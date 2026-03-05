@@ -1,0 +1,48 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" class="login-root appui appui--en appui--medium appui--light appui--ltr" style="flex-grow: 0;">
+        <ui:VisualElement name="group" style="background-color: rgba(255, 255, 255, 0.26); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; margin-left: 50px; margin-right: 50px; padding-top: 25px; padding-left: 25px; padding-right: 25px; padding-bottom: 25px; margin-top: 50px; margin-bottom: 50px; -unity-background-image-tint-color: rgba(255, 255, 255, 0.2); flex-grow: 1;">
+            <appui:Heading text="Create your Account" size="XXL" style="-unity-text-align: middle-center; -unity-font-style: bold;"/>
+            <ui:VisualElement name="username" style="flex-grow: 1;">
+                <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" binding-path="Username" class="auth-field ff ggg item-field" style="margin-top: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="password" style="flex-grow: 1;">
+                <appui:Heading text="Password" size="L" primary="true" name="Heading_password" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:TextField name="password-field" label="Usuario" placeholder="Your password" binding-path="Username" is-password="true" class="auth-field ff ggg item-field" style="margin-top: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="age" style="flex-grow: 1;">
+                <appui:Heading text="Age Range" size="L" primary="true" name="Heading_age" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:Dropdown name="age-dropdown" binding-path="SelectedAge" class="auth-field"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="username" style="flex-grow: 1;">
+                <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" binding-path="Username" class="auth-field ff ggg item-field" style="margin-top: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="username" style="flex-grow: 1;">
+                <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" binding-path="Username" class="auth-field ff ggg item-field" style="margin-top: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="username" style="flex-grow: 1;">
+                <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" binding-path="Username" class="auth-field ff ggg item-field" style="margin-top: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="username" style="flex-grow: 1;">
+                <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" binding-path="Username" class="auth-field ff ggg item-field" style="margin-top: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="username" style="flex-grow: 1;">
+                <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field" style="flex-shrink: 1; flex-grow: 1; margin-top: 40px; padding-left: 20px;"/>
+                <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" binding-path="Username" class="auth-field ff ggg item-field" style="margin-top: 0;"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="auth-actions">
+                <appui:Button name="register-button" text="Registrar" variant="primary" class="auth-button"/>
+                <appui:Button name="goto-login-button" text="¿Ya tienes cuenta? Entra aquí" variant="ghost" class="auth-button"/>
+            </ui:VisualElement>
+            <appui:Text name="error-label" binding-path="ErrorMessage" class="auth-error"/>
+            <ui:VisualElement name="loading-overlay" binding-path="IsLoading" class="auth-loading-overlay">
+                <appui:CircularProgress class="auth-loading-spinner"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

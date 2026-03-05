@@ -1,0 +1,21 @@
+{
+    "name": "Foodmission",
+    "rootNamespace": "eu.foodmission.platform",
+    "references": [
+        "GUID:eec0964c48f6f4e40bc3ec2257ccf8c5",
+        "GUID:2f101f87087d58f4ba92ca00188e763d",
+        "GUID:9c739b017e1d4fdabf06fa2d84a463c3",
+        "GUID:f7898ee836234b98a20cbddc2a6e0b08",
+        "GUID:710bb277e6ff49ed91ba164465e106ef",
+        "GUID:84651a3751eca9349aac36a66bba901b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

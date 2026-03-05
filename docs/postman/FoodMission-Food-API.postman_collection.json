@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "food-api-collection",
+		"name": "FoodMission Food API",
+		"description": "Collection for FoodMission Food API endpoints.\n\n**IMPORTANT:** Make sure the `base_url` variable is set to `http://localhost:3000` (or your backend server URL) in your Postman environment. Do NOT use a frontend URL (like localhost:5173 or localhost:4200).\n\nThe API uses the global prefix `/api/v1`, so all endpoints are under `/api/v1/...`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Food",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Apple\",\n  \"description\": \"Fresh red apple\",\n  \"barcode\": \"1234567890123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods"
+					]
+				},
+				"description": "Creates a new food item in the database. Requires user or admin role.\n\n**Rate Limit:** 5 requests per minute"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    const jsonData = pm.response.json();",
+							"    pm.environment.set('food_id', jsonData.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			]
+		},
+		{
+			"name": "Get All Foods",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods?page=1&limit=10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number (default: 1)"
+						},
+						{
+							"key": "limit",
+							"value": "10",
+							"description": "Items per page (default: 10)"
+						}
+					]
+				},
+				"description": "Retrieves a paginated list of food items with optional filtering and sorting. This is a public endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Food by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods/{{food_id}}?includeOpenFoodFacts=false",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods",
+						"{{food_id}}"
+					],
+					"query": [
+						{
+							"key": "includeOpenFoodFacts",
+							"value": "false",
+							"description": "Include OpenFoodFacts information (optional)"
+						}
+					]
+				},
+				"description": "Retrieves a food item by its ID. Optionally includes OpenFoodFacts information. This is a public endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Food by Barcode",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods/barcode/1234567890123?includeOpenFoodFacts=false",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods",
+						"barcode",
+						"1234567890123"
+					],
+					"query": [
+						{
+							"key": "includeOpenFoodFacts",
+							"value": "false",
+							"description": "Include OpenFoodFacts information (optional)"
+						}
+					]
+				},
+				"description": "Retrieves a food item by its barcode. Optionally includes OpenFoodFacts information. This is a public endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Search OpenFoodFacts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods/search/openfoodfacts?query=apple&page=1&pageSize=20",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods",
+						"search",
+						"openfoodfacts"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "apple",
+							"description": "Search query (name, category, or brand)"
+						},
+						{
+							"key": "category",
+							"value": "",
+							"description": "Filter by category (optional)",
+							"disabled": true
+						},
+						{
+							"key": "brand",
+							"value": "",
+							"description": "Filter by brand (optional)",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page number (default: 1, min: 1)"
+						},
+						{
+							"key": "pageSize",
+							"value": "20",
+							"description": "Items per page (default: 10, min: 1, max: 50). Can also use 'limit' parameter for backward compatibility."
+						},
+						{
+							"key": "limit",
+							"value": "",
+							"description": "Items per page (alternative to pageSize, for backward compatibility)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Search for products in the OpenFoodFacts database by name, category, or brand. This is a public endpoint.\n\n**Query Parameters:**\n- `query` (optional): Search query string\n- `category` (optional): Filter by category\n- `brand` (optional): Filter by brand\n- `page` (optional): Page number, default: 1, min: 1\n- `pageSize` (optional): Items per page, default: 10, min: 1, max: 50\n- `limit` (optional): Alternative to pageSize for backward compatibility\n\n**Rate Limit:** 20 searches per minute"
+			},
+			"response": []
+		},
+		{
+			"name": "Import from OpenFoodFacts",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods/import/openfoodfacts/3017620422003",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods",
+						"import",
+						"openfoodfacts",
+						"3017620422003"
+					]
+				},
+				"description": "Imports a food item from OpenFoodFacts database using barcode. Requires user or admin role.\n\n**Authentication Required:** This endpoint requires a valid JWT token. Make sure to:\n1. Set the `jwt_token` variable in your Postman environment\n2. Include the Authorization header: `Bearer {{jwt_token}}`\n\n**Rate Limit:** 10 imports per minute"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    const jsonData = pm.response.json();",
+							"    pm.environment.set('food_id', jsonData.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			]
+		},
+		{
+			"name": "Get OpenFoodFacts Info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods/{{food_id}}/openfoodfacts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods",
+						"{{food_id}}",
+						"openfoodfacts"
+					]
+				},
+				"description": "Retrieves OpenFoodFacts information for a food item by its ID, if the food has a barcode. Returns null if no barcode or OpenFoodFacts data available. This is a public endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Food",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Updated Apple Name\",\n  \"description\": \"Updated description\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods/{{food_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods",
+						"{{food_id}}"
+					]
+				},
+				"description": "Updates a food item by its ID. Requires user or admin role."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Food",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/foods/{{food_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"foods",
+						"{{food_id}}"
+					]
+				},
+				"description": "Deletes a food item by its ID. Requires admin role."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string",
+			"description": "Backend API server URL. Must be the NestJS backend (default: http://localhost:3000). Do NOT use a frontend URL."
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string",
+			"description": "JWT access token (set automatically from Auth API collection)"
+		},
+		{
+			"key": "food_id",
+			"value": "",
+			"type": "string",
+			"description": "Food ID (automatically set after creating or importing food)"
+		}
+	]
+}
+

@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "pantry-item-api-collection",
+		"name": "FoodMission Pantry Item API",
+		"description": "Collection for FoodMission Pantry Item API endpoints.\n\n**IMPORTANT:** Make sure the `base_url` variable is set to `http://localhost:3000` (or your backend server URL) in your Postman environment. Do NOT use a frontend URL (like localhost:5173 or localhost:4200).\n\nThe API uses the global prefix `/api/v1`, so all endpoints are under `/api/v1/...`\n\n**Note:** Users can have multiple pantries. The pantryId must belong to the authenticated user when creating or querying pantry items.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Pantry Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"pantryId\": \"{{pantry_id}}\",\n  \"foodId\": \"{{food_id}}\",\n  \"quantity\": 2,\n  \"unit\": \"KG\",\n  \"notes\": \"Store in cool place\",\n  \"expiryDate\": \"2027-02-02\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry-item",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry-item"
+					]
+				},
+				"description": "Creates a new Pantry Item and adds it to the specified pantry. The pantryId must be provided in the request body and must belong to the authenticated user. Users can have multiple pantries. The unit field is optional and defaults to PIECES if not provided. Requires user or admin role.\n\n**Rate Limit:** 10 requests per minute\n\n**Required fields:**\n- `pantryId` (UUID): The ID of the pantry to add the item to\n- `foodId` (UUID): The ID of the food item to add\n- `quantity` (number, min 0.01): The quantity of the item\n\n**Optional fields:**\n- `unit` (enum): The unit of measurement (PIECES, G, KG, ML, L, CUPS). Defaults to PIECES if not provided.\n- `notes` (string, max 500 chars): Additional notes for the item\n- `expiryDate` (ISO date string): When the food will expire"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Set default food_id if not exists",
+							"const defaultFoodId = '00d2eca5-0377-448b-b74e-d5ae25e9c944';",
+							"if (!pm.environment.get('food_id') || pm.environment.get('food_id') === '') {",
+							"    pm.environment.set('food_id', defaultFoodId);",
+							"}",
+							"// Warn if pantry_id is not set",
+							"if (!pm.environment.get('pantry_id') || pm.environment.get('pantry_id') === '') {",
+							"    console.warn('Warning: pantry_id is not set. Please set it manually or create a pantry first using the Pantry API collection.');",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    const jsonData = pm.response.json();",
+							"    pm.environment.set('pantry_item_id', jsonData.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			]
+		},
+		{
+			"name": "Get All Pantry Items",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry-item?pantryId={{pantry_id}}&foodId={{food_id}}&unit=KG&expiryDate=",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry-item"
+					],
+					"query": [
+						{
+							"key": "pantryId",
+							"value": "{{pantry_id}}",
+							"description": "The ID of the pantry to get items from (required, UUID)",
+							"disabled": false
+						},
+						{
+							"key": "foodId",
+							"value": "{{food_id}}",
+							"description": "Filter by food ID (optional, UUID)",
+							"disabled": true
+						},
+						{
+							"key": "unit",
+							"value": "KG",
+							"description": "Filter by unit (optional: PIECES, G, KG, ML, L, CUPS)",
+							"disabled": true
+						},
+						{
+							"key": "expiryDate",
+							"value": "",
+							"description": "Filter by expiry date (optional, ISO date string)",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Retrieve pantry items from a specific pantry. The pantryId must be provided as a query parameter and must belong to the authenticated user. Optional filtering by foodId, unit, or expiryDate. Returns a response with a `data` array containing the pantry items. Requires user or admin role.\n\n**Required query parameters:**\n- `pantryId` (UUID): The ID of the pantry to get items from\n\n**Optional query parameters:**\n- `foodId` (UUID): Filter by food ID\n- `unit` (enum): Filter by unit (PIECES, G, KG, ML, L, CUPS)\n- `expiryDate` (ISO date string): Filter by expiry date"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pantry Item by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry-item/{{pantry_item_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry-item",
+						"{{pantry_item_id}}"
+					]
+				},
+				"description": "Get a specific pantry item by ID. The pantry item must belong to a pantry owned by the authenticated user. Returns 403 Forbidden if the user does not own the pantry, or 404 Not Found if the item doesn't exist. Requires user or admin role."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pantry Item",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"quantity\": 3,\n  \"unit\": \"PIECES\",\n  \"notes\": \"Buy organic if available\",\n  \"expiryDate\": \"2027-03-15\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry-item/{{pantry_item_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry-item",
+						"{{pantry_item_id}}"
+					]
+				},
+				"description": "Update quantity, unit, notes, or expiry date of a pantry item. All fields are optional. The pantry item must belong to a pantry owned by the authenticated user. Returns 403 Forbidden if the user does not own the pantry, or 404 Not Found if the item doesn't exist. Requires user or admin role.\n\n**Optional fields (all can be updated independently):**\n- `quantity` (number, min 0.01): The quantity of the item\n- `unit` (enum): The unit of measurement (PIECES, G, KG, ML, L, CUPS)\n- `notes` (string, max 500 chars): Additional notes for the item\n- `expiryDate` (ISO date string): When the food will expire\n- `foodId` (UUID): The ID of the food item (can be changed)"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pantry Item",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry-item/{{pantry_item_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry-item",
+						"{{pantry_item_id}}"
+					]
+				},
+				"description": "Delete a specific pantry item by ID. The pantry item must belong to a pantry owned by the authenticated user. Returns 403 Forbidden if the user does not own the pantry, or 404 Not Found if the item doesn't exist. Requires user or admin role."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string",
+			"description": "Backend API server URL. Must be the NestJS backend (default: http://localhost:3000). Do NOT use a frontend URL."
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string",
+			"description": "JWT access token (set automatically from Auth API collection)"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string",
+			"description": "User ID from the authenticated user profile (set automatically from Auth API collection)"
+		},
+		{
+			"key": "pantry_item_id",
+			"value": "",
+			"type": "string",
+			"description": "Pantry Item ID (automatically set after creating a pantry item)"
+		},
+		{
+			"key": "food_id",
+			"value": "00d2eca5-0377-448b-b74e-d5ae25e9c944",
+			"type": "string",
+			"description": "Food ID to use when creating pantry items (default: seeded food ID)"
+		},
+		{
+			"key": "pantry_id",
+			"value": "",
+			"type": "string",
+			"description": "Pantry ID (set automatically from Pantry API collection or manually)"
+		}
+	]
+}

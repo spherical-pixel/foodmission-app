@@ -1,0 +1,120 @@
+{
+  "info": {
+    "_postman_id": "meal-api-collection",
+    "name": "FoodMission Meal API",
+    "description": "Meal endpoints. Set `base_url` to backend (e.g., http://localhost:3000). All routes use `/api/v1`. Auth: `Authorization: Bearer {{jwt_token}}`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Meal",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Grilled chicken salad\",\n  \"mealType\": \"MEAT\",\n  \"calories\": 520,\n  \"proteins\": 42,\n  \"sustainabilityScore\": 0.7\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/meals",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meals"]
+        },
+        "description": "Create a meal (auth required)."
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const body = pm.response.json();",
+              "  pm.environment.set('meal_id', body.id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "List Meals",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/meals?page=1&limit=10&mealType=MEAT&search=salad",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meals"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" },
+            { "key": "mealType", "value": "MEAT" },
+            { "key": "search", "value": "salad" }
+          ]
+        },
+        "description": "List meals for current user with filters."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Meal by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/meals/{{meal_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meals", "{{meal_id}}"]
+        },
+        "description": "Fetch a meal by id."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Meal",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated meal name\",\n  \"calories\": 480\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/meals/{{meal_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meals", "{{meal_id}}"]
+        },
+        "description": "Update a meal."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Meal",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/meals/{{meal_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meals", "{{meal_id}}"]
+        },
+        "description": "Delete a meal."
+      },
+      "response": []
+    }
+  ]
+}

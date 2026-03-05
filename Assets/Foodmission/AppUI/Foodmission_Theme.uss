@@ -1,0 +1,112 @@
+/* ============================================
+   Foodmission Custom Theme
+   Based on corporate green: #024639
+   ============================================ */
+
+.appui {
+   /* Sizing */
+   --appui-sizing-100: 16px;
+   --appui-sizing-200: 32px;
+   --appui-sizing-300: 48px;
+   --appui-sizing-400: 64px;
+   --appui-sizing-500: 80px;
+   --appui-sizing-600: 96px;
+   --appui-sizing-700: 112px;
+   --appui-sizing-800: 128px;
+
+   --appui-font-sizes-body-sm:24px;
+   --appui-font-sizes-body-md:28px;
+   --appui-font-sizes-body-lg:32px;
+
+
+   /* TextField - transparent background for both modes */
+   --appui-alias-field-background-color-default: transparent;
+   --appui-alias-field-border-color-default: rgba(255, 255, 255, 1.0);
+   --appui-alias-field-border-color-focus: rgba(255, 255, 255, 1.0);
+   --appui-alias-field-placeholder-color: rgba(255, 255, 255, 0.5);
+}
+
+
+.appui--light {
+    /* Foodmission safe areas */
+    --fm-main-bg: #024639;
+    --fm-safe-area-top: 60px;
+    --fm-safe-area-right: 20px;
+    --fm-safe-area-bottom: 20px;
+    --fm-safe-area-left: 20px;
+
+    /* ============================================
+       Primary Palette - Light Mode
+       From corporate green to white
+       ============================================ */
+    --appui-primary-15: #000000;
+    --appui-primary-25: #001A16;
+    --appui-primary-50: #00332B;
+    --appui-primary-100: #024639;    /* Corporate green - primary text */
+    --appui-primary-200: #035A4A;
+    --appui-primary-300: #04705C;
+    --appui-primary-400: #058A71;
+    --appui-primary-500: #06A487;
+    --appui-primary-600: #2FB89D;
+    --appui-primary-700: #5CC6B0;
+    --appui-primary-800: #88D4C3;
+    --appui-primary-900: #B3E2D6;
+    --appui-primary-1000: #D6F0EA;
+    --appui-primary-1100: #E8F7F3;
+    --appui-primary-1200: #F4FCFA;
+    --appui-primary-1300: #FFFFFF;
+
+    /* Foregrounds - mapped to primary palette */
+    --appui-foregrounds-200: var(--appui-primary-15);
+    --appui-foregrounds-100: var(--appui-primary-1300);  /* White text */
+    --appui-foregrounds-50: var(--appui-primary-25);
+    --appui-foregrounds-25: var(--appui-primary-300);
+
+    /* Backgrounds */
+    --appui-backgrounds-300: var(--appui-primary-1100);
+    --appui-backgrounds-200: var(--appui-primary-1200);
+    --appui-backgrounds-100: var(--appui-primary-1300);
+    --appui-backgrounds-50: var(--appui-primary-1300);
+}
+
+.appui--dark {
+    /* Foodmission safe areas */
+    --fm-main-bg: #024639;
+    --fm-safe-area-top: 60px;
+    --fm-safe-area-right: 20px;
+    --fm-safe-area-bottom: 20px;
+    --fm-safe-area-left: 20px;
+
+    /* ============================================
+       Primary Palette - Dark Mode
+       From black through corporate green to white
+       ============================================ */
+    --appui-primary-15: #000000;
+    --appui-primary-25: #000A09;
+    --appui-primary-50: #001411;
+    --appui-primary-100: #001E1A;
+    --appui-primary-200: #002823;
+    --appui-primary-300: #00322C;
+    --appui-primary-400: #013C35;
+    --appui-primary-500: #01463E;
+    --appui-primary-600: #015047;
+    --appui-primary-700: #024639;    /* Corporate green */
+    --appui-primary-800: #2C8B76;
+    --appui-primary-900: #5CB09E;
+    --appui-primary-1000: #8CD4C6;
+    --appui-primary-1100: #BBE8DE;
+    --appui-primary-1200: #DDF4EE;
+    --appui-primary-1300: #FFFFFF;
+
+    /* Foregrounds - mapped to primary palette */
+    --appui-foregrounds-200: var(--appui-primary-1300);
+    --appui-foregrounds-100: var(--appui-primary-1300);  /* White text */
+    --appui-foregrounds-50: var(--appui-primary-900);
+    --appui-foregrounds-25: var(--appui-primary-600);
+
+    /* Backgrounds - use darker tones */
+    --appui-backgrounds-300: var(--appui-primary-300);
+    --appui-backgrounds-200: var(--appui-primary-200);
+    --appui-backgrounds-100: var(--appui-primary-100);
+    --appui-backgrounds-50: var(--appui-primary-50);
+}

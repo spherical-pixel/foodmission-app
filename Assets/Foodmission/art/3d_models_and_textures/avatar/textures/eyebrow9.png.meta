@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 46c79bd054180174aadb606335c256df
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1696654809316384506
+    second: eyebrow9_0
+  - first:
+      213: -8369268394611335787
+    second: eyebrow9_1
+  - first:
+      213: -7710843718365686297
+    second: eyebrow9_2
+  - first:
+      213: 6851639206317011422
+    second: eyebrow9_3
+  - first:
+      213: 401381451954159167
+    second: eyebrow9_4
+  - first:
+      213: 3071482648183903468
+    second: eyebrow9_5
+  - first:
+      213: -3433915899421961691
+    second: eyebrow9_6
+  - first:
+      213: -1795920576488029702
+    second: eyebrow9_7
+  - first:
+      213: -6221896477056857953
+    second: eyebrow9_8
+  - first:
+      213: -84135046459397449
+    second: eyebrow9_9
+  - first:
+      213: -8090387781189072738
+    second: eyebrow9_10
+  - first:
+      213: -2789952845934514328
+    second: eyebrow9_11
+  - first:
+      213: 2905823507875080732
+    second: eyebrow9_12
+  - first:
+      213: 2906685302342598614
+    second: eyebrow9_13
+  - first:
+      213: -3543737347871421146
+    second: eyebrow9_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: eyebrow9_0
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 188
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afed2cf4f8abb8710800000000000000
+      internalID: 1696654809316384506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_1
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 196
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59d9945ccb26adb80800000000000000
+      internalID: -8369268394611335787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_2
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 201
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e5d240fd749df490800000000000000
+      internalID: -7710843718365686297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_3
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 210
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed13aad7e89e51f50800000000000000
+      internalID: 6851639206317011422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_4
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 212
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3e782fcd4ef19500800000000000000
+      internalID: 401381451954159167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_5
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 215
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce417c2f13910aa20800000000000000
+      internalID: 3071482648183903468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 217
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5225362eea74850d0800000000000000
+      internalID: -3433915899421961691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_7
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 218
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af1cd9930cb9317e0800000000000000
+      internalID: -1795920576488029702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_8
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 217
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9885cf7e1267a9a0800000000000000
+      internalID: -6221896477056857953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_9
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 215
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ba60aafe9715def0800000000000000
+      internalID: -84135046459397449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_10
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 209
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e98801f7d2b29bf80800000000000000
+      internalID: -8090387781189072738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_11
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 207
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86fabfd1ba81849d0800000000000000
+      internalID: -2789952845934514328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_12
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 201
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1aafdea51f835820800000000000000
+      internalID: 2905823507875080732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_13
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 191
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dfbaf7d1ee965820800000000000000
+      internalID: 2906685302342598614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eyebrow9_14
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 177
+        width: 14
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62dc6da58ad12dec0800000000000000
+      internalID: -3543737347871421146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      eyebrow9_0: 1696654809316384506
+      eyebrow9_1: -8369268394611335787
+      eyebrow9_10: -8090387781189072738
+      eyebrow9_11: -2789952845934514328
+      eyebrow9_12: 2905823507875080732
+      eyebrow9_13: 2906685302342598614
+      eyebrow9_14: -3543737347871421146
+      eyebrow9_2: -7710843718365686297
+      eyebrow9_3: 6851639206317011422
+      eyebrow9_4: 401381451954159167
+      eyebrow9_5: 3071482648183903468
+      eyebrow9_6: -3433915899421961691
+      eyebrow9_7: -1795920576488029702
+      eyebrow9_8: -6221896477056857953
+      eyebrow9_9: -84135046459397449
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

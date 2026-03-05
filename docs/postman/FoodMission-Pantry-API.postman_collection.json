@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "pantry-api-collection",
+		"name": "FoodMission Pantry API",
+		"description": "Collection for FoodMission Pantry API endpoints.\n\n**IMPORTANT:** Make sure the `base_url` variable is set to `http://localhost:3000` (or your backend server URL) in your Postman environment. Do NOT use a frontend URL (like localhost:5173 or localhost:4200).\n\nThe API uses the global prefix `/api/v1`, so all endpoints are under `/api/v1/...`\n\n**Note:** Users can have multiple pantries with different titles. A pantry with the same title cannot be created twice for the same user.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Pantry",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Home Pantry\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry"
+					]
+				},
+				"description": "Creates a new pantry for the authenticated user. Users can have multiple pantries with different titles. If a pantry with the same title already exists for the user, returns a 409 Conflict error. Requires user or admin role.\n\n**Rate Limit:** 5 requests per minute"
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    const jsonData = pm.response.json();",
+							"    pm.environment.set('pantry_id', jsonData.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			]
+		},
+		{
+			"name": "Get All My Pantries",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry"
+					]
+				},
+				"description": "Retrieves all pantries for the authenticated user with all items. Returns an empty array if no pantries exist. Requires user or admin role."
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    const jsonData = pm.response.json();",
+							"    if (Array.isArray(jsonData) && jsonData.length > 0) {",
+							"        pm.environment.set('pantry_id', jsonData[0].id);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			]
+		},
+		{
+			"name": "Get Pantry by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry/{{pantry_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry",
+						"{{pantry_id}}"
+					]
+				},
+				"description": "Retrieves a specific pantry by ID for the authenticated user. Only the pantry owner can access it. Returns 403 Forbidden if the user does not own the pantry, or 404 Not Found if the pantry doesn't exist. Requires user or admin role."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pantry",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Updated Pantry Name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry/{{pantry_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry",
+						"{{pantry_id}}"
+					]
+				},
+				"description": "Updates the pantry title. Only the pantry owner can update their pantry. If updating to a title that already exists for the user, returns 409 Conflict. Requires user or admin role."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pantry",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/pantry/{{pantry_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pantry",
+						"{{pantry_id}}"
+					]
+				},
+				"description": "Deletes a specific pantry by ID. Only the pantry owner can delete their pantry. All pantry items will be deleted as well (cascade delete). Returns 403 Forbidden if the user does not own the pantry, or 404 Not Found if the pantry doesn't exist. Requires user or admin role."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string",
+			"description": "Backend API server URL. Must be the NestJS backend (default: http://localhost:3000). Do NOT use a frontend URL."
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string",
+			"description": "JWT access token (set automatically from Auth API collection)"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string",
+			"description": "User ID from the authenticated user profile (set automatically from Auth API collection)"
+		},
+		{
+			"key": "pantry_id",
+			"value": "",
+			"type": "string",
+			"description": "Pantry ID (automatically set after creating or getting pantry)"
+		}
+	]
+}

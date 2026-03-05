@@ -1,0 +1,29 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/Styles/Login.uss?fileID=7433441132597879392&amp;guid=73aaed7c57cf2482e9d3413302ada616&amp;type=3#Login"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" class="login-root appui appui--en appui--medium appui--light appui--ltr" style="width: 100%; height: 100%; min-width: 100%; min-height: 100%; max-width: 100%; max-height: 100%;">
+        <ui:Image name="logofoodmission" source="project://database/Assets/Foodmission/graphics/png/logo-foodmission-white.png?fileID=21300000&amp;guid=bab1e9be189fa4421b7615dfe330b1f6&amp;type=3#logo-foodmission-white" class="login-logo-foodmission" style="margin-top: 180px;"/>
+        <ui:VisualElement name="group" style="flex-grow: 0; background-color: rgba(255, 255, 255, 0.26); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; margin-left: 50px; margin-right: 50px; padding-top: 25px; padding-left: 25px; padding-right: 25px; padding-bottom: 25px; margin-top: 50px; margin-bottom: 50px; -unity-background-image-tint-color: rgba(255, 255, 255, 0.2);">
+            <appui:Heading text="Play, learn, and eat better: together we feed the change." size="XXL" primary="true" name="Heading" class="heading-wrap" style="flex-shrink: 1; flex-grow: 1;"/>
+            <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field"/>
+            <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" class="auth-field item-field">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="Username" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" binding-mode="ToSource"/>
+                </Bindings>
+            </appui:TextField>
+            <appui:Heading text="Password" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field"/>
+            <appui:TextField name="password-field" label="Contraseña" placeholder="********" is-password="true" class="auth-field item-field">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="Password" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" binding-mode="ToSource"/>
+                </Bindings>
+            </appui:TextField>
+            <appui:Button name="login-button" text="Entrar" variant="Default" title="Sign in" trailing-icon="caret-right" class="auth-button" style="margin-top: 40px; margin-bottom: 20px;"/>
+            <appui:Text text="Forgot your password?" name="forgot-password" style="-unity-font-style: bold; -unity-text-align: middle-center; margin-top: 40px; margin-bottom: 40px;"/>
+            <appui:Text text="Don&apos;t have an account? Sign up" name="register" style="-unity-font-style: bold; -unity-text-align: middle-center; margin-top: 40px; margin-bottom: 40px;"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="auth-actions"/>
+        <ui:VisualElement name="loading-overlay" binding-path="IsLoading" class="auth-loading-overlay" style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; justify-content: center; align-self: center; align-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.47); display: none;">
+            <appui:CircularProgress class="auth-loading-spinner"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

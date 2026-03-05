@@ -1,0 +1,362 @@
+{
+  "info": {
+    "_postman_id": "meal-logging-api-collection",
+    "name": "FoodMission Meal Logging API",
+    "description": "Collection for Meal, Recipe, and Meal Log endpoints.\n\n**IMPORTANT:** Set `base_url` to your backend (e.g., http://localhost:3000). All endpoints are under `/api/v1`. Auth-required requests expect `Authorization: Bearer {{jwt_token}}`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Meals",
+      "item": [
+        {
+          "name": "Create Meal",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Grilled chicken salad\",\n  \"mealType\": \"MEAT\",\n  \"calories\": 520,\n  \"proteins\": 42,\n  \"sustainabilityScore\": 0.7\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/meals",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meals"]
+            },
+            "description": "Create a meal. Requires user/admin."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const body = pm.response.json();",
+                  "  pm.environment.set('meal_id', body.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Meals",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/meals?page=1&limit=10&mealType=MEAT&search=salad",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meals"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "mealType", "value": "MEAT" },
+                { "key": "search", "value": "salad" }
+              ]
+            },
+            "description": "List meals for current user with filters."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Meal by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/meals/{{meal_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meals", "{{meal_id}}"]
+            },
+            "description": "Fetch a meal by id."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Meal",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated meal name\",\n  \"calories\": 480\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/meals/{{meal_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meals", "{{meal_id}}"]
+            },
+            "description": "Update a meal."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Meal",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/meals/{{meal_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meals", "{{meal_id}}"]
+            },
+            "description": "Delete a meal."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Recipes",
+      "item": [
+        {
+          "name": "Create Recipe",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mealId\": \"{{meal_id}}\",\n  \"title\": \"Veggie pasta\",\n  \"description\": \"Weeknight dinner\",\n  \"instructions\": \"Boil pasta, mix veggies\",\n  \"prepTime\": 10,\n  \"cookTime\": 15,\n  \"servings\": 2,\n  \"difficulty\": \"easy\",\n  \"tags\": [\"quick\", \"veggie\"],\n  \"allergens\": [\"gluten\"],\n  \"sustainabilityScore\": 0.6\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recipes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "recipes"]
+            },
+            "description": "Create a recipe linked to a meal (auth required)."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const body = pm.response.json();",
+                  "  pm.environment.set('recipe_id', body.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Recipes",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/recipes?page=1&limit=10&mealType=MEAT&tags=quick&allergens=gluten&difficulty=easy&search=pasta",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "recipes"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "mealType", "value": "MEAT" },
+                { "key": "tags", "value": "quick" },
+                { "key": "allergens", "value": "gluten" },
+                { "key": "difficulty", "value": "easy" },
+                { "key": "search", "value": "pasta" }
+              ]
+            },
+            "description": "List recipes with filters."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Recipe by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/recipes/{{recipe_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "recipes", "{{recipe_id}}"]
+            },
+            "description": "Fetch a recipe by id."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Recipe",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated recipe title\",\n  \"tags\": [\"updated\", \"quick\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/recipes/{{recipe_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "recipes", "{{recipe_id}}"]
+            },
+            "description": "Update a recipe."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Recipe",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/recipes/{{recipe_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "recipes", "{{recipe_id}}"]
+            },
+            "description": "Delete a recipe."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Meal Logs",
+      "item": [
+        {
+          "name": "Create Meal Log",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mealId\": \"{{meal_id}}\",\n  \"typeOfMeal\": \"DINNER\",\n  \"timestamp\": \"2025-01-01T18:30:00.000Z\",\n  \"mealFromPantry\": true,\n  \"eatenOut\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/meal-logs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meal-logs"]
+            },
+            "description": "Create a meal log (auth required)."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const body = pm.response.json();",
+                  "  pm.environment.set('meal_log_id', body.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List Meal Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/meal-logs?page=1&limit=10&typeOfMeal=DINNER&mealType=MEAT&mealFromPantry=true&eatenOut=false&dateFrom=2025-01-01T00:00:00.000Z&dateTo=2025-01-31T23:59:59.999Z",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meal-logs"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "typeOfMeal", "value": "DINNER" },
+                { "key": "mealType", "value": "MEAT" },
+                { "key": "mealFromPantry", "value": "true" },
+                { "key": "eatenOut", "value": "false" },
+                { "key": "dateFrom", "value": "2025-01-01T00:00:00.000Z" },
+                { "key": "dateTo", "value": "2025-01-31T23:59:59.999Z" }
+              ]
+            },
+            "description": "List meal logs with filters."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Meal Log by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/meal-logs/{{meal_log_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meal-logs", "{{meal_log_id}}"]
+            },
+            "description": "Fetch a meal log by id."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Meal Log",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eatenOut\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/meal-logs/{{meal_log_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meal-logs", "{{meal_log_id}}"]
+            },
+            "description": "Update a meal log."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Meal Log",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/meal-logs/{{meal_log_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "meal-logs", "{{meal_log_id}}"]
+            },
+            "description": "Delete a meal log."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="" class="fm-loading-main-content" style="justify-content: flex-start; flex-grow: 1; background-color: rgba(255, 0, 0, 0);">
+        <ui:Image source="project://database/Assets/Foodmission/RenderTextures/NutriRenderTexture.renderTexture?fileID=8400000&amp;guid=70b891fe7178443c7b15210d9bd22e0e&amp;type=2#NutriRenderTexture" name="Nutri" style="max-height: 700px;"/>
+        <appui:FieldLabel required-text="HOME HOME HOME" label="HOME HOME HOME" indicator-type="Text"/>
+        <appui:Button title="HOME HOME HOME" subtitle="HOME HOME HOME" size="L"/>
+        <appui:Text text="HOME HOME HOME"/>
+    </ui:VisualElement>
+</ui:UXML>

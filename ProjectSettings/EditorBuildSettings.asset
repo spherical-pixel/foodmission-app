@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Samples/App UI/2.1.3/UI Kit/Scenes/UI Kit.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ac
+  - enabled: 0
+    path: Assets/Samples/App UI/2.1.3/Navigation/Scenes/NavigationSample.unity
+    guid: 21ffc17eb36bb4e698490c1c45719bf4
+  - enabled: 0
+    path: Assets/FoodMissionOld/scenes/foodmission_scene.unity
+    guid: 34dd7a35113ac4904be7050e47d9a82f
+  - enabled: 1
+    path: Assets/Foodmission/scenes/FoodmissionAppUI.unity
+    guid: 423ed66176ccf4efba0b6d5eb1615af1
+  m_configObjects:
+    com.unity.adaptivePerformance.basic.provider_settings: {fileID: 11400000, guid: 1ed8016df24fa49558d7075acbd9a0e2, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 8cf626d32b59b4b88942d57dc98fa729, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: a358e12bfe55a43f8a46fd99f4295bc9, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 6ce4ebcc708454cc0858b5772ef1903f, type: 2}
+    com.unity.dt.app-ui: {fileID: 11400000, guid: a31f4400692fc454290231da49768b56, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 00a927af5f532431b9aa5cd722c330d9, type: 2}
+  m_UseUCBPForAssetBundles: 0

@@ -1,0 +1,124 @@
+{
+  "info": {
+    "_postman_id": "meal-log-api-collection",
+    "name": "FoodMission Meal Log API",
+    "description": "Meal Log endpoints. Set `base_url` to backend (e.g., http://localhost:3000). All routes use `/api/v1`. Auth: `Authorization: Bearer {{jwt_token}}`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Meal Log",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mealId\": \"{{meal_id}}\",\n  \"typeOfMeal\": \"DINNER\",\n  \"timestamp\": \"2025-01-01T18:30:00.000Z\",\n  \"mealFromPantry\": true,\n  \"eatenOut\": false\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/meal-logs",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meal-logs"]
+        },
+        "description": "Create a meal log (auth required)."
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const body = pm.response.json();",
+              "  pm.environment.set('meal_log_id', body.id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "List Meal Logs",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/meal-logs?page=1&limit=10&typeOfMeal=DINNER&mealType=MEAT&mealFromPantry=true&eatenOut=false&dateFrom=2025-01-01T00:00:00.000Z&dateTo=2025-01-31T23:59:59.999Z",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meal-logs"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" },
+            { "key": "typeOfMeal", "value": "DINNER" },
+            { "key": "mealType", "value": "MEAT" },
+            { "key": "mealFromPantry", "value": "true" },
+            { "key": "eatenOut", "value": "false" },
+            { "key": "dateFrom", "value": "2025-01-01T00:00:00.000Z" },
+            { "key": "dateTo", "value": "2025-01-31T23:59:59.999Z" }
+          ]
+        },
+        "description": "List meal logs with filters."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Meal Log by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/meal-logs/{{meal_log_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meal-logs", "{{meal_log_id}}"]
+        },
+        "description": "Fetch a meal log by id."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Meal Log",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"eatenOut\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/meal-logs/{{meal_log_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meal-logs", "{{meal_log_id}}"]
+        },
+        "description": "Update a meal log."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Meal Log",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/meal-logs/{{meal_log_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "meal-logs", "{{meal_log_id}}"]
+        },
+        "description": "Delete a meal log."
+      },
+      "response": []
+    }
+  ]
+}

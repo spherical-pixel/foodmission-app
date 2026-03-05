@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 63b9996e727774f16a08dde171cdadd8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3825372000443364514
+    second: icons_miscellaneous_0
+  - first:
+      213: -8377473811813364989
+    second: icons_miscellaneous_1
+  - first:
+      213: -83084719247467000
+    second: icons_miscellaneous_2
+  - first:
+      213: -1688016079347922783
+    second: icons_miscellaneous_3
+  - first:
+      213: 1034494529026819120
+    second: icons_miscellaneous_4
+  - first:
+      213: -6514045175871520265
+    second: icons_miscellaneous_5
+  - first:
+      213: 2803470986080532205
+    second: icons_miscellaneous_6
+  - first:
+      213: 3818125873328932393
+    second: icons_miscellaneous_7
+  - first:
+      213: 3944193611659188205
+    second: icons_miscellaneous_8
+  - first:
+      213: 7499456120099010746
+    second: icons_miscellaneous_9
+  - first:
+      213: -5644347030584801681
+    second: icons_miscellaneous_10
+  - first:
+      213: 2973364207361775927
+    second: icons_miscellaneous_11
+  - first:
+      213: -7629177546961896100
+    second: icons_miscellaneous_12
+  - first:
+      213: 6996804560706452038
+    second: icons_miscellaneous_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: icons_miscellaneous_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 865
+        width: 293
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a4f6241193761530800000000000000
+      internalID: 3825372000443364514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_1
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 973
+        width: 121
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30b0ab334fb3dbb80800000000000000
+      internalID: -8377473811813364989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 734
+        width: 160
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80eddf653e2d8def0800000000000000
+      internalID: -83084719247467000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_3
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 603
+        width: 484
+        height: 338
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a8c15fb156f298e0800000000000000
+      internalID: -1688016079347922783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_4
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 595
+        width: 157
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0348abc0b434b5e00800000000000000
+      internalID: 1034494529026819120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 253
+        width: 265
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f1c459ec667995a0800000000000000
+      internalID: -6514045175871520265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_6
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 217
+        width: 416
+        height: 388
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de6b177220ee7e620800000000000000
+      internalID: 2803470986080532205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_7
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 282
+        width: 25
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 926cf73a045bcf430800000000000000
+      internalID: 3818125873328932393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_8
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 265
+        width: 46
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de79f4c41379cb630800000000000000
+      internalID: 3944193611659188205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_9
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 295
+        width: 51
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab8712f7b9b631860800000000000000
+      internalID: 7499456120099010746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_10
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 0
+        width: 290
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6646fcd7404ba1b0800000000000000
+      internalID: -5644347030584801681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_11
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 0
+        width: 192
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 739d8a73ef2834920800000000000000
+      internalID: 2973364207361775927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_12
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 0
+        width: 263
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5d33f03177bf1690800000000000000
+      internalID: -7629177546961896100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons_miscellaneous_13
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 203
+        width: 70
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64abdb36da4a91160800000000000000
+      internalID: 6996804560706452038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      icons_miscellaneous_0: 3825372000443364514
+      icons_miscellaneous_1: -8377473811813364989
+      icons_miscellaneous_10: -5644347030584801681
+      icons_miscellaneous_11: 2973364207361775927
+      icons_miscellaneous_12: -7629177546961896100
+      icons_miscellaneous_13: 6996804560706452038
+      icons_miscellaneous_2: -83084719247467000
+      icons_miscellaneous_3: -1688016079347922783
+      icons_miscellaneous_4: 1034494529026819120
+      icons_miscellaneous_5: -6514045175871520265
+      icons_miscellaneous_6: 2803470986080532205
+      icons_miscellaneous_7: 3818125873328932393
+      icons_miscellaneous_8: 3944193611659188205
+      icons_miscellaneous_9: 7499456120099010746
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

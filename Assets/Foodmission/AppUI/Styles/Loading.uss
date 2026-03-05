@@ -1,0 +1,85 @@
+.loading-root {
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.loading-logo-foodmission {
+    margin-top: 80px;
+    margin-bottom: 40px;
+    -unity-background-scale-mode: scale-to-fit;
+    max-height: none;
+    max-width: 90%;
+    align-self: center;
+
+    translate: 0 -200px; /* Move up for animation */
+    opacity: 0;
+    transition-property: translate, opacity;
+    transition-duration: 0.4s, 0.4s;
+    transition-timing-function: ease-in-out;
+}
+
+.loading-logo-foodmission.visible {
+    translate: 0 0;
+    opacity: 1;
+}
+
+.loading-logo-foodmission.exit {
+    translate: 0 -200px;
+    opacity: 0;
+}
+
+.loading-logo-eu {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    -unity-background-scale-mode: scale-to-fit;
+    max-height: none;
+}
+
+.loading-footer {
+    flex-grow: 0;
+    position: relative;
+    bottom: auto;
+    align-self: center;
+    background-color: rgb(255, 255, 255);
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-content: flex-end;
+    width: 100%;
+    height: auto;
+}
+
+.loading-footer-partners {
+    overflow: visible;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+
+
+
+.loading-container {
+    flex-grow: 1;
+    padding-left: 24px;
+    padding-right: 24px;
+    justify-content: center;
+}
+
+.loading-animation {
+    -unity-background-scale-mode: scale-to-fit;
+    align-self: center;
+    width: auto;
+    height: auto;
+}
+
+.loading-progress {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    height: 4px;
+}
+
+.loading-text {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -unity-text-align: middle-center;
+    color: var(--appui-foregrounds-100);
+    font-size: var(--appui-font-sizes-body-md);
+}

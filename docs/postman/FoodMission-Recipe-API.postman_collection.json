@@ -1,0 +1,123 @@
+{
+  "info": {
+    "_postman_id": "recipe-api-collection",
+    "name": "FoodMission Recipe API",
+    "description": "Recipe endpoints. Set `base_url` to backend (e.g., http://localhost:3000). All routes use `/api/v1`. Auth: `Authorization: Bearer {{jwt_token}}`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Recipe",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mealId\": \"{{meal_id}}\",\n  \"title\": \"Veggie pasta\",\n  \"description\": \"Weeknight dinner\",\n  \"instructions\": \"Boil pasta, mix veggies\",\n  \"prepTime\": 10,\n  \"cookTime\": 15,\n  \"servings\": 2,\n  \"difficulty\": \"easy\",\n  \"tags\": [\"quick\", \"veggie\"],\n  \"allergens\": [\"gluten\"],\n  \"sustainabilityScore\": 0.6\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/recipes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "recipes"]
+        },
+        "description": "Create a recipe linked to a meal (auth required)."
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const body = pm.response.json();",
+              "  pm.environment.set('recipe_id', body.id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "List Recipes",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/recipes?page=1&limit=10&mealType=MEAT&tags=quick&allergens=gluten&difficulty=easy&search=pasta",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "recipes"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" },
+            { "key": "mealType", "value": "MEAT" },
+            { "key": "tags", "value": "quick" },
+            { "key": "allergens", "value": "gluten" },
+            { "key": "difficulty", "value": "easy" },
+            { "key": "search", "value": "pasta" }
+          ]
+        },
+        "description": "List recipes with filters."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Recipe by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/recipes/{{recipe_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "recipes", "{{recipe_id}}"]
+        },
+        "description": "Fetch a recipe by id."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Recipe",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated recipe title\",\n  \"tags\": [\"updated\", \"quick\"]\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/recipes/{{recipe_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "recipes", "{{recipe_id}}"]
+        },
+        "description": "Update a recipe."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Recipe",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/recipes/{{recipe_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "recipes", "{{recipe_id}}"]
+        },
+        "description": "Delete a recipe."
+      },
+      "response": []
+    }
+  ]
+}

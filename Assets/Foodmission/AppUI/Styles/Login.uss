@@ -1,0 +1,14 @@
+.login-root {
+    flex-grow: 1;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.login-logo-foodmission {
+    margin-top: 80px;
+    margin-bottom: 40px;
+    -unity-background-scale-mode: scale-to-fit;
+    max-height: none;
+    max-width: 90%;
+    align-self: center;
+}
