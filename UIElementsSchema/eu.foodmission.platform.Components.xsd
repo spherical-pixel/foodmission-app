@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:appui="Unity.AppUI.UI" xmlns:AddressablesGUI="UnityEditor.AddressableAssets.GUIElements" xmlns:editor="UnityEditor.UIElements" xmlns:nav="Unity.AppUI.Navigation" xmlns:engine="UnityEngine.UIElements" xmlns="UnityEditor.Accessibility" elementFormDefault="qualified" targetNamespace="eu.foodmission.platform.Components" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:simpleType name="UISpriteAnimation_scale-mode_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="StretchToFill" />
+      <xs:enumeration value="ScaleAndCrop" />
+      <xs:enumeration value="ScaleToFit" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UISpriteAnimation_cycle_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Loop" />
+      <xs:enumeration value="Reverse" />
+      <xs:enumeration value="PingPong" />
+      <xs:enumeration value="OneShot" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="UISpriteAnimationType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="name" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
+        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
+        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
+        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
+        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
+        <xs:attribute default="false" name="focusable" type="xs:boolean" use="optional" />
+        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
+        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
+        <xs:attribute default="" name="source" type="xs:string" use="optional" />
+        <xs:attribute default="RGBA(1.000, 1.000, 1.000, 1.000)" name="tint-color" type="xs:string" use="optional" />
+        <xs:attribute default="ScaleToFit" name="scale-mode" xmlns:q1="eu.foodmission.platform.Components" type="q1:UISpriteAnimation_scale-mode_Type" use="optional" />
+        <xs:attribute default="(x:0.00, y:0.00, width:1.00, height:1.00)" name="uv" type="xs:string" use="optional" />
+        <xs:attribute default="0" name="start-delay" type="xs:float" use="optional" />
+        <xs:attribute default="30" name="fps" type="xs:int" use="optional" />
+        <xs:attribute default="Loop" name="cycle" xmlns:q2="eu.foodmission.platform.Components" type="q2:UISpriteAnimation_cycle_Type" use="optional" />
+        <xs:attribute default="UnityEngine.Sprite[]" name="sprites" type="xs:string" use="optional" />
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UISpriteAnimation" substitutionGroup="engine:VisualElement" xmlns:q3="eu.foodmission.platform.Components" type="q3:UISpriteAnimationType" />
+</xs:schema>
