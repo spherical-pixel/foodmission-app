@@ -88,8 +88,7 @@ Assets/Foodmission/
 │   ├── Core/           # AppBuilder, App classes, DI
 │   ├── Models/         # State records (AppState, etc.)
 │   ├── Services/       # Interfaces and implementations
-│   ├── Screens/        # Navigation screens (per-screen folders)
-│   ├── ViewModels/     # MVVM ViewModels
+│   ├── Screens/        # Navigation screens and ViewModels (per-screen folders)
 │   ├── Store/          # Redux actions and reducers
 │   └── Navigation/     # Generated navigation graph
 ├── AppUI/              # UXML templates, USS styles
