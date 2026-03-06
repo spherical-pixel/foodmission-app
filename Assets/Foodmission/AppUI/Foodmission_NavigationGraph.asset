@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
   m_Name: Home
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
-  m_Position: {x: 1605, y: 598}
+  m_Position: {x: 1606, y: 598}
   m_Guid: 2bd46e9599a2c4d81abf7c47803f76cd
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
@@ -29,9 +29,9 @@ MonoBehaviour:
         m_ScreenType: eu.foodmission.platform.HomeScreen, Foodmission, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
-        m_ShowAppBar: 1
+        m_ShowAppBar: 0
         m_ShowBackButton: 0
-        m_ShowDrawer: 1
+        m_ShowDrawer: 0
         m_ShowNavigationRail: 0
 --- !u!114 &-8470440507793497497
 MonoBehaviour:

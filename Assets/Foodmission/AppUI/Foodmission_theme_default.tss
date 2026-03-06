@@ -4,7 +4,7 @@
 
 @import url("Foodmission_Global_Styles.uss");
 
-@import url("Foodmission_AppUIIcons.uss");
 @import url("AppUIIcons.uss");
+@import url("Foodmission_AppUIIcons.uss");
 
 VisualElement {}

@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 65ad2b67dc2624e339cb33d55688e974
+guid: 817e3e55b39594be3a418918ae68155c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4793025923520398299
-    second: icon-notifications_0
+      213: 4056412823519602305
+    second: icon-meal-log_0
+  - first:
+      213: -5179212297814764679
+    second: icon-meal-log_1
+  - first:
+      213: -3437409828511290683
+    second: icon-meal-log_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,16 +115,51 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: icon-notifications_0
+      name: icon-meal-log_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 94
+        width: 14
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 186a930a8f54b4830800000000000000
+      internalID: 4056412823519602305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon-meal-log_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 0
+        width: 93
         height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -128,8 +169,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd30ca2deaf348240800000000000000
-      internalID: 4793025923520398299
+      spriteID: 9739a641bddbf18b0800000000000000
+      internalID: -5179212297814764679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon-meal-log_2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 25
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cae52029fddb40d0800000000000000
+      internalID: -3437409828511290683
       vertices: []
       indices: 
       edges: []
@@ -148,7 +211,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      icon-notifications_0: 4793025923520398299
+      icon-meal-log_0: 4056412823519602305
+      icon-meal-log_1: -5179212297814764679
+      icon-meal-log_2: -3437409828511290683
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

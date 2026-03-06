@@ -32,10 +32,11 @@
     --appui-icon-warning-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/Warning.png");
     --appui-icon-x-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/X.png");
 /* Additional icons */
-    --appui-icon-home-regular: url("project:/Assets/Foodmission/graphics/png/icon-home.png");
-    --appui-icon-meal-log-regular: url("project:/Assets/Foodmission/graphics/png/icon-meal-log.png");
-    --appui-icon-menu-regular: url("project:/Assets/Foodmission/graphics/png/icon-menu.png");
-    --appui-icon-notifications-regular: url("project:/Assets/Foodmission/graphics/png/icon-notifications.png");
+    --appui-icon-fm-home-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-home.png");
+    --appui-icon-fm-meal-log-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-meal-log.png");
+    --appui-icon-fm-menu-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-menu.png");
+    --appui-icon-fm-notifications-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-notifications.png");
+    --appui-icon-fm-avatar-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar.png");
 }
 
 .appui-icon--calendar--regular {
@@ -150,19 +151,23 @@
     --unity-image: var(--appui-icon-x-regular);
 }
 
-.appui-icon--home--regular {
-    --unity-image: var(--appui-icon-icon-home-regular);
+.appui-icon--fm-home--regular {
+    --unity-image: var(--appui-icon-fm-home-regular);
 }
 
-.appui-icon--meal-log--regular {
-    --unity-image: var(--appui-icon-icon-meal-log-regular);
+.appui-icon--fm-meal-log--regular {
+    --unity-image: var(--appui-icon-fm-meal-log-regular);
 }
 
-.appui-icon--menu--regular {
-    --unity-image: var(--appui-icon-icon-menu-regular);
+.appui-icon--fm-menu--regular {
+    --unity-image: var(--appui-icon-fm-menu-regular);
 }
 
-.appui-icon--notifications--regular {
-    --unity-image: var(--appui-icon-icon-notifications-regular);
+.appui-icon--fm-notifications--regular {
+    --unity-image: var(--appui-icon-fm-notifications-regular);
+}
+
+.appui-icon--fm-avatar--regular {
+    --unity-image: var(--appui-icon-fm-avatar-regular);
 }
 

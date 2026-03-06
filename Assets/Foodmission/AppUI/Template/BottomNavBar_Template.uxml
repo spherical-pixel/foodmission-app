@@ -1,11 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Theme.uss?fileID=7433441132597879392&amp;guid=827025de60b2746fba86343352934c22&amp;type=3#Foodmission_Theme"/>
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_AppUIIcons.uss?fileID=7433441132597879392&amp;guid=f7ec1fc49fc5e477793636b709231cc2&amp;type=3#Foodmission_AppUIIcons"/>
-    <Unity.AppUI.UI.BottomNavBar>
-        <Unity.AppUI.UI.BottomNavBarItem icon="fm-home" label="HOME" is-selected="false"/>
-        <Unity.AppUI.UI.BottomNavBarItem icon="fm-menu" label="MENU"/>
-        <Unity.AppUI.UI.BottomNavBarItem icon="fm-notifications" label="NOTIFICATIONS"/>
-        <Unity.AppUI.UI.BottomNavBarItem icon="fm-meal-log" label="MEAL LOG"/>
-        <Unity.AppUI.UI.BottomNavBarItem icon="fm-profile" label="PROFILE" class="no-tint" style="display: flex;"/>
-    </Unity.AppUI.UI.BottomNavBar>
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" class="appui appui--en appui--medium appui--light appui--ltr" style="flex-grow: 1;">
+        <Unity.AppUI.UI.BottomNavBar>
+            <Unity.AppUI.UI.BottomNavBarItem icon="fm-home" label="HOME" is-selected="false"/>
+            <Unity.AppUI.UI.BottomNavBarItem icon="caret-down" label="MENU"/>
+            <Unity.AppUI.UI.BottomNavBarItem icon="fm-notifications" label="NOTIFICATIONS"/>
+            <Unity.AppUI.UI.BottomNavBarItem icon="fm-meal-log" label="MEAL LOG"/>
+            <Unity.AppUI.UI.BottomNavBarItem icon="fm-avatar" label="PROFILE" class="no-tint" style="display: flex;"/>
+        </Unity.AppUI.UI.BottomNavBar>
+    </ui:VisualElement>
 </ui:UXML>

@@ -49,16 +49,13 @@
     background-image: url("project://database/Assets/Foodmission/graphics/icons_miscellaneous.png?fileID=2800000&guid=63b9996e727774f16a08dde171cdadd8&type=3#icons_miscellaneous");
     background-repeat: repeat;
     background-size: 256px 256px;
-    animation-name: scroll-background;
-    animation-duration: 5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
 }
 
 .appui-bottom-navbar {
     min-height: 223px;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: transparent;
     background-image: url("project://database/Assets/Foodmission/graphics/png/NavBarBack.png?fileID=21300000&guid=f15965a97feed4bb0be052f64bbcb614&type=3#NavBarBack");
+    padding: 40px 40px 6px 40px;
 }
 
 .appui-bottom-navbar-item {
@@ -91,7 +88,7 @@
 
 .appui-bottom-navbar-item.no-tint .appui-icon--primary,
 .appui-bottom-navbar-item.no-tint.is-selected .appui-icon--primary {
-    --unity-image-tint-color: rgb(255, 255, 255);
+    --unity-image-tint-color: rgb(255,255,255);
 }
 
 .appui-bottom-navbar-item .appui-bottom-navbar-item__label,
