@@ -39,6 +39,34 @@ MonoBehaviour:
     m_Key: LOADING
     m_Metadata:
       m_Items: []
+  - m_Id: 18113535941795840
+    m_Key: LOADING_ASSETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18114763199340544
+    m_Key: CHECK_AUTH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417184911908864
+    m_Key: LOGIN_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417602513592320
+    m_Key: USERNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417848396275712
+    m_Key: USERNAME_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418052671463424
+    m_Key: PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418114709413888
+    m_Key: PASSWORD_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

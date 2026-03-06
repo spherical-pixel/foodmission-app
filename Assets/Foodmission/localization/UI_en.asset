@@ -42,6 +42,34 @@ MonoBehaviour:
     m_Localized: Loading
     m_Metadata:
       m_Items: []
+  - m_Id: 18113535941795840
+    m_Localized: Loading Assets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18114763199340544
+    m_Localized: Checking Authentication
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417184911908864
+    m_Localized: 'Play, learn, and eat better: together we feed the change.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417602513592320
+    m_Localized: Username
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417848396275712
+    m_Localized: Your username
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418052671463424
+    m_Localized: Password
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418114709413888
+    m_Localized: Your password
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
