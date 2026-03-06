@@ -1,5 +1,12 @@
 using System;
 using Unity.AppUI.Redux;
+using UnityEngine;
+
+#if UNITY_EDITOR
+using Unity.AppUI.Redux.DevTools;
+#endif
+
+
 
 namespace eu.foodmission.platform
 {
@@ -53,8 +60,21 @@ namespace eu.foodmission.platform
                 }
             );
 
-            // Create store with single slice
+#if UNITY_EDITOR
+            // Create store with DevTools enhancer in editor
+            var enhancerConfig = new DefaultEnhancerConfiguration
+            {
+                devTools = new DevToolsConfiguration
+                {
+                    enabled = true,
+                    name = "Foodmission Store"
+                }
+            };
+            var enhancer = StoreFactory.DefaultEnhancer<PartitionedState>(enhancerConfig);
+            store = StoreFactory.CreateStore(new[] { appSlice }, enhancer);
+#else
             store = StoreFactory.CreateStore(new[] { appSlice });
+#endif
 
             // Subscribe to AppState changes for auto-save
             _appStateSubscription = store.Subscribe(
