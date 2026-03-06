@@ -49,6 +49,7 @@ namespace eu.foodmission.platform
             
 
             return isAuthenticated ? Actions.loading_to_home : Actions.loading_to_auth;
+            //return Actions.loading_to_home;
         }
     }
 }

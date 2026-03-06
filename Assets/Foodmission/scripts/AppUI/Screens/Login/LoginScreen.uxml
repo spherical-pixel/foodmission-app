@@ -4,20 +4,34 @@
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" class="login-root appui appui--en appui--medium appui--light appui--ltr" style="width: 100%; height: 100%; min-width: 100%; min-height: 100%; max-width: 100%; max-height: 100%;">
         <ui:Image name="logofoodmission" source="project://database/Assets/Foodmission/graphics/png/logo-foodmission-white.png?fileID=21300000&amp;guid=bab1e9be189fa4421b7615dfe330b1f6&amp;type=3#logo-foodmission-white" class="login-logo-foodmission" style="margin-top: 180px;"/>
         <ui:VisualElement name="group" style="flex-grow: 0; background-color: rgba(255, 255, 255, 0.26); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; margin-left: 50px; margin-right: 50px; padding-top: 25px; padding-left: 25px; padding-right: 25px; padding-bottom: 25px; margin-top: 50px; margin-bottom: 50px; -unity-background-image-tint-color: rgba(255, 255, 255, 0.2);">
-            <appui:Heading text="Play, learn, and eat better: together we feed the change." size="XXL" primary="true" name="Heading" class="heading-wrap" style="flex-shrink: 1; flex-grow: 1;"/>
-            <appui:Heading text="Username" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field"/>
+            <appui:Heading text="Play, learn, and eat better: together we feed the change." size="XXL" primary="true" name="Heading" selectable="true" focusable="true" class="heading-wrap" style="flex-shrink: 1; flex-grow: 1;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18417184911908864)"/>
+                </Bindings>
+            </appui:Heading>
+            <appui:Heading text="Username" size="L" primary="true" name="Heading_username" selectable="true" focusable="true" class="heading-wrap heading_field">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18417602513592320)"/>
+                </Bindings>
+            </appui:Heading>
             <appui:TextField name="username-field" label="Usuario" placeholder="Tu nombre de usuario" class="auth-field item-field">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="Username" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" binding-mode="ToSource"/>
+                    <UnityEngine.Localization.LocalizedString property="placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18417848396275712)"/>
                 </Bindings>
             </appui:TextField>
-            <appui:Heading text="Password" size="L" primary="true" name="Heading_username" class="heading-wrap heading_field"/>
+            <appui:Heading text="Password" size="L" primary="true" name="Heading_password" selectable="true" focusable="true" class="heading-wrap heading_field">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18418052671463424)"/>
+                </Bindings>
+            </appui:Heading>
             <appui:TextField name="password-field" label="Contraseña" placeholder="********" is-password="true" class="auth-field item-field">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="Password" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" binding-mode="ToSource"/>
+                    <UnityEngine.Localization.LocalizedString property="placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18418114709413888)"/>
                 </Bindings>
             </appui:TextField>
-            <appui:Button name="login-button" text="Entrar" variant="Default" title="Sign in" trailing-icon="caret-right" class="auth-button" style="margin-top: 40px; margin-bottom: 20px;"/>
+            <appui:Button name="login-button" text="Entrar" title="Sign in" trailing-icon="caret-right" size="M" class="auth-button" style="margin-top: 40px; margin-bottom: 20px;"/>
             <appui:Text text="Forgot your password?" name="forgot-password" style="-unity-font-style: bold; -unity-text-align: middle-center; margin-top: 40px; margin-bottom: 40px;"/>
             <appui:Text text="Don&apos;t have an account? Sign up" name="register" style="-unity-font-style: bold; -unity-text-align: middle-center; margin-top: 40px; margin-bottom: 40px;"/>
         </ui:VisualElement>

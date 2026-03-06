@@ -65,10 +65,8 @@ namespace eu.foodmission.platform
 
         private async Task ExitAnimation(string navigationAction)
         {
-            //contentContainer.dataSource = null;
-            //contentContainer.Unbind();
-            // _logo.RemoveFromClassList("visible");
-            // _logo.AddToClassList("exit");
+            _logo.RemoveFromClassList("visible");
+            _logo.AddToClassList("exit");
 
             await Task.Delay(500);
             _navController.Navigate(navigationAction);
