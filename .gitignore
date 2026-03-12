@@ -44,3 +44,4 @@ sysinfo.txt
 fmod_editor.log
 .idea/
 ProjectSettings/Packages/com.unity.probuilder/Settings.json
+.utmp/
