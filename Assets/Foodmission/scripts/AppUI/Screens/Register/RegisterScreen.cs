@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using eu.foodmission.platform.Components;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
@@ -13,8 +18,8 @@ namespace eu.foodmission.platform
     class RegisterScreen : NavigationScreenBase<RegisterViewModel>
     {
         private Unity.AppUI.UI.Button _registerButton;
-        private Unity.AppUI.UI.Text _loginText;
-        private Dropdown _ageDropdown;
+        private FormFieldItemDropDownField _countryDropdown;
+        private FormFieldItemDropDownField _regionDropdown;
 
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
@@ -29,40 +34,108 @@ namespace eu.foodmission.platform
             RegisterManualEvents();
         }
 
+        
+
         /// <summary>
         /// Cache UI elements for later use.
         /// </summary>
         private void CacheUIElements()
         {
             _registerButton = contentContainer.Q<Unity.AppUI.UI.Button>("register-button");
-            _loginText = contentContainer.Q<Unity.AppUI.UI.Text>("goto-login-button");
-            _ageDropdown = contentContainer.Q<Dropdown>("age-dropdown");
+            _countryDropdown = contentContainer.Q<FormFieldItemDropDownField>("country");
+            _regionDropdown = contentContainer.Q<FormFieldItemDropDownField>("region");
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
 
-            // Configure age dropdown options
-            if (_ageDropdown != null && _viewModel != null)
-            {
-                // Set the source items (options)
-                _ageDropdown.sourceItems = _viewModel.AgeOptions;
+            if (_viewModel == null) return;
 
-                // Configure how to display each item
-                _ageDropdown.bindItem = (item, index) =>
+            _viewModel.PropertyChanged += OnPropertyChanged;
+            
+            // Configure country dropdown
+            if (_countryDropdown != null)
+            {
+                _countryDropdown.Dropdown.sourceItems = _viewModel.CountryOptions;
+                Debug.Log("Country options set successfully. -> " + _viewModel.CountryOptions.Count);
+                _countryDropdown.Dropdown.bindItem = (item, index) =>
                 {
-                    item.label = _viewModel.AgeOptions[index];
-                    item.icon = null; 
+                    item.label = _viewModel.CountryOptions[index];
+                    item.icon = null;
                 };
 
-                // Set the selected value by finding its index
-                var selectedIndex = _viewModel.AgeOptions.IndexOf(_viewModel.SelectedAge);
-                if (selectedIndex >= 0)
+                // Set initial value if available
+                if (_viewModel.SelectedCountryIndex >= 0)
                 {
-                    _ageDropdown.SetValueWithoutNotify(new[] { selectedIndex });
+                    _countryDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedCountryIndex });
+                    UpdateRegionDropdown();
                 }
+
+                // Subscribe to value changes using RegisterValueChangedCallback
+                _countryDropdown.Dropdown.RegisterValueChangedCallback(OnCountryChanged);
             }
+
+            // Configure region dropdown
+            if (_regionDropdown != null)
+            {
+                _regionDropdown.Dropdown.RegisterValueChangedCallback(OnRegionChanged);
+            }            
+        }
+
+        /// <summary>
+        /// Updates the region dropdown based on selected country
+        /// </summary>
+        private void UpdateRegionDropdown()
+        {
+            if (_regionDropdown == null || _viewModel == null)
+                return;
+
+            _viewModel.UpdateRegionsForSelectedCountry();
+
+            _regionDropdown.Dropdown.sourceItems = _viewModel.RegionOptions;
+            _regionDropdown.Dropdown.bindItem = (item, index) =>
+            {
+                item.label = _viewModel.RegionOptions[index];
+                item.icon = null;
+            };
+
+            // Set value to first item or clear
+            if (_viewModel.SelectedRegionIndex >= 0)
+            {
+                _regionDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedRegionIndex });
+            }
+            else
+            {
+                _regionDropdown.Dropdown.SetValueWithoutNotify(new int[0]);
+            }
+        }
+
+        /// <summary>
+        /// Handles country selection change
+        /// </summary>
+        private void OnCountryChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            var value = evt.newValue?.ToArray();
+            Debug.LogError($"[RegisterScreen] OnCountryChanged called with: {value?.Length} items");
+            if (_viewModel == null || value == null || value.Length == 0)
+                return;
+
+            _viewModel.SelectedCountryIndex = value[0];
+            UpdateRegionDropdown();
+        }
+
+        /// <summary>
+        /// Handles region selection change
+        /// </summary>
+        private void OnRegionChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            var value = evt.newValue?.ToArray();
+            Debug.LogError($"[RegisterScreen] OnRegionChanged called with: {value?.Length} items");
+            if (_viewModel == null || value == null || value.Length == 0)
+                return;
+
+            _viewModel.SelectedRegionIndex = value[0];
         }
 
         /// <summary>
@@ -71,10 +144,9 @@ namespace eu.foodmission.platform
         private void RegisterManualEvents()
         {
             if (_registerButton != null)
+            {
                 _registerButton.clicked += OnRegisterClicked;
-
-            if (_loginText != null)
-                _loginText.RegisterCallback<ClickEvent>(OnLoginClicked);
+            }            
         }
 
         /// <summary>
@@ -83,19 +155,33 @@ namespace eu.foodmission.platform
         private void UnregisterManualEvents()
         {
             if (_registerButton != null)
+            {
                 _registerButton.clicked -= OnRegisterClicked;
+            }
 
-            if (_loginText != null)
-                _loginText.UnregisterCallback<ClickEvent>(OnLoginClicked);
         }
 
         protected override void OnViewModelUnbinding()
         {
+            _viewModel.PropertyChanged -= OnPropertyChanged;
+
             UnregisterManualEvents();
 
+            // Unregister dropdown callbacks
+            if (_countryDropdown != null)
+            {
+                _countryDropdown.Dropdown.UnregisterValueChangedCallback(OnCountryChanged);
+            }
+            if (_regionDropdown != null)
+            {
+                _regionDropdown.Dropdown.UnregisterValueChangedCallback(OnRegionChanged);
+            }
+
             _registerButton = null;
-            _loginText = null;
-            _ageDropdown = null;
+            _countryDropdown = null;
+            _regionDropdown = null;
+
+
 
             base.OnViewModelUnbinding();
         }
@@ -105,10 +191,21 @@ namespace eu.foodmission.platform
             _viewModel?.Register();
         }
 
-        private void OnLoginClicked(ClickEvent evt)
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Debug.Log($"[{GetType().Name}] Navigate back to login");
-            _navController.Navigate(Destinations.login);
+            if( sender == _viewModel)
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(RegisterViewModel.Username):
+                        _viewModel.ValidateUsername();
+                        break;
+                    case nameof(RegisterViewModel.Email):
+                        _viewModel.ValidateEmail();
+                        break;
+
+                }
+            }
         }
 
         

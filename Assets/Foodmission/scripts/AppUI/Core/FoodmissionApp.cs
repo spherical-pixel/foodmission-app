@@ -24,6 +24,11 @@ namespace eu.foodmission.platform
         public FoodmissionApp()
         {
             Debug.Log($"[{GetType().Name}] FoodmissionApp");
+
+#if UNITY_ANDROID || UNITY_IOS
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 60;
+#endif
         }
 
         public override void InitializeComponent()

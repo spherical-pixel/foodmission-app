@@ -70,6 +70,38 @@ MonoBehaviour:
     m_Localized: "Tu contrase\xF1a"
     m_Metadata:
       m_Items: []
+  - m_Id: 22812687661522944
+    m_Localized: "Correo electr\xF3nico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22812856394178560
+    m_Localized: "Tu correo electr\xF3nico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22815397693612032
+    m_Localized: "A\xF1o de nacimiento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819676332482560
+    m_Localized: "Pa\xEDs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819860558897152
+    m_Localized: "Elige tu pa\xEDs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820314747494400
+    m_Localized: "Regi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820425670057984
+    m_Localized: "Elige tu regi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820717341958144
+    m_Localized: "C\xF3digo postal"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

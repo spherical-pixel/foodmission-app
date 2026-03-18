@@ -31,7 +31,7 @@
                     <UnityEngine.Localization.LocalizedString property="placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18418114709413888)"/>
                 </Bindings>
             </appui:TextField>
-            <appui:Button name="login-button" text="Entrar" title="Sign in" trailing-icon="caret-right" size="M" class="auth-button" style="margin-top: 40px; margin-bottom: 20px;"/>
+            <appui:Button name="login-button" text="Entrar" title="Sign in" trailing-icon="caret-right" size="M" class="auth-button"/>
             <appui:Text text="Forgot your password?" name="forgot-password" style="-unity-font-style: bold; -unity-text-align: middle-center; margin-top: 40px; margin-bottom: 40px;"/>
             <appui:Text text="Don&apos;t have an account? Sign up" name="register" style="-unity-font-style: bold; -unity-text-align: middle-center; margin-top: 40px; margin-bottom: 40px;"/>
         </ui:VisualElement>

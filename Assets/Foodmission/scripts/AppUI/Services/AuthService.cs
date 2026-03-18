@@ -146,20 +146,46 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(bool success, string userId, string error)> RegisterAsync(string username, string email, string password)
+        public async Task<(bool success, string userId, string error)> RegisterAsync(
+            string username,
+            string email,
+            string password,
+            int yearOfBirth = 0,
+            string country = null,
+            string region = null,
+            string zip = null)
         {
             _storeService.store.Dispatch(AppActions.registerRequest.Invoke());
 
             try
             {
-                RegisterRequest registerData = new RegisterRequest
-                {
-                    username = username,
-                    email = email,
-                    password = password
-                };
+                // Build JSON manually to only include fields with values
+                var jsonBuilder = new System.Text.StringBuilder();
+                jsonBuilder.Append("{");
+                jsonBuilder.AppendFormat("\"username\":\"{0}\",", EscapeJson(username));
+                jsonBuilder.AppendFormat("\"email\":\"{0}\",", EscapeJson(email));
+                jsonBuilder.AppendFormat("\"password\":\"{0}\"", EscapeJson(password));
 
-                string json = JsonUtility.ToJson(registerData);
+                if (yearOfBirth > 0)
+                {
+                    jsonBuilder.AppendFormat(",\"yearOfBirth\":{0}", yearOfBirth);
+                }
+                if (!string.IsNullOrEmpty(country))
+                {
+                    jsonBuilder.AppendFormat(",\"country\":\"{0}\"", EscapeJson(country));
+                }
+                if (!string.IsNullOrEmpty(region))
+                {
+                    jsonBuilder.AppendFormat(",\"region\":\"{0}\"", EscapeJson(region));
+                }
+                if (!string.IsNullOrEmpty(zip))
+                {
+                    jsonBuilder.AppendFormat(",\"zip\":\"{0}\"", EscapeJson(zip));
+                }
+
+                jsonBuilder.Append("}");
+                string json = jsonBuilder.ToString();
+
                 string url = $"{_baseUrl}/api/v1/auth/register";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
@@ -181,14 +207,13 @@ namespace eu.foodmission.platform
                 {
                     string errorMessage = request.responseCode switch
                     {
-                        // TODO: Add to localization table
                         400 => "Datos de registro inválidos",
                         409 => "El usuario ya existe",
                         500 => "Error del servidor",
                         _ => $"Error de conexión: {request.error}"
                     };
 
-                    Debug.LogError($"[{GetType().Name}] Register failed: {errorMessage}");
+                    Debug.LogError($"[{GetType().Name}] Register failed: {errorMessage} (Code: {request.responseCode})");
                     _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMessage));
                     return (false, null, errorMessage);
                 }
@@ -196,45 +221,58 @@ namespace eu.foodmission.platform
                 string responseJson = request.downloadHandler.text;
                 Debug.Log($"[{GetType().Name}] Register response: {responseJson}");
 
-                LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseJson);
+                RegisterResponse response = JsonUtility.FromJson<RegisterResponse>(responseJson);
 
-                if (string.IsNullOrEmpty(response?.access_token))
+                if (response?.createdUser == null || string.IsNullOrEmpty(response.createdUser.id))
                 {
-                    // TODO: Add to localization table
-                    string error = "Respuesta inválida del servidor";
-                    _storeService.store.Dispatch(AppActions.registerFailure.Invoke(error));
-                    return (false, null, error);
+                    string errorMsg = "Respuesta inválida del servidor";
+                    _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMsg));
+                    return (false, null, errorMsg);
                 }
 
-                // Calculate expiration timestamp
-                long expiresAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + response.expires_in;
+                // Register successful - dispatch success
+                _storeService.store.Dispatch(AppActions.registerSuccess.Invoke(response.createdUser.id));
+                Debug.Log($"[{GetType().Name}] Register successful for user: {response.createdUser.username}");
 
-                // Create payload with registered user data 
-                AppActions.LoginPayload payload = new AppActions.LoginPayload(
-                    userId: response.user.id,
-                    email: response.user.email,
-                    // firstName: response.user.firstName,
-                    // lastName: response.user.lastName,
-                    accessToken: response.access_token,
-                    tokenType: response.token_type,
-                    expiresAt: expiresAt
-                );
+                // Auto-login after successful registration
+                Debug.Log($"[{GetType().Name}] Attempting auto-login for: {username}");
+                var loginResult = await LoginAsync(username, password);
 
-                // Dispatch registerSuccess and loginSuccess
-                _storeService.store.Dispatch(AppActions.registerSuccess.Invoke(response.user.id));
-                _storeService.store.Dispatch(AppActions.loginSuccess.Invoke(payload));
-
-                Debug.Log($"[{GetType().Name}] Register successful for user: {response.user.email}");
-                return (true, response.user.id, null);
+                if (loginResult.success)
+                {
+                    Debug.Log($"[{GetType().Name}] Auto-login successful after registration");
+                    return (true, loginResult.userId, null);
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Auto-login failed after registration: {loginResult.error}");
+                    // Registration succeeded but auto-login failed - still return success
+                    return (true, response.createdUser.id, null);
+                }
             }
             catch (Exception ex)
             {
-                // TODO: Add to localization table
                 string error = $"Error inesperado: {ex.Message}";
                 Debug.LogError($"[{GetType().Name}] Register exception: {ex}");
                 _storeService.store.Dispatch(AppActions.registerFailure.Invoke(error));
                 return (false, null, error);
             }
+        }
+
+        /// <summary>
+        /// Escapes special characters for JSON strings
+        /// </summary>
+        private string EscapeJson(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return str;
+
+            return str
+                .Replace("\\", "\\\\")
+                .Replace("\"", "\\\"")
+                .Replace("\n", "\\n")
+                .Replace("\r", "\\r")
+                .Replace("\t", "\\t");
         }
 
         public void Logout()

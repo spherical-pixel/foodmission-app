@@ -23,6 +23,43 @@ namespace eu.foodmission.platform
         public string username;
         public string email;
         public string password;
+        public int yearOfBirth;
+        public string country;
+        public string region;
+        public string zip;
+    }
+
+    /// <summary>
+    /// API Register response
+    /// </summary>
+    [Serializable]
+    public class RegisterResponse
+    {
+        public KeycloakUserData createdUser;
+        public LocalUserData localUser;
+    }
+
+    /// <summary>
+    /// Keycloak user data in register response
+    /// </summary>
+    [Serializable]
+    public class KeycloakUserData
+    {
+        public string id;
+        public string username;
+        public string email;
+    }
+
+    /// <summary>
+    /// Local user data in register response
+    /// </summary>
+    [Serializable]
+    public class LocalUserData
+    {
+        public string id;
+        public string email;
+        public string username;
+        public string keycloakId;
     }
 
     // ==================== Responses ====================

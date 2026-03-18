@@ -70,6 +70,38 @@ MonoBehaviour:
     m_Localized: Your password
     m_Metadata:
       m_Items: []
+  - m_Id: 22812687661522944
+    m_Localized: Email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22812856394178560
+    m_Localized: Your email
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22815397693612032
+    m_Localized: Birth year
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819676332482560
+    m_Localized: Country
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819860558897152
+    m_Localized: Select your country
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820314747494400
+    m_Localized: Region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820425670057984
+    m_Localized: Select your region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820717341958144
+    m_Localized: Postal code
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

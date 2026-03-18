@@ -6,7 +6,14 @@ namespace eu.foodmission.platform
     {
         Task<bool> CheckSessionAsync();
         Task<(bool success, string userId, string error)> LoginAsync(string username, string password);
-        Task<(bool success, string userId, string error)> RegisterAsync(string username, string email, string password);
+        Task<(bool success, string userId, string error)> RegisterAsync(
+            string username,
+            string email,
+            string password,
+            int yearOfBirth = 0,
+            string country = null,
+            string region = null,
+            string zip = null);
         void Logout();
     }
 }

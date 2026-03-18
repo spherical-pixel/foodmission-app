@@ -67,6 +67,38 @@ MonoBehaviour:
     m_Key: PASSWORD_PLACEHOLDER
     m_Metadata:
       m_Items: []
+  - m_Id: 22812687661522944
+    m_Key: EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22812856394178560
+    m_Key: EMAIL_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22815397693612032
+    m_Key: BIRTH_YEAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819676332482560
+    m_Key: COUNTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819860558897152
+    m_Key: COUNTRY_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820314747494400
+    m_Key: REGION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820425670057984
+    m_Key: REGION_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820717341958144
+    m_Key: PO_CODE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

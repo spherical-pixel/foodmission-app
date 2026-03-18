@@ -1,6 +1,8 @@
 using System;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
+using Unity.AppUI.UI;
+using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
 {
