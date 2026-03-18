@@ -1,0 +1,5139 @@
+[
+  {
+    "country_iso": "AT",
+    "country_name_local": "Austria",
+    "flag": "🇦🇹",
+    "regions": [
+      {
+        "region_iso": "AT-5",
+        "region_name_local": "Salzburg"
+      },
+      {
+        "region_iso": "AT-6",
+        "region_name_local": "Steiermark"
+      },
+      {
+        "region_iso": "AT-1",
+        "region_name_local": "Burgenland"
+      },
+      {
+        "region_iso": "AT-7",
+        "region_name_local": "Tirol"
+      },
+      {
+        "region_iso": "AT-2",
+        "region_name_local": "Kärnten"
+      },
+      {
+        "region_iso": "AT-8",
+        "region_name_local": "Vorarlberg"
+      },
+      {
+        "region_iso": "AT-3",
+        "region_name_local": "Niederösterreich"
+      },
+      {
+        "region_iso": "AT-9",
+        "region_name_local": "Wien"
+      },
+      {
+        "region_iso": "AT-4",
+        "region_name_local": "Oberösterreich"
+      }
+    ]
+  },
+  {
+    "country_iso": "BE",
+    "country_name_local": "Belgium",
+    "flag": "🇧🇪",
+    "regions": [
+      {
+        "region_iso": "BE-WHT",
+        "region_name_local": "Hainaut"
+      },
+      {
+        "region_iso": "BE-VLI",
+        "region_name_local": "Limburg"
+      },
+      {
+        "region_iso": "BE-WLG",
+        "region_name_local": "Liège"
+      },
+      {
+        "region_iso": "BE-VOV",
+        "region_name_local": "Oost-Vlaanderen"
+      },
+      {
+        "region_iso": "BE-BRU",
+        "region_name_local": "Bruxelles-Capitale, Région de"
+      },
+      {
+        "region_iso": "BE-WLX",
+        "region_name_local": "Luxembourg"
+      },
+      {
+        "region_iso": "BE-VWV",
+        "region_name_local": "West-Vlaanderen"
+      },
+      {
+        "region_iso": "BE-VAN",
+        "region_name_local": "Antwerpen"
+      },
+      {
+        "region_iso": "BE-WNA",
+        "region_name_local": "Namur"
+      },
+      {
+        "region_iso": "BE-WAL",
+        "region_name_local": "wallonne, Région"
+      },
+      {
+        "region_iso": "BE-VBR",
+        "region_name_local": "Vlaams-Brabant"
+      },
+      {
+        "region_iso": "BE-WBR",
+        "region_name_local": "Brabant wallon"
+      },
+      {
+        "region_iso": "BE-VLG",
+        "region_name_local": "Vlaams Gewest"
+      }
+    ]
+  },
+  {
+    "country_iso": "BG",
+    "country_name_local": "Bulgaria",
+    "flag": "🇧🇬",
+    "regions": [
+      {
+        "region_iso": "BG-13",
+        "region_name_local": "Pazardzhik"
+      },
+      {
+        "region_iso": "BG-14",
+        "region_name_local": "Pernik"
+      },
+      {
+        "region_iso": "BG-15",
+        "region_name_local": "Pleven"
+      },
+      {
+        "region_iso": "BG-16",
+        "region_name_local": "Plovdiv"
+      },
+      {
+        "region_iso": "BG-17",
+        "region_name_local": "Razgrad"
+      },
+      {
+        "region_iso": "BG-18",
+        "region_name_local": "Ruse"
+      },
+      {
+        "region_iso": "BG-19",
+        "region_name_local": "Silistra"
+      },
+      {
+        "region_iso": "BG-20",
+        "region_name_local": "Sliven"
+      },
+      {
+        "region_iso": "BG-21",
+        "region_name_local": "Smolyan"
+      },
+      {
+        "region_iso": "BG-22",
+        "region_name_local": "Sofia (stolitsa)"
+      },
+      {
+        "region_iso": "BG-01",
+        "region_name_local": "Blagoevgrad"
+      },
+      {
+        "region_iso": "BG-23",
+        "region_name_local": "Sofia"
+      },
+      {
+        "region_iso": "BG-02",
+        "region_name_local": "Burgas"
+      },
+      {
+        "region_iso": "BG-24",
+        "region_name_local": "Stara Zagora"
+      },
+      {
+        "region_iso": "BG-03",
+        "region_name_local": "Varna"
+      },
+      {
+        "region_iso": "BG-25",
+        "region_name_local": "Targovishte"
+      },
+      {
+        "region_iso": "BG-04",
+        "region_name_local": "Veliko Tarnovo"
+      },
+      {
+        "region_iso": "BG-26",
+        "region_name_local": "Haskovo"
+      },
+      {
+        "region_iso": "BG-05",
+        "region_name_local": "Vidin"
+      },
+      {
+        "region_iso": "BG-27",
+        "region_name_local": "Shumen"
+      },
+      {
+        "region_iso": "BG-06",
+        "region_name_local": "Vratsa"
+      },
+      {
+        "region_iso": "BG-28",
+        "region_name_local": "Yambol"
+      },
+      {
+        "region_iso": "BG-07",
+        "region_name_local": "Gabrovo"
+      },
+      {
+        "region_iso": "BG-08",
+        "region_name_local": "Dobrich"
+      },
+      {
+        "region_iso": "BG-09",
+        "region_name_local": "Kardzhali"
+      },
+      {
+        "region_iso": "BG-10",
+        "region_name_local": "Kyustendil"
+      },
+      {
+        "region_iso": "BG-11",
+        "region_name_local": "Lovech"
+      },
+      {
+        "region_iso": "BG-12",
+        "region_name_local": "Montana"
+      }
+    ]
+  },
+  {
+    "country_iso": "HR",
+    "country_name_local": "Croatia",
+    "flag": "🇭🇷",
+    "regions": [
+      {
+        "region_iso": "HR-11",
+        "region_name_local": "Požeško-slavonska županija"
+      },
+      {
+        "region_iso": "HR-12",
+        "region_name_local": "Brodsko-posavska županija"
+      },
+      {
+        "region_iso": "HR-13",
+        "region_name_local": "Zadarska županija"
+      },
+      {
+        "region_iso": "HR-14",
+        "region_name_local": "Osječko-baranjska županija"
+      },
+      {
+        "region_iso": "HR-15",
+        "region_name_local": "Šibensko-kninska županija"
+      },
+      {
+        "region_iso": "HR-16",
+        "region_name_local": "Vukovarsko-srijemska županija"
+      },
+      {
+        "region_iso": "HR-17",
+        "region_name_local": "Splitsko-dalmatinska županija"
+      },
+      {
+        "region_iso": "HR-18",
+        "region_name_local": "Istarska županija"
+      },
+      {
+        "region_iso": "HR-19",
+        "region_name_local": "Dubrovačko-neretvanska županija"
+      },
+      {
+        "region_iso": "HR-20",
+        "region_name_local": "Međimurska županija"
+      },
+      {
+        "region_iso": "HR-21",
+        "region_name_local": "Grad Zagreb"
+      },
+      {
+        "region_iso": "HR-01",
+        "region_name_local": "Zagrebačka županija"
+      },
+      {
+        "region_iso": "HR-02",
+        "region_name_local": "Krapinsko-zagorska županija"
+      },
+      {
+        "region_iso": "HR-03",
+        "region_name_local": "Sisačko-moslavačka županija"
+      },
+      {
+        "region_iso": "HR-04",
+        "region_name_local": "Karlovačka županija"
+      },
+      {
+        "region_iso": "HR-05",
+        "region_name_local": "Varaždinska županija"
+      },
+      {
+        "region_iso": "HR-06",
+        "region_name_local": "Koprivničko-križevačka županija"
+      },
+      {
+        "region_iso": "HR-07",
+        "region_name_local": "Bjelovarsko-bilogorska županija"
+      },
+      {
+        "region_iso": "HR-08",
+        "region_name_local": "Primorsko-goranska županija"
+      },
+      {
+        "region_iso": "HR-09",
+        "region_name_local": "Ličko-senjska županija"
+      },
+      {
+        "region_iso": "HR-10",
+        "region_name_local": "Virovitičko-podravska županija"
+      }
+    ]
+  },
+  {
+    "country_iso": "CY",
+    "country_name_local": "Cyprus",
+    "flag": "🇨🇾",
+    "regions": [
+      {
+        "region_iso": "CY-04",
+        "region_name_local": "Ammochostos"
+      },
+      {
+        "region_iso": "CY-05",
+        "region_name_local": "Pafos"
+      },
+      {
+        "region_iso": "CY-06",
+        "region_name_local": "Keryneia"
+      },
+      {
+        "region_iso": "CY-01",
+        "region_name_local": "Lefkosia"
+      },
+      {
+        "region_iso": "CY-02",
+        "region_name_local": "Lemesos"
+      },
+      {
+        "region_iso": "CY-03",
+        "region_name_local": "Larnaka"
+      }
+    ]
+  },
+  {
+    "country_iso": "CZ",
+    "country_name_local": "Czechia",
+    "flag": "🇨🇿",
+    "regions": [
+      {
+        "region_iso": "CZ-633",
+        "region_name_local": "Pelhřimov"
+      },
+      {
+        "region_iso": "CZ-634",
+        "region_name_local": "Třebíč"
+      },
+      {
+        "region_iso": "CZ-635",
+        "region_name_local": "Žďár nad Sázavou"
+      },
+      {
+        "region_iso": "CZ-64",
+        "region_name_local": "Jihomoravský kraj"
+      },
+      {
+        "region_iso": "CZ-641",
+        "region_name_local": "Blansko"
+      },
+      {
+        "region_iso": "CZ-642",
+        "region_name_local": "Brno-město"
+      },
+      {
+        "region_iso": "CZ-643",
+        "region_name_local": "Brno-venkov"
+      },
+      {
+        "region_iso": "CZ-644",
+        "region_name_local": "Břeclav"
+      },
+      {
+        "region_iso": "CZ-645",
+        "region_name_local": "Hodonín"
+      },
+      {
+        "region_iso": "CZ-646",
+        "region_name_local": "Vyškov"
+      },
+      {
+        "region_iso": "CZ-647",
+        "region_name_local": "Znojmo"
+      },
+      {
+        "region_iso": "CZ-71",
+        "region_name_local": "Olomoucký kraj"
+      },
+      {
+        "region_iso": "CZ-711",
+        "region_name_local": "Jeseník"
+      },
+      {
+        "region_iso": "CZ-712",
+        "region_name_local": "Olomouc"
+      },
+      {
+        "region_iso": "CZ-713",
+        "region_name_local": "Prostějov"
+      },
+      {
+        "region_iso": "CZ-714",
+        "region_name_local": "Přerov"
+      },
+      {
+        "region_iso": "CZ-715",
+        "region_name_local": "Šumperk"
+      },
+      {
+        "region_iso": "CZ-72",
+        "region_name_local": "Zlínský kraj"
+      },
+      {
+        "region_iso": "CZ-721",
+        "region_name_local": "Kroměříž"
+      },
+      {
+        "region_iso": "CZ-722",
+        "region_name_local": "Uherské Hradiště"
+      },
+      {
+        "region_iso": "CZ-723",
+        "region_name_local": "Vsetín"
+      },
+      {
+        "region_iso": "CZ-724",
+        "region_name_local": "Zlín"
+      },
+      {
+        "region_iso": "CZ-80",
+        "region_name_local": "Moravskoslezský kraj"
+      },
+      {
+        "region_iso": "CZ-801",
+        "region_name_local": "Bruntál"
+      },
+      {
+        "region_iso": "CZ-10",
+        "region_name_local": "Praha, Hlavní město"
+      },
+      {
+        "region_iso": "CZ-802",
+        "region_name_local": "Frýdek-Místek"
+      },
+      {
+        "region_iso": "CZ-20",
+        "region_name_local": "Středočeský kraj"
+      },
+      {
+        "region_iso": "CZ-803",
+        "region_name_local": "Karviná"
+      },
+      {
+        "region_iso": "CZ-201",
+        "region_name_local": "Benešov"
+      },
+      {
+        "region_iso": "CZ-804",
+        "region_name_local": "Nový Jičín"
+      },
+      {
+        "region_iso": "CZ-202",
+        "region_name_local": "Beroun"
+      },
+      {
+        "region_iso": "CZ-805",
+        "region_name_local": "Opava"
+      },
+      {
+        "region_iso": "CZ-203",
+        "region_name_local": "Kladno"
+      },
+      {
+        "region_iso": "CZ-806",
+        "region_name_local": "Ostrava-město"
+      },
+      {
+        "region_iso": "CZ-204",
+        "region_name_local": "Kolín"
+      },
+      {
+        "region_iso": "CZ-205",
+        "region_name_local": "Kutná Hora"
+      },
+      {
+        "region_iso": "CZ-206",
+        "region_name_local": "Mělník"
+      },
+      {
+        "region_iso": "CZ-207",
+        "region_name_local": "Mladá Boleslav"
+      },
+      {
+        "region_iso": "CZ-208",
+        "region_name_local": "Nymburk"
+      },
+      {
+        "region_iso": "CZ-209",
+        "region_name_local": "Praha-východ"
+      },
+      {
+        "region_iso": "CZ-20A",
+        "region_name_local": "Praha-západ"
+      },
+      {
+        "region_iso": "CZ-20B",
+        "region_name_local": "Příbram"
+      },
+      {
+        "region_iso": "CZ-20C",
+        "region_name_local": "Rakovník"
+      },
+      {
+        "region_iso": "CZ-31",
+        "region_name_local": "Jihočeský kraj"
+      },
+      {
+        "region_iso": "CZ-311",
+        "region_name_local": "České Budějovice"
+      },
+      {
+        "region_iso": "CZ-312",
+        "region_name_local": "Český Krumlov"
+      },
+      {
+        "region_iso": "CZ-313",
+        "region_name_local": "Jindřichův Hradec"
+      },
+      {
+        "region_iso": "CZ-314",
+        "region_name_local": "Písek"
+      },
+      {
+        "region_iso": "CZ-315",
+        "region_name_local": "Prachatice"
+      },
+      {
+        "region_iso": "CZ-316",
+        "region_name_local": "Strakonice"
+      },
+      {
+        "region_iso": "CZ-317",
+        "region_name_local": "Tábor"
+      },
+      {
+        "region_iso": "CZ-32",
+        "region_name_local": "Plzeňský kraj"
+      },
+      {
+        "region_iso": "CZ-321",
+        "region_name_local": "Domažlice"
+      },
+      {
+        "region_iso": "CZ-322",
+        "region_name_local": "Klatovy"
+      },
+      {
+        "region_iso": "CZ-323",
+        "region_name_local": "Plzeň-město"
+      },
+      {
+        "region_iso": "CZ-324",
+        "region_name_local": "Plzeň-jih"
+      },
+      {
+        "region_iso": "CZ-325",
+        "region_name_local": "Plzeň-sever"
+      },
+      {
+        "region_iso": "CZ-326",
+        "region_name_local": "Rokycany"
+      },
+      {
+        "region_iso": "CZ-327",
+        "region_name_local": "Tachov"
+      },
+      {
+        "region_iso": "CZ-41",
+        "region_name_local": "Karlovarský kraj"
+      },
+      {
+        "region_iso": "CZ-411",
+        "region_name_local": "Cheb"
+      },
+      {
+        "region_iso": "CZ-412",
+        "region_name_local": "Karlovy Vary"
+      },
+      {
+        "region_iso": "CZ-413",
+        "region_name_local": "Sokolov"
+      },
+      {
+        "region_iso": "CZ-42",
+        "region_name_local": "Ústecký kraj"
+      },
+      {
+        "region_iso": "CZ-421",
+        "region_name_local": "Děčín"
+      },
+      {
+        "region_iso": "CZ-422",
+        "region_name_local": "Chomutov"
+      },
+      {
+        "region_iso": "CZ-423",
+        "region_name_local": "Litoměřice"
+      },
+      {
+        "region_iso": "CZ-424",
+        "region_name_local": "Louny"
+      },
+      {
+        "region_iso": "CZ-425",
+        "region_name_local": "Most"
+      },
+      {
+        "region_iso": "CZ-426",
+        "region_name_local": "Teplice"
+      },
+      {
+        "region_iso": "CZ-427",
+        "region_name_local": "Ústí nad Labem"
+      },
+      {
+        "region_iso": "CZ-51",
+        "region_name_local": "Liberecký kraj"
+      },
+      {
+        "region_iso": "CZ-511",
+        "region_name_local": "Česká Lípa"
+      },
+      {
+        "region_iso": "CZ-512",
+        "region_name_local": "Jablonec nad Nisou"
+      },
+      {
+        "region_iso": "CZ-513",
+        "region_name_local": "Liberec"
+      },
+      {
+        "region_iso": "CZ-514",
+        "region_name_local": "Semily"
+      },
+      {
+        "region_iso": "CZ-52",
+        "region_name_local": "Královéhradecký kraj"
+      },
+      {
+        "region_iso": "CZ-521",
+        "region_name_local": "Hradec Králové"
+      },
+      {
+        "region_iso": "CZ-522",
+        "region_name_local": "Jičín"
+      },
+      {
+        "region_iso": "CZ-523",
+        "region_name_local": "Náchod"
+      },
+      {
+        "region_iso": "CZ-524",
+        "region_name_local": "Rychnov nad Kněžnou"
+      },
+      {
+        "region_iso": "CZ-525",
+        "region_name_local": "Trutnov"
+      },
+      {
+        "region_iso": "CZ-53",
+        "region_name_local": "Pardubický kraj"
+      },
+      {
+        "region_iso": "CZ-531",
+        "region_name_local": "Chrudim"
+      },
+      {
+        "region_iso": "CZ-532",
+        "region_name_local": "Pardubice"
+      },
+      {
+        "region_iso": "CZ-533",
+        "region_name_local": "Svitavy"
+      },
+      {
+        "region_iso": "CZ-534",
+        "region_name_local": "Ústí nad Orlicí"
+      },
+      {
+        "region_iso": "CZ-63",
+        "region_name_local": "Kraj Vysočina"
+      },
+      {
+        "region_iso": "CZ-631",
+        "region_name_local": "Havlíčkův Brod"
+      },
+      {
+        "region_iso": "CZ-632",
+        "region_name_local": "Jihlava"
+      }
+    ]
+  },
+  {
+    "country_iso": "DK",
+    "country_name_local": "Denmark",
+    "flag": "🇩🇰",
+    "regions": [
+      {
+        "region_iso": "DK-83",
+        "region_name_local": "Syddanmark"
+      },
+      {
+        "region_iso": "DK-84",
+        "region_name_local": "Hovedstaden"
+      },
+      {
+        "region_iso": "DK-85",
+        "region_name_local": "Sjælland"
+      },
+      {
+        "region_iso": "DK-81",
+        "region_name_local": "Nordjylland"
+      },
+      {
+        "region_iso": "DK-82",
+        "region_name_local": "Midtjylland"
+      }
+    ]
+  },
+  {
+    "country_iso": "EE",
+    "country_name_local": "Estonia",
+    "flag": "🇪🇪",
+    "regions": [
+      {
+        "region_iso": "EE-712",
+        "region_name_local": "Saarde"
+      },
+      {
+        "region_iso": "EE-714",
+        "region_name_local": "Saaremaa"
+      },
+      {
+        "region_iso": "EE-719",
+        "region_name_local": "Saku"
+      },
+      {
+        "region_iso": "EE-726",
+        "region_name_local": "Saue"
+      },
+      {
+        "region_iso": "EE-732",
+        "region_name_local": "Setomaa"
+      },
+      {
+        "region_iso": "EE-735",
+        "region_name_local": "Sillamäe"
+      },
+      {
+        "region_iso": "EE-74",
+        "region_name_local": "Saaremaa"
+      },
+      {
+        "region_iso": "EE-784",
+        "region_name_local": "Tallinn"
+      },
+      {
+        "region_iso": "EE-79",
+        "region_name_local": "Tartumaa"
+      },
+      {
+        "region_iso": "EE-792",
+        "region_name_local": "Tapa"
+      },
+      {
+        "region_iso": "EE-793",
+        "region_name_local": "Tartu"
+      },
+      {
+        "region_iso": "EE-796",
+        "region_name_local": "Tartu"
+      },
+      {
+        "region_iso": "EE-803",
+        "region_name_local": "Toila"
+      },
+      {
+        "region_iso": "EE-809",
+        "region_name_local": "Tori"
+      },
+      {
+        "region_iso": "EE-81",
+        "region_name_local": "Valgamaa"
+      },
+      {
+        "region_iso": "EE-824",
+        "region_name_local": "Tõrva"
+      },
+      {
+        "region_iso": "EE-834",
+        "region_name_local": "Türi"
+      },
+      {
+        "region_iso": "EE-84",
+        "region_name_local": "Viljandimaa"
+      },
+      {
+        "region_iso": "EE-855",
+        "region_name_local": "Valga"
+      },
+      {
+        "region_iso": "EE-87",
+        "region_name_local": "Võrumaa"
+      },
+      {
+        "region_iso": "EE-890",
+        "region_name_local": "Viimsi"
+      },
+      {
+        "region_iso": "EE-130",
+        "region_name_local": "Alutaguse"
+      },
+      {
+        "region_iso": "EE-897",
+        "region_name_local": "Viljandi"
+      },
+      {
+        "region_iso": "EE-141",
+        "region_name_local": "Anija"
+      },
+      {
+        "region_iso": "EE-899",
+        "region_name_local": "Viljandi"
+      },
+      {
+        "region_iso": "EE-142",
+        "region_name_local": "Antsla"
+      },
+      {
+        "region_iso": "EE-901",
+        "region_name_local": "Vinni"
+      },
+      {
+        "region_iso": "EE-171",
+        "region_name_local": "Elva"
+      },
+      {
+        "region_iso": "EE-903",
+        "region_name_local": "Viru-Nigula"
+      },
+      {
+        "region_iso": "EE-184",
+        "region_name_local": "Haapsalu"
+      },
+      {
+        "region_iso": "EE-907",
+        "region_name_local": "Vormsi"
+      },
+      {
+        "region_iso": "EE-191",
+        "region_name_local": "Haljala"
+      },
+      {
+        "region_iso": "EE-917",
+        "region_name_local": "Võru"
+      },
+      {
+        "region_iso": "EE-198",
+        "region_name_local": "Harku"
+      },
+      {
+        "region_iso": "EE-919",
+        "region_name_local": "Võru"
+      },
+      {
+        "region_iso": "EE-205",
+        "region_name_local": "Hiiumaa"
+      },
+      {
+        "region_iso": "EE-928",
+        "region_name_local": "Väike-Maarja"
+      },
+      {
+        "region_iso": "EE-214",
+        "region_name_local": "Häädemeeste"
+      },
+      {
+        "region_iso": "EE-245",
+        "region_name_local": "Jõelähtme"
+      },
+      {
+        "region_iso": "EE-247",
+        "region_name_local": "Jõgeva"
+      },
+      {
+        "region_iso": "EE-251",
+        "region_name_local": "Jõhvi"
+      },
+      {
+        "region_iso": "EE-255",
+        "region_name_local": "Järva"
+      },
+      {
+        "region_iso": "EE-272",
+        "region_name_local": "Kadrina"
+      },
+      {
+        "region_iso": "EE-283",
+        "region_name_local": "Kambja"
+      },
+      {
+        "region_iso": "EE-284",
+        "region_name_local": "Kanepi"
+      },
+      {
+        "region_iso": "EE-291",
+        "region_name_local": "Kastre"
+      },
+      {
+        "region_iso": "EE-293",
+        "region_name_local": "Kehtna"
+      },
+      {
+        "region_iso": "EE-296",
+        "region_name_local": "Keila"
+      },
+      {
+        "region_iso": "EE-303",
+        "region_name_local": "Kihnu"
+      },
+      {
+        "region_iso": "EE-305",
+        "region_name_local": "Kiili"
+      },
+      {
+        "region_iso": "EE-317",
+        "region_name_local": "Kohila"
+      },
+      {
+        "region_iso": "EE-321",
+        "region_name_local": "Kohtla-Järve"
+      },
+      {
+        "region_iso": "EE-338",
+        "region_name_local": "Kose"
+      },
+      {
+        "region_iso": "EE-353",
+        "region_name_local": "Kuusalu"
+      },
+      {
+        "region_iso": "EE-37",
+        "region_name_local": "Harjumaa"
+      },
+      {
+        "region_iso": "EE-39",
+        "region_name_local": "Hiiumaa"
+      },
+      {
+        "region_iso": "EE-424",
+        "region_name_local": "Loksa"
+      },
+      {
+        "region_iso": "EE-430",
+        "region_name_local": "Lääneranna"
+      },
+      {
+        "region_iso": "EE-431",
+        "region_name_local": "Lääne-Harju"
+      },
+      {
+        "region_iso": "EE-432",
+        "region_name_local": "Luunja"
+      },
+      {
+        "region_iso": "EE-441",
+        "region_name_local": "Lääne-Nigula"
+      },
+      {
+        "region_iso": "EE-442",
+        "region_name_local": "Lüganuse"
+      },
+      {
+        "region_iso": "EE-446",
+        "region_name_local": "Maardu"
+      },
+      {
+        "region_iso": "EE-45",
+        "region_name_local": "Ida-Virumaa"
+      },
+      {
+        "region_iso": "EE-478",
+        "region_name_local": "Muhu"
+      },
+      {
+        "region_iso": "EE-480",
+        "region_name_local": "Mulgi"
+      },
+      {
+        "region_iso": "EE-486",
+        "region_name_local": "Mustvee"
+      },
+      {
+        "region_iso": "EE-50",
+        "region_name_local": "Jõgevamaa"
+      },
+      {
+        "region_iso": "EE-503",
+        "region_name_local": "Märjamaa"
+      },
+      {
+        "region_iso": "EE-511",
+        "region_name_local": "Narva"
+      },
+      {
+        "region_iso": "EE-514",
+        "region_name_local": "Narva-Jõesuu"
+      },
+      {
+        "region_iso": "EE-52",
+        "region_name_local": "Järvamaa"
+      },
+      {
+        "region_iso": "EE-528",
+        "region_name_local": "Nõo"
+      },
+      {
+        "region_iso": "EE-557",
+        "region_name_local": "Otepää"
+      },
+      {
+        "region_iso": "EE-56",
+        "region_name_local": "Läänemaa"
+      },
+      {
+        "region_iso": "EE-567",
+        "region_name_local": "Paide"
+      },
+      {
+        "region_iso": "EE-586",
+        "region_name_local": "Peipsiääre"
+      },
+      {
+        "region_iso": "EE-60",
+        "region_name_local": "Lääne-Virumaa"
+      },
+      {
+        "region_iso": "EE-615",
+        "region_name_local": "Põhja-Sakala"
+      },
+      {
+        "region_iso": "EE-618",
+        "region_name_local": "Põltsamaa"
+      },
+      {
+        "region_iso": "EE-622",
+        "region_name_local": "Põlva"
+      },
+      {
+        "region_iso": "EE-624",
+        "region_name_local": "Pärnu"
+      },
+      {
+        "region_iso": "EE-638",
+        "region_name_local": "Põhja-Pärnumaa"
+      },
+      {
+        "region_iso": "EE-64",
+        "region_name_local": "Põlvamaa"
+      },
+      {
+        "region_iso": "EE-651",
+        "region_name_local": "Raasiku"
+      },
+      {
+        "region_iso": "EE-653",
+        "region_name_local": "Rae"
+      },
+      {
+        "region_iso": "EE-661",
+        "region_name_local": "Rakvere"
+      },
+      {
+        "region_iso": "EE-663",
+        "region_name_local": "Rakvere"
+      },
+      {
+        "region_iso": "EE-668",
+        "region_name_local": "Rapla"
+      },
+      {
+        "region_iso": "EE-68",
+        "region_name_local": "Pärnumaa"
+      },
+      {
+        "region_iso": "EE-689",
+        "region_name_local": "Ruhnu"
+      },
+      {
+        "region_iso": "EE-698",
+        "region_name_local": "Rõuge"
+      },
+      {
+        "region_iso": "EE-708",
+        "region_name_local": "Räpina"
+      },
+      {
+        "region_iso": "EE-71",
+        "region_name_local": "Raplamaa"
+      }
+    ]
+  },
+  {
+    "country_iso": "FI",
+    "country_name_local": "Finland",
+    "flag": "🇫🇮",
+    "regions": [
+      {
+        "region_iso": "FI-06",
+        "region_name_local": "Kanta-Häme"
+      },
+      {
+        "region_iso": "FI-07",
+        "region_name_local": "Keski-Pohjanmaa"
+      },
+      {
+        "region_iso": "FI-08",
+        "region_name_local": "Keski-Suomi"
+      },
+      {
+        "region_iso": "FI-09",
+        "region_name_local": "Kymenlaakso"
+      },
+      {
+        "region_iso": "FI-10",
+        "region_name_local": "Lappi"
+      },
+      {
+        "region_iso": "FI-11",
+        "region_name_local": "Pirkanmaa"
+      },
+      {
+        "region_iso": "FI-12",
+        "region_name_local": "Pohjanmaa"
+      },
+      {
+        "region_iso": "FI-13",
+        "region_name_local": "Pohjois-Karjala"
+      },
+      {
+        "region_iso": "FI-14",
+        "region_name_local": "Pohjois-Pohjanmaa"
+      },
+      {
+        "region_iso": "FI-15",
+        "region_name_local": "Pohjois-Savo"
+      },
+      {
+        "region_iso": "FI-16",
+        "region_name_local": "Päijät-Häme"
+      },
+      {
+        "region_iso": "FI-17",
+        "region_name_local": "Satakunta"
+      },
+      {
+        "region_iso": "FI-18",
+        "region_name_local": "Uusimaa"
+      },
+      {
+        "region_iso": "FI-19",
+        "region_name_local": "Varsinais-Suomi"
+      },
+      {
+        "region_iso": "FI-01",
+        "region_name_local": "Landskapet Åland"
+      },
+      {
+        "region_iso": "FI-02",
+        "region_name_local": "Etelä-Karjala"
+      },
+      {
+        "region_iso": "FI-03",
+        "region_name_local": "Etelä-Pohjanmaa"
+      },
+      {
+        "region_iso": "FI-04",
+        "region_name_local": "Etelä-Savo"
+      },
+      {
+        "region_iso": "FI-05",
+        "region_name_local": "Kainuu"
+      }
+    ]
+  },
+  {
+    "country_iso": "FR",
+    "country_name_local": "France",
+    "flag": "🇫🇷",
+    "regions": [
+      {
+        "region_iso": "FR-68",
+        "region_name_local": "Haut-Rhin"
+      },
+      {
+        "region_iso": "FR-69",
+        "region_name_local": "Rhône"
+      },
+      {
+        "region_iso": "FR-69M",
+        "region_name_local": "Métropole de Lyon"
+      },
+      {
+        "region_iso": "FR-6AE",
+        "region_name_local": "Alsace"
+      },
+      {
+        "region_iso": "FR-70",
+        "region_name_local": "Haute-Saône"
+      },
+      {
+        "region_iso": "FR-71",
+        "region_name_local": "Saône-et-Loire"
+      },
+      {
+        "region_iso": "FR-72",
+        "region_name_local": "Sarthe"
+      },
+      {
+        "region_iso": "FR-73",
+        "region_name_local": "Savoie"
+      },
+      {
+        "region_iso": "FR-74",
+        "region_name_local": "Haute-Savoie"
+      },
+      {
+        "region_iso": "FR-75C",
+        "region_name_local": "Paris"
+      },
+      {
+        "region_iso": "FR-76",
+        "region_name_local": "Seine-Maritime"
+      },
+      {
+        "region_iso": "FR-77",
+        "region_name_local": "Seine-et-Marne"
+      },
+      {
+        "region_iso": "FR-78",
+        "region_name_local": "Yvelines"
+      },
+      {
+        "region_iso": "FR-79",
+        "region_name_local": "Deux-Sèvres"
+      },
+      {
+        "region_iso": "FR-80",
+        "region_name_local": "Somme"
+      },
+      {
+        "region_iso": "FR-81",
+        "region_name_local": "Tarn"
+      },
+      {
+        "region_iso": "FR-01",
+        "region_name_local": "Ain"
+      },
+      {
+        "region_iso": "FR-82",
+        "region_name_local": "Tarn-et-Garonne"
+      },
+      {
+        "region_iso": "FR-02",
+        "region_name_local": "Aisne"
+      },
+      {
+        "region_iso": "FR-83",
+        "region_name_local": "Var"
+      },
+      {
+        "region_iso": "FR-03",
+        "region_name_local": "Allier"
+      },
+      {
+        "region_iso": "FR-84",
+        "region_name_local": "Vaucluse"
+      },
+      {
+        "region_iso": "FR-04",
+        "region_name_local": "Alpes-de-Haute-Provence"
+      },
+      {
+        "region_iso": "FR-85",
+        "region_name_local": "Vendée"
+      },
+      {
+        "region_iso": "FR-05",
+        "region_name_local": "Hautes-Alpes"
+      },
+      {
+        "region_iso": "FR-86",
+        "region_name_local": "Vienne"
+      },
+      {
+        "region_iso": "FR-06",
+        "region_name_local": "Alpes-Maritimes"
+      },
+      {
+        "region_iso": "FR-87",
+        "region_name_local": "Haute-Vienne"
+      },
+      {
+        "region_iso": "FR-07",
+        "region_name_local": "Ardèche"
+      },
+      {
+        "region_iso": "FR-88",
+        "region_name_local": "Vosges"
+      },
+      {
+        "region_iso": "FR-08",
+        "region_name_local": "Ardennes"
+      },
+      {
+        "region_iso": "FR-89",
+        "region_name_local": "Yonne"
+      },
+      {
+        "region_iso": "FR-09",
+        "region_name_local": "Ariège"
+      },
+      {
+        "region_iso": "FR-90",
+        "region_name_local": "Territoire de Belfort"
+      },
+      {
+        "region_iso": "FR-10",
+        "region_name_local": "Aube"
+      },
+      {
+        "region_iso": "FR-91",
+        "region_name_local": "Essonne"
+      },
+      {
+        "region_iso": "FR-11",
+        "region_name_local": "Aude"
+      },
+      {
+        "region_iso": "FR-92",
+        "region_name_local": "Hauts-de-Seine"
+      },
+      {
+        "region_iso": "FR-12",
+        "region_name_local": "Aveyron"
+      },
+      {
+        "region_iso": "FR-93",
+        "region_name_local": "Seine-Saint-Denis"
+      },
+      {
+        "region_iso": "FR-13",
+        "region_name_local": "Bouches-du-Rhône"
+      },
+      {
+        "region_iso": "FR-94",
+        "region_name_local": "Val-de-Marne"
+      },
+      {
+        "region_iso": "FR-14",
+        "region_name_local": "Calvados"
+      },
+      {
+        "region_iso": "FR-95",
+        "region_name_local": "Val-d'Oise"
+      },
+      {
+        "region_iso": "FR-15",
+        "region_name_local": "Cantal"
+      },
+      {
+        "region_iso": "FR-971",
+        "region_name_local": "Guadeloupe"
+      },
+      {
+        "region_iso": "FR-16",
+        "region_name_local": "Charente"
+      },
+      {
+        "region_iso": "FR-972",
+        "region_name_local": "Martinique"
+      },
+      {
+        "region_iso": "FR-17",
+        "region_name_local": "Charente-Maritime"
+      },
+      {
+        "region_iso": "FR-973",
+        "region_name_local": "Guyane (française)"
+      },
+      {
+        "region_iso": "FR-18",
+        "region_name_local": "Cher"
+      },
+      {
+        "region_iso": "FR-974",
+        "region_name_local": "La Réunion"
+      },
+      {
+        "region_iso": "FR-19",
+        "region_name_local": "Corrèze"
+      },
+      {
+        "region_iso": "FR-976",
+        "region_name_local": "Mayotte"
+      },
+      {
+        "region_iso": "FR-20R",
+        "region_name_local": "Corse"
+      },
+      {
+        "region_iso": "FR-ARA",
+        "region_name_local": "Auvergne-Rhône-Alpes"
+      },
+      {
+        "region_iso": "FR-21",
+        "region_name_local": "Côte-d'Or"
+      },
+      {
+        "region_iso": "FR-BFC",
+        "region_name_local": "Bourgogne-Franche-Comté"
+      },
+      {
+        "region_iso": "FR-22",
+        "region_name_local": "Côtes-d'Armor"
+      },
+      {
+        "region_iso": "FR-BL",
+        "region_name_local": "Saint-Barthélemy"
+      },
+      {
+        "region_iso": "FR-23",
+        "region_name_local": "Creuse"
+      },
+      {
+        "region_iso": "FR-BRE",
+        "region_name_local": "Bretagne"
+      },
+      {
+        "region_iso": "FR-24",
+        "region_name_local": "Dordogne"
+      },
+      {
+        "region_iso": "FR-CP",
+        "region_name_local": "Clipperton"
+      },
+      {
+        "region_iso": "FR-25",
+        "region_name_local": "Doubs"
+      },
+      {
+        "region_iso": "FR-CVL",
+        "region_name_local": "Centre-Val de Loire"
+      },
+      {
+        "region_iso": "FR-26",
+        "region_name_local": "Drôme"
+      },
+      {
+        "region_iso": "FR-GES",
+        "region_name_local": "Grand-Est"
+      },
+      {
+        "region_iso": "FR-27",
+        "region_name_local": "Eure"
+      },
+      {
+        "region_iso": "FR-HDF",
+        "region_name_local": "Hauts-de-France"
+      },
+      {
+        "region_iso": "FR-28",
+        "region_name_local": "Eure-et-Loir"
+      },
+      {
+        "region_iso": "FR-IDF",
+        "region_name_local": "Île-de-France"
+      },
+      {
+        "region_iso": "FR-29",
+        "region_name_local": "Finistère"
+      },
+      {
+        "region_iso": "FR-MF",
+        "region_name_local": "Saint-Martin"
+      },
+      {
+        "region_iso": "FR-2A",
+        "region_name_local": "Corse-du-Sud"
+      },
+      {
+        "region_iso": "FR-NAQ",
+        "region_name_local": "Nouvelle-Aquitaine"
+      },
+      {
+        "region_iso": "FR-2B",
+        "region_name_local": "Haute-Corse"
+      },
+      {
+        "region_iso": "FR-NC",
+        "region_name_local": "Nouvelle-Calédonie"
+      },
+      {
+        "region_iso": "FR-30",
+        "region_name_local": "Gard"
+      },
+      {
+        "region_iso": "FR-NOR",
+        "region_name_local": "Normandie"
+      },
+      {
+        "region_iso": "FR-31",
+        "region_name_local": "Haute-Garonne"
+      },
+      {
+        "region_iso": "FR-OCC",
+        "region_name_local": "Occitanie"
+      },
+      {
+        "region_iso": "FR-32",
+        "region_name_local": "Gers"
+      },
+      {
+        "region_iso": "FR-PAC",
+        "region_name_local": "Provence-Alpes-Côte-d’Azur"
+      },
+      {
+        "region_iso": "FR-33",
+        "region_name_local": "Gironde"
+      },
+      {
+        "region_iso": "FR-PDL",
+        "region_name_local": "Pays-de-la-Loire"
+      },
+      {
+        "region_iso": "FR-34",
+        "region_name_local": "Hérault"
+      },
+      {
+        "region_iso": "FR-PF",
+        "region_name_local": "Polynésie française"
+      },
+      {
+        "region_iso": "FR-35",
+        "region_name_local": "Ille-et-Vilaine"
+      },
+      {
+        "region_iso": "FR-PM",
+        "region_name_local": "Saint-Pierre-et-Miquelon"
+      },
+      {
+        "region_iso": "FR-36",
+        "region_name_local": "Indre"
+      },
+      {
+        "region_iso": "FR-TF",
+        "region_name_local": "Terres australes françaises"
+      },
+      {
+        "region_iso": "FR-37",
+        "region_name_local": "Indre-et-Loire"
+      },
+      {
+        "region_iso": "FR-WF",
+        "region_name_local": "Wallis-et-Futuna"
+      },
+      {
+        "region_iso": "FR-38",
+        "region_name_local": "Isère"
+      },
+      {
+        "region_iso": "FR-39",
+        "region_name_local": "Jura"
+      },
+      {
+        "region_iso": "FR-40",
+        "region_name_local": "Landes"
+      },
+      {
+        "region_iso": "FR-41",
+        "region_name_local": "Loir-et-Cher"
+      },
+      {
+        "region_iso": "FR-42",
+        "region_name_local": "Loire"
+      },
+      {
+        "region_iso": "FR-43",
+        "region_name_local": "Haute-Loire"
+      },
+      {
+        "region_iso": "FR-44",
+        "region_name_local": "Loire-Atlantique"
+      },
+      {
+        "region_iso": "FR-45",
+        "region_name_local": "Loiret"
+      },
+      {
+        "region_iso": "FR-46",
+        "region_name_local": "Lot"
+      },
+      {
+        "region_iso": "FR-47",
+        "region_name_local": "Lot-et-Garonne"
+      },
+      {
+        "region_iso": "FR-48",
+        "region_name_local": "Lozère"
+      },
+      {
+        "region_iso": "FR-49",
+        "region_name_local": "Maine-et-Loire"
+      },
+      {
+        "region_iso": "FR-50",
+        "region_name_local": "Manche"
+      },
+      {
+        "region_iso": "FR-51",
+        "region_name_local": "Marne"
+      },
+      {
+        "region_iso": "FR-52",
+        "region_name_local": "Haute-Marne"
+      },
+      {
+        "region_iso": "FR-53",
+        "region_name_local": "Mayenne"
+      },
+      {
+        "region_iso": "FR-54",
+        "region_name_local": "Meurthe-et-Moselle"
+      },
+      {
+        "region_iso": "FR-55",
+        "region_name_local": "Meuse"
+      },
+      {
+        "region_iso": "FR-56",
+        "region_name_local": "Morbihan"
+      },
+      {
+        "region_iso": "FR-57",
+        "region_name_local": "Moselle"
+      },
+      {
+        "region_iso": "FR-58",
+        "region_name_local": "Nièvre"
+      },
+      {
+        "region_iso": "FR-59",
+        "region_name_local": "Nord"
+      },
+      {
+        "region_iso": "FR-60",
+        "region_name_local": "Oise"
+      },
+      {
+        "region_iso": "FR-61",
+        "region_name_local": "Orne"
+      },
+      {
+        "region_iso": "FR-62",
+        "region_name_local": "Pas-de-Calais"
+      },
+      {
+        "region_iso": "FR-63",
+        "region_name_local": "Puy-de-Dôme"
+      },
+      {
+        "region_iso": "FR-64",
+        "region_name_local": "Pyrénées-Atlantiques"
+      },
+      {
+        "region_iso": "FR-65",
+        "region_name_local": "Hautes-Pyrénées"
+      },
+      {
+        "region_iso": "FR-66",
+        "region_name_local": "Pyrénées-Orientales"
+      },
+      {
+        "region_iso": "FR-67",
+        "region_name_local": "Bas-Rhin"
+      }
+    ]
+  },
+  {
+    "country_iso": "DE",
+    "country_name_local": "Germany",
+    "flag": "🇩🇪",
+    "regions": [
+      {
+        "region_iso": "DE-SN",
+        "region_name_local": "Sachsen"
+      },
+      {
+        "region_iso": "DE-NI",
+        "region_name_local": "Niedersachsen"
+      },
+      {
+        "region_iso": "DE-BY",
+        "region_name_local": "Bayern"
+      },
+      {
+        "region_iso": "DE-ST",
+        "region_name_local": "Sachsen-Anhalt"
+      },
+      {
+        "region_iso": "DE-NW",
+        "region_name_local": "Nordrhein-Westfalen"
+      },
+      {
+        "region_iso": "DE-HB",
+        "region_name_local": "Bremen"
+      },
+      {
+        "region_iso": "DE-TH",
+        "region_name_local": "Thüringen"
+      },
+      {
+        "region_iso": "DE-RP",
+        "region_name_local": "Rheinland-Pfalz"
+      },
+      {
+        "region_iso": "DE-HE",
+        "region_name_local": "Hessen"
+      },
+      {
+        "region_iso": "DE-BB",
+        "region_name_local": "Brandenburg"
+      },
+      {
+        "region_iso": "DE-SH",
+        "region_name_local": "Schleswig-Holstein"
+      },
+      {
+        "region_iso": "DE-HH",
+        "region_name_local": "Hamburg"
+      },
+      {
+        "region_iso": "DE-BE",
+        "region_name_local": "Berlin"
+      },
+      {
+        "region_iso": "DE-SL",
+        "region_name_local": "Saarland"
+      },
+      {
+        "region_iso": "DE-MV",
+        "region_name_local": "Mecklenburg-Vorpommern"
+      },
+      {
+        "region_iso": "DE-BW",
+        "region_name_local": "Baden-Württemberg"
+      }
+    ]
+  },
+  {
+    "country_iso": "GR",
+    "country_name_local": "Greece",
+    "flag": "🇬🇷",
+    "regions": [
+      {
+        "region_iso": "GR-69",
+        "region_name_local": "Ágion Óros"
+      },
+      {
+        "region_iso": "GR-K",
+        "region_name_local": "Vóreio Aigaío"
+      },
+      {
+        "region_iso": "GR-F",
+        "region_name_local": "Ionía Nísia"
+      },
+      {
+        "region_iso": "GR-A",
+        "region_name_local": "Anatolikí Makedonía kai Thráki"
+      },
+      {
+        "region_iso": "GR-L",
+        "region_name_local": "Nótio Aigaío"
+      },
+      {
+        "region_iso": "GR-G",
+        "region_name_local": "Dytikí Elláda"
+      },
+      {
+        "region_iso": "GR-B",
+        "region_name_local": "Kentrikí Makedonía"
+      },
+      {
+        "region_iso": "GR-M",
+        "region_name_local": "Kríti"
+      },
+      {
+        "region_iso": "GR-H",
+        "region_name_local": "Stereá Elláda"
+      },
+      {
+        "region_iso": "GR-C",
+        "region_name_local": "Dytikí Makedonía"
+      },
+      {
+        "region_iso": "GR-I",
+        "region_name_local": "Attikí"
+      },
+      {
+        "region_iso": "GR-D",
+        "region_name_local": "Ípeiros"
+      },
+      {
+        "region_iso": "GR-J",
+        "region_name_local": "Pelopónnisos"
+      },
+      {
+        "region_iso": "GR-E",
+        "region_name_local": "Thessalía"
+      }
+    ]
+  },
+  {
+    "country_iso": "HU",
+    "country_name_local": "Hungary",
+    "flag": "🇭🇺",
+    "regions": [
+      {
+        "region_iso": "HU-BA",
+        "region_name_local": "Baranya"
+      },
+      {
+        "region_iso": "HU-ZE",
+        "region_name_local": "Zalaegerszeg"
+      },
+      {
+        "region_iso": "HU-MI",
+        "region_name_local": "Miskolc"
+      },
+      {
+        "region_iso": "HU-BC",
+        "region_name_local": "Békéscsaba"
+      },
+      {
+        "region_iso": "HU-NK",
+        "region_name_local": "Nagykanizsa"
+      },
+      {
+        "region_iso": "HU-BE",
+        "region_name_local": "Békés"
+      },
+      {
+        "region_iso": "HU-NO",
+        "region_name_local": "Nógrád"
+      },
+      {
+        "region_iso": "HU-BK",
+        "region_name_local": "Bács-Kiskun"
+      },
+      {
+        "region_iso": "HU-NY",
+        "region_name_local": "Nyíregyháza"
+      },
+      {
+        "region_iso": "HU-BU",
+        "region_name_local": "Budapest"
+      },
+      {
+        "region_iso": "HU-PE",
+        "region_name_local": "Pest"
+      },
+      {
+        "region_iso": "HU-BZ",
+        "region_name_local": "Borsod-Abaúj-Zemplén"
+      },
+      {
+        "region_iso": "HU-PS",
+        "region_name_local": "Pécs"
+      },
+      {
+        "region_iso": "HU-CS",
+        "region_name_local": "Csongrád-Csanád"
+      },
+      {
+        "region_iso": "HU-SD",
+        "region_name_local": "Szeged"
+      },
+      {
+        "region_iso": "HU-DE",
+        "region_name_local": "Debrecen"
+      },
+      {
+        "region_iso": "HU-SF",
+        "region_name_local": "Székesfehérvár"
+      },
+      {
+        "region_iso": "HU-DU",
+        "region_name_local": "Dunaújváros"
+      },
+      {
+        "region_iso": "HU-SH",
+        "region_name_local": "Szombathely"
+      },
+      {
+        "region_iso": "HU-EG",
+        "region_name_local": "Eger"
+      },
+      {
+        "region_iso": "HU-SK",
+        "region_name_local": "Szolnok"
+      },
+      {
+        "region_iso": "HU-ER",
+        "region_name_local": "Érd"
+      },
+      {
+        "region_iso": "HU-SN",
+        "region_name_local": "Sopron"
+      },
+      {
+        "region_iso": "HU-FE",
+        "region_name_local": "Fejér"
+      },
+      {
+        "region_iso": "HU-SO",
+        "region_name_local": "Somogy"
+      },
+      {
+        "region_iso": "HU-GS",
+        "region_name_local": "Győr-Moson-Sopron"
+      },
+      {
+        "region_iso": "HU-SS",
+        "region_name_local": "Szekszárd"
+      },
+      {
+        "region_iso": "HU-GY",
+        "region_name_local": "Győr"
+      },
+      {
+        "region_iso": "HU-ST",
+        "region_name_local": "Salgótarján"
+      },
+      {
+        "region_iso": "HU-HB",
+        "region_name_local": "Hajdú-Bihar"
+      },
+      {
+        "region_iso": "HU-SZ",
+        "region_name_local": "Szabolcs-Szatmár-Bereg"
+      },
+      {
+        "region_iso": "HU-HE",
+        "region_name_local": "Heves"
+      },
+      {
+        "region_iso": "HU-TB",
+        "region_name_local": "Tatabánya"
+      },
+      {
+        "region_iso": "HU-HV",
+        "region_name_local": "Hódmezővásárhely"
+      },
+      {
+        "region_iso": "HU-TO",
+        "region_name_local": "Tolna"
+      },
+      {
+        "region_iso": "HU-JN",
+        "region_name_local": "Jász-Nagykun-Szolnok"
+      },
+      {
+        "region_iso": "HU-VA",
+        "region_name_local": "Vas"
+      },
+      {
+        "region_iso": "HU-KE",
+        "region_name_local": "Komárom-Esztergom"
+      },
+      {
+        "region_iso": "HU-VE",
+        "region_name_local": "Veszprém"
+      },
+      {
+        "region_iso": "HU-KM",
+        "region_name_local": "Kecskemét"
+      },
+      {
+        "region_iso": "HU-VM",
+        "region_name_local": "Veszprém"
+      },
+      {
+        "region_iso": "HU-KV",
+        "region_name_local": "Kaposvár"
+      },
+      {
+        "region_iso": "HU-ZA",
+        "region_name_local": "Zala"
+      }
+    ]
+  },
+  {
+    "country_iso": "IE",
+    "country_name_local": "Ireland",
+    "flag": "🇮🇪",
+    "regions": [
+      {
+        "region_iso": "IE-MH",
+        "region_name_local": "Meath"
+      },
+      {
+        "region_iso": "IE-MN",
+        "region_name_local": "Monaghan"
+      },
+      {
+        "region_iso": "IE-MO",
+        "region_name_local": "Mayo"
+      },
+      {
+        "region_iso": "IE-OY",
+        "region_name_local": "Offaly"
+      },
+      {
+        "region_iso": "IE-C",
+        "region_name_local": "Connaught"
+      },
+      {
+        "region_iso": "IE-RN",
+        "region_name_local": "Roscommon"
+      },
+      {
+        "region_iso": "IE-CE",
+        "region_name_local": "Clare"
+      },
+      {
+        "region_iso": "IE-SO",
+        "region_name_local": "Sligo"
+      },
+      {
+        "region_iso": "IE-CN",
+        "region_name_local": "Cavan"
+      },
+      {
+        "region_iso": "IE-TA",
+        "region_name_local": "Tipperary"
+      },
+      {
+        "region_iso": "IE-CO",
+        "region_name_local": "Cork"
+      },
+      {
+        "region_iso": "IE-U",
+        "region_name_local": "Ulster"
+      },
+      {
+        "region_iso": "IE-CW",
+        "region_name_local": "Carlow"
+      },
+      {
+        "region_iso": "IE-WD",
+        "region_name_local": "Waterford"
+      },
+      {
+        "region_iso": "IE-D",
+        "region_name_local": "Dublin"
+      },
+      {
+        "region_iso": "IE-WH",
+        "region_name_local": "Westmeath"
+      },
+      {
+        "region_iso": "IE-DL",
+        "region_name_local": "Donegal"
+      },
+      {
+        "region_iso": "IE-WW",
+        "region_name_local": "Wicklow"
+      },
+      {
+        "region_iso": "IE-G",
+        "region_name_local": "Galway"
+      },
+      {
+        "region_iso": "IE-WX",
+        "region_name_local": "Wexford"
+      },
+      {
+        "region_iso": "IE-KE",
+        "region_name_local": "Kildare"
+      },
+      {
+        "region_iso": "IE-KK",
+        "region_name_local": "Kilkenny"
+      },
+      {
+        "region_iso": "IE-KY",
+        "region_name_local": "Kerry"
+      },
+      {
+        "region_iso": "IE-L",
+        "region_name_local": "Leinster"
+      },
+      {
+        "region_iso": "IE-LD",
+        "region_name_local": "Longford"
+      },
+      {
+        "region_iso": "IE-LH",
+        "region_name_local": "Louth"
+      },
+      {
+        "region_iso": "IE-LK",
+        "region_name_local": "Limerick"
+      },
+      {
+        "region_iso": "IE-LM",
+        "region_name_local": "Leitrim"
+      },
+      {
+        "region_iso": "IE-LS",
+        "region_name_local": "Laois"
+      },
+      {
+        "region_iso": "IE-M",
+        "region_name_local": "Munster"
+      }
+    ]
+  },
+  {
+    "country_iso": "IT",
+    "country_name_local": "Italy",
+    "flag": "🇮🇹",
+    "regions": [
+      {
+        "region_iso": "IT-OR",
+        "region_name_local": "Oristano"
+      },
+      {
+        "region_iso": "IT-PA",
+        "region_name_local": "Palermo"
+      },
+      {
+        "region_iso": "IT-PC",
+        "region_name_local": "Piacenza"
+      },
+      {
+        "region_iso": "IT-PD",
+        "region_name_local": "Padova"
+      },
+      {
+        "region_iso": "IT-PE",
+        "region_name_local": "Pescara"
+      },
+      {
+        "region_iso": "IT-PG",
+        "region_name_local": "Perugia"
+      },
+      {
+        "region_iso": "IT-21",
+        "region_name_local": "Piemonte"
+      },
+      {
+        "region_iso": "IT-PI",
+        "region_name_local": "Pisa"
+      },
+      {
+        "region_iso": "IT-23",
+        "region_name_local": "Valle d'Aosta"
+      },
+      {
+        "region_iso": "IT-PN",
+        "region_name_local": "Pordenone"
+      },
+      {
+        "region_iso": "IT-25",
+        "region_name_local": "Lombardia"
+      },
+      {
+        "region_iso": "IT-PO",
+        "region_name_local": "Prato"
+      },
+      {
+        "region_iso": "IT-32",
+        "region_name_local": "Trentino-Alto Adige"
+      },
+      {
+        "region_iso": "IT-PR",
+        "region_name_local": "Parma"
+      },
+      {
+        "region_iso": "IT-34",
+        "region_name_local": "Veneto"
+      },
+      {
+        "region_iso": "IT-PT",
+        "region_name_local": "Pistoia"
+      },
+      {
+        "region_iso": "IT-36",
+        "region_name_local": "Friuli Venezia Giulia"
+      },
+      {
+        "region_iso": "IT-PU",
+        "region_name_local": "Pesaro e Urbino"
+      },
+      {
+        "region_iso": "IT-42",
+        "region_name_local": "Liguria"
+      },
+      {
+        "region_iso": "IT-PV",
+        "region_name_local": "Pavia"
+      },
+      {
+        "region_iso": "IT-45",
+        "region_name_local": "Emilia-Romagna"
+      },
+      {
+        "region_iso": "IT-PZ",
+        "region_name_local": "Potenza"
+      },
+      {
+        "region_iso": "IT-52",
+        "region_name_local": "Toscana"
+      },
+      {
+        "region_iso": "IT-RA",
+        "region_name_local": "Ravenna"
+      },
+      {
+        "region_iso": "IT-55",
+        "region_name_local": "Umbria"
+      },
+      {
+        "region_iso": "IT-RC",
+        "region_name_local": "Reggio Calabria"
+      },
+      {
+        "region_iso": "IT-57",
+        "region_name_local": "Marche"
+      },
+      {
+        "region_iso": "IT-RE",
+        "region_name_local": "Reggio Emilia"
+      },
+      {
+        "region_iso": "IT-62",
+        "region_name_local": "Lazio"
+      },
+      {
+        "region_iso": "IT-RG",
+        "region_name_local": "Ragusa"
+      },
+      {
+        "region_iso": "IT-65",
+        "region_name_local": "Abruzzo"
+      },
+      {
+        "region_iso": "IT-RI",
+        "region_name_local": "Rieti"
+      },
+      {
+        "region_iso": "IT-67",
+        "region_name_local": "Molise"
+      },
+      {
+        "region_iso": "IT-RM",
+        "region_name_local": "Roma"
+      },
+      {
+        "region_iso": "IT-72",
+        "region_name_local": "Campania"
+      },
+      {
+        "region_iso": "IT-RN",
+        "region_name_local": "Rimini"
+      },
+      {
+        "region_iso": "IT-75",
+        "region_name_local": "Puglia"
+      },
+      {
+        "region_iso": "IT-RO",
+        "region_name_local": "Rovigo"
+      },
+      {
+        "region_iso": "IT-77",
+        "region_name_local": "Basilicata"
+      },
+      {
+        "region_iso": "IT-SA",
+        "region_name_local": "Salerno"
+      },
+      {
+        "region_iso": "IT-78",
+        "region_name_local": "Calabria"
+      },
+      {
+        "region_iso": "IT-SI",
+        "region_name_local": "Siena"
+      },
+      {
+        "region_iso": "IT-82",
+        "region_name_local": "Sicilia"
+      },
+      {
+        "region_iso": "IT-SO",
+        "region_name_local": "Sondrio"
+      },
+      {
+        "region_iso": "IT-88",
+        "region_name_local": "Sardegna"
+      },
+      {
+        "region_iso": "IT-SP",
+        "region_name_local": "La Spezia"
+      },
+      {
+        "region_iso": "IT-AG",
+        "region_name_local": "Agrigento"
+      },
+      {
+        "region_iso": "IT-SR",
+        "region_name_local": "Siracusa"
+      },
+      {
+        "region_iso": "IT-AL",
+        "region_name_local": "Alessandria"
+      },
+      {
+        "region_iso": "IT-SS",
+        "region_name_local": "Sassari"
+      },
+      {
+        "region_iso": "IT-AN",
+        "region_name_local": "Ancona"
+      },
+      {
+        "region_iso": "IT-SU",
+        "region_name_local": "Sud Sardegna"
+      },
+      {
+        "region_iso": "IT-AP",
+        "region_name_local": "Ascoli Piceno"
+      },
+      {
+        "region_iso": "IT-SV",
+        "region_name_local": "Savona"
+      },
+      {
+        "region_iso": "IT-AQ",
+        "region_name_local": "L'Aquila"
+      },
+      {
+        "region_iso": "IT-TA",
+        "region_name_local": "Taranto"
+      },
+      {
+        "region_iso": "IT-AR",
+        "region_name_local": "Arezzo"
+      },
+      {
+        "region_iso": "IT-TE",
+        "region_name_local": "Teramo"
+      },
+      {
+        "region_iso": "IT-AT",
+        "region_name_local": "Asti"
+      },
+      {
+        "region_iso": "IT-TN",
+        "region_name_local": "Trento"
+      },
+      {
+        "region_iso": "IT-AV",
+        "region_name_local": "Avellino"
+      },
+      {
+        "region_iso": "IT-TO",
+        "region_name_local": "Torino"
+      },
+      {
+        "region_iso": "IT-BA",
+        "region_name_local": "Bari"
+      },
+      {
+        "region_iso": "IT-TP",
+        "region_name_local": "Trapani"
+      },
+      {
+        "region_iso": "IT-BG",
+        "region_name_local": "Bergamo"
+      },
+      {
+        "region_iso": "IT-TR",
+        "region_name_local": "Terni"
+      },
+      {
+        "region_iso": "IT-BI",
+        "region_name_local": "Biella"
+      },
+      {
+        "region_iso": "IT-TS",
+        "region_name_local": "Trieste"
+      },
+      {
+        "region_iso": "IT-BL",
+        "region_name_local": "Belluno"
+      },
+      {
+        "region_iso": "IT-TV",
+        "region_name_local": "Treviso"
+      },
+      {
+        "region_iso": "IT-BN",
+        "region_name_local": "Benevento"
+      },
+      {
+        "region_iso": "IT-UD",
+        "region_name_local": "Udine"
+      },
+      {
+        "region_iso": "IT-BO",
+        "region_name_local": "Bologna"
+      },
+      {
+        "region_iso": "IT-VA",
+        "region_name_local": "Varese"
+      },
+      {
+        "region_iso": "IT-BR",
+        "region_name_local": "Brindisi"
+      },
+      {
+        "region_iso": "IT-VB",
+        "region_name_local": "Verbano-Cusio-Ossola"
+      },
+      {
+        "region_iso": "IT-BS",
+        "region_name_local": "Brescia"
+      },
+      {
+        "region_iso": "IT-VC",
+        "region_name_local": "Vercelli"
+      },
+      {
+        "region_iso": "IT-BT",
+        "region_name_local": "Barletta-Andria-Trani"
+      },
+      {
+        "region_iso": "IT-VE",
+        "region_name_local": "Venezia"
+      },
+      {
+        "region_iso": "IT-BZ",
+        "region_name_local": "Bolzano"
+      },
+      {
+        "region_iso": "IT-VI",
+        "region_name_local": "Vicenza"
+      },
+      {
+        "region_iso": "IT-CA",
+        "region_name_local": "Cagliari"
+      },
+      {
+        "region_iso": "IT-VR",
+        "region_name_local": "Verona"
+      },
+      {
+        "region_iso": "IT-CB",
+        "region_name_local": "Campobasso"
+      },
+      {
+        "region_iso": "IT-VT",
+        "region_name_local": "Viterbo"
+      },
+      {
+        "region_iso": "IT-CE",
+        "region_name_local": "Caserta"
+      },
+      {
+        "region_iso": "IT-VV",
+        "region_name_local": "Vibo Valentia"
+      },
+      {
+        "region_iso": "IT-CH",
+        "region_name_local": "Chieti"
+      },
+      {
+        "region_iso": "IT-CL",
+        "region_name_local": "Caltanissetta"
+      },
+      {
+        "region_iso": "IT-CN",
+        "region_name_local": "Cuneo"
+      },
+      {
+        "region_iso": "IT-CO",
+        "region_name_local": "Como"
+      },
+      {
+        "region_iso": "IT-CR",
+        "region_name_local": "Cremona"
+      },
+      {
+        "region_iso": "IT-CS",
+        "region_name_local": "Cosenza"
+      },
+      {
+        "region_iso": "IT-CT",
+        "region_name_local": "Catania"
+      },
+      {
+        "region_iso": "IT-CZ",
+        "region_name_local": "Catanzaro"
+      },
+      {
+        "region_iso": "IT-EN",
+        "region_name_local": "Enna"
+      },
+      {
+        "region_iso": "IT-FC",
+        "region_name_local": "Forlì-Cesena"
+      },
+      {
+        "region_iso": "IT-FE",
+        "region_name_local": "Ferrara"
+      },
+      {
+        "region_iso": "IT-FG",
+        "region_name_local": "Foggia"
+      },
+      {
+        "region_iso": "IT-FI",
+        "region_name_local": "Firenze"
+      },
+      {
+        "region_iso": "IT-FM",
+        "region_name_local": "Fermo"
+      },
+      {
+        "region_iso": "IT-FR",
+        "region_name_local": "Frosinone"
+      },
+      {
+        "region_iso": "IT-GE",
+        "region_name_local": "Genova"
+      },
+      {
+        "region_iso": "IT-GO",
+        "region_name_local": "Gorizia"
+      },
+      {
+        "region_iso": "IT-GR",
+        "region_name_local": "Grosseto"
+      },
+      {
+        "region_iso": "IT-IM",
+        "region_name_local": "Imperia"
+      },
+      {
+        "region_iso": "IT-IS",
+        "region_name_local": "Isernia"
+      },
+      {
+        "region_iso": "IT-KR",
+        "region_name_local": "Crotone"
+      },
+      {
+        "region_iso": "IT-LC",
+        "region_name_local": "Lecco"
+      },
+      {
+        "region_iso": "IT-LE",
+        "region_name_local": "Lecce"
+      },
+      {
+        "region_iso": "IT-LI",
+        "region_name_local": "Livorno"
+      },
+      {
+        "region_iso": "IT-LO",
+        "region_name_local": "Lodi"
+      },
+      {
+        "region_iso": "IT-LT",
+        "region_name_local": "Latina"
+      },
+      {
+        "region_iso": "IT-LU",
+        "region_name_local": "Lucca"
+      },
+      {
+        "region_iso": "IT-MB",
+        "region_name_local": "Monza e Brianza"
+      },
+      {
+        "region_iso": "IT-MC",
+        "region_name_local": "Macerata"
+      },
+      {
+        "region_iso": "IT-ME",
+        "region_name_local": "Messina"
+      },
+      {
+        "region_iso": "IT-MI",
+        "region_name_local": "Milano"
+      },
+      {
+        "region_iso": "IT-MN",
+        "region_name_local": "Mantova"
+      },
+      {
+        "region_iso": "IT-MO",
+        "region_name_local": "Modena"
+      },
+      {
+        "region_iso": "IT-MS",
+        "region_name_local": "Massa-Carrara"
+      },
+      {
+        "region_iso": "IT-MT",
+        "region_name_local": "Matera"
+      },
+      {
+        "region_iso": "IT-NA",
+        "region_name_local": "Napoli"
+      },
+      {
+        "region_iso": "IT-NO",
+        "region_name_local": "Novara"
+      },
+      {
+        "region_iso": "IT-NU",
+        "region_name_local": "Nuoro"
+      }
+    ]
+  },
+  {
+    "country_iso": "LV",
+    "country_name_local": "Latvia",
+    "flag": "🇱🇻",
+    "regions": [
+      {
+        "region_iso": "LV-080",
+        "region_name_local": "Ropažu novads"
+      },
+      {
+        "region_iso": "LV-007",
+        "region_name_local": "Alūksnes novads"
+      },
+      {
+        "region_iso": "LV-087",
+        "region_name_local": "Salaspils novads"
+      },
+      {
+        "region_iso": "LV-011",
+        "region_name_local": "Ādažu novads"
+      },
+      {
+        "region_iso": "LV-088",
+        "region_name_local": "Saldus novads"
+      },
+      {
+        "region_iso": "LV-015",
+        "region_name_local": "Balvu novads"
+      },
+      {
+        "region_iso": "LV-089",
+        "region_name_local": "Saulkrastu novads"
+      },
+      {
+        "region_iso": "LV-016",
+        "region_name_local": "Bauskas novads"
+      },
+      {
+        "region_iso": "LV-091",
+        "region_name_local": "Siguldas novads"
+      },
+      {
+        "region_iso": "LV-022",
+        "region_name_local": "Cēsu novads"
+      },
+      {
+        "region_iso": "LV-094",
+        "region_name_local": "Smiltenes novads"
+      },
+      {
+        "region_iso": "LV-026",
+        "region_name_local": "Dobeles novads"
+      },
+      {
+        "region_iso": "LV-097",
+        "region_name_local": "Talsu novads"
+      },
+      {
+        "region_iso": "LV-033",
+        "region_name_local": "Gulbenes novads"
+      },
+      {
+        "region_iso": "LV-099",
+        "region_name_local": "Tukuma novads"
+      },
+      {
+        "region_iso": "LV-041",
+        "region_name_local": "Jelgavas novads"
+      },
+      {
+        "region_iso": "LV-101",
+        "region_name_local": "Valkas novads"
+      },
+      {
+        "region_iso": "LV-042",
+        "region_name_local": "Jēkabpils novads"
+      },
+      {
+        "region_iso": "LV-102",
+        "region_name_local": "Varakļānu novads"
+      },
+      {
+        "region_iso": "LV-047",
+        "region_name_local": "Krāslavas novads"
+      },
+      {
+        "region_iso": "LV-106",
+        "region_name_local": "Ventspils novads"
+      },
+      {
+        "region_iso": "LV-050",
+        "region_name_local": "Kuldīgas novads"
+      },
+      {
+        "region_iso": "LV-111",
+        "region_name_local": "Augšdaugavas novads"
+      },
+      {
+        "region_iso": "LV-052",
+        "region_name_local": "Ķekavas novads"
+      },
+      {
+        "region_iso": "LV-112",
+        "region_name_local": "Dienvidkurzemes Novads"
+      },
+      {
+        "region_iso": "LV-054",
+        "region_name_local": "Limbažu novads"
+      },
+      {
+        "region_iso": "LV-113",
+        "region_name_local": "Valmieras Novads"
+      },
+      {
+        "region_iso": "LV-056",
+        "region_name_local": "Līvānu novads"
+      },
+      {
+        "region_iso": "LV-DGV",
+        "region_name_local": "Daugavpils"
+      },
+      {
+        "region_iso": "LV-058",
+        "region_name_local": "Ludzas novads"
+      },
+      {
+        "region_iso": "LV-JEL",
+        "region_name_local": "Jelgava"
+      },
+      {
+        "region_iso": "LV-059",
+        "region_name_local": "Madonas novads"
+      },
+      {
+        "region_iso": "LV-JUR",
+        "region_name_local": "Jūrmala"
+      },
+      {
+        "region_iso": "LV-062",
+        "region_name_local": "Mārupes novads"
+      },
+      {
+        "region_iso": "LV-LPX",
+        "region_name_local": "Liepāja"
+      },
+      {
+        "region_iso": "LV-067",
+        "region_name_local": "Ogres novads"
+      },
+      {
+        "region_iso": "LV-REZ",
+        "region_name_local": "Rēzekne"
+      },
+      {
+        "region_iso": "LV-068",
+        "region_name_local": "Olaines novads"
+      },
+      {
+        "region_iso": "LV-RIX",
+        "region_name_local": "Rīga"
+      },
+      {
+        "region_iso": "LV-073",
+        "region_name_local": "Preiļu novads"
+      },
+      {
+        "region_iso": "LV-VEN",
+        "region_name_local": "Ventspils"
+      },
+      {
+        "region_iso": "LV-077",
+        "region_name_local": "Rēzeknes novads"
+      },
+      {
+        "region_iso": "LV-002",
+        "region_name_local": "Aizkraukles novads"
+      }
+    ]
+  },
+  {
+    "country_iso": "LT",
+    "country_name_local": "Lithuania",
+    "flag": "🇱🇹",
+    "regions": [
+      {
+        "region_iso": "LT-KL",
+        "region_name_local": "Klaipėdos apskritis"
+      },
+      {
+        "region_iso": "LT-41",
+        "region_name_local": "Šakiai"
+      },
+      {
+        "region_iso": "LT-20",
+        "region_name_local": "Klaipėdos miestas"
+      },
+      {
+        "region_iso": "LT-KU",
+        "region_name_local": "Kauno apskritis"
+      },
+      {
+        "region_iso": "LT-42",
+        "region_name_local": "Šalčininkai"
+      },
+      {
+        "region_iso": "LT-21",
+        "region_name_local": "Klaipėda"
+      },
+      {
+        "region_iso": "LT-MR",
+        "region_name_local": "Marijampolės apskritis"
+      },
+      {
+        "region_iso": "LT-43",
+        "region_name_local": "Šiaulių miestas"
+      },
+      {
+        "region_iso": "LT-22",
+        "region_name_local": "Kretinga"
+      },
+      {
+        "region_iso": "LT-01",
+        "region_name_local": "Akmenė"
+      },
+      {
+        "region_iso": "LT-PN",
+        "region_name_local": "Panevėžio apskritis"
+      },
+      {
+        "region_iso": "LT-44",
+        "region_name_local": "Šiauliai"
+      },
+      {
+        "region_iso": "LT-23",
+        "region_name_local": "Kupiškis"
+      },
+      {
+        "region_iso": "LT-02",
+        "region_name_local": "Alytaus miestas"
+      },
+      {
+        "region_iso": "LT-SA",
+        "region_name_local": "Šiaulių apskritis"
+      },
+      {
+        "region_iso": "LT-45",
+        "region_name_local": "Šilalė"
+      },
+      {
+        "region_iso": "LT-24",
+        "region_name_local": "Lazdijai"
+      },
+      {
+        "region_iso": "LT-03",
+        "region_name_local": "Alytus"
+      },
+      {
+        "region_iso": "LT-TA",
+        "region_name_local": "Tauragės apskritis"
+      },
+      {
+        "region_iso": "LT-46",
+        "region_name_local": "Šilutė"
+      },
+      {
+        "region_iso": "LT-25",
+        "region_name_local": "Marijampolė"
+      },
+      {
+        "region_iso": "LT-04",
+        "region_name_local": "Anykščiai"
+      },
+      {
+        "region_iso": "LT-TE",
+        "region_name_local": "Telšių apskritis"
+      },
+      {
+        "region_iso": "LT-47",
+        "region_name_local": "Širvintos"
+      },
+      {
+        "region_iso": "LT-26",
+        "region_name_local": "Mažeikiai"
+      },
+      {
+        "region_iso": "LT-05",
+        "region_name_local": "Birštonas"
+      },
+      {
+        "region_iso": "LT-UT",
+        "region_name_local": "Utenos apskritis"
+      },
+      {
+        "region_iso": "LT-48",
+        "region_name_local": "Skuodas"
+      },
+      {
+        "region_iso": "LT-27",
+        "region_name_local": "Molėtai"
+      },
+      {
+        "region_iso": "LT-06",
+        "region_name_local": "Biržai"
+      },
+      {
+        "region_iso": "LT-VL",
+        "region_name_local": "Vilniaus apskritis"
+      },
+      {
+        "region_iso": "LT-49",
+        "region_name_local": "Švenčionys"
+      },
+      {
+        "region_iso": "LT-28",
+        "region_name_local": "Neringa"
+      },
+      {
+        "region_iso": "LT-07",
+        "region_name_local": "Druskininkai"
+      },
+      {
+        "region_iso": "LT-50",
+        "region_name_local": "Tauragė"
+      },
+      {
+        "region_iso": "LT-29",
+        "region_name_local": "Pagėgiai"
+      },
+      {
+        "region_iso": "LT-08",
+        "region_name_local": "Elektrėnai"
+      },
+      {
+        "region_iso": "LT-51",
+        "region_name_local": "Telšiai"
+      },
+      {
+        "region_iso": "LT-30",
+        "region_name_local": "Pakruojis"
+      },
+      {
+        "region_iso": "LT-09",
+        "region_name_local": "Ignalina"
+      },
+      {
+        "region_iso": "LT-52",
+        "region_name_local": "Trakai"
+      },
+      {
+        "region_iso": "LT-31",
+        "region_name_local": "Palangos miestas"
+      },
+      {
+        "region_iso": "LT-10",
+        "region_name_local": "Jonava"
+      },
+      {
+        "region_iso": "LT-53",
+        "region_name_local": "Ukmergė"
+      },
+      {
+        "region_iso": "LT-32",
+        "region_name_local": "Panevėžio miestas"
+      },
+      {
+        "region_iso": "LT-11",
+        "region_name_local": "Joniškis"
+      },
+      {
+        "region_iso": "LT-54",
+        "region_name_local": "Utena"
+      },
+      {
+        "region_iso": "LT-33",
+        "region_name_local": "Panevėžys"
+      },
+      {
+        "region_iso": "LT-12",
+        "region_name_local": "Jurbarkas"
+      },
+      {
+        "region_iso": "LT-55",
+        "region_name_local": "Varėna"
+      },
+      {
+        "region_iso": "LT-34",
+        "region_name_local": "Pasvalys"
+      },
+      {
+        "region_iso": "LT-13",
+        "region_name_local": "Kaišiadorys"
+      },
+      {
+        "region_iso": "LT-56",
+        "region_name_local": "Vilkaviškis"
+      },
+      {
+        "region_iso": "LT-35",
+        "region_name_local": "Plungė"
+      },
+      {
+        "region_iso": "LT-14",
+        "region_name_local": "Kalvarija"
+      },
+      {
+        "region_iso": "LT-57",
+        "region_name_local": "Vilniaus miestas"
+      },
+      {
+        "region_iso": "LT-36",
+        "region_name_local": "Prienai"
+      },
+      {
+        "region_iso": "LT-15",
+        "region_name_local": "Kauno miestas"
+      },
+      {
+        "region_iso": "LT-58",
+        "region_name_local": "Vilnius"
+      },
+      {
+        "region_iso": "LT-37",
+        "region_name_local": "Radviliškis"
+      },
+      {
+        "region_iso": "LT-16",
+        "region_name_local": "Kaunas"
+      },
+      {
+        "region_iso": "LT-59",
+        "region_name_local": "Visaginas"
+      },
+      {
+        "region_iso": "LT-38",
+        "region_name_local": "Raseiniai"
+      },
+      {
+        "region_iso": "LT-17",
+        "region_name_local": "Kazlų Rūdos"
+      },
+      {
+        "region_iso": "LT-60",
+        "region_name_local": "Zarasai"
+      },
+      {
+        "region_iso": "LT-39",
+        "region_name_local": "Rietavas"
+      },
+      {
+        "region_iso": "LT-18",
+        "region_name_local": "Kėdainiai"
+      },
+      {
+        "region_iso": "LT-AL",
+        "region_name_local": "Alytaus apskritis"
+      },
+      {
+        "region_iso": "LT-40",
+        "region_name_local": "Rokiškis"
+      },
+      {
+        "region_iso": "LT-19",
+        "region_name_local": "Kelmė"
+      }
+    ]
+  },
+  {
+    "country_iso": "LU",
+    "country_name_local": "Luxembourg",
+    "flag": "🇱🇺",
+    "regions": [
+      {
+        "region_iso": "LU-ME",
+        "region_name_local": "Mersch"
+      },
+      {
+        "region_iso": "LU-DI",
+        "region_name_local": "Diekirch"
+      },
+      {
+        "region_iso": "LU-RD",
+        "region_name_local": "Redange"
+      },
+      {
+        "region_iso": "LU-EC",
+        "region_name_local": "Echternach"
+      },
+      {
+        "region_iso": "LU-RM",
+        "region_name_local": "Remich"
+      },
+      {
+        "region_iso": "LU-ES",
+        "region_name_local": "Esch-sur-Alzette"
+      },
+      {
+        "region_iso": "LU-VD",
+        "region_name_local": "Vianden"
+      },
+      {
+        "region_iso": "LU-GR",
+        "region_name_local": "Grevenmacher"
+      },
+      {
+        "region_iso": "LU-CA",
+        "region_name_local": "Capellen"
+      },
+      {
+        "region_iso": "LU-WI",
+        "region_name_local": "Wiltz"
+      },
+      {
+        "region_iso": "LU-LU",
+        "region_name_local": "Luxembourg"
+      },
+      {
+        "region_iso": "LU-CL",
+        "region_name_local": "Clervaux"
+      }
+    ]
+  },
+  {
+    "country_iso": "MT",
+    "country_name_local": "Malta",
+    "flag": "🇲🇹",
+    "regions": [
+      {
+        "region_iso": "MT-20",
+        "region_name_local": "Isla"
+      },
+      {
+        "region_iso": "MT-63",
+        "region_name_local": "Xgħajra"
+      },
+      {
+        "region_iso": "MT-42",
+        "region_name_local": "Qala"
+      },
+      {
+        "region_iso": "MT-21",
+        "region_name_local": "Kalkara"
+      },
+      {
+        "region_iso": "MT-64",
+        "region_name_local": "Żabbar"
+      },
+      {
+        "region_iso": "MT-43",
+        "region_name_local": "Qormi"
+      },
+      {
+        "region_iso": "MT-22",
+        "region_name_local": "Kerċem"
+      },
+      {
+        "region_iso": "MT-01",
+        "region_name_local": "Attard"
+      },
+      {
+        "region_iso": "MT-65",
+        "region_name_local": "Żebbuġ Gozo"
+      },
+      {
+        "region_iso": "MT-44",
+        "region_name_local": "Qrendi"
+      },
+      {
+        "region_iso": "MT-23",
+        "region_name_local": "Kirkop"
+      },
+      {
+        "region_iso": "MT-02",
+        "region_name_local": "Balzan"
+      },
+      {
+        "region_iso": "MT-66",
+        "region_name_local": "Żebbuġ Malta"
+      },
+      {
+        "region_iso": "MT-45",
+        "region_name_local": "Rabat Gozo"
+      },
+      {
+        "region_iso": "MT-24",
+        "region_name_local": "Lija"
+      },
+      {
+        "region_iso": "MT-03",
+        "region_name_local": "Birgu"
+      },
+      {
+        "region_iso": "MT-67",
+        "region_name_local": "Żejtun"
+      },
+      {
+        "region_iso": "MT-46",
+        "region_name_local": "Rabat Malta"
+      },
+      {
+        "region_iso": "MT-25",
+        "region_name_local": "Luqa"
+      },
+      {
+        "region_iso": "MT-04",
+        "region_name_local": "Birkirkara"
+      },
+      {
+        "region_iso": "MT-68",
+        "region_name_local": "Żurrieq"
+      },
+      {
+        "region_iso": "MT-47",
+        "region_name_local": "Safi"
+      },
+      {
+        "region_iso": "MT-26",
+        "region_name_local": "Marsa"
+      },
+      {
+        "region_iso": "MT-05",
+        "region_name_local": "Birżebbuġa"
+      },
+      {
+        "region_iso": "MT-48",
+        "region_name_local": "Saint Julian's"
+      },
+      {
+        "region_iso": "MT-27",
+        "region_name_local": "Marsaskala"
+      },
+      {
+        "region_iso": "MT-06",
+        "region_name_local": "Bormla"
+      },
+      {
+        "region_iso": "MT-49",
+        "region_name_local": "Saint John"
+      },
+      {
+        "region_iso": "MT-28",
+        "region_name_local": "Marsaxlokk"
+      },
+      {
+        "region_iso": "MT-07",
+        "region_name_local": "Dingli"
+      },
+      {
+        "region_iso": "MT-50",
+        "region_name_local": "Saint Lawrence"
+      },
+      {
+        "region_iso": "MT-29",
+        "region_name_local": "Mdina"
+      },
+      {
+        "region_iso": "MT-08",
+        "region_name_local": "Fgura"
+      },
+      {
+        "region_iso": "MT-51",
+        "region_name_local": "Saint Paul's Bay"
+      },
+      {
+        "region_iso": "MT-30",
+        "region_name_local": "Mellieħa"
+      },
+      {
+        "region_iso": "MT-09",
+        "region_name_local": "Floriana"
+      },
+      {
+        "region_iso": "MT-52",
+        "region_name_local": "Sannat"
+      },
+      {
+        "region_iso": "MT-31",
+        "region_name_local": "Mġarr"
+      },
+      {
+        "region_iso": "MT-10",
+        "region_name_local": "Fontana"
+      },
+      {
+        "region_iso": "MT-53",
+        "region_name_local": "Saint Lucia's"
+      },
+      {
+        "region_iso": "MT-32",
+        "region_name_local": "Mosta"
+      },
+      {
+        "region_iso": "MT-11",
+        "region_name_local": "Gudja"
+      },
+      {
+        "region_iso": "MT-54",
+        "region_name_local": "Santa Venera"
+      },
+      {
+        "region_iso": "MT-33",
+        "region_name_local": "Mqabba"
+      },
+      {
+        "region_iso": "MT-12",
+        "region_name_local": "Gżira"
+      },
+      {
+        "region_iso": "MT-55",
+        "region_name_local": "Siġġiewi"
+      },
+      {
+        "region_iso": "MT-34",
+        "region_name_local": "Msida"
+      },
+      {
+        "region_iso": "MT-13",
+        "region_name_local": "Għajnsielem"
+      },
+      {
+        "region_iso": "MT-56",
+        "region_name_local": "Sliema"
+      },
+      {
+        "region_iso": "MT-35",
+        "region_name_local": "Mtarfa"
+      },
+      {
+        "region_iso": "MT-14",
+        "region_name_local": "Għarb"
+      },
+      {
+        "region_iso": "MT-57",
+        "region_name_local": "Swieqi"
+      },
+      {
+        "region_iso": "MT-36",
+        "region_name_local": "Munxar"
+      },
+      {
+        "region_iso": "MT-15",
+        "region_name_local": "Għargħur"
+      },
+      {
+        "region_iso": "MT-58",
+        "region_name_local": "Ta' Xbiex"
+      },
+      {
+        "region_iso": "MT-37",
+        "region_name_local": "Nadur"
+      },
+      {
+        "region_iso": "MT-16",
+        "region_name_local": "Għasri"
+      },
+      {
+        "region_iso": "MT-59",
+        "region_name_local": "Tarxien"
+      },
+      {
+        "region_iso": "MT-38",
+        "region_name_local": "Naxxar"
+      },
+      {
+        "region_iso": "MT-17",
+        "region_name_local": "Għaxaq"
+      },
+      {
+        "region_iso": "MT-60",
+        "region_name_local": "Valletta"
+      },
+      {
+        "region_iso": "MT-39",
+        "region_name_local": "Paola"
+      },
+      {
+        "region_iso": "MT-18",
+        "region_name_local": "Ħamrun"
+      },
+      {
+        "region_iso": "MT-61",
+        "region_name_local": "Xagħra"
+      },
+      {
+        "region_iso": "MT-40",
+        "region_name_local": "Pembroke"
+      },
+      {
+        "region_iso": "MT-19",
+        "region_name_local": "Iklin"
+      },
+      {
+        "region_iso": "MT-62",
+        "region_name_local": "Xewkija"
+      },
+      {
+        "region_iso": "MT-41",
+        "region_name_local": "Pietà"
+      }
+    ]
+  },
+  {
+    "country_iso": "NL",
+    "country_name_local": "Netherlands",
+    "flag": "🇳🇱",
+    "regions": [
+      {
+        "region_iso": "NL-BQ2",
+        "region_name_local": "Saba"
+      },
+      {
+        "region_iso": "NL-ZH",
+        "region_name_local": "Zuid-Holland"
+      },
+      {
+        "region_iso": "NL-OV",
+        "region_name_local": "Overijssel"
+      },
+      {
+        "region_iso": "NL-GE",
+        "region_name_local": "Gelderland"
+      },
+      {
+        "region_iso": "NL-BQ3",
+        "region_name_local": "Sint Eustatius"
+      },
+      {
+        "region_iso": "NL-SX",
+        "region_name_local": "Sint Maarten"
+      },
+      {
+        "region_iso": "NL-GR",
+        "region_name_local": "Groningen"
+      },
+      {
+        "region_iso": "NL-CW",
+        "region_name_local": "Curaçao"
+      },
+      {
+        "region_iso": "NL-UT",
+        "region_name_local": "Utrecht"
+      },
+      {
+        "region_iso": "NL-LI",
+        "region_name_local": "Limburg"
+      },
+      {
+        "region_iso": "NL-DR",
+        "region_name_local": "Drenthe"
+      },
+      {
+        "region_iso": "NL-AW",
+        "region_name_local": "Aruba"
+      },
+      {
+        "region_iso": "NL-ZE",
+        "region_name_local": "Zeeland"
+      },
+      {
+        "region_iso": "NL-NB",
+        "region_name_local": "Noord-Brabant"
+      },
+      {
+        "region_iso": "NL-FL",
+        "region_name_local": "Flevoland"
+      },
+      {
+        "region_iso": "NL-BQ1",
+        "region_name_local": "Bonaire"
+      },
+      {
+        "region_iso": "NL-NH",
+        "region_name_local": "Noord-Holland"
+      },
+      {
+        "region_iso": "NL-FR",
+        "region_name_local": "Fryslân"
+      }
+    ]
+  },
+  {
+    "country_iso": "PL",
+    "country_name_local": "Poland",
+    "flag": "🇵🇱",
+    "regions": [
+      {
+        "region_iso": "PL-30",
+        "region_name_local": "Wielkopolskie"
+      },
+      {
+        "region_iso": "PL-20",
+        "region_name_local": "Podlaskie"
+      },
+      {
+        "region_iso": "PL-10",
+        "region_name_local": "Łódzkie"
+      },
+      {
+        "region_iso": "PL-32",
+        "region_name_local": "Zachodniopomorskie"
+      },
+      {
+        "region_iso": "PL-22",
+        "region_name_local": "Pomorskie"
+      },
+      {
+        "region_iso": "PL-12",
+        "region_name_local": "Małopolskie"
+      },
+      {
+        "region_iso": "PL-02",
+        "region_name_local": "Dolnośląskie"
+      },
+      {
+        "region_iso": "PL-24",
+        "region_name_local": "Śląskie"
+      },
+      {
+        "region_iso": "PL-14",
+        "region_name_local": "Mazowieckie"
+      },
+      {
+        "region_iso": "PL-04",
+        "region_name_local": "Kujawsko-Pomorskie"
+      },
+      {
+        "region_iso": "PL-26",
+        "region_name_local": "Świętokrzyskie"
+      },
+      {
+        "region_iso": "PL-16",
+        "region_name_local": "Opolskie"
+      },
+      {
+        "region_iso": "PL-06",
+        "region_name_local": "Lubelskie"
+      },
+      {
+        "region_iso": "PL-28",
+        "region_name_local": "Warmińsko-Mazurskie"
+      },
+      {
+        "region_iso": "PL-18",
+        "region_name_local": "Podkarpackie"
+      },
+      {
+        "region_iso": "PL-08",
+        "region_name_local": "Lubuskie"
+      }
+    ]
+  },
+  {
+    "country_iso": "PT",
+    "country_name_local": "Portugal",
+    "flag": "🇵🇹",
+    "regions": [
+      {
+        "region_iso": "PT-05",
+        "region_name_local": "Castelo Branco"
+      },
+      {
+        "region_iso": "PT-06",
+        "region_name_local": "Coimbra"
+      },
+      {
+        "region_iso": "PT-07",
+        "region_name_local": "Évora"
+      },
+      {
+        "region_iso": "PT-08",
+        "region_name_local": "Faro"
+      },
+      {
+        "region_iso": "PT-09",
+        "region_name_local": "Guarda"
+      },
+      {
+        "region_iso": "PT-10",
+        "region_name_local": "Leiria"
+      },
+      {
+        "region_iso": "PT-11",
+        "region_name_local": "Lisboa"
+      },
+      {
+        "region_iso": "PT-12",
+        "region_name_local": "Portalegre"
+      },
+      {
+        "region_iso": "PT-13",
+        "region_name_local": "Porto"
+      },
+      {
+        "region_iso": "PT-14",
+        "region_name_local": "Santarém"
+      },
+      {
+        "region_iso": "PT-15",
+        "region_name_local": "Setúbal"
+      },
+      {
+        "region_iso": "PT-16",
+        "region_name_local": "Viana do Castelo"
+      },
+      {
+        "region_iso": "PT-17",
+        "region_name_local": "Vila Real"
+      },
+      {
+        "region_iso": "PT-18",
+        "region_name_local": "Viseu"
+      },
+      {
+        "region_iso": "PT-20",
+        "region_name_local": "Região Autónoma dos Açores"
+      },
+      {
+        "region_iso": "PT-30",
+        "region_name_local": "Região Autónoma da Madeira"
+      },
+      {
+        "region_iso": "PT-01",
+        "region_name_local": "Aveiro"
+      },
+      {
+        "region_iso": "PT-02",
+        "region_name_local": "Beja"
+      },
+      {
+        "region_iso": "PT-03",
+        "region_name_local": "Braga"
+      },
+      {
+        "region_iso": "PT-04",
+        "region_name_local": "Bragança"
+      }
+    ]
+  },
+  {
+    "country_iso": "RO",
+    "country_name_local": "Romania",
+    "flag": "🇷🇴",
+    "regions": [
+      {
+        "region_iso": "RO-MM",
+        "region_name_local": "Maramureș"
+      },
+      {
+        "region_iso": "RO-BN",
+        "region_name_local": "Bistrița-Năsăud"
+      },
+      {
+        "region_iso": "RO-MS",
+        "region_name_local": "Mureș"
+      },
+      {
+        "region_iso": "RO-BR",
+        "region_name_local": "Brăila"
+      },
+      {
+        "region_iso": "RO-NT",
+        "region_name_local": "Neamț"
+      },
+      {
+        "region_iso": "RO-BT",
+        "region_name_local": "Botoșani"
+      },
+      {
+        "region_iso": "RO-OT",
+        "region_name_local": "Olt"
+      },
+      {
+        "region_iso": "RO-BV",
+        "region_name_local": "Brașov"
+      },
+      {
+        "region_iso": "RO-PH",
+        "region_name_local": "Prahova"
+      },
+      {
+        "region_iso": "RO-BZ",
+        "region_name_local": "Buzău"
+      },
+      {
+        "region_iso": "RO-SB",
+        "region_name_local": "Sibiu"
+      },
+      {
+        "region_iso": "RO-CJ",
+        "region_name_local": "Cluj"
+      },
+      {
+        "region_iso": "RO-SJ",
+        "region_name_local": "Sălaj"
+      },
+      {
+        "region_iso": "RO-CL",
+        "region_name_local": "Călărași"
+      },
+      {
+        "region_iso": "RO-SM",
+        "region_name_local": "Satu Mare"
+      },
+      {
+        "region_iso": "RO-CS",
+        "region_name_local": "Caraș-Severin"
+      },
+      {
+        "region_iso": "RO-SV",
+        "region_name_local": "Suceava"
+      },
+      {
+        "region_iso": "RO-CT",
+        "region_name_local": "Constanța"
+      },
+      {
+        "region_iso": "RO-TL",
+        "region_name_local": "Tulcea"
+      },
+      {
+        "region_iso": "RO-CV",
+        "region_name_local": "Covasna"
+      },
+      {
+        "region_iso": "RO-TM",
+        "region_name_local": "Timiș"
+      },
+      {
+        "region_iso": "RO-DB",
+        "region_name_local": "Dâmbovița"
+      },
+      {
+        "region_iso": "RO-TR",
+        "region_name_local": "Teleorman"
+      },
+      {
+        "region_iso": "RO-DJ",
+        "region_name_local": "Dolj"
+      },
+      {
+        "region_iso": "RO-VL",
+        "region_name_local": "Vâlcea"
+      },
+      {
+        "region_iso": "RO-GJ",
+        "region_name_local": "Gorj"
+      },
+      {
+        "region_iso": "RO-VN",
+        "region_name_local": "Vrancea"
+      },
+      {
+        "region_iso": "RO-GL",
+        "region_name_local": "Galați"
+      },
+      {
+        "region_iso": "RO-VS",
+        "region_name_local": "Vaslui"
+      },
+      {
+        "region_iso": "RO-GR",
+        "region_name_local": "Giurgiu"
+      },
+      {
+        "region_iso": "RO-HD",
+        "region_name_local": "Hunedoara"
+      },
+      {
+        "region_iso": "RO-AB",
+        "region_name_local": "Alba"
+      },
+      {
+        "region_iso": "RO-HR",
+        "region_name_local": "Harghita"
+      },
+      {
+        "region_iso": "RO-AG",
+        "region_name_local": "Argeș"
+      },
+      {
+        "region_iso": "RO-IF",
+        "region_name_local": "Ilfov"
+      },
+      {
+        "region_iso": "RO-AR",
+        "region_name_local": "Arad"
+      },
+      {
+        "region_iso": "RO-IL",
+        "region_name_local": "Ialomița"
+      },
+      {
+        "region_iso": "RO-B",
+        "region_name_local": "București"
+      },
+      {
+        "region_iso": "RO-IS",
+        "region_name_local": "Iași"
+      },
+      {
+        "region_iso": "RO-BC",
+        "region_name_local": "Bacău"
+      },
+      {
+        "region_iso": "RO-MH",
+        "region_name_local": "Mehedinți"
+      },
+      {
+        "region_iso": "RO-BH",
+        "region_name_local": "Bihor"
+      }
+    ]
+  },
+  {
+    "country_iso": "SK",
+    "country_name_local": "Slovakia",
+    "flag": "🇸🇰",
+    "regions": [
+      {
+        "region_iso": "SK-ZI",
+        "region_name_local": "Žilinský kraj"
+      },
+      {
+        "region_iso": "SK-KI",
+        "region_name_local": "Košický kraj"
+      },
+      {
+        "region_iso": "SK-NI",
+        "region_name_local": "Nitriansky kraj"
+      },
+      {
+        "region_iso": "SK-PV",
+        "region_name_local": "Prešovský kraj"
+      },
+      {
+        "region_iso": "SK-TA",
+        "region_name_local": "Trnavský kraj"
+      },
+      {
+        "region_iso": "SK-BC",
+        "region_name_local": "Banskobystrický kraj"
+      },
+      {
+        "region_iso": "SK-TC",
+        "region_name_local": "Trenčiansky kraj"
+      },
+      {
+        "region_iso": "SK-BL",
+        "region_name_local": "Bratislavský kraj"
+      }
+    ]
+  },
+  {
+    "country_iso": "SI",
+    "country_name_local": "Slovenia",
+    "flag": "🇸🇮",
+    "regions": [
+      {
+        "region_iso": "SI-045",
+        "region_name_local": "Kidričevo"
+      },
+      {
+        "region_iso": "SI-130",
+        "region_name_local": "Trebnje"
+      },
+      {
+        "region_iso": "SI-046",
+        "region_name_local": "Kobarid"
+      },
+      {
+        "region_iso": "SI-131",
+        "region_name_local": "Tržič"
+      },
+      {
+        "region_iso": "SI-047",
+        "region_name_local": "Kobilje"
+      },
+      {
+        "region_iso": "SI-132",
+        "region_name_local": "Turnišče"
+      },
+      {
+        "region_iso": "SI-048",
+        "region_name_local": "Kočevje"
+      },
+      {
+        "region_iso": "SI-133",
+        "region_name_local": "Velenje"
+      },
+      {
+        "region_iso": "SI-049",
+        "region_name_local": "Komen"
+      },
+      {
+        "region_iso": "SI-134",
+        "region_name_local": "Velike Lašče"
+      },
+      {
+        "region_iso": "SI-050",
+        "region_name_local": "Koper"
+      },
+      {
+        "region_iso": "SI-135",
+        "region_name_local": "Videm"
+      },
+      {
+        "region_iso": "SI-051",
+        "region_name_local": "Kozje"
+      },
+      {
+        "region_iso": "SI-136",
+        "region_name_local": "Vipava"
+      },
+      {
+        "region_iso": "SI-052",
+        "region_name_local": "Kranj"
+      },
+      {
+        "region_iso": "SI-137",
+        "region_name_local": "Vitanje"
+      },
+      {
+        "region_iso": "SI-053",
+        "region_name_local": "Kranjska Gora"
+      },
+      {
+        "region_iso": "SI-138",
+        "region_name_local": "Vodice"
+      },
+      {
+        "region_iso": "SI-054",
+        "region_name_local": "Krško"
+      },
+      {
+        "region_iso": "SI-139",
+        "region_name_local": "Vojnik"
+      },
+      {
+        "region_iso": "SI-055",
+        "region_name_local": "Kungota"
+      },
+      {
+        "region_iso": "SI-140",
+        "region_name_local": "Vrhnika"
+      },
+      {
+        "region_iso": "SI-056",
+        "region_name_local": "Kuzma"
+      },
+      {
+        "region_iso": "SI-141",
+        "region_name_local": "Vuzenica"
+      },
+      {
+        "region_iso": "SI-057",
+        "region_name_local": "Laško"
+      },
+      {
+        "region_iso": "SI-142",
+        "region_name_local": "Zagorje ob Savi"
+      },
+      {
+        "region_iso": "SI-058",
+        "region_name_local": "Lenart"
+      },
+      {
+        "region_iso": "SI-143",
+        "region_name_local": "Zavrč"
+      },
+      {
+        "region_iso": "SI-059",
+        "region_name_local": "Lendava"
+      },
+      {
+        "region_iso": "SI-144",
+        "region_name_local": "Zreče"
+      },
+      {
+        "region_iso": "SI-060",
+        "region_name_local": "Litija"
+      },
+      {
+        "region_iso": "SI-146",
+        "region_name_local": "Železniki"
+      },
+      {
+        "region_iso": "SI-061",
+        "region_name_local": "Ljubljana"
+      },
+      {
+        "region_iso": "SI-147",
+        "region_name_local": "Žiri"
+      },
+      {
+        "region_iso": "SI-062",
+        "region_name_local": "Ljubno"
+      },
+      {
+        "region_iso": "SI-148",
+        "region_name_local": "Benedikt"
+      },
+      {
+        "region_iso": "SI-063",
+        "region_name_local": "Ljutomer"
+      },
+      {
+        "region_iso": "SI-149",
+        "region_name_local": "Bistrica ob Sotli"
+      },
+      {
+        "region_iso": "SI-064",
+        "region_name_local": "Logatec"
+      },
+      {
+        "region_iso": "SI-150",
+        "region_name_local": "Bloke"
+      },
+      {
+        "region_iso": "SI-065",
+        "region_name_local": "Loška dolina"
+      },
+      {
+        "region_iso": "SI-151",
+        "region_name_local": "Braslovče"
+      },
+      {
+        "region_iso": "SI-066",
+        "region_name_local": "Loški Potok"
+      },
+      {
+        "region_iso": "SI-152",
+        "region_name_local": "Cankova"
+      },
+      {
+        "region_iso": "SI-067",
+        "region_name_local": "Luče"
+      },
+      {
+        "region_iso": "SI-153",
+        "region_name_local": "Cerkvenjak"
+      },
+      {
+        "region_iso": "SI-068",
+        "region_name_local": "Lukovica"
+      },
+      {
+        "region_iso": "SI-154",
+        "region_name_local": "Dobje"
+      },
+      {
+        "region_iso": "SI-069",
+        "region_name_local": "Majšperk"
+      },
+      {
+        "region_iso": "SI-155",
+        "region_name_local": "Dobrna"
+      },
+      {
+        "region_iso": "SI-070",
+        "region_name_local": "Maribor"
+      },
+      {
+        "region_iso": "SI-156",
+        "region_name_local": "Dobrovnik"
+      },
+      {
+        "region_iso": "SI-071",
+        "region_name_local": "Medvode"
+      },
+      {
+        "region_iso": "SI-157",
+        "region_name_local": "Dolenjske Toplice"
+      },
+      {
+        "region_iso": "SI-072",
+        "region_name_local": "Mengeš"
+      },
+      {
+        "region_iso": "SI-158",
+        "region_name_local": "Grad"
+      },
+      {
+        "region_iso": "SI-073",
+        "region_name_local": "Metlika"
+      },
+      {
+        "region_iso": "SI-159",
+        "region_name_local": "Hajdina"
+      },
+      {
+        "region_iso": "SI-074",
+        "region_name_local": "Mežica"
+      },
+      {
+        "region_iso": "SI-160",
+        "region_name_local": "Hoče-Slivnica"
+      },
+      {
+        "region_iso": "SI-075",
+        "region_name_local": "Miren-Kostanjevica"
+      },
+      {
+        "region_iso": "SI-161",
+        "region_name_local": "Hodoš"
+      },
+      {
+        "region_iso": "SI-076",
+        "region_name_local": "Mislinja"
+      },
+      {
+        "region_iso": "SI-162",
+        "region_name_local": "Horjul"
+      },
+      {
+        "region_iso": "SI-077",
+        "region_name_local": "Moravče"
+      },
+      {
+        "region_iso": "SI-163",
+        "region_name_local": "Jezersko"
+      },
+      {
+        "region_iso": "SI-078",
+        "region_name_local": "Moravske Toplice"
+      },
+      {
+        "region_iso": "SI-164",
+        "region_name_local": "Komenda"
+      },
+      {
+        "region_iso": "SI-079",
+        "region_name_local": "Mozirje"
+      },
+      {
+        "region_iso": "SI-165",
+        "region_name_local": "Kostel"
+      },
+      {
+        "region_iso": "SI-080",
+        "region_name_local": "Murska Sobota"
+      },
+      {
+        "region_iso": "SI-166",
+        "region_name_local": "Križevci"
+      },
+      {
+        "region_iso": "SI-081",
+        "region_name_local": "Muta"
+      },
+      {
+        "region_iso": "SI-167",
+        "region_name_local": "Lovrenc na Pohorju"
+      },
+      {
+        "region_iso": "SI-082",
+        "region_name_local": "Naklo"
+      },
+      {
+        "region_iso": "SI-168",
+        "region_name_local": "Markovci"
+      },
+      {
+        "region_iso": "SI-083",
+        "region_name_local": "Nazarje"
+      },
+      {
+        "region_iso": "SI-169",
+        "region_name_local": "Miklavž na Dravskem polju"
+      },
+      {
+        "region_iso": "SI-084",
+        "region_name_local": "Nova Gorica"
+      },
+      {
+        "region_iso": "SI-170",
+        "region_name_local": "Mirna Peč"
+      },
+      {
+        "region_iso": "SI-085",
+        "region_name_local": "Novo Mesto"
+      },
+      {
+        "region_iso": "SI-171",
+        "region_name_local": "Oplotnica"
+      },
+      {
+        "region_iso": "SI-086",
+        "region_name_local": "Odranci"
+      },
+      {
+        "region_iso": "SI-001",
+        "region_name_local": "Ajdovščina"
+      },
+      {
+        "region_iso": "SI-172",
+        "region_name_local": "Podlehnik"
+      },
+      {
+        "region_iso": "SI-087",
+        "region_name_local": "Ormož"
+      },
+      {
+        "region_iso": "SI-002",
+        "region_name_local": "Beltinci"
+      },
+      {
+        "region_iso": "SI-173",
+        "region_name_local": "Polzela"
+      },
+      {
+        "region_iso": "SI-088",
+        "region_name_local": "Osilnica"
+      },
+      {
+        "region_iso": "SI-003",
+        "region_name_local": "Bled"
+      },
+      {
+        "region_iso": "SI-174",
+        "region_name_local": "Prebold"
+      },
+      {
+        "region_iso": "SI-089",
+        "region_name_local": "Pesnica"
+      },
+      {
+        "region_iso": "SI-004",
+        "region_name_local": "Bohinj"
+      },
+      {
+        "region_iso": "SI-175",
+        "region_name_local": "Prevalje"
+      },
+      {
+        "region_iso": "SI-090",
+        "region_name_local": "Piran"
+      },
+      {
+        "region_iso": "SI-005",
+        "region_name_local": "Borovnica"
+      },
+      {
+        "region_iso": "SI-176",
+        "region_name_local": "Razkrižje"
+      },
+      {
+        "region_iso": "SI-091",
+        "region_name_local": "Pivka"
+      },
+      {
+        "region_iso": "SI-006",
+        "region_name_local": "Bovec"
+      },
+      {
+        "region_iso": "SI-177",
+        "region_name_local": "Ribnica na Pohorju"
+      },
+      {
+        "region_iso": "SI-092",
+        "region_name_local": "Podčetrtek"
+      },
+      {
+        "region_iso": "SI-007",
+        "region_name_local": "Brda"
+      },
+      {
+        "region_iso": "SI-178",
+        "region_name_local": "Selnica ob Dravi"
+      },
+      {
+        "region_iso": "SI-093",
+        "region_name_local": "Podvelka"
+      },
+      {
+        "region_iso": "SI-008",
+        "region_name_local": "Brezovica"
+      },
+      {
+        "region_iso": "SI-179",
+        "region_name_local": "Sodražica"
+      },
+      {
+        "region_iso": "SI-094",
+        "region_name_local": "Postojna"
+      },
+      {
+        "region_iso": "SI-009",
+        "region_name_local": "Brežice"
+      },
+      {
+        "region_iso": "SI-180",
+        "region_name_local": "Solčava"
+      },
+      {
+        "region_iso": "SI-095",
+        "region_name_local": "Preddvor"
+      },
+      {
+        "region_iso": "SI-010",
+        "region_name_local": "Tišina"
+      },
+      {
+        "region_iso": "SI-181",
+        "region_name_local": "Sveta Ana"
+      },
+      {
+        "region_iso": "SI-096",
+        "region_name_local": "Ptuj"
+      },
+      {
+        "region_iso": "SI-011",
+        "region_name_local": "Celje"
+      },
+      {
+        "region_iso": "SI-182",
+        "region_name_local": "Sveti Andraž v Slovenskih goricah"
+      },
+      {
+        "region_iso": "SI-097",
+        "region_name_local": "Puconci"
+      },
+      {
+        "region_iso": "SI-012",
+        "region_name_local": "Cerklje na Gorenjskem"
+      },
+      {
+        "region_iso": "SI-183",
+        "region_name_local": "Šempeter-Vrtojba"
+      },
+      {
+        "region_iso": "SI-098",
+        "region_name_local": "Rače-Fram"
+      },
+      {
+        "region_iso": "SI-013",
+        "region_name_local": "Cerknica"
+      },
+      {
+        "region_iso": "SI-184",
+        "region_name_local": "Tabor"
+      },
+      {
+        "region_iso": "SI-099",
+        "region_name_local": "Radeče"
+      },
+      {
+        "region_iso": "SI-014",
+        "region_name_local": "Cerkno"
+      },
+      {
+        "region_iso": "SI-185",
+        "region_name_local": "Trnovska Vas"
+      },
+      {
+        "region_iso": "SI-100",
+        "region_name_local": "Radenci"
+      },
+      {
+        "region_iso": "SI-015",
+        "region_name_local": "Črenšovci"
+      },
+      {
+        "region_iso": "SI-186",
+        "region_name_local": "Trzin"
+      },
+      {
+        "region_iso": "SI-101",
+        "region_name_local": "Radlje ob Dravi"
+      },
+      {
+        "region_iso": "SI-016",
+        "region_name_local": "Črna na Koroškem"
+      },
+      {
+        "region_iso": "SI-187",
+        "region_name_local": "Velika Polana"
+      },
+      {
+        "region_iso": "SI-102",
+        "region_name_local": "Radovljica"
+      },
+      {
+        "region_iso": "SI-017",
+        "region_name_local": "Črnomelj"
+      },
+      {
+        "region_iso": "SI-188",
+        "region_name_local": "Veržej"
+      },
+      {
+        "region_iso": "SI-103",
+        "region_name_local": "Ravne na Koroškem"
+      },
+      {
+        "region_iso": "SI-018",
+        "region_name_local": "Destrnik"
+      },
+      {
+        "region_iso": "SI-189",
+        "region_name_local": "Vransko"
+      },
+      {
+        "region_iso": "SI-104",
+        "region_name_local": "Ribnica"
+      },
+      {
+        "region_iso": "SI-019",
+        "region_name_local": "Divača"
+      },
+      {
+        "region_iso": "SI-190",
+        "region_name_local": "Žalec"
+      },
+      {
+        "region_iso": "SI-105",
+        "region_name_local": "Rogašovci"
+      },
+      {
+        "region_iso": "SI-020",
+        "region_name_local": "Dobrepolje"
+      },
+      {
+        "region_iso": "SI-191",
+        "region_name_local": "Žetale"
+      },
+      {
+        "region_iso": "SI-106",
+        "region_name_local": "Rogaška Slatina"
+      },
+      {
+        "region_iso": "SI-021",
+        "region_name_local": "Dobrova-Polhov Gradec"
+      },
+      {
+        "region_iso": "SI-192",
+        "region_name_local": "Žirovnica"
+      },
+      {
+        "region_iso": "SI-107",
+        "region_name_local": "Rogatec"
+      },
+      {
+        "region_iso": "SI-022",
+        "region_name_local": "Dol pri Ljubljani"
+      },
+      {
+        "region_iso": "SI-193",
+        "region_name_local": "Žužemberk"
+      },
+      {
+        "region_iso": "SI-108",
+        "region_name_local": "Ruše"
+      },
+      {
+        "region_iso": "SI-023",
+        "region_name_local": "Domžale"
+      },
+      {
+        "region_iso": "SI-194",
+        "region_name_local": "Šmartno pri Litiji"
+      },
+      {
+        "region_iso": "SI-109",
+        "region_name_local": "Semič"
+      },
+      {
+        "region_iso": "SI-024",
+        "region_name_local": "Dornava"
+      },
+      {
+        "region_iso": "SI-195",
+        "region_name_local": "Apače"
+      },
+      {
+        "region_iso": "SI-110",
+        "region_name_local": "Sevnica"
+      },
+      {
+        "region_iso": "SI-025",
+        "region_name_local": "Dravograd"
+      },
+      {
+        "region_iso": "SI-196",
+        "region_name_local": "Cirkulane"
+      },
+      {
+        "region_iso": "SI-111",
+        "region_name_local": "Sežana"
+      },
+      {
+        "region_iso": "SI-026",
+        "region_name_local": "Duplek"
+      },
+      {
+        "region_iso": "SI-197",
+        "region_name_local": "Kostanjevica na Krki"
+      },
+      {
+        "region_iso": "SI-112",
+        "region_name_local": "Slovenj Gradec"
+      },
+      {
+        "region_iso": "SI-027",
+        "region_name_local": "Gorenja vas-Poljane"
+      },
+      {
+        "region_iso": "SI-198",
+        "region_name_local": "Makole"
+      },
+      {
+        "region_iso": "SI-113",
+        "region_name_local": "Slovenska Bistrica"
+      },
+      {
+        "region_iso": "SI-028",
+        "region_name_local": "Gorišnica"
+      },
+      {
+        "region_iso": "SI-199",
+        "region_name_local": "Mokronog-Trebelno"
+      },
+      {
+        "region_iso": "SI-114",
+        "region_name_local": "Slovenske Konjice"
+      },
+      {
+        "region_iso": "SI-029",
+        "region_name_local": "Gornja Radgona"
+      },
+      {
+        "region_iso": "SI-200",
+        "region_name_local": "Poljčane"
+      },
+      {
+        "region_iso": "SI-115",
+        "region_name_local": "Starše"
+      },
+      {
+        "region_iso": "SI-030",
+        "region_name_local": "Gornji Grad"
+      },
+      {
+        "region_iso": "SI-201",
+        "region_name_local": "Renče-Vogrsko"
+      },
+      {
+        "region_iso": "SI-116",
+        "region_name_local": "Sveti Jurij ob Ščavnici"
+      },
+      {
+        "region_iso": "SI-031",
+        "region_name_local": "Gornji Petrovci"
+      },
+      {
+        "region_iso": "SI-202",
+        "region_name_local": "Središče ob Dravi"
+      },
+      {
+        "region_iso": "SI-117",
+        "region_name_local": "Šenčur"
+      },
+      {
+        "region_iso": "SI-032",
+        "region_name_local": "Grosuplje"
+      },
+      {
+        "region_iso": "SI-203",
+        "region_name_local": "Straža"
+      },
+      {
+        "region_iso": "SI-118",
+        "region_name_local": "Šentilj"
+      },
+      {
+        "region_iso": "SI-033",
+        "region_name_local": "Šalovci"
+      },
+      {
+        "region_iso": "SI-204",
+        "region_name_local": "Sveta Trojica v Slovenskih goricah"
+      },
+      {
+        "region_iso": "SI-119",
+        "region_name_local": "Šentjernej"
+      },
+      {
+        "region_iso": "SI-034",
+        "region_name_local": "Hrastnik"
+      },
+      {
+        "region_iso": "SI-205",
+        "region_name_local": "Sveti Tomaž"
+      },
+      {
+        "region_iso": "SI-120",
+        "region_name_local": "Šentjur"
+      },
+      {
+        "region_iso": "SI-035",
+        "region_name_local": "Hrpelje-Kozina"
+      },
+      {
+        "region_iso": "SI-206",
+        "region_name_local": "Šmarješke Toplice"
+      },
+      {
+        "region_iso": "SI-121",
+        "region_name_local": "Škocjan"
+      },
+      {
+        "region_iso": "SI-036",
+        "region_name_local": "Idrija"
+      },
+      {
+        "region_iso": "SI-207",
+        "region_name_local": "Gorje"
+      },
+      {
+        "region_iso": "SI-122",
+        "region_name_local": "Škofja Loka"
+      },
+      {
+        "region_iso": "SI-037",
+        "region_name_local": "Ig"
+      },
+      {
+        "region_iso": "SI-208",
+        "region_name_local": "Log-Dragomer"
+      },
+      {
+        "region_iso": "SI-123",
+        "region_name_local": "Škofljica"
+      },
+      {
+        "region_iso": "SI-038",
+        "region_name_local": "Ilirska Bistrica"
+      },
+      {
+        "region_iso": "SI-209",
+        "region_name_local": "Rečica ob Savinji"
+      },
+      {
+        "region_iso": "SI-124",
+        "region_name_local": "Šmarje pri Jelšah"
+      },
+      {
+        "region_iso": "SI-039",
+        "region_name_local": "Ivančna Gorica"
+      },
+      {
+        "region_iso": "SI-210",
+        "region_name_local": "Sveti Jurij v Slovenskih goricah"
+      },
+      {
+        "region_iso": "SI-125",
+        "region_name_local": "Šmartno ob Paki"
+      },
+      {
+        "region_iso": "SI-040",
+        "region_name_local": "Izola"
+      },
+      {
+        "region_iso": "SI-211",
+        "region_name_local": "Šentrupert"
+      },
+      {
+        "region_iso": "SI-126",
+        "region_name_local": "Šoštanj"
+      },
+      {
+        "region_iso": "SI-041",
+        "region_name_local": "Jesenice"
+      },
+      {
+        "region_iso": "SI-212",
+        "region_name_local": "Mirna"
+      },
+      {
+        "region_iso": "SI-127",
+        "region_name_local": "Štore"
+      },
+      {
+        "region_iso": "SI-042",
+        "region_name_local": "Juršinci"
+      },
+      {
+        "region_iso": "SI-213",
+        "region_name_local": "Ankaran"
+      },
+      {
+        "region_iso": "SI-128",
+        "region_name_local": "Tolmin"
+      },
+      {
+        "region_iso": "SI-043",
+        "region_name_local": "Kamnik"
+      },
+      {
+        "region_iso": "SI-129",
+        "region_name_local": "Trbovlje"
+      },
+      {
+        "region_iso": "SI-044",
+        "region_name_local": "Kanal ob Soči"
+      }
+    ]
+  },
+  {
+    "country_iso": "ES",
+    "country_name_local": "Spain",
+    "flag": "🇪🇸",
+    "regions": [
+      {
+        "region_iso": "ES-VC",
+        "region_name_local": "Valenciana, Comunidad"
+      },
+      {
+        "region_iso": "ES-AL",
+        "region_name_local": "Almería"
+      },
+      {
+        "region_iso": "ES-NA",
+        "region_name_local": "Navarra"
+      },
+      {
+        "region_iso": "ES-CU",
+        "region_name_local": "Cuenca"
+      },
+      {
+        "region_iso": "ES-VI",
+        "region_name_local": "Álava"
+      },
+      {
+        "region_iso": "ES-AN",
+        "region_name_local": "Andalucía"
+      },
+      {
+        "region_iso": "ES-NC",
+        "region_name_local": "Navarra, Comunidad Foral de"
+      },
+      {
+        "region_iso": "ES-EX",
+        "region_name_local": "Extremadura"
+      },
+      {
+        "region_iso": "ES-Z",
+        "region_name_local": "Zaragoza"
+      },
+      {
+        "region_iso": "ES-AR",
+        "region_name_local": "Aragón"
+      },
+      {
+        "region_iso": "ES-O",
+        "region_name_local": "Asturias"
+      },
+      {
+        "region_iso": "ES-GA",
+        "region_name_local": "Galicia [Galicia]"
+      },
+      {
+        "region_iso": "ES-ZA",
+        "region_name_local": "Zamora"
+      },
+      {
+        "region_iso": "ES-AS",
+        "region_name_local": "Asturias, Principado de"
+      },
+      {
+        "region_iso": "ES-OR",
+        "region_name_local": "Ourense [Orense]"
+      },
+      {
+        "region_iso": "ES-GC",
+        "region_name_local": "Las Palmas"
+      },
+      {
+        "region_iso": "ES-ML",
+        "region_name_local": "Melilla"
+      },
+      {
+        "region_iso": "ES-AV",
+        "region_name_local": "Ávila"
+      },
+      {
+        "region_iso": "ES-P",
+        "region_name_local": "Palencia"
+      },
+      {
+        "region_iso": "ES-GI",
+        "region_name_local": "Girona [Gerona]"
+      },
+      {
+        "region_iso": "ES-B",
+        "region_name_local": "Barcelona [Barcelona]"
+      },
+      {
+        "region_iso": "ES-PM",
+        "region_name_local": "Illes Balears [Islas Baleares]"
+      },
+      {
+        "region_iso": "ES-GR",
+        "region_name_local": "Granada"
+      },
+      {
+        "region_iso": "ES-BA",
+        "region_name_local": "Badajoz"
+      },
+      {
+        "region_iso": "ES-PO",
+        "region_name_local": "Pontevedra [Pontevedra]"
+      },
+      {
+        "region_iso": "ES-GU",
+        "region_name_local": "Guadalajara"
+      },
+      {
+        "region_iso": "ES-BI",
+        "region_name_local": "Bizkaia"
+      },
+      {
+        "region_iso": "ES-PV",
+        "region_name_local": "País Vasco"
+      },
+      {
+        "region_iso": "ES-H",
+        "region_name_local": "Huelva"
+      },
+      {
+        "region_iso": "ES-VA",
+        "region_name_local": "Valladolid"
+      },
+      {
+        "region_iso": "ES-BU",
+        "region_name_local": "Burgos"
+      },
+      {
+        "region_iso": "ES-RI",
+        "region_name_local": "La Rioja"
+      },
+      {
+        "region_iso": "ES-HU",
+        "region_name_local": "Huesca"
+      },
+      {
+        "region_iso": "ES-MU",
+        "region_name_local": "Murcia"
+      },
+      {
+        "region_iso": "ES-C",
+        "region_name_local": "A Coruña [La Coruña]"
+      },
+      {
+        "region_iso": "ES-S",
+        "region_name_local": "Cantabria"
+      },
+      {
+        "region_iso": "ES-IB",
+        "region_name_local": "Illes Balears [Islas Baleares]"
+      },
+      {
+        "region_iso": "ES-CA",
+        "region_name_local": "Cádiz"
+      },
+      {
+        "region_iso": "ES-SA",
+        "region_name_local": "Salamanca"
+      },
+      {
+        "region_iso": "ES-J",
+        "region_name_local": "Jaén"
+      },
+      {
+        "region_iso": "ES-CB",
+        "region_name_local": "Cantabria"
+      },
+      {
+        "region_iso": "ES-SE",
+        "region_name_local": "Sevilla"
+      },
+      {
+        "region_iso": "ES-L",
+        "region_name_local": "Lleida [Lérida]"
+      },
+      {
+        "region_iso": "ES-CC",
+        "region_name_local": "Cáceres"
+      },
+      {
+        "region_iso": "ES-SG",
+        "region_name_local": "Segovia"
+      },
+      {
+        "region_iso": "ES-LE",
+        "region_name_local": "León"
+      },
+      {
+        "region_iso": "ES-CE",
+        "region_name_local": "Ceuta"
+      },
+      {
+        "region_iso": "ES-SO",
+        "region_name_local": "Soria"
+      },
+      {
+        "region_iso": "ES-LO",
+        "region_name_local": "La Rioja"
+      },
+      {
+        "region_iso": "ES-CL",
+        "region_name_local": "Castilla y León"
+      },
+      {
+        "region_iso": "ES-SS",
+        "region_name_local": "Gipuzkoa"
+      },
+      {
+        "region_iso": "ES-LU",
+        "region_name_local": "Lugo [Lugo]"
+      },
+      {
+        "region_iso": "ES-CM",
+        "region_name_local": "Castilla-La Mancha"
+      },
+      {
+        "region_iso": "ES-T",
+        "region_name_local": "Tarragona [Tarragona]"
+      },
+      {
+        "region_iso": "ES-M",
+        "region_name_local": "Madrid"
+      },
+      {
+        "region_iso": "ES-CN",
+        "region_name_local": "Canarias"
+      },
+      {
+        "region_iso": "ES-TE",
+        "region_name_local": "Teruel"
+      },
+      {
+        "region_iso": "ES-MA",
+        "region_name_local": "Málaga"
+      },
+      {
+        "region_iso": "ES-CO",
+        "region_name_local": "Córdoba"
+      },
+      {
+        "region_iso": "ES-TF",
+        "region_name_local": "Santa Cruz de Tenerife"
+      },
+      {
+        "region_iso": "ES-MC",
+        "region_name_local": "Murcia, Región de"
+      },
+      {
+        "region_iso": "ES-CR",
+        "region_name_local": "Ciudad Real"
+      },
+      {
+        "region_iso": "ES-TO",
+        "region_name_local": "Toledo"
+      },
+      {
+        "region_iso": "ES-MD",
+        "region_name_local": "Madrid, Comunidad de"
+      },
+      {
+        "region_iso": "ES-CS",
+        "region_name_local": "Castellón"
+      },
+      {
+        "region_iso": "ES-V",
+        "region_name_local": "Valencia"
+      },
+      {
+        "region_iso": "ES-A",
+        "region_name_local": "Alicante"
+      },
+      {
+        "region_iso": "ES-CT",
+        "region_name_local": "Catalunya [Cataluña]"
+      },
+      {
+        "region_iso": "ES-AB",
+        "region_name_local": "Albacete"
+      }
+    ]
+  },
+  {
+    "country_iso": "SE",
+    "country_name_local": "Sweden",
+    "flag": "🇸🇪",
+    "regions": [
+      {
+        "region_iso": "SE-I",
+        "region_name_local": "Gotlands län [SE-09]"
+      },
+      {
+        "region_iso": "SE-K",
+        "region_name_local": "Blekinge län [SE-10]"
+      },
+      {
+        "region_iso": "SE-M",
+        "region_name_local": "Skåne län [SE-12]"
+      },
+      {
+        "region_iso": "SE-N",
+        "region_name_local": "Hallands län [SE-13]"
+      },
+      {
+        "region_iso": "SE-O",
+        "region_name_local": "Västra Götalands län [SE-14]"
+      },
+      {
+        "region_iso": "SE-S",
+        "region_name_local": "Värmlands län [SE-17]"
+      },
+      {
+        "region_iso": "SE-T",
+        "region_name_local": "Örebro län [SE-18]"
+      },
+      {
+        "region_iso": "SE-U",
+        "region_name_local": "Västmanlands län [SE-19]"
+      },
+      {
+        "region_iso": "SE-W",
+        "region_name_local": "Dalarnas län [SE-20]"
+      },
+      {
+        "region_iso": "SE-X",
+        "region_name_local": "Gävleborgs län [SE-21]"
+      },
+      {
+        "region_iso": "SE-Y",
+        "region_name_local": "Västernorrlands län [SE-22]"
+      },
+      {
+        "region_iso": "SE-Z",
+        "region_name_local": "Jämtlands län [SE-23]"
+      },
+      {
+        "region_iso": "SE-AB",
+        "region_name_local": "Stockholms län [SE-01]"
+      },
+      {
+        "region_iso": "SE-AC",
+        "region_name_local": "Västerbottens län [SE-24]"
+      },
+      {
+        "region_iso": "SE-BD",
+        "region_name_local": "Norrbottens län [SE-25]"
+      },
+      {
+        "region_iso": "SE-C",
+        "region_name_local": "Uppsala län [SE-03]"
+      },
+      {
+        "region_iso": "SE-D",
+        "region_name_local": "Södermanlands län [SE-04]"
+      },
+      {
+        "region_iso": "SE-E",
+        "region_name_local": "Östergötlands län [SE-05]"
+      },
+      {
+        "region_iso": "SE-F",
+        "region_name_local": "Jönköpings län [SE-06]"
+      },
+      {
+        "region_iso": "SE-G",
+        "region_name_local": "Kronobergs län [SE-07]"
+      },
+      {
+        "region_iso": "SE-H",
+        "region_name_local": "Kalmar län [SE-08]"
+      }
+    ]
+  }
+]

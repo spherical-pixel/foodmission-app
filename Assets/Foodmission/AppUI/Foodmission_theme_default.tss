@@ -7,4 +7,8 @@
 @import url("AppUIIcons.uss");
 @import url("Foodmission_AppUIIcons.uss");
 
-VisualElement {}
+/* Fuente Roboto como default para todo */
+VisualElement {
+    -unity-font-definition: url("project://database/Assets/Foodmission/Resources/Fonts%20&%20Materials/Roboto-VariableFont_wdth,wght.ttf");
+}
+
