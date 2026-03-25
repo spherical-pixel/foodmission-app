@@ -15,10 +15,8 @@ namespace eu.foodmission.platform
     {
         private readonly IAuthService _authService;
 
-        // Datos de países cargados desde JSON
+        // Country data loaded from JSON
         private List<CountryData> _countriesData = new();
-
-        private string _errorMessage = "";
 
         [ObservableProperty]
         private string _username = "";
@@ -42,28 +40,66 @@ namespace eu.foodmission.platform
         private string _password = "";
 
         [ObservableProperty]
+        private string _passwordHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _passwordHelpTextVariant = HelpTextVariant.Default;
+
+        [ObservableProperty]
         private int _yearOfBirth = 0;
+
+        [ObservableProperty]
+        private string _yearOfBirthHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _yearOfBirthHelpTextVariant = HelpTextVariant.Default;
 
         [ObservableProperty]
         private int _selectedCountryIndex = -1;
 
         [ObservableProperty]
+        private string _countryHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _countryHelpTextVariant = HelpTextVariant.Default;
+
+        [ObservableProperty]
         private int _selectedRegionIndex = -1;
+
+        [ObservableProperty]
+        private string _regionHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _regionHelpTextVariant = HelpTextVariant.Default;
 
         [ObservableProperty]
         private string _postalCode = "";
 
+        [ObservableProperty]
+        private string _postalCodeHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _postalCodeHelpTextVariant = HelpTextVariant.Default;
+
+        [ObservableProperty]
+        private CheckboxState _hasAcceptedTerms = CheckboxState.Unchecked;
+
+        [ObservableProperty]
+        private string _termsHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _termsHelpTextVariant = HelpTextVariant.Default;
+
         /// <summary>
-        /// Lista de opciones de países para el dropdown (formato: "🇦🇹 Austria")
+        /// Country dropdown options list (format: "🇦🇹 Austria")
         /// </summary>
         public List<string> CountryOptions { get; private set; } = new();
 
         /// <summary>
-        /// Lista de opciones de regiones para el país seleccionado
+        /// Region options list for the selected country
         /// </summary>
         public List<string> RegionOptions { get; private set; } = new();
 
-        
         public event System.Action<string> ShowErrorRequest;
 
         public RegisterViewModel(IAuthService authService, IStoreService storeService) : base(storeService)
@@ -72,24 +108,14 @@ namespace eu.foodmission.platform
 
             LoadCountriesData();
 
-            AppState state = _storeService.GetAppState();
-            SynchronizeState(state);
-
             _storeSubscription = _store.Subscribe(
                 SelectAuthState,
                 OnAuthStateChanged
             );
-
         }
 
-        
-
-
-
-
-
         /// <summary>
-        /// Carga los datos de países desde el JSON en Resources
+        /// Loads country data from the JSON in Resources
         /// </summary>
         private void LoadCountriesData()
         {
@@ -113,7 +139,7 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Actualiza las regiones disponibles según el país seleccionado
+        /// Updates available regions based on the selected country
         /// </summary>
         public void UpdateRegionsForSelectedCountry()
         {
@@ -133,7 +159,7 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Obtiene el código ISO del país seleccionado
+        /// Gets the ISO code of the selected country
         /// </summary>
         public string GetSelectedCountryIso()
         {
@@ -143,7 +169,7 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Obtiene el código ISO de la región seleccionada
+        /// Gets the ISO code of the selected region
         /// </summary>
         public string GetSelectedRegionIso()
         {
@@ -177,128 +203,221 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void SynchronizeState(AppState state)
-        {
-            // IsLoading = state.isAuthenticating;
-            // ErrorMessage = state.authError;
-            // IsAuthenticated = !string.IsNullOrEmpty(state.userId);
-        }
-
         public async void Register()
         {
-            
-            
-            _errorMessage = String.Empty;
+            bool fieldsOk = true;
 
-            // // Validations
-            // if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
-            // {
-            //     _errorMessage = "Por favor, rellena todos los campos";
-            // }
-            // else if (Username.Length < 3)
-            // {
-            //     _errorMessage = "El nombre de usuario debe tener al menos 3 caracteres";
-            // }
-            // else if (!Email.Contains("@") || !Email.Contains("."))
-            // {
-            //     _errorMessage = "Por favor, introduce un email válido";
-            // }
-            // else if (Password.Length < 6)
-            // {
-            //     _errorMessage = "La contraseña debe tener al menos 6 caracteres";
-            // }
-
-            // if (!string.IsNullOrEmpty(_errorMessage))
-            // {
-            //     ShowErrorRequest?.Invoke(_errorMessage);
-            //     return;
-            // }
-
-            
-
-            // Get country and region ISO codes
-            string countryIso = GetSelectedCountryIso();
-            string regionIso = GetSelectedRegionIso();
-
-
-            // Vamos a ver los datos que vamos a mandar antes de nada
-
-            
-            return;
-            // Call RegisterAsync with optional fields
-            var result = await _authService.RegisterAsync(
-                Username,
-                Email,
-                Password,
-                YearOfBirth,
-                country: !string.IsNullOrEmpty(countryIso) ? countryIso : null,
-                region: !string.IsNullOrEmpty(regionIso) ? regionIso : null,
-                zip: !string.IsNullOrEmpty(PostalCode) ? PostalCode : null
-            );
-
-            if (result.success)
+            if (!ValidateUsername())
             {
-                // Registration and auto-login successful - navigation handled by auth state change
-                Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
+                fieldsOk = false;
+            }
+
+            if (!ValidatePassword())
+            {
+                fieldsOk = false;
+            }
+
+            if (!ValidateEmail())
+            {
+                fieldsOk = false;
+            }
+
+            if (!ValidateYearOfBirth())
+            {
+                fieldsOk = false;
+            }
+
+            if (!ValidateCountry())
+            {
+                fieldsOk = false;
+            }
+
+            if (!ValidateRegion())
+            {
+                fieldsOk = false;
+            }
+
+            if (!ValidateTerms())
+            {
+                fieldsOk = false;
+            }
+
+            if (fieldsOk)
+            {
+                // Get country and region ISO codes
+                string countryIso = GetSelectedCountryIso();
+                string regionIso = GetSelectedRegionIso();
+
+                // Call RegisterAsync with optional fields
+                var result = await _authService.RegisterAsync(
+                    Username,
+                    Email,
+                    Password,
+                    YearOfBirth,
+                    country: !string.IsNullOrEmpty(countryIso) ? countryIso : null,
+                    region: !string.IsNullOrEmpty(regionIso) ? regionIso : null,
+                    zip: !string.IsNullOrEmpty(PostalCode) ? PostalCode : null
+                );
+
+                if (result.success)
+                {
+                    // Registration and auto-login successful - navigation handled by auth state change
+                    Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
+                }
+                else
+                {
+                    ShowErrorRequest?.Invoke(result.error);
+                }
             }
             else
             {
-                ShowErrorRequest?.Invoke(result.error);
+                ShowErrorRequest?.Invoke("@UI:ERROR_FIELDS_VALIDATION");
             }
         }
 
-
-        
-
-        public void ValidateUsername()
+        public bool ValidateUsername()
         {
             if (string.IsNullOrEmpty(Username))
             {
-                UsernameHelpTextValue = "El campo no puede estar vacio";
+                UsernameHelpTextValue = "@UI:ERROR_NO_EMPTY";
                 UsernameHelpTextVariant = HelpTextVariant.Destructive;
-                return;
+                return false;
             }
-            
+
             UsernameHelpTextValue = string.Empty;
             UsernameHelpTextVariant = HelpTextVariant.Default;
+            return true;
         }
 
-
-        public void ValidateEmail()
+        public bool ValidateEmail()
         {
             if (string.IsNullOrEmpty(Email))
             {
-                EmailHelpTextValue = "El campo no puede estar vacio";
+                EmailHelpTextValue = "@UI:ERROR_NO_EMPTY";
                 EmailHelpTextVariant = HelpTextVariant.Destructive;
-                return;
+                return false;
             }
 
             if (!Email.Contains("@") || !Email.Contains("."))
             {
-                EmailHelpTextValue = "Por favor, introduce un email válido";
+                EmailHelpTextValue = "@UI:ERROR_EMAIL_INVALID";
                 EmailHelpTextVariant = HelpTextVariant.Destructive;
-                return;
+                return false;
             }
 
             EmailHelpTextValue = string.Empty;
             EmailHelpTextVariant = HelpTextVariant.Default;
+            return true;
         }
 
+        public bool ValidatePassword()
+        {
+            if (string.IsNullOrEmpty(Password))
+            {
+                PasswordHelpTextValue = "@UI:ERROR_NO_EMPTY";
+                PasswordHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
 
-        
+            if (Password.Length < 6)
+            {
+                PasswordHelpTextValue = "@UI:ERROR_PASS_SHORT";
+                PasswordHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
 
-        
+            PasswordHelpTextValue = string.Empty;
+            PasswordHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
 
+        public bool ValidateYearOfBirth()
+        {
+            if (YearOfBirth != 0 && YearOfBirth < DateTime.Now.Year - 100)
+            {
+                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
+                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
 
-        
+            if (YearOfBirth != 0 && YearOfBirth > DateTime.Now.Year - 18)
+            {
+                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_2";
+                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
 
-        
+            YearOfBirthHelpTextValue = string.Empty;
+            YearOfBirthHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
 
+        public bool ValidateCountry()
+        {
+            if (_selectedCountryIndex == -1)
+            {
+                CountryHelpTextValue = "@UI:ERROR_COUNTRY_SELECT";
+                CountryHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
 
+            CountryHelpTextValue = string.Empty;
+            CountryHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
 
-        
-        
+        public bool ValidateRegion()
+        {
+            if (_selectedRegionIndex == -1)
+            {
+                RegionHelpTextValue = "@UI:ERROR_REGION_SELECT";
+                RegionHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
 
-        
+            RegionHelpTextValue = string.Empty;
+            RegionHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
+
+        /// <summary>
+        /// Validates the postal code field. Since postal code formats vary widely by country,
+        /// this only checks length constraints when a value is provided.
+        /// </summary>
+        public bool ValidatePostalCode()
+        {
+            // Postal code is optional - only validate if a value is provided
+            if (string.IsNullOrEmpty(PostalCode))
+            {
+                PostalCodeHelpTextValue = string.Empty;
+                PostalCodeHelpTextVariant = HelpTextVariant.Default;
+                return true;
+            }
+
+            if (PostalCode.Length < 2 || PostalCode.Length > 10)
+            {
+                PostalCodeHelpTextValue = "@UI:ERROR_PC_FORMAT";
+                PostalCodeHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            PostalCodeHelpTextValue = string.Empty;
+            PostalCodeHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
+
+        public bool ValidateTerms()
+        {
+            if (HasAcceptedTerms != CheckboxState.Checked)
+            {
+                TermsHelpTextValue = "You must accept the Terms and Conditions";
+                TermsHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            TermsHelpTextValue = string.Empty;
+            TermsHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
     }
 }

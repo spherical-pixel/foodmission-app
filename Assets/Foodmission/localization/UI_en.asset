@@ -26,8 +26,8 @@ MonoBehaviour:
     m_Localized: Menu
     m_Metadata:
       m_Items: []
-  - m_Id: 8707915112448
-    m_Localized: Notifications
+  - m_Id: 25358751560097792
+    m_Localized: Password must be at least 6 characters long.
     m_Metadata:
       m_Items: []
   - m_Id: 8970780532736
@@ -100,6 +100,130 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 22820717341958144
     m_Localized: Postal code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25345767223844864
+    m_Localized: I agree to the <b>Terms of Service</b> and <b>Privacy Policy</b>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351728189661184
+    m_Localized: Terms and Conditions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351921299611648
+    m_Localized: '<b>FOODMISSION Terms and Conditions</b>
+
+
+      By using this application,
+      you agree to the following terms:
+
+
+      <b>1. ACCOUNT REGISTRATION</b>
+
+      You
+      must provide accurate and complete information when registering. You are responsible
+      for maintaining the confidentiality of your account credentials.
+
+
+      <b>2.
+      PRIVACY</b>
+
+      We collect and process your personal data according to our
+      Privacy Policy. This includes nutritional data, location information, and usage
+      statistics.
+
+
+      <b>3. DATA USAGE</b>
+
+      Your data will be used to provide
+      personalized nutritional recommendations and improve our services.
+
+
+      <b>4.
+      SECURITY</b>
+
+      You must notify us immediately of any unauthorized access
+      to your account.
+
+
+      <b>5. ACCEPTABLE USE</b>
+
+      You agree not to misuse
+      the service or attempt unauthorized access.
+
+
+      <b>6. TERMINATION</b>
+
+      We
+      reserve the right to terminate accounts that violate these terms.
+
+
+      For
+      more information, contact us at support@foodmission.eu'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353163560181760
+    m_Localized: Accept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353325686808576
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353803774550016
+    m_Localized: Ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354482861727744
+    m_Localized: Error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354925167861760
+    m_Localized: Fields validation failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25355658118291456
+    m_Localized: This field cannot be empty.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25358434474909696
+    m_Localized: Please enter a valid email address.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284416
+    m_Localized: Invalid birth year.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284417
+    m_Localized: You must be over 18 to use the platform.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284418
+    m_Localized: You must select a country.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284419
+    m_Localized: You must select a region.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284420
+    m_Localized: Invalid postal code format.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284421
+    m_Localized: You must accept the Terms and Conditions to continue.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25367919163596800
+    m_Localized: Sign in
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25368981371084800
+    m_Localized: Forgot you password?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25369431499595776
+    m_Localized: Don't have an account? Sign up
     m_Metadata:
       m_Items: []
   references:

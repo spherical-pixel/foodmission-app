@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using eu.foodmission.platform.Components;
-using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -20,7 +18,8 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Button _registerButton;
         private FormFieldItemDropDownField _countryDropdown;
         private FormFieldItemDropDownField _regionDropdown;
-
+        private FormFieldItemCheckbox _termsCheckbox;
+        
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -44,6 +43,7 @@ namespace eu.foodmission.platform
             _registerButton = contentContainer.Q<Unity.AppUI.UI.Button>("register-button");
             _countryDropdown = contentContainer.Q<FormFieldItemDropDownField>("country");
             _regionDropdown = contentContainer.Q<FormFieldItemDropDownField>("region");
+            _termsCheckbox = contentContainer.Q<FormFieldItemCheckbox>("checkbox");
         }
 
         protected override void OnViewModelBound()
@@ -53,12 +53,16 @@ namespace eu.foodmission.platform
             if (_viewModel == null) return;
 
             _viewModel.PropertyChanged += OnPropertyChanged;
+            _viewModel.ShowErrorRequest += OnShowErrorRequested;
+
             
+
+            
+
             // Configure country dropdown
             if (_countryDropdown != null)
             {
                 _countryDropdown.Dropdown.sourceItems = _viewModel.CountryOptions;
-                Debug.Log("Country options set successfully. -> " + _viewModel.CountryOptions.Count);
                 _countryDropdown.Dropdown.bindItem = (item, index) =>
                 {
                     item.label = _viewModel.CountryOptions[index];
@@ -89,7 +93,9 @@ namespace eu.foodmission.platform
         private void UpdateRegionDropdown()
         {
             if (_regionDropdown == null || _viewModel == null)
+            {
                 return;
+            }
 
             _viewModel.UpdateRegionsForSelectedCountry();
 
@@ -117,9 +123,11 @@ namespace eu.foodmission.platform
         private void OnCountryChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             var value = evt.newValue?.ToArray();
-            Debug.LogError($"[RegisterScreen] OnCountryChanged called with: {value?.Length} items");
+            
             if (_viewModel == null || value == null || value.Length == 0)
+            {
                 return;
+            }
 
             _viewModel.SelectedCountryIndex = value[0];
             UpdateRegionDropdown();
@@ -131,9 +139,11 @@ namespace eu.foodmission.platform
         private void OnRegionChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             var value = evt.newValue?.ToArray();
-            Debug.LogError($"[RegisterScreen] OnRegionChanged called with: {value?.Length} items");
+            //Debug.Log($"[RegisterScreen] OnRegionChanged called with: {value?.Length} items");
             if (_viewModel == null || value == null || value.Length == 0)
+            {
                 return;
+            }
 
             _viewModel.SelectedRegionIndex = value[0];
         }
@@ -146,7 +156,12 @@ namespace eu.foodmission.platform
             if (_registerButton != null)
             {
                 _registerButton.clicked += OnRegisterClicked;
-            }            
+            }
+
+            if( _termsCheckbox != null)
+            {
+                _termsCheckbox.Button.clicked += OnTermsLinkClicked;
+            }
         }
 
         /// <summary>
@@ -159,11 +174,16 @@ namespace eu.foodmission.platform
                 _registerButton.clicked -= OnRegisterClicked;
             }
 
+            if( _termsCheckbox != null)
+            {
+                _termsCheckbox.Button.clicked -= OnTermsLinkClicked;
+            }
         }
 
         protected override void OnViewModelUnbinding()
         {
             _viewModel.PropertyChanged -= OnPropertyChanged;
+            _viewModel.ShowErrorRequest -= OnShowErrorRequested;
 
             UnregisterManualEvents();
 
@@ -177,9 +197,12 @@ namespace eu.foodmission.platform
                 _regionDropdown.Dropdown.UnregisterValueChangedCallback(OnRegionChanged);
             }
 
+            
+
             _registerButton = null;
             _countryDropdown = null;
             _regionDropdown = null;
+            
 
 
 
@@ -189,6 +212,38 @@ namespace eu.foodmission.platform
         private void OnRegisterClicked()
         {
             _viewModel?.Register();
+        }
+
+        
+
+        private void OnTermsLinkClicked()
+        {
+            ShowTermsDialog();
+        }
+
+        private void ShowTermsDialog()
+        {
+            var termsContent = "@UI:T&C_TEXT";
+
+            AlertDialog dialog = new AlertDialog
+            {
+                title = "@UI:T&C_TITLE",
+                description = termsContent,
+                variant = AlertSemantic.Information
+            };
+
+            dialog.SetPrimaryAction(0, "@UI:TXT_ACCEPT", () =>
+            {
+                if (_viewModel != null)
+                {
+                    _viewModel.HasAcceptedTerms = CheckboxState.Checked;
+                }
+            });
+
+            dialog.SetCancelAction(1, "@UI:TXT_CANCEL");
+
+            var modal = Modal.Build(_termsCheckbox, dialog);
+            modal.Show();
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -203,9 +258,48 @@ namespace eu.foodmission.platform
                     case nameof(RegisterViewModel.Email):
                         _viewModel.ValidateEmail();
                         break;
-
+                    case nameof(RegisterViewModel.Password):
+                        _viewModel.ValidatePassword();
+                        break;
+                    case nameof(RegisterViewModel.YearOfBirth):
+                        _viewModel.ValidateYearOfBirth();
+                        break;
+                    case nameof(RegisterViewModel.PostalCode):
+                        _viewModel.ValidatePostalCode();
+                        break;
+                    case nameof(RegisterViewModel.HasAcceptedTerms):
+                        _viewModel.ValidateTerms();
+                        break;
                 }
             }
+        }
+
+        void OnShowErrorRequested(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
+
+
+            AlertDialog dialog = new AlertDialog
+            {
+                title = "@UI:ALERT_ERROR_TITLE",
+                description = message,
+                variant = AlertSemantic.Error
+            };
+
+            dialog.SetPrimaryAction(0, "@UI:TXT_OK", () => Debug.LogError("Confirmed Alert"));
+            //dialog.SetCancelAction(1, "Cancel");
+
+            var modal = Modal
+                .Build(this, dialog);
+            modal.dismissed += (modalElement, dismissType) =>
+            {
+                Debug.LogError("Dismissed Alert");
+                
+            };
+            modal.Show();
         }
 
         

@@ -18,8 +18,8 @@ namespace eu.foodmission.platform
     {
         // UI elements references
         private Unity.AppUI.UI.Button _loginButton;
-        private Unity.AppUI.UI.Text _registerText;
-        private Unity.AppUI.UI.Text _forgotText;
+        private Unity.AppUI.UI.Button _registerButton;
+        private Unity.AppUI.UI.Button _forgotButton;
         
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -40,8 +40,8 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _loginButton = contentContainer.Q<Unity.AppUI.UI.Button>("login-button");
-            _registerText = contentContainer.Q<Unity.AppUI.UI.Text>("register");
-            _forgotText = contentContainer.Q<Unity.AppUI.UI.Text>("forgot-password");
+            _registerButton = contentContainer.Q<Unity.AppUI.UI.Button>("btRegister");
+            _forgotButton = contentContainer.Q<Unity.AppUI.UI.Button>("btForgotPassword");
             
         }
 
@@ -55,14 +55,14 @@ namespace eu.foodmission.platform
                 _loginButton.clicked += OnLoginClicked;
             }
 
-            if (_registerText != null)
+            if (_registerButton != null)
             {
-                _registerText.RegisterCallback<ClickEvent>(OnRegisterClicked);
+                _registerButton.clicked += OnRegisterClicked;
             }
 
-            if (_forgotText != null)
+            if (_forgotButton != null)
             {
-                _forgotText.RegisterCallback<ClickEvent>(OnForgotClicked);
+                _forgotButton.clicked += OnForgotClicked;
             }
         }
 
@@ -76,14 +76,14 @@ namespace eu.foodmission.platform
                 _loginButton.clicked -= OnLoginClicked;
             }
 
-            if (_registerText != null)
+            if (_registerButton != null)
             {
-                _registerText.UnregisterCallback<ClickEvent>(OnRegisterClicked);
+                _registerButton.clicked -= OnRegisterClicked;
             }
 
-            if (_forgotText != null)
+            if (_forgotButton != null)
             {
-                _forgotText.UnregisterCallback<ClickEvent>(OnForgotClicked);
+                _forgotButton.clicked -= OnForgotClicked;
             }
         }
 
@@ -92,8 +92,8 @@ namespace eu.foodmission.platform
             UnregisterManualEvents();
 
             _loginButton = null;
-            _registerText = null;
-            _forgotText = null;
+            _registerButton = null;
+            _forgotButton = null;
 
             _viewModel.ShowErrorRequest -=OnShowErrorRequested;
 
@@ -112,12 +112,12 @@ namespace eu.foodmission.platform
             _viewModel?.Login();
         }
 
-        private void OnRegisterClicked(ClickEvent evt)
+        private void OnRegisterClicked()
         {
             _navController.Navigate(Actions.login_to_register);
         }
 
-        private void OnForgotClicked(ClickEvent evt)
+        private void OnForgotClicked()
         {
             // TODO: Implement navigation to forgot password screen
         }
@@ -138,11 +138,11 @@ namespace eu.foodmission.platform
                 variant = AlertSemantic.Error
             };
 
-            dialog.SetPrimaryAction(0, "Confirm", () => Debug.LogError("Confirmed Alert"));
+            dialog.SetPrimaryAction(0, "@UI:TXT_OK", () => Debug.LogError("Confirmed Alert"));
             //dialog.SetCancelAction(1, "Cancel");
 
             var modal = Modal
-                .Build(_loginButton, dialog);
+                .Build(this, dialog);
             modal.dismissed += (modalElement, dismissType) =>
             {
                 Debug.LogError("Dismissed Alert");

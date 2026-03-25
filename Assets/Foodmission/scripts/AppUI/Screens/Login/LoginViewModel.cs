@@ -2,7 +2,9 @@ using System;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.Redux;
+using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 namespace eu.foodmission.platform
@@ -18,17 +20,29 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string _username = "";
 
+        [ObservableProperty]
+        private string _usernameHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _usernameHelpTextVariant = HelpTextVariant.Default;
+
         /// <summary>
         /// Holds momentary password entered by the user for auth
         /// </summary>
         [ObservableProperty]
         private string _password = "";
 
+        [ObservableProperty]
+        private string _passwordHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _passwordHelpTextVariant = HelpTextVariant.Default;
+
         /// <summary>
         /// True if waiting for login results, false otherwise. 
         /// </summary>
         [ObservableProperty]
-        private bool _isLoading;
+        private DisplayStyle _isLoading;
 
         
         /// <summary>
@@ -71,7 +85,14 @@ namespace eu.foodmission.platform
         /// </summary>
         private void OnAuthStateChanged((bool isAuthenticating, string authError, string userId) authState)
         {
-            IsLoading = authState.isAuthenticating;
+            if(authState.isAuthenticating)
+            {
+                IsLoading = DisplayStyle.Flex;
+            }
+            else
+            {
+                IsLoading = DisplayStyle.None;
+            }
             
 
             bool wasAuthenticated = IsAuthenticated;
@@ -92,8 +113,14 @@ namespace eu.foodmission.platform
         /// </summary>
         private void SynchronizeState(AppState state)
         {
-            IsLoading = state.isAuthenticating;
-            //ErrorMessage = state.authError;
+            if(state.isAuthenticating)
+            {
+                IsLoading = DisplayStyle.Flex;
+            }
+            else
+            {
+                IsLoading = DisplayStyle.None;
+            }
             IsAuthenticated = !string.IsNullOrEmpty(state.userId);
         }
 
@@ -103,13 +130,64 @@ namespace eu.foodmission.platform
         public async void Login()
         {
             Debug.LogError($"[{GetType().Name}] - Login -> username:"+Username+", password:"+Password);
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+
+            bool fieldsOk = true;
+
+            if (!ValidateUsername())
             {
-                ShowErrorRequest?.Invoke("Please fill the user and password fields");
-                return;
+                fieldsOk = false;
             }
 
-            await _authService.LoginAsync(Username, Password);
+            if (!ValidatePassword())
+            {
+                fieldsOk = false;
+            }
+
+            if(fieldsOk)
+            {
+                await _authService.LoginAsync(Username, Password);
+            }
+            else
+            {
+                ShowErrorRequest?.Invoke("@UI:ERROR_FIELDS_VALIDATION");
+            }
+        }
+
+
+        public bool ValidateUsername()
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                UsernameHelpTextValue = "@UI:ERROR_NO_EMPTY";
+                UsernameHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            UsernameHelpTextValue = string.Empty;
+            UsernameHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
+
+
+        public bool ValidatePassword()
+        {
+            if (string.IsNullOrEmpty(Password))
+            {
+                PasswordHelpTextValue = "@UI:ERROR_NO_EMPTY";
+                PasswordHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            if (Password.Length < 6)
+            {
+                PasswordHelpTextValue = "@UI:ERROR_PASS_SHORT";
+                PasswordHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            PasswordHelpTextValue = string.Empty;
+            PasswordHelpTextVariant = HelpTextVariant.Default;
+            return true;
         }
 
         

@@ -26,32 +26,50 @@
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18418052671463424)"/>
                     <UnityEngine.Localization.LocalizedString property="TextFieldPlaceholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18418114709413888)"/>
                     <ui:DataBinding property="TextFieldValue" data-source-path="Password" binding-mode="ToSource"/>
+                    <ui:DataBinding property="HelpTextText" data-source-path="PasswordHelpTextValue" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="HelpTextVariant" data-source-path="PasswordHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemPassword>
             <eu.foodmission.platform.Components.FormFieldItemIntField name="yearofbirth">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22815397693612032)"/>
                     <ui:DataBinding property="IntFieldValue" data-source-path="YearOfBirth" binding-mode="ToSource"/>
+                    <ui:DataBinding property="HelpTextText" data-source-path="YearOfBirthHelpTextValue" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="HelpTextVariant" data-source-path="YearOfBirthHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemIntField>
             <eu.foodmission.platform.Components.FormFieldItemDropDownField name="country">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22819860558897152)"/>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22819676332482560)"/>
+                    <ui:DataBinding property="HelpTextText" data-source-path="CountryHelpTextValue" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="HelpTextVariant" data-source-path="CountryHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemDropDownField>
             <eu.foodmission.platform.Components.FormFieldItemDropDownField name="region">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22820425670057984)"/>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22820314747494400)"/>
+                    <ui:DataBinding property="HelpTextVariant" data-source-path="RegionHelpTextVariant" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="HelpTextText" data-source-path="RegionHelpTextValue" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemDropDownField>
             <eu.foodmission.platform.Components.FormFieldItemTextField name="postalcode">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22820717341958144)"/>
                     <ui:DataBinding property="TextFieldValue" data-source-path="PostalCode" binding-mode="ToSource"/>
+                    <ui:DataBinding property="HelpTextText" data-source-path="PostalCodeHelpTextValue" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="HelpTextVariant" data-source-path="PostalCodeHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemTextField>
+            <eu.foodmission.platform.Components.FormFieldItemCheckbox name="checkbox">
+                <Bindings>
+                    <ui:DataBinding property="HelpTextText" data-source-path="TermsHelpTextValue" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="HelpTextVariant" data-source-path="TermsHelpTextVariant" binding-mode="TwoWay"/>
+                    <UnityEngine.Localization.LocalizedString property="Text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25345767223844864)"/>
+                    <ui:DataBinding property="CheckboxValue" data-source-path="HasAcceptedTerms" binding-mode="TwoWay"/>
+                </Bindings>
+            </eu.foodmission.platform.Components.FormFieldItemCheckbox>
             <ui:VisualElement class="auth-actions">
                 <appui:Button name="register-button" text="Registrar" variant="primary" title="Register" class="auth-button"/>
             </ui:VisualElement>

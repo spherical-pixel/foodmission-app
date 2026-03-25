@@ -23,10 +23,6 @@ MonoBehaviour:
     m_Key: NAV_MENU
     m_Metadata:
       m_Items: []
-  - m_Id: 8707915112448
-    m_Key: NAV_NOTIFICATIONS
-    m_Metadata:
-      m_Items: []
   - m_Id: 8970780532736
     m_Key: NAV_MEAL_LOG
     m_Metadata:
@@ -97,6 +93,86 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 22820717341958144
     m_Key: PO_CODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25345767223844864
+    m_Key: AGREE_TERMS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351728189661184
+    m_Key: T&C_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351921299611648
+    m_Key: T&C_TEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353163560181760
+    m_Key: TXT_ACCEPT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353325686808576
+    m_Key: TXT_CANCEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353803774550016
+    m_Key: TXT_OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354482861727744
+    m_Key: ALERT_ERROR_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354925167861760
+    m_Key: ERROR_FIELDS_VALIDATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25355658118291456
+    m_Key: ERROR_NO_EMPTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25358434474909696
+    m_Key: ERROR_EMAIL_INVALID
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25358751560097792
+    m_Key: ERROR_PASS_SHORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284416
+    m_Key: ERROR_BIRTH_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284417
+    m_Key: ERROR_BIRTH_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284418
+    m_Key: ERROR_COUNTRY_SELECT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284419
+    m_Key: ERROR_REGION_SELECT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284420
+    m_Key: ERROR_PC_FORMAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284421
+    m_Key: ERROR_T&C_A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25367919163596800
+    m_Key: SIGNIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25368981371084800
+    m_Key: PASS_FORGOT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25369431499595776
+    m_Key: NOACC_SIGN
     m_Metadata:
       m_Items: []
   m_Metadata:
