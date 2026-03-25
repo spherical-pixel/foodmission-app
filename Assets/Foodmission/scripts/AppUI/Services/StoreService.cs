@@ -12,20 +12,17 @@ namespace eu.foodmission.platform
 {
     /// <summary>
     /// Store service implementation with local persistence integration.
-    /// Manages the global application state (AppState).
+    /// Manages the global application state (AppState) directly for better DevTools visibility.
     /// </summary>
     public class StoreService : IStoreService, IDisposable
     {
         private readonly ILocalStorageService _localStorageService;
         private IDisposableSubscription _appStateSubscription;
 
-        // Slice name
-        public const string APP_SLICE = "app";
-
         // localStorage key
         private const string APP_STATE_KEY = "app_state";
 
-        public IStore<PartitionedState> store { get; }
+        public IStore<AppState> store { get; }
 
         public StoreService(ILocalStorageService localStorageService)
         {
@@ -34,31 +31,27 @@ namespace eu.foodmission.platform
             // Restore persisted state before creating the store
             AppState persistedAppState = LoadPersistedAppState();
 
-            // Create single AppState slice
-            var appSlice = StoreFactory.CreateSlice<AppState>(
-                APP_SLICE,
-                persistedAppState,
-                builder =>
-                {
-                    builder
-                        // Preferences
-                        .AddCase(AppActions.setTheme, AppReducers.SetThemeReducer)
-                        .AddCase(AppActions.setLanguage, AppReducers.SetLanguageReducer)
-                        .AddCase(AppActions.setScale, AppReducers.SetScaleReducer)
-                        .AddCase(AppActions.completeOnboarding, AppReducers.CompleteOnboardingReducer)
-                        .AddCase(AppActions.setUser, AppReducers.SetUserReducer)
-                        .AddCase(AppActions.logout, AppReducers.LogoutReducer)
-                        .AddCase(AppActions.updateSessionTimestamp, AppReducers.UpdateSessionTimestampReducer)
-                        .AddCase(AppActions.restoreState, AppReducers.RestoreStateReducer)
-                        // Auth
-                        .AddCase(AppActions.loginRequest, AppReducers.LoginRequestReducer)
-                        .AddCase(AppActions.loginSuccess, AppReducers.LoginSuccessReducer)
-                        .AddCase(AppActions.loginFailure, AppReducers.LoginFailureReducer)
-                        .AddCase(AppActions.registerRequest, AppReducers.RegisterRequestReducer)
-                        .AddCase(AppActions.registerSuccess, AppReducers.RegisterSuccessReducer)
-                        .AddCase(AppActions.registerFailure, AppReducers.RegisterFailureReducer);
-                }
-            );
+            // Create reducer using SliceReducerSwitchBuilder
+            var reducerBuilder = new SliceReducerSwitchBuilder<AppState>("app");
+            reducerBuilder
+                // Preferences
+                .AddCase(AppActions.setTheme, AppReducers.SetThemeReducer)
+                .AddCase(AppActions.setLanguage, AppReducers.SetLanguageReducer)
+                .AddCase(AppActions.setScale, AppReducers.SetScaleReducer)
+                .AddCase(AppActions.completeOnboarding, AppReducers.CompleteOnboardingReducer)
+                .AddCase(AppActions.setUser, AppReducers.SetUserReducer)
+                .AddCase(AppActions.logout, AppReducers.LogoutReducer)
+                .AddCase(AppActions.updateSessionTimestamp, AppReducers.UpdateSessionTimestampReducer)
+                .AddCase(AppActions.restoreState, AppReducers.RestoreStateReducer)
+                // Auth
+                .AddCase(AppActions.loginRequest, AppReducers.LoginRequestReducer)
+                .AddCase(AppActions.loginSuccess, AppReducers.LoginSuccessReducer)
+                .AddCase(AppActions.loginFailure, AppReducers.LoginFailureReducer)
+                .AddCase(AppActions.registerRequest, AppReducers.RegisterRequestReducer)
+                .AddCase(AppActions.registerSuccess, AppReducers.RegisterSuccessReducer)
+                .AddCase(AppActions.registerFailure, AppReducers.RegisterFailureReducer);
+
+            var reducer = reducerBuilder.GetReducer();
 
 #if UNITY_EDITOR
             // Create store with DevTools enhancer in editor
@@ -70,15 +63,15 @@ namespace eu.foodmission.platform
                     name = "Foodmission Store"
                 }
             };
-            var enhancer = StoreFactory.DefaultEnhancer<PartitionedState>(enhancerConfig);
-            store = StoreFactory.CreateStore(new[] { appSlice }, enhancer);
+            var enhancer = StoreFactory.DefaultEnhancer<AppState>(enhancerConfig);
+            store = StoreFactory.CreateStore(reducer, persistedAppState, enhancer);
 #else
-            store = StoreFactory.CreateStore(new[] { appSlice });
+            store = StoreFactory.CreateStore(reducer, persistedAppState);
 #endif
 
             // Subscribe to AppState changes for auto-save
             _appStateSubscription = store.Subscribe(
-                state => state.Get<AppState>(APP_SLICE),
+                state => state,
                 OnAppStateChanged
             );
         }
@@ -109,7 +102,7 @@ namespace eu.foodmission.platform
 
         // ==================== IStoreService Implementation ====================
 
-        public AppState GetAppState() => store.GetState<AppState>(APP_SLICE);
+        public AppState GetAppState() => store.GetState();
 
         public void SaveAppState()
         {

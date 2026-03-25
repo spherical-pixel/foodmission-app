@@ -67,7 +67,7 @@ namespace eu.foodmission.platform
 
             // Subscribe to state changes
             _subscription = _storeService.store.Subscribe(
-                state => state.Get<AppState>(StoreService.APP_SLICE),
+                state => state,
                 OnAppStateChanged
             );
 

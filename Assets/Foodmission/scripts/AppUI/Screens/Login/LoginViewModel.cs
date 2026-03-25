@@ -74,10 +74,9 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Selector for extracting only the relevant auth state
         /// </summary>
-        private (bool isAuthenticating, string authError, string userId) SelectAuthState(PartitionedState state)
+        private (bool isAuthenticating, string authError, string userId) SelectAuthState(AppState state)
         {
-            AppState appState = state.Get<AppState>(StoreService.APP_SLICE);
-            return (appState.isAuthenticating, appState.authError, appState.userId);
+            return (state.isAuthenticating, state.authError, state.userId);
         }
 
         /// <summary>

@@ -183,10 +183,9 @@ namespace eu.foodmission.platform
             return country.regions[SelectedRegionIndex].region_iso;
         }
 
-        private (bool isAuthenticating, string authError, string userId) SelectAuthState(PartitionedState state)
+        private (bool isAuthenticating, string authError, string userId) SelectAuthState(AppState state)
         {
-            AppState appState = state.Get<AppState>(StoreService.APP_SLICE);
-            return (appState.isAuthenticating, appState.authError, appState.userId);
+            return (state.isAuthenticating, state.authError, state.userId);
         }
 
         private void OnAuthStateChanged((bool isAuthenticating, string authError, string userId) authState)

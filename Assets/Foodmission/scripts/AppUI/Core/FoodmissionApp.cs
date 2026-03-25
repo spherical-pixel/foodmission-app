@@ -87,7 +87,7 @@ namespace eu.foodmission.platform
             // Scale change subscription
             _scaleSubscription?.Dispose();
             _scaleSubscription = _storeService.store.Subscribe(
-                state => state.Get<AppState>(StoreService.APP_SLICE).scale,
+                state => state.scale,
                 OnScaleChanged
             );
         }

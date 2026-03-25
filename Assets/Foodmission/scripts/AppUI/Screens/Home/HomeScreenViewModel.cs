@@ -25,10 +25,9 @@ namespace eu.foodmission.platform
             );
         }
 
-        private (string userId, string lang) SelectUserState(PartitionedState state)
+        private (string userId, string lang) SelectUserState(AppState state)
         {
-            AppState appState = state.Get<AppState>(StoreService.APP_SLICE);
-            return (appState.userId, appState.lang);
+            return (state.userId, state.lang);
         }
 
         private void OnUserStateChanged((string userId, string lang) userState)

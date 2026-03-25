@@ -10,7 +10,7 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Reference to the Redux store
         /// </summary>
-        IStore<PartitionedState> store { get; }
+        IStore<AppState> store { get; }
 
         /// <summary>
         /// Gets the global application state

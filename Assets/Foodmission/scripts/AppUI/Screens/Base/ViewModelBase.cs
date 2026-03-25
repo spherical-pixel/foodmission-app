@@ -38,7 +38,7 @@ namespace eu.foodmission.platform
         // --------------------------------------------------------------------
 
         protected readonly IStoreService _storeService;
-        protected readonly IStore<PartitionedState> _store;
+        protected readonly IStore<AppState> _store;
         protected IDisposableSubscription _storeSubscription;
 
         // --------------------------------------------------------------------
