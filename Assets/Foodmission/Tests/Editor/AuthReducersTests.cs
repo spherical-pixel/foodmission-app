@@ -33,7 +33,7 @@ namespace eu.foodmission.platform.Tests
         public void LoginSuccessReducer_SetsUserIdAndIsAuthenticatingToFalse()
         {
             // Arrange
-            var state = m_InitialState with { isAuthenticating = true };
+            var state = new AppState { isAuthenticating = true };
             var payload = new AppActions.LoginPayload(
                 userId: "user123",
                 email: "test@example.com",
@@ -59,7 +59,7 @@ namespace eu.foodmission.platform.Tests
         public void LoginFailureReducer_SetsErrorMessageAndIsAuthenticatingToFalse()
         {
             // Arrange
-            var state = m_InitialState with { isAuthenticating = true };
+            var state = new AppState { isAuthenticating = true };
             var action = AppActions.loginFailure.Invoke("Error message");
 
             // Act
@@ -74,7 +74,7 @@ namespace eu.foodmission.platform.Tests
         public void LogoutReducer_ClearsAllUserData()
         {
             // Arrange
-            var state = m_InitialState with
+            var state = new AppState
             {
                 userId = "user123",
                 userEmail = "test@example.com",

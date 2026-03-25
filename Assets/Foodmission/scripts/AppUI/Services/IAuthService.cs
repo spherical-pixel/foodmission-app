@@ -15,5 +15,6 @@ namespace eu.foodmission.platform
             string region = null,
             string zip = null);
         void Logout();
+        Task<(bool success, string message)> RequestPasswordResetAsync(string email);
     }
 }

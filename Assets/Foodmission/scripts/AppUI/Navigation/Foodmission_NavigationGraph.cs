@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit it directly.
-// Date: 2026-02-26 16:19:56
+// Date: 2026-03-25 15:25:25
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +13,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string go_to_menu = "go_to_menu";
         public const string loading_to_auth = "loading_to_auth";
         public const string login_to_register = "login_to_register";
+        public const string login_to_forgotpassword = "login_to_forgotpassword";
     }
     public static partial class Destinations
     {
@@ -21,6 +22,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string login = "Login";
         public const string register = "Register";
         public const string home = "Home";
+        public const string forgotpassword = "ForgotPassword";
     }
     public static partial class Graphs
     {

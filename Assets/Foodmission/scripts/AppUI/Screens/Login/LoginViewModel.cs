@@ -93,7 +93,7 @@ namespace eu.foodmission.platform
             {
                 IsLoading = DisplayStyle.None;
             }
-            
+
 
             bool wasAuthenticated = IsAuthenticated;
             IsAuthenticated = !string.IsNullOrEmpty(authState.userId);

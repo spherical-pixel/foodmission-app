@@ -119,7 +119,9 @@ namespace eu.foodmission.platform
 
         private void OnForgotClicked()
         {
-            // TODO: Implement navigation to forgot password screen
+            // TODO: We'll need to change this once the endpoint is working
+            Application.OpenURL("https://test.auth.foodmission.eu/realms/foodmission/login-actions/reset-credentials");
+            //_navController.Navigate(Actions.login_to_forgotpassword);
         }
 
 

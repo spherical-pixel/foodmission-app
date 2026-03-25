@@ -87,4 +87,17 @@ namespace eu.foodmission.platform
         public string firstName;
         public string lastName;
     }
+
+    /// <summary>
+    /// Profile response from GET /api/v1/auth/profile
+    /// </summary>
+    [Serializable]
+    public class ProfileResponse
+    {
+        public string id;
+        public string email;
+        public string firstName;
+        public string lastName;
+        public string keycloakId;
+    }
 }

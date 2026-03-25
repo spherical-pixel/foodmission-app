@@ -16,10 +16,10 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator completeOnboarding = "app/completeOnboarding";
         public static readonly ActionCreator<string> setUser = "app/setUser";
         public static readonly ActionCreator logout = "app/logout";
-        public static readonly ActionCreator<long> updateSessionTimestamp = "app/updateSessionTimestamp";
+        public static readonly ActionCreator<int> updateSessionTimestamp = "app/updateSessionTimestamp";
         public static readonly ActionCreator<AppState> restoreState = "app/restoreState";
 
-        
+
         // Auth
         public static readonly ActionCreator<string> loginRequest = "app/loginRequest";
         public static readonly ActionCreator<LoginPayload> loginSuccess = "app/loginSuccess";
@@ -34,9 +34,9 @@ namespace eu.foodmission.platform
             public readonly string email;
             public readonly string accessToken;
             public readonly string tokenType;
-            public readonly long expiresAt;
+            public readonly int expiresAt;
 
-            public LoginPayload(string userId, string email, string accessToken, string tokenType, long expiresAt)
+            public LoginPayload(string userId, string email, string accessToken, string tokenType, int expiresAt)
             {
                 this.userId = userId;
                 this.email = email;
@@ -48,7 +48,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator registerRequest = "app/registerRequest";
         public static readonly ActionCreator<string> registerSuccess = "app/registerSuccess";
         public static readonly ActionCreator<string> registerFailure = "app/registerFailure";
-        
+
     }
 
     // ==================== App Reducers ====================
@@ -62,44 +62,55 @@ namespace eu.foodmission.platform
 
         public static AppState SetThemeReducer(AppState state, IAction<string> action)
         {
-            return state with { theme = action.payload };
+            var newState = state.Copy();
+            newState.theme = action.payload;
+            return newState;
         }
 
         public static AppState SetLanguageReducer(AppState state, IAction<string> action)
         {
-            return state with { lang = action.payload };
+            var newState = state.Copy();
+            newState.lang = action.payload;
+            return newState;
         }
 
         public static AppState SetScaleReducer(AppState state, IAction<string> action)
         {
-            return state with { scale = action.payload };
+            var newState = state.Copy();
+            newState.scale = action.payload;
+            return newState;
         }
 
         public static AppState CompleteOnboardingReducer(AppState state, IAction action)
         {
-            return state with { hasCompletedOnboarding = true };
+            var newState = state.Copy();
+            newState.hasCompletedOnboarding = true;
+            return newState;
         }
 
         public static AppState SetUserReducer(AppState state, IAction<string> action)
         {
-            return state with { userId = action.payload };
+            var newState = state.Copy();
+            newState.userId = action.payload;
+            return newState;
         }
 
         public static AppState LogoutReducer(AppState state, IAction action)
         {
-            return state with
-            {
-                userId = "",
-                userEmail = "",
-                accessToken = "",
-                tokenType = "",
-                tokenExpiresAt = 0
-            };
+            var newState = state.Copy();
+            newState.userId = "";
+            newState.userEmail = "";
+            newState.accessToken = "";
+            newState.tokenType = "";
+            newState.tokenExpiresAt = 0;
+            return newState;
         }
 
-        public static AppState UpdateSessionTimestampReducer(AppState state, IAction<long> action)
+        public static AppState UpdateSessionTimestampReducer(AppState state, IAction<int> action)
         {
-            return state with { lastSessionTimestamp = action.payload };
+            var newState = state.Copy();
+            newState.lastSessionTimestamp = action.payload;
+            return newState;
         }
 
         public static AppState RestoreStateReducer(AppState state, IAction<AppState> action)
@@ -112,43 +123,58 @@ namespace eu.foodmission.platform
 
         public static AppState LoginRequestReducer(AppState state, IAction<string> action)
         {
-            return state with { isAuthenticating = true, authError = "" };
+            var newState = state.Copy();
+            newState.isAuthenticating = true;
+            newState.authError = "";
+            return newState;
         }
 
         public static AppState LoginSuccessReducer(AppState state, IAction<AppActions.LoginPayload> action)
         {
-            return state with
-            {
-                isAuthenticating = false,
-                authError = "",
-                userId = action.payload.userId,
-                userEmail = action.payload.email,
-                accessToken = action.payload.accessToken,
-                tokenType = action.payload.tokenType,
-                tokenExpiresAt = action.payload.expiresAt
-            };
+            var newState = state.Copy();
+            newState.isAuthenticating = false;
+            newState.authError = "";
+            newState.userId = action.payload.userId;
+            newState.userEmail = action.payload.email;
+            newState.accessToken = action.payload.accessToken;
+            newState.tokenType = action.payload.tokenType;
+            newState.tokenExpiresAt = action.payload.expiresAt;
+            return newState;
         }
 
         public static AppState LoginFailureReducer(AppState state, IAction<string> action)
         {
-            return state with { isAuthenticating = false, authError = action.payload };
+            var newState = state.Copy();
+            newState.isAuthenticating = false;
+            newState.authError = action.payload;
+            return newState;
         }
 
         public static AppState RegisterRequestReducer(AppState state, IAction action)
         {
-            return state with { isAuthenticating = true, authError = "" };
+            var newState = state.Copy();
+            newState.isAuthenticating = true;
+            newState.authError = "";
+            return newState;
         }
 
         public static AppState RegisterSuccessReducer(AppState state, IAction<string> action)
         {
-            return state with { isAuthenticating = false, userId = action.payload, authError = "" };
+            var newState = state.Copy();
+            newState.isAuthenticating = false;
+            newState.userId = action.payload;
+            newState.authError = "";
+            return newState;
         }
 
         public static AppState RegisterFailureReducer(AppState state, IAction<string> action)
         {
-            return state with { isAuthenticating = false, authError = action.payload };
+            var newState = state.Copy();
+            newState.isAuthenticating = false;
+            newState.authError = action.payload;
+            return newState;
         }
 
-        
+
     }
 }

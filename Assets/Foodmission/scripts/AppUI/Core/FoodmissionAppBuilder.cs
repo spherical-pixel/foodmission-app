@@ -14,6 +14,7 @@ namespace eu.foodmission.platform
         public VisualTreeAsset MenuTemplate;
         public VisualTreeAsset LoginTemplate;
         public VisualTreeAsset RegisterTemplate;
+        public VisualTreeAsset ForgotPasswordTemplate;
 
         public NavGraphViewAsset GraphAsset;
 
@@ -36,6 +37,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<MenuScreenViewModel>();
             builder.services.AddTransient<LoginViewModel>();
             builder.services.AddTransient<RegisterViewModel>();
+            builder.services.AddTransient<ForgotPasswordViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

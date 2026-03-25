@@ -226,6 +226,22 @@ MonoBehaviour:
     m_Localized: Don't have an account? Sign up
     m_Metadata:
       m_Items: []
+  - m_Id: 25394900353671168
+    m_Localized: Reset password
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395075277119488
+    m_Localized: Input your email and we'll send you a link to reset your password.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395779614007296
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395959562231808
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -175,6 +175,22 @@ MonoBehaviour:
     m_Key: NOACC_SIGN
     m_Metadata:
       m_Items: []
+  - m_Id: 25394900353671168
+    m_Key: FP_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395075277119488
+    m_Key: FP_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395779614007296
+    m_Key: TXT_CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395959562231808
+    m_Key: TXT_BACK
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

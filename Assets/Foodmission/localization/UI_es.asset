@@ -226,6 +226,23 @@ MonoBehaviour:
     m_Localized: "\xBFNo tienes cuenta? Registrate."
     m_Metadata:
       m_Items: []
+  - m_Id: 25394900353671168
+    m_Localized: "Restablecer contrase\xF1a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395075277119488
+    m_Localized: "Introduce tu correo electronico y te mandaremos un enlace para
+      restablecer la contrase\xF1a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395779614007296
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395959562231808
+    m_Localized: Volver
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

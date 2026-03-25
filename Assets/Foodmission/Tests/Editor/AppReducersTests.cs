@@ -58,7 +58,7 @@ namespace eu.foodmission.platform.Tests
         public void LogoutReducer_ClearsAllSessionData()
         {
             // Arrange
-            var stateWithSession = m_InitialState with
+            var stateWithSession = new AppState
             {
                 userId = "user123",
                 userEmail = "test@example.com",

@@ -29,8 +29,8 @@ namespace eu.foodmission.platform
             }
 
             // Verify expiration
-            long currentTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            if (state.tokenExpiresAt < currentTimestamp)
+            long currentTimestampLong = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (state.tokenExpiresAt < currentTimestampLong)
             {
                 return false;
             }
@@ -117,24 +117,31 @@ namespace eu.foodmission.platform
                     return (false, null, error);
                 }
 
-                // Calculate token expiration
-                long expiresAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + response.expires_in;
+                // Calculate token expiration (int for JsonUtility compatibility)
+                int expiresAt = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + response.expires_in);
+
+                // Fetch user profile to get userId (backend stores keycloakId as id)
+                string userId = await FetchUserIdAsync(response.access_token);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    // If profile fetch fails, use email from login as fallback identification
+                    userId = username;
+                    Debug.LogWarning($"[{GetType().Name}] Profile fetch failed, using username as userId");
+                }
 
                 // Create login payload and dispatch it to the store
                 AppActions.LoginPayload payload = new AppActions.LoginPayload(
-                    userId: response.user.id,
-                    email: response.user.email,
-                    // firstName: response.user.firstName,
-                    // lastName: response.user.lastName,
+                    userId: userId,
+                    email: username,
                     accessToken: response.access_token,
                     tokenType: response.token_type,
                     expiresAt: expiresAt
                 );
 
                 _storeService.store.Dispatch(AppActions.loginSuccess.Invoke(payload));
-                Debug.Log($"[{GetType().Name}] Login successful for user: {response.user.email}");
+                Debug.Log($"[{GetType().Name}] Login successful for user: {userId}");
 
-                return (true, response.user.id, null);
+                return (true, userId, null);
             }
             catch (Exception ex)
             {
@@ -260,6 +267,50 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
+        /// Fetches user profile to get the userId from the backend
+        /// </summary>
+        private async Task<string> FetchUserIdAsync(string accessToken)
+        {
+            try
+            {
+                string url = $"{_baseUrl}/api/v1/auth/profile";
+                using UnityWebRequest request = UnityWebRequest.Get(url);
+                request.SetRequestHeader("Authorization", $"Bearer {accessToken}");
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    string responseJson = request.downloadHandler.text;
+                    Debug.Log($"[{GetType().Name}] Profile response: {responseJson}");
+
+                    // Parse the profile response - it contains id, email, etc.
+                    // The backend returns { id, email, firstName, lastName, keycloakId, ... }
+                    var profile = JsonUtility.FromJson<ProfileResponse>(responseJson);
+                    if (profile != null && !string.IsNullOrEmpty(profile.id))
+                    {
+                        return profile.id;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Profile fetch failed: {request.responseCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Profile fetch error: {ex.Message}");
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Escapes special characters for JSON strings
         /// </summary>
         private string EscapeJson(string str)
@@ -279,6 +330,57 @@ namespace eu.foodmission.platform
         {
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log("[AuthService] User logged out");
+        }
+
+        /// <summary>
+        /// Requests a password reset email for the given email address.
+        /// Calls POST /api/v1/auth/forgot-password on the backend.
+        /// </summary>
+        public async Task<(bool success, string message)> RequestPasswordResetAsync(string email)
+        {
+            try
+            {
+                var requestData = new { email = email };
+                string json = JsonUtility.ToJson(requestData);
+                string url = $"{_baseUrl}/api/v1/auth/forgot-password";
+
+                using UnityWebRequest request = new UnityWebRequest(url, "POST")
+                {
+                    uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(json)),
+                    downloadHandler = new DownloadHandlerBuffer()
+                };
+
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                Debug.Log($"[AuthService] Password reset response: code={request.responseCode}, result={request.result}");
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    return (true, "Password reset email sent successfully");
+                }
+
+                string errorMessage = request.responseCode switch
+                {
+                    404 => "Email address not found",
+                    422 => "Invalid email format",
+                    500 => "Server error. Please try again later.",
+                    _ => $"Request failed: {request.error}"
+                };
+
+                return (false, errorMessage);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[AuthService] Password reset exception: {ex}");
+                return (false, "An unexpected error occurred");
+            }
         }
     }
 }
