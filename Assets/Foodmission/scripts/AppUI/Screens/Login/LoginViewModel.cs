@@ -13,6 +13,7 @@ namespace eu.foodmission.platform
     public partial class LoginViewModel : ViewModelBase
     {
         private readonly IAuthService _authService;
+        private bool _hasNavigated; // Prevents double navigation
 
         /// <summary>
         /// Username for auth
@@ -84,6 +85,8 @@ namespace eu.foodmission.platform
         /// </summary>
         private void OnAuthStateChanged((bool isAuthenticating, string authError, string userId) authState)
         {
+            Debug.Log($"[{GetType().Name}] OnAuthStateChanged: isAuthenticating={authState.isAuthenticating}, userId={authState.userId}, authError={authState.authError}");
+
             if(authState.isAuthenticating)
             {
                 IsLoading = DisplayStyle.Flex;
@@ -93,17 +96,29 @@ namespace eu.foodmission.platform
                 IsLoading = DisplayStyle.None;
             }
 
-
             bool wasAuthenticated = IsAuthenticated;
             IsAuthenticated = !string.IsNullOrEmpty(authState.userId);
+
+            Debug.Log($"[{GetType().Name}] Auth state transition: wasAuthenticated={wasAuthenticated}, IsAuthenticated={IsAuthenticated}, _hasNavigated={_hasNavigated}");
 
             // If has just authenticated (transition from not authenticated to authenticated), navigate to home)
             if (IsAuthenticated && !wasAuthenticated)
             {
-                RaiseNavigationRequested(Actions.loading_to_home);
-            }else if(!string.IsNullOrEmpty(authState.authError))
+                if (!_hasNavigated)
+                {
+                    _hasNavigated = true;
+                    Debug.Log($"[{GetType().Name}] Authentication successful - navigating to home");
+                    RaiseNavigationRequested(Actions.loading_to_home);
+                }
+                else
+                {
+                    Debug.Log($"[{GetType().Name}] Navigation already triggered - ignoring duplicate");
+                }
+            }
+            else if(!string.IsNullOrEmpty(authState.authError))
             {
-                ShowErrorRequest(authState.authError);
+                Debug.Log($"[{GetType().Name}] Authentication failed: {authState.authError}");
+                ShowErrorRequest?.Invoke(authState.authError);
             }
         }
 
@@ -128,7 +143,8 @@ namespace eu.foodmission.platform
         /// </summary>
         public async void Login()
         {
-            Debug.LogError($"[{GetType().Name}] - Login -> username:"+Username+", password:"+Password);
+            Debug.Log($"[{GetType().Name}] Login started for user: {Username}");
+            _hasNavigated = false; // Reset navigation flag on new login attempt
 
             bool fieldsOk = true;
 
@@ -144,10 +160,21 @@ namespace eu.foodmission.platform
 
             if(fieldsOk)
             {
-                await _authService.LoginAsync(Username, Password);
+                try
+                {
+                    await _authService.LoginAsync(Username, Password);
+                    // Navigation happens via OnAuthStateChanged callback
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] Login exception: {ex.Message}");
+                    ShowErrorRequest?.Invoke("Login failed. Please try again.");
+                    IsLoading = DisplayStyle.None;
+                }
             }
             else
             {
+                Debug.Log($"[{GetType().Name}] Field validation failed");
                 ShowErrorRequest?.Invoke("@UI:ERROR_FIELDS_VALIDATION");
             }
         }

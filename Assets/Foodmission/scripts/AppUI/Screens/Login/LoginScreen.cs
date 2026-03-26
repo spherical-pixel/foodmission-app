@@ -87,23 +87,45 @@ namespace eu.foodmission.platform
             }
         }
 
+        protected override void OnViewModelBound()
+        {
+            base.OnViewModelBound();
+            _viewModel.ShowErrorRequest +=OnShowErrorRequested;
+            _viewModel.NavigationRequested +=OnNavigationRequested;
+        }
+
         protected override void OnViewModelUnbinding()
         {
+            if (_viewModel != null)
+            {
+                _viewModel.ShowErrorRequest -=OnShowErrorRequested;
+                _viewModel.NavigationRequested -=OnNavigationRequested;
+            }
+
             UnregisterManualEvents();
 
             _loginButton = null;
             _registerButton = null;
             _forgotButton = null;
 
-            _viewModel.ShowErrorRequest -=OnShowErrorRequested;
-
             base.OnViewModelUnbinding();
         }
 
-        protected override void OnViewModelBound()
+        /// <summary>
+        /// Handles navigation requests from the ViewModel with logging
+        /// </summary>
+        private void OnNavigationRequested(string navigationAction)
         {
-            base.OnViewModelBound();
-            _viewModel.ShowErrorRequest +=OnShowErrorRequested;
+            Debug.Log($"[{GetType().Name}] Navigation requested: {navigationAction}");
+            if (_navController != null)
+            {
+                Debug.Log($"[{GetType().Name}] Executing navigation to: {navigationAction}");
+                _navController.Navigate(navigationAction);
+            }
+            else
+            {
+                Debug.LogError($"[{GetType().Name}] Cannot navigate - NavController is null");
+            }
         }
 
 
