@@ -1,5 +1,71 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9008780826100339191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: OnboardingGroups
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 3480, y: -251}
+  m_Guid: 02b5efce81a9947009ff8de8f8ee32ed
+  m_Parent: {fileID: 4520152674340125327}
+  m_Actions: []
+  m_Label: OnboardingGroups
+  m_TemplateSettings:
+    rid: 3341417627117944917
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944917
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.OnboardingGroupsScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
+--- !u!114 &-8970255772820488510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Notifications
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 271}
+  m_Guid: 02edce4eeaa0840d0ae4dcdd0148d240
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: Notifications
+  m_TemplateSettings:
+    rid: 3341417627117944918
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944918
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.NotificationsScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 0
+        m_ShowBackButton: 0
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
 --- !u!114 &-8582299972390442400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
   m_Name: Home
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
-  m_Position: {x: 1606, y: 598}
+  m_Position: {x: 1395, y: -159}
   m_Guid: 2bd46e9599a2c4d81abf7c47803f76cd
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
@@ -45,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
   m_Name: loading_to_home
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
-  m_Position: {x: 591, y: 212}
+  m_Position: {x: 564, y: 238}
   m_Guid: 83b0352a-67eb-4a9c-9655-488037a5640b
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
@@ -87,6 +153,127 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &-5819251557388559100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: OnboardingProfile
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1561, y: -251}
+  m_Guid: 1f0e248ee8a6149f19948f455c949da4
+  m_Parent: {fileID: 4520152674340125327}
+  m_Actions:
+  - {fileID: 2363329532361742206}
+  m_Label: OnboardingProfile
+  m_TemplateSettings:
+    rid: 3341417627117944915
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944915
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.OnboardingProfileScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &-5137250046231210904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: GroupsJoin
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 3243}
+  m_Guid: 60072675206ac404d9ef499a359fd23a
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: GroupsJoin
+  m_TemplateSettings:
+    rid: 3341417627117944925
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944925
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.GroupsJoinScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &-5093508927337335151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_settings
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 1960}
+  m_Guid: 4f114b92-7791-479f-9be9-b1320001c860
+  m_Destination: {fileID: -2965649022661221946}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &-3216693981237870489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: groups_to_detail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 3669}
+  m_Guid: 7fe844bd-3bde-448a-8d51-9dba2cec15ce
+  m_Destination: {fileID: 4519001266055914913}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &-3035501447349949994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
   m_Name: loading_to_auth
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
-  m_Position: {x: 591, y: -242}
+  m_Position: {x: 564, y: -536}
   m_Guid: a616d476-9799-4f28-a602-f61d7697d564
   m_Destination: {fileID: 3884702253746698299}
   m_Options:
@@ -108,6 +295,126 @@ MonoBehaviour:
     m_PopUpToInclusive: 0
     m_EnterAnim: 3
     m_ExitAnim: 4
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &-2965649022661221946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Settings
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 1960}
+  m_Guid: 9c71ce17f92d040aaba7a69d08f5bcf8
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: Settings
+  m_TemplateSettings:
+    rid: 3341417627117944922
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944922
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.SettingsScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &-2891793651288044259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_notifications
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 271}
+  m_Guid: 9987c70d-d311-4748-a5db-0c1ed9bd8f4f
+  m_Destination: {fileID: -8970255772820488510}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &-2746602517445119038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: PantryItemDetail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 5384}
+  m_Guid: a841583886ace4b1d97ce9e04af015ed
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: PantryItemDetail
+  m_TemplateSettings:
+    rid: 3341417627117944930
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944930
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.PantryItemDetailScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &-2017724658979243455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_groups_join
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 3243}
+  m_Guid: 1bc9b4d9-31c7-46fe-aef1-9ab7bf5ab326
+  m_Destination: {fileID: -5137250046231210904}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
     m_PopEnterAnim: 0
     m_PopExitAnim: 0
     m_PopUpToSaveState: 0
@@ -141,6 +448,66 @@ MonoBehaviour:
     m_RestoreState: 1
     m_LaunchSingleTop: 1
   m_DefaultArguments: []
+--- !u!114 &-1716996974998973278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_auth
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 564, y: -152}
+  m_Guid: d998d66e-f106-4a8c-9639-da2e3bb0a74b
+  m_Destination: {fileID: 3884702253746698299}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 2
+    m_ExitAnim: 1
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &-1712618335311785518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Pantry
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 4961}
+  m_Guid: fc8c141d646da4789923d03826afe89d
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: Pantry
+  m_TemplateSettings:
+    rid: 3341417627117944929
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944929
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.PantryScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &-1477136575185016345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +543,66 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 0
         m_ShowNavigationRail: 0
+--- !u!114 &-1332422748303549395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_meallog_add
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 1125}
+  m_Guid: 5c98a48b-928b-4890-b6fc-21b3a700d3cd
+  m_Destination: {fileID: 4257401503016902208}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &-1300064111542830868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: ShoppingListDetail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 4527}
+  m_Guid: 7515a819e097343a68502414f8149394
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: ShoppingListDetail
+  m_TemplateSettings:
+    rid: 3341417627117944928
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944928
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.ShoppingListDetailScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &-364094978430066862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +626,33 @@ MonoBehaviour:
     m_ExitAnim: 0
     m_PopEnterAnim: 0
     m_PopExitAnim: 1
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &-183864760696684321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: shopping_list_to_detail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 4527}
+  m_Guid: 0d28d6de-1ce8-4865-92ee-958c1c4aeded
+  m_Destination: {fileID: -1300064111542830868}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
     m_PopUpToSaveState: 0
     m_RestoreState: 0
     m_LaunchSingleTop: 0
@@ -231,6 +685,241 @@ MonoBehaviour:
   - {fileID: -8582299972390442400}
   - {fileID: 7184409324572556450}
   - {fileID: 5825177629302443624}
+  - {fileID: 4520152674340125327}
+  - {fileID: -5819251557388559100}
+  - {fileID: 3584806811463786402}
+  - {fileID: -9008780826100339191}
+  - {fileID: 6475924670633165201}
+  - {fileID: 2363329532361742206}
+  - {fileID: 5199080988345134681}
+  - {fileID: -8970255772820488510}
+  - {fileID: 4263548773454473108}
+  - {fileID: 4257401503016902208}
+  - {fileID: 2629326327219844483}
+  - {fileID: -2965649022661221946}
+  - {fileID: 588194815658208120}
+  - {fileID: 7964142450801946633}
+  - {fileID: -5137250046231210904}
+  - {fileID: 4519001266055914913}
+  - {fileID: 6060502882641011789}
+  - {fileID: -1300064111542830868}
+  - {fileID: -1712618335311785518}
+  - {fileID: -2746602517445119038}
+  - {fileID: -2891793651288044259}
+  - {fileID: 7153593643151026913}
+  - {fileID: -1332422748303549395}
+  - {fileID: 1995307887428131888}
+  - {fileID: -5093508927337335151}
+  - {fileID: 3673242429823106320}
+  - {fileID: 107596328955053790}
+  - {fileID: -2017724658979243455}
+  - {fileID: -3216693981237870489}
+  - {fileID: 673415384649435719}
+  - {fileID: -183864760696684321}
+  - {fileID: 5282194982018375192}
+  - {fileID: 1375785094262749335}
+  - {fileID: -1716996974998973278}
+--- !u!114 &107596328955053790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_groups_create
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 2818}
+  m_Guid: ea09130d-e43c-43b2-a938-a0d97f04f22b
+  m_Destination: {fileID: 7964142450801946633}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &588194815658208120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Groups
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 2395}
+  m_Guid: dbca76521e92047348a6d66618b3c956
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: Groups
+  m_TemplateSettings:
+    rid: 3341417627117944923
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944923
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.GroupsScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &673415384649435719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_shopping_list
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 4097}
+  m_Guid: 594968e6-29f9-4cca-ae70-e6b168398e33
+  m_Destination: {fileID: 6060502882641011789}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &1375785094262749335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: pantry_to_item_detail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 5384}
+  m_Guid: e3a6fc4d-9856-44df-90b1-04d9dc2514d2
+  m_Destination: {fileID: -2746602517445119038}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &1995307887428131888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_profile
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 1544}
+  m_Guid: 2cce355d-a24f-4e19-b754-434290a0ab20
+  m_Destination: {fileID: 2629326327219844483}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &2363329532361742206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: onboardingprofile_to_onboardingavatar
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 2098, y: -251}
+  m_Guid: 91674078-d67c-457c-b674-9a94602fdd95
+  m_Destination: {fileID: 3584806811463786402}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &2629326327219844483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Profile
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 1544}
+  m_Guid: f766b456664f44a9c83cf83914bb1a13
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: Profile
+  m_TemplateSettings:
+    rid: 3341417627117944921
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944921
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.ProfileScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &2695106299898621552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +955,67 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 0
         m_ShowNavigationRail: 0
+--- !u!114 &3584806811463786402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: OnboardingAvatar
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 2497, y: -251}
+  m_Guid: 5fb196936b3c14701a21af277795721d
+  m_Parent: {fileID: 4520152674340125327}
+  m_Actions:
+  - {fileID: 5199080988345134681}
+  m_Label: OnboardingAvatar
+  m_TemplateSettings:
+    rid: 3341417627117944916
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944916
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.OnboardingAvatarScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &3673242429823106320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_groups
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 2395}
+  m_Guid: 9996555a-3bd2-4a70-a668-2d8728b71b74
+  m_Destination: {fileID: 588194815658208120}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &3884702253746698299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,12 +1028,129 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac212c624cd4a46acc6d3430ae62e14, type: 3}
   m_Name: auth_graph
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavGraph
-  m_Position: {x: 1121, y: -242}
+  m_Position: {x: 1087, y: -374}
   m_Guid: 0baeb13b3b5c3443d89df4c0a8736ab6
   m_Parent: {fileID: 6576446744998733474}
   m_Actions: []
   m_Label: 
   m_StartDestination: {fileID: -1477136575185016345}
+--- !u!114 &4257401503016902208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: MealLogAdd
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 1113}
+  m_Guid: b07022150a18f4ffb9e43bae2b973960
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: MealLogAdd
+  m_TemplateSettings:
+    rid: 3341417627117944920
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944920
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.MealLogAddScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &4263548773454473108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: MealLog
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 701}
+  m_Guid: dd0f7286c0b444c5fa140711bb5af012
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: MealLog
+  m_TemplateSettings:
+    rid: 3341417627117944919
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944919
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.MealLogScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &4519001266055914913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: GroupDetail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 3669}
+  m_Guid: ddccdbe4757f34128b366f0b9a4a4421
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: GroupDetail
+  m_TemplateSettings:
+    rid: 3341417627117944926
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944926
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.GroupDetailScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &4520152674340125327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac212c624cd4a46acc6d3430ae62e14, type: 3}
+  m_Name: onboarding_graph
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavGraph
+  m_Position: {x: 1052, y: -944}
+  m_Guid: 604a120fb6e8c4145aba4d10e6ea833d
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: 
+  m_StartDestination: {fileID: -5819251557388559100}
 --- !u!114 &4583499250303890363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +1166,20 @@ MonoBehaviour:
   m_Position: {x: 1082, y: 343}
   m_Guid: 54cc504d69d794ad3a85639c9c873247
   m_Parent: {fileID: 6576446744998733474}
-  m_Actions: []
+  m_Actions:
+  - {fileID: -2891793651288044259}
+  - {fileID: 7153593643151026913}
+  - {fileID: -1332422748303549395}
+  - {fileID: 1995307887428131888}
+  - {fileID: -5093508927337335151}
+  - {fileID: 3673242429823106320}
+  - {fileID: 107596328955053790}
+  - {fileID: -2017724658979243455}
+  - {fileID: -3216693981237870489}
+  - {fileID: 673415384649435719}
+  - {fileID: -183864760696684321}
+  - {fileID: 5282194982018375192}
+  - {fileID: 1375785094262749335}
   m_Label: 
   m_StartDestination: {fileID: -8582299972390442400}
 --- !u!114 &4866392392842450029
@@ -334,6 +1214,60 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 0
         m_ShowNavigationRail: 0
+--- !u!114 &5199080988345134681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: onboardingavatar_to_onboardinggroups
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 3047, y: -251}
+  m_Guid: c5438ce2-6ed1-43cc-8e0d-b1f25cc23d97
+  m_Destination: {fileID: -9008780826100339191}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &5282194982018375192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_pantry
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 4961}
+  m_Guid: 51aee683-b38b-48e7-8a94-20ea8b818cd4
+  m_Destination: {fileID: -1712618335311785518}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &5376681605016951471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +1334,66 @@ MonoBehaviour:
         m_ShowBackButton: 1
         m_ShowDrawer: 0
         m_ShowNavigationRail: 0
+--- !u!114 &6060502882641011789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: ShoppingList
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 4097}
+  m_Guid: 3836ccbecf3a547129e2005665286015
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: ShoppingList
+  m_TemplateSettings:
+    rid: 3341417627117944927
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944927
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.ShoppingListScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &6475924670633165201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: register_to_onboarding
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 564, y: -944}
+  m_Guid: 3388b08d-4c57-464d-a43c-14b4b2d76f79
+  m_Destination: {fileID: 4520152674340125327}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 3
+    m_ExitAnim: 4
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &6576446744998733474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,8 +1412,37 @@ MonoBehaviour:
   m_Actions:
   - {fileID: -1943232225755662504}
   - {fileID: -7001863560772320369}
+  - {fileID: 6475924670633165201}
+  - {fileID: -1716996974998973278}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
+--- !u!114 &7153593643151026913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_meallog
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 701}
+  m_Guid: 5259ea10-07f8-4ca0-aeb2-7c1cf93f9f38
+  m_Destination: {fileID: 4263548773454473108}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &7184409324572556450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,3 +1470,36 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &7964142450801946633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: GroupsCreate
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 2818}
+  m_Guid: 74301a475e4054ad18d4c8cc3ad0e93a
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: GroupsCreate
+  m_TemplateSettings:
+    rid: 3341417627117944924
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3341417627117944924
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.GroupsCreateScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0

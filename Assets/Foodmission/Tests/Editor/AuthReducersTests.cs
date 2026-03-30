@@ -36,6 +36,7 @@ namespace eu.foodmission.platform.Tests
             var state = new AppState { isAuthenticating = true };
             var payload = new AppActions.LoginPayload(
                 userId: "user123",
+                userName: "testuser",
                 email: "test@example.com",
                 accessToken: "eyJhbGciOiJIUzI1NiIs...",
                 tokenType: "Bearer",
@@ -49,6 +50,7 @@ namespace eu.foodmission.platform.Tests
             // Assert
             Assert.IsFalse(newState.isAuthenticating);
             Assert.AreEqual("user123", newState.userId);
+            Assert.AreEqual("testuser", newState.userName);
             Assert.AreEqual("test@example.com", newState.userEmail);
             Assert.AreEqual("eyJhbGciOiJIUzI1NiIs...", newState.accessToken);
             Assert.AreEqual("Bearer", newState.tokenType);
@@ -77,6 +79,7 @@ namespace eu.foodmission.platform.Tests
             var state = new AppState
             {
                 userId = "user123",
+                userName = "testuser",
                 userEmail = "test@example.com",
                 accessToken = "eyJ...",
                 tokenType = "Bearer",
@@ -89,6 +92,7 @@ namespace eu.foodmission.platform.Tests
 
             // Assert
             Assert.IsEmpty(newState.userId);
+            Assert.IsEmpty(newState.userName);
             Assert.IsEmpty(newState.userEmail);
             Assert.IsEmpty(newState.accessToken);
             Assert.IsEmpty(newState.tokenType);

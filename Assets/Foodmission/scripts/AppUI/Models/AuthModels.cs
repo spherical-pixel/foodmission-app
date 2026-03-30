@@ -96,8 +96,7 @@ namespace eu.foodmission.platform
     {
         public string id;
         public string email;
-        public string firstName;
-        public string lastName;
+        public string username;
         public string keycloakId;
     }
 }

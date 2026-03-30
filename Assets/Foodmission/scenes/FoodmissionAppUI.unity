@@ -194,6 +194,8 @@ MonoBehaviour:
   LoginTemplate: {fileID: 9197481963319205126, guid: 1bad67de3b1b94208aa0e030975889b8, type: 3}
   RegisterTemplate: {fileID: 9197481963319205126, guid: 61e6e124fb6e849c4ac488d29545f911, type: 3}
   ForgotPasswordTemplate: {fileID: 9197481963319205126, guid: b75cc1ba4e92d444284e8ec904412ca3, type: 3}
+  ProfileTemplate: {fileID: 9197481963319205126, guid: c7fd564d76267489b96a7bb81eb559ab, type: 3}
+  SettingsTemplate: {fileID: 9197481963319205126, guid: ba824eac88578478091945dde0430b60, type: 3}
   GraphAsset: {fileID: 11400000, guid: af062f8dbc7304d13ac9d886d982c734, type: 2}
 --- !u!1001 &571964842469848223
 PrefabInstance:

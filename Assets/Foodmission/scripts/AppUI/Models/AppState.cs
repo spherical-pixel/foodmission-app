@@ -37,7 +37,12 @@ namespace eu.foodmission.platform
         public string userId = "";
 
         /// <summary>
-        /// User email
+        /// Username (display name, from profile API)
+        /// </summary>
+        public string userName = "";
+
+        /// <summary>
+        /// User email (from profile API, not the login input)
         /// </summary>
         public string userEmail = "";
 
@@ -90,6 +95,7 @@ namespace eu.foodmission.platform
                 scale = this.scale,
                 hasCompletedOnboarding = this.hasCompletedOnboarding,
                 userId = this.userId,
+                userName = this.userName,
                 userEmail = this.userEmail,
                 accessToken = this.accessToken,
                 tokenType = this.tokenType,

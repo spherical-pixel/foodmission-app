@@ -15,6 +15,8 @@ namespace eu.foodmission.platform
         public VisualTreeAsset LoginTemplate;
         public VisualTreeAsset RegisterTemplate;
         public VisualTreeAsset ForgotPasswordTemplate;
+        public VisualTreeAsset ProfileTemplate;
+        public VisualTreeAsset SettingsTemplate;
 
         public NavGraphViewAsset GraphAsset;
 
@@ -39,6 +41,22 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<LoginViewModel>();
             builder.services.AddTransient<RegisterViewModel>();
             builder.services.AddTransient<ForgotPasswordViewModel>();
+            builder.services.AddTransient<NotificationsViewModel>();
+            builder.services.AddTransient<MealLogViewModel>();
+            builder.services.AddTransient<MealLogAddViewModel>();
+            builder.services.AddTransient<ProfileViewModel>();
+            builder.services.AddTransient<SettingsViewModel>();
+            builder.services.AddTransient<GroupsViewModel>();
+            builder.services.AddTransient<GroupsCreateViewModel>();
+            builder.services.AddTransient<GroupsJoinViewModel>();
+            builder.services.AddTransient<GroupDetailViewModel>();
+            builder.services.AddTransient<ShoppingListViewModel>();
+            builder.services.AddTransient<ShoppingListDetailViewModel>();
+            builder.services.AddTransient<PantryViewModel>();
+            builder.services.AddTransient<PantryItemDetailViewModel>();
+            builder.services.AddTransient<OnboardingProfileViewModel>();
+            builder.services.AddTransient<OnboardingAvatarViewModel>();
+            builder.services.AddTransient<OnboardingGroupsViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

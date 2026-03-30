@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" style="flex-grow: 1; padding-left: 16px; padding-right: 16px; padding-top: 24px; padding-bottom: 24px;">
+        <appui:Heading text="Settings" size="XL" style="margin-bottom: 24px;"/>
+        <!-- Theme row -->
+        <ui:VisualElement name="row-theme" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <appui:Text text="Theme" style="flex-shrink: 0; margin-right: 16px;"/>
+            <ui:DropdownField name="dropdown-theme" style="flex-grow: 1;"/>
+        </ui:VisualElement>
+        <!-- Language row -->
+        <ui:VisualElement name="row-lang" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <appui:Text text="Language" style="flex-shrink: 0; margin-right: 16px;"/>
+            <ui:DropdownField name="dropdown-lang" style="flex-grow: 1;"/>
+        </ui:VisualElement>
+        <!-- Scale row -->
+        <ui:VisualElement name="row-scale" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <appui:Text text="Text size" style="flex-shrink: 0; margin-right: 16px;"/>
+            <ui:DropdownField name="dropdown-scale" style="flex-grow: 1;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

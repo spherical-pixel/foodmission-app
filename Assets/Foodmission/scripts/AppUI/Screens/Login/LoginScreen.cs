@@ -90,16 +90,14 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
-            _viewModel.ShowErrorRequest +=OnShowErrorRequested;
-            _viewModel.NavigationRequested +=OnNavigationRequested;
+            _viewModel.ShowErrorRequest += OnShowErrorRequested;
         }
 
         protected override void OnViewModelUnbinding()
         {
             if (_viewModel != null)
             {
-                _viewModel.ShowErrorRequest -=OnShowErrorRequested;
-                _viewModel.NavigationRequested -=OnNavigationRequested;
+                _viewModel.ShowErrorRequest -= OnShowErrorRequested;
             }
 
             UnregisterManualEvents();
@@ -109,23 +107,6 @@ namespace eu.foodmission.platform
             _forgotButton = null;
 
             base.OnViewModelUnbinding();
-        }
-
-        /// <summary>
-        /// Handles navigation requests from the ViewModel with logging
-        /// </summary>
-        private void OnNavigationRequested(string navigationAction)
-        {
-            Debug.Log($"[{GetType().Name}] Navigation requested: {navigationAction}");
-            if (_navController != null)
-            {
-                Debug.Log($"[{GetType().Name}] Executing navigation to: {navigationAction}");
-                _navController.Navigate(navigationAction);
-            }
-            else
-            {
-                Debug.LogError($"[{GetType().Name}] Cannot navigate - NavController is null");
-            }
         }
 
 
@@ -154,7 +135,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-
+            
             AlertDialog dialog = new AlertDialog
             {
                 title = "@UI:ALERT_ERROR_TITLE",
@@ -162,6 +143,8 @@ namespace eu.foodmission.platform
                 variant = AlertSemantic.Error
             };
 
+            dialog.size = Size.L;
+            dialog.scaleOverride = "large";
             dialog.SetPrimaryAction(0, "@UI:TXT_OK", () => Debug.LogError("Confirmed Alert"));
             //dialog.SetCancelAction(1, "Cancel");
 

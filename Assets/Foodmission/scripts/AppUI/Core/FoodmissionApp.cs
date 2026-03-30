@@ -42,12 +42,15 @@ namespace eu.foodmission.platform
 
             // Create and add the NavHost for navigation
             var navHost = new NavHost();
-            // Set the Navigation graph asset
             navHost.navController.SetGraph(FoodmissionAppBuilder.instance.GraphAsset);
-            navHost.visualController = new FoodmissionVisualController();
+            var visualController = new FoodmissionVisualController();
+            navHost.visualController = visualController;
 
             rootVisualElement.Add(navHost);
             navHost.StretchToParentSize();
+
+            // Add the profile drawer after the NavHost so it renders on top
+            visualController.CreateProfileDrawer(rootVisualElement);
 
             // rootVisualElement in AppUI is a Panel
             _panel = rootVisualElement as Panel;

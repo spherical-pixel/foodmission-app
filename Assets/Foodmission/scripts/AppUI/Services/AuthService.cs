@@ -120,19 +120,22 @@ namespace eu.foodmission.platform
                 // Calculate token expiration (int for JsonUtility compatibility)
                 int expiresAt = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + response.expires_in);
 
-                // Fetch user profile to get userId (backend stores keycloakId as id)
-                string userId = await FetchUserIdAsync(response.access_token);
-                if (string.IsNullOrEmpty(userId))
+                // Fetch user profile to get userId, username and email
+                ProfileResponse profile = await FetchProfileAsync(response.access_token);
+                string userId = profile?.id ?? username;
+                string userName = profile?.username ?? "";
+                string userEmail = profile?.email ?? "";
+
+                if (profile == null)
                 {
-                    // If profile fetch fails, use email from login as fallback identification
-                    userId = username;
-                    Debug.LogWarning($"[{GetType().Name}] Profile fetch failed, using username as userId");
+                    Debug.LogWarning($"[{GetType().Name}] Profile fetch failed, using login input as fallback");
                 }
 
                 // Create login payload and dispatch it to the store
                 AppActions.LoginPayload payload = new AppActions.LoginPayload(
                     userId: userId,
-                    email: username,
+                    userName: userName,
+                    email: userEmail,
                     accessToken: response.access_token,
                     tokenType: response.token_type,
                     expiresAt: expiresAt
@@ -267,9 +270,9 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Fetches user profile to get the userId from the backend
+        /// Fetches user profile from GET /api/v1/auth/profile
         /// </summary>
-        private async Task<string> FetchUserIdAsync(string accessToken)
+        private async Task<ProfileResponse> FetchProfileAsync(string accessToken)
         {
             try
             {
@@ -289,12 +292,10 @@ namespace eu.foodmission.platform
                     string responseJson = request.downloadHandler.text;
                     Debug.Log($"[{GetType().Name}] Profile response: {responseJson}");
 
-                    // Parse the profile response - it contains id, email, etc.
-                    // The backend returns { id, email, firstName, lastName, keycloakId, ... }
-                    var profile = JsonUtility.FromJson<ProfileResponse>(responseJson);
+                    ProfileResponse profile = JsonUtility.FromJson<ProfileResponse>(responseJson);
                     if (profile != null && !string.IsNullOrEmpty(profile.id))
                     {
-                        return profile.id;
+                        return profile;
                     }
                 }
                 else

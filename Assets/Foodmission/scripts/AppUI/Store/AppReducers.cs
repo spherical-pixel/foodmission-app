@@ -31,14 +31,16 @@ namespace eu.foodmission.platform
         public readonly struct LoginPayload
         {
             public readonly string userId;
+            public readonly string userName;
             public readonly string email;
             public readonly string accessToken;
             public readonly string tokenType;
             public readonly int expiresAt;
 
-            public LoginPayload(string userId, string email, string accessToken, string tokenType, int expiresAt)
+            public LoginPayload(string userId, string userName, string email, string accessToken, string tokenType, int expiresAt)
             {
                 this.userId = userId;
+                this.userName = userName;
                 this.email = email;
                 this.accessToken = accessToken;
                 this.tokenType = tokenType;
@@ -99,6 +101,7 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userId = "";
+            newState.userName = "";
             newState.userEmail = "";
             newState.accessToken = "";
             newState.tokenType = "";
@@ -135,6 +138,7 @@ namespace eu.foodmission.platform
             newState.isAuthenticating = false;
             newState.authError = "";
             newState.userId = action.payload.userId;
+            newState.userName = action.payload.userName;
             newState.userEmail = action.payload.email;
             newState.accessToken = action.payload.accessToken;
             newState.tokenType = action.payload.tokenType;

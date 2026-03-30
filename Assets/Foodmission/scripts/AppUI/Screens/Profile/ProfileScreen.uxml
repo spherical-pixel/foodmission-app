@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:ScrollView name="root" data-source-type="eu.foodmission.platform.ProfileViewModel, Foodmission" style="flex-grow: 1;">
+        <!-- Header -->
+        <ui:VisualElement name="profile-header" style="align-items: center; padding-top: 40px; padding-bottom: 32px;">
+            <ui:VisualElement name="avatar" style="width: 80px; height: 80px; border-radius: 40px; background-color: rgb(100, 149, 237); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-color: rgb(255, 255, 255);"/>
+            <appui:Heading name="username-label" size="L" style="margin-top: 12px;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="UserName" binding-mode="ToTarget"/>
+                </Bindings>
+            </appui:Heading>
+        </ui:VisualElement>
+        <!-- Divider -->
+        <ui:VisualElement style="height: 1px; background-color: rgba(128, 128, 128, 0.3); margin-left: 16px; margin-right: 16px; margin-bottom: 8px;"/>
+        <!-- Menu -->
+        <ui:VisualElement name="profile-menu" style="padding-left: 16px; padding-right: 16px; padding-top: 8px;">
+            <appui:Button name="btn-settings" title="Settings" quiet="true" size="L" style="margin-bottom: 4px; width: 100%;"/>
+            <appui:Button name="btn-groups" title="Groups" quiet="true" size="L" style="margin-bottom: 4px; width: 100%;"/>
+            <ui:VisualElement style="height: 1px; background-color: rgba(128, 128, 128, 0.3); margin-top: 8px; margin-bottom: 8px;"/>
+            <appui:Button name="btn-logout" title="Log out" quiet="true" size="L" style="width: 100%;"/>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>
