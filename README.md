@@ -1,16 +1,16 @@
 # 🍎 Foodmission
 
-[![Unity](https://img.shields.io/badge/Unity-6000.3.8f1-black.svg?style=flat-square&logo=unity)](https://unity.com)
+[![Unity](https://img.shields.io/badge/Unity-6000.3.12f1-black.svg?style=flat-square&logo=unity)](https://unity.com)
 [![App UI](https://img.shields.io/badge/App%20UI-2.1.6-blue.svg?style=flat-square)](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.1/manual/index.html)
-[![License](https://img.shields.io/badge/License-Open%20Source-green.svg?style=flat-square)](LICENSE)
+[![EU Horizon](https://img.shields.io/badge/EU%20Horizon-101181774-blue.svg?style=flat-square)](https://www.foodmission.eu/)
 
-> A gamified mobile application promoting healthy and sustainable eating habits through personalized nutrition tracking, challenges, and community engagement.
+> A gamified citizen science mobile platform promoting healthy and sustainable eating habits, developed as part of the EU Horizon project FOODMISSION (grant 101181774).
 
 ---
 
 ## 📱 Overview
 
-Foodmission is an open-source Unity application designed to help users develop healthier and more sustainable eating habits. Built with the **Unity App UI** framework following MVVM architecture with Redux state management.
+Foodmission is a Unity application designed to help users develop healthier and more sustainable eating habits. Built with the **Unity App UI** framework following MVVM architecture with Redux state management.
 
 ### ✨ Key Features
 
@@ -41,10 +41,10 @@ NavHost with Navigation Graph + DI container
 
 | Component | Technology |
 |-----------|------------|
-| **Engine** | Unity 6000.3.8f1 (Unity 6) |
+| **Engine** | Unity 6000.3.12f1 (Unity 6) |
 | **UI Framework** | Unity App UI v2.1.6 |
 | **Architecture** | MVVM with declarative navigation |
-| **State Management** | Redux with C# records |
+| **State Management** | Redux with class-based state + `Copy()` pattern |
 | **Accessibility** | Native Unity 6.0+ APIs |
 | **Localization** | Unity Localization |
 
@@ -54,7 +54,7 @@ NavHost with Navigation Graph + DI container
 
 ### Prerequisites
 
-- [Unity 6000.3.8f1](https://unity.com/releases/editor/whats-new/6000.3.8) or later
+- [Unity 6000.3.12f1](https://unity.com/releases/editor/whats-new/6000.3.12) or later
 - [Unity Hub](https://unity.com/unity-hub)
 - Git
 
@@ -86,14 +86,14 @@ NavHost with Navigation Graph + DI container
 Assets/Foodmission/
 ├── scripts/AppUI/
 │   ├── Core/           # AppBuilder, App classes, DI
-│   ├── Models/         # State records (AppState, etc.)
+│   ├── Models/         # State models (AppState, AuthModels, CountryModels)
 │   ├── Services/       # Interfaces and implementations
 │   ├── Screens/        # Navigation screens and ViewModels (per-screen folders)
 │   ├── Store/          # Redux actions and reducers
 │   └── Navigation/     # Generated navigation graph
 ├── AppUI/              # UXML templates, USS styles
 ├── scenes/             # Unity scenes
-└── docs/               # Documentation and API collections
+└── Tests/              # Unity Test Framework (EditMode)
 ```
 
 ---
@@ -102,9 +102,8 @@ Assets/Foodmission/
 
 | Resource | Description |
 |----------|-------------|
-| [PLATFORM_OVERVIEW.md](docs/PLATFORM_OVERVIEW.md) | Feature specifications and data models |
-| [docs/app-ui/](docs/app-ui/) | Unity App UI framework documentation (v2.1) |
-| [API Docs](https://api.foodmission.eu/api/docs) | Backend API (Swagger UI) |
+| [App UI Docs](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.1/manual/index.html) | Unity App UI framework documentation (v2.1) |
+| [API Docs](https://test.api.foodmission.eu/api/docs) | Backend API — test environment (Swagger UI) |
 
 ---
 
@@ -149,7 +148,7 @@ This project is open source. See [LICENSE](LICENSE) for details.
 
 - [Unity App UI](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.1/manual/index.html) — UI Framework
 - [Unity Localization](https://docs.unity3d.com/Packages/com.unity.localization@1.5) — i18n support
-- Funded by European research programs
+- Funded by the European Union — Horizon Europe programme, grant agreement 101181774 (HORIZON-CL6-2024-FARM2FORK-01-6)
 
 ---
 
