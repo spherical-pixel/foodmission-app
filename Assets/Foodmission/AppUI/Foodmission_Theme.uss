@@ -5,14 +5,14 @@
 
 .appui {
    /* Sizing */
-   --appui-sizing-100: 16px;
-   --appui-sizing-200: 32px;
-   --appui-sizing-300: 48px;
-   --appui-sizing-400: 64px;
-   --appui-sizing-500: 80px;
-   --appui-sizing-600: 96px;
-   --appui-sizing-700: 112px;
-   --appui-sizing-800: 128px;
+   --appui-sizing-100: 26px;
+   --appui-sizing-200: 42px;
+   --appui-sizing-300: 58px;
+   --appui-sizing-400: 74px;
+   --appui-sizing-500: 90px;
+   --appui-sizing-600: 106px;
+   --appui-sizing-700: 122px;
+   --appui-sizing-800: 138px;
 
    --appui-font-sizes-body-sm:24px;
    --appui-font-sizes-body-md:28px;

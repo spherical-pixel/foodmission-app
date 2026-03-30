@@ -208,3 +208,96 @@
     margin-top: 40px;
     margin-bottom: 20px;
 }
+
+/* HelpText font size - usa la variable de tamaño del tema */
+.appui-help-text {
+    font-size: var(--appui-font-sizes-body-sm);
+}
+
+/* ============================================
+   Dialog/AlertDialog Overrides for Mobile
+   Makes dialogs larger and more touch-friendly
+   ============================================ */
+
+/* Base dialog - more padding and full width on mobile */
+.appui-dialog {
+    padding: var(--appui-spacing-500);
+    min-width: 320px;
+    max-width: 85%;
+}
+
+/* Override fixed sizes to be responsive - higher specificity to beat Dialog.uss */
+.appui-modal__content > .appui-dialog--size-s,
+.appui-modal__content > .appui-dialog--size-m,
+.appui-modal__content > .appui-dialog--size-l {
+    width: 90%;
+    min-width: 800px;
+    max-width: 1000px;
+}
+
+/* Dialog header/title - much larger for mobile */
+.appui-dialog__header{
+    font-size: var(--appui-font-sizes-heading-lg);
+    -unity-font-style: bold;
+}
+
+/* Dialog content/description - larger font with more line height */
+.appui-dialog__content {
+    font-size: var(--appui-font-sizes-body-lg);
+    margin-top: var(--appui-spacing-400);
+    -unity-text-align: middle-center;
+}
+
+.appui-dialog__content .appui-text {
+    font-size: var(--appui-font-sizes-body-lg);
+    -unity-text-align: middle-center;
+}
+
+/* Button group - more spacing */
+.appui-dialog__buttongroup {
+    margin-top: var(--appui-spacing-500);
+    gap: var(--appui-spacing-300);
+}
+
+/* Action buttons - larger and more touch-friendly */
+.appui-dialog__buttongroup > .appui-button {
+    padding: var(--appui-spacing-300) var(--appui-spacing-500);
+    font-size: var(--appui-font-sizes-body-lg);
+    min-height: 44px;
+}
+
+/* Primary action button - accent color */
+.appui-dialog__primary-action {
+    font-size: var(--appui-font-sizes-body-lg);
+}
+
+/* Secondary/Cancel buttons */
+.appui-dialog__secondary-action,
+.appui-dialog__cancel-action {
+    font-size: var(--appui-font-sizes-body-lg);
+}
+
+/* Icon in dialog - larger and positioned better */
+.appui-dialog__icon {
+    width: 56px;
+    height: 56px;
+    --unity-image-size: 56px;
+}
+
+/* Dialog heading row spacing */
+.appui-dialog__heading {
+    gap: var(--appui-spacing-300);
+}
+
+/* Modal content - larger border radius */
+.appui-modal__content {
+    border-radius: var(--appui-border-radius-xl);
+}
+
+/* Divider spacing */
+.appui-dialog__divider {
+    margin-top: var(--appui-spacing-300);
+    margin-bottom: var(--appui-spacing-300);
+}
+
+
