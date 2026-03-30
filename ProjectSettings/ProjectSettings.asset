@@ -114,6 +114,7 @@ PlayerSettings:
   xboxEnableGuest: 0
   xboxEnablePIXSampling: 0
   metalFramebufferOnly: 0
+  metalUseMetalDisplayLink: 0
   xboxOneResolution: 0
   xboxOneSResolution: 0
   xboxOneXResolution: 3
@@ -274,7 +275,7 @@ PlayerSettings:
   AndroidAllowedArchitectures: -1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: /Users/tonidurans/Desktop/Work/foodmission-docs/certs/user.keystore.keystore
+  AndroidKeystoreName: '{inproject}: _desarrollo/foodmission-docs/certs/user.keystore.keystore'
   AndroidKeyaliasName: development
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
