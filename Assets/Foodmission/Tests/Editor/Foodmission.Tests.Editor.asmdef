@@ -5,7 +5,10 @@
         "Foodmission",
         "Unity.AppUI.Redux",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "Unity.AppUI",
+        "Unity.AppUI.Editor",
+        "Unity.AppUI.Tests"
     ],
     "includePlatforms": [
         "Editor"
