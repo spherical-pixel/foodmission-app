@@ -71,9 +71,22 @@ namespace eu.foodmission.platform
     public class LoginResponse
     {
         public string access_token;
+        public string refresh_token;
         public string token_type;
         public int expires_in;
         public UserData user;
+    }
+
+    /// <summary>
+    /// Response from POST /api/v1/auth/refresh
+    /// </summary>
+    [Serializable]
+    public class RefreshResponse
+    {
+        public string access_token;
+        public string refresh_token;   // may be empty if backend does not rotate the refresh token
+        public string token_type;
+        public int expires_in;
     }
 
     /// <summary>

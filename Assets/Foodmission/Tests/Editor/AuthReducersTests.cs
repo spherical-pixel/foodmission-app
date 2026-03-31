@@ -98,5 +98,15 @@ namespace eu.foodmission.platform.Tests
             Assert.IsEmpty(newState.tokenType);
             Assert.AreEqual(0, newState.tokenExpiresAt);
         }
+
+        [Test]
+        public void AppState_Copy_IncludesRefreshToken()
+        {
+            var state = new AppState { refreshToken = "my-refresh-token" };
+
+            var copy = state.Copy();
+
+            Assert.AreEqual("my-refresh-token", copy.refreshToken);
+        }
     }
 }

@@ -27,6 +27,11 @@ namespace eu.foodmission.platform
         public string scale = "medium";
 
         /// <summary>
+        /// Font choice: "Roboto", "OpenDyslexic", "OpenSans"
+        /// </summary>
+        public string font = "Roboto";
+
+        /// <summary>
         /// OnBoarding completed
         /// </summary>
         public bool hasCompletedOnboarding = false;
@@ -62,6 +67,11 @@ namespace eu.foodmission.platform
         public int tokenExpiresAt = 0;
 
         /// <summary>
+        /// OAuth2 refresh token (persisted — used to obtain new access tokens)
+        /// </summary>
+        public string refreshToken = "";
+
+        /// <summary>
         /// Last session timestamp (Unix seconds as int)
         /// </summary>
         public int lastSessionTimestamp = 0;
@@ -93,6 +103,7 @@ namespace eu.foodmission.platform
                 lang = this.lang,
                 theme = this.theme,
                 scale = this.scale,
+                font = this.font,
                 hasCompletedOnboarding = this.hasCompletedOnboarding,
                 userId = this.userId,
                 userName = this.userName,
@@ -100,6 +111,7 @@ namespace eu.foodmission.platform
                 accessToken = this.accessToken,
                 tokenType = this.tokenType,
                 tokenExpiresAt = this.tokenExpiresAt,
+                refreshToken = this.refreshToken,
                 lastSessionTimestamp = this.lastSessionTimestamp,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError
