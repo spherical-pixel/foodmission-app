@@ -20,6 +20,7 @@ namespace eu.foodmission.platform
         private bool _isInitialized;
 
         public string currentTheme { get; private set; } = "system";
+        private string _currentFont = "roboto";
         public float safeAreaTop { get; private set; }
         public float safeAreaRight { get; private set; }
         public float safeAreaBottom { get; private set; }
@@ -61,9 +62,10 @@ namespace eu.foodmission.platform
             _panel = panel;
             _isInitialized = true;
 
-            // Apply initial theme from state
+            // Apply initial theme and font from state
             AppState appState = _storeService.GetAppState();
             SetTheme(appState.theme);
+            SetFont(appState.font);
 
             // Subscribe to state changes
             _subscription = _storeService.store.Subscribe(
@@ -143,6 +145,28 @@ namespace eu.foodmission.platform
             {
                 SetTheme(state.theme);
             }
+
+            if (state.font != _currentFont)
+            {
+                SetFont(state.font);
+            }
+        }
+
+        /// <summary>
+        /// Applies the font preference by toggling CSS classes on the panel root.
+        /// "roboto" is the App UI default — no class needed.
+        /// </summary>
+        public void SetFont(string font)
+        {
+            if (!_isInitialized)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Cannot set font — not initialized yet");
+                return;
+            }
+
+            _currentFont = font;
+            _panel.EnableInClassList("fm-font-open-sans",     font == "open-sans");
+            _panel.EnableInClassList("fm-font-open-dyslexic", font == "open-dyslexic");
         }
 
         private void OnSystemThemeChanged(bool darkMode)

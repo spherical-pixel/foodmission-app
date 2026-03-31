@@ -7,6 +7,7 @@ namespace eu.foodmission.platform
     {
         void Initialize(Panel panel);
         void SetTheme(string theme);
+        void SetFont(string font);
         string currentTheme { get; }
         float safeAreaTop { get; }
         float safeAreaRight { get; }
