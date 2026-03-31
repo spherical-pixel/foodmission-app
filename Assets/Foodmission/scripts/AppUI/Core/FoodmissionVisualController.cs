@@ -11,6 +11,9 @@ namespace eu.foodmission.platform
     public class FoodmissionVisualController : INavVisualController
     {
         private Drawer _profileDrawer;
+        private VisualElement _menuBackdrop;
+        private VisualElement _menuPanel;
+        private bool _menuOpen;
         private NavController _cachedNavController;
         private Label _userNameLabel;
 
@@ -173,6 +176,124 @@ namespace eu.foodmission.platform
         }
 
         // --------------------------------------------------------------------
+        // Menu Bottom Sheet (custom overlay)
+        // --------------------------------------------------------------------
+
+        /// <summary>
+        /// Creates the menu bottom sheet overlay and adds it to the root visual element.
+        /// Must be called after the NavHost is added so it renders on top.
+        /// </summary>
+        public void CreateMenuDrawer(VisualElement root)
+        {
+            _menuBackdrop = new VisualElement();
+            _menuBackdrop.AddToClassList("fm-menu-backdrop");
+            _menuBackdrop.style.display = DisplayStyle.None;
+            _menuBackdrop.pickingMode = PickingMode.Ignore;
+            _menuBackdrop.RegisterCallback<ClickEvent>(e =>
+            {
+                if (e.target == _menuBackdrop)
+                {
+                    CloseMenuDrawer();
+                }
+            });
+
+            var handle = new VisualElement();
+            handle.AddToClassList("fm-menu-panel__handle");
+
+            _menuPanel = new VisualElement();
+            _menuPanel.AddToClassList("fm-menu-panel");
+            _menuPanel.Add(handle);
+
+            var scroll = new ScrollView(ScrollViewMode.Vertical);
+            scroll.style.flexGrow = 1;
+            _menuPanel.Add(scroll);
+
+            BuildMenuContent(scroll.contentContainer);
+
+            _menuBackdrop.Add(_menuPanel);
+            root.Add(_menuBackdrop);
+        }
+
+        private void ToggleMenuDrawer()
+        {
+            if (_menuOpen)
+            {
+                CloseMenuDrawer();
+            }
+            else
+            {
+                OpenMenuDrawer();
+            }
+        }
+
+        private void OpenMenuDrawer()
+        {
+            _menuOpen = true;
+            _menuBackdrop.style.display = DisplayStyle.Flex;
+            _menuBackdrop.pickingMode = PickingMode.Position;
+            _menuPanel.schedule.Execute(() => _menuPanel.AddToClassList("fm-menu-panel--visible")).StartingIn(16);
+        }
+
+        private void CloseMenuDrawer()
+        {
+            _menuOpen = false;
+            _menuPanel.RemoveFromClassList("fm-menu-panel--visible");
+            _menuPanel.schedule.Execute(() =>
+            {
+                _menuBackdrop.style.display = DisplayStyle.None;
+                _menuBackdrop.pickingMode = PickingMode.Ignore;
+            }).StartingIn(300);
+        }
+
+        private void BuildMenuContent(VisualElement container)
+        {
+            // Phase 2 — disabled
+            AddMenuItem(container, "scene",            "Daily challenge",  null);
+            AddMenuItem(container, "scene",            "Missions",         null);
+
+            // Phase 1 Sprint 3 — active
+            AddMenuItem(container, "list",             "Shopping list",    () =>
+            {
+                CloseMenuDrawer();
+                _cachedNavController?.Navigate(Actions.go_to_shopping_list);
+            });
+            AddMenuItem(container, "scene",            "Pantry",           () =>
+            {
+                CloseMenuDrawer();
+                _cachedNavController?.Navigate(Actions.go_to_pantry);
+            });
+
+            // Phase 3 — disabled
+            AddMenuItem(container, "magnifying-glass", "Recipe book",      null);
+            AddMenuItem(container, "warning",          "Food waste",       null);
+            AddMenuItem(container, "scene",            "Games",            null);
+            AddMenuItem(container, "info",             "Knowledge",        null);
+            AddMenuItem(container, "users",            "Global community", null);
+            AddMenuItem(container, "scene",            "Map",              null);
+        }
+
+        private void AddMenuItem(VisualElement container, string icon, string label, Action onClick)
+        {
+            bool isEnabled = onClick != null;
+
+            var btn = new Unity.AppUI.UI.Button();
+            btn.title = label;
+            btn.leadingIcon = icon;
+            btn.trailingIcon = "caret-right";
+            btn.quiet = true;
+            btn.size = Size.L;
+            btn.style.width = Length.Percent(100);
+            btn.SetEnabled(isEnabled);
+
+            if (isEnabled)
+            {
+                btn.clicked += onClick;
+            }
+
+            container.Add(btn);
+        }
+
+        // --------------------------------------------------------------------
         // INavVisualController
         // --------------------------------------------------------------------
 
@@ -184,9 +305,13 @@ namespace eu.foodmission.platform
             var activeTab = BottomNavBarHelper.GetActiveTab(destination.name);
 
             AddNavItem(bottomNavBar, "fm-home",          "@UI:NAV_HOME",          activeTab == NavTab.Home,          navController, Actions.go_to_home);
-            AddNavItem(bottomNavBar, "fm-menu",          "@UI:NAV_MENU",          activeTab == NavTab.Menu,          navController, Actions.go_to_menu);
             AddNavItem(bottomNavBar, "fm-notifications", "@UI:NAV_NOTIFICATIONS", activeTab == NavTab.Notifications, navController, Actions.go_to_notifications);
             AddNavItem(bottomNavBar, "fm-meal-log",      "@UI:NAV_MEAL_LOG",      activeTab == NavTab.MealLog,       navController, Actions.go_to_meallog);
+
+            // Menu tab toggles the bottom sheet — does not navigate
+            var menuItem = new BottomNavBarItem("fm-menu", "@UI:NAV_MENU", () => ToggleMenuDrawer());
+            menuItem.isSelected = activeTab == NavTab.Menu;
+            bottomNavBar.Insert(1, menuItem);
 
             // Profile tab toggles the drawer — does not navigate
             var profileItem = new BottomNavBarItem("fm-profile", "@UI:NAV_PROFILE", () => _profileDrawer?.Toggle());

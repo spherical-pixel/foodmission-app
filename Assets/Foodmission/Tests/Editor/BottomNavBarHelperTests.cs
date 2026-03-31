@@ -56,12 +56,6 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void IsNavBarVisible_ReturnsTrue_ForMenuScreen()
-        {
-            Assert.IsTrue(BottomNavBarHelper.IsNavBarVisible("MENU"));
-        }
-
-        [Test]
         public void IsNavBarVisible_ReturnsTrue_ForNotificationsScreen()
         {
             Assert.IsTrue(BottomNavBarHelper.IsNavBarVisible("Notifications"));
@@ -109,12 +103,6 @@ namespace eu.foodmission.platform.Tests
         public void GetActiveTab_ReturnsHome_ForHomeScreen()
         {
             Assert.AreEqual(NavTab.Home, BottomNavBarHelper.GetActiveTab("Home"));
-        }
-
-        [Test]
-        public void GetActiveTab_ReturnsMenu_ForMenuScreen()
-        {
-            Assert.AreEqual(NavTab.Menu, BottomNavBarHelper.GetActiveTab("MENU"));
         }
 
         [Test]

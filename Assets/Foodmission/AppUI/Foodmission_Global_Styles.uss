@@ -300,4 +300,48 @@
     margin-bottom: var(--appui-spacing-300);
 }
 
+/* ============================================
+   Menu Bottom Sheet
+   ============================================ */
 
+.fm-menu-backdrop {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    justify-content: flex-end;
+}
+
+.fm-menu-panel {
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding-bottom: 16px;
+    translate: 0 100%;
+    transition-property: translate;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+.appui--light .fm-menu-panel {
+    background-color: #FFFFFF;
+}
+
+.appui--dark .fm-menu-panel {
+    background-color: #1E1E1E;
+}
+
+.fm-menu-panel--visible {
+    translate: 0 0%;
+}
+
+.fm-menu-panel__handle {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgba(128, 128, 128, 0.4);
+    align-self: center;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}

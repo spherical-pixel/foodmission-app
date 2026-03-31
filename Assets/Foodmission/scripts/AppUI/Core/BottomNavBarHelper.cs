@@ -52,7 +52,6 @@ namespace eu.foodmission.platform
                 case "Home":
                     return NavTab.Home;
 
-                case "MENU":
                 case "ShoppingList":
                 case "ShoppingListDetail":
                 case "Pantry":

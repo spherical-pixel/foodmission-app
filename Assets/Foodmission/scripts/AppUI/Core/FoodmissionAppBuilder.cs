@@ -11,7 +11,6 @@ namespace eu.foodmission.platform
 
         public VisualTreeAsset SplashTemplate;
         public VisualTreeAsset HomeTemplate;
-        public VisualTreeAsset MenuTemplate;
         public VisualTreeAsset LoginTemplate;
         public VisualTreeAsset RegisterTemplate;
         public VisualTreeAsset ForgotPasswordTemplate;
@@ -37,7 +36,6 @@ namespace eu.foodmission.platform
             // ViewModels (Transient - new instance each time)
             builder.services.AddTransient<SplashScreenViewModel>();
             builder.services.AddTransient<HomeScreenViewModel>();
-            builder.services.AddTransient<MenuScreenViewModel>();
             builder.services.AddTransient<LoginViewModel>();
             builder.services.AddTransient<RegisterViewModel>();
             builder.services.AddTransient<ForgotPasswordViewModel>();
