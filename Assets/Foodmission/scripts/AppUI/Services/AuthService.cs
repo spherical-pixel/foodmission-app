@@ -33,7 +33,8 @@ namespace eu.foodmission.platform
             long currentTimestampLong = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             if (state.tokenExpiresAt < currentTimestampLong)
             {
-                return false;
+                Debug.Log($"[{GetType().Name}] Access token expired — attempting refresh");
+                return await RefreshAsync();
             }
 
             // Verify token
@@ -50,7 +51,13 @@ namespace eu.foodmission.platform
                     await Task.Yield();
                 }
 
-                return request.result == UnityWebRequest.Result.Success;
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    int remaining = (int)(state.tokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                    ScheduleProactiveRefresh(remaining);
+                    return true;
+                }
+                return false;
             }
             catch
             {
@@ -242,10 +249,12 @@ namespace eu.foodmission.platform
                     email: userEmail,
                     accessToken: response.access_token,
                     tokenType: response.token_type,
-                    expiresAt: expiresAt
+                    expiresAt: expiresAt,
+                    refreshToken: response.refresh_token ?? ""
                 );
 
                 _storeService.store.Dispatch(AppActions.loginSuccess.Invoke(payload));
+                ScheduleProactiveRefresh(response.expires_in);
                 Debug.Log($"[{GetType().Name}] Login successful for user: {userId}");
 
                 return (true, userId, null);
@@ -433,8 +442,11 @@ namespace eu.foodmission.platform
 
         public void Logout()
         {
+            _refreshTimerCts?.Cancel();
+            _refreshTimerCts?.Dispose();
+            _refreshTimerCts = null;
             _storeService.store.Dispatch(AppActions.logout.Invoke());
-            Debug.Log("[AuthService] User logged out");
+            Debug.Log($"[{GetType().Name}] User logged out");
         }
 
         /// <summary>
