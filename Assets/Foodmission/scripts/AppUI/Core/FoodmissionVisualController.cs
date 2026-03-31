@@ -368,7 +368,7 @@ namespace eu.foodmission.platform
             UpdateMarkAllReadButton();
         }
 
-        public void ToggleNotificationsPanel()
+        private void ToggleNotificationsPanel()
         {
             if (_notificationsOpen)
             {
