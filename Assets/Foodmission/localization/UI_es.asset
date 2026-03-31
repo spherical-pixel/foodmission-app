@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: e58ac225f892840658d216244603ef45, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 3341417644789858537
   m_TableData:
   - m_Id: 15417204736
     m_Localized: Inicio
@@ -243,6 +244,21 @@ MonoBehaviour:
     m_Localized: Volver
     m_Metadata:
       m_Items: []
+  - m_Id: 27512489452232704
+    m_Localized: Cargando {global.PET_NAME}
+    m_Metadata:
+      m_Items:
+      - rid: 3341417644789858537
+  - m_Id: 27515040654417920
+    m_Localized: Nutri
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3341417644789858537
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 27512489452232704

@@ -191,6 +191,14 @@ MonoBehaviour:
     m_Key: TXT_BACK
     m_Metadata:
       m_Items: []
+  - m_Id: 27512489452232704
+    m_Key: LOADING_NUTRI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27515040654417920
+    m_Key: PET_NAME
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

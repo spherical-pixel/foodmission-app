@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: ecef101743cdb4acdb45c26f3ed92856
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 34d6d72c198e84f0487009eae618024c
+    m_Address: Assets/Foodmission/prefabs/NutriController.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a73f1e0560284464cbcdeefa5fb0f8a7, type: 2}
   m_SchemaSet:
