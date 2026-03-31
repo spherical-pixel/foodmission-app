@@ -7,3 +7,5 @@
 @import url("AppUIIcons.uss");
 @import url("Foodmission_AppUIIcons.uss");
 
+@import url("Styles/Foodmission_Fonts.uss");
+
