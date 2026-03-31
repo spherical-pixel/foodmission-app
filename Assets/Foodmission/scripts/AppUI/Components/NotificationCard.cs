@@ -41,6 +41,11 @@ namespace eu.foodmission.platform
         /// </summary>
         public void Bind(NotificationModel model)
         {
+            if (model == null)
+            {
+                return;
+            }
+
             _currentId = model.Id;
 
             if (_textLabel != null)
@@ -58,7 +63,10 @@ namespace eu.foodmission.platform
 
         private void OnOverflowClicked()
         {
-            OnDelete?.Invoke(_currentId);
+            if (_currentId == null)
+            {
+                return;
+            }
             OnView?.Invoke(_currentId);
         }
     }
