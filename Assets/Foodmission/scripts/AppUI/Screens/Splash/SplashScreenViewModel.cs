@@ -39,6 +39,12 @@ namespace eu.foodmission.platform
             LoadingText = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UI", "LOADING_ASSETS").Task;
             await Task.Delay(500);
 
+            // Load Nutri from Addressables
+            LoadingText = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UI", "LOADING_NUTRI").Task;
+            var nutriService = App.current.services.GetService<INutriService>();
+            await nutriService.InitializeAsync();
+            await Task.Delay(500);
+
             
             // Check session
             LoadingText = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UI", "CHECK_AUTH").Task;

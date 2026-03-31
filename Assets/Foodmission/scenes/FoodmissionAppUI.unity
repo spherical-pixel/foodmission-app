@@ -190,73 +190,14 @@ MonoBehaviour:
   uiDocument: {fileID: 1083319571}
   SplashTemplate: {fileID: 9197481963319205126, guid: 19d179cef1b0e4ef39a9a50f465a618c, type: 3}
   HomeTemplate: {fileID: 9197481963319205126, guid: c1025af4cbad94c66aa65d7d4e33118a, type: 3}
-  MenuTemplate: {fileID: 9197481963319205126, guid: 46a4ac4af5e064076a43d9f985fe0642, type: 3}
   LoginTemplate: {fileID: 9197481963319205126, guid: 1bad67de3b1b94208aa0e030975889b8, type: 3}
   RegisterTemplate: {fileID: 9197481963319205126, guid: 61e6e124fb6e849c4ac488d29545f911, type: 3}
   ForgotPasswordTemplate: {fileID: 9197481963319205126, guid: b75cc1ba4e92d444284e8ec904412ca3, type: 3}
   ProfileTemplate: {fileID: 9197481963319205126, guid: c7fd564d76267489b96a7bb81eb559ab, type: 3}
   SettingsTemplate: {fileID: 9197481963319205126, guid: ba824eac88578478091945dde0430b60, type: 3}
   GraphAsset: {fileID: 11400000, guid: af062f8dbc7304d13ac9d886d982c734, type: 2}
---- !u!1001 &571964842469848223
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4831336168800760897, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_Name
-      value: NutriController
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214090621983965346, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 34d6d72c198e84f0487009eae618024c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1083319572}
-  - {fileID: 571964842469848223}
