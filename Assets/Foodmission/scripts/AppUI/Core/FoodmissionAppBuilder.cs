@@ -17,6 +17,7 @@ namespace eu.foodmission.platform
         public VisualTreeAsset ProfileTemplate;
         public VisualTreeAsset SettingsTemplate;
 
+        public VisualTreeAsset NotificationCardTemplate;
         public NavGraphViewAsset GraphAsset;
 
         protected override void OnConfiguringApp(AppBuilder builder)

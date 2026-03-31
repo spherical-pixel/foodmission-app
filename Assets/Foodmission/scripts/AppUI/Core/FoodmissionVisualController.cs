@@ -21,6 +21,7 @@ namespace eu.foodmission.platform
         private readonly List<NotificationModel> _notifications = new List<NotificationModel>();
         private VisualElement _notificationsListContainer;
         private Unity.AppUI.UI.Button _markAllReadBtn;
+        private VisualTreeAsset _notificationCardTemplate;
         private NavController _cachedNavController;
         private Label _userNameLabel;
 
@@ -308,8 +309,9 @@ namespace eu.foodmission.platform
         /// Creates the notifications bottom sheet overlay.
         /// Must be called after the NavHost is added so it renders on top.
         /// </summary>
-        public void CreateNotificationsPanel(VisualElement root)
+        public void CreateNotificationsPanel(VisualElement root, VisualTreeAsset notificationCardTemplate)
         {
+            _notificationCardTemplate = notificationCardTemplate;
             _notifications.AddRange(CreateMockNotifications());
 
             _notificationsBackdrop = new VisualElement();
@@ -418,16 +420,11 @@ namespace eu.foodmission.platform
                 return;
             }
 
-#if UNITY_EDITOR
-            var template = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                "Assets/Foodmission/AppUI/Template/NotificationCard.uxml");
-#else
-            VisualTreeAsset template = null;
-#endif
+            var template = _notificationCardTemplate;
 
             if (template == null)
             {
-                Debug.LogWarning("[FoodmissionVisualController] NotificationCard template not found — assign it in FoodmissionAppBuilder (Task 8)");
+                Debug.LogWarning("[FoodmissionVisualController] NotificationCardTemplate is null — assign it in FoodmissionAppBuilder Inspector");
                 return;
             }
 
