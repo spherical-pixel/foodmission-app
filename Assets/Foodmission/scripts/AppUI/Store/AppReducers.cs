@@ -13,6 +13,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<string> setTheme = "app/setTheme";
         public static readonly ActionCreator<string> setLanguage = "app/setLanguage";
         public static readonly ActionCreator<string> setScale = "app/setScale";
+        public static readonly ActionCreator<string> setFont = "app/setFont";
         public static readonly ActionCreator completeOnboarding = "app/completeOnboarding";
         public static readonly ActionCreator<string> setUser = "app/setUser";
         public static readonly ActionCreator logout = "app/logout";
@@ -36,8 +37,10 @@ namespace eu.foodmission.platform
             public readonly string accessToken;
             public readonly string tokenType;
             public readonly int expiresAt;
+            public readonly string refreshToken;
 
-            public LoginPayload(string userId, string userName, string email, string accessToken, string tokenType, int expiresAt)
+            public LoginPayload(string userId, string userName, string email,
+                string accessToken, string tokenType, int expiresAt, string refreshToken)
             {
                 this.userId = userId;
                 this.userName = userName;
@@ -45,8 +48,31 @@ namespace eu.foodmission.platform
                 this.accessToken = accessToken;
                 this.tokenType = tokenType;
                 this.expiresAt = expiresAt;
+                this.refreshToken = refreshToken;
             }
         }
+
+        public static readonly ActionCreator<TokenRefreshPayload> tokenRefreshed = "app/tokenRefreshed";
+
+        /// <summary>
+        /// Payload for token refresh — accessToken is always updated; refreshToken is optional (rotation)
+        /// </summary>
+        public readonly struct TokenRefreshPayload
+        {
+            public readonly string accessToken;
+            public readonly string tokenType;
+            public readonly int expiresAt;
+            public readonly string refreshToken;
+
+            public TokenRefreshPayload(string accessToken, string tokenType, int expiresAt, string refreshToken)
+            {
+                this.accessToken = accessToken;
+                this.tokenType = tokenType;
+                this.expiresAt = expiresAt;
+                this.refreshToken = refreshToken;
+            }
+        }
+
         public static readonly ActionCreator registerRequest = "app/registerRequest";
         public static readonly ActionCreator<string> registerSuccess = "app/registerSuccess";
         public static readonly ActionCreator<string> registerFailure = "app/registerFailure";
@@ -83,6 +109,14 @@ namespace eu.foodmission.platform
             return newState;
         }
 
+        public static AppState SetFontReducer(AppState state, IAction<string> action)
+        {
+            UnityEngine.Debug.Log($"[AppReducers] SetFontReducer: {action.payload}");
+            var newState = state.Copy();
+            newState.font = action.payload;
+            return newState;
+        }
+
         public static AppState CompleteOnboardingReducer(AppState state, IAction action)
         {
             var newState = state.Copy();
@@ -106,6 +140,7 @@ namespace eu.foodmission.platform
             newState.accessToken = "";
             newState.tokenType = "";
             newState.tokenExpiresAt = 0;
+            newState.refreshToken = "";
             return newState;
         }
 
@@ -143,6 +178,7 @@ namespace eu.foodmission.platform
             newState.accessToken = action.payload.accessToken;
             newState.tokenType = action.payload.tokenType;
             newState.tokenExpiresAt = action.payload.expiresAt;
+            newState.refreshToken = action.payload.refreshToken;
             return newState;
         }
 
@@ -151,6 +187,19 @@ namespace eu.foodmission.platform
             var newState = state.Copy();
             newState.isAuthenticating = false;
             newState.authError = action.payload;
+            return newState;
+        }
+
+        public static AppState TokenRefreshedReducer(AppState state, IAction<AppActions.TokenRefreshPayload> action)
+        {
+            var newState = state.Copy();
+            newState.accessToken = action.payload.accessToken;
+            newState.tokenType = action.payload.tokenType;
+            newState.tokenExpiresAt = action.payload.expiresAt;
+            if (!string.IsNullOrEmpty(action.payload.refreshToken))
+            {
+                newState.refreshToken = action.payload.refreshToken;
+            }
             return newState;
         }
 

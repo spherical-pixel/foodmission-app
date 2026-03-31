@@ -38,6 +38,7 @@ namespace eu.foodmission.platform
                 .AddCase(AppActions.setTheme, AppReducers.SetThemeReducer)
                 .AddCase(AppActions.setLanguage, AppReducers.SetLanguageReducer)
                 .AddCase(AppActions.setScale, AppReducers.SetScaleReducer)
+                .AddCase(AppActions.setFont, AppReducers.SetFontReducer)
                 .AddCase(AppActions.completeOnboarding, AppReducers.CompleteOnboardingReducer)
                 .AddCase(AppActions.setUser, AppReducers.SetUserReducer)
                 .AddCase(AppActions.logout, AppReducers.LogoutReducer)
@@ -47,6 +48,7 @@ namespace eu.foodmission.platform
                 .AddCase(AppActions.loginRequest, AppReducers.LoginRequestReducer)
                 .AddCase(AppActions.loginSuccess, AppReducers.LoginSuccessReducer)
                 .AddCase(AppActions.loginFailure, AppReducers.LoginFailureReducer)
+                .AddCase(AppActions.tokenRefreshed, AppReducers.TokenRefreshedReducer)
                 .AddCase(AppActions.registerRequest, AppReducers.RegisterRequestReducer)
                 .AddCase(AppActions.registerSuccess, AppReducers.RegisterSuccessReducer)
                 .AddCase(AppActions.registerFailure, AppReducers.RegisterFailureReducer);

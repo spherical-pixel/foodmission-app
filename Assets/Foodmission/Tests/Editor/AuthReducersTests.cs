@@ -40,7 +40,8 @@ namespace eu.foodmission.platform.Tests
                 email: "test@example.com",
                 accessToken: "eyJhbGciOiJIUzI1NiIs...",
                 tokenType: "Bearer",
-                expiresAt: 1234567890
+                expiresAt: 1234567890,
+                refreshToken: "refresh-token-value"
             );
             var action = AppActions.loginSuccess.Invoke(payload);
 
@@ -55,6 +56,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("eyJhbGciOiJIUzI1NiIs...", newState.accessToken);
             Assert.AreEqual("Bearer", newState.tokenType);
             Assert.AreEqual(1234567890, newState.tokenExpiresAt);
+            Assert.AreEqual("refresh-token-value", newState.refreshToken);
         }
 
         [Test]
@@ -107,6 +109,85 @@ namespace eu.foodmission.platform.Tests
             var copy = state.Copy();
 
             Assert.AreEqual("my-refresh-token", copy.refreshToken);
+        }
+
+        [Test]
+        public void TokenRefreshedReducer_UpdatesTokenFieldsOnly()
+        {
+            var state = new AppState
+            {
+                userId = "user123",
+                userName = "testuser",
+                accessToken = "old-token",
+                tokenType = "Bearer",
+                tokenExpiresAt = 1000,
+                refreshToken = "old-refresh"
+            };
+            var payload = new AppActions.TokenRefreshPayload(
+                accessToken: "new-token",
+                tokenType: "Bearer",
+                expiresAt: 9999,
+                refreshToken: "new-refresh"
+            );
+            var action = AppActions.tokenRefreshed.Invoke(payload);
+
+            var newState = AppReducers.TokenRefreshedReducer(state, action);
+
+            Assert.AreEqual("new-token", newState.accessToken);
+            Assert.AreEqual("Bearer", newState.tokenType);
+            Assert.AreEqual(9999, newState.tokenExpiresAt);
+            Assert.AreEqual("new-refresh", newState.refreshToken);
+            // User identity fields must not change
+            Assert.AreEqual("user123", newState.userId);
+            Assert.AreEqual("testuser", newState.userName);
+        }
+
+        [Test]
+        public void TokenRefreshedReducer_WithEmptyRefreshToken_KeepsExistingRefreshToken()
+        {
+            var state = new AppState { refreshToken = "existing-refresh", accessToken = "old" };
+            var payload = new AppActions.TokenRefreshPayload(
+                accessToken: "new-token",
+                tokenType: "Bearer",
+                expiresAt: 9999,
+                refreshToken: ""
+            );
+            var action = AppActions.tokenRefreshed.Invoke(payload);
+
+            var newState = AppReducers.TokenRefreshedReducer(state, action);
+
+            Assert.AreEqual("existing-refresh", newState.refreshToken);
+        }
+
+        [Test]
+        public void LoginSuccessReducer_StoresRefreshToken()
+        {
+            var state = new AppState();
+            var payload = new AppActions.LoginPayload(
+                userId: "user123",
+                userName: "testuser",
+                email: "test@example.com",
+                accessToken: "eyJ...",
+                tokenType: "Bearer",
+                expiresAt: 1234567890,
+                refreshToken: "my-refresh-token"
+            );
+            var action = AppActions.loginSuccess.Invoke(payload);
+
+            var newState = AppReducers.LoginSuccessReducer(state, action);
+
+            Assert.AreEqual("my-refresh-token", newState.refreshToken);
+        }
+
+        [Test]
+        public void LogoutReducer_ClearsRefreshToken()
+        {
+            var state = new AppState { refreshToken = "my-refresh-token" };
+            var action = AppActions.logout.Invoke();
+
+            var newState = AppReducers.LogoutReducer(state, action);
+
+            Assert.IsEmpty(newState.refreshToken);
         }
     }
 }
