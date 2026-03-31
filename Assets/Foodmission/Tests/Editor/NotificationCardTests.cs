@@ -99,7 +99,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void OverflowBtn_WhenBound_CanSubscribeToOnView()
+        public void OverflowBtn_WhenBound_IsPresent()
         {
             var card = new NotificationCard(_template);
             var model = new NotificationModel
@@ -109,12 +109,6 @@ namespace eu.foodmission.platform.Tests
             };
             card.Bind(model);
 
-            string receivedId = null;
-            card.OnView += id => receivedId = id;
-
-            // Simulate overflow click by invoking the internal handler via reflection
-            // since ActionButton.clicked is not directly invocable in EditMode tests
-            // Verify the subscription is registered (event is non-null after binding)
             Assert.IsNotNull(card.Q<Unity.AppUI.UI.ActionButton>("overflow-btn"));
         }
     }

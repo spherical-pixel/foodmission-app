@@ -17,7 +17,6 @@ namespace eu.foodmission.platform
         private ActionButton _overflowBtn;
         private string _currentId;
 
-        public event Action<string> OnView;
         public event Action<string> OnDelete;
 
         public NotificationCard(VisualTreeAsset template)
