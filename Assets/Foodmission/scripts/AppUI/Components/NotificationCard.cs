@@ -58,6 +58,7 @@ namespace eu.foodmission.platform
 
         private void OnOverflowClicked()
         {
+            OnDelete?.Invoke(_currentId);
             OnView?.Invoke(_currentId);
         }
     }

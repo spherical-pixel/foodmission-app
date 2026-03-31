@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using eu.foodmission.platform;
 using UnityEngine.UIElements;
-using Unity.AppUI.UI;
 
 namespace eu.foodmission.platform.Tests
 {
