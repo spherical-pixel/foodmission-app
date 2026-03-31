@@ -17,6 +17,7 @@ namespace eu.foodmission.platform
         private ActionButton _overflowBtn;
         private string _currentId;
 
+        public event Action<string> OnView;
         public event Action<string> OnDelete;
 
         public NotificationCard(VisualTreeAsset template)
@@ -66,7 +67,12 @@ namespace eu.foodmission.platform
             {
                 return;
             }
-            OnDelete?.Invoke(_currentId);
+
+            var id = _currentId;
+            MenuBuilder.Build(_overflowBtn)
+                .AddAction(0, "View",   "eye",   _ => OnView?.Invoke(id))
+                .AddAction(1, "Delete", "trash", _ => OnDelete?.Invoke(id))
+                .Show();
         }
     }
 }
