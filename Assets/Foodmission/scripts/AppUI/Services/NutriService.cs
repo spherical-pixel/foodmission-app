@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace eu.foodmission.platform
 {
-    public class NutriService : MonoBehaviour, INutriService
+    public class NutriService : INutriService
     {
         private const string PREFAB_ADDRESS = "Assets/Foodmission/prefabs/NutriController.prefab";
 
@@ -59,7 +59,7 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                _nutriController = Instantiate(prefab);
+                _nutriController = UnityEngine.Object.Instantiate(prefab);
                 _nutriController.name = "NutriController";
 
 
