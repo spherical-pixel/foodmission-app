@@ -108,7 +108,7 @@ namespace eu.foodmission.platform
                 {
                     _hasNavigated = true;
                     Debug.Log($"[{GetType().Name}] Authentication successful - navigating to home");
-                    RaiseNavigationRequested(Actions.loading_to_home);
+                    RaiseNavigationRequested(Actions.go_to_home);
                 }
                 else
                 {
