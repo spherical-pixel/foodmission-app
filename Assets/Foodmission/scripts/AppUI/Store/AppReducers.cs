@@ -164,6 +164,7 @@ namespace eu.foodmission.platform
             var newState = state.Copy();
             newState.isAuthenticating = true;
             newState.authError = "";
+            newState.userId = "";
             return newState;
         }
 
