@@ -12,6 +12,7 @@ namespace eu.foodmission.platform
     {
         private readonly IStoreService _storeService;
         private readonly string _baseUrl = "https://test.api.foodmission.eu";
+        private System.Threading.CancellationTokenSource _refreshTimerCts;
 
         public AuthService(IStoreService storeService)
         {
@@ -55,6 +56,109 @@ namespace eu.foodmission.platform
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Exchanges the stored refresh token for a new access token.
+        /// Dispatches tokenRefreshed on success and schedules the proactive timer.
+        /// Returns false without throwing if the refresh token is missing or the request fails.
+        /// </summary>
+        public async Task<bool> RefreshAsync()
+        {
+            AppState state = _storeService.GetAppState();
+
+            if (string.IsNullOrEmpty(state.refreshToken))
+            {
+                Debug.LogWarning($"[{GetType().Name}] RefreshAsync — no refresh token stored");
+                return false;
+            }
+
+            try
+            {
+                string json = $"{{\"token\":\"{EscapeJson(state.refreshToken)}\"}}";
+                string url = $"{_baseUrl}/api/v1/auth/refresh";
+
+                using UnityWebRequest request = new UnityWebRequest(url, "POST")
+                {
+                    uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(json)),
+                    downloadHandler = new DownloadHandlerBuffer()
+                };
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] RefreshAsync failed: {request.responseCode} {request.error}");
+                    return false;
+                }
+
+                RefreshResponse response = JsonUtility.FromJson<RefreshResponse>(request.downloadHandler.text);
+
+                if (response == null || string.IsNullOrEmpty(response.access_token))
+                {
+                    Debug.LogWarning($"[{GetType().Name}] RefreshAsync — invalid response body");
+                    return false;
+                }
+
+                int expiresAt = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + response.expires_in);
+
+                var payload = new AppActions.TokenRefreshPayload(
+                    accessToken: response.access_token,
+                    tokenType: string.IsNullOrEmpty(response.token_type) ? "Bearer" : response.token_type,
+                    expiresAt: expiresAt,
+                    refreshToken: response.refresh_token ?? ""
+                );
+                _storeService.store.Dispatch(AppActions.tokenRefreshed.Invoke(payload));
+
+                ScheduleProactiveRefresh(response.expires_in);
+                Debug.Log($"[{GetType().Name}] Token refreshed. Expires in {response.expires_in}s");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] RefreshAsync exception: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Schedules a proactive token refresh 60 seconds before the token expires.
+        /// Cancels any previously scheduled refresh first.
+        /// </summary>
+        private void ScheduleProactiveRefresh(int expiresInSeconds)
+        {
+            _refreshTimerCts?.Cancel();
+            _refreshTimerCts?.Dispose();
+            _refreshTimerCts = new System.Threading.CancellationTokenSource();
+            _ = ProactiveRefreshLoop(expiresInSeconds, _refreshTimerCts.Token);
+        }
+
+        private async Task ProactiveRefreshLoop(int expiresInSeconds, System.Threading.CancellationToken token)
+        {
+            try
+            {
+                int delayMs = Math.Max(expiresInSeconds - 60, 10) * 1000;
+                await Task.Delay(delayMs, token);
+
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                bool success = await RefreshAsync();
+                if (!success)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Proactive refresh failed — logging out");
+                    Logout();
+                }
+            }
+            catch (OperationCanceledException) { }
         }
 
         public async Task<(bool success, string userId, string error)> LoginAsync(string username, string password)

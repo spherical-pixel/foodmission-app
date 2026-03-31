@@ -189,5 +189,19 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsEmpty(newState.refreshToken);
         }
+
+        [Test]
+        public void AuthService_RefreshAsync_WithNoRefreshToken_ReturnsFalse()
+        {
+            var localStorageService = new LocalStorageService();
+            var storeService = new StoreService(localStorageService);
+            // AppState starts with empty refreshToken (default)
+            var authService = new AuthService(storeService);
+
+            var task = authService.RefreshAsync();
+            task.Wait();
+
+            Assert.IsFalse(task.Result);
+        }
     }
 }

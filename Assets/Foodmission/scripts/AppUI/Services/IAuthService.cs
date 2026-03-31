@@ -5,6 +5,7 @@ namespace eu.foodmission.platform
     public interface IAuthService
     {
         Task<bool> CheckSessionAsync();
+        Task<bool> RefreshAsync();
         Task<(bool success, string userId, string error)> LoginAsync(string username, string password);
         Task<(bool success, string userId, string error)> RegisterAsync(
             string username,
