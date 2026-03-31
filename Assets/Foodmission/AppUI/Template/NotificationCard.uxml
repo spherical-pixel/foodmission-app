@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="notification-card" class="fm-notification-card">
+        <ui:VisualElement name="indicator" class="fm-notification-card__indicator" />
+        <ui:VisualElement name="content-area" class="fm-notification-card__content">
+            <ui:Label name="text" class="fm-notification-card__text" />
+            <ui:Label name="timestamp" class="fm-notification-card__timestamp" />
+        </ui:VisualElement>
+        <appui:ActionButton name="overflow-btn" icon="dots-three-bold" quiet="true" />
+    </ui:VisualElement>
+</ui:UXML>
