@@ -111,7 +111,6 @@ namespace eu.foodmission.platform
 
         public static AppState SetFontReducer(AppState state, IAction<string> action)
         {
-            UnityEngine.Debug.Log($"[AppReducers] SetFontReducer: {action.payload}");
             var newState = state.Copy();
             newState.font = action.payload;
             return newState;

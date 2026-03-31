@@ -203,5 +203,26 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsFalse(task.Result);
         }
+
+        [Test]
+        public void AppState_Copy_IncludesFont()
+        {
+            var state = new AppState { font = "open-sans" };
+
+            var copy = state.Copy();
+
+            Assert.AreEqual("open-sans", copy.font);
+        }
+
+        [Test]
+        public void SetFontReducer_UpdatesFontField()
+        {
+            var state = new AppState { font = "roboto" };
+            var action = AppActions.setFont.Invoke("open-dyslexic");
+
+            var newState = AppReducers.SetFontReducer(state, action);
+
+            Assert.AreEqual("open-dyslexic", newState.font);
+        }
     }
 }

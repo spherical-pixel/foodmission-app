@@ -27,9 +27,9 @@ namespace eu.foodmission.platform
         public string scale = "medium";
 
         /// <summary>
-        /// Font choice: "Roboto", "OpenDyslexic", "OpenSans"
+        /// Font family preference: "roboto", "open-sans", or "open-dyslexic"
         /// </summary>
-        public string font = "Roboto";
+        public string font = "roboto";
 
         /// <summary>
         /// OnBoarding completed
