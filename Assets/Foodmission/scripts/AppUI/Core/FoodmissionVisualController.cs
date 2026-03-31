@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
@@ -14,6 +15,12 @@ namespace eu.foodmission.platform
         private VisualElement _menuBackdrop;
         private VisualElement _menuPanel;
         private bool _menuOpen;
+        private VisualElement _notificationsBackdrop;
+        private VisualElement _notificationsPanel;
+        private bool _notificationsOpen;
+        private readonly List<NotificationModel> _notifications = new List<NotificationModel>();
+        private VisualElement _notificationsListContainer;
+        private Unity.AppUI.UI.Button _markAllReadBtn;
         private NavController _cachedNavController;
         private Label _userNameLabel;
 
@@ -291,6 +298,206 @@ namespace eu.foodmission.platform
             }
 
             container.Add(btn);
+        }
+
+        // --------------------------------------------------------------------
+        // Notifications Bottom Sheet
+        // --------------------------------------------------------------------
+
+        /// <summary>
+        /// Creates the notifications bottom sheet overlay.
+        /// Must be called after the NavHost is added so it renders on top.
+        /// </summary>
+        public void CreateNotificationsPanel(VisualElement root)
+        {
+            _notifications.AddRange(CreateMockNotifications());
+
+            _notificationsBackdrop = new VisualElement();
+            _notificationsBackdrop.AddToClassList("fm-notifications-backdrop");
+            _notificationsBackdrop.style.display = DisplayStyle.None;
+            _notificationsBackdrop.pickingMode = PickingMode.Ignore;
+            _notificationsBackdrop.RegisterCallback<ClickEvent>(e =>
+            {
+                if (e.target == _notificationsBackdrop)
+                {
+                    CloseNotificationsPanel();
+                }
+            });
+
+            // Handle bar
+            var handle = new VisualElement();
+            handle.AddToClassList("fm-notifications-panel__handle");
+
+            // Header row
+            var header = new VisualElement();
+            header.AddToClassList("fm-notifications-panel__header");
+
+            var title = new Label("Notifications");
+            title.AddToClassList("fm-notifications-panel__title");
+
+            _markAllReadBtn = new Unity.AppUI.UI.Button();
+            _markAllReadBtn.title = "Mark all as read";
+            _markAllReadBtn.quiet = true;
+            _markAllReadBtn.size = Unity.AppUI.UI.Size.S;
+            _markAllReadBtn.clicked += OnMarkAllReadClicked;
+
+            header.Add(title);
+            header.Add(_markAllReadBtn);
+
+            var divider = new VisualElement();
+            divider.AddToClassList("fm-notifications-panel__divider");
+
+            // Scrollable list
+            var scroll = new ScrollView(ScrollViewMode.Vertical);
+            scroll.style.flexGrow = 1;
+            scroll.style.maxHeight = new Length(65, LengthUnit.Percent);
+
+            _notificationsListContainer = scroll.contentContainer;
+
+            _notificationsPanel = new VisualElement();
+            _notificationsPanel.AddToClassList("fm-notifications-panel");
+            _notificationsPanel.Add(handle);
+            _notificationsPanel.Add(header);
+            _notificationsPanel.Add(divider);
+            _notificationsPanel.Add(scroll);
+
+            _notificationsBackdrop.Add(_notificationsPanel);
+            root.Add(_notificationsBackdrop);
+
+            RefreshNotificationsList();
+            UpdateMarkAllReadButton();
+        }
+
+        public void ToggleNotificationsPanel()
+        {
+            if (_notificationsOpen)
+            {
+                CloseNotificationsPanel();
+            }
+            else
+            {
+                OpenNotificationsPanel();
+            }
+        }
+
+        private void OpenNotificationsPanel()
+        {
+            _notificationsOpen = true;
+            _notificationsBackdrop.style.display = DisplayStyle.Flex;
+            _notificationsBackdrop.pickingMode = PickingMode.Position;
+            _notificationsPanel.schedule
+                .Execute(() => _notificationsPanel.AddToClassList("fm-notifications-panel--visible"))
+                .StartingIn(16);
+        }
+
+        private void CloseNotificationsPanel()
+        {
+            _notificationsOpen = false;
+            _notificationsPanel.RemoveFromClassList("fm-notifications-panel--visible");
+            _notificationsPanel.schedule.Execute(() =>
+            {
+                _notificationsBackdrop.style.display = DisplayStyle.None;
+                _notificationsBackdrop.pickingMode = PickingMode.Ignore;
+            }).StartingIn(300);
+        }
+
+        private void RefreshNotificationsList()
+        {
+            if (_notificationsListContainer == null)
+            {
+                return;
+            }
+
+            _notificationsListContainer.Clear();
+
+            if (_notifications.Count == 0)
+            {
+                var empty = new Label("No notifications");
+                empty.AddToClassList("fm-notifications-empty");
+                _notificationsListContainer.Add(empty);
+                return;
+            }
+
+#if UNITY_EDITOR
+            var template = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                "Assets/Foodmission/AppUI/Template/NotificationCard.uxml");
+#else
+            VisualTreeAsset template = null;
+#endif
+
+            if (template == null)
+            {
+                Debug.LogWarning("[FoodmissionVisualController] NotificationCard template not found — assign it in FoodmissionAppBuilder (Task 8)");
+                return;
+            }
+
+            foreach (var model in _notifications)
+            {
+                var card = new NotificationCard(template);
+                card.Bind(model);
+                card.OnDelete += OnNotificationDeleted;
+                _notificationsListContainer.Add(card);
+            }
+        }
+
+        private void OnNotificationDeleted(string id)
+        {
+            _notifications.RemoveAll(n => n.Id == id);
+            RefreshNotificationsList();
+            UpdateMarkAllReadButton();
+        }
+
+        private void OnMarkAllReadClicked()
+        {
+            foreach (var n in _notifications)
+            {
+                n.IsRead = true;
+            }
+
+            RefreshNotificationsList();
+            UpdateMarkAllReadButton();
+        }
+
+        private void UpdateMarkAllReadButton()
+        {
+            if (_markAllReadBtn == null)
+            {
+                return;
+            }
+
+            bool anyUnread = _notifications.Exists(n => !n.IsRead);
+            _markAllReadBtn.SetEnabled(anyUnread);
+        }
+
+        private static List<NotificationModel> CreateMockNotifications()
+        {
+            return new List<NotificationModel>
+            {
+                new NotificationModel
+                {
+                    Id = "n1",
+                    Text = "The user Laura has been successfully added to your group.",
+                    Timestamp = "1 h",
+                    Type = NotificationType.Social,
+                    IsRead = false
+                },
+                new NotificationModel
+                {
+                    Id = "n2",
+                    Text = "You are very close to earning the Balanced Starter badge. Keep it up!",
+                    Timestamp = "2 h",
+                    Type = NotificationType.Badge,
+                    IsRead = false
+                },
+                new NotificationModel
+                {
+                    Id = "n3",
+                    Text = "Welcome to Foodmission! Complete your profile to get started.",
+                    Timestamp = "Yesterday",
+                    Type = NotificationType.System,
+                    IsRead = true
+                }
+            };
         }
 
         // --------------------------------------------------------------------
