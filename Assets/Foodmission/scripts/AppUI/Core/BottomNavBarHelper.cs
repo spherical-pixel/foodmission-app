@@ -58,9 +58,6 @@ namespace eu.foodmission.platform
                 case "PantryItemDetail":
                     return NavTab.Menu;
 
-                case "Notifications":
-                    return NavTab.Notifications;
-
                 case "MealLog":
                 case "MealLogAdd":
                     return NavTab.MealLog;

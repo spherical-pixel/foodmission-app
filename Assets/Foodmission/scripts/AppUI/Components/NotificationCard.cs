@@ -67,7 +67,7 @@ namespace eu.foodmission.platform
             {
                 return;
             }
-            OnView?.Invoke(_currentId);
+            OnDelete?.Invoke(_currentId);
         }
     }
 }
