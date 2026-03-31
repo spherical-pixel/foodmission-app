@@ -345,3 +345,133 @@
     margin-top: 12px;
     margin-bottom: 8px;
 }
+
+/* ============================================
+   Notification Card
+   ============================================ */
+
+.fm-notification-card {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 14px 12px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.appui--dark .fm-notification-card {
+    background-color: rgba(40, 40, 40, 0.95);
+}
+
+.fm-notification-card--read {
+    opacity: 0.65;
+}
+
+.fm-notification-card__indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: rgb(0, 120, 90);
+    margin-top: 5px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.fm-notification-card--read .fm-notification-card__indicator {
+    background-color: transparent;
+    border-width: 2px;
+    border-color: rgb(200, 200, 200);
+}
+
+.fm-notification-card__content {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.fm-notification-card__text {
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-foregrounds-100);
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+.fm-notification-card__timestamp {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-50);
+    margin-top: 5px;
+}
+
+/* ============================================
+   Notifications Bottom Sheet Panel
+   ============================================ */
+
+.fm-notifications-backdrop {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    justify-content: flex-end;
+}
+
+.fm-notifications-panel {
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding-bottom: 16px;
+    translate: 0 100%;
+    transition-property: translate;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+.appui--light .fm-notifications-panel {
+    background-color: #F5F5F5;
+}
+
+.appui--dark .fm-notifications-panel {
+    background-color: #1E1E1E;
+}
+
+.fm-notifications-panel--visible {
+    translate: 0 0%;
+}
+
+.fm-notifications-panel__handle {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgba(128, 128, 128, 0.4);
+    align-self: center;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.fm-notifications-panel__header {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px 8px 16px;
+}
+
+.fm-notifications-panel__title {
+    flex-grow: 1;
+    font-size: var(--appui-font-sizes-heading-sm);
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-100);
+}
+
+.fm-notifications-panel__divider {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.2);
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 8px;
+}
+
+.fm-notifications-empty {
+    -unity-text-align: middle-center;
+    color: var(--appui-foregrounds-50);
+    margin-top: 32px;
+    margin-bottom: 32px;
+    font-size: var(--appui-font-sizes-body-md);
+}
