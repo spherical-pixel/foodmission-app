@@ -52,6 +52,7 @@ namespace eu.foodmission.platform
             // Add the profile drawer and menu drawer after the NavHost so they render on top
             visualController.CreateProfileDrawer(rootVisualElement);
             visualController.CreateMenuDrawer(rootVisualElement);
+            visualController.CreateNotificationsPanel(rootVisualElement);
 
             // rootVisualElement in AppUI is a Panel
             _panel = rootVisualElement as Panel;

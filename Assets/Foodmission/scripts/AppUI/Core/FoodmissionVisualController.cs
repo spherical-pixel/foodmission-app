@@ -511,9 +511,13 @@ namespace eu.foodmission.platform
 
             var activeTab = BottomNavBarHelper.GetActiveTab(destination.name);
 
-            AddNavItem(bottomNavBar, "fm-home",          "@UI:NAV_HOME",          activeTab == NavTab.Home,          navController, Actions.go_to_home);
-            AddNavItem(bottomNavBar, "fm-notifications", "@UI:NAV_NOTIFICATIONS", activeTab == NavTab.Notifications, navController, Actions.go_to_notifications);
-            AddNavItem(bottomNavBar, "fm-meal-log",      "@UI:NAV_MEAL_LOG",      activeTab == NavTab.MealLog,       navController, Actions.go_to_meallog);
+            AddNavItem(bottomNavBar, "fm-home",     "@UI:NAV_HOME",     activeTab == NavTab.Home,    navController, Actions.go_to_home);
+            AddNavItem(bottomNavBar, "fm-meal-log", "@UI:NAV_MEAL_LOG", activeTab == NavTab.MealLog, navController, Actions.go_to_meallog);
+
+            // Notifications tab toggles the bottom sheet — does not navigate
+            var notificationsItem = new BottomNavBarItem("fm-notifications", "@UI:NAV_NOTIFICATIONS", () => ToggleNotificationsPanel());
+            notificationsItem.isSelected = activeTab == NavTab.Notifications;
+            bottomNavBar.Insert(1, notificationsItem);
 
             // Menu tab toggles the bottom sheet — does not navigate
             var menuItem = new BottomNavBarItem("fm-menu", "@UI:NAV_MENU", () => ToggleMenuDrawer());
