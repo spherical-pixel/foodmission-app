@@ -17,5 +17,10 @@
             <appui:Text text="Text size" style="flex-shrink: 0; margin-right: 16px;"/>
             <ui:DropdownField name="dropdown-scale" style="flex-grow: 1;"/>
         </ui:VisualElement>
+        <!-- Font row -->
+        <ui:VisualElement name="row-font" style="flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <appui:Text text="Font" style="flex-shrink: 0; margin-right: 16px;"/>
+            <ui:DropdownField name="dropdown-font" style="flex-grow: 1;"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
