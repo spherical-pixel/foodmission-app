@@ -16,7 +16,6 @@ namespace Unity.AppUI.Navigation.Generated
         public const string register_to_onboarding = "register_to_onboarding";
         public const string onboardingprofile_to_onboardingavatar = "onboardingprofile_to_onboardingavatar";
         public const string onboardingavatar_to_onboardinggroups = "onboardingavatar_to_onboardinggroups";
-        public const string go_to_notifications = "go_to_notifications";
         public const string go_to_meallog = "go_to_meallog";
         public const string go_to_meallog_add = "go_to_meallog_add";
         public const string go_to_profile = "go_to_profile";
@@ -41,7 +40,6 @@ namespace Unity.AppUI.Navigation.Generated
         public const string onboardingprofile = "OnboardingProfile";
         public const string onboardingavatar = "OnboardingAvatar";
         public const string onboardinggroups = "OnboardingGroups";
-        public const string notifications = "Notifications";
         public const string meallog = "MealLog";
         public const string meallogadd = "MealLogAdd";
         public const string profile = "Profile";

@@ -40,7 +40,6 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<LoginViewModel>();
             builder.services.AddTransient<RegisterViewModel>();
             builder.services.AddTransient<ForgotPasswordViewModel>();
-            builder.services.AddTransient<NotificationsViewModel>();
             builder.services.AddTransient<MealLogViewModel>();
             builder.services.AddTransient<MealLogAddViewModel>();
             builder.services.AddTransient<ProfileViewModel>();
