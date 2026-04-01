@@ -154,7 +154,7 @@ namespace eu.foodmission.platform
 
         /// <summary>
         /// Applies the font preference by toggling CSS classes on the panel root.
-        /// "roboto" is the App UI default — no class needed.
+        /// "roboto" is the App UI default
         /// </summary>
         public void SetFont(string font)
         {
@@ -167,6 +167,7 @@ namespace eu.foodmission.platform
             _currentFont = font;
             _panel.EnableInClassList("fm-font-open-sans",     font == "open-sans");
             _panel.EnableInClassList("fm-font-open-dyslexic", font == "open-dyslexic");
+            _panel.EnableInClassList("fm-font-roboto", font == "roboto");
         }
 
         private void OnSystemThemeChanged(bool darkMode)

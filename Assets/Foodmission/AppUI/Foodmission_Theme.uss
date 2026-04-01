@@ -14,10 +14,11 @@
    --appui-sizing-700: 122px;
    --appui-sizing-800: 138px;
 
-   --appui-font-sizes-body-sm:24px;
-   --appui-font-sizes-body-md:28px;
-   --appui-font-sizes-body-lg:32px;
-
+   /* Safe areas - shared between all modes */
+   --fm-safe-area-top: 60px;
+   --fm-safe-area-right: 20px;
+   --fm-safe-area-bottom: 20px;
+   --fm-safe-area-left: 20px;
 
    /* TextField - transparent background for both modes */
    --appui-alias-field-background-color-default: transparent;
@@ -28,12 +29,7 @@
 
 
 .appui--light {
-    /* Foodmission safe areas */
     --fm-main-bg: #024639;
-    --fm-safe-area-top: 60px;
-    --fm-safe-area-right: 20px;
-    --fm-safe-area-bottom: 20px;
-    --fm-safe-area-left: 20px;
 
     /* ============================================
        Primary Palette - Light Mode
@@ -56,26 +52,28 @@
     --appui-primary-1200: #F4FCFA;
     --appui-primary-1300: #FFFFFF;
 
-    /* Foregrounds - mapped to primary palette */
-    --appui-foregrounds-200: var(--appui-primary-15);
-    --appui-foregrounds-100: var(--appui-primary-1300);  /* White text */
-    --appui-foregrounds-50: var(--appui-primary-25);
-    --appui-foregrounds-25: var(--appui-primary-300);
+    /* Foregrounds - dark text for content on white/light surfaces */
+    --appui-foregrounds-200: var(--appui-primary-15);   /* #000000 - max contrast */
+    --appui-foregrounds-100: var(--appui-primary-25);   /* #001A16 - primary text (near black) */
+    --appui-foregrounds-50: var(--appui-primary-300);   /* #04705C - secondary text (medium green) */
+    --appui-foregrounds-25: var(--appui-primary-700);   /* #5CC6B0 - tertiary text (light teal) */
 
     /* Backgrounds */
     --appui-backgrounds-300: var(--appui-primary-1100);
     --appui-backgrounds-200: var(--appui-primary-1200);
     --appui-backgrounds-100: var(--appui-primary-1300);
     --appui-backgrounds-50: var(--appui-primary-1300);
+
+    /* Surface colors for panels, menus, and cards */
+    --fm-surface-bg: rgba(255, 255, 255, 0.95);
+    --fm-surface-bg-alt: #F5F5F5;
+    --fm-card-bg: rgba(255, 255, 255, 0.95);
+    --fm-icon-tint: var(--appui-primary-100);
+    --fm-icon-tint-selected: var(--appui-primary-500);
 }
 
 .appui--dark {
-    /* Foodmission safe areas */
     --fm-main-bg: #024639;
-    --fm-safe-area-top: 60px;
-    --fm-safe-area-right: 20px;
-    --fm-safe-area-bottom: 20px;
-    --fm-safe-area-left: 20px;
 
     /* ============================================
        Primary Palette - Dark Mode
@@ -109,4 +107,34 @@
     --appui-backgrounds-200: var(--appui-primary-200);
     --appui-backgrounds-100: var(--appui-primary-100);
     --appui-backgrounds-50: var(--appui-primary-50);
+
+    /* Surface colors for panels, menus, and cards */
+    --fm-surface-bg: rgba(30, 30, 30, 0.95);
+    --fm-surface-bg-alt: #1E1E1E;
+    --fm-card-bg: rgba(40, 40, 40, 0.95);
+    --fm-icon-tint: var(--appui-primary-900);
+    --fm-icon-tint-selected: var(--appui-primary-1000);
+}
+
+/* ============================================
+   Font sizes per scale level
+   Defined after .appui so scale classes win in cascade
+   ============================================ */
+
+.appui--small {
+    --appui-font-sizes-body-sm: 20px;
+    --appui-font-sizes-body-md: 24px;
+    --appui-font-sizes-body-lg: 28px;
+}
+
+.appui--medium {
+    --appui-font-sizes-body-sm: 24px;
+    --appui-font-sizes-body-md: 32px;
+    --appui-font-sizes-body-lg: 40px;
+}
+
+.appui--large {
+    --appui-font-sizes-body-sm: 32px;
+    --appui-font-sizes-body-md: 42px;
+    --appui-font-sizes-body-lg: 52px;
 }

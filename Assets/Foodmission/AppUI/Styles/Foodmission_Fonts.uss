@@ -1,6 +1,6 @@
 /*
  * Font overrides applied via CSS class on the App UI Panel root.
- * Roboto is the App UI default — no rule needed.
+ * Roboto is the App UI default
  * -unity-font-definition inherits downward to all child elements.
  */
 
@@ -10,4 +10,8 @@
 
 .fm-font-open-dyslexic {
     -unity-font-definition: resource('Fonts & Materials/OpenDyslexic-Regular SDF');
+}
+
+.fm-font-roboto {
+    -unity-font-definition: resource('Fonts & Materials/Roboto-VariableFont_wdth,wght SDF');
 }
