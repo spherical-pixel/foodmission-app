@@ -50,9 +50,14 @@ namespace eu.foodmission.platform
             LoadingText = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UI", "CHECK_AUTH").Task;
             var isAuthenticated = await _authService.CheckSessionAsync();
 
-            
+            // If session check failed, explicitly logout to reset preferences
+            if (!isAuthenticated)
+            {
+                _authService.Logout();
+            }
+
             await Task.Delay(500);
-            
+
 
             return isAuthenticated ? Actions.loading_to_home : Actions.loading_to_auth;
             //return Actions.loading_to_home;

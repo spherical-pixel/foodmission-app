@@ -133,6 +133,7 @@ namespace eu.foodmission.platform
         public static AppState LogoutReducer(AppState state, IAction action)
         {
             var newState = state.Copy();
+            // Clear session data
             newState.userId = "";
             newState.userName = "";
             newState.userEmail = "";
@@ -140,6 +141,10 @@ namespace eu.foodmission.platform
             newState.tokenType = "";
             newState.tokenExpiresAt = 0;
             newState.refreshToken = "";
+            // Reset preferences to defaults
+            newState.theme = "system";
+            newState.scale = "medium";
+            newState.font = "roboto";
             return newState;
         }
 
