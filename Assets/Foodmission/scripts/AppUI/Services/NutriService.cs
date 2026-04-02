@@ -40,6 +40,24 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            // Reuse existing instance if present (e.g. after USS hot-reload recreates the DI container)
+            var existing = GameObject.Find("NutriController");
+            if (existing != null)
+            {
+                _nutriController = existing;
+                Transform existingNutri = _nutriController.transform.Find("nutri");
+                if (existingNutri != null)
+                {
+                    _animator = existingNutri.GetComponent<Animator>();
+                }
+                if (_animator != null)
+                {
+                    _isInitialized = true;
+                    Debug.Log($"[{GetType().Name}] Reused existing NutriController after hot-reload");
+                }
+                return;
+            }
+
             Debug.Log($"[{GetType().Name}] Loading Nutri from Addressables: {PREFAB_ADDRESS}");
 
             try
