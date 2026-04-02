@@ -45,12 +45,12 @@ namespace eu.foodmission.platform
             navHost.navController.SetGraph(FoodmissionAppBuilder.instance.GraphAsset);
             var visualController = new FoodmissionVisualController();
             navHost.visualController = visualController;
+            
 
             rootVisualElement.Add(navHost);
             navHost.StretchToParentSize();
 
-            // Add the profile drawer and menu drawer after the NavHost so they render on top
-            visualController.CreateProfileDrawer(rootVisualElement);
+            // Add the menu drawer and notifications after the NavHost so they render on top
             visualController.CreateMenuDrawer(rootVisualElement);
             visualController.CreateNotificationsPanel(rootVisualElement, FoodmissionAppBuilder.instance.NotificationCardTemplate);
 

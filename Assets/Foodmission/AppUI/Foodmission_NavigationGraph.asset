@@ -97,7 +97,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 0
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-8470440507793497497
 MonoBehaviour:
@@ -191,7 +191,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-5093508927337335151
 MonoBehaviour:
@@ -305,7 +305,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-2891793651288044259
 MonoBehaviour:
@@ -365,7 +365,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-2017724658979243455
 MonoBehaviour:
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
     m_PopUpToStrategy: 2
-    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToRoute: {fileID: -8582299972390442400}
     m_PopUpToInclusive: 1
     m_EnterAnim: 0
     m_ExitAnim: 0
@@ -479,7 +479,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-1477136575185016345
 MonoBehaviour:
@@ -574,7 +574,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-364094978430066862
 MonoBehaviour:
@@ -748,7 +748,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &673415384649435719
 MonoBehaviour:
@@ -889,7 +889,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &2695106299898621552
 MonoBehaviour:
@@ -1036,7 +1036,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &4263548773454473108
 MonoBehaviour:
@@ -1069,7 +1069,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &4519001266055914913
 MonoBehaviour:
@@ -1102,7 +1102,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &4520152674340125327
 MonoBehaviour:
@@ -1304,7 +1304,7 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &6475924670633165201
 MonoBehaviour:
@@ -1439,5 +1439,5 @@ MonoBehaviour:
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 0
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0

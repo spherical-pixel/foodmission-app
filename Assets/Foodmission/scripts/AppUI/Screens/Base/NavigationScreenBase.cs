@@ -119,6 +119,8 @@ namespace eu.foodmission.platform
             BindViewModel();
             SubscribeToNavigation();
             OnViewModelBound();
+
+            appBar.showDrawerButton = false;
         }
 
         /// <summary>

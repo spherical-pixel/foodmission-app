@@ -29,25 +29,7 @@ namespace eu.foodmission.platform
         // Profile Drawer
         // --------------------------------------------------------------------
 
-        /// <summary>
-        /// Creates the profile drawer and adds it to the root visual element.
-        /// Must be called after the NavHost is added so the drawer renders on top.
-        /// </summary>
-        public void CreateProfileDrawer(VisualElement root)
-        {
-            _profileDrawer = new Drawer();
-            _profileDrawer.anchor = DrawerAnchor.Left;
-            _profileDrawer.swipeable = true;
-
-            BuildDrawerContent();
-
-            root.Add(_profileDrawer);
-
-            _profileDrawer.opened += OnDrawerOpened;
-
-        }
-
-        private void BuildDrawerContent()
+        private void BuildDrawerContent(Drawer drawer)
         {
             // ── Header: avatar + username + level bar ──
             var header = new VisualElement();
@@ -108,16 +90,16 @@ namespace eu.foodmission.platform
             header.Add(avatar);
             header.Add(_userNameLabel);
             header.Add(levelRow);
-            _profileDrawer.Add(header);
+            drawer.Add(header);
 
-            _profileDrawer.Add(CreateDivider(16));
+            drawer.Add(CreateDivider(16));
 
             // ── Menu items ──
             var menuContainer = new VisualElement();
             menuContainer.style.paddingLeft = 8;
             menuContainer.style.paddingRight = 8;
             menuContainer.style.paddingTop = 4;
-            _profileDrawer.Add(menuContainer);
+            drawer.Add(menuContainer);
 
             // No-op items (functionality to be added later)
             AddDrawerButton(menuContainer, "Edit Profile", null);
@@ -537,28 +519,77 @@ namespace eu.foodmission.platform
             }
 
             appBar.title = destination.label;
-            appBar.stretch = true;
+            appBar.stretch = false;
+            
 
+            
             var themeService = App.current?.services.GetService<IThemeService>();
             if (themeService != null)
             {
-                var bar = appBar.Q<VisualElement>(className: "appui-appbar__bar");
-                if (bar != null)
+                var safeAreaTop = themeService.safeAreaTop;
+                if (safeAreaTop > 0)
                 {
-                    var safeAreaTop = themeService.safeAreaTop;
-                    bar.style.paddingTop = safeAreaTop;
 
-                    if (safeAreaTop > 0)
+                     VisualElement filler = new VisualElement();
+                    filler.name = "appbar-safe-area-filler";
+                    filler.style.height = safeAreaTop;
+                    filler.AddToClassList("appui-appbar__bar"); // same background as __bar to seamlessly fill the safe area
+
+                    appBar.hierarchy.Insert(0, filler); 
+                }
+            }
+
+            var screen = appBar.parent;
+            if (screen != null)
+            {
+                appBar.RegisterCallback<GeometryChangedEvent>(OnAppBarGeometryChanged);
+
+                void OnAppBarGeometryChanged(GeometryChangedEvent e)
+                {
+                    appBar.UnregisterCallback<GeometryChangedEvent>(OnAppBarGeometryChanged);
+
+                    // Defer to next frame so paddingTop/border are fully applied before measuring.
+                    appBar.schedule.Execute(() =>
                     {
-                        bar.style.paddingBottom = safeAreaTop * 0.30f;
-                    }
+                        float contentMargin = appBar.worldBound.yMax - screen.worldBound.y;
+                        if (contentMargin <= 0) return;
+
+                        // Apply margin to the direct sibling of AppBar inside screen.
+                        // The AppBar is position:absolute so it doesn't push content down automatically.
+                        foreach (var child in screen.Children())
+                        {
+                            if (child == appBar) continue;
+                            child.style.marginTop = contentMargin;
+                            break;
+                        }
+                    });
                 }
             }
         }
 
         public void SetupDrawer(Drawer drawer, NavDestination destination, NavController navController)
         {
-            // Not used — profile drawer is managed independently via CreateProfileDrawer
+            if (drawer == null || destination == null || navController == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] SetupDrawer - null parameters: drawer={drawer != null}, destination={destination != null}, navController={navController != null}");
+                return;
+            }
+
+            if (_profileDrawer == drawer)
+            {
+                return;
+            }
+
+            if (_profileDrawer != null)
+            {
+                _profileDrawer.opened -= OnDrawerOpened;
+            }
+
+            _profileDrawer = drawer;
+            _profileDrawer.Clear();
+            _profileDrawer.swipeAreaWidth = 16;
+            BuildDrawerContent(_profileDrawer);
+            _profileDrawer.opened += OnDrawerOpened;
         }
 
         public void SetupNavigationRail(NavigationRail navigationRail, NavDestination destination, NavController navController)
