@@ -4,7 +4,7 @@
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.SplashScreenViewModel, Foodmission" class="fm-screen-container-fixed loading-root" style="justify-content: space-around; display: flex; visibility: visible;">
         <ui:Image name="logofoodmission" source="project://database/Assets/Foodmission/graphics/png/logo-foodmission-white.png?fileID=21300000&amp;guid=bab1e9be189fa4421b7615dfe330b1f6&amp;type=3#logo-foodmission-white" class="loading-logo-foodmission visible" style="margin-top: 180px;"/>
         <ui:VisualElement name="loading" class="loading-container" style="transition-property: all, opacity; transition-duration: 0s, 0.5s; transition-timing-function: ease, ease; transition-delay: 0s, 0.5s;">
-            <appui:Heading name="txtLoading" text="Loading" primary="true" size="XXL" class="centered-text">
+            <appui:Heading name="txtLoading" text="Loading" primary="true" size="M" class="centered-text">
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="LoadingText" binding-mode="ToTarget"/>
                 </Bindings>

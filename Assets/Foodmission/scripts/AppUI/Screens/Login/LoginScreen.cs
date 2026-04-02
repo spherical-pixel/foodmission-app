@@ -1,3 +1,4 @@
+using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
@@ -135,27 +136,10 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            
-            AlertDialog dialog = new AlertDialog
-            {
-                title = "@UI:ALERT_ERROR_TITLE",
-                description = message,
-                variant = AlertSemantic.Error
-            };
-
-            dialog.size = Size.L;
-            dialog.scaleOverride = "large";
-            dialog.SetPrimaryAction(0, "@UI:TXT_OK", () => Debug.LogError("Confirmed Alert"));
-            //dialog.SetCancelAction(1, "Cancel");
-
-            var modal = Modal
-                .Build(this, dialog);
-            modal.dismissed += (modalElement, dismissType) =>
-            {
-                Debug.LogError("Dismissed Alert");
-                
-            };
-            modal.Show();
+            Toast.Build(this, message, NotificationDuration.Long)
+                .SetStyle(NotificationStyle.Negative)
+                .SetPosition(PopupNotificationPlacement.Bottom)
+                .Show();
         }
     }
 }

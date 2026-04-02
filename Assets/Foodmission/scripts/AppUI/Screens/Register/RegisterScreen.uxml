@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.RegisterViewModel, Foodmission" class="login-root appui appui--en appui--medium appui--light appui--ltr" style="flex-grow: 0; background-color: rgba(255, 255, 255, 0);">
         <ui:VisualElement name="group" style="background-color: rgba(255, 255, 255, 0.26); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; margin-left: 50px; margin-right: 50px; padding-top: 25px; padding-left: 25px; padding-right: 25px; padding-bottom: 25px; margin-top: 50px; margin-bottom: 50px; -unity-background-image-tint-color: rgba(255, 255, 255, 0.2); flex-grow: 1;">
-            <appui:Heading text="Create your Account" size="XXL" style="-unity-text-align: middle-center; -unity-font-style: bold;"/>
+            <appui:Heading text="Create your Account" size="M" style="-unity-text-align: middle-center; -unity-font-style: bold;"/>
             <eu.foodmission.platform.Components.FormFieldItemTextField headingText="fghfgh" icon-button-Visible="true" icon-button-quiet="true" icon-button-icon="eye" text-field-is-password="false" text-field-value="" text-field-placeholder="sdfsdf" name="username" Heading-Text="">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18417602513592320)"/>
@@ -62,6 +62,7 @@
                     <ui:DataBinding property="HelpTextVariant" data-source-path="PostalCodeHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemTextField>
+            <appui:Spacer spacing="XL"/>
             <eu.foodmission.platform.Components.FormFieldItemCheckbox name="checkbox">
                 <Bindings>
                     <ui:DataBinding property="HelpTextText" data-source-path="TermsHelpTextValue" binding-mode="TwoWay"/>
@@ -70,8 +71,9 @@
                     <ui:DataBinding property="CheckboxValue" data-source-path="HasAcceptedTerms" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemCheckbox>
+            <appui:Spacer spacing="XL"/>
             <ui:VisualElement class="auth-actions">
-                <appui:Button name="register-button" text="Registrar" variant="primary" title="Register" class="auth-button"/>
+                <appui:Button name="register-button" text="Registrar" variant="Accent" title="Register" trailing-icon="fm-arrow-right" class="auth-button fm-button fm-button-align-left"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
