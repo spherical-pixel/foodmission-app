@@ -12,6 +12,27 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string _userName = "";
 
+        [ObservableProperty]
+        private float _healthProgress = 0.65f;
+
+        [ObservableProperty]
+        private float _sustainabilityProgress = 0.42f;
+
+        [ObservableProperty]
+        private float _knowledgeProgress = 0.78f;
+
+        [ObservableProperty]
+        private int _caloriesConsumed = 1850;
+
+        [ObservableProperty]
+        private int _caloriesLeft = 350;
+
+        [ObservableProperty]
+        private string _selectedTimePeriod = "Today";
+
+        [ObservableProperty]
+        private string _selectedUserScope = "Me";
+
         public HomeScreenViewModel(IStoreService storeService) : base(storeService)
         {
             // Get initial state
@@ -39,7 +60,7 @@ namespace eu.foodmission.platform
         private void UpdateWelcomeMessage(AppState state)
         {
             UserName = state.userId ?? "";
-            // TODO: this is just a test 
+            // TODO: this is just a test
             WelcomeMessage = state.lang switch
             {
                 "es" => $"Bienvenido, {state.userId}",
@@ -47,6 +68,18 @@ namespace eu.foodmission.platform
                 "ca" => $"Benvingut, {state.userId}",
                 _ => $"Welcome, {state.userId}"
             };
+        }
+
+        public void SetTimePeriod(string period)
+        {
+            SelectedTimePeriod = period;
+            // TODO: Update progress and stats based on selected period
+        }
+
+        public void SetUserScope(string scope)
+        {
+            SelectedUserScope = scope;
+            // TODO: Update progress and stats based on selected scope
         }
     }
 }
