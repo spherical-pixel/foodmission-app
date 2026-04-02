@@ -1,17 +1,23 @@
 /*
  * Font overrides applied via CSS class on the App UI Panel root.
- * Roboto is the App UI default
  * -unity-font-definition inherits downward to all child elements.
+ * --appui-font-weights-100 = regular, --appui-font-weights-200 = bold
  */
 
 .fm-font-open-sans {
-    -unity-font-definition: resource('Fonts & Materials/OpenSans-VariableFont_wdth,wght SDF');
+    -unity-font-definition: resource('Fonts & Materials/OpenSans-Regular SDF');
+    --appui-font-weights-100: resource('Fonts & Materials/OpenSans-Regular SDF');
+    --appui-font-weights-200: resource('Fonts & Materials/OpenSans-Bold SDF');
 }
 
 .fm-font-open-dyslexic {
     -unity-font-definition: resource('Fonts & Materials/OpenDyslexic-Regular SDF');
+    --appui-font-weights-100: resource('Fonts & Materials/OpenDyslexic-Regular SDF');
+    --appui-font-weights-200: resource('Fonts & Materials/OpenDyslexic-Bold SDF');
 }
 
 .fm-font-roboto {
-    -unity-font-definition: resource('Fonts & Materials/Roboto-VariableFont_wdth,wght SDF');
+    -unity-font-definition: resource('Fonts & Materials/Roboto-Regular SDF');
+    --appui-font-weights-100: resource('Fonts & Materials/Roboto-Regular SDF');
+    --appui-font-weights-200: resource('Fonts & Materials/Roboto-Bold SDF');
 }

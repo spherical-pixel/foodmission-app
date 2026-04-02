@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Foodmission_UITK_TextSettings
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.PanelTextSettings
   m_Version: 
-  m_DefaultFontAsset: {fileID: 11400000, guid: e93ea107607784ddb815755aeb2603d5, type: 2}
+  m_DefaultFontAsset: {fileID: 11400000, guid: 6aa6ba3e5fea1464a8d1f0cf924d07d7, type: 2}
   m_DefaultFontAssetPath: Fonts & Materials/
   m_FallbackFontAssets: []
+  m_FallbackOSFontAssets: []
   m_MatchMaterialPreset: 0
   m_MissingCharacterUnicode: 0
   m_ClearDynamicDataOnBuild: 1
@@ -30,7 +31,12 @@ MonoBehaviour:
   m_DefaultColorGradientPresetsPath: Text Color Gradients/
   m_UnicodeLineBreakingRules:
     m_UnicodeLineBreakingRules: {fileID: 0}
-    m_LeadingCharacters: {fileID: 4900000, guid: d82c1b31c7e74239bff1220585707d2b, type: 3}
-    m_FollowingCharacters: {fileID: 4900000, guid: fade42e8bc714b018fac513c043d323b, type: 3}
+    m_LeadingCharacters: {fileID: 0}
+    m_FollowingCharacters: {fileID: 0}
     m_UseModernHangulLineBreakingRules: 0
   m_DisplayWarnings: 0
+  m_FontReferences:
+  - font: {fileID: 12800000, guid: 8c9d11570d1ef4f4cbeb28d1c7e6b763, type: 3}
+    fontAsset: {fileID: 0}
+  - font: {fileID: 12800000, guid: f129b03ed61794ba68a0ed3044e56031, type: 3}
+    fontAsset: {fileID: 0}
