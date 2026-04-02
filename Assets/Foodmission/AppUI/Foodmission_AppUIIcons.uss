@@ -37,6 +37,8 @@
     --appui-icon-fm-menu-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-menu.png");
     --appui-icon-fm-notifications-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-notifications.png");
     --appui-icon-fm-avatar-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar.png");
+    --appui-icon-fm-arrow-right-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-arrow-right.png");
+    --appui-icon-fm-arrow-down-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-arrow-down.png");
 }
 
 .appui-icon--calendar--regular {
@@ -169,5 +171,13 @@
 
 .appui-icon--fm-avatar--regular {
     --unity-image: var(--appui-icon-fm-avatar-regular);
+}
+
+.appui-icon--fm-arrow-right--regular {
+    --unity-image: var(--appui-icon-fm-arrow-right-regular);
+}
+
+.appui-icon--fm-arrow-down--regular {
+    --unity-image: var(--appui-icon-fm-arrow-down-regular);
 }
 

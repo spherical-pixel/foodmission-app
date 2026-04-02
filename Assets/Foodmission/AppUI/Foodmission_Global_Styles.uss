@@ -31,19 +31,23 @@
 
 .appui {
     background-color: var(--fm-main-bg);
+    font-size: var(--appui-font-sizes-body-md);
 }
 
-.appui-picker,
-.appui-textfield {
-    background-color: transparent;
-    border-width: 6px;
-    border-color: rgb(255, 255, 255);
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-    margin: 20px 0 20px 0;
-    font-size: var(--appui-font-sizes-body-md);
+.appui-button.fm-button.appui-button--size-s {
+    min-height: var(--appui-sizing-800);
+}
+
+.appui-button.fm-button.appui-button--size-m {
+    min-height: var(--appui-sizing-850);
+}
+
+.appui-button.fm-button.appui-button--size-l {
+    min-height: var(--appui-sizing-900);
+}
+
+.fm-button-align-left .appui-button__titlecontainer {
+    align-items: flex-start;
 }
 
 .appui-navigation-screen__container {
@@ -109,166 +113,24 @@
 
 .heading-wrap {
     white-space: normal;
-    /*text-wrap: wrap;*/
-}
-
-.heading_field {
-    margin-top: 40px;
-    padding-left: 20px;
-    padding-bottom: 10px;
 }
 
 .item-field {
     margin-top: 0;
 }
 
-.appui-picker__menu {
-    background-color: var(--fm-surface-bg);
-    border-radius: 16px;
-    border-width: 0;
-    padding: 8px;
-    margin-top: 4px;
-}
-
-.appui-picker__menu .appui-dropdown-item,
-.appui-picker__menu .appui-picker-item {
-    padding: 14px 16px;
-    border-radius: 10px;
-    font-size: var(--appui-font-sizes-body-md);
-    color: var(--appui-foregrounds-100);
-    -unity-font-style: normal;
-    transition: background-color 0.15s ease;
-}
-
-.appui-picker__menu .appui-dropdown-item:hover,
-.appui-picker__menu .appui-picker-item:hover {
-    background-color: rgba(0, 120, 100, 0.1);
-}
-
-.appui-picker__menu .appui-dropdown-item.appui-dropdown-item--selected,
-.appui-picker__menu .appui-picker-item.appui-picker-item--selected {
-    background-color: rgba(0, 120, 100, 0.2);
-    color: var(--fm-icon-tint-selected);
-    -unity-font-style: bold;
-}
-
-.appui-picker__menu .appui-dropdown-item.appui-dropdown-item--selected .appui-dropdown-item__checkmark,
-.appui-picker__menu .appui-picker-item--selected .appui-picker-item__checkmark {
-    --unity-image-tint-color: var(--fm-icon-tint-selected);
-}
-
-.appui-picker__menu .unity-scroller {
-    width: 6px;
-}
-
-.appui-picker__menu .unity-scroller .unity-scroller__slider {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-}
-
 .centered-text {
     -unity-text-align: middle-center;
 }
 
-.appui-button {
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
 
-.appui-checkbox {
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-/* HelpText font size - usa la variable de tamaño del tema */
-.appui-help-text {
-    font-size: var(--appui-font-sizes-body-sm);
-}
-
-/* ============================================
-   Dialog/AlertDialog Overrides for Mobile
-   Makes dialogs larger and more touch-friendly
-   ============================================ */
-
-/* Base dialog - more padding and full width on mobile */
-.appui-dialog {
-    padding: var(--appui-spacing-500);
-    min-width: 320px;
-    max-width: 85%;
-}
-
-/* Override fixed sizes to be responsive - higher specificity to beat Dialog.uss */
-.appui-modal__content > .appui-dialog--size-s,
-.appui-modal__content > .appui-dialog--size-m,
-.appui-modal__content > .appui-dialog--size-l {
-    width: 90%;
-    min-width: 800px;
-    max-width: 1000px;
-}
-
-/* Dialog header/title - much larger for mobile */
-.appui-dialog__header{
-    font-size: var(--appui-font-sizes-heading-lg);
-    -unity-font-style: bold;
-}
-
-/* Dialog content/description - larger font with more line height */
+.appui-dialog .appui-heading--primary,
 .appui-dialog__content {
-    font-size: var(--appui-font-sizes-body-lg);
-    margin-top: var(--appui-spacing-400);
-    -unity-text-align: middle-center;
+    color: var(--appui-primary-100);
 }
 
-.appui-dialog__content .appui-text {
-    font-size: var(--appui-font-sizes-body-lg);
-    -unity-text-align: middle-center;
-}
-
-/* Button group - more spacing */
-.appui-dialog__buttongroup {
-    margin-top: var(--appui-spacing-500);
-    gap: var(--appui-spacing-300);
-}
-
-/* Action buttons - larger and more touch-friendly */
-.appui-dialog__buttongroup > .appui-button {
-    padding: var(--appui-spacing-300) var(--appui-spacing-500);
-    font-size: var(--appui-font-sizes-body-lg);
-    min-height: 44px;
-}
-
-/* Primary action button - accent color */
-.appui-dialog__primary-action {
-    font-size: var(--appui-font-sizes-body-lg);
-}
-
-/* Secondary/Cancel buttons */
-.appui-dialog__secondary-action,
-.appui-dialog__cancel-action {
-    font-size: var(--appui-font-sizes-body-lg);
-}
-
-/* Icon in dialog - larger and positioned better */
-.appui-dialog__icon {
-    width: 56px;
-    height: 56px;
-    --unity-image-size: 56px;
-}
-
-/* Dialog heading row spacing */
-.appui-dialog__heading {
-    gap: var(--appui-spacing-300);
-}
-
-/* Modal content - larger border radius */
-.appui-modal__content {
-    border-radius: var(--appui-border-radius-xl);
-}
-
-/* Divider spacing */
-.appui-dialog__divider {
-    margin-top: var(--appui-spacing-300);
-    margin-bottom: var(--appui-spacing-300);
+.appui-picker__menu {
+    max-height: 500px;
 }
 
 /* ============================================
@@ -429,28 +291,191 @@
     font-size: var(--appui-font-sizes-body-md);
 }
 
+
+
+
+
 /* ============================================
-   Font Selection Overrides for AppUI Components
-   Allows font selector to cascade to all text elements
+   Profile Header (shared between Profile & Settings)
    ============================================ */
-.fm-font-open-sans .appui,
-.fm-font-open-sans .appui-button__title,
-.fm-font-open-sans .appui-appbar__compact-title.appui-localized-text,
-.fm-font-open-sans .appui-appbar__large-title.appui-localized-text
- {
-    -unity-font-definition: resource('Fonts & Materials/OpenSans-VariableFont_wdth,wght SDF') !important;
+
+.fm-profile-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--appui-primary-100);
+    border-radius: 20px;
+    flex-shrink: 0;
+    margin-right: 12px;
 }
 
-.fm-font-open-dyslexic .appui,
-.fm-font-open-dyslexic .appui-button__title,
-.fm-font-open-dyslexic .appui-appbar__compact-title.appui-localized-text,
-.fm-font-open-dyslexic .appui-appbar__large-title.appui-localized-text {
-    -unity-font-definition: resource('Fonts & Materials/OpenDyslexic-Regular SDF') !important;
+.fm-profile-username {
+    flex-grow: 1;
+    font-size: var(--appui-font-sizes-body-lg);
 }
 
-.fm-font-roboto .appui,
-.fm-font-roboto .appui-button__title,
-.fm-font-roboto .appui-appbar__compact-title.appui-localized-text,
-.fm-font-roboto .appui-appbar__large-title.appui-localized-text {
-    -unity-font-definition: resource('Fonts & Materials/Roboto-VariableFont_wdth,wght SDF') !important;
+.fm-profile-xp-badge {
+    background-color: var(--fm-icon-tint-selected);
+    border-radius: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.fm-profile-xp-label {
+    color: white;
+    font-size: var(--appui-font-sizes-body-sm);
+}
+
+/* ============================================
+   Arrow Stepper Component
+   Left arrow / value label / right arrow selector
+   ============================================ */
+
+.fm-arrow-stepper__row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.fm-arrow-stepper__label {
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    font-size: var(--appui-font-sizes-body-md);
+}
+
+/* ============================================
+   Home Screen Styles
+   ============================================ */
+
+.fm-home-nutri-image {
+    width: 100%;
+    height: 280px;
+    align-self: center;
+}
+
+.fm-home-nutri-label {
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-foregrounds-100);
+    -unity-text-align: middle-center;
+    white-space: normal;
+    margin-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* Status rows — horizontal: icon + label + progress */
+.fm-home-status-bars {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 8px;
+}
+
+.fm-status-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.fm-status-icon {
+    font-size: 20px;
+    width: 28px;
+    flex-shrink: 0;
+}
+
+.fm-status-label {
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-foregrounds-100);
+    -unity-font-style: bold;
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.fm-status-progress {
+    flex-grow: 1;
+    height: 16px;
+}
+
+/* Simple stepper: ◄ value ► */
+.fm-home-selectors-row {
+    flex-direction: row;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.fm-simple-stepper {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.fm-stepper-value {
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-foregrounds-100);
+    -unity-font-style: bold;
+}
+
+/* Calories card */
+.fm-calories-card {
+    background-color: var(--fm-surface-bg);
+    border-radius: 24px;
+    padding-top: 16px;
+    padding-bottom: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.fm-calories-circle-wrapper {
+    align-items: center;
+    justify-content: center;
+    width: 240px;
+    height: 240px;
+    margin-top: 16px;
+}
+
+.fm-calories-circular {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+}
+
+.fm-calories-center {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+}
+
+.fm-calories-consumed-label {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+}
+
+.fm-calories-big-number {
+    font-size: var(--appui-font-sizes-body-lg);
+    color: var(--appui-foregrounds-100);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.fm-calories-left-label {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+}
+
+.fm-calories-left-number {
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-foregrounds-100);
+    -unity-text-align: middle-center;
 }

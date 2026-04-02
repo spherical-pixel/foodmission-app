@@ -5,14 +5,24 @@
 
 .appui {
    /* Sizing */
-   --appui-sizing-100: 26px;
-   --appui-sizing-200: 42px;
-   --appui-sizing-300: 58px;
-   --appui-sizing-400: 74px;
-   --appui-sizing-500: 90px;
-   --appui-sizing-600: 106px;
-   --appui-sizing-700: 122px;
-   --appui-sizing-800: 138px;
+    --appui-sizing-60: 45px;
+    --appui-sizing-100: 16px;
+    --appui-sizing-200: 62px;
+    --appui-sizing-250: 70px;
+    --appui-sizing-300: 78px;
+    --appui-sizing-400: 94px;
+    --appui-sizing-500: 110px; /* 90*/
+    --appui-sizing-600: 126px;
+    --appui-sizing-700: 142px;
+    --appui-sizing-800: 158px;
+    --appui-sizing-850: 174px;
+    --appui-sizing-900: 190px;
+    --appui-sizing-950: 206px;
+    --appui-sizing-1000: 222px;
+    --appui-sizing-1050: 238px;
+    --appui-sizing-1100: 254px;
+    --appui-sizing-1150: 270px;
+    --appui-sizing-1200: 286px;
 
    /* Safe areas - shared between all modes */
    --fm-safe-area-top: 60px;
@@ -21,48 +31,105 @@
    --fm-safe-area-left: 20px;
 
    /* TextField - transparent background for both modes */
+   
    --appui-alias-field-background-color-default: transparent;
-   --appui-alias-field-border-color-default: rgba(255, 255, 255, 1.0);
-   --appui-alias-field-border-color-focus: rgba(255, 255, 255, 1.0);
-   --appui-alias-field-placeholder-color: rgba(255, 255, 255, 0.5);
+   --appui-alias-actions-background-color-default: transparent;
+   --appui-alias-actions-background-color-active: var(--appui-base-100);
+   
+
+    --appui-spacing-25: 8px;
+    --appui-spacing-50: 16px;
+    --appui-spacing-100: 32px;
+    --appui-spacing-125: 40px;
+    --appui-spacing-150: 48px;
+    --appui-spacing-200: 64px;
+    --appui-spacing-250: 80px;
+    --appui-spacing-300: 96px;
+    --appui-spacing-400: 128px;
+    --appui-spacing-450: 128px;
+    --appui-spacing-500: 160px;
+    --appui-spacing-600: 192px;
+    --appui-spacing-700: 224px;
+    --appui-spacing-800: 256px;
+    --appui-spacing-900: 288px;
+    --appui-spacing-1000: 320px;
+
+    --appui-alias-control-border-width: 8px;
+    --appui-alias-control-border-radius: 35px;  
+
+    --appui-alias-control-sizing-lg-height: var(--appui-sizing-700);
+    --appui-alias-control-sizing-md-height: var(--appui-sizing-600);
+    --appui-alias-control-sizing-sm-height: var(--appui-sizing-500);
+
+    --appui-alias-caret-icon-default: var(--appui-icon-fm-arrow-down-regular);
 }
 
 
 .appui--light {
     --fm-main-bg: #024639;
 
-    /* ============================================
-       Primary Palette - Light Mode
-       From corporate green to white
-       ============================================ */
-    --appui-primary-15: #000000;
-    --appui-primary-25: #001A16;
-    --appui-primary-50: #00332B;
-    --appui-primary-100: #024639;    /* Corporate green - primary text */
-    --appui-primary-200: #035A4A;
-    --appui-primary-300: #04705C;
-    --appui-primary-400: #058A71;
-    --appui-primary-500: #06A487;
-    --appui-primary-600: #2FB89D;
-    --appui-primary-700: #5CC6B0;
-    --appui-primary-800: #88D4C3;
-    --appui-primary-900: #B3E2D6;
-    --appui-primary-1000: #D6F0EA;
-    --appui-primary-1100: #E8F7F3;
-    --appui-primary-1200: #F4FCFA;
+    --appui-positive-300: var(--appui-color-green-1000);
+    --appui-positive-200: var(--appui-color-green-900);
+    --appui-positive-100: var(--appui-color-green-800);
+    --appui-positive-50: var(--appui-color-green-700);
+    --appui-positive-25: var(--appui-color-green-600);
+    --appui-warning-300: var(--appui-color-orange-1000);
+    --appui-warning-200: var(--appui-color-orange-900);
+    --appui-warning-100: var(--appui-color-orange-800);
+    --appui-warning-50: var(--appui-color-orange-700);
+    --appui-warning-25: var(--appui-color-orange-600);
+    --appui-destructive-300: var(--appui-color-red-1000);
+    --appui-destructive-200: var(--appui-color-red-900);
+    --appui-destructive-100: var(--appui-color-red-800);
+    --appui-destructive-50: var(--appui-color-red-700);
+    --appui-destructive-25: var(--appui-color-red-600);
+
+    --appui-accent-300: var(--appui-color-blue-1000);
+    --appui-accent-200: var(--appui-color-blue-900);
+    --appui-accent-100: var(--appui-primary-1300);
+    --appui-accent-50: var(--appui-color-blue-700);
+    --appui-accent-25: var(--appui-color-blue-600);
+
     --appui-primary-1300: #FFFFFF;
+    --appui-primary-1200: #F4FCFA;
+    --appui-primary-1100: #E8F7F3;
+    --appui-primary-1000: #D6F0EA;
+    --appui-primary-900: #B3E2D6;
+    --appui-primary-800: #88D4C3;
+    --appui-primary-700: #5CC6B0;
+    --appui-primary-600: #2FB89D;
+    --appui-primary-500: #06A487;
+    --appui-primary-400: #058A71;
+    --appui-primary-300: #04705C;
+    --appui-primary-200: #035A4A;
+    --appui-primary-100: #024639; /* Corporate green */
+    --appui-primary-50: #00332B;
+    --appui-primary-25: #001A16;
+    --appui-primary-15: #000000;
 
-    /* Foregrounds - dark text for content on white/light surfaces */
-    --appui-foregrounds-200: var(--appui-primary-15);   /* #000000 - max contrast */
-    --appui-foregrounds-100: var(--appui-primary-25);   /* #001A16 - primary text (near black) */
-    --appui-foregrounds-50: var(--appui-primary-300);   /* #04705C - secondary text (medium green) */
-    --appui-foregrounds-25: var(--appui-primary-700);   /* #5CC6B0 - tertiary text (light teal) */
+    --appui-base-600: var(--appui-primary-400);
+    --appui-base-500: var(--appui-primary-500);
+    --appui-base-400: var(--appui-primary-1300);
+    --appui-base-300: var(--appui-primary-700);
+    --appui-base-200: var(--appui-primary-200);/**/
+    --appui-base-100: var(--appui-primary-200);/**/
+    --appui-base-50: var(--appui-primary-1000);
+    --appui-base-25: var(--appui-primary-1100);
 
-    /* Backgrounds */
-    --appui-backgrounds-300: var(--appui-primary-1100);
-    --appui-backgrounds-200: var(--appui-primary-1200);
-    --appui-backgrounds-100: var(--appui-primary-1300);
-    --appui-backgrounds-50: var(--appui-primary-1300);
+    --appui-foregrounds-200: var(--appui-primary-1300);
+    --appui-foregrounds-100: var(--appui-primary-1200);
+    --appui-foregrounds-50: var(--appui-primary-100);
+    --appui-foregrounds-25: var(--appui-primary-50);
+
+    --appui-backgrounds-300: var(--appui-primary-15);
+    --appui-backgrounds-200: var(--appui-primary-1300);
+    --appui-backgrounds-100: var(--appui-primary-100);
+    --appui-backgrounds-50: var(--appui-primary-1100);
+
+    --appui-alias-actions-accent-foreground-color-focus: var(--appui-primary-100);
+    --appui-alias-actions-accent-foreground-color-active: var(--appui-primary-100);
+    --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-100);
+    --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-100);
 
     /* Surface colors for panels, menus, and cards */
     --fm-surface-bg: rgba(255, 255, 255, 0.95);
@@ -79,26 +146,57 @@
        Primary Palette - Dark Mode
        From black through corporate green to white
        ============================================ */
-    --appui-primary-15: #000000;
-    --appui-primary-25: #000A09;
-    --appui-primary-50: #001411;
-    --appui-primary-100: #001E1A;
-    --appui-primary-200: #002823;
-    --appui-primary-300: #00322C;
-    --appui-primary-400: #013C35;
-    --appui-primary-500: #01463E;
-    --appui-primary-600: #015047;
-    --appui-primary-700: #024639;    /* Corporate green */
-    --appui-primary-800: #2C8B76;
-    --appui-primary-900: #5CB09E;
-    --appui-primary-1000: #8CD4C6;
-    --appui-primary-1100: #BBE8DE;
-    --appui-primary-1200: #DDF4EE;
+    --appui-primary-15: #080E0D;
+    --appui-primary-25: #0C1514;
+    --appui-primary-50: #101B19;
+    --appui-primary-100: #152220;
+    --appui-primary-200: #1C2D2A;
+    --appui-primary-300: #243835;
+    --appui-primary-400: #2B4340;
+    --appui-primary-500: #024639;    /* Corporate green */
+    --appui-primary-600: #2A6B5E;
+    --appui-primary-700: #3D8C7B;
+    --appui-primary-800: #57A898;
+    --appui-primary-900: #74C2B3;
+    --appui-primary-1000: #96D5C9;
+    --appui-primary-1100: #B8E4DD;
+    --appui-primary-1200: #D8F0EB;
     --appui-primary-1300: #FFFFFF;
+
+    --appui-positive-300: var(--appui-color-green-1000);
+    --appui-positive-200: var(--appui-color-green-900);
+    --appui-positive-100: var(--appui-color-green-800);
+    --appui-positive-50: var(--appui-color-green-700);
+    --appui-positive-25: var(--appui-color-green-600);
+    --appui-warning-300: var(--appui-color-orange-1000);
+    --appui-warning-200: var(--appui-color-orange-900);
+    --appui-warning-100: var(--appui-color-orange-800);
+    --appui-warning-50: var(--appui-color-orange-700);
+    --appui-warning-25: var(--appui-color-orange-600);
+    --appui-destructive-300: var(--appui-color-red-1000);
+    --appui-destructive-200: var(--appui-color-red-900);
+    --appui-destructive-100: var(--appui-color-red-800);
+    --appui-destructive-50: var(--appui-color-red-700);
+    --appui-destructive-25: var(--appui-color-red-600);
+
+    --appui-accent-300: var(--appui-color-blue-1000);
+    --appui-accent-200: var(--appui-color-blue-900);
+    --appui-accent-100: var(--appui-primary-1300);
+    --appui-accent-50: var(--appui-color-blue-700);
+    --appui-accent-25: var(--appui-color-blue-600);
+
+    --appui-base-600: var(--appui-primary-400);
+    --appui-base-500: var(--appui-primary-500);
+    --appui-base-400: var(--appui-primary-1300);
+    --appui-base-300: var(--appui-primary-700);
+    --appui-base-200: var(--appui-primary-200);
+    --appui-base-100: var(--appui-primary-200);
+    --appui-base-50: var(--appui-primary-1000);
+    --appui-base-25: var(--appui-primary-1100);
 
     /* Foregrounds - mapped to primary palette */
     --appui-foregrounds-200: var(--appui-primary-1300);
-    --appui-foregrounds-100: var(--appui-primary-1300);  /* White text */
+    --appui-foregrounds-100: var(--appui-primary-1300);
     --appui-foregrounds-50: var(--appui-primary-900);
     --appui-foregrounds-25: var(--appui-primary-600);
 
@@ -107,6 +205,11 @@
     --appui-backgrounds-200: var(--appui-primary-200);
     --appui-backgrounds-100: var(--appui-primary-100);
     --appui-backgrounds-50: var(--appui-primary-50);
+
+    --appui-alias-actions-accent-foreground-color-focus: var(--appui-primary-100);
+    --appui-alias-actions-accent-foreground-color-active: var(--appui-primary-100);
+    --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-100);
+    --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-100);
 
     /* Surface colors for panels, menus, and cards */
     --fm-surface-bg: rgba(30, 30, 30, 0.95);
@@ -125,16 +228,82 @@
     --appui-font-sizes-body-sm: 20px;
     --appui-font-sizes-body-md: 24px;
     --appui-font-sizes-body-lg: 28px;
+
+    --appui-font-sizes-25: 8px;
+    --appui-font-sizes-50: 12px;
+    --appui-font-sizes-75: 16px;
+    --appui-font-sizes-100: 28px;
+    --appui-font-sizes-200: 28px;
+    --appui-font-sizes-300: 28px;
+    --appui-font-sizes-400: 32px;
+    --appui-font-sizes-500: 36px;
+    --appui-font-sizes-600: 42px;
+    --appui-font-sizes-700: 48px;
+    --appui-font-sizes-800: 56px;
+    --appui-font-sizes-900: 64px;
+    --appui-font-sizes-1000: 72px;
+    --appui-font-sizes-1100: 82px;
+    --appui-font-sizes-1200: 94px;
+    --appui-font-sizes-1300: 108px;
+    --appui-font-sizes-1400: 122px;
+    --appui-font-sizes-1500: 138px;
+    --appui-font-sizes-1600: 156px;
+    --appui-font-sizes-1700: 176px;
+    --appui-font-sizes-1800: 200px;
 }
 
 .appui--medium {
     --appui-font-sizes-body-sm: 24px;
     --appui-font-sizes-body-md: 32px;
     --appui-font-sizes-body-lg: 40px;
+
+    --appui-font-sizes-25: 16px;
+    --appui-font-sizes-50: 20px;
+    --appui-font-sizes-75: 24px;
+    --appui-font-sizes-100: 36px;
+    --appui-font-sizes-200: 36px;
+    --appui-font-sizes-300: 36px;
+    --appui-font-sizes-400: 40px;
+    --appui-font-sizes-500: 44px;
+    --appui-font-sizes-600: 50px;
+    --appui-font-sizes-700: 56px;
+    --appui-font-sizes-800: 64px;
+    --appui-font-sizes-900: 72px;
+    --appui-font-sizes-1000: 80px;
+    --appui-font-sizes-1100: 90px;
+    --appui-font-sizes-1200: 102px;
+    --appui-font-sizes-1300: 116px;
+    --appui-font-sizes-1400: 130px;
+    --appui-font-sizes-1500: 146px;
+    --appui-font-sizes-1600: 164px;
+    --appui-font-sizes-1700: 184px;
+    --appui-font-sizes-1800: 208px;
 }
 
 .appui--large {
     --appui-font-sizes-body-sm: 32px;
     --appui-font-sizes-body-md: 42px;
     --appui-font-sizes-body-lg: 52px;
+
+    --appui-font-sizes-25: 24px;
+    --appui-font-sizes-50: 28px;
+    --appui-font-sizes-75: 32px;
+    --appui-font-sizes-100: 44px;
+    --appui-font-sizes-200: 44px;
+    --appui-font-sizes-300: 44px;
+    --appui-font-sizes-400: 48px;
+    --appui-font-sizes-500: 52px;
+    --appui-font-sizes-600: 58px;
+    --appui-font-sizes-700: 64px;
+    --appui-font-sizes-800: 72px;
+    --appui-font-sizes-900: 80px;
+    --appui-font-sizes-1000: 90px;
+    --appui-font-sizes-1100: 102px;
+    --appui-font-sizes-1200: 116px;
+    --appui-font-sizes-1300: 130px;
+    --appui-font-sizes-1400: 138px;
+    --appui-font-sizes-1500: 154px;
+    --appui-font-sizes-1600: 172px;
+    --appui-font-sizes-1700: 192px;
+    --appui-font-sizes-1800: 216px;
 }

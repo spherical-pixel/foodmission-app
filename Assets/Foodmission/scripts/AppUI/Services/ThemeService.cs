@@ -19,7 +19,7 @@ namespace eu.foodmission.platform
         private Panel _panel;
         private bool _isInitialized;
 
-        public string currentTheme { get; private set; } = "system";
+        public string currentTheme { get; private set; } = "light";//"system";
         private string _currentFont = "roboto";
         public float safeAreaTop { get; private set; }
         public float safeAreaRight { get; private set; }
@@ -64,6 +64,7 @@ namespace eu.foodmission.platform
 
             // Apply initial theme and font from state
             AppState appState = _storeService.GetAppState();
+            Debug.Log($"[ThemeService] Initial theme from state: {appState.theme}, font: {appState.font}");
             SetTheme(appState.theme);
             SetFont(appState.font);
 

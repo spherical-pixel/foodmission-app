@@ -2,8 +2,10 @@
     flex-grow: 1;
     justify-content: space-between;
     /* Loading/splash screen always has dark green background - keep white text regardless of theme */
+    /*
     --appui-foregrounds-100: rgba(255, 255, 255, 1.0);
     --appui-foregrounds-50: rgba(255, 255, 255, 0.7);
+    */
 }
 
 .loading-logo-foodmission {
