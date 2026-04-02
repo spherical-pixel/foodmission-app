@@ -7,9 +7,12 @@ namespace eu.foodmission.platform
     [Preserve]
     class ProfileScreen : NavigationScreenBase<ProfileViewModel>
     {
-        private Unity.AppUI.UI.Button _settingsButton;
-        private Unity.AppUI.UI.Button _groupsButton;
-        private Unity.AppUI.UI.Button _logoutButton;
+        private VisualElement _menuItemProfile;
+        private VisualElement _menuItemAvatar;
+        private VisualElement _menuItemGroups;
+        private VisualElement _menuItemBadges;
+        private VisualElement _menuItemSettings;
+        private VisualElement _menuItemLogout;
 
         public ProfileScreen()
         {
@@ -20,44 +23,77 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
-            _settingsButton = contentContainer.Q<Unity.AppUI.UI.Button>("btn-settings");
-            _groupsButton = contentContainer.Q<Unity.AppUI.UI.Button>("btn-groups");
-            _logoutButton = contentContainer.Q<Unity.AppUI.UI.Button>("btn-logout");
+            _menuItemProfile = contentContainer.Q<VisualElement>("menu-item-profile");
+            _menuItemAvatar = contentContainer.Q<VisualElement>("menu-item-avatar");
+            _menuItemGroups = contentContainer.Q<VisualElement>("menu-item-groups");
+            _menuItemBadges = contentContainer.Q<VisualElement>("menu-item-badges");
+            _menuItemSettings = contentContainer.Q<VisualElement>("menu-item-settings");
+            _menuItemLogout = contentContainer.Q<VisualElement>("menu-item-logout");
         }
 
         private void RegisterManualEvents()
         {
-            if (_settingsButton != null)
+            if (_menuItemProfile != null)
             {
-                _settingsButton.clicked += OnSettingsClicked;
+                _menuItemProfile.RegisterCallback<PointerDownEvent>(OnProfileClicked);
             }
 
-            if (_groupsButton != null)
+            if (_menuItemAvatar != null)
             {
-                _groupsButton.clicked += OnGroupsClicked;
+                _menuItemAvatar.RegisterCallback<PointerDownEvent>(OnAvatarClicked);
             }
 
-            if (_logoutButton != null)
+            if (_menuItemGroups != null)
             {
-                _logoutButton.clicked += OnLogoutClicked;
+                _menuItemGroups.RegisterCallback<PointerDownEvent>(OnGroupsClicked);
+            }
+
+            if (_menuItemBadges != null)
+            {
+                _menuItemBadges.RegisterCallback<PointerDownEvent>(OnBadgesClicked);
+            }
+
+            if (_menuItemSettings != null)
+            {
+                _menuItemSettings.RegisterCallback<PointerDownEvent>(OnSettingsClicked);
+            }
+
+            if (_menuItemLogout != null)
+            {
+                _menuItemLogout.RegisterCallback<PointerDownEvent>(OnLogoutClicked);
             }
         }
 
         private void UnregisterManualEvents()
         {
-            if (_settingsButton != null)
+            if (_menuItemProfile != null)
             {
-                _settingsButton.clicked -= OnSettingsClicked;
+                _menuItemProfile.UnregisterCallback<PointerDownEvent>(OnProfileClicked);
             }
 
-            if (_groupsButton != null)
+            if (_menuItemAvatar != null)
             {
-                _groupsButton.clicked -= OnGroupsClicked;
+                _menuItemAvatar.UnregisterCallback<PointerDownEvent>(OnAvatarClicked);
             }
 
-            if (_logoutButton != null)
+            if (_menuItemGroups != null)
             {
-                _logoutButton.clicked -= OnLogoutClicked;
+                _menuItemGroups.UnregisterCallback<PointerDownEvent>(OnGroupsClicked);
+            }
+
+            if (_menuItemBadges != null)
+            {
+                _menuItemBadges.UnregisterCallback<PointerDownEvent>(OnBadgesClicked);
+            }
+
+            if (_menuItemSettings != null)
+            {
+                _menuItemSettings.UnregisterCallback<PointerDownEvent>(OnSettingsClicked);
+            }
+
+            if (_menuItemLogout != null)
+            {
+                _menuItemLogout.UnregisterCallback<PointerDownEvent>(OnLogoutClicked);
             }
         }
 
@@ -69,24 +105,45 @@ namespace eu.foodmission.platform
         protected override void OnViewModelUnbinding()
         {
             UnregisterManualEvents();
-            _settingsButton = null;
-            _groupsButton = null;
-            _logoutButton = null;
+            _menuItemProfile = null;
+            _menuItemAvatar = null;
+            _menuItemGroups = null;
+            _menuItemBadges = null;
+            _menuItemSettings = null;
+            _menuItemLogout = null;
 
             base.OnViewModelUnbinding();
         }
 
-        private void OnSettingsClicked()
+        private void OnProfileClicked(PointerDownEvent evt)
         {
+            // Edit Profile - stub navigation, needs go_to_edit_profile action
             _navController?.Navigate(Actions.go_to_settings);
         }
 
-        private void OnGroupsClicked()
+        private void OnAvatarClicked(PointerDownEvent evt)
+        {
+            // Edit Avatar - stub navigation, needs go_to_edit_avatar action
+            _navController?.Navigate(Actions.go_to_settings);
+        }
+
+        private void OnGroupsClicked(PointerDownEvent evt)
         {
             _navController?.Navigate(Actions.go_to_groups);
         }
 
-        private void OnLogoutClicked()
+        private void OnBadgesClicked(PointerDownEvent evt)
+        {
+            // View Badges - stub navigation, needs go_to_view_badges action
+            _navController?.Navigate(Actions.go_to_settings);
+        }
+
+        private void OnSettingsClicked(PointerDownEvent evt)
+        {
+            _navController?.Navigate(Actions.go_to_settings);
+        }
+
+        private void OnLogoutClicked(PointerDownEvent evt)
         {
             _viewModel?.Logout();
         }

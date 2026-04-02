@@ -6,5 +6,7 @@ namespace eu.foodmission.platform
     class MealLogScreen : NavigationScreenBase<MealLogViewModel>
     {
         public MealLogScreen() { }
+
+        
     }
 }

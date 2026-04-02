@@ -18,21 +18,25 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_Font = "roboto";
 
+        [ObservableProperty]
+        private string m_UserName = "User";
+
         public SettingsViewModel(IStoreService storeService) : base(storeService)
         {
             SynchronizeState(_storeService.GetAppState());
             _storeSubscription = _store.Subscribe(SelectSettingsState, OnSettingsStateChanged);
         }
 
-        private (string theme, string lang, string scale, string font) SelectSettingsState(AppState state)
-            => (state.theme, state.lang, state.scale, state.font);
+        private (string theme, string lang, string scale, string font, string userName) SelectSettingsState(AppState state)
+            => (state.theme, state.lang, state.scale, state.font, state.userName);
 
-        private void OnSettingsStateChanged((string theme, string lang, string scale, string font) s)
+        private void OnSettingsStateChanged((string theme, string lang, string scale, string font, string userName) s)
         {
             Theme = s.theme;
             Lang = s.lang;
             Scale = s.scale;
             Font = s.font;
+            UserName = s.userName ?? "User";
         }
 
         private void SynchronizeState(AppState state)
@@ -41,6 +45,7 @@ namespace eu.foodmission.platform
             Lang = state.lang;
             Scale = state.scale;
             Font = state.font;
+            UserName = state.userName ?? "User";
         }
 
         public void SetTheme(string theme) => _store.Dispatch(AppActions.setTheme.Invoke(theme));

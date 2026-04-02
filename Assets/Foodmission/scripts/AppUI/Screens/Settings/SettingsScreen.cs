@@ -1,21 +1,22 @@
-using System.Collections.Generic;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
+using eu.foodmission.platform.Components;
 
 namespace eu.foodmission.platform
 {
     [Preserve]
     class SettingsScreen : NavigationScreenBase<SettingsViewModel>
     {
-        private DropdownField _themeDropdown;
-        private DropdownField _langDropdown;
-        private DropdownField _scaleDropdown;
-        private DropdownField _fontDropdown;
+        private FormFieldItemArrowStepper _themeStepper;
+        private FormFieldItemArrowStepper _langStepper;
+        private FormFieldItemArrowStepper _scaleStepper;
+        private FormFieldItemArrowStepper _fontStepper;
+        private Label _userNameLabel;
 
-        private static readonly List<string> k_ThemeChoices = new List<string> { "Light", "Dark", "System" };
-        private static readonly List<string> k_LangChoices  = new List<string> { "English", "Español" };
-        private static readonly List<string> k_ScaleChoices = new List<string> { "Small", "Medium", "Large" };
-        private static readonly List<string> k_FontChoices  = new List<string> { "Roboto", "Open Sans", "OpenDyslexic" };
+        private static readonly string[] k_ThemeChoices = { "Light", "Dark", "System" };
+        private static readonly string[] k_LangChoices  = { "English", "Español" };
+        private static readonly string[] k_ScaleChoices = { "Small", "Medium", "Large" };
+        private static readonly string[] k_FontChoices  = { "Roboto", "Open Sans", "OpenDyslexic" };
 
         public SettingsScreen()
         {
@@ -25,136 +26,143 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
-            _themeDropdown = contentContainer.Q<DropdownField>("dropdown-theme");
-            _langDropdown  = contentContainer.Q<DropdownField>("dropdown-lang");
-            _scaleDropdown = contentContainer.Q<DropdownField>("dropdown-scale");
-            _fontDropdown  = contentContainer.Q<DropdownField>("dropdown-font");
+            _themeStepper = contentContainer.Q<FormFieldItemArrowStepper>("stepper-theme");
+            _langStepper  = contentContainer.Q<FormFieldItemArrowStepper>("stepper-lang");
+            _scaleStepper = contentContainer.Q<FormFieldItemArrowStepper>("stepper-scale");
+            _fontStepper  = contentContainer.Q<FormFieldItemArrowStepper>("stepper-font");
+            _userNameLabel = contentContainer.Q<Label>("username");
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
-            SetupDropdowns();
+            SetupSteppers();
+            UpdateProfileHeader();
         }
 
-        private void SetupDropdowns()
+        private void SetupSteppers()
         {
-            if (_themeDropdown != null)
+            if (_themeStepper != null)
             {
-                _themeDropdown.choices = k_ThemeChoices;
-                _themeDropdown.SetValueWithoutNotify(ThemeToLabel(_viewModel.Theme));
-                _themeDropdown.RegisterValueChangedCallback(OnThemeChanged);
+                _themeStepper.Choices = k_ThemeChoices;
+                _themeStepper.SelectedIndex = ThemeLabelToIndex(_viewModel.Theme);
+                _themeStepper.RegisterValueChangedCallback(OnThemeChanged);
             }
 
-            if (_langDropdown != null)
+            if (_langStepper != null)
             {
-                _langDropdown.choices = k_LangChoices;
-                _langDropdown.SetValueWithoutNotify(LangToLabel(_viewModel.Lang));
-                _langDropdown.RegisterValueChangedCallback(OnLangChanged);
+                _langStepper.Choices = k_LangChoices;
+                _langStepper.SelectedIndex = LangLabelToIndex(_viewModel.Lang);
+                _langStepper.RegisterValueChangedCallback(OnLangChanged);
             }
 
-            if (_scaleDropdown != null)
+            if (_scaleStepper != null)
             {
-                _scaleDropdown.choices = k_ScaleChoices;
-                _scaleDropdown.SetValueWithoutNotify(ScaleToLabel(_viewModel.Scale));
-                _scaleDropdown.RegisterValueChangedCallback(OnScaleChanged);
+                _scaleStepper.Choices = k_ScaleChoices;
+                _scaleStepper.SelectedIndex = ScaleLabelToIndex(_viewModel.Scale);
+                _scaleStepper.RegisterValueChangedCallback(OnScaleChanged);
             }
 
-            if (_fontDropdown != null)
+            if (_fontStepper != null)
             {
-                _fontDropdown.choices = k_FontChoices;
-                _fontDropdown.SetValueWithoutNotify(FontToLabel(_viewModel.Font));
-                _fontDropdown.RegisterValueChangedCallback(OnFontChanged);
+                _fontStepper.Choices = k_FontChoices;
+                _fontStepper.SelectedIndex = FontLabelToIndex(_viewModel.Font);
+                _fontStepper.RegisterValueChangedCallback(OnFontChanged);
+            }
+        }
+
+        private void UpdateProfileHeader()
+        {
+            if (_userNameLabel != null)
+            {
+                _userNameLabel.text = _viewModel?.UserName ?? "User";
             }
         }
 
         protected override void OnViewModelUnbinding()
         {
-            if (_themeDropdown != null)
-            {
-                _themeDropdown.UnregisterValueChangedCallback(OnThemeChanged);
-            }
+            if (_themeStepper != null)
+                _themeStepper.UnregisterValueChangedCallback(OnThemeChanged);
+            if (_langStepper != null)
+                _langStepper.UnregisterValueChangedCallback(OnLangChanged);
+            if (_scaleStepper != null)
+                _scaleStepper.UnregisterValueChangedCallback(OnScaleChanged);
+            if (_fontStepper != null)
+                _fontStepper.UnregisterValueChangedCallback(OnFontChanged);
 
-            if (_langDropdown != null)
-            {
-                _langDropdown.UnregisterValueChangedCallback(OnLangChanged);
-            }
-
-            if (_scaleDropdown != null)
-            {
-                _scaleDropdown.UnregisterValueChangedCallback(OnScaleChanged);
-            }
-
-            if (_fontDropdown != null)
-            {
-                _fontDropdown.UnregisterValueChangedCallback(OnFontChanged);
-            }
-
-            _themeDropdown = null;
-            _langDropdown  = null;
-            _scaleDropdown = null;
-            _fontDropdown  = null;
+            _themeStepper = null;
+            _langStepper  = null;
+            _scaleStepper = null;
+            _fontStepper  = null;
+            _userNameLabel = null;
 
             base.OnViewModelUnbinding();
         }
 
-        private void OnThemeChanged(ChangeEvent<string> evt) => _viewModel?.SetTheme(LabelToTheme(evt.newValue));
-        private void OnLangChanged(ChangeEvent<string> evt)  => _viewModel?.SetLanguage(LabelToLang(evt.newValue));
-        private void OnScaleChanged(ChangeEvent<string> evt) => _viewModel?.SetScale(LabelToScale(evt.newValue));
-        private void OnFontChanged(ChangeEvent<string> evt)  => _viewModel?.SetFont(LabelToFont(evt.newValue));
+        private void OnThemeChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetTheme(IndexToTheme(evt.newValue));
 
-        private static string ThemeToLabel(string theme) => theme switch
+        private void OnLangChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetLanguage(IndexToLang(evt.newValue));
+
+        private void OnScaleChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetScale(IndexToScale(evt.newValue));
+
+        private void OnFontChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetFont(IndexToFont(evt.newValue));
+
+        private static int ThemeLabelToIndex(string theme) => theme switch
         {
-            "light" => "Light",
-            "dark"  => "Dark",
-            _       => "System"
+            "light" => 0,
+            "dark"  => 1,
+            _       => 2  // system
         };
 
-        private static string LangToLabel(string lang) => lang switch
+        private static int LangLabelToIndex(string lang) => lang switch
         {
-            "en" => "English",
-            _    => "Español"
+            "en" => 0,
+            _    => 1   // es
         };
 
-        private static string ScaleToLabel(string scale) => scale switch
+        private static int ScaleLabelToIndex(string scale) => scale switch
         {
-            "small" => "Small",
-            "large" => "Large",
-            _       => "Medium"
+            "small" => 0,
+            "large" => 2,
+            _       => 1  // medium
         };
 
-        private static string FontToLabel(string font) => font switch
+        private static int FontLabelToIndex(string font) => font switch
         {
-            "open-sans"     => "Open Sans",
-            "open-dyslexic" => "OpenDyslexic",
-            _               => "Roboto"
+            "open-sans"     => 1,
+            "open-dyslexic" => 2,
+            _               => 0  // roboto
         };
 
-        private static string LabelToTheme(string label) => label switch
+        private static string IndexToTheme(int index) => index switch
         {
-            "Light" => "light",
-            "Dark"  => "dark",
-            _       => "system"
+            0 => "light",
+            1 => "dark",
+            _ => "system"
         };
 
-        private static string LabelToLang(string label) => label switch
+        private static string IndexToLang(int index) => index switch
         {
-            "English" => "en",
-            _         => "es"
+            0 => "en",
+            _ => "es"
         };
 
-        private static string LabelToScale(string label) => label switch
+        private static string IndexToScale(int index) => index switch
         {
-            "Small" => "small",
-            "Large" => "large",
-            _       => "medium"
+            0 => "small",
+            2 => "large",
+            _ => "medium"
         };
 
-        private static string LabelToFont(string label) => label switch
+        private static string IndexToFont(int index) => index switch
         {
-            "Open Sans"    => "open-sans",
-            "OpenDyslexic" => "open-dyslexic",
-            _              => "roboto"
+            1 => "open-sans",
+            2 => "open-dyslexic",
+            _ => "roboto"
         };
     }
 }
