@@ -121,7 +121,7 @@ namespace eu.foodmission.platform.Components
             _heading = new Unity.AppUI.UI.Heading();
             _heading.AddToClassList("heading-wrap");
             _heading.AddToClassList("heading_field");
-            _heading.size = HeadingSize.L;
+            _heading.size = HeadingSize.S;
             _heading.primary = true;
             
             _headingContainer.Add(_heading);
@@ -131,6 +131,10 @@ namespace eu.foodmission.platform.Components
 
             _fieldContainer = new VisualElement();
             this.Add(_fieldContainer);
+
+            Spacer spacer = new Spacer();
+            spacer.spacing = SpacerSpacing.S;
+            this.Add(spacer);
 
             _helpText = new Unity.AppUI.UI.HelpText();
             this.Add(_helpText);

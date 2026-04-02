@@ -199,6 +199,10 @@ MonoBehaviour:
     m_Key: PET_NAME
     m_Metadata:
       m_Items: []
+  - m_Id: 28204088708554752
+    m_Key: NAV_NOTIFICATIONS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

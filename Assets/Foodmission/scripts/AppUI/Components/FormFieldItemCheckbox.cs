@@ -64,7 +64,7 @@ namespace eu.foodmission.platform.Components
 
             Spacer space = new Spacer
             {
-                spacing = Unity.AppUI.UI.SpacerSpacing.XL
+                spacing = Unity.AppUI.UI.SpacerSpacing.S
             };
             ve.Add(space);
 
@@ -72,6 +72,7 @@ namespace eu.foodmission.platform.Components
             {
                 quiet = true
             };
+
             
             ve.Add(_button);
 
