@@ -24,12 +24,7 @@
     --appui-sizing-1150: 270px;
     --appui-sizing-1200: 286px;
 
-   /* Safe areas - shared between all modes */
-   --fm-safe-area-top: 60px;
-   --fm-safe-area-right: 20px;
-   --fm-safe-area-bottom: 20px;
-   --fm-safe-area-left: 20px;
-
+   
    /* TextField - transparent background for both modes */
    
    --appui-alias-field-background-color-default: transparent;
