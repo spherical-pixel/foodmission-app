@@ -131,7 +131,7 @@
     --fm-surface-bg-alt: #F5F5F5;
     --fm-card-bg: rgba(255, 255, 255, 0.95);
     --fm-icon-tint: var(--appui-primary-100);
-    --fm-icon-tint-selected: var(--appui-primary-500);
+    --fm-icon-tint-selected: var(--appui-primary-15);
 }
 
 .appui--dark {

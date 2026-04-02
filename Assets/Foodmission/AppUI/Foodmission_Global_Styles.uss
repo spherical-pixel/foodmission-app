@@ -57,7 +57,7 @@
 }
 
 .appui-bottom-navbar {
-    min-height: 223px;
+    min-height: var(--appui-sizing-1000);
     background-color: transparent;
     background-image: url("project://database/Assets/Foodmission/graphics/png/NavBarBack.png?fileID=21300000&guid=f15965a97feed4bb0be052f64bbcb614&type=3#NavBarBack");
     padding: 40px 40px 6px 40px;
@@ -67,8 +67,8 @@
     align-items: center;
     justify-content: center;
     border-width: 0;
-    width: 170px;
-    height: 170px;
+    width: var(--appui-sizing-850);
+    height: var(--appui-sizing-850);
     flex-grow: 1;
     flex-direction: column;
     border-top-left-radius: 15px;
@@ -101,14 +101,10 @@
 .appui-bottom-navbar-item .appui-localized-text {
     -unity-text-align: upper-center;
     font-size: var(--appui-font-sizes-body-sm);
-    min-height: 20px;
-    height: 20px;
-    /*line-height: 20px;*/
     color: var(--fm-icon-tint);
     margin-top: 0;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    white-space: normal;
+    padding-top: 8px;
+    white-space: nowrap;
 }
 
 .heading-wrap {
