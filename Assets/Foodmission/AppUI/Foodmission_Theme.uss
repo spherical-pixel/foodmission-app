@@ -127,9 +127,9 @@
     --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-100);
 
     /* Surface colors for panels, menus, and cards */
-    --fm-surface-bg: rgba(255, 255, 255, 0.95);
+    --fm-surface-bg: rgba(255, 255, 255, 0.90);
     --fm-surface-bg-alt: #F5F5F5;
-    --fm-card-bg: rgba(255, 255, 255, 0.95);
+    --fm-card-bg: rgba(255, 255, 255, 0.90);
     --fm-icon-tint: var(--appui-primary-100);
     --fm-icon-tint-selected: var(--appui-primary-15);
 }

@@ -12,6 +12,7 @@
     background-color: transparent;
 }
 
+
 .fm-screen-fixed .appui-navigation-screen__container {
     overflow: hidden;
 }
@@ -48,6 +49,14 @@
 
 .fm-button-align-left .appui-button__titlecontainer {
     align-items: flex-start;
+}
+
+.fm-button-drawer{
+    font-size: var(--appui-font-sizes-500);
+}
+
+.fm-button-drawer .appui-icon{
+    --unity-image-tint-color: var(--fm-icon-tint);
 }
 
 .appui-navigation-screen__container {
@@ -127,6 +136,14 @@
 
 .appui-picker__menu {
     max-height: 500px;
+}
+
+.appui-drawer .appui-button{
+    color: var(--appui-primary-100);
+}
+
+.appui-drawer__drawer-container {
+    background-color: var(--fm-surface-bg);
 }
 
 /* ============================================

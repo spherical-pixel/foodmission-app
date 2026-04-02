@@ -31,9 +31,40 @@ namespace eu.foodmission.platform
 
         private void BuildDrawerContent(Drawer drawer)
         {
+            IThemeService themeService = App.current?.services.GetService<IThemeService>();
+            if (themeService != null)
+            {
+                var safeAreaTop = themeService.safeAreaTop;
+                if (safeAreaTop > 0)
+                {
+
+                    VisualElement filler = new VisualElement();
+                    filler.name = "safe-area-filler";
+                    filler.style.height = safeAreaTop;
+                    filler.style.backgroundColor = new Color(0f, 0f, 0f,0f);
+                    drawer.Add(filler);
+                }
+            }
+
+            VisualElement drawerRoot = new VisualElement();
+            drawerRoot.style.flexDirection = FlexDirection.Row;
+            drawerRoot.style.flexGrow = 1;
+            drawer.Add(drawerRoot);
+
+            Spacer spacer = new Spacer();
+            spacer.spacing = SpacerSpacing.XL;
+            drawerRoot.Add(spacer);
+
+
+            VisualElement content = new VisualElement();
+            content.style.flexGrow = 1;
+            content.style.paddingRight = 75;
+            drawerRoot.Add(content);
+
+
             // ── Header: avatar + username + level bar ──
-            var header = new VisualElement();
-            header.style.alignItems = Align.Center;
+            VisualElement header = new VisualElement();
+            header.style.alignItems = Align.FlexStart;
             header.style.paddingTop = 48;
             header.style.paddingBottom = 24;
             header.style.paddingLeft = 24;
@@ -56,7 +87,7 @@ namespace eu.foodmission.platform
             // Level progress bar (placeholder)
             var levelRow = new VisualElement();
             levelRow.style.flexDirection = FlexDirection.Row;
-            levelRow.style.alignItems = Align.Center;
+            levelRow.style.alignItems = Align.FlexStart;
             levelRow.style.marginTop = 6;
             levelRow.style.width = 140;
 
@@ -90,38 +121,40 @@ namespace eu.foodmission.platform
             header.Add(avatar);
             header.Add(_userNameLabel);
             header.Add(levelRow);
-            drawer.Add(header);
 
-            drawer.Add(CreateDivider(16));
+
+            content.Add(header);
+
+            content.Add(CreateDivider(16));
 
             // ── Menu items ──
             var menuContainer = new VisualElement();
             menuContainer.style.paddingLeft = 8;
             menuContainer.style.paddingRight = 8;
             menuContainer.style.paddingTop = 4;
-            drawer.Add(menuContainer);
+            content.Add(menuContainer);
 
             // No-op items (functionality to be added later)
-            AddDrawerButton(menuContainer, "Edit Profile", null);
-            AddDrawerButton(menuContainer, "Edit Avatar", null);
+            AddDrawerButton(menuContainer, "✏️ Edit Profile", null);
+            AddDrawerButton(menuContainer, "🧑‍💻 Edit Avatar", null);
 
-            AddDrawerButton(menuContainer, "Manage Groups", () =>
+            AddDrawerButton(menuContainer, "👥 Manage Groups", () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_groups);
             });
 
-            AddDrawerButton(menuContainer, "View Badges", null);
+            AddDrawerButton(menuContainer, "🏅 View Badges", null);
 
             menuContainer.Add(CreateDivider(8));
 
-            AddDrawerButton(menuContainer, "Settings", () =>
+            AddDrawerButton(menuContainer, "⚙️ Settings", () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_settings);
             });
 
-            AddDrawerButton(menuContainer, "Log out", () =>
+            AddDrawerButton(menuContainer, "🚪 Log out", () =>
             {
                 _profileDrawer.Close();
                 var storeService = App.current?.services?.GetService<IStoreService>();
@@ -136,7 +169,10 @@ namespace eu.foodmission.platform
             btn.title = label;
             btn.quiet = true;
             btn.size = Size.L;
+            btn.AddToClassList("fm-button-align-left");
+            btn.AddToClassList("fm-button-drawer");
             btn.style.width = Length.Percent(100);
+            btn.trailingIcon = "fm-arrow-right";
             if (onClick != null)
             {
                 btn.clicked += onClick;
