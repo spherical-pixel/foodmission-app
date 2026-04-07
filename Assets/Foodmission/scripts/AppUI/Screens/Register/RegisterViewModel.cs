@@ -135,7 +135,7 @@ namespace eu.foodmission.platform
 
             _countriesData = wrapper.countries;
 
-            CountryOptions = _countriesData.Select(c => $"{c.country_name_local}").ToList();
+            CountryOptions = _countriesData.Select(c => $"{c.flag} {c.country_name_local}").ToList();
         }
 
         /// <summary>

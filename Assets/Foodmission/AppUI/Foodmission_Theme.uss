@@ -57,6 +57,9 @@
     --appui-alias-control-sizing-sm-height: var(--appui-sizing-500);
 
     --appui-alias-caret-icon-default: var(--appui-icon-fm-arrow-down-regular);
+
+    
+    -unity-text-generator: advanced; /* ZWJ support for ligatures in icons */
 }
 
 
