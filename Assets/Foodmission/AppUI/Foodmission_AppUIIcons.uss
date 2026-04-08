@@ -175,9 +175,13 @@
 
 .appui-icon--fm-arrow-right--regular {
     --unity-image: var(--appui-icon-fm-arrow-right-regular);
+    width: var(--appui-sizing-200);
+    height: var(--appui-sizing-200);
 }
 
 .appui-icon--fm-arrow-down--regular {
     --unity-image: var(--appui-icon-fm-arrow-down-regular);
+    width: var(--appui-sizing-200);
+    height: var(--appui-sizing-200);
 }
 

@@ -23,7 +23,7 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Button _markAllReadBtn;
         private VisualTreeAsset _notificationCardTemplate;
         private NavController _cachedNavController;
-        private Label _userNameLabel;
+        private TextElement _userNameLabel;
 
         // --------------------------------------------------------------------
         // Profile Drawer
@@ -58,70 +58,62 @@ namespace eu.foodmission.platform
 
             VisualElement content = new VisualElement();
             content.style.flexGrow = 1;
-            content.style.paddingRight = 75;
+            content.style.paddingRight = 10;
             drawerRoot.Add(content);
 
 
-            // ── Header: avatar + username + level bar ──
+            // ── Header: [avatar] | [name / xp bar + badge] ──
             VisualElement header = new VisualElement();
-            header.style.alignItems = Align.FlexStart;
+            header.style.flexDirection = FlexDirection.Row;
+            header.style.alignItems = Align.Center;
             header.style.paddingTop = 48;
             header.style.paddingBottom = 24;
             header.style.paddingLeft = 24;
             header.style.paddingRight = 24;
 
             var avatar = new VisualElement();
-            avatar.style.width = 72;
-            avatar.style.height = 72;
-            avatar.style.borderTopLeftRadius = 36;
-            avatar.style.borderTopRightRadius = 36;
-            avatar.style.borderBottomLeftRadius = 36;
-            avatar.style.borderBottomRightRadius = 36;
-            avatar.style.backgroundColor = new Color(0.39f, 0.58f, 0.93f);
+            avatar.AddToClassList("fm-profile-avatar");
 
-            _userNameLabel = new Label();
-            _userNameLabel.style.marginTop = 10;
-            _userNameLabel.style.fontSize = 18;
-            _userNameLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+            // Right column
+            var rightColumn = new VisualElement();
+            rightColumn.style.flexDirection = FlexDirection.Column;
+            rightColumn.style.justifyContent = Justify.Center;
+            rightColumn.style.flexGrow = 1;
 
-            // Level progress bar (placeholder)
-            var levelRow = new VisualElement();
-            levelRow.style.flexDirection = FlexDirection.Row;
-            levelRow.style.alignItems = Align.FlexStart;
-            levelRow.style.marginTop = 6;
-            levelRow.style.width = 140;
+            var nameHeading = new Heading();
+            nameHeading.AddToClassList("fm-profile-username");
+            nameHeading.size = HeadingSize.XL;
+            nameHeading.style.marginBottom = 8;
+            _userNameLabel = nameHeading;
 
-            var levelBar = new VisualElement();
-            levelBar.style.flexGrow = 1;
-            levelBar.style.height = 6;
-            levelBar.style.borderTopLeftRadius = 3;
-            levelBar.style.borderTopRightRadius = 3;
-            levelBar.style.borderBottomLeftRadius = 3;
-            levelBar.style.borderBottomRightRadius = 3;
-            levelBar.style.backgroundColor = new Color(0.8f, 0.8f, 0.8f, 0.4f);
+            // XP row: bar + star badge
+            var xpRow = new VisualElement();
+            xpRow.style.flexDirection = FlexDirection.Row;
+            xpRow.style.alignItems = Align.Center;
 
-            var levelFill = new VisualElement();
-            levelFill.style.width = Length.Percent(40); // placeholder progress
-            levelFill.style.height = Length.Percent(100);
-            levelFill.style.borderTopLeftRadius = 3;
-            levelFill.style.borderTopRightRadius = 3;
-            levelFill.style.borderBottomLeftRadius = 3;
-            levelFill.style.borderBottomRightRadius = 3;
-            levelFill.style.backgroundColor = new Color(0.39f, 0.78f, 0.58f);
-            levelBar.Add(levelFill);
+            var xpBar = new LinearProgress();
+            xpBar.value = 0.3f;
+            xpBar.AddToClassList("fm-xp-progress");
+            xpBar.AddToClassList("appui-progress--rounded-corners");
+            xpBar.style.flexGrow = 1;
+            xpBar.style.marginRight = 6;
+            xpBar.variant = Progress.Variant.Determinate;
 
-            var levelLabel = new Label("1");
-            levelLabel.style.marginLeft = 6;
-            levelLabel.style.fontSize = 11;
-            levelLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+            var xpBadge = new VisualElement();
+            xpBadge.AddToClassList("fm-profile-xp-badge");
 
-            levelRow.Add(levelBar);
-            levelRow.Add(levelLabel);
+            var xpLabel = new Label("20");
+            xpLabel.AddToClassList("fm-profile-xp-label");
+            xpBadge.Add(xpLabel);
+
+            xpRow.Add(xpBar);
+            xpRow.Add(xpBadge);
+
+            rightColumn.Add(nameHeading);
+            rightColumn.Add(xpRow);
 
             header.Add(avatar);
-            header.Add(_userNameLabel);
-            header.Add(levelRow);
-
+            header.Add(rightColumn);
 
             content.Add(header);
 
@@ -130,7 +122,7 @@ namespace eu.foodmission.platform
             // ── Menu items ──
             var menuContainer = new VisualElement();
             menuContainer.style.paddingLeft = 8;
-            menuContainer.style.paddingRight = 8;
+            menuContainer.style.paddingRight = 4;
             menuContainer.style.paddingTop = 4;
             content.Add(menuContainer);
 
@@ -146,8 +138,7 @@ namespace eu.foodmission.platform
 
             AddDrawerButton(menuContainer, "🏅 View Badges", null);
 
-            menuContainer.Add(CreateDivider(8));
-
+            
             AddDrawerButton(menuContainer, "⚙️ Settings", () =>
             {
                 _profileDrawer.Close();
@@ -623,7 +614,7 @@ namespace eu.foodmission.platform
 
             _profileDrawer = drawer;
             _profileDrawer.Clear();
-            _profileDrawer.swipeAreaWidth = 16;
+            _profileDrawer.swipeAreaWidth = 0;
             BuildDrawerContent(_profileDrawer);
             _profileDrawer.opened += OnDrawerOpened;
         }
