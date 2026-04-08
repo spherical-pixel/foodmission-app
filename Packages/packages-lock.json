@@ -1,15 +1,5 @@
 {
   "dependencies": {
-    "com.coplaydev.unity-mcp": {
-      "version": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.test-framework": "1.1.31"
-      },
-      "hash": "73eb27aeccfa8e0676eaf3304136e9b85953d913"
-    },
     "com.unity.2d.animation": {
       "version": "13.0.4",
       "depth": 0,
@@ -123,6 +113,34 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.ai.assistant": {
+      "version": "2.4.0-pre.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.2d.sprite": "1.0.0",
+        "com.unity.mathematics": "1.3.2",
+        "com.unity.cloud.gltfast": "6.14.1",
+        "com.unity.serialization": "3.1.1",
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.modules.unitywebrequest": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ai.inference": {
+      "version": "2.6.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.8.17",
+        "com.unity.dt.app-ui": "1.3.6",
+        "com.unity.collections": "2.4.3",
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.modules.imageconversion": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.bindings.openimageio": {
       "version": "1.0.2",
       "depth": 1,
@@ -134,11 +152,24 @@
     },
     "com.unity.burst": {
       "version": "1.8.28",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
         "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.cloud.gltfast": {
+      "version": "6.14.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.8.24",
+        "com.unity.collections": "1.2.4",
+        "com.unity.mathematics": "1.2.6",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -302,6 +333,16 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.serialization": {
+      "version": "3.1.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.7.2",
+        "com.unity.collections": "2.4.2"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
