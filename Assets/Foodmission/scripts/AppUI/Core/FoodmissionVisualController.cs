@@ -265,44 +265,42 @@ namespace eu.foodmission.platform
         private void BuildMenuContent(VisualElement container)
         {
             // Phase 2 — disabled
-            AddMenuItem(container, "scene",            "Daily challenge",  null);
-            AddMenuItem(container, "scene",            "Missions",         null);
+            AddMenuItem(container, "🏆 Daily challenge",  null);
+            AddMenuItem(container, "🎯 Missions",         null);
 
             // Phase 1 Sprint 3 — active
-            AddMenuItem(container, "list",             "Shopping list",    () =>
+            AddMenuItem(container, "📝 Shopping list",    () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_shopping_list);
             });
-            AddMenuItem(container, "scene",            "Pantry",           () =>
+            AddMenuItem(container, "🧺 Pantry",           () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_pantry);
             });
 
             // Phase 3 — disabled
-            AddMenuItem(container, "magnifying-glass", "Recipe book",      null);
-            AddMenuItem(container, "warning",          "Food waste",       null);
-            AddMenuItem(container, "scene",            "Games",            null);
-            AddMenuItem(container, "info",             "Knowledge",        null);
-            AddMenuItem(container, "users",            "Global community", null);
-            AddMenuItem(container, "scene",            "Map",              null);
+            AddMenuItem(container, "🍳 Recipe book",      null);
+            AddMenuItem(container, "🗑️ Food waste",       null);
+            AddMenuItem(container, "💡 Knowledge",        null);
+            AddMenuItem(container, "🌐 Global community", null);
+            AddMenuItem(container, "🗺️ Map",              null);
         }
 
-        private void AddMenuItem(VisualElement container, string icon, string label, Action onClick)
+        private void AddMenuItem(VisualElement container, string label, Action onClick)
         {
-            bool isEnabled = onClick != null;
-
+            
             var btn = new Unity.AppUI.UI.Button();
+            btn.AddToClassList("fm-button-align-left");
+            btn.AddToClassList("fm-button-drawer");
             btn.title = label;
-            btn.leadingIcon = icon;
-            btn.trailingIcon = "caret-right";
+            btn.trailingIcon = "fm-arrow-right";
             btn.quiet = true;
             btn.size = Size.L;
             btn.style.width = Length.Percent(100);
-            btn.SetEnabled(isEnabled);
-
-            if (isEnabled)
+            
+            if (onClick != null)
             {
                 btn.clicked += onClick;
             }

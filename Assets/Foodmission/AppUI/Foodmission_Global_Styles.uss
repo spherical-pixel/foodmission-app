@@ -136,7 +136,8 @@
     max-height: 500px;
 }
 
-.appui-drawer .appui-button {
+.appui-drawer .appui-button,
+.fm-button-drawer {
     color: var(--appui-primary-100);
 }
 
@@ -155,7 +156,8 @@
 }
 
 .fm-menu-panel {
-    background-color: var(--fm-surface-bg-alt);
+    /*background-color: var(--fm-surface-bg-alt);*/
+    background-color: var(--fm-surface-bg);
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
     padding-bottom: 16px;
@@ -163,6 +165,8 @@
     transition-property: translate;
     transition-duration: 0.3s;
     transition-timing-function: ease;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 .fm-menu-panel--visible {
