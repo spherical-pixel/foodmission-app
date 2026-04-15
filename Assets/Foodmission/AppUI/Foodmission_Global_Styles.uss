@@ -12,7 +12,6 @@
     background-color: transparent;
 }
 
-
 .fm-screen-fixed .appui-navigation-screen__container {
     overflow: hidden;
 }
@@ -51,11 +50,11 @@
     align-items: flex-start;
 }
 
-.fm-button-drawer{
+.fm-button-drawer {
     font-size: var(--appui-font-sizes-500);
 }
 
-.fm-button-drawer .appui-icon{
+.fm-button-drawer .appui-icon {
     --unity-image-tint-color: var(--fm-icon-tint);
 }
 
@@ -128,7 +127,6 @@
     -unity-text-align: middle-center;
 }
 
-
 .appui-dialog .appui-heading--primary,
 .appui-dialog__content {
     color: var(--appui-primary-100);
@@ -138,17 +136,13 @@
     max-height: 500px;
 }
 
-.appui-drawer .appui-button{
+.appui-drawer .appui-button {
     color: var(--appui-primary-100);
 }
 
 .appui-drawer__drawer-container {
     background-color: var(--fm-surface-bg);
 }
-
-/* ============================================
-   Menu Bottom Sheet
-   ============================================ */
 
 .fm-menu-backdrop {
     position: absolute;
@@ -184,10 +178,6 @@
     margin-top: 12px;
     margin-bottom: 8px;
 }
-
-/* ============================================
-   Notification Card
-   ============================================ */
 
 .fm-notification-card {
     flex-direction: row;
@@ -235,10 +225,6 @@
     color: var(--appui-foregrounds-50);
     margin-top: 5px;
 }
-
-/* ============================================
-   Notifications Bottom Sheet Panel
-   ============================================ */
 
 .fm-notifications-backdrop {
     position: absolute;
@@ -304,14 +290,6 @@
     font-size: var(--appui-font-sizes-body-md);
 }
 
-
-
-
-
-/* ============================================
-   Profile Header (shared between Profile & Settings)
-   ============================================ */
-
 .fm-profile-avatar {
     width: 184px;
     height: 184px;
@@ -321,7 +299,6 @@
     background-color: var(--appui-primary-1000);
     border-width: 6px;
     border-color: white;
-    /*background-image: var(--appui-icon-fm-avatar-regular);*/
     --unity-image-tint-color: var(--appui-primary-300);
     --unity-image-size: scale-to-fit;
     padding: 10px;
@@ -332,26 +309,28 @@
     font-size: var(--appui-font-sizes-500);
     color: var(--appui-primary-100);
     padding-bottom: 8px;
-    -unity-font-definition: var(--appui-font-weights-200); /* semibold */  
+    -unity-font-definition: var(--appui-font-weights-200);
 }
 
 .fm-xp-progress {
-    --progress-color: #29D1E3;
-    --appui-linear-progress-height: 14px;
-    --appui-linear-progress-border-radius: 7px;
+    --progress-color: rgb(41, 209, 227);
+    --appui-linear-progress-height: 28px;
+    --appui-linear-progress-border-radius: 12px;
     background-color: rgba(0, 0, 0, 0.08);
+    margin-right: -60px;
     margin-bottom: 45px;
 }
 
 .fm-profile-xp-badge {
-    width: 46px;
-    height: 46px;
+    width: 115px;
+    height: 115px;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    background-image: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/Star.png");
-    --unity-image-tint-color: #29D1E3;
-    --unity-image-size: contain;
+    background-image: url("project://database/Assets/Foodmission/graphics/png/icons/fm-star.png?fileID=21300000&guid=b4db6c7cc883c433caa9e390badce675&type=3#fm-star");
+    -unity-background-image-size: contain;
+    -unity-background-image-tint-color:  rgb(53, 229, 255);
+    margin-bottom: 45px;
 }
 
 .fm-profile-xp-label {
@@ -360,11 +339,6 @@
     -unity-font-style: bold;
     -unity-text-align: middle-center;
 }
-
-/* ============================================
-   Arrow Stepper Component
-   Left arrow / value label / right arrow selector
-   ============================================ */
 
 .fm-arrow-stepper__row {
     flex-direction: row;
@@ -376,10 +350,6 @@
     -unity-text-align: middle-center;
     font-size: var(--appui-font-sizes-body-md);
 }
-
-/* ============================================
-   Home Screen Styles
-   ============================================ */
 
 .fm-home-nutri-image {
     width: 100%;
@@ -397,7 +367,6 @@
     padding-right: 16px;
 }
 
-/* Status rows — horizontal: icon + label + progress */
 .fm-home-status-bars {
     padding-left: 16px;
     padding-right: 16px;
@@ -429,7 +398,6 @@
     height: 16px;
 }
 
-/* Simple stepper: ◄ value ► */
 .fm-home-selectors-row {
     flex-direction: row;
     padding-left: 16px;
@@ -453,7 +421,6 @@
     -unity-font-style: bold;
 }
 
-/* Calories card */
 .fm-calories-card {
     background-color: var(--fm-surface-bg);
     border-radius: 24px;
@@ -513,3 +480,5 @@
     color: var(--appui-foregrounds-100);
     -unity-text-align: middle-center;
 }
+
+

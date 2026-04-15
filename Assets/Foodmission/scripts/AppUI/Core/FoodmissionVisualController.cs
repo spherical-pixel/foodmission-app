@@ -96,7 +96,7 @@ namespace eu.foodmission.platform
             xpBar.AddToClassList("fm-xp-progress");
             xpBar.AddToClassList("appui-progress--rounded-corners");
             xpBar.style.flexGrow = 1;
-            xpBar.style.marginRight = 6;
+            //xpBar.style.marginRight = -20;
             xpBar.variant = Progress.Variant.Determinate;
 
             var xpBadge = new VisualElement();
