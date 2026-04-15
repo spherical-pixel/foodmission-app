@@ -1,65 +1,30 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-
-    <ui:ScrollView name="root" data-source-type="eu.foodmission.platform.HomeScreenViewModel, Foodmission" style="flex-grow: 1;">
-
-        <!-- Nutri + status label -->
+    <ui:VisualElement name="root" style="flex-grow: 1; background-color: rgba(2, 70, 57, 0);">
         <ui:Image name="nutri-render" source="project://database/Assets/Foodmission/RenderTextures/NutriRenderTexture.renderTexture?fileID=8400000&amp;guid=70b891fe7178443c7b15210d9bd22e0e&amp;type=2#NutriRenderTexture" class="fm-home-nutri-image"/>
-        <ui:Label text="Your nutritional intelligence status" class="fm-home-nutri-label"/>
-
-        <!-- Status Bars: icon + label + progress in one row each -->
-        <ui:VisualElement class="fm-home-status-bars">
-            <ui:VisualElement class="fm-status-row">
-                <ui:Label text="❤️" class="fm-status-icon"/>
-                <ui:Label text="Health" class="fm-status-label"/>
-                <appui:LinearProgress name="health-progress" class="fm-status-progress"/>
-            </ui:VisualElement>
-            <ui:VisualElement class="fm-status-row">
-                <ui:Label text="🌍" class="fm-status-icon"/>
-                <ui:Label text="Sustainability" class="fm-status-label"/>
-                <appui:LinearProgress name="sustainability-progress" class="fm-status-progress"/>
-            </ui:VisualElement>
-            <ui:VisualElement class="fm-status-row">
-                <ui:Label text="🧠" class="fm-status-icon"/>
-                <ui:Label text="Knowledge" class="fm-status-label"/>
-                <appui:LinearProgress name="knowledge-progress" class="fm-status-progress"/>
-            </ui:VisualElement>
+        <appui:Heading text="Your nutritional intelligence status" size="S" class="centered-text"/>
+        <ui:VisualElement class="fm-home-status-bars" style="flex-direction: row; justify-content: space-around;">
+            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="❤️" Heading-Text="Health" Progress-Value="0.5"/>
+            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="🌍" Heading-Text="Sustainability" Progress-Value="0.25"/>
+            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="🧠" Heading-Text="Knowledge" Progress-Value="0.75"/>
         </ui:VisualElement>
-
-        <!-- Simple selectors row: ◄ Today ►   ◄ Me ► -->
         <ui:VisualElement class="fm-home-selectors-row">
-            <ui:VisualElement class="fm-simple-stepper">
-                <appui:IconButton name="btn-prev-period" icon="caret-left" quiet="true"/>
-                <ui:Label name="label-period" text="Today" class="fm-stepper-value"/>
-                <appui:IconButton name="btn-next-period" icon="caret-right" quiet="true"/>
-            </ui:VisualElement>
-            <ui:VisualElement class="fm-simple-stepper">
-                <appui:IconButton name="btn-prev-scope" icon="caret-left" quiet="true"/>
-                <ui:Label name="label-scope" text="Me" class="fm-stepper-value"/>
-                <appui:IconButton name="btn-next-scope" icon="caret-right" quiet="true"/>
-            </ui:VisualElement>
+            <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="Today,Week,Month" stepper-selected-index="0"/>
+            <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="Me,Group" stepper-selected-index="0"/>
         </ui:VisualElement>
-
-        <!-- Calories card with circular progress -->
-        <ui:VisualElement class="fm-calories-card">
-            <!-- Card type selector: ◄ Calories ► -->
-            <ui:VisualElement class="fm-simple-stepper">
-                <appui:IconButton name="btn-prev-card" icon="caret-left" quiet="true"/>
-                <ui:Label name="label-card-type" text="Calories" class="fm-stepper-value"/>
-                <appui:IconButton name="btn-next-card" icon="caret-right" quiet="true"/>
-            </ui:VisualElement>
-
-            <!-- Circular progress + stats overlay -->
-            <ui:VisualElement class="fm-calories-circle-wrapper">
-                <appui:CircularProgress name="calories-circular" class="fm-calories-circular"/>
-                <ui:VisualElement class="fm-calories-center">
-                    <ui:Label text="Calories consumed" class="fm-calories-consumed-label"/>
-                    <ui:Label name="calories-consumed" text="0" class="fm-calories-big-number"/>
-                    <ui:Label text="Left" class="fm-calories-left-label"/>
-                    <ui:Label name="calories-left" text="0" class="fm-calories-left-number"/>
+        <ui:VisualElement class="fm-calories-card" style="background-color: rgba(255, 255, 255, 0.2); flex-grow: 1; width: 800px; height: 800px; align-self: center; max-width: 800px; max-height: 800px;">
+            <ui:VisualElement name="Calories" class="fm-calories-circle-wrapper">
+                <appui:CircularProgress name="calories-circular" color-override="rgb(53, 229, 255)" variant="Determinate" value="0.74" size="L" rounded-progress-corners="false" class="fm-calories-circular" style="width: 100%; height: 100%; aspect-ratio: 1;"/>
+                <ui:VisualElement name="back" style="flex-grow: 1; background-color: rgb(255, 255, 255); position: absolute; width: 80%; height: 80%; border-top-left-radius: 500px; border-top-right-radius: 500px; border-bottom-right-radius: 500px; border-bottom-left-radius: 500px; display: flex;">
+                    <ui:VisualElement name="Info" class="fm-calories-center" style="display: flex; flex-grow: 1; overflow: hidden; position: relative; padding-top: 35%; padding-bottom: 10%; margin-top: 20px;">
+                        <appui:Text text="Calories consumed" primary="true" size="L" class="fm-primary-color centered-text"/>
+                        <appui:Text text="1502" primary="true" size="XXXL" name="calories-consumed" class="centered-text" style="color: rgb(75, 229, 255); font-size: 100px; -unity-font-style: bold; flex-grow: 1; width: 100%; height: auto;"/>
+                        <appui:Text text="Left" primary="true" size="L" class="fm-primary-color centered-text"/>
+                        <appui:Text text="498" primary="true" size="XXXL" name="calories-left" class="centered-text fm-primary-color" style="font-size: 100px; -unity-font-style: bold; flex-grow: 1; width: 100%; height: auto;"/>
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
+            <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="Calories,Carbon footprint,Amount spent,Proteins" stepper-selected-index="0" class="fm-primary-color" style="position: absolute; top: 20%;"/>
         </ui:VisualElement>
-
-    </ui:ScrollView>
+    </ui:VisualElement>
 </ui:UXML>

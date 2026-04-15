@@ -7,16 +7,22 @@ namespace eu.foodmission.platform
     [Preserve]
     class SettingsScreen : NavigationScreenBase<SettingsViewModel>
     {
-        private FormFieldItemArrowStepper _themeStepper;
-        private FormFieldItemArrowStepper _langStepper;
-        private FormFieldItemArrowStepper _scaleStepper;
-        private FormFieldItemArrowStepper _fontStepper;
-        private Label _userNameLabel;
+        private FormFieldItemArrowStepperSettings _themeStepper;
+        private FormFieldItemArrowStepperSettings _langStepper;
+        private FormFieldItemArrowStepperSettings _scaleStepper;
+        private FormFieldItemArrowStepperSettings _fontStepper;
+        
 
         private static readonly string[] k_ThemeChoices = { "Light", "Dark", "System" };
         private static readonly string[] k_LangChoices  = { "English", "Español" };
         private static readonly string[] k_ScaleChoices = { "Small", "Medium", "Large" };
         private static readonly string[] k_FontChoices  = { "Roboto", "Open Sans", "OpenDyslexic" };
+
+        protected override bool IsFixedContent => false;
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+        protected override bool ApplySafeAreaTop => false;
 
         public SettingsScreen()
         {
@@ -26,18 +32,16 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
-            _themeStepper = contentContainer.Q<FormFieldItemArrowStepper>("stepper-theme");
-            _langStepper  = contentContainer.Q<FormFieldItemArrowStepper>("stepper-lang");
-            _scaleStepper = contentContainer.Q<FormFieldItemArrowStepper>("stepper-scale");
-            _fontStepper  = contentContainer.Q<FormFieldItemArrowStepper>("stepper-font");
-            _userNameLabel = contentContainer.Q<Label>("username");
+            _themeStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-theme");
+            _langStepper  = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-lang");
+            _scaleStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-scale");
+            _fontStepper  = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-font");
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
             SetupSteppers();
-            UpdateProfileHeader();
         }
 
         private void SetupSteppers()
@@ -71,30 +75,32 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void UpdateProfileHeader()
-        {
-            if (_userNameLabel != null)
-            {
-                _userNameLabel.text = _viewModel?.UserName ?? "User";
-            }
-        }
-
         protected override void OnViewModelUnbinding()
         {
             if (_themeStepper != null)
+            {
                 _themeStepper.UnregisterValueChangedCallback(OnThemeChanged);
+            }
+
             if (_langStepper != null)
+            {
                 _langStepper.UnregisterValueChangedCallback(OnLangChanged);
+            }
+
             if (_scaleStepper != null)
+            {
                 _scaleStepper.UnregisterValueChangedCallback(OnScaleChanged);
+            }
+
             if (_fontStepper != null)
+            {
                 _fontStepper.UnregisterValueChangedCallback(OnFontChanged);
+            }
 
             _themeStepper = null;
             _langStepper  = null;
             _scaleStepper = null;
             _fontStepper  = null;
-            _userNameLabel = null;
 
             base.OnViewModelUnbinding();
         }

@@ -1,47 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:components="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <ui:VisualElement name="root" style="flex-grow: 1; padding-left: 16px; padding-right: 16px; padding-top: 24px; padding-bottom: 24px;">
-        <!-- Profile Header -->
-        <ui:VisualElement name="profile-header" style="flex-direction: row; align-items: center; margin-bottom: 32px;">
-            <ui:VisualElement name="avatar" class="fm-profile-avatar"/>
-            <ui:Label name="username" text="User" class="fm-profile-username"/>
-            <ui:VisualElement name="xp-badge" class="fm-profile-xp-badge">
-                <ui:Label text="20 XP" class="fm-profile-xp-label"/>
-            </ui:VisualElement>
+    <ui:VisualElement name="root" style="flex-grow: 0; background-color: rgba(2, 70, 57, 0);">
+        <ui:VisualElement name="content" style="flex-grow: 0; padding-left: 95px; padding-right: 95px;">
+            <appui:Spacer spacing="XL"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Text size" stepper-choices="" name="stepper-scale" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Theme" stepper-choices="" name="stepper-theme" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Background" stepper-choices="" name="stepper-background" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Font" stepper-choices="" name="stepper-font" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Push notifications" stepper-choices="" name="stepper-notifications" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Language" stepper-choices="" name="stepper-lang" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Sound" stepper-choices="" name="stepper-sound" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Music" stepper-choices="" name="stepper-music" style="flex-grow: 1;"/>
         </ui:VisualElement>
-        <appui:LinearProgress name="xp-progress" style="margin-bottom: 24px;"/>
-
-        <!-- Settings Title -->
-        <appui:Heading text="Settings" size="XL" style="margin-bottom: 24px;"/>
-
-        <!-- Text Size row -->
-        <components:FormFieldItemArrowStepper name="stepper-scale" Heading-Text="Text size" style="margin-bottom: 16px;"/>
-
-        <!-- Theme row -->
-        <components:FormFieldItemArrowStepper name="stepper-theme" Heading-Text="Theme" style="margin-bottom: 16px;"/>
-
-        <!-- Background row -->
-        <components:FormFieldItemArrowStepper name="stepper-background" Heading-Text="Background" style="margin-bottom: 16px;"/>
-
-        <!-- Font Style row -->
-        <components:FormFieldItemArrowStepper name="stepper-font" Heading-Text="Font" style="margin-bottom: 16px;"/>
-
-        <!-- Push Notifications row -->
-        <components:FormFieldItemArrowStepper name="stepper-notifications" Heading-Text="Push notifications" style="margin-bottom: 16px;"/>
-
-        <!-- Language row -->
-        <components:FormFieldItemArrowStepper name="stepper-lang" Heading-Text="Language" style="margin-bottom: 16px;"/>
-
-        <!-- Weight row -->
-        <components:FormFieldItemArrowStepper name="stepper-weight" Heading-Text="Weight" style="margin-bottom: 16px;"/>
-
-        <!-- Currency row -->
-        <components:FormFieldItemArrowStepper name="stepper-currency" Heading-Text="Currency" style="margin-bottom: 16px;"/>
-
-        <!-- Sound row -->
-        <components:FormFieldItemArrowStepper name="stepper-sound" Heading-Text="Sound" style="margin-bottom: 16px;"/>
-
-        <!-- Music row -->
-        <components:FormFieldItemArrowStepper name="stepper-music" Heading-Text="Music" style="margin-bottom: 16px;"/>
     </ui:VisualElement>
 </ui:UXML>

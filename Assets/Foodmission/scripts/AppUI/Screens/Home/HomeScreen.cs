@@ -29,6 +29,12 @@ namespace eu.foodmission.platform
         private int _scopeIndex = 0;
         private static readonly string[] k_ScopeChoices = { "Me", "Group" };
 
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool IsFixedContent => false;
+
         public HomeScreen()
         {
             InitializeComponent(FoodmissionAppBuilder.instance.HomeTemplate);
