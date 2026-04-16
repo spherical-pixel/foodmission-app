@@ -11,7 +11,6 @@ namespace eu.foodmission.platform
     public class AuthService : IAuthService
     {
         private readonly IStoreService _storeService;
-        private readonly string _baseUrl = "https://test.api.foodmission.eu";
         private System.Threading.CancellationTokenSource _refreshTimerCts;
 
         public AuthService(IStoreService storeService)
@@ -40,7 +39,7 @@ namespace eu.foodmission.platform
             // Verify token
             try
             {
-                string url = $"{_baseUrl}/api/v1/auth/token-info";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/auth/token-info";
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
@@ -83,7 +82,7 @@ namespace eu.foodmission.platform
             try
             {
                 string json = $"{{\"token\":\"{EscapeJson(state.refreshToken)}\"}}";
-                string url = $"{_baseUrl}/api/v1/auth/refresh";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/auth/refresh";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
                 {
@@ -181,7 +180,7 @@ namespace eu.foodmission.platform
                 };
 
                 string json = JsonUtility.ToJson(loginData);
-                string url = $"{_baseUrl}/api/v1/auth/login";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/auth/login";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
                 {
@@ -309,7 +308,7 @@ namespace eu.foodmission.platform
                 jsonBuilder.Append("}");
                 string json = jsonBuilder.ToString();
 
-                string url = $"{_baseUrl}/api/v1/auth/register";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/auth/register";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
                 {
@@ -389,7 +388,7 @@ namespace eu.foodmission.platform
         {
             try
             {
-                string url = $"{_baseUrl}/api/v1/auth/profile";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/auth/profile";
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Authorization", $"Bearer {accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
@@ -459,7 +458,7 @@ namespace eu.foodmission.platform
             {
                 var requestData = new { email = email };
                 string json = JsonUtility.ToJson(requestData);
-                string url = $"{_baseUrl}/api/v1/auth/forgot-password";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/auth/forgot-password";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
                 {
