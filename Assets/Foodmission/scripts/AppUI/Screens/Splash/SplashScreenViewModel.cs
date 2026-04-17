@@ -63,12 +63,12 @@ namespace eu.foodmission.platform
                 return Actions.loading_to_auth;
             }
 
-            // Authenticated — check if extended profile is needed
-            AppState state = _storeService.GetAppState();
-            if (!state.hasCompletedExtendedProfile)
-            {
-                return Actions.register_to_onboarding;
-            }
+            // // Authenticated — check if extended profile is needed
+            // AppState state = _storeService.GetAppState();
+            // if (!state.hasCompletedExtendedProfile)
+            // {
+            //     return Actions.register_to_onboarding;
+            // }
 
             //return Actions.register_to_onboarding;
             return Actions.loading_to_home;

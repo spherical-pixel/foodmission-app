@@ -108,18 +108,20 @@ namespace eu.foodmission.platform
                 {
                     _hasNavigated = true;
 
-                    // Check if extended profile is needed
-                    AppState state = _storeService.GetAppState();
-                    if (!state.hasCompletedExtendedProfile)
-                    {
-                        Debug.Log($"[{GetType().Name}] Authentication successful - navigating to onboarding profile");
-                        RaiseNavigationRequested(Actions.register_to_onboarding);
-                    }
-                    else
-                    {
-                        Debug.Log($"[{GetType().Name}] Authentication successful - navigating to home");
-                        RaiseNavigationRequested(Actions.go_to_home);
-                    }
+                    // // Check if extended profile is needed
+                    // AppState state = _storeService.GetAppState();
+                    // if (!state.hasCompletedExtendedProfile)
+                    // {
+                    //     Debug.Log($"[{GetType().Name}] Authentication successful - navigating to onboarding profile");
+                    //     RaiseNavigationRequested(Actions.register_to_onboarding);
+                    // }
+                    // else
+                    // {
+                    //     Debug.Log($"[{GetType().Name}] Authentication successful - navigating to home");
+                    //     RaiseNavigationRequested(Actions.go_to_home);
+                    // }
+
+                    RaiseNavigationRequested(Actions.go_to_home);
                 }
                 else
                 {
