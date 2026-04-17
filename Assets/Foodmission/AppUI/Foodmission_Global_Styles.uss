@@ -71,6 +71,14 @@
     padding: 40px 40px 6px 40px;
 }
 
+.appui--dark .appui-bottom-navbar {
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+}
+
+.appui--light .appui-bottom-navbar {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
 .appui-bottom-navbar-item {
     align-items: center;
     justify-content: center;
@@ -95,7 +103,7 @@
     --unity-image-tint-color: var(--fm-icon-tint);
 }
 
-.appui-bottom-navbar-item.is-selected .appui-icon--primary {
+.appui-bottom-navbar-item.is-selected .appui-bottom-navbar-item__icon {
     --unity-image-tint-color: var(--fm-icon-tint-selected);
 }
 
@@ -156,7 +164,6 @@
 }
 
 .fm-menu-panel {
-    /*background-color: var(--fm-surface-bg-alt);*/
     background-color: var(--fm-surface-bg);
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
@@ -355,6 +362,7 @@
     font-size: var(--appui-font-sizes-body-md);
     min-width: 180px;
 }
+
 .fm-primary-color,
 .fm-primary-color .fm-arrow-stepper__label {
     color: var(--appui-primary-100);
@@ -432,7 +440,6 @@
     -unity-font-style: bold;
 }
 
-
 .fm-calories-card {
     background-color: var(--fm-surface-bg);
     border-radius: 500px;
@@ -453,7 +460,6 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    
 }
 
 .fm-calories-circular {
@@ -463,11 +469,8 @@
 }
 
 .fm-calories-center {
-    /*
-    position: absolute;*/
     align-items: center;
     justify-content: center;
-    /*width: 160px;*/
 }
 
 .fm-calories-consumed-label {
@@ -493,4 +496,25 @@
     font-size: var(--appui-font-sizes-body-md);
     color: var(--appui-foregrounds-100);
     -unity-text-align: middle-center;
+}
+
+.box-background {
+    background-color: var(--fm-surface-bg-transparent);
+    border-radius: 15px;
+    border-width: 1px;
+    margin: 50px;
+    padding: 25px;
+}
+
+.fm-calories-background {
+    flex-grow: 1;
+    background-color: var(--appui-backgrounds-50);
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    border-top-left-radius: 500px;
+    border-top-right-radius: 500px;
+    border-bottom-right-radius: 500px;
+    border-bottom-left-radius: 500px;
+    display: flex;
 }

@@ -117,7 +117,7 @@
     --appui-foregrounds-200: var(--appui-primary-1300);
     --appui-foregrounds-100: var(--appui-primary-1200);
     --appui-foregrounds-50: var(--appui-primary-100);
-    --appui-foregrounds-25: var(--appui-primary-50);
+    --appui-foregrounds-25: var(--appui-primary-1200);
 
     --appui-backgrounds-300: var(--appui-primary-15);
     --appui-backgrounds-200: var(--appui-primary-1300);
@@ -129,8 +129,15 @@
     --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-100);
     --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-100);
 
+    --appui-alias-control-background-color-disabled: var(--appui-primary-300);
+   --appui-alias-control-background-color-focus: var(--appui-primary-300);
+   --appui-alias-control-background-color-active: var(--appui-primary-300);
+   --appui-alias-control-background-color-hover: var(--appui-primary-300);
+   --appui-alias-control-background-color-default: var(--appui-primary-300);
+
     /* Surface colors for panels, menus, and cards */
     --fm-surface-bg: rgba(255, 255, 255, 0.90);
+    --fm-surface-bg-transparent: rgba(255, 255, 255, 0.65);
     --fm-surface-bg-alt: #F5F5F5;
     --fm-card-bg: rgba(255, 255, 255, 0.90);
     --fm-icon-tint: var(--appui-primary-100);
@@ -186,7 +193,7 @@
 
     --appui-accent-300: var(--appui-color-blue-1000);
     --appui-accent-200: var(--appui-color-blue-900);
-    --appui-accent-100: var(--appui-primary-1300);
+    --appui-accent-100: var(--appui-primary-400);
     --appui-accent-50: var(--appui-color-blue-700);
     --appui-accent-25: var(--appui-color-blue-600);
 
@@ -209,10 +216,10 @@
        FOREGROUNDS (texto)
        ============================================ */
 
---appui-foregrounds-200: var(--appui-primary-1300); /* blanco puro */
---appui-foregrounds-100: var(--appui-primary-1200); /* texto principal */
---appui-foregrounds-50: var(--appui-primary-1000);  /* secundario */
---appui-foregrounds-25: var(--appui-primary-800);   /* tertiary */
+   --appui-foregrounds-200: var(--appui-primary-1300); /* blanco puro */
+   --appui-foregrounds-100: var(--appui-primary-1200); /* texto principal */
+   --appui-foregrounds-50: var(--appui-primary-1000);  /* secundario */
+   --appui-foregrounds-25: var(--appui-primary-1200);   /* tertiary */
 
 
     /* ============================================
@@ -229,10 +236,17 @@
        ACTIONS
        ============================================ */
 
-    --appui-alias-actions-accent-foreground-color-focus: var(--appui-primary-1000);
-    --appui-alias-actions-accent-foreground-color-active: var(--appui-primary-1000);
-    --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-1000);
-    --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-1000);
+   --appui-alias-actions-accent-foreground-color-focus: var(--appui-primary-1300);
+   --appui-alias-actions-accent-foreground-color-active: var(--appui-primary-1300);
+   --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-1300);
+   --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-1300);
+
+   --appui-alias-control-background-color-disabled: var(--appui-primary-300);
+   --appui-alias-control-background-color-focus: var(--appui-primary-300);
+   --appui-alias-control-background-color-active: var(--appui-primary-300);
+   --appui-alias-control-background-color-hover: var(--appui-primary-300);
+   --appui-alias-control-background-color-default: var(--appui-primary-300);
+
 
 
     /* ============================================
@@ -249,11 +263,12 @@
        ============================================ */
 
     --fm-surface-bg: rgba(10, 20, 18, 0.95);
+    --fm-surface-bg-transparent: rgba(10, 20, 18, 0.65);
     --fm-surface-bg-alt: #0f1f1c;
     --fm-card-bg: rgba(15, 30, 26, 0.95);
 
-    --fm-icon-tint: var(--appui-primary-900);
-    --fm-icon-tint-selected: var(--appui-primary-1200);
+    --fm-icon-tint: var(--appui-primary-1200);
+    --fm-icon-tint-selected: var(--appui-primary-900);
 
 
     /* ============================================

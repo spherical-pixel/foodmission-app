@@ -14,8 +14,8 @@
         </ui:VisualElement>
         <ui:VisualElement class="fm-calories-card" style="background-color: rgba(255, 255, 255, 0.2); flex-grow: 1; width: 800px; height: 800px; align-self: center; max-width: 800px; max-height: 800px;">
             <ui:VisualElement name="Calories" class="fm-calories-circle-wrapper">
-                <appui:CircularProgress name="calories-circular" color-override="rgb(53, 229, 255)" variant="Determinate" value="0.74" size="L" rounded-progress-corners="false" class="fm-calories-circular" style="width: 100%; height: 100%; aspect-ratio: 1;"/>
-                <ui:VisualElement name="back" style="flex-grow: 1; background-color: rgb(255, 255, 255); position: absolute; width: 80%; height: 80%; border-top-left-radius: 500px; border-top-right-radius: 500px; border-bottom-right-radius: 500px; border-bottom-left-radius: 500px; display: flex;">
+                <appui:CircularProgress name="calories-circular" color-override="rgb(53, 229, 255)" variant="Determinate" value="0.37" size="L" rounded-progress-corners="false" class="fm-calories-circular" style="width: 100%; height: 100%; aspect-ratio: 1;"/>
+                <ui:VisualElement name="back" class="fm-calories-background">
                     <ui:VisualElement name="Info" class="fm-calories-center" style="display: flex; flex-grow: 1; overflow: hidden; position: relative; padding-top: 35%; padding-bottom: 10%; margin-top: 20px;">
                         <appui:Text text="Calories consumed" primary="true" size="L" class="fm-primary-color centered-text"/>
                         <appui:Text text="1502" primary="true" size="XXXL" name="calories-consumed" class="centered-text" style="color: rgb(75, 229, 255); font-size: 100px; -unity-font-style: bold; flex-grow: 1; width: 100%; height: auto;"/>
