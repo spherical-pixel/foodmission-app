@@ -24,10 +24,201 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27512489452232704
-    m_Localized: 
+    m_Localized: "\u0141adowanie {global.PET_NAME}"
     m_Metadata:
       m_Items:
       - rid: 3341417644789858544
+  - m_Id: 15417204736
+    m_Localized: Dom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 467936468992
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8970780532736
+    m_Localized: "Dziennik posi\u0142k\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9243779391488
+    m_Localized: Profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2541068313681920
+    m_Localized: "Za\u0142adunek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18113535941795840
+    m_Localized: "\u0141adowanie zasob\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18114763199340544
+    m_Localized: Sprawdzanie uwierzytelniania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417184911908864
+    m_Localized: "Baw si\u0119, ucz i jedz lepiej: razem nap\u0119dzamy zmian\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417602513592320
+    m_Localized: "Nazwa u\u017Cytkownika"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417848396275712
+    m_Localized: "Twoja nazwa u\u017Cytkownika"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418052671463424
+    m_Localized: "Has\u0142o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418114709413888
+    m_Localized: "Twoje has\u0142o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22812687661522944
+    m_Localized: E-mail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22812856394178560
+    m_Localized: "Tw\xF3j adres e-mail"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22815397693612032
+    m_Localized: Rok urodzenia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819676332482560
+    m_Localized: Kraj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819860558897152
+    m_Localized: "Wybierz sw\xF3j kraj"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820314747494400
+    m_Localized: Region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820425670057984
+    m_Localized: "Wybierz sw\xF3j region"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820717341958144
+    m_Localized: Kod pocztowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25345767223844864
+    m_Localized: "Wyra\u017Cam zgod\u0119 na <b>Warunki korzystania z us\u0142ugi</b>
+      i <b>Polityk\u0119 prywatno\u015Bci</b>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351728189661184
+    m_Localized: Warunki korzystania z serwisu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351921299611648
+    m_Localized: "<b>Regulamin FOODMISSION</b>\n\nKorzystaj\u0105c z tej aplikacji,
+      akceptujesz nast\u0119puj\u0105ce warunki:\n\n<b>1. REJESTRACJA KONTA</b>\nPodczas
+      rejestracji musisz poda\u0107 dok\u0142adne i kompletne informacje. Ponosisz
+      odpowiedzialno\u015B\u0107 za zachowanie poufno\u015Bci danych logowania do
+      konta.\n\n<b>2. PRYWATNO\u015A\u0106</b>\nGromadzimy i przetwarzamy Twoje dane
+      osobowe zgodnie z nasz\u0105 Polityk\u0105 Prywatno\u015Bci. Obejmuje to dane
+      dotycz\u0105ce warto\u015Bci od\u017Cywczych, informacje o lokalizacji i statystyki
+      u\u017Cytkowania.\n\nAby uzyska\u0107 wi\u0119cej informacji, skontaktuj si\u0119
+      z nami pod adresem support@foodmission.eu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353163560181760
+    m_Localized: "Przyj\u0105\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353325686808576
+    m_Localized: "Anulowa\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353803774550016
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354482861727744
+    m_Localized: "B\u0142\u0105d"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354925167861760
+    m_Localized: "Walidacja p\xF3l nie powiod\u0142a si\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25355658118291456
+    m_Localized: "To pole nie mo\u017Ce by\u0107 puste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25358434474909696
+    m_Localized: "Prosz\u0119 poda\u0107 prawid\u0142owy adres e-mail."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25358751560097792
+    m_Localized: "Has\u0142o musi mie\u0107 co najmniej 6 znak\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284416
+    m_Localized: "Nieprawid\u0142owy rok urodzenia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284417
+    m_Localized: "Aby korzysta\u0107 z platformy musisz mie\u0107 uko\u0144czone
+      18 lat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284418
+    m_Localized: "Musisz wybra\u0107 kraj."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284419
+    m_Localized: "Musisz wybra\u0107 region."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284420
+    m_Localized: "Nieprawid\u0142owy format kodu pocztowego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284421
+    m_Localized: "Aby kontynuowa\u0107, musisz zaakceptowa\u0107 Regulamin."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25367919163596800
+    m_Localized: "Zalogowa\u0107 si\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25368981371084800
+    m_Localized: "Zapomnia\u0142e\u015B has\u0142a?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25369431499595776
+    m_Localized: "Nie masz konta? Zarejestruj si\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25394900353671168
+    m_Localized: "Zresetuj has\u0142o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395075277119488
+    m_Localized: "Podaj sw\xF3j adres e-mail, a my wy\u015Blemy Ci link umo\u017Cliwiaj\u0105cy
+      zresetowanie has\u0142a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395779614007296
+    m_Localized: "Kontynuowa\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395959562231808
+    m_Localized: Z powrotem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28204088708554752
+    m_Localized: Powiadomienia
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

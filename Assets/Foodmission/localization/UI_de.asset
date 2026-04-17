@@ -24,10 +24,202 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27512489452232704
-    m_Localized: 
+    m_Localized: '{global.PET_NAME} wird geladen'
     m_Metadata:
       m_Items:
       - rid: 3341417644789858540
+  - m_Id: 15417204736
+    m_Localized: Heim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 467936468992
+    m_Localized: Speisekarte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8970780532736
+    m_Localized: Mahlzeitenprotokoll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9243779391488
+    m_Localized: Profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2541068313681920
+    m_Localized: Laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18113535941795840
+    m_Localized: Assets laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18114763199340544
+    m_Localized: "\xDCberpr\xFCfung der Authentifizierung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417184911908864
+    m_Localized: "Spielen, lernen und sich besser ern\xE4hren: Gemeinsam gestalten
+      wir den Wandel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417602513592320
+    m_Localized: Benutzername
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18417848396275712
+    m_Localized: Ihr Benutzername
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418052671463424
+    m_Localized: Passwort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18418114709413888
+    m_Localized: Ihr Passwort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22812687661522944
+    m_Localized: E-Mail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22812856394178560
+    m_Localized: Ihre E-Mail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22815397693612032
+    m_Localized: Geburtsjahr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819676332482560
+    m_Localized: Land
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22819860558897152
+    m_Localized: "W\xE4hlen Sie Ihr Land aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820314747494400
+    m_Localized: Region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820425670057984
+    m_Localized: "W\xE4hlen Sie Ihre Region aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22820717341958144
+    m_Localized: Postleitzahl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25345767223844864
+    m_Localized: Ich stimme den <b>Nutzungsbedingungen</b> und der <b>Datenschutzrichtlinie</b>
+      zu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351728189661184
+    m_Localized: "Gesch\xE4ftsbedingungen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25351921299611648
+    m_Localized: "<b>Nutzungsbedingungen von FOODMISSION</b>\n\nMit der Nutzung dieser
+      Anwendung erkl\xE4ren Sie sich mit den folgenden Bedingungen einverstanden:\n\n<b>1.
+      KONTOREGISTRIERUNG</b>\nBei der Registrierung m\xFCssen Sie korrekte und vollst\xE4ndige
+      Angaben machen. Sie sind f\xFCr die Geheimhaltung Ihrer Zugangsdaten verantwortlich.\n\n<b>2.
+      DATENSCHUTZ</b>\nWir erheben und verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF
+      unserer Datenschutzrichtlinie. Dies umfasst N\xE4hrwertangaben, Standortinformationen
+      und Nutzungsstatistiken.\n\nF\xFCr weitere Informationen kontaktieren Sie uns
+      bitte unter support@foodmission.eu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353163560181760
+    m_Localized: Akzeptieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353325686808576
+    m_Localized: Stornieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25353803774550016
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354482861727744
+    m_Localized: Fehler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25354925167861760
+    m_Localized: Feldvalidierung fehlgeschlagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25355658118291456
+    m_Localized: Dieses Feld darf nicht leer sein.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25358434474909696
+    m_Localized: "Bitte geben Sie eine g\xFCltige E-Mail-Adresse ein."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25358751560097792
+    m_Localized: Das Passwort muss mindestens 6 Zeichen lang sein.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284416
+    m_Localized: "Ung\xFCltiges Geburtsjahr."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284417
+    m_Localized: "Sie m\xFCssen \xFCber 18 Jahre alt sein, um die Plattform nutzen
+      zu k\xF6nnen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284418
+    m_Localized: "Sie m\xFCssen ein Land ausw\xE4hlen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284419
+    m_Localized: "Sie m\xFCssen eine Region ausw\xE4hlen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284420
+    m_Localized: "Ung\xFCltiges Postleitzahlformat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25360689668284421
+    m_Localized: "Um fortfahren zu k\xF6nnen, m\xFCssen Sie die Allgemeinen Gesch\xE4ftsbedingungen
+      akzeptieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25367919163596800
+    m_Localized: anmelden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25368981371084800
+    m_Localized: Passwort vergessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25369431499595776
+    m_Localized: Sie haben noch kein Konto? Jetzt registrieren!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25394900353671168
+    m_Localized: "Passwort zur\xFCcksetzen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395075277119488
+    m_Localized: "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link
+      zum Zur\xFCcksetzen Ihres Passworts."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395779614007296
+    m_Localized: Weitermachen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25395959562231808
+    m_Localized: "Zur\xFCck"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28204088708554752
+    m_Localized: Benachrichtigungen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
