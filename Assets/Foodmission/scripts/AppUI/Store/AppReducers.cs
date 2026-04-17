@@ -145,7 +145,7 @@ namespace eu.foodmission.platform
             newState.tokenExpiresAt = 0;
             newState.refreshToken = "";
             // Reset preferences to defaults
-            newState.theme = "light";//"system";
+            newState.theme = "system";//"system";
             newState.scale = "medium";
             newState.font = "roboto";
             return newState;

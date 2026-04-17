@@ -19,7 +19,7 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Visual theme: "light", "dark", "system"
         /// </summary>
-        public string theme = "light";// "system";
+        public string theme = "system";// "system";
 
         /// <summary>
         /// UI scale: "small", "medium", "large"
