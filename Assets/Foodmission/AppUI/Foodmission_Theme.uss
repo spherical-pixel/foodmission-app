@@ -138,39 +138,46 @@
 }
 
 .appui--dark {
-    --fm-main-bg: #024639;
+    --fm-main-bg: #021f1a;
 
     /* ============================================
-       Primary Palette - Dark Mode
-       From black through corporate green to white
+       PRIMARY PALETTE
        ============================================ */
-    --appui-primary-15: #080E0D;
-    --appui-primary-25: #0C1514;
-    --appui-primary-50: #101B19;
-    --appui-primary-100: #152220;
-    --appui-primary-200: #1C2D2A;
-    --appui-primary-300: #243835;
-    --appui-primary-400: #2B4340;
-    --appui-primary-500: #024639;    /* Corporate green */
-    --appui-primary-600: #2A6B5E;
-    --appui-primary-700: #3D8C7B;
-    --appui-primary-800: #57A898;
-    --appui-primary-900: #74C2B3;
-    --appui-primary-1000: #96D5C9;
-    --appui-primary-1100: #B8E4DD;
-    --appui-primary-1200: #D8F0EB;
-    --appui-primary-1300: #FFFFFF;
+
+    --appui-primary-1300: #ffffff;
+    --appui-primary-1200: #e6f7f3;
+    --appui-primary-1100: #cdeee6;
+    --appui-primary-1000: #a8e0d3;
+    --appui-primary-900: #7fd1bf;
+    --appui-primary-800: #57c2ab;
+    --appui-primary-700: #2fb398;
+    --appui-primary-600: #1f8f79;
+    --appui-primary-500: #176e5d;
+    --appui-primary-400: #0f5447;
+    --appui-primary-300: #0a3d33;
+    --appui-primary-200: #072b24;
+    --appui-primary-100: #ffffff;
+    --appui-primary-50: #020f0d;
+    --appui-primary-25: #010807;
+    --appui-primary-15: #000000;
+
+
+    /* ============================================
+       SEMANTIC COLORS
+       ============================================ */
 
     --appui-positive-300: var(--appui-color-green-1000);
     --appui-positive-200: var(--appui-color-green-900);
     --appui-positive-100: var(--appui-color-green-800);
     --appui-positive-50: var(--appui-color-green-700);
     --appui-positive-25: var(--appui-color-green-600);
+
     --appui-warning-300: var(--appui-color-orange-1000);
     --appui-warning-200: var(--appui-color-orange-900);
     --appui-warning-100: var(--appui-color-orange-800);
     --appui-warning-50: var(--appui-color-orange-700);
     --appui-warning-25: var(--appui-color-orange-600);
+
     --appui-destructive-300: var(--appui-color-red-1000);
     --appui-destructive-200: var(--appui-color-red-900);
     --appui-destructive-100: var(--appui-color-red-800);
@@ -183,38 +190,77 @@
     --appui-accent-50: var(--appui-color-blue-700);
     --appui-accent-25: var(--appui-color-blue-600);
 
-    --appui-base-600: var(--appui-primary-400);
-    --appui-base-500: var(--appui-primary-500);
-    --appui-base-400: var(--appui-primary-1300);
-    --appui-base-300: var(--appui-primary-700);
-    --appui-base-200: var(--appui-primary-200);
+
+    /* ============================================
+       BASE
+       ============================================ */
+
+    --appui-base-600: var(--appui-primary-700);
+    --appui-base-500: var(--appui-primary-600);
+    --appui-base-400: var(--appui-primary-500);
+    --appui-base-300: var(--appui-primary-400);
+    --appui-base-200: var(--appui-primary-300);
     --appui-base-100: var(--appui-primary-200);
-    --appui-base-50: var(--appui-primary-1000);
-    --appui-base-25: var(--appui-primary-1100);
+    --appui-base-50: var(--appui-primary-100);
+    --appui-base-25: var(--appui-primary-50);
 
-    /* Foregrounds - mapped to primary palette */
-    --appui-foregrounds-200: var(--appui-primary-1300);
-    --appui-foregrounds-100: var(--appui-primary-1300);
-    --appui-foregrounds-50: var(--appui-primary-900);
-    --appui-foregrounds-25: var(--appui-primary-600);
 
-    /* Backgrounds - use darker tones */
-    --appui-backgrounds-300: var(--appui-primary-300);
-    --appui-backgrounds-200: var(--appui-primary-200);
-    --appui-backgrounds-100: var(--appui-primary-100);
-    --appui-backgrounds-50: var(--appui-primary-50);
+    /* ============================================
+       FOREGROUNDS (texto)
+       ============================================ */
 
-    --appui-alias-actions-accent-foreground-color-focus: var(--appui-primary-100);
-    --appui-alias-actions-accent-foreground-color-active: var(--appui-primary-100);
-    --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-100);
-    --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-100);
+--appui-foregrounds-200: var(--appui-primary-1300); /* blanco puro */
+--appui-foregrounds-100: var(--appui-primary-1200); /* texto principal */
+--appui-foregrounds-50: var(--appui-primary-1000);  /* secundario */
+--appui-foregrounds-25: var(--appui-primary-800);   /* tertiary */
 
-    /* Surface colors for panels, menus, and cards */
-    --fm-surface-bg: rgba(30, 30, 30, 0.95);
-    --fm-surface-bg-alt: #1E1E1E;
-    --fm-card-bg: rgba(40, 40, 40, 0.95);
+
+    /* ============================================
+       BACKGROUNDS
+       ============================================ */
+
+    --appui-backgrounds-300: var(--appui-primary-25);  /* fondo app */
+    --appui-backgrounds-200: var(--appui-primary-100); /* surface */
+    --appui-backgrounds-100: var(--appui-primary-200); /* cards */
+    --appui-backgrounds-50: var(--appui-primary-300);  /* hover */
+
+
+    /* ============================================
+       ACTIONS
+       ============================================ */
+
+    --appui-alias-actions-accent-foreground-color-focus: var(--appui-primary-1000);
+    --appui-alias-actions-accent-foreground-color-active: var(--appui-primary-1000);
+    --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-1000);
+    --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-1000);
+
+
+    /* ============================================
+       INPUTS / INTERACTIONS
+       ============================================ */
+
+    --appui-alias-field-background-color-default: rgba(255,255,255,0.05);
+    --appui-alias-actions-background-color-default: transparent;
+    --appui-alias-actions-background-color-active: var(--appui-primary-300);
+
+
+    /* ============================================
+       SURFACES
+       ============================================ */
+
+    --fm-surface-bg: rgba(10, 20, 18, 0.95);
+    --fm-surface-bg-alt: #0f1f1c;
+    --fm-card-bg: rgba(15, 30, 26, 0.95);
+
     --fm-icon-tint: var(--appui-primary-900);
-    --fm-icon-tint-selected: var(--appui-primary-1000);
+    --fm-icon-tint-selected: var(--appui-primary-1200);
+
+
+    /* ============================================
+       CONTROLS
+       ============================================ */
+
+    --appui-alias-control-border-width: 4px;
 }
 
 /* ============================================

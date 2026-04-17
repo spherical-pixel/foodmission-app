@@ -11,7 +11,7 @@ namespace eu.foodmission.platform
     public class AuthService : IAuthService
     {
         private readonly IStoreService _storeService;
-        private readonly string _baseUrl = "https://test.api.foodmission.eu";
+        private readonly string _baseUrl = "https://staging.api.foodmission.eu";
         private System.Threading.CancellationTokenSource _refreshTimerCts;
 
         public AuthService(IStoreService storeService)
