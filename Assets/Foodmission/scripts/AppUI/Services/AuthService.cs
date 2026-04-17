@@ -498,5 +498,177 @@ namespace eu.foodmission.platform
                 return (false, "An unexpected error occurred");
             }
         }
+
+        /// <summary>
+        /// Updates the current user's extended profile via PATCH /api/v1/users/me.
+        /// Only non-null fields are included in the request body.
+        /// Returns true on success, false on failure.
+        /// </summary>
+        public async Task<bool> UpdateProfileAsync(ProfileUpdateRequest request)
+        {
+            AppState state = _storeService.GetAppState();
+
+            if (string.IsNullOrEmpty(state.accessToken))
+            {
+                Debug.LogError($"[{GetType().Name}] UpdateProfile — no access token");
+                return false;
+            }
+
+            try
+            {
+                // Build JSON manually — only include non-empty fields (PATCH semantics)
+                var jsonBuilder = new System.Text.StringBuilder();
+                jsonBuilder.Append("{");
+
+                bool hasField = false;
+
+                if (!string.IsNullOrEmpty(request.gender))
+                {
+                    jsonBuilder.AppendFormat("\"gender\":\"{0}\"", EscapeJson(request.gender));
+                    hasField = true;
+                }
+
+                if (!string.IsNullOrEmpty(request.activityLevel))
+                {
+                    if (hasField) jsonBuilder.Append(",");
+                    jsonBuilder.AppendFormat("\"activityLevel\":\"{0}\"", EscapeJson(request.activityLevel));
+                    hasField = true;
+                }
+
+                if (!string.IsNullOrEmpty(request.educationLevel))
+                {
+                    if (hasField) jsonBuilder.Append(",");
+                    jsonBuilder.AppendFormat("\"educationLevel\":\"{0}\"", EscapeJson(request.educationLevel));
+                    hasField = true;
+                }
+
+                if (!string.IsNullOrEmpty(request.annualIncome))
+                {
+                    if (hasField) jsonBuilder.Append(",");
+                    jsonBuilder.AppendFormat("\"annualIncome\":\"{0}\"", EscapeJson(request.annualIncome));
+                    hasField = true;
+                }
+
+                // Preferences nested object — only include non-empty fields
+                if (request.preferences != null)
+                {
+                    bool hasDietary = !string.IsNullOrEmpty(request.preferences.dietaryPreference);
+                    bool hasShopping = !string.IsNullOrEmpty(request.preferences.shoppingResponsibility);
+
+                    if (hasDietary || hasShopping)
+                    {
+                        if (hasField) jsonBuilder.Append(",");
+                        jsonBuilder.Append("\"preferences\":{");
+
+                        bool hasPrefField = false;
+
+                        if (hasDietary)
+                        {
+                            jsonBuilder.AppendFormat("\"dietaryPreference\":\"{0}\"", EscapeJson(request.preferences.dietaryPreference));
+                            hasPrefField = true;
+                        }
+
+                        if (hasShopping)
+                        {
+                            if (hasPrefField) jsonBuilder.Append(",");
+                            jsonBuilder.AppendFormat("\"shoppingResponsibility\":\"{0}\"", EscapeJson(request.preferences.shoppingResponsibility));
+                        }
+
+                        jsonBuilder.Append("}");
+                        hasField = true;
+                    }
+                }
+
+                jsonBuilder.Append("}");
+                string json = jsonBuilder.ToString();
+                Debug.Log($"[{GetType().Name}] UpdateProfile JSON: {json}");
+
+                string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+
+                bool success = await SendPatchRequest(url, bodyRaw, state.tokenType, state.accessToken);
+
+                return success;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] UpdateProfileAsync exception: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<(bool success, string error)> DeleteAccountAsync()
+        {
+            AppState state = _storeService.GetAppState();
+
+            if (string.IsNullOrEmpty(state.accessToken))
+            {
+                return (false, "No access token");
+            }
+
+            try
+            {
+                string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
+
+                using UnityWebRequest request = new UnityWebRequest(url, "DELETE");
+                request.downloadHandler = new DownloadHandlerBuffer();
+                request.SetRequestHeader("Accept", "application/json");
+                request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log($"[{GetType().Name}] Account deleted successfully");
+                    Logout();
+                    return (true, null);
+                }
+
+                string responseBody = request.downloadHandler?.text ?? "no body";
+                Debug.LogError($"[{GetType().Name}] DeleteAccount failed: {request.responseCode} {request.error} — Body: {responseBody}");
+                return (false, $"Request failed: {request.responseCode}");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] DeleteAccount exception: {ex.Message}");
+                return (false, "An unexpected error occurred");
+            }
+        }
+
+        /// <summary>
+        /// Sends a PATCH request for profile updates.
+        /// Uses new UnityWebRequest(url, "PATCH") which works correctly with NestJS.
+        /// </summary>
+        private async Task<bool> SendPatchRequest(string url, byte[] bodyRaw, string tokenType, string accessToken)
+        {
+            using UnityWebRequest request = new UnityWebRequest(url, "PATCH");
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw)
+            {
+                contentType = "application/json"
+            };
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Authorization", $"{tokenType} {accessToken}");
+
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                string responseBody = request.downloadHandler?.text ?? "no body";
+                Debug.LogError($"[{GetType().Name}] UpdateProfile PATCH failed: {request.responseCode} {request.error} — Body: {responseBody}");
+                return false;
+            }
+
+            Debug.Log($"[{GetType().Name}] Profile updated successfully via PATCH");
+            return true;
+        }
     }
 }
