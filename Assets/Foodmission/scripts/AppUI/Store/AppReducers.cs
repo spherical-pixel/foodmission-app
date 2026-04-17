@@ -77,6 +77,9 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<string> registerSuccess = "app/registerSuccess";
         public static readonly ActionCreator<string> registerFailure = "app/registerFailure";
 
+        // Extended profile
+        public static readonly ActionCreator setExtendedProfile = "app/setExtendedProfile";
+
     }
 
     // ==================== App Reducers ====================
@@ -230,6 +233,13 @@ namespace eu.foodmission.platform
             var newState = state.Copy();
             newState.isAuthenticating = false;
             newState.authError = action.payload;
+            return newState;
+        }
+
+        public static AppState SetExtendedProfileReducer(AppState state, IAction action)
+        {
+            var newState = state.Copy();
+            newState.hasCompletedExtendedProfile = true;
             return newState;
         }
 

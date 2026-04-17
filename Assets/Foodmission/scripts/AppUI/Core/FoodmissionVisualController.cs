@@ -145,6 +145,35 @@ namespace eu.foodmission.platform
                 _cachedNavController?.Navigate(Actions.go_to_settings);
             });
 
+            content.Add(CreateDivider(16));
+            var dangerContainer = new VisualElement();
+            dangerContainer.style.paddingLeft = 8;
+            dangerContainer.style.paddingRight = 4;
+            dangerContainer.style.paddingTop = 4;
+            content.Add(dangerContainer);
+
+            AddDrawerButton(dangerContainer, "🗑️ Delete Account", async () =>
+            {
+                var authService = App.current?.services?.GetService<IAuthService>();
+                if (authService == null)
+                {
+                    return;
+                }
+
+                _profileDrawer.Close();
+                var (success, error) = await authService.DeleteAccountAsync();
+                if (success)
+                {
+                    var storeService = App.current?.services?.GetService<IStoreService>();
+                    storeService?.store.Dispatch(AppActions.logout.Invoke());
+                    _cachedNavController?.Navigate(Actions.go_to_auth);
+                }
+                else
+                {
+                    Debug.LogError($"[FoodmissionVisualController] Delete account failed: {error}");
+                }
+            });
+
             AddDrawerButton(menuContainer, "🚪 Log out", () =>
             {
                 _profileDrawer.Close();

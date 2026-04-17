@@ -16,6 +16,7 @@ namespace eu.foodmission.platform
         public VisualTreeAsset ForgotPasswordTemplate;
         public VisualTreeAsset ProfileTemplate;
         public VisualTreeAsset SettingsTemplate;
+        public VisualTreeAsset OnboardingProfileTemplate;
 
         public VisualTreeAsset NotificationCardTemplate;
         public NavGraphViewAsset GraphAsset;

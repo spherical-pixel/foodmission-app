@@ -37,6 +37,11 @@ namespace eu.foodmission.platform
         public bool hasCompletedOnboarding = false;
 
         /// <summary>
+        /// Whether the user has completed the extended profile (onboarding)
+        /// </summary>
+        public bool hasCompletedExtendedProfile = false;
+
+        /// <summary>
         /// ID of logged user (empty if no session)
         /// </summary>
         public string userId = "";
@@ -105,6 +110,7 @@ namespace eu.foodmission.platform
                 scale = this.scale,
                 font = this.font,
                 hasCompletedOnboarding = this.hasCompletedOnboarding,
+                hasCompletedExtendedProfile = this.hasCompletedExtendedProfile,
                 userId = this.userId,
                 userName = this.userName,
                 userEmail = this.userEmail,

@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.Redux;
+using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
@@ -45,7 +46,6 @@ namespace eu.foodmission.platform
             await nutriService.InitializeAsync();
             await Task.Delay(500);
 
-            
             // Check session
             LoadingText = await LocalizationSettings.StringDatabase.GetLocalizedStringAsync("UI", "CHECK_AUTH").Task;
             var isAuthenticated = await _authService.CheckSessionAsync();
@@ -58,9 +58,20 @@ namespace eu.foodmission.platform
 
             await Task.Delay(500);
 
+            if (!isAuthenticated)
+            {
+                return Actions.loading_to_auth;
+            }
 
-            return isAuthenticated ? Actions.loading_to_home : Actions.loading_to_auth;
-            //return Actions.loading_to_home;
+            // Authenticated — check if extended profile is needed
+            AppState state = _storeService.GetAppState();
+            if (!state.hasCompletedExtendedProfile)
+            {
+                return Actions.register_to_onboarding;
+            }
+
+            //return Actions.register_to_onboarding;
+            return Actions.loading_to_home;
         }
     }
 }

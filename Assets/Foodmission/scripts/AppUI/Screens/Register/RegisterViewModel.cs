@@ -197,8 +197,18 @@ namespace eu.foodmission.platform
             }
             else if (!string.IsNullOrEmpty(authState.userId))
             {
-                Debug.Log($"[{GetType().Name}] - OnAuthStateChanged -> userId = {authState.userId}, navigating to home");
-                RaiseNavigationRequested(Actions.loading_to_home);
+                // Check if extended profile is needed
+                AppState state = _storeService.GetAppState();
+                if (!state.hasCompletedExtendedProfile)
+                {
+                    Debug.Log($"[{GetType().Name}] - OnAuthStateChanged -> userId = {authState.userId}, navigating to onboarding profile");
+                    RaiseNavigationRequested(Actions.register_to_onboarding);
+                }
+                else
+                {
+                    Debug.Log($"[{GetType().Name}] - OnAuthStateChanged -> userId = {authState.userId}, navigating to home");
+                    RaiseNavigationRequested(Actions.loading_to_home);
+                }
             }
         }
 
