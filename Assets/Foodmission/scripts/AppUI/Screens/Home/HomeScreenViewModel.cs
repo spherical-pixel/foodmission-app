@@ -1,5 +1,6 @@
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
+using UnityEngine;
 
 namespace eu.foodmission.platform
 {
@@ -33,10 +34,15 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string _selectedUserScope = "Me";
 
+        [ObservableProperty]
+        private RenderTexture _nutriCameraTexture;
+
         public HomeScreenViewModel(IStoreService storeService) : base(storeService)
         {
             // Get initial state
             AppState state = _storeService.GetAppState();
+
+            _nutriCameraTexture = App.current?.services?.GetService<INutriService>()?.NutriCameraRenderTexture;
             UpdateWelcomeMessage(state);
 
             // Subscribe to user state changes

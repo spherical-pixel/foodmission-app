@@ -13,7 +13,10 @@ namespace eu.foodmission.platform
         private GameObject _nutriController;
         private Animator _animator;
         private NutriMood _currentMood = NutriMood.Neutral;
+        private Camera _nutriCamera;
         private bool _isInitialized;
+
+        public RenderTexture NutriCameraRenderTexture => _nutriCamera != null ? _nutriCamera.targetTexture : null;
 
         private static readonly Dictionary<NutriMood, string> MoodToAnimation = new()
         {
@@ -50,11 +53,20 @@ namespace eu.foodmission.platform
                 {
                     _animator = existingNutri.GetComponent<Animator>();
                 }
-                if (_animator != null)
+
+                Transform nutriCameraObj = _nutriController.transform.Find("CameraNutri");
+                if (nutriCameraObj != null)
+                {
+                    _nutriCamera = nutriCameraObj.GetComponent<Camera>();
+                }
+
+                if (_animator != null || _nutriCamera != null)
                 {
                     _isInitialized = true;
                     Debug.Log($"[{GetType().Name}] Reused existing NutriController after hot-reload");
                 }
+
+                
                 return;
             }
 
@@ -87,10 +99,15 @@ namespace eu.foodmission.platform
                     _animator = nutriObj.GetComponent<Animator>();
                 }
 
-
-                if (_animator == null)
+                Transform nutriCameraObj = _nutriController.transform.Find("CameraNutri");
+                if (nutriCameraObj != null)
                 {
-                    Debug.LogError($"[{GetType().Name}] Animator not found on nutri object");
+                    _nutriCamera = nutriCameraObj.GetComponent<Camera>();
+                }
+
+                if (_animator == null || _nutriCamera == null)
+                {
+                    Debug.LogError($"[{GetType().Name}] Required components not found on nutri object");
                     return;
                 }
 

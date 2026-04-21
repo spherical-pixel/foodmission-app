@@ -24,5 +24,7 @@ namespace eu.foodmission.platform
         void SetMood(NutriMood mood);
         NutriMood CurrentMood { get; }
         bool IsInitialized { get; }
+
+        RenderTexture NutriCameraRenderTexture { get; }
     }
 }
