@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using eu.foodmission.platform.Components;
 
 namespace eu.foodmission.platform.Tests
 {

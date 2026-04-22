@@ -1,6 +1,6 @@
 using System;
 
-namespace eu.foodmission.platform
+namespace eu.foodmission.platform.Components
 {
     public struct FMDialogAction
     {
