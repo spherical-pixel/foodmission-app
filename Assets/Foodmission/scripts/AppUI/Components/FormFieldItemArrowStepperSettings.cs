@@ -83,19 +83,24 @@ namespace eu.foodmission.platform.Components
             this.style.flexDirection = FlexDirection.Row;
             this.style.justifyContent = Justify.SpaceBetween;
             this.style.alignItems = Align.Center;
-            this.style.flexGrow = 1;
+            this.style.flexGrow = 0;
 
             _heading = new Unity.AppUI.UI.Heading();
             _heading.AddToClassList("heading-wrap");
-            _heading.AddToClassList("heading_field");
+            _heading.AddToClassList("stepper-heading");
             _heading.size = HeadingSize.M;
             _heading.primary = true;
-            //_heading.style.minWidth = new StyleLength(new Length(80,LengthUnit.Percent));
+            _heading.style.flexShrink = 1;
+            // Remove hardcoded width to let it fit its content
+            // _heading.style.width = new StyleLength(new Length(50,LengthUnit.Percent));
             Add(_heading);
 
             _stepper = new FMArrowStepper();
             _stepper.RemoveFromClassList("fm-simple-stepper");
             _stepper.valueChanged += OnStepperValueChanged;
+            _stepper.style.flexShrink = 0;
+            // Remove hardcoded width
+            // _stepper.style.width = new StyleLength(new Length(30,LengthUnit.Percent));
             Add(_stepper);
 
             

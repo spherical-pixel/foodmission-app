@@ -3,14 +3,14 @@
     <ui:VisualElement name="root" style="flex-grow: 0; background-color: rgba(2, 70, 57, 0);">
         <ui:VisualElement name="content" style="flex-grow: 0; padding-left: 95px; padding-right: 95px;">
             <appui:Spacer spacing="XL"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Text size" stepper-choices="" name="stepper-scale" style="flex-grow: 1;"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Theme" stepper-choices="" name="stepper-theme" style="flex-grow: 1;"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Background" stepper-choices="" name="stepper-background" style="flex-grow: 1;"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Font" stepper-choices="" name="stepper-font" style="flex-grow: 1;"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Push notifications" stepper-choices="" name="stepper-notifications" style="flex-grow: 1;"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Language" stepper-choices="" name="stepper-lang" style="flex-grow: 1;"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Sound" stepper-choices="" name="stepper-sound" style="flex-grow: 1;"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Music" stepper-choices="" name="stepper-music" style="flex-grow: 1;"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Text size" stepper-choices="" name="stepper-scale"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Theme" stepper-choices="" name="stepper-theme"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Background" stepper-choices="" name="stepper-background"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Font" stepper-choices="" name="stepper-font"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Push notifications" stepper-choices="" name="stepper-notifications"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Language" stepper-choices="" name="stepper-lang"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Sound" stepper-choices="" name="stepper-sound"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Music" stepper-choices="" name="stepper-music"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
