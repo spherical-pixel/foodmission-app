@@ -227,7 +227,7 @@
        ============================================ */
 
     --appui-backgrounds-300: var(--appui-primary-25);  /* fondo app */
-    --appui-backgrounds-200: var(--appui-primary-100); /* surface */
+    --appui-backgrounds-200: var(--appui-primary-15); /* surface */
     --appui-backgrounds-100: var(--appui-primary-200); /* cards */
     --appui-backgrounds-50: var(--appui-primary-300);  /* hover */
 

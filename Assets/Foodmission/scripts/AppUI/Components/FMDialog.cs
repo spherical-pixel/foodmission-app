@@ -1,5 +1,4 @@
 using System;
-
 using Unity.AppUI.Core;
 using Unity.AppUI.UI;
 
@@ -130,7 +129,7 @@ namespace eu.foodmission.platform.Components
             foreach (var action in actions)
             {
                 var captured = action;
-                var button = new Button
+                var button = new Unity.AppUI.UI.Button
                 {
                     title = captured.Label
                 };
