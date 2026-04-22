@@ -39,6 +39,19 @@ namespace eu.foodmission.platform.Components
             }
         }
 
+        [UxmlAttribute("stepper-cyclic")] [CreateProperty]
+        public bool Cyclic
+        {
+            get => _stepper?.Cyclic ?? true;
+            set
+            {
+                if (_stepper != null)
+                {
+                    _stepper.Cyclic = value;
+                }
+            }
+        }
+
         [UxmlAttribute("stepper-selected-index")] [CreateProperty]
         public int SelectedIndex
         {

@@ -14,6 +14,10 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<string> setLanguage = "app/setLanguage";
         public static readonly ActionCreator<string> setScale = "app/setScale";
         public static readonly ActionCreator<string> setFont = "app/setFont";
+        public static readonly ActionCreator<int> setSound = "app/setSound";
+        public static readonly ActionCreator<int> setMusic = "app/setMusic";
+        public static readonly ActionCreator<bool> setPushNotifications = "app/setPushNotifications";
+        public static readonly ActionCreator<bool> setBackgroundPattern = "app/setBackgroundPattern";
         public static readonly ActionCreator completeOnboarding = "app/completeOnboarding";
         public static readonly ActionCreator<string> setUser = "app/setUser";
         public static readonly ActionCreator logout = "app/logout";
@@ -116,6 +120,34 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.font = action.payload;
+            return newState;
+        }
+
+        public static AppState SetSoundReducer(AppState state, IAction<int> action)
+        {
+            var newState = state.Copy();
+            newState.soundVolume = action.payload;
+            return newState;
+        }
+
+        public static AppState SetMusicReducer(AppState state, IAction<int> action)
+        {
+            var newState = state.Copy();
+            newState.musicVolume = action.payload;
+            return newState;
+        }
+
+        public static AppState SetPushNotificationsReducer(AppState state, IAction<bool> action)
+        {
+            var newState = state.Copy();
+            newState.pushNotificationsEnabled = action.payload;
+            return newState;
+        }
+
+        public static AppState SetBackgroundPatternReducer(AppState state, IAction<bool> action)
+        {
+            var newState = state.Copy();
+            newState.backgroundPattern = action.payload;
             return newState;
         }
 

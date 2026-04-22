@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using eu.foodmission.platform.Components;
@@ -11,12 +12,29 @@ namespace eu.foodmission.platform
         private FormFieldItemArrowStepperSettings _langStepper;
         private FormFieldItemArrowStepperSettings _scaleStepper;
         private FormFieldItemArrowStepperSettings _fontStepper;
+        private FormFieldItemArrowStepperSettings _soundStepper;
+        private FormFieldItemArrowStepperSettings _musicStepper;
+        private FormFieldItemArrowStepperSettings _notificationsStepper;
+        private FormFieldItemArrowStepperSettings _backgroundStepper;
         
 
         private static readonly string[] k_ThemeChoices = { "Light", "Dark", "System" };
-        private static readonly string[] k_LangChoices  = { "English", "Español" };
+        private static readonly string[] k_LangChoices = {
+            "Nederlands",   // nl
+            "English",      // en
+            "Deutsch",      // de
+            "Ελληνικά",   // el
+            "Italiano",     // it
+            "Norsk",        // no
+            "Polski",       // pl
+            "Slovenščina",  // sl
+            "Español"  // es
+        };
         private static readonly string[] k_ScaleChoices = { "Small", "Medium", "Large" };
         private static readonly string[] k_FontChoices  = { "Roboto", "Open Sans", "OpenDyslexic" };
+        private static readonly string[] k_SoundChoices         = Enumerable.Range(0, 21).Select(i => (i * 5).ToString()).ToArray();
+        private static readonly string[] k_NotificationsChoices = { "Off", "On" };
+        private static readonly string[] k_BackgroundChoices    = { "Plain", "Pattern" };
 
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
@@ -36,6 +54,10 @@ namespace eu.foodmission.platform
             _langStepper  = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-lang");
             _scaleStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-scale");
             _fontStepper  = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-font");
+            _soundStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-sound");
+            _musicStepper         = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-music");
+            _notificationsStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-notifications");
+            _backgroundStepper    = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-background");
         }
 
         protected override void OnViewModelBound()
@@ -73,6 +95,34 @@ namespace eu.foodmission.platform
                 _fontStepper.SelectedIndex = FontLabelToIndex(_viewModel.Font);
                 _fontStepper.RegisterValueChangedCallback(OnFontChanged);
             }
+
+            if (_soundStepper != null)
+            {
+                _soundStepper.Choices = k_SoundChoices;
+                _soundStepper.SelectedIndex = SoundValueToIndex(_viewModel.Sound);
+                _soundStepper.RegisterValueChangedCallback(OnSoundChanged);
+            }
+
+            if (_musicStepper != null)
+            {
+                _musicStepper.Choices = k_SoundChoices;
+                _musicStepper.SelectedIndex = SoundValueToIndex(_viewModel.Music);
+                _musicStepper.RegisterValueChangedCallback(OnMusicChanged);
+            }
+
+            if (_notificationsStepper != null)
+            {
+                _notificationsStepper.Choices = k_NotificationsChoices;
+                _notificationsStepper.SelectedIndex = _viewModel.PushNotifications ? 1 : 0;
+                _notificationsStepper.RegisterValueChangedCallback(OnNotificationsChanged);
+            }
+
+            if (_backgroundStepper != null)
+            {
+                _backgroundStepper.Choices = k_BackgroundChoices;
+                _backgroundStepper.SelectedIndex = _viewModel.BackgroundPattern ? 1 : 0;
+                _backgroundStepper.RegisterValueChangedCallback(OnBackgroundChanged);
+            }
         }
 
         protected override void OnViewModelUnbinding()
@@ -97,10 +147,34 @@ namespace eu.foodmission.platform
                 _fontStepper.UnregisterValueChangedCallback(OnFontChanged);
             }
 
+            if (_soundStepper != null)
+            {
+                _soundStepper.UnregisterValueChangedCallback(OnSoundChanged);
+            }
+
+            if (_musicStepper != null)
+            {
+                _musicStepper.UnregisterValueChangedCallback(OnMusicChanged);
+            }
+
+            if (_notificationsStepper != null)
+            {
+                _notificationsStepper.UnregisterValueChangedCallback(OnNotificationsChanged);
+            }
+
+            if (_backgroundStepper != null)
+            {
+                _backgroundStepper.UnregisterValueChangedCallback(OnBackgroundChanged);
+            }
+
             _themeStepper = null;
             _langStepper  = null;
             _scaleStepper = null;
             _fontStepper  = null;
+            _soundStepper         = null;
+            _musicStepper         = null;
+            _notificationsStepper = null;
+            _backgroundStepper    = null;
 
             base.OnViewModelUnbinding();
         }
@@ -117,6 +191,18 @@ namespace eu.foodmission.platform
         private void OnFontChanged(object sender, ChangeEvent<int> evt) =>
             _viewModel?.SetFont(IndexToFont(evt.newValue));
 
+        private void OnSoundChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetSound(IndexToSoundValue(evt.newValue));
+
+        private void OnMusicChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetMusic(IndexToSoundValue(evt.newValue));
+
+        private void OnNotificationsChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetPushNotifications(evt.newValue == 1);
+
+        private void OnBackgroundChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetBackgroundPattern(evt.newValue == 1);
+
         private static int ThemeLabelToIndex(string theme) => theme switch
         {
             "light" => 0,
@@ -126,8 +212,15 @@ namespace eu.foodmission.platform
 
         private static int LangLabelToIndex(string lang) => lang switch
         {
-            "en" => 0,
-            _    => 1   // es
+            "nl" => 0,
+            "en" => 1,
+            "de" => 2,
+            "el" => 3,
+            "it" => 4,
+            "no" => 5,
+            "pl" => 6,
+            "sl" => 7,
+            _    => 8  // es
         };
 
         private static int ScaleLabelToIndex(string scale) => scale switch
@@ -153,7 +246,14 @@ namespace eu.foodmission.platform
 
         private static string IndexToLang(int index) => index switch
         {
-            0 => "en",
+            0 => "nl",
+            1 => "en",
+            2 => "de",
+            3 => "el",
+            4 => "it",
+            5 => "no",
+            6 => "pl",
+            7 => "sl",
             _ => "es"
         };
 
@@ -170,5 +270,11 @@ namespace eu.foodmission.platform
             2 => "open-dyslexic",
             _ => "roboto"
         };
+
+        private static int SoundValueToIndex(int volume) =>
+            System.Math.Clamp(volume / 5, 0, 20);
+
+        private static int IndexToSoundValue(int index) =>
+            index * 5;
     }
 }

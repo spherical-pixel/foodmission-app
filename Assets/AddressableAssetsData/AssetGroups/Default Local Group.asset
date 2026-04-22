@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: ecef101743cdb4acdb45c26f3ed92856
   m_SerializeEntries:
+  - m_GUID: 1d8e881c2df504c1ea975a29285c7a28
+    m_Address: Foodmission/AppUI/Templates/NutriMessageWithButtons.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34d6d72c198e84f0487009eae618024c
     m_Address: Assets/Foodmission/prefabs/NutriController.prefab
     m_ReadOnly: 0

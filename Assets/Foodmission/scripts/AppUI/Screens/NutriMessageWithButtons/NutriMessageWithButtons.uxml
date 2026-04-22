@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:unity="Unity.Mathematics" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Theme.uss?fileID=7433441132597879392&amp;guid=827025de60b2746fba86343352934c22&amp;type=3#Foodmission_Theme"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" class="fm-background-tile" style="flex-grow: 1;">
+        <ui:VisualElement name="content-container" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-content: stretch; padding-left: 96px; padding-right: 96px; padding-top: 0;">
+            <appui:ExVisualElement name="message-container" class="box-background" style="min-height: 660px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;"/>
+            <ui:Image name="nutri-image" class="fm-home-nutri-image"/>
+            <appui:ExVisualElement name="buttons-container" style="min-height: 660px; justify-content: flex-end;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

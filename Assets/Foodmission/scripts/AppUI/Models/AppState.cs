@@ -32,6 +32,26 @@ namespace eu.foodmission.platform
         public string font = "roboto";
 
         /// <summary>
+        /// Sound effects volume: 0–100 in steps of 5
+        /// </summary>
+        public int soundVolume = 100;
+
+        /// <summary>
+        /// Music volume: 0–100 in steps of 5
+        /// </summary>
+        public int musicVolume = 100;
+
+        /// <summary>
+        /// Whether push notifications are enabled
+        /// </summary>
+        public bool pushNotificationsEnabled = false;
+
+        /// <summary>
+        /// Whether the tile background pattern is shown (false = plain color)
+        /// </summary>
+        public bool backgroundPattern = true;
+
+        /// <summary>
         /// OnBoarding completed
         /// </summary>
         public bool hasCompletedOnboarding = false;
@@ -109,6 +129,10 @@ namespace eu.foodmission.platform
                 theme = this.theme,
                 scale = this.scale,
                 font = this.font,
+                soundVolume = this.soundVolume,
+                musicVolume = this.musicVolume,
+                pushNotificationsEnabled = this.pushNotificationsEnabled,
+                backgroundPattern = this.backgroundPattern,
                 hasCompletedOnboarding = this.hasCompletedOnboarding,
                 hasCompletedExtendedProfile = this.hasCompletedExtendedProfile,
                 userId = this.userId,

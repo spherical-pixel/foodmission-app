@@ -4,6 +4,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.Redux;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
@@ -19,6 +20,8 @@ namespace eu.foodmission.platform
         private IThemeService _themeService;
         private IStoreService _storeService;
         private IDisposableSubscription _scaleSubscription;
+        private IDisposableSubscription _langSubscription;
+        private IDisposableSubscription _backgroundSubscription;
         private Panel _panel;
 
         public FoodmissionApp()
@@ -95,6 +98,26 @@ namespace eu.foodmission.platform
                 state => state.scale,
                 OnScaleChanged
             );
+
+            // Apply the initial locale from state
+            ApplyLocaleFromState();
+
+            // Locale change subscription
+            _langSubscription?.Dispose();
+            _langSubscription = _storeService.store.Subscribe(
+                state => state.lang,
+                OnLangChanged
+            );
+
+            // Apply the initial background from state
+            ApplyBackgroundFromState();
+
+            // Background change subscription
+            _backgroundSubscription?.Dispose();
+            _backgroundSubscription = _storeService.store.Subscribe(
+                state => state.backgroundPattern,
+                OnBackgroundPatternChanged
+            );
         }
 
         /// <summary>
@@ -108,11 +131,64 @@ namespace eu.foodmission.platform
             _scaleSubscription?.Dispose();
             _scaleSubscription = null;
 
+            _langSubscription?.Dispose();
+            _langSubscription = null;
+
+            _backgroundSubscription?.Dispose();
+            _backgroundSubscription = null;
+
             _themeService?.Dispose();
             _themeService = null;
 
             _storeService = null;
             _panel = null;
+        }
+
+        private void ApplyBackgroundFromState()
+        {
+            if (_storeService == null)
+                return;
+
+            ApplyBackground(_storeService.GetAppState().backgroundPattern);
+        }
+
+        private void OnBackgroundPatternChanged(bool pattern)
+        {
+            ApplyBackground(pattern);
+        }
+
+        private void ApplyBackground(bool pattern)
+        {
+            if (pattern)
+                rootVisualElement.RemoveFromClassList("fm-plain-background");
+            else
+                rootVisualElement.AddToClassList("fm-plain-background");
+        }
+
+        private void ApplyLocaleFromState()
+        {
+            if (_storeService == null)
+                return;
+
+            ApplyLocale(_storeService.GetAppState().lang);
+        }
+
+        private void OnLangChanged(string lang)
+        {
+            ApplyLocale(lang);
+        }
+
+        private static void ApplyLocale(string lang)
+        {
+            var locale = LocalizationSettings.AvailableLocales.GetLocale(lang);
+            if (locale != null)
+            {
+                LocalizationSettings.SelectedLocale = locale;
+            }
+            else
+            {
+                Debug.LogWarning($"[FoodmissionApp] Locale not found for lang: {lang}");
+            }
         }
 
         /// <summary>

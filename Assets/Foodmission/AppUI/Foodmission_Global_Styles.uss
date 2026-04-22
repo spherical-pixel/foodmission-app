@@ -64,6 +64,10 @@
     background-size: 256px 256px;
 }
 
+.fm-plain-background .appui-navigation-screen__container {
+    background-image: none;
+}
+
 .appui-bottom-navbar {
     min-height: var(--appui-sizing-1000);
     background-color: transparent;
@@ -124,15 +128,16 @@
 }
 
 .heading-wrap {
-    white-space: nowrap;                                                                             
-    overflow: hidden;                                                                                
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.stepper-heading{
-    text-overflow: ellipsis;                                                                         
-    min-width: 0;                                                                                    
-    flex-shrink: 1;                                                                                  
-    -unity-text-auto-size: best-fit var(--appui-font-sizes-50) var(--appui-font-sizes-500);
+.stepper-heading {
+    min-width: 0;
+    flex-shrink: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-500);
 }
 
 
@@ -367,10 +372,12 @@
 }
 
 .fm-arrow-stepper__label {
-    flex-grow: 1;
+    width: 180px;
     -unity-text-align: middle-center;
     font-size: var(--appui-font-sizes-body-md);
-    min-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-md);
 }
 
 .fm-primary-color,
@@ -562,3 +569,30 @@
     background-color: var(--appui-foregrounds-100);
 }
 
+.fm-background-tile{
+    background-image: url("project://database/Assets/Foodmission/graphics/icons_miscellaneous.png?fileID=2800000&guid=63b9996e727774f16a08dde171cdadd8&type=3#icons_miscellaneous");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    background-color: var(--fm-main-bg);
+}
+
+/* NutriMessageDialog enter/exit animations */
+.fm-nutri-dialog {
+    opacity: 0;
+    scale: 0.95;
+    transition-property: opacity, scale;
+    transition-duration: 350ms, 350ms;
+    transition-timing-function: ease-out, ease-out;
+}
+
+.fm-nutri-dialog.fm-nutri-dialog--visible {
+    opacity: 1;
+    scale: 1;
+}
+
+.fm-nutri-dialog.fm-nutri-dialog--exit {
+    opacity: 0;
+    scale: 0.95;
+    transition-duration: 200ms, 200ms;
+    transition-timing-function: ease-in, ease-in;
+}

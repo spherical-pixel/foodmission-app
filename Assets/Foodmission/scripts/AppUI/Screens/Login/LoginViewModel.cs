@@ -1,4 +1,5 @@
 using System;
+using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.Redux;
@@ -154,8 +155,23 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Called when user clicks Login button
         /// </summary>
-        public async void Login()
+        public async void Login(VisualElement velement)
         {
+            // NutriMessageDialog.Show(                                                                                                                                                            
+            //     anchor: velement,
+            //     message: "@UI:COMPLETE_WELCOME_MESSAGE",                                                                                                                                                 
+            //     actions: new[]                                        
+            //     {
+            //         new FMDialogAction("@UI:BTN_CREATE_AVATAR", () => {}, isPrimary: true),
+            //         new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () => {}, isPrimary: true),
+            //         new FMDialogAction("@UI:BTN_ENTER_APP", () => {}, isPrimary: true)
+            //     }
+            // );           
+
+            // return;
+
+
+
             Debug.Log($"[{GetType().Name}] Login started for user: {Username}");
             _hasNavigated = false; // Reset navigation flag on new login attempt
 

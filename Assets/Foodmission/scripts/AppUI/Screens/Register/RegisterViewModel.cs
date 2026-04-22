@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.Redux;
@@ -197,6 +198,22 @@ namespace eu.foodmission.platform
             }
             else if (!string.IsNullOrEmpty(authState.userId))
             {
+                NutriMessageDialog.Show(
+                    message: "@UI:COMPLETE_WELCOME_MESSAGE",
+                    actions: new[]
+                    {
+                        new FMDialogAction("@UI:BTN_CREATE_AVATAR", () => {}, isPrimary: true),
+                        new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
+                        {
+                            RaiseNavigationRequested(Actions.register_to_onboarding);
+                        }, isPrimary: true),
+                        new FMDialogAction("@UI:BTN_ENTER_APP", () =>
+                        {
+                            RaiseNavigationRequested(Actions.loading_to_home);
+                        }, isPrimary: true)
+                    }
+                );           
+
                 // Check if extended profile is needed
                 // AppState state = _storeService.GetAppState();
                 // if (!state.hasCompletedExtendedProfile)
@@ -209,7 +226,7 @@ namespace eu.foodmission.platform
                 //     Debug.Log($"[{GetType().Name}] - OnAuthStateChanged -> userId = {authState.userId}, navigating to home");
                 //     RaiseNavigationRequested(Actions.loading_to_home);
                 // }
-                RaiseNavigationRequested(Actions.loading_to_home);
+                //RaiseNavigationRequested(Actions.loading_to_home);
             }
         }
 

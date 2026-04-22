@@ -103,7 +103,7 @@ Assets/Foodmission/
 | Resource | Description |
 |----------|-------------|
 | [App UI Docs](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.1/manual/index.html) | Unity App UI framework documentation (v2.1) |
-| [API Docs](https://test.api.foodmission.eu/api/docs) | Backend API — test environment (Swagger UI) |
+| [API Docs](https://staging.api.foodmission.eu/api/docs) | Backend API — test environment (Swagger UI) |
 
 ---
 

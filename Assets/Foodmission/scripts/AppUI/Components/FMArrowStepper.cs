@@ -72,8 +72,20 @@ namespace eu.foodmission.platform.Components
         private Text _valueLabel;
         private IconButton _nextButton;
 
+        [UxmlAttribute("cyclic")] [CreateProperty]
+        public bool Cyclic
+        {
+            get => _cyclic;
+            set
+            {
+                _cyclic = value;
+                UpdateButtonStates();
+            }
+        }
+
         private string[] _choices = Array.Empty<string>();
         private int _selectedIndex = 0;
+        private bool _cyclic = true;
 
         public FMArrowStepper()
         {
@@ -113,12 +125,18 @@ namespace eu.foodmission.platform.Components
 
         private void OnPrevClicked()
         {
-            SelectedIndex--;
+            if (_cyclic && _selectedIndex == 0)
+                SelectedIndex = Choices.Length - 1;
+            else
+                SelectedIndex--;
         }
 
         private void OnNextClicked()
         {
-            SelectedIndex++;
+            if (_cyclic && _selectedIndex == Choices.Length - 1)
+                SelectedIndex = 0;
+            else
+                SelectedIndex++;
         }
 
         private void UpdateLabel()
@@ -133,11 +151,11 @@ namespace eu.foodmission.platform.Components
         {
             if (_prevButton != null)
             {
-                _prevButton.SetEnabled(_selectedIndex > 0);
+                _prevButton.SetEnabled(_cyclic || _selectedIndex > 0);
             }
             if (_nextButton != null)
             {
-                _nextButton.SetEnabled(_selectedIndex < Choices.Length - 1);
+                _nextButton.SetEnabled(_cyclic || _selectedIndex < Choices.Length - 1);
             }
         }
     }

@@ -113,7 +113,7 @@ namespace eu.foodmission.platform
 
         private void OnLoginClicked()
         {
-            _viewModel?.Login();
+            _viewModel?.Login(this);
         }
 
         private void OnRegisterClicked()
