@@ -1,5 +1,6 @@
 using System;
 
+using Unity.AppUI.Core;
 using Unity.AppUI.UI;
 
 using UnityEngine.UIElements;
@@ -46,9 +47,24 @@ namespace eu.foodmission.platform.Components
             };
 
             dialog.SetPrimaryAction(0, confirmLabel, onConfirm ?? (() => { }));
-            dialog.SetCancelAction(1, cancelLabel, onCancel ?? (() => { }));
 
-            Modal.Build(anchor, dialog).Show();
+            // SetCancelAction only accepts (actionId, displayText) — no callback overload.
+            // The cancel callback is captured via the modal's dismissed event instead.
+            dialog.SetCancelAction(1, cancelLabel);
+
+            var modal = Modal.Build(anchor, dialog);
+            if (onCancel != null)
+            {
+                modal.dismissed += (_, dismissType) =>
+                {
+                    if (dismissType == DismissType.Manual)
+                    {
+                        onCancel.Invoke();
+                    }
+                };
+            }
+
+            modal.Show();
         }
 
         public static void ShowScrollable(
@@ -60,21 +76,37 @@ namespace eu.foodmission.platform.Components
             string acceptLabel = "@UI:TXT_ACCEPT",
             string cancelLabel = "@UI:TXT_BACK")
         {
-            var dialog = new Dialog { title = title };
+            // Use AlertDialog so SetPrimaryAction and SetCancelAction are available.
+            // The scrollable text content is added directly to the dialog's contentContainer.
+            var dialog = new AlertDialog { title = title };
 
             var scrollView = new ScrollView();
             scrollView.AddToClassList("fm-dialog-scroll");
 
-            var text = new Text { text = content };
+            var text = new Unity.AppUI.UI.Text { text = content };
             text.AddToClassList("fm-dialog-scroll-text");
 
             scrollView.Add(text);
-            dialog.Add(scrollView);
+            dialog.contentContainer.Add(scrollView);
 
             dialog.SetPrimaryAction(0, acceptLabel, onAccept ?? (() => { }));
-            dialog.SetCancelAction(1, cancelLabel, onCancel ?? (() => { }));
 
-            Modal.Build(anchor, dialog).Show();
+            // SetCancelAction only accepts (actionId, displayText); cancel callback via dismissed event.
+            dialog.SetCancelAction(1, cancelLabel);
+
+            var modal = Modal.Build(anchor, dialog);
+            if (onCancel != null)
+            {
+                modal.dismissed += (_, dismissType) =>
+                {
+                    if (dismissType == DismissType.Manual)
+                    {
+                        onCancel.Invoke();
+                    }
+                };
+            }
+
+            modal.Show();
         }
 
         public static void ShowCustom(
@@ -83,24 +115,42 @@ namespace eu.foodmission.platform.Components
             VisualElement content,
             params FMDialogAction[] actions)
         {
-            var dialog = new Dialog { title = title };
-            dialog.Add(content);
+            if (actions == null || actions.Length == 0)
+            {
+                throw new ArgumentException("ShowCustom requires at least one action.", nameof(actions));
+            }
 
-            int priority = 0;
+            // Dialog does not expose SetPrimaryAction / SetCancelAction — those belong to AlertDialog.
+            // We add Button instances directly to the public actionContainer instead.
+            var dialog = new Dialog { title = title };
+            dialog.contentContainer.Add(content);
+
+            Modal modal = null;
+
             foreach (var action in actions)
             {
                 var captured = action;
+                var button = new Button
+                {
+                    title = captured.Label
+                };
+
                 if (captured.IsPrimary)
                 {
-                    dialog.SetPrimaryAction(priority++, captured.Label, captured.Callback ?? (() => { }));
+                    button.variant = ButtonVariant.Accent;
                 }
-                else
+
+                button.clicked += () =>
                 {
-                    dialog.SetCancelAction(priority++, captured.Label, captured.Callback ?? (() => { }));
-                }
+                    captured.Callback?.Invoke();
+                    modal?.Dismiss(DismissType.Action);
+                };
+
+                dialog.actionContainer.Add(button);
             }
 
-            Modal.Build(anchor, dialog).Show();
+            modal = Modal.Build(anchor, dialog);
+            modal.Show();
         }
     }
 }
