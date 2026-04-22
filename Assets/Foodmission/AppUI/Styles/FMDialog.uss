@@ -1,0 +1,8 @@
+.fm-dialog-scroll {
+    max-height: 420px;
+}
+
+.fm-dialog-scroll-text {
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
