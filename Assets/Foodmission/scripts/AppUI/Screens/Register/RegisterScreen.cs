@@ -222,29 +222,20 @@ namespace eu.foodmission.platform
             ShowTermsDialog();
         }
 
-        private void ShowTermsDialog()
+private void ShowTermsDialog()
         {
-            var termsContent = "@UI:T&C_TEXT";
-
-            AlertDialog dialog = new AlertDialog
-            {
-                title = "@UI:T&C_TITLE",
-                description = termsContent,
-                variant = AlertSemantic.Information
-            };
-
-            dialog.SetPrimaryAction(0, "@UI:TXT_ACCEPT", () =>
-            {
-                if (_viewModel != null)
+            FMDialog.ShowScrollable(
+                this,
+                "@UI:T&C_TITLE",
+                "@UI:T&C_TEXT",
+                onAccept: () =>
                 {
-                    _viewModel.HasAcceptedTerms = CheckboxState.Checked;
+                    if (_viewModel != null)
+                    {
+                        _viewModel.HasAcceptedTerms = CheckboxState.Checked;
+                    }
                 }
-            });
-
-            dialog.SetCancelAction(1, "@UI:TXT_CANCEL");
-
-            var modal = Modal.Build(_termsCheckbox, dialog);
-            modal.Show();
+            );
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
