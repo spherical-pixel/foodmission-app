@@ -2,6 +2,8 @@
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
+using eu.foodmission.platform.Components;
+
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -113,48 +115,30 @@ namespace eu.foodmission.platform
             _navController.PopBackStack();//.Navigate(Actions.forgotpassword_to_login);
         }
 
-        void OnShowErrorRequested(string message)
+void OnShowErrorRequested(string message)
         {
             if (string.IsNullOrEmpty(message))
             {
                 return;
             }
 
-            AlertDialog dialog = new AlertDialog
-            {
-                title = "@UI:ALERT_ERROR_TITLE",
-                description = message,
-                variant = AlertSemantic.Error
-            };
-
-            dialog.SetPrimaryAction(0, "@UI:TXT_OK", () => { });
-
-            var modal = Modal.Build(this, dialog);
-            modal.Show();
+            FMDialog.ShowAlert(this, "@UI:ALERT_ERROR_TITLE", message, AlertSemantic.Error);
         }
 
-        void OnShowSuccessRequested(string message)
+void OnShowSuccessRequested(string message)
         {
             if (string.IsNullOrEmpty(message))
             {
                 return;
             }
 
-            AlertDialog dialog = new AlertDialog
-            {
-                title = "@UI:ALERT_SUCCESS_TITLE",
-                description = message,
-                variant = AlertSemantic.Confirmation
-            };
-
-            dialog.SetPrimaryAction(0, "@UI:TXT_OK", () =>
-            {
-                //_navController.Navigate(Actions.)
-                _navController.PopBackStack();
-            });
-
-            var modal = Modal.Build(this, dialog);
-            modal.Show();
+            FMDialog.ShowAlert(
+                this,
+                "@UI:ALERT_SUCCESS_TITLE",
+                message,
+                AlertSemantic.Confirmation,
+                onOk: () => _navController.PopBackStack()
+            );
         }
     }
 }
