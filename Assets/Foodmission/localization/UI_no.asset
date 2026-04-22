@@ -124,6 +124,34 @@ MonoBehaviour:
       din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
       i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
       stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
+      support@foodmission.eu<b>FOODMISSIONs vilk\xE5r og betingelser</b>\n\nVed \xE5
+      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
+      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
+      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
+      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
+      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
+      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
+      support@foodmission.eu<b>FOODMISSION Vilk\xE5r og betingelser</b>\n\nVed \xE5
+      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
+      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
+      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
+      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
+      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
+      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
+      support@foodmission.eu<b>FOODMISSION Vilk\xE5r og betingelser</b>\n\nVed \xE5
+      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
+      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
+      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
+      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
+      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
+      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
+      support@foodmission.eu<b>FOODMISSION Vilk\xE5r og betingelser</b>\n\nVed \xE5
+      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
+      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
+      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
+      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
+      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
+      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
       support@foodmission.eu"
     m_Metadata:
       m_Items: []
@@ -214,6 +242,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 28204088708554752
     m_Localized: Varsler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35547983100502016
+    m_Localized: "Sammen skal vi koble kj\xF8kkenet ditt med \xE5 ta vare p\xE5 planeten.\n\nLag
+      mat, l\xE6r, del og dyrk hver dag.\n\nKlar til \xE5 starte?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549851969118208
+    m_Localized: Lag din avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549934412357632
+    m_Localized: "Fullf\xF8r profilen din"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35550076637011968
+    m_Localized: "G\xE5 inn i appen"
     m_Metadata:
       m_Items: []
   references:

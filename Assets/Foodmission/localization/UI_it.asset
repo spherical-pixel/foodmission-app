@@ -124,6 +124,35 @@ MonoBehaviour:
       PRIVACY</b>\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0
       con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
       informazioni sulla posizione e statistiche di utilizzo.\n\nPer ulteriori informazioni,
+      contattaci all'indirizzo support@foodmission.eu<b>Termini e condizioni di FOODMISSION</b>\n\nUtilizzando
+      questa applicazione, accetti i seguenti termini:\n\n<b>1. REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8
+      necessario fornire informazioni accurate e complete al momento della registrazione.
+      Sei responsabile della riservatezza delle tue credenziali di accesso.\n\n<b>2.
+      PRIVACY</b>\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0
+      con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
+      informazioni sulla posizione e statistiche di utilizzo.\n\n\nPer ulteriori
+      informazioni, contattaci all'indirizzo support@foodmission.eu<b>Termini e condizioni
+      di FOODMISSION</b>\n\nUtilizzando questa applicazione, accetti i seguenti termini:\n\n<b>1.
+      REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8 necessario fornire informazioni accurate
+      e complete al momento della registrazione. Sei responsabile della riservatezza
+      delle tue credenziali di accesso.\n\n<b>2. PRIVACY</b>\nRaccogliamo ed elaboriamo
+      i tuoi dati personali in conformit\xE0 con la nostra Informativa sulla privacy.
+      Ci\xF2 include dati nutrizionali, informazioni sulla posizione e statistiche
+      di utilizzo.\n\nPer ulteriori informazioni, contattaci all'indirizzo support@foodmission.eu<b>Termini
+      e condizioni di FOODMISSION</b>\n\nUtilizzando questa applicazione, accetti
+      i seguenti termini:\n\n<b>1. REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8 necessario
+      fornire informazioni accurate e complete al momento della registrazione. Sei
+      responsabile della riservatezza delle tue credenziali di accesso.\n\n<b>2.
+      PRIVACY</b>\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0
+      con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
+      informazioni sulla posizione e statistiche di utilizzo.\n\nPer ulteriori informazioni,
+      contattaci all'indirizzo support@foodmission.eu<b>Termini e condizioni di FOODMISSION</b>\n\nUtilizzando
+      questa applicazione, accetti i seguenti termini:\n\n<b>1. REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8
+      necessario fornire informazioni accurate e complete al momento della registrazione.
+      Sei responsabile della riservatezza delle tue credenziali di accesso.\n\n<b>2.
+      PRIVACY</b>\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0
+      con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
+      informazioni sulla posizione e statistiche di utilizzo.\n\nPer ulteriori informazioni,
       contattaci all'indirizzo support@foodmission.eu"
     m_Metadata:
       m_Items: []
@@ -215,6 +244,29 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 28204088708554752
     m_Localized: Notifiche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35547983100502016
+    m_Localized: 'Insieme, uniremo la tua cucina al rispetto per il pianeta.
+
+
+      Cucina,
+      impara, condividi e cresci ogni giorno.
+
+
+      Pronto a iniziare?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549851969118208
+    m_Localized: Crea il tuo avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549934412357632
+    m_Localized: Completa il tuo profilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35550076637011968
+    m_Localized: Accedi all'app
     m_Metadata:
       m_Items: []
   references:

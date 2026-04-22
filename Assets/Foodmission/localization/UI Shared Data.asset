@@ -203,6 +203,22 @@ MonoBehaviour:
     m_Key: NAV_NOTIFICATIONS
     m_Metadata:
       m_Items: []
+  - m_Id: 35547983100502016
+    m_Key: COMPLETE_WELCOME_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549851969118208
+    m_Key: BTN_CREATE_AVATAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549934412357632
+    m_Key: BTN_COMPLETE_PROFILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35550076637011968
+    m_Key: BTN_ENTER_APP
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -119,8 +119,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25351921299611648
-    m_Localized: "<b>Nutzungsbedingungen von FOODMISSION</b>\n\nMit der Nutzung dieser
-      Anwendung erkl\xE4ren Sie sich mit den folgenden Bedingungen einverstanden:\n\n<b>1.
+    m_Localized: "<b>Nutzungsbedingungen von FOODMISSION</b>\n\nDurch die Nutzung
+      dieser Anwendung stimmen Sie den folgenden Bedingungen zu:\n\n<b>1. KONTOREGISTRIERUNG</b>\nSie
+      m\xFCssen bei der Registrierung korrekte und vollst\xE4ndige Angaben machen.
+      Sie sind f\xFCr die Geheimhaltung Ihrer Zugangsdaten verantwortlich.\n\n<b>2.
+      DATENSCHUTZ</b>\nWir erheben und verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF
+      unserer Datenschutzrichtlinie. Dies umfasst N\xE4hrwertangaben, Standortinformationen
+      und Nutzungsstatistiken.\n\nF\xFCr weitere Informationen kontaktieren Sie uns
+      bitte unter support@foodmission.eu.<b>Nutzungsbedingungen von FOODMISSION</b>\n\nDurch
+      die Nutzung dieser Anwendung stimmen Sie den folgenden Bedingungen zu:\n\n<b>1.
+      KONTOREGISTRIERUNG</b>\nSie m\xFCssen bei der Registrierung korrekte und vollst\xE4ndige
+      Angaben machen. Sie sind f\xFCr die Geheimhaltung Ihrer Zugangsdaten verantwortlich.\n\n<b>2.
+      DATENSCHUTZ</b>\nWir erheben und verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF
+      unserer Datenschutzrichtlinie. Dies umfasst N\xE4hrwertangaben, Standortinformationen
+      und Nutzungsstatistiken.\n\nF\xFCr weitere Informationen kontaktieren Sie uns
+      bitte unter support@foodmission.eu.<b>Nutzungsbedingungen von FOODMISSION</b>\n\nDurch
+      die Nutzung dieser Anwendung stimmen Sie den folgenden Bedingungen zu:\n\n<b>1.
+      KONTOREGISTRIERUNG</b>\nSie m\xFCssen bei der Registrierung korrekte und vollst\xE4ndige
+      Angaben machen. Sie sind f\xFCr die Geheimhaltung Ihrer Zugangsdaten verantwortlich.\n\n<b>2.
+      DATENSCHUTZ</b>\nWir erheben und verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF
+      unserer Datenschutzrichtlinie. Dies umfasst N\xE4hrwertangaben, Standortinformationen
+      und Nutzungsstatistiken.\n\nF\xFCr weitere Informationen kontaktieren Sie uns
+      bitte unter support@foodmission.eu.<b>Nutzungsbedingungen von FOODMISSION</b>\n\nDurch
+      die Nutzung dieser Anwendung stimmen Sie den folgenden Bedingungen zu:\n\n<b>1.
+      KONTOREGISTRIERUNG</b>\nSie m\xFCssen bei der Registrierung korrekte und vollst\xE4ndige
+      Angaben machen. Sie sind f\xFCr die Geheimhaltung Ihrer Zugangsdaten verantwortlich.\n\n<b>2.
+      DATENSCHUTZ</b>\nWir erheben und verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF
+      unserer Datenschutzrichtlinie. Dies umfasst N\xE4hrwertangaben, Standortinformationen
+      und Nutzungsstatistiken.\n\nF\xFCr weitere Informationen kontaktieren Sie uns
+      bitte unter support@foodmission.eu.<b>Nutzungsbedingungen von FOODMISSION</b>\n\nMit
+      der Nutzung dieser Anwendung stimmen Sie den folgenden Bedingungen zu:\n\n<b>1.
       KONTOREGISTRIERUNG</b>\nBei der Registrierung m\xFCssen Sie korrekte und vollst\xE4ndige
       Angaben machen. Sie sind f\xFCr die Geheimhaltung Ihrer Zugangsdaten verantwortlich.\n\n<b>2.
       DATENSCHUTZ</b>\nWir erheben und verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF
@@ -218,6 +246,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 28204088708554752
     m_Localized: Benachrichtigungen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35547983100502016
+    m_Localized: "Gemeinsam verbinden wir deine K\xFCche mit dem Schutz unseres Planeten.\n\nKochen,
+      lernen, teilen und wachsen \u2013 jeden Tag.\n\nBereit loszulegen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549851969118208
+    m_Localized: Erstelle deinen Avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549934412357632
+    m_Localized: "Vervollst\xE4ndigen Sie Ihr Profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35550076637011968
+    m_Localized: "App \xF6ffnen"
     m_Metadata:
       m_Items: []
   references:

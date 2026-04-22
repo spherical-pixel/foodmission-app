@@ -120,10 +120,37 @@ MonoBehaviour:
     m_Localized: "<b>Pogoji uporabe FOODMISSION</b>\n\nZ uporabo te aplikacije se
       strinjate z naslednjimi pogoji:\n\n<b>1. REGISTRACIJA RA\u010CUNA</b>\nPri
       registraciji morate navesti to\u010Dne in popolne podatke. Odgovorni ste za
-      ohranjanje zaupnosti podatkov za svoj ra\u010Dun.\n\n<b>2. ZASEBNOST</b>\nVa\u0161e
+      ohranjanje zaupnosti poverilnic svojega ra\u010Duna.\n\n<b>2. ZASEBNOST</b>\nVa\u0161e
       osebne podatke zbiramo in obdelujemo v skladu z na\u0161o politiko zasebnosti.
       To vklju\u010Duje podatke o hranilni vrednosti, podatke o lokaciji in statistiko
-      uporabe.\n\nZa ve\u010D informacij nas kontaktirajte na support@foodmission.eu"
+      uporabe.\n\nZa ve\u010D informacij nas kontaktirajte na support@foodmission.eu<b>Pogoji
+      uporabe FOODMISSION</b>\n\nZ uporabo te aplikacije se strinjate z naslednjimi
+      pogoji:\n\n<b>1. REGISTRACIJA RA\u010CUNA</b>\nPri registraciji morate navesti
+      to\u010Dne in popolne podatke. Odgovorni ste za ohranjanje zaupnosti poverilnic
+      svojega ra\u010Duna.\n\n<b>2. ZASEBNOST</b>\nVa\u0161e osebne podatke zbiramo
+      in obdelujemo v skladu z na\u0161o politiko zasebnosti. To vklju\u010Duje podatke
+      o hranilni vrednosti, podatke o lokaciji in statistiko uporabe.\n\nZa ve\u010D
+      informacij nas kontaktirajte na support@foodmission.eu<b>Pogoji uporabe FOODMISSION</b>\n\nZ
+      uporabo te aplikacije se strinjate z naslednjimi pogoji:\n\n<b>1. REGISTRACIJA
+      RA\u010CUNA</b>\nPri registraciji morate navesti to\u010Dne in popolne podatke.
+      Odgovorni ste za ohranjanje zaupnosti poverilnic svojega ra\u010Duna.\n\n<b>2.
+      ZASEBNOST</b>\nVa\u0161e osebne podatke zbiramo in obdelujemo v skladu z na\u0161o
+      politiko zasebnosti. To vklju\u010Duje podatke o hranilni vrednosti, podatke
+      o lokaciji in statistiko uporabe.\n\nZa ve\u010D informacij nas kontaktirajte
+      na support@foodmission.eu<b>Pogoji uporabe FOODMISSION</b>\n\nZ uporabo te
+      aplikacije se strinjate z naslednjimi pogoji:\n\n<b>1. REGISTRACIJA RA\u010CUNA</b>\nPri
+      registraciji morate navesti to\u010Dne in popolne podatke. Odgovorni ste za
+      ohranjanje zaupnosti poverilnic svojega ra\u010Duna.\n\n<b>2. ZASEBNOST</b>\nVa\u0161e
+      osebne podatke zbiramo in obdelujemo v skladu z na\u0161o politiko zasebnosti.
+      To vklju\u010Duje podatke o hranilni vrednosti, podatke o lokaciji in statistiko
+      uporabe.\n\nZa ve\u010D informacij nas kontaktirajte na support@foodmission.eu<b>Pogoji
+      uporabe FOODMISSION</b>\n\nZ uporabo te aplikacije se strinjate z naslednjimi
+      pogoji:\n\n<b>1. REGISTRACIJA RA\u010CUNA</b>\nPri registraciji morate navesti
+      to\u010Dne in popolne podatke. Odgovorni ste za ohranjanje zaupnosti podatkov
+      za svoj ra\u010Dun.\n\n<b>2. ZASEBNOST</b>\nVa\u0161e osebne podatke zbiramo
+      in obdelujemo v skladu z na\u0161o politiko zasebnosti. To vklju\u010Duje podatke
+      o hranilni vrednosti, podatke o lokaciji in statistiko uporabe.\n\nZa ve\u010D
+      informacij nas kontaktirajte na support@foodmission.eu"
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -213,6 +240,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 28204088708554752
     m_Localized: Obvestila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35547983100502016
+    m_Localized: "Skupaj bomo va\u0161o kuhinjo povezali s skrbjo za planet.\n\nKuhajte,
+      u\u010Dite se, delite in gojite vsak dan.\n\nSte pripravljeni za\u010Deti?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549851969118208
+    m_Localized: Ustvari svoj avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35549934412357632
+    m_Localized: Izpolnite svoj profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35550076637011968
+    m_Localized: Vstopite v aplikacijo
     m_Metadata:
       m_Items: []
   references:
