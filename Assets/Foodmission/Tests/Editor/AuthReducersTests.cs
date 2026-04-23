@@ -1,5 +1,9 @@
+using System.Threading.Tasks;
+
 using NUnit.Framework;
+
 using Unity.AppUI.Redux;
+
 using eu.foodmission.platform;
 
 namespace eu.foodmission.platform.Tests
@@ -19,14 +23,16 @@ namespace eu.foodmission.platform.Tests
         public void LoginRequestReducer_SetsIsAuthenticatingToTrue()
         {
             // Arrange
+            var state = new AppState { userId = "stale-user", authError = "previous error" };
             var action = AppActions.loginRequest.Invoke("testuser");
 
             // Act
-            var newState = AppReducers.LoginRequestReducer(m_InitialState, action);
+            var newState = AppReducers.LoginRequestReducer(state, action);
 
             // Assert
             Assert.IsTrue(newState.isAuthenticating);
             Assert.IsEmpty(newState.authError);
+            Assert.IsEmpty(newState.userId); // must clear userId so navigation guard doesn't fire prematurely
         }
 
         [Test]
@@ -85,20 +91,29 @@ namespace eu.foodmission.platform.Tests
                 userEmail = "test@example.com",
                 accessToken = "eyJ...",
                 tokenType = "Bearer",
-                tokenExpiresAt = 1234567890
+                tokenExpiresAt = 1234567890,
+                refreshToken = "refresh-token",
+                theme = "dark",
+                scale = "large",
+                font = "open-sans"
             };
             var action = AppActions.logout.Invoke();
 
             // Act
             var newState = AppReducers.LogoutReducer(state, action);
 
-            // Assert
+            // Assert — session data cleared
             Assert.IsEmpty(newState.userId);
             Assert.IsEmpty(newState.userName);
             Assert.IsEmpty(newState.userEmail);
             Assert.IsEmpty(newState.accessToken);
             Assert.IsEmpty(newState.tokenType);
             Assert.AreEqual(0, newState.tokenExpiresAt);
+            Assert.IsEmpty(newState.refreshToken);
+            // Preferences reset to defaults
+            Assert.AreEqual("system", newState.theme);
+            Assert.AreEqual("medium", newState.scale);
+            Assert.AreEqual("roboto", newState.font);
         }
 
         [Test]
@@ -191,17 +206,17 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void AuthService_RefreshAsync_WithNoRefreshToken_ReturnsFalse()
+        public async Task AuthService_RefreshAsync_WithNoRefreshToken_ReturnsFalse()
         {
             var localStorageService = new LocalStorageService();
             var storeService = new StoreService(localStorageService);
             // AppState starts with empty refreshToken (default)
             var authService = new AuthService(storeService);
 
-            var task = authService.RefreshAsync();
-            task.Wait();
+            var result = await authService.RefreshAsync();
 
-            Assert.IsFalse(task.Result);
+            storeService.Dispose();
+            Assert.IsFalse(result);
         }
 
         [Test]
@@ -223,6 +238,54 @@ namespace eu.foodmission.platform.Tests
             var newState = AppReducers.SetFontReducer(state, action);
 
             Assert.AreEqual("open-dyslexic", newState.font);
+        }
+
+        [Test]
+        public void RegisterRequestReducer_SetsIsAuthenticatingToTrue()
+        {
+            var state = new AppState { authError = "previous error" };
+            var action = AppActions.registerRequest.Invoke();
+
+            var newState = AppReducers.RegisterRequestReducer(state, action);
+
+            Assert.IsTrue(newState.isAuthenticating);
+            Assert.IsEmpty(newState.authError);
+        }
+
+        [Test]
+        public void RegisterSuccessReducer_SetsUserIdAndIsAuthenticatingToFalse()
+        {
+            var state = new AppState { isAuthenticating = true };
+            var action = AppActions.registerSuccess.Invoke("new-user-id");
+
+            var newState = AppReducers.RegisterSuccessReducer(state, action);
+
+            Assert.IsFalse(newState.isAuthenticating);
+            Assert.AreEqual("new-user-id", newState.userId);
+            Assert.IsEmpty(newState.authError);
+        }
+
+        [Test]
+        public void RegisterFailureReducer_SetsErrorAndIsAuthenticatingToFalse()
+        {
+            var state = new AppState { isAuthenticating = true };
+            var action = AppActions.registerFailure.Invoke("Email already in use");
+
+            var newState = AppReducers.RegisterFailureReducer(state, action);
+
+            Assert.IsFalse(newState.isAuthenticating);
+            Assert.AreEqual("Email already in use", newState.authError);
+        }
+
+        [Test]
+        public void SetExtendedProfileReducer_SetsHasCompletedExtendedProfileToTrue()
+        {
+            var state = new AppState { hasCompletedExtendedProfile = false };
+            var action = AppActions.setExtendedProfile.Invoke();
+
+            var newState = AppReducers.SetExtendedProfileReducer(state, action);
+
+            Assert.IsTrue(newState.hasCompletedExtendedProfile);
         }
     }
 }

@@ -7,8 +7,7 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Unity.AppUI",
-        "Unity.AppUI.Editor",
-        "Unity.AppUI.Tests"
+        "Unity.AppUI.Editor"
     ],
     "includePlatforms": [
         "Editor"

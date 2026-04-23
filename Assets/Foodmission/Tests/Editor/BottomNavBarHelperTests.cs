@@ -178,6 +178,12 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void GetActiveTab_ReturnsProfile_ForGroupsJoinScreen()
+        {
+            Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("GroupsJoin"));
+        }
+
+        [Test]
         public void GetActiveTab_ReturnsNone_ForAuthScreens()
         {
             Assert.AreEqual(NavTab.None, BottomNavBarHelper.GetActiveTab("Login"));
