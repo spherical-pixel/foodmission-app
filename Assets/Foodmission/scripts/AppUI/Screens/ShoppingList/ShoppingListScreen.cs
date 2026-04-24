@@ -6,5 +6,11 @@ namespace eu.foodmission.platform
     class ShoppingListScreen : NavigationScreenBase<ShoppingListViewModel>
     {
         public ShoppingListScreen() { }
+
+        protected override async void OnViewModelBound()
+        {
+            base.OnViewModelBound();
+            await _viewModel.LoadListsAsync();
+        }
     }
 }
