@@ -43,7 +43,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetGroupsAsync failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] GetGroups failed: {request.responseCode}");
                 return null;
             }
 
@@ -68,7 +68,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetGroupAsync {id} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] GetGroup {id} failed: {request.responseCode}");
                 return null;
             }
 
@@ -106,7 +106,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] CreateGroupAsync failed: {request.responseCode} — {request.downloadHandler?.text}");
+                Debug.LogError($"[{GetType().Name}] CreateGroup failed: {request.responseCode} — {request.downloadHandler?.text}");
                 return null;
             }
 
@@ -144,7 +144,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateGroupAsync {id} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] UpdateGroup {id} failed: {request.responseCode}");
                 return false;
             }
 
@@ -169,7 +169,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] DeleteGroupAsync {id} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] DeleteGroup {id} failed: {request.responseCode}");
                 return false;
             }
 
@@ -203,7 +203,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] JoinGroupAsync failed: {request.responseCode} — {request.downloadHandler?.text}");
+                Debug.LogError($"[{GetType().Name}] JoinGroup failed: {request.responseCode} — {request.downloadHandler?.text}");
                 return null;
             }
 
@@ -230,7 +230,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] LeaveGroupAsync {id} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] LeaveGroup {id} failed: {request.responseCode}");
                 return false;
             }
 
@@ -255,7 +255,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetInviteCodeAsync {id} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] GetInviteCode {id} failed: {request.responseCode}");
                 return null;
             }
 
@@ -283,7 +283,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] RegenerateInviteCodeAsync {id} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] RegenerateInviteCode {id} failed: {request.responseCode}");
                 return null;
             }
 
@@ -309,7 +309,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetMembersAsync {id} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] GetMembers {id} failed: {request.responseCode}");
                 return null;
             }
 
@@ -349,7 +349,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] AddVirtualMemberAsync {groupId} failed: {request.responseCode} — {request.downloadHandler?.text}");
+                Debug.LogError($"[{GetType().Name}] AddVirtualMember {groupId} failed: {request.responseCode} — {request.downloadHandler?.text}");
                 return null;
             }
 
@@ -387,7 +387,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateVirtualMemberAsync {memberId} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] UpdateVirtualMember {memberId} failed: {request.responseCode}");
                 return false;
             }
 
@@ -412,7 +412,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] RemoveMemberAsync {memberId} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] RemoveMember {memberId} failed: {request.responseCode}");
                 return false;
             }
 
@@ -439,7 +439,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] MakeAdminAsync {memberId} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] MakeAdmin {memberId} failed: {request.responseCode}");
                 return false;
             }
 
