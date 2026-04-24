@@ -28,13 +28,13 @@ namespace eu.foodmission.platform
     // JsonUtility cannot deserialize top-level JSON arrays.
     // Use: JsonUtility.FromJson<ShoppingListArrayWrapper>("{\"items\":" + json + "}")
     [Serializable]
-    internal class ShoppingListArrayWrapper
+    public class ShoppingListArrayWrapper
     {
         public ShoppingList[] items;
     }
 
     [Serializable]
-    internal class ShoppingListItemArrayWrapper
+    public class ShoppingListItemArrayWrapper
     {
         public ShoppingListItem[] items;
     }
