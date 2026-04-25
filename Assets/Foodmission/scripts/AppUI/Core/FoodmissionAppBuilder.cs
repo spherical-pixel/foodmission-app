@@ -10,18 +10,7 @@ namespace eu.foodmission.platform
         internal static FoodmissionAppBuilder instance { get; private set; }
 
         public VisualTreeAsset SplashTemplate;
-        public VisualTreeAsset HomeTemplate;
-        public VisualTreeAsset LoginTemplate;
-        public VisualTreeAsset RegisterTemplate;
-        public VisualTreeAsset ForgotPasswordTemplate;
-        public VisualTreeAsset ProfileTemplate;
-        public VisualTreeAsset SettingsTemplate;
-        public VisualTreeAsset OnboardingProfileTemplate;
-
         public VisualTreeAsset NotificationCardTemplate;
-        public VisualTreeAsset CompleteWelcomeTemplate;
-        public VisualTreeAsset ShoppingListTemplate;
-        public VisualTreeAsset ShoppingListDetailTemplate;
 
 
         public NavGraphViewAsset GraphAsset;
@@ -46,6 +35,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IGroupService, GroupService>();
             builder.services.AddSingleton<IFoodCategoryService, FoodCategoryService>();
             builder.services.AddSingleton<IPantryService, PantryService>();
+            builder.services.AddSingleton<ITemplateService, TemplateService>();
 
             // ViewModels (Transient - new instance each time)
             builder.services.AddTransient<SplashScreenViewModel>();
