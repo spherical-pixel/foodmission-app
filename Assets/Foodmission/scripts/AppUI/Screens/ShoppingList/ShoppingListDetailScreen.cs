@@ -137,7 +137,7 @@ namespace eu.foodmission.platform
             var searchContainer = new VisualElement();
             searchContainer.style.minWidth = 280;
 
-            var searchField = new UnityEngine.UIElements.TextField { label = "Search product" };
+            var searchField = new Unity.AppUI.UI.TextField { label = "Search product" };
             searchField.style.marginBottom = 8;
 
             var searchSpinner = new CircularProgress { size = Size.S };
