@@ -44,7 +44,9 @@ namespace eu.foodmission.platform
 
         public SettingsScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.SettingsTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.Settings));
             CacheUIElements();
         }
 

@@ -29,7 +29,9 @@ namespace eu.foodmission.platform
 
         public RegisterScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.RegisterTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.Register));
             CacheUIElements();
             RegisterManualEvents();
         }

@@ -28,7 +28,9 @@ namespace eu.foodmission.platform
 
         public CompleteWelcomeView()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.CompleteWelcomeTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.CompleteWelcome));
             CacheUIElements();
             RegisterManualEvents();
         }

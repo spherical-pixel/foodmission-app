@@ -16,7 +16,9 @@ namespace eu.foodmission.platform
 
         public ProfileScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.ProfileTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.Profile));
             CacheUIElements();
             RegisterManualEvents();
         }

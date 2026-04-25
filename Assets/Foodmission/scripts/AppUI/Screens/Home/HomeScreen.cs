@@ -37,7 +37,9 @@ namespace eu.foodmission.platform
 
         public HomeScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.HomeTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.Home));
             CacheUIElements();
         }
 

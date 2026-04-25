@@ -31,7 +31,9 @@ namespace eu.foodmission.platform
 
         public ForgotPasswordScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.ForgotPasswordTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.ForgotPassword));
             CacheUIElements();
             RegisterManualEvents();
         }

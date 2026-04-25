@@ -31,7 +31,9 @@ namespace eu.foodmission.platform
 
         public OnboardingProfileScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.OnboardingProfileTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.OnboardingProfile));
             CacheUIElements();
             RegisterManualEvents();
         }

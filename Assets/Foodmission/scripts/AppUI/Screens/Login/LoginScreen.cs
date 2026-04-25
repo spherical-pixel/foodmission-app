@@ -30,7 +30,9 @@ namespace eu.foodmission.platform
 
         public LoginScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.LoginTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.Login));
             CacheUIElements();
             RegisterManualEvents();
         }

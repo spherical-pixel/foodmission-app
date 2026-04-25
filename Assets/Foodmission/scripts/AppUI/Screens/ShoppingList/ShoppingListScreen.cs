@@ -21,7 +21,9 @@ namespace eu.foodmission.platform
 
         public ShoppingListScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.ShoppingListTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.ShoppingList));
             CacheUIElements();
         }
 

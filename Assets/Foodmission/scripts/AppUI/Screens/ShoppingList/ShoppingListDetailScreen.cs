@@ -22,7 +22,9 @@ namespace eu.foodmission.platform
 
         public ShoppingListDetailScreen()
         {
-            InitializeComponent(FoodmissionAppBuilder.instance.ShoppingListDetailTemplate);
+            InitializeComponent(App.current.services
+                .GetRequiredService<ITemplateService>()
+                .Get(TemplateAddresses.ShoppingListDetail));
             CacheUIElements();
         }
 
