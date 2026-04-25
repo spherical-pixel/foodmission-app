@@ -20,6 +20,8 @@ namespace eu.foodmission.platform
 
         public VisualTreeAsset NotificationCardTemplate;
         public VisualTreeAsset CompleteWelcomeTemplate;
+        public VisualTreeAsset ShoppingListTemplate;
+        public VisualTreeAsset ShoppingListDetailTemplate;
 
 
         public NavGraphViewAsset GraphAsset;

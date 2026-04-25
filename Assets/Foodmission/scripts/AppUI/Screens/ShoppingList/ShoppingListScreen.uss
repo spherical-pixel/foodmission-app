@@ -1,0 +1,58 @@
+.fm-sl-root {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.fm-sl-header {
+    margin-bottom: 16px;
+}
+
+.fm-sl-spinner {
+    align-self: center;
+    margin-top: 32px;
+    display: none;
+}
+
+.fm-sl-spinner.visible {
+    display: flex;
+}
+
+.fm-sl-error {
+    color: var(--appui-color-danger-500);
+    align-self: center;
+    margin-top: 16px;
+    display: none;
+}
+
+.fm-sl-error.visible {
+    display: flex;
+}
+
+.fm-sl-scroll {
+    flex-grow: 1;
+    margin-bottom: 8px;
+}
+
+.fm-sl-container {
+    flex-direction: column;
+}
+
+.fm-sl-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.2);
+}
+
+.fm-sl-row-name {
+    flex-grow: 1;
+    font-size: var(--appui-font-sizes-body-lg);
+}
+
+.fm-sl-new-btn {
+    margin-top: 8px;
+    align-self: stretch;
+}
