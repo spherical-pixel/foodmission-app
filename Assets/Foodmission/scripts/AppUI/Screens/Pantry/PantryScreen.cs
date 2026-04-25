@@ -6,5 +6,11 @@ namespace eu.foodmission.platform
     class PantryScreen : NavigationScreenBase<PantryViewModel>
     {
         public PantryScreen() { }
+
+        protected override async void OnViewModelBound()
+        {
+            base.OnViewModelBound();
+            await _viewModel.LoadAsync();
+        }
     }
 }
