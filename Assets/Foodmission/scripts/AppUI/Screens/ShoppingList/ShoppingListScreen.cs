@@ -17,7 +17,7 @@ namespace eu.foodmission.platform
         private VisualElement _listsContainer;
         private CircularProgress _spinner;
         private Text _errorText;
-        private Button _btnNewList;
+        private Unity.AppUI.UI.Button _btnNewList;
 
         public ShoppingListScreen()
         {
@@ -128,7 +128,7 @@ namespace eu.foodmission.platform
 
         private void OnNewListClicked()
         {
-            var nameField = new TextField { label = "List name" };
+            var nameField = new UnityEngine.UIElements.TextField { label = "List name" };
 
             FMDialog.ShowCustom(
                 this,
