@@ -6,5 +6,11 @@ namespace eu.foodmission.platform
     class GroupsScreen : NavigationScreenBase<GroupsViewModel>
     {
         public GroupsScreen() { }
+
+        protected override async void OnViewModelBound()
+        {
+            base.OnViewModelBound();
+            await _viewModel.LoadGroupsAsync();
+        }
     }
 }
