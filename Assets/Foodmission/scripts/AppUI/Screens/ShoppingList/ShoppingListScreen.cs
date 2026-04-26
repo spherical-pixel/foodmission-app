@@ -32,7 +32,7 @@ namespace eu.foodmission.platform
             _listsContainer = contentContainer.Q<VisualElement>("lists-container");
             _spinner = contentContainer.Q<CircularProgress>("loading-spinner");
             _errorText = contentContainer.Q<Text>("error-message");
-            _btnNewList = contentContainer.Q<Button>("btn-new-list");
+            _btnNewList = contentContainer.Q<Unity.AppUI.UI.Button>("btn-new-list");
         }
 
         protected override void OnViewModelBound()

@@ -32,8 +32,8 @@ namespace eu.foodmission.platform
         {
             _itemsContainer = contentContainer.Q<VisualElement>("items-container");
             _spinner = contentContainer.Q<CircularProgress>("loading-spinner");
-            _btnAdd = contentContainer.Q<Button>("btn-add");
-            _btnClearChecked = contentContainer.Q<Button>("btn-clear-checked");
+            _btnAdd = contentContainer.Q<Unity.AppUI.UI.Button>("btn-add");
+            _btnClearChecked = contentContainer.Q<Unity.AppUI.UI.Button>("btn-clear-checked");
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
