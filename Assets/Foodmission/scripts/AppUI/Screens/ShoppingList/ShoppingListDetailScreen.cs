@@ -143,7 +143,7 @@ namespace eu.foodmission.platform
             var searchContainer = new VisualElement();
             searchContainer.style.minWidth = 280;
 
-            var searchField = new Unity.AppUI.UI.TextField { label = "Search product" };
+            var searchField = new Unity.AppUI.UI.TextField { placeholder = "Search product" };
             searchField.style.marginBottom = 8;
 
             var searchSpinner = new CircularProgress { size = Size.S };
@@ -164,7 +164,7 @@ namespace eu.foodmission.platform
             var selectedNameLabel = new Text();
             selectedNameLabel.style.marginBottom = 8;
 
-            var qtyField = new Unity.AppUI.UI.FloatField { label = "Quantity", value = 1f };
+            var qtyField = new Unity.AppUI.UI.FloatField { placeholder = "Quantity", value = 1f };
             qtyField.style.marginBottom = 8;
 
             var unitChoices = new List<string> { "PIECES", "G", "KG", "ML", "L", "CUPS" };

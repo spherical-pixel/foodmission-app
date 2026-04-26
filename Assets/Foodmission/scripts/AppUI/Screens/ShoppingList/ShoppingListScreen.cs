@@ -131,7 +131,7 @@ namespace eu.foodmission.platform
 
         private void OnNewListClicked()
         {
-            var nameField = new Unity.AppUI.UI.TextField { label = "List name" };
+            var nameField = new Unity.AppUI.UI.TextField { placeholder = "List name" };
 
             FMDialog.ShowCustom(
                 this,
