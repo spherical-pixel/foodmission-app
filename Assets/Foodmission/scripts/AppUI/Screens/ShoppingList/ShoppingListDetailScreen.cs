@@ -110,7 +110,7 @@ namespace eu.foodmission.platform
                 {
                     value = captured.Item.@checked ? CheckboxState.Checked : CheckboxState.Unchecked
                 };
-                toggle.RegisterValueChangedCallback(_ =>
+                toggle.RegisterValueChangedCallback(evt =>
                     _ = _viewModel.ToggleItemAsync(captured.Item.id));
 
                 var nameLabel = new Text { text = captured.FoodName };
