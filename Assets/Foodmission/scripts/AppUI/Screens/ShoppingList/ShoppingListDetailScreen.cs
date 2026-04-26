@@ -106,7 +106,10 @@ namespace eu.foodmission.platform
                 var row = new VisualElement();
                 row.AddToClassList("fm-sld-item-row");
 
-                var toggle = new Checkbox { value = captured.Item.@checked };
+                var toggle = new Checkbox
+                {
+                    value = captured.Item.@checked ? CheckboxState.Checked : CheckboxState.Unchecked
+                };
                 toggle.RegisterValueChangedCallback(_ =>
                     _ = _viewModel.ToggleItemAsync(captured.Item.id));
 
