@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using eu.foodmission.platform.Components;
+using Unity.AppUI.MVVM;
 using Unity.AppUI.Core;
 using Unity.AppUI.UI;
 using UnityEngine;

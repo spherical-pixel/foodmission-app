@@ -3,6 +3,7 @@ using System.ComponentModel;
 
 using eu.foodmission.platform.Components;
 
+using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;

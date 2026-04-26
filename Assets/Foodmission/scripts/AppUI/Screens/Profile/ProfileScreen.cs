@@ -1,3 +1,4 @@
+using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
