@@ -164,7 +164,10 @@ namespace eu.foodmission.platform
             var selectedNameLabel = new Text();
             selectedNameLabel.style.marginBottom = 8;
 
-            var qtyField = new Unity.AppUI.UI.FloatField { placeholder = "Quantity", value = 1f };
+            var qtyLabel = new Text { text = "Quantity" };
+            qtyLabel.style.marginBottom = 4;
+
+            var qtyField = new Unity.AppUI.UI.FloatField { value = 1f };
             qtyField.style.marginBottom = 8;
 
             var unitChoices = new List<string> { "PIECES", "G", "KG", "ML", "L", "CUPS" };
@@ -172,6 +175,7 @@ namespace eu.foodmission.platform
             unitDropdown.style.marginBottom = 8;
 
             confirmContainer.Add(selectedNameLabel);
+            confirmContainer.Add(qtyLabel);
             confirmContainer.Add(qtyField);
             confirmContainer.Add(unitDropdown);
 
