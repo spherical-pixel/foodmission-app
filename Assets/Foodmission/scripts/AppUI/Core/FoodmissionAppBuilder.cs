@@ -35,6 +35,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IGroupService, GroupService>();
             builder.services.AddSingleton<IFoodCategoryService, FoodCategoryService>();
             builder.services.AddSingleton<IPantryService, PantryService>();
+            builder.services.AddSingleton<IMealService, MealService>();
             builder.services.AddSingleton<ITemplateService, TemplateService>();
 
             // ViewModels (Transient - new instance each time)
