@@ -74,6 +74,7 @@ namespace eu.foodmission.platform
         public string refresh_token;
         public string token_type;
         public int expires_in;
+        public int refresh_expires_in;
         public UserData user;
     }
 
@@ -87,6 +88,7 @@ namespace eu.foodmission.platform
         public string refresh_token;   // may be empty if backend does not rotate the refresh token
         public string token_type;
         public int expires_in;
+        public int refresh_expires_in;
     }
 
     /// <summary>

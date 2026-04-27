@@ -32,6 +32,13 @@ namespace eu.foodmission.platform
             long currentTimestampLong = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             if (state.tokenExpiresAt < currentTimestampLong)
             {
+                // If refresh token expiry is known and also expired, skip the refresh attempt
+                if (state.refreshTokenExpiresAt > 0 && state.refreshTokenExpiresAt < currentTimestampLong)
+                {
+                    Debug.Log($"[{GetType().Name}] Both access and refresh tokens expired — re-login required");
+                    return false;
+                }
+
                 Debug.Log($"[{GetType().Name}] Access token expired — attempting refresh");
                 return await RefreshAsync();
             }
@@ -53,7 +60,11 @@ namespace eu.foodmission.platform
                 if (request.result == UnityWebRequest.Result.Success)
                 {
                     int remaining = (int)(state.tokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-                    ScheduleProactiveRefresh(remaining);
+                    int refreshRemaining = state.refreshTokenExpiresAt > 0
+                        ? (int)(state.refreshTokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+                        : 0;
+                    ScheduleProactiveRefresh(remaining, refreshRemaining);
+                    Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
                     return true;
                 }
                 return false;
@@ -112,17 +123,22 @@ namespace eu.foodmission.platform
                     return false;
                 }
 
-                int expiresAt = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + response.expires_in);
+                long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                int expiresAt = (int)(now + response.expires_in);
+                int refreshExpiresAt = response.refresh_expires_in > 0
+                    ? (int)(now + response.refresh_expires_in)
+                    : 0;
 
                 var payload = new AppActions.TokenRefreshPayload(
                     accessToken: response.access_token,
                     tokenType: string.IsNullOrEmpty(response.token_type) ? "Bearer" : response.token_type,
                     expiresAt: expiresAt,
-                    refreshToken: response.refresh_token ?? ""
+                    refreshToken: response.refresh_token ?? "",
+                    refreshTokenExpiresAt: refreshExpiresAt
                 );
                 _storeService.store.Dispatch(AppActions.tokenRefreshed.Invoke(payload));
 
-                ScheduleProactiveRefresh(response.expires_in);
+                ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
                 Debug.Log($"[{GetType().Name}] Token refreshed. Expires in {response.expires_in}s");
                 return true;
             }
@@ -134,15 +150,21 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Schedules a proactive token refresh 60 seconds before the token expires.
-        /// Cancels any previously scheduled refresh first.
+        /// Schedules a proactive token refresh 60 seconds before the earliest expiry
+        /// (access token or refresh token, whichever comes first).
         /// </summary>
-        private void ScheduleProactiveRefresh(int expiresInSeconds)
+        private void ScheduleProactiveRefresh(int accessExpiresInSeconds, int refreshExpiresInSeconds = 0)
         {
+            int effectiveExpiry = accessExpiresInSeconds;
+            if (refreshExpiresInSeconds > 0)
+            {
+                effectiveExpiry = Math.Min(accessExpiresInSeconds, refreshExpiresInSeconds);
+            }
+
             _refreshTimerCts?.Cancel();
             _refreshTimerCts?.Dispose();
             _refreshTimerCts = new System.Threading.CancellationTokenSource();
-            _ = ProactiveRefreshLoop(expiresInSeconds, _refreshTimerCts.Token);
+            _ = ProactiveRefreshLoop(effectiveExpiry, _refreshTimerCts.Token);
         }
 
         private async Task ProactiveRefreshLoop(int expiresInSeconds, System.Threading.CancellationToken token)
@@ -227,8 +249,11 @@ namespace eu.foodmission.platform
                     return (false, null, error);
                 }
 
-                // Calculate token expiration (int for JsonUtility compatibility)
-                int expiresAt = (int)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() + response.expires_in);
+                long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                int expiresAt = (int)(now + response.expires_in);
+                int refreshExpiresAt = response.refresh_expires_in > 0
+                    ? (int)(now + response.refresh_expires_in)
+                    : 0;
 
                 // Fetch user profile to get userId, username and email
                 ProfileResponse profile = await FetchProfileAsync(response.access_token);
@@ -249,11 +274,12 @@ namespace eu.foodmission.platform
                     accessToken: response.access_token,
                     tokenType: response.token_type,
                     expiresAt: expiresAt,
-                    refreshToken: response.refresh_token ?? ""
+                    refreshToken: response.refresh_token ?? "",
+                    refreshTokenExpiresAt: refreshExpiresAt
                 );
 
                 _storeService.store.Dispatch(AppActions.loginSuccess.Invoke(payload));
-                ScheduleProactiveRefresh(response.expires_in);
+                ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
                 Debug.Log($"[{GetType().Name}] Login successful for user: {userId}");
 
                 return (true, userId, null);

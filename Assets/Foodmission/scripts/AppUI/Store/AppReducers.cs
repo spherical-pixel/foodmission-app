@@ -42,9 +42,11 @@ namespace eu.foodmission.platform
             public readonly string tokenType;
             public readonly int expiresAt;
             public readonly string refreshToken;
+            public readonly int refreshTokenExpiresAt;
 
             public LoginPayload(string userId, string userName, string email,
-                string accessToken, string tokenType, int expiresAt, string refreshToken)
+                string accessToken, string tokenType, int expiresAt, string refreshToken,
+                int refreshTokenExpiresAt = 0)
             {
                 this.userId = userId;
                 this.userName = userName;
@@ -53,6 +55,7 @@ namespace eu.foodmission.platform
                 this.tokenType = tokenType;
                 this.expiresAt = expiresAt;
                 this.refreshToken = refreshToken;
+                this.refreshTokenExpiresAt = refreshTokenExpiresAt;
             }
         }
 
@@ -67,13 +70,16 @@ namespace eu.foodmission.platform
             public readonly string tokenType;
             public readonly int expiresAt;
             public readonly string refreshToken;
+            public readonly int refreshTokenExpiresAt;
 
-            public TokenRefreshPayload(string accessToken, string tokenType, int expiresAt, string refreshToken)
+            public TokenRefreshPayload(string accessToken, string tokenType, int expiresAt, string refreshToken,
+                int refreshTokenExpiresAt = 0)
             {
                 this.accessToken = accessToken;
                 this.tokenType = tokenType;
                 this.expiresAt = expiresAt;
                 this.refreshToken = refreshToken;
+                this.refreshTokenExpiresAt = refreshTokenExpiresAt;
             }
         }
 
@@ -219,6 +225,7 @@ namespace eu.foodmission.platform
             newState.tokenType = action.payload.tokenType;
             newState.tokenExpiresAt = action.payload.expiresAt;
             newState.refreshToken = action.payload.refreshToken;
+            newState.refreshTokenExpiresAt = action.payload.refreshTokenExpiresAt;
             return newState;
         }
 
@@ -239,6 +246,10 @@ namespace eu.foodmission.platform
             if (!string.IsNullOrEmpty(action.payload.refreshToken))
             {
                 newState.refreshToken = action.payload.refreshToken;
+            }
+            if (action.payload.refreshTokenExpiresAt > 0)
+            {
+                newState.refreshTokenExpiresAt = action.payload.refreshTokenExpiresAt;
             }
             return newState;
         }

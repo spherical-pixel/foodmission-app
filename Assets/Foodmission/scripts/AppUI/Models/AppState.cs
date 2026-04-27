@@ -14,7 +14,7 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Código de idioma: "es", "en", "ca", etc.
         /// </summary>
-        public string lang = "es";
+        public string lang = "en";
 
         /// <summary>
         /// Visual theme: "light", "dark", "system"
@@ -97,6 +97,11 @@ namespace eu.foodmission.platform
         public string refreshToken = "";
 
         /// <summary>
+        /// Refresh token expiration timestamp (Unix seconds). 0 = unknown.
+        /// </summary>
+        public int refreshTokenExpiresAt = 0;
+
+        /// <summary>
         /// Last session timestamp (Unix seconds as int)
         /// </summary>
         public int lastSessionTimestamp = 0;
@@ -142,6 +147,7 @@ namespace eu.foodmission.platform
                 tokenType = this.tokenType,
                 tokenExpiresAt = this.tokenExpiresAt,
                 refreshToken = this.refreshToken,
+                refreshTokenExpiresAt = this.refreshTokenExpiresAt,
                 lastSessionTimestamp = this.lastSessionTimestamp,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError
