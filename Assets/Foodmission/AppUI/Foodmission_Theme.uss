@@ -284,9 +284,9 @@
    ============================================ */
 
 .appui--small {
-    --appui-font-sizes-body-sm: 20px;
-    --appui-font-sizes-body-md: 24px;
-    --appui-font-sizes-body-lg: 28px;
+    --appui-font-sizes-body-sm: 24px;
+    --appui-font-sizes-body-md: 28px;
+    --appui-font-sizes-body-lg: 30px;
 
     --appui-font-sizes-25: 8px;
     --appui-font-sizes-50: 12px;
@@ -312,7 +312,7 @@
 }
 
 .appui--medium {
-    --appui-font-sizes-body-sm: 24px;
+    --appui-font-sizes-body-sm: 28px;
     --appui-font-sizes-body-md: 32px;
     --appui-font-sizes-body-lg: 40px;
 
