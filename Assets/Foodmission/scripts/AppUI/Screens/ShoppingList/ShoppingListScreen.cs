@@ -89,7 +89,7 @@ namespace eu.foodmission.platform
                 var row = new VisualElement();
                 row.AddToClassList("fm-sl-row");
 
-                var nameLabel = new Text { text = captured.name };
+                var nameLabel = new Text { text = captured.title };
                 nameLabel.AddToClassList("fm-sl-row-name");
 
                 var deleteBtn = new IconButton { icon = "trash" };
@@ -106,7 +106,7 @@ namespace eu.foodmission.platform
                     FMDialog.ShowConfirm(
                         this,
                         "Delete list",
-                        $"Delete \"{captured.name}\"?",
+                        $"Delete \"{captured.title}\"?",
                         onConfirm: async () => await _viewModel.DeleteListAsync(captured.id),
                         semantic: AlertSemantic.Destructive);
 

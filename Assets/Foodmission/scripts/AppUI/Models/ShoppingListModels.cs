@@ -8,7 +8,7 @@ namespace eu.foodmission.platform
     public class ShoppingList
     {
         public string id;
-        public string name;
+        public string title;
         public string description;
         public string userGroupId;
     }
@@ -23,20 +23,19 @@ namespace eu.foodmission.platform
         public string unit;     // PIECES, G, KG, ML, L, CUPS
         public string notes;
         public bool @checked;
-    }
-
-    // JsonUtility cannot deserialize top-level JSON arrays.
-    // Use: JsonUtility.FromJson<ShoppingListArrayWrapper>("{\"items\":" + json + "}")
-    [Serializable]
-    public class ShoppingListArrayWrapper
-    {
-        public ShoppingList[] items;
+        public FoodItem food;
     }
 
     [Serializable]
-    public class ShoppingListItemArrayWrapper
+    public class ShoppingListPagedResponse
     {
-        public ShoppingListItem[] items;
+        public ShoppingList[] data;
+    }
+
+    [Serializable]
+    public class ShoppingListItemPagedResponse
+    {
+        public ShoppingListItem[] data;
     }
 
     // View-only enriched model for UI — not serialized, not from API

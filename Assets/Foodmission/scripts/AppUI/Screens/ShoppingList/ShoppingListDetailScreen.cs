@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 
 using eu.foodmission.platform.Components;
 
@@ -20,6 +22,7 @@ namespace eu.foodmission.platform
         private CircularProgress _spinner;
         private Unity.AppUI.UI.Button _btnAdd;
         private Unity.AppUI.UI.Button _btnClearChecked;
+        private CancellationTokenSource _searchCts;
 
         public ShoppingListDetailScreen()
         {
@@ -75,6 +78,9 @@ namespace eu.foodmission.platform
         {
             _btnAdd.clicked -= OnAddClicked;
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            _searchCts?.Cancel();
+            _searchCts?.Dispose();
+            _searchCts = null;
             base.OnViewModelUnbinding();
         }
 
@@ -187,24 +193,58 @@ namespace eu.foodmission.platform
             OpenFoodFactsProduct selectedProduct = null;
 
             // ── Search wiring ──────────────────────────────────────────────
-            searchField.RegisterValueChangedCallback(async evt =>
+            // RegisterValueChangedCallback on AppUI TextField only fires on commit (blur/Enter).
+            // Wire to the inner UI Toolkit TextField to get per-keystroke updates + debounce.
+            searchContainer.schedule.Execute(() =>
             {
-                string query = evt.newValue;
-
-                if (string.IsNullOrWhiteSpace(query))
+                var innerField = searchField.Q<UnityEngine.UIElements.TextField>();
+                if (innerField == null)
                 {
-                    resultsScroll.style.display = DisplayStyle.None;
-                    resultsContainer.Clear();
                     return;
                 }
 
-                searchSpinner.style.display = DisplayStyle.Flex;
-                resultsScroll.style.display = DisplayStyle.None;
-                resultsContainer.Clear();
+                innerField.RegisterValueChangedCallback(async innerEvt =>
+                {
+                    string query = innerEvt.newValue;
 
-                await _viewModel.SearchFoodsAsync(query);
+                    _searchCts?.Cancel();
+                    _searchCts?.Dispose();
+                    _searchCts = new CancellationTokenSource();
+                    CancellationToken ct = _searchCts.Token;
 
-                searchSpinner.style.display = DisplayStyle.None;
+                    if (string.IsNullOrWhiteSpace(query))
+                    {
+                        resultsScroll.style.display = DisplayStyle.None;
+                        resultsContainer.Clear();
+                        return;
+                    }
+
+                    try
+                    {
+                        await System.Threading.Tasks.Task.Delay(400, ct);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return;
+                    }
+
+                    if (ct.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    searchSpinner.style.display = DisplayStyle.Flex;
+                    resultsScroll.style.display = DisplayStyle.None;
+                    resultsContainer.Clear();
+
+                    await _viewModel.SearchFoodsAsync(query);
+
+                    if (ct.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    searchSpinner.style.display = DisplayStyle.None;
 
                 if (_viewModel.SearchResults?.Count > 0)
                 {
@@ -242,7 +282,8 @@ namespace eu.foodmission.platform
 
                     resultsScroll.style.display = DisplayStyle.Flex;
                 }
-            });
+                }); // closes innerField.RegisterValueChangedCallback
+            }).ExecuteLater(0); // closes schedule.Execute
 
             // ── Modal ──────────────────────────────────────────────────────
             FMDialog.ShowCustom(

@@ -48,14 +48,14 @@ namespace eu.foodmission.platform
             }
 
             string json = request.downloadHandler.text;
-            ShoppingListArrayWrapper wrapper = JsonUtility.FromJson<ShoppingListArrayWrapper>("{\"items\":" + json + "}");
-            return wrapper?.items;
+            ShoppingListPagedResponse response = JsonUtility.FromJson<ShoppingListPagedResponse>(json);
+            return response?.data;
         }
 
         public async Task<ShoppingList> CreateListAsync(string name, string description = null, string groupId = null)
         {
             var sb = new StringBuilder("{");
-            sb.AppendFormat("\"name\":\"{0}\"", EscapeJson(name));
+            sb.AppendFormat("\"title\":\"{0}\"", EscapeJson(name));
 
             if (!string.IsNullOrEmpty(description))
             {
@@ -98,7 +98,7 @@ namespace eu.foodmission.platform
         public async Task<bool> UpdateListAsync(string id, string name, string description = null)
         {
             var sb = new StringBuilder("{");
-            sb.AppendFormat("\"name\":\"{0}\"", EscapeJson(name));
+            sb.AppendFormat("\"title\":\"{0}\"", EscapeJson(name));
 
             if (!string.IsNullOrEmpty(description))
             {
@@ -110,11 +110,7 @@ namespace eu.foodmission.platform
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(id)}";
 
-            using UnityWebRequest request = new UnityWebRequest(url, "PATCH")
-            {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
-                downloadHandler = new DownloadHandlerBuffer()
-            };
+            using UnityWebRequest request = MakePatchRequest(url, body);
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
@@ -181,8 +177,8 @@ namespace eu.foodmission.platform
             }
 
             string json = request.downloadHandler.text;
-            ShoppingListItemArrayWrapper wrapper = JsonUtility.FromJson<ShoppingListItemArrayWrapper>("{\"items\":" + json + "}");
-            return wrapper?.items;
+            ShoppingListItemPagedResponse response = JsonUtility.FromJson<ShoppingListItemPagedResponse>(json);
+            return response?.data;
         }
 
         public async Task<ShoppingListItem> AddItemAsync(string listId, string foodId, float quantity, string unit = "PIECES", string notes = null)
@@ -261,11 +257,7 @@ namespace eu.foodmission.platform
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items/{Uri.EscapeDataString(itemId)}";
 
-            using UnityWebRequest request = new UnityWebRequest(url, "PATCH")
-            {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
-                downloadHandler = new DownloadHandlerBuffer()
-            };
+            using UnityWebRequest request = MakePatchRequest(url, body);
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
@@ -288,13 +280,10 @@ namespace eu.foodmission.platform
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items/{Uri.EscapeDataString(itemId)}/toggle-checked";
 
-            using UnityWebRequest request = new UnityWebRequest(url, "PATCH")
-            {
-                uploadHandler = new UploadHandlerRaw(Array.Empty<byte>()) { contentType = "application/json" },
-                downloadHandler = new DownloadHandlerBuffer()
-            };
-            request.SetRequestHeader("Authorization", AuthHeader);
+            using UnityWebRequest request = new UnityWebRequest(url, "PATCH");
+            request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Authorization", AuthHeader);
 
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
             while (!op.isDone)
@@ -304,7 +293,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] ToggleItem {itemId} failed: {request.responseCode}");
+                Debug.LogError($"[{GetType().Name}] ToggleItem {itemId} failed: {request.responseCode} — {request.downloadHandler?.text}");
                 return null;
             }
 
@@ -359,6 +348,23 @@ namespace eu.foodmission.platform
             }
 
             return true;
+        }
+
+        // uploadHandler must be assigned after construction (not in initializer) for PATCH
+        // to work correctly with NestJS — matches the pattern used in AuthService.SendPatchRequest.
+        // For bodyless PATCH (e.g. toggle-checked), omit uploadHandler entirely.
+        private static UnityWebRequest MakePatchRequest(string url, byte[] body)
+        {
+            UnityWebRequest request = new UnityWebRequest(url, "PATCH");
+            if (body != null && body.Length > 0)
+            {
+                request.uploadHandler = new UploadHandlerRaw(body)
+                {
+                    contentType = "application/json"
+                };
+            }
+            request.downloadHandler = new DownloadHandlerBuffer();
+            return request;
         }
 
         private static string EscapeJson(string s)

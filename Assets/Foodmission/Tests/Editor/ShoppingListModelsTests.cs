@@ -9,12 +9,12 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ShoppingList_Roundtrips_Via_JsonUtility()
         {
-            var list = new ShoppingList { id = "list-1", name = "Weekly Shop", description = "For Monday", userGroupId = "" };
+            var list = new ShoppingList { id = "list-1", title = "Weekly Shop", description = "For Monday", userGroupId = "" };
             string json = JsonUtility.ToJson(list);
             var result = JsonUtility.FromJson<ShoppingList>(json);
 
             Assert.AreEqual("list-1", result.id);
-            Assert.AreEqual("Weekly Shop", result.name);
+            Assert.AreEqual("Weekly Shop", result.title);
         }
 
         [Test]
@@ -40,33 +40,34 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void ShoppingListArrayWrapper_Deserializes_Api_Array_Response()
+        public void ShoppingListPagedResponse_Deserializes_Api_Response()
         {
-            // API returns a raw JSON array — wrap it before passing to JsonUtility
-            string apiJson = "[{\"id\":\"1\",\"name\":\"My List\",\"description\":\"\",\"userGroupId\":\"\"}," +
-                             "{\"id\":\"2\",\"name\":\"Weekend\",\"description\":\"\",\"userGroupId\":\"\"}]";
-            string wrapped = "{\"items\":" + apiJson + "}";
+            // API returns {"data":[...]} paged envelope
+            string apiJson = "{\"data\":[{\"id\":\"1\",\"title\":\"My List\",\"description\":\"\",\"userGroupId\":\"\"}," +
+                             "{\"id\":\"2\",\"title\":\"Weekend\",\"description\":\"\",\"userGroupId\":\"\"}]}";
 
-            var wrapper = JsonUtility.FromJson<ShoppingListArrayWrapper>(wrapped);
+            var response = JsonUtility.FromJson<ShoppingListPagedResponse>(apiJson);
 
-            Assert.IsNotNull(wrapper.items);
-            Assert.AreEqual(2, wrapper.items.Length);
-            Assert.AreEqual("My List", wrapper.items[0].name);
-            Assert.AreEqual("Weekend", wrapper.items[1].name);
+            Assert.IsNotNull(response.data);
+            Assert.AreEqual(2, response.data.Length);
+            Assert.AreEqual("My List", response.data[0].title);
+            Assert.AreEqual("Weekend", response.data[1].title);
         }
 
         [Test]
-        public void ShoppingListItemArrayWrapper_Deserializes_Api_Array_Response()
+        public void ShoppingListItemPagedResponse_Deserializes_Api_Response()
         {
-            string apiJson = "[{\"id\":\"i1\",\"shoppingListId\":\"l1\",\"foodId\":\"f1\"," +
-                             "\"quantity\":1.0,\"unit\":\"PIECES\",\"notes\":\"\",\"checked\":false}]";
-            string wrapped = "{\"items\":" + apiJson + "}";
+            // API returns {"data":[...]} paged envelope with embedded food object
+            string apiJson = "{\"data\":[{\"id\":\"i1\",\"shoppingListId\":\"l1\",\"foodId\":\"f1\"," +
+                             "\"quantity\":1.0,\"unit\":\"PIECES\",\"notes\":\"\",\"checked\":false," +
+                             "\"food\":{\"id\":\"f1\",\"name\":\"Leche\",\"barcode\":\"123\"}}]}";
 
-            var wrapper = JsonUtility.FromJson<ShoppingListItemArrayWrapper>(wrapped);
+            var response = JsonUtility.FromJson<ShoppingListItemPagedResponse>(apiJson);
 
-            Assert.IsNotNull(wrapper.items);
-            Assert.AreEqual(1, wrapper.items.Length);
-            Assert.AreEqual("f1", wrapper.items[0].foodId);
+            Assert.IsNotNull(response.data);
+            Assert.AreEqual(1, response.data.Length);
+            Assert.AreEqual("f1", response.data[0].foodId);
+            Assert.AreEqual("Leche", response.data[0].food.name);
         }
     }
 }

@@ -77,13 +77,19 @@ namespace eu.foodmission.platform
 
         private async Task<ShoppingListItemView> EnrichItemAsync(ShoppingListItem item)
         {
-            FoodItem food = await _foodService.GetFoodByIdAsync(item.foodId);
+            string foodName = item.food?.name;
+
+            if (string.IsNullOrEmpty(foodName))
+            {
+                FoodItem fetched = await _foodService.GetFoodByIdAsync(item.foodId);
+                foodName = fetched?.name ?? "Unknown";
+            }
 
             return new ShoppingListItemView
             {
                 Item = item,
-                FoodName = food?.name ?? "Unknown",
-                FoodImageUrl = null,
+                FoodName = foodName,
+                FoodImageUrl = item.food?.imageUrl,
                 FoodBrands = null
             };
         }

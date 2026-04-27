@@ -11,6 +11,8 @@ namespace eu.foodmission.platform
         public string name;
         public string barcode;
         public string description;
+        public string imageUrl;
+        public string imageFrontUrl;
     }
 
     [Serializable]
