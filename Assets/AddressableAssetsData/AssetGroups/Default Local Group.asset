@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: ecef101743cdb4acdb45c26f3ed92856
   m_SerializeEntries:
+  - m_GUID: 079f1f2546b3846e0a5715fa4781fc60
+    m_Address: Foodmission/AppUI/Templates/ShoppingListDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1bad67de3b1b94208aa0e030975889b8
+    m_Address: Foodmission/AppUI/Templates/LoginScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1d8e881c2df504c1ea975a29285c7a28
     m_Address: Foodmission/AppUI/Templates/NutriMessageWithButtons.uxml
     m_ReadOnly: 0
@@ -22,6 +32,46 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34d6d72c198e84f0487009eae618024c
     m_Address: Assets/Foodmission/prefabs/NutriController.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61e6e124fb6e849c4ac488d29545f911
+    m_Address: Foodmission/AppUI/Templates/RegisterScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84b9398f3e23944e5931f939640b84b4
+    m_Address: Foodmission/AppUI/Templates/CompleteWelcome.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b75cc1ba4e92d444284e8ec904412ca3
+    m_Address: Foodmission/AppUI/Templates/ForgotPasswordScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba824eac88578478091945dde0430b60
+    m_Address: Foodmission/AppUI/Templates/SettingsScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1025af4cbad94c66aa65d7d4e33118a
+    m_Address: Foodmission/AppUI/Templates/HomeScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7fd564d76267489b96a7bb81eb559ab
+    m_Address: Foodmission/AppUI/Templates/ProfileScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc5288c773c974a9fad507c1523ff373
+    m_Address: Foodmission/AppUI/Templates/ShoppingListScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5b048e6d5ec64ca6919ab462546e28c
+    m_Address: Foodmission/AppUI/Templates/OnboardingProfileScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
