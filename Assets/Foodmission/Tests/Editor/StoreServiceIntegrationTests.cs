@@ -42,7 +42,7 @@ namespace eu.foodmission.platform.Tests
             var state = _storeService.GetAppState();
 
             Assert.AreEqual("system", state.theme);
-            Assert.AreEqual("es", state.lang);
+            Assert.AreEqual("en", state.lang);
             Assert.AreEqual("medium", state.scale);
             Assert.AreEqual("roboto", state.font);
             Assert.IsEmpty(state.userId);

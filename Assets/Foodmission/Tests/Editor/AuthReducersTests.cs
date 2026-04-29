@@ -287,5 +287,187 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(newState.hasCompletedExtendedProfile);
         }
+
+        // ── ProfileSyncedReducer ──────────────────────────────────────────────
+
+        [Test]
+        public void ProfileSyncedReducer_AppliesProfileFields()
+        {
+            var state = new AppState();
+            var payload = new AppActions.ProfilePayload(
+                firstName: "Antonio", lastName: "Duran", yearOfBirth: 1990,
+                country: "ES", region: "ES-VC", zip: "03450",
+                gender: "MALE", annualIncome: "FROM_20000_TO_34999",
+                educationLevel: "UNIVERSITY", activityLevel: "MODERATE",
+                weightKg: 75f, heightCm: 180f
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            Assert.AreEqual("Antonio", newState.userFirstName);
+            Assert.AreEqual("Duran", newState.userLastName);
+            Assert.AreEqual(1990, newState.userYearOfBirth);
+            Assert.AreEqual("ES", newState.userCountry);
+            Assert.AreEqual("ES-VC", newState.userRegion);
+            Assert.AreEqual("03450", newState.userZip);
+            Assert.AreEqual("MALE", newState.userGender);
+            Assert.AreEqual("FROM_20000_TO_34999", newState.userAnnualIncome);
+            Assert.AreEqual("UNIVERSITY", newState.userEducationLevel);
+            Assert.AreEqual("MODERATE", newState.userActivityLevel);
+            Assert.AreEqual(75f, newState.userWeightKg);
+            Assert.AreEqual(180f, newState.userHeightCm);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithValidSettings_AppliesSettings()
+        {
+            var state = new AppState { theme = "system", scale = "medium", soundVolume = 100 };
+            var settings = new UserSettingsDto
+            {
+                theme = "dark", scale = "large", font = "open-sans",
+                soundVolume = 80, musicVolume = 60,
+                pushNotificationsEnabled = true, backgroundPattern = false
+            };
+            var payload = new AppActions.ProfilePayload(
+                firstName: "", lastName: "", yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
+                weightKg: 0f, heightCm: 0f, settings: settings
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            Assert.AreEqual("dark", newState.theme);
+            Assert.AreEqual("large", newState.scale);
+            Assert.AreEqual("open-sans", newState.font);
+            Assert.AreEqual(80, newState.soundVolume);
+            Assert.AreEqual(60, newState.musicVolume);
+            Assert.IsTrue(newState.pushNotificationsEnabled);
+            Assert.IsFalse(newState.backgroundPattern);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithEmptySettings_KeepsLocalSettings()
+        {
+            // Server returns settings:{} — theme is empty — local settings must not be overwritten
+            var state = new AppState { theme = "dark", scale = "large", soundVolume = 50 };
+            var emptySettings = new UserSettingsDto(); // theme == null
+            var payload = new AppActions.ProfilePayload(
+                firstName: "", lastName: "", yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
+                weightKg: 0f, heightCm: 0f, settings: emptySettings
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            Assert.AreEqual("dark", newState.theme);
+            Assert.AreEqual("large", newState.scale);
+            Assert.AreEqual(50, newState.soundVolume);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithNullSettings_KeepsLocalSettings()
+        {
+            var state = new AppState { theme = "dark" };
+            var payload = new AppActions.ProfilePayload(
+                firstName: "", lastName: "", yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
+                weightKg: 0f, heightCm: 0f, settings: null
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            Assert.AreEqual("dark", newState.theme);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithLanguage_UpdatesLang()
+        {
+            var state = new AppState { lang = "en" };
+            var payload = new AppActions.ProfilePayload(
+                firstName: "", lastName: "", yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
+                weightKg: 0f, heightCm: 0f, language: "es"
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            Assert.AreEqual("es", newState.lang);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithNullLanguage_KeepsExistingLang()
+        {
+            var state = new AppState { lang = "en" };
+            var payload = new AppActions.ProfilePayload(
+                firstName: "", lastName: "", yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
+                weightKg: 0f, heightCm: 0f, language: null
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            Assert.AreEqual("en", newState.lang);
+        }
+
+        [Test]
+        public void LogoutReducer_ClearsProfileFields()
+        {
+            var state = new AppState
+            {
+                userFirstName = "Antonio", userLastName = "Duran",
+                userYearOfBirth = 1990, userCountry = "ES",
+                userGender = "MALE", userActivityLevel = "MODERATE"
+            };
+            var action = AppActions.logout.Invoke();
+
+            var newState = AppReducers.LogoutReducer(state, action);
+
+            Assert.IsEmpty(newState.userFirstName);
+            Assert.IsEmpty(newState.userLastName);
+            Assert.AreEqual(0, newState.userYearOfBirth);
+            Assert.IsEmpty(newState.userCountry);
+            Assert.IsEmpty(newState.userGender);
+            Assert.IsEmpty(newState.userActivityLevel);
+        }
+
+        [Test]
+        public void AppState_Copy_IncludesProfileFields()
+        {
+            var state = new AppState
+            {
+                userFirstName = "Antonio", userLastName = "Duran",
+                userYearOfBirth = 1990, userCountry = "ES", userRegion = "ES-VC",
+                userZip = "03450", userGender = "MALE",
+                userAnnualIncome = "FROM_20000_TO_34999",
+                userEducationLevel = "UNIVERSITY", userActivityLevel = "MODERATE",
+                userWeightKg = 75f, userHeightCm = 180f
+            };
+
+            var copy = state.Copy();
+
+            Assert.AreEqual("Antonio", copy.userFirstName);
+            Assert.AreEqual("Duran", copy.userLastName);
+            Assert.AreEqual(1990, copy.userYearOfBirth);
+            Assert.AreEqual("ES", copy.userCountry);
+            Assert.AreEqual("ES-VC", copy.userRegion);
+            Assert.AreEqual("03450", copy.userZip);
+            Assert.AreEqual("MALE", copy.userGender);
+            Assert.AreEqual("FROM_20000_TO_34999", copy.userAnnualIncome);
+            Assert.AreEqual("UNIVERSITY", copy.userEducationLevel);
+            Assert.AreEqual("MODERATE", copy.userActivityLevel);
+            Assert.AreEqual(75f, copy.userWeightKg);
+            Assert.AreEqual(180f, copy.userHeightCm);
+        }
     }
 }
