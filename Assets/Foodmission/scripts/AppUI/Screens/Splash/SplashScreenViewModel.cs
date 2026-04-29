@@ -74,6 +74,9 @@ namespace eu.foodmission.platform
             }
 
             return Actions.loading_to_home;
+
+            
+            //return Actions.register_to_onboarding;
         }
     }
 }

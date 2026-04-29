@@ -103,6 +103,8 @@ namespace eu.foodmission.platform
 
         public event System.Action<string> ShowErrorRequest;
 
+        private bool _registrationCompleted = false;
+
         public RegisterViewModel(IAuthService authService, IStoreService storeService) : base(storeService)
         {
             _authService = authService;
@@ -196,8 +198,10 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[{GetType().Name}] - OnAuthStateChanged -> authError = {authState.authError}");
                 ShowErrorRequest?.Invoke(authState.authError);
             }
-            else if (!string.IsNullOrEmpty(authState.userId))
+            else if (!string.IsNullOrEmpty(authState.userId) && !_registrationCompleted)
             {
+                Debug.Log($"[{GetType().Name}] - OnAuthStateChanged -> userId = {authState.userId}, registration completed -> " + JsonUtility.ToJson(authState));
+                _registrationCompleted = true;
                 NutriMessageDialog.Show(
                     message: "@UI:COMPLETE_WELCOME_MESSAGE",
                     actions: new[]

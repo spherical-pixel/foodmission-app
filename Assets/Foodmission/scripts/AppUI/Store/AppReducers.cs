@@ -90,6 +90,48 @@ namespace eu.foodmission.platform
         // Extended profile
         public static readonly ActionCreator setExtendedProfile = "app/setExtendedProfile";
 
+        // Profile sync
+        public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
+
+        public readonly struct ProfilePayload
+        {
+            public readonly string firstName;
+            public readonly string lastName;
+            public readonly int yearOfBirth;
+            public readonly string country;
+            public readonly string region;
+            public readonly string zip;
+            public readonly string gender;
+            public readonly string annualIncome;
+            public readonly string educationLevel;
+            public readonly string activityLevel;
+            public readonly float weightKg;
+            public readonly float heightCm;
+            public readonly string language;
+            public readonly UserSettingsDto settings;
+
+            public ProfilePayload(string firstName, string lastName, int yearOfBirth,
+                string country, string region, string zip, string gender,
+                string annualIncome, string educationLevel, string activityLevel,
+                float weightKg, float heightCm, string language = null,
+                UserSettingsDto settings = null)
+            {
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.yearOfBirth = yearOfBirth;
+                this.country = country;
+                this.region = region;
+                this.zip = zip;
+                this.gender = gender;
+                this.annualIncome = annualIncome;
+                this.educationLevel = educationLevel;
+                this.activityLevel = activityLevel;
+                this.weightKg = weightKg;
+                this.heightCm = heightCm;
+                this.language = language;
+                this.settings = settings;
+            }
+        }
     }
 
     // ==================== App Reducers ====================
@@ -182,8 +224,21 @@ namespace eu.foodmission.platform
             newState.tokenType = "";
             newState.tokenExpiresAt = 0;
             newState.refreshToken = "";
+            // Clear profile data
+            newState.userFirstName = "";
+            newState.userLastName = "";
+            newState.userYearOfBirth = 0;
+            newState.userCountry = "";
+            newState.userRegion = "";
+            newState.userZip = "";
+            newState.userGender = "";
+            newState.userAnnualIncome = "";
+            newState.userEducationLevel = "";
+            newState.userActivityLevel = "";
+            newState.userWeightKg = 0f;
+            newState.userHeightCm = 0f;
             // Reset preferences to defaults
-            newState.theme = "system";//"system";
+            newState.theme = "system";
             newState.scale = "medium";
             newState.font = "roboto";
             return newState;
@@ -286,6 +341,41 @@ namespace eu.foodmission.platform
             return newState;
         }
 
+        public static AppState ProfileSyncedReducer(AppState state, IAction<AppActions.ProfilePayload> action)
+        {
+            var newState = state.Copy();
+            newState.userFirstName = action.payload.firstName ?? "";
+            newState.userLastName = action.payload.lastName ?? "";
+            newState.userYearOfBirth = action.payload.yearOfBirth;
+            newState.userCountry = action.payload.country ?? "";
+            newState.userRegion = action.payload.region ?? "";
+            newState.userZip = action.payload.zip ?? "";
+            newState.userGender = action.payload.gender ?? "";
+            newState.userAnnualIncome = action.payload.annualIncome ?? "";
+            newState.userEducationLevel = action.payload.educationLevel ?? "";
+            newState.userActivityLevel = action.payload.activityLevel ?? "";
+            newState.userWeightKg = action.payload.weightKg;
+            newState.userHeightCm = action.payload.heightCm;
 
+            if (!string.IsNullOrEmpty(action.payload.language))
+            {
+                newState.lang = action.payload.language;
+            }
+
+            // Only apply server settings if the server has stored them (theme is our sentinel)
+            var s = action.payload.settings;
+            if (s != null && !string.IsNullOrEmpty(s.theme))
+            {
+                newState.theme = s.theme;
+                newState.scale = s.scale ?? newState.scale;
+                newState.font = s.font ?? newState.font;
+                newState.soundVolume = s.soundVolume > 0 ? s.soundVolume : newState.soundVolume;
+                newState.musicVolume = s.musicVolume > 0 ? s.musicVolume : newState.musicVolume;
+                newState.pushNotificationsEnabled = s.pushNotificationsEnabled;
+                newState.backgroundPattern = s.backgroundPattern;
+            }
+
+            return newState;
+        }
     }
 }

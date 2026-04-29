@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace eu.foodmission.platform
 {
@@ -15,18 +16,35 @@ namespace eu.foodmission.platform
     }
 
     /// <summary>
-    /// API Register request
+    /// API Register request — only non-null fields are serialized.
     /// </summary>
-    [Serializable]
     public class RegisterRequest
     {
+        [JsonProperty("username")]
         public string username;
+
+        [JsonProperty("email")]
         public string email;
+
+        [JsonProperty("password")]
         public string password;
-        public int yearOfBirth;
+
+        [JsonProperty("yearOfBirth", NullValueHandling = NullValueHandling.Ignore)]
+        public int? yearOfBirth;
+
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string country;
+
+        [JsonProperty("region", NullValueHandling = NullValueHandling.Ignore)]
         public string region;
+
+        [JsonProperty("zip", NullValueHandling = NullValueHandling.Ignore)]
         public string zip;
+
+        public string ToJson() => JsonConvert.SerializeObject(this, new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
     }
 
     /// <summary>
@@ -60,6 +78,22 @@ namespace eu.foodmission.platform
         public string email;
         public string username;
         public string keycloakId;
+    }
+
+    public class RefreshRequest
+    {
+        [JsonProperty("token")]
+        public string token;
+
+        public string ToJson() => JsonConvert.SerializeObject(this);
+    }
+
+    public class ForgotPasswordRequest
+    {
+        [JsonProperty("email")]
+        public string email;
+
+        public string ToJson() => JsonConvert.SerializeObject(this);
     }
 
     // ==================== Responses ====================
@@ -113,5 +147,19 @@ namespace eu.foodmission.platform
         public string email;
         public string username;
         public string keycloakId;
+        public string firstName;
+        public string lastName;
+        public int yearOfBirth;
+        public string country;
+        public string region;
+        public string zip;
+        public string gender;
+        public string annualIncome;
+        public string educationLevel;
+        public string activityLevel;
+        public float weightKg;
+        public float heightCm;
+        public string language;
+        public UserSettingsDto settings;
     }
 }

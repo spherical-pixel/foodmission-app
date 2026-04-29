@@ -106,6 +106,21 @@ namespace eu.foodmission.platform
         /// </summary>
         public int lastSessionTimestamp = 0;
 
+        // ==================== User profile (synced from server) ====================
+
+        public string userFirstName = "";
+        public string userLastName = "";
+        public int userYearOfBirth = 0;
+        public string userCountry = "";
+        public string userRegion = "";
+        public string userZip = "";
+        public string userGender = "";
+        public string userAnnualIncome = "";
+        public string userEducationLevel = "";
+        public string userActivityLevel = "";
+        public float userWeightKg = 0f;
+        public float userHeightCm = 0f;
+
         // ==================== Temporal data (not persisted) ====================
 
         /// <summary>
@@ -149,6 +164,18 @@ namespace eu.foodmission.platform
                 refreshToken = this.refreshToken,
                 refreshTokenExpiresAt = this.refreshTokenExpiresAt,
                 lastSessionTimestamp = this.lastSessionTimestamp,
+                userFirstName = this.userFirstName,
+                userLastName = this.userLastName,
+                userYearOfBirth = this.userYearOfBirth,
+                userCountry = this.userCountry,
+                userRegion = this.userRegion,
+                userZip = this.userZip,
+                userGender = this.userGender,
+                userAnnualIncome = this.userAnnualIncome,
+                userEducationLevel = this.userEducationLevel,
+                userActivityLevel = this.userActivityLevel,
+                userWeightKg = this.userWeightKg,
+                userHeightCm = this.userHeightCm,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError
             };

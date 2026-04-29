@@ -38,8 +38,6 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private IList<string> _dietaryPreferenceOptions = new List<string>();
 
-        // Dietary preference checkbox states (parallel to _dietaryPreferenceOptions)
-        private List<bool> _dietaryPreferenceChecked = new List<bool>();
 
         // Selected indices for dropdowns (-1 = no selection)
         [ObservableProperty]
@@ -47,6 +45,9 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private int _selectedActivityLevelIndex = -1;
+        
+        [ObservableProperty]
+        private int[] _selectedDietaryPreferenceIndices = new int[] { };
 
         [ObservableProperty]
         private int _selectedEducationLevelIndex = -1;
@@ -79,7 +80,8 @@ namespace eu.foodmission.platform
             _selectedActivityLevelIndex >= 0 ||
             _selectedEducationLevelIndex >= 0 ||
             _selectedAnnualIncomeIndex >= 0 ||
-            _selectedShoppingResponsibilityIndex >= 0;
+            _selectedShoppingResponsibilityIndex >= 0 || 
+            (_selectedDietaryPreferenceIndices != null);
 
         
         /// <summary>
@@ -128,9 +130,7 @@ namespace eu.foodmission.platform
                 ShoppingResponsibilityOptions = data.shoppingResponsibilities?.Select(s => s.label).ToList() ?? new List<string>();
                 DietaryPreferenceOptions = data.dietaryPreferences?.Select(d => d.label).ToList() ?? new List<string>();
 
-                // Initialize checkbox states for dietary preferences
-                _dietaryPreferenceChecked = new List<bool>(new bool[DietaryPreferenceOptions.Count]);
-
+                
                 Debug.Log($"[OnboardingProfileViewModel] Catalog loaded: {GenderOptions.Count} genders, {ActivityLevelOptions.Count} activity levels");
             }
             catch (Exception ex)
@@ -146,16 +146,37 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Sets the checked state of a dietary preference at the given index.
+        /// Pre-populates dropdown indices from the current AppState profile data.
+        /// Call this after LoadCatalogDataAsync() so _catalogData is available.
         /// </summary>
-        public void SetDietaryPreference(int index, bool isChecked)
+        public void PrePopulateFromState()
         {
-            if (index >= 0 && index < _dietaryPreferenceChecked.Count)
-            {
-                _dietaryPreferenceChecked[index] = isChecked;
-            }
+            if (_catalogData == null) return;
+
+            AppState state = _storeService.GetAppState();
+
+            SelectedGenderIndex = FindCatalogIndex(_catalogData.genders, state.userGender);
+            SelectedActivityLevelIndex = FindCatalogIndex(_catalogData.activityLevels, state.userActivityLevel);
+            SelectedEducationLevelIndex = FindCatalogIndex(_catalogData.educationLevels, state.userEducationLevel);
+            SelectedAnnualIncomeIndex = FindCatalogIndex(_catalogData.annualIncomeLevels, state.userAnnualIncome);
         }
 
+        private static int FindCatalogIndex(CatalogItem[] items, string code)
+        {
+            if (items == null || string.IsNullOrEmpty(code)) return -1;
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i].code == code) return i;
+            }
+            return -1;
+        }
+
+        public void Skip()
+        {
+            RaiseNavigationRequested(Actions.go_to_home);
+        }
+
+        
         /// <summary>
         /// Submits the profile data to the backend.
         /// </summary>
@@ -171,66 +192,31 @@ namespace eu.foodmission.platform
 
             try
             {
-                // Map selected indices to catalog codes
-                string genderCode =  _selectedGenderIndex >= 0 ? _catalogData.genders[_selectedGenderIndex].code : null;
-                string activityLevelCode = _selectedActivityLevelIndex >= 0 ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null;
-                string educationLevelCode = _selectedEducationLevelIndex >= 0 ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null;
-                string annualIncomeCode = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null;
-                string shoppingResponsibilityCode = _selectedShoppingResponsibilityIndex >= 0 ? _catalogData.shoppingResponsibilities[_selectedShoppingResponsibilityIndex].code : null;
+                string shoppingResponsibilityCode = _selectedShoppingResponsibilityIndex >= 0
+                    ? _catalogData.shoppingResponsibilities[_selectedShoppingResponsibilityIndex].code
+                    : null;
 
-                // Build dietary preference — pick first selected preference
-                string dietaryPreferenceCode = "";
-                for (int i = 0; i < _dietaryPreferenceChecked.Count; i++)
-                {
-                    if (_dietaryPreferenceChecked[i])
-                    {
-                        dietaryPreferenceCode = _catalogData.dietaryPreferences[i].code;
-                        break;
-                    }
-                }
+                // Backend supports a single dietary preference — take the first selected index
+                string dietaryCode = _selectedDietaryPreferenceIndices.Length > 0
+                    ? _catalogData.dietaryPreferences[_selectedDietaryPreferenceIndices[0]].code
+                    : null;
 
-                var request = new ProfileUpdateRequest();
-                if( genderCode != null)
+                var request = new ProfileUpdateRequest
                 {
-                    request.gender = genderCode;
-                }
-                if( activityLevelCode != null)
-                {
-                    request.activityLevel = activityLevelCode;
-                }
-                if( educationLevelCode != null)                {
-                    request.educationLevel = educationLevelCode;
-                }
-                if( annualIncomeCode != null)                {
-                    request.annualIncome = annualIncomeCode;
-                }
-                if( shoppingResponsibilityCode != null)                {
-                    if( request.preferences == null)
-                    {
-                        request.preferences = new ProfileUpdatePreferences();
-                    }
-                    request.preferences.shoppingResponsibility = shoppingResponsibilityCode;
-                }
-                
-                if( dietaryPreferenceCode != null)                {
-                    if( request.preferences == null)
-                    {
-                        request.preferences = new ProfileUpdatePreferences();
-                    }
-                    request.preferences.dietaryPreference = dietaryPreferenceCode;
-                }
-                
-                /*{
-                    
-                    
-                    
-                    
-                    preferences = new ProfileUpdatePreferences
-                    {
-                        dietaryPreference = dietaryPreferenceCode,
-                        shoppingResponsibility = shoppingResponsibilityCode
-                    }
-                };*/
+                    gender = _selectedGenderIndex >= 0 ? _catalogData.genders[_selectedGenderIndex].code : null,
+                    activityLevel = _selectedActivityLevelIndex >= 0 ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
+                    educationLevel = _selectedEducationLevelIndex >= 0 ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
+                    annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
+                    preferences = (shoppingResponsibilityCode != null || dietaryCode != null)
+                        ? new ProfileUpdatePreferences
+                        {
+                            shoppingResponsibility = shoppingResponsibilityCode,
+                            dietaryPreference = dietaryCode
+                        }
+                        : null
+                };
+
+                Debug.Log($"[OnboardingProfileViewModel] Submitting profile update: {request.ToJson()}");
 
                 bool success = await _authService.UpdateProfileAsync(request);
 
@@ -238,7 +224,8 @@ namespace eu.foodmission.platform
                 {
                     // Mark extended profile as completed in Redux
                     _storeService.store.Dispatch(AppActions.setExtendedProfile.Invoke());
-                    RaiseNavigationRequested(Actions.onboardingprofile_to_onboardingavatar);
+                    //RaiseNavigationRequested(Actions.onboardingprofile_to_onboardingavatar);
+                    RaiseNavigationRequested(Actions.go_to_home);
                 }
                 else
                 {

@@ -16,14 +16,14 @@ namespace eu.foodmission.platform
     class OnboardingProfileScreen : NavigationScreenBase<OnboardingProfileViewModel>
     {
         private Unity.AppUI.UI.Button _submitButton;
+        private Unity.AppUI.UI.Button _skipButton;
         private FormFieldItemDropDownField _genderDropdown;
         private FormFieldItemDropDownField _activityLevelDropdown;
+        private FormFieldItemDropDownField _dietaryPreferencesDropdown;
         private FormFieldItemDropDownField _educationLevelDropdown;
         private FormFieldItemDropDownField _annualIncomeDropdown;
         private FormFieldItemDropDownField _shoppingResponsibilityDropdown;
-        private VisualElement _dietaryPreferencesContainer;
-        private readonly List<FormFieldItemCheckbox> _dietaryCheckboxes = new List<FormFieldItemCheckbox>();
-
+        
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -42,12 +42,14 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _submitButton = contentContainer.Q<Unity.AppUI.UI.Button>("submit-button");
+            _skipButton = contentContainer.Q<Unity.AppUI.UI.Button>("skip-button");
             _genderDropdown = contentContainer.Q<FormFieldItemDropDownField>("gender-dropdown");
             _activityLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("activity-level-dropdown");
             _educationLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("education-level-dropdown");
+            _dietaryPreferencesDropdown = contentContainer.Q<FormFieldItemDropDownField>("dietary-preferences-dropdown");
             _annualIncomeDropdown = contentContainer.Q<FormFieldItemDropDownField>("annual-income-dropdown");
             _shoppingResponsibilityDropdown = contentContainer.Q<FormFieldItemDropDownField>("shopping-responsibility-dropdown");
-            _dietaryPreferencesContainer = contentContainer.Q<VisualElement>("dietary-preferences-container");
+            
         }
 
         private void RegisterManualEvents()
@@ -55,6 +57,11 @@ namespace eu.foodmission.platform
             if (_submitButton != null)
             {
                 _submitButton.clicked += OnSubmitClicked;
+            }
+
+            if (_skipButton != null)
+            {
+                _skipButton.clicked += OnSkipClicked;
             }
 
             if (_genderDropdown != null)
@@ -65,6 +72,11 @@ namespace eu.foodmission.platform
             if (_activityLevelDropdown != null)
             {
                 _activityLevelDropdown.Dropdown.RegisterValueChangedCallback(OnActivityLevelChanged);
+            }
+
+            if( _dietaryPreferencesDropdown != null)
+            {
+                _dietaryPreferencesDropdown.Dropdown.RegisterValueChangedCallback(OnDietaryPreferencesChanged);
             }
 
             if (_educationLevelDropdown != null)
@@ -90,6 +102,11 @@ namespace eu.foodmission.platform
                 _submitButton.clicked -= OnSubmitClicked;
             }
 
+            if (_skipButton != null)
+            {
+                _skipButton.clicked -= OnSkipClicked;
+            }
+
             if (_genderDropdown != null)
             {
                 _genderDropdown.Dropdown.UnregisterValueChangedCallback(OnGenderChanged);
@@ -98,6 +115,11 @@ namespace eu.foodmission.platform
             if (_activityLevelDropdown != null)
             {
                 _activityLevelDropdown.Dropdown.UnregisterValueChangedCallback(OnActivityLevelChanged);
+            }
+
+            if (_dietaryPreferencesDropdown != null)
+            {
+                _dietaryPreferencesDropdown.Dropdown.UnregisterValueChangedCallback(OnDietaryPreferencesChanged);
             }
 
             if (_educationLevelDropdown != null)
@@ -120,11 +142,18 @@ namespace eu.foodmission.platform
         {
             base.OnEnter(controller, destination, args);
 
+            if( args != null && args.Length > 0)
+            {
+                // Handle any arguments passed during navigation if needed
+                Debug.Log($"OnboardingProfileScreen received {args.Length} arguments.");
+            }
+
             if (_viewModel != null)
             {
                 await _viewModel.LoadCatalogDataAsync();
+                _viewModel.PrePopulateFromState();
                 PopulateDropdowns();
-                PopulateDietaryCheckboxes();
+                PrePopulateDropdownSelections();
                 UpdateSubmitButtonState();
             }
         }
@@ -135,6 +164,7 @@ namespace eu.foodmission.platform
 
             ConfigureDropdown(_genderDropdown, _viewModel.GenderOptions);
             ConfigureDropdown(_activityLevelDropdown, _viewModel.ActivityLevelOptions);
+            ConfigureDropdown(_dietaryPreferencesDropdown, _viewModel.DietaryPreferenceOptions);
             ConfigureDropdown(_educationLevelDropdown, _viewModel.EducationLevelOptions);
             ConfigureDropdown(_annualIncomeDropdown, _viewModel.AnnualIncomeOptions);
             ConfigureDropdown(_shoppingResponsibilityDropdown, _viewModel.ShoppingResponsibilityOptions);
@@ -152,35 +182,19 @@ namespace eu.foodmission.platform
             };
         }
 
-        private void PopulateDietaryCheckboxes()
+        
+        private void PrePopulateDropdownSelections()
         {
-            if (_viewModel == null || _dietaryPreferencesContainer == null) return;
+            SetDropdownSelection(_genderDropdown, _viewModel.SelectedGenderIndex);
+            SetDropdownSelection(_activityLevelDropdown, _viewModel.SelectedActivityLevelIndex);
+            SetDropdownSelection(_educationLevelDropdown, _viewModel.SelectedEducationLevelIndex);
+            SetDropdownSelection(_annualIncomeDropdown, _viewModel.SelectedAnnualIncomeIndex);
+        }
 
-            // Clear any existing checkboxes
-            foreach (var checkbox in _dietaryCheckboxes)
-            {
-                _dietaryPreferencesContainer.Remove(checkbox);
-            }
-            _dietaryCheckboxes.Clear();
-
-            var options = _viewModel.DietaryPreferenceOptions;
-            if (options == null) return;
-
-            for (int i = 0; i < options.Count; i++)
-            {
-                var checkbox = new FormFieldItemCheckbox();
-                checkbox.Text = options[i];
-                checkbox.CheckboxValue = CheckboxState.Unchecked;
-
-                int index = i; // capture for closure
-                checkbox.Button.clicked += () =>
-                {
-                    _viewModel.SetDietaryPreference(index, checkbox.CheckboxValue == CheckboxState.Checked);
-                };
-
-                _dietaryPreferencesContainer.Add(checkbox);
-                _dietaryCheckboxes.Add(checkbox);
-            }
+        private static void SetDropdownSelection(FormFieldItemDropDownField dropdown, int index)
+        {
+            if (dropdown == null || index < 0) return;
+            dropdown.Dropdown.value = new[] { index };
         }
 
         private void UpdateSubmitButtonState()
@@ -212,6 +226,18 @@ namespace eu.foodmission.platform
             }
             UpdateSubmitButtonState();
         }
+
+        private void OnDietaryPreferencesChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            // This callback may not be needed if we're using individual checkboxes for dietary preferences
+            // But if the dropdown is used for something else related to dietary preferences, handle it here
+            if( _viewModel == null) return;
+            var value = evt.newValue?.ToArray();
+            if (value != null && value.Length > 0)
+            {
+                _viewModel.SelectedDietaryPreferenceIndices = value.ToArray<int>();
+            }
+        }  
 
         private void OnEducationLevelChanged(ChangeEvent<IEnumerable<int>> evt)
         {
@@ -251,6 +277,14 @@ namespace eu.foodmission.platform
             if (_viewModel != null)
             {
                 await _viewModel.SubmitAsync();
+            }
+        }
+
+        private void OnSkipClicked()
+        {
+            if (_viewModel != null)
+            {
+                _viewModel.Skip();
             }
         }
 

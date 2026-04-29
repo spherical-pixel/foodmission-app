@@ -65,6 +65,13 @@ namespace eu.foodmission.platform
                         : 0;
                     ScheduleProactiveRefresh(remaining, refreshRemaining);
                     Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
+
+                    ProfileResponse profile = await FetchProfileAsync(state.accessToken);
+                    if (profile != null)
+                    {
+                        DispatchProfileSynced(profile);
+                    }
+
                     return true;
                 }
                 return false;
@@ -92,7 +99,7 @@ namespace eu.foodmission.platform
 
             try
             {
-                string json = $"{{\"token\":\"{EscapeJson(state.refreshToken)}\"}}";
+                string json = new RefreshRequest { token = state.refreshToken }.ToJson();
                 string url = $"{ApiConfig.BaseUrl}/api/v1/auth/refresh";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
@@ -255,7 +262,7 @@ namespace eu.foodmission.platform
                     ? (int)(now + response.refresh_expires_in)
                     : 0;
 
-                // Fetch user profile to get userId, username and email
+                // Fetch user profile
                 ProfileResponse profile = await FetchProfileAsync(response.access_token);
                 string userId = profile?.id ?? username;
                 string userName = profile?.username ?? "";
@@ -266,7 +273,6 @@ namespace eu.foodmission.platform
                     Debug.LogWarning($"[{GetType().Name}] Profile fetch failed, using login input as fallback");
                 }
 
-                // Create login payload and dispatch it to the store
                 AppActions.LoginPayload payload = new AppActions.LoginPayload(
                     userId: userId,
                     userName: userName,
@@ -279,6 +285,12 @@ namespace eu.foodmission.platform
                 );
 
                 _storeService.store.Dispatch(AppActions.loginSuccess.Invoke(payload));
+
+                if (profile != null)
+                {
+                    DispatchProfileSynced(profile);
+                }
+
                 ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
                 Debug.Log($"[{GetType().Name}] Login successful for user: {userId}");
 
@@ -307,32 +319,16 @@ namespace eu.foodmission.platform
 
             try
             {
-                // Build JSON manually to only include fields with values
-                var jsonBuilder = new System.Text.StringBuilder();
-                jsonBuilder.Append("{");
-                jsonBuilder.AppendFormat("\"username\":\"{0}\",", EscapeJson(username));
-                jsonBuilder.AppendFormat("\"email\":\"{0}\",", EscapeJson(email));
-                jsonBuilder.AppendFormat("\"password\":\"{0}\"", EscapeJson(password));
-
-                if (yearOfBirth > 0)
+                string json = new RegisterRequest
                 {
-                    jsonBuilder.AppendFormat(",\"yearOfBirth\":{0}", yearOfBirth);
-                }
-                if (!string.IsNullOrEmpty(country))
-                {
-                    jsonBuilder.AppendFormat(",\"country\":\"{0}\"", EscapeJson(country));
-                }
-                if (!string.IsNullOrEmpty(region))
-                {
-                    jsonBuilder.AppendFormat(",\"region\":\"{0}\"", EscapeJson(region));
-                }
-                if (!string.IsNullOrEmpty(zip))
-                {
-                    jsonBuilder.AppendFormat(",\"zip\":\"{0}\"", EscapeJson(zip));
-                }
-
-                jsonBuilder.Append("}");
-                string json = jsonBuilder.ToString();
+                    username = username,
+                    email = email,
+                    password = password,
+                    yearOfBirth = yearOfBirth > 0 ? yearOfBirth : (int?)null,
+                    country = string.IsNullOrEmpty(country) ? null : country,
+                    region = string.IsNullOrEmpty(region) ? null : region,
+                    zip = string.IsNullOrEmpty(zip) ? null : zip
+                }.ToJson();
 
                 string url = $"{ApiConfig.BaseUrl}/api/v1/auth/register";
 
@@ -407,6 +403,54 @@ namespace eu.foodmission.platform
             }
         }
 
+        private void DispatchProfileSynced(ProfileResponse profile)
+        {
+            var payload = new AppActions.ProfilePayload(
+                firstName: profile.firstName ?? "",
+                lastName: profile.lastName ?? "",
+                yearOfBirth: profile.yearOfBirth,
+                country: profile.country ?? "",
+                region: profile.region ?? "",
+                zip: profile.zip ?? "",
+                gender: profile.gender ?? "",
+                annualIncome: profile.annualIncome ?? "",
+                educationLevel: profile.educationLevel ?? "",
+                activityLevel: profile.activityLevel ?? "",
+                weightKg: profile.weightKg,
+                heightCm: profile.heightCm,
+                language: profile.language,
+                settings: profile.settings
+            );
+            _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
+        }
+
+        public async Task SyncSettingsAsync()
+        {
+            AppState state = _storeService.GetAppState();
+            if (string.IsNullOrEmpty(state.accessToken)) return;
+
+            var request = new ProfileUpdateRequest
+            {
+                language = state.lang,
+                settings = new UserSettingsDto
+                {
+                    theme = state.theme,
+                    scale = state.scale,
+                    font = state.font,
+                    soundVolume = state.soundVolume,
+                    musicVolume = state.musicVolume,
+                    pushNotificationsEnabled = state.pushNotificationsEnabled,
+                    backgroundPattern = state.backgroundPattern
+                }
+            };
+
+            bool success = await UpdateProfileAsync(request);
+            if (!success)
+            {
+                Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
+            }
+        }
+
         /// <summary>
         /// Fetches user profile from GET /api/v1/auth/profile
         /// </summary>
@@ -449,22 +493,6 @@ namespace eu.foodmission.platform
             return null;
         }
 
-        /// <summary>
-        /// Escapes special characters for JSON strings
-        /// </summary>
-        private string EscapeJson(string str)
-        {
-            if (string.IsNullOrEmpty(str))
-                return str;
-
-            return str
-                .Replace("\\", "\\\\")
-                .Replace("\"", "\\\"")
-                .Replace("\n", "\\n")
-                .Replace("\r", "\\r")
-                .Replace("\t", "\\t");
-        }
-
         public void Logout()
         {
             _refreshTimerCts?.Cancel();
@@ -482,8 +510,7 @@ namespace eu.foodmission.platform
         {
             try
             {
-                var requestData = new { email = email };
-                string json = JsonUtility.ToJson(requestData);
+                string json = new ForgotPasswordRequest { email = email }.ToJson();
                 string url = $"{ApiConfig.BaseUrl}/api/v1/auth/forgot-password";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
@@ -527,7 +554,6 @@ namespace eu.foodmission.platform
 
         /// <summary>
         /// Updates the current user's extended profile via PATCH /api/v1/users/me.
-        /// Only non-null fields are included in the request body.
         /// Returns true on success, false on failure.
         /// </summary>
         public async Task<bool> UpdateProfileAsync(ProfileUpdateRequest request)
@@ -542,71 +568,7 @@ namespace eu.foodmission.platform
 
             try
             {
-                // Build JSON manually — only include non-empty fields (PATCH semantics)
-                var jsonBuilder = new System.Text.StringBuilder();
-                jsonBuilder.Append("{");
-
-                bool hasField = false;
-
-                if (!string.IsNullOrEmpty(request.gender))
-                {
-                    jsonBuilder.AppendFormat("\"gender\":\"{0}\"", EscapeJson(request.gender));
-                    hasField = true;
-                }
-
-                if (!string.IsNullOrEmpty(request.activityLevel))
-                {
-                    if (hasField) jsonBuilder.Append(",");
-                    jsonBuilder.AppendFormat("\"activityLevel\":\"{0}\"", EscapeJson(request.activityLevel));
-                    hasField = true;
-                }
-
-                if (!string.IsNullOrEmpty(request.educationLevel))
-                {
-                    if (hasField) jsonBuilder.Append(",");
-                    jsonBuilder.AppendFormat("\"educationLevel\":\"{0}\"", EscapeJson(request.educationLevel));
-                    hasField = true;
-                }
-
-                if (!string.IsNullOrEmpty(request.annualIncome))
-                {
-                    if (hasField) jsonBuilder.Append(",");
-                    jsonBuilder.AppendFormat("\"annualIncome\":\"{0}\"", EscapeJson(request.annualIncome));
-                    hasField = true;
-                }
-
-                // Preferences nested object — only include non-empty fields
-                if (request.preferences != null)
-                {
-                    bool hasDietary = !string.IsNullOrEmpty(request.preferences.dietaryPreference);
-                    bool hasShopping = !string.IsNullOrEmpty(request.preferences.shoppingResponsibility);
-
-                    if (hasDietary || hasShopping)
-                    {
-                        if (hasField) jsonBuilder.Append(",");
-                        jsonBuilder.Append("\"preferences\":{");
-
-                        bool hasPrefField = false;
-
-                        if (hasDietary)
-                        {
-                            jsonBuilder.AppendFormat("\"dietaryPreference\":\"{0}\"", EscapeJson(request.preferences.dietaryPreference));
-                            hasPrefField = true;
-                        }
-
-                        if (hasShopping)
-                        {
-                            if (hasPrefField) jsonBuilder.Append(",");
-                            jsonBuilder.AppendFormat("\"shoppingResponsibility\":\"{0}\"", EscapeJson(request.preferences.shoppingResponsibility));
-                        }
-
-                        jsonBuilder.Append("}");
-                        hasField = true;
-                    }
-                }
-
-                jsonBuilder.Append("}");
-                string json = jsonBuilder.ToString();
+                string json = request.ToJson();
                 Debug.Log($"[{GetType().Name}] UpdateProfile JSON: {json}");
 
                 string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";

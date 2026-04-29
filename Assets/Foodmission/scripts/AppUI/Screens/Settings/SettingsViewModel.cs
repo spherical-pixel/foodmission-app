@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
 
@@ -6,6 +8,10 @@ namespace eu.foodmission.platform
     [ObservableObject]
     public partial class SettingsViewModel : ViewModelBase
     {
+        private readonly IAuthService _authService;
+        private CancellationTokenSource _syncCts;
+        private const int SyncDelayMs = 1500;
+
         [ObservableProperty]
         private string m_Theme = "system";
 
@@ -33,8 +39,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_UserName = "User";
 
-        public SettingsViewModel(IStoreService storeService) : base(storeService)
+        public SettingsViewModel(IStoreService storeService, IAuthService authService) : base(storeService)
         {
+            _authService = authService;
             SynchronizeState(_storeService.GetAppState());
             _storeSubscription = _store.Subscribe(SelectSettingsState, OnSettingsStateChanged);
         }
@@ -68,49 +75,99 @@ namespace eu.foodmission.platform
             UserName = state.userName ?? "User";
         }
 
-        public void SetTheme(string theme) => _store.Dispatch(AppActions.setTheme.Invoke(theme));
-        public void SetLanguage(string lang) => _store.Dispatch(AppActions.setLanguage.Invoke(lang));
-        public void SetScale(string scale) => _store.Dispatch(AppActions.setScale.Invoke(scale));
-        public void SetFont(string font) => _store.Dispatch(AppActions.setFont.Invoke(font));
+        public void SetTheme(string theme)
+        {
+            _store.Dispatch(AppActions.setTheme.Invoke(theme));
+            ScheduleSettingsSync();
+        }
+
+        public void SetLanguage(string lang)
+        {
+            _store.Dispatch(AppActions.setLanguage.Invoke(lang));
+            ScheduleSettingsSync();
+        }
+
+        public void SetScale(string scale)
+        {
+            _store.Dispatch(AppActions.setScale.Invoke(scale));
+            ScheduleSettingsSync();
+        }
+
+        public void SetFont(string font)
+        {
+            _store.Dispatch(AppActions.setFont.Invoke(font));
+            ScheduleSettingsSync();
+        }
 
         public void SetSound(int volume)
         {
             _store.Dispatch(AppActions.setSound.Invoke(volume));
             ApplyMixerVolume(volume);
+            ScheduleSettingsSync();
         }
 
         private static void ApplyMixerVolume(int volume)
         {
             // TODO: mixer call here
-            // e.g.: _audioMixer.SetFloat("SoundVolume", Mathf.Log10(Mathf.Max(volume, 1) / 100f) * 20f);
         }
 
         public void SetMusic(int volume)
         {
             _store.Dispatch(AppActions.setMusic.Invoke(volume));
             ApplyMixerMusicVolume(volume);
+            ScheduleSettingsSync();
         }
 
         private static void ApplyMixerMusicVolume(int volume)
         {
             // TODO: mixer call here
-            // e.g.: _audioMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Max(volume, 1) / 100f) * 20f);
         }
 
         public void SetPushNotifications(bool enabled)
         {
             _store.Dispatch(AppActions.setPushNotifications.Invoke(enabled));
             ApplyPushNotifications(enabled);
+            ScheduleSettingsSync();
         }
 
         private static void ApplyPushNotifications(bool enabled)
         {
             // TODO: platform-specific calls here
-            // iOS:    UnityEngine.iOS.NotificationServices.RegisterForNotifications(...)
-            // Android: Firebase.Messaging.FirebaseMessaging.SubscribeAsync(...) / UnsubscribeAsync(...)
         }
 
-        public void SetBackgroundPattern(bool pattern) =>
+        public void SetBackgroundPattern(bool pattern)
+        {
             _store.Dispatch(AppActions.setBackgroundPattern.Invoke(pattern));
+            ScheduleSettingsSync();
+        }
+
+        private void ScheduleSettingsSync()
+        {
+            _syncCts?.Cancel();
+            _syncCts?.Dispose();
+            _syncCts = new CancellationTokenSource();
+            _ = SyncAfterDelay(_syncCts.Token);
+        }
+
+        private async Task SyncAfterDelay(CancellationToken token)
+        {
+            try
+            {
+                await Task.Delay(SyncDelayMs, token);
+                await _authService.SyncSettingsAsync();
+            }
+            catch (System.OperationCanceledException)
+            {
+                
+            }
+        }
+
+        protected override void OnDispose()
+        {
+            _syncCts?.Cancel();
+            _syncCts?.Dispose();
+            _syncCts = null;
+            base.OnDispose();
+        }
     }
 }
