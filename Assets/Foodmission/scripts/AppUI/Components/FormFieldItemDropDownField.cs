@@ -24,7 +24,33 @@ namespace eu.foodmission.platform.Components
                 }
             }
         }
-        
+
+        [UxmlAttribute("dropdown-selectiontype")] [CreateProperty]
+        public PickerSelectionType DropdownSelectionType
+        {
+            get => _dropdown?.selectionType ?? PickerSelectionType.Single;
+            set
+            {
+                if (_dropdown != null)
+                {
+                    _dropdown.selectionType = value;
+                }
+            }
+        }
+
+        [UxmlAttribute("dropdown-closeonselect")] [CreateProperty]
+        public bool DropdownCloseOnSelect
+        {
+            get => _dropdown?.closeOnSelection ?? false;
+            set
+            {
+                if (_dropdown != null)
+                {
+                    _dropdown.closeOnSelection = value;
+                }
+            }
+        }
+
         public Dropdown Dropdown
         {
             get => _dropdown;
