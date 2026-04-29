@@ -1,4 +1,5 @@
 using System;
+using Unity.AppUI.Navigation;
 
 namespace eu.foodmission.platform
 {
@@ -11,6 +12,6 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Event fired when the ViewModel requests navigation.
         /// </summary>
-        event Action<string> NavigationRequested;
+        event Action<string, Argument[]> NavigationRequested;
     }
 }

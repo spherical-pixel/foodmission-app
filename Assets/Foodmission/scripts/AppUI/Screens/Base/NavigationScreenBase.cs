@@ -210,11 +210,11 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Callback when ViewModel asks for navigation.
         /// </summary>
-        protected virtual void OnNavigationRequested(string navigationAction)
+        protected virtual void OnNavigationRequested(string navigationAction, Argument[] args)
         {
             if (_navController != null)
             {
-                _navController.Navigate(navigationAction);
+                _navController.Navigate(navigationAction, args ?? System.Array.Empty<Argument>());
             }
             else
             {

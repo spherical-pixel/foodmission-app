@@ -9,7 +9,7 @@ namespace eu.foodmission.platform
     {
         public GroupsJoinScreen() { }
 
-        protected override void OnNavigationRequested(string navigationAction)
+        protected override void OnNavigationRequested(string navigationAction, Argument[] arguments)
         {
             if (navigationAction == Unity.AppUI.Navigation.Generated.Actions.groups_to_detail
                 && _viewModel.JoinedGroup != null)
@@ -20,7 +20,7 @@ namespace eu.foodmission.platform
             }
             else
             {
-                base.OnNavigationRequested(navigationAction);
+                base.OnNavigationRequested(navigationAction, arguments);
             }
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation;
 using Unity.AppUI.Redux;
 using Unity.AppUI.UI;
 using UnityEngine.UIElements;
@@ -22,15 +23,16 @@ namespace eu.foodmission.platform
         /// Event fired when the ViewModel requests navigation.
         /// Screens using NavigationScreenBase are automatically subscribed.
         /// </summary>
-        public event System.Action<string> NavigationRequested;
+        public event System.Action<string, Argument[]> NavigationRequested;
 
         /// <summary>
         /// Invokes the NavigationRequested event. Derived classes should use this to request navigation.
         /// </summary>
         /// <param name="action">The navigation action to execute</param>
-        protected void RaiseNavigationRequested(string action)
+        /// <param name="args">The arguments for the navigation action</param>
+        protected void RaiseNavigationRequested(string action,params Argument[] args)
         {
-            NavigationRequested?.Invoke(action);
+            NavigationRequested?.Invoke(action, args);
         }
 
         // --------------------------------------------------------------------
