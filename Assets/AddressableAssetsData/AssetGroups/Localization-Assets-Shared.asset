@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 4733778d43d494231ad89754532b946d
   m_SerializeEntries:
+  - m_GUID: 15123a87ffbc64c6296495bca22084b4
+    m_Address: Assets/Foodmission/localization/AppUI Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e58ac225f892840658d216244603ef45
     m_Address: Assets/Foodmission/localization/Texts Shared Data.asset
     m_ReadOnly: 1
