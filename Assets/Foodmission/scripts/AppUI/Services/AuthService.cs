@@ -495,11 +495,53 @@ namespace eu.foodmission.platform
 
         public void Logout()
         {
+            string refreshToken = _storeService.GetAppState().refreshToken;
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                _ = RevokeTokenAsync(refreshToken);
+            }
+
             _refreshTimerCts?.Cancel();
             _refreshTimerCts?.Dispose();
             _refreshTimerCts = null;
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log($"[{GetType().Name}] User logged out");
+        }
+
+        private async Task RevokeTokenAsync(string token)
+        {
+            try
+            {
+                string json = $"{{\"token\":\"{EscapeJson(token)}\",\"tokenTypeHint\":\"refresh_token\"}}";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/auth/logout";
+
+                using UnityWebRequest request = new UnityWebRequest(url, "POST")
+                {
+                    uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(json)),
+                    downloadHandler = new DownloadHandlerBuffer()
+                };
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log($"[{GetType().Name}] Token revoked successfully");
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Token revocation failed: {request.responseCode} (local logout still applied)");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Token revocation exception: {ex.Message} (local logout still applied)");
+            }
         }
 
         /// <summary>
