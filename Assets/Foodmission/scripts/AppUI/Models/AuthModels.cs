@@ -96,6 +96,17 @@ namespace eu.foodmission.platform
         public string ToJson() => JsonConvert.SerializeObject(this);
     }
 
+    public class RevokeTokenRequest
+    {
+        [JsonProperty("token")]
+        public string token;
+
+        [JsonProperty("tokenTypeHint")]
+        public string tokenTypeHint;
+
+        public string ToJson() => JsonConvert.SerializeObject(this);
+    }
+
     // ==================== Responses ====================
 
     /// <summary>

@@ -512,7 +512,7 @@ namespace eu.foodmission.platform
         {
             try
             {
-                string json = $"{{\"token\":\"{EscapeJson(token)}\",\"tokenTypeHint\":\"refresh_token\"}}";
+                string json = new RevokeTokenRequest { token = token, tokenTypeHint = "refresh_token" }.ToJson();
                 string url = $"{ApiConfig.BaseUrl}/api/v1/auth/logout";
 
                 using UnityWebRequest request = new UnityWebRequest(url, "POST")
