@@ -207,13 +207,14 @@ namespace eu.foodmission.platform
                     activityLevel = _selectedActivityLevelIndex >= 0 ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
                     annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
-                    preferences = (shoppingResponsibilityCode != null || dietaryCode != null)
-                        ? new ProfileUpdatePreferences
-                        {
-                            shoppingResponsibility = shoppingResponsibilityCode,
-                            dietaryPreference = dietaryCode
-                        }
-                        : null
+                    // TODO: Uncomment this once backend is fixed to accept preferences object
+                    // preferences = (shoppingResponsibilityCode != null || dietaryCode != null)
+                    //     ? new ProfileUpdatePreferences
+                    //     {
+                    //         shoppingResponsibility = shoppingResponsibilityCode,
+                    //         dietaryPreference = dietaryCode
+                    //     }
+                    //     : null
                 };
 
                 Debug.Log($"[OnboardingProfileViewModel] Submitting profile update: {request.ToJson()}");

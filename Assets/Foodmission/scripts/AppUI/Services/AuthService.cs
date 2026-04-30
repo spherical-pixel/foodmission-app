@@ -432,16 +432,17 @@ namespace eu.foodmission.platform
             var request = new ProfileUpdateRequest
             {
                 language = state.lang,
-                settings = new UserSettingsDto
-                {
-                    theme = state.theme,
-                    scale = state.scale,
-                    font = state.font,
-                    soundVolume = state.soundVolume,
-                    musicVolume = state.musicVolume,
-                    pushNotificationsEnabled = state.pushNotificationsEnabled,
-                    backgroundPattern = state.backgroundPattern
-                }
+                // TODO: Uncomment this once backend is fixed
+                // settings = new UserSettingsDto
+                // {
+                //     theme = state.theme,
+                //     scale = state.scale,
+                //     font = state.font,
+                //     soundVolume = state.soundVolume,
+                //     musicVolume = state.musicVolume,
+                //     pushNotificationsEnabled = state.pushNotificationsEnabled,
+                //     backgroundPattern = state.backgroundPattern
+                // }
             };
 
             bool success = await UpdateProfileAsync(request);
