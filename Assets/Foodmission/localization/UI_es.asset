@@ -115,38 +115,12 @@ MonoBehaviour:
     m_Localized: "T\xE9rminos y condiciones de FOODMISSION\n\nAl usar esta aplicaci\xF3n,
       aceptas los siguientes t\xE9rminos:\n\n1. REGISTRO DE CUENTA\nDebes proporcionar
       informaci\xF3n precisa y completa al registrarte. Eres responsable de mantener
-      la confidencialidad de tus credenciales de acceso.\n\n2. PRIVACIDAD\nRecopilamos
-      y procesamos tus datos personales de acuerdo con nuestra Pol\xEDtica de privacidad.
-      Esto incluye datos nutricionales, informaci\xF3n de ubicaci\xF3n y estad\xEDsticas
-      de uso.\n\nPara m\xE1s informaci\xF3n, cont\xE1ctanos en support@foodmission.eu\nT\xE9rminos
-      y condiciones de FOODMISSION\n\nAl usar esta aplicaci\xF3n, aceptas los siguientes
-      t\xE9rminos:\n\n1. REGISTRO DE CUENTA\nDebes proporcionar informaci\xF3n precisa
-      y completa al registrarte. Eres responsable de mantener la confidencialidad
-      de tus credenciales de acceso.\n\n2. PRIVACIDAD\nRecopilamos y procesamos tus
-      datos personales de acuerdo con nuestra Pol\xEDtica de privacidad. Esto incluye
-      datos nutricionales, informaci\xF3n de ubicaci\xF3n y estad\xEDsticas de uso.\n\nPara
-      m\xE1s informaci\xF3n, cont\xE1ctanos en support@foodmission.eu. T\xE9rminos
-      y condiciones de FOODMISSION\n\nAl usar esta aplicaci\xF3n, aceptas los siguientes
-      t\xE9rminos:\n\n1. REGISTRO DE CUENTA\nDebes proporcionar informaci\xF3n precisa
-      y completa al registrarte. Eres responsable de mantener la confidencialidad
-      de tus credenciales.\n\n2. PRIVACIDAD\nRecopilamos y procesamos tus datos personales
-      de acuerdo con nuestra Pol\xEDtica de privacidad. Esto incluye datos nutricionales,
-      informaci\xF3n de ubicaci\xF3n y estad\xEDsticas de uso.\n\nPara m\xE1s informaci\xF3n,
-      cont\xE1ctanos en support@foodmission.eu. T\xE9rminos y condiciones de FOODMISSION\n\nAl
-      usar esta aplicaci\xF3n, aceptas los siguientes t\xE9rminos:\n\n1. REGISTRO
-      DE CUENTA\nDebes proporcionar informaci\xF3n precisa y completa al registrarte.
-      Eres responsable de mantener la confidencialidad de tus credenciales.\n\n2.
-      PRIVACIDAD\nRecopilamos y procesamos tus datos personales de acuerdo con nuestra
-      Pol\xEDtica de privacidad. Esto incluye datos nutricionales, informaci\xF3n
-      de ubicaci\xF3n y estad\xEDsticas de uso.\n\nPara m\xE1s informaci\xF3n, cont\xE1ctenos
-      en support@foodmission.eu. T\xE9rminos y condiciones de FOODMISSION\n\nAl usar
-      esta aplicaci\xF3n, usted acepta los siguientes t\xE9rminos:\n\n1. REGISTRO
-      DE CUENTA\nDebe proporcionar informaci\xF3n precisa y completa al registrarse.
-      Usted es responsable de mantener la confidencialidad de sus credenciales de
-      acceso.\n\n2. PRIVACIDAD\nRecopilamos y procesamos sus datos personales de
-      acuerdo con nuestra Pol\xEDtica de privacidad. Esto incluye datos nutricionales,
-      informaci\xF3n de ubicaci\xF3n y estad\xEDsticas de uso.\n\nPara m\xE1s informaci\xF3n,
-      cont\xE1ctenos en support@foodmission.eu"
+      la confidencialidad de tus credenciales.\n\n2. PRIVACIDAD\nRecopilamos y procesamos
+      tus datos personales de acuerdo con nuestra Pol\xEDtica de privacidad. Esto
+      incluye datos nutricionales, informaci\xF3n de ubicaci\xF3n y estad\xEDsticas
+      de uso.\n\nPara m\xE1s informaci\xF3n, cont\xE1ctanos en support@foodmission.eu\n\nAl
+      usar esta aplicaci\xF3n, aceptas los siguientes t\xE9rminos:\n\nPara m\xE1s
+      informaci\xF3n, cont\xE1ctanos en support@foodmission.eu"
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -258,6 +232,51 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35550076637011968
     m_Localized: "Entra en la aplicaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38372841320603648
+    m_Localized: "Usuario o contrase\xF1a incorrectos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373129888718848
+    m_Localized: Servicio no encontrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373203972710400
+    m_Localized: "Solicitud no v\xE1lida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373263087230976
+    m_Localized: Error del servidor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373338052026368
+    m_Localized: "Error de conexi\xF3n: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38380494998462464
+    m_Localized: "Respuesta no v\xE1lida del servidor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381013338939392
+    m_Localized: 'Error inesperado: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381665582571520
+    m_Localized: "Datos de registro no v\xE1lidos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38382047729803264
+    m_Localized: El usuario ya existe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465117124288512
+    m_Localized: "\xA1Atenci\xF3n!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465306467753984
+    m_Localized: "Esta acci\xF3n eliminar\xE1 permanentemente todos tus datos de
+      la plataforma.\n\n\xBFEst\xE1s seguro?"
     m_Metadata:
       m_Items: []
   references:

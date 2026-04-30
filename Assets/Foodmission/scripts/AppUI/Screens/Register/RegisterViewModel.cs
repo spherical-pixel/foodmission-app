@@ -202,21 +202,21 @@ namespace eu.foodmission.platform
             {
                 Debug.Log($"[{GetType().Name}] - OnAuthStateChanged -> userId = {authState.userId}, registration completed -> " + JsonUtility.ToJson(authState));
                 _registrationCompleted = true;
-                NutriMessageDialog.Show(
-                    message: "@UI:COMPLETE_WELCOME_MESSAGE",
-                    actions: new[]
-                    {
-                        new FMDialogAction("@UI:BTN_CREATE_AVATAR", () => {}, isPrimary: true),
-                        new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
-                        {
-                            RaiseNavigationRequested(Actions.register_to_onboarding);
-                        }, isPrimary: true),
-                        new FMDialogAction("@UI:BTN_ENTER_APP", () =>
-                        {
-                            RaiseNavigationRequested(Actions.loading_to_home);
-                        }, isPrimary: true)
-                    }
-                );           
+                // NutriMessageDialog.Show(
+                //     message: "@UI:COMPLETE_WELCOME_MESSAGE",
+                //     actions: new[]
+                //     {
+                //         new FMDialogAction("@UI:BTN_CREATE_AVATAR", () => {}, isPrimary: true),
+                //         new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
+                //         {
+                //             RaiseNavigationRequested(Actions.register_to_onboarding);
+                //         }, isPrimary: true),
+                //         new FMDialogAction("@UI:BTN_ENTER_APP", () =>
+                //         {
+                //             RaiseNavigationRequested(Actions.loading_to_home);
+                //         }, isPrimary: true)
+                //     }
+                // );           
 
                 // Check if extended profile is needed
                 // AppState state = _storeService.GetAppState();
@@ -294,6 +294,27 @@ namespace eu.foodmission.platform
                 {
                     // Registration and auto-login successful - navigation handled by auth state change
                     Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
+
+                    NutriMessageDialog.Show(
+                        message: "@UI:COMPLETE_WELCOME_MESSAGE",
+                        actions: new[]
+                        {
+                            new FMDialogAction("@UI:BTN_CREATE_AVATAR", () =>
+                            {
+                                RaiseNavigationRequested(Actions.loading_to_home);
+                            }, isPrimary: true),
+                            new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
+                            {
+                                RaiseNavigationRequested(Actions.register_to_onboarding);
+                            }, isPrimary: true),
+                            new FMDialogAction("@UI:BTN_ENTER_APP", () =>
+                            {
+                                RaiseNavigationRequested(Actions.loading_to_home);
+                            }, isPrimary: true)
+                        }
+                    );           
+
+
                 }
                 else
                 {

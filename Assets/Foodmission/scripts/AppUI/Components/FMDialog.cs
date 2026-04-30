@@ -14,7 +14,10 @@ namespace eu.foodmission.platform.Components
             string message,
             AlertSemantic semantic = AlertSemantic.Information,
             string okLabel = "@UI:TXT_OK",
-            Action onOk = null)
+            Action onOk = null,
+            string koLabel = null,
+            Action onKo = null
+            )
         {
             var dialog = new AlertDialog
             {
@@ -24,7 +27,11 @@ namespace eu.foodmission.platform.Components
             };
 
             dialog.SetPrimaryAction(0, okLabel, onOk ?? (() => { }));
-
+            if( !string.IsNullOrEmpty(koLabel) && onKo != null)
+            {
+                dialog.SetCancelAction(1, koLabel);
+                dialog.cancelButton.clicked += () => onKo?.Invoke();
+            }
             Modal.Build(anchor, dialog).Show();
         }
 

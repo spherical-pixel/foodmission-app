@@ -219,6 +219,50 @@ MonoBehaviour:
     m_Key: BTN_ENTER_APP
     m_Metadata:
       m_Items: []
+  - m_Id: 38372841320603648
+    m_Key: API_ERROR_LOGIN_401
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373129888718848
+    m_Key: API_ERROR_404
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373203972710400
+    m_Key: API_ERROR_400
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373263087230976
+    m_Key: API_ERROR_500
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373338052026368
+    m_Key: API_ERROR_CONNECTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38380494998462464
+    m_Key: API_ERROR_INVALID_RESPONSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381013338939392
+    m_Key: API_ERROR_UNEXPECTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381665582571520
+    m_Key: API_ERROR_REGISTER_400
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38382047729803264
+    m_Key: API_ERROR_REGISTER_409
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465117124288512
+    m_Key: DELETE_ACCOUNT_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465306467753984
+    m_Key: DELETE_ACCOUNT_MESSAGE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

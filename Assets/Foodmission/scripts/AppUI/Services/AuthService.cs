@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Networking;
 
 namespace eu.foodmission.platform
@@ -230,12 +231,11 @@ namespace eu.foodmission.platform
                 {
                     string errorMessage = request.responseCode switch
                     {
-                        // TODO: Add to localization table
-                        401 => "Usuario o contraseña incorrectos", 
-                        404 => "Servicio no encontrado",
-                        400 => "Solicitud inválida",
-                        500 => "Error del servidor",
-                        _ => $"Error de conexión: {request.error}"
+                        401 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_LOGIN_401"), 
+                        404 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_404"),
+                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_400"),
+                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_500"),
+                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_CONNECTION",new object[]{ request.error})
                     };
 
                     Debug.LogError($"[{GetType().Name}] Login failed: {errorMessage} (Code: {request.responseCode})");
@@ -250,8 +250,7 @@ namespace eu.foodmission.platform
 
                 if (string.IsNullOrEmpty(response?.access_token))
                 {
-                    // TODO: Add to localization table
-                    string error = "Respuesta inválida del servidor";
+                    string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_INVALID_RESPONSE");
                     _storeService.store.Dispatch(AppActions.loginFailure.Invoke(error));
                     return (false, null, error);
                 }
@@ -298,8 +297,7 @@ namespace eu.foodmission.platform
             }
             catch (Exception ex)
             {
-                // TODO: Add to localization table
-                string error = $"Error inesperado: {ex.Message}";
+                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_UNEXPECTED",new object[]{ ex.Message});
                 Debug.LogError($"[{GetType().Name}] Login exception: {ex}");
                 _storeService.store.Dispatch(AppActions.loginFailure.Invoke(error));
                 return (false, null, error);
@@ -351,10 +349,10 @@ namespace eu.foodmission.platform
                 {
                     string errorMessage = request.responseCode switch
                     {
-                        400 => "Datos de registro inválidos",
-                        409 => "El usuario ya existe",
-                        500 => "Error del servidor",
-                        _ => $"Error de conexión: {request.error}"
+                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_REGISTER_400"),
+                        409 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_REGISTER_409"),
+                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_500"),
+                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_CONNECTION", new object[]{ request.error })
                     };
 
                     Debug.LogError($"[{GetType().Name}] Register failed: {errorMessage} (Code: {request.responseCode})");
@@ -369,7 +367,7 @@ namespace eu.foodmission.platform
 
                 if (response?.createdUser == null || string.IsNullOrEmpty(response.createdUser.id))
                 {
-                    string errorMsg = "Respuesta inválida del servidor";
+                    string errorMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_INVALID_RESPONSE");
                     _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMsg));
                     return (false, null, errorMsg);
                 }
@@ -396,7 +394,7 @@ namespace eu.foodmission.platform
             }
             catch (Exception ex)
             {
-                string error = $"Error inesperado: {ex.Message}";
+                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_UNEXPECTED", new object[]{ ex.Message });
                 Debug.LogError($"[{GetType().Name}] Register exception: {ex}");
                 _storeService.store.Dispatch(AppActions.registerFailure.Invoke(error));
                 return (false, null, error);

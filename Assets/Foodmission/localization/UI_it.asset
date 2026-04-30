@@ -125,34 +125,7 @@ MonoBehaviour:
       con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
       informazioni sulla posizione e statistiche di utilizzo.\n\nPer ulteriori informazioni,
       contattaci all'indirizzo support@foodmission.eu<b>Termini e condizioni di FOODMISSION</b>\n\nUtilizzando
-      questa applicazione, accetti i seguenti termini:\n\n<b>1. REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8
-      necessario fornire informazioni accurate e complete al momento della registrazione.
-      Sei responsabile della riservatezza delle tue credenziali di accesso.\n\n<b>2.
-      PRIVACY</b>\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0
-      con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
-      informazioni sulla posizione e statistiche di utilizzo.\n\n\nPer ulteriori
-      informazioni, contattaci all'indirizzo support@foodmission.eu<b>Termini e condizioni
-      di FOODMISSION</b>\n\nUtilizzando questa applicazione, accetti i seguenti termini:\n\n<b>1.
-      REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8 necessario fornire informazioni accurate
-      e complete al momento della registrazione. Sei responsabile della riservatezza
-      delle tue credenziali di accesso.\n\n<b>2. PRIVACY</b>\nRaccogliamo ed elaboriamo
-      i tuoi dati personali in conformit\xE0 con la nostra Informativa sulla privacy.
-      Ci\xF2 include dati nutrizionali, informazioni sulla posizione e statistiche
-      di utilizzo.\n\nPer ulteriori informazioni, contattaci all'indirizzo support@foodmission.eu<b>Termini
-      e condizioni di FOODMISSION</b>\n\nUtilizzando questa applicazione, accetti
-      i seguenti termini:\n\n<b>1. REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8 necessario
-      fornire informazioni accurate e complete al momento della registrazione. Sei
-      responsabile della riservatezza delle tue credenziali di accesso.\n\n<b>2.
-      PRIVACY</b>\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0
-      con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
-      informazioni sulla posizione e statistiche di utilizzo.\n\nPer ulteriori informazioni,
-      contattaci all'indirizzo support@foodmission.eu<b>Termini e condizioni di FOODMISSION</b>\n\nUtilizzando
-      questa applicazione, accetti i seguenti termini:\n\n<b>1. REGISTRAZIONE DELL'ACCOUNT</b>\n\xC8
-      necessario fornire informazioni accurate e complete al momento della registrazione.
-      Sei responsabile della riservatezza delle tue credenziali di accesso.\n\n<b>2.
-      PRIVACY</b>\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0
-      con la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali,
-      informazioni sulla posizione e statistiche di utilizzo.\n\nPer ulteriori informazioni,
+      questa applicazione, accetti i seguenti termini:\n\nPer ulteriori informazioni,
       contattaci all'indirizzo support@foodmission.eu"
     m_Metadata:
       m_Items: []
@@ -267,6 +240,51 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35550076637011968
     m_Localized: Accedi all'app
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38372841320603648
+    m_Localized: Nome utente o password errati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373129888718848
+    m_Localized: Servizio non trovato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373203972710400
+    m_Localized: Richiesta non valida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373263087230976
+    m_Localized: Errore del server
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373338052026368
+    m_Localized: 'Errore di connessione: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38380494998462464
+    m_Localized: Risposta non valida del server
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381013338939392
+    m_Localized: 'Errore imprevisto: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381665582571520
+    m_Localized: Dati di registrazione non validi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38382047729803264
+    m_Localized: "L'utente esiste gi\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465117124288512
+    m_Localized: Attenzione!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465306467753984
+    m_Localized: "Questa azione eliminer\xE0 definitivamente tutti i tuoi dati dalla
+      piattaforma.\n\nSei sicuro?"
     m_Metadata:
       m_Items: []
   references:

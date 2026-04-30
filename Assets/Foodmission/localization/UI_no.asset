@@ -125,34 +125,8 @@ MonoBehaviour:
       i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
       stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
       support@foodmission.eu<b>FOODMISSIONs vilk\xE5r og betingelser</b>\n\nVed \xE5
-      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
-      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
-      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
-      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
-      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
-      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
-      support@foodmission.eu<b>FOODMISSION Vilk\xE5r og betingelser</b>\n\nVed \xE5
-      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
-      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
-      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
-      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
-      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
-      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
-      support@foodmission.eu<b>FOODMISSION Vilk\xE5r og betingelser</b>\n\nVed \xE5
-      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
-      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
-      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
-      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
-      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
-      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
-      support@foodmission.eu<b>FOODMISSION Vilk\xE5r og betingelser</b>\n\nVed \xE5
-      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
-      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
-      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
-      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
-      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
-      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
-      support@foodmission.eu"
+      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\nFor mer informasjon,
+      kontakt oss p\xE5 support@foodmission.eu"
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -259,6 +233,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35550076637011968
     m_Localized: "G\xE5 inn i appen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38372841320603648
+    m_Localized: Bruker eller passord feil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373129888718848
+    m_Localized: Tjenesten ble ikke funnet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373203972710400
+    m_Localized: "Ugyldig foresp\xF8rsel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373263087230976
+    m_Localized: Serverfeil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38373338052026368
+    m_Localized: 'Tilkoblingsfeil: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38380494998462464
+    m_Localized: Ugyldig svar fra serveren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381013338939392
+    m_Localized: 'Uventet feil: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38381665582571520
+    m_Localized: Ugyldige registreringsdata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38382047729803264
+    m_Localized: Brukeren finnes allerede
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465117124288512
+    m_Localized: Oppmerksomhet!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38465306467753984
+    m_Localized: 'Denne handlingen vil slette alle dataene dine permanent fra plattformen.
+
+
+      Er
+      du sikker?'
     m_Metadata:
       m_Items: []
   references:

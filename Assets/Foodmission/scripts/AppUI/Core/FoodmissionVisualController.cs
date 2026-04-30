@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
@@ -154,24 +155,35 @@ namespace eu.foodmission.platform
 
             AddDrawerButton(dangerContainer, "🗑️ Delete Account", async () =>
             {
-                var authService = App.current?.services?.GetService<IAuthService>();
-                if (authService == null)
-                {
-                    return;
-                }
+                FMDialog.ShowAlert(
+                    App.current?.rootVisualElement,
+                    "@UI:DELETE_ACCOUNT_TITLE",
+                    "@UI:DELETE_ACCOUNT_MESSAGE",
+                    AlertSemantic.Destructive,
+                    "@UI:TXT_ACCEPT", onOk: async () =>
+                    {
+                        var authService = App.current?.services?.GetService<IAuthService>();
+                        if (authService == null)
+                        {
+                            return;
+                        }
 
-                _profileDrawer.Close();
-                var (success, error) = await authService.DeleteAccountAsync();
-                if (success)
-                {
-                    var storeService = App.current?.services?.GetService<IStoreService>();
-                    storeService?.store.Dispatch(AppActions.logout.Invoke());
-                    _cachedNavController?.Navigate(Actions.go_to_auth);
-                }
-                else
-                {
-                    Debug.LogError($"[FoodmissionVisualController] Delete account failed: {error}");
-                }
+                        _profileDrawer.Close();
+                        var (success, error) = await authService.DeleteAccountAsync();
+                        if (success)
+                        {
+                            var storeService = App.current?.services?.GetService<IStoreService>();
+                            storeService?.store.Dispatch(AppActions.logout.Invoke());
+                            _cachedNavController?.Navigate(Actions.go_to_auth);
+                        }
+                        else
+                        {
+                            Debug.LogError($"[FoodmissionVisualController] Delete account failed: {error}");
+                        }
+                    },
+                    "@UI:TXT_CANCEL", onKo: () => {}
+                );
+                
             });
 
             AddDrawerButton(menuContainer, "🚪 Log out", () =>
@@ -558,7 +570,7 @@ namespace eu.foodmission.platform
             bottomNavBar.Insert(1, menuItem);
 
             // Profile tab toggles the drawer — does not navigate
-            var profileItem = new BottomNavBarItem("fm-profile", "@UI:NAV_PROFILE", () => _profileDrawer?.Toggle());
+            var profileItem = new BottomNavBarItem("fm-avatar", "@UI:NAV_PROFILE", () => _profileDrawer?.Toggle());
             profileItem.isSelected = false;
             profileItem.AddToClassList("no-tint");
             bottomNavBar.Add(profileItem);
