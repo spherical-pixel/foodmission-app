@@ -284,6 +284,202 @@ MonoBehaviour:
       Twoich danych z platformy.\n\nCzy jeste\u015B pewien?"
     m_Metadata:
       m_Items: []
+  - m_Id: 39878750429503488
+    m_Localized: Rozmiar tekstu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878840065974272
+    m_Localized: Temat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878882189369344
+    m_Localized: "T\u0142o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878980084424704
+    m_Localized: Chrzcielnica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879011575259136
+    m_Localized: Powiadomienia push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879077732016128
+    m_Localized: "J\u0119zyk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879128504066048
+    m_Localized: "D\u017Awi\u0119k"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879174494609408
+    m_Localized: Muzyka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892766241579008
+    m_Localized: "\u015Awiat\u0142o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892875138293760
+    m_Localized: Ciemny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892914422145024
+    m_Localized: System
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39894833018429440
+    m_Localized: Holenderski
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895260770328576
+    m_Localized: Angielski
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895302340075520
+    m_Localized: Niemiecki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895357172211712
+    m_Localized: Grecki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895410716696576
+    m_Localized: "W\u0142oski"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895456581410816
+    m_Localized: Norweski
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895644041633792
+    m_Localized: Polski
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895706960388096
+    m_Localized: "S\u0142owe\u0144ski"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895724194783232
+    m_Localized: "Hiszpa\u0144ski"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897152762142720
+    m_Localized: "Ma\u0142y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897194361249792
+    m_Localized: "\u015Aredni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897246425145344
+    m_Localized: "Du\u017Cy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897565464879104
+    m_Localized: NA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897588734877696
+    m_Localized: "Wy\u0142\u0105czony"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897610318766080
+    m_Localized: "Zwyk\u0142y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897672927141888
+    m_Localized: "Wz\xF3r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39898680386379776
+    m_Localized: Ustawienia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903344821526528
+    m_Localized: Login
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903457170153472
+    m_Localized: Rejestr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903535817547776
+    m_Localized: "Zapomnia\u0142em has\u0142a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903585188700160
+    m_Localized: Onboarding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906068652875776
+    m_Localized: Edytuj profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906079050555392
+    m_Localized: Edytuj awatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906116358889472
+    m_Localized: "Zarz\u0105dzaj grupami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906149892349952
+    m_Localized: "Wy\u015Bwietl odznaki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906172642254848
+    m_Localized: "Usu\u0144 konto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906262576521216
+    m_Localized: "Wyloguj si\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910244942340096
+    m_Localized: Codzienne wyzwanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910254861869056
+    m_Localized: Misje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910298566516736
+    m_Localized: "Lista zakup\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910325154209792
+    m_Localized: "Spi\u017Carnia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910356015898624
+    m_Localized: "Ksi\u0105\u017Cka kucharska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910387632562176
+    m_Localized: "Marnowanie \u017Cywno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910411816919040
+    m_Localized: Wiedza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910434310971392
+    m_Localized: "Spo\u0142eczno\u015B\u0107 globalna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910459409686528
+    m_Localized: Mapa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910482159591424
+    m_Localized: Oznacz wszystkie jako przeczytane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910503894335488
+    m_Localized: Brak powiadomien
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

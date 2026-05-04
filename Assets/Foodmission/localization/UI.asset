@@ -55,14 +55,14 @@ MonoBehaviour:
     - rid: 6503522586583368290
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: B
+        m_Column: C
         m_LocaleIdentifier:
           m_Code: nl
         m_IncludeComments: 0
     - rid: 6503522586583368291
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: C
+        m_Column: B
         m_LocaleIdentifier:
           m_Code: en
         m_IncludeComments: 0

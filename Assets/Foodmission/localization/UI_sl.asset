@@ -279,6 +279,202 @@ MonoBehaviour:
       prepri\u010Dani?"
     m_Metadata:
       m_Items: []
+  - m_Id: 39878750429503488
+    m_Localized: Velikost besedila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878840065974272
+    m_Localized: Tema
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878882189369344
+    m_Localized: Ozadje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878980084424704
+    m_Localized: Pisava
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879011575259136
+    m_Localized: Potisna obvestila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879077732016128
+    m_Localized: Jezik
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879128504066048
+    m_Localized: Zvok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879174494609408
+    m_Localized: Glasba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892766241579008
+    m_Localized: Svetloba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892875138293760
+    m_Localized: Temno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892914422145024
+    m_Localized: Sistem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39894833018429440
+    m_Localized: "Nizozem\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895260770328576
+    m_Localized: "Angle\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895302340075520
+    m_Localized: "Nem\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895357172211712
+    m_Localized: "Gr\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895410716696576
+    m_Localized: "Italijan\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895456581410816
+    m_Localized: "Norve\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895644041633792
+    m_Localized: "Polj\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895706960388096
+    m_Localized: "Sloven\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895724194783232
+    m_Localized: "\u0160pan\u0161\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897152762142720
+    m_Localized: Majhna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897194361249792
+    m_Localized: Srednje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897246425145344
+    m_Localized: Velika
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897565464879104
+    m_Localized: Vklopljeno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897588734877696
+    m_Localized: Izklopljeno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897610318766080
+    m_Localized: Navaden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897672927141888
+    m_Localized: Vzorec
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39898680386379776
+    m_Localized: Nastavitve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903344821526528
+    m_Localized: Prijava
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903457170153472
+    m_Localized: Registracija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903535817547776
+    m_Localized: Pozabljeno geslo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903585188700160
+    m_Localized: Uvajanje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906068652875776
+    m_Localized: Uredi profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906079050555392
+    m_Localized: Uredi avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906116358889472
+    m_Localized: Upravljanje skupin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906149892349952
+    m_Localized: "Ogled zna\u010Dk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906172642254848
+    m_Localized: "Izbri\u0161i ra\u010Dun"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906262576521216
+    m_Localized: Odjava
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910244942340096
+    m_Localized: Dnevni izziv
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910254861869056
+    m_Localized: Misije
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910298566516736
+    m_Localized: Nakupovalni seznam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910325154209792
+    m_Localized: Shramba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910356015898624
+    m_Localized: Knjiga receptov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910387632562176
+    m_Localized: Odpadki hrane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910411816919040
+    m_Localized: Znanje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910434310971392
+    m_Localized: Globalna skupnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910459409686528
+    m_Localized: Zemljevid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910482159591424
+    m_Localized: Oznaci vse kot prebrano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910503894335488
+    m_Localized: Ni obvestil
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

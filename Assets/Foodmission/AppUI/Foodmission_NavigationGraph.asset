@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Guid: 2bd46e9599a2c4d81abf7c47803f76cd
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: Home
+  m_Label: '@UI:NAV_HOME'
   m_TemplateSettings:
     rid: 7904466660358881690
   m_Arguments: []
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Parent: {fileID: 4520152674340125327}
   m_Actions:
   - {fileID: 2363329532361742206}
-  m_Label: OnboardingProfile
+  m_Label: '@UI:ONBOARDING'
   m_TemplateSettings:
     rid: 3341417627117944915
   m_Arguments: []
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Guid: 9c71ce17f92d040aaba7a69d08f5bcf8
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: Settings
+  m_Label: '@UI:SETTINGS'
   m_TemplateSettings:
     rid: 3341417627117944922
   m_Arguments: []
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
     m_PopUpToStrategy: 2
-    m_PopUpToRoute: {fileID: -8582299972390442400}
+    m_PopUpToRoute: {fileID: -1477136575185016345}
     m_PopUpToInclusive: 1
     m_EnterAnim: 0
     m_ExitAnim: 0
@@ -499,7 +499,7 @@ MonoBehaviour:
   m_Actions:
   - {fileID: -364094978430066862}
   - {fileID: 7184409324572556450}
-  m_Label: Login
+  m_Label: '@UI:LOGIN'
   m_TemplateSettings:
     rid: 7904466660358881657
   m_Arguments: []
@@ -874,7 +874,7 @@ MonoBehaviour:
   m_Guid: f766b456664f44a9c83cf83914bb1a13
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: Profile
+  m_Label: '@UI:NAV_PROFILE'
   m_TemplateSettings:
     rid: 3341417627117944921
   m_Arguments: []
@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_Guid: dd0f7286c0b444c5fa140711bb5af012
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: MealLog
+  m_Label: '@UI:NAV_MEAL_LOG'
   m_TemplateSettings:
     rid: 3341417627117944919
   m_Arguments: []
@@ -1116,7 +1116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac212c624cd4a46acc6d3430ae62e14, type: 3}
   m_Name: onboarding_graph
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavGraph
-  m_Position: {x: 1052, y: -944}
+  m_Position: {x: 1051, y: -978}
   m_Guid: 604a120fb6e8c4145aba4d10e6ea833d
   m_Parent: {fileID: 6576446744998733474}
   m_Actions: []
@@ -1223,7 +1223,7 @@ MonoBehaviour:
   m_Guid: 406d6fe739dce4ce4b010534b3ae4c43
   m_Parent: {fileID: 3884702253746698299}
   m_Actions: []
-  m_Label: Register
+  m_Label: '@UI:REGISTER'
   m_TemplateSettings:
     rid: 7904466660358881689
   m_Arguments: []
@@ -1256,7 +1256,7 @@ MonoBehaviour:
   m_Guid: a818b5054a3ea441e9e94361cc61629a
   m_Parent: {fileID: 3884702253746698299}
   m_Actions: []
-  m_Label: ForgotPassword
+  m_Label: '@UI:FORGOT_PASSWORD'
   m_TemplateSettings:
     rid: 3341417515908333687
   m_Arguments: []
@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
   m_Name: register_to_onboarding
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
-  m_Position: {x: 564, y: -944}
+  m_Position: {x: 564, y: -978}
   m_Guid: 3388b08d-4c57-464d-a43c-14b4b2d76f79
   m_Destination: {fileID: 4520152674340125327}
   m_Options:

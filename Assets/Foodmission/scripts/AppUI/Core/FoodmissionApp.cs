@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
         
         private IThemeService _themeService;
         private IStoreService _storeService;
+        private FoodmissionVisualController _visualController;
         private IDisposableSubscription _scaleSubscription;
         private IDisposableSubscription _langSubscription;
         private IDisposableSubscription _backgroundSubscription;
@@ -46,16 +47,16 @@ namespace eu.foodmission.platform
             // Create and add the NavHost for navigation
             var navHost = new NavHost();
             navHost.navController.SetGraph(FoodmissionAppBuilder.instance.GraphAsset);
-            var visualController = new FoodmissionVisualController();
-            navHost.visualController = visualController;
+            _visualController = new FoodmissionVisualController();
+            navHost.visualController = _visualController;
             
 
             rootVisualElement.Add(navHost);
             navHost.StretchToParentSize();
 
             // Add the menu drawer and notifications after the NavHost so they render on top
-            visualController.CreateMenuDrawer(rootVisualElement);
-            visualController.CreateNotificationsPanel(rootVisualElement, FoodmissionAppBuilder.instance.NotificationCardTemplate);
+            _visualController.CreateMenuDrawer(rootVisualElement);
+            _visualController.CreateNotificationsPanel(rootVisualElement, FoodmissionAppBuilder.instance.NotificationCardTemplate);
 
             // rootVisualElement in AppUI is a Panel
             _panel = rootVisualElement as Panel;
@@ -141,6 +142,7 @@ namespace eu.foodmission.platform
             _themeService = null;
 
             _storeService = null;
+            _visualController = null;
             _panel = null;
         }
 
@@ -171,11 +173,13 @@ namespace eu.foodmission.platform
                 return;
 
             ApplyLocale(_storeService.GetAppState().lang);
+            _visualController?.RefreshLocalizedContent();
         }
 
         private void OnLangChanged(string lang)
         {
             ApplyLocale(lang);
+            _visualController?.RefreshLocalizedContent();
         }
 
         private static void ApplyLocale(string lang)

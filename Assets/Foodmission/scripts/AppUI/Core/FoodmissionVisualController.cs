@@ -6,6 +6,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
@@ -15,6 +16,7 @@ namespace eu.foodmission.platform
         private Drawer _profileDrawer;
         private VisualElement _menuBackdrop;
         private VisualElement _menuPanel;
+        private VisualElement _menuContentContainer;
         private bool _menuOpen;
         private VisualElement _notificationsBackdrop;
         private VisualElement _notificationsPanel;
@@ -22,6 +24,7 @@ namespace eu.foodmission.platform
         private readonly List<NotificationModel> _notifications = new List<NotificationModel>();
         private VisualElement _notificationsListContainer;
         private Unity.AppUI.UI.Button _markAllReadBtn;
+        private Label _notificationsTitleLabel;
         private VisualTreeAsset _notificationCardTemplate;
         private NavController _cachedNavController;
         private TextElement _userNameLabel;
@@ -128,19 +131,19 @@ namespace eu.foodmission.platform
             content.Add(menuContainer);
 
             // No-op items (functionality to be added later)
-            AddDrawerButton(menuContainer, "✏️ Edit Profile", null);
-            AddDrawerButton(menuContainer, "🧑‍💻 Edit Avatar", null);
+            AddDrawerButton(menuContainer, "✏️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","EDIT_PROFILE"), null);
+            AddDrawerButton(menuContainer, "🧑‍💻 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","EDIT_AVATAR"), null);
 
-            AddDrawerButton(menuContainer, "👥 Manage Groups", () =>
+            AddDrawerButton(menuContainer, "👥 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MANAGE_GROUPS"), () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_groups);
             });
 
-            AddDrawerButton(menuContainer, "🏅 View Badges", null);
+            AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","VIEW_BADGES"), null);
 
             
-            AddDrawerButton(menuContainer, "⚙️ Settings", () =>
+            AddDrawerButton(menuContainer, "⚙️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","SETTINGS"), () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_settings);
@@ -153,7 +156,7 @@ namespace eu.foodmission.platform
             dangerContainer.style.paddingTop = 4;
             content.Add(dangerContainer);
 
-            AddDrawerButton(dangerContainer, "🗑️ Delete Account", async () =>
+            AddDrawerButton(dangerContainer, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","DELETE_ACCOUNT"), async () =>
             {
                 FMDialog.ShowAlert(
                     App.current?.rootVisualElement,
@@ -186,13 +189,40 @@ namespace eu.foodmission.platform
                 
             });
 
-            AddDrawerButton(menuContainer, "🚪 Log out", () =>
+            AddDrawerButton(menuContainer, "🚪 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","LOG_OUT"), () =>
             {
                 _profileDrawer.Close();
                 var storeService = App.current?.services?.GetService<IStoreService>();
                 storeService?.store.Dispatch(AppActions.logout.Invoke());
                 _cachedNavController?.Navigate(Actions.go_to_auth);
             });
+        }
+
+        public void RefreshLocalizedContent()
+        {
+            if (_menuContentContainer != null)
+            {
+                _menuContentContainer.Clear();
+                BuildMenuContent(_menuContentContainer);
+            }
+
+            if (_profileDrawer != null)
+            {
+                _profileDrawer.Clear();
+                BuildDrawerContent(_profileDrawer);
+            }
+
+            if (_notificationsTitleLabel != null)
+            {
+                _notificationsTitleLabel.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NAV_NOTIFICATIONS");
+            }
+
+            if (_markAllReadBtn != null)
+            {
+                _markAllReadBtn.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MARK_ALL_AS_READ");
+            }
+
+            RefreshNotificationsList();
         }
 
         private void AddDrawerButton(VisualElement container, string label, Action onClick)
@@ -266,7 +296,8 @@ namespace eu.foodmission.platform
             scroll.style.flexGrow = 1;
             _menuPanel.Add(scroll);
 
-            BuildMenuContent(scroll.contentContainer);
+            _menuContentContainer = scroll.contentContainer;
+            BuildMenuContent(_menuContentContainer);
 
             _menuBackdrop.Add(_menuPanel);
             root.Add(_menuBackdrop);
@@ -306,27 +337,27 @@ namespace eu.foodmission.platform
         private void BuildMenuContent(VisualElement container)
         {
             // Phase 2 — disabled
-            AddMenuItem(container, "🏆 Daily challenge",  null);
-            AddMenuItem(container, "🎯 Missions",         null);
+            AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","DAILY_CHALLENGE"),  null);
+            AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MISSIONS"),         null);
 
             // Phase 1 Sprint 3 — active
-            AddMenuItem(container, "📝 Shopping list",    () =>
+            AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","SHOPPING_LIST"),    () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_shopping_list);
             });
-            AddMenuItem(container, "🧺 Pantry",           () =>
+            AddMenuItem(container, "🧺 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","PANTRY"),           () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_pantry);
             });
 
             // Phase 3 — disabled
-            AddMenuItem(container, "🍳 Recipe book",      null);
-            AddMenuItem(container, "🗑️ Food waste",       null);
-            AddMenuItem(container, "💡 Knowledge",        null);
-            AddMenuItem(container, "🌐 Global community", null);
-            AddMenuItem(container, "🗺️ Map",              null);
+            AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","RECIPE_BOOK"),      null);
+            AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","FOOD_WASTE"),       null);
+            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","KNOWLEDGE"),        null);
+            AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","GLOBAL_COMMUNITY"), null);
+            AddMenuItem(container, "🗺️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MAP"),              null);
         }
 
         private void AddMenuItem(VisualElement container, string label, Action onClick)
@@ -382,16 +413,16 @@ namespace eu.foodmission.platform
             var header = new VisualElement();
             header.AddToClassList("fm-notifications-panel__header");
 
-            var title = new Label("Notifications");
-            title.AddToClassList("fm-notifications-panel__title");
+            _notificationsTitleLabel = new Label(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NAV_NOTIFICATIONS"));
+            _notificationsTitleLabel.AddToClassList("fm-notifications-panel__title");
 
             _markAllReadBtn = new Unity.AppUI.UI.Button();
-            _markAllReadBtn.title = "Mark all as read";
+            _markAllReadBtn.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MARK_ALL_AS_READ");
             _markAllReadBtn.quiet = true;
             _markAllReadBtn.size = Unity.AppUI.UI.Size.S;
             _markAllReadBtn.clicked += OnMarkAllReadClicked;
 
-            header.Add(title);
+            header.Add(_notificationsTitleLabel);
             header.Add(_markAllReadBtn);
 
             var divider = new VisualElement();
@@ -462,7 +493,7 @@ namespace eu.foodmission.platform
 
             if (_notifications.Count == 0)
             {
-                var empty = new Label("No notifications");
+                var empty = new Label(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_NOTIFICATIONS"));
                 empty.AddToClassList("fm-notifications-empty");
                 _notificationsListContainer.Add(empty);
                 return;

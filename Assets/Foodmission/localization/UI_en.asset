@@ -306,6 +306,202 @@ MonoBehaviour:
       you sure?"
     m_Metadata:
       m_Items: []
+  - m_Id: 39878750429503488
+    m_Localized: Text size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878840065974272
+    m_Localized: Theme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878882189369344
+    m_Localized: Background
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878980084424704
+    m_Localized: Font
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879011575259136
+    m_Localized: Push notifications
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879077732016128
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879128504066048
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879174494609408
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892766241579008
+    m_Localized: Light
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892875138293760
+    m_Localized: Dark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892914422145024
+    m_Localized: System
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39894833018429440
+    m_Localized: Dutch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895260770328576
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895302340075520
+    m_Localized: German
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895357172211712
+    m_Localized: Greek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895410716696576
+    m_Localized: Italian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895456581410816
+    m_Localized: Norwegian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895724194783232
+    m_Localized: Spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895706960388096
+    m_Localized: Slovenian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895644041633792
+    m_Localized: Polish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897152762142720
+    m_Localized: Small
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897194361249792
+    m_Localized: Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897246425145344
+    m_Localized: Large
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897565464879104
+    m_Localized: On
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897588734877696
+    m_Localized: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897672927141888
+    m_Localized: Pattern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897610318766080
+    m_Localized: Plain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39898680386379776
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903585188700160
+    m_Localized: Onboarding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903535817547776
+    m_Localized: Forgot Password
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903457170153472
+    m_Localized: Register
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903344821526528
+    m_Localized: Login
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906262576521216
+    m_Localized: Log out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906172642254848
+    m_Localized: Delete Account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906149892349952
+    m_Localized: View Badges
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906116358889472
+    m_Localized: Manage Groups
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906079050555392
+    m_Localized: Edit Avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906068652875776
+    m_Localized: Edit Profile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910459409686528
+    m_Localized: Map
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910434310971392
+    m_Localized: Global community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910411816919040
+    m_Localized: Knowledge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910387632562176
+    m_Localized: Food waste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910356015898624
+    m_Localized: Recipe book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910325154209792
+    m_Localized: Pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910298566516736
+    m_Localized: Shopping list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910254861869056
+    m_Localized: Missions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910244942340096
+    m_Localized: Daily challenge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910482159591424
+    m_Localized: Mark all as read
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910503894335488
+    m_Localized: No notifications
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

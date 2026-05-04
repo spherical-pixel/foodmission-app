@@ -287,6 +287,202 @@ MonoBehaviour:
       piattaforma.\n\nSei sicuro?"
     m_Metadata:
       m_Items: []
+  - m_Id: 39878750429503488
+    m_Localized: Dimensione del testo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878840065974272
+    m_Localized: Tema
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878882189369344
+    m_Localized: Sfondo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878980084424704
+    m_Localized: Font
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879011575259136
+    m_Localized: Notifiche push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879077732016128
+    m_Localized: Lingua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879128504066048
+    m_Localized: Suono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879174494609408
+    m_Localized: Musica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892766241579008
+    m_Localized: Leggero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892875138293760
+    m_Localized: Buio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892914422145024
+    m_Localized: Sistema
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39894833018429440
+    m_Localized: Olandese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895260770328576
+    m_Localized: Inglese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895302340075520
+    m_Localized: Tedesco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895357172211712
+    m_Localized: Greco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895410716696576
+    m_Localized: Italiano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895456581410816
+    m_Localized: Norvegese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895644041633792
+    m_Localized: Polacco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895706960388096
+    m_Localized: Sloveno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895724194783232
+    m_Localized: Spagnolo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897152762142720
+    m_Localized: Piccolo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897194361249792
+    m_Localized: Mezzo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897246425145344
+    m_Localized: Grande
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897565464879104
+    m_Localized: Acceso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897588734877696
+    m_Localized: Spento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897610318766080
+    m_Localized: Pianura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897672927141888
+    m_Localized: Modello
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39898680386379776
+    m_Localized: Impostazioni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903344821526528
+    m_Localized: Login
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903457170153472
+    m_Localized: Registro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903535817547776
+    m_Localized: Ha dimenticato la password
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903585188700160
+    m_Localized: Onboarding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906068652875776
+    m_Localized: Modifica profilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906079050555392
+    m_Localized: Modifica avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906116358889472
+    m_Localized: Gestisci gruppi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906149892349952
+    m_Localized: Visualizza i badge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906172642254848
+    m_Localized: Elimina account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906262576521216
+    m_Localized: Disconnettiti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910244942340096
+    m_Localized: Sfida quotidiana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910254861869056
+    m_Localized: Missioni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910298566516736
+    m_Localized: Lista della spesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910325154209792
+    m_Localized: Dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910356015898624
+    m_Localized: Ricettario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910387632562176
+    m_Localized: spreco alimentare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910411816919040
+    m_Localized: Conoscenza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910434310971392
+    m_Localized: "Comunit\xE0 globale"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910459409686528
+    m_Localized: Mappa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910482159591424
+    m_Localized: Segna tutto come letto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910503894335488
+    m_Localized: Nessuna notifica
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

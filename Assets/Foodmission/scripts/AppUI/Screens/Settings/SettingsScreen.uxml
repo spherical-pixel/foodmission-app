@@ -3,14 +3,46 @@
     <ui:VisualElement name="root" style="flex-grow: 0; background-color: rgba(2, 70, 57, 0);">
         <ui:VisualElement name="content" style="flex-grow: 0; padding-left: 95px; padding-right: 95px;">
             <appui:Spacer spacing="XL"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Text size" stepper-choices="" name="stepper-scale"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Theme" stepper-choices="" name="stepper-theme"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Background" stepper-choices="" name="stepper-background"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Font" stepper-choices="" name="stepper-font"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Push notifications" stepper-choices="" name="stepper-notifications"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Language" stepper-choices="" name="stepper-lang"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Sound" stepper-choices="" name="stepper-sound"/>
-            <components:FormFieldItemArrowStepperSettings Heading-Text="Music" stepper-choices="" name="stepper-music"/>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Text size" stepper-choices="" name="stepper-scale">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39878750429503488)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Theme" stepper-choices="" name="stepper-theme">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39878840065974272)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Background" stepper-choices="" name="stepper-background">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39878882189369344)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Font" stepper-choices="" name="stepper-font">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39878980084424704)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Push notifications" stepper-choices="" name="stepper-notifications">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39879011575259136)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Language" stepper-choices="" name="stepper-lang">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39879077732016128)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Sound" stepper-choices="" name="stepper-sound">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39879128504066048)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
+            <components:FormFieldItemArrowStepperSettings Heading-Text="Music" stepper-choices="" name="stepper-music">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39879174494609408)"/>
+                </Bindings>
+            </components:FormFieldItemArrowStepperSettings>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

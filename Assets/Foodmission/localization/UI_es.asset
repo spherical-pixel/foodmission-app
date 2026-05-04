@@ -279,6 +279,202 @@ MonoBehaviour:
       la plataforma.\n\n\xBFEst\xE1s seguro?"
     m_Metadata:
       m_Items: []
+  - m_Id: 39878750429503488
+    m_Localized: "Tama\xF1o del texto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878840065974272
+    m_Localized: Tema
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878882189369344
+    m_Localized: Fondo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39878980084424704
+    m_Localized: Fuente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879011575259136
+    m_Localized: notificaciones push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879077732016128
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879128504066048
+    m_Localized: Sonido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39879174494609408
+    m_Localized: "M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892766241579008
+    m_Localized: Claro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892875138293760
+    m_Localized: Oscuro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39892914422145024
+    m_Localized: Sistema
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39894833018429440
+    m_Localized: "Holand\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895260770328576
+    m_Localized: "Ingl\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895302340075520
+    m_Localized: "Alem\xE1n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895357172211712
+    m_Localized: Griego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895410716696576
+    m_Localized: Italiano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895456581410816
+    m_Localized: Noruego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895644041633792
+    m_Localized: Polaco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895706960388096
+    m_Localized: Esloveno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39895724194783232
+    m_Localized: "Espa\xF1ol"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897152762142720
+    m_Localized: "Peque\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897194361249792
+    m_Localized: Medio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897246425145344
+    m_Localized: Grande
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897565464879104
+    m_Localized: Encendido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897588734877696
+    m_Localized: Apagado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897610318766080
+    m_Localized: Plano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39897672927141888
+    m_Localized: "Patr\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39898680386379776
+    m_Localized: Ajustes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903344821526528
+    m_Localized: Acceso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903457170153472
+    m_Localized: Registro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903535817547776
+    m_Localized: "Has olvidado tu contrase\xF1a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39903585188700160
+    m_Localized: Onboarding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906068652875776
+    m_Localized: Editar perfil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906079050555392
+    m_Localized: Editar avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906116358889472
+    m_Localized: Administrar grupos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906149892349952
+    m_Localized: Ver insignias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906172642254848
+    m_Localized: Eliminar cuenta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39906262576521216
+    m_Localized: "Cerrar la sesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910244942340096
+    m_Localized: "Desaf\xEDo diario"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910254861869056
+    m_Localized: Misiones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910298566516736
+    m_Localized: Lista de compras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910325154209792
+    m_Localized: Despensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910356015898624
+    m_Localized: Libro de recetas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910387632562176
+    m_Localized: desperdicio de alimentos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910411816919040
+    m_Localized: Conocimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910434310971392
+    m_Localized: Comunidad global
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910459409686528
+    m_Localized: Mapa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910482159591424
+    m_Localized: Marcar todo como leido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39910503894335488
+    m_Localized: No hay notificaciones
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

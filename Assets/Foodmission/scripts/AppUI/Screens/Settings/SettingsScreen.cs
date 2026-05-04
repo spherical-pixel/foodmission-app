@@ -19,23 +19,23 @@ namespace eu.foodmission.platform
         private FormFieldItemArrowStepperSettings _backgroundStepper;
         
 
-        private static readonly string[] k_ThemeChoices = { "Light", "Dark", "System" };
+        private static readonly string[] k_ThemeChoices = { "@UI:LIGHT", "@UI:DARK", "@UI:SYSTEM" };
         private static readonly string[] k_LangChoices = {
-            "Nederlands",   // nl
-            "English",      // en
-            "Deutsch",      // de
-            "Ελληνικά",   // el
-            "Italiano",     // it
-            "Norsk",        // no
-            "Polski",       // pl
-            "Slovenščina",  // sl
-            "Español"  // es
+            "@UI:LANG_NL",   // nl Nederlands
+            "@UI:LANG_EN",      // en
+            "@UI:LANG_DE",      // de
+            "@UI:LANG_EL",   // el
+            "@UI:LANG_IT",     // it
+            "@UI:LANG_NO",        // no
+            "@UI:LANG_PL",       // pl
+            "@UI:LANG_SL",  // sl
+            "@UI:LANG_ES"  // es
         };
-        private static readonly string[] k_ScaleChoices = { "Small", "Medium", "Large" };
+        private static readonly string[] k_ScaleChoices = { "@UI:SCALE_SM", "@UI:SCALE_MD", "@UI:SCALE_LG" };
         private static readonly string[] k_FontChoices  = { "Roboto", "Open Sans", "OpenDyslexic" };
         private static readonly string[] k_SoundChoices         = Enumerable.Range(0, 21).Select(i => (i * 5).ToString()).ToArray();
-        private static readonly string[] k_NotificationsChoices = { "Off", "On" };
-        private static readonly string[] k_BackgroundChoices    = { "Plain", "Pattern" };
+        private static readonly string[] k_NotificationsChoices = { "@UI:OFF", "@UI:ON" };
+        private static readonly string[] k_BackgroundChoices    = { "@UI:PLAIN", "@UI:PATTERN" };
 
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
