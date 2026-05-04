@@ -90,7 +90,10 @@
     width: var(--appui-sizing-850);
     height: var(--appui-sizing-850);
     flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
     flex-direction: column;
+    overflow: hidden;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -121,10 +124,18 @@
 .appui-bottom-navbar-item .appui-localized-text {
     -unity-text-align: upper-center;
     font-size: var(--appui-font-sizes-body-sm);
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    flex-shrink: 1;
+    overflow: hidden;
     -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-sm);
     color: var(--fm-icon-tint);
     margin-top: 0;
-    padding-top: 8px;
+    padding: 0;
+    wrap: nowrap;
+    flex-wrap: nowrap;
     white-space: nowrap;
 }
 
