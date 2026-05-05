@@ -78,6 +78,7 @@ namespace eu.foodmission.platform.Components
 
             _headingText = new Unity.AppUI.UI.Heading();
             _headingText.AddToClassList("centered-text");
+            _headingText.AddToClassList("heading-auto-size-md");
             _headingText.size = HeadingSize.M;
             _headingText.primary = true;
             _headingText.style.paddingTop = 0;

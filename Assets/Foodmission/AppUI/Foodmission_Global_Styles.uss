@@ -130,17 +130,23 @@
     min-width: 0;
     flex-shrink: 1;
     overflow: hidden;
-    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-sm);
+    -unity-text-auto-size: best-fit;
+    --unity-text-min-size: var(--appui-font-sizes-25);
+    --unity-text-max-size: var(--appui-font-sizes-body-sm);
     color: var(--fm-icon-tint);
     margin-top: 0;
     padding: 0;
-    wrap: nowrap;
     flex-wrap: nowrap;
     white-space: nowrap;
 }
 
 .heading-wrap {
     white-space: nowrap;
+    overflow: hidden;
+}
+
+.heading-wrap-pre {
+    white-space: pre-wrap;
     overflow: hidden;
 }
 
@@ -151,8 +157,6 @@
     white-space: nowrap;
     -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-500);
 }
-
-
 
 .item-field {
     margin-top: 0;
@@ -392,6 +396,10 @@
     -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-md);
 }
 
+.fm-arrow-stepper-narrow .fm-arrow-stepper__label {
+    width: 100px;
+}
+
 .fm-primary-color,
 .fm-primary-color .fm-arrow-stepper__label {
     color: var(--appui-primary-100);
@@ -414,6 +422,8 @@
 }
 
 .fm-home-status-bars {
+    flex-direction: row;
+    justify-content: space-around;
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 8px;
@@ -470,7 +480,13 @@
 }
 
 .fm-calories-card {
-    background-color: var(--fm-surface-bg);
+    flex-grow: 1;
+    width: 800px;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+    align-self: center;
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 500px;
     padding-top: 16px;
     padding-bottom: 16px;
@@ -480,8 +496,8 @@
     margin-right: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
-    align-items: center;
     aspect-ratio: 1;
+    align-items: center;
 }
 
 .fm-calories-circle-wrapper {
@@ -495,11 +511,21 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    aspect-ratio: 1;
 }
 
 .fm-calories-center {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 100%;
     align-items: center;
     justify-content: center;
+    max-height: 100%;
+    padding-left: 12%;
+    padding-right: 12%;
+    margin-bottom: 8px;
 }
 
 .fm-calories-consumed-label {
@@ -529,7 +555,7 @@
 
 .box-background {
     background-color: var(--fm-surface-bg-transparent);
-    border-radius: 15px;
+    border-radius: 35px;
     border-width: 1px;
     margin: 50px;
     padding: 25px;
@@ -539,6 +565,8 @@
     flex-grow: 1;
     background-color: var(--appui-backgrounds-50);
     position: absolute;
+    flex-direction: column;
+    align-items: center;
     width: 80%;
     height: 80%;
     border-top-left-radius: 500px;
@@ -548,12 +576,8 @@
     display: flex;
 }
 
-
-/* Dialogs */
-
 .fm-dialog-scroll {
     max-height: 1200px;
-    /*min-width: 280px;*/
 }
 
 .fm-dialog-scroll-text {
@@ -562,7 +586,6 @@
 }
 
 .appui-dialog {
-    /*outline: none;*/
     padding: var(--appui-spacing-100);
     max-width: 100%;
 }
@@ -577,18 +600,17 @@
     width: 900px;
 }
 
-.appui-divider__content{
+.appui-divider__content {
     background-color: var(--appui-foregrounds-100);
 }
 
-.fm-background-tile{
+.fm-background-tile {
     background-image: url("project://database/Assets/Foodmission/graphics/icons_miscellaneous.png?fileID=2800000&guid=63b9996e727774f16a08dde171cdadd8&type=3#icons_miscellaneous");
     background-repeat: repeat;
     background-size: 256px 256px;
     background-color: var(--fm-main-bg);
 }
 
-/* NutriMessageDialog enter/exit animations */
 .fm-nutri-dialog {
     opacity: 0;
     scale: 0.95;
@@ -607,4 +629,66 @@
     scale: 0.95;
     transition-duration: 200ms, 200ms;
     transition-timing-function: ease-in, ease-in;
+}
+
+.autosize-body-sm {
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-sm);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.autosize-body-md {
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-md);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.autosize-body-lg {
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-lg);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.autosize-font-sizes-1100 {
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-1100);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.fm-calories-stepper {
+    margin-top: 15%;
+}
+
+.fm-calories-consumed-value {
+    color: rgb(75, 229, 255);
+}
+
+.heading-auto-size-md {
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-heading-sm) var(--appui-font-sizes-heading-md);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.bold-text {
+    -unity-font-style: bold;
 }
