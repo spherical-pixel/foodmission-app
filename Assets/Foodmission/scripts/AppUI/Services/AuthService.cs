@@ -65,7 +65,8 @@ namespace eu.foodmission.platform
                         ? (int)(state.refreshTokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds())
                         : 0;
                     ScheduleProactiveRefresh(remaining, refreshRemaining);
-                    Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
+                    // TODO: Remove this log or change to Debug after testing
+                    // Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
 
                     ProfileResponse profile = await FetchProfileAsync(state.accessToken);
                     if (profile != null)
