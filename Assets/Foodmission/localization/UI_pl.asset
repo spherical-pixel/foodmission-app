@@ -520,6 +520,18 @@ MonoBehaviour:
     m_Localized: "Utw\xF3rz swoje konto"
     m_Metadata:
       m_Items: []
+  - m_Id: 40270284408741888
+    m_Localized: "P\u0142e\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270509588340736
+    m_Localized: "Uzupe\u0142nij sw\xF3j profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270634402439168
+    m_Localized: "Informacje te pomagaj\u0105 nam dostosowa\u0107 Twoje do\u015Bwiadczenie"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

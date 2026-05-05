@@ -515,6 +515,18 @@ MonoBehaviour:
     m_Localized: Crea tu cuenta
     m_Metadata:
       m_Items: []
+  - m_Id: 40270284408741888
+    m_Localized: "G\xE9nero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270509588340736
+    m_Localized: Completa tu perfil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270634402439168
+    m_Localized: "Esta informaci\xF3n nos ayuda a personalizar su experiencia."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -519,6 +519,19 @@ MonoBehaviour:
     m_Localized: Opprett kontoen din
     m_Metadata:
       m_Items: []
+  - m_Id: 40270284408741888
+    m_Localized: "Kj\xF8nn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270509588340736
+    m_Localized: "Fullf\xF8r profilen din"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270634402439168
+    m_Localized: "Denne informasjonen hjelper oss med \xE5 skreddersy opplevelsen
+      din"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

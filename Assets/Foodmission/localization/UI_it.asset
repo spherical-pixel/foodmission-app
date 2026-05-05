@@ -523,6 +523,18 @@ MonoBehaviour:
     m_Localized: Crea il tuo account
     m_Metadata:
       m_Items: []
+  - m_Id: 40270284408741888
+    m_Localized: Genere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270509588340736
+    m_Localized: Completa il tuo profilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270634402439168
+    m_Localized: Queste informazioni ci aiutano a personalizzare la tua esperienza
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

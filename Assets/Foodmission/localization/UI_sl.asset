@@ -515,6 +515,18 @@ MonoBehaviour:
     m_Localized: "Ustvarite svoj ra\u010Dun"
     m_Metadata:
       m_Items: []
+  - m_Id: 40270284408741888
+    m_Localized: Spol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270509588340736
+    m_Localized: Izpolnite svoj profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40270634402439168
+    m_Localized: "Te informacije nam pomagajo prilagoditi va\u0161o izku\u0161njo"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
