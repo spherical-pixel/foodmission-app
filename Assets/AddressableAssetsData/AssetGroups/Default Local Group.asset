@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4446c26847c8e4f3096f1ed6114884fa
+    m_Address: Foodmission/AppUI/Templates/EditProfileScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 61e6e124fb6e849c4ac488d29545f911
     m_Address: Foodmission/AppUI/Templates/RegisterScreen.uxml
     m_ReadOnly: 0

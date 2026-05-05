@@ -617,6 +617,20 @@ namespace eu.foodmission.platform
                 byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
 
                 bool success = await SendPatchRequest(url, bodyRaw, state.tokenType, state.accessToken);
+                if (!success)
+                {
+                    return false;
+                }
+
+                ProfileResponse profile = await FetchProfileAsync(state.accessToken);
+                if (profile != null)
+                {
+                    DispatchProfileSynced(profile);
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] UpdateProfileAsync — PATCH succeeded but profile refresh failed");
+                }
 
                 return success;
             }

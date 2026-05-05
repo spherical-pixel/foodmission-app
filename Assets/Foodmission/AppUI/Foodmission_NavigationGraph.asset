@@ -33,39 +33,6 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
---- !u!114 &-8970255772820488510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
-  m_Name: Notifications
-  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
-  m_Position: {x: 1386, y: 271}
-  m_Guid: 02edce4eeaa0840d0ae4dcdd0148d240
-  m_Parent: {fileID: 4583499250303890363}
-  m_Actions: []
-  m_Label: Notifications
-  m_TemplateSettings:
-    rid: 3341417627117944918
-  m_Arguments: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 3341417627117944918
-      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
-      data:
-        m_ScreenType: eu.foodmission.platform.NotificationsScreen, Foodmission, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-        m_ShowBottomNavBar: 1
-        m_ShowAppBar: 0
-        m_ShowBackButton: 0
-        m_ShowDrawer: 1
-        m_ShowNavigationRail: 0
 --- !u!114 &-8582299972390442400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
-  m_Position: {x: 1386, y: 1960}
+  m_Position: {x: 1386, y: 1979}
   m_Guid: 9c71ce17f92d040aaba7a69d08f5bcf8
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
@@ -304,36 +271,9 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
---- !u!114 &-2891793651288044259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
-  m_Name: go_to_notifications
-  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
-  m_Position: {x: 969, y: 271}
-  m_Guid: 9987c70d-d311-4748-a5db-0c1ed9bd8f4f
-  m_Destination: {fileID: -8970255772820488510}
-  m_Options:
-    m_PopUpToStrategy: 0
-    m_PopUpToRoute: {fileID: 0}
-    m_PopUpToInclusive: 0
-    m_EnterAnim: 0
-    m_ExitAnim: 0
-    m_PopEnterAnim: 0
-    m_PopExitAnim: 0
-    m_PopUpToSaveState: 0
-    m_RestoreState: 0
-    m_LaunchSingleTop: 0
-  m_DefaultArguments: []
 --- !u!114 &-2746602517445119038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +307,33 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
+--- !u!114 &-2672747531530209858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_editprofile
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 251}
+  m_Guid: 57c92f25-a044-4517-93ef-173bda36651c
+  m_Destination: {fileID: -1533082464427466851}
+  m_Options:
+    m_PopUpToStrategy: 2
+    m_PopUpToRoute: {fileID: -8582299972390442400}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 3
+    m_ExitAnim: 4
+    m_PopEnterAnim: 3
+    m_PopExitAnim: 4
+    m_PopUpToSaveState: 1
+    m_RestoreState: 1
+    m_LaunchSingleTop: 1
+  m_DefaultArguments: []
 --- !u!114 &-2017724658979243455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,12 +378,12 @@ MonoBehaviour:
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
     m_PopUpToStrategy: 2
-    m_PopUpToRoute: {fileID: -1477136575185016345}
+    m_PopUpToRoute: {fileID: -8582299972390442400}
     m_PopUpToInclusive: 1
-    m_EnterAnim: 0
-    m_ExitAnim: 0
-    m_PopEnterAnim: 0
-    m_PopExitAnim: 0
+    m_EnterAnim: 3
+    m_ExitAnim: 4
+    m_PopEnterAnim: 3
+    m_PopExitAnim: 4
     m_PopUpToSaveState: 1
     m_RestoreState: 1
     m_LaunchSingleTop: 1
@@ -481,6 +448,39 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
+--- !u!114 &-1533082464427466851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: EditProfile
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1401, y: 271}
+  m_Guid: d0eaa8da3d4b24928839fd82f014cd6f
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: '@UI:EDIT_PROFILE'
+  m_TemplateSettings:
+    rid: 4008881091823797032
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4008881091823797032
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.EditProfileScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 1
 --- !u!114 &-1477136575185016345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,7 +663,6 @@ MonoBehaviour:
   - {fileID: 6475924670633165201}
   - {fileID: 2363329532361742206}
   - {fileID: 5199080988345134681}
-  - {fileID: -8970255772820488510}
   - {fileID: 4263548773454473108}
   - {fileID: 4257401503016902208}
   - {fileID: 2629326327219844483}
@@ -676,7 +675,6 @@ MonoBehaviour:
   - {fileID: -1300064111542830868}
   - {fileID: -1712618335311785518}
   - {fileID: -2746602517445119038}
-  - {fileID: -2891793651288044259}
   - {fileID: 7153593643151026913}
   - {fileID: -1332422748303549395}
   - {fileID: 1995307887428131888}
@@ -690,6 +688,8 @@ MonoBehaviour:
   - {fileID: 5282194982018375192}
   - {fileID: 1375785094262749335}
   - {fileID: -1716996974998973278}
+  - {fileID: -1533082464427466851}
+  - {fileID: -2672747531530209858}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,7 +1138,6 @@ MonoBehaviour:
   m_Guid: 54cc504d69d794ad3a85639c9c873247
   m_Parent: {fileID: 6576446744998733474}
   m_Actions:
-  - {fileID: -2891793651288044259}
   - {fileID: 7153593643151026913}
   - {fileID: -1332422748303549395}
   - {fileID: 1995307887428131888}
@@ -1151,6 +1150,7 @@ MonoBehaviour:
   - {fileID: -183864760696684321}
   - {fileID: 5282194982018375192}
   - {fileID: 1375785094262749335}
+  - {fileID: -2672747531530209858}
   m_Label: 
   m_StartDestination: {fileID: -8582299972390442400}
 --- !u!114 &5199080988345134681

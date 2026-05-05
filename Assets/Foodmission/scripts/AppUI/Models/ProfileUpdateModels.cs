@@ -47,6 +47,18 @@ namespace eu.foodmission.platform
         [JsonProperty("settings", NullValueHandling = NullValueHandling.Ignore)]
         public UserSettingsDto settings;
 
+        [JsonProperty("yearOfBirth", NullValueHandling = NullValueHandling.Ignore)]
+        public int? yearOfBirth;
+
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
+        public string country;
+
+        [JsonProperty("region", NullValueHandling = NullValueHandling.Ignore)]
+        public string region;
+
+        [JsonProperty("zip", NullValueHandling = NullValueHandling.Ignore)]
+        public string zip;
+
         public string ToJson() => JsonConvert.SerializeObject(this, new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore
