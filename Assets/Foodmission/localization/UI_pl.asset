@@ -480,6 +480,46 @@ MonoBehaviour:
     m_Localized: Brak powiadomien
     m_Metadata:
       m_Items: []
+  - m_Id: 39915502649204736
+    m_Localized: "Tw\xF3j stan inteligencji \u017Cywieniowej"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915588338835456
+    m_Localized: Zdrowie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915847026728960
+    m_Localized: "Zr\xF3wnowa\u017Cony rozw\xF3j"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915896439824384
+    m_Localized: Wiedza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916671006138368
+    m_Localized: Dzisiaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916733786480640
+    m_Localized: "Tydzie\u0144"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916761389195264
+    m_Localized: "Miesi\u0105c"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916799158902784
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916808910659584
+    m_Localized: Grupa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40182439656546304
+    m_Localized: "Utw\xF3rz swoje konto"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

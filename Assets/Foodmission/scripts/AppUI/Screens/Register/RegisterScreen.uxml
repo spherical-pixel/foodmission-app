@@ -2,7 +2,11 @@
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.RegisterViewModel, Foodmission" class="login-root" style="flex-grow: 0; background-color: rgba(255, 255, 255, 0);">
         <ui:VisualElement name="group" class="box-background" style="flex-grow: 1;">
-            <appui:Heading text="Create your Account" size="M" style="-unity-text-align: middle-center; -unity-font-style: bold;"/>
+            <appui:Heading text="Create your Account" size="M" style="-unity-text-align: middle-center; -unity-font-style: bold;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(40182439656546304)"/>
+                </Bindings>
+            </appui:Heading>
             <eu.foodmission.platform.Components.FormFieldItemTextField headingText="fghfgh" icon-button-Visible="true" icon-button-quiet="true" icon-button-icon="eye" text-field-is-password="false" text-field-value="" text-field-placeholder="sdfsdf" name="username" Heading-Text="">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18417602513592320)"/>

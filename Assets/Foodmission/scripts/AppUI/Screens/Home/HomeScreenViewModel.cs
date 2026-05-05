@@ -8,10 +8,10 @@ namespace eu.foodmission.platform
     public partial class HomeScreenViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private string _welcomeMessage = "Bienvenido";
+        private TimePeriod _selectedTimePeriod = TimePeriod.TODAY;
 
         [ObservableProperty]
-        private string _userName = "";
+        private UserScope _selectedUserScope = UserScope.ME;
 
         [ObservableProperty]
         private float _healthProgress = 0.65f;
@@ -28,11 +28,7 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _caloriesLeft = 350;
 
-        [ObservableProperty]
-        private string _selectedTimePeriod = "Today";
-
-        [ObservableProperty]
-        private string _selectedUserScope = "Me";
+        
 
         [ObservableProperty]
         private RenderTexture _nutriCameraTexture;
@@ -43,7 +39,7 @@ namespace eu.foodmission.platform
             AppState state = _storeService.GetAppState();
 
             _nutriCameraTexture = App.current?.services?.GetService<INutriService>()?.NutriCameraRenderTexture;
-            UpdateWelcomeMessage(state);
+            
 
             // Subscribe to user state changes
             _storeSubscription = _store.Subscribe(
@@ -60,29 +56,18 @@ namespace eu.foodmission.platform
         private void OnUserStateChanged((string userId, string lang) userState)
         {
             AppState state = _storeService.GetAppState();
-            UpdateWelcomeMessage(state);
+            
         }
 
-        private void UpdateWelcomeMessage(AppState state)
-        {
-            UserName = state.userId ?? "";
-            // TODO: this is just a test
-            WelcomeMessage = state.lang switch
-            {
-                "es" => $"Bienvenido, {state.userId}",
-                "en" => $"Welcome, {state.userId}",
-                "ca" => $"Benvingut, {state.userId}",
-                _ => $"Welcome, {state.userId}"
-            };
-        }
+        
 
-        public void SetTimePeriod(string period)
+        public void SetTimePeriod(TimePeriod period)
         {
             SelectedTimePeriod = period;
             // TODO: Update progress and stats based on selected period
         }
 
-        public void SetUserScope(string scope)
+        public void SetUserScope(UserScope scope)
         {
             SelectedUserScope = scope;
             // TODO: Update progress and stats based on selected scope

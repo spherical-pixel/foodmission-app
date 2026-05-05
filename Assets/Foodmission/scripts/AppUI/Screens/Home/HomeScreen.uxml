@@ -6,15 +6,36 @@
                 <ui:DataBinding property="source" data-source-path="NutriCameraTexture" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Image>
-        <appui:Heading text="Your nutritional intelligence status" size="S" class="centered-text"/>
+        <appui:Heading text="Your nutritional intelligence status" size="S" class="centered-text">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39915502649204736)"/>
+            </Bindings>
+        </appui:Heading>
         <ui:VisualElement class="fm-home-status-bars" style="flex-direction: row; justify-content: space-around;">
-            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="❤️" Heading-Text="Health" Progress-Value="0.5"/>
-            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="🌍" Heading-Text="Sustainability" Progress-Value="0.25"/>
-            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="🧠" Heading-Text="Knowledge" Progress-Value="0.75"/>
+            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="❤️" Heading-Text="Health" Progress-Value="0.5">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39915588338835456)"/>
+                    <ui:DataBinding property="ProgressValue" data-source-path="HealthProgress" binding-mode="ToTarget"/>
+                </Bindings>
+            </eu.foodmission.platform.Components.FMStatusBar>
+            <appui:Spacer spacing="S"/>
+            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="🌍" Heading-Text="Sustainability" Progress-Value="0.25">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39915847026728960)"/>
+                    <ui:DataBinding property="ProgressValue" data-source-path="SustainabilityProgress" binding-mode="ToTarget"/>
+                </Bindings>
+            </eu.foodmission.platform.Components.FMStatusBar>
+            <appui:Spacer spacing="S"/>
+            <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="🧠" Heading-Text="Knowledge" Progress-Value="0.75">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39915896439824384)"/>
+                    <ui:DataBinding property="ProgressValue" data-source-path="KnowledgeProgress" binding-mode="ToTarget"/>
+                </Bindings>
+            </eu.foodmission.platform.Components.FMStatusBar>
         </ui:VisualElement>
         <ui:VisualElement class="fm-home-selectors-row">
-            <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="Today,Week,Month" stepper-selected-index="0"/>
-            <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="Me,Group" stepper-selected-index="0"/>
+            <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="" stepper-selected-index="0" name="period-stepper"/>
+            <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="" stepper-selected-index="0" name="scope-stepper"/>
         </ui:VisualElement>
         <ui:VisualElement class="fm-calories-card" style="background-color: rgba(255, 255, 255, 0.2); flex-grow: 1; width: 800px; height: 800px; align-self: center; max-width: 800px; max-height: 800px;">
             <ui:VisualElement name="Calories" class="fm-calories-circle-wrapper">

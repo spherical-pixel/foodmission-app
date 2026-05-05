@@ -483,6 +483,46 @@ MonoBehaviour:
     m_Localized: Nessuna notifica
     m_Metadata:
       m_Items: []
+  - m_Id: 39915502649204736
+    m_Localized: Il tuo stato di intelligenza nutrizionale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915588338835456
+    m_Localized: Salute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915847026728960
+    m_Localized: "Sostenibilit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915896439824384
+    m_Localized: Conoscenza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916671006138368
+    m_Localized: Oggi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916733786480640
+    m_Localized: Settimana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916761389195264
+    m_Localized: Mese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916799158902784
+    m_Localized: Me
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916808910659584
+    m_Localized: Gruppo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40182439656546304
+    m_Localized: Crea il tuo account
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

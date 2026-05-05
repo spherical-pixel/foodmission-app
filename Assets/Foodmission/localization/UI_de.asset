@@ -480,6 +480,46 @@ MonoBehaviour:
     m_Localized: Keine Benachrichtigungen
     m_Metadata:
       m_Items: []
+  - m_Id: 39915502649204736
+    m_Localized: "Ihr Ern\xE4hrungsstatus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915588338835456
+    m_Localized: Gesundheit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915847026728960
+    m_Localized: Nachhaltigkeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39915896439824384
+    m_Localized: Wissen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916671006138368
+    m_Localized: Heute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916733786480640
+    m_Localized: Woche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916761389195264
+    m_Localized: Monat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916799158902784
+    m_Localized: Mich
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39916808910659584
+    m_Localized: Gruppe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40182439656546304
+    m_Localized: Erstellen Sie Ihr Konto
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

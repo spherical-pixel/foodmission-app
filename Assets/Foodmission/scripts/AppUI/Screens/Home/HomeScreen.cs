@@ -1,3 +1,4 @@
+using System;
 using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.UI;
@@ -16,19 +17,11 @@ namespace eu.foodmission.platform
         private Label _caloriesConsumedLabel;
         private Label _caloriesLeftLabel;
 
-        // Period stepper
-        private IconButton _btnPrevPeriod;
-        private IconButton _btnNextPeriod;
-        private Label _labelPeriod;
-        private int _periodIndex = 0;
-        private static readonly string[] k_PeriodChoices = { "Today", "Week", "Month" };
-
-        // Scope stepper
-        private IconButton _btnPrevScope;
-        private IconButton _btnNextScope;
-        private Label _labelScope;
-        private int _scopeIndex = 0;
-        private static readonly string[] k_ScopeChoices = { "Me", "Group" };
+        private FMArrowStepper _periodStepper;
+        private FMArrowStepper _scopeStepper;
+        
+        private static readonly string[] k_PeriodChoices = { "@UI:TODAY", "@UI:WEEK", "@UI:MONTH" };
+        private static readonly string[] k_ScopeChoices = { "@UI:ME", "@UI:GROUP" };
 
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -53,13 +46,9 @@ namespace eu.foodmission.platform
             _caloriesConsumedLabel  = contentContainer.Q<Label>("calories-consumed");
             _caloriesLeftLabel      = contentContainer.Q<Label>("calories-left");
 
-            _btnPrevPeriod = contentContainer.Q<IconButton>("btn-prev-period");
-            _btnNextPeriod = contentContainer.Q<IconButton>("btn-next-period");
-            _labelPeriod   = contentContainer.Q<Label>("label-period");
-
-            _btnPrevScope  = contentContainer.Q<IconButton>("btn-prev-scope");
-            _btnNextScope  = contentContainer.Q<IconButton>("btn-next-scope");
-            _labelScope    = contentContainer.Q<Label>("label-scope");
+            _periodStepper = contentContainer.Q<FMArrowStepper>("period-stepper");
+            _scopeStepper = contentContainer.Q<FMArrowStepper>("scope-stepper");
+            
         }
 
         protected override void OnViewModelBound()
@@ -67,71 +56,78 @@ namespace eu.foodmission.platform
             base.OnViewModelBound();
             RegisterEvents();
             RefreshStats();
-            UpdateStepperStates();
+            SetupSteppers();
         }
 
         private void RegisterEvents()
         {
-            if (_btnPrevPeriod != null) _btnPrevPeriod.clicked += OnPrevPeriod;
-            if (_btnNextPeriod != null) _btnNextPeriod.clicked += OnNextPeriod;
-            if (_btnPrevScope  != null) _btnPrevScope.clicked  += OnPrevScope;
-            if (_btnNextScope  != null) _btnNextScope.clicked  += OnNextScope;
+            // if (_btnPrevPeriod != null) _btnPrevPeriod.clicked += OnPrevPeriod;
+            // if (_btnNextPeriod != null) _btnNextPeriod.clicked += OnNextPeriod;
+            // if (_btnPrevScope  != null) _btnPrevScope.clicked  += OnPrevScope;
+            // if (_btnNextScope  != null) _btnNextScope.clicked  += OnNextScope;
         }
 
         private void UnregisterEvents()
         {
-            if (_btnPrevPeriod != null) _btnPrevPeriod.clicked -= OnPrevPeriod;
-            if (_btnNextPeriod != null) _btnNextPeriod.clicked -= OnNextPeriod;
-            if (_btnPrevScope  != null) _btnPrevScope.clicked  -= OnPrevScope;
-            if (_btnNextScope  != null) _btnNextScope.clicked  -= OnNextScope;
+            // if (_btnPrevPeriod != null) _btnPrevPeriod.clicked -= OnPrevPeriod;
+            // if (_btnNextPeriod != null) _btnNextPeriod.clicked -= OnNextPeriod;
+            // if (_btnPrevScope  != null) _btnPrevScope.clicked  -= OnPrevScope;
+            // if (_btnNextScope  != null) _btnNextScope.clicked  -= OnNextScope;
         }
 
-        private void OnPrevPeriod()
+
+        private void SetupSteppers()
         {
-            if (_periodIndex > 0)
+            if (_periodStepper != null)
             {
-                _periodIndex--;
-                UpdateStepperStates();
+                _periodStepper.Choices = k_PeriodChoices;
+                _periodStepper.SelectedIndex = _viewModel.SelectedTimePeriod switch
+                {
+                    TimePeriod.TODAY => 0,
+                    TimePeriod.WEEK => 1,
+                    TimePeriod.MONTH => 2,
+                    _ => 0
+                };
+                _periodStepper.RegisterValueChangedCallback(OnPeriodChanged);
+            }
+
+            if (_scopeStepper != null)
+            {
+                _scopeStepper.Choices = k_ScopeChoices;
+                _scopeStepper.SelectedIndex = _viewModel.SelectedUserScope switch
+                {
+                    UserScope.ME => 0,
+                    UserScope.GROUP => 1,
+                    _ => 0
+                };
+                _scopeStepper.RegisterValueChangedCallback(OnScopeChanged);
             }
         }
 
-        private void OnNextPeriod()
+        private void OnPeriodChanged(object sender, ChangeEvent<int> evt)
         {
-            if (_periodIndex < k_PeriodChoices.Length - 1)
+            TimePeriod selectedPeriod = evt.newValue switch
             {
-                _periodIndex++;
-                UpdateStepperStates();
-            }
+                0 => TimePeriod.TODAY,
+                1 => TimePeriod.WEEK,
+                2 => TimePeriod.MONTH,
+                _ => TimePeriod.TODAY
+            };
+            _viewModel.SetTimePeriod(selectedPeriod);
         }
 
-        private void OnPrevScope()
+        private void OnScopeChanged(object sender, ChangeEvent<int> evt)
         {
-            if (_scopeIndex > 0)
+            UserScope selectedScope = evt.newValue switch
             {
-                _scopeIndex--;
-                UpdateStepperStates();
-            }
+                0 => UserScope.ME,
+                1 => UserScope.GROUP,
+                _ => UserScope.ME
+            };
+            _viewModel.SetUserScope(selectedScope);
         }
 
-        private void OnNextScope()
-        {
-            if (_scopeIndex < k_ScopeChoices.Length - 1)
-            {
-                _scopeIndex++;
-                UpdateStepperStates();
-            }
-        }
-
-        private void UpdateStepperStates()
-        {
-            if (_labelPeriod != null) _labelPeriod.text = k_PeriodChoices[_periodIndex];
-            if (_labelScope  != null) _labelScope.text  = k_ScopeChoices[_scopeIndex];
-
-            if (_btnPrevPeriod != null) _btnPrevPeriod.SetEnabled(_periodIndex > 0);
-            if (_btnNextPeriod != null) _btnNextPeriod.SetEnabled(_periodIndex < k_PeriodChoices.Length - 1);
-            if (_btnPrevScope  != null) _btnPrevScope.SetEnabled(_scopeIndex > 0);
-            if (_btnNextScope  != null) _btnNextScope.SetEnabled(_scopeIndex < k_ScopeChoices.Length - 1);
-        }
+        
 
         private void RefreshStats()
         {
@@ -161,12 +157,9 @@ namespace eu.foodmission.platform
             _caloriesCircular       = null;
             _caloriesConsumedLabel  = null;
             _caloriesLeftLabel      = null;
-            _btnPrevPeriod          = null;
-            _btnNextPeriod          = null;
-            _labelPeriod            = null;
-            _btnPrevScope           = null;
-            _btnNextScope           = null;
-            _labelScope             = null;
+            _periodStepper = null;
+            _scopeStepper = null;
+            
 
             base.OnViewModelUnbinding();
         }
