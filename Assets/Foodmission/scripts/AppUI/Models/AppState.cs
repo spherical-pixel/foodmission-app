@@ -14,7 +14,7 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Código de idioma: "es", "en", "ca", etc.
         /// </summary>
-        public string lang = "en";
+        public string lang = "none";
 
         /// <summary>
         /// Visual theme: "light", "dark", "system"

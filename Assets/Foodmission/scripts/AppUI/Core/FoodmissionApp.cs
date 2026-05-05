@@ -170,20 +170,100 @@ namespace eu.foodmission.platform
         private void ApplyLocaleFromState()
         {
             if (_storeService == null)
+            {
                 return;
+            }
 
-            ApplyLocale(_storeService.GetAppState().lang);
+            string currentLang = _storeService.GetAppState().lang;
+
+            if( currentLang == "none")
+            {
+                currentLang = CheckLangCode(currentLang);
+                Debug.Log($"[{GetType().Name}] - ApplyLocaleFromState - Applying locale from system: {currentLang}");
+                _storeService.store.Dispatch(AppActions.setLanguage.Invoke(currentLang));
+            }
+            else
+            {
+                Debug.Log($"[{GetType().Name}] - ApplyLocaleFromState - Applying locale from state: {currentLang}");
+                
+            }
+
+
+            ApplyLocale(currentLang);
             _visualController?.RefreshLocalizedContent();
+        }
+
+        private string CheckLangCode(string lang)
+        {
+            string currentLang = lang;
+            
+            if( currentLang != "none" && currentLang != string.Empty && currentLang != null)
+            {
+                foreach (var locale in LocalizationSettings.AvailableLocales.Locales)
+                {
+                    if (locale.Identifier.Code == currentLang)
+                    {
+                        return currentLang;
+                    }
+                }
+            }
+
+            
+            switch (Application.systemLanguage)
+            {
+                case SystemLanguage.English:
+                    currentLang = "en";
+                    break;
+                case SystemLanguage.Dutch:
+                    currentLang = "nl";
+                    break;
+                case SystemLanguage.German:
+                    currentLang = "de";
+                    break;
+                case SystemLanguage.Greek:
+                    currentLang = "el";
+                    break;
+                case SystemLanguage.Italian:
+                    currentLang = "it";
+                    break;
+                case SystemLanguage.Norwegian:
+                    currentLang = "no";
+                    break;
+                case SystemLanguage.Polish:
+                    currentLang = "pl";
+                    break;
+                case SystemLanguage.Slovenian:
+                    currentLang = "sl";
+                    break;
+                case SystemLanguage.Spanish:
+                    currentLang = "es";
+                    break;
+                default:
+                    currentLang = "en";
+                    break;
+            }
+                
+            
+            return currentLang;
         }
 
         private void OnLangChanged(string lang)
         {
+            if( lang == "none")
+            {
+                lang = CheckLangCode(lang);
+                if( _storeService.GetAppState().lang != lang)
+                {
+                    _storeService.store.Dispatch(AppActions.setLanguage.Invoke(lang));
+                }
+            }
             ApplyLocale(lang);
             _visualController?.RefreshLocalizedContent();
         }
 
         private static void ApplyLocale(string lang)
         {
+            Debug.Log($"[FoodmissionApp] - ApplyLocale -  Applying locale: {lang}");
             var locale = LocalizationSettings.AvailableLocales.GetLocale(lang);
             if (locale != null)
             {

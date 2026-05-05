@@ -223,7 +223,8 @@ namespace eu.foodmission.platform
             "no" => 5,
             "pl" => 6,
             "sl" => 7,
-            _    => 8  // es
+            "es" => 8,
+            _    => 1  // en as default
         };
 
         private static int ScaleLabelToIndex(string scale) => scale switch

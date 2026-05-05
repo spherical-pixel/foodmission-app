@@ -217,6 +217,7 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             // Clear session data
+            newState.lang = "none";
             newState.userId = "";
             newState.userName = "";
             newState.userEmail = "";

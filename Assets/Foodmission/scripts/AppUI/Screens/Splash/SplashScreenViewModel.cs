@@ -32,10 +32,6 @@ namespace eu.foodmission.platform
             LoadingText = "Loading localizations...";
             await Task.Delay(100);
 
-            LocalizationSettings.ProjectLocale =
-                LocalizationSettings.AvailableLocales.GetLocale(Application.systemLanguage)
-                ?? LocalizationSettings.AvailableLocales.GetLocale("en");
-
             if (!LocalizationSettings.InitializationOperation.IsDone)
             {
                 await LocalizationSettings.InitializationOperation.Task;
