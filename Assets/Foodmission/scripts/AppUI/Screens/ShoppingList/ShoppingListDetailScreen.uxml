@@ -33,7 +33,7 @@
             <ui:VisualElement name="items-container" class="fm-sl-container"/>
         </ui:ScrollView>
 
-        <appui:Button name="btn-add" title="+" variant="Accent" size="L" class="fm-sld-fab"/>
+        <appui:Button name="btn-add" title="Add item" variant="Accent" size="L" class="fm-sld-fab fm-button"/>
 
     </ui:VisualElement>
 </ui:UXML>

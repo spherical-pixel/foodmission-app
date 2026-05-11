@@ -73,12 +73,6 @@ namespace eu.foodmission.platform
         private string m_ErrorMessage = "";
 
         [ObservableProperty]
-        private bool m_CanCreateMeal;
-
-        [ObservableProperty]
-        private bool m_IsCreatingMeal;
-
-        [ObservableProperty]
         private ApiErrorResponse m_ErrorDetail;
 
         public MealLogAddViewModel(
@@ -101,7 +95,6 @@ namespace eu.foodmission.platform
             if (string.IsNullOrWhiteSpace(query))
             {
                 MealSearchResults = new List<Meal>();
-                CanCreateMeal = false;
                 return;
             }
 
@@ -126,8 +119,16 @@ namespace eu.foodmission.platform
         {
             if (_selectedMeal == null)
             {
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SELECT_MEAL_FIRST");
-                return false;
+                if (!string.IsNullOrWhiteSpace(MealSearchQuery))
+                {
+                    bool autoCreated = await CreateAndSelectMealAsync(MealSearchQuery);
+                    if (!autoCreated) return false;
+                }
+                else
+                {
+                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SELECT_MEAL_FIRST");
+                    return false;
+                }
             }
 
             IsSaving = true;
@@ -234,9 +235,7 @@ namespace eu.foodmission.platform
         {
             if (string.IsNullOrWhiteSpace(name)) return false;
 
-            IsCreatingMeal = true;
             var (created, error) = await _mealService.CreateMealAsync(new CreateMealRequest { name = name.Trim() });
-            IsCreatingMeal = false;
 
             if (error != null)
             {
@@ -262,8 +261,6 @@ namespace eu.foodmission.platform
             EatenOut = false;
             PantryDeductions = new List<PantryDeduction>();
             ErrorMessage = "";
-            CanCreateMeal = false;
-            IsCreatingMeal = false;
         }
     }
 }

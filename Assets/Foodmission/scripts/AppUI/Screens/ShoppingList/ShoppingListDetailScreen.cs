@@ -326,6 +326,7 @@ namespace eu.foodmission.platform
             {
                 sourceItems = UnitChoices
             };
+            unitDropdown.bindItem = (item, i) => item.label = UnitChoices[i];
             int unitIdx = UnitValues.IndexOf(captured.Item.unit);
             if (unitIdx >= 0)
             {

@@ -194,6 +194,7 @@ namespace eu.foodmission.platform.Components
             qtyField.style.marginBottom = 8;
 
             var unitDropdown = new Dropdown { sourceItems = UnitChoices, selectedIndex = 0 };
+            unitDropdown.bindItem = (item, i) => item.label = UnitChoices[i];
             unitDropdown.style.marginBottom = 8;
 
             confirmContainer.Add(selectedNameLabel);

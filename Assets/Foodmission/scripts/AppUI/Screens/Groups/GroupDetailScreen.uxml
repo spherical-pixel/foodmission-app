@@ -46,7 +46,7 @@
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986009)"/>
                     </Bindings>
 </appui:Heading>
-                <appui:Button name="btn-add-member" title="+" variant="Accent" size="S" class="fm-gd-add-btn"/>
+                <appui:Button name="btn-add-member" title="Add Member" variant="Accent" size="S" class="fm-gd-add-btn fm-button"/>
             </ui:VisualElement>
             <ui:ScrollView name="members-scroll" class="fm-gd-members-scroll">
                 <ui:VisualElement name="members-container" class="fm-gd-members-container"/>

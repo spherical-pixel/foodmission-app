@@ -62,10 +62,11 @@ namespace eu.foodmission.platform
             base.OnViewModelBound();
 
             _pantryDropdown.sourceItems = _viewModel.PantryItemOptions;
+            _pantryDropdown.bindItem = (item, i) => item.label = _viewModel.PantryItemOptions[i];
             _onPantryChanged = evt => _viewModel.OnPantryItemSelected(evt.newValue);
             _pantryDropdown.RegisterCallback(_onPantryChanged);
 
-            _reasonDropdown.sourceItems = new System.Collections.Generic.List<string>
+            var reasonOptions = new System.Collections.Generic.List<string>
             {
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_EXPIRED"),
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_SPOILED"),
@@ -74,6 +75,8 @@ namespace eu.foodmission.platform
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_PORTION_LARGE"),
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_OTHER"),
             };
+            _reasonDropdown.sourceItems = reasonOptions;
+            _reasonDropdown.bindItem = (item, i) => item.label = reasonOptions[i];
             _onReasonChanged = evt =>
             {
                 if (evt.newValue >= 0)
@@ -81,11 +84,13 @@ namespace eu.foodmission.platform
             };
             _reasonDropdown.RegisterCallback(_onReasonChanged);
 
-            _methodDropdown.sourceItems = new System.Collections.Generic.List<string>
+            var methodOptions = new System.Collections.Generic.List<string>
             {
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DETECT_AUTOMATIC"),
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DETECT_MANUAL"),
             };
+            _methodDropdown.sourceItems = methodOptions;
+            _methodDropdown.bindItem = (item, i) => item.label = methodOptions[i];
             _onMethodChanged = evt =>
             {
                 if (evt.newValue >= 0)
@@ -137,6 +142,7 @@ namespace eu.foodmission.platform
             {
                 case nameof(_viewModel.PantryItemOptions):
                     _pantryDropdown.sourceItems = _viewModel.PantryItemOptions;
+                    _pantryDropdown.bindItem = (item, i) => item.label = _viewModel.PantryItemOptions[i];
                     break;
                 case nameof(_viewModel.SelectedFoodName):
                     UpdateFoodName();

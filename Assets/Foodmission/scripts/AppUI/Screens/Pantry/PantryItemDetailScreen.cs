@@ -126,7 +126,9 @@ namespace eu.foodmission.platform
             base.OnViewModelBound();
 
             _unitDropdown.sourceItems = UnitChoices;
+            _unitDropdown.bindItem = (item, i) => item.label = UnitChoices[i];
             _locationDropdown.sourceItems = LocationChoices;
+            _locationDropdown.bindItem = (item, i) => item.label = LocationChoices[i];
 
             _btnSave.clicked += OnSaveClicked;
             _btnDelete.clicked += OnDeleteClicked;

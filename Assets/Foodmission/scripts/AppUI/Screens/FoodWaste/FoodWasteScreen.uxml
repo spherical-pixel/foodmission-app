@@ -21,6 +21,6 @@
         <ui:ScrollView name="scroll-view" class="fm-fw-scroll">
             <ui:VisualElement name="waste-container" class="fm-fw-container"/>
         </ui:ScrollView>
-        <appui:Button name="btn-add-waste" title="+" variant="Accent" class="fm-fw-fab"/>
+        <appui:Button name="btn-add-waste" title="Log Waste" variant="Accent" class="fm-fw-fab fm-button"/>
     </ui:VisualElement>
 </ui:UXML>

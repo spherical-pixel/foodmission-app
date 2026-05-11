@@ -27,7 +27,6 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Toggle _toggleEatenOut;
         private VisualElement _deductionSection;
         private VisualElement _deductionContainer;
-        private Unity.AppUI.UI.Button _btnCreateMeal;
         private Unity.AppUI.UI.Button _btnSave;
         private CircularProgress _searchSpinner;
         private Text _errorText;
@@ -52,7 +51,6 @@ namespace eu.foodmission.platform
             _toggleEatenOut = contentContainer.Q<Unity.AppUI.UI.Toggle>("toggle-eaten-out");
             _deductionSection = contentContainer.Q<VisualElement>("deduction-section");
             _deductionContainer = contentContainer.Q<VisualElement>("deduction-container");
-            _btnCreateMeal = contentContainer.Q<Unity.AppUI.UI.Button>("btn-create-meal");
             _btnSave = contentContainer.Q<Unity.AppUI.UI.Button>("btn-save");
             _searchSpinner = contentContainer.Q<CircularProgress>("search-spinner");
             _errorText = contentContainer.Q<Text>("error-message");
@@ -62,6 +60,7 @@ namespace eu.foodmission.platform
         {
             if (_typeDropdown == null) return;
             _typeDropdown.sourceItems = MealLogAddViewModel.TypeOfMealOptions;
+            _typeDropdown.bindItem = (item, i) => item.label = MealLogAddViewModel.TypeOfMealOptions[i];
             _typeDropdown.SetValueWithoutNotify(new[] { 0 });
         }
 
@@ -80,13 +79,11 @@ namespace eu.foodmission.platform
                     _mealSearchInnerField.RegisterValueChangedCallback(OnSearchChanged);
             }).ExecuteLater(0);
             _toggleFromPantry?.RegisterValueChangedCallback(OnFromPantryChanged);
-            _btnCreateMeal?.RegisterCallback<ClickEvent>(OnCreateMealClicked);
             _btnSave?.RegisterCallback<ClickEvent>(OnSaveClicked);
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             UpdateDeductionVisibility();
             UpdateSelectedMealState();
-            UpdateCreateMealButton();
         }
 
         protected override void OnViewModelUnbinding()
@@ -95,8 +92,6 @@ namespace eu.foodmission.platform
             _searchCts?.Dispose();
             _searchCts = null;
 
-            if (_btnCreateMeal != null)
-                _btnCreateMeal.UnregisterCallback<ClickEvent>(OnCreateMealClicked);
             if (_btnSave != null)
                 _btnSave.UnregisterCallback<ClickEvent>(OnSaveClicked);
             if (_mealSearchInnerField != null)
@@ -122,7 +117,6 @@ namespace eu.foodmission.platform
             if (string.IsNullOrWhiteSpace(query))
             {
                 _mealSearchResults?.Clear();
-                _btnCreateMeal?.EnableInClassList("visible", false);
                 return;
             }
 
@@ -187,12 +181,6 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(_viewModel.IsSaving):
                     UpdateSavingState();
-                    break;
-                case nameof(_viewModel.CanCreateMeal):
-                    UpdateCreateMealButton();
-                    break;
-                case nameof(_viewModel.IsCreatingMeal):
-                    UpdateCreatingState();
                     break;
                 case nameof(_viewModel.ErrorMessage):
                     UpdateErrorState();
@@ -316,7 +304,6 @@ namespace eu.foodmission.platform
             else
                 FMLoadingOverlay.Hide(contentContainer);
             _btnSave?.SetEnabled(!isSaving);
-            _btnCreateMeal?.SetEnabled(!isSaving);
             _mealSearchField?.SetEnabled(!isSaving);
             _typeDropdown?.SetEnabled(!isSaving);
             _toggleFromPantry?.SetEnabled(!isSaving);
@@ -338,31 +325,6 @@ namespace eu.foodmission.platform
                 FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail);
                 _viewModel.ErrorDetail = null;
             }
-        }
-
-        private async void OnCreateMealClicked(ClickEvent evt)
-        {
-            try
-            {
-                string name = _mealSearchField?.value?.Trim();
-                await _viewModel.CreateAndSelectMealAsync(name);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[{GetType().Name}] OnCreateMealClicked failed: {ex.Message}");
-            }
-        }
-
-        private void UpdateCreateMealButton()
-        {
-            Debug.Log($"[{GetType().Name}] UpdateCreateMealButton CanCreateMeal={_viewModel.CanCreateMeal} _btnCreateMeal={_btnCreateMeal != null}");
-            _btnCreateMeal?.EnableInClassList("visible", _viewModel.CanCreateMeal);
-        }
-
-        private void UpdateCreatingState()
-        {
-            bool isCreating = _viewModel.IsCreatingMeal;
-            _btnCreateMeal?.SetEnabled(!isCreating);
         }
 
         private async void OnSaveClicked(ClickEvent evt)

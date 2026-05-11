@@ -22,6 +22,6 @@
         <ui:ScrollView name="scroll-view" class="fm-grp-scroll">
             <ui:VisualElement name="groups-container" class="fm-grp-container"/>
         </ui:ScrollView>
-        <appui:Button name="btn-fab" title="+" variant="Accent" size="L" class="fm-grp-fab"/>
+        <appui:Button name="btn-fab" title="Create Group" variant="Accent" size="L" class="fm-grp-fab fm-button"/>
     </ui:VisualElement>
 </ui:UXML>
