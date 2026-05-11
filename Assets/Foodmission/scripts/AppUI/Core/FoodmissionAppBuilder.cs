@@ -29,6 +29,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IThemeService, ThemeService>();
             builder.services.AddSingleton<IKeyboardService, KeyboardService>();
             builder.services.AddSingleton<INutriService, NutriService>();
+            builder.services.AddSingleton<IAvatarService, AvatarService>();
             builder.services.AddSingleton<ICatalogService, CatalogService>();
             builder.services.AddSingleton<IFoodService, FoodService>();
             builder.services.AddSingleton<IShoppingListService, ShoppingListService>();
@@ -60,6 +61,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<OnboardingAvatarViewModel>();
             builder.services.AddTransient<OnboardingGroupsViewModel>();
             builder.services.AddTransient<EditProfileViewModel>();
+            builder.services.AddTransient<AvatarEditorViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)
@@ -114,6 +116,25 @@ namespace eu.foodmission.platform
             }
 
             Debug.Log($"[{GetType().Name}] KeyboardService initialized with updater");
+        }
+
+        /// <summary>
+        /// Initializes the Avatar service (optional - called explicitly when needed)
+        /// </summary>
+        internal void InitializeAvatarSystem()
+        {
+            // Get the avatar service from DI
+            var avatarService = App.current?.services?.GetService<IAvatarService>();
+            if (avatarService == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] AvatarService not found in DI container");
+                return;
+            }
+
+            // Initialize the service (asynchronously)
+            avatarService.InitializeAsync();
+
+            Debug.Log($"[{GetType().Name}] AvatarService initialized");
         }
     }
 }

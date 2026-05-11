@@ -12,8 +12,11 @@
     --appui-sizing-300: 78px;
     --appui-sizing-400: 94px;
     --appui-sizing-500: 110px; /* 90*/
+    --appui-sizing-550: 118px; 
     --appui-sizing-600: 126px;
+    --appui-sizing-650: 134px;
     --appui-sizing-700: 142px;
+    --appui-sizing-750: 150px;
     --appui-sizing-800: 158px;
     --appui-sizing-850: 174px;
     --appui-sizing-900: 190px;

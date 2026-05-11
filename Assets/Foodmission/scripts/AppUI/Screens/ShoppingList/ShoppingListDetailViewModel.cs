@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 
 using Unity.AppUI.MVVM;
 
-using UnityEngine;
-
 namespace eu.foodmission.platform
 {
     [ObservableObject]
@@ -16,22 +14,25 @@ namespace eu.foodmission.platform
         private string _currentListId;
 
         [ObservableProperty]
-        private List<ShoppingListItemView> m_Items = new();
+        private List<ShoppingListItemView> _items = new();
 
         [ObservableProperty]
-        private List<OpenFoodFactsProduct> m_SearchResults = new();
+        private List<OpenFoodFactsProduct> _searchResults = new();
 
         [ObservableProperty]
-        private string m_SearchQuery = "";
+        private string _searchQuery = "";
 
         [ObservableProperty]
-        private bool m_IsLoadingItems;
+        private bool _isLoadingItems;
 
         [ObservableProperty]
-        private bool m_IsSearching;
+        private bool _isSearching;
 
         [ObservableProperty]
-        private string m_ListName = "";
+        private string _listName = "";
+
+        [ObservableProperty]
+        private string _errorMessage = "";
 
         public ShoppingListDetailViewModel(
             IStoreService storeService,
@@ -43,15 +44,22 @@ namespace eu.foodmission.platform
             _foodService = foodService;
         }
 
-        public async Task LoadAsync(string listId)
+        public async Task LoadAsync(string listId, string listName = null)
         {
             if (string.IsNullOrEmpty(listId))
             {
+                ErrorMessage = "Invalid shopping list";
                 return;
             }
 
             _currentListId = listId;
+            if (!string.IsNullOrWhiteSpace(listName))
+            {
+                ListName = listName.Trim();
+            }
+
             IsLoadingItems = true;
+            ErrorMessage = "";
 
             ShoppingListItem[] rawItems = await _shoppingListService.GetItemsAsync(_currentListId);
 
@@ -59,6 +67,7 @@ namespace eu.foodmission.platform
 
             if (rawItems == null)
             {
+                ErrorMessage = "Could not load items";
                 Items = new List<ShoppingListItemView>();
                 return;
             }
@@ -97,6 +106,7 @@ namespace eu.foodmission.platform
         public async Task SearchFoodsAsync(string query)
         {
             SearchQuery = query;
+            ErrorMessage = "";
 
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -111,21 +121,28 @@ namespace eu.foodmission.platform
             SearchResults = response?.products != null
                 ? new List<OpenFoodFactsProduct>(response.products)
                 : new List<OpenFoodFactsProduct>();
+
+            if (response == null)
+            {
+                ErrorMessage = "Could not search products";
+            }
         }
 
-        public async Task ImportAndAddItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
+        public async Task<bool> ImportAndAddItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
         {
-            if (string.IsNullOrEmpty(_currentListId))
+            if (string.IsNullOrEmpty(_currentListId) || product == null)
             {
-                return;
+                ErrorMessage = "Could not add the item";
+                return false;
             }
 
+            ErrorMessage = "";
             FoodItem foodItem = await _foodService.ImportFromBarcodeAsync(product.barcode);
 
             if (foodItem == null)
             {
-                Debug.LogError($"[{GetType().Name}] Failed to import food: {product.name}");
-                return;
+                ErrorMessage = "Could not import the selected product";
+                return false;
             }
 
             ShoppingListItem added = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity, unit);
@@ -135,11 +152,16 @@ namespace eu.foodmission.platform
                 SearchResults = new List<OpenFoodFactsProduct>();
                 SearchQuery = "";
                 await LoadAsync(_currentListId);
+                return true;
             }
+
+            ErrorMessage = "Could not add the item to the list";
+            return false;
         }
 
         public async Task ToggleItemAsync(string itemId)
         {
+            ErrorMessage = "";
             ShoppingListItem updated = await _shoppingListService.ToggleItemCheckedAsync(_currentListId, itemId);
 
             if (updated != null)
@@ -151,27 +173,39 @@ namespace eu.foodmission.platform
                     Items[idx].Item.@checked = updated.@checked;
                     Items = new List<ShoppingListItemView>(Items);
                 }
+
+                return;
             }
+
+            ErrorMessage = "Could not update the item";
         }
 
         public async Task DeleteItemAsync(string itemId)
         {
+            ErrorMessage = "";
             bool success = await _shoppingListService.DeleteItemAsync(_currentListId, itemId);
 
             if (success)
             {
                 Items = new List<ShoppingListItemView>(Items.FindAll(v => v.Item.id != itemId));
+                return;
             }
+
+            ErrorMessage = "Could not delete the item";
         }
 
         public async Task ClearCheckedItemsAsync()
         {
+            ErrorMessage = "";
             bool success = await _shoppingListService.ClearCheckedItemsAsync(_currentListId);
 
             if (success)
             {
                 Items = new List<ShoppingListItemView>(Items.FindAll(v => !v.Item.@checked));
+                return;
             }
+
+            ErrorMessage = "Could not clear completed items";
         }
     }
 }

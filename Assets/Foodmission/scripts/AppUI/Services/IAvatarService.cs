@@ -1,0 +1,36 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace eu.foodmission.platform
+{
+    public enum AvatarMood
+    {
+        Neutral,
+        Happy,
+        VeryHappy,
+        Bored,
+        Speaking,
+        Idle
+    }
+
+    public interface IAvatarService
+    {
+        Task InitializeAsync();
+        
+        bool IsInitialized { get; }
+        
+        RenderTexture AvatarCameraRenderTexture { get; }
+        RenderTexture FullBodyAvatarRenderTexture { get; }
+
+        void SetRandomConfig();
+        void SetAvatarConfig(AvatarConfig config);
+        AvatarConfig GetCurrentAvatarConfig{get;}
+
+        List<Color> GetColorPalette(AvatarEditorItemEnum itemType);
+        int GetMaxPartCount(AvatarEditorItemEnum itemType);
+        bool HasSavedConfig { get; }
+        void SaveCurrentConfig();
+        void LoadSavedConfig();
+    }
+}

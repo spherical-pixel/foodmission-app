@@ -25,7 +25,9 @@ namespace eu.foodmission.platform
             TemplateAddresses.CompleteWelcome,
             TemplateAddresses.ShoppingList,
             TemplateAddresses.ShoppingListDetail,
-            TemplateAddresses.EditProfile
+            TemplateAddresses.EditProfile,
+            TemplateAddresses.AvatarEditor,
+            TemplateAddresses.AvatarEditorPanelItem
         };
 
         public async Task PreloadAllAsync()

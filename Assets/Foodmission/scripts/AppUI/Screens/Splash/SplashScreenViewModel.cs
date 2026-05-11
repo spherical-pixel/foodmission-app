@@ -48,6 +48,13 @@ namespace eu.foodmission.platform
             await nutriService.InitializeAsync();
             await Task.Delay(500);
 
+            // Load Avatar from Addressables
+            LoadingText = await LocalizationSettings.StringDatabase
+                .GetLocalizedStringAsync("UI", "LOADING_AVATAR").Task;
+            var avatarService = App.current.services.GetService<IAvatarService>();
+            await avatarService.InitializeAsync();
+            await Task.Delay(500);
+
             // Preload UI templates
             LoadingText = "Loading UI...";
             await _templateService.PreloadAllAsync();

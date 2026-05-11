@@ -50,7 +50,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 9e6da7c8a672cb5469c3306a80a06c00, type: 3}
+        m_Texture: {fileID: 2800000, guid: b8021e8f7b95cc74c990a686e2880fd1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -78,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9e6da7c8a672cb5469c3306a80a06c00, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3eb4e16dad4e8d145ab527064f309762, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -160,8 +160,8 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.5, g: 0.2647059, b: 0, a: 1}
-    - _Color: {r: 0.5, g: 0.26470587, b: 0, a: 1}
+    - _BaseColor: {r: 1, g: 0.8784314, b: 0.3254902, a: 1}
+    - _Color: {r: 1, g: 0.8784314, b: 0.3254902, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 0.5}

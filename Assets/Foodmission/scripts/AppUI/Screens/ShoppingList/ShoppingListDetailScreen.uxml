@@ -13,6 +13,7 @@
         </ui:VisualElement>
 
         <appui:CircularProgress name="loading-spinner" size="L" class="fm-sl-spinner"/>
+        <appui:Text name="error-message" class="fm-sl-error"/>
 
         <ui:ScrollView name="scroll-view" class="fm-sl-scroll">
             <ui:VisualElement name="items-container" class="fm-sl-container"/>

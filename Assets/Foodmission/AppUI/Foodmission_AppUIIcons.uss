@@ -12,6 +12,7 @@
     --appui-icon-caret-double-right-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/CaretDoubleRight.png");
     --appui-icon-caret-up-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/CaretUp.png");
     --appui-icon-check-bold: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Bold/Check.png");
+    --appui-icon-check-circle-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/CheckCircle.png");
     --appui-icon-check-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/Check.png");
     --appui-icon-color-picker-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/ColorPicker.png");
     --appui-icon-delete-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/Delete.png");
@@ -31,6 +32,7 @@
     --appui-icon-warning-fill: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Fill/Warning.png");
     --appui-icon-warning-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/Warning.png");
     --appui-icon-x-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/X.png");
+    --appui-icon-x-circle-regular: url("project:/Packages/com.unity.dt.app-ui/PackageResources/Icons/Regular/XCircle.png");
 /* Additional icons */
     --appui-icon-fm-home-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-home.png");
     --appui-icon-fm-meal-log-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-meal-log.png");
@@ -39,7 +41,76 @@
     --appui-icon-fm-avatar-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar.png");
     --appui-icon-fm-arrow-right-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-arrow-right.png");
     --appui-icon-fm-arrow-down-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-arrow-down.png");
+    --appui-icon-fm-star-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-star.png");
     --appui-icon-fm-arrow-left-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-arrow-left.png");
+    --appui-icon-fm-avatar-eyebrows-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-eyebrows.png");
+    --appui-icon-fm-avatar-eyes-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-eyes.png");
+    --appui-icon-fm-avatar-facial-hair-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-facial-hair.png");
+    --appui-icon-fm-avatar-hair-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-hair.png");
+    --appui-icon-fm-avatar-mouth-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-mouth.png");
+    --appui-icon-fm-avatar-nose-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-nose.png");
+    --appui-icon-fm-avatar-shoes-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-shoes.png");
+    --appui-icon-fm-avatar-skin-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-skin.png");
+    --appui-icon-fm-avatar-trousers-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-trousers.png");
+    --appui-icon-fm-avatar-tshirt-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-avatar-tshirt.png");
+    --appui-icon-fm-arrow-slim-left-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-arrow-slim-left.png");
+    --appui-icon-fm-arrow-slim-right-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-arrow-slim-right.png");
+    --appui-icon-fm-item-none-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/fm-item-none.png");
+    --appui-icon-fm-icon-nose-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-1.png");
+    --appui-icon-fm-icon-nose-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-2.png");
+    --appui-icon-fm-icon-nose-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-3.png");
+    --appui-icon-fm-icon-nose-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-4.png");
+    --appui-icon-fm-icon-nose-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-5.png");
+    --appui-icon-fm-icon-nose-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-6.png");
+    --appui-icon-fm-icon-nose-7-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-7.png");
+    --appui-icon-fm-icon-nose-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-8.png");
+    --appui-icon-fm-icon-nose-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-9.png");
+    --appui-icon-fm-icon-nose-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_nose/fm-icon-nose-10.png");
+    --appui-icon-fm-icon-mouth-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-1.png");
+    --appui-icon-fm-icon-mouth-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-2.png");
+    --appui-icon-fm-icon-mouth-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-3.png");
+    --appui-icon-fm-icon-mouth-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-4.png");
+    --appui-icon-fm-icon-mouth-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-5.png");
+    --appui-icon-fm-icon-mouth-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-6.png");
+    --appui-icon-fm-icon-mouth-7-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-7.png");
+    --appui-icon-fm-icon-mouth-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-8.png");
+    --appui-icon-fm-icon-mouth-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-9.png");
+    --appui-icon-fm-icon-mouth-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_mouth/fm-icon-mouth-10.png");
+    --appui-icon-fm-icon-hair-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-1.png");
+    --appui-icon-fm-icon-hair-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-2.png");
+    --appui-icon-fm-icon-hair-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-3.png");
+    --appui-icon-fm-icon-hair-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-4.png");
+    --appui-icon-fm-icon-hair-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-5.png");
+    --appui-icon-fm-icon-hair-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-6.png");
+    --appui-icon-fm-icon-hair-7-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-7.png");
+    --appui-icon-fm-icon-hair-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-8.png");
+    --appui-icon-fm-icon-hair-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-9.png");
+    --appui-icon-fm-icon-hair-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-10.png");
+    --appui-icon-fm-icon-eyebrows-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-1.png");
+    --appui-icon-fm-icon-eyebrows-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-2.png");
+    --appui-icon-fm-icon-eyebrows-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-3.png");
+    --appui-icon-fm-icon-eyebrows-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-4.png");
+    --appui-icon-fm-icon-eyebrows-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-5.png");
+    --appui-icon-fm-icon-eyebrows-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-6.png");
+    --appui-icon-fm-icon-eyebrows-7-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-7.png");
+    --appui-icon-fm-icon-eyebrows-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-8.png");
+    --appui-icon-fm-icon-eyebrows-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-9.png");
+    --appui-icon-fm-icon-eyebrows-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-10.png");
+    --appui-icon-fm-icon-eyes-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-1.png");
+    --appui-icon-fm-icon-eyes-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-2.png");
+    --appui-icon-fm-icon-eyes-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-3.png");
+    --appui-icon-fm-icon-eyes-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-4.png");
+    --appui-icon-fm-icon-eyes-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-5.png");
+    --appui-icon-fm-icon-eyes-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-6.png");
+    --appui-icon-fm-icon-eyes-7-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-7.png");
+    --appui-icon-fm-icon-eyes-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-8.png");
+    --appui-icon-fm-icon-eyes-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-9.png");
+    --appui-icon-fm-icon-eyes-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-10.png");
+    --appui-icon-fm-icon-facialhair-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-1.png");
+    --appui-icon-fm-icon-facialhair-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-2.png");
+    --appui-icon-fm-icon-facialhair-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-3.png");
+    --appui-icon-fm-icon-facialhair-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-4.png");
+    --appui-icon-fm-icon-facialhair-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-5.png");
 }
 
 .appui-icon--calendar--regular {
@@ -76,6 +147,10 @@
 
 .appui-icon--check--bold {
     --unity-image: var(--appui-icon-check-bold);
+}
+
+.appui-icon--check-circle--regular {
+    --unity-image: var(--appui-icon-check-circle-regular);
 }
 
 .appui-icon--check--regular {
@@ -154,6 +229,10 @@
     --unity-image: var(--appui-icon-x-regular);
 }
 
+.appui-icon--x-circle--regular {
+    --unity-image: var(--appui-icon-x-circle-regular);
+}
+
 .appui-icon--fm-home--regular {
     --unity-image: var(--appui-icon-fm-home-regular);
 }
@@ -176,19 +255,289 @@
 
 .appui-icon--fm-arrow-right--regular {
     --unity-image: var(--appui-icon-fm-arrow-right-regular);
-    width: var(--appui-sizing-200);
-    height: var(--appui-sizing-200);
 }
 
 .appui-icon--fm-arrow-down--regular {
     --unity-image: var(--appui-icon-fm-arrow-down-regular);
-    width: var(--appui-sizing-200);
-    height: var(--appui-sizing-200);
+}
+
+.appui-icon--fm-star--regular {
+    --unity-image: var(--appui-icon-fm-star-regular);
 }
 
 .appui-icon--fm-arrow-left--regular {
     --unity-image: var(--appui-icon-fm-arrow-left-regular);
-    width: var(--appui-sizing-200);
-    height: var(--appui-sizing-200);
+}
+
+.appui-icon--fm-avatar-eyebrows--regular {
+    --unity-image: var(--appui-icon-fm-avatar-eyebrows-regular);
+}
+
+.appui-icon--fm-avatar-eyes--regular {
+    --unity-image: var(--appui-icon-fm-avatar-eyes-regular);
+}
+
+.appui-icon--fm-avatar-facial-hair--regular {
+    --unity-image: var(--appui-icon-fm-avatar-facial-hair-regular);
+}
+
+.appui-icon--fm-avatar-hair--regular {
+    --unity-image: var(--appui-icon-fm-avatar-hair-regular);
+}
+
+.appui-icon--fm-avatar-mouth--regular {
+    --unity-image: var(--appui-icon-fm-avatar-mouth-regular);
+}
+
+.appui-icon--fm-avatar-nose--regular {
+    --unity-image: var(--appui-icon-fm-avatar-nose-regular);
+}
+
+.appui-icon--fm-avatar-shoes--regular {
+    --unity-image: var(--appui-icon-fm-avatar-shoes-regular);
+}
+
+.appui-icon--fm-avatar-skin--regular {
+    --unity-image: var(--appui-icon-fm-avatar-skin-regular);
+}
+
+.appui-icon--fm-avatar-trousers--regular {
+    --unity-image: var(--appui-icon-fm-avatar-trousers-regular);
+}
+
+.appui-icon--fm-avatar-tshirt--regular {
+    --unity-image: var(--appui-icon-fm-avatar-tshirt-regular);
+}
+
+.appui-icon--fm-arrow-slim-left--regular {
+    --unity-image: var(--appui-icon-fm-arrow-slim-left-regular);
+}
+
+.appui-icon--fm-arrow-slim-right--regular {
+    --unity-image: var(--appui-icon-fm-arrow-slim-right-regular);
+}
+
+.appui-icon--fm-item-none--regular {
+    --unity-image: var(--appui-icon-fm-item-none-regular);
+}
+
+.appui-icon--fm-icon-nose-1--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-1-regular);
+}
+
+.appui-icon--fm-icon-nose-2--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-2-regular);
+}
+
+.appui-icon--fm-icon-nose-3--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-3-regular);
+}
+
+.appui-icon--fm-icon-nose-4--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-4-regular);
+}
+
+.appui-icon--fm-icon-nose-5--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-5-regular);
+}
+
+.appui-icon--fm-icon-nose-6--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-6-regular);
+}
+
+.appui-icon--fm-icon-nose-7--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-7-regular);
+}
+
+.appui-icon--fm-icon-nose-8--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-8-regular);
+}
+
+.appui-icon--fm-icon-nose-9--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-9-regular);
+}
+
+.appui-icon--fm-icon-nose-10--regular {
+    --unity-image: var(--appui-icon-fm-icon-nose-10-regular);
+}
+
+.appui-icon--fm-icon-mouth-1--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-1-regular);
+}
+
+.appui-icon--fm-icon-mouth-2--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-2-regular);
+}
+
+.appui-icon--fm-icon-mouth-3--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-3-regular);
+}
+
+.appui-icon--fm-icon-mouth-4--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-4-regular);
+}
+
+.appui-icon--fm-icon-mouth-5--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-5-regular);
+}
+
+.appui-icon--fm-icon-mouth-6--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-6-regular);
+}
+
+.appui-icon--fm-icon-mouth-7--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-7-regular);
+}
+
+.appui-icon--fm-icon-mouth-8--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-8-regular);
+}
+
+.appui-icon--fm-icon-mouth-9--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-9-regular);
+}
+
+.appui-icon--fm-icon-mouth-10--regular {
+    --unity-image: var(--appui-icon-fm-icon-mouth-10-regular);
+}
+
+.appui-icon--fm-icon-hair-1--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-1-regular);
+}
+
+.appui-icon--fm-icon-hair-2--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-2-regular);
+}
+
+.appui-icon--fm-icon-hair-3--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-3-regular);
+}
+
+.appui-icon--fm-icon-hair-4--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-4-regular);
+}
+
+.appui-icon--fm-icon-hair-5--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-5-regular);
+}
+
+.appui-icon--fm-icon-hair-6--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-6-regular);
+}
+
+.appui-icon--fm-icon-hair-7--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-7-regular);
+}
+
+.appui-icon--fm-icon-hair-8--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-8-regular);
+}
+
+.appui-icon--fm-icon-hair-9--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-9-regular);
+}
+
+.appui-icon--fm-icon-hair-10--regular {
+    --unity-image: var(--appui-icon-fm-icon-hair-10-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-1--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-1-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-2--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-2-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-3--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-3-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-4--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-4-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-5--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-5-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-6--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-6-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-7--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-7-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-8--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-8-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-9--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-9-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-10--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-10-regular);
+}
+
+.appui-icon--fm-icon-eyes-1--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-1-regular);
+}
+
+.appui-icon--fm-icon-eyes-2--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-2-regular);
+}
+
+.appui-icon--fm-icon-eyes-3--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-3-regular);
+}
+
+.appui-icon--fm-icon-eyes-4--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-4-regular);
+}
+
+.appui-icon--fm-icon-eyes-5--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-5-regular);
+}
+
+.appui-icon--fm-icon-eyes-6--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-6-regular);
+}
+
+.appui-icon--fm-icon-eyes-7--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-7-regular);
+}
+
+.appui-icon--fm-icon-eyes-8--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-8-regular);
+}
+
+.appui-icon--fm-icon-eyes-9--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-9-regular);
+}
+
+.appui-icon--fm-icon-eyes-10--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyes-10-regular);
+}
+
+.appui-icon--fm-icon-facialhair-1--regular {
+    --unity-image: var(--appui-icon-fm-icon-facialhair-1-regular);
+}
+
+.appui-icon--fm-icon-facialhair-2--regular {
+    --unity-image: var(--appui-icon-fm-icon-facialhair-2-regular);
+}
+
+.appui-icon--fm-icon-facialhair-3--regular {
+    --unity-image: var(--appui-icon-fm-icon-facialhair-3-regular);
+}
+
+.appui-icon--fm-icon-facialhair-4--regular {
+    --unity-image: var(--appui-icon-fm-icon-facialhair-4-regular);
+}
+
+.appui-icon--fm-icon-facialhair-5--regular {
+    --unity-image: var(--appui-icon-fm-icon-facialhair-5-regular);
 }
 

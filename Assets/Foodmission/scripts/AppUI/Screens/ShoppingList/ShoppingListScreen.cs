@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
         private CircularProgress _spinner;
         private Text _errorText;
         private Unity.AppUI.UI.Button _btnNewList;
+        private bool _isLoading;
 
         public ShoppingListScreen()
         {
@@ -100,15 +101,22 @@ namespace eu.foodmission.platform
                 row.RegisterCallback<ClickEvent>(_ =>
                     _navController?.Navigate(
                         Actions.shopping_list_to_detail,
-                        new[] { new Argument("listId", captured.id) }));
+                        new[]
+                        {
+                            new Argument("listId", captured.id),
+                            new Argument("listTitle", captured.title)
+                        }));
 
-                deleteBtn.clicked += () =>
+                deleteBtn.RegisterCallback<ClickEvent>(evt =>
+                {
+                    evt.StopPropagation();
                     FMDialog.ShowConfirm(
                         this,
                         "Delete list",
                         $"Delete \"{captured.title}\"?",
                         onConfirm: async () => await _viewModel.DeleteListAsync(captured.id),
                         semantic: AlertSemantic.Destructive);
+                });
 
                 _listsContainer.Add(row);
             }
@@ -116,7 +124,12 @@ namespace eu.foodmission.platform
 
         private void UpdateLoadingState()
         {
-            _spinner?.EnableInClassList("visible", _viewModel.IsLoading);
+            _isLoading = _viewModel.IsLoading;
+            _spinner?.EnableInClassList("visible", _isLoading);
+            if (_btnNewList != null)
+            {
+                _btnNewList.SetEnabled(!_isLoading);
+            }
         }
 
         private void UpdateErrorState()

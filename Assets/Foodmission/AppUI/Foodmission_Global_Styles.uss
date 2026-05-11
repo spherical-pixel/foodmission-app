@@ -50,6 +50,33 @@
     align-items: flex-start;
 }
 
+.fm-button-avatar {
+}
+
+.appui-button.fm-button-avatar-scroll {
+    margin: 5px;
+    min-width: 150px;
+    min-height: 150px;
+    aspect-ratio: 1;
+    width: auto;
+    height: auto;
+}
+
+.appui-button.fm-button-avatar-scroll-arrow {
+    min-height: 150px;
+    width: auto;
+    height: auto;
+}
+
+.fm-button-avatar #appui-button__leading-icon {
+    width: 85%;
+    height: 85%;
+}
+
+.margin-300 {
+    margin: var(--appui-spacing-25);
+}
+
 .fm-button-drawer {
     font-size: var(--appui-font-sizes-500);
 }

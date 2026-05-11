@@ -20,6 +20,8 @@ namespace eu.foodmission.platform
     {
         private VisualElement _itemsContainer;
         private CircularProgress _spinner;
+        private Text _errorText;
+        private Heading _listTitle;
         private Unity.AppUI.UI.Button _btnAdd;
         private Unity.AppUI.UI.Button _btnClearChecked;
         private CancellationTokenSource _searchCts;
@@ -36,6 +38,8 @@ namespace eu.foodmission.platform
         {
             _itemsContainer = contentContainer.Q<VisualElement>("items-container");
             _spinner = contentContainer.Q<CircularProgress>("loading-spinner");
+            _errorText = contentContainer.Q<Text>("error-message");
+            _listTitle = contentContainer.Q<Heading>("list-title");
             _btnAdd = contentContainer.Q<Unity.AppUI.UI.Button>("btn-add");
             _btnClearChecked = contentContainer.Q<Unity.AppUI.UI.Button>("btn-clear-checked");
         }
@@ -45,6 +49,7 @@ namespace eu.foodmission.platform
             base.OnEnter(controller, destination, args);
 
             string listId = null;
+            string listTitle = null;
 
             if (args != null)
             {
@@ -53,14 +58,17 @@ namespace eu.foodmission.platform
                     if (arg.name == "listId")
                     {
                         listId = arg.value?.ToString();
-                        break;
+                    }
+                    else if (arg.name == "listTitle")
+                    {
+                        listTitle = arg.value?.ToString();
                     }
                 }
             }
 
             if (!string.IsNullOrEmpty(listId))
             {
-                await _viewModel.LoadAsync(listId);
+                await _viewModel.LoadAsync(listId, listTitle);
             }
         }
 
@@ -69,14 +77,18 @@ namespace eu.foodmission.platform
             base.OnViewModelBound();
 
             _btnAdd.clicked += OnAddClicked;
-            _btnClearChecked.clicked += async () => await _viewModel.ClearCheckedItemsAsync();
+            _btnClearChecked.clicked += OnClearCheckedClicked;
 
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            UpdateLoadingState();
+            UpdateErrorState();
+            UpdateListTitle();
         }
 
         protected override void OnViewModelUnbinding()
         {
             _btnAdd.clicked -= OnAddClicked;
+            _btnClearChecked.clicked -= OnClearCheckedClicked;
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             _searchCts?.Cancel();
             _searchCts?.Dispose();
@@ -92,8 +104,21 @@ namespace eu.foodmission.platform
             }
             else if (e.PropertyName == nameof(_viewModel.IsLoadingItems))
             {
-                _spinner?.EnableInClassList("visible", _viewModel.IsLoadingItems);
+                UpdateLoadingState();
             }
+            else if (e.PropertyName == nameof(_viewModel.ErrorMessage))
+            {
+                UpdateErrorState();
+            }
+            else if (e.PropertyName == nameof(_viewModel.ListName))
+            {
+                UpdateListTitle();
+            }
+        }
+
+        private async void OnClearCheckedClicked()
+        {
+            await _viewModel.ClearCheckedItemsAsync();
         }
 
         private void RebuildItems()
@@ -140,6 +165,32 @@ namespace eu.foodmission.platform
                 row.Add(qtyLabel);
                 row.Add(deleteBtn);
                 _itemsContainer.Add(row);
+            }
+        }
+
+        private void UpdateLoadingState()
+        {
+            bool isLoading = _viewModel.IsLoadingItems;
+            _spinner?.EnableInClassList("visible", isLoading);
+            _btnAdd?.SetEnabled(!isLoading);
+            _btnClearChecked?.SetEnabled(!isLoading);
+        }
+
+        private void UpdateErrorState()
+        {
+            bool hasError = !string.IsNullOrEmpty(_viewModel.ErrorMessage);
+            _errorText?.EnableInClassList("visible", hasError);
+            if (_errorText != null)
+            {
+                _errorText.text = _viewModel.ErrorMessage;
+            }
+        }
+
+        private void UpdateListTitle()
+        {
+            if (_listTitle != null && !string.IsNullOrWhiteSpace(_viewModel.ListName))
+            {
+                _listTitle.text = _viewModel.ListName;
             }
         }
 
@@ -296,7 +347,15 @@ namespace eu.foodmission.platform
                     if (selectedProduct != null)
                     {
                         string unit = unitChoices[unitDropdown.selectedIndex];
-                        await _viewModel.ImportAndAddItemAsync(selectedProduct, qtyField.value, unit);
+                        bool added = await _viewModel.ImportAndAddItemAsync(selectedProduct, qtyField.value, unit);
+                        if (!added)
+                        {
+                            FMDialog.ShowAlert(this, "Add item", "Could not add the selected item.", AlertSemantic.Error);
+                        }
+                    }
+                    else
+                    {
+                        FMDialog.ShowAlert(this, "Add item", "Select a product first.", AlertSemantic.Warning);
                     }
                 }, isPrimary: true));
         }

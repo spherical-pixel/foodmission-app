@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 
 using Unity.AppUI.MVVM;
 
-using UnityEngine;
-
 namespace eu.foodmission.platform
 {
     [ObservableObject]
@@ -13,13 +11,13 @@ namespace eu.foodmission.platform
         private readonly IShoppingListService _shoppingListService;
 
         [ObservableProperty]
-        private List<ShoppingList> m_Lists = new();
+        private List<ShoppingList> _lists = new();
 
         [ObservableProperty]
-        private bool m_IsLoading;
+        private bool _isLoading;
 
         [ObservableProperty]
-        private string m_ErrorMessage = "";
+        private string _errorMessage = "";
 
         public ShoppingListViewModel(IStoreService storeService, IShoppingListService shoppingListService)
             : base(storeService)
@@ -50,25 +48,38 @@ namespace eu.foodmission.platform
         {
             if (string.IsNullOrWhiteSpace(name))
             {
+                ErrorMessage = "List name is required";
                 return;
             }
 
+            ErrorMessage = "";
+            IsLoading = true;
             ShoppingList created = await _shoppingListService.CreateListAsync(name);
+            IsLoading = false;
 
             if (created != null)
             {
                 await LoadListsAsync();
+                return;
             }
+
+            ErrorMessage = "Could not create the list";
         }
 
         public async Task DeleteListAsync(string id)
         {
+            ErrorMessage = "";
+            IsLoading = true;
             bool success = await _shoppingListService.DeleteListAsync(id);
+            IsLoading = false;
 
             if (success)
             {
                 Lists = new List<ShoppingList>(Lists.FindAll(l => l.id != id));
+                return;
             }
+
+            ErrorMessage = "Could not delete the list";
         }
     }
 }
