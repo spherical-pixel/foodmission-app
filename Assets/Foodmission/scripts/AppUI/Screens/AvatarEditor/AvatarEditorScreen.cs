@@ -1,5 +1,7 @@
 
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Scripting;
@@ -43,6 +45,7 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Button _btSave;
         private Unity.AppUI.UI.Button _btExit;
 
+        private bool _isFromOnboarding;
         private AvatarEditorPanelItem _avatarEditorPanelItem;
 
         public AvatarEditor()
@@ -52,6 +55,25 @@ namespace eu.foodmission.platform
                 .Get(TemplateAddresses.AvatarEditor));
             CacheUIElements();
             RegisterManualEvents();
+        }
+
+        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            _isFromOnboarding = false;
+            if (args != null)
+            {
+                foreach (var arg in args)
+                {
+                    if (arg.name == "fromOnboarding")
+                        _isFromOnboarding = arg.value?.ToString() == "true";
+                }
+            }
+            base.OnEnter(controller, destination, args);
+
+            if (_isFromOnboarding && appBar != null)
+            {
+                appBar.style.display = DisplayStyle.None;
+            }
         }
 
         private void CacheUIElements()
@@ -117,21 +139,31 @@ namespace eu.foodmission.platform
         {
             _viewModel?.AvatarService.SaveCurrentConfig();
             CloseSelectorItemAvatar();
+            OnNavigationRequested(Actions.go_to_home,null);
         }
 
         private void OnExitClicked()
         {
             _viewModel?.AvatarService.LoadSavedConfig();
             CloseSelectorItemAvatar();
+            OnNavigationRequested(Actions.go_to_home,null);
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            if (_btSave != null)
+                _btSave.style.display = _isFromOnboarding ? DisplayStyle.Flex : DisplayStyle.None;
+            if (_btExit != null)
+                _btExit.style.display = _isFromOnboarding ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         protected override void OnViewModelUnbinding()
         {
+            if (!_isFromOnboarding)
+            {
+                _viewModel?.AvatarService.SaveCurrentConfig();
+            }
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
         }

@@ -22,6 +22,8 @@ namespace eu.foodmission.platform
         [Header("Partes del Avatar (Objetos)")]
         public List<GameObject> hairParts;
         public List<GameObject> noseParts;
+        public GameObject eyebrowLeftGameObject;
+        public GameObject eyebrowRightGameObject;
         public GameObject facialHairGameObject; // Para activar/desactivar toda la barba
         
 
@@ -103,7 +105,7 @@ namespace eu.foodmission.platform
         {
             avatarConfig.hair.idPart = Mathf.Clamp(avatarConfig.hair.idPart, 0, 10);
             avatarConfig.hair.idColor = Mathf.Clamp(avatarConfig.hair.idColor, 1, 10);
-            avatarConfig.eyebrows.idPart = Mathf.Clamp(avatarConfig.eyebrows.idPart, 1, 10);
+            avatarConfig.eyebrows.idPart = Mathf.Clamp(avatarConfig.eyebrows.idPart, 0, 10);
             avatarConfig.eyebrows.idColor = Mathf.Clamp(avatarConfig.eyebrows.idColor, 1, 10);
             avatarConfig.eyes.idPart = Mathf.Clamp(avatarConfig.eyes.idPart, 1, 10);
             avatarConfig.eyes.idColor = Mathf.Clamp(avatarConfig.eyes.idColor, 1, 10);
@@ -148,19 +150,29 @@ namespace eu.foodmission.platform
 
         public void ApplyEyebrows(AvatarPartConfig eyebrowsConfig)
         {
-            
-            if (eyebrowMaterial != null)
+            if (eyebrowsConfig.idPart == 0)
             {
-                int idColor = eyebrowsConfig.idColor - 1;
-                if (idColor < hairColors.Count)
+                if (eyebrowLeftGameObject != null) eyebrowLeftGameObject.SetActive(false);
+                if (eyebrowRightGameObject != null) eyebrowRightGameObject.SetActive(false);
+            }
+            else
+            {
+                if (eyebrowRightGameObject != null) eyebrowRightGameObject.SetActive(true);
+                if (eyebrowLeftGameObject != null) eyebrowLeftGameObject.SetActive(true);
+
+                if (eyebrowMaterial != null)
                 {
-                    eyebrowMaterial.color = hairColors[idColor];
-                }
-                int idPart = eyebrowsConfig.idPart - 1;
-                
-                if (idPart >= 0 && idPart < eyebrowTextures.Count)
-                {
-                    eyebrowMaterial.mainTexture = eyebrowTextures[idPart];
+                    int idColor = eyebrowsConfig.idColor - 1;
+                    if (idColor < hairColors.Count)
+                    {
+                        eyebrowMaterial.color = hairColors[idColor];
+                    }
+                    int idPart = eyebrowsConfig.idPart - 1;
+
+                    if (idPart >= 0 && idPart < eyebrowTextures.Count)
+                    {
+                        eyebrowMaterial.mainTexture = eyebrowTextures[idPart];
+                    }
                 }
             }
         }

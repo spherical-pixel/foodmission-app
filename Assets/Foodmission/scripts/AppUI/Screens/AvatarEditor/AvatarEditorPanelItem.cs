@@ -138,7 +138,14 @@ namespace eu.foodmission.platform
             List<Color> palette = _avatarService.GetColorPalette(_itemEnum);
             AvatarPartConfig targetPart = GetPartConfigForItem(_itemEnum, _editingConfig);
 
-            for (int i = 0; i < maxParts; i++)
+            int startIndex = _itemEnum switch
+            {
+                AvatarEditorItemEnum.Eyes => 1,
+                AvatarEditorItemEnum.Nose => 1,
+                AvatarEditorItemEnum.Mouth => 1,
+                _ => 0
+            };
+            for (int i = startIndex; i < maxParts; i++)
             {
                 int partIndex = i;
                 bool isSelected = partIndex == targetPart.idPart;
@@ -163,6 +170,13 @@ namespace eu.foodmission.platform
                 if (_btLeftParts != null) _btLeftParts.style.display = DisplayStyle.None;
                 if (_btRightParts != null) _btRightParts.style.display = DisplayStyle.None;
                 if( _selectorParts != null) _selectorParts.style.display = DisplayStyle.None;
+            }
+
+            if (_itemEnum == AvatarEditorItemEnum.Mouth || _itemEnum == AvatarEditorItemEnum.Nose)
+            {
+                if (_btLeftColor != null) _btLeftColor.style.display = DisplayStyle.None;
+                if (_btRightColor != null) _btRightColor.style.display = DisplayStyle.None;
+                if (_selectorColor != null) _selectorColor.style.display = DisplayStyle.None;
             }
         }
 

@@ -80,6 +80,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8368c3d52103f4f7eb128311f718548d
+    m_Address: Foodmission/AppUI/Templates/AvatarEditorPanelItem.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 84b9398f3e23944e5931f939640b84b4
     m_Address: Foodmission/AppUI/Templates/CompleteWelcome.uxml
     m_ReadOnly: 0

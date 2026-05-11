@@ -227,7 +227,8 @@ namespace eu.foodmission.platform
                 {
                     // Mark extended profile as completed in Redux
                     _storeService.store.Dispatch(AppActions.setExtendedProfile.Invoke());
-                    //RaiseNavigationRequested(Actions.onboardingprofile_to_onboardingavatar);
+                    // When ready, uncomment to navigate to avatar editor with onboarding flag:
+                    //RaiseNavigationRequested(Actions.go_to_avatar_editor, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
                     RaiseNavigationRequested(Actions.go_to_home);
                 }
                 else

@@ -301,7 +301,7 @@ namespace eu.foodmission.platform
                         {
                             new FMDialogAction("@UI:BTN_CREATE_AVATAR", () =>
                             {
-                                RaiseNavigationRequested(Actions.loading_to_home);
+                                RaiseNavigationRequested(Actions.go_to_avatar_editor, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
                             }, isPrimary: true),
                             new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
                             {

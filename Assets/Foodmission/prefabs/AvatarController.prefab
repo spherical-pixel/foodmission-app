@@ -325,6 +325,8 @@ MonoBehaviour:
   - {fileID: 7627006033596251526}
   - {fileID: 6185106910298338558}
   - {fileID: 7185914488753373981}
+  eyebrowLeftGameObject: {fileID: 4529161095805382009}
+  eyebrowRightGameObject: {fileID: 7541749660510986980}
   facialHairGameObject: {fileID: 1360871653377073958}
   hairMaterial: {fileID: 2100000, guid: f2cc51d0618855d4e8c7a979db97e607, type: 2}
   eyebrowMaterial: {fileID: 2100000, guid: f2386d1e2350cef4c9910a612e41126f, type: 2}
@@ -1134,6 +1136,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4586094790168502431, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
   m_PrefabInstance: {fileID: 1484054029054958256}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4529161095805382009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3045202198397024201, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
+  m_PrefabInstance: {fileID: 1484054029054958256}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6064572252330415406 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4661747960526573470, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
@@ -1172,6 +1179,11 @@ GameObject:
 --- !u!1 &7488876309327984870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8319764886542082646, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
+  m_PrefabInstance: {fileID: 1484054029054958256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7541749660510986980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8949151764412692564, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
   m_PrefabInstance: {fileID: 1484054029054958256}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7627006033596251526 stripped
