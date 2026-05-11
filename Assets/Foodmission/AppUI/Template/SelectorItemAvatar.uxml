@@ -1,0 +1,47 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="SelectorItemAvatar" class="box-background" style="justify-content: flex-end; overflow: hidden; flex-direction: column-reverse; border-bottom-left-radius: 0; border-bottom-right-radius: 0; align-content: flex-end; margin-bottom: 0; background-color: rgb(209, 209, 209);">
+        <ui:VisualElement name="Bottom" style="position: relative; flex-shrink: 0;">
+            <ui:VisualElement name="edit" style="flex-grow: 1;">
+                <ui:VisualElement name="Selector" style="flex-grow: 1; flex-direction: row; justify-content: space-between; margin-top: 25px; margin-bottom: 25px;">
+                    <appui:Button leading-icon="fm-arrow-slim-left" quiet="true" variant="Default" name="btLeft" class="fm-button-avatar-scroll-arrow"/>
+                    <ui:ScrollView mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1; padding-left: 25px; padding-right: 25px;">
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll aaaaa"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                    </ui:ScrollView>
+                    <appui:Button name="btRight" trailing-icon="fm-arrow-slim-right" quiet="true" class="fm-button-avatar-scroll-arrow"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Selector" style="flex-grow: 1; flex-direction: row; justify-content: space-between; margin-top: 25px; margin-bottom: 25px;">
+                    <appui:Button leading-icon="fm-arrow-slim-left" quiet="true" variant="Default" name="btLeft" class="fm-button-avatar-scroll-arrow"/>
+                    <ui:ScrollView mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1; padding-left: 25px; padding-right: 25px;">
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll aaaaa"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                        <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="item_1" class="fm-button-avatar-scroll"/>
+                    </ui:ScrollView>
+                    <appui:Button name="btRight" trailing-icon="fm-arrow-slim-right" quiet="true" class="fm-button-avatar-scroll-arrow"/>
+                </ui:VisualElement>
+                <appui:Spacer/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Buttons" style="flex-grow: 1;">
+                <appui:Button title="Confirm" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" class="fm-button-align-left fm-button"/>
+                <appui:Spacer/>
+                <appui:Button title="Cancel" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" class="fm-button-align-left fm-button"/>
+                <appui:Spacer/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

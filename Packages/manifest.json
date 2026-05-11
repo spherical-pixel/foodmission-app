@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.unity.nuget.newtonsoft-json": "3.2.1",
     "com.unity.2d.animation": "13.0.4",
     "com.unity.2d.aseprite": "3.0.1",
     "com.unity.2d.psdimporter": "12.0.1",
@@ -9,7 +8,7 @@
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.2d.tilemap.extras": "6.0.1",
     "com.unity.adaptiveperformance": "6.0.0",
-    "com.unity.ai.assistant": "2.6.0-pre.1",
+    "com.unity.ai.assistant": "2.7.0-pre.2",
     "com.unity.ai.inference": "2.6.1",
     "com.unity.device-simulator.devices": "1.0.1",
     "com.unity.dt.app-ui": "2.1.9",
@@ -17,6 +16,7 @@
     "com.unity.inputsystem": "1.19.0",
     "com.unity.localization": "1.5.11",
     "com.unity.multiplayer.center": "1.0.1",
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
     "com.unity.recorder": "5.1.6",
     "com.unity.render-pipelines.universal": "17.3.0",
     "com.unity.test-framework": "1.6.0",

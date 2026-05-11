@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2689467240430632386}
   - component: {fileID: 3940819661446166795}
   - component: {fileID: 9114982165648575772}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,6 +88,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &186468611763489230
 GameObject:
@@ -100,7 +101,7 @@ GameObject:
   - component: {fileID: 9105994269907712738}
   - component: {fileID: 5328314773515040967}
   - component: {fileID: 5183482893743971407}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,6 +178,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &326936086382145978
 GameObject:
@@ -188,7 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6087668646628456483}
   - component: {fileID: 2453123792410150408}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,6 +259,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -280,13 +283,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5482141820820161849}
   - component: {fileID: 5010866743155733225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: beard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5482141820820161849
 Transform:
   m_ObjectHideFlags: 0
@@ -349,6 +352,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -373,7 +377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4836466573692000202}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5985155411623491739}
   - component: {fileID: 8127985136319592065}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,6 +479,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -497,7 +502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6133933372274250632}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,7 +536,7 @@ GameObject:
   - component: {fileID: 7915612680565750470}
   - component: {fileID: 5063147466980747995}
   - component: {fileID: 327397689504073963}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,6 +613,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1555722217894426990
 GameObject:
@@ -618,7 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5857180011917238299}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +659,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2096620225336574095}
   - component: {fileID: 5474297043040852725}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,7 +714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5320918633639753825}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +746,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8696069758853340921}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +778,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 874745486141335072}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8427295136453445110}
   - component: {fileID: 3979848488175223760}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,6 +881,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -899,7 +906,7 @@ GameObject:
   - component: {fileID: 3166196570138996197}
   - component: {fileID: 2106857326224477778}
   - component: {fileID: 8497679575594063632}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pelo_8_parte_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,6 +983,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2195553696332715474
 GameObject:
@@ -988,7 +996,7 @@ GameObject:
   - component: {fileID: 1643869203387157429}
   - component: {fileID: 7664012683349592562}
   - component: {fileID: 2229800857778892120}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1065,6 +1073,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2370918239900746583
 GameObject:
@@ -1077,7 +1086,7 @@ GameObject:
   - component: {fileID: 4646682877224989699}
   - component: {fileID: 3571481110807270331}
   - component: {fileID: 8203978824793555922}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pelo_7_parte_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1154,6 +1163,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2398462210651153519
 GameObject:
@@ -1165,7 +1175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1166494011978209273}
   - component: {fileID: 1486440006906119374}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hand_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1235,6 +1245,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1262,7 +1273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4660782882028647079}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1293,7 +1304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3669224502192533964}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1326,7 +1337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6008711968902962896}
   - component: {fileID: 8917735744238806930}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: eyebrow_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1395,6 +1406,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1417,7 +1429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8534708152525835861}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1461,7 +1473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8954644709352495517}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1494,7 +1506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1149206349832876090}
   - component: {fileID: 2319424982032574103}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1563,6 +1575,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -1593,7 +1606,7 @@ GameObject:
   - component: {fileID: 2841948523798577521}
   - component: {fileID: 294117877248265366}
   - component: {fileID: 658160479762704228}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pelo_3_parte_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1670,6 +1683,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3275650821190013468
 GameObject:
@@ -1680,7 +1694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4683317234068863862}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1712,7 +1726,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8767570612125942201}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1744,7 +1758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4113582411100412263}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1776,7 +1790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7074430630612178658}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:HeadTop_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1809,7 +1823,7 @@ GameObject:
   - component: {fileID: 1142077319968291919}
   - component: {fileID: 936594477342637047}
   - component: {fileID: 4922146254860368434}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1887,6 +1901,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4383604593409563712
 GameObject:
@@ -1898,7 +1913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3863919161348338315}
   - component: {fileID: 7917254501163260756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1968,6 +1983,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2001,7 +2017,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4252595236361136016}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2033,7 +2049,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 227332050561046700}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2066,7 +2082,7 @@ GameObject:
   - component: {fileID: 3326278252837337926}
   - component: {fileID: 282802623083079686}
   - component: {fileID: 2784380130621679264}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2143,6 +2159,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4661747960526573470
 GameObject:
@@ -2154,7 +2171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 727360749998753056}
   - component: {fileID: 1967302497269968125}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2223,6 +2240,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2246,7 +2264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6528604461217644882}
   - component: {fileID: 4355857099737385643}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2315,6 +2333,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2339,7 +2358,7 @@ GameObject:
   - component: {fileID: 1393451675296903403}
   - component: {fileID: 7535182284643692642}
   - component: {fileID: 4987231983509695669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2416,6 +2435,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5284901295536574466
 GameObject:
@@ -2427,7 +2447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 971923023595393113}
   - component: {fileID: 3228572669187849923}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2496,6 +2516,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2518,7 +2539,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3589804285032098029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2559,7 +2580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7767992400466401060}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2593,7 +2614,7 @@ GameObject:
   - component: {fileID: 4811147795324516082}
   - component: {fileID: 1276090620291736441}
   - component: {fileID: 2061077065355415788}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pelo_8_parte_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2670,6 +2691,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6072872152381364665
 GameObject:
@@ -2680,7 +2702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2271753621375235851}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2715,7 +2737,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3007704379863375318}
   - component: {fileID: 6982912946397581283}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: leg_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2762,7 +2784,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 85fb85608ac8b58489c8a76a08eb06d5, type: 2}
+  - {fileID: 2100000, guid: 169f7e3fdbb3d894bb97ce86eb9044e8, type: 2}
   - {fileID: 2100000, guid: 0add9842ff11df942bcc874f4e3c515c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -2785,6 +2807,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2813,7 +2836,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8305613692234413329}
   - component: {fileID: 4359361829431332328}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hand_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2883,6 +2906,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -2911,7 +2935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7845604152361033155}
   - component: {fileID: 6302186245388337537}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2980,6 +3004,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3002,7 +3027,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6237716701036505534}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3036,7 +3061,7 @@ GameObject:
   - component: {fileID: 5077845802409046525}
   - component: {fileID: 8123532545615246734}
   - component: {fileID: 5893303652761938159}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pelo_3_parte_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3113,6 +3138,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6975356537062789863
 GameObject:
@@ -3123,7 +3149,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5390704816363025500}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3155,7 +3181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4107660442003509964}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3188,7 +3214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2967266951700004072}
   - component: {fileID: 4831790054989524959}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3257,6 +3283,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3281,7 +3308,7 @@ GameObject:
   - component: {fileID: 5322586529188506242}
   - component: {fileID: 2281035353813622390}
   - component: {fileID: 311749015795216230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pelo_7_parte_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3358,6 +3385,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7333198525779816423
 GameObject:
@@ -3368,7 +3396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6676409697304217246}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3401,7 +3429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 737930170216712032}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3434,7 +3462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 471640486912356815}
   - component: {fileID: 1944160401442646112}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: eye_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3503,6 +3531,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3525,7 +3554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1360994092943261976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3557,7 +3586,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2489258288658813468}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3589,7 +3618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 244083948355105771}
   - component: {fileID: 402942278873622026}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3658,6 +3687,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3681,7 +3711,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7651949497197929460}
   - component: {fileID: 999434995869643524}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: eye_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3750,6 +3780,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3772,7 +3803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8446045452494180718}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:RightToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3804,7 +3835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2992818072992304673}
   - component: {fileID: 8185161062712780956}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3873,6 +3904,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3895,7 +3927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4182322591403686229}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3928,7 +3960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4714278275537083732}
   - component: {fileID: 6084080159894091404}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: leg_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3998,6 +4030,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -4026,7 +4059,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6673085548027220142}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: noses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4068,7 +4101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 484455129587058547}
   - component: {fileID: 6411483303188301353}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: eyebrow_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4137,6 +4170,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -4160,7 +4194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6339819465861981828}
   - component: {fileID: 1814235942706043433}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: nose8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4229,6 +4263,7 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -4251,7 +4286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5437008082982081036}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mixamorig:Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4284,7 +4319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8496013409316000083}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: hair8
   m_TagString: Untagged
   m_Icon: {fileID: 0}

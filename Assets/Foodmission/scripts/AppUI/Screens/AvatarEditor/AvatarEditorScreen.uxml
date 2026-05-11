@@ -1,0 +1,42 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.AvatarEditorViewModel, Foodmission" class="login-root appui appui--medium appui--en appui--ltr appui--light" style="flex-grow: 1; background-color: rgba(2, 70, 57, 0); height: 100%; width: 100%;">
+        <ui:VisualElement name="back" style="flex-grow: 1;">
+            <ui:VisualElement name="frame" class="box-background" style="flex-grow: 1; justify-content: space-between; overflow: hidden;">
+                <ui:VisualElement name="Top">
+                    <ui:Image name="Image" source="project://database/Assets/Foodmission/RenderTextures/AvatarRenderTexture.renderTexture?fileID=8400000&amp;guid=7cb162da67c7940e5a2872749817e46b&amp;type=2#AvatarRenderTexture" style="width: 920px; height: 1183px; align-self: center;">
+                        <Bindings>
+                            <ui:DataBinding property="source" data-source-path="AvatarRenderTexture" binding-mode="ToTarget"/>
+                        </Bindings>
+                    </ui:Image>
+                </ui:VisualElement>
+                <ui:VisualElement name="Bottom" style="position: relative; flex-shrink: 0;">
+                    <ui:VisualElement name="edit" style="flex-grow: 1;">
+                        <ui:VisualElement name="linea_1" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; align-content: center; justify-content: space-between;">
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-hair" name="btHair" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-eyebrows" name="btEyebrows" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-eyes" name="btEyes" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-nose" name="btNose" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-mouth" name="btMouth" class="fm-button-avatar"/>
+                        </ui:VisualElement>
+                        <appui:Spacer/>
+                        <ui:VisualElement name="linea_2" style="flex-direction: row; align-content: center; justify-content: space-between;">
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-facial-hair" name="btFacialHair" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-skin" name="btSkin" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-tshirt" name="btTshirt" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-trousers" name="btTrousers" class="fm-button-avatar"/>
+                            <appui:Button title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-avatar-shoes" name="btShoes" class="fm-button-avatar"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <appui:Spacer/>
+                    <ui:VisualElement name="Buttons" style="flex-grow: 1;">
+                        <appui:Button title="Save &amp; continue" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btSave" class="fm-button-align-left fm-button"/>
+                        <appui:Spacer/>
+                        <appui:Button title="Exit without saving" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btExit" class="fm-button-align-left fm-button"/>
+                        <appui:Spacer name="btExit"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
