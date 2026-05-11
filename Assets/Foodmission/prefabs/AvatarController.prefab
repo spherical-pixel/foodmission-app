@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391946691505775530}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.23755316, y: 0.94402975, z: -0.110905476, w: -0.20019096}
+  m_LocalRotation: {x: -0.031367183, y: -0.90705746, z: 0.075536795, w: 0.41298565}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5941619986095415821}
-  m_LocalEulerAnglesHint: {x: 17.729, y: 199.968, z: -25.104}
+  m_LocalEulerAnglesHint: {x: 6.38, y: -130.656, z: 6.894}
 --- !u!108 &7014162199808604904
 Light:
   m_ObjectHideFlags: 0
@@ -44,7 +44,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 0, g: 0.94915247, b: 1, a: 1}
-  m_Intensity: 1.2
+  m_Intensity: 0.1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -153,13 +153,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768510475486205811}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0037678822, y: -0.37821028, z: 0.49392456, w: -0.78293127}
+  m_LocalRotation: {x: 0.29625118, y: 0.3160364, z: 0.117593564, w: 0.8936039}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5941619986095415821}
-  m_LocalEulerAnglesHint: {x: 22.304, y: -320.499, z: -56.396}
+  m_LocalEulerAnglesHint: {x: 27.074, y: 45.445, z: 26.508}
 --- !u!108 &5214313005590240890
 Light:
   m_ObjectHideFlags: 0
@@ -171,7 +171,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.6
+  m_Intensity: 0.9
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -419,7 +419,6 @@ GameObject:
   - component: {fileID: 4914182282929029198}
   - component: {fileID: 4300802341067690162}
   - component: {fileID: 2095309396424206743}
-  - component: {fileID: 3145941251433636513}
   m_Layer: 7
   m_Name: shadow
   m_TagString: Untagged
@@ -437,7 +436,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.02, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5941619986095415821}
@@ -475,7 +474,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 02ad13cf8e40a6348af93c30f5f9a16e, type: 2}
+  - {fileID: 2100000, guid: 567c8cc4b488bb1429bf8d037ecf163d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -499,28 +498,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3145941251433636513
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3218958789568180735}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &6399708186181136573
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,13 +652,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7374090262957422878}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19663066, y: 0, z: 0, w: 0.98047763}
-  m_LocalPosition: {x: 0, y: 16.3, z: -15.9}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 17.8, z: -33.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5941619986095415821}
-  m_LocalEulerAnglesHint: {x: 22.68, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!20 &639804451253478473
 Camera:
   m_ObjectHideFlags: 0
@@ -715,7 +692,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 30
   orthographic: 0
   orthographic size: 6
   m_Depth: 0
