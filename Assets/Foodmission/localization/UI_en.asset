@@ -239,7 +239,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: '''Together, we''''ll connect your kitchen with caring for the planet.'
+    m_Localized: "Together, we\u2019ll connect your kitchen with caring for the planet.\n\nCook,
+      learn, share, and grow every day.\n\nReady to get started?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -295,8 +296,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: "This action will permanently delete all your data from the platform.\\n\\n\xBFAre     
-      you sure?"
+    m_Localized: 'This action will permanently delete all your data from the platform.
+
+
+      Are
+      you sure?'
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488

@@ -240,7 +240,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: '''Samen verbinden we jouw keuken met zorg voor de planeet.'
+    m_Localized: 'Samen verbinden we jouw keuken met zorg voor de planeet.
+
+
+      Kook,
+      leer, deel en groei elke dag.
+
+
+      Klaar om te beginnen?'
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -296,7 +303,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: '''Door deze actie worden al uw gegevens permanent van het platform'
+    m_Localized: 'Door deze actie worden al uw gegevens permanent van het platform
+      verwijderd.
+
+
+      Weet u het zeker?'
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488

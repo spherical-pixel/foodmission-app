@@ -222,8 +222,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Gemeinsam verbinden wir deine K\xFCche mit dem Schutz unseres Planeten.\\n\\nKochen,     
-      lernen, teilen und wachsen \u2013 jeden Tag.\\n\\nBereit loszulegen?"
+    m_Localized: "Gemeinsam verbinden wir deine K\xFCche mit dem Schutz unseres Planeten.\n\nKochen,
+      lernen, teilen und wachsen \u2013 jeden Tag.\n\nBereit loszulegen?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -279,7 +279,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: "Diese Aktion l\xF6scht alle Ihre Daten dauerhaft von der Plattform.\\n\\nSind     
+    m_Localized: "Diese Aktion l\xF6scht alle Ihre Daten dauerhaft von der Plattform.\n\nSind
       Sie sicher?"
     m_Metadata:
       m_Items: []

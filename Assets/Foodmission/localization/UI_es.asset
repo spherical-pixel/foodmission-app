@@ -218,8 +218,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Juntos, conectaremos tu cocina con el cuidado del planeta.\\n\\nCocina,     
-      aprende, comparte y crece cada d\xEDa.\\n\\n\xBFListo para empezar?"
+    m_Localized: "Juntos, conectaremos tu cocina con el cuidado del planeta.\n\nCocina,
+      aprende, comparte y crece cada d\xEDa.\n\n\xBFListo para empezar?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -275,8 +275,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: "Esta acci\xF3n eliminar\xE1 permanentemente todos tus datos de     
-      la plataforma.\\n\\n\xBFEst\xE1s seguro?"
+    m_Localized: "Esta acci\xF3n eliminar\xE1 permanentemente todos tus datos de
+      la plataforma.\n\n\xBFEst\xE1s seguro?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488

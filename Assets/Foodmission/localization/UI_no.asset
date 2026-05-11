@@ -219,8 +219,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Sammen skal vi koble kj\xF8kkenet ditt med \xE5 ta vare p\xE5 planeten.\\n\\nLag     
-      mat, l\xE6r, del og dyrk hver dag.\\n\\nKlar til \xE5 starte?"
+    m_Localized: "Sammen skal vi koble kj\xF8kkenet ditt med \xE5 ta vare p\xE5 planeten.\n\nLag
+      mat, l\xE6r, del og voks hver dag.\n\nKlar til \xE5 komme i gang?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -276,7 +276,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: '''Denne handlingen vil slette alle dataene dine permanent fra plattformen.'
+    m_Localized: 'Denne handlingen vil slette alle dataene dine permanent fra plattformen.
+
+
+      Er
+      du sikker?'
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
