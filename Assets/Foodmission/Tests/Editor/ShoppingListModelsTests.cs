@@ -9,11 +9,12 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ShoppingList_Roundtrips_Via_JsonUtility()
         {
-            var list = new ShoppingList { id = "list-1", title = "Weekly Shop", description = "For Monday", userGroupId = "" };
+            var list = new ShoppingList { id = "list-1", userId = "user-1", title = "Weekly Shop" };
             string json = JsonUtility.ToJson(list);
             var result = JsonUtility.FromJson<ShoppingList>(json);
 
             Assert.AreEqual("list-1", result.id);
+            Assert.AreEqual("user-1", result.userId);
             Assert.AreEqual("Weekly Shop", result.title);
         }
 
