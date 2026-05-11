@@ -3536,6 +3536,61 @@
     ]
   },
   {
+    "country_iso": "NO",
+    "country_name_local": "Norway",
+    "flag": "🇳🇴",
+    "regions": [
+      {
+        "region_iso": "NO-42",
+        "region_name_local": "Agder"
+      },
+      {
+        "region_iso": "NO-34",
+        "region_name_local": "Innlandet"
+      },
+      {
+        "region_iso": "NO-15",
+        "region_name_local": "Møre og Romsdal"
+      },
+      {
+        "region_iso": "NO-18",
+        "region_name_local": "Nordland"
+      },
+      {
+        "region_iso": "NO-03",
+        "region_name_local": "Oslo"
+      },
+      {
+        "region_iso": "NO-11",
+        "region_name_local": "Rogaland"
+      },
+      {
+        "region_iso": "NO-21",
+        "region_name_local": "Svalbard"
+      },
+      {
+        "region_iso": "NO-54",
+        "region_name_local": "Troms og Finnmark"
+      },
+      {
+        "region_iso": "NO-50",
+        "region_name_local": "Trøndelag"
+      },
+      {
+        "region_iso": "NO-38",
+        "region_name_local": "Vestfold og Telemark"
+      },
+      {
+        "region_iso": "NO-46",
+        "region_name_local": "Vestland"
+      },
+      {
+        "region_iso": "NO-30",
+        "region_name_local": "Viken"
+      }
+    ]
+  },
+  {
     "country_iso": "PL",
     "country_name_local": "Poland",
     "flag": "🇵🇱",
