@@ -108,7 +108,37 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25351921299611648
-    m_Localized: '''<b>FOODMISSION Terms and Conditions</b>'
+    m_Localized: '<b>FOODMISSION Terms and Conditions</b>
+
+
+      By using this application,
+      you agree to the following terms:
+
+
+      <b>1. ACCOUNT REGISTRATION</b>
+
+      You
+      must provide accurate and complete information when registering. You are responsible
+      for maintaining the confidentiality of your account credentials.
+
+
+      <b>2.
+      PRIVACY</b>
+
+      We collect and process your personal data according to our
+      Privacy Policy. This includes nutritional data, location information, and usage
+      statistics.
+
+
+      For more information, contact us at support@foodmission.eu<b>FOODMISSION
+      Terms and Conditions</b>
+
+
+      By using this application, you agree to the
+      following terms:
+
+
+      For more information, contact us at support@foodmission.eu'
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -1249,6 +1279,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7590950986030
     m_Localized: Joined group!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 319685458386944
+    m_Localized: Loading Avatar
     m_Metadata:
       m_Items: []
   references:

@@ -1243,6 +1243,10 @@ MonoBehaviour:
     m_Key: GROUP_JOINED
     m_Metadata:
       m_Items: []
+  - m_Id: 319685458386944
+    m_Key: LOADING_AVATAR
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
