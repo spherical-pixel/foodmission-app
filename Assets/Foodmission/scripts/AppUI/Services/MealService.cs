@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +27,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<PaginatedMealResponse> GetMealsAsync(
+        public async Task<(PaginatedMealResponse Result, ApiErrorResponse Error)> GetMealsAsync(
             string search = null,
             string mealCategory = null,
             string mealCourse = null,
@@ -60,7 +59,10 @@ namespace eu.foodmission.platform
                 sb.Append($"&recipeId={Uri.EscapeDataString(recipeId)}");
             }
 
-            using UnityWebRequest request = UnityWebRequest.Get(sb.ToString());
+            string url = sb.ToString();
+            Debug.Log($"[{GetType().Name}] GetMealsAsync calling: {url}");
+
+            using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
@@ -72,23 +74,26 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetMeals failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetMealsAsync"));
             }
 
-            return JsonUtility.FromJson<PaginatedMealResponse>(request.downloadHandler.text);
+            string raw = request.downloadHandler.text;
+
+            PaginatedMealResponse result = JsonUtility.FromJson<PaginatedMealResponse>(raw);
+            Debug.Log($"[{GetType().Name}] GetMealsAsync parsed: {result?.data?.Length ?? 0} meals, page {result?.page}/{result?.totalPages}");
+            return (result, null);
         }
 
-        public async Task<Meal> GetMealAsync(string id)
+        public async Task<(Meal Result, ApiErrorResponse Error)> GetMealAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
-                return null;
+                return (null, null);
             }
 
             if (_cache.TryGetValue(id, out Meal cached))
             {
-                return cached;
+                return (cached, null);
             }
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/meals/{Uri.EscapeDataString(id)}";
@@ -105,8 +110,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogWarning($"[{GetType().Name}] GetMeal {id} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetMeal {id}"));
             }
 
             Meal meal = JsonUtility.FromJson<Meal>(request.downloadHandler.text);
@@ -115,21 +119,18 @@ namespace eu.foodmission.platform
                 _cache[meal.id] = meal;
             }
 
-            return meal;
+            return (meal, null);
         }
 
-        public async Task<Meal> CreateMealAsync(CreateMealRequest request)
+        public async Task<(Meal Result, ApiErrorResponse Error)> CreateMealAsync(CreateMealRequest request)
         {
             if (request == null)
             {
                 Debug.LogError($"[{GetType().Name}] CreateMeal — request is null");
-                return null;
+                return (null, null);
             }
 
-            byte[] body = BuildBody(request.name, request.recipeId, request.calories,
-                request.proteins, request.nutritionalInfo, request.sustainabilityScore,
-                request.price, request.barcode, request.mealCategories,
-                request.mealCourse, request.dietaryPreferences);
+            byte[] body = request.ToJsonBody();
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/meals";
 
@@ -149,8 +150,7 @@ namespace eu.foodmission.platform
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] CreateMeal failed: {req.responseCode} — {req.downloadHandler?.text}");
-                return null;
+                return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] CreateMeal"));
             }
 
             Meal meal = JsonUtility.FromJson<Meal>(req.downloadHandler.text);
@@ -159,27 +159,24 @@ namespace eu.foodmission.platform
                 _cache[meal.id] = meal;
             }
 
-            return meal;
+            return (meal, null);
         }
 
-        public async Task<Meal> UpdateMealAsync(string id, UpdateMealRequest request)
+        public async Task<(Meal Result, ApiErrorResponse Error)> UpdateMealAsync(string id, UpdateMealRequest request)
         {
             if (string.IsNullOrEmpty(id))
             {
                 Debug.LogError($"[{GetType().Name}] UpdateMeal — id is null or empty");
-                return null;
+                return (null, null);
             }
 
             if (request == null)
             {
                 Debug.LogError($"[{GetType().Name}] UpdateMeal — request is null");
-                return null;
+                return (null, null);
             }
 
-            byte[] body = BuildBody(request.name, request.recipeId, request.calories,
-                request.proteins, request.nutritionalInfo, request.sustainabilityScore,
-                request.price, request.barcode, request.mealCategories,
-                request.mealCourse, request.dietaryPreferences);
+            byte[] body = request.ToJsonBody();
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/meals/{Uri.EscapeDataString(id)}";
 
@@ -195,8 +192,7 @@ namespace eu.foodmission.platform
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateMeal {id} failed: {req.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] UpdateMeal {id}"));
             }
 
             Meal meal = JsonUtility.FromJson<Meal>(req.downloadHandler.text);
@@ -205,15 +201,15 @@ namespace eu.foodmission.platform
                 _cache[meal.id] = meal;
             }
 
-            return meal;
+            return (meal, null);
         }
 
-        public async Task<bool> DeleteMealAsync(string id)
+        public async Task<(bool Success, ApiErrorResponse Error)> DeleteMealAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 Debug.LogError($"[{GetType().Name}] DeleteMeal — id is null or empty");
-                return false;
+                return (false, null);
             }
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/meals/{Uri.EscapeDataString(id)}";
@@ -232,100 +228,11 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] DeleteMeal {id} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] DeleteMeal {id}"));
             }
 
             _cache.Remove(id);
-            return true;
-        }
-
-        private static byte[] BuildBody(
-            string name,
-            string recipeId,
-            float? calories,
-            float? proteins,
-            MealNutritionalInfo nutritionalInfo,
-            float? sustainabilityScore,
-            float? price,
-            string barcode,
-            string[] mealCategories,
-            string mealCourse,
-            string[] dietaryPreferences)
-        {
-            var sb = new StringBuilder("{");
-            bool hasField = false;
-
-            void Append(string fragment) { if (hasField) sb.Append(","); sb.Append(fragment); hasField = true; }
-            string F(float v) => v.ToString("0.##", CultureInfo.InvariantCulture);
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                Append($"\"name\":\"{EscapeJson(name)}\"");
-            }
-            if (!string.IsNullOrEmpty(recipeId))
-            {
-                Append($"\"recipeId\":\"{EscapeJson(recipeId)}\"");
-            }
-            if (calories.HasValue)
-            {
-                Append($"\"calories\":{F(calories.Value)}");
-            }
-            if (proteins.HasValue)
-            {
-                Append($"\"proteins\":{F(proteins.Value)}");
-            }
-            if (nutritionalInfo != null)
-            {
-                Append($"\"nutritionalInfo\":{{\"carbs\":{F(nutritionalInfo.carbs)},\"fats\":{F(nutritionalInfo.fats)},\"sugar\":{F(nutritionalInfo.sugar)}}}");
-            }
-            if (sustainabilityScore.HasValue)
-            {
-                Append($"\"sustainabilityScore\":{F(sustainabilityScore.Value)}");
-            }
-            if (price.HasValue)
-            {
-                Append($"\"price\":{F(price.Value)}");
-            }
-            if (!string.IsNullOrEmpty(barcode))
-            {
-                Append($"\"barcode\":\"{EscapeJson(barcode)}\"");
-            }
-            if (mealCategories != null && mealCategories.Length > 0)
-            {
-                var arr = new StringBuilder("[");
-                for (int i = 0; i < mealCategories.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        arr.Append(",");
-                    }
-                    arr.Append($"\"{EscapeJson(mealCategories[i])}\"");
-                }
-                arr.Append("]");
-                Append($"\"mealCategories\":{arr}");
-            }
-            if (!string.IsNullOrEmpty(mealCourse))
-            {
-                Append($"\"mealCourse\":\"{EscapeJson(mealCourse)}\"");
-            }
-            if (dietaryPreferences != null && dietaryPreferences.Length > 0)
-            {
-                var arr = new StringBuilder("[");
-                for (int i = 0; i < dietaryPreferences.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        arr.Append(",");
-                    }
-                    arr.Append($"\"{EscapeJson(dietaryPreferences[i])}\"");
-                }
-                arr.Append("]");
-                Append($"\"dietaryPreferences\":{arr}");
-            }
-
-            sb.Append("}");
-            return Encoding.UTF8.GetBytes(sb.ToString());
+            return (true, null);
         }
 
         // uploadHandler must be assigned after construction (not in initializer) for PATCH
@@ -342,18 +249,5 @@ namespace eu.foodmission.platform
             return request;
         }
 
-        private static string EscapeJson(string s)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return s;
-            }
-            return s
-                .Replace("\\", "\\\\")
-                .Replace("\"", "\\\"")
-                .Replace("\n", "\\n")
-                .Replace("\r", "\\r")
-                .Replace("\t", "\\t");
-        }
     }
 }

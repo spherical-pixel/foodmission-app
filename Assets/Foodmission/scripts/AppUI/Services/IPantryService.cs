@@ -5,16 +5,16 @@ namespace eu.foodmission.platform
     public interface IPantryService
     {
         // Returns pantry with embedded items. Caches pantryId internally.
-        Task<Pantry> GetPantryAsync();
+        Task<(Pantry Result, ApiErrorResponse Error)> GetPantryAsync();
 
         // Refresh items only — uses cached pantryId
-        Task<PantryItem[]> GetItemsAsync();
+        Task<(PantryItem[] Result, ApiErrorResponse Error)> GetItemsAsync();
 
         // Single item by id
-        Task<PantryItem> GetItemAsync(string itemId);
+        Task<(PantryItem Result, ApiErrorResponse Error)> GetItemAsync(string itemId);
 
         // Add item — exactly one of foodId/foodCategoryId must be non-empty; the other is null
-        Task<PantryItem> AddItemAsync(
+        Task<(PantryItem Result, ApiErrorResponse Error)> AddItemAsync(
             string foodId,
             string foodCategoryId,
             float quantity,
@@ -24,14 +24,22 @@ namespace eu.foodmission.platform
             string expiryDate = null);
 
         // Update — all fields optional (PATCH semantics, pass null to skip)
-        Task<PantryItem> UpdateItemAsync(
+        Task<(PantryItem Result, ApiErrorResponse Error)> UpdateItemAsync(
             string itemId,
             float? quantity,
             string unit,
             string notes,
             string location,
-            string expiryDate);
+            string expiryDate,
+            string foodId = null,
+            string foodCategoryId = null);
 
-        Task<bool> DeleteItemAsync(string itemId);
+        Task<(bool Success, ApiErrorResponse Error)> DeleteItemAsync(string itemId);
+
+        // Get expired items for waste detection
+        Task<(ExpiredPantryItem[] Result, ApiErrorResponse Error)> GetExpiredItemsAsync();
+
+        // Batch-waste: send selected expired items to waste (returns detailed result)
+        Task<(BatchWasteResult Result, ApiErrorResponse Error)> BatchWasteAsync(BatchWasteRequest request);
     }
 }

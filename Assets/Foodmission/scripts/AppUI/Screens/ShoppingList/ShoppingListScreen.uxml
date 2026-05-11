@@ -7,13 +7,25 @@
 
     <ui:VisualElement name="root" class="fm-sl-root">
         <ui:VisualElement name="header" class="fm-sl-header">
-            <appui:Heading name="screen-title" size="L" text="Shopping Lists"/>
+            <appui:Heading name="screen-title" size="L" text="Shopping Lists">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000028)"/>
+                </Bindings>
+</appui:Heading>
         </ui:VisualElement>
-        <appui:CircularProgress name="loading-spinner" size="L" class="fm-sl-spinner"/>
         <appui:Text name="error-message" class="fm-sl-error"/>
+        <appui:Text name="empty-state" text="No shopping lists yet. Tap New List to create one." class="fm-sl-empty">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000029)"/>
+                </Bindings>
+</appui:Text>
         <ui:ScrollView name="scroll-view" class="fm-sl-scroll">
             <ui:VisualElement name="lists-container" class="fm-sl-container"/>
         </ui:ScrollView>
-        <appui:Button name="btn-new-list" title="New List" variant="Accent" class="fm-sl-new-btn"/>
+        <appui:Button name="btn-new-list" title="New List" variant="Accent" class="fm-sl-new-btn">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000030)"/>
+                </Bindings>
+</appui:Button>
     </ui:VisualElement>
 </ui:UXML>

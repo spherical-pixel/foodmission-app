@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Unity.AppUI.MVVM;
 
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -13,6 +17,14 @@ namespace eu.foodmission.platform
         private readonly IPantryService _pantryService;
         private readonly IFoodService _foodService;
         private readonly IFoodCategoryService _foodCategoryService;
+        private readonly ILocalStorageService _localStorage;
+
+        private const string CacheKey = "pantry_cache";
+        private const string FoodSearchCachePrefix = "food_search_";
+        private const string CategorySearchCachePrefix = "category_search_";
+        private static readonly TimeSpan CacheTtl = TimeSpan.FromHours(24);
+
+        private List<PantryItemView> _allItems = new();
 
         [ObservableProperty]
         private List<PantryItemView> m_Items = new();
@@ -22,6 +34,9 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private string m_ErrorMessage = "";
+
+        [ObservableProperty]
+        private string m_FilterText = "";
 
         [ObservableProperty]
         private List<OpenFoodFactsProduct> m_FoodSearchResults = new();
@@ -35,16 +50,42 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool m_IsSearching;
 
+        [ObservableProperty]
+        private ExpiredPantryItem[] m_ExpiredItems = Array.Empty<ExpiredPantryItem>();
+
+        [ObservableProperty]
+        private int m_ExpiredItemCount;
+
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
+        public bool HasExpiredItems => ExpiredItemCount > 0;
+
         public PantryViewModel(
             IStoreService storeService,
             IPantryService pantryService,
             IFoodService foodService,
-            IFoodCategoryService foodCategoryService)
+            IFoodCategoryService foodCategoryService,
+            ILocalStorageService localStorage)
             : base(storeService)
         {
             _pantryService = pantryService;
             _foodService = foodService;
             _foodCategoryService = foodCategoryService;
+            _localStorage = localStorage;
+        }
+
+        public void ApplyFilter()
+        {
+            if (string.IsNullOrWhiteSpace(FilterText))
+            {
+                Items = new List<PantryItemView>(_allItems);
+            }
+            else
+            {
+                string filter = FilterText.ToLowerInvariant();
+                Items = _allItems.Where(v => v.DisplayName.ToLowerInvariant().Contains(filter)).ToList();
+            }
         }
 
         public async Task LoadAsync()
@@ -52,43 +93,84 @@ namespace eu.foodmission.platform
             IsLoading = true;
             ErrorMessage = "";
 
-            Pantry pantry = await _pantryService.GetPantryAsync();
+            var pantryTask = _pantryService.GetPantryAsync();
+            var expiredTask = _pantryService.GetExpiredItemsAsync();
 
-            IsLoading = false;
+            await Task.WhenAll(pantryTask, expiredTask);
 
-            if (pantry == null)
+            var (expiredItems, _) = expiredTask.Result;
+            ExpiredItems = expiredItems ?? Array.Empty<ExpiredPantryItem>();
+            ExpiredItemCount = ExpiredItems.Length;
+
+            var (pantry, pantryError) = pantryTask.Result;
+
+            if (pantryError != null)
             {
-                ErrorMessage = "Error loading pantry";
-                Items = new List<PantryItemView>();
+                PantryItem[] cached = _localStorage.GetValue<PantryItemArrayWrapper>(CacheKey)?.items;
+                if (cached != null && cached.Length > 0)
+                {
+                    PantryItemView[] enriched = await EnrichItemsAsync(cached);
+                    _allItems = new List<PantryItemView>(enriched);
+                }
+                else
+                {
+                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_LOADING_PANTRY");
+                    _allItems = new List<PantryItemView>();
+                }
+
+                ErrorDetail = pantryError;
+
+                IsLoading = false;
+                ApplyFilter();
                 return;
             }
 
             PantryItem[] rawItems = pantry.items ?? System.Array.Empty<PantryItem>();
-            Task<PantryItemView>[] tasks = new Task<PantryItemView>[rawItems.Length];
 
-            for (int i = 0; i < rawItems.Length; i++)
+            _localStorage.SetValue(CacheKey, new PantryItemArrayWrapper { items = rawItems });
+
+            PantryItemView[] enrichedItems = await EnrichItemsAsync(rawItems);
+            _allItems = new List<PantryItemView>(enrichedItems);
+            ErrorDetail = null;
+            IsLoading = false;
+            ApplyFilter();
+        }
+
+        private async Task<PantryItemView[]> EnrichItemsAsync(PantryItem[] items)
+        {
+            Task<PantryItemView>[] tasks = new Task<PantryItemView>[items.Length];
+
+            for (int i = 0; i < items.Length; i++)
             {
-                tasks[i] = EnrichItemAsync(rawItems[i]);
+                tasks[i] = EnrichItemAsync(items[i]);
             }
 
-            PantryItemView[] enriched = await Task.WhenAll(tasks);
-            Items = new List<PantryItemView>(enriched);
+            return await Task.WhenAll(tasks);
+        }
+
+        private void SaveCacheFromAllItems()
+        {
+            PantryItem[] raw = new PantryItem[_allItems.Count];
+            for (int i = 0; i < _allItems.Count; i++)
+                raw[i] = _allItems[i].Item;
+
+            _localStorage.SetValue(CacheKey, new PantryItemArrayWrapper { items = raw });
         }
 
         private async Task<PantryItemView> EnrichItemAsync(PantryItem item)
         {
-            string displayName = "Unknown";
+            string displayName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             string imageUrl = null;
 
             if (!string.IsNullOrEmpty(item.foodId))
             {
-                FoodItem food = await _foodService.GetFoodByIdAsync(item.foodId);
-                displayName = food?.name ?? "Unknown";
+                var (food, _) = await _foodService.GetFoodByIdAsync(item.foodId);
+                displayName = food?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
             else if (!string.IsNullOrEmpty(item.foodCategoryId))
             {
-                FoodCategory category = await _foodCategoryService.GetCategoryByIdAsync(item.foodCategoryId);
-                displayName = category?.name ?? "Unknown";
+                var (category, _) = await _foodCategoryService.GetCategoryByIdAsync(item.foodCategoryId);
+                displayName = category?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
             return new PantryItemView
@@ -109,13 +191,37 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            string normalized = query.Trim().ToLowerInvariant();
+            string cacheKey = FoodSearchCachePrefix + normalized;
+
+            CachedFoodSearch cached = _localStorage.GetValue<CachedFoodSearch>(cacheKey);
+            if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
+            {
+                FoodSearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                return;
+            }
+
             IsSearching = true;
-            OpenFoodFactsSearchResponse response = await _foodService.SearchOpenFoodFactsAsync(query);
+            var (response, _) = await _foodService.SearchOpenFoodFactsAsync(query);
             IsSearching = false;
 
-            FoodSearchResults = response?.products != null
-                ? new List<OpenFoodFactsProduct>(response.products)
-                : new List<OpenFoodFactsProduct>();
+            if (response?.products != null)
+            {
+                _localStorage.SetValue(cacheKey, new CachedFoodSearch
+                {
+                    data = response,
+                    cachedAtTicks = DateTime.UtcNow.Ticks
+                });
+                FoodSearchResults = new List<OpenFoodFactsProduct>(response.products);
+            }
+            else if (cached?.data?.products != null)
+            {
+                FoodSearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+            }
+            else
+            {
+                FoodSearchResults = new List<OpenFoodFactsProduct>();
+            }
         }
 
         public async Task SearchCategoriesAsync(string query)
@@ -128,55 +234,156 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            string normalized = query.Trim().ToLowerInvariant();
+            string cacheKey = CategorySearchCachePrefix + normalized;
+
+            CachedCategorySearch cached = _localStorage.GetValue<CachedCategorySearch>(cacheKey);
+            if (cached?.data?.data != null && IsCacheFresh(cached.cachedAtTicks))
+            {
+                CategorySearchResults = new List<FoodCategory>(cached.data.data);
+                return;
+            }
+
             IsSearching = true;
-            PaginatedFoodCategoryResponse response = await _foodCategoryService.SearchCategoriesAsync(query);
+            var (response, _) = await _foodCategoryService.SearchCategoriesAsync(query);
             IsSearching = false;
 
-            CategorySearchResults = response?.data != null
-                ? new List<FoodCategory>(response.data)
-                : new List<FoodCategory>();
+            if (response?.data != null)
+            {
+                _localStorage.SetValue(cacheKey, new CachedCategorySearch
+                {
+                    data = response,
+                    cachedAtTicks = DateTime.UtcNow.Ticks
+                });
+                CategorySearchResults = new List<FoodCategory>(response.data);
+            }
+            else if (cached?.data?.data != null)
+            {
+                CategorySearchResults = new List<FoodCategory>(cached.data.data);
+            }
+            else
+            {
+                CategorySearchResults = new List<FoodCategory>();
+            }
+        }
+
+        private static bool IsCacheFresh(long cachedAtTicks)
+        {
+            if (cachedAtTicks <= 0) return false;
+            DateTime cachedAt = new DateTime(cachedAtTicks, DateTimeKind.Utc);
+            return (DateTime.UtcNow - cachedAt) < CacheTtl;
         }
 
         public async Task ImportAndAddFoodItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
         {
-            FoodItem foodItem = await _foodService.ImportFromBarcodeAsync(product.barcode);
+            var (foodItem, foodError) = await _foodService.ImportFromBarcodeAsync(product.barcode);
 
-            if (foodItem == null)
+            if (foodError != null)
             {
-                Debug.LogError($"[{GetType().Name}] Failed to import food: {product.name}");
+                if (foodError.statusCode == 400)
+                {
+                    var (existingFood, findError) = await _foodService.FindByBarcodeAsync(product.barcode);
+                    if (findError == null && existingFood != null)
+                    {
+                        foodItem = existingFood;
+                        foodError = null;
+                    }
+                }
+            }
+
+            if (foodError != null)
+            {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FAILED_IMPORT_FOOD", new object[] { product.name });
+                ErrorDetail = foodError;
                 return;
             }
 
-            PantryItem added = await _pantryService.AddItemAsync(foodItem.id, null, quantity, unit);
+            var (added, addError) = await _pantryService.AddItemAsync(foodItem.id, null, quantity, unit);
 
-            if (added != null)
+            if (addError != null)
+            {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_ITEM_MISSING");
+                ErrorDetail = addError;
+            }
+            else
             {
                 FoodSearchResults = new List<OpenFoodFactsProduct>();
                 SearchQuery = "";
+                ErrorMessage = "";
+                ErrorDetail = null;
                 await LoadAsync();
             }
         }
 
         public async Task AddCategoryItemAsync(FoodCategory category, float quantity, string unit)
         {
-            PantryItem added = await _pantryService.AddItemAsync(null, category.id, quantity, unit);
+            var (added, error) = await _pantryService.AddItemAsync(null, category.id, quantity, unit);
 
-            if (added != null)
+            if (error != null)
+            {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_CATEGORY_ITEM");
+                ErrorDetail = error;
+            }
+            else
             {
                 CategorySearchResults = new List<FoodCategory>();
                 SearchQuery = "";
+                ErrorMessage = "";
+                ErrorDetail = null;
                 await LoadAsync();
             }
         }
 
         public async Task DeleteItemAsync(string itemId)
         {
-            bool success = await _pantryService.DeleteItemAsync(itemId);
+            var (success, error) = await _pantryService.DeleteItemAsync(itemId);
 
-            if (success)
+            if (error != null)
             {
-                Items = new List<PantryItemView>(Items.FindAll(v => v.Item.id != itemId));
+                ErrorDetail = error;
             }
+            else
+            {
+                _allItems = new List<PantryItemView>(_allItems.FindAll(v => v.Item.id != itemId));
+                ApplyFilter();
+
+                SaveCacheFromAllItems();
+
+                ExpiredItems = ExpiredItems.Where(e => e.pantryItemId != itemId).ToArray();
+                ExpiredItemCount = ExpiredItems.Length;
+
+                ErrorDetail = null;
+            }
+        }
+
+        public async Task<int> BatchWasteExpiredAsync()
+        {
+            if (ExpiredItems.Length == 0) return 0;
+
+            var batchRequest = new BatchWasteRequest
+            {
+                items = ExpiredItems.Select(e => new BatchWasteItemRequest
+                {
+                    pantryItemId = e.pantryItemId,
+                    quantity = e.quantity,
+                    unit = e.unit,
+                    notes = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "AUTO_DETECTED_EXPIRED")
+                }).ToArray()
+            };
+
+            var (result, error) = await _pantryService.BatchWasteAsync(batchRequest);
+
+            if (error != null)
+            {
+                ErrorDetail = error;
+            }
+
+            ExpiredItems = Array.Empty<ExpiredPantryItem>();
+            ExpiredItemCount = 0;
+
+            await LoadAsync();
+
+            return result?.successCount ?? 0;
         }
     }
 }

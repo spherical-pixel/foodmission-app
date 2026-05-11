@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="GroupsScreen.uss"/>
+
+    <ui:VisualElement name="root" class="fm-grp-root">
+        <ui:VisualElement name="header" class="fm-grp-header">
+            <appui:Heading name="screen-title" size="L" text="Groups">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986000)"/>
+                </Bindings>
+</appui:Heading>
+        </ui:VisualElement>
+        <appui:Text name="error-message" class="fm-grp-error"/>
+        <appui:Text name="empty-state" text="No groups yet." class="fm-grp-empty">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986001)"/>
+                </Bindings>
+</appui:Text>
+        <ui:ScrollView name="scroll-view" class="fm-grp-scroll">
+            <ui:VisualElement name="groups-container" class="fm-grp-container"/>
+        </ui:ScrollView>
+        <appui:Button name="btn-fab" title="+" variant="Accent" size="L" class="fm-grp-fab"/>
+    </ui:VisualElement>
+</ui:UXML>

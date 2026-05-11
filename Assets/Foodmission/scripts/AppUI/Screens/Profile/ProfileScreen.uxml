@@ -22,7 +22,11 @@
         <ui:VisualElement name="menu-item-profile" style="flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; margin-bottom: 8px;">
             <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="✏️" style="margin-right: 12px; font-size: 20px;"/>
-                <appui:Text name="label-profile" text="Edit Profile"/>
+                <appui:Text name="label-profile" text="Edit Profile">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39906068652875776)"/>
+                </Bindings>
+</appui:Text>
             </ui:VisualElement>
             <appui:Icon name="icon-caret-profile" icon="caret-right"/>
         </ui:VisualElement>
@@ -30,7 +34,11 @@
         <ui:VisualElement name="menu-item-avatar" style="flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; margin-bottom: 8px;">
             <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="🎨" style="margin-right: 12px; font-size: 20px;"/>
-                <appui:Text name="label-avatar" text="Edit Avatar"/>
+                <appui:Text name="label-avatar" text="Edit Avatar">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39906079050555392)"/>
+                </Bindings>
+</appui:Text>
             </ui:VisualElement>
             <appui:Icon name="icon-caret-avatar" icon="caret-right"/>
         </ui:VisualElement>
@@ -38,7 +46,11 @@
         <ui:VisualElement name="menu-item-groups" style="flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; margin-bottom: 8px;">
             <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="👥" style="margin-right: 12px; font-size: 20px;"/>
-                <appui:Text name="label-groups" text="Manage Groups"/>
+                <appui:Text name="label-groups" text="Manage Groups">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39906116358889472)"/>
+                </Bindings>
+</appui:Text>
             </ui:VisualElement>
             <appui:Icon name="icon-caret-groups" icon="caret-right"/>
         </ui:VisualElement>
@@ -46,7 +58,11 @@
         <ui:VisualElement name="menu-item-badges" style="flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; margin-bottom: 8px;">
             <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="🏅" style="margin-right: 12px; font-size: 20px;"/>
-                <appui:Text name="label-badges" text="View Badges"/>
+                <appui:Text name="label-badges" text="View Badges">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39906149892349952)"/>
+                </Bindings>
+</appui:Text>
             </ui:VisualElement>
             <appui:Icon name="icon-caret-badges" icon="caret-right"/>
         </ui:VisualElement>
@@ -54,7 +70,11 @@
         <ui:VisualElement name="menu-item-settings" style="flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; padding-bottom: 12px; margin-bottom: 8px;">
             <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="⚙️" style="margin-right: 12px; font-size: 20px;"/>
-                <appui:Text name="label-settings" text="Settings"/>
+                <appui:Text name="label-settings" text="Settings">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39898680386379776)"/>
+                </Bindings>
+</appui:Text>
             </ui:VisualElement>
             <appui:Icon name="icon-caret-settings" icon="caret-right"/>
         </ui:VisualElement>
@@ -65,7 +85,11 @@
         <ui:VisualElement name="menu-item-logout" style="flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; padding-bottom: 12px;">
             <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="🚪" style="margin-right: 12px; font-size: 20px;"/>
-                <appui:Text name="label-logout" text="Log out"/>
+                <appui:Text name="label-logout" text="Log out">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39906262576521216)"/>
+                </Bindings>
+</appui:Text>
             </ui:VisualElement>
             <appui:Icon name="icon-caret-logout" icon="caret-right"/>
         </ui:VisualElement>

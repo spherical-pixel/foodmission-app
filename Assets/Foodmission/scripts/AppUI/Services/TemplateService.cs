@@ -25,7 +25,19 @@ namespace eu.foodmission.platform
             TemplateAddresses.CompleteWelcome,
             TemplateAddresses.ShoppingList,
             TemplateAddresses.ShoppingListDetail,
-            TemplateAddresses.EditProfile
+            TemplateAddresses.EditProfile,
+            TemplateAddresses.AvatarEditor,
+            TemplateAddresses.Pantry,
+            TemplateAddresses.PantryItemDetail,
+            TemplateAddresses.MealLog,
+            TemplateAddresses.MealLogAdd,
+            TemplateAddresses.FoodWaste,
+            TemplateAddresses.FoodWasteAdd,
+            TemplateAddresses.Groups,
+            TemplateAddresses.GroupsCreate,
+            TemplateAddresses.GroupsJoin,
+            TemplateAddresses.GroupDetail,
+            TemplateAddresses.OnboardingGroups,
         };
 
         public async Task PreloadAllAsync()

@@ -1,0 +1,44 @@
+.fm-fwa-root {
+    flex-grow: 1;
+    padding: 16px;
+}
+.fm-fwa-header {
+    margin-bottom: 16px;
+}
+.fm-fwa-spinner {
+    align-self: center;
+    display: none;
+}
+.fm-fwa-spinner.visible {
+    display: flex;
+}
+.fm-fwa-error {
+    color: rgb(var(--fm-color-error));
+    display: none;
+    margin-bottom: 8px;
+}
+.fm-fwa-error.visible {
+    display: flex;
+}
+.fm-fwa-section {
+    margin-bottom: 16px;
+}
+.fm-fwa-dropdown {
+    margin-top: 4px;
+}
+.fm-fwa-field {
+    margin-top: 4px;
+}
+.fm-fwa-food-name {
+    font-size: 14px;
+    margin-top: 4px;
+    color: rgb(var(--fm-color-text-secondary));
+}
+.fm-fwa-max-qty {
+    font-size: 12px;
+    margin-top: 2px;
+    color: rgb(var(--fm-color-text-secondary));
+}
+.fm-fwa-save-btn {
+    margin-top: 16px;
+}

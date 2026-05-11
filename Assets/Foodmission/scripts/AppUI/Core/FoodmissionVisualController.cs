@@ -136,7 +136,11 @@ namespace eu.foodmission.platform
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_editprofile);
             });
-            AddDrawerButton(menuContainer, "🧑‍💻 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","EDIT_AVATAR"), null);
+            AddDrawerButton(menuContainer, "🧑‍💻 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","EDIT_AVATAR"), () =>
+            {
+                _profileDrawer.Close();
+                _cachedNavController?.Navigate(Actions.go_to_avatar_editor);
+            });
 
             AddDrawerButton(menuContainer, "👥 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MANAGE_GROUPS"), () =>
             {
@@ -160,7 +164,7 @@ namespace eu.foodmission.platform
             dangerContainer.style.paddingTop = 4;
             content.Add(dangerContainer);
 
-            AddDrawerButton(dangerContainer, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","DELETE_ACCOUNT"), async () =>
+            AddDrawerButton(dangerContainer, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","DELETE_ACCOUNT"), () =>
             {
                 FMDialog.ShowAlert(
                     App.current?.rootVisualElement,
@@ -358,7 +362,11 @@ namespace eu.foodmission.platform
 
             // Phase 3 — disabled
             AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","RECIPE_BOOK"),      null);
-            AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","FOOD_WASTE"),       null);
+            AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","FOOD_WASTE"),       () =>
+            {
+                CloseMenuDrawer();
+                _cachedNavController?.Navigate(Actions.go_to_foodwaste);
+            });
             AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","KNOWLEDGE"),        null);
             AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","GLOBAL_COMMUNITY"), null);
             AddMenuItem(container, "🗺️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MAP"),              null);

@@ -27,7 +27,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<PaginatedFoodCategoryResponse> SearchCategoriesAsync(
+        public async Task<(PaginatedFoodCategoryResponse Result, ApiErrorResponse Error)> SearchCategoriesAsync(
             string query = null, string foodGroup = null, int page = 1, int pageSize = 20)
         {
             var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/food-categories?page={page}&limit={pageSize}");
@@ -55,22 +55,22 @@ namespace eu.foodmission.platform
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError($"[{GetType().Name}] SearchCategories failed: {request.responseCode} {request.error}");
-                return null;
+                return (null, null);
             }
 
-            return JsonUtility.FromJson<PaginatedFoodCategoryResponse>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<PaginatedFoodCategoryResponse>(request.downloadHandler.text), null);
         }
 
-        public async Task<FoodCategory> GetCategoryByIdAsync(string id)
+        public async Task<(FoodCategory Result, ApiErrorResponse Error)> GetCategoryByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
-                return null;
+                return (null, null);
             }
 
             if (_cache.TryGetValue(id, out FoodCategory cached))
             {
-                return cached;
+                return (cached, null);
             }
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-categories/{Uri.EscapeDataString(id)}";
@@ -88,7 +88,7 @@ namespace eu.foodmission.platform
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogWarning($"[{GetType().Name}] GetCategoryById {id} failed: {request.responseCode}");
-                return null;
+                return (null, null);
             }
 
             FoodCategory category = JsonUtility.FromJson<FoodCategory>(request.downloadHandler.text);
@@ -98,10 +98,10 @@ namespace eu.foodmission.platform
                 _cache[category.id] = category;
             }
 
-            return category;
+            return (category, null);
         }
 
-        public async Task<string[]> GetFoodGroupsAsync()
+        public async Task<(string[] Result, ApiErrorResponse Error)> GetFoodGroupsAsync()
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-categories/food-groups";
 
@@ -118,12 +118,12 @@ namespace eu.foodmission.platform
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError($"[{GetType().Name}] GetFoodGroups failed: {request.responseCode}");
-                return null;
+                return (null, null);
             }
 
             string json = request.downloadHandler.text;
             StringArrayWrapper wrapper = JsonUtility.FromJson<StringArrayWrapper>("{\"items\":" + json + "}");
-            return wrapper?.items;
+            return (wrapper?.items, null);
         }
     }
 

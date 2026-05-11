@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -20,6 +22,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_ErrorMessage = "";
 
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
         // Exposed so the Screen can read the joined group id for navigation with args
         public UserGroup JoinedGroup { get; private set; }
 
@@ -33,23 +38,25 @@ namespace eu.foodmission.platform
         {
             if (string.IsNullOrWhiteSpace(InviteCode))
             {
-                ErrorMessage = "Invite code is required";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "INVITE_CODE_REQUIRED");
                 return;
             }
 
             IsJoining = true;
             ErrorMessage = "";
 
-            UserGroup group = await _groupService.JoinGroupAsync(InviteCode);
+            var (group, error) = await _groupService.JoinGroupAsync(InviteCode);
 
             IsJoining = false;
 
-            if (group == null)
+            if (error != null)
             {
-                ErrorMessage = "Invalid invite code or already a member";
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "INVALID_INVITE_CODE");
                 return;
             }
 
+            ErrorDetail = null;
             JoinedGroup = group;
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.groups_to_detail);
         }

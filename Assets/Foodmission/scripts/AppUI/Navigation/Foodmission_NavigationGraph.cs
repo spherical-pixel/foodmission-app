@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit it directly.
-// Date: 2026-05-05 17:14:04
+// Date: 2026-05-05 18:04:11
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +30,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string pantry_to_item_detail = "pantry_to_item_detail";
         public const string go_to_auth = "go_to_auth";
         public const string go_to_editprofile = "go_to_editprofile";
+        public const string go_to_avatar_editor = "go_to_avatar_editor";
     }
     public static partial class Destinations
     {
@@ -54,6 +55,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string pantry = "Pantry";
         public const string pantryitemdetail = "PantryItemDetail";
         public const string editprofile = "EditProfile";
+        public const string new_destination = "new_destination";
     }
     public static partial class Graphs
     {

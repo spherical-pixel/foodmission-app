@@ -2,6 +2,7 @@ using System;
 using Unity.AppUI.Core;
 using Unity.AppUI.UI;
 
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Components
@@ -113,6 +114,20 @@ namespace eu.foodmission.platform.Components
             }
 
             modal.Show();
+        }
+
+        public static void ShowApiError(
+            VisualElement anchor,
+            string title,
+            ApiErrorResponse error,
+            string okLabel = "@UI:TXT_OK")
+        {
+            string message = error?.message ?? "Unknown error";
+            string traceInfo = !string.IsNullOrEmpty(error?.traceId)
+                ? $"\n\nTrace ID: {error.traceId}"
+                : "";
+
+            ShowAlert(anchor, title, $"{message}{traceInfo}", AlertSemantic.Error, okLabel);
         }
 
         public static void ShowCustom(

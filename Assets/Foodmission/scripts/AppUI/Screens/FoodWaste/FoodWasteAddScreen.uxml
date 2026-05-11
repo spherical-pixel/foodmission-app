@@ -1,0 +1,72 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="FoodWasteAddScreen.uss"/>
+    <ui:VisualElement name="root" class="fm-fwa-root">
+        <ui:VisualElement name="header" class="fm-fwa-header">
+            <appui:Heading name="screen-title" size="L" text="Log Waste">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000013)"/>
+                </Bindings>
+</appui:Heading>
+        </ui:VisualElement>
+        <appui:Text name="error-message" class="fm-fwa-error"/>
+        <ui:VisualElement name="pantry-selector" class="fm-fwa-section">
+            <appui:Heading name="pantry-selector-label" size="S" text="Pantry item">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000014)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:Dropdown name="pantry-item-dropdown" class="fm-fwa-dropdown"/>
+            <appui:Text name="food-name-label" class="fm-fwa-food-name"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="quantity-section" class="fm-fwa-section">
+            <appui:Heading name="quantity-label" size="S" text="Quantity wasted">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000015)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:FloatField name="quantity-field" class="fm-fwa-field"/>
+            <appui:Text name="max-quantity-label" class="fm-fwa-max-qty"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="reason-section" class="fm-fwa-section">
+            <appui:Heading name="reason-label" size="S" text="Waste reason">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000016)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:Dropdown name="waste-reason-dropdown" class="fm-fwa-dropdown"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="method-section" class="fm-fwa-section">
+            <appui:Heading name="method-label" size="S" text="Detection method">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000017)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:Dropdown name="detection-method-dropdown" class="fm-fwa-dropdown"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="cost-section" class="fm-fwa-section">
+            <appui:Heading name="cost-label" size="S" text="Estimated cost (€)">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000018)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:FloatField name="cost-field" class="fm-fwa-field"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="notes-section" class="fm-fwa-section">
+            <appui:Heading name="notes-label" size="S" text="Notes">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000019)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:TextField name="notes-field" class="fm-fwa-field" multiline="true"/>
+        </ui:VisualElement>
+        <appui:Button name="btn-save" title="Save" variant="Accent" class="fm-fwa-save-btn">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000020)"/>
+                </Bindings>
+</appui:Button>
+    </ui:VisualElement>
+</ui:UXML>

@@ -8,6 +8,8 @@ using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.Redux;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -225,18 +227,18 @@ namespace eu.foodmission.platform
         public async Task LoadCatalogDataAsync()
         {
             IsLoading = true;
-            LoadingText = "Cargando datos...";
+            LoadingText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_DATA");
 
             try
             {
                 AppState state = _storeService.GetAppState();
                 string lang = state.lang ?? "es";
 
-                CatalogData data = await _catalogService.LoadStartupAsync(lang);
+                var (data, _) = await _catalogService.LoadStartupAsync(lang);
 
                 if (data == null)
                 {
-                    ErrorMessage = "No se pudieron cargar los datos. Intenta de nuevo.";
+                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_LOAD_DATA");
                     ShowErrorRequest?.Invoke(ErrorMessage);
                     IsLoading = false;
                     return;
@@ -258,7 +260,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[EditProfileViewModel] LoadCatalogDataAsync exception: {ex.Message}");
-                ErrorMessage = "Error al cargar los datos.";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_LOADING_DATA");
                 ShowErrorRequest?.Invoke(ErrorMessage);
             }
             finally
@@ -414,14 +416,14 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
-                    ErrorMessage = "No se pudo guardar el perfil. Intenta de nuevo.";
+                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SAVE_PROFILE");
                     ShowErrorRequest?.Invoke(ErrorMessage);
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[EditProfileViewModel] SubmitAsync exception: {ex.Message}");
-                ErrorMessage = "Error inesperado. Intenta de nuevo.";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNEXPECTED_ERROR");
                 ShowErrorRequest?.Invoke(ErrorMessage);
             }
             finally

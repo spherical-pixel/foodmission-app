@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -21,6 +23,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_ErrorMessage = "";
 
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
         public GroupsViewModel(IStoreService storeService, IGroupService groupService)
             : base(storeService)
         {
@@ -32,36 +37,48 @@ namespace eu.foodmission.platform
             IsLoading = true;
             ErrorMessage = "";
 
-            UserGroup[] groups = await _groupService.GetGroupsAsync();
+            var (groups, error) = await _groupService.GetGroupsAsync();
 
             IsLoading = false;
 
-            if (groups == null)
+            if (error != null)
             {
-                ErrorMessage = "Error loading groups";
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_LOADING_GROUPS");
                 Groups = new List<UserGroup>();
                 return;
             }
 
+            ErrorDetail = null;
             Groups = new List<UserGroup>(groups);
         }
 
         public async Task LeaveGroupAsync(string groupId)
         {
-            bool success = await _groupService.LeaveGroupAsync(groupId);
+            var (success, error) = await _groupService.LeaveGroupAsync(groupId);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 Groups = new List<UserGroup>(Groups.FindAll(g => g.id != groupId));
             }
         }
 
         public async Task DeleteGroupAsync(string groupId)
         {
-            bool success = await _groupService.DeleteGroupAsync(groupId);
+            var (success, error) = await _groupService.DeleteGroupAsync(groupId);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 Groups = new List<UserGroup>(Groups.FindAll(g => g.id != groupId));
             }
         }

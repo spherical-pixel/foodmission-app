@@ -1,0 +1,75 @@
+.fm-gc-root {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.fm-gc-header {
+    margin-bottom: 16px;
+}
+
+.fm-gc-spinner {
+    align-self: center;
+    margin-top: 32px;
+    display: none;
+}
+
+.fm-gc-spinner.visible {
+    display: flex;
+}
+
+.fm-gc-error {
+    color: var(--appui-color-danger-500);
+    align-self: center;
+    margin-top: 16px;
+    display: none;
+}
+
+.fm-gc-error.visible {
+    display: flex;
+}
+
+.fm-gc-form {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.fm-gc-field-row {
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.fm-gc-field-label {
+    font-size: var(--appui-font-sizes-body-sm);
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.fm-gc-field {
+    margin-top: 4px;
+}
+
+.fm-gc-footer {
+    margin-top: auto;
+    padding-bottom: 16px;
+}
+
+.fm-gc-create-btn {
+    align-self: stretch;
+}
+
+.fm-gc-loading-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.47);
+    display: none;
+}
+
+.fm-gc-loading-overlay.visible {
+    display: flex;
+}

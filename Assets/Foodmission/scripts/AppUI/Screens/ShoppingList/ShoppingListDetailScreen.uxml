@@ -8,12 +8,27 @@
     <ui:VisualElement name="root" class="fm-sld-root fm-plain-background">
 
         <ui:VisualElement name="toolbar" class="fm-sld-toolbar">
-            <appui:Heading name="list-title" size="M" text="Shopping List" class="fm-sld-title"/>
-            <appui:Button name="btn-clear-checked" title="Clear done" size="S"/>
+            <appui:Heading name="list-title" size="M" text="Shopping List" class="fm-sld-title">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000031)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:Text name="progress-label" class="fm-sld-progress"/>
+            <appui:Button name="btn-clear-checked" title="Clear done" size="S">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000032)"/>
+                </Bindings>
+</appui:Button>
         </ui:VisualElement>
 
-        <appui:CircularProgress name="loading-spinner" size="L" class="fm-sl-spinner"/>
+        <appui:Text name="error-message" class="fm-sl-error"/>
 
+        <appui:TextField name="filter-field" placeholder="Filter items..." class="fm-sld-filter"/>
+        <appui:Text name="empty-state" text="No items yet. Tap + to add items." class="fm-sld-empty">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000033)"/>
+                </Bindings>
+</appui:Text>
         <ui:ScrollView name="scroll-view" class="fm-sl-scroll">
             <ui:VisualElement name="items-container" class="fm-sl-container"/>
         </ui:ScrollView>

@@ -1,0 +1,105 @@
+.fm-pid-root {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.fm-pid-toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    margin-bottom: 4px;
+}
+
+.fm-pid-title {
+    flex-grow: 1;
+}
+
+.fm-pid-spinner {
+    align-self: center;
+    margin-top: 32px;
+    display: none;
+}
+
+.fm-pid-spinner.visible {
+    display: flex;
+}
+
+.fm-pid-error {
+    color: var(--appui-color-danger-500);
+    align-self: center;
+    margin-top: 16px;
+    display: none;
+}
+
+.fm-pid-error.visible {
+    display: flex;
+}
+
+.fm-pid-form {
+    flex-direction: column;
+    padding: 16px;
+}
+
+.fm-pid-label {
+    font-size: var(--appui-font-sizes-body-lg);
+    font-weight: var(--appui-font-weight-bold);
+    margin-bottom: 16px;
+}
+
+.fm-pid-field-row {
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.fm-pid-field-label {
+    font-size: var(--appui-font-sizes-body-sm);
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.fm-pid-dropdown {
+    align-self: stretch;
+}
+
+.fm-pid-expiry-quick {
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.fm-pid-expiry-quick .fm-pid-quick-btn {
+    font-size: var(--appui-font-sizes-body-sm);
+    flex-grow: 1;
+}
+
+.fm-pid-actions {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px;
+    gap: 12px;
+}
+
+.fm-pid-btn-save {
+    flex-grow: 1;
+}
+
+.fm-pid-btn-delete {
+    flex-grow: 1;
+}
+
+.fm-pid-loading-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.47);
+    display: none;
+}
+
+.fm-pid-loading-overlay.visible {
+    display: flex;
+}

@@ -462,7 +462,7 @@ namespace eu.foodmission.platform
         {
             if (HasAcceptedTerms != CheckboxState.Checked)
             {
-                TermsHelpTextValue = "You must accept the Terms and Conditions";
+                TermsHelpTextValue = "@UI:ACCEPT_TERMS";
                 TermsHelpTextVariant = HelpTextVariant.Destructive;
                 return false;
             }

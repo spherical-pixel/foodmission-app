@@ -43,9 +43,17 @@
                 <ui:VisualElement name="back" class="fm-calories-background">
                     <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="Calories,Carbon footprint,Amount spent,Proteins" stepper-selected-index="0" class="fm-primary-color fm-arrow-stepper-narrow fm-calories-stepper"/>
                     <ui:VisualElement name="Info" class="fm-calories-center">
-                        <appui:Text text="Calories consumed" class="fm-primary-color centered-text autosize-body-lg"/>
+                        <appui:Text text="Calories consumed" class="fm-primary-color centered-text autosize-body-lg">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000052)"/>
+                </Bindings>
+</appui:Text>
                         <appui:Text text="1502" name="calories-consumed" class="centered-text autosize-font-sizes-1100 bold-text fm-calories-consumed-value"/>
-                        <appui:Text text="Left" class="fm-primary-color centered-text autosize-body-lg"/>
+                        <appui:Text text="Left" class="fm-primary-color centered-text autosize-body-lg">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000053)"/>
+                </Bindings>
+</appui:Text>
                         <appui:Text text="498" name="calories-left" class="centered-text fm-primary-color autosize-font-sizes-1100 bold-text"/>
                     </ui:VisualElement>
                 </ui:VisualElement>

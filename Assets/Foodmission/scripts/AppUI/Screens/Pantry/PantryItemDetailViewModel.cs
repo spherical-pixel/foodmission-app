@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -39,6 +41,12 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool m_IsSaving;
 
+        [ObservableProperty]
+        private string m_ErrorMessage = "";
+
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
         public PantryItemDetailViewModel(
             IStoreService storeService,
             IPantryService pantryService,
@@ -61,32 +69,36 @@ namespace eu.foodmission.platform
             _itemId = itemId;
             IsLoading = true;
 
-            PantryItem item = await _pantryService.GetItemAsync(_itemId);
+            var (item, error) = await _pantryService.GetItemAsync(_itemId);
 
             IsLoading = false;
 
-            if (item == null)
+            if (error != null)
             {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_LOAD_ITEM");
+                ErrorDetail = error;
                 return;
             }
 
+            ErrorMessage = "";
+            ErrorDetail = null;
             Quantity = item.quantity;
             Unit = item.unit ?? "";
             Notes = item.notes ?? "";
             Location = item.location ?? "";
             ExpiryDate = item.expiryDate ?? "";
 
-            string displayName = "Unknown";
+            string displayName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
 
             if (!string.IsNullOrEmpty(item.foodId))
             {
-                FoodItem food = await _foodService.GetFoodByIdAsync(item.foodId);
-                displayName = food?.name ?? "Unknown";
+                var (food, _) = await _foodService.GetFoodByIdAsync(item.foodId);
+                displayName = food?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
             else if (!string.IsNullOrEmpty(item.foodCategoryId))
             {
-                FoodCategory category = await _foodCategoryService.GetCategoryByIdAsync(item.foodCategoryId);
-                displayName = category?.name ?? "Unknown";
+                var (category, _) = await _foodCategoryService.GetCategoryByIdAsync(item.foodCategoryId);
+                displayName = category?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
             ItemView = new PantryItemView
@@ -106,28 +118,43 @@ namespace eu.foodmission.platform
 
             IsSaving = true;
 
-            PantryItem updated = await _pantryService.UpdateItemAsync(
+            PantryItem item = ItemView?.Item;
+            var (updated, error) = await _pantryService.UpdateItemAsync(
                 _itemId,
                 Quantity,
                 Unit,
                 Notes,
                 Location,
-                ExpiryDate);
+                ExpiryDate,
+                item?.foodId,
+                item?.foodCategoryId);
 
             IsSaving = false;
 
-            if (updated != null)
+            if (error != null)
             {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SAVE_ITEM");
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorMessage = "";
+                ErrorDetail = null;
                 await LoadAsync(_itemId);
             }
         }
 
         public async Task DeleteAsync()
         {
-            bool success = await _pantryService.DeleteItemAsync(_itemId);
+            var (success, error) = await _pantryService.DeleteItemAsync(_itemId);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_pantry);
             }
         }

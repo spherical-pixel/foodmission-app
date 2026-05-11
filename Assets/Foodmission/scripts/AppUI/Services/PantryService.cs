@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -26,20 +26,21 @@ namespace eu.foodmission.platform
             }
         }
 
-        private async Task<string> EnsurePantryIdAsync()
+        private async Task<(string PantryId, ApiErrorResponse Error)> EnsurePantryIdAsync()
         {
             if (!string.IsNullOrEmpty(_pantryId))
             {
-                return _pantryId;
+                return (_pantryId, null);
             }
 
-            Pantry pantry = await GetPantryAsync();
-            return pantry?.id ?? string.Empty;
+            var (pantry, error) = await GetPantryAsync();
+            if (error != null) return (null, error);
+            return (pantry?.id, null);
         }
 
         // ── Pantry ─────────────────────────────────────────────────────────
 
-        public async Task<Pantry> GetPantryAsync()
+        public async Task<(Pantry Result, ApiErrorResponse Error)> GetPantryAsync()
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry";
 
@@ -55,8 +56,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetPantry failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetPantry"));
             }
 
             Pantry pantry = JsonUtility.FromJson<Pantry>(request.downloadHandler.text);
@@ -66,19 +66,20 @@ namespace eu.foodmission.platform
                 _pantryId = pantry.id;
             }
 
-            return pantry;
+            return (pantry, null);
         }
 
         // ── Items ──────────────────────────────────────────────────────────
 
-        public async Task<PantryItem[]> GetItemsAsync()
+        public async Task<(PantryItem[] Result, ApiErrorResponse Error)> GetItemsAsync()
         {
-            string pantryId = await EnsurePantryIdAsync();
+            var (pantryId, error) = await EnsurePantryIdAsync();
+            if (error != null) return (null, error);
 
             if (string.IsNullOrEmpty(pantryId))
             {
                 Debug.LogWarning($"[{GetType().Name}] GetItems — pantryId unavailable");
-                return null;
+                return (null, null);
             }
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items";
@@ -95,23 +96,22 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetItems failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetItems"));
             }
 
-            string json = request.downloadHandler.text;
-            PantryItemArrayWrapper wrapper = JsonUtility.FromJson<PantryItemArrayWrapper>("{\"items\":" + json + "}");
-            return wrapper?.items;
+            PantryItemListResponse response = JsonUtility.FromJson<PantryItemListResponse>(request.downloadHandler.text);
+            return (response?.data, null);
         }
 
-        public async Task<PantryItem> GetItemAsync(string itemId)
+        public async Task<(PantryItem Result, ApiErrorResponse Error)> GetItemAsync(string itemId)
         {
-            string pantryId = await EnsurePantryIdAsync();
+            var (pantryId, error) = await EnsurePantryIdAsync();
+            if (error != null) return (null, error);
 
             if (string.IsNullOrEmpty(pantryId))
             {
                 Debug.LogWarning($"[{GetType().Name}] GetItems — pantryId unavailable");
-                return null;
+                return (null, null);
             }
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/{Uri.EscapeDataString(itemId)}";
@@ -128,14 +128,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetItem {itemId} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetItem {itemId}"));
             }
 
-            return JsonUtility.FromJson<PantryItem>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<PantryItem>(request.downloadHandler.text), null);
         }
 
-        public async Task<PantryItem> AddItemAsync(
+        public async Task<(PantryItem Result, ApiErrorResponse Error)> AddItemAsync(
             string foodId,
             string foodCategoryId,
             float quantity,
@@ -144,55 +143,43 @@ namespace eu.foodmission.platform
             string location = null,
             string expiryDate = null)
         {
-            string pantryId = await EnsurePantryIdAsync();
+            var (pantryId, error) = await EnsurePantryIdAsync();
+            if (error != null) return (null, error);
 
             if (string.IsNullOrEmpty(pantryId))
             {
                 Debug.LogWarning($"[{GetType().Name}] GetItems — pantryId unavailable");
-                return null;
+                return (null, null);
             }
 
-            var sb = new StringBuilder("{");
+            string effectiveExpiryDate = !string.IsNullOrEmpty(expiryDate)
+                ? expiryDate
+                : DateTime.UtcNow.AddDays(30).ToString("yyyy-MM-dd");
 
-            if (!string.IsNullOrEmpty(foodId))
+            AddPantryItemRequest body = new()
             {
-                sb.AppendFormat("\"foodId\":\"{0}\"", EscapeJson(foodId));
-            }
-            else
-            {
-                sb.AppendFormat("\"foodCategoryId\":\"{0}\"", EscapeJson(foodCategoryId));
-            }
-
-            sb.AppendFormat(",\"quantity\":{0}", quantity.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture));
-            sb.AppendFormat(",\"unit\":\"{0}\"", unit ?? "PIECES");
-
-            if (!string.IsNullOrEmpty(notes))
-            {
-                sb.AppendFormat(",\"notes\":\"{0}\"", EscapeJson(notes));
-            }
-
-            if (!string.IsNullOrEmpty(location))
-            {
-                sb.AppendFormat(",\"location\":\"{0}\"", EscapeJson(location));
-            }
-
-            if (!string.IsNullOrEmpty(expiryDate))
-            {
-                sb.AppendFormat(",\"expiryDate\":\"{0}\"", EscapeJson(expiryDate));
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                foodId = foodId,
+                foodCategoryId = foodCategoryId,
+                quantity = quantity,
+                unit = unit ?? "PIECES",
+                notes = notes,
+                location = location,
+                expiryDate = effectiveExpiryDate
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items";
 
+            byte[] bodyJson = body.ToJsonBody();
+
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(bodyJson) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
+
+            Debug.Log($"[{GetType().Name}] AddItemAsync: Sending request to {url} with body: {Encoding.UTF8.GetString(bodyJson)}");
 
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
             while (!op.isDone)
@@ -202,73 +189,47 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] AddItem failed: {request.responseCode} — {request.downloadHandler?.text}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] AddItem"));
             }
 
-            return JsonUtility.FromJson<PantryItem>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<PantryItem>(request.downloadHandler.text), null);
         }
 
-        public async Task<PantryItem> UpdateItemAsync(
+        public async Task<(PantryItem Result, ApiErrorResponse Error)> UpdateItemAsync(
             string itemId,
             float? quantity,
             string unit,
             string notes,
             string location,
-            string expiryDate)
+            string expiryDate,
+            string foodId = null,
+            string foodCategoryId = null)
         {
-            string pantryId = await EnsurePantryIdAsync();
+            var (pantryId, error) = await EnsurePantryIdAsync();
+            if (error != null) return (null, error);
 
             if (string.IsNullOrEmpty(pantryId))
             {
                 Debug.LogWarning($"[{GetType().Name}] GetItems — pantryId unavailable");
-                return null;
+                return (null, null);
             }
 
-            var sb = new StringBuilder("{");
-            bool hasField = false;
-
-            if (quantity.HasValue)
+            UpdatePantryItemRequest body = new()
             {
-                sb.AppendFormat("\"quantity\":{0}", quantity.Value.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture));
-                hasField = true;
-            }
-
-            if (!string.IsNullOrEmpty(unit))
-            {
-                if (hasField) sb.Append(",");
-                sb.AppendFormat("\"unit\":\"{0}\"", EscapeJson(unit));
-                hasField = true;
-            }
-
-            if (notes != null)
-            {
-                if (hasField) sb.Append(",");
-                sb.AppendFormat("\"notes\":\"{0}\"", EscapeJson(notes));
-                hasField = true;
-            }
-
-            if (location != null)
-            {
-                if (hasField) sb.Append(",");
-                sb.AppendFormat("\"location\":\"{0}\"", EscapeJson(location));
-                hasField = true;
-            }
-
-            if (!string.IsNullOrEmpty(expiryDate))
-            {
-                if (hasField) sb.Append(",");
-                sb.AppendFormat("\"expiryDate\":\"{0}\"", EscapeJson(expiryDate));
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                quantity = quantity,
+                unit = unit,
+                notes = notes,
+                location = location,
+                expiryDate = expiryDate,
+                foodId = foodId,
+                foodCategoryId = foodCategoryId
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/{Uri.EscapeDataString(itemId)}";
 
             using UnityWebRequest request = new UnityWebRequest(url, "PATCH")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -282,21 +243,75 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateItem {itemId} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] UpdateItem {itemId}"));
             }
 
-            return JsonUtility.FromJson<PantryItem>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<PantryItem>(request.downloadHandler.text), null);
         }
 
-        public async Task<bool> DeleteItemAsync(string itemId)
+        public async Task<(ExpiredPantryItem[] Result, ApiErrorResponse Error)> GetExpiredItemsAsync()
         {
-            string pantryId = await EnsurePantryIdAsync();
+            var (pantryId, error) = await EnsurePantryIdAsync();
+            if (error != null) return (null, error);
+            if (string.IsNullOrEmpty(pantryId)) return (null, null);
+
+            string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/expired";
+
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+            request.SetRequestHeader("Authorization", AuthHeader);
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone) await Task.Yield();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetExpiredItemsAsync"));
+            }
+
+            ExpiredPantryItemArrayWrapper wrapper = JsonUtility.FromJson<ExpiredPantryItemArrayWrapper>(
+                "{\"items\":" + request.downloadHandler.text + "}");
+            return (wrapper?.items, null);
+        }
+
+        public async Task<(BatchWasteResult Result, ApiErrorResponse Error)> BatchWasteAsync(BatchWasteRequest request)
+        {
+            if (request?.items == null || request.items.Length == 0) return (null, null);
+
+            var (pantryId, error) = await EnsurePantryIdAsync();
+            if (error != null) return (null, error);
+            if (string.IsNullOrEmpty(pantryId)) return (null, null);
+
+            string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/batch-waste";
+
+            using UnityWebRequest req = new UnityWebRequest(url, "POST")
+            {
+                uploadHandler = new UploadHandlerRaw(request.ToJsonBody()) { contentType = "application/json" },
+                downloadHandler = new DownloadHandlerBuffer()
+            };
+            req.SetRequestHeader("Authorization", AuthHeader);
+            req.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = req.SendWebRequest();
+            while (!op.isDone) await Task.Yield();
+
+            if (req.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] BatchWasteAsync"));
+            }
+
+            return (JsonUtility.FromJson<BatchWasteResult>(req.downloadHandler.text), null);
+        }
+
+        public async Task<(bool Success, ApiErrorResponse Error)> DeleteItemAsync(string itemId)
+        {
+            var (pantryId, error) = await EnsurePantryIdAsync();
+            if (error != null) return (false, error);
 
             if (string.IsNullOrEmpty(pantryId))
             {
                 Debug.LogWarning($"[{GetType().Name}] GetItems — pantryId unavailable");
-                return false;
+                return (false, null);
             }
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/{Uri.EscapeDataString(itemId)}";
@@ -315,26 +330,81 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] DeleteItem {itemId} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] DeleteItem {itemId}"));
             }
 
-            return true;
+            return (true, null);
         }
 
-        private static string EscapeJson(string s)
+        // ── Request DTOs ───────────────────────────────────────────────────
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class AddPantryItemRequest
         {
-            if (string.IsNullOrEmpty(s))
-            {
-                return s;
-            }
+            [JsonProperty("foodId")]
+            public string foodId;
 
-            return s
-                .Replace("\\", "\\\\")
-                .Replace("\"", "\\\"")
-                .Replace("\n", "\\n")
-                .Replace("\r", "\\r")
-                .Replace("\t", "\\t");
+            [JsonProperty("foodCategoryId")]
+            public string foodCategoryId;
+
+            [JsonProperty("quantity")]
+            public float quantity;
+
+            [JsonProperty("unit")]
+            public string unit;
+
+            [JsonProperty("notes")]
+            public string notes;
+
+            [JsonProperty("location")]
+            public string location;
+
+            [JsonProperty("expiryDate")]
+            public string expiryDate;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
         }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class UpdatePantryItemRequest
+        {
+            [JsonProperty("quantity")]
+            public float? quantity;
+
+            [JsonProperty("unit")]
+            public string unit;
+
+            [JsonProperty("notes")]
+            public string notes;
+
+            [JsonProperty("location")]
+            public string location;
+
+            [JsonProperty("expiryDate")]
+            public string expiryDate;
+
+            [JsonProperty("foodId")]
+            public string foodId;
+
+            [JsonProperty("foodCategoryId")]
+            public string foodCategoryId;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
     }
 }

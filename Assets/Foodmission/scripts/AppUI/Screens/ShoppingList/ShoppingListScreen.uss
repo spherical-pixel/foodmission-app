@@ -52,6 +52,17 @@
     font-size: var(--appui-font-sizes-body-lg);
 }
 
+.fm-sl-empty {
+    align-self: center;
+    margin-top: 48px;
+    opacity: 0.5;
+    display: none;
+}
+
+.fm-sl-empty.visible {
+    display: flex;
+}
+
 .fm-sl-new-btn {
     margin-top: 8px;
     align-self: stretch;

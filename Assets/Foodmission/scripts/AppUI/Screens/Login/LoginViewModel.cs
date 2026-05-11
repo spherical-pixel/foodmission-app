@@ -197,7 +197,7 @@ namespace eu.foodmission.platform
                 catch (Exception ex)
                 {
                     Debug.LogError($"[{GetType().Name}] Login exception: {ex.Message}");
-                    ShowErrorRequest?.Invoke("Login failed. Please try again.");
+                    ShowErrorRequest?.Invoke("@UI:LOGIN_FAILED");
                     IsLoading = DisplayStyle.None;
                 }
             }

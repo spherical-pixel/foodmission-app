@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -27,7 +27,7 @@ namespace eu.foodmission.platform
 
         // ── Lists ──────────────────────────────────────────────────────────
 
-        public async Task<ShoppingList[]> GetListsAsync()
+        public async Task<(ShoppingList[] Result, ApiErrorResponse Error)> GetListsAsync()
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists";
 
@@ -43,38 +43,26 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetLists failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetLists"));
             }
 
             string json = request.downloadHandler.text;
             ShoppingListPagedResponse response = JsonUtility.FromJson<ShoppingListPagedResponse>(json);
-            return response?.data;
+            return (response?.data, null);
         }
 
-        public async Task<ShoppingList> CreateListAsync(string name, string description = null, string groupId = null)
+        public async Task<(ShoppingList Result, ApiErrorResponse Error)> CreateListAsync(string name)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"title\":\"{0}\"", EscapeJson(name));
-
-            if (!string.IsNullOrEmpty(description))
+            CreateShoppingListRequest body = new()
             {
-                sb.AppendFormat(",\"description\":\"{0}\"", EscapeJson(description));
-            }
-
-            if (!string.IsNullOrEmpty(groupId))
-            {
-                sb.AppendFormat(",\"userGroupId\":\"{0}\"", EscapeJson(groupId));
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                title = name
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists";
 
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -88,29 +76,22 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] CreateList failed: {request.responseCode} — {request.downloadHandler?.text}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] CreateList"));
             }
 
-            return JsonUtility.FromJson<ShoppingList>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<ShoppingList>(request.downloadHandler.text), null);
         }
 
-        public async Task<bool> UpdateListAsync(string id, string name, string description = null)
+        public async Task<(bool Success, ApiErrorResponse Error)> UpdateListAsync(string id, string name)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"title\":\"{0}\"", EscapeJson(name));
-
-            if (!string.IsNullOrEmpty(description))
+            UpdateShoppingListRequest body = new()
             {
-                sb.AppendFormat(",\"description\":\"{0}\"", EscapeJson(description));
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                title = name
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(id)}";
 
-            using UnityWebRequest request = MakePatchRequest(url, body);
+            using UnityWebRequest request = MakePatchRequest(url, body.ToJsonBody());
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
@@ -122,14 +103,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateList {id} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] UpdateList {id}"));
             }
 
-            return true;
+            return (true, null);
         }
 
-        public async Task<bool> DeleteListAsync(string id)
+        public async Task<(bool Success, ApiErrorResponse Error)> DeleteListAsync(string id)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(id)}";
 
@@ -147,16 +127,15 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] DeleteList {id} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] DeleteList {id}"));
             }
 
-            return true;
+            return (true, null);
         }
 
         // ── Items ──────────────────────────────────────────────────────────
 
-        public async Task<ShoppingListItem[]> GetItemsAsync(string listId)
+        public async Task<(ShoppingListItem[] Result, ApiErrorResponse Error)> GetItemsAsync(string listId)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items";
 
@@ -172,35 +151,30 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetItems for list {listId} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetItems for list {listId}"));
             }
 
             string json = request.downloadHandler.text;
             ShoppingListItemPagedResponse response = JsonUtility.FromJson<ShoppingListItemPagedResponse>(json);
-            return response?.data;
+            return (response?.data, null);
         }
 
-        public async Task<ShoppingListItem> AddItemAsync(string listId, string foodId, float quantity, string unit = "PIECES", string notes = null)
+        public async Task<(ShoppingListItem Result, ApiErrorResponse Error)> AddItemAsync(string listId, string foodId, float quantity, string unit = "PIECES", string notes = null, bool? checkedState = null)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"foodId\":\"{0}\"", EscapeJson(foodId));
-            sb.AppendFormat(",\"quantity\":{0}", quantity.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture));
-            sb.AppendFormat(",\"unit\":\"{0}\"", unit ?? "PIECES");
-
-            if (!string.IsNullOrEmpty(notes))
+            AddShoppingListItemRequest body = new()
             {
-                sb.AppendFormat(",\"notes\":\"{0}\"", EscapeJson(notes));
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                foodId = foodId,
+                quantity = quantity,
+                unit = unit ?? "PIECES",
+                notes = notes,
+                @checked = checkedState
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items";
 
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -214,50 +188,25 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] AddItem failed: {request.responseCode} — {request.downloadHandler?.text}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] AddItem"));
             }
 
-            return JsonUtility.FromJson<ShoppingListItem>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<ShoppingListItem>(request.downloadHandler.text), null);
         }
 
-        public async Task<ShoppingListItem> UpdateItemAsync(string listId, string itemId, float? quantity, string unit, string notes, bool? isChecked)
+        public async Task<(ShoppingListItem Result, ApiErrorResponse Error)> UpdateItemAsync(string listId, string itemId, float? quantity, string unit, string notes, bool? isChecked)
         {
-            var sb = new StringBuilder("{");
-            bool hasField = false;
-
-            if (quantity.HasValue)
+            UpdateShoppingListItemRequest body = new()
             {
-                sb.AppendFormat("\"quantity\":{0}", quantity.Value.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture));
-                hasField = true;
-            }
-
-            if (!string.IsNullOrEmpty(unit))
-            {
-                if (hasField) sb.Append(",");
-                sb.AppendFormat("\"unit\":\"{0}\"", unit);
-                hasField = true;
-            }
-
-            if (notes != null)
-            {
-                if (hasField) sb.Append(",");
-                sb.AppendFormat("\"notes\":\"{0}\"", EscapeJson(notes));
-                hasField = true;
-            }
-
-            if (isChecked.HasValue)
-            {
-                if (hasField) sb.Append(",");
-                sb.AppendFormat("\"checked\":{0}", isChecked.Value ? "true" : "false");
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                quantity = quantity,
+                unit = unit,
+                notes = notes,
+                isChecked = isChecked
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items/{Uri.EscapeDataString(itemId)}";
 
-            using UnityWebRequest request = MakePatchRequest(url, body);
+            using UnityWebRequest request = MakePatchRequest(url, body.ToJsonBody());
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
@@ -269,38 +218,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateItem {itemId} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] UpdateItem {itemId}"));
             }
 
-            return JsonUtility.FromJson<ShoppingListItem>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<ShoppingListItem>(request.downloadHandler.text), null);
         }
 
-        public async Task<ShoppingListItem> ToggleItemCheckedAsync(string listId, string itemId)
-        {
-            string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items/{Uri.EscapeDataString(itemId)}/toggle-checked";
-
-            using UnityWebRequest request = new UnityWebRequest(url, "PATCH");
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Accept", "application/json");
-            request.SetRequestHeader("Authorization", AuthHeader);
-
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-            {
-                await Task.Yield();
-            }
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"[{GetType().Name}] ToggleItem {itemId} failed: {request.responseCode} — {request.downloadHandler?.text}");
-                return null;
-            }
-
-            return JsonUtility.FromJson<ShoppingListItem>(request.downloadHandler.text);
-        }
-
-        public async Task<bool> DeleteItemAsync(string listId, string itemId)
+        public async Task<(bool Success, ApiErrorResponse Error)> DeleteItemAsync(string listId, string itemId)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items/{Uri.EscapeDataString(itemId)}";
 
@@ -318,14 +242,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] DeleteItem {itemId} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] DeleteItem {itemId}"));
             }
 
-            return true;
+            return (true, null);
         }
 
-        public async Task<bool> ClearCheckedItemsAsync(string listId)
+        public async Task<(bool Success, ApiErrorResponse Error)> ClearCheckedItemsAsync(string listId)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/shopping-lists/{Uri.EscapeDataString(listId)}/items/clear-checked";
 
@@ -343,16 +266,14 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] ClearChecked {listId} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] ClearChecked {listId}"));
             }
 
-            return true;
+            return (true, null);
         }
 
         // uploadHandler must be assigned after construction (not in initializer) for PATCH
         // to work correctly with NestJS — matches the pattern used in AuthService.SendPatchRequest.
-        // For bodyless PATCH (e.g. toggle-checked), omit uploadHandler entirely.
         private static UnityWebRequest MakePatchRequest(string url, byte[] body)
         {
             UnityWebRequest request = new UnityWebRequest(url, "PATCH");
@@ -367,19 +288,91 @@ namespace eu.foodmission.platform
             return request;
         }
 
-        private static string EscapeJson(string s)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return s;
-            }
+        // ── Request DTOs ───────────────────────────────────────────────────
 
-            return s
-                .Replace("\\", "\\\\")
-                .Replace("\"", "\\\"")
-                .Replace("\n", "\\n")
-                .Replace("\r", "\\r")
-                .Replace("\t", "\\t");
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class CreateShoppingListRequest
+        {
+            [JsonProperty("title")]
+            public string title;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class UpdateShoppingListRequest
+        {
+            [JsonProperty("title")]
+            public string title;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class AddShoppingListItemRequest
+        {
+            [JsonProperty("foodId")]
+            public string foodId;
+
+            [JsonProperty("quantity")]
+            public float quantity;
+
+            [JsonProperty("unit")]
+            public string unit;
+
+            [JsonProperty("notes")]
+            public string notes;
+
+            [JsonProperty("checked")]
+            public bool? @checked;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class UpdateShoppingListItemRequest
+        {
+            [JsonProperty("quantity")]
+            public float? quantity;
+
+            [JsonProperty("unit")]
+            public string unit;
+
+            [JsonProperty("notes")]
+            public string notes;
+
+            [JsonProperty("checked")]
+            public bool? isChecked;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
         }
     }
 }

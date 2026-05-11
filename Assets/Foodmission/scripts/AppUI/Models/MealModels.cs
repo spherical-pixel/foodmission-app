@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using Newtonsoft.Json;
 
 using UnityEngine;
 
@@ -42,34 +44,93 @@ namespace eu.foodmission.platform
         public int totalPages;
     }
 
-    // Outgoing request models — not deserialized by JsonUtility, plain C# classes
     public class CreateMealRequest
     {
+        [JsonProperty("name")]
         public string name;
+
+        [JsonProperty("recipeId")]
         public string recipeId;
+
+        [JsonProperty("calories")]
         public float? calories;
+
+        [JsonProperty("proteins")]
         public float? proteins;
+
+        [JsonProperty("nutritionalInfo")]
         public MealNutritionalInfo nutritionalInfo;
+
+        [JsonProperty("sustainabilityScore")]
         public float? sustainabilityScore;
+
+        [JsonProperty("price")]
         public float? price;
+
+        [JsonProperty("barcode")]
         public string barcode;
+
+        [JsonProperty("mealCategories")]
         public string[] mealCategories;
+
+        [JsonProperty("mealCourse")]
         public string mealCourse;
+
+        [JsonProperty("dietaryPreferences")]
         public string[] dietaryPreferences;
+
+        public byte[] ToJsonBody()
+        {
+            string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            return Encoding.UTF8.GetBytes(json);
+        }
     }
 
     public class UpdateMealRequest
     {
+        [JsonProperty("name")]
         public string name;
+
+        [JsonProperty("recipeId")]
         public string recipeId;
+
+        [JsonProperty("calories")]
         public float? calories;
+
+        [JsonProperty("proteins")]
         public float? proteins;
+
+        [JsonProperty("nutritionalInfo")]
         public MealNutritionalInfo nutritionalInfo;
+
+        [JsonProperty("sustainabilityScore")]
         public float? sustainabilityScore;
+
+        [JsonProperty("price")]
         public float? price;
+
+        [JsonProperty("barcode")]
         public string barcode;
+
+        [JsonProperty("mealCategories")]
         public string[] mealCategories;
+
+        [JsonProperty("mealCourse")]
         public string mealCourse;
+
+        [JsonProperty("dietaryPreferences")]
         public string[] dietaryPreferences;
+
+        public byte[] ToJsonBody()
+        {
+            string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            return Encoding.UTF8.GetBytes(json);
+        }
     }
 }

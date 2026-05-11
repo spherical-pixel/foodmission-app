@@ -8,9 +8,8 @@ namespace eu.foodmission.platform
     public class ShoppingList
     {
         public string id;
+        public string userId;
         public string title;
-        public string description;
-        public string userGroupId;
     }
 
     [Serializable]

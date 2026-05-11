@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -27,7 +27,7 @@ namespace eu.foodmission.platform
 
         // ── Groups CRUD ────────────────────────────────────────────────────
 
-        public async Task<UserGroup[]> GetGroupsAsync()
+        public async Task<(UserGroup[] Result, ApiErrorResponse Error)> GetGroupsAsync()
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups";
 
@@ -43,16 +43,15 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetGroups failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetGroups"));
             }
 
             string json = request.downloadHandler.text;
             UserGroupArrayWrapper wrapper = JsonUtility.FromJson<UserGroupArrayWrapper>("{\"items\":" + json + "}");
-            return wrapper?.items;
+            return (wrapper?.items, null);
         }
 
-        public async Task<UserGroup> GetGroupAsync(string id)
+        public async Task<(UserGroup Result, ApiErrorResponse Error)> GetGroupAsync(string id)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(id)}";
 
@@ -68,31 +67,25 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetGroup {id} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetGroup {id}"));
             }
 
-            return JsonUtility.FromJson<UserGroup>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<UserGroup>(request.downloadHandler.text), null);
         }
 
-        public async Task<UserGroup> CreateGroupAsync(string name, string description = null)
+        public async Task<(UserGroup Result, ApiErrorResponse Error)> CreateGroupAsync(string name, string description = null)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"name\":\"{0}\"", EscapeJson(name));
-
-            if (!string.IsNullOrEmpty(description))
+            CreateGroupRequest body = new()
             {
-                sb.AppendFormat(",\"description\":\"{0}\"", EscapeJson(description));
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                name = name,
+                description = description
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups";
 
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -106,31 +99,25 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] CreateGroup failed: {request.responseCode} — {request.downloadHandler?.text}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] CreateGroup"));
             }
 
-            return JsonUtility.FromJson<UserGroup>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<UserGroup>(request.downloadHandler.text), null);
         }
 
-        public async Task<bool> UpdateGroupAsync(string id, string name, string description = null)
+        public async Task<(bool Success, ApiErrorResponse Error)> UpdateGroupAsync(string id, string name, string description = null)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"name\":\"{0}\"", EscapeJson(name));
-
-            if (!string.IsNullOrEmpty(description))
+            UpdateGroupRequest body = new()
             {
-                sb.AppendFormat(",\"description\":\"{0}\"", EscapeJson(description));
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                name = name,
+                description = description
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(id)}";
 
             using UnityWebRequest request = new UnityWebRequest(url, "PATCH")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -144,14 +131,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateGroup {id} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] UpdateGroup {id}"));
             }
 
-            return true;
+            return (true, null);
         }
 
-        public async Task<bool> DeleteGroupAsync(string id)
+        public async Task<(bool Success, ApiErrorResponse Error)> DeleteGroupAsync(string id)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(id)}";
 
@@ -169,27 +155,23 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] DeleteGroup {id} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] DeleteGroup {id}"));
             }
 
-            return true;
+            return (true, null);
         }
 
         // ── Join / Leave ───────────────────────────────────────────────────
 
-        public async Task<UserGroup> JoinGroupAsync(string inviteCode)
+        public async Task<(UserGroup Result, ApiErrorResponse Error)> JoinGroupAsync(string inviteCode)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"inviteCode\":\"{0}\"", EscapeJson(inviteCode));
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+            JoinGroupRequest body = new() { inviteCode = inviteCode };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/join";
 
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -203,14 +185,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] JoinGroup failed: {request.responseCode} — {request.downloadHandler?.text}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] JoinGroup"));
             }
 
-            return JsonUtility.FromJson<UserGroup>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<UserGroup>(request.downloadHandler.text), null);
         }
 
-        public async Task<bool> LeaveGroupAsync(string id)
+        public async Task<(bool Success, ApiErrorResponse Error)> LeaveGroupAsync(string id)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(id)}/leave";
 
@@ -230,16 +211,15 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] LeaveGroup {id} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] LeaveGroup {id}"));
             }
 
-            return true;
+            return (true, null);
         }
 
         // ── Invite Code ────────────────────────────────────────────────────
 
-        public async Task<string> GetInviteCodeAsync(string id)
+        public async Task<(string Code, ApiErrorResponse Error)> GetInviteCodeAsync(string id)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(id)}/invite-code";
 
@@ -255,15 +235,14 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetInviteCode {id} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetInviteCode {id}"));
             }
 
             InviteCodeResponse response = JsonUtility.FromJson<InviteCodeResponse>(request.downloadHandler.text);
-            return response?.inviteCode;
+            return (response?.inviteCode, null);
         }
 
-        public async Task<string> RegenerateInviteCodeAsync(string id)
+        public async Task<(string Code, ApiErrorResponse Error)> RegenerateInviteCodeAsync(string id)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(id)}/regenerate-code";
 
@@ -283,17 +262,16 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] RegenerateInviteCode {id} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] RegenerateInviteCode {id}"));
             }
 
             InviteCodeResponse response = JsonUtility.FromJson<InviteCodeResponse>(request.downloadHandler.text);
-            return response?.inviteCode;
+            return (response?.inviteCode, null);
         }
 
         // ── Members ────────────────────────────────────────────────────────
 
-        public async Task<GroupMember[]> GetMembersAsync(string id)
+        public async Task<(GroupMember[] Result, ApiErrorResponse Error)> GetMembersAsync(string id)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(id)}/members";
 
@@ -309,33 +287,27 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] GetMembers {id} failed: {request.responseCode}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetMembers {id}"));
             }
 
             string json = request.downloadHandler.text;
             GroupMemberArrayWrapper wrapper = JsonUtility.FromJson<GroupMemberArrayWrapper>("{\"items\":" + json + "}");
-            return wrapper?.items;
+            return (wrapper?.items, null);
         }
 
-        public async Task<GroupMember> AddVirtualMemberAsync(string groupId, string name, int yearOfBirth = 0)
+        public async Task<(GroupMember Result, ApiErrorResponse Error)> AddVirtualMemberAsync(string groupId, string name, int yearOfBirth = 0)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"name\":\"{0}\"", EscapeJson(name));
-
-            if (yearOfBirth > 0)
+            AddMemberRequest body = new()
             {
-                sb.AppendFormat(",\"yearOfBirth\":{0}", yearOfBirth);
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                nickname = name,
+                yearOfBirth = yearOfBirth > 0 ? yearOfBirth : null
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(groupId)}/members";
 
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -349,31 +321,25 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] AddVirtualMember {groupId} failed: {request.responseCode} — {request.downloadHandler?.text}");
-                return null;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] AddVirtualMember {groupId}"));
             }
 
-            return JsonUtility.FromJson<GroupMember>(request.downloadHandler.text);
+            return (JsonUtility.FromJson<GroupMember>(request.downloadHandler.text), null);
         }
 
-        public async Task<bool> UpdateVirtualMemberAsync(string groupId, string memberId, string name, int yearOfBirth = 0)
+        public async Task<(bool Success, ApiErrorResponse Error)> UpdateVirtualMemberAsync(string groupId, string memberId, string name, int yearOfBirth = 0)
         {
-            var sb = new StringBuilder("{");
-            sb.AppendFormat("\"name\":\"{0}\"", EscapeJson(name));
-
-            if (yearOfBirth > 0)
+            UpdateMemberRequest body = new()
             {
-                sb.AppendFormat(",\"yearOfBirth\":{0}", yearOfBirth);
-            }
-
-            sb.Append("}");
-            byte[] body = Encoding.UTF8.GetBytes(sb.ToString());
+                nickname = name,
+                yearOfBirth = yearOfBirth > 0 ? yearOfBirth : null
+            };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(groupId)}/members/{Uri.EscapeDataString(memberId)}";
 
             using UnityWebRequest request = new UnityWebRequest(url, "PATCH")
             {
-                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body.ToJsonBody()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -387,14 +353,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] UpdateVirtualMember {memberId} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] UpdateVirtualMember {memberId}"));
             }
 
-            return true;
+            return (true, null);
         }
 
-        public async Task<bool> RemoveMemberAsync(string groupId, string memberId)
+        public async Task<(bool Success, ApiErrorResponse Error)> RemoveMemberAsync(string groupId, string memberId)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(groupId)}/members/{Uri.EscapeDataString(memberId)}";
 
@@ -412,14 +377,13 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] RemoveMember {memberId} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] RemoveMember {memberId}"));
             }
 
-            return true;
+            return (true, null);
         }
 
-        public async Task<bool> MakeAdminAsync(string groupId, string memberId)
+        public async Task<(bool Success, ApiErrorResponse Error)> MakeAdminAsync(string groupId, string memberId)
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/user-groups/{Uri.EscapeDataString(groupId)}/members/{Uri.EscapeDataString(memberId)}/make-admin";
 
@@ -439,28 +403,104 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"[{GetType().Name}] MakeAdmin {memberId} failed: {request.responseCode}");
-                return false;
+                return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] MakeAdmin {memberId}"));
             }
 
-            return true;
+            return (true, null);
         }
 
-        // ── Helpers ────────────────────────────────────────────────────────
+        // ── Request DTOs ───────────────────────────────────────────────────
 
-        private static string EscapeJson(string s)
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class CreateGroupRequest
         {
-            if (string.IsNullOrEmpty(s))
-            {
-                return s;
-            }
+            [JsonProperty("name")]
+            public string name;
 
-            return s
-                .Replace("\\", "\\\\")
-                .Replace("\"", "\\\"")
-                .Replace("\n", "\\n")
-                .Replace("\r", "\\r")
-                .Replace("\t", "\\t");
+            [JsonProperty("description")]
+            public string description;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class UpdateGroupRequest
+        {
+            [JsonProperty("name")]
+            public string name;
+
+            [JsonProperty("description")]
+            public string description;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class JoinGroupRequest
+        {
+            [JsonProperty("inviteCode")]
+            public string inviteCode;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class AddMemberRequest
+        {
+            [JsonProperty("nickname")]
+            public string nickname;
+
+            [JsonProperty("yearOfBirth")]
+            public int? yearOfBirth;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
+        }
+
+        [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
+        private class UpdateMemberRequest
+        {
+            [JsonProperty("nickname")]
+            public string nickname;
+
+            [JsonProperty("yearOfBirth")]
+            public int? yearOfBirth;
+
+            public byte[] ToJsonBody()
+            {
+                string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+                return Encoding.UTF8.GetBytes(json);
+            }
         }
     }
 }

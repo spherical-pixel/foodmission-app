@@ -1,0 +1,79 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="PantryItemDetailScreen.uss"/>
+
+    <ui:VisualElement name="root" class="fm-pid-root">
+        <ui:VisualElement name="toolbar" class="fm-pid-toolbar">
+            <appui:Heading name="item-title" size="M" text="Item" class="fm-pid-title">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000034)"/>
+                </Bindings>
+</appui:Heading>
+        </ui:VisualElement>
+
+        <appui:Text name="error-message" class="fm-pid-error"/>
+
+        <ui:VisualElement name="form" class="fm-pid-form">
+            <appui:Text name="lbl-name" class="fm-pid-label"/>
+            <ui:VisualElement name="field-quantity" class="fm-pid-field-row">
+                <appui:Text text="Quantity" class="fm-pid-field-label">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000035)"/>
+                </Bindings>
+</appui:Text>
+                <appui:FloatField name="quantity-field" value="1"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="field-unit" class="fm-pid-field-row">
+                <appui:Text text="Unit" class="fm-pid-field-label">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000036)"/>
+                </Bindings>
+</appui:Text>
+                <appui:Dropdown name="unit-field" class="fm-pid-dropdown"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="field-location" class="fm-pid-field-row">
+                <appui:Text text="Location" class="fm-pid-field-label">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000037)"/>
+                </Bindings>
+</appui:Text>
+                <appui:Dropdown name="location-field" class="fm-pid-dropdown"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="field-notes" class="fm-pid-field-row">
+                <appui:Text text="Notes" class="fm-pid-field-label">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000019)"/>
+                </Bindings>
+</appui:Text>
+                <appui:TextField name="notes-field" multiline="true"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="field-expiry" class="fm-pid-field-row">
+                <appui:Text text="Expiry date" class="fm-pid-field-label">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000038)"/>
+                </Bindings>
+</appui:Text>
+                <appui:TextField name="expiry-field" placeholder="YYYY-MM-DD"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <appui:Spacer/>
+
+        <ui:VisualElement name="actions" class="fm-pid-actions">
+            <appui:Button name="btn-save" title="Save" variant="Accent" class="fm-pid-btn-save">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000020)"/>
+                </Bindings>
+</appui:Button>
+            <appui:Button name="btn-delete" title="Delete" variant="Destructive" class="fm-pid-btn-delete">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000040)"/>
+                </Bindings>
+</appui:Button>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

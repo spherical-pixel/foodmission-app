@@ -1,4 +1,8 @@
+using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
+
+using UnityEngine;
 
 using eu.foodmission.platform.Components;
 
@@ -9,6 +13,8 @@ using Unity.AppUI.UI;
 
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -16,8 +22,8 @@ namespace eu.foodmission.platform
     class ShoppingListScreen : NavigationScreenBase<ShoppingListViewModel>
     {
         private VisualElement _listsContainer;
-        private CircularProgress _spinner;
         private Text _errorText;
+        private Text _emptyState;
         private Unity.AppUI.UI.Button _btnNewList;
 
         public ShoppingListScreen()
@@ -31,8 +37,8 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _listsContainer = contentContainer.Q<VisualElement>("lists-container");
-            _spinner = contentContainer.Q<CircularProgress>("loading-spinner");
             _errorText = contentContainer.Q<Text>("error-message");
+            _emptyState = contentContainer.Q<Text>("empty-state");
             _btnNewList = contentContainer.Q<Unity.AppUI.UI.Button>("btn-new-list");
         }
 
@@ -47,7 +53,11 @@ namespace eu.foodmission.platform
             UpdateLoadingState();
             UpdateErrorState();
 
-            _ = _viewModel.LoadListsAsync();
+            _ = _viewModel.LoadListsAsync().ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                    Debug.LogError($"[{GetType().Name}] LoadListsAsync failed: {t.Exception}");
+            }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         protected override void OnViewModelUnbinding()
@@ -70,6 +80,9 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.ErrorMessage):
                     UpdateErrorState();
                     break;
+                case nameof(_viewModel.ErrorDetail):
+                    UpdateApiErrorState();
+                    break;
             }
         }
 
@@ -77,10 +90,13 @@ namespace eu.foodmission.platform
         {
             _listsContainer.Clear();
 
-            if (_viewModel.Lists == null)
+            if (_viewModel.Lists == null || _viewModel.Lists.Count == 0)
             {
+                _emptyState?.EnableInClassList("visible", true);
                 return;
             }
+
+            _emptyState?.EnableInClassList("visible", false);
 
             foreach (ShoppingList list in _viewModel.Lists)
             {
@@ -100,15 +116,24 @@ namespace eu.foodmission.platform
                 row.RegisterCallback<ClickEvent>(_ =>
                     _navController?.Navigate(
                         Actions.shopping_list_to_detail,
-                        new[] { new Argument("listId", captured.id) }));
+                        new[]
+                        {
+                            new Argument("listId", captured.id),
+                            new Argument("listTitle", captured.title)
+                        }));
 
-                deleteBtn.clicked += () =>
+                string capturedId = captured.id;
+                string capturedTitle = captured.title;
+                deleteBtn.RegisterCallback<ClickEvent>(evt =>
+                {
+                    evt.StopPropagation();
                     FMDialog.ShowConfirm(
                         this,
-                        "Delete list",
-                        $"Delete \"{captured.title}\"?",
-                        onConfirm: async () => await _viewModel.DeleteListAsync(captured.id),
+                        "@UI:DELETE_LIST",
+                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { capturedTitle }),
+                        onConfirm: () => _ = SafeDeleteListAsync(capturedId),
                         semantic: AlertSemantic.Destructive);
+                });
 
                 _listsContainer.Add(row);
             }
@@ -116,7 +141,15 @@ namespace eu.foodmission.platform
 
         private void UpdateLoadingState()
         {
-            _spinner?.EnableInClassList("visible", _viewModel.IsLoading);
+            bool isLoading = _viewModel.IsLoading;
+            if (isLoading)
+                FMLoadingOverlay.Show(contentContainer);
+            else
+                FMLoadingOverlay.Hide(contentContainer);
+            if (_btnNewList != null)
+            {
+                _btnNewList.SetEnabled(!isLoading);
+            }
         }
 
         private void UpdateErrorState()
@@ -129,23 +162,55 @@ namespace eu.foodmission.platform
             }
         }
 
+        private void UpdateApiErrorState()
+        {
+            if (_viewModel.ErrorDetail != null)
+            {
+                FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail);
+                _viewModel.ErrorDetail = null;
+            }
+        }
+
         private void OnNewListClicked()
         {
-            var nameField = new Unity.AppUI.UI.TextField { placeholder = "List name" };
+            var nameField = new Unity.AppUI.UI.TextField { placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LIST_NAME_PLACEHOLDER") };
 
             FMDialog.ShowCustom(
                 this,
-                "New shopping list",
+                "@UI:NEW_SHOPPING_LIST",
                 nameField,
-                new FMDialogAction("Cancel", null),
-                new FMDialogAction("Create", async () =>
+                new FMDialogAction("@UI:TXT_CANCEL", null),
+                new FMDialogAction("@UI:CREATE", () =>
                 {
                     string name = nameField.value?.Trim();
                     if (!string.IsNullOrEmpty(name))
                     {
-                        await _viewModel.CreateListAsync(name);
+                        _ = SafeCreateListAsync(name);
                     }
                 }, isPrimary: true));
+        }
+        private async Task SafeDeleteListAsync(string id)
+        {
+            try
+            {
+                await _viewModel.DeleteListAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] DeleteListAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeCreateListAsync(string name)
+        {
+            try
+            {
+                await _viewModel.CreateListAsync(name);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] CreateListAsync failed: {ex.Message}");
+            }
         }
     }
 }

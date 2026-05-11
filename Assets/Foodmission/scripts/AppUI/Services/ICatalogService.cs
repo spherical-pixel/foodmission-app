@@ -13,6 +13,6 @@ namespace eu.foodmission.platform
         /// </summary>
         /// <param name="lang">Language code for localized labels (e.g. "es", "en", "ca").</param>
         /// <returns>CatalogData with all reference lists, or null on error.</returns>
-        Task<CatalogData> LoadStartupAsync(string lang);
+        Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang);
     }
 }

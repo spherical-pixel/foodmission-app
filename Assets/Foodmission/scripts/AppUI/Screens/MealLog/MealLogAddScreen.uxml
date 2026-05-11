@@ -1,0 +1,70 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="MealLogAddScreen.uss"/>
+    <ui:VisualElement name="root" class="fm-mla-root">
+        <ui:VisualElement name="header" class="fm-mla-header">
+            <appui:Heading name="screen-title" size="L" text="Log Meal">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000004)"/>
+                </Bindings>
+            </appui:Heading>
+        </ui:VisualElement>
+        <appui:Text name="error-message" class="fm-mla-error"/>
+        <ui:VisualElement name="meal-selector" class="fm-mla-section">
+            <appui:Heading name="meal-selector-label" size="S" text="Meal">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000005)"/>
+                </Bindings>
+</appui:Heading>
+            <ui:VisualElement name="search-row" class="fm-mla-search-row">
+                <appui:TextField name="meal-search-field" placeholder="Search meals..." class="fm-mla-search-field"/>
+                <appui:CircularProgress name="search-spinner" size="S" class="fm-mla-search-spinner"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="meal-search-results-scroll" class="fm-mla-search-results-scroll">
+                <ui:VisualElement name="meal-search-results" class="fm-mla-search-results"/>
+            </ui:ScrollView>
+            <appui:Button name="btn-create-meal" title="Create meal" variant="Default"
+                class="fm-mla-create-btn">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000007)"/>
+                </Bindings>
+</appui:Button>
+        </ui:VisualElement>
+        <ui:VisualElement name="type-selector" class="fm-mla-section">
+            <appui:Heading name="type-selector-label" size="S" text="Type of meal">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000008)"/>
+                </Bindings>
+</appui:Heading>
+            <appui:Dropdown name="type-of-meal-dropdown" class="fm-mla-dropdown"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="toggles" class="fm-mla-section fm-mla-toggles">
+            <appui:Toggle name="toggle-from-pantry" label="From pantry">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000009)"/>
+                </Bindings>
+</appui:Toggle>
+            <appui:Toggle name="toggle-eaten-out" label="Eaten out">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000010)"/>
+                </Bindings>
+</appui:Toggle>
+        </ui:VisualElement>
+        <ui:VisualElement name="deduction-section" class="fm-mla-section fm-mla-deduction" style="display:none">
+            <appui:Heading name="deduction-label" size="S" text="Select items to deduct from pantry">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000011)"/>
+                </Bindings>
+</appui:Heading>
+            <ui:VisualElement name="deduction-container" class="fm-mla-deduction-container"/>
+        </ui:VisualElement>
+        <appui:Button name="btn-save" title="Log Meal" variant="Accent" class="fm-mla-save-btn">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000012)"/>
+                </Bindings>
+</appui:Button>
+    </ui:VisualElement>
+</ui:UXML>

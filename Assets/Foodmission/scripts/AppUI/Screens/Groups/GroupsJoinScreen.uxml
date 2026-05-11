@@ -1,0 +1,38 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="GroupsJoinScreen.uss"/>
+
+    <ui:VisualElement name="root" class="fm-gj-root">
+        <ui:VisualElement name="header" class="fm-gj-header">
+            <appui:Heading name="screen-title" size="L" text="Join Group">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986003)"/>
+                </Bindings>
+</appui:Heading>
+        </ui:VisualElement>
+        <appui:Text name="error-message" class="fm-gj-error"/>
+
+        <ui:VisualElement name="form" class="fm-gj-form">
+            <ui:VisualElement class="fm-gj-field-row">
+                <appui:Text text="Invite Code" class="fm-gj-field-label">
+    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986007)"/>
+                    </Bindings>
+</appui:Text>
+                <appui:TextField name="invite-code-field" class="fm-gj-field"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="fm-gj-footer">
+            <appui:Button name="btn-join" title="Join Group" variant="Accent" class="fm-gj-join-btn">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986003)"/>
+                </Bindings>
+</appui:Button>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

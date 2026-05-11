@@ -1,0 +1,31 @@
+.fm-og-spinner {
+    align-self: center;
+    margin: 16px 0;
+    display: none;
+}
+
+.fm-og-spinner.visible {
+    display: flex;
+}
+
+.fm-og-error {
+    color: var(--appui-color-danger-500);
+    align-self: center;
+    margin: 8px 0;
+    display: none;
+}
+
+.fm-og-error.visible {
+    display: flex;
+}
+
+.fm-og-card {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 8px;
+}
+
+.fm-og-field {
+    margin-top: 4px;
+}

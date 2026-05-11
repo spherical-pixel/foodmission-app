@@ -1,0 +1,134 @@
+.fm-p-root {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.fm-p-header {
+    margin-bottom: 16px;
+}
+
+.fm-p-spinner {
+    align-self: center;
+    margin-top: 32px;
+    display: none;
+}
+
+.fm-p-spinner.visible {
+    display: flex;
+}
+
+.fm-p-error {
+    color: var(--appui-color-danger-500);
+    align-self: center;
+    margin-top: 16px;
+    display: none;
+}
+
+.fm-p-error.visible {
+    display: flex;
+}
+
+.fm-p-filter {
+    margin: 0 0 8px;
+}
+
+.fm-p-scroll {
+    flex-grow: 1;
+    margin-bottom: 8px;
+}
+
+.fm-p-container {
+    flex-direction: column;
+}
+
+.fm-p-item-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.2);
+}
+
+.fm-p-item-info {
+    flex-grow: 1;
+    flex-direction: column;
+    margin-left: 8px;
+}
+
+.fm-p-item-name {
+    font-size: var(--appui-font-sizes-body-md);
+}
+
+.fm-p-item-detail {
+    font-size: var(--appui-font-sizes-body-sm);
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+.fm-p-item-expiry {
+    font-size: var(--appui-font-sizes-body-sm);
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
+.fm-p-item-expiry--expired {
+    color: var(--appui-color-danger-500);
+}
+
+.fm-p-item-expiry--soon {
+    color: var(--appui-color-warning-500);
+}
+
+.fm-p-section-header {
+    font-size: var(--appui-font-sizes-body-sm);
+    font-weight: var(--appui-font-weight-bold);
+    text-transform: uppercase;
+    opacity: 0.6;
+    padding: 8px 8px 4px;
+    margin-top: 8px;
+}
+
+.fm-p-expired-banner {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--appui-color-danger-100);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+    display: none;
+}
+
+.fm-p-expired-banner.visible {
+    display: flex;
+}
+
+.fm-p-expired-banner-text {
+    flex-grow: 1;
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-color-danger-700);
+}
+
+.fm-p-expired-btn {
+    flex-shrink: 0;
+}
+
+.fm-p-empty {
+    align-self: center;
+    margin-top: 48px;
+    opacity: 0.5;
+    display: none;
+}
+
+.fm-p-empty.visible {
+    display: flex;
+}
+
+.fm-p-fab {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+}

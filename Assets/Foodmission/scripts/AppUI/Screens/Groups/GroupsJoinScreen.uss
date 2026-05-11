@@ -1,0 +1,75 @@
+.fm-gj-root {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.fm-gj-header {
+    margin-bottom: 16px;
+}
+
+.fm-gj-spinner {
+    align-self: center;
+    margin-top: 32px;
+    display: none;
+}
+
+.fm-gj-spinner.visible {
+    display: flex;
+}
+
+.fm-gj-error {
+    color: var(--appui-color-danger-500);
+    align-self: center;
+    margin-top: 16px;
+    display: none;
+}
+
+.fm-gj-error.visible {
+    display: flex;
+}
+
+.fm-gj-form {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.fm-gj-field-row {
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.fm-gj-field-label {
+    font-size: var(--appui-font-sizes-body-sm);
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.fm-gj-field {
+    margin-top: 4px;
+}
+
+.fm-gj-footer {
+    margin-top: auto;
+    padding-bottom: 16px;
+}
+
+.fm-gj-join-btn {
+    align-self: stretch;
+}
+
+.fm-gj-loading-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.47);
+    display: none;
+}
+
+.fm-gj-loading-overlay.visible {
+    display: flex;
+}

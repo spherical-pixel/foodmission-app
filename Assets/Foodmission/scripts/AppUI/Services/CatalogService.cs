@@ -19,13 +19,13 @@ namespace eu.foodmission.platform
         /// if available for the requested language, otherwise fetches from API.
         /// </summary>
         /// <param name="lang">Language code for localized labels (e.g. "es", "en").</param>
-        /// <returns>CatalogData with all reference lists, or null on error.</returns>
-        public async Task<CatalogData> LoadStartupAsync(string lang)
+        /// <returns>Tuple of CatalogData and ApiErrorResponse. Error is null on success.</returns>
+        public async Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang)
         {
             // Return cache if language matches
             if (_cachedData != null && _cachedLang == lang)
             {
-                return _cachedData;
+                return (_cachedData, null);
             }
 
             try
@@ -43,8 +43,7 @@ namespace eu.foodmission.platform
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
-                    Debug.LogError($"[{GetType().Name}] LoadStartup failed: {request.responseCode} {request.error}");
-                    return null;
+                    return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] LoadStartup"));
                 }
 
                 string responseJson = request.downloadHandler.text;
@@ -55,19 +54,19 @@ namespace eu.foodmission.platform
                 if (response?.data == null)
                 {
                     Debug.LogError($"[{GetType().Name}] Invalid catalog response");
-                    return null;
+                    return (null, null);
                 }
 
                 _cachedData = response.data;
                 _cachedLang = lang;
 
                 Debug.Log($"[{GetType().Name}] Catalog loaded successfully (lang={lang})");
-                return _cachedData;
+                return (_cachedData, null);
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] LoadStartupAsync exception: {ex.Message}");
-                return null;
+                return (null, null);
             }
         }
     }

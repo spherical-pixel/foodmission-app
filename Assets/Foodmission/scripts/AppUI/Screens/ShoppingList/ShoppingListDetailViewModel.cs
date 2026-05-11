@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Unity.AppUI.MVVM;
-
-using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -12,67 +14,141 @@ namespace eu.foodmission.platform
     {
         private readonly IShoppingListService _shoppingListService;
         private readonly IFoodService _foodService;
+        private readonly ILocalStorageService _localStorage;
+
+        private const string CacheKeyPrefix = "shoppinglist_items_";
+        private const string FoodSearchCachePrefix = "food_search_";
+        private static readonly TimeSpan CacheTtl = TimeSpan.FromHours(24);
 
         private string _currentListId;
+        private List<ShoppingListItemView> _allItems = new();
 
         [ObservableProperty]
-        private List<ShoppingListItemView> m_Items = new();
+        private List<ShoppingListItemView> _items = new();
 
         [ObservableProperty]
-        private List<OpenFoodFactsProduct> m_SearchResults = new();
+        private List<OpenFoodFactsProduct> _searchResults = new();
 
         [ObservableProperty]
-        private string m_SearchQuery = "";
+        private string _searchQuery = "";
 
         [ObservableProperty]
-        private bool m_IsLoadingItems;
+        private bool _isLoadingItems;
 
         [ObservableProperty]
-        private bool m_IsSearching;
+        private bool _isSearching;
 
         [ObservableProperty]
-        private string m_ListName = "";
+        private string _listName = "";
+
+        [ObservableProperty]
+        private string _errorMessage = "";
+
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
+        [ObservableProperty]
+        private string _filterText = "";
 
         public ShoppingListDetailViewModel(
             IStoreService storeService,
             IShoppingListService shoppingListService,
-            IFoodService foodService)
+            IFoodService foodService,
+            ILocalStorageService localStorage)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
             _foodService = foodService;
+            _localStorage = localStorage;
         }
 
-        public async Task LoadAsync(string listId)
+        public void ApplyFilter()
+        {
+            if (string.IsNullOrWhiteSpace(FilterText))
+            {
+                Items = new List<ShoppingListItemView>(_allItems);
+            }
+            else
+            {
+                string filter = FilterText.ToLowerInvariant();
+                Items = _allItems.Where(v => (v.FoodName ?? "").ToLowerInvariant().Contains(filter)).ToList();
+            }
+        }
+
+        public async Task LoadAsync(string listId, string listName = null)
         {
             if (string.IsNullOrEmpty(listId))
             {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "INVALID_SHOPPING_LIST");
                 return;
             }
 
             _currentListId = listId;
-            IsLoadingItems = true;
-
-            ShoppingListItem[] rawItems = await _shoppingListService.GetItemsAsync(_currentListId);
-
-            IsLoadingItems = false;
-
-            if (rawItems == null)
+            if (!string.IsNullOrWhiteSpace(listName))
             {
-                Items = new List<ShoppingListItemView>();
+                ListName = listName.Trim();
+            }
+
+            IsLoadingItems = true;
+            ErrorMessage = "";
+
+            var (rawItems, error) = await _shoppingListService.GetItemsAsync(_currentListId);
+
+            if (error != null)
+            {
+                ErrorDetail = error;
+                ShoppingListItem[] cached = _localStorage.GetValue<ShoppingListItemPagedResponse>(GetCacheKey())?.data;
+                if (cached != null && cached.Length > 0)
+                {
+                    ShoppingListItemView[] enriched = await EnrichItemsAsync(cached);
+                    _allItems = new List<ShoppingListItemView>(enriched);
+                }
+                else
+                {
+                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_LOAD_ITEMS");
+                    _allItems = new List<ShoppingListItemView>();
+                }
+
+                IsLoadingItems = false;
+                ApplyFilter();
                 return;
             }
 
-            // Resolve food names in parallel — FoodService caches by id after first call
-            Task<ShoppingListItemView>[] tasks = new Task<ShoppingListItemView>[rawItems.Length];
+            ErrorDetail = null;
+            _localStorage.SetValue(GetCacheKey(), new ShoppingListItemPagedResponse { data = rawItems });
 
-            for (int i = 0; i < rawItems.Length; i++)
+            ShoppingListItemView[] enrichedItems = await EnrichItemsAsync(rawItems);
+            _allItems = new List<ShoppingListItemView>(enrichedItems);
+            IsLoadingItems = false;
+            ApplyFilter();
+        }
+
+        private string GetCacheKey()
+        {
+            return CacheKeyPrefix + _currentListId;
+        }
+
+        private async Task<ShoppingListItemView[]> EnrichItemsAsync(ShoppingListItem[] items)
+        {
+            Task<ShoppingListItemView>[] tasks = new Task<ShoppingListItemView>[items.Length];
+
+            for (int i = 0; i < items.Length; i++)
             {
-                tasks[i] = EnrichItemAsync(rawItems[i]);
+                tasks[i] = EnrichItemAsync(items[i]);
             }
 
-            ShoppingListItemView[] enriched = await Task.WhenAll(tasks);
-            Items = new List<ShoppingListItemView>(enriched);
+            return await Task.WhenAll(tasks);
+        }
+
+        private void SaveCache()
+        {
+            ShoppingListItem[] raw = new ShoppingListItem[_allItems.Count];
+            for (int i = 0; i < _allItems.Count; i++)
+            {
+                raw[i] = _allItems[i].Item;
+            }
+
+            _localStorage.SetValue(GetCacheKey(), new ShoppingListItemPagedResponse { data = raw });
         }
 
         private async Task<ShoppingListItemView> EnrichItemAsync(ShoppingListItem item)
@@ -81,8 +157,8 @@ namespace eu.foodmission.platform
 
             if (string.IsNullOrEmpty(foodName))
             {
-                FoodItem fetched = await _foodService.GetFoodByIdAsync(item.foodId);
-                foodName = fetched?.name ?? "Unknown";
+                var (fetched, _) = await _foodService.GetFoodByIdAsync(item.foodId);
+                foodName = fetched?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
             return new ShoppingListItemView
@@ -97,6 +173,7 @@ namespace eu.foodmission.platform
         public async Task SearchFoodsAsync(string query)
         {
             SearchQuery = query;
+            ErrorMessage = "";
 
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -104,74 +181,195 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            string normalized = query.Trim().ToLowerInvariant();
+            string cacheKey = FoodSearchCachePrefix + normalized;
+
+            CachedFoodSearch cached = _localStorage.GetValue<CachedFoodSearch>(cacheKey);
+            if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
+            {
+                SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                return;
+            }
+
             IsSearching = true;
-            OpenFoodFactsSearchResponse response = await _foodService.SearchOpenFoodFactsAsync(query);
+            var (response, _) = await _foodService.SearchOpenFoodFactsAsync(query);
             IsSearching = false;
 
-            SearchResults = response?.products != null
-                ? new List<OpenFoodFactsProduct>(response.products)
-                : new List<OpenFoodFactsProduct>();
-        }
-
-        public async Task ImportAndAddItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
-        {
-            if (string.IsNullOrEmpty(_currentListId))
+            if (response?.products != null)
             {
-                return;
+                _localStorage.SetValue(cacheKey, new CachedFoodSearch
+                {
+                    data = response,
+                    cachedAtTicks = DateTime.UtcNow.Ticks
+                });
+                SearchResults = new List<OpenFoodFactsProduct>(response.products);
             }
-
-            FoodItem foodItem = await _foodService.ImportFromBarcodeAsync(product.barcode);
-
-            if (foodItem == null)
+            else if (cached?.data?.products != null)
             {
-                Debug.LogError($"[{GetType().Name}] Failed to import food: {product.name}");
-                return;
+                SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
             }
-
-            ShoppingListItem added = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity, unit);
-
-            if (added != null)
+            else
             {
                 SearchResults = new List<OpenFoodFactsProduct>();
-                SearchQuery = "";
-                await LoadAsync(_currentListId);
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SEARCH_PRODUCTS");
             }
+        }
+
+        private static bool IsCacheFresh(long cachedAtTicks)
+        {
+            if (cachedAtTicks <= 0) return false;
+            DateTime cachedAt = new DateTime(cachedAtTicks, DateTimeKind.Utc);
+            return (DateTime.UtcNow - cachedAt) < CacheTtl;
+        }
+
+        public async Task<bool> ImportAndAddItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
+        {
+            if (string.IsNullOrEmpty(_currentListId) || product == null)
+            {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_LIST_ITEM");
+                return false;
+            }
+
+            ErrorMessage = "";
+            var (foodItem, error) = await _foodService.ImportFromBarcodeAsync(product.barcode);
+
+            if (error != null)
+            {
+                if (error.statusCode == 400)
+                {
+                    var (existingFood, findError) = await _foodService.FindByBarcodeAsync(product.barcode);
+                    if (findError == null && existingFood != null)
+                    {
+                        foodItem = existingFood;
+                        error = null;
+                    }
+                }
+            }
+
+            if (error != null)
+            {
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
+                return false;
+            }
+
+            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity, unit);
+
+            if (addError != null)
+            {
+                ErrorDetail = addError;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_TO_LIST");
+                return false;
+            }
+
+            ErrorDetail = null;
+            SearchResults = new List<OpenFoodFactsProduct>();
+            SearchQuery = "";
+            await LoadAsync(_currentListId);
+            return true;
         }
 
         public async Task ToggleItemAsync(string itemId)
         {
-            ShoppingListItem updated = await _shoppingListService.ToggleItemCheckedAsync(_currentListId, itemId);
+            ErrorMessage = "";
 
-            if (updated != null)
+            ShoppingListItemView view = _allItems.Find(v => v.Item.id == itemId);
+            if (view == null) return;
+
+            bool newChecked = !view.Item.@checked;
+            var (updated, error) = await _shoppingListService.UpdateItemAsync(
+                _currentListId, itemId, null, null, null, newChecked);
+
+            if (error != null)
             {
-                int idx = Items.FindIndex(v => v.Item.id == itemId);
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_UPDATE_LIST_ITEM");
+                return;
+            }
 
-                if (idx >= 0)
-                {
-                    Items[idx].Item.@checked = updated.@checked;
-                    Items = new List<ShoppingListItemView>(Items);
-                }
+            ErrorDetail = null;
+            view.Item.@checked = updated.@checked;
+            ApplyFilter();
+            SaveCache();
+        }
+
+        public async Task RenameListAsync(string newName)
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                return;
+            }
+
+            var (success, error) = await _shoppingListService.UpdateListAsync(_currentListId, newName.Trim());
+            if (error != null)
+            {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
+                ListName = newName.Trim();
+            }
+        }
+
+        public async Task UpdateItemAsync(string itemId, float quantity, string unit)
+        {
+            ErrorMessage = "";
+            var (updated, error) = await _shoppingListService.UpdateItemAsync(
+                _currentListId, itemId, quantity, unit, null, null);
+
+            if (error != null)
+            {
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_UPDATE_LIST_ITEM");
+                return;
+            }
+
+            ErrorDetail = null;
+            int idx = _allItems.FindIndex(v => v.Item.id == itemId);
+            if (idx >= 0)
+            {
+                _allItems[idx].Item.quantity = updated.quantity;
+                _allItems[idx].Item.unit = updated.unit;
+                ApplyFilter();
+                SaveCache();
             }
         }
 
         public async Task DeleteItemAsync(string itemId)
         {
-            bool success = await _shoppingListService.DeleteItemAsync(_currentListId, itemId);
+            ErrorMessage = "";
+            var (success, error) = await _shoppingListService.DeleteItemAsync(_currentListId, itemId);
 
-            if (success)
+            if (error != null)
             {
-                Items = new List<ShoppingListItemView>(Items.FindAll(v => v.Item.id != itemId));
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_DELETE_LIST_ITEM");
+                return;
             }
+
+            ErrorDetail = null;
+            _allItems = new List<ShoppingListItemView>(_allItems.FindAll(v => v.Item.id != itemId));
+            ApplyFilter();
+            SaveCache();
         }
 
         public async Task ClearCheckedItemsAsync()
         {
-            bool success = await _shoppingListService.ClearCheckedItemsAsync(_currentListId);
+            ErrorMessage = "";
+            var (success, error) = await _shoppingListService.ClearCheckedItemsAsync(_currentListId);
 
-            if (success)
+            if (error != null)
             {
-                Items = new List<ShoppingListItemView>(Items.FindAll(v => !v.Item.@checked));
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_CLEAR_ITEMS");
+                return;
             }
+
+            ErrorDetail = null;
+            _allItems = new List<ShoppingListItemView>(_allItems.FindAll(v => !v.Item.@checked));
+            ApplyFilter();
+            SaveCache();
         }
     }
 }

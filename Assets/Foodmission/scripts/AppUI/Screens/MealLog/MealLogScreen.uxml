@@ -1,0 +1,26 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="MealLogScreen.uss"/>
+    <ui:VisualElement name="root" class="fm-ml-root">
+        <ui:VisualElement name="header" class="fm-ml-header">
+            <appui:Heading name="screen-title" size="L" text="Meal Log">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000026)"/>
+                </Bindings>
+</appui:Heading>
+        </ui:VisualElement>
+        <appui:Text name="error-message" class="fm-ml-error"/>
+        <appui:Text name="empty-state" text="No meals logged yet. Tap + to log your first meal." class="fm-ml-empty">
+    <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000027)"/>
+                </Bindings>
+</appui:Text>
+        <ui:ScrollView name="scroll-view" class="fm-ml-scroll">
+            <ui:VisualElement name="logs-container" class="fm-ml-container"/>
+        </ui:ScrollView>
+        <appui:Button name="btn-add-log" title="+" variant="Accent" class="fm-ml-fab"/>
+    </ui:VisualElement>
+</ui:UXML>

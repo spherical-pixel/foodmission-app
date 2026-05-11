@@ -1,0 +1,187 @@
+.fm-gd-root {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.fm-gd-toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    margin-bottom: 4px;
+}
+
+.fm-gd-title {
+    flex-grow: 1;
+}
+
+.fm-gd-spinner {
+    align-self: center;
+    margin-top: 32px;
+    display: none;
+}
+
+.fm-gd-spinner.visible {
+    display: flex;
+}
+
+.fm-gd-error {
+    color: var(--appui-color-danger-500);
+    align-self: center;
+    margin-top: 16px;
+    display: none;
+}
+
+.fm-gd-error.visible {
+    display: flex;
+}
+
+.fm-gd-info {
+    padding: 0 16px 16px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.15);
+}
+
+.fm-gd-desc {
+    font-size: var(--appui-font-sizes-body-md);
+    opacity: 0.7;
+    margin-bottom: 4px;
+}
+
+.fm-gd-count {
+    font-size: var(--appui-font-sizes-body-sm);
+    opacity: 0.5;
+}
+
+.fm-gd-section {
+    padding: 12px 16px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.15);
+}
+
+.fm-gd-section-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.fm-gd-section-heading {
+    margin-bottom: 8px;
+}
+
+.fm-gd-invite-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fm-gd-invite-code {
+    font-size: var(--appui-font-sizes-body-lg);
+    font-weight: bold;
+    letter-spacing: 2px;
+    flex-grow: 1;
+}
+
+.fm-gd-invite-btn {
+    margin-left: 8px;
+}
+
+.fm-gd-members-scroll {
+    max-height: 240px;
+}
+
+.fm-gd-members-container {
+    flex-direction: column;
+}
+
+.fm-gd-member-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.1);
+}
+
+.fm-gd-member-info {
+    flex-grow: 1;
+}
+
+.fm-gd-member-name {
+    font-size: var(--appui-font-sizes-body-md);
+}
+
+.fm-gd-member-email {
+    font-size: var(--appui-font-sizes-body-sm);
+    opacity: 0.5;
+}
+
+.fm-gd-member-badge {
+    font-size: var(--appui-font-sizes-body-xs);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+.fm-gd-member-badge--admin {
+    background-color: rgba(2, 70, 57, 0.1);
+    color: var(--appui-color-primary-100);
+}
+
+.fm-gd-member-badge--virtual {
+    background-color: rgba(128, 128, 128, 0.1);
+    color: rgba(128, 128, 128, 0.7);
+}
+
+.fm-gd-member-actions {
+    flex-direction: row;
+    margin-left: 8px;
+}
+
+.fm-gd-add-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+}
+
+#invite-section {
+    display: none;
+}
+
+#invite-section.visible {
+    display: flex;
+}
+
+.fm-gd-admin-actions {
+    padding: 16px;
+    margin-top: auto;
+    display: none;
+}
+
+.fm-gd-admin-actions.visible {
+    display: flex;
+}
+
+.fm-gd-desc {
+    display: none;
+}
+
+.fm-gd-desc.visible {
+    display: flex;
+}
+
+.fm-gd-loading-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.47);
+    display: none;
+}
+
+.fm-gd-loading-overlay.visible {
+    display: flex;
+}

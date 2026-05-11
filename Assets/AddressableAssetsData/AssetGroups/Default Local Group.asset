@@ -15,8 +15,23 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: ecef101743cdb4acdb45c26f3ed92856
   m_SerializeEntries:
+  - m_GUID: 0214d38b533774eaf963f3f4b5f9f2db
+    m_Address: Foodmission/AppUI/Templates/MealLogAddScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 079f1f2546b3846e0a5715fa4781fc60
     m_Address: Foodmission/AppUI/Templates/ShoppingListDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1308b5ea68d634733973423c4f1076e4
+    m_Address: Foodmission/AppUI/Templates/MealLogScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1add3ee3674b548d48c2de12624b9d44
+    m_Address: Foodmission/AppUI/Templates/AvatarEditorScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -27,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1d8e881c2df504c1ea975a29285c7a28
     m_Address: Foodmission/AppUI/Templates/NutriMessageWithButtons.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 285dadc4433624d0696806c1de9e1273
+    m_Address: Foodmission/AppUI/Templates/GroupsScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -45,8 +65,38 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 750618c0bd0d34c5593c3d6e471ba605
+    m_Address: Foodmission/AppUI/Templates/OnboardingGroupsScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fe8a6637519f4ac8ad42db3226dcda0
+    m_Address: Assets/Foodmission/prefabs/AvatarController.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 815ab17664c940c1aa9329ef9cfaffbe
+    m_Address: Foodmission/AppUI/Templates/PantryScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 84b9398f3e23944e5931f939640b84b4
     m_Address: Foodmission/AppUI/Templates/CompleteWelcome.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d68a50099003416fa97fc177dce52c3
+    m_Address: Foodmission/AppUI/Templates/GroupDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a43abde285ab8486c8af0f7e34ee9097
+    m_Address: Foodmission/AppUI/Templates/FoodWasteScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9633a5f840db4d97878f72b4d971832
+    m_Address: Foodmission/AppUI/Templates/GroupsCreateScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -77,6 +127,21 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e5b048e6d5ec64ca6919ab462546e28c
     m_Address: Foodmission/AppUI/Templates/OnboardingProfileScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e669379b59334a82a9c9476c988bdacd
+    m_Address: Foodmission/AppUI/Templates/PantryItemDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f002d526211874ba984cb4f2746657e4
+    m_Address: Foodmission/AppUI/Templates/FoodWasteAddScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd0a788c8b0e84f09abf06face9e8624
+    m_Address: Foodmission/AppUI/Templates/GroupsJoinScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -6,6 +6,7 @@ using Unity.AppUI.Redux;
 
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Localization;
 
 namespace eu.foodmission.platform
 {
@@ -29,7 +30,7 @@ namespace eu.foodmission.platform
 
         public async Task<string> InitializeAppAsync()
         {
-            LoadingText = "Loading localizations...";
+            LoadingText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_LOCALIZATIONS");
             await Task.Delay(100);
 
             if (!LocalizationSettings.InitializationOperation.IsDone)
@@ -48,8 +49,15 @@ namespace eu.foodmission.platform
             await nutriService.InitializeAsync();
             await Task.Delay(500);
 
+            // Load Avatar from Addressables
+            LoadingText = await LocalizationSettings.StringDatabase
+                .GetLocalizedStringAsync("UI", "LOADING_AVATAR").Task;
+            var avatarService = App.current.services.GetService<IAvatarService>();
+            await avatarService.InitializeAsync();
+            await Task.Delay(500);
+
             // Preload UI templates
-            LoadingText = "Loading UI...";
+            LoadingText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_UI");
             await _templateService.PreloadAllAsync();
 
             // Check session

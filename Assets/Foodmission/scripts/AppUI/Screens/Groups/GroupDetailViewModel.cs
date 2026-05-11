@@ -29,6 +29,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool m_IsLoading;
 
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
         public GroupDetailViewModel(IStoreService storeService, IGroupService groupService)
             : base(storeService)
         {
@@ -45,15 +48,17 @@ namespace eu.foodmission.platform
             _groupId = groupId;
             IsLoading = true;
 
-            UserGroup group = await _groupService.GetGroupAsync(_groupId);
+            var (group, error) = await _groupService.GetGroupAsync(_groupId);
 
             IsLoading = false;
 
-            if (group == null)
+            if (error != null)
             {
+                ErrorDetail = error;
                 return;
             }
 
+            ErrorDetail = null;
             Group = group;
             Members = group.members != null
                 ? new List<GroupMember>(group.members)
@@ -65,80 +70,120 @@ namespace eu.foodmission.platform
 
         public async Task LoadInviteCodeAsync()
         {
-            string code = await _groupService.GetInviteCodeAsync(_groupId);
+            var (code, error) = await _groupService.GetInviteCodeAsync(_groupId);
 
-            if (code != null)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 InviteCode = code;
             }
         }
 
         public async Task RegenerateInviteCodeAsync()
         {
-            string code = await _groupService.RegenerateInviteCodeAsync(_groupId);
+            var (code, error) = await _groupService.RegenerateInviteCodeAsync(_groupId);
 
-            if (code != null)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 InviteCode = code;
             }
         }
 
         public async Task AddVirtualMemberAsync(string name, int yearOfBirth = 0)
         {
-            GroupMember member = await _groupService.AddVirtualMemberAsync(_groupId, name, yearOfBirth);
+            var (member, error) = await _groupService.AddVirtualMemberAsync(_groupId, name, yearOfBirth);
 
-            if (member != null)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 Members = new List<GroupMember>(Members) { member };
             }
         }
 
         public async Task RemoveMemberAsync(string memberId)
         {
-            bool success = await _groupService.RemoveMemberAsync(_groupId, memberId);
+            var (success, error) = await _groupService.RemoveMemberAsync(_groupId, memberId);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 Members = new List<GroupMember>(Members.FindAll(m => m.id != memberId));
             }
         }
 
         public async Task MakeAdminAsync(string memberId)
         {
-            bool success = await _groupService.MakeAdminAsync(_groupId, memberId);
+            var (success, error) = await _groupService.MakeAdminAsync(_groupId, memberId);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 await LoadAsync(_groupId);
             }
         }
 
         public async Task UpdateGroupAsync(string name, string description = null)
         {
-            bool success = await _groupService.UpdateGroupAsync(_groupId, name, description);
+            var (success, error) = await _groupService.UpdateGroupAsync(_groupId, name, description);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 await LoadAsync(_groupId);
             }
         }
 
         public async Task LeaveGroupAsync()
         {
-            bool success = await _groupService.LeaveGroupAsync(_groupId);
+            var (success, error) = await _groupService.LeaveGroupAsync(_groupId);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_groups);
             }
         }
 
         public async Task DeleteGroupAsync()
         {
-            bool success = await _groupService.DeleteGroupAsync(_groupId);
+            var (success, error) = await _groupService.DeleteGroupAsync(_groupId);
 
-            if (success)
+            if (error != null)
             {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
                 RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_groups);
             }
         }

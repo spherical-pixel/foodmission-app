@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -23,6 +25,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_ErrorMessage = "";
 
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
         public GroupsCreateViewModel(IStoreService storeService, IGroupService groupService)
             : base(storeService)
         {
@@ -33,23 +38,25 @@ namespace eu.foodmission.platform
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                ErrorMessage = "Name is required";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GROUP_NAME_REQUIRED");
                 return;
             }
 
             IsCreating = true;
             ErrorMessage = "";
 
-            UserGroup created = await _groupService.CreateGroupAsync(Name, Description);
+            var (created, error) = await _groupService.CreateGroupAsync(Name, Description);
 
             IsCreating = false;
 
-            if (created == null)
+            if (error != null)
             {
-                ErrorMessage = "Error creating group";
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_CREATING_GROUP");
                 return;
             }
 
+            ErrorDetail = null;
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_groups);
         }
     }

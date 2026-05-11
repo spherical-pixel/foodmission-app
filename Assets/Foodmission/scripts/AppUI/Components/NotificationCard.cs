@@ -70,8 +70,8 @@ namespace eu.foodmission.platform
 
             var id = _currentId;
             MenuBuilder.Build(_overflowBtn)
-                .AddAction(0, "View",   "eye",   _ => OnView?.Invoke(id))
-                .AddAction(1, "Delete", "trash", _ => OnDelete?.Invoke(id))
+                .AddAction(0, "@UI:MENU_VIEW",   "eye",   _ => OnView?.Invoke(id))
+                .AddAction(1, "@UI:DELETE", "trash", _ => OnDelete?.Invoke(id))
                 .Show();
         }
     }
