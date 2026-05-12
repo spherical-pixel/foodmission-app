@@ -6,7 +6,8 @@ namespace eu.foodmission.platform
     [System.Serializable]
     public class AvatarController : MonoBehaviour
     {
-        
+        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        private static readonly int BaseMapId = Shader.PropertyToID("_BaseMap");
 
         [Header("Colores Predefinidos")]
         private List<Color> clothesColors = new List<Color>();
@@ -24,19 +25,23 @@ namespace eu.foodmission.platform
         public List<GameObject> noseParts;
         public GameObject eyebrowLeftGameObject;
         public GameObject eyebrowRightGameObject;
-        public GameObject facialHairGameObject; // Para activar/desactivar toda la barba
-        
+        public GameObject facialHairGameObject;
 
-        [Header("Materiales")]
-        public Material hairMaterial;
-        public Material eyebrowMaterial;
-        public Material eyesMaterial;
-        public Material skinMaterial;
-        public Material mouthMaterial;
-        public Material facialHairMaterial;
-        public Material tshirtMaterial;
-        public Material trouserMaterial;
-        public Material shoesMaterial;
+        [Header("Renderers")]
+        public Renderer headRenderer;
+        public Renderer mouthRenderer;
+        public Renderer eyebrowRightRenderer;
+        public Renderer eyebrowLeftRenderer;
+        public Renderer eyeRightRenderer;
+        public Renderer eyeLeftRenderer;
+        public Renderer beardRenderer;
+        public Renderer handRightRenderer;
+        public Renderer handLeftRenderer;
+        public Renderer bodyRenderer;
+        public Renderer legRightRenderer;
+        public Renderer legLeftRenderer;
+        public List<Renderer> noseRenderers;
+        public List<Renderer> hairRenderers;
 
         [Header("Texturas")]
         public List<Texture> eyebrowTextures = new List<Texture>();
@@ -54,10 +59,12 @@ namespace eu.foodmission.platform
         [Header("Animator")]
         public Animator animator;
         private bool _colorsInitialized = false;
+        private MaterialPropertyBlock _propertyBlock;
 
         private void Awake()
         {
             InitializeColors();
+            _propertyBlock = new MaterialPropertyBlock();
         }
 
 #if UNITY_EDITOR
@@ -73,28 +80,22 @@ namespace eu.foodmission.platform
 
         private void InitializeColors()
         {
-            if( _colorsInitialized) return;
-            
+            if (_colorsInitialized) return;
 
             clothesColors.Clear();
             hairColors.Clear();
             skinColors.Clear();
             eyesColors.Clear();
 
-            // Clothes Colors
-
             string[] clothesHex = { "#FFFFFF", "#66DAFF", "#F11A39", "#578728", "#161616", "#FFD300", "#5C47CA", "#99FFB2", "#FFA0EE", "#543C12" };
             foreach (var hex in clothesHex) if (ColorUtility.TryParseHtmlString(hex, out Color c)) clothesColors.Add(c);
 
-            // Hair Colors
             string[] hairHex = { "#FFFFFF", "#FFFE9B", "#FFE053", "#AB8D5E", "#9A7545", "#90514D", "#951A1A", "#46261D", "#1B2B54", "#161616" };
             foreach (var hex in hairHex) if (ColorUtility.TryParseHtmlString(hex, out Color c)) hairColors.Add(c);
 
-            // Skin Colors
             string[] skinHex = { "#FFF3B6", "#FFDFB6", "#E2BF92", "#E9C8B3", "#C8AFA1", "#B79B76", "#8C795F", "#594934", "#462C2C", "#261B1E" };
             foreach (var hex in skinHex) if (ColorUtility.TryParseHtmlString(hex, out Color c)) skinColors.Add(c);
 
-            // Eyes Colors
             string[] eyesHex = { "#3E2723", "#63472B", "#A0785A", "#495E35", "#2E5334", "#4682B4", "#82A1B1", "#607D8B", "#27445C", "#9E9E9E" };
             foreach (var hex in eyesHex) if (ColorUtility.TryParseHtmlString(hex, out Color c)) eyesColors.Add(c);
 
@@ -125,7 +126,6 @@ namespace eu.foodmission.platform
             avatarConfig.shoes.idColor = Mathf.Clamp(avatarConfig.shoes.idColor, 1, 10);
         }
 
-        // Helper for Clamp if Math.Clamp is not available in older Unity versions
         private int Clamp(int value, int min, int max) => Mathf.Clamp(value, min, max);
 
         public void ApplyHair(AvatarPartConfig hairConfig)
@@ -141,9 +141,15 @@ namespace eu.foodmission.platform
                     if (hairParts[i] != null) hairParts[i].SetActive(i == hairConfig.idPart - 1);
                 }
 
-                if (hairMaterial != null && hairConfig.idColor - 1 < hairColors.Count)
+                if (hairConfig.idColor - 1 < hairColors.Count)
                 {
-                    hairMaterial.color = hairColors[hairConfig.idColor - 1];
+                    _propertyBlock.Clear();
+                    _propertyBlock.SetColor(BaseColorId, hairColors[hairConfig.idColor - 1]);
+                    foreach (var renderer in hairRenderers)
+                    {
+                        if (renderer != null)
+                            renderer.SetPropertyBlock(_propertyBlock);
+                    }
                 }
             }
         }
@@ -160,60 +166,62 @@ namespace eu.foodmission.platform
                 if (eyebrowRightGameObject != null) eyebrowRightGameObject.SetActive(true);
                 if (eyebrowLeftGameObject != null) eyebrowLeftGameObject.SetActive(true);
 
-                if (eyebrowMaterial != null)
+                _propertyBlock.Clear();
+                int idColor = eyebrowsConfig.idColor - 1;
+                if (idColor < hairColors.Count)
                 {
-                    int idColor = eyebrowsConfig.idColor - 1;
-                    if (idColor < hairColors.Count)
-                    {
-                        eyebrowMaterial.color = hairColors[idColor];
-                    }
-                    int idPart = eyebrowsConfig.idPart - 1;
-
-                    if (idPart >= 0 && idPart < eyebrowTextures.Count)
-                    {
-                        eyebrowMaterial.mainTexture = eyebrowTextures[idPart];
-                    }
+                    _propertyBlock.SetColor(BaseColorId, hairColors[idColor]);
                 }
+                int idPart = eyebrowsConfig.idPart - 1;
+                if (idPart >= 0 && idPart < eyebrowTextures.Count && eyebrowTextures[idPart] != null)
+                {
+                    _propertyBlock.SetTexture(BaseMapId, eyebrowTextures[idPart]);
+                }
+
+                if (eyebrowRightRenderer != null)
+                    eyebrowRightRenderer.SetPropertyBlock(_propertyBlock);
+                if (eyebrowLeftRenderer != null)
+                    eyebrowLeftRenderer.SetPropertyBlock(_propertyBlock);
             }
         }
 
         public void ApplyEyes(AvatarPartConfig eyesConfig)
         {
-            if (eyesMaterial != null)
+            _propertyBlock.Clear();
+            int idColor = eyesConfig.idColor - 1;
+            if (idColor < eyesColors.Count)
             {
-                int idColor = eyesConfig.idColor - 1;
-                if (idColor < eyesColors.Count)
-                {
-                    eyesMaterial.color = eyesColors[idColor];
-                }
-                
-                int idPart = eyesConfig.idPart - 1;
-                if (idPart >= 0 && idPart < eyeTextures.Count)
-                {
-                    eyesMaterial.mainTexture = eyeTextures[idPart];
-                }
+                _propertyBlock.SetColor(BaseColorId, eyesColors[idColor]);
             }
+
+            int idPart = eyesConfig.idPart - 1;
+            if (idPart >= 0 && idPart < eyeTextures.Count && eyeTextures[idPart] != null)
+            {
+                _propertyBlock.SetTexture(BaseMapId, eyeTextures[idPart]);
+            }
+
+            if (eyeRightRenderer != null)
+                eyeRightRenderer.SetPropertyBlock(_propertyBlock);
+            if (eyeLeftRenderer != null)
+                eyeLeftRenderer.SetPropertyBlock(_propertyBlock);
         }
 
         public void ApplyNose(AvatarPartConfig noseConfig)
         {
             int idPart = noseConfig.idPart - 1;
-            int idColor = noseConfig.idColor - 1;
             if (idPart >= 1 && idPart <= noseParts.Count)
             {
                 for (int i = 0; i < noseParts.Count; i++)
                 {
-                    if (noseParts[i] != null){
-                        noseParts[i].SetActive(i == idPart);  
-                    } 
-                    else{
-                        noseParts[i].SetActive(false);
+                    if (noseParts[i] != null)
+                    {
+                        noseParts[i].SetActive(i == idPart);
                     }
-                }
-            
-                if (skinMaterial != null && idColor < skinColors.Count)
-                {
-                    skinMaterial.color = skinColors[idColor];
+                    else
+                    {
+                        if (i < noseRenderers.Count && noseRenderers[i] != null)
+                            noseRenderers[i].gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -221,12 +229,11 @@ namespace eu.foodmission.platform
         public void ApplyMouth(AvatarPartConfig mouthConfig)
         {
             int idPart = mouthConfig.idPart - 1;
-            if (idPart >= 1 && idPart <= mouthTextures.Count)
+            if (idPart >= 1 && idPart < mouthTextures.Count && mouthRenderer != null && mouthTextures[idPart] != null)
             {
-                if (mouthMaterial != null)
-                {
-                    mouthMaterial.mainTexture = mouthTextures[idPart];
-                }
+                _propertyBlock.Clear();
+                _propertyBlock.SetTexture(BaseMapId, mouthTextures[idPart]);
+                mouthRenderer.SetPropertyBlock(_propertyBlock);
             }
         }
 
@@ -238,22 +245,24 @@ namespace eu.foodmission.platform
             }
             else
             {
-                
-                
-                if (facialHairMaterial != null)
+                if (beardRenderer != null)
                 {
                     if (facialHairGameObject != null) facialHairGameObject.SetActive(true);
+
+                    _propertyBlock.Clear();
                     int idColor = facialHairConfig.idColor - 1;
                     if (idColor < hairColors.Count)
                     {
-                        facialHairMaterial.color = hairColors[idColor];
+                        _propertyBlock.SetColor(BaseColorId, hairColors[idColor]);
                     }
-                    
+
                     int idPart = facialHairConfig.idPart - 1;
-                    if (idPart >= 0 && idPart < facialHairTextures.Count)
+                    if (idPart >= 0 && idPart < facialHairTextures.Count && facialHairTextures[idPart] != null)
                     {
-                        facialHairMaterial.mainTexture = facialHairTextures[idPart];
+                        _propertyBlock.SetTexture(BaseMapId, facialHairTextures[idPart]);
                     }
+
+                    beardRenderer.SetPropertyBlock(_propertyBlock);
                 }
             }
         }
@@ -261,33 +270,72 @@ namespace eu.foodmission.platform
         public void ApplySkin(AvatarPartConfig skinConfig)
         {
             int idColor = skinConfig.idColor - 1;
-            if (skinMaterial != null && idColor < skinColors.Count)
+            if (idColor < skinColors.Count)
             {
-                skinMaterial.color = skinColors[idColor];
+                _propertyBlock.Clear();
+                _propertyBlock.SetColor(BaseColorId, skinColors[idColor]);
+
+                if (headRenderer != null)
+                    headRenderer.SetPropertyBlock(_propertyBlock);
+                if (handRightRenderer != null)
+                    handRightRenderer.SetPropertyBlock(_propertyBlock, 1);
+                if (handLeftRenderer != null)
+                    handLeftRenderer.SetPropertyBlock(_propertyBlock, 1);
+                foreach (var nose in noseRenderers)
+                {
+                    if (nose != null)
+                        nose.SetPropertyBlock(_propertyBlock);
+                }
             }
         }
 
         public void ApplyTshirt(AvatarPartConfig tshirtConfig)
         {
             int idColor = tshirtConfig.idColor - 1;
-            if (tshirtMaterial != null && idColor < clothesColors.Count)
+            if (idColor < clothesColors.Count)
             {
-                tshirtMaterial.color = clothesColors[idColor];                
+                _propertyBlock.Clear();
+                _propertyBlock.SetColor(BaseColorId, clothesColors[idColor]);
+
+                if (bodyRenderer != null)
+                    bodyRenderer.SetPropertyBlock(_propertyBlock, 0);
+                if (handRightRenderer != null)
+                    handRightRenderer.SetPropertyBlock(_propertyBlock, 0);
+                if (handLeftRenderer != null)
+                    handLeftRenderer.SetPropertyBlock(_propertyBlock, 0);
             }
         }
 
         public void ApplyTrousers(AvatarPartConfig trousersConfig)
         {
             int idColor = trousersConfig.idColor - 1;
-            if (trouserMaterial != null && idColor < clothesColors.Count)
-                trouserMaterial.color = clothesColors[idColor];
+            if (idColor < clothesColors.Count)
+            {
+                _propertyBlock.Clear();
+                _propertyBlock.SetColor(BaseColorId, clothesColors[idColor]);
+
+                if (bodyRenderer != null)
+                    bodyRenderer.SetPropertyBlock(_propertyBlock, 1);
+                if (legRightRenderer != null)
+                    legRightRenderer.SetPropertyBlock(_propertyBlock, 1);
+                if (legLeftRenderer != null)
+                    legLeftRenderer.SetPropertyBlock(_propertyBlock, 1);
+            }
         }
 
         public void ApplyShoes(AvatarPartConfig shoesConfig)
         {
             int idColor = shoesConfig.idColor - 1;
-            if (shoesMaterial != null && idColor < clothesColors.Count)
-                shoesMaterial.color = clothesColors[idColor];
+            if (idColor < clothesColors.Count)
+            {
+                _propertyBlock.Clear();
+                _propertyBlock.SetColor(BaseColorId, clothesColors[idColor]);
+
+                if (legRightRenderer != null)
+                    legRightRenderer.SetPropertyBlock(_propertyBlock, 0);
+                if (legLeftRenderer != null)
+                    legLeftRenderer.SetPropertyBlock(_propertyBlock, 0);
+            }
         }
 
         public void ApplyAvatar(AvatarConfig avatarConfig)
