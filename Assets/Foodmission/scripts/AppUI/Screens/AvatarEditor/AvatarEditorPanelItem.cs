@@ -145,7 +145,7 @@ namespace eu.foodmission.platform
                 AvatarEditorItemEnum.Mouth => 1,
                 _ => 0
             };
-            for (int i = startIndex; i < maxParts; i++)
+            for (int i = startIndex; i <= maxParts; i++)
             {
                 int partIndex = i;
                 bool isSelected = partIndex == targetPart.idPart;
@@ -267,9 +267,6 @@ namespace eu.foodmission.platform
         private static Unity.AppUI.UI.Button CreatePartOption(int index, bool selected,AvatarEditorItemEnum itemEnum)
         {
             var btn = new Unity.AppUI.UI.Button();
-            // {
-            //     title = index == 0 ? "✕" :  index.ToString()
-            // };
 
             if ( index == 0)
             {
@@ -292,10 +289,6 @@ namespace eu.foodmission.platform
             {
                 style =
                 {
-                    /*width = 80,
-                    height = 80,
-                    marginLeft = 4,
-                    marginRight = 4,*/
                     backgroundColor = color
                 }
             };

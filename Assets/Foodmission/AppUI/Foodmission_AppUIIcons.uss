@@ -86,16 +86,6 @@
     --appui-icon-fm-icon-hair-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-8.png");
     --appui-icon-fm-icon-hair-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-9.png");
     --appui-icon-fm-icon-hair-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_hair/fm-icon-hair-10.png");
-    --appui-icon-fm-icon-eyebrows-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-1.png");
-    --appui-icon-fm-icon-eyebrows-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-2.png");
-    --appui-icon-fm-icon-eyebrows-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-3.png");
-    --appui-icon-fm-icon-eyebrows-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-4.png");
-    --appui-icon-fm-icon-eyebrows-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-5.png");
-    --appui-icon-fm-icon-eyebrows-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-6.png");
-    --appui-icon-fm-icon-eyebrows-7-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-7.png");
-    --appui-icon-fm-icon-eyebrows-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-8.png");
-    --appui-icon-fm-icon-eyebrows-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-9.png");
-    --appui-icon-fm-icon-eyebrows-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-10.png");
     --appui-icon-fm-icon-eyes-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-1.png");
     --appui-icon-fm-icon-eyes-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-2.png");
     --appui-icon-fm-icon-eyes-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eye/fm-icon-eyes-3.png");
@@ -111,6 +101,16 @@
     --appui-icon-fm-icon-facialhair-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-3.png");
     --appui-icon-fm-icon-facialhair-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-4.png");
     --appui-icon-fm-icon-facialhair-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_beard/fm-icon-facialhair-5.png");
+    --appui-icon-fm-icon-eyebrows-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-1.png");
+    --appui-icon-fm-icon-eyebrows-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-2.png");
+    --appui-icon-fm-icon-eyebrows-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-3.png");
+    --appui-icon-fm-icon-eyebrows-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-4.png");
+    --appui-icon-fm-icon-eyebrows-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-5.png");
+    --appui-icon-fm-icon-eyebrows-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-6.png");
+    --appui-icon-fm-icon-eyebrows-7-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-7.png");
+    --appui-icon-fm-icon-eyebrows-8-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-8.png");
+    --appui-icon-fm-icon-eyebrows-9-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-9.png");
+    --appui-icon-fm-icon-eyebrows-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-10.png");
 }
 
 .appui-icon--calendar--regular {
@@ -441,46 +441,6 @@
     --unity-image: var(--appui-icon-fm-icon-hair-10-regular);
 }
 
-.appui-icon--fm-icon-eyebrows-1--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-1-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-2--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-2-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-3--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-3-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-4--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-4-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-5--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-5-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-6--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-6-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-7--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-7-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-8--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-8-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-9--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-9-regular);
-}
-
-.appui-icon--fm-icon-eyebrows-10--regular {
-    --unity-image: var(--appui-icon-fm-icon-eyebrows-10-regular);
-}
-
 .appui-icon--fm-icon-eyes-1--regular {
     --unity-image: var(--appui-icon-fm-icon-eyes-1-regular);
 }
@@ -539,5 +499,45 @@
 
 .appui-icon--fm-icon-facialhair-5--regular {
     --unity-image: var(--appui-icon-fm-icon-facialhair-5-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-1--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-1-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-2--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-2-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-3--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-3-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-4--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-4-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-5--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-5-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-6--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-6-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-7--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-7-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-8--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-8-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-9--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-9-regular);
+}
+
+.appui-icon--fm-icon-eyebrows-10--regular {
+    --unity-image: var(--appui-icon-fm-icon-eyebrows-10-regular);
 }
 

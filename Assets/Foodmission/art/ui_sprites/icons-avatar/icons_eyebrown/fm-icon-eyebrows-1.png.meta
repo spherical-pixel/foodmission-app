@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 308ed6b22b4910f4a940e29f0e5a9d14
+guid: 83ca2f013d4732a4caa4e00a6b5c0475
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4444707832347421955
-    second: icon_eyebrow10_0
+      213: 6758164449886980269
+    second: icon_eyebrow1_0
   - first:
-      213: -4397752452448352295
-    second: icon_eyebrow10_1
+      213: -8576156398726342756
+    second: icon_eyebrow1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: icon_eyebrow10_0
+      name: icon_eyebrow1_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 56
-        width: 51
-        height: 15
+        x: 18
+        y: 59
+        width: 33
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,20 +144,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df2198a86c93152c0800000000000000
-      internalID: -4444707832347421955
+      spriteID: da8cf29c2c2d9cd50800000000000000
+      internalID: 6758164449886980269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: icon_eyebrow10_1
+      name: icon_eyebrow1_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 56
-        width: 51
-        height: 15
+        x: 74
+        y: 59
+        width: 33
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d786bdd17b08f2c0800000000000000
-      internalID: -4397752452448352295
+      spriteID: c9719bb913f5bf880800000000000000
+      internalID: -8576156398726342756
       vertices: []
       indices: 
       edges: []
@@ -186,8 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      icon_eyebrow10_0: -4444707832347421955
-      icon_eyebrow10_1: -4397752452448352295
+      icon_eyebrow1_0: 6758164449886980269
+      icon_eyebrow1_1: -8576156398726342756
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 500b402c864b86e4d9146bb415848016
+guid: dcc02e1d77432484a9f921628e2e62f8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6096765836000865109
-    second: icon_eyebrow6_0
+      213: -8830018909305129094
+    second: icon_eyebrow7_0
   - first:
-      213: -3396965317407304599
-    second: icon_eyebrow6_1
+      213: -7087552945515136290
+    second: icon_eyebrow7_1
+  - first:
+      213: 5717718892559345056
+    second: icon_eyebrow7_2
+  - first:
+      213: 2703912638632359345
+    second: icon_eyebrow7_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -129,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: icon_eyebrow6_0
+      name: icon_eyebrow7_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 54
-        width: 57
-        height: 24
+        x: 9
+        y: 56
+        width: 10
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 55ba19dc9301c9450800000000000000
-      internalID: 6096765836000865109
+      spriteID: a77b2eed598757580800000000000000
+      internalID: -8830018909305129094
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: icon_eyebrow6_1
+      name: icon_eyebrow7_1
       rect:
         serializedVersion: 2
-        x: 63
-        y: 54
-        width: 57
-        height: 24
+        x: 19
+        y: 60
+        width: 41
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +172,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9649d9daa0e8bd0d0800000000000000
-      internalID: -3396965317407304599
+      spriteID: edafbc3c524f3ad90800000000000000
+      internalID: -7087552945515136290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_eyebrow7_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 60
+        width: 41
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a52a8cf90b695f40800000000000000
+      internalID: 5717718892559345056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_eyebrow7_3
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 56
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b5fe59083a368520800000000000000
+      internalID: 2703912638632359345
       vertices: []
       indices: 
       edges: []
@@ -186,8 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      icon_eyebrow6_0: 6096765836000865109
-      icon_eyebrow6_1: -3396965317407304599
+      icon_eyebrow7_0: -8830018909305129094
+      icon_eyebrow7_1: -7087552945515136290
+      icon_eyebrow7_2: 5717718892559345056
+      icon_eyebrow7_3: 2703912638632359345
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
