@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb82f2d5b1bdd4dbdae32c8ef2436c39
+    m_Address: Assets/Foodmission/localization/APP_INFO Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e58ac225f892840658d216244603ef45
     m_Address: Assets/Foodmission/localization/Texts Shared Data.asset
     m_ReadOnly: 1

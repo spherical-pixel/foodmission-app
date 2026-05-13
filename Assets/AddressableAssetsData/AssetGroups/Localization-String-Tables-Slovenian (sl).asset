@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Slovenian (sl)
   m_GUID: f451d35821e6645a1ad8dace4bcb2323
   m_SerializeEntries:
+  - m_GUID: 3e2f824757a334fda8ffe3cd6ab2bac4
+    m_Address: APP_INFO_sl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-sl
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c370558b73a4d461c99c95ee2a266c29
     m_Address: UI_sl
     m_ReadOnly: 1

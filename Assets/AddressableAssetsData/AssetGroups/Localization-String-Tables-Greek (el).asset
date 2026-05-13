@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Greek (el)
   m_GUID: 9e75aba70e60a49f4a10a8469b420aca
   m_SerializeEntries:
+  - m_GUID: 19b87a18bdfef48b0b71a3c39760e1c1
+    m_Address: APP_INFO_el
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-el
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: accbd0b866ef24409aaae66030499dcb
     m_Address: AppUI_el
     m_ReadOnly: 1
