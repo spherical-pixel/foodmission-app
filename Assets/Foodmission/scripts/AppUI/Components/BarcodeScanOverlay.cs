@@ -47,11 +47,11 @@ namespace eu.foodmission.platform.Components
             });
             closeBtn.text = "\u2715";
             closeBtn.style.position = Position.Absolute;
-            closeBtn.style.top = 48;
-            closeBtn.style.right = 16;
-            closeBtn.style.width = 44;
-            closeBtn.style.height = 44;
-            closeBtn.style.fontSize = 22;
+            closeBtn.style.top = 80;
+            closeBtn.style.right = 20;
+            closeBtn.style.width = 80;
+            closeBtn.style.height = 80;
+            closeBtn.style.fontSize = 44;
             closeBtn.style.backgroundColor = new Color(0, 0, 0, 0.3f);
             closeBtn.style.color = Color.white;
             closeBtn.style.borderLeftColor = closeBtn.style.borderRightColor = closeBtn.style.borderTopColor = closeBtn.style.borderBottomColor = new Color(1, 1, 1, 0.5f);
