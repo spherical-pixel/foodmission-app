@@ -378,7 +378,8 @@ namespace eu.foodmission.platform
                     {
                         FMDialog.ShowAlert(this, "@UI:ADD_ITEM", "@UI:ADD_ITEM_ERROR", AlertSemantic.Error);
                     }
-                });
+                },
+                async barcode => await _viewModel.ImportByBarcodeAsync(barcode));
         }
         private async Task SafeToggleItemAsync(string itemId)
         {

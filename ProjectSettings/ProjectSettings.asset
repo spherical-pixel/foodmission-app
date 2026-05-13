@@ -552,7 +552,7 @@ PlayerSettings:
   enableInternalProfiler: 0
   logObjCUncaughtExceptions: 1
   enableCrashReportAPI: 0
-  cameraUsageDescription: 
+  cameraUsageDescription: Foodmission needs camera access to scan barcodes
   locationUsageDescription: 
   microphoneUsageDescription: 
   bluetoothUsageDescription: 

@@ -269,6 +269,18 @@ namespace eu.foodmission.platform
             return true;
         }
 
+        public async Task<FoodItem> ImportByBarcodeAsync(string barcode)
+        {
+            var (foodItem, error) = await _foodService.ImportFromBarcodeAsync(barcode);
+            if (error != null && error.statusCode == 400)
+            {
+                var (existingFood, findError) = await _foodService.FindByBarcodeAsync(barcode);
+                if (findError == null && existingFood != null)
+                    return existingFood;
+            }
+            return foodItem;
+        }
+
         public async Task ToggleItemAsync(string itemId)
         {
             ErrorMessage = "";

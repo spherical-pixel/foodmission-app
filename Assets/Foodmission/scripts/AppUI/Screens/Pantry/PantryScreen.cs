@@ -347,7 +347,8 @@ namespace eu.foodmission.platform
                     {
                         await _viewModel.AddCategoryItemAsync(category, qty, unit);
                     }
-                });
+                },
+                async barcode => await _viewModel.ImportByBarcodeAsync(barcode));
         }
     }
 }
