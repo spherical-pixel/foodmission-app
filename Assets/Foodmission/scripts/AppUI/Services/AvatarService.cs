@@ -174,6 +174,28 @@ namespace eu.foodmission.platform
             }
         }
 
+        public void SetAvatarCameraActive(bool active)
+        {
+            if (_avatarController?.avatarCamera == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] AvatarCamera not available");
+                return;
+            }
+
+            _avatarController.avatarCamera.gameObject.SetActive(active);
+        }
+
+        public void SetFullBodyCameraActive(bool active)
+        {
+            if (_avatarController?.fullBodyCamera == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] FullBodyCamera not available");
+                return;
+            }
+
+            _avatarController.fullBodyCamera.gameObject.SetActive(active);
+        }
+
         public void SaveCurrentConfig()
         {
             if (_currentConfig == null)

@@ -83,6 +83,13 @@ namespace eu.foodmission.platform.Components
             RenderTexture nutriTexture,
             FMDialogAction[] actions)
         {
+            var nutriService = App.current?.services?.GetService<INutriService>();
+            if (nutriService != null)
+            {
+                nutriService.SetActive(true);
+                nutriService.SetCameraActive(true);
+            }
+
             var root = _template.Instantiate();
             root.style.flexGrow = 1;
             root.AddToClassList("fm-nutri-dialog");
@@ -104,22 +111,18 @@ namespace eu.foodmission.platform.Components
             }
 
             // Nutri image
-            if (nutriImage != null)
-            {
-                if (nutriTexture != null)
+                if (nutriImage != null)
                 {
-                    nutriImage.image = nutriTexture;
-                }
-                else
-                {
-                    var nutriService = App.current?.services?.GetService<INutriService>();
-                    if (nutriService != null)
+                    if (nutriTexture != null)
+                    {
+                        nutriImage.image = nutriTexture;
+                    }
+                    else if (nutriService != null)
                     {
                         nutriImage.image = nutriService.NutriCameraRenderTexture;
                     }
+                    nutriImage.style.display = DisplayStyle.Flex;
                 }
-                nutriImage.style.display = DisplayStyle.Flex;
-            }
 
             // Buttons
             Modal modal = null;
@@ -151,6 +154,11 @@ namespace eu.foodmission.platform.Components
                 var capturedAction = action;
                 button.clicked += () =>
                 {
+                    if (nutriService != null)
+                    {
+                        nutriService.SetCameraActive(false);
+                    }
+
                     root.RemoveFromClassList("fm-nutri-dialog--visible");
                     root.AddToClassList("fm-nutri-dialog--exit");
                     root.schedule.Execute(() =>

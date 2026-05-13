@@ -23,6 +23,9 @@ namespace eu.foodmission.platform
         RenderTexture AvatarCameraRenderTexture { get; }
         RenderTexture FullBodyAvatarRenderTexture { get; }
 
+        void SetAvatarCameraActive(bool active);
+        void SetFullBodyCameraActive(bool active);
+
         void SetRandomConfig();
         void SetAvatarConfig(AvatarConfig config);
         AvatarConfig GetCurrentAvatarConfig{get;}

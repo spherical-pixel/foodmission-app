@@ -131,6 +131,17 @@ namespace eu.foodmission.platform
             _nutriController.SetActive(active);
         }
 
+        public void SetCameraActive(bool active)
+        {
+            if (_nutriCamera == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] NutriCamera not available");
+                return;
+            }
+
+            _nutriCamera.gameObject.SetActive(active);
+        }
+
         public void SetMood(NutriMood mood)
         {
             if (_animator == null)

@@ -21,6 +21,7 @@ namespace eu.foodmission.platform
     {
         Task InitializeAsync();
         void SetActive(bool active);
+        void SetCameraActive(bool active);
         void SetMood(NutriMood mood);
         NutriMood CurrentMood { get; }
         bool IsInitialized { get; }

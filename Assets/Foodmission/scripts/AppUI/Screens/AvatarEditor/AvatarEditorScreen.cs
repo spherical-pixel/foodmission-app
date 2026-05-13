@@ -70,6 +70,8 @@ namespace eu.foodmission.platform
             }
             base.OnEnter(controller, destination, args);
 
+            _viewModel?.AvatarService.SetFullBodyCameraActive(true);
+
             if (_isFromOnboarding && appBar != null)
             {
                 appBar.style.display = DisplayStyle.None;
@@ -164,6 +166,10 @@ namespace eu.foodmission.platform
             {
                 _viewModel?.AvatarService.SaveCurrentConfig();
             }
+
+            _viewModel?.AvatarService.SetFullBodyCameraActive(false);
+            _viewModel?.AvatarService.SetAvatarCameraActive(false);
+
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
         }
