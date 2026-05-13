@@ -30,6 +30,8 @@ namespace eu.foodmission.platform
 
         public async Task<string> InitializeAppAsync()
         {
+            AndroidSystemBar.ShowAndSetTransparent();
+
             LoadingText = "Loading localizations";//LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_LOCALIZATIONS");
             // Await localization initialization first before accessing StringDatabase
             if (!LocalizationSettings.InitializationOperation.IsDone)

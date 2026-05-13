@@ -110,6 +110,8 @@ namespace eu.foodmission.platform
 
             _panel.theme = effectiveTheme;
             ThemeChanged?.Invoke(effectiveTheme);
+
+            AndroidSystemBar.SetAppearance(effectiveTheme == "light");
         }
 
         /// <summary>
