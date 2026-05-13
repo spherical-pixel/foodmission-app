@@ -116,72 +116,48 @@ namespace eu.foodmission.platform
         private float GetPlatformKeyboardHeight()
         {
 #if UNITY_EDITOR
-            // In editor, return a simulated height if testing
             return TouchScreenKeyboard.visible ? 400f : 0f;
-#elif UNITY_IOS
-            // On iOS, TouchScreenKeyboard.area works reliably
-            return TouchScreenKeyboard.area.height;
-#elif UNITY_ANDROID
-            // On Android, we need to use Java interop
-            return GetAndroidKeyboardHeight();
 #else
-            return 0f;
-#endif
-        }
-
-#if UNITY_ANDROID
-        /// <summary>
-        /// Gets the keyboard height on Android using Java interop.
-        /// This uses the window visible display frame to calculate keyboard height.
-        /// </summary>
-        private float GetAndroidKeyboardHeight()
-        {
             try
             {
-                using (var unityPlayerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                if (!TouchScreenKeyboard.visible)
                 {
-                    var unityPlayer = unityPlayerClass.GetStatic<AndroidJavaObject>("currentActivity")
-                        .Get<AndroidJavaObject>("mUnityPlayer");
-
-                    // Get the view
-                    var view = unityPlayer.Call<AndroidJavaObject>("getView");
-
-                    // Create a Rect to hold the visible display frame
-                    using (var rect = new AndroidJavaObject("android.graphics.Rect"))
-                    {
-                        view.Call("getWindowVisibleDisplayFrame", rect);
-
-                        // Calculate keyboard height
-                        int screenHeight = Screen.height;
-                        int visibleHeight = rect.Call<int>("height");
-                        int keyboardHeight = screenHeight - visibleHeight;
-
-                        // Get the mobile input field height if visible
-                        if (!TouchScreenKeyboard.hideInput)
-                        {
-                            var dialog = unityPlayer.Get<AndroidJavaObject>("mSoftInputDialog");
-                            if (dialog != null)
-                            {
-                                var editText = dialog.Get<AndroidJavaObject>("mInputField");
-                                if (editText != null)
-                                {
-                                    int inputFieldHeight = editText.Call<int>("getHeight");
-                                    keyboardHeight += inputFieldHeight;
-                                }
-                            }
-                        }
-
-                        return Mathf.Max(0, keyboardHeight);
-                    }
+                    return 0f;
                 }
+
+                float areaHeight = TouchScreenKeyboard.area.height;
+
+                // On Android with IME keyboards (GBoard etc.), area.height often returns 0
+                // even when the keyboard is visible. Fall back to estimation.
+                if (areaHeight <= 0f)
+                {
+                    return EstimateKeyboardHeight();
+                }
+
+                return areaHeight;
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[KeyboardService] Error getting Android keyboard height: {ex.Message}");
+                Debug.LogError($"[KeyboardService] Error getting keyboard height: {ex.Message}");
                 return 0f;
             }
-        }
 #endif
+        }
+
+        /// <summary>
+        /// Estimates keyboard height as a percentage of screen when the platform API
+        /// fails to report actual height (common with IME keyboards on Android).
+        /// </summary>
+        private static float EstimateKeyboardHeight()
+        {
+            float screenHeight = Screen.safeArea.height > 0 ? Screen.safeArea.height : Screen.height;
+            float screenWidth = Screen.width;
+
+            // Portrait: ~45%, Landscape: ~35%
+            return screenHeight > screenWidth
+                ? screenHeight * 0.45f
+                : screenHeight * 0.35f;
+        }
 
         /// <inheritdoc/>
         public float GetKeyboardHeightRatio()
