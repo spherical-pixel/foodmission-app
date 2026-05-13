@@ -30,13 +30,14 @@ namespace eu.foodmission.platform
 
         public async Task<string> InitializeAppAsync()
         {
-            LoadingText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_LOCALIZATIONS");
-            await Task.Delay(100);
-
+            LoadingText = "Loading localizations";//LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_LOCALIZATIONS");
+            // Await localization initialization first before accessing StringDatabase
             if (!LocalizationSettings.InitializationOperation.IsDone)
             {
                 await LocalizationSettings.InitializationOperation.Task;
             }
+
+            await Task.Delay(100);
 
             LoadingText = await LocalizationSettings.StringDatabase
                 .GetLocalizedStringAsync("UI", "LOADING_ASSETS").Task;

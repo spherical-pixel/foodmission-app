@@ -305,7 +305,6 @@ namespace eu.foodmission.platform
             _menuPanel.Add(scroll);
 
             _menuContentContainer = scroll.contentContainer;
-            BuildMenuContent(_menuContentContainer);
 
             _menuBackdrop.Add(_menuPanel);
             root.Add(_menuBackdrop);
@@ -425,11 +424,11 @@ namespace eu.foodmission.platform
             var header = new VisualElement();
             header.AddToClassList("fm-notifications-panel__header");
 
-            _notificationsTitleLabel = new Label(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NAV_NOTIFICATIONS"));
+            _notificationsTitleLabel = new Label();
             _notificationsTitleLabel.AddToClassList("fm-notifications-panel__title");
 
             _markAllReadBtn = new Unity.AppUI.UI.Button();
-            _markAllReadBtn.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MARK_ALL_AS_READ");
+            _markAllReadBtn.title = string.Empty;
             _markAllReadBtn.quiet = true;
             _markAllReadBtn.size = Unity.AppUI.UI.Size.S;
             _markAllReadBtn.clicked += OnMarkAllReadClicked;
