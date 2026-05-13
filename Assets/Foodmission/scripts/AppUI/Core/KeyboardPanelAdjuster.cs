@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,6 +19,7 @@ namespace eu.foodmission.platform
         // Store the last focused element that might need keyboard adjustment
         private VisualElement _lastFocusedElement;
         private bool _isKeyboardVisible;
+        private System.Threading.CancellationTokenSource _adjustCts;
 
         [SerializeField]
         [Tooltip("Additional margin between focused field and keyboard (in pixels)")]
@@ -33,6 +33,7 @@ namespace eu.foodmission.platform
         {
             _rootElement = rootElement;
             _keyboardService = keyboardService;
+            _adjustCts = new System.Threading.CancellationTokenSource();
 
             if (_rootElement == null)
             {
@@ -67,6 +68,9 @@ namespace eu.foodmission.platform
             {
                 _rootElement.UnregisterCallback<FocusInEvent>(OnGlobalFocusIn, TrickleDown.TrickleDown);
             }
+
+            _adjustCts?.Cancel();
+            _adjustCts?.Dispose();
         }
 
         private void OnGlobalFocusIn(FocusInEvent evt)
@@ -79,11 +83,11 @@ namespace eu.foodmission.platform
                 {
                     _lastFocusedElement = focusedElement;
 
-                    // If keyboard is already visible, adjust immediately
-                    if (_isKeyboardVisible && _keyboardService?.KeyboardHeight > 0)
-                    {
-                        _ = AdjustForKeyboardAsync(_keyboardService.KeyboardHeight);
-                    }
+                    // Always attempt adjustment on focus change.
+                    // If keyboard isn't visible yet (first tap), AdjustForKeyboardAsync
+                    // will wait until TouchScreenKeyboard.visible becomes true.
+                    float height = _keyboardService?.KeyboardHeight ?? 0f;
+                    _ = AdjustForKeyboardAsync(height);
                 }
             }
         }
@@ -140,16 +144,65 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            // Small delay to let keyboard finish appearing
-            await System.Threading.Tasks.Task.Delay(100);
+            // Cancel any previous pending adjustment
+            _adjustCts?.Cancel();
+            _adjustCts = new System.Threading.CancellationTokenSource();
+            var token = _adjustCts.Token;
 
-            if (_rootElement == null || _lastFocusedElement == null)
+            // If keyboard isn't visible yet (first tap on iOS), wait for it to appear
+            if (!TouchScreenKeyboard.visible)
+            {
+                try
+                {
+                    // Poll up to 2 seconds for keyboard to appear
+                    for (int i = 0; i < 120; i++)
+                    {
+                        await System.Threading.Tasks.Task.Delay(16, token);
+                        if (TouchScreenKeyboard.visible) break;
+                    }
+                }
+                catch (System.Threading.Tasks.TaskCanceledException)
+                {
+                    return;
+                }
+            }
+
+            // Also wait for keyboard height to stabilize (300ms for iOS animation)
+            float height = keyboardHeight > 0 ? keyboardHeight : (_keyboardService?.KeyboardHeight ?? 0f);
+            if (height <= 0)
+            {
+                try
+                {
+                    await System.Threading.Tasks.Task.Delay(300, token);
+                    height = _keyboardService?.KeyboardHeight ?? 0f;
+                }
+                catch (System.Threading.Tasks.TaskCanceledException)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                try
+                {
+                    await System.Threading.Tasks.Task.Delay(300, token);
+                }
+                catch (System.Threading.Tasks.TaskCanceledException)
+                {
+                    return;
+                }
+            }
+
+            if (token.IsCancellationRequested || _rootElement == null || _lastFocusedElement == null)
             {
                 return;
             }
 
+            // Re-read height in case it settled differently
+            float finalHeight = _keyboardService?.KeyboardHeight ?? height;
+
             // Calculate adjustment
-            float offset = CalculatePanelOffset(_lastFocusedElement, keyboardHeight);
+            float offset = CalculatePanelOffset(_lastFocusedElement, finalHeight);
 
             if (offset != 0)
             {
@@ -164,47 +217,46 @@ namespace eu.foodmission.platform
                 return 0f;
             }
 
-            // Get the current panel translate
-            Vector3 panelTranslate = _rootElement.resolvedStyle.translate;
-
-            // Get focused element bounds in screen space
-            Rect elementBounds = focusedElement.worldBound;
-
-            // Panel height
             float panelHeight = _rootElement.layout.height;
             if (panelHeight <= 0) panelHeight = Screen.height;
 
-            // Scale factor (UI Toolkit units to screen pixels)
             float scale = _rootElement.layout.width / Screen.width;
             if (scale <= 0) scale = 1f;
 
-            // Convert keyboard height from screen pixels to UI Toolkit units
             float keyboardHeightUI = keyboardHeight * scale;
 
-            // Calculate where the keyboard top is in UI Toolkit coordinates
-            // Keyboard appears at bottom of screen, so its top is at (panelHeight - keyboardHeight)
-            float keyboardTopY = panelHeight - keyboardHeightUI - panelTranslate.y;
+            // Keyboard top in panel coordinates (top-left origin).
+            // On iOS, the keyboard sits above the home indicator (safe area bottom inset),
+            // so we offset from the safe area bottom rather than the screen edge.
+            // On devices without bottom inset (Screen.safeArea.y == 0), this matches
+            // the original panelHeight - keyboardHeightUI formula.
+            float keyboardBottomUI = (Screen.height - Screen.safeArea.y) * scale;
+            float keyboardTopY = keyboardBottomUI - keyboardHeightUI;
 
-            // Element bottom in panel coordinates
-            float elementBottomY = elementBounds.yMax;
+            // Get element's current visual bottom (worldBound includes all parent transforms
+            // including the panel's current translate and any scroll offsets)
+            float elementBottom = focusedElement.worldBound.yMax;
 
-            // Check if element is covered by keyboard
-            float overlap = elementBottomY - keyboardTopY + (keyboardMargin * scale);
-
-            if (overlap <= 0)
+            // If element is already above keyboard (with margin), no adjustment needed
+            if (elementBottom <= keyboardTopY - (keyboardMargin * scale))
             {
-                // Element is above keyboard
                 return 0f;
             }
 
-            // Cap the movement
-            float maxOffset = panelHeight * maxMovePercent * scale;
-            if (overlap > maxOffset)
+            // Compute how much extra upward movement is needed beyond current translate
+            Vector3 panelTranslate = _rootElement.resolvedStyle.translate;
+            float extraNeeded = keyboardTopY - elementBottom - (keyboardMargin * scale);
+
+            float finalTranslateY = panelTranslate.y + extraNeeded;
+
+            // Cap max movement to prevent panel from going too far off-screen
+            float maxMove = panelHeight * maxMovePercent * scale;
+            if (finalTranslateY < -maxMove)
             {
-                overlap = maxOffset;
+                finalTranslateY = -maxMove;
             }
 
-            return -overlap; // Negative to move up
+            return finalTranslateY - _originalTranslate.y;
         }
 
         private void ApplyPanelOffset(float offset)
