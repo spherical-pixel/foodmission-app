@@ -1280,7 +1280,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 346294877937664
-    m_Localized: ERROR
+    m_Localized: "B\u0141\u0104D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1352600405401600
+    m_Localized: Sprawdzanie aktualizacji...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674160731316224
+    m_Localized: "Aktualizacja dost\u0119pna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674295611744256
+    m_Localized: "Dost\u0119pna jest nowa wersja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674465741103104
+    m_Localized: 'Informacje o wydaniu:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915250622464
+    m_Localized: Aktualizacja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915254816768
+    m_Localized: "P\xF3\u017Aniej"
     m_Metadata:
       m_Items: []
   references:

@@ -5,8 +5,10 @@
 
 .appui {
    /* Sizing */
-    --appui-sizing-60: 45px;
+   
+    --appui-sizing-60: 25px;
     --appui-sizing-100: 16px;
+    --appui-sizing-150: 39px;
     --appui-sizing-200: 62px;
     --appui-sizing-250: 70px;
     --appui-sizing-300: 78px;

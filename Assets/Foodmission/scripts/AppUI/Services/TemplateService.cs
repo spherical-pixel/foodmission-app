@@ -38,7 +38,8 @@ namespace eu.foodmission.platform
             TemplateAddresses.GroupsJoin,
             TemplateAddresses.GroupDetail,
             TemplateAddresses.OnboardingGroups,
-            TemplateAddresses.AvatarEditorPanelItem
+            TemplateAddresses.AvatarEditorPanelItem,
+            TemplateAddresses.ForceUpdate
         };
 
         public async Task PreloadAllAsync()

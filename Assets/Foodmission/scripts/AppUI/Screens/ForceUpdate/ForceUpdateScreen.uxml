@@ -1,0 +1,55 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.ForceUpdateScreenViewModel, Foodmission" style="align-items: center; justify-content: center; align-content: center; flex-grow: 1;">
+        <ui:VisualElement name="update-content" class="box-background" style="padding: 24px; width: 90%;">
+            <appui:Heading size="XXL" primary="true" text="Update Required" class="update-title" style="margin-bottom: 16px; text-align: center; flex-wrap: wrap; white-space: pre-wrap;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(1674160731316224)"/>
+                </Bindings>
+            </appui:Heading>
+            <appui:Text text="A new version is available." size="XXL" primary="false" class="update-message" style="margin-bottom: 24px; text-align: center;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(1674295611744256)"/>
+                </Bindings>
+            </appui:Text>
+            <ui:VisualElement style="flex-direction: row; justify-content: space-around; margin-bottom: 24px; padding: 16px; background-color: rgba(245, 245, 245, 0.49); border-radius: 8px; flex-grow: 1;">
+                <appui:Text label="Current:" size="XL" primary="true" name="Text" text="xbgfgbxbxbsgfbfbhf">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="CurrentVersion" binding-mode="ToTarget"/>
+                    </Bindings>
+                </appui:Text>
+                <appui:Icon icon-name="caret-double-right" size="XS" style="height: auto;"/>
+                <appui:Text label="Latest:" size="XL" primary="true" text="cghcfgvhfghfghcfgbncfnfghnfghn">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="LatestVersion" binding-mode="ToTarget"/>
+                    </Bindings>
+                </appui:Text>
+            </ui:VisualElement>
+            <appui:Spacer spacing="XS"/>
+            <appui:Text primary="true" size="XL" text="Release Notes:">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(1674465741103104)"/>
+                </Bindings>
+            </appui:Text>
+            <ui:ScrollView class="fm-dialog-scroll">
+                <appui:Text primary="true" size="XL" text="Dear Partners,  The FOODMISSION app build 0.0.3 is now ready for both Android and iOS.  Release notes: &#x9;- Added: preliminary support for barcode scanner &#x9;- Fixed: renderer performance issue  &#x9;- Added: build metadata &#x9;- Fixed: Avatar editor showed some elements in the wrong order &#x9;- Fixed: Android bars were hidden in runtime  &#x9;- Fixed: Soft keyboard adjusting &#x9;- Fixed: Minor localization preload issue &#x9;- Optimized: renderTextures adjusted to improve performance &#x9;- Added: missing localization assets  The links are the same as they are for the distribution channel not just for the build, if you already had the app installed you should be able to update it through TestFlight or Google Play Store.  Android -&gt; https://play.google.com/apps/testing/eu.foodmission.platform  iOS -&gt; https://testflight.apple.com/join/eVPDEzhq  Many thanks. Have a nice day." class="fm-dialog-scroll-text" style="flex-grow: 1; flex-shrink: 1;">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="ReleaseNotes" binding-mode="ToTarget"/>
+                    </Bindings>
+                </appui:Text>
+            </ui:ScrollView>
+            <appui:Spacer spacing="XL"/>
+            <appui:Button name="update-button" variant="Accent" title="Update" trailing-icon="fm-arrow-right" class="fm-button fm-button-align-left" style="width: 100%; margin-bottom: 12px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(1675915250622464)"/>
+                </Bindings>
+            </appui:Button>
+            <appui:Spacer/>
+            <appui:Button name="skip-button" variant="Default" title="Later" class="fm-button fm-button-align-left" style="width: 100%; display: flex;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(1675915254816768)"/>
+                </Bindings>
+            </appui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

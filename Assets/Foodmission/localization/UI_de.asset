@@ -1278,7 +1278,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 346294877937664
-    m_Localized: ERROR
+    m_Localized: FEHLER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1352600405401600
+    m_Localized: Suche nach Updates...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674160731316224
+    m_Localized: "Update verf\xFCgbar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674295611744256
+    m_Localized: "Eine neue Version ist verf\xFCgbar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674465741103104
+    m_Localized: 'Versionshinweise:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915250622464
+    m_Localized: Aktualisieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915254816768
+    m_Localized: "Sp\xE4ter"
     m_Metadata:
       m_Items: []
   references:

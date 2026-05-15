@@ -1251,6 +1251,30 @@ MonoBehaviour:
     m_Key: ERROR_TITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 1352600405401600
+    m_Key: CHECKING_UPDATES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674160731316224
+    m_Key: UPTADE_AVAILABLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674295611744256
+    m_Key: UPDATE_AVAILABLE_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674465741103104
+    m_Key: RELEASE_NOTES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915250622464
+    m_Key: UPDATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915254816768
+    m_Key: LATER
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

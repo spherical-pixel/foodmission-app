@@ -66,6 +66,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<OnboardingGroupsViewModel>();
             builder.services.AddTransient<EditProfileViewModel>();
             builder.services.AddTransient<AvatarEditorViewModel>();
+            builder.services.AddTransient<ForceUpdateScreenViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

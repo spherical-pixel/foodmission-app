@@ -1271,7 +1271,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 346294877937664
-    m_Localized: ERROR
+    m_Localized: NAPAKA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1352600405401600
+    m_Localized: Preverjanje posodobitev ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674160731316224
+    m_Localized: Posodobitev je na voljo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674295611744256
+    m_Localized: "Na voljo je nova razli\u010Dica."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674465741103104
+    m_Localized: 'Opombe ob izdaji:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915250622464
+    m_Localized: Posodobitev
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915254816768
+    m_Localized: Kasneje
     m_Metadata:
       m_Items: []
   references:

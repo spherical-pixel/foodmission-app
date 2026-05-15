@@ -1533,7 +1533,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 346294877937664
-    m_Localized: ERROR
+    m_Localized: "\u03A3\u03A6\u0391\u039B\u039C\u0391"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1352600405401600
+    m_Localized: "\u0388\u03BB\u03B5\u03B3\u03C7\u03BF\u03C2 \u03B3\u03B9\u03B1 \u03B5\u03BD\u03B7\u03BC\u03B5\u03C1\u03CE\u03C3\u03B5\u03B9\u03C2..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674160731316224
+    m_Localized: "\u0394\u03B9\u03B1\u03B8\u03AD\u03C3\u03B9\u03BC\u03B7 \u03B5\u03BD\u03B7\u03BC\u03AD\u03C1\u03C9\u03C3\u03B7"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674295611744256
+    m_Localized: "\u039C\u03B9\u03B1 \u03BD\u03AD\u03B1 \u03AD\u03BA\u03B4\u03BF\u03C3\u03B7
+      \u03B5\u03AF\u03BD\u03B1\u03B9 \u03B4\u03B9\u03B1\u03B8\u03AD\u03C3\u03B9\u03BC\u03B7."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674465741103104
+    m_Localized: "\u03A3\u03B7\u03BC\u03B5\u03B9\u03CE\u03C3\u03B5\u03B9\u03C2 \u03AD\u03BA\u03B4\u03BF\u03C3\u03B7\u03C2:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915250622464
+    m_Localized: "\u0395\u03BA\u03C3\u03C5\u03B3\u03C7\u03C1\u03BF\u03BD\u03AF\u03B6\u03C9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915254816768
+    m_Localized: "\u0391\u03C1\u03B3\u03CC\u03C4\u03B5\u03C1\u03B1"
     m_Metadata:
       m_Items: []
   references:

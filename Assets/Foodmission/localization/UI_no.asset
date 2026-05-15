@@ -1273,7 +1273,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 346294877937664
-    m_Localized: ERROR
+    m_Localized: FEIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1352600405401600
+    m_Localized: Sjekker etter oppdateringer ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674160731316224
+    m_Localized: Oppdatering tilgjengelig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674295611744256
+    m_Localized: En ny versjon er tilgjengelig.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1674465741103104
+    m_Localized: 'Utgivelsesnotater:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915250622464
+    m_Localized: Oppdatering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1675915254816768
+    m_Localized: Seinere
     m_Metadata:
       m_Items: []
   references:
