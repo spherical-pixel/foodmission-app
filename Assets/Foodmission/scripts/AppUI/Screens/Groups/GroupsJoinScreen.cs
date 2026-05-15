@@ -10,6 +10,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
@@ -21,6 +22,9 @@ namespace eu.foodmission.platform
     {
         private Unity.AppUI.UI.TextField _inviteCodeField;
         private Unity.AppUI.UI.Button _btnJoin;
+
+        private AccessibilityNode _joinButtonNode;
+        private AccessibilityNode _inviteCodeFieldNode;
 
         public GroupsJoinScreen()
         {
@@ -76,6 +80,68 @@ namespace eu.foodmission.platform
 
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _joinButtonNode = CreateButtonNode(h, _btnJoin, "Join group");
+
+            if (_inviteCodeField != null)
+            {
+                _inviteCodeFieldNode = h.AddNode("Invite code");
+                _inviteCodeFieldNode.role = AccessibilityRole.TextField;
+                _inviteCodeFieldNode.frameGetter = MakeElementFrameGetter(_inviteCodeField);
+            }
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _joinButtonNode = null;
+            _inviteCodeFieldNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
+        }
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var r = element.worldBound;
+                var s = element.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
         }
 
         private void OnInviteCodeChanged(ChangeEvent<string> evt)

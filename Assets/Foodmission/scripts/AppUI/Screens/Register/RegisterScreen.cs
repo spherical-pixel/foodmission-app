@@ -6,14 +6,13 @@ using Unity.AppUI.MVVM;
 using Unity.AppUI.Core;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
+using System;
 
 namespace eu.foodmission.platform
 {
-    /// <summary>
-    /// Basic register screen
-    /// </summary>
     [Preserve]
     class RegisterScreen : NavigationScreenBase<RegisterViewModel>
     {
@@ -21,7 +20,16 @@ namespace eu.foodmission.platform
         private FormFieldItemDropDownField _countryDropdown;
         private FormFieldItemDropDownField _regionDropdown;
         private FormFieldItemCheckbox _termsCheckbox;
-        
+        private FormFieldItemTextField _usernameField;
+        private FormFieldItemTextField _emailField;
+        private FormFieldItemPassword _passwordField;
+        private FormFieldItemIntField _yearOfBirthField;
+        private FormFieldItemTextField _postalCodeField;
+        private Unity.AppUI.UI.Heading _heading;
+
+        private AccessibilityNode _headingNode;
+        private AccessibilityNode _registerButtonNode;
+
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -37,17 +45,18 @@ namespace eu.foodmission.platform
             RegisterManualEvents();
         }
 
-        
-
-        /// <summary>
-        /// Cache UI elements for later use.
-        /// </summary>
         private void CacheUIElements()
         {
             _registerButton = contentContainer.Q<Unity.AppUI.UI.Button>("register-button");
             _countryDropdown = contentContainer.Q<FormFieldItemDropDownField>("country");
             _regionDropdown = contentContainer.Q<FormFieldItemDropDownField>("region");
             _termsCheckbox = contentContainer.Q<FormFieldItemCheckbox>("checkbox");
+            _usernameField = contentContainer.Q<FormFieldItemTextField>("username");
+            _emailField = contentContainer.Q<FormFieldItemTextField>("email");
+            _passwordField = contentContainer.Q<FormFieldItemPassword>("password");
+            _yearOfBirthField = contentContainer.Q<FormFieldItemIntField>("yearofbirth");
+            _postalCodeField = contentContainer.Q<FormFieldItemTextField>("postalcode");
+            _heading = contentContainer.Q<Unity.AppUI.UI.Heading>();
         }
 
         protected override void OnViewModelBound()
@@ -59,11 +68,6 @@ namespace eu.foodmission.platform
             _viewModel.PropertyChanged += OnPropertyChanged;
             _viewModel.ShowErrorRequest += OnShowErrorRequested;
 
-            
-
-            
-
-            // Configure country dropdown
             if (_countryDropdown != null)
             {
                 _countryDropdown.Dropdown.sourceItems = _viewModel.CountryOptions;
@@ -73,33 +77,24 @@ namespace eu.foodmission.platform
                     item.icon = null;
                 };
 
-                // Set initial value if available
                 if (_viewModel.SelectedCountryIndex >= 0)
                 {
                     _countryDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedCountryIndex });
                     UpdateRegionDropdown();
                 }
 
-                // Subscribe to value changes using RegisterValueChangedCallback
                 _countryDropdown.Dropdown.RegisterValueChangedCallback(OnCountryChanged);
             }
 
-            // Configure region dropdown
             if (_regionDropdown != null)
             {
                 _regionDropdown.Dropdown.RegisterValueChangedCallback(OnRegionChanged);
-            }            
+            }
         }
 
-        /// <summary>
-        /// Updates the region dropdown based on selected country
-        /// </summary>
         private void UpdateRegionDropdown()
         {
-            if (_regionDropdown == null || _viewModel == null)
-            {
-                return;
-            }
+            if (_regionDropdown == null || _viewModel == null) return;
 
             _viewModel.UpdateRegionsForSelectedCountry();
 
@@ -110,7 +105,6 @@ namespace eu.foodmission.platform
                 item.icon = null;
             };
 
-            // Set value to first item or clear
             if (_viewModel.SelectedRegionIndex >= 0)
             {
                 _regionDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedRegionIndex });
@@ -121,40 +115,23 @@ namespace eu.foodmission.platform
             }
         }
 
-        /// <summary>
-        /// Handles country selection change
-        /// </summary>
         private void OnCountryChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             var value = evt.newValue?.ToArray();
-            
-            if (_viewModel == null || value == null || value.Length == 0)
-            {
-                return;
-            }
+            if (_viewModel == null || value == null || value.Length == 0) return;
 
             _viewModel.SelectedCountryIndex = value[0];
             UpdateRegionDropdown();
         }
 
-        /// <summary>
-        /// Handles region selection change
-        /// </summary>
         private void OnRegionChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             var value = evt.newValue?.ToArray();
-            //Debug.Log($"[RegisterScreen] OnRegionChanged called with: {value?.Length} items");
-            if (_viewModel == null || value == null || value.Length == 0)
-            {
-                return;
-            }
+            if (_viewModel == null || value == null || value.Length == 0) return;
 
             _viewModel.SelectedRegionIndex = value[0];
         }
 
-        /// <summary>
-        /// Manually register events
-        /// </summary>
         private void RegisterManualEvents()
         {
             if (_registerButton != null)
@@ -162,15 +139,12 @@ namespace eu.foodmission.platform
                 _registerButton.clicked += OnRegisterClicked;
             }
 
-            if( _termsCheckbox != null)
+            if (_termsCheckbox != null)
             {
                 _termsCheckbox.Button.clicked += OnTermsLinkClicked;
             }
         }
 
-        /// <summary>
-        /// Un register manual events
-        /// </summary>
         private void UnregisterManualEvents()
         {
             if (_registerButton != null)
@@ -178,7 +152,7 @@ namespace eu.foodmission.platform
                 _registerButton.clicked -= OnRegisterClicked;
             }
 
-            if( _termsCheckbox != null)
+            if (_termsCheckbox != null)
             {
                 _termsCheckbox.Button.clicked -= OnTermsLinkClicked;
             }
@@ -191,7 +165,6 @@ namespace eu.foodmission.platform
 
             UnregisterManualEvents();
 
-            // Unregister dropdown callbacks
             if (_countryDropdown != null)
             {
                 _countryDropdown.Dropdown.UnregisterValueChangedCallback(OnCountryChanged);
@@ -201,16 +174,101 @@ namespace eu.foodmission.platform
                 _regionDropdown.Dropdown.UnregisterValueChangedCallback(OnRegionChanged);
             }
 
-            
-
             _registerButton = null;
             _countryDropdown = null;
             _regionDropdown = null;
-            
-
-
+            _usernameField = null;
+            _emailField = null;
+            _passwordField = null;
+            _yearOfBirthField = null;
+            _postalCodeField = null;
+            _termsCheckbox = null;
+            _heading = null;
 
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _usernameField?.CreateAccessibilityNode(h, "Username");
+            _emailField?.CreateAccessibilityNode(h, "Email");
+            _passwordField?.CreateAccessibilityNode(h, "Password");
+            _yearOfBirthField?.CreateAccessibilityNode(h, "Year of birth");
+            _countryDropdown?.CreateAccessibilityNode(h, "Country");
+            _regionDropdown?.CreateAccessibilityNode(h, "Region");
+            _postalCodeField?.CreateAccessibilityNode(h, "Postal code");
+            _termsCheckbox?.CreateAccessibilityNode(h, "Terms and conditions");
+
+            if (_heading != null)
+            {
+                _headingNode = h.AddNode(_heading.text);
+                _headingNode.role = AccessibilityRole.StaticText;
+                _headingNode.frameGetter = MakeElementFrameGetter(_heading);
+            }
+
+            _registerButtonNode = CreateButtonNode(h, _registerButton, "Create account");
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _headingNode = null;
+            _registerButtonNode = null;
+
+            _usernameField?.DestroyAccessibilityNode();
+            _emailField?.DestroyAccessibilityNode();
+            _passwordField?.DestroyAccessibilityNode();
+            _yearOfBirthField?.DestroyAccessibilityNode();
+            _countryDropdown?.DestroyAccessibilityNode();
+            _regionDropdown?.DestroyAccessibilityNode();
+            _postalCodeField?.DestroyAccessibilityNode();
+            _termsCheckbox?.DestroyAccessibilityNode();
+
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+
+            if (!button.enabledSelf)
+            {
+                node.state = AccessibilityState.Disabled;
+            }
+
+            node.frameGetter = MakeElementFrameGetter(button);
+
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+
+            return node;
+        }
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var rect = element.worldBound;
+                var scale = element.panel.scaledPixelsPerPoint;
+                return new Rect(rect.position * scale, rect.size * scale);
+            };
         }
 
         private void OnRegisterClicked()
@@ -218,14 +276,12 @@ namespace eu.foodmission.platform
             _viewModel?.Register();
         }
 
-        
-
         private void OnTermsLinkClicked()
         {
             ShowTermsDialog();
         }
 
-private void ShowTermsDialog()
+        private void ShowTermsDialog()
         {
             FMDialog.ShowScrollable(
                 this,
@@ -243,7 +299,7 @@ private void ShowTermsDialog()
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if( sender == _viewModel)
+            if (sender == _viewModel)
             {
                 switch (e.PropertyName)
                 {
@@ -271,17 +327,12 @@ private void ShowTermsDialog()
 
         void OnShowErrorRequested(string message)
         {
-            if (string.IsNullOrEmpty(message))
-            {
-                return;
-            }
+            if (string.IsNullOrEmpty(message)) return;
 
             Toast.Build(this, message, NotificationDuration.Long)
                 .SetStyle(NotificationStyle.Negative)
                 .SetPosition(PopupNotificationPlacement.Bottom)
                 .Show();
         }
-
-        
     }
 }

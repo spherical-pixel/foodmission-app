@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 
 using UnityEngine;
+using UnityEngine.Accessibility;
 
 using eu.foodmission.platform.Components;
 
@@ -30,6 +31,10 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.TextField _filterField;
         private Unity.AppUI.UI.Button _btnAdd;
         private Unity.AppUI.UI.Button _btnClearChecked;
+
+        private AccessibilityNode _addButtonNode;
+        private AccessibilityNode _clearCheckedButtonNode;
+        private AccessibilityNode _filterFieldNode;
 
         public ShoppingListDetailScreen()
         {
@@ -142,6 +147,70 @@ namespace eu.foodmission.platform
             {
                 UpdateListTitle();
             }
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _addButtonNode = CreateButtonNode(h, _btnAdd, "Add item");
+            _clearCheckedButtonNode = CreateButtonNode(h, _btnClearChecked, "Clear checked items");
+
+            if (_filterField != null)
+            {
+                _filterFieldNode = h.AddNode("Filter items");
+                _filterFieldNode.role = AccessibilityRole.TextField;
+                _filterFieldNode.frameGetter = MakeElementFrameGetter(_filterField);
+            }
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _addButtonNode = null;
+            _clearCheckedButtonNode = null;
+            _filterFieldNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
+        }
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var r = element.worldBound;
+                var s = element.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
         }
 
         private async void OnClearCheckedClicked()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Components
@@ -47,6 +48,8 @@ namespace eu.foodmission.platform.Components
 
             anchor.Add(overlay);
             s_Overlays[anchor] = overlay;
+
+            NotifyLayoutChanged();
         }
 
         public static void Hide(VisualElement anchor)
@@ -62,6 +65,8 @@ namespace eu.foodmission.platform.Components
 
                 s_Overlays.Remove(anchor);
             }
+
+            NotifyLayoutChanged();
         }
 
         public static void HideAll()
@@ -75,6 +80,14 @@ namespace eu.foodmission.platform.Components
             }
 
             s_Overlays.Clear();
+
+            NotifyLayoutChanged();
+        }
+
+        private static void NotifyLayoutChanged()
+        {
+            if (!AssistiveSupport.isScreenReaderEnabled) return;
+            AssistiveSupport.notificationDispatcher?.SendLayoutChanged();
         }
     }
 }

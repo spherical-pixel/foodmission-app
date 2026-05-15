@@ -4,6 +4,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.Redux;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
@@ -19,6 +20,7 @@ namespace eu.foodmission.platform
         
         private IThemeService _themeService;
         private IStoreService _storeService;
+        private IAccessibilityService _accessibilityService;
         private FoodmissionVisualController _visualController;
         private IDisposableSubscription _scaleSubscription;
         private IDisposableSubscription _langSubscription;
@@ -90,6 +92,13 @@ namespace eu.foodmission.platform
             // Initialize the theme service
             _themeService.Initialize(_panel);
 
+            // Initialize accessibility service and apply system settings
+            _accessibilityService = services.GetRequiredService<IAccessibilityService>();
+            ApplyFontScaleFromSystem();
+            ApplyBoldTextFromSystem();
+            _accessibilityService.FontScaleChanged += OnSystemFontScaleChanged;
+            _accessibilityService.BoldTextStatusChanged += OnSystemBoldTextChanged;
+
             // Apply the initial scale from state
             ApplyScaleFromState();
 
@@ -137,6 +146,12 @@ namespace eu.foodmission.platform
 
             _backgroundSubscription?.Dispose();
             _backgroundSubscription = null;
+
+            if (_accessibilityService != null)
+            {
+                _accessibilityService.FontScaleChanged -= OnSystemFontScaleChanged;
+                _accessibilityService.BoldTextStatusChanged -= OnSystemBoldTextChanged;
+            }
 
             _themeService?.Dispose();
             _themeService = null;
@@ -272,6 +287,61 @@ namespace eu.foodmission.platform
             else
             {
                 Debug.LogWarning($"[FoodmissionApp] Locale not found for lang: {lang}");
+            }
+        }
+
+        private void ApplyFontScaleFromSystem()
+        {
+            if (_panel == null || _accessibilityService == null) return;
+
+            var systemScale = _accessibilityService.FontScale;
+            if (Mathf.Approximately(systemScale, 1f)) return;
+
+            float currentScale = float.TryParse(_panel.scale, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float parsed) ? parsed : 1f;
+            _panel.scale = (currentScale * systemScale).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        private void OnSystemFontScaleChanged(float scale)
+        {
+            if (_panel == null) return;
+            var appState = _storeService?.GetAppState();
+            var baseScale = appState != null ? appState.scale : "medium";
+
+            float baseValue = baseScale switch
+            {
+                "small" => 0.85f,
+                "large" => 1.15f,
+                _ => 1.0f
+            };
+
+            _panel.scale = (baseValue * scale).ToString("F2");
+        }
+
+        private void ApplyBoldTextFromSystem()
+        {
+            if (_panel == null || _accessibilityService == null) return;
+
+            if (_accessibilityService.IsBoldTextEnabled)
+            {
+                rootVisualElement.AddToClassList("fm-bold-text");
+            }
+            else
+            {
+                rootVisualElement.RemoveFromClassList("fm-bold-text");
+            }
+        }
+
+        private void OnSystemBoldTextChanged(bool enabled)
+        {
+            if (_panel == null) return;
+
+            if (enabled)
+            {
+                rootVisualElement.AddToClassList("fm-bold-text");
+            }
+            else
+            {
+                rootVisualElement.RemoveFromClassList("fm-bold-text");
             }
         }
 

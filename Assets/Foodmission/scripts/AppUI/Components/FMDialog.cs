@@ -3,6 +3,7 @@ using Unity.AppUI.Core;
 using Unity.AppUI.UI;
 
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Components
@@ -33,7 +34,9 @@ namespace eu.foodmission.platform.Components
                 dialog.SetCancelAction(1, koLabel);
                 dialog.cancelButton.clicked += () => onKo?.Invoke();
             }
-            Modal.Build(anchor, dialog).Show();
+            var modal = Modal.Build(anchor, dialog);
+            NotifyScreenReaderOfDialog(modal, title, message);
+            modal.Show();
         }
 
         public static void ShowConfirm(
@@ -71,6 +74,7 @@ namespace eu.foodmission.platform.Components
                 };
             }
 
+            NotifyScreenReaderOfDialog(modal, title, message);
             modal.Show();
         }
 
@@ -113,6 +117,7 @@ namespace eu.foodmission.platform.Components
                 };
             }
 
+            NotifyScreenReaderOfDialog(modal, title, content);
             modal.Show();
         }
 
@@ -171,7 +176,23 @@ namespace eu.foodmission.platform.Components
             }
 
             modal = Modal.Build(anchor, dialog);
+            NotifyScreenReaderOfDialog(modal, title, "");
             modal.Show();
+        }
+
+        private static void NotifyScreenReaderOfDialog(Modal modal, string title, string content)
+        {
+            if (!AssistiveSupport.isScreenReaderEnabled) return;
+
+            var dispatcher = AssistiveSupport.notificationDispatcher;
+            if (dispatcher == null) return;
+
+            dispatcher.SendLayoutChanged();
+
+            modal.dismissed += (_, _) =>
+            {
+                dispatcher.SendLayoutChanged();
+            };
         }
     }
 }

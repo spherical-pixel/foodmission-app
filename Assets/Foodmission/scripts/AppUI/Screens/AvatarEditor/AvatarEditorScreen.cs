@@ -1,9 +1,11 @@
 
+using System;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -44,6 +46,19 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Button _btShoes;
         private Unity.AppUI.UI.Button _btSave;
         private Unity.AppUI.UI.Button _btExit;
+
+        private AccessibilityNode _btHairNode;
+        private AccessibilityNode _btEyebrowsNode;
+        private AccessibilityNode _btEyesNode;
+        private AccessibilityNode _btNoseNode;
+        private AccessibilityNode _btMouthNode;
+        private AccessibilityNode _btFacialHairNode;
+        private AccessibilityNode _btSkinNode;
+        private AccessibilityNode _btTshirtNode;
+        private AccessibilityNode _btTrousersNode;
+        private AccessibilityNode _btShoesNode;
+        private AccessibilityNode _btSaveNode;
+        private AccessibilityNode _btExitNode;
 
         private bool _isFromOnboarding;
         private AvatarEditorPanelItem _avatarEditorPanelItem;
@@ -172,6 +187,71 @@ namespace eu.foodmission.platform
 
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _btHairNode = CreateButtonNode(h, _btHair, "Hair");
+            _btEyebrowsNode = CreateButtonNode(h, _btEyebrows, "Eyebrows");
+            _btEyesNode = CreateButtonNode(h, _btEyes, "Eyes");
+            _btNoseNode = CreateButtonNode(h, _btNose, "Nose");
+            _btMouthNode = CreateButtonNode(h, _btMouth, "Mouth");
+            _btFacialHairNode = CreateButtonNode(h, _btFacialHair, "Facial hair");
+            _btSkinNode = CreateButtonNode(h, _btSkin, "Skin");
+            _btTshirtNode = CreateButtonNode(h, _btTshirt, "T-shirt");
+            _btTrousersNode = CreateButtonNode(h, _btTrousers, "Trousers");
+            _btShoesNode = CreateButtonNode(h, _btShoes, "Shoes");
+            _btSaveNode = CreateButtonNode(h, _btSave, "Save avatar");
+            _btExitNode = CreateButtonNode(h, _btExit, "Exit without saving");
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _btHairNode = null;
+            _btEyebrowsNode = null;
+            _btEyesNode = null;
+            _btNoseNode = null;
+            _btMouthNode = null;
+            _btFacialHairNode = null;
+            _btSkinNode = null;
+            _btTshirtNode = null;
+            _btTrousersNode = null;
+            _btShoesNode = null;
+            _btSaveNode = null;
+            _btExitNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
         }
 
         private void OpenSelectorItemAvatar(AvatarEditorItemEnum itemEnum)

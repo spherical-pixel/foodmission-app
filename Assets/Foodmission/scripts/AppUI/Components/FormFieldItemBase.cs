@@ -1,13 +1,16 @@
 
 using Unity.AppUI.UI;
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Properties;
+using System;
 
 
 namespace eu.foodmission.platform.Components
 {
     [UxmlElement]
-    public partial class FormFieldItemBase : VisualElement
+    public partial class FormFieldItemBase : VisualElement, IAccessibleComponent
     {
 
         /* ========= UXML ATTRIBUTES ========= */
@@ -110,6 +113,34 @@ namespace eu.foodmission.platform.Components
         protected VisualElement _fieldContainer;
         protected Unity.AppUI.UI.HelpText _helpText;
 
+        protected AccessibilityNode _accessibilityNode;
+
+        public AccessibilityNode AccessibilityNode => _accessibilityNode;
+
+        public virtual AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)
+        {
+            DestroyAccessibilityNode();
+            _accessibilityNode = hierarchy.AddNode(!string.IsNullOrEmpty(label) ? label : HeadingText);
+            return _accessibilityNode;
+        }
+
+        public virtual void UpdateAccessibilityNode() { }
+
+        public virtual void DestroyAccessibilityNode()
+        {
+            _accessibilityNode = null;
+        }
+
+        protected static Func<Rect> MakeFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var rect = element.worldBound;
+                var scale = element.panel.scaledPixelsPerPoint;
+                return new Rect(rect.position * scale, rect.size * scale);
+            };
+        }
 
         public FormFieldItemBase()
         {

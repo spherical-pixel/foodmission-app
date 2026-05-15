@@ -1,8 +1,9 @@
 
+using System.Linq;
 using Unity.AppUI.UI;
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Properties;
-using System.Diagnostics.Contracts;
 
 
 namespace eu.foodmission.platform.Components
@@ -69,6 +70,44 @@ namespace eu.foodmission.platform.Components
             _dropdown = new Unity.AppUI.UI.Dropdown();
             _dropdown.AddToClassList("item-field");
             _fieldContainer.Add(_dropdown);
+            _dropdown.RegisterValueChangedCallback(OnDropdownValueChanged);
+        }
+
+        public override AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)
+        {
+            base.CreateAccessibilityNode(hierarchy, label);
+            if (_accessibilityNode == null) return null;
+
+            _accessibilityNode.role = AccessibilityRole.Dropdown;
+            _accessibilityNode.value = FormatDropdownValue(_dropdown?.value);
+            _accessibilityNode.frameGetter = MakeFrameGetter(_dropdown);
+
+            if (_dropdown != null && !_dropdown.enabledSelf)
+            {
+                _accessibilityNode.state = AccessibilityState.Disabled;
+            }
+
+            return _accessibilityNode;
+        }
+
+        public override void UpdateAccessibilityNode()
+        {
+            if (_accessibilityNode != null && _dropdown != null)
+            {
+                _accessibilityNode.value = FormatDropdownValue(_dropdown.value);
+            }
+        }
+
+        private static string FormatDropdownValue(System.Collections.IEnumerable value)
+        {
+            if (value == null) return "";
+            var indices = value.Cast<int>().ToList();
+            return indices.Count > 0 ? string.Join(",", indices) : "";
+        }
+
+        private void OnDropdownValueChanged(ChangeEvent<System.Collections.Generic.IEnumerable<int>> evt)
+        {
+            UpdateAccessibilityNode();
         }
         
     }

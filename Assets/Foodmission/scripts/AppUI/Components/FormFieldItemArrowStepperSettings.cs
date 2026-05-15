@@ -1,14 +1,33 @@
 using System;
 using Unity.AppUI.UI;
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Properties;
-using UnityEngine;
 
 namespace eu.foodmission.platform.Components
 {
     [UxmlElement]
-    public partial class FormFieldItemArrowStepperSettings : VisualElement
+    public partial class FormFieldItemArrowStepperSettings : VisualElement, IAccessibleComponent
     {
+        private AccessibilityNode _accessibilityNode;
+
+        public AccessibilityNode AccessibilityNode => _accessibilityNode;
+
+        public AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)
+        {
+            return _stepper?.CreateAccessibilityNode(hierarchy, label ?? HeadingText);
+        }
+
+        public void UpdateAccessibilityNode()
+        {
+            _stepper?.UpdateAccessibilityNode();
+        }
+
+        public void DestroyAccessibilityNode()
+        {
+            _stepper?.DestroyAccessibilityNode();
+        }
         /* ========= UXML ATTRIBUTES ========= */
 
         [UxmlAttribute("Heading-Text")]

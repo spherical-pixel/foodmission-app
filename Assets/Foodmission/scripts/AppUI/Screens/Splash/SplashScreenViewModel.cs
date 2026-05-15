@@ -15,25 +15,30 @@ namespace eu.foodmission.platform
     {
         private readonly IAuthService _authService;
         private readonly ITemplateService _templateService;
+        private readonly IAppUpdateService _appUpdateService;
 
         [ObservableProperty]
         private string _loadingText = "Loading...";
 
+        public AppVersionCheckResult PendingUpdate { get; set; }
+        public string ReturnActionOnSkip { get; set; }
+
         public SplashScreenViewModel(
             IStoreService storeService,
             IAuthService authService,
-            ITemplateService templateService) : base(storeService)
+            ITemplateService templateService,
+            IAppUpdateService appUpdateService) : base(storeService)
         {
             _authService = authService;
             _templateService = templateService;
+            _appUpdateService = appUpdateService;
         }
 
         public async Task<string> InitializeAppAsync()
         {
             AndroidSystemBar.ShowAndSetTransparent();
 
-            LoadingText = "Loading localizations";//LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_LOCALIZATIONS");
-            // Await localization initialization first before accessing StringDatabase
+            LoadingText = "Loading localizations";
             if (!LocalizationSettings.InitializationOperation.IsDone)
             {
                 await LocalizationSettings.InitializationOperation.Task;
@@ -45,25 +50,22 @@ namespace eu.foodmission.platform
                 .GetLocalizedStringAsync("UI", "LOADING_ASSETS").Task;
             await Task.Delay(500);
 
-            // Load Nutri from Addressables
             LoadingText = await LocalizationSettings.StringDatabase
                 .GetLocalizedStringAsync("UI", "LOADING_NUTRI").Task;
             var nutriService = App.current.services.GetService<INutriService>();
             await nutriService.InitializeAsync();
             await Task.Delay(500);
 
-            // Load Avatar from Addressables
             LoadingText = await LocalizationSettings.StringDatabase
                 .GetLocalizedStringAsync("UI", "LOADING_AVATAR").Task;
             var avatarService = App.current.services.GetService<IAvatarService>();
             await avatarService.InitializeAsync();
             await Task.Delay(500);
 
-            // Preload UI templates
             LoadingText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_UI");
             await _templateService.PreloadAllAsync();
 
-            // Check session
+            // Check session first to know return action
             LoadingText = await LocalizationSettings.StringDatabase
                 .GetLocalizedStringAsync("UI", "CHECK_AUTH").Task;
             var isAuthenticated = await _authService.CheckSessionAsync();
@@ -73,17 +75,22 @@ namespace eu.foodmission.platform
                 _authService.Logout();
             }
 
-            await Task.Delay(500);
+            string returnAction = isAuthenticated ? Actions.loading_to_home : Actions.loading_to_auth;
 
-            if (!isAuthenticated)
+            // Check for app updates (after session, so we know the return action)
+            LoadingText = await LocalizationSettings.StringDatabase
+                .GetLocalizedStringAsync("UI", "CHECKING_UPDATES").Task;
+            var (updateResult, _) = await _appUpdateService.CheckForUpdateAsync();
+            if (updateResult?.updateAvailable == true)
             {
-                return Actions.loading_to_auth;
+                PendingUpdate = updateResult;
+                ReturnActionOnSkip = returnAction;
+                return Actions.loading_to_forceupdate;
             }
 
-            return Actions.loading_to_home;
+            await Task.Delay(500);
 
-            
-            //return Actions.register_to_onboarding;
+            return returnAction;
         }
     }
 }

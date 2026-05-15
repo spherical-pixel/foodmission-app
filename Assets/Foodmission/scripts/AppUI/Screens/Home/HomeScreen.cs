@@ -3,6 +3,8 @@ using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -20,9 +22,14 @@ namespace eu.foodmission.platform
 
         private FMArrowStepper _periodStepper;
         private FMArrowStepper _scopeStepper;
-        
+
         private static readonly string[] k_PeriodChoices = { "@UI:TODAY", "@UI:WEEK", "@UI:MONTH" };
         private static readonly string[] k_ScopeChoices = { "@UI:ME", "@UI:GROUP" };
+
+        private AccessibilityNode _healthProgressNode;
+        private AccessibilityNode _sustainabilityProgressNode;
+        private AccessibilityNode _knowledgeProgressNode;
+        private AccessibilityNode _caloriesNode;
 
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -61,7 +68,6 @@ namespace eu.foodmission.platform
 
             _periodStepper = contentContainer.Q<FMArrowStepper>("period-stepper");
             _scopeStepper = contentContainer.Q<FMArrowStepper>("scope-stepper");
-            
         }
 
         protected override void OnViewModelBound()
@@ -74,20 +80,11 @@ namespace eu.foodmission.platform
 
         private void RegisterEvents()
         {
-            // if (_btnPrevPeriod != null) _btnPrevPeriod.clicked += OnPrevPeriod;
-            // if (_btnNextPeriod != null) _btnNextPeriod.clicked += OnNextPeriod;
-            // if (_btnPrevScope  != null) _btnPrevScope.clicked  += OnPrevScope;
-            // if (_btnNextScope  != null) _btnNextScope.clicked  += OnNextScope;
         }
 
         private void UnregisterEvents()
         {
-            // if (_btnPrevPeriod != null) _btnPrevPeriod.clicked -= OnPrevPeriod;
-            // if (_btnNextPeriod != null) _btnNextPeriod.clicked -= OnNextPeriod;
-            // if (_btnPrevScope  != null) _btnPrevScope.clicked  -= OnPrevScope;
-            // if (_btnNextScope  != null) _btnNextScope.clicked  -= OnNextScope;
         }
-
 
         private void SetupSteppers()
         {
@@ -140,8 +137,6 @@ namespace eu.foodmission.platform
             _viewModel.SetUserScope(selectedScope);
         }
 
-        
-
         private void RefreshStats()
         {
             if (_viewModel == null) return;
@@ -179,9 +174,81 @@ namespace eu.foodmission.platform
             _caloriesLeftLabel      = null;
             _periodStepper = null;
             _scopeStepper = null;
-            
 
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _periodStepper?.CreateAccessibilityNode(h, "Time period");
+            _scopeStepper?.CreateAccessibilityNode(h, "Scope");
+
+            if (_healthProgress != null)
+            {
+                _healthProgressNode = h.AddNode("Health progress");
+                _healthProgressNode.role = AccessibilityRole.StaticText;
+                _healthProgressNode.value = $"{_viewModel?.HealthProgress * 100:F0}%";
+                _healthProgressNode.frameGetter = MakeElementFrameGetter(_healthProgress);
+            }
+
+            if (_sustainabilityProgress != null)
+            {
+                _sustainabilityProgressNode = h.AddNode("Sustainability progress");
+                _sustainabilityProgressNode.role = AccessibilityRole.StaticText;
+                _sustainabilityProgressNode.value = $"{_viewModel?.SustainabilityProgress * 100:F0}%";
+                _sustainabilityProgressNode.frameGetter = MakeElementFrameGetter(_sustainabilityProgress);
+            }
+
+            if (_knowledgeProgress != null)
+            {
+                _knowledgeProgressNode = h.AddNode("Knowledge progress");
+                _knowledgeProgressNode.role = AccessibilityRole.StaticText;
+                _knowledgeProgressNode.value = $"{_viewModel?.KnowledgeProgress * 100:F0}%";
+                _knowledgeProgressNode.frameGetter = MakeElementFrameGetter(_knowledgeProgress);
+            }
+
+            if (_caloriesCircular != null)
+            {
+                string caloriesText = _viewModel != null
+                    ? $"{_viewModel.CaloriesConsumed} consumed, {_viewModel.CaloriesLeft} left"
+                    : "Calories";
+                _caloriesNode = h.AddNode(caloriesText);
+                _caloriesNode.role = AccessibilityRole.StaticText;
+                _caloriesNode.frameGetter = MakeElementFrameGetter(_caloriesCircular);
+            }
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _healthProgressNode = null;
+            _sustainabilityProgressNode = null;
+            _knowledgeProgressNode = null;
+            _caloriesNode = null;
+
+            _periodStepper?.DestroyAccessibilityNode();
+            _scopeStepper?.DestroyAccessibilityNode();
+
+            base.TeardownAccessibilityNodes();
+        }
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var rect = element.worldBound;
+                var scale = element.panel.scaledPixelsPerPoint;
+                return new Rect(rect.position * scale, rect.size * scale);
+            };
         }
     }
 }

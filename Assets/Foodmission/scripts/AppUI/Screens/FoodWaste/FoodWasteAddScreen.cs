@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 
 using UnityEngine;
+using UnityEngine.Accessibility;
 
 using eu.foodmission.platform.Components;
 
@@ -30,6 +31,14 @@ namespace eu.foodmission.platform
         private Text _foodNameLabel;
         private Unity.AppUI.UI.Button _btnSave;
         private Text _errorText;
+
+        private AccessibilityNode _saveButtonNode;
+        private AccessibilityNode _pantryDropdownNode;
+        private AccessibilityNode _reasonDropdownNode;
+        private AccessibilityNode _methodDropdownNode;
+        private AccessibilityNode _quantityFieldNode;
+        private AccessibilityNode _costFieldNode;
+        private AccessibilityNode _notesFieldNode;
 
         private EventCallback<ChangeEvent<int>> _onPantryChanged;
         private EventCallback<ChangeEvent<int>> _onReasonChanged;
@@ -134,6 +143,108 @@ namespace eu.foodmission.platform
             _btnSave.clicked -= OnSaveClicked;
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _saveButtonNode = CreateButtonNode(h, _btnSave, "Save food waste record");
+
+            if (_pantryDropdown != null)
+            {
+                _pantryDropdownNode = h.AddNode("Pantry item");
+                _pantryDropdownNode.role = AccessibilityRole.Dropdown;
+                _pantryDropdownNode.frameGetter = MakeElementFrameGetter(_pantryDropdown);
+            }
+
+            if (_reasonDropdown != null)
+            {
+                _reasonDropdownNode = h.AddNode("Waste reason");
+                _reasonDropdownNode.role = AccessibilityRole.Dropdown;
+                _reasonDropdownNode.frameGetter = MakeElementFrameGetter(_reasonDropdown);
+            }
+
+            if (_methodDropdown != null)
+            {
+                _methodDropdownNode = h.AddNode("Detection method");
+                _methodDropdownNode.role = AccessibilityRole.Dropdown;
+                _methodDropdownNode.frameGetter = MakeElementFrameGetter(_methodDropdown);
+            }
+
+            if (_quantityField != null)
+            {
+                _quantityFieldNode = h.AddNode("Quantity");
+                _quantityFieldNode.role = AccessibilityRole.TextField;
+                _quantityFieldNode.frameGetter = MakeElementFrameGetter(_quantityField);
+            }
+
+            if (_costField != null)
+            {
+                _costFieldNode = h.AddNode("Cost estimate");
+                _costFieldNode.role = AccessibilityRole.TextField;
+                _costFieldNode.frameGetter = MakeElementFrameGetter(_costField);
+            }
+
+            if (_notesField != null)
+            {
+                _notesFieldNode = h.AddNode("Notes");
+                _notesFieldNode.role = AccessibilityRole.TextField;
+                _notesFieldNode.frameGetter = MakeElementFrameGetter(_notesField);
+            }
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _saveButtonNode = null;
+            _pantryDropdownNode = null;
+            _reasonDropdownNode = null;
+            _methodDropdownNode = null;
+            _quantityFieldNode = null;
+            _costFieldNode = null;
+            _notesFieldNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
+        }
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var r = element.worldBound;
+                var s = element.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

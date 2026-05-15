@@ -9,6 +9,7 @@ using Unity.AppUI.MVVM;
 using Unity.AppUI.UI;
 
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
@@ -31,6 +32,7 @@ namespace eu.foodmission.platform
         private CircularProgress _searchSpinner;
         private Text _errorText;
         private CancellationTokenSource _searchCts;
+        private AccessibilityNode _saveButtonNode;
 
         public MealLogAddScreen()
         {
@@ -103,6 +105,49 @@ namespace eu.foodmission.platform
                 _toggleFromPantry.UnregisterValueChangedCallback(OnFromPantryChanged);
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _saveButtonNode = h.AddNode("Save meal log");
+            _saveButtonNode.role = AccessibilityRole.Button;
+            _saveButtonNode.frameGetter = MakeElementFrameGetter(_btnSave);
+            _saveButtonNode.invoked += () =>
+            {
+                if (_btnSave != null)
+                {
+                    using var evt = NavigationSubmitEvent.GetPooled();
+                    evt.target = _btnSave;
+                    _btnSave.SendEvent(evt);
+                }
+                return true;
+            };
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _saveButtonNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var r = element.worldBound;
+                var s = element.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
         }
 
         private async void OnSearchChanged(ChangeEvent<string> evt)

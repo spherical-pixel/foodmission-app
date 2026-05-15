@@ -1,8 +1,11 @@
 using System.Linq;
 using Unity.AppUI.MVVM;
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using eu.foodmission.platform.Components;
+using System;
 
 namespace eu.foodmission.platform
 {
@@ -17,7 +20,17 @@ namespace eu.foodmission.platform
         private FormFieldItemArrowStepperSettings _musicStepper;
         private FormFieldItemArrowStepperSettings _notificationsStepper;
         private FormFieldItemArrowStepperSettings _backgroundStepper;
-        
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var rect = element.worldBound;
+                var scale = element.panel.scaledPixelsPerPoint;
+                return new Rect(rect.position * scale, rect.size * scale);
+            };
+        }
 
         private static readonly string[] k_ThemeChoices = { "@UI:LIGHT", "@UI:DARK", "@UI:SYSTEM" };
         private static readonly string[] k_LangChoices = {
@@ -67,6 +80,41 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
             SetupSteppers();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _themeStepper?.CreateAccessibilityNode(h, "Theme");
+            _langStepper?.CreateAccessibilityNode(h, "Language");
+            _scaleStepper?.CreateAccessibilityNode(h, "Scale");
+            _fontStepper?.CreateAccessibilityNode(h, "Font");
+            _soundStepper?.CreateAccessibilityNode(h, "Sound volume");
+            _musicStepper?.CreateAccessibilityNode(h, "Music volume");
+            _notificationsStepper?.CreateAccessibilityNode(h, "Notifications");
+            _backgroundStepper?.CreateAccessibilityNode(h, "Background");
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _themeStepper?.DestroyAccessibilityNode();
+            _langStepper?.DestroyAccessibilityNode();
+            _scaleStepper?.DestroyAccessibilityNode();
+            _fontStepper?.DestroyAccessibilityNode();
+            _soundStepper?.DestroyAccessibilityNode();
+            _musicStepper?.DestroyAccessibilityNode();
+            _notificationsStepper?.DestroyAccessibilityNode();
+            _backgroundStepper?.DestroyAccessibilityNode();
+
+            base.TeardownAccessibilityNodes();
         }
 
         private void SetupSteppers()

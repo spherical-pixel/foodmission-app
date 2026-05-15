@@ -1,19 +1,16 @@
 using System.Threading.Tasks;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
 {
-    /// <summary>
-    /// Splash screen
-    /// Navigates automatically to Home or Login based on authentication state.
-    /// </summary>
     [Preserve]
     class SplashScreen : NavigationScreenBase<SplashScreenViewModel>
     {
-
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
         protected override bool ApplySafeAreaRight => false;
@@ -21,17 +18,14 @@ namespace eu.foodmission.platform
         protected override bool IsFixedContent => true;
 
         private VisualElement _logo;
+        private AccessibilityNode _logoNode;
 
         public SplashScreen()
         {
             InitializeComponent(FoodmissionAppBuilder.instance.SplashTemplate);
             CacheUIElements();
-
         }
 
-         /// <summary>
-        /// Cache UI elements references
-        /// </summary>
         private void CacheUIElements()
         {
             _logo = contentContainer.Q<VisualElement>("logofoodmission");
@@ -46,21 +40,34 @@ namespace eu.foodmission.platform
             await Task.Delay(500);
             _logo.AddToClassList("visible");
             await Task.Delay(500);
-            
-            // Async init 
+
             if (_viewModel != null)
             {
                 string navigationAction = await _viewModel.InitializeAppAsync();
 
+                if (navigationAction == Actions.loading_to_forceupdate && _viewModel.PendingUpdate != null)
+                {
+                    string jsonData = JsonUtility.ToJson(_viewModel.PendingUpdate);
+                    string returnAction = _viewModel.ReturnActionOnSkip;
+
+                    if (string.IsNullOrEmpty(returnAction))
+                        returnAction = Actions.loading_to_auth;
+
+                    _navController.Navigate(navigationAction, new[]
+                    {
+                        new Argument("updateData", jsonData),
+                        new Argument("returnAction", returnAction)
+                    });
+                    return;
+                }
+
                 await ExitAnimation(navigationAction);
-                //_navController.Navigate(navigationAction);
             }
             else
             {
                 Debug.LogError($"[{GetType().Name}] ViewModel is null - cannot initialize");
             }
         }
-
 
         private async Task ExitAnimation(string navigationAction)
         {
@@ -69,15 +76,39 @@ namespace eu.foodmission.platform
 
             await Task.Delay(500);
             _navController.Navigate(navigationAction);
-
         }
-
 
         public override void OnExit(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnExit(controller, destination, args);
         }
 
-        
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _logoNode = h.AddNode("Foodmission");
+            _logoNode.role = AccessibilityRole.Image;
+            _logoNode.frameGetter = () =>
+            {
+                if (_logo == null || _logo.panel == null) return Rect.zero;
+                var rect = _logo.worldBound;
+                var scale = _logo.panel.scaledPixelsPerPoint;
+                return new Rect(rect.position * scale, rect.size * scale);
+            };
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _logoNode = null;
+            base.TeardownAccessibilityNodes();
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 
 using UnityEngine;
+using UnityEngine.Accessibility;
 
 using eu.foodmission.platform.Components;
 
@@ -26,6 +27,8 @@ namespace eu.foodmission.platform
         private Text _emptyState;
         private Unity.AppUI.UI.Button _btnAdd;
         private ScrollView _scrollView;
+
+        private AccessibilityNode _addButtonNode;
 
         public FoodWasteScreen()
         {
@@ -70,6 +73,47 @@ namespace eu.foodmission.platform
                 _scrollView.UnregisterCallback<GeometryChangedEvent>(OnScrollChanged);
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            _addButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnAdd, "Add food waste");
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _addButtonNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
         }
 
         private void OnScrollChanged(GeometryChangedEvent evt)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,6 +8,7 @@ using Unity.AppUI.Core;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -23,7 +25,10 @@ namespace eu.foodmission.platform
         private FormFieldItemDropDownField _educationLevelDropdown;
         private FormFieldItemDropDownField _annualIncomeDropdown;
         private FormFieldItemDropDownField _shoppingResponsibilityDropdown;
-        
+
+        private AccessibilityNode _submitButtonNode;
+        private AccessibilityNode _skipButtonNode;
+
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -310,6 +315,51 @@ namespace eu.foodmission.platform
 
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _submitButtonNode = CreateButtonNode(h, _submitButton, "Submit profile");
+            _skipButtonNode = CreateButtonNode(h, _skipButton, "Skip profile setup");
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _submitButtonNode = null;
+            _skipButtonNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -9,6 +9,8 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
@@ -29,6 +31,14 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.TextField _expiryField;
         private Unity.AppUI.UI.Button _btnSave;
         private Unity.AppUI.UI.Button _btnDelete;
+
+        private AccessibilityNode _quantityFieldNode;
+        private AccessibilityNode _unitDropdownNode;
+        private AccessibilityNode _locationDropdownNode;
+        private AccessibilityNode _notesFieldNode;
+        private AccessibilityNode _expiryFieldNode;
+        private AccessibilityNode _saveButtonNode;
+        private AccessibilityNode _deleteButtonNode;
 
         private static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
 
@@ -175,6 +185,102 @@ namespace eu.foodmission.platform
                     UpdateApiErrorState();
                     break;
             }
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _saveButtonNode = CreateButtonNode(h, _btnSave, "Save item");
+            _deleteButtonNode = CreateButtonNode(h, _btnDelete, "Delete item");
+
+            if (_quantityField != null)
+            {
+                _quantityFieldNode = h.AddNode("Quantity");
+                _quantityFieldNode.role = AccessibilityRole.TextField;
+                _quantityFieldNode.frameGetter = MakeElementFrameGetter(_quantityField);
+            }
+
+            if (_unitDropdown != null)
+            {
+                _unitDropdownNode = h.AddNode("Unit");
+                _unitDropdownNode.role = AccessibilityRole.Dropdown;
+                _unitDropdownNode.frameGetter = MakeElementFrameGetter(_unitDropdown);
+            }
+
+            if (_locationDropdown != null)
+            {
+                _locationDropdownNode = h.AddNode("Location");
+                _locationDropdownNode.role = AccessibilityRole.Dropdown;
+                _locationDropdownNode.frameGetter = MakeElementFrameGetter(_locationDropdown);
+            }
+
+            if (_notesField != null)
+            {
+                _notesFieldNode = h.AddNode("Notes");
+                _notesFieldNode.role = AccessibilityRole.TextField;
+                _notesFieldNode.frameGetter = MakeElementFrameGetter(_notesField);
+            }
+
+            if (_expiryField != null)
+            {
+                _expiryFieldNode = h.AddNode("Expiry date");
+                _expiryFieldNode.role = AccessibilityRole.TextField;
+                _expiryFieldNode.frameGetter = MakeElementFrameGetter(_expiryField);
+            }
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _saveButtonNode = null;
+            _deleteButtonNode = null;
+            _quantityFieldNode = null;
+            _unitDropdownNode = null;
+            _locationDropdownNode = null;
+            _notesFieldNode = null;
+            _expiryFieldNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
+        }
+
+        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
+        {
+            return () =>
+            {
+                if (element == null || element.panel == null) return Rect.zero;
+                var r = element.worldBound;
+                var s = element.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
         }
 
         private void UpdateItemTitle()

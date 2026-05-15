@@ -1,5 +1,8 @@
+using System;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -14,6 +17,13 @@ namespace eu.foodmission.platform
         private VisualElement _menuItemBadges;
         private VisualElement _menuItemSettings;
         private VisualElement _menuItemLogout;
+
+        private AccessibilityNode _menuItemProfileNode;
+        private AccessibilityNode _menuItemAvatarNode;
+        private AccessibilityNode _menuItemGroupsNode;
+        private AccessibilityNode _menuItemBadgesNode;
+        private AccessibilityNode _menuItemSettingsNode;
+        private AccessibilityNode _menuItemLogoutNode;
 
         public ProfileScreen()
         {
@@ -116,6 +126,59 @@ namespace eu.foodmission.platform
             _menuItemLogout = null;
 
             base.OnViewModelUnbinding();
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _menuItemProfileNode = CreateButtonNode(h, _menuItemProfile, "Edit profile");
+            _menuItemAvatarNode = CreateButtonNode(h, _menuItemAvatar, "Edit avatar");
+            _menuItemGroupsNode = CreateButtonNode(h, _menuItemGroups, "Groups");
+            _menuItemBadgesNode = CreateButtonNode(h, _menuItemBadges, "Badges");
+            _menuItemSettingsNode = CreateButtonNode(h, _menuItemSettings, "Settings");
+            _menuItemLogoutNode = CreateButtonNode(h, _menuItemLogout, "Logout");
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _menuItemProfileNode = null;
+            _menuItemAvatarNode = null;
+            _menuItemGroupsNode = null;
+            _menuItemBadgesNode = null;
+            _menuItemSettingsNode = null;
+            _menuItemLogoutNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
         }
 
         private void OnProfileClicked(PointerDownEvent evt)

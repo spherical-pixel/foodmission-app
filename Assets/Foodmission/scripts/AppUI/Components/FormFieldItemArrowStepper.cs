@@ -1,8 +1,9 @@
 using System;
 using Unity.AppUI.UI;
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Properties;
-using UnityEngine;
 
 namespace eu.foodmission.platform.Components
 {
@@ -74,6 +75,55 @@ namespace eu.foodmission.platform.Components
 
         private string[] _choices = Array.Empty<string>();
         private int _selectedIndex = 0;
+
+        public override AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)
+        {
+            base.CreateAccessibilityNode(hierarchy, label);
+            if (_accessibilityNode == null) return null;
+
+            _accessibilityNode.role = AccessibilityRole.Slider;
+            _accessibilityNode.value = SelectedValue;
+            _accessibilityNode.frameGetter = MakeFrameGetter(this);
+
+            _accessibilityNode.incremented += OnStepperIncremented;
+            _accessibilityNode.decremented += OnStepperDecremented;
+
+            return _accessibilityNode;
+        }
+
+        public override void UpdateAccessibilityNode()
+        {
+            if (_accessibilityNode != null)
+            {
+                _accessibilityNode.value = SelectedValue;
+            }
+        }
+
+        public override void DestroyAccessibilityNode()
+        {
+            if (_accessibilityNode != null)
+            {
+                _accessibilityNode.incremented -= OnStepperIncremented;
+                _accessibilityNode.decremented -= OnStepperDecremented;
+            }
+            base.DestroyAccessibilityNode();
+        }
+
+        private void OnStepperIncremented()
+        {
+            if (_selectedIndex < Choices.Length - 1)
+            {
+                SelectedIndex++;
+            }
+        }
+
+        private void OnStepperDecremented()
+        {
+            if (_selectedIndex > 0)
+            {
+                SelectedIndex--;
+            }
+        }
 
         public FormFieldItemArrowStepper()
         {

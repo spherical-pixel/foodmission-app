@@ -1,14 +1,18 @@
 using System;
 using Unity.AppUI.UI;
+using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Properties;
-using UnityEngine;
 
 namespace eu.foodmission.platform.Components
 {
     [UxmlElement]
-    public partial class FMArrowStepper : VisualElement
+    public partial class FMArrowStepper : VisualElement, IAccessibleComponent
     {
+        private AccessibilityNode _accessibilityNode;
+
+        public AccessibilityNode AccessibilityNode => _accessibilityNode;
         /* ========= UXML ATTRIBUTES ========= */
 
         [UxmlAttribute("stepper-choices")] [CreateProperty]
@@ -157,6 +161,58 @@ namespace eu.foodmission.platform.Components
             {
                 _nextButton.SetEnabled(_cyclic || _selectedIndex < Choices.Length - 1);
             }
+        }
+
+        // --------------------------------------------------------------------
+        // IAccessibleComponent
+        // --------------------------------------------------------------------
+
+        public virtual AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)
+        {
+            DestroyAccessibilityNode();
+            _accessibilityNode = hierarchy.AddNode(!string.IsNullOrEmpty(label) ? label : SelectedValue);
+            _accessibilityNode.role = AccessibilityRole.Slider;
+            _accessibilityNode.value = SelectedValue;
+            _accessibilityNode.frameGetter = () =>
+            {
+                if (this.panel == null) return Rect.zero;
+                var rect = this.worldBound;
+                var scale = this.panel.scaledPixelsPerPoint;
+                return new Rect(rect.position * scale, rect.size * scale);
+            };
+            _accessibilityNode.incremented += OnIncremented;
+            _accessibilityNode.decremented += OnDecremented;
+            return _accessibilityNode;
+        }
+
+        public virtual void UpdateAccessibilityNode()
+        {
+            if (_accessibilityNode != null)
+            {
+                _accessibilityNode.value = SelectedValue;
+            }
+        }
+
+        public virtual void DestroyAccessibilityNode()
+        {
+            if (_accessibilityNode != null)
+            {
+                _accessibilityNode.incremented -= OnIncremented;
+                _accessibilityNode.decremented -= OnDecremented;
+                _accessibilityNode = null;
+            }
+        }
+
+        private void OnIncremented()
+        {
+            if (_cyclic || _selectedIndex < Choices.Length - 1)
+                SelectedIndex++;
+        }
+
+        private void OnDecremented()
+        {
+            if (_cyclic || _selectedIndex > 0)
+                SelectedIndex--;
         }
     }
 }

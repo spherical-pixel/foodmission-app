@@ -2,6 +2,7 @@ using System;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -21,7 +22,9 @@ namespace eu.foodmission.platform
 
         protected TViewModel _viewModel;
         protected IThemeService _themeService;
+        protected IAccessibilityService _accessibilityService;
         protected NavController _navController;
+        protected AccessibilityHierarchy _accessibilityHierarchy;
 
         // --------------------------------------------------------------------
         // Construction & UI Setup
@@ -119,6 +122,8 @@ namespace eu.foodmission.platform
             BindViewModel();
             SubscribeToNavigation();
             OnViewModelBound();
+            SubscribeToScreenReaderStatus();
+            TryActivateAccessibility();
 
             appBar.showDrawerButton = false;
         }
@@ -130,6 +135,7 @@ namespace eu.foodmission.platform
         {
             _viewModel = App.current.services.GetRequiredService<TViewModel>();
             _themeService = App.current.services.GetRequiredService<IThemeService>();
+            _accessibilityService = App.current.services.GetRequiredService<IAccessibilityService>();
         }
 
         /// <summary>
@@ -156,6 +162,58 @@ namespace eu.foodmission.platform
         protected virtual void OnViewModelBound() { }
 
         // --------------------------------------------------------------------
+        // Accessibility - Screen Reader Support
+        // --------------------------------------------------------------------
+
+        protected virtual void SetupAccessibilityNodes() { }
+
+        protected virtual void TeardownAccessibilityNodes() { }
+
+        private void TryActivateAccessibility()
+        {
+            if (!AssistiveSupport.isScreenReaderEnabled) return;
+
+            _accessibilityHierarchy = _accessibilityService.CreateHierarchy();
+            SetupAccessibilityNodes();
+
+            if (_accessibilityHierarchy != null)
+            {
+                AssistiveSupport.activeHierarchy = _accessibilityHierarchy;
+            }
+        }
+
+        private void TryDeactivateAccessibility()
+        {
+            if (_accessibilityHierarchy == null) return;
+
+            AssistiveSupport.activeHierarchy = null;
+            TeardownAccessibilityNodes();
+            _accessibilityHierarchy = null;
+        }
+
+        private void SubscribeToScreenReaderStatus()
+        {
+            _accessibilityService.ScreenReaderStatusChanged += OnScreenReaderStatusChanged;
+        }
+
+        private void UnsubscribeFromScreenReaderStatus()
+        {
+            _accessibilityService.ScreenReaderStatusChanged -= OnScreenReaderStatusChanged;
+        }
+
+        private void OnScreenReaderStatusChanged(bool enabled)
+        {
+            if (enabled)
+            {
+                TryActivateAccessibility();
+            }
+            else
+            {
+                TryDeactivateAccessibility();
+            }
+        }
+
+        // --------------------------------------------------------------------
         // Lifecycle - Screen Exit
         // --------------------------------------------------------------------
 
@@ -167,6 +225,9 @@ namespace eu.foodmission.platform
         /// <param name="args"></param>
         public override void OnExit(NavController controller, NavDestination destination, Argument[] args)
         {
+            TryDeactivateAccessibility();
+            UnsubscribeFromScreenReaderStatus();
+
             OnViewModelUnbinding();
 
             UnsubscribeFromNavigation();

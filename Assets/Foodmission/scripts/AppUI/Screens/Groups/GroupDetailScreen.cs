@@ -10,6 +10,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
@@ -32,6 +33,11 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Button _btnRegenerate;
         private Unity.AppUI.UI.Button _btnAddMember;
         private Text _errorText;
+
+        private AccessibilityNode _leaveButtonNode;
+        private AccessibilityNode _deleteButtonNode;
+        private AccessibilityNode _regenerateButtonNode;
+        private AccessibilityNode _addMemberButtonNode;
 
         public GroupDetailScreen()
         {
@@ -216,6 +222,55 @@ namespace eu.foodmission.platform
                 FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail);
                 _viewModel.ErrorDetail = null;
             }
+        }
+
+        // --------------------------------------------------------------------
+        // Accessibility
+        // --------------------------------------------------------------------
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+
+            var h = _accessibilityHierarchy;
+
+            _leaveButtonNode = CreateButtonNode(h, _btnLeave, "Leave group");
+            _deleteButtonNode = CreateButtonNode(h, _btnDelete, "Delete group");
+            _regenerateButtonNode = CreateButtonNode(h, _btnRegenerate, "Regenerate invite code");
+            _addMemberButtonNode = CreateButtonNode(h, _btnAddMember, "Add virtual member");
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _leaveButtonNode = null;
+            _deleteButtonNode = null;
+            _regenerateButtonNode = null;
+            _addMemberButtonNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
         }
 
         private void RebuildMembers()
