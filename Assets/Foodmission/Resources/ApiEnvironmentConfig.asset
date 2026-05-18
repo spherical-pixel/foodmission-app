@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799c4391928524ee9ac51f00078cc83c, type: 3}
+  m_Name: ApiEnvironmentConfig
+  m_EditorClassIdentifier: Foodmission::eu.foodmission.platform.ApiEnvironmentConfig
+  m_ActiveIndex: 0
+  m_Environments:
+  - Name: Staging
+    ApiBaseUrl: https://staging.api.foodmission.eu
+    AuthBaseUrl: https://staging.auth.foodmission.eu
+  - Name: Test
+    ApiBaseUrl: https://test.api.foodmission.eu
+    AuthBaseUrl: https://test.auth.foodmission.eu
+  - Name: Local
+    ApiBaseUrl: http://localhost:3000
+    AuthBaseUrl: http://localhost:8080

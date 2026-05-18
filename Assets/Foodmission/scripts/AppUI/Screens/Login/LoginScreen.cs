@@ -199,7 +199,7 @@ namespace eu.foodmission.platform
         private void OnForgotClicked()
         {
             // TODO: We'll need to change this once the endpoint is working
-            Application.OpenURL("https://staging.auth.foodmission.eu/realms/foodmission/login-actions/reset-credentials");
+            Application.OpenURL($"{ApiConfig.AuthBaseUrl}/realms/foodmission/login-actions/reset-credentials");
             //_navController.Navigate(Actions.login_to_forgotpassword);
         }
 
