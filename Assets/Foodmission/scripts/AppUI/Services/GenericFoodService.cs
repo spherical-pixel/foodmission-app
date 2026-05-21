@@ -8,12 +8,12 @@ using UnityEngine.Networking;
 
 namespace eu.foodmission.platform
 {
-    public class FoodCategoryService : IFoodCategoryService
+    public class GenericFoodService : IGenericFoodService
     {
         private readonly IStoreService _storeService;
-        private readonly Dictionary<string, FoodCategory> _cache = new();
+        private readonly Dictionary<string, GenericFood> _cache = new();
 
-        public FoodCategoryService(IStoreService storeService)
+        public GenericFoodService(IStoreService storeService)
         {
             _storeService = storeService;
         }
@@ -27,10 +27,10 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(PaginatedFoodCategoryResponse Result, ApiErrorResponse Error)> SearchCategoriesAsync(
+        public async Task<(PaginatedGenericFoodResponse Result, ApiErrorResponse Error)> SearchCategoriesAsync(
             string query = null, string foodGroup = null, int page = 1, int pageSize = 20)
         {
-            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/food-categories?page={page}&limit={pageSize}");
+            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/generic-foods?page={page}&limit={pageSize}");
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -58,22 +58,22 @@ namespace eu.foodmission.platform
                 return (null, null);
             }
 
-            return (JsonUtility.FromJson<PaginatedFoodCategoryResponse>(request.downloadHandler.text), null);
+            return (JsonUtility.FromJson<PaginatedGenericFoodResponse>(request.downloadHandler.text), null);
         }
 
-        public async Task<(FoodCategory Result, ApiErrorResponse Error)> GetCategoryByIdAsync(string id)
+        public async Task<(GenericFood Result, ApiErrorResponse Error)> GetCategoryByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 return (null, null);
             }
 
-            if (_cache.TryGetValue(id, out FoodCategory cached))
+            if (_cache.TryGetValue(id, out GenericFood cached))
             {
                 return (cached, null);
             }
 
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-categories/{Uri.EscapeDataString(id)}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/generic-foods/{Uri.EscapeDataString(id)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -91,7 +91,7 @@ namespace eu.foodmission.platform
                 return (null, null);
             }
 
-            FoodCategory category = JsonUtility.FromJson<FoodCategory>(request.downloadHandler.text);
+            GenericFood category = JsonUtility.FromJson<GenericFood>(request.downloadHandler.text);
 
             if (category != null && !string.IsNullOrEmpty(category.id))
             {
@@ -103,7 +103,7 @@ namespace eu.foodmission.platform
 
         public async Task<(string[] Result, ApiErrorResponse Error)> GetFoodGroupsAsync()
         {
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-categories/food-groups";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/generic-foods/food-groups";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);

@@ -17,12 +17,12 @@ namespace eu.foodmission.platform
     {
         public string id;
         public string shoppingListId;
-        public string foodId;
+        public string foodProductId;
         public float quantity;
         public string unit;     // PIECES, G, KG, ML, L, CUPS
         public string notes;
         public bool @checked;
-        public FoodItem food;
+        public FoodProduct foodProduct;
     }
 
     [Serializable]

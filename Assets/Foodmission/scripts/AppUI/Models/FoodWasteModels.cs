@@ -32,8 +32,8 @@ namespace eu.foodmission.platform
         public string id;
         public string userId;
         public string pantryItemId;
-        public string foodId;
-        public string foodCategoryId;
+        public string foodProductId;
+        public string genericFoodId;
         public float quantity;
         public string unit;
         public string wasteReason;
@@ -44,8 +44,8 @@ namespace eu.foodmission.platform
         public string wastedAt;
         public string createdAt;
         public string updatedAt;
-        public FoodItem food;
-        public FoodCategory foodCategory;
+        public FoodProduct foodProduct;
+        public GenericFood genericFood;
     }
 
     [Serializable]
@@ -102,11 +102,11 @@ namespace eu.foodmission.platform
         [JsonProperty("pantryItemId")]
         public string pantryItemId;
 
-        [JsonProperty("foodId")]
-        public string foodId;
+        [JsonProperty("foodProductId")]
+        public string foodProductId;
 
-        [JsonProperty("foodCategoryId")]
-        public string foodCategoryId;
+        [JsonProperty("genericFoodId")]
+        public string genericFoodId;
 
         [JsonProperty("quantity")]
         public float? quantity;
@@ -197,11 +197,11 @@ namespace eu.foodmission.platform
     public class ExpiredPantryItem
     {
         public string pantryItemId;
-        public string foodId;
+        public string foodProductId;
         public float quantity;
         public string unit;
         public string expiryDate;
-        public FoodItem food;
+        public FoodProduct foodProduct;
         public string suggestedWasteReason;
         public string suggestedDetectionMethod;
     }
@@ -238,7 +238,7 @@ namespace eu.foodmission.platform
     [Serializable]
     public class MostWastedFood
     {
-        public string foodId;
+        public string foodProductId;
         public string foodName;
         public float totalQuantity;
         public int count;

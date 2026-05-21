@@ -12,8 +12,8 @@ namespace eu.foodmission.platform
     public partial class PantryItemDetailViewModel : ViewModelBase
     {
         private readonly IPantryService _pantryService;
-        private readonly IFoodService _foodService;
-        private readonly IFoodCategoryService _foodCategoryService;
+        private readonly IFoodProductService _foodProductService;
+        private readonly IGenericFoodService _genericFoodService;
 
         private string _itemId;
 
@@ -50,13 +50,13 @@ namespace eu.foodmission.platform
         public PantryItemDetailViewModel(
             IStoreService storeService,
             IPantryService pantryService,
-            IFoodService foodService,
-            IFoodCategoryService foodCategoryService)
+            IFoodProductService foodProductService,
+            IGenericFoodService genericFoodService)
             : base(storeService)
         {
             _pantryService = pantryService;
-            _foodService = foodService;
-            _foodCategoryService = foodCategoryService;
+            _foodProductService = foodProductService;
+            _genericFoodService = genericFoodService;
         }
 
         public async Task LoadAsync(string itemId)
@@ -90,14 +90,14 @@ namespace eu.foodmission.platform
 
             string displayName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
 
-            if (!string.IsNullOrEmpty(item.foodId))
+            if (!string.IsNullOrEmpty(item.foodProductId))
             {
-                var (food, _) = await _foodService.GetFoodByIdAsync(item.foodId);
+                var (food, _) = await _foodProductService.GetFoodByIdAsync(item.foodProductId);
                 displayName = food?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
-            else if (!string.IsNullOrEmpty(item.foodCategoryId))
+            else if (!string.IsNullOrEmpty(item.genericFoodId))
             {
-                var (category, _) = await _foodCategoryService.GetCategoryByIdAsync(item.foodCategoryId);
+                var (category, _) = await _genericFoodService.GetCategoryByIdAsync(item.genericFoodId);
                 displayName = category?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
@@ -126,8 +126,8 @@ namespace eu.foodmission.platform
                 Notes,
                 Location,
                 ExpiryDate,
-                item?.foodId,
-                item?.foodCategoryId);
+                item?.foodProductId,
+                item?.genericFoodId);
 
             IsSaving = false;
 

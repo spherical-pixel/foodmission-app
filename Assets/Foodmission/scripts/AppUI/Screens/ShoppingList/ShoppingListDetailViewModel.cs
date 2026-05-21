@@ -13,7 +13,7 @@ namespace eu.foodmission.platform
     public partial class ShoppingListDetailViewModel : ViewModelBase
     {
         private readonly IShoppingListService _shoppingListService;
-        private readonly IFoodService _foodService;
+        private readonly IFoodProductService _foodProductService;
         private readonly ILocalStorageService _localStorage;
 
         private const string CacheKeyPrefix = "shoppinglist_items_";
@@ -53,12 +53,12 @@ namespace eu.foodmission.platform
         public ShoppingListDetailViewModel(
             IStoreService storeService,
             IShoppingListService shoppingListService,
-            IFoodService foodService,
+            IFoodProductService foodProductService,
             ILocalStorageService localStorage)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
-            _foodService = foodService;
+            _foodProductService = foodProductService;
             _localStorage = localStorage;
         }
 
@@ -153,11 +153,11 @@ namespace eu.foodmission.platform
 
         private async Task<ShoppingListItemView> EnrichItemAsync(ShoppingListItem item)
         {
-            string foodName = item.food?.name;
+            string foodName = item.foodProduct?.name;
 
             if (string.IsNullOrEmpty(foodName))
             {
-                var (fetched, _) = await _foodService.GetFoodByIdAsync(item.foodId);
+                var (fetched, _) = await _foodProductService.GetFoodByIdAsync(item.foodProductId);
                 foodName = fetched?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
@@ -165,7 +165,7 @@ namespace eu.foodmission.platform
             {
                 Item = item,
                 FoodName = foodName,
-                FoodImageUrl = item.food?.imageUrl,
+                FoodImageUrl = item.foodProduct?.imageUrl,
                 FoodBrands = null
             };
         }
@@ -192,7 +192,7 @@ namespace eu.foodmission.platform
             }
 
             IsSearching = true;
-            var (response, _) = await _foodService.SearchOpenFoodFactsAsync(query);
+            var (response, _) = await _foodProductService.SearchOpenFoodFactsAsync(query);
             IsSearching = false;
 
             if (response?.products != null)
@@ -231,13 +231,13 @@ namespace eu.foodmission.platform
             }
 
             ErrorMessage = "";
-            var (foodItem, error) = await _foodService.ImportFromBarcodeAsync(product.barcode);
+            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
 
             if (error != null)
             {
                 if (error.statusCode == 400)
                 {
-                    var (existingFood, findError) = await _foodService.FindByBarcodeAsync(product.barcode);
+                    var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode);
                     if (findError == null && existingFood != null)
                     {
                         foodItem = existingFood;
@@ -269,12 +269,12 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public async Task<FoodItem> ImportByBarcodeAsync(string barcode)
+        public async Task<FoodProduct> ImportByBarcodeAsync(string barcode)
         {
-            var (foodItem, error) = await _foodService.ImportFromBarcodeAsync(barcode);
+            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(barcode);
             if (error != null && error.statusCode == 400)
             {
-                var (existingFood, findError) = await _foodService.FindByBarcodeAsync(barcode);
+                var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(barcode);
                 if (findError == null && existingFood != null)
                     return existingFood;
             }

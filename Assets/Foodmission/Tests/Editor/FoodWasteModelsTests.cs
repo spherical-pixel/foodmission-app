@@ -15,7 +15,7 @@ namespace eu.foodmission.platform.Tests
                 id = "waste-1",
                 userId = "user-1",
                 pantryItemId = "pantry-1",
-                foodId = "food-1",
+                foodProductId = "food-1",
                 quantity = 2.5f,
                 unit = "KG",
                 wasteReason = "EXPIRED",
@@ -41,10 +41,10 @@ namespace eu.foodmission.platform.Tests
         public void PaginatedFoodWasteResponse_Deserializes()
         {
             string json = "{\"data\":[" +
-                "{\"id\":\"w1\",\"userId\":\"u1\",\"pantryItemId\":\"p1\",\"foodId\":\"f1\"," +
+                "{\"id\":\"w1\",\"userId\":\"u1\",\"pantryItemId\":\"p1\",\"foodProductId\":\"f1\"," +
                 "\"quantity\":1.5,\"unit\":\"KG\",\"wasteReason\":\"EXPIRED\",\"detectionMethod\":\"AUTOMATIC\"," +
                 "\"wastedAt\":\"2026-05-09T10:00:00\",\"createdAt\":\"\",\"updatedAt\":\"\"}," +
-                "{\"id\":\"w2\",\"userId\":\"u1\",\"pantryItemId\":\"p2\",\"foodId\":\"f2\"," +
+                "{\"id\":\"w2\",\"userId\":\"u1\",\"pantryItemId\":\"p2\",\"foodProductId\":\"f2\"," +
                 "\"quantity\":0.5,\"unit\":\"G\",\"wasteReason\":\"SPOILED\",\"detectionMethod\":\"MANUAL\"," +
                 "\"wastedAt\":\"2026-05-08T15:00:00\",\"createdAt\":\"\",\"updatedAt\":\"\"}]," +
                 "\"total\":2,\"page\":1,\"limit\":20,\"totalPages\":1}";
@@ -156,7 +156,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ExpiredPantryItem_Deserializes()
         {
-            string json = "{\"pantryItemId\":\"p1\",\"foodId\":\"f1\",\"quantity\":2.0," +
+            string json = "{\"pantryItemId\":\"p1\",\"foodProductId\":\"f1\",\"quantity\":2.0," +
                 "\"unit\":\"KG\",\"expiryDate\":\"2026-05-01T00:00:00\"," +
                 "\"suggestedWasteReason\":\"EXPIRED\",\"suggestedDetectionMethod\":\"AUTOMATIC\"}";
 

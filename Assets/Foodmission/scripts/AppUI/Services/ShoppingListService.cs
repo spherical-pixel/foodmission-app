@@ -159,11 +159,11 @@ namespace eu.foodmission.platform
             return (response?.data, null);
         }
 
-        public async Task<(ShoppingListItem Result, ApiErrorResponse Error)> AddItemAsync(string listId, string foodId, float quantity, string unit = "PIECES", string notes = null, bool? checkedState = null)
+        public async Task<(ShoppingListItem Result, ApiErrorResponse Error)> AddItemAsync(string listId, string foodProductId, float quantity, string unit = "PIECES", string notes = null, bool? checkedState = null)
         {
             AddShoppingListItemRequest body = new()
             {
-                foodId = foodId,
+                foodProductId = foodProductId,
                 quantity = quantity,
                 unit = unit ?? "PIECES",
                 notes = notes,
@@ -325,8 +325,8 @@ namespace eu.foodmission.platform
         [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
         private class AddShoppingListItemRequest
         {
-            [JsonProperty("foodId")]
-            public string foodId;
+            [JsonProperty("foodProductId")]
+            public string foodProductId;
 
             [JsonProperty("quantity")]
             public float quantity;

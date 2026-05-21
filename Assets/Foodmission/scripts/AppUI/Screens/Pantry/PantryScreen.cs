@@ -413,7 +413,7 @@ namespace eu.foodmission.platform
                     {
                         await _viewModel.ImportAndAddFoodItemAsync(product, qty, unit);
                     }
-                    else if (item is FoodCategory category)
+                    else if (item is GenericFood category)
                     {
                         await _viewModel.AddCategoryItemAsync(category, qty, unit);
                     }

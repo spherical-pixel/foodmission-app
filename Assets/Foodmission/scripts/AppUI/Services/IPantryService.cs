@@ -13,10 +13,10 @@ namespace eu.foodmission.platform
         // Single item by id
         Task<(PantryItem Result, ApiErrorResponse Error)> GetItemAsync(string itemId);
 
-        // Add item — exactly one of foodId/foodCategoryId must be non-empty; the other is null
+        // Add item — exactly one of foodProductId/genericFoodId must be non-empty; the other is null
         Task<(PantryItem Result, ApiErrorResponse Error)> AddItemAsync(
-            string foodId,
-            string foodCategoryId,
+            string foodProductId,
+            string genericFoodId,
             float quantity,
             string unit = "PIECES",
             string notes = null,
@@ -31,8 +31,8 @@ namespace eu.foodmission.platform
             string notes,
             string location,
             string expiryDate,
-            string foodId = null,
-            string foodCategoryId = null);
+            string foodProductId = null,
+            string genericFoodId = null);
 
         Task<(bool Success, ApiErrorResponse Error)> DeleteItemAsync(string itemId);
 
