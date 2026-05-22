@@ -73,26 +73,12 @@
     height: 85%;
 }
 
-.margin-300 {
-    margin: var(--appui-spacing-25);
-}
-
 .fm-button-drawer {
     font-size: var(--appui-font-sizes-500);
 }
 
 .fm-button-drawer .appui-icon {
     --unity-image-tint-color: var(--fm-icon-tint);
-}
-
-.appui-navigation-screen__container {
-    background-image: url("project://database/Assets/Foodmission/graphics/icons_miscellaneous.png?fileID=2800000&guid=63b9996e727774f16a08dde171cdadd8&type=3#icons_miscellaneous");
-    background-repeat: repeat;
-    background-size: 256px 256px;
-}
-
-.fm-plain-background .appui-navigation-screen__container {
-    background-image: none;
 }
 
 .appui-bottom-navbar {
@@ -165,46 +151,6 @@
     padding: 0;
     flex-wrap: nowrap;
     white-space: nowrap;
-}
-
-.heading-wrap {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.heading-wrap-pre {
-    white-space: pre-wrap;
-    overflow: hidden;
-}
-
-.stepper-heading {
-    min-width: 50%;
-    flex-shrink: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-500);
-}
-
-.item-field {
-    margin-top: 0;
-}
-
-.centered-text {
-    -unity-text-align: middle-center;
-}
-
-.appui-dialog .appui-heading--primary,
-.appui-dialog__content {
-    color: var(--appui-primary-100);
-}
-
-.appui-picker__menu {
-    max-height: 500px;
-}
-
-.appui-drawer .appui-button,
-.fm-button-drawer {
-    color: var(--appui-primary-100);
 }
 
 .appui-drawer__drawer-container {
@@ -359,54 +305,75 @@
     font-size: var(--appui-font-sizes-body-md);
 }
 
-.fm-profile-avatar {
-    width: 184px;
-    height: 184px;
-    border-radius: 125px;
-    flex-shrink: 0;
-    margin-right: 16px;
-    background-color: var(--appui-primary-1000);
-    border-width: 6px;
-    border-color: white;
-    --unity-image-tint-color: var(--appui-primary-300);
-    --unity-image-size: scale-to-fit;
-    padding: 10px;
+.fm-dialog-scroll {
+    max-height: 1200px;
+    padding: var(--appui-sizing-150);
 }
 
-.fm-profile-username {
-    flex-grow: 1;
-    font-size: var(--appui-font-sizes-500);
+.fm-dialog-scroll-text {
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+.appui-dialog {
+    padding: var(--appui-spacing-100);
+    max-width: 100%;
+}
+
+.appui-modal__content{
+    background-color: var(--fm-surface-bg);
+    border-radius: 35px;
+    --box-shadow-offset-y: 10;
+    --box-shadow-spread:20;
+    --box-shadow-blur: 30;
+    --box-shadow-color: rgba(0, 0, 0, 0.65);
+}
+
+.appui-dialog__content {
+    margin-top: var(--appui-spacing-100);
+}
+
+.appui-dialog--size-s,
+.appui-dialog--size-m,
+.appui-dialog--size-l {
+    width: 900px;
+}
+
+.appui-dialog .appui-heading--primary,
+.appui-dialog__content {
     color: var(--appui-primary-100);
-    padding-bottom: 8px;
-    -unity-font-definition: var(--appui-font-weights-200);
 }
 
-.fm-xp-progress {
-    --progress-color: rgb(41, 209, 227);
-    --appui-linear-progress-height: 28px;
-    --appui-linear-progress-border-radius: 12px;
-    background-color: rgba(0, 0, 0, 0.08);
-    margin-right: -60px;
-    margin-bottom: 45px;
+.appui-dialog__content .appui-textfield {
+    color: var(--appui-primary-100);
 }
 
-.fm-profile-xp-badge {
-    width: 115px;
-    height: 115px;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    background-image: url("project://database/Assets/Foodmission/graphics/png/icons/fm-star.png?fileID=21300000&guid=b4db6c7cc883c433caa9e390badce675&type=3#fm-star");
-    -unity-background-image-size: contain;
-    -unity-background-image-tint-color: rgb(53, 229, 255);
-    margin-bottom: 45px;
+.fm-nutri-dialog {
+    opacity: 0;
+    scale: 0.95;
+    transition-property: opacity, scale;
+    transition-duration: 350ms, 350ms;
+    transition-timing-function: ease-out, ease-out;
 }
 
-.fm-profile-xp-label {
-    color: white;
-    font-size: var(--appui-font-sizes-body-md);
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
+.fm-nutri-dialog.fm-nutri-dialog--visible {
+    opacity: 1;
+    scale: 1;
+}
+
+.fm-nutri-dialog.fm-nutri-dialog--exit {
+    opacity: 0;
+    scale: 0.95;
+    transition-duration: 200ms, 200ms;
+    transition-timing-function: ease-in, ease-in;
+}
+
+.stepper-heading {
+    min-width: 50%;
+    flex-shrink: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-500);
 }
 
 .fm-arrow-stepper__row {
@@ -427,9 +394,22 @@
     width: 100px;
 }
 
-.fm-primary-color,
-.fm-primary-color .fm-arrow-stepper__label {
-    color: var(--appui-primary-100);
+.fm-simple-stepper {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.fm-stepper-value {
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    font-size: var(--appui-font-sizes-body-md);
+    -unity-font-style: bold;
+}
+
+.fm-calories-stepper {
+    margin-top: 15%;
 }
 
 .fm-home-nutri-image {
@@ -490,20 +470,6 @@
     padding-right: 16px;
     padding-top: 8px;
     padding-bottom: 8px;
-}
-
-.fm-simple-stepper {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-}
-
-.fm-stepper-value {
-    flex-grow: 1;
-    -unity-text-align: middle-center;
-    font-size: var(--appui-font-sizes-body-md);
-    -unity-font-style: bold;
 }
 
 .fm-calories-card {
@@ -580,14 +546,6 @@
     -unity-text-align: middle-center;
 }
 
-.box-background {
-    background-color: var(--fm-surface-bg-transparent);
-    border-radius: 35px;
-    border-width: 1px;
-    margin: 50px;
-    padding: 25px;
-}
-
 .fm-calories-background {
     flex-grow: 1;
     background-color: var(--appui-backgrounds-50);
@@ -603,62 +561,81 @@
     display: flex;
 }
 
-
-.fm-dialog-scroll {
-    max-height: 1200px;
-    padding: var(--appui-sizing-150);
-    
+.fm-calories-consumed-value {
+    color: rgb(75, 229, 255);
 }
 
-.fm-dialog-scroll-text {
-    white-space: normal;
-    -unity-text-align: upper-left;
+.fm-profile-avatar {
+    width: 184px;
+    height: 184px;
+    border-radius: 125px;
+    flex-shrink: 0;
+    margin-right: 16px;
+    background-color: var(--appui-primary-1000);
+    border-width: 6px;
+    border-color: white;
+    --unity-image-tint-color: var(--appui-primary-300);
+    --unity-image-size: scale-to-fit;
+    padding: 10px;
 }
 
-.appui-dialog {
-    padding: var(--appui-spacing-100);
-    max-width: 100%;
+.fm-profile-username {
+    flex-grow: 1;
+    font-size: var(--appui-font-sizes-500);
+    color: var(--appui-primary-100);
+    padding-bottom: 8px;
+    -unity-font-definition: var(--appui-font-weights-200);
 }
 
-.appui-dialog__content {
-    margin-top: var(--appui-spacing-100);
+.fm-xp-progress {
+    --progress-color: rgb(41, 209, 227);
+    --appui-linear-progress-height: 28px;
+    --appui-linear-progress-border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.08);
+    margin-right: -60px;
+    margin-bottom: 45px;
 }
 
-.appui-dialog--size-s,
-.appui-dialog--size-m,
-.appui-dialog--size-l {
-    width: 900px;
+.fm-profile-xp-badge {
+    width: 115px;
+    height: 115px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/Foodmission/graphics/png/icons/fm-star.png?fileID=21300000&guid=b4db6c7cc883c433caa9e390badce675&type=3#fm-star");
+    -unity-background-image-size: contain;
+    -unity-background-image-tint-color: rgb(53, 229, 255);
+    margin-bottom: 45px;
 }
 
-.appui-divider__content {
-    background-color: var(--appui-foregrounds-100);
+.fm-profile-xp-label {
+    color: white;
+    font-size: var(--appui-font-sizes-body-md);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
 }
 
-.fm-background-tile {
-    background-image: url("project://database/Assets/Foodmission/graphics/icons_miscellaneous.png?fileID=2800000&guid=63b9996e727774f16a08dde171cdadd8&type=3#icons_miscellaneous");
-    background-repeat: repeat;
-    background-size: 256px 256px;
-    background-color: var(--fm-main-bg);
+.heading-wrap {
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.fm-nutri-dialog {
-    opacity: 0;
-    scale: 0.95;
-    transition-property: opacity, scale;
-    transition-duration: 350ms, 350ms;
-    transition-timing-function: ease-out, ease-out;
+.heading-wrap-pre {
+    white-space: pre-wrap;
+    overflow: hidden;
 }
 
-.fm-nutri-dialog.fm-nutri-dialog--visible {
-    opacity: 1;
-    scale: 1;
+.item-field {
+    margin-top: 0;
 }
 
-.fm-nutri-dialog.fm-nutri-dialog--exit {
-    opacity: 0;
-    scale: 0.95;
-    transition-duration: 200ms, 200ms;
-    transition-timing-function: ease-in, ease-in;
+.centered-text {
+    -unity-text-align: middle-center;
+}
+
+.fm-primary-color,
+.fm-primary-color .fm-arrow-stepper__label {
+    color: var(--appui-primary-100);
 }
 
 .autosize-body-sm {
@@ -699,14 +676,6 @@
     flex-shrink: 1;
     flex-wrap: nowrap;
     white-space: nowrap;
-}
-
-.fm-calories-stepper {
-    margin-top: 15%;
-}
-
-.fm-calories-consumed-value {
-    color: rgb(75, 229, 255);
 }
 
 .heading-auto-size-md {
@@ -751,3 +720,120 @@
     top: 0;
     bottom: 0;
 }
+
+.fm-background-tile {
+    background-image: url("project://database/Assets/Foodmission/graphics/icons_miscellaneous.png?fileID=2800000&guid=63b9996e727774f16a08dde171cdadd8&type=3#icons_miscellaneous");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    background-color: var(--fm-main-bg);
+}
+
+.fm-back-screen-transparent {
+    background-image: url("project://database/Assets/Foodmission/graphics/gradients/white-transparent.png?fileID=2800000&guid=c5207a51b69ad4ac68eb3245c0924044&type=3#white-transparent");
+    -unity-background-scale-mode: scale-to-fit;
+    background-repeat: repeat no-repeat;
+    -unity-background-image-tint-color: var(--fm-bg-screen-trans);
+
+}
+
+.box-background {
+    background-color: var(--fm-surface-bg-transparent);
+    border-radius: 35px;
+    border-width: 1px;
+    margin: 50px;
+    padding: 25px;
+}
+
+.margin-300 {
+    margin: var(--appui-spacing-25);
+}
+
+.appui-picker__menu {
+    max-height: 500px;
+}
+
+.fm-button{
+    /*box-shadow: 0 4px 12px rgba(255, 0, 0, 0.7);*/
+    --box-shadow-offset-y: 10;
+    --box-shadow-spread:20;
+    --box-shadow-blur: 30;
+    --box-shadow-color: rgba(255, 0, 0, 0.65);
+}
+
+
+.appui-drawer .appui-button,
+.fm-button-drawer {
+    color: var(--appui-primary-100);
+}
+
+.appui-divider__content {
+    background-color: var(--appui-foregrounds-100);
+}
+
+.fm-sl-root {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 70px;
+    padding-bottom: 106px;
+    background-color: transparent;
+}
+
+.appui-navigation-screen__container {
+    background-image: url("project://database/Assets/Foodmission/graphics/icons_miscellaneous.png?fileID=2800000&guid=63b9996e727774f16a08dde171cdadd8&type=3#icons_miscellaneous");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+}
+
+.fm-plain-background .appui-navigation-screen__container {
+    background-image: none;
+}
+
+.appui-navigation-screen--with-bottom-nav-bar > .appui-navigation-screen__right-container > .appui-navigation-screen__bottom-nav-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.fm-shopping-list-item-list{
+    width: 100%;
+    height: 116px;
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 35px;
+    flex-grow: 1;
+    margin-bottom: 10px;
+    --box-shadow-offset-y: 40;
+    --box-shadow-spread:80;
+    --box-shadow-blur: 120;
+    --box-shadow-color: rgba(255, 0, 0, 0.65);
+    
+}
+
+
+.fm-shopping-list-item-list .appui-text{
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 100px;
+    color: var(--appui-foregrounds-50);
+}
+
+.fm-shopping-list-item-list .fm-full-button{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.fm-shopping-list-item-list .appui-icon{
+    color: var(--appui-foregrounds-50);
+    --unity-image-tint-color: var(--appui-foregrounds-50);
+    padding: 10px;
+}
+

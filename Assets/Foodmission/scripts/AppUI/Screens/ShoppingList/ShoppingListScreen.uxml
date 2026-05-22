@@ -1,20 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/ShoppingList/ShoppingListScreen.uss?fileID=7433441132597879392&amp;guid=0a0ccc8543a5f45f9b418eea9097bc67&amp;type=3#ShoppingListScreen"/>
-    <ui:VisualElement name="root" class="fm-sl-root">
-        <appui:Text name="error-message" class="fm-sl-error"/>
-        <appui:Text name="empty-state" text="No shopping lists yet. Tap New List to create one." class="fm-sl-empty">
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.ShoppingListViewModel, Foodmission" class="fm-sl-root fm-back-screen-transparent">
+        <appui:Text text="Search or add a shopping list " style="margin-bottom: 8px; margin-top: 20px; padding-left: 40px; padding-right: 40px;"/>
+        <eu.foodmission.platform.Components.FMSearchOrCreateField name="search-or-create-field">
             <Bindings>
-                <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000029)"/>
+                <ui:DataBinding property="TextFieldValue" data-source-path="SearchText" binding-mode="TwoWay"/>
             </Bindings>
-        </appui:Text>
-        <ui:ScrollView name="scroll-view" class="fm-sl-scroll">
-            <ui:VisualElement name="lists-container" class="fm-sl-container"/>
+        </eu.foodmission.platform.Components.FMSearchOrCreateField>
+        <appui:Text text="There are no shopping lists, add one to continue" name="empty-state" style="margin-bottom: 8px; margin-top: 20px; padding-left: 40px; padding-right: 40px;"/>
+        <ui:ScrollView name="scroll-view" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fm-sl-scroll">
+            <ui:VisualElement name="lists-container"/>
         </ui:ScrollView>
-        <appui:Button name="btn-new-list" title="New List" variant="Accent" class="fm-sl-new-btn">
-            <Bindings>
-                <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000030)"/>
-            </Bindings>
-        </appui:Button>
     </ui:VisualElement>
 </ui:UXML>

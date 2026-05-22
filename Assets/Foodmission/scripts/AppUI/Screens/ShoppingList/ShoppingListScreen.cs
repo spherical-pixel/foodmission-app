@@ -16,18 +16,27 @@ using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using Unity.AppUI.Core;
 
 namespace eu.foodmission.platform
 {
     [Preserve]
     class ShoppingListScreen : NavigationScreenBase<ShoppingListViewModel>
     {
-        private VisualElement _listsContainer;
-        private Text _errorText;
-        private Text _emptyState;
-        private Unity.AppUI.UI.Button _btnNewList;
 
-        private AccessibilityNode _newListButtonNode;
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool IsFixedContent => false;
+
+
+        private FMSearchOrCreateField _searchOrCreateField;
+        private VisualElement _listsContainer;
+        private Unity.AppUI.UI.Text _emptyState;
+        private UnityEngine.UIElements.TextField _searchField;
+        
+        
 
         public ShoppingListScreen()
         {
@@ -40,17 +49,18 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _listsContainer = contentContainer.Q<VisualElement>("lists-container");
-            _errorText = contentContainer.Q<Text>("error-message");
-            _emptyState = contentContainer.Q<Text>("empty-state");
-            _btnNewList = contentContainer.Q<Unity.AppUI.UI.Button>("btn-new-list");
+            _emptyState = contentContainer.Q<Unity.AppUI.UI.Text>("empty-state");
+            _searchOrCreateField = contentContainer.Q<FMSearchOrCreateField>("search-or-create-field");
+            _searchField = _searchOrCreateField.Q<UnityEngine.UIElements.TextField>();
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
 
-            _btnNewList.clicked += OnNewListClicked;
+            _searchOrCreateField.ActionButton.clicked += OnNewListClicked;
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            _searchField.RegisterValueChangedCallback(OnSearchTextChanged);
 
             RebuildLists();
             UpdateLoadingState();
@@ -65,51 +75,12 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            _btnNewList.clicked -= OnNewListClicked;
+            _searchOrCreateField.ActionButton.clicked -= OnNewListClicked;
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            _searchField.UnregisterValueChangedCallback(OnSearchTextChanged);
             base.OnViewModelUnbinding();
         }
 
-        // --------------------------------------------------------------------
-        // Accessibility
-        // --------------------------------------------------------------------
-
-        protected override void SetupAccessibilityNodes()
-        {
-            base.SetupAccessibilityNodes();
-            if (_accessibilityHierarchy == null) return;
-
-            _newListButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnNewList, "New shopping list");
-        }
-
-        protected override void TeardownAccessibilityNodes()
-        {
-            _newListButtonNode = null;
-            base.TeardownAccessibilityNodes();
-        }
-
-        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
-        {
-            if (button == null) return null;
-            var node = hierarchy.AddNode(label);
-            node.role = AccessibilityRole.Button;
-            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
-            node.frameGetter = () =>
-            {
-                if (button.panel == null) return Rect.zero;
-                var r = button.worldBound;
-                var s = button.panel.scaledPixelsPerPoint;
-                return new Rect(r.position * s, r.size * s);
-            };
-            node.invoked += () =>
-            {
-                using var evt = NavigationSubmitEvent.GetPooled();
-                evt.target = button;
-                button.SendEvent(evt);
-                return true;
-            };
-            return node;
-        }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -127,6 +98,9 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.ErrorDetail):
                     UpdateApiErrorState();
                     break;
+                case nameof(_viewModel.SearchText):
+                    _viewModel.ApplyFilter();
+                    break;
             }
         }
 
@@ -136,73 +110,72 @@ namespace eu.foodmission.platform
 
             if (_viewModel.Lists == null || _viewModel.Lists.Count == 0)
             {
-                _emptyState?.EnableInClassList("visible", true);
+                _emptyState.style.visibility = Visibility.Visible;
                 return;
             }
 
-            _emptyState?.EnableInClassList("visible", false);
+            _emptyState.style.visibility = Visibility.Hidden;
 
             foreach (ShoppingList list in _viewModel.Lists)
             {
                 ShoppingList captured = list;
 
-                var row = new VisualElement();
-                row.AddToClassList("fm-sl-row");
+                FMItemListShoppingList item = new FMItemListShoppingList { Text = captured.title };
 
-                var nameLabel = new Text { text = captured.title };
-                nameLabel.AddToClassList("fm-sl-row-name");
+                item.RemoveButton.clicked += () => OnItemRemoveClicked(captured);
+                item.OpenButton.clicked += () => OnItemOpenClicked(captured);
 
-                var deleteBtn = new IconButton { icon = "trash" };
+                _listsContainer.Add(item);
+            }
+        }
 
-                row.Add(nameLabel);
-                row.Add(deleteBtn);
+        private void OnSearchTextChanged(ChangeEvent<string> evt)
+        {
+            _viewModel.SearchText = evt.newValue;
+        }
 
-                row.RegisterCallback<ClickEvent>(_ =>
-                    _navController?.Navigate(
-                        Actions.shopping_list_to_detail,
-                        new[]
-                        {
-                            new Argument("listId", captured.id),
-                            new Argument("listTitle", captured.title)
-                        }));
-
-                string capturedId = captured.id;
-                string capturedTitle = captured.title;
-                deleteBtn.RegisterCallback<ClickEvent>(evt =>
+        private void OnItemOpenClicked(ShoppingList list)
+        {
+            _navController?.Navigate(
+                Actions.shopping_list_to_detail,
+                new[]
                 {
-                    evt.StopPropagation();
-                    FMDialog.ShowConfirm(
+                    new Argument("listId", list.id),
+                    new Argument("listTitle", list.title)
+                });
+        }
+
+        private void OnItemRemoveClicked(ShoppingList list)
+        {
+            FMDialog.ShowConfirm(
                         this,
                         "@UI:DELETE_LIST",
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { capturedTitle }),
-                        onConfirm: () => _ = SafeDeleteListAsync(capturedId),
+                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { list.title }),
+                        onConfirm: () => _ = SafeDeleteListAsync(list.id),
                         semantic: AlertSemantic.Destructive);
-                });
-
-                _listsContainer.Add(row);
-            }
         }
 
         private void UpdateLoadingState()
         {
             bool isLoading = _viewModel.IsLoading;
             if (isLoading)
-                FMLoadingOverlay.Show(contentContainer);
-            else
-                FMLoadingOverlay.Hide(contentContainer);
-            if (_btnNewList != null)
             {
-                _btnNewList.SetEnabled(!isLoading);
+                FMLoadingOverlay.Show(contentContainer);
+            }
+            else
+            {
+                FMLoadingOverlay.Hide(contentContainer);
             }
         }
 
         private void UpdateErrorState()
         {
-            bool hasError = !string.IsNullOrEmpty(_viewModel.ErrorMessage);
-            _errorText?.EnableInClassList("visible", hasError);
-            if (_errorText != null)
+            if (!string.IsNullOrEmpty(_viewModel.ErrorMessage))
             {
-                _errorText.text = _viewModel.ErrorMessage;
+                Toast.Build(this, _viewModel.ErrorMessage, NotificationDuration.Long)
+                    .SetStyle(NotificationStyle.Negative)
+                    .SetPosition(PopupNotificationPlacement.Bottom)
+                    .Show();
             }
         }
 
@@ -217,7 +190,7 @@ namespace eu.foodmission.platform
 
         private void OnNewListClicked()
         {
-            var nameField = new Unity.AppUI.UI.TextField { placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LIST_NAME_PLACEHOLDER") };
+            var nameField = new Unity.AppUI.UI.TextField { placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LIST_NAME_PLACEHOLDER"),value = _searchOrCreateField.TextFieldValue };
 
             FMDialog.ShowCustom(
                 this,

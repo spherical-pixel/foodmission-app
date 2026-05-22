@@ -70,6 +70,7 @@
 
 .appui--light {
     --fm-main-bg: #024639;
+    
 
     --appui-positive-300: var(--appui-color-green-1000);
     --appui-positive-200: var(--appui-color-green-900);
@@ -147,6 +148,7 @@
     --fm-card-bg: rgba(255, 255, 255, 0.90);
     --fm-icon-tint: var(--appui-primary-100);
     --fm-icon-tint-selected: var(--appui-primary-15);
+    --fm-bg-screen-trans: rgba(255, 255, 255, 0.45);
 }
 
 .appui--dark {
@@ -209,7 +211,7 @@
 
     --appui-base-600: var(--appui-primary-700);
     --appui-base-500: var(--appui-primary-600);
-    --appui-base-400: var(--appui-primary-500);
+    --appui-base-400: var(--appui-primary-300);
     --appui-base-300: var(--appui-primary-400);
     --appui-base-200: var(--appui-primary-300);
     --appui-base-100: var(--appui-primary-200);
@@ -274,6 +276,8 @@
 
     --fm-icon-tint: var(--appui-primary-1200);
     --fm-icon-tint-selected: var(--appui-primary-900);
+
+   --fm-bg-screen-trans: rgba(0, 0, 0, 0.45);
 
 
     /* ============================================

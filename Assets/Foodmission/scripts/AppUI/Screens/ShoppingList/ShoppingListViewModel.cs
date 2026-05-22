@@ -15,8 +15,15 @@ namespace eu.foodmission.platform
 
         private const string CacheKey = "shoppinglists_cache";
 
+        private List<ShoppingList> _allLists = new();
+
         [ObservableProperty]
         private List<ShoppingList> _lists = new();
+
+        [ObservableProperty]
+        private string _searchText = "";
+
+        
 
         [ObservableProperty]
         private bool _isLoading;
@@ -48,7 +55,8 @@ namespace eu.foodmission.platform
             {
                 ErrorDetail = error;
                 ShoppingList[] cached = _localStorage.GetValue<ShoppingListPagedResponse>(CacheKey)?.data;
-                Lists = cached != null ? new List<ShoppingList>(cached) : new List<ShoppingList>();
+                _allLists = cached != null ? new List<ShoppingList>(cached) : new List<ShoppingList>();
+                ApplyFilter();
 
                 if (cached == null || cached.Length == 0)
                 {
@@ -61,7 +69,8 @@ namespace eu.foodmission.platform
 
             ErrorDetail = null;
             _localStorage.SetValue(CacheKey, new ShoppingListPagedResponse { data = lists });
-            Lists = new List<ShoppingList>(lists);
+            _allLists = new List<ShoppingList>(lists);
+            ApplyFilter();
             IsLoading = false;
         }
 
@@ -86,6 +95,7 @@ namespace eu.foodmission.platform
             }
 
             ErrorDetail = null;
+            SearchText = "";
             await LoadListsAsync();
         }
 
@@ -104,13 +114,27 @@ namespace eu.foodmission.platform
             }
 
             ErrorDetail = null;
-            Lists = new List<ShoppingList>(Lists.FindAll(l => l.id != id));
+            _allLists.RemoveAll(l => l.id == id);
+            ApplyFilter();
             SaveCache();
+        }
+
+        public void ApplyFilter()
+        {
+            if (string.IsNullOrWhiteSpace(_searchText))
+            {
+                Lists = new List<ShoppingList>(_allLists);
+            }
+            else
+            {
+                Lists = _allLists.FindAll(l =>
+                    l.title.Contains(_searchText, System.StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         private void SaveCache()
         {
-            _localStorage.SetValue(CacheKey, new ShoppingListPagedResponse { data = Lists.ToArray() });
+            _localStorage.SetValue(CacheKey, new ShoppingListPagedResponse { data = _allLists.ToArray() });
         }
     }
 }
