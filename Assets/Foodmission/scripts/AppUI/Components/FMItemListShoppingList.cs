@@ -61,7 +61,7 @@ namespace eu.foodmission.platform.Components
             _removeButton.style.right = 0;
             _removeButton.quiet = true;
             _removeButton.leadingIcon = "fm-trash";
-            _removeButton.size = Size.S;
+            _removeButton.size = Size.L;
             this.Add(_removeButton);
 
 

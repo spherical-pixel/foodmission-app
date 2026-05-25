@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.ForceUpdateScreenViewModel, Foodmission" style="align-items: center; justify-content: center; align-content: center; flex-grow: 1;">
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.ForceUpdateScreenViewModel, Foodmission" class="fm-root" style="align-items: center; justify-content: center; align-content: center; flex-grow: 1;">
         <ui:VisualElement name="update-content" class="box-background" style="padding: 24px; width: 90%;">
             <appui:Heading size="XXL" primary="true" text="Update Required" class="update-title" style="margin-bottom: 16px; text-align: center; flex-wrap: wrap; white-space: pre-wrap;">
                 <Bindings>
@@ -45,7 +45,7 @@
                 </Bindings>
             </appui:Button>
             <appui:Spacer/>
-            <appui:Button name="skip-button" variant="Default" title="Later" class="fm-button fm-button-align-left" style="width: 100%; display: flex;">
+            <appui:Button name="skip-button" variant="Accent" title="Later" class="fm-button fm-button-align-left" style="width: 100%; display: flex;">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(1675915254816768)"/>
                 </Bindings>

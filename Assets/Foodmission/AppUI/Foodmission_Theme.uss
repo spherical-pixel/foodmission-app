@@ -6,28 +6,28 @@
 .appui {
    /* Sizing */
    
-    --appui-sizing-60: 25px;
-    --appui-sizing-100: 16px;
-    --appui-sizing-150: 39px;
-    --appui-sizing-200: 62px;
-    --appui-sizing-250: 70px;
-    --appui-sizing-300: 78px;
-    --appui-sizing-400: 94px;
-    --appui-sizing-500: 110px; /* 90*/
-    --appui-sizing-550: 118px; 
-    --appui-sizing-600: 126px;
-    --appui-sizing-650: 134px;
-    --appui-sizing-700: 142px;
-    --appui-sizing-750: 150px;
-    --appui-sizing-800: 158px;
+    --appui-sizing-60: 21px;
+    --appui-sizing-100: 25px;
+    --appui-sizing-150: 29px;
+    --appui-sizing-200: 35px;
+    --appui-sizing-250: 41px;
+    --appui-sizing-300: 48px;
+    --appui-sizing-400: 57px;
+    --appui-sizing-500: 65px; /* 90*/
+    --appui-sizing-550: 75px; 
+    --appui-sizing-600: 86px;
+    --appui-sizing-650: 100px;
+    --appui-sizing-700: 115px;
+    --appui-sizing-750: 132px;
+    --appui-sizing-800: 152px;
     --appui-sizing-850: 174px;
-    --appui-sizing-900: 190px;
-    --appui-sizing-950: 206px;
-    --appui-sizing-1000: 222px;
-    --appui-sizing-1050: 238px;
-    --appui-sizing-1100: 254px;
-    --appui-sizing-1150: 270px;
-    --appui-sizing-1200: 286px;
+    --appui-sizing-900: 200px;
+    --appui-sizing-950: 230px;
+    --appui-sizing-1000: 264px;
+    --appui-sizing-1050: 304px;
+    --appui-sizing-1100: 350px;
+    --appui-sizing-1150: 402px;
+    --appui-sizing-1200: 462px;
 
    
    /* TextField - transparent background for both modes */
@@ -57,9 +57,9 @@
     --appui-alias-control-border-width: 8px;
     --appui-alias-control-border-radius: 35px;  
 
-    --appui-alias-control-sizing-lg-height: var(--appui-sizing-700);
-    --appui-alias-control-sizing-md-height: var(--appui-sizing-600);
-    --appui-alias-control-sizing-sm-height: var(--appui-sizing-500);
+    --appui-alias-control-sizing-lg-height: var(--appui-sizing-850);
+    --appui-alias-control-sizing-md-height: var(--appui-sizing-800);
+    --appui-alias-control-sizing-sm-height: var(--appui-sizing-750);
 
     --appui-alias-caret-icon-default: var(--appui-icon-fm-arrow-down-regular);
 
