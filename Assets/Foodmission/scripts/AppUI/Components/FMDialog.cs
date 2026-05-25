@@ -28,11 +28,15 @@ namespace eu.foodmission.platform.Components
                 variant = semantic
             };
 
+            dialog.primaryButton.AddToClassList("fm-button");
+            dialog.primaryButton.variant = ButtonVariant.Accent;
+
             dialog.SetPrimaryAction(0, okLabel, onOk ?? (() => { }));
             if( !string.IsNullOrEmpty(koLabel) && onKo != null)
             {
                 dialog.SetCancelAction(1, koLabel);
                 dialog.cancelButton.clicked += () => onKo?.Invoke();
+                dialog.cancelButton.AddToClassList("fm-button");
             }
             var modal = Modal.Build(anchor, dialog);
             NotifyScreenReaderOfDialog(modal, title, message);
@@ -61,6 +65,8 @@ namespace eu.foodmission.platform.Components
             // SetCancelAction only accepts (actionId, displayText) — no callback overload.
             // The cancel callback is captured via the modal's dismissed event instead.
             dialog.SetCancelAction(1, cancelLabel);
+            dialog.primaryButton.AddToClassList("fm-button");
+            dialog.cancelButton.AddToClassList("fm-button");
 
             var modal = Modal.Build(anchor, dialog);
             if (onCancel != null)
@@ -101,9 +107,11 @@ namespace eu.foodmission.platform.Components
             dialog.contentContainer.Add(scrollView);
 
             dialog.SetPrimaryAction(0, acceptLabel, onAccept ?? (() => { }));
+            dialog.primaryButton.AddToClassList("fm-button");
 
             // SetCancelAction only accepts (actionId, displayText); cancel callback via dismissed event.
             dialog.SetCancelAction(1, cancelLabel);
+            dialog.cancelButton.AddToClassList("fm-button");
 
             var modal = Modal.Build(anchor, dialog);
             if (onCancel != null)

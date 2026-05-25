@@ -758,6 +758,7 @@
     --box-shadow-spread:20;
     --box-shadow-blur: 30;
     --box-shadow-color: rgba(255, 0, 0, 0.65);
+    background-color: var(--appui-base-100);
 }
 
 
@@ -767,7 +768,17 @@
 }
 
 .appui-divider__content {
-    background-color: var(--appui-foregrounds-100);
+    background-color: var(--appui-backgrounds-300);
+}
+
+.appui-divider--size-s > .appui-divider__content {
+    height: 2px;
+}
+.appui-divider--size-m > .appui-divider__content {
+    height: 3px;
+}
+.appui-divider--size-l > .appui-divider__content {
+    height: 4px;
 }
 
 .fm-sl-root {
