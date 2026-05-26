@@ -31,10 +31,10 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<INutriService, NutriService>();
             builder.services.AddSingleton<IAvatarService, AvatarService>();
             builder.services.AddSingleton<ICatalogService, CatalogService>();
-            builder.services.AddSingleton<IFoodService, FoodService>();
+            builder.services.AddSingleton<IFoodProductService, FoodProductService>();
             builder.services.AddSingleton<IShoppingListService, ShoppingListService>();
             builder.services.AddSingleton<IGroupService, GroupService>();
-            builder.services.AddSingleton<IFoodCategoryService, FoodCategoryService>();
+            builder.services.AddSingleton<IGenericFoodService, GenericFoodService>();
             builder.services.AddSingleton<IPantryService, PantryService>();
             builder.services.AddSingleton<IMealService, MealService>();
             builder.services.AddSingleton<IMealLogService, MealLogService>();

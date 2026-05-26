@@ -59,8 +59,8 @@ namespace eu.foodmission.platform
     public class PantryDeduction
     {
         public string PantryItemId;
-        public string FoodId;
-        public string FoodCategoryId;
+        public string FoodProductId;
+        public string GenericFoodId;
         public string FoodName;
         public float AvailableQuantity;
         public string Unit;

@@ -178,7 +178,7 @@ namespace eu.foodmission.platform
                     }
                     else
                     {
-                        await _pantryService.UpdateItemAsync(d.PantryItemId, remaining, d.Unit, null, null, null, d.FoodId, d.FoodCategoryId);
+                        await _pantryService.UpdateItemAsync(d.PantryItemId, remaining, d.Unit, null, null, null, d.FoodProductId, d.GenericFoodId);
                     }
                 }
 
@@ -215,9 +215,9 @@ namespace eu.foodmission.platform
                 .Select(item => new PantryDeduction
                 {
                     PantryItemId = item.id,
-                    FoodId = item.foodId,
-                    FoodCategoryId = item.foodCategoryId,
-                    FoodName = item.foodId ?? item.foodCategoryId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
+                    FoodProductId = item.foodProductId,
+                    GenericFoodId = item.genericFoodId,
+                    FoodName = item.foodProductId ?? item.genericFoodId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
                     AvailableQuantity = item.quantity,
                     Unit = item.unit,
                     Quantity = 0

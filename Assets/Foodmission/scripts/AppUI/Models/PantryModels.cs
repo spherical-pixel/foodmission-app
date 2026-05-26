@@ -17,8 +17,8 @@ namespace eu.foodmission.platform
     {
         public string id;
         public string pantryId;
-        public string foodId;           // non-empty if added via OpenFoodFacts product
-        public string foodCategoryId;   // non-empty if added via NEVO food category
+        public string foodProductId;       // non-empty if added via OpenFoodFacts product
+        public string genericFoodId;       // non-empty if added via NEVO food category
         public float quantity;
         public string unit;             // PIECES, G, KG, ML, L, CUPS
         public string notes;
@@ -36,8 +36,8 @@ namespace eu.foodmission.platform
             }
         }
 
-        public FoodItem food;           // populated by backend $include
-        public FoodCategory foodCategory; // populated by backend $include
+        public FoodProduct foodProduct;     // populated by backend $include
+        public GenericFood genericFood;     // populated by backend $include
     }
 
     // JsonUtility cannot deserialize top-level JSON arrays

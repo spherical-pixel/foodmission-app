@@ -87,12 +87,12 @@ namespace eu.foodmission.platform.Tests
         {
             var cached = new CachedCategorySearch
             {
-                data = new PaginatedFoodCategoryResponse
+                data = new PaginatedGenericFoodResponse
                 {
                     data = new[]
                     {
-                        new FoodCategory { id = "cat-1", name = "Whole milk", foodGroup = "Dairy" },
-                        new FoodCategory { id = "cat-2", name = "Chicken breast", foodGroup = "Meat" }
+                        new GenericFood { id = "cat-1", name = "Whole milk", foodGroup = "Dairy" },
+                        new GenericFood { id = "cat-2", name = "Chicken breast", foodGroup = "Meat" }
                     },
                     total = 2,
                     page = 1,
@@ -143,9 +143,9 @@ namespace eu.foodmission.platform.Tests
         {
             var cached = new CachedCategorySearch
             {
-                data = new PaginatedFoodCategoryResponse
+                data = new PaginatedGenericFoodResponse
                 {
-                    data = Array.Empty<FoodCategory>(),
+                    data = Array.Empty<GenericFood>(),
                     total = 0
                 },
                 cachedAtTicks = 0

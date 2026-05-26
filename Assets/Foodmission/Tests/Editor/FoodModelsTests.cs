@@ -7,11 +7,11 @@ namespace eu.foodmission.platform.Tests
     public class FoodModelsTests
     {
         [Test]
-        public void FoodItem_Roundtrips_Via_JsonUtility()
+        public void FoodProduct_Roundtrips_Via_JsonUtility()
         {
-            var food = new FoodItem { id = "abc-123", name = "Apple", barcode = "012345", description = "A fruit" };
+            var food = new FoodProduct { id = "abc-123", name = "Apple", barcode = "012345", description = "A fruit" };
             string json = JsonUtility.ToJson(food);
-            var result = JsonUtility.FromJson<FoodItem>(json);
+            var result = JsonUtility.FromJson<FoodProduct>(json);
 
             Assert.AreEqual("abc-123", result.id);
             Assert.AreEqual("Apple", result.name);
@@ -20,13 +20,13 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void PaginatedFoodResponse_Deserializes_Data_Array()
+        public void PaginatedFoodProductResponse_Deserializes_Data_Array()
         {
             string json = "{\"data\":[{\"id\":\"1\",\"name\":\"Apple\",\"barcode\":\"\",\"description\":\"\"}," +
                           "{\"id\":\"2\",\"name\":\"Banana\",\"barcode\":\"\",\"description\":\"\"}]," +
                           "\"total\":2,\"page\":1,\"pageSize\":20,\"totalPages\":1}";
 
-            var result = JsonUtility.FromJson<PaginatedFoodResponse>(json);
+            var result = JsonUtility.FromJson<PaginatedFoodProductResponse>(json);
 
             Assert.IsNotNull(result.data);
             Assert.AreEqual(2, result.data.Length);

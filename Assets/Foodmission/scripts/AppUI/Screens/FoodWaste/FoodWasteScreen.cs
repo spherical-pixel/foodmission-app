@@ -176,7 +176,7 @@ namespace eu.foodmission.platform
                     var info = new VisualElement();
                     info.AddToClassList("fm-fw-row-info");
 
-                    string foodName = captured.food?.name ?? captured.foodId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+                    string foodName = captured.foodProduct?.name ?? captured.foodProductId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
                     var nameLabel = new Text { text = foodName };
                     nameLabel.AddToClassList("fm-fw-row-name");
 

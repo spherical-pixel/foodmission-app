@@ -5,7 +5,7 @@ using UnityEngine;
 namespace eu.foodmission.platform
 {
     [Serializable]
-    public class FoodItem
+    public class FoodProduct
     {
         public string id;
         public string name;
@@ -16,9 +16,9 @@ namespace eu.foodmission.platform
     }
 
     [Serializable]
-    public class PaginatedFoodResponse
+    public class PaginatedFoodProductResponse
     {
-        public FoodItem[] data;
+        public FoodProduct[] data;
         public int total;
         public int page;
         public int pageSize;

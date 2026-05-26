@@ -24,7 +24,7 @@ namespace eu.foodmission.platform.Tests
             var item = new ShoppingListItem
             {
                 id = "item-1",
-                foodId = "food-1",
+                foodProductId = "food-1",
                 quantity = 2.5f,
                 unit = "KG",
                 @checked = true
@@ -58,17 +58,17 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ShoppingListItemPagedResponse_Deserializes_Api_Response()
         {
-            // API returns {"data":[...]} paged envelope with embedded food object
-            string apiJson = "{\"data\":[{\"id\":\"i1\",\"shoppingListId\":\"l1\",\"foodId\":\"f1\"," +
+            // API returns {"data":[...]} paged envelope with embedded foodProduct object
+            string apiJson = "{\"data\":[{\"id\":\"i1\",\"shoppingListId\":\"l1\",\"foodProductId\":\"f1\"," +
                              "\"quantity\":1.0,\"unit\":\"PIECES\",\"notes\":\"\",\"checked\":false," +
-                             "\"food\":{\"id\":\"f1\",\"name\":\"Leche\",\"barcode\":\"123\"}}]}";
+                             "\"foodProduct\":{\"id\":\"f1\",\"name\":\"Leche\",\"barcode\":\"123\"}}]}";
 
             var response = JsonUtility.FromJson<ShoppingListItemPagedResponse>(apiJson);
 
             Assert.IsNotNull(response.data);
             Assert.AreEqual(1, response.data.Length);
-            Assert.AreEqual("f1", response.data[0].foodId);
-            Assert.AreEqual("Leche", response.data[0].food.name);
+            Assert.AreEqual("f1", response.data[0].foodProductId);
+            Assert.AreEqual("Leche", response.data[0].foodProduct.name);
         }
     }
 }
