@@ -1,8 +1,37 @@
+v0.0.4 — Changelog
+🆕 Added
+- Partial screen reader support — AccessibilityService + IAccessibleComponent for 26 screens
+- App update check — AppUpdateService fetches version from GitHub, shows ForceUpdateScreen with forced/optional flows
+- API environment switching — ApiEnvironmentConfig ScriptableObject to toggle between Staging/Test/Local at runtime
+- FMItemListShoppingList — reusable shopping list item component
+- FMSearchOrCreateField — reusable search-or-create input component
+
+🎨 Updated
+- ShoppingListScreen redesign with new item component and improved layout
+- AlertDialog styles and panel adjustments
+- Form field components (arrow steppers, checkbox, dropdown, int field, text field) now implement IAccessibleComponent
+- Navigation graph updates and cleanup
+- FMDialog, LoginScreen, RegisterScreen, SettingsScreen, splash flow, onboarding screens, profile screens, food waste screens, groups screens — accessibility integration and layout fixes
+🐛 Fixed
+
+- Arrow stepper flex layout — FMArrowStepper and FormFieldItemArrowStepperSettings now properly shrink and grow
+- Avatar editor: Save/Exit button visibility per entry point, AppBar behavior
+- FMDialog button layout and icon spacing
+- FormFieldItemBase label and input alignment
+- Shopping list view model null filter fix
+- Disabled Unity Connect service
+🔧 Infrastructure
+
+- Updated Foodmission.slnx
+- FoodmissionApp.cs and FoodmissionAppBuilder.cs — service registration for Accessibility and AppUpdate
+- latest-version.json — version manifest for app update feature
+
 v0.0.3 — Changelog
 🆕 Added
 - Barcode scanner — preliminary support with camera preview and ZXing decoding (BarcodeScanOverlay)
 - Nutri camera — functions to enable/disable cameras in Avatar and Nutri (interactive mascot)
 - iOS & Android metadata for localizations (App Store / Play Store descriptions, keywords, etc.)
+
 🐛 Fixed
 - Avatar Editor: error preventing all customization options from showing; fixed eyebrows ordering
 - Avatar materials: now using MaterialPropertyBlock to avoid dirtying assets on disk
@@ -10,8 +39,10 @@ v0.0.3 — Changelog
 - KeyboardPanelAdjuster: general virtual keyboard panel adjustment
 - KeyboardService on Android: proper fallback when TouchScreenKeyboard.area.height returns 0
 - Localization: minor preload issue
+
 🎨 Optimized
 - RenderTextures: reduced sizes for performance (Avatar + Nutri)
+
 🔧 Other
 - Added missing localization assets
 - Store upload preparation (version 0.0.3)
@@ -34,6 +65,7 @@ v0.0.2 — Changelog
 - Form components: text fields, password, dropdown, checkbox, stepper, arrow stepper
 - Components: FMStatusBar, AvatarController, FMProductSearchDialog, BarcodeScanOverlay
 - Services: TemplateService (UXML from addressables), CatalogService (startup reference data), KeyboardService, NutriService
+
 🔧 Infrastructure
 - Unity 6 upgrade (6000.3.12f1), URP, AppUI v2.1.6, Input System
 - MVVM + Redux architecture with centralized AppState
@@ -43,6 +75,7 @@ v0.0.2 — Changelog
 - TemplateService for loading UXML from addressables with preloading during splash
 - Newtonsoft.Json 3.2.1 for OpenFoodFacts deserialization
 - All screens migrated from inline loading to TemplateService
+
 🐛 Fixed
 - Navigation stopping after login
 - Duplicated NutriController on hot reload
@@ -56,6 +89,7 @@ v0.0.2 — Changelog
 - Checkbox value type (bool → CheckboxState)
 - FloatField placeholder vs label
 - Profile drawer integration with nav framework
+
 🎨 Styling & Theme
 - Complete light/dark themes with green-based palette
 - Font system: OpenSans, Roboto, OpenDyslexic (Regular/Bold SDF)
@@ -63,6 +97,7 @@ v0.0.2 — Changelog
 - Safe area handling via code
 - All USS/TSS organized and cleaned
 - Custom arrow icons and app icons
+
 🧪 Testing
 - Model serialization tests (Food, ShoppingList, Group, Pantry, Meal, etc.)
 - Service tests for Auth, Profile, etc.
