@@ -1,15 +1,15 @@
 {
   "ios": {
-    "latestVersion": "0.0.3",
+    "latestVersion": "0.0.4",
     "isForced": false,
     "storeUrl": "https://testflight.apple.com/join/eVPDEzhq",
-    "releaseNotes": "- Added: preliminary support for barcode scanner\n- Fixed: renderer performance issue\n- Added: build metadata\n- Fixed: Avatar editor showed some elements in the wrong order\n- Fixed: Android bars were hidden in runtime\n- Fixed: Soft keyboard adjusting\n- Fixed: Minor localization preload issue\n- Optimized: renderTextures adjusted to improve performance\n- Added: missing localization assets"
+    "releaseNotes": "- Added: Screen reader preliminary support for accessibility\n- Added: App update checker\n- Added: Search or create field in shopping lists\n- Changed: Shopping list design updated\n- Changed: Environment selector for development\n- Fixed: Stepper controls now adapt to screen size\n- Fixed: Avatar editor buttons behavior\n- Fixed: Various style and layout improvements\n- Fixed: Dialog spacing"
   },
   "android": {
-    "latestVersion": "0.0.3",
+    "latestVersion": "0.0.4",
     "isForced": false,
     "storeUrl": "https://play.google.com/apps/testing/eu.foodmission.platform",
-    "releaseNotes": "- Added: preliminary support for barcode scanner\n- Fixed: renderer performance issue\n- Added: build metadata\n- Fixed: Avatar editor showed some elements in the wrong order\n- Fixed: Android bars were hidden in runtime\n- Fixed: Soft keyboard adjusting\n- Fixed: Minor localization preload issue\n- Optimized: renderTextures adjusted to improve performance\n- Added: missing localization assets"
+    "releaseNotes": "- Added: Screen reader preliminary support for accessibility\n- Added: App update checker\n- Added: Search or create field in shopping lists\n- Changed: Shopping list design updated\n- Changed: Environment selector for development\n- Fixed: Stepper controls now adapt to screen size\n- Fixed: Avatar editor buttons behavior\n- Fixed: Various style and layout improvements\n- Fixed: Dialog spacing"
   }
 }
 

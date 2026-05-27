@@ -135,8 +135,8 @@ namespace eu.foodmission.platform
         }
 
         public async Task<(PantryItem Result, ApiErrorResponse Error)> AddItemAsync(
-            string foodId,
-            string foodCategoryId,
+            string foodProductId,
+            string genericFoodId,
             float quantity,
             string unit = "PIECES",
             string notes = null,
@@ -158,8 +158,8 @@ namespace eu.foodmission.platform
 
             AddPantryItemRequest body = new()
             {
-                foodId = foodId,
-                foodCategoryId = foodCategoryId,
+                foodProductId = foodProductId,
+                genericFoodId = genericFoodId,
                 quantity = quantity,
                 unit = unit ?? "PIECES",
                 notes = notes,
@@ -202,8 +202,8 @@ namespace eu.foodmission.platform
             string notes,
             string location,
             string expiryDate,
-            string foodId = null,
-            string foodCategoryId = null)
+            string foodProductId = null,
+            string genericFoodId = null)
         {
             var (pantryId, error) = await EnsurePantryIdAsync();
             if (error != null) return (null, error);
@@ -221,8 +221,8 @@ namespace eu.foodmission.platform
                 notes = notes,
                 location = location,
                 expiryDate = expiryDate,
-                foodId = foodId,
-                foodCategoryId = foodCategoryId
+                foodProductId = foodProductId,
+                genericFoodId = genericFoodId
             };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/{Uri.EscapeDataString(itemId)}";
@@ -341,11 +341,11 @@ namespace eu.foodmission.platform
         [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
         private class AddPantryItemRequest
         {
-            [JsonProperty("foodId")]
-            public string foodId;
+            [JsonProperty("foodProductId")]
+            public string foodProductId;
 
-            [JsonProperty("foodCategoryId")]
-            public string foodCategoryId;
+            [JsonProperty("genericFoodId")]
+            public string genericFoodId;
 
             [JsonProperty("quantity")]
             public float quantity;
@@ -390,11 +390,11 @@ namespace eu.foodmission.platform
             [JsonProperty("expiryDate")]
             public string expiryDate;
 
-            [JsonProperty("foodId")]
-            public string foodId;
+            [JsonProperty("foodProductId")]
+            public string foodProductId;
 
-            [JsonProperty("foodCategoryId")]
-            public string foodCategoryId;
+            [JsonProperty("genericFoodId")]
+            public string genericFoodId;
 
             public byte[] ToJsonBody()
             {

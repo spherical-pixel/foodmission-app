@@ -72,9 +72,9 @@ namespace eu.foodmission.platform.Components
 
         /* ========= INTERNAL ELEMENTS ========= */
         private VisualElement _stepperRow;
-        private IconButton _prevButton;
+        private Unity.AppUI.UI.Button _prevButton;
         private Text _valueLabel;
-        private IconButton _nextButton;
+        private Unity.AppUI.UI.Button _nextButton;
 
         [UxmlAttribute("cyclic")] [CreateProperty]
         public bool Cyclic
@@ -101,8 +101,8 @@ namespace eu.foodmission.platform.Components
             _stepperRow.AddToClassList("fm-arrow-stepper__row");
 
             // Previous button
-            _prevButton = new IconButton();
-            _prevButton.icon = "fm-arrow-left";
+            _prevButton = new Unity.AppUI.UI.Button();
+            _prevButton.leadingIcon = "fm-arrow-left";
             _prevButton.quiet = true;
             _prevButton.clicked += OnPrevClicked;
             _stepperRow.Add(_prevButton);
@@ -115,8 +115,8 @@ namespace eu.foodmission.platform.Components
             _stepperRow.Add(_valueLabel);
 
             // Next button
-            _nextButton = new IconButton();
-            _nextButton.icon = "fm-arrow-right";
+            _nextButton = new Unity.AppUI.UI.Button();
+            _nextButton.leadingIcon = "fm-arrow-right";
             _nextButton.quiet = true;
             _nextButton.clicked += OnNextClicked;
             _stepperRow.Add(_nextButton);

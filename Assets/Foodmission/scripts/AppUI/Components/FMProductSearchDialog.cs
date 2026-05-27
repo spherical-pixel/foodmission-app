@@ -44,7 +44,7 @@ namespace eu.foodmission.platform.Components
             string title,
             Func<string, Task<List<OpenFoodFactsProduct>>> searchAsync,
             Func<OpenFoodFactsProduct, float, string, Task> onConfirmed,
-            Func<string, Task<FoodItem>> importFromBarcodeAsync = null)
+            Func<string, Task<FoodProduct>> importFromBarcodeAsync = null)
         {
             object selectedItem = null;
 
@@ -76,9 +76,9 @@ namespace eu.foodmission.platform.Components
             VisualElement anchor,
             string title,
             Func<string, Task<List<OpenFoodFactsProduct>>> searchFoodsAsync,
-            Func<string, Task<List<FoodCategory>>> searchCategoriesAsync,
+            Func<string, Task<List<GenericFood>>> searchGenericFoodsAsync,
             Func<object, float, string, Task> onConfirmed,
-            Func<string, Task<FoodItem>> importFromBarcodeAsync = null)
+            Func<string, Task<FoodProduct>> importFromBarcodeAsync = null)
         {
             object selectedItem = null;
             bool isFoodSearch = true;
@@ -128,7 +128,7 @@ namespace eu.foodmission.platform.Components
                 }
                 else
                 {
-                    var results = await searchCategoriesAsync(query);
+                    var results = await searchGenericFoodsAsync(query);
                     return results != null ? new List<object>(results) : new List<object>();
                 }
             }, isDual: true, onItemSelected: obj =>
@@ -136,7 +136,7 @@ namespace eu.foodmission.platform.Components
                 selectedItem = obj;
                 string name = isFoodSearch
                     ? FormatFoodName((OpenFoodFactsProduct)obj)
-                    : ((FoodCategory)obj).name;
+                    : ((GenericFood)obj).foodName;
                 ui.selectedNameLabel.text = name;
                 ui.searchField.style.display = DisplayStyle.None;
                 toggleRow.style.display = DisplayStyle.None;
@@ -352,7 +352,7 @@ namespace eu.foodmission.platform.Components
             SearchUI ui,
             VisualElement anchor,
             string title,
-            Func<string, Task<FoodItem>> importFromBarcodeAsync,
+            Func<string, Task<FoodProduct>> importFromBarcodeAsync,
             Action<object> onItemSelected)
         {
             if (importFromBarcodeAsync == null) return;
@@ -371,7 +371,7 @@ namespace eu.foodmission.platform.Components
             VisualElement anchor,
             string title,
             string barcode,
-            Func<string, Task<FoodItem>> importAsync,
+            Func<string, Task<FoodProduct>> importAsync,
             Action<object> onItemSelected)
         {
             try
@@ -432,9 +432,9 @@ namespace eu.foodmission.platform.Components
                         ? food.name
                         : $"{food.name} · {brands}";
                 }
-                else if (item is FoodCategory cat)
+                else if (item is GenericFood gf)
                 {
-                    rowText = cat.name;
+                    rowText = gf.foodName;
                 }
                 else
                 {

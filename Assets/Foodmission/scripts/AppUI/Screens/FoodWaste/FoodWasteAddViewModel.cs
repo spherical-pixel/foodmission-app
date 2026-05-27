@@ -76,7 +76,7 @@ namespace eu.foodmission.platform
 
             PantryItemOptions = _pantryItems.Select(item =>
             {
-                string name = item.foodId ?? item.foodCategoryId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+                string name = item.foodProductId ?? item.genericFoodId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
                 return $"{item.quantity} {item.unit} — {name}";
             }).ToList();
 
@@ -90,7 +90,7 @@ namespace eu.foodmission.platform
             {
                 MaxQuantity = _pantryItems[index].quantity;
                 Quantity = _pantryItems[index].quantity;
-                SelectedFoodName = _pantryItems[index].foodId ?? _pantryItems[index].foodCategoryId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+                SelectedFoodName = _pantryItems[index].foodProductId ?? _pantryItems[index].genericFoodId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
             else
             {

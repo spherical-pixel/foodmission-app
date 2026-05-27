@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.EditProfileViewModel, Foodmission" class="login-root" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0);">
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.EditProfileViewModel, Foodmission" class="fm-root">
         <ui:VisualElement name="form-container" class="box-background" style="flex-shrink: 0;">
             <eu.foodmission.platform.Components.FormFieldItemIntField name="yearofbirth">
                 <Bindings>
@@ -36,7 +36,7 @@
             </eu.foodmission.platform.Components.FormFieldItemTextField>
             <fm:FormFieldItemDropDownField name="gender-dropdown" dropdown-defaultmessage="Selecciona">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(18417602513592320)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(40270284408741888)"/>
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
@@ -73,12 +73,13 @@
             <appui:Spacer spacing="XL"/>
             <ui:VisualElement class="auth-actions">
                 <appui:Button name="submit-button" text="Continuar" variant="Accent" trailing-icon="fm-arrow-right" title="Aceptar" class="auth-button fm-button fm-button-align-left">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395779614007296)"/>
-                </Bindings>
-</appui:Button>
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000020)"/>
+                    </Bindings>
+                </appui:Button>
             </ui:VisualElement>
             <appui:Spacer spacing="XL"/>
         </ui:VisualElement>
+        <ui:VisualElement class="fm-bottom-nav-padding" style="flex-grow: 1;"/>
     </ui:VisualElement>
 </ui:UXML>

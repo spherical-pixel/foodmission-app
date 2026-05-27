@@ -28,13 +28,11 @@ namespace eu.foodmission.platform
         private Text _emptyState;
         private Heading _listTitle;
         private Text _progressLabel;
-        private Unity.AppUI.UI.TextField _filterField;
-        private Unity.AppUI.UI.Button _btnAdd;
+        private FMSearchOrCategoryField _searchCategoryField;
         private Unity.AppUI.UI.Button _btnClearChecked;
 
         private AccessibilityNode _addButtonNode;
         private AccessibilityNode _clearCheckedButtonNode;
-        private AccessibilityNode _filterFieldNode;
 
         public ShoppingListDetailScreen()
         {
@@ -51,8 +49,7 @@ namespace eu.foodmission.platform
             _emptyState = contentContainer.Q<Text>("empty-state");
             _listTitle = contentContainer.Q<Heading>("list-title");
             _progressLabel = contentContainer.Q<Text>("progress-label");
-            _filterField = contentContainer.Q<Unity.AppUI.UI.TextField>("filter-field");
-            _btnAdd = contentContainer.Q<Unity.AppUI.UI.Button>("btn-add");
+            _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
             _btnClearChecked = contentContainer.Q<Unity.AppUI.UI.Button>("btn-clear-checked");
         }
 
@@ -89,13 +86,19 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
 
-            _btnAdd.clicked += OnAddClicked;
             _btnClearChecked.clicked += OnClearCheckedClicked;
             _listTitle.RegisterCallback<ClickEvent>(_ => ShowRenameDialog());
 
-            if (_filterField != null)
+            if (_searchCategoryField != null)
             {
-                _filterField.RegisterValueChangedCallback(OnFilterChanged);
+                _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
+                _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
+                _searchCategoryField.OnProductConfirmed = async (product, qty, unit) =>
+                {
+                    await SafeImportAndAddItemAsync(product, qty, unit);
+                };
+                _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
+                _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
             }
 
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -106,19 +109,9 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            _btnAdd.clicked -= OnAddClicked;
             _btnClearChecked.clicked -= OnClearCheckedClicked;
-            if (_filterField != null)
-            {
-                _filterField.UnregisterValueChangedCallback(OnFilterChanged);
-            }
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
-        }
-
-        private void OnFilterChanged(ChangeEvent<string> evt)
-        {
-            _viewModel.FilterText = evt.newValue;
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -126,10 +119,6 @@ namespace eu.foodmission.platform
             if (e.PropertyName == nameof(_viewModel.Items))
             {
                 RebuildItems();
-            }
-            else if (e.PropertyName == nameof(_viewModel.FilterText))
-            {
-                _viewModel.ApplyFilter();
             }
             else if (e.PropertyName == nameof(_viewModel.IsLoadingItems))
             {
@@ -160,22 +149,14 @@ namespace eu.foodmission.platform
 
             var h = _accessibilityHierarchy;
 
-            _addButtonNode = CreateButtonNode(h, _btnAdd, "Add item");
+            _addButtonNode = CreateButtonNode(h, null, "Add item");
             _clearCheckedButtonNode = CreateButtonNode(h, _btnClearChecked, "Clear checked items");
-
-            if (_filterField != null)
-            {
-                _filterFieldNode = h.AddNode("Filter items");
-                _filterFieldNode.role = AccessibilityRole.TextField;
-                _filterFieldNode.frameGetter = MakeElementFrameGetter(_filterField);
-            }
         }
 
         protected override void TeardownAccessibilityNodes()
         {
             _addButtonNode = null;
             _clearCheckedButtonNode = null;
-            _filterFieldNode = null;
             base.TeardownAccessibilityNodes();
         }
 
@@ -287,7 +268,6 @@ namespace eu.foodmission.platform
                 FMLoadingOverlay.Show(contentContainer);
             else
                 FMLoadingOverlay.Hide(contentContainer);
-            _btnAdd?.SetEnabled(!isLoading);
             _btnClearChecked?.SetEnabled(!isLoading);
         }
 
@@ -430,26 +410,18 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void OnAddClicked()
+        private async Task SafeImportAndAddItemAsync(OpenFoodFactsProduct product, float qty, string unit)
         {
-            FMProductSearchDialog.ShowFoodSearch(
-                this,
-                "@UI:ADD_ITEM",
-                async query =>
-                {
-                    await _viewModel.SearchFoodsAsync(query);
-                    return _viewModel.SearchResults;
-                },
-                async (product, qty, unit) =>
-                {
-                    bool added = await _viewModel.ImportAndAddItemAsync(product, qty, unit);
-                    if (!added)
-                    {
-                        FMDialog.ShowAlert(this, "@UI:ADD_ITEM", "@UI:ADD_ITEM_ERROR", AlertSemantic.Error);
-                    }
-                },
-                async barcode => await _viewModel.ImportByBarcodeAsync(barcode));
+            try
+            {
+                await _viewModel.ImportAndAddItemAsync(product, qty, unit);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] ImportAndAddItemAsync failed: {ex.Message}");
+            }
         }
+
         private async Task SafeToggleItemAsync(string itemId)
         {
             try

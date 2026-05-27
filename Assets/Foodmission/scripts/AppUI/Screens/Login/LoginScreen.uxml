@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <Style src="project://database/Assets/Foodmission/AppUI/Styles/Login.uss?fileID=7433441132597879392&amp;guid=73aaed7c57cf2482e9d3413302ada616&amp;type=3#Login"/>
-    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" class="login-root" style="width: 100%; height: 100%; min-width: 100%; min-height: 100%; max-width: 100%; max-height: 100%;">
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.LoginViewModel, Foodmission" class="fm-root">
         <ui:Image name="logofoodmission" source="project://database/Assets/Foodmission/graphics/png/logo-foodmission-white.png?fileID=21300000&amp;guid=bab1e9be189fa4421b7615dfe330b1f6&amp;type=3#logo-foodmission-white" class="login-logo-foodmission" style="margin-top: 180px;"/>
         <ui:VisualElement name="group" class="box-background" style="flex-grow: 0;">
             <appui:Heading size="M" primary="true" name="Heading" selectable="true" focusable="true" class="heading-wrap-pre">

@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
     m_PopUpToStrategy: 2
-    m_PopUpToRoute: {fileID: -1477136575185016345}
+    m_PopUpToRoute: {fileID: -8582299972390442400}
     m_PopUpToInclusive: 1
     m_EnterAnim: 3
     m_ExitAnim: 4
@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Guid: 3836ccbecf3a547129e2005665286015
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: ShoppingList
+  m_Label: '@UI:SHOPPING_LIST_APP_BAR'
   m_TemplateSettings:
     rid: 3341417627117944927
   m_Arguments: []

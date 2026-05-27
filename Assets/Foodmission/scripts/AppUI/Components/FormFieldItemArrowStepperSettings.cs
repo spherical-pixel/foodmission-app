@@ -128,7 +128,11 @@ namespace eu.foodmission.platform.Components
             _stepper = new FMArrowStepper();
             _stepper.RemoveFromClassList("fm-simple-stepper");
             _stepper.valueChanged += OnStepperValueChanged;
-            _stepper.style.flexShrink = 0;
+            _stepper.style.flexShrink = 1;
+            _stepper.style.flexGrow = 1;
+            _stepper.style.flexBasis = StyleKeyword.Auto;
+
+
             Add(_stepper);
 
             

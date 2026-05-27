@@ -1304,6 +1304,10 @@ MonoBehaviour:
     m_Localized: Dopo
     m_Metadata:
       m_Items: []
+  - m_Id: 3882568704319488
+    m_Localized: "\U0001F4DD Lista della spesa"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

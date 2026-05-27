@@ -13,7 +13,8 @@ namespace eu.foodmission.platform
     public partial class ShoppingListDetailViewModel : ViewModelBase
     {
         private readonly IShoppingListService _shoppingListService;
-        private readonly IFoodService _foodService;
+        private readonly IFoodProductService _foodProductService;
+        private readonly IGenericFoodService _genericFoodService;
         private readonly ILocalStorageService _localStorage;
 
         private const string CacheKeyPrefix = "shoppinglist_items_";
@@ -50,15 +51,23 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string _filterText = "";
 
+        [ObservableProperty]
+        private List<GenericFood> _genericFoods = new();
+
+        [ObservableProperty]
+        private bool _isLoadingGenericFoods;
+
         public ShoppingListDetailViewModel(
             IStoreService storeService,
             IShoppingListService shoppingListService,
-            IFoodService foodService,
+            IFoodProductService foodProductService,
+            IGenericFoodService genericFoodService,
             ILocalStorageService localStorage)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
-            _foodService = foodService;
+            _foodProductService = foodProductService;
+            _genericFoodService = genericFoodService;
             _localStorage = localStorage;
         }
 
@@ -73,6 +82,23 @@ namespace eu.foodmission.platform
                 string filter = FilterText.ToLowerInvariant();
                 Items = _allItems.Where(v => (v.FoodName ?? "").ToLowerInvariant().Contains(filter)).ToList();
             }
+        }
+
+        public async Task<List<GenericFood>> GetGenericFoodsAsync()
+        {
+            IsLoadingGenericFoods = true;
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+
+            if (error != null)
+            {
+                ErrorDetail = error;
+                IsLoadingGenericFoods = false;
+                return new List<GenericFood>();
+            }
+
+            GenericFoods = result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
+            IsLoadingGenericFoods = false;
+            return GenericFoods;
         }
 
         public async Task LoadAsync(string listId, string listName = null)
@@ -153,11 +179,11 @@ namespace eu.foodmission.platform
 
         private async Task<ShoppingListItemView> EnrichItemAsync(ShoppingListItem item)
         {
-            string foodName = item.food?.name;
+            string foodName = item.foodProduct?.name;
 
             if (string.IsNullOrEmpty(foodName))
             {
-                var (fetched, _) = await _foodService.GetFoodByIdAsync(item.foodId);
+                var (fetched, _) = await _foodProductService.GetFoodByIdAsync(item.foodProductId);
                 foodName = fetched?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
@@ -165,12 +191,12 @@ namespace eu.foodmission.platform
             {
                 Item = item,
                 FoodName = foodName,
-                FoodImageUrl = item.food?.imageUrl,
+                FoodImageUrl = item.foodProduct?.imageUrl,
                 FoodBrands = null
             };
         }
 
-        public async Task SearchFoodsAsync(string query)
+        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
         {
             SearchQuery = query;
             ErrorMessage = "";
@@ -178,7 +204,7 @@ namespace eu.foodmission.platform
             if (string.IsNullOrWhiteSpace(query))
             {
                 SearchResults = new List<OpenFoodFactsProduct>();
-                return;
+                return SearchResults;
             }
 
             string normalized = query.Trim().ToLowerInvariant();
@@ -188,11 +214,11 @@ namespace eu.foodmission.platform
             if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
             {
                 SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
-                return;
+                return SearchResults;
             }
 
             IsSearching = true;
-            var (response, _) = await _foodService.SearchOpenFoodFactsAsync(query);
+            var (response, _) = await _foodProductService.SearchOpenFoodFactsAsync(query);
             IsSearching = false;
 
             if (response?.products != null)
@@ -213,6 +239,8 @@ namespace eu.foodmission.platform
                 SearchResults = new List<OpenFoodFactsProduct>();
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SEARCH_PRODUCTS");
             }
+
+            return SearchResults;
         }
 
         private static bool IsCacheFresh(long cachedAtTicks)
@@ -231,13 +259,13 @@ namespace eu.foodmission.platform
             }
 
             ErrorMessage = "";
-            var (foodItem, error) = await _foodService.ImportFromBarcodeAsync(product.barcode);
+            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
 
             if (error != null)
             {
                 if (error.statusCode == 400)
                 {
-                    var (existingFood, findError) = await _foodService.FindByBarcodeAsync(product.barcode);
+                    var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode);
                     if (findError == null && existingFood != null)
                     {
                         foodItem = existingFood;
@@ -269,12 +297,12 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public async Task<FoodItem> ImportByBarcodeAsync(string barcode)
+        public async Task<FoodProduct> ImportByBarcodeAsync(string barcode)
         {
-            var (foodItem, error) = await _foodService.ImportFromBarcodeAsync(barcode);
+            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(barcode);
             if (error != null && error.statusCode == 400)
             {
-                var (existingFood, findError) = await _foodService.FindByBarcodeAsync(barcode);
+                var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(barcode);
                 if (findError == null && existingFood != null)
                     return existingFood;
             }

@@ -404,8 +404,8 @@ namespace eu.foodmission.platform
                 },
                 async query =>
                 {
-                    await _viewModel.SearchCategoriesAsync(query);
-                    return _viewModel.CategorySearchResults;
+                    await _viewModel.SearchGenericFoodsAsync(query);
+                    return _viewModel.GenericFoodSearchResults;
                 },
                 async (item, qty, unit) =>
                 {
@@ -413,9 +413,9 @@ namespace eu.foodmission.platform
                     {
                         await _viewModel.ImportAndAddFoodItemAsync(product, qty, unit);
                     }
-                    else if (item is FoodCategory category)
+                    else if (item is GenericFood genericFood)
                     {
-                        await _viewModel.AddCategoryItemAsync(category, qty, unit);
+                        await _viewModel.AddGenericFoodItemAsync(genericFood, qty, unit);
                     }
                 },
                 async barcode => await _viewModel.ImportByBarcodeAsync(barcode));

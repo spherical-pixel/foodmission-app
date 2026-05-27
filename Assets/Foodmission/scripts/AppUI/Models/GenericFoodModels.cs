@@ -5,21 +5,20 @@ using UnityEngine;
 namespace eu.foodmission.platform
 {
     [Serializable]
-    public class FoodCategory
+    public class GenericFood
     {
         public string id;
-        public string name;
+        public string foodName;
         public string foodGroup;
-        public string description;
     }
 
     [Serializable]
-    public class PaginatedFoodCategoryResponse
+    public class PaginatedGenericFoodResponse
     {
-        public FoodCategory[] data;
+        public GenericFood[] items;
         public int total;
         public int page;
-        public int pageSize;
+        public int limit;
         public int totalPages;
     }
 }
