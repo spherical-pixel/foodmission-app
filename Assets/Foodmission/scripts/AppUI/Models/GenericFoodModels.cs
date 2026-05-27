@@ -8,18 +8,17 @@ namespace eu.foodmission.platform
     public class GenericFood
     {
         public string id;
-        public string name;
+        public string foodName;
         public string foodGroup;
-        public string description;
     }
 
     [Serializable]
     public class PaginatedGenericFoodResponse
     {
-        public GenericFood[] data;
+        public GenericFood[] items;
         public int total;
         public int page;
-        public int pageSize;
+        public int limit;
         public int totalPages;
     }
 }

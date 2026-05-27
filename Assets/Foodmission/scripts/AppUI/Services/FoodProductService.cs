@@ -22,7 +22,7 @@ namespace eu.foodmission.platform
         public async Task<(PaginatedFoodProductResponse Result, ApiErrorResponse Error)> SearchFoodsAsync(string query, int page = 1, int pageSize = 20)
         {
             AppState state = _storeService.GetAppState();
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products?search={Uri.EscapeDataString(query ?? "")}&page={page}&pageSize={pageSize}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products?search={Uri.EscapeDataString(query ?? "")}&page={page}&limit={pageSize}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
@@ -86,7 +86,7 @@ namespace eu.foodmission.platform
         {
             AppState state = _storeService.GetAppState();
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/search/openfoodfacts" +
-                         $"?query={Uri.EscapeDataString(query ?? "")}&page={page}&pageSize={pageSize}";
+                         $"?query={Uri.EscapeDataString(query ?? "")}&page={page}&limit={pageSize}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");

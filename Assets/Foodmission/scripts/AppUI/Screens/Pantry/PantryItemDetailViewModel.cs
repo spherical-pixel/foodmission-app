@@ -97,8 +97,8 @@ namespace eu.foodmission.platform
             }
             else if (!string.IsNullOrEmpty(item.genericFoodId))
             {
-                var (category, _) = await _genericFoodService.GetCategoryByIdAsync(item.genericFoodId);
-                displayName = category?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+                var (genericFood, _) = await _genericFoodService.GetGenericFoodByIdAsync(item.genericFoodId);
+                displayName = genericFood?.foodName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
             ItemView = new PantryItemView

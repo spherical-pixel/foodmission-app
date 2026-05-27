@@ -10,7 +10,7 @@ namespace eu.foodmission.platform
     }
 
     [Serializable]
-    public class CachedCategorySearch
+    public class CachedGenericFoodSearch
     {
         public PaginatedGenericFoodResponse data;
         public long cachedAtTicks;

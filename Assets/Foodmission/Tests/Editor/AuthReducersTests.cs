@@ -208,6 +208,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task AuthService_RefreshAsync_WithNoRefreshToken_ReturnsFalse()
         {
+            UnityEngine.PlayerPrefs.DeleteAll();
             var localStorageService = new LocalStorageService();
             var storeService = new StoreService(localStorageService);
             // AppState starts with empty refreshToken (default)

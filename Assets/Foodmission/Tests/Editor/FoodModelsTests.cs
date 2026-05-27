@@ -24,7 +24,7 @@ namespace eu.foodmission.platform.Tests
         {
             string json = "{\"data\":[{\"id\":\"1\",\"name\":\"Apple\",\"barcode\":\"\",\"description\":\"\"}," +
                           "{\"id\":\"2\",\"name\":\"Banana\",\"barcode\":\"\",\"description\":\"\"}]," +
-                          "\"total\":2,\"page\":1,\"pageSize\":20,\"totalPages\":1}";
+                          "\"total\":2,\"page\":1,\"limit\":20,\"totalPages\":1}";
 
             var result = JsonUtility.FromJson<PaginatedFoodProductResponse>(json);
 

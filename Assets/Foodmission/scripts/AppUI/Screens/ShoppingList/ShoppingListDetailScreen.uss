@@ -39,10 +39,6 @@
     margin-right: 8px;
 }
 
-.fm-sld-filter {
-    margin: 4px 16px 8px;
-}
-
 .fm-sld-progress {
     font-size: var(--appui-font-sizes-body-sm);
     opacity: 0.6;
@@ -59,15 +55,6 @@
 
 .fm-sld-empty.visible {
     display: flex;
-}
-
-.fm-sld-fab {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 28px;
 }
 
 .fm-sld-loading-overlay {

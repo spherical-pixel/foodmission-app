@@ -14,6 +14,7 @@ namespace eu.foodmission.platform
     {
         private readonly IShoppingListService _shoppingListService;
         private readonly IFoodProductService _foodProductService;
+        private readonly IGenericFoodService _genericFoodService;
         private readonly ILocalStorageService _localStorage;
 
         private const string CacheKeyPrefix = "shoppinglist_items_";
@@ -50,15 +51,23 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string _filterText = "";
 
+        [ObservableProperty]
+        private List<GenericFood> _genericFoods = new();
+
+        [ObservableProperty]
+        private bool _isLoadingGenericFoods;
+
         public ShoppingListDetailViewModel(
             IStoreService storeService,
             IShoppingListService shoppingListService,
             IFoodProductService foodProductService,
+            IGenericFoodService genericFoodService,
             ILocalStorageService localStorage)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
             _foodProductService = foodProductService;
+            _genericFoodService = genericFoodService;
             _localStorage = localStorage;
         }
 
@@ -73,6 +82,23 @@ namespace eu.foodmission.platform
                 string filter = FilterText.ToLowerInvariant();
                 Items = _allItems.Where(v => (v.FoodName ?? "").ToLowerInvariant().Contains(filter)).ToList();
             }
+        }
+
+        public async Task<List<GenericFood>> GetGenericFoodsAsync()
+        {
+            IsLoadingGenericFoods = true;
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+
+            if (error != null)
+            {
+                ErrorDetail = error;
+                IsLoadingGenericFoods = false;
+                return new List<GenericFood>();
+            }
+
+            GenericFoods = result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
+            IsLoadingGenericFoods = false;
+            return GenericFoods;
         }
 
         public async Task LoadAsync(string listId, string listName = null)
@@ -170,7 +196,7 @@ namespace eu.foodmission.platform
             };
         }
 
-        public async Task SearchFoodsAsync(string query)
+        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
         {
             SearchQuery = query;
             ErrorMessage = "";
@@ -178,7 +204,7 @@ namespace eu.foodmission.platform
             if (string.IsNullOrWhiteSpace(query))
             {
                 SearchResults = new List<OpenFoodFactsProduct>();
-                return;
+                return SearchResults;
             }
 
             string normalized = query.Trim().ToLowerInvariant();
@@ -188,7 +214,7 @@ namespace eu.foodmission.platform
             if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
             {
                 SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
-                return;
+                return SearchResults;
             }
 
             IsSearching = true;
@@ -213,6 +239,8 @@ namespace eu.foodmission.platform
                 SearchResults = new List<OpenFoodFactsProduct>();
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SEARCH_PRODUCTS");
             }
+
+            return SearchResults;
         }
 
         private static bool IsCacheFresh(long cachedAtTicks)

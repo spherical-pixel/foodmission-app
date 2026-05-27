@@ -21,7 +21,7 @@ namespace eu.foodmission.platform
         public FoodProduct[] data;
         public int total;
         public int page;
-        public int pageSize;
+        public int limit;
         public int totalPages;
     }
 

@@ -21,7 +21,7 @@ namespace eu.foodmission.platform
 
         private const string CacheKey = "pantry_cache";
         private const string FoodSearchCachePrefix = "food_search_";
-        private const string CategorySearchCachePrefix = "category_search_";
+        private const string GenericFoodSearchCachePrefix = "generic_food_search_";
         private static readonly TimeSpan CacheTtl = TimeSpan.FromHours(24);
 
         private List<PantryItemView> _allItems = new();
@@ -42,7 +42,7 @@ namespace eu.foodmission.platform
         private List<OpenFoodFactsProduct> m_FoodSearchResults = new();
 
         [ObservableProperty]
-        private List<GenericFood> m_CategorySearchResults = new();
+        private List<GenericFood> m_GenericFoodSearchResults = new();
 
         [ObservableProperty]
         private string m_SearchQuery = "";
@@ -169,8 +169,8 @@ namespace eu.foodmission.platform
             }
             else if (!string.IsNullOrEmpty(item.genericFoodId))
             {
-                var (category, _) = await _genericFoodService.GetCategoryByIdAsync(item.genericFoodId);
-                displayName = category?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+                var (genericFood, _) = await _genericFoodService.GetGenericFoodByIdAsync(item.genericFoodId);
+                displayName = genericFood?.foodName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
             return new PantryItemView
@@ -224,46 +224,46 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task SearchCategoriesAsync(string query)
+        public async Task SearchGenericFoodsAsync(string query)
         {
             SearchQuery = query;
 
             if (string.IsNullOrWhiteSpace(query))
             {
-                CategorySearchResults = new List<GenericFood>();
+                GenericFoodSearchResults = new List<GenericFood>();
                 return;
             }
 
             string normalized = query.Trim().ToLowerInvariant();
-            string cacheKey = CategorySearchCachePrefix + normalized;
+            string cacheKey = GenericFoodSearchCachePrefix + normalized;
 
-            CachedCategorySearch cached = _localStorage.GetValue<CachedCategorySearch>(cacheKey);
-            if (cached?.data?.data != null && IsCacheFresh(cached.cachedAtTicks))
+            CachedGenericFoodSearch cached = _localStorage.GetValue<CachedGenericFoodSearch>(cacheKey);
+            if (cached?.data?.items != null && IsCacheFresh(cached.cachedAtTicks))
             {
-                CategorySearchResults = new List<GenericFood>(cached.data.data);
+                GenericFoodSearchResults = new List<GenericFood>(cached.data.items);
                 return;
             }
 
             IsSearching = true;
-            var (response, _) = await _genericFoodService.SearchCategoriesAsync(query);
+            var (response, _) = await _genericFoodService.SearchGenericFoodsAsync(query);
             IsSearching = false;
 
-            if (response?.data != null)
+            if (response?.items != null)
             {
-                _localStorage.SetValue(cacheKey, new CachedCategorySearch
+                _localStorage.SetValue(cacheKey, new CachedGenericFoodSearch
                 {
                     data = response,
                     cachedAtTicks = DateTime.UtcNow.Ticks
                 });
-                CategorySearchResults = new List<GenericFood>(response.data);
+                GenericFoodSearchResults = new List<GenericFood>(response.items);
             }
-            else if (cached?.data?.data != null)
+            else if (cached?.data?.items != null)
             {
-                CategorySearchResults = new List<GenericFood>(cached.data.data);
+                GenericFoodSearchResults = new List<GenericFood>(cached.data.items);
             }
             else
             {
-                CategorySearchResults = new List<GenericFood>();
+                GenericFoodSearchResults = new List<GenericFood>();
             }
         }
 
@@ -327,9 +327,9 @@ namespace eu.foodmission.platform
             return foodItem;
         }
 
-        public async Task AddCategoryItemAsync(GenericFood category, float quantity, string unit)
+        public async Task AddGenericFoodItemAsync(GenericFood genericFood, float quantity, string unit)
         {
-            var (added, error) = await _pantryService.AddItemAsync(null, category.id, quantity, unit);
+            var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity, unit);
 
             if (error != null)
             {
@@ -338,7 +338,7 @@ namespace eu.foodmission.platform
             }
             else
             {
-                CategorySearchResults = new List<GenericFood>();
+                GenericFoodSearchResults = new List<GenericFood>();
                 SearchQuery = "";
                 ErrorMessage = "";
                 ErrorDetail = null;

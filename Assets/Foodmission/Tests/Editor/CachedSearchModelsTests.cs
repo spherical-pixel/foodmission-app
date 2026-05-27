@@ -83,34 +83,34 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void CachedCategorySearch_Roundtrips_Via_JsonUtility_WithCategories()
+        public void CachedGenericFoodSearch_Roundtrips_Via_JsonUtility_WithItems()
         {
-            var cached = new CachedCategorySearch
+            var cached = new CachedGenericFoodSearch
             {
                 data = new PaginatedGenericFoodResponse
                 {
-                    data = new[]
+                    items = new[]
                     {
-                        new GenericFood { id = "cat-1", name = "Whole milk", foodGroup = "Dairy" },
-                        new GenericFood { id = "cat-2", name = "Chicken breast", foodGroup = "Meat" }
+                        new GenericFood { id = "cat-1", foodName = "Whole milk", foodGroup = "Dairy" },
+                        new GenericFood { id = "cat-2", foodName = "Chicken breast", foodGroup = "Meat" }
                     },
                     total = 2,
                     page = 1,
-                    pageSize = 20,
+                    limit = 20,
                     totalPages = 1
                 },
                 cachedAtTicks = DateTime.UtcNow.Ticks
             };
 
             string json = JsonUtility.ToJson(cached);
-            var restored = JsonUtility.FromJson<CachedCategorySearch>(json);
+            var restored = JsonUtility.FromJson<CachedGenericFoodSearch>(json);
 
             Assert.IsNotNull(restored);
             Assert.IsNotNull(restored.data);
-            Assert.IsNotNull(restored.data.data);
-            Assert.AreEqual(2, restored.data.data.Length);
-            Assert.AreEqual("Whole milk", restored.data.data[0].name);
-            Assert.AreEqual("Meat", restored.data.data[1].foodGroup);
+            Assert.IsNotNull(restored.data.items);
+            Assert.AreEqual(2, restored.data.items.Length);
+            Assert.AreEqual("Whole milk", restored.data.items[0].foodName);
+            Assert.AreEqual("Meat", restored.data.items[1].foodGroup);
             Assert.AreEqual(2, restored.data.total);
         }
 
@@ -139,25 +139,25 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void CachedCategorySearch_WhenNoData_Roundtrips()
+        public void CachedGenericFoodSearch_WhenNoData_Roundtrips()
         {
-            var cached = new CachedCategorySearch
+            var cached = new CachedGenericFoodSearch
             {
                 data = new PaginatedGenericFoodResponse
                 {
-                    data = Array.Empty<GenericFood>(),
+                    items = Array.Empty<GenericFood>(),
                     total = 0
                 },
                 cachedAtTicks = 0
             };
 
             string json = JsonUtility.ToJson(cached);
-            var restored = JsonUtility.FromJson<CachedCategorySearch>(json);
+            var restored = JsonUtility.FromJson<CachedGenericFoodSearch>(json);
 
             Assert.IsNotNull(restored);
             Assert.IsNotNull(restored.data);
-            Assert.IsNotNull(restored.data.data);
-            Assert.AreEqual(0, restored.data.data.Length);
+            Assert.IsNotNull(restored.data.items);
+            Assert.AreEqual(0, restored.data.items.Length);
             Assert.AreEqual(0, restored.cachedAtTicks);
         }
     }
