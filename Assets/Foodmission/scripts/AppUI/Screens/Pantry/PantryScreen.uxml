@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:eu="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Pantry/PantryScreen.uss?fileID=7433441132597879392&amp;guid=abaccea1e09c4989b8f5630ef0501136&amp;type=3#PantryScreen"/>
     <ui:VisualElement name="root" class="fm-root">
@@ -10,7 +10,7 @@
             </appui:Heading>
         </ui:VisualElement>
         <appui:Text name="error-message" class="fm-p-error"/>
-        <appui:TextField name="filter-field" placeholder="Filter items..." class="fm-p-filter"/>
+        <eu:FMSearchOrCategoryField name="search-category-field"/>
         <ui:VisualElement name="expired-banner" class="fm-p-expired-banner">
             <appui:Text name="expired-banner-text" class="fm-p-expired-banner-text"/>
             <appui:Button name="btn-move-to-waste" text="Move to waste" variant="Destructive" class="fm-p-expired-btn">
@@ -24,10 +24,11 @@
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000023)"/>
             </Bindings>
         </appui:Text>
-        <ui:ScrollView name="scroll-view" class="fm-p-scroll">
-            <ui:VisualElement name="items-container" class="fm-p-container"/>
-        </ui:ScrollView>
-        <appui:Button name="btn-add" title="Add item" variant="Accent" size="L" class="fm-p-fab fm-button"/>
+        <ui:VisualElement name="main-content" style="flex-grow: 1;">
+            <ui:ScrollView name="scroll-view" class="fm-p-scroll">
+                <ui:VisualElement name="items-container" class="fm-p-container"/>
+            </ui:ScrollView>
+        </ui:VisualElement>
         <ui:VisualElement class="fm-bottom-nav-padding"/>
     </ui:VisualElement>
 </ui:UXML>
