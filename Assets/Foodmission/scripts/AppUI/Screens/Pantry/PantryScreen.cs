@@ -16,6 +16,7 @@ using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using System.Threading.Tasks;
 
 namespace eu.foodmission.platform
 {
