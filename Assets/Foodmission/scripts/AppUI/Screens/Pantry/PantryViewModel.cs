@@ -39,18 +39,6 @@ namespace eu.foodmission.platform
         private string m_FilterText = "";
 
         [ObservableProperty]
-        private List<OpenFoodFactsProduct> m_FoodSearchResults = new();
-
-        [ObservableProperty]
-        private List<GenericFood> m_GenericFoodSearchResults = new();
-
-        [ObservableProperty]
-        private string m_SearchQuery = "";
-
-        [ObservableProperty]
-        private bool m_IsSearching;
-
-        [ObservableProperty]
         private ExpiredPantryItem[] m_ExpiredItems = Array.Empty<ExpiredPantryItem>();
 
         [ObservableProperty]
@@ -181,14 +169,11 @@ namespace eu.foodmission.platform
             };
         }
 
-        public async Task SearchFoodsAsync(string query)
+        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
         {
-            SearchQuery = query;
-
             if (string.IsNullOrWhiteSpace(query))
             {
-                FoodSearchResults = new List<OpenFoodFactsProduct>();
-                return;
+                return new List<OpenFoodFactsProduct>();
             }
 
             string normalized = query.Trim().ToLowerInvariant();
@@ -197,13 +182,10 @@ namespace eu.foodmission.platform
             CachedFoodSearch cached = _localStorage.GetValue<CachedFoodSearch>(cacheKey);
             if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
             {
-                FoodSearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
-                return;
+                return new List<OpenFoodFactsProduct>(cached.data.products);
             }
 
-            IsSearching = true;
             var (response, _) = await _foodProductService.SearchOpenFoodFactsAsync(query);
-            IsSearching = false;
 
             if (response?.products != null)
             {
@@ -212,59 +194,26 @@ namespace eu.foodmission.platform
                     data = response,
                     cachedAtTicks = DateTime.UtcNow.Ticks
                 });
-                FoodSearchResults = new List<OpenFoodFactsProduct>(response.products);
+                return new List<OpenFoodFactsProduct>(response.products);
             }
-            else if (cached?.data?.products != null)
+
+            if (cached?.data?.products != null)
             {
-                FoodSearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                return new List<OpenFoodFactsProduct>(cached.data.products);
             }
-            else
-            {
-                FoodSearchResults = new List<OpenFoodFactsProduct>();
-            }
+
+            return new List<OpenFoodFactsProduct>();
         }
 
-        public async Task SearchGenericFoodsAsync(string query)
+        public async Task<List<GenericFood>> GetGenericFoodsAsync()
         {
-            SearchQuery = query;
-
-            if (string.IsNullOrWhiteSpace(query))
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+            if (error != null)
             {
-                GenericFoodSearchResults = new List<GenericFood>();
-                return;
+                ErrorDetail = error;
+                return new List<GenericFood>();
             }
-
-            string normalized = query.Trim().ToLowerInvariant();
-            string cacheKey = GenericFoodSearchCachePrefix + normalized;
-
-            CachedGenericFoodSearch cached = _localStorage.GetValue<CachedGenericFoodSearch>(cacheKey);
-            if (cached?.data?.items != null && IsCacheFresh(cached.cachedAtTicks))
-            {
-                GenericFoodSearchResults = new List<GenericFood>(cached.data.items);
-                return;
-            }
-
-            IsSearching = true;
-            var (response, _) = await _genericFoodService.SearchGenericFoodsAsync(query);
-            IsSearching = false;
-
-            if (response?.items != null)
-            {
-                _localStorage.SetValue(cacheKey, new CachedGenericFoodSearch
-                {
-                    data = response,
-                    cachedAtTicks = DateTime.UtcNow.Ticks
-                });
-                GenericFoodSearchResults = new List<GenericFood>(response.items);
-            }
-            else if (cached?.data?.items != null)
-            {
-                GenericFoodSearchResults = new List<GenericFood>(cached.data.items);
-            }
-            else
-            {
-                GenericFoodSearchResults = new List<GenericFood>();
-            }
+            return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
         }
 
         private static bool IsCacheFresh(long cachedAtTicks)
@@ -304,15 +253,15 @@ namespace eu.foodmission.platform
             {
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_ITEM_MISSING");
                 ErrorDetail = addError;
+                return;
             }
-            else
-            {
-                FoodSearchResults = new List<OpenFoodFactsProduct>();
-                SearchQuery = "";
-                ErrorMessage = "";
-                ErrorDetail = null;
-                await LoadAsync();
-            }
+
+            ErrorDetail = null;
+            var newItem = new PantryItemView { Item = added, DisplayName = product.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN") };
+            _allItems.Add(newItem);
+            FilterText = "";
+            ApplyFilter();
+            SaveCacheFromAllItems();
         }
 
         public async Task<FoodProduct> ImportByBarcodeAsync(string barcode)
@@ -335,19 +284,20 @@ namespace eu.foodmission.platform
             {
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_CATEGORY_ITEM");
                 ErrorDetail = error;
+                return;
             }
-            else
-            {
-                GenericFoodSearchResults = new List<GenericFood>();
-                SearchQuery = "";
-                ErrorMessage = "";
-                ErrorDetail = null;
-                await LoadAsync();
-            }
+
+            ErrorDetail = null;
+            var newItem = new PantryItemView { Item = added, DisplayName = genericFood.foodName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN") };
+            _allItems.Add(newItem);
+            FilterText = "";
+            ApplyFilter();
+            SaveCacheFromAllItems();
         }
 
         public async Task DeleteItemAsync(string itemId)
         {
+            ErrorMessage = "";
             var (success, error) = await _pantryService.DeleteItemAsync(itemId);
 
             if (error != null)
