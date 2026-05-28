@@ -25,14 +25,12 @@ namespace eu.foodmission.platform
         private VisualElement _itemsContainer;
         private Text _errorText;
         private Text _emptyState;
-        private Unity.AppUI.UI.TextField _filterField;
-        private Unity.AppUI.UI.Button _btnAdd;
         private VisualElement _expiredBanner;
         private Text _expiredBannerText;
         private Unity.AppUI.UI.Button _btnMoveToWaste;
+        private FMSearchOrCategoryField _searchCategoryField;
+        private VisualElement _mainContent;
 
-        private AccessibilityNode _addButtonNode;
-        private AccessibilityNode _filterFieldNode;
         private AccessibilityNode _moveToWasteNode;
 
         public PantryScreen()
@@ -48,8 +46,8 @@ namespace eu.foodmission.platform
             _itemsContainer = contentContainer.Q<VisualElement>("items-container");
             _errorText = contentContainer.Q<Text>("error-message");
             _emptyState = contentContainer.Q<Text>("empty-state");
-            _filterField = contentContainer.Q<Unity.AppUI.UI.TextField>("filter-field");
-            _btnAdd = contentContainer.Q<Unity.AppUI.UI.Button>("btn-add");
+            _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
+            _mainContent = contentContainer.Q<VisualElement>("main-content");
             _expiredBanner = contentContainer.Q<VisualElement>("expired-banner");
             _expiredBannerText = contentContainer.Q<Text>("expired-banner-text");
             _btnMoveToWaste = contentContainer.Q<Unity.AppUI.UI.Button>("btn-move-to-waste");
@@ -59,11 +57,24 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
 
-            _btnAdd.clicked += OnAddClicked;
-            if (_filterField != null)
+            if (_searchCategoryField != null)
             {
-                _filterField.RegisterValueChangedCallback(OnFilterChanged);
+                _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
+                _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
+                _searchCategoryField.OnProductConfirmed = async (product, qty, unit) =>
+                {
+                    await SafeImportAndAddFoodItemAsync(product, qty, unit);
+                    RebuildItems();
+                };
+                _searchCategoryField.OnGenericFoodConfirmed = async (food, qty, unit) =>
+                {
+                    await SafeAddGenericFoodItemAsync(food, qty, unit);
+                    RebuildItems();
+                };
+                _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
+                _searchCategoryField.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
             }
+
             if (_btnMoveToWaste != null)
             {
                 _btnMoveToWaste.clicked += OnMoveToWasteClicked;
@@ -80,10 +91,9 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            _btnAdd.clicked -= OnAddClicked;
-            if (_filterField != null)
+            if (_searchCategoryField != null)
             {
-                _filterField.UnregisterValueChangedCallback(OnFilterChanged);
+                _searchCategoryField.OnPopoverVisibilityChanged -= OnPopoverVisibilityChanged;
             }
             if (_btnMoveToWaste != null)
             {
@@ -104,22 +114,12 @@ namespace eu.foodmission.platform
 
             var h = _accessibilityHierarchy;
 
-            _addButtonNode = CreateButtonNode(h, _btnAdd, "Add pantry item");
             _moveToWasteNode = CreateButtonNode(h, _btnMoveToWaste, "Move expired items to waste");
-
-            if (_filterField != null)
-            {
-                _filterFieldNode = h.AddNode("Filter pantry items");
-                _filterFieldNode.role = AccessibilityRole.TextField;
-                _filterFieldNode.frameGetter = MakeElementFrameGetter(_filterField);
-            }
         }
 
         protected override void TeardownAccessibilityNodes()
         {
-            _addButtonNode = null;
             _moveToWasteNode = null;
-            _filterFieldNode = null;
             base.TeardownAccessibilityNodes();
         }
 
@@ -157,9 +157,36 @@ namespace eu.foodmission.platform
             };
         }
 
-        private void OnFilterChanged(ChangeEvent<string> evt)
+        private void OnPopoverVisibilityChanged(bool isVisible)
         {
-            _viewModel.FilterText = evt.newValue;
+            if (_mainContent != null)
+            {
+                _mainContent.style.visibility = isVisible ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+        private async Task SafeImportAndAddFoodItemAsync(OpenFoodFactsProduct product, float qty, string unit)
+        {
+            try
+            {
+                await _viewModel.ImportAndAddFoodItemAsync(product, qty, unit);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] ImportAndAddFoodItemAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeAddGenericFoodItemAsync(GenericFood food, float qty, string unit)
+        {
+            try
+            {
+                await _viewModel.AddGenericFoodItemAsync(food, qty, unit);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] AddGenericFoodItemAsync failed: {ex.Message}");
+            }
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -330,7 +357,6 @@ namespace eu.foodmission.platform
                 FMLoadingOverlay.Show(contentContainer);
             else
                 FMLoadingOverlay.Hide(contentContainer);
-            _btnAdd?.SetEnabled(!isLoading);
         }
 
         private void UpdateErrorState()
@@ -392,33 +418,5 @@ namespace eu.foodmission.platform
                 semantic: AlertSemantic.Destructive);
         }
 
-        private void OnAddClicked()
-        {
-            FMProductSearchDialog.ShowDualSearch(
-                this,
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_ITEM_TITLE"),
-                async query =>
-                {
-                    await _viewModel.SearchFoodsAsync(query);
-                    return _viewModel.FoodSearchResults;
-                },
-                async query =>
-                {
-                    await _viewModel.SearchGenericFoodsAsync(query);
-                    return _viewModel.GenericFoodSearchResults;
-                },
-                async (item, qty, unit) =>
-                {
-                    if (item is OpenFoodFactsProduct product)
-                    {
-                        await _viewModel.ImportAndAddFoodItemAsync(product, qty, unit);
-                    }
-                    else if (item is GenericFood genericFood)
-                    {
-                        await _viewModel.AddGenericFoodItemAsync(genericFood, qty, unit);
-                    }
-                },
-                async barcode => await _viewModel.ImportByBarcodeAsync(barcode));
-        }
     }
 }
