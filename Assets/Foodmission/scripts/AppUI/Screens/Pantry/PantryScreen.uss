@@ -29,10 +29,6 @@
     display: flex;
 }
 
-.fm-p-filter {
-    margin: 0 0 8px;
-}
-
 .fm-p-scroll {
     flex-grow: 1;
     margin-bottom: 8px;
@@ -124,11 +120,3 @@
     display: flex;
 }
 
-.fm-p-fab {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 28px;
-}
