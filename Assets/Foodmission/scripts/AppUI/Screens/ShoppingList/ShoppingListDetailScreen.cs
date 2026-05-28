@@ -108,7 +108,7 @@ namespace eu.foodmission.platform
                     await SafeAddGenericFoodItemAsync(food, qty, unit);
                     RebuildItems();
                 };
-                // _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
+                _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
 
                 _searchCategoryField.OnPopoverVisibilityChanged += isVisible =>

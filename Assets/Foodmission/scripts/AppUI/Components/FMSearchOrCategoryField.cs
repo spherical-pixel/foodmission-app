@@ -71,16 +71,16 @@ namespace eu.foodmission.platform.Components
             { "Vegetables", "🥦" },
         };
 
-        // private Func<string, Task<FoodProduct>> _importFromBarcodeAsync;
-        // public Func<string, Task<FoodProduct>> ImportFromBarcodeAsync
-        // {
-        //     get => _importFromBarcodeAsync;
-        //     set
-        //     {
-        //         _importFromBarcodeAsync = value;
-        //         _scanButton.style.display = value != null ? DisplayStyle.Flex : DisplayStyle.None;
-        //     }
-        // }
+        private Func<string, Task<FoodProduct>> _importFromBarcodeAsync;
+        public Func<string, Task<FoodProduct>> ImportFromBarcodeAsync
+        {
+            get => _importFromBarcodeAsync;
+            set
+            {
+                _importFromBarcodeAsync = value;
+                _scanButton.style.display = value != null ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+        }
 
         /* ========= INTERNAL ELEMENTS ========= */
 
@@ -98,7 +98,7 @@ namespace eu.foodmission.platform.Components
         private VisualElement _categoryContainer;
         private VisualElement _searchResultsContainer;
         private CircularProgress _spinner;
-        // private Unity.AppUI.UI.IconButton _scanButton;
+        private Unity.AppUI.UI.IconButton _scanButton;
         private VisualElement _confirmContainer;
         private Unity.AppUI.UI.FloatField _qtyField;
         private Dropdown _unitDropdown;
@@ -114,13 +114,17 @@ namespace eu.foodmission.platform.Components
             searchRow.style.flexDirection = FlexDirection.Row;
             searchRow.style.alignItems = Align.Center;
 
+            var searchField = new VisualElement();
+            searchField.style.flexGrow = 1;
+            searchRow.Add(searchField);
+
             _textField = new Unity.AppUI.UI.TextField
             {
                 placeholder = "Search products or select category..."
             };
             _textField.style.flexGrow = 1;
             _textField.AddToClassList("fm-scf-field");
-            searchRow.Add(_textField);
+            searchField.Add(_textField);
 
             _actionButton = new Unity.AppUI.UI.Button();
             _actionButton.style.position = Position.Absolute;
@@ -128,19 +132,19 @@ namespace eu.foodmission.platform.Components
             _actionButton.quiet = true;
             _actionButton.leadingIcon = "fm-add-icon";
             _actionButton.size = Size.L;
-            searchRow.Add(_actionButton);
+            searchField.Add(_actionButton);
 
-            // _scanButton = new Unity.AppUI.UI.IconButton
-            // {
-            //     icon = "barcode",
-            //     quiet = true,
-            //     tooltip = "Scan barcode"
-            // };
-            // _scanButton.style.minWidth = 36;
-            // _scanButton.style.minHeight = 36;
-            // _scanButton.style.marginRight = 4;
-            // _scanButton.style.display = DisplayStyle.None;
-            // searchRow.Add(_scanButton);
+            _scanButton = new Unity.AppUI.UI.IconButton
+            {
+                icon = "barcode",
+                quiet = true,
+                tooltip = "Scan barcode"
+            };
+            _scanButton.style.minWidth = 36;
+            _scanButton.style.minHeight = 36;
+            _scanButton.style.marginRight = 4;
+            _scanButton.style.display = DisplayStyle.Flex;
+            searchRow.Add(_scanButton);
 
             Add(searchRow);
 
@@ -227,7 +231,7 @@ namespace eu.foodmission.platform.Components
                 }
             }).ExecuteLater(0);
 
-            //_scanButton.clicked += OnScanClicked;
+            _scanButton.clicked += OnScanClicked;
 
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
@@ -542,25 +546,25 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        // private async void OnScanClicked()
-        // {
-        //     if (ImportFromBarcodeAsync != null)
-        //     {
-        //         BarcodeScanOverlay.Show(this, async barcode =>
-        //         {
-        //             var foodItem = await ImportFromBarcodeAsync(barcode);
-        //             if (foodItem != null)
-        //             {
-        //                 OnResultClicked(new OpenFoodFactsProduct
-        //                 {
-        //                     name = foodItem.name,
-        //                     barcode = foodItem.barcode,
-        //                     brands = Array.Empty<string>(),
-        //                 });
-        //             }
-        //         });
-        //     }
-        // }
+        private async void OnScanClicked()
+        {
+            if (ImportFromBarcodeAsync != null)
+            {
+                BarcodeScanOverlay.Show(this, async barcode =>
+                {
+                    var foodItem = await ImportFromBarcodeAsync(barcode);
+                    if (foodItem != null)
+                    {
+                        OnResultClicked(new OpenFoodFactsProduct
+                        {
+                            name = foodItem.name,
+                            barcode = foodItem.barcode,
+                            brands = Array.Empty<string>(),
+                        });
+                    }
+                });
+            }
+        }
 
         private void SetMode(Mode mode)
         {

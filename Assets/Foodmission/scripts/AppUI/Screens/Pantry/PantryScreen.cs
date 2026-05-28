@@ -73,6 +73,7 @@ namespace eu.foodmission.platform
                     RebuildItems();
                 };
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
+                _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchCategoryField.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
             }
 
