@@ -29,6 +29,7 @@ namespace eu.foodmission.platform
 
         private VisualElement _selectorParts;
         private VisualElement _selectorColor;
+        private Unity.AppUI.UI.Heading _heading;
 
         private const float SCROLL_STEP = 120f;
 
@@ -50,6 +51,7 @@ namespace eu.foodmission.platform
             _avatarService = avatarService;
             _configSnapshot = avatarService.GetCurrentAvatarConfig?.Copy();
             _editingConfig = avatarService.GetCurrentAvatarConfig?.Copy();
+            _heading.text = itemEnum.ToString();
 
             PrepareButtonsForItem();
         }
@@ -66,6 +68,7 @@ namespace eu.foodmission.platform
             _btKo = contentContainer.Q<Unity.AppUI.UI.Button>("btKo");
             _selectorParts = contentContainer.Q<VisualElement>("selectorParts");
             _selectorColor = contentContainer.Q<VisualElement>("selectorColor");
+            _heading = contentContainer.Q<Unity.AppUI.UI.Heading>("title-heading");
         }
 
         private void RegisterManualEvents()

@@ -116,6 +116,9 @@ namespace eu.foodmission.platform.Components
 
             var searchField = new VisualElement();
             searchField.style.flexGrow = 1;
+            //searchField.style.alignContent = Align.Center;
+            searchField.style.justifyContent = Justify.Center;
+            //searchField.style.alignItems = Align.Center;
             searchRow.Add(searchField);
 
             _textField = new Unity.AppUI.UI.TextField

@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.AvatarEditorViewModel, Foodmission" class="fm-root" style="flex-grow: 1; background-color: rgba(2, 70, 57, 0); height: 100%; width: 100%;">
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.AvatarEditorViewModel, Foodmission" class="fm-root appui appui--light appui--en appui--ltr" style="flex-grow: 1; background-color: rgba(2, 70, 57, 0); height: 100%; width: 100%;">
         <ui:VisualElement name="back" style="flex-grow: 1;">
             <ui:VisualElement name="frame" class="box-background" style="flex-grow: 1; justify-content: space-between; overflow: hidden;">
                 <ui:VisualElement name="Top">

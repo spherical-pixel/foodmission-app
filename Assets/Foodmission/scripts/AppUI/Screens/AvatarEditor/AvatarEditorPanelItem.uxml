@@ -1,9 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3"/>
-    <ui:VisualElement name="SelectorItemAvatar" template="SelectorItemAvatar" class="fm-avatar-panel-item-spacing" style="position: absolute; bottom: 0; right: 0; left: 0;">
+    <ui:VisualElement name="SelectorItemAvatar" template="SelectorItemAvatar" class="fm-avatar-panel-item-spacing appui appui--light appui--ltr appui--en" style="position: absolute; bottom: 0; right: 0; left: 0;">
         <ui:VisualElement name="SelectorItemAvatar" class="box-background" style="justify-content: flex-end; overflow: hidden; flex-direction: column-reverse; border-bottom-left-radius: 0; border-bottom-right-radius: 0; align-content: flex-end; margin-bottom: 0; background-color: rgb(209, 209, 209);">
             <ui:VisualElement name="Bottom" style="position: relative; flex-shrink: 0;">
                 <ui:VisualElement name="edit" style="flex-grow: 1;">
+                    <appui:Heading text="nombre de la seccion de los cohones" name="title-heading" class="fm-heading-avatar-editor-part heading-auto-size-md"/>
                     <ui:VisualElement name="selectorParts" style="flex-grow: 1; flex-direction: row; justify-content: space-between; margin-top: 25px; margin-bottom: 25px;">
                         <appui:Button leading-icon="fm-arrow-slim-left" quiet="true" variant="Default" name="btLeftParts" class="fm-button-avatar-scroll-arrow"/>
                         <ui:ScrollView mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="scrollParts" style="flex-grow: 1; padding-left: 25px; padding-right: 25px;"/>
