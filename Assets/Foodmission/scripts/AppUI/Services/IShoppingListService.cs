@@ -12,7 +12,7 @@ namespace eu.foodmission.platform
 
         // Items
         Task<(ShoppingListItem[] Result, ApiErrorResponse Error)> GetItemsAsync(string listId);
-        Task<(ShoppingListItem Result, ApiErrorResponse Error)> AddItemAsync(string listId, string foodProductId, float quantity, string unit = "PIECES", string notes = null, bool? checkedState = null);
+        Task<(ShoppingListItem Result, ApiErrorResponse Error)> AddItemAsync(string listId, string foodProductId = null, float quantity = 1, string unit = "PIECES", string notes = null, bool? checkedState = null, string genericFoodId = null);
         Task<(ShoppingListItem Result, ApiErrorResponse Error)> UpdateItemAsync(string listId, string itemId, float? quantity, string unit, string notes, bool? isChecked);
         Task<(bool Success, ApiErrorResponse Error)> DeleteItemAsync(string listId, string itemId);
         Task<(bool Success, ApiErrorResponse Error)> ClearCheckedItemsAsync(string listId);

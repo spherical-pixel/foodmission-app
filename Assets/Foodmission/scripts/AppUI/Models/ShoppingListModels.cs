@@ -23,6 +23,7 @@ namespace eu.foodmission.platform
         public string notes;
         public bool @checked;
         public FoodProduct foodProduct;
+        public GenericFood genericFood;
     }
 
     [Serializable]

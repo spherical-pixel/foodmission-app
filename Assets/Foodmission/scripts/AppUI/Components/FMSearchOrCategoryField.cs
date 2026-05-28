@@ -16,26 +16,6 @@ namespace eu.foodmission.platform.Components
     [UxmlElement]
     public partial class FMSearchOrCategoryField : VisualElement
     {
-        private enum Mode { Idle, Categories, Searching, Confirmed }
-
-        private Mode _currentMode = Mode.Idle;
-        private CancellationTokenSource _debounceCts;
-        private List<GenericFood> _genericFoods = new();
-        private List<object> _recentProducts = new();
-        private object _selectedItem;
-
-        private Unity.AppUI.UI.TextField _textField;
-        protected Unity.AppUI.UI.Button _actionButton;
-        private VisualElement _resultsContainer;
-        private VisualElement _categoryContainer;
-        private VisualElement _searchResultsContainer;
-        private CircularProgress _spinner;
-        private Unity.AppUI.UI.IconButton _scanButton;
-        private VisualElement _confirmContainer;
-        private Unity.AppUI.UI.FloatField _qtyField;
-        private Dropdown _unitDropdown;
-        private Text _selectedNameLabel;
-
         // ========= UXML ATTRIBUTES =========
         [UxmlAttribute("placeholder")][CreateProperty]
         public string Placeholder
@@ -55,19 +35,74 @@ namespace eu.foodmission.platform.Components
         public Func<string, Task<List<OpenFoodFactsProduct>>> SearchProductsAsync { get; set; }
         public Func<Task<List<GenericFood>>> GetGenericFoodsAsync { get; set; }
         public Func<OpenFoodFactsProduct, float, string, Task> OnProductConfirmed { get; set; }
+        public Func<GenericFood, float, string, Task> OnGenericFoodConfirmed { get; set; }
         public Func<string, Task> OnCreateItemAsync { get; set; }
         public Action<string> OnTextChanged { get; set; }
+        public Action<bool> OnPopoverVisibilityChanged { get; set; }
 
-        private Func<string, Task<FoodProduct>> _importFromBarcodeAsync;
-        public Func<string, Task<FoodProduct>> ImportFromBarcodeAsync
+        private static readonly Dictionary<string, string> CategoryEmojis = new()
         {
-            get => _importFromBarcodeAsync;
-            set
-            {
-                _importFromBarcodeAsync = value;
-                _scanButton.style.display = value != null ? DisplayStyle.Flex : DisplayStyle.None;
-            }
-        }
+            { "Alcoholic beverages", "🍺" },
+            { "Bread", "🍞" },
+            { "Cereal products and types of flour", "🌾" },
+            { "Cheese", "🧀" },
+            { "Cold meat cuts", "🥩" },
+            { "Eggs", "🥚" },
+            { "Fats and oils", "🫒" },
+            { "Fish, crustacean and shellfish", "🐟" },
+            { "Foods for special nutritional use", "🍼" },
+            { "Fruits", "🍎" },
+            { "Herbs and spices", "🌿" },
+            { "Legumes", "🫘" },
+            { "Meat and poultry", "🍗" },
+            { "Meat substitutes and dairy substitutes", "🧈" },
+            { "Milk and milk products", "🥛" },
+            { "Miscellaneous foods", "📦" },
+            { "Mixed dishes", "🍽️" },
+            { "Non-alcoholic beverages", "🥤" },
+            { "Nuts and seeds", "🥜" },
+            { "Pastry and biscuits", "🥐" },
+            { "Potatoes and tubers", "🥔" },
+            { "Savoury bread spreads", "🧴" },
+            { "Savoury sauces", "🥫" },
+            { "Savoury snacks", "🍿" },
+            { "Soups", "🍜" },
+            { "Sugar, sweets and sweet sauces", "🍯" },
+            { "Vegetables", "🥦" },
+        };
+
+        // private Func<string, Task<FoodProduct>> _importFromBarcodeAsync;
+        // public Func<string, Task<FoodProduct>> ImportFromBarcodeAsync
+        // {
+        //     get => _importFromBarcodeAsync;
+        //     set
+        //     {
+        //         _importFromBarcodeAsync = value;
+        //         _scanButton.style.display = value != null ? DisplayStyle.Flex : DisplayStyle.None;
+        //     }
+        // }
+
+        /* ========= INTERNAL ELEMENTS ========= */
+
+        private enum Mode { Idle, Categories, Searching, Confirmed }
+
+        private Mode _currentMode = Mode.Idle;
+        private CancellationTokenSource _debounceCts;
+        private List<GenericFood> _genericFoods = new();
+        private List<object> _recentProducts = new();
+        private object _selectedItem;
+
+        private Unity.AppUI.UI.TextField _textField;
+        protected Unity.AppUI.UI.Button _actionButton;
+        private VisualElement _resultsContainer;
+        private VisualElement _categoryContainer;
+        private VisualElement _searchResultsContainer;
+        private CircularProgress _spinner;
+        // private Unity.AppUI.UI.IconButton _scanButton;
+        private VisualElement _confirmContainer;
+        private Unity.AppUI.UI.FloatField _qtyField;
+        private Dropdown _unitDropdown;
+        private Text _selectedNameLabel;
 
         // ========= CONSTRUCTOR =========
         public FMSearchOrCategoryField()
@@ -92,19 +127,20 @@ namespace eu.foodmission.platform.Components
             _actionButton.style.right = 0;
             _actionButton.quiet = true;
             _actionButton.leadingIcon = "fm-add-icon";
+            _actionButton.size = Size.L;
             searchRow.Add(_actionButton);
 
-            _scanButton = new Unity.AppUI.UI.IconButton
-            {
-                icon = "barcode",
-                quiet = true,
-                tooltip = "Scan barcode"
-            };
-            _scanButton.style.minWidth = 36;
-            _scanButton.style.minHeight = 36;
-            _scanButton.style.marginRight = 4;
-            _scanButton.style.display = DisplayStyle.None;
-            searchRow.Add(_scanButton);
+            // _scanButton = new Unity.AppUI.UI.IconButton
+            // {
+            //     icon = "barcode",
+            //     quiet = true,
+            //     tooltip = "Scan barcode"
+            // };
+            // _scanButton.style.minWidth = 36;
+            // _scanButton.style.minHeight = 36;
+            // _scanButton.style.marginRight = 4;
+            // _scanButton.style.display = DisplayStyle.None;
+            // searchRow.Add(_scanButton);
 
             Add(searchRow);
 
@@ -191,7 +227,33 @@ namespace eu.foodmission.platform.Components
                 }
             }).ExecuteLater(0);
 
-            _scanButton.clicked += OnScanClicked;
+            //_scanButton.clicked += OnScanClicked;
+
+            RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
+            RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
+        }
+
+        private void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            if (panel?.visualTree != null)
+                panel.visualTree.RegisterCallback<PointerDownEvent>(OnPanelPointerDown, TrickleDown.TrickleDown);
+        }
+
+        private void OnDetachFromPanel(DetachFromPanelEvent evt)
+        {
+            if (panel?.visualTree != null)
+                panel.visualTree.UnregisterCallback<PointerDownEvent>(OnPanelPointerDown, TrickleDown.TrickleDown);
+        }
+
+        private void OnPanelPointerDown(PointerDownEvent evt)
+        {
+            if (_currentMode == Mode.Idle || _currentMode == Mode.Confirmed) return;
+            if (evt.target is not VisualElement target) return;
+
+            if (_resultsContainer.Contains(target)) return;
+            if (target == _textField || _textField.Contains(target)) return;
+
+            ResetToIdle();
         }
 
         private void OnTextFieldFocused(FocusEvent evt)
@@ -228,8 +290,9 @@ namespace eu.foodmission.platform.Components
             // Recent products heading
             if (_recentProducts.Count > 0)
             {
-                var recentHeading = new Text { text = "RECENTLY ADDED" };
+                var recentHeading = new Unity.AppUI.UI.Heading { text = "RECENTLY ADDED" };
                 recentHeading.AddToClassList("fm-scf-heading");
+                recentHeading.size = HeadingSize.M;
                 _categoryContainer.Add(recentHeading);
 
                 foreach (var prod in _recentProducts)
@@ -240,28 +303,33 @@ namespace eu.foodmission.platform.Components
             }
 
             // Food groups heading
-            var groupHeading = new Text { text = "CATEGORIES" };
+            //var groupHeading = new Text { text = "CATEGORIES" };
+            var groupHeading = new Unity.AppUI.UI.Heading { text = "CATEGORIES" };
+            groupHeading.size = HeadingSize.M;
+
             groupHeading.AddToClassList("fm-scf-heading");
             _categoryContainer.Add(groupHeading);
 
             foreach (var group in groups)
             {
-                var row = new VisualElement();
-                row.AddToClassList("fm-scf-category-row");
-
-                var label = new Text { text = group };
-                label.style.flexGrow = 1;
-                row.Add(label);
-
-                var arrow = new Text { text = ">" };
-                arrow.style.opacity = 0.4f;
-                row.Add(arrow);
-
-                string capturedGroup = group;
-                row.RegisterCallback<ClickEvent>(_ => ShowItemsForGroup(capturedGroup));
-                _categoryContainer.Add(row);
+                string emoji = CategoryEmojis.TryGetValue(group, out string e) ? e : "📦";
+                string localized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", group + "_title");
+                var btn = new Unity.AppUI.UI.Button();
+                btn.trailingIcon = "fm-arrow-right";
+                btn.style.flexGrow = 1;
+                btn.AddToClassList("fm-scf-category-row");
+                btn.AddToClassList("fm-button-align-left");
+                btn.title = $"{emoji} {localized}";
+                btn.quiet = true;
+                btn.RegisterCallback<ClickEvent>(_ => ShowItemsForGroup(group));
+                //btn.variant = ButtonVariant.Accent;
+                btn.size = Size.M;
+                _categoryContainer.Add(btn);
             }
 
+            _categoryContainer.style.display = DisplayStyle.Flex;
+            _searchResultsContainer.style.display = DisplayStyle.None;
+            _confirmContainer.style.display = DisplayStyle.None;
             _resultsContainer.style.display = DisplayStyle.Flex;
         }
 
@@ -272,7 +340,15 @@ namespace eu.foodmission.platform.Components
             // Back button row
             var backRow = new VisualElement();
             backRow.AddToClassList("fm-scf-back-row");
-            var backLabel = new Text { text = $"\u2190 {foodGroup}" };
+            string backEmoji = CategoryEmojis.TryGetValue(foodGroup, out string be) ? be : "📦";
+            string backLocalized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", foodGroup + "_title");
+            var backLabel = new Unity.AppUI.UI.Heading { text = $"{backEmoji} {backLocalized}" };
+            backLabel.size = HeadingSize.M;
+
+            var icon = new Unity.AppUI.UI.Icon { iconName = "fm-arrow-left" };
+            icon.style.marginRight = 5;
+            backRow.Add(icon);
+
             backRow.Add(backLabel);
             backRow.RegisterCallback<ClickEvent>(evt => { _ = ShowGenericFoodsAsync(); });
             _categoryContainer.Add(backRow);
@@ -283,24 +359,32 @@ namespace eu.foodmission.platform.Components
                 string group = string.IsNullOrEmpty(gf.foodGroup) ? "Other" : gf.foodGroup;
                 if (group != foodGroup) continue;
 
-                var row = new VisualElement();
-                row.AddToClassList("fm-scf-category-row");
-
-                var label = new Text { text = gf.foodName };
-                row.Add(label);
+                //var row = new VisualElement();
+                var btn = new Unity.AppUI.UI.Button();
+                btn.AddToClassList("fm-scf-category-row");
+                btn.style.flexGrow = 1;
+                btn.AddToClassList("fm-button-align-left");
+                btn.title = $"{gf.foodName}";
+                btn.quiet = true;
+                btn.size = Size.M;
 
                 GenericFood captured = gf;
-                row.RegisterCallback<ClickEvent>(_ => OnGenericFoodClicked(captured));
-                _categoryContainer.Add(row);
+                btn.RegisterCallback<ClickEvent>(_ => OnGenericFoodClicked(captured));
+                _categoryContainer.Add(btn);
             }
         }
 
         private void OnGenericFoodClicked(GenericFood genericFood)
         {
-            _textField.value = genericFood.foodName;
-            _categoryContainer.Clear();
-            _resultsContainer.style.display = DisplayStyle.None;
-            // Triggers search via RegisterValueChangedCallback
+            SetMode(Mode.Confirmed);
+            _selectedItem = genericFood;
+
+            _searchResultsContainer.style.display = DisplayStyle.None;
+            _categoryContainer.style.display = DisplayStyle.None;
+
+            _selectedNameLabel.text = genericFood.foodName;
+            _confirmContainer.style.display = DisplayStyle.Flex;
+            _textField.value = "";
         }
 
         private void OnTextFieldValueChanged(ChangeEvent<string> evt)
@@ -411,13 +495,13 @@ namespace eu.foodmission.platform.Components
 
         private async void OnAddClicked()
         {
+            float qty = _qtyField.value;
+            int unitIdx = _unitDropdown.selectedIndex >= 0 ? _unitDropdown.selectedIndex : 0;
+            string[] unitValues = { "PIECES", "G", "KG", "ML", "L", "CUPS" };
+            string unit = unitValues[unitIdx];
+
             if (_selectedItem is OpenFoodFactsProduct product && OnProductConfirmed != null)
             {
-                float qty = _qtyField.value;
-                int unitIdx = _unitDropdown.selectedIndex >= 0 ? _unitDropdown.selectedIndex : 0;
-                string[] unitValues = { "PIECES", "G", "KG", "ML", "L", "CUPS" };
-                string unit = unitValues[unitIdx];
-
                 try
                 {
                     await OnProductConfirmed(product, qty, unit);
@@ -426,6 +510,18 @@ namespace eu.foodmission.platform.Components
                 catch (Exception ex)
                 {
                     Debug.LogError($"[{GetType().Name}] OnProductConfirmed failed: {ex.Message}");
+                }
+            }
+            else if (_selectedItem is GenericFood genericFood && OnGenericFoodConfirmed != null)
+            {
+                try
+                {
+                    await OnGenericFoodConfirmed(genericFood, qty, unit);
+                    ResetToIdle();
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] OnGenericFoodConfirmed failed: {ex.Message}");
                 }
             }
         }
@@ -446,29 +542,38 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        private async void OnScanClicked()
-        {
-            if (ImportFromBarcodeAsync != null)
-            {
-                BarcodeScanOverlay.Show(this, async barcode =>
-                {
-                    var foodItem = await ImportFromBarcodeAsync(barcode);
-                    if (foodItem != null)
-                    {
-                        OnResultClicked(new OpenFoodFactsProduct
-                        {
-                            name = foodItem.name,
-                            barcode = foodItem.barcode,
-                            brands = Array.Empty<string>(),
-                        });
-                    }
-                });
-            }
-        }
+        // private async void OnScanClicked()
+        // {
+        //     if (ImportFromBarcodeAsync != null)
+        //     {
+        //         BarcodeScanOverlay.Show(this, async barcode =>
+        //         {
+        //             var foodItem = await ImportFromBarcodeAsync(barcode);
+        //             if (foodItem != null)
+        //             {
+        //                 OnResultClicked(new OpenFoodFactsProduct
+        //                 {
+        //                     name = foodItem.name,
+        //                     barcode = foodItem.barcode,
+        //                     brands = Array.Empty<string>(),
+        //                 });
+        //             }
+        //         });
+        //     }
+        // }
 
         private void SetMode(Mode mode)
         {
+            Mode prev = _currentMode;
             _currentMode = mode;
+
+            bool wasOpen = prev != Mode.Idle;
+            bool nowOpen = mode != Mode.Idle;
+            if (wasOpen != nowOpen)
+            {
+                style.flexGrow = nowOpen ? 1 : 0;
+                OnPopoverVisibilityChanged?.Invoke(nowOpen);
+            }
         }
 
         private void ResetToIdle()
@@ -476,6 +581,7 @@ namespace eu.foodmission.platform.Components
             SetMode(Mode.Idle);
             _selectedItem = null;
             _textField.value = "";
+            _textField.Blur();
             _resultsContainer.style.display = DisplayStyle.None;
             _categoryContainer.style.display = DisplayStyle.None;
             _categoryContainer.Clear();

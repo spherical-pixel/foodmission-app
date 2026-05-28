@@ -179,12 +179,25 @@ namespace eu.foodmission.platform
 
         private async Task<ShoppingListItemView> EnrichItemAsync(ShoppingListItem item)
         {
-            string foodName = item.foodProduct?.name;
+            string foodName = item.foodProduct?.name ?? item.genericFood?.foodName;
 
             if (string.IsNullOrEmpty(foodName))
             {
-                var (fetched, _) = await _foodProductService.GetFoodByIdAsync(item.foodProductId);
-                foodName = fetched?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+                if (!string.IsNullOrEmpty(item.foodProductId))
+                {
+                    var (fetched, _) = await _foodProductService.GetFoodByIdAsync(item.foodProductId);
+                    foodName = fetched?.name;
+                }
+
+                if (string.IsNullOrEmpty(foodName))
+                {
+                    foodName = item.genericFood?.foodName;
+                }
+            }
+
+            if (string.IsNullOrEmpty(foodName))
+            {
+                foodName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
             }
 
             return new ShoppingListItemView
@@ -293,7 +306,48 @@ namespace eu.foodmission.platform
             ErrorDetail = null;
             SearchResults = new List<OpenFoodFactsProduct>();
             SearchQuery = "";
-            await LoadAsync(_currentListId);
+            var newItem = new ShoppingListItemView
+            {
+                Item = added,
+                FoodName = product.name ?? added.foodProduct?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
+            };
+            _allItems.Add(newItem);
+            FilterText = "";
+            ApplyFilter();
+            SaveCache();
+            return true;
+        }
+
+        public async Task<bool> AddGenericFoodItemAsync(GenericFood food, float quantity, string unit)
+        {
+            if (string.IsNullOrEmpty(_currentListId) || food == null)
+            {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_LIST_ITEM");
+                return false;
+            }
+
+            ErrorMessage = "";
+            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, genericFoodId: food.id, quantity: quantity, unit: unit);
+
+            if (addError != null)
+            {
+                ErrorDetail = addError;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_TO_LIST");
+                return false;
+            }
+
+            ErrorDetail = null;
+            SearchResults = new List<OpenFoodFactsProduct>();
+            SearchQuery = "";
+            var newItem = new ShoppingListItemView
+            {
+                Item = added,
+                FoodName = added.genericFood?.foodName ?? food.foodName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
+            };
+            _allItems.Add(newItem);
+            FilterText = "";
+            ApplyFilter();
+            SaveCache();
             return true;
         }
 

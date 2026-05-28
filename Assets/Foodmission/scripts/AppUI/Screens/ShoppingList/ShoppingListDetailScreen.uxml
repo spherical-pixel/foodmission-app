@@ -1,39 +1,24 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
-         xmlns:eu="eu.foodmission.platform.Components"
-         xsi="http://www.w3.org/2001/XMLSchema-instance"
-         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
-         editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:eu="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <Style src="ShoppingListDetailScreen.uss"/>
-
-    <ui:VisualElement name="root" class="fm-sld-root fm-plain-background">
-
-        <ui:VisualElement name="toolbar" class="fm-sld-toolbar">
-            <appui:Heading name="list-title" size="M" text="Shopping List" class="fm-sld-title">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000031)"/>
-                </Bindings>
-</appui:Heading>
-            <appui:Text name="progress-label" class="fm-sld-progress"/>
-            <appui:Button name="btn-clear-checked" title="Clear done" size="S">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000032)"/>
-                </Bindings>
-</appui:Button>
-        </ui:VisualElement>
-
-        <appui:Text name="error-message" class="fm-sl-error"/>
-
+    <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.ShoppingListViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.ShoppingListDetailViewModel, Foodmission" class="fm-root">
+        <appui:Heading name="list-title" text="Nombre de la lista" size="L">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="ListName" binding-mode="ToTarget"/>
+            </Bindings>
+        </appui:Heading>
+        <appui:Text text="What do you want to add to the list?" style="margin-bottom: 8px; margin-top: 20px; padding-left: 40px; padding-right: 40px;"/>
         <eu:FMSearchOrCategoryField name="search-category-field"/>
-
-        <appui:Text name="empty-state" text="No items yet. Tap + to add items." class="fm-sld-empty">
-    <Bindings>
+        <ui:VisualElement name="main-content" style="flex-grow: 1;">
+            <appui:Text name="empty-state" text="No items yet. Tap + to add items." class="fm-sld-empty">
+                <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000033)"/>
                 </Bindings>
-</appui:Text>
-        <ui:ScrollView name="scroll-view" class="fm-sl-scroll">
-            <ui:VisualElement name="items-container" class="fm-sl-container"/>
-        </ui:ScrollView>
-
+            </appui:Text>
+            <ui:ScrollView name="scroll-view" class="fm-sl-scroll">
+                <ui:VisualElement name="items-container" class="fm-sl-container"/>
+            </ui:ScrollView>
+        </ui:VisualElement>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
     </ui:VisualElement>
 </ui:UXML>

@@ -17,22 +17,30 @@ using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using Unity.AppUI.Core;
 
 namespace eu.foodmission.platform
 {
     [Preserve]
     class ShoppingListDetailScreen : NavigationScreenBase<ShoppingListDetailViewModel>
     {
+
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool IsFixedContent => false;
+
+
         private VisualElement _itemsContainer;
-        private Text _errorText;
+        
         private Text _emptyState;
         private Heading _listTitle;
         private Text _progressLabel;
         private FMSearchOrCategoryField _searchCategoryField;
-        private Unity.AppUI.UI.Button _btnClearChecked;
+        private VisualElement _mainContent;
+        
 
-        private AccessibilityNode _addButtonNode;
-        private AccessibilityNode _clearCheckedButtonNode;
 
         public ShoppingListDetailScreen()
         {
@@ -45,12 +53,10 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _itemsContainer = contentContainer.Q<VisualElement>("items-container");
-            _errorText = contentContainer.Q<Text>("error-message");
             _emptyState = contentContainer.Q<Text>("empty-state");
             _listTitle = contentContainer.Q<Heading>("list-title");
-            _progressLabel = contentContainer.Q<Text>("progress-label");
             _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
-            _btnClearChecked = contentContainer.Q<Unity.AppUI.UI.Button>("btn-clear-checked");
+            _mainContent = contentContainer.Q<VisualElement>("main-content");
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -86,7 +92,6 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
 
-            _btnClearChecked.clicked += OnClearCheckedClicked;
             _listTitle.RegisterCallback<ClickEvent>(_ => ShowRenameDialog());
 
             if (_searchCategoryField != null)
@@ -96,9 +101,24 @@ namespace eu.foodmission.platform
                 _searchCategoryField.OnProductConfirmed = async (product, qty, unit) =>
                 {
                     await SafeImportAndAddItemAsync(product, qty, unit);
+                    RebuildItems();
                 };
-                _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
+                _searchCategoryField.OnGenericFoodConfirmed = async (food, qty, unit) =>
+                {
+                    await SafeAddGenericFoodItemAsync(food, qty, unit);
+                    RebuildItems();
+                };
+                // _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
+
+                _searchCategoryField.OnPopoverVisibilityChanged += isVisible =>
+                {
+                    // When the popover is open, we want to disable scrolling on the main content to prevent accidental scrolls
+                    if (_mainContent != null)
+                    {
+                        _mainContent.style.visibility = isVisible ? Visibility.Hidden : Visibility.Visible;
+                    }
+                };
             }
 
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -109,7 +129,7 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            _btnClearChecked.clicked -= OnClearCheckedClicked;
+            
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
         }
@@ -149,14 +169,12 @@ namespace eu.foodmission.platform
 
             var h = _accessibilityHierarchy;
 
-            _addButtonNode = CreateButtonNode(h, null, "Add item");
-            _clearCheckedButtonNode = CreateButtonNode(h, _btnClearChecked, "Clear checked items");
+            
         }
 
         protected override void TeardownAccessibilityNodes()
         {
-            _addButtonNode = null;
-            _clearCheckedButtonNode = null;
+            
             base.TeardownAccessibilityNodes();
         }
 
@@ -208,56 +226,30 @@ namespace eu.foodmission.platform
 
         private void RebuildItems()
         {
+            Debug.Log($"[{GetType().Name}] RebuildItems - Rebuilding items, count: {_viewModel.Items?.Count ?? 0}");
             _itemsContainer.Clear();
 
             if (_viewModel.Items == null || _viewModel.Items.Count == 0)
             {
-                _emptyState?.EnableInClassList("visible", true);
+                _emptyState.style.visibility = Visibility.Visible;
                 UpdateProgress();
                 return;
             }
 
-            _emptyState?.EnableInClassList("visible", false);
+            _emptyState.style.visibility = Visibility.Hidden;
             UpdateProgress();
 
             foreach (ShoppingListItemView view in _viewModel.Items)
             {
                 ShoppingListItemView captured = view;
 
-                var row = new VisualElement();
-                row.AddToClassList("fm-sld-item-row");
+                FMItemShoppingListDetail item = new FMItemShoppingListDetail { Text = captured.FoodName };
 
-                string toggleItemId = captured.Item.id;
-                var toggle = new Checkbox
-                {
-                    value = captured.Item.@checked ? CheckboxState.Checked : CheckboxState.Unchecked
-                };
-                toggle.RegisterValueChangedCallback(evt =>
-                    _ = SafeToggleItemAsync(toggleItemId));
-
-                var nameLabel = new Text { text = captured.FoodName };
-                nameLabel.AddToClassList("fm-sld-item-name");
-                if (captured.Item.@checked)
-                {
-                    nameLabel.AddToClassList("fm-sld-item-name--checked");
-                }
-
-                var qtyLabel = new Text
-                {
-                    text = $"{captured.Item.quantity:0.##} {captured.Item.unit}"
-                };
-                qtyLabel.AddToClassList("fm-sld-item-qty");
-                qtyLabel.RegisterCallback<ClickEvent>(_ => ShowEditItemDialog(captured));
-
-                string deleteItemId = captured.Item.id;
-                var deleteBtn = new IconButton { icon = "trash" };
-                deleteBtn.clicked += () => _ = SafeDeleteItemAsync(deleteItemId);
-
-                row.Add(toggle);
-                row.Add(nameLabel);
-                row.Add(qtyLabel);
-                row.Add(deleteBtn);
-                _itemsContainer.Add(row);
+                item.Checkbox.value = captured.Item.@checked ? CheckboxState.Checked : CheckboxState.Unchecked;
+                item.Checkbox.RegisterValueChangedCallback(evt =>_ = SafeToggleItemAsync(captured.Item.id));
+                item.EditButton.clicked += () => ShowEditItemDialog(captured);
+                item.RemoveButton.clicked += () => _ = SafeDeleteItemAsync(captured.Item.id);
+                _itemsContainer.Add(item);
             }
         }
 
@@ -268,16 +260,17 @@ namespace eu.foodmission.platform
                 FMLoadingOverlay.Show(contentContainer);
             else
                 FMLoadingOverlay.Hide(contentContainer);
-            _btnClearChecked?.SetEnabled(!isLoading);
+            
         }
 
         private void UpdateErrorState()
         {
-            bool hasError = !string.IsNullOrEmpty(_viewModel.ErrorMessage);
-            _errorText?.EnableInClassList("visible", hasError);
-            if (_errorText != null)
+            if (!string.IsNullOrEmpty(_viewModel.ErrorMessage))
             {
-                _errorText.text = _viewModel.ErrorMessage;
+                Toast.Build(this, _viewModel.ErrorMessage, NotificationDuration.Long)
+                    .SetStyle(NotificationStyle.Negative)
+                    .SetPosition(PopupNotificationPlacement.Bottom)
+                    .Show();
             }
         }
 
@@ -306,11 +299,6 @@ namespace eu.foodmission.platform
                 _progressLabel.text = total > 0 ? $"{checked_}/{total}" : "";
             }
 
-            bool hasChecked = checked_ > 0;
-            if (_btnClearChecked != null)
-            {
-                _btnClearChecked.style.display = hasChecked ? DisplayStyle.Flex : DisplayStyle.None;
-            }
         }
 
         private void ShowRenameDialog()
@@ -419,6 +407,18 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] ImportAndAddItemAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeAddGenericFoodItemAsync(GenericFood food, float qty, string unit)
+        {
+            try
+            {
+                await _viewModel.AddGenericFoodItemAsync(food, qty, unit);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] AddGenericFoodItemAsync failed: {ex.Message}");
             }
         }
 

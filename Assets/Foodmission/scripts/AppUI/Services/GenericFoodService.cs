@@ -98,53 +98,53 @@ namespace eu.foodmission.platform
             return filtered;
         }
 
-        private static List<GenericFood> FallbackGenericFoods => new()
+        private static List<GenericFood> s_FallbackGenericFoods;
+
+        private static List<GenericFood> FallbackGenericFoods
         {
-            new GenericFood { id = "fb-veg-01", foodName = "Tomato", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-02", foodName = "Lettuce", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-03", foodName = "Carrot", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-04", foodName = "Onion", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-05", foodName = "Broccoli", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-06", foodName = "Spinach", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-07", foodName = "Potato", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-08", foodName = "Garlic", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-09", foodName = "Bell Pepper", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-veg-10", foodName = "Cucumber", foodGroup = "Vegetables" },
-            new GenericFood { id = "fb-frt-01", foodName = "Apple", foodGroup = "Fruits" },
-            new GenericFood { id = "fb-frt-02", foodName = "Banana", foodGroup = "Fruits" },
-            new GenericFood { id = "fb-frt-03", foodName = "Orange", foodGroup = "Fruits" },
-            new GenericFood { id = "fb-frt-04", foodName = "Strawberry", foodGroup = "Fruits" },
-            new GenericFood { id = "fb-frt-05", foodName = "Grapes", foodGroup = "Fruits" },
-            new GenericFood { id = "fb-frt-06", foodName = "Lemon", foodGroup = "Fruits" },
-            new GenericFood { id = "fb-frt-07", foodName = "Watermelon", foodGroup = "Fruits" },
-            new GenericFood { id = "fb-dry-01", foodName = "Milk", foodGroup = "Dairy" },
-            new GenericFood { id = "fb-dry-02", foodName = "Cheese", foodGroup = "Dairy" },
-            new GenericFood { id = "fb-dry-03", foodName = "Yogurt", foodGroup = "Dairy" },
-            new GenericFood { id = "fb-dry-04", foodName = "Butter", foodGroup = "Dairy" },
-            new GenericFood { id = "fb-dry-05", foodName = "Eggs", foodGroup = "Dairy" },
-            new GenericFood { id = "fb-grn-01", foodName = "Rice", foodGroup = "Grains" },
-            new GenericFood { id = "fb-grn-02", foodName = "Bread", foodGroup = "Grains" },
-            new GenericFood { id = "fb-grn-03", foodName = "Pasta", foodGroup = "Grains" },
-            new GenericFood { id = "fb-grn-04", foodName = "Oats", foodGroup = "Grains" },
-            new GenericFood { id = "fb-grn-05", foodName = "Flour", foodGroup = "Grains" },
-            new GenericFood { id = "fb-prt-01", foodName = "Chicken Breast", foodGroup = "Proteins" },
-            new GenericFood { id = "fb-prt-02", foodName = "Ground Beef", foodGroup = "Proteins" },
-            new GenericFood { id = "fb-prt-03", foodName = "Pork", foodGroup = "Proteins" },
-            new GenericFood { id = "fb-prt-04", foodName = "Salmon", foodGroup = "Proteins" },
-            new GenericFood { id = "fb-prt-05", foodName = "Tofu", foodGroup = "Proteins" },
-            new GenericFood { id = "fb-prt-06", foodName = "Beans", foodGroup = "Proteins" },
-            new GenericFood { id = "fb-prt-07", foodName = "Lentils", foodGroup = "Proteins" },
-            new GenericFood { id = "fb-cnd-01", foodName = "Olive Oil", foodGroup = "Condiments" },
-            new GenericFood { id = "fb-cnd-02", foodName = "Salt", foodGroup = "Condiments" },
-            new GenericFood { id = "fb-cnd-03", foodName = "Sugar", foodGroup = "Condiments" },
-            new GenericFood { id = "fb-cnd-04", foodName = "Vinegar", foodGroup = "Condiments" },
-            new GenericFood { id = "fb-cnd-05", foodName = "Soy Sauce", foodGroup = "Condiments" },
-            new GenericFood { id = "fb-cnd-06", foodName = "Ketchup", foodGroup = "Condiments" },
-            new GenericFood { id = "fb-bvg-01", foodName = "Water", foodGroup = "Beverages" },
-            new GenericFood { id = "fb-bvg-02", foodName = "Orange Juice", foodGroup = "Beverages" },
-            new GenericFood { id = "fb-bvg-03", foodName = "Coffee", foodGroup = "Beverages" },
-            new GenericFood { id = "fb-bvg-04", foodName = "Tea", foodGroup = "Beverages" },
-        };
+            get
+            {
+                if (s_FallbackGenericFoods == null)
+                {
+                    TextAsset asset = Resources.Load<TextAsset>("fallback-generic-foods");
+                    if (asset != null)
+                    {
+                        var response = JsonUtility.FromJson<PaginatedGenericFoodResponse>(asset.text);
+                        s_FallbackGenericFoods = response?.items != null
+                            ? new List<GenericFood>(response.items)
+                            : new List<GenericFood>();
+                    }
+                    else
+                    {
+                        s_FallbackGenericFoods = new List<GenericFood>();
+                    }
+                }
+                return s_FallbackGenericFoods;
+            }
+        }
+
+        private static string[] s_FallbackFoodGroups;
+
+        private static string[] FallbackFoodGroups
+        {
+            get
+            {
+                if (s_FallbackFoodGroups == null)
+                {
+                    TextAsset asset = Resources.Load<TextAsset>("fallback-food-groups");
+                    if (asset != null)
+                    {
+                        var wrapper = JsonUtility.FromJson<StringArrayWrapper>("{\"items\":" + asset.text + "}");
+                        s_FallbackFoodGroups = wrapper?.items ?? Array.Empty<string>();
+                    }
+                    else
+                    {
+                        s_FallbackFoodGroups = Array.Empty<string>();
+                    }
+                }
+                return s_FallbackFoodGroups;
+            }
+        }
 
         public async Task<(GenericFood Result, ApiErrorResponse Error)> GetGenericFoodByIdAsync(string id)
         {
@@ -210,6 +210,11 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
+                string[] fallback = FallbackFoodGroups;
+                if (fallback.Length > 0)
+                {
+                    return (fallback, null);
+                }
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetFoodGroups"));
             }
 

@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
     m_PopUpToStrategy: 2
-    m_PopUpToRoute: {fileID: -8582299972390442400}
+    m_PopUpToRoute: {fileID: -1477136575185016345}
     m_PopUpToInclusive: 1
     m_EnterAnim: 3
     m_ExitAnim: 4
@@ -619,7 +619,7 @@ MonoBehaviour:
   m_Guid: 7515a819e097343a68502414f8149394
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: ShoppingListDetail
+  m_Label: '@UI:SHOPPING_LIST_APP_BAR'
   m_TemplateSettings:
     rid: 3341417627117944928
   m_Arguments: []
@@ -633,7 +633,7 @@ MonoBehaviour:
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-364094978430066862

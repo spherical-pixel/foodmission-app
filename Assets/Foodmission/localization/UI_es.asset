@@ -605,7 +605,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000020
-    m_Localized: Ahorrar
+    m_Localized: Guardar
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000021
@@ -1299,6 +1299,114 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3882568704319488
     m_Localized: "\U0001F4DD Lista de la compra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026047336448
+    m_Localized: "bebidas alcoh\xF3licas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530752
+    m_Localized: Pan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530753
+    m_Localized: Productos de cereales y tipos de harina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530754
+    m_Localized: Queso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530755
+    m_Localized: Embutidos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530756
+    m_Localized: Huevos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530757
+    m_Localized: Grasas y aceites
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530758
+    m_Localized: "Peces, crust\xE1ceos y mariscos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530759
+    m_Localized: Alimentos para uso nutricional especial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530760
+    m_Localized: Frutas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530761
+    m_Localized: Hierbas y especias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530762
+    m_Localized: Legumbres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530763
+    m_Localized: Carne y aves de corral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530764
+    m_Localized: "Sustitutos de la carne y sustitutos de los l\xE1cteos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530765
+    m_Localized: "Leche y productos l\xE1cteos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530766
+    m_Localized: Alimentos diversos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530767
+    m_Localized: Platos variados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530768
+    m_Localized: Bebidas sin alcohol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530769
+    m_Localized: Frutos secos y semillas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530770
+    m_Localized: Pasteles y galletas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530771
+    m_Localized: "Papas y tub\xE9rculos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530772
+    m_Localized: Untables salados para pan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530773
+    m_Localized: Salsas saladas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530774
+    m_Localized: Aperitivos salados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530775
+    m_Localized: Sopas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530776
+    m_Localized: "Az\xFAcar, dulces y salsas dulces"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026055725056
+    m_Localized: Verduras
     m_Metadata:
       m_Items: []
   references:

@@ -113,6 +113,7 @@
     --appui-icon-fm-icon-eyebrows-10-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-avatar/icons_eyebrown/fm-icon-eyebrows-10.png");
     --appui-icon-fm-add-icon-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-add-icon.png");
     --appui-icon-fm-trash-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-trash.png");
+    --appui-icon-fm-edit-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-edit.png");
 }
 
 .appui-icon--calendar--regular {
@@ -549,5 +550,9 @@
 
 .appui-icon--fm-trash--regular {
     --unity-image: var(--appui-icon-fm-trash-regular);
+}
+
+.appui-icon--fm-edit--regular {
+    --unity-image: var(--appui-icon-fm-edit-regular);
 }
 

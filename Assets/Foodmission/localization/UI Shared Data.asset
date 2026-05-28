@@ -15,6 +15,114 @@ MonoBehaviour:
   m_TableCollectionName: UI
   m_TableCollectionNameGuidString: e58ac225f892840658d216244603ef45
   m_Entries:
+  - m_Id: 6145026047336448
+    m_Key: Alcoholic beverages_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530752
+    m_Key: Bread_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530753
+    m_Key: Cereal products and types of flour_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530754
+    m_Key: Cheese_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530755
+    m_Key: Cold meat cuts_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530756
+    m_Key: Eggs_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530757
+    m_Key: Fats and oils_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530758
+    m_Key: Fish, crustacean and shellfish_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530759
+    m_Key: Foods for special nutritional use_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530760
+    m_Key: Fruits_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530761
+    m_Key: Herbs and spices_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530762
+    m_Key: Legumes_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530763
+    m_Key: Meat and poultry_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530764
+    m_Key: Meat substitutes and dairy substitutes_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530765
+    m_Key: Milk and milk products_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530766
+    m_Key: Miscellaneous foods_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530767
+    m_Key: Mixed dishes_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530768
+    m_Key: Non-alcoholic beverages_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530769
+    m_Key: Nuts and seeds_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530770
+    m_Key: Pastry and biscuits_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530771
+    m_Key: Potatoes and tubers_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530772
+    m_Key: Savoury bread spreads_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530773
+    m_Key: Savoury sauces_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530774
+    m_Key: Savoury snacks_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530775
+    m_Key: Soups_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026051530776
+    m_Key: Sugar, sweets and sweet sauces_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6145026055725056
+    m_Key: Vegetables_title
+    m_Metadata:
+      m_Items: []
   - m_Id: 15417204736
     m_Key: NAV_HOME
     m_Metadata:
