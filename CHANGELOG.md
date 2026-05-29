@@ -1,3 +1,14 @@
+v0.0.5 — Changelog
+🆕 Added
+- FMSearchOrCategoryField — unified search, category browsing, and barcode scan button for Pantry and ShoppingListDetail screens, replacing FMProductSearchDialog
+
+🎨 Updated
+- Avatar editor — cleaned up UXML (removed AppUI theme classes from root, fixed stylesheet references, removed placeholder text)
+
+🔧 Infrastructure
+- Model naming migration — food → foodProduct, foodCategory → genericFood to align with API v1
+- Localization updates — changed preliminary machine translations to only English by now
+
 v0.0.4 — Changelog
 🆕 Added
 - Partial screen reader support — AccessibilityService + IAccessibleComponent for 26 screens
