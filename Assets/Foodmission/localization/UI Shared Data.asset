@@ -1391,6 +1391,26 @@ MonoBehaviour:
     m_Key: NO_RESULTS
     m_Metadata:
       m_Items: []
+  - m_Id: 6798748049989632
+    m_Key: ENVIRONMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798836050681856
+    m_Key: API_URL_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798909413253120
+    m_Key: APP_VERSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798978623463424
+    m_Key: ENV_CHANGE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800027757305856
+    m_Key: ENV_CHANGE_MSG
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

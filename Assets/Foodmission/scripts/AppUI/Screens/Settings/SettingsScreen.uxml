@@ -43,6 +43,29 @@
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39879174494609408)"/>
                 </Bindings>
             </components:FormFieldItemArrowStepperSettings>
+            <appui:Spacer spacing="M"/>
+            <appui:Accordion>
+                <appui:AccordionItem title="Developer settings">
+                    <components:FormFieldItemArrowStepperSettings Heading-Text="Backend" stepper-choices="" name="stepper-environment">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(6798748049989632)"/>
+                        </Bindings>
+                    </components:FormFieldItemArrowStepperSettings>
+                    <components:FormFieldItemTextField Heading-Text="API URL" textField-placeholder="Enter local url (http://192.168.0.100:3000)" name="local-url-field">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(6798836050681856)"/>
+                        </Bindings>
+                    </components:FormFieldItemTextField>
+                    <ui:VisualElement name="version-row" style="flex-direction: row; justify-content: space-between; align-items: center; padding-top: 10px; padding-bottom: 10px;">
+                        <appui:Heading text="App version" size="M" class="stepper-heading">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(6798909413253120)"/>
+                            </Bindings>
+                        </appui:Heading>
+                        <appui:Text name="version-value" text="0.0.0"/>
+                    </ui:VisualElement>
+                </appui:AccordionItem>
+            </appui:Accordion>
             <ui:VisualElement class="fm-bottom-nav-padding" style="flex-grow: 1;"/>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -20,6 +20,11 @@ namespace eu.foodmission.platform
         private FormFieldItemArrowStepperSettings _musicStepper;
         private FormFieldItemArrowStepperSettings _notificationsStepper;
         private FormFieldItemArrowStepperSettings _backgroundStepper;
+        private FormFieldItemArrowStepperSettings _environmentStepper;
+        private FormFieldItemTextField _localUrlFieldComponent;
+        private Unity.AppUI.UI.TextField _localUrlInnerField;
+        private Unity.AppUI.UI.Text _versionValue;
+        private bool _isSettingEnvironment;
 
         private static Func<Rect> MakeElementFrameGetter(VisualElement element)
         {
@@ -74,6 +79,9 @@ namespace eu.foodmission.platform
             _musicStepper         = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-music");
             _notificationsStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-notifications");
             _backgroundStepper    = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-background");
+            _environmentStepper   = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-environment");
+            _localUrlFieldComponent = contentContainer.Q<FormFieldItemTextField>("local-url-field");
+            _versionValue         = contentContainer.Q<Unity.AppUI.UI.Text>("version-value");
         }
 
         protected override void OnViewModelBound()
@@ -101,6 +109,7 @@ namespace eu.foodmission.platform
             _musicStepper?.CreateAccessibilityNode(h, "Music volume");
             _notificationsStepper?.CreateAccessibilityNode(h, "Notifications");
             _backgroundStepper?.CreateAccessibilityNode(h, "Background");
+            _environmentStepper?.CreateAccessibilityNode(h, "Environment");
         }
 
         protected override void TeardownAccessibilityNodes()
@@ -113,6 +122,7 @@ namespace eu.foodmission.platform
             _musicStepper?.DestroyAccessibilityNode();
             _notificationsStepper?.DestroyAccessibilityNode();
             _backgroundStepper?.DestroyAccessibilityNode();
+            _environmentStepper?.DestroyAccessibilityNode();
 
             base.TeardownAccessibilityNodes();
         }
@@ -174,6 +184,28 @@ namespace eu.foodmission.platform
                 _backgroundStepper.SelectedIndex = _viewModel.BackgroundPattern ? 1 : 0;
                 _backgroundStepper.RegisterValueChangedCallback(OnBackgroundChanged);
             }
+
+            if (_environmentStepper != null)
+            {
+                _environmentStepper.Choices = ApiConfig.Environments
+                    .Select(e => e.Name)
+                    .ToArray();
+                _environmentStepper.SelectedIndex = ApiConfig.ActiveEnvironmentIndex;
+                _environmentStepper.RegisterValueChangedCallback(OnEnvironmentChanged);
+            }
+
+            if (_localUrlFieldComponent != null)
+            {
+                _localUrlFieldComponent.TextFieldValue = ApiConfig.LocalUrl;
+                _localUrlInnerField = _localUrlFieldComponent.Q<Unity.AppUI.UI.TextField>();
+                if (_localUrlInnerField != null)
+                    _localUrlInnerField.RegisterValueChangedCallback(OnLocalUrlChanged);
+            }
+
+            if (_versionValue != null)
+            {
+                _versionValue.text = ApiConfig.AppVersion;
+            }
         }
 
         protected override void OnViewModelUnbinding()
@@ -218,6 +250,11 @@ namespace eu.foodmission.platform
                 _backgroundStepper.UnregisterValueChangedCallback(OnBackgroundChanged);
             }
 
+            if (_environmentStepper != null)
+                _environmentStepper.UnregisterValueChangedCallback(OnEnvironmentChanged);
+            if (_localUrlInnerField != null)
+                _localUrlInnerField.UnregisterValueChangedCallback(OnLocalUrlChanged);
+
             _themeStepper = null;
             _langStepper  = null;
             _scaleStepper = null;
@@ -226,6 +263,10 @@ namespace eu.foodmission.platform
             _musicStepper         = null;
             _notificationsStepper = null;
             _backgroundStepper    = null;
+            _environmentStepper   = null;
+            _localUrlFieldComponent = null;
+            _localUrlInnerField   = null;
+            _versionValue         = null;
 
             base.OnViewModelUnbinding();
         }
@@ -328,5 +369,55 @@ namespace eu.foodmission.platform
 
         private static int IndexToSoundValue(int index) =>
             index * 5;
+
+        private void OnEnvironmentChanged(object sender, ChangeEvent<int> evt)
+        {
+            if (_isSettingEnvironment || _viewModel == null) return;
+
+            int oldValue = evt.previousValue;
+            int newValue = evt.newValue;
+
+            // When switching to Local, require a URL before showing confirmation
+            if (newValue >= 0 && newValue < ApiConfig.Environments.Count
+                && ApiConfig.Environments[newValue].Name == "Local"
+                && string.IsNullOrEmpty(ApiConfig.LocalUrl))
+            {
+                _isSettingEnvironment = true;
+                _environmentStepper.SelectedIndex = oldValue;
+                _isSettingEnvironment = false;
+
+                FMDialog.ShowAlert(
+                    contentContainer,
+                    "@UI:ENV_CHANGE_TITLE",
+                    "@UI:ENV_LOCAL_URL_REQUIRED"
+                );
+                _localUrlInnerField?.Focus();
+                return;
+            }
+
+            FMDialog.ShowConfirm(
+                contentContainer,
+                "@UI:ENV_CHANGE_TITLE",
+                "@UI:ENV_CHANGE_MSG",
+                onConfirm: () =>
+                {
+                    _isSettingEnvironment = true;
+                    ApiConfig.SetActiveEnvironment(newValue);
+                    _isSettingEnvironment = false;
+                    _viewModel.Logout();
+                },
+                onCancel: () =>
+                {
+                    _isSettingEnvironment = true;
+                    _environmentStepper.SelectedIndex = oldValue;
+                    _isSettingEnvironment = false;
+                }
+            );
+        }
+
+        private void OnLocalUrlChanged(ChangeEvent<string> evt)
+        {
+            ApiConfig.LocalUrl = evt.newValue;
+        }
     }
 }
