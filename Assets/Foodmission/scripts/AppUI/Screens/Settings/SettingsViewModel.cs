@@ -141,6 +141,12 @@ namespace eu.foodmission.platform
             ScheduleSettingsSync();
         }
 
+        public void Logout()
+        {
+            _store.Dispatch(AppActions.logout.Invoke());
+            RaiseNavigationRequested("go_to_auth");
+        }
+
         private void ScheduleSettingsSync()
         {
             _syncCts?.Cancel();

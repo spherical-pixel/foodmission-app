@@ -1433,6 +1433,26 @@ MonoBehaviour:
     m_Localized: No results found
     m_Metadata:
       m_Items: []
+  - m_Id: 6798748049989632
+    m_Localized: Backend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798836050681856
+    m_Localized: API URL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798909413253120
+    m_Localized: App version
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798978623463424
+    m_Localized: Change environment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800027757305856
+    m_Localized: Changing the environment will log you out. Are you sure?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

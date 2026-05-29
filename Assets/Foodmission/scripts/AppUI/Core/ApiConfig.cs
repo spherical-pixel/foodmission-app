@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace eu.foodmission.platform
@@ -6,17 +7,47 @@ namespace eu.foodmission.platform
     public static class ApiConfig
     {
         private const string ConfigResourcePath = "ApiEnvironmentConfig";
+        private const string PrefsEnvIndexKey = "fm_env_index";
+        private const string PrefsEnvVersionKey = "fm_env_version";
+
         private static ApiEnvironmentConfig _cached;
+        private static int? s_runtimeActiveIndex;
+        private static string s_localUrlOverride;
+        private static bool s_loaded;
+
 #if UNITY_EDITOR
         private static bool _warmingCache;
 #endif
 
-        private static ApiEnvironmentConfig LoadConfig()
+        private static void EnsureLoaded()
         {
-            if (_cached != null)
-                return _cached;
-            _cached = Resources.Load<ApiEnvironmentConfig>(ConfigResourcePath);
-            return _cached;
+            if (s_loaded) return;
+            if (_cached == null)
+                _cached = Resources.Load<ApiEnvironmentConfig>(ConfigResourcePath);
+            LoadRuntimeOverride();
+            s_loaded = true;
+        }
+
+        private static void LoadRuntimeOverride()
+        {
+            s_runtimeActiveIndex = null;
+            s_localUrlOverride = null;
+
+            var savedVersion = PlayerPrefs.GetString(PrefsEnvVersionKey, "");
+            if (savedVersion != Application.version)
+            {
+                PlayerPrefs.DeleteKey(PrefsEnvIndexKey);
+                PlayerPrefs.DeleteKey(PrefsEnvVersionKey);
+                PlayerPrefs.Save();
+                return;
+            }
+
+            if (PlayerPrefs.HasKey(PrefsEnvIndexKey))
+            {
+                int index = PlayerPrefs.GetInt(PrefsEnvIndexKey, -1);
+                if (_cached != null && index >= 0 && index < _cached.Environments.Count)
+                    s_runtimeActiveIndex = index;
+            }
         }
 
 #if UNITY_EDITOR
@@ -28,21 +59,108 @@ namespace eu.foodmission.platform
             UnityEditor.EditorApplication.delayCall += () =>
             {
                 _cached = Resources.Load<ApiEnvironmentConfig>(ConfigResourcePath);
+                s_loaded = false;
                 _warmingCache = false;
             };
         }
 #endif
 
-        private static string Resolve(Func<EnvironmentDefinition, string> selector, string fallback)
+        private static int ResolveIndex()
         {
-            var config = LoadConfig();
-            if (config != null && config.ActiveEnvironment != null)
-                return selector(config.ActiveEnvironment);
-            return fallback;
+            if (s_runtimeActiveIndex.HasValue)
+                return s_runtimeActiveIndex.Value;
+            if (_cached != null)
+                return _cached.ActiveIndex;
+            return 0;
         }
 
-        public static string BaseUrl => Resolve(e => e.ApiBaseUrl, "https://staging.api.foodmission.eu");
+        public static int ActiveEnvironmentIndex
+        {
+            get
+            {
+                EnsureLoaded();
+                return ResolveIndex();
+            }
+        }
 
-        public static string AuthBaseUrl => Resolve(e => e.AuthBaseUrl, "https://staging.auth.foodmission.eu");
+        public static IReadOnlyList<EnvironmentDefinition> Environments
+        {
+            get
+            {
+                EnsureLoaded();
+                if (_cached != null)
+                    return _cached.Environments;
+                return Array.Empty<EnvironmentDefinition>();
+            }
+        }
+
+        public static void SetActiveEnvironment(int index)
+        {
+            EnsureLoaded();
+            if (_cached == null || index < 0 || index >= _cached.Environments.Count) return;
+
+            s_runtimeActiveIndex = index;
+
+            // Local environment is ephemeral — don't persist across restarts
+            if (_cached.Environments[index].Name == "Local")
+            {
+                PlayerPrefs.DeleteKey(PrefsEnvIndexKey);
+                PlayerPrefs.DeleteKey(PrefsEnvVersionKey);
+                PlayerPrefs.Save();
+                return;
+            }
+
+            PlayerPrefs.SetInt(PrefsEnvIndexKey, index);
+            PlayerPrefs.SetString(PrefsEnvVersionKey, Application.version);
+            PlayerPrefs.Save();
+        }
+
+        public static string LocalUrl
+        {
+            get
+            {
+                EnsureLoaded();
+                return s_localUrlOverride ?? "";
+            }
+            set
+            {
+                EnsureLoaded();
+                s_localUrlOverride = string.IsNullOrEmpty(value) ? null : value;
+            }
+        }
+
+        public static string AppVersion => Application.version;
+
+        private static EnvironmentDefinition GetActiveEnvironment()
+        {
+            if (_cached == null) return null;
+            int idx = ResolveIndex();
+            if (idx < 0 || idx >= _cached.Environments.Count) return null;
+            return _cached.Environments[idx];
+        }
+
+        public static string BaseUrl
+        {
+            get
+            {
+                EnsureLoaded();
+                var env = GetActiveEnvironment();
+                if (env == null) return "https://staging.api.foodmission.eu";
+                if (env.Name == "Local" && !string.IsNullOrEmpty(s_localUrlOverride))
+                    return s_localUrlOverride;
+                return env.ApiBaseUrl;
+            }
+        }
+
+        public static string AuthBaseUrl
+        {
+            get
+            {
+                EnsureLoaded();
+                var env = GetActiveEnvironment();
+                if (env == null) return "https://staging.auth.foodmission.eu";
+                return env.AuthBaseUrl;
+            }
+        }
     }
 }
