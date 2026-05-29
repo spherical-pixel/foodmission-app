@@ -44,11 +44,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18114763199340544
-    m_Localized: Kontrollerer autentisering
+    m_Localized: Bekrefter autentisering
     m_Metadata:
       m_Items: []
   - m_Id: 18417184911908864
-    m_Localized: "Lek, l\xE6r og spis bedre: sammen gir vi n\xE6ring til forandringen."
+    m_Localized: "Lek, l\xE6r og spis bedre: sammen skaper vi endring."
     m_Metadata:
       m_Items: []
   - m_Id: 18417602513592320
@@ -72,7 +72,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22812856394178560
-    m_Localized: Din e-post
+    m_Localized: Din e-postadresse
     m_Metadata:
       m_Items: []
   - m_Id: 22815397693612032
@@ -100,7 +100,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25345767223844864
-    m_Localized: "Jeg godtar <b>tjenestevilk\xE5rene</b> og <b>personvernerkl\xE6ringen</b>."
+    m_Localized: "Jeg godtar <b>bruksvilk\xE5rene</b> og <b>personvernerkl\xE6ringen</b>."
     m_Metadata:
       m_Items: []
   - m_Id: 25351728189661184
@@ -108,28 +108,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25351921299611648
-    m_Localized: "<b>FOODMISSIONs vilk\xE5r og betingelser</b>\n\nVed \xE5 bruke
-      denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\n<b>1. KONTOREGISTRERING</b>\nDu
-      m\xE5 oppgi n\xF8yaktig og fullstendig informasjon n\xE5r du registrerer deg.
-      Du er ansvarlig for \xE5 opprettholde konfidensialiteten til kontoinformasjonen
-      din.\n\n<b>2. PERSONVERN</b>\nVi samler inn og behandler dine personopplysninger
-      i henhold til v\xE5r personvernerkl\xE6ring. Dette inkluderer ern\xE6ringsdata,
-      stedsinformasjon og bruksstatistikk.\n\nFor mer informasjon, kontakt oss p\xE5
-      support@foodmission.eu<b>FOODMISSIONs vilk\xE5r og betingelser</b>\n\nVed \xE5
-      bruke denne applikasjonen godtar du f\xF8lgende vilk\xE5r:\n\nFor mer informasjon,
-      kontakt oss p\xE5 support@foodmission.eu"
+    m_Localized: "FOODMISSIONs vilk\xE5r og betingelser\n\nVed \xE5 bruke denne applikasjonen
+      godtar du f\xF8lgende vilk\xE5r:\n\n1. KONTOREGISTRERING\nDu m\xE5 oppgi n\xF8yaktig
+      og fullstendig informasjon ved registrering. Du er ansvarlig for \xE5 beskytte
+      konfidensialiteten til dine kontoopplysninger.\n\n2. PERSONVERN\nVi samler
+      inn og behandler dine personopplysninger i henhold til v\xE5r personvernerkl\xE6ring.
+      Dette inkluderer ern\xE6ringsmessige data, lokasjonsinformasjon og bruksstatistikk.\n\nFor
+      mer informasjon, kontakt oss p\xE5 support@foodmission.eu"
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
-    m_Localized: Akseptere
+    m_Localized: Aksepter
     m_Metadata:
       m_Items: []
   - m_Id: 25353325686808576
-    m_Localized: Kansellere
+    m_Localized: Avbryt
     m_Metadata:
       m_Items: []
   - m_Id: 25353803774550016
-    m_Localized: OK
+    m_Localized: Ok
     m_Metadata:
       m_Items: []
   - m_Id: 25354482861727744
@@ -137,7 +134,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25354925167861760
-    m_Localized: Validering av felt mislyktes
+    m_Localized: Validering av felter mislyktes
     m_Metadata:
       m_Items: []
   - m_Id: 25355658118291456
@@ -145,7 +142,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25358434474909696
-    m_Localized: Vennligst skriv inn en gyldig e-postadresse.
+    m_Localized: Vennligst oppgi en gyldig e-postadresse.
     m_Metadata:
       m_Items: []
   - m_Id: 25358751560097792
@@ -173,7 +170,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284421
-    m_Localized: "Du m\xE5 godta vilk\xE5rene og betingelsene for \xE5 fortsette."
+    m_Localized: "Du m\xE5 godta vilk\xE5rene for \xE5 fortsette."
     m_Metadata:
       m_Items: []
   - m_Id: 25367919163596800
@@ -181,7 +178,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25368981371084800
-    m_Localized: Glemt passordet ditt?
+    m_Localized: Har du glemt passordet ditt?
     m_Metadata:
       m_Items: []
   - m_Id: 25369431499595776
@@ -193,12 +190,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25395075277119488
-    m_Localized: "Skriv inn e-postadressen din, s\xE5 sender vi deg en lenke for     
+    m_Localized: "Skriv inn e-postadressen din, s\xE5 sender vi deg en lenke for
       \xE5 tilbakestille passordet ditt."
     m_Metadata:
       m_Items: []
   - m_Id: 25395779614007296
-    m_Localized: Fortsette
+    m_Localized: Fortsett
     m_Metadata:
       m_Items: []
   - m_Id: 25395959562231808
@@ -219,8 +216,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Sammen skal vi koble kj\xF8kkenet ditt med \xE5 ta vare p\xE5 planeten.\n\nLag
-      mat, l\xE6r, del og voks hver dag.\n\nKlar til \xE5 komme i gang?"
+    m_Localized: "Sammen kan vi knytte kj\xF8kkenet ditt til omsorgen for planeten.\n\nLag
+      mat, l\xE6r, del og utvikle deg hver dag.\n\nEr du klar til \xE5 begynne?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -236,7 +233,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38372841320603648
-    m_Localized: Bruker eller passord feil
+    m_Localized: Brukernavn eller passord er feil
     m_Metadata:
       m_Items: []
   - m_Id: 38373129888718848
@@ -272,15 +269,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465117124288512
-    m_Localized: Oppmerksomhet!
+    m_Localized: "V\xE6r oppmerksom!"
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: 'Denne handlingen vil slette alle dataene dine permanent fra plattformen.
-
-
-      Er
-      du sikker?'
+    m_Localized: Denne handlingen vil slette alle dataene dine fra plattformen permanent.
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -300,7 +293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39879011575259136
-    m_Localized: Push-varsler
+    m_Localized: Pushvarsler
     m_Metadata:
       m_Items: []
   - m_Id: 39879077732016128
@@ -316,7 +309,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39892766241579008
-    m_Localized: Lys
+    m_Localized: Lyst
     m_Metadata:
       m_Items: []
   - m_Id: 39892875138293760
@@ -336,27 +329,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895302340075520
-    m_Localized: Tysk
+    m_Localized: tysk
     m_Metadata:
       m_Items: []
   - m_Id: 39895357172211712
-    m_Localized: Gresk
+    m_Localized: gresk
     m_Metadata:
       m_Items: []
   - m_Id: 39895410716696576
-    m_Localized: Italiensk
+    m_Localized: italiensk
     m_Metadata:
       m_Items: []
   - m_Id: 39895456581410816
-    m_Localized: Norsk
+    m_Localized: norsk
     m_Metadata:
       m_Items: []
   - m_Id: 39895644041633792
-    m_Localized: Pusse
+    m_Localized: polsk
     m_Metadata:
       m_Items: []
   - m_Id: 39895706960388096
-    m_Localized: Slovensk
+    m_Localized: slovensk
     m_Metadata:
       m_Items: []
   - m_Id: 39895724194783232
@@ -384,11 +377,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897610318766080
-    m_Localized: Vanlig
+    m_Localized: Enkel
     m_Metadata:
       m_Items: []
   - m_Id: 39897672927141888
-    m_Localized: "M\xF8nster"
+    m_Localized: "m\xF8nster"
     m_Metadata:
       m_Items: []
   - m_Id: 39898680386379776
@@ -400,7 +393,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39903457170153472
-    m_Localized: Register
+    m_Localized: Registrer
     m_Metadata:
       m_Items: []
   - m_Id: 39903535817547776
@@ -408,7 +401,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39903585188700160
-    m_Localized: Onboarding
+    m_Localized: "Oppl\xE6ring"
     m_Metadata:
       m_Items: []
   - m_Id: 39906068652875776
@@ -424,7 +417,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39906149892349952
-    m_Localized: Vis merker
+    m_Localized: Se merker
     m_Metadata:
       m_Items: []
   - m_Id: 39906172642254848
@@ -448,7 +441,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910325154209792
-    m_Localized: Spiskammer
+    m_Localized: Matlager
     m_Metadata:
       m_Items: []
   - m_Id: 39910356015898624
@@ -464,7 +457,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910434310971392
-    m_Localized: Globalt fellesskap
+    m_Localized: Globale fellesskap
     m_Metadata:
       m_Items: []
   - m_Id: 39910459409686528
@@ -480,15 +473,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915502649204736
-    m_Localized: "Din ern\xE6ringsmessige intelligensstatus"
+    m_Localized: "Din ern\xE6ringsmessige kunnskapsstatus"
     m_Metadata:
       m_Items: []
   - m_Id: 39915588338835456
-    m_Localized: Helse
+    m_Localized: helse
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: "B\xE6rekraft"
+    m_Localized: "b\xE6rekraft"
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
@@ -500,7 +493,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39916733786480640
-    m_Localized: Uke
+    m_Localized: uke
     m_Metadata:
       m_Items: []
   - m_Id: 39916761389195264
@@ -508,11 +501,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39916799158902784
-    m_Localized: Meg
+    m_Localized: Jeg
     m_Metadata:
       m_Items: []
   - m_Id: 39916808910659584
-    m_Localized: Gruppe
+    m_Localized: gruppe
     m_Metadata:
       m_Items: []
   - m_Id: 40182439656546304
@@ -528,8 +521,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 40270634402439168
-    m_Localized: "Denne informasjonen hjelper oss med \xE5 skreddersy opplevelsen     
-      din"
+    m_Localized: "Denne informasjonen hjelper oss med \xE5 tilpasse opplevelsen din"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000001
@@ -537,7 +529,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000002
-    m_Localized: "Kunne ikke sende tilbakestillings-e-post. Pr\xF8v p\xE5 nytt."
+    m_Localized: "Kunne ikke sende e-post for tilbakestilling av passord. Pr\xF8v
+      igjen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000003
@@ -545,7 +538,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000004
-    m_Localized: "Loggm\xE5ltid"
+    m_Localized: "Registrer m\xE5ltid"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000005
@@ -553,7 +546,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000006
-    m_Localized: "S\xF8k etter m\xE5ltider..."
+    m_Localized: "S\xF8k etter m\xE5ltider"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000007
@@ -565,7 +558,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000009
-    m_Localized: Fra spiskammerset
+    m_Localized: Fra spiskammeret
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000010
@@ -573,27 +566,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000011
-    m_Localized: Velg varer som skal trekkes fra spiskammerset
+    m_Localized: Velg varer som skal trekkes fra beholdningen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000012
-    m_Localized: "Loggm\xE5ltid"
+    m_Localized: "Registrer m\xE5ltid"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000013
-    m_Localized: "T\xF8mmeravfall"
+    m_Localized: "Trest\xF8r"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000014
-    m_Localized: Spiskammervare
+    m_Localized: Matvare som oppbevares i et spiskammer
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000015
-    m_Localized: Mengde bortkastet
+    m_Localized: Mengde som gikk tapt
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
-    m_Localized: "\xC5rsaken til avfall"
+    m_Localized: "Meningsl\xF8s grunn"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000017
@@ -609,11 +602,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000020
-    m_Localized: Spare
+    m_Localized: Lagre
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000021
-    m_Localized: Filtrer elementer...
+    m_Localized: Filtrer elementer
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
@@ -621,7 +614,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000023
-    m_Localized: "Spiskammerset ditt er tomt. Trykk p\xE5 + for \xE5 legge til varer."
+    m_Localized: "Matlageret ditt er tomt. Trykk p\xE5 + for \xE5 legge til varer."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000024
@@ -629,7 +622,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000025
-    m_Localized: "Ingen avfall registrert enn\xE5. Trykk p\xE5 + for \xE5 logge avfall."
+    m_Localized: "Ingen avfall er registrert enn\xE5. Trykk p\xE5 + for \xE5 registrere
+      avfall."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000026
@@ -637,8 +631,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000027
-    m_Localized: "Ingen m\xE5ltider er logget enn\xE5. Trykk p\xE5 + for \xE5 logge
-      ditt f\xF8rste m\xE5ltid."
+    m_Localized: "Ingen m\xE5ltider er registrert enn\xE5. Trykk p\xE5 + for \xE5
+      registrere ditt f\xF8rste m\xE5ltid."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000028
@@ -646,8 +640,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000029
-    m_Localized: "Ingen handlelister enn\xE5. Trykk p\xE5 Ny liste for \xE5 opprette
-      en."
+    m_Localized: "Ingen handlelister enn\xE5. Trykk p\xE5 \xABNy liste\xBB for \xE5
+      opprette en."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000030
@@ -659,7 +653,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000032
-    m_Localized: Fjern ferdig
+    m_Localized: Ferdig
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
@@ -667,11 +661,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
-    m_Localized: Punkt
+    m_Localized: vare
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000035
-    m_Localized: Mengde
+    m_Localized: Antall
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000036
@@ -699,7 +693,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000042
-    m_Localized: Velge...
+    m_Localized: Velg
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000043
@@ -707,11 +701,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000044
-    m_Localized: Ansvar for handleturen
+    m_Localized: Ansvarlig forbruk
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000045
-    m_Localized: "Utdanningsniv\xE5"
+    m_Localized: "Utdannelsesniv\xE5"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000046
@@ -731,23 +725,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000050
-    m_Localized: Bekrefte
+    m_Localized: Bekreft
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000051
-    m_Localized: Kalorier, Karbonavtrykk, Mengde brukt, Proteiner
+    m_Localized: "Kalorier, karbonavtrykk, bel\xF8p brukt, proteiner"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
-    m_Localized: Kalorier forbrukt
+    m_Localized: inntatt kalori
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000053
-    m_Localized: Igjen
+    m_Localized: Venstre
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000054
-    m_Localized: "Slette \xAB{0}\xBB?"
+    m_Localized: Slett "{0}"?
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000055
@@ -755,11 +749,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000056
-    m_Localized: Slett liste
+    m_Localized: Slett listen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000057
-    m_Localized: Slett avfallspost
+    m_Localized: Slett avfallsregistrering
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -767,7 +761,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000059
-    m_Localized: Gi nytt navn til listen
+    m_Localized: Gi listen et nytt navn
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000060
@@ -783,27 +777,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000063
-    m_Localized: "{0} varer har utl\xF8pt"
+    m_Localized: "{0} varer har g\xE5tt ut p\xE5 dato"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000064
-    m_Localized: '{0} vare flyttet til avfall'
+    m_Localized: '{0} element flyttet til papirkurven'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000065
-    m_Localized: '{0} varer flyttet til avfall'
+    m_Localized: '{0} elementer flyttet til papirkurven'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000066
-    m_Localized: Listenavn
+    m_Localized: Liste navn
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000067
-    m_Localized: Mengde
+    m_Localized: Antall
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000068
-    m_Localized: Utsikt
+    m_Localized: Vis
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
@@ -819,15 +813,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000072
-    m_Localized: Skape
+    m_Localized: Opprett
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000073
-    m_Localized: "Flytte 1 utg\xE5tt vare til matavfall?"
+    m_Localized: "Flytt 1 utg\xE5tt vare til matavfallsbeholderen?"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000074
-    m_Localized: "Flytte {0} utg\xE5tte varer til matavfall?"
+    m_Localized: "Flytt {0} utl\xF8pte varer til matavfallsbeholderen?"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000075
@@ -839,7 +833,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000077
-    m_Localized: "Skriv inn et m\xE5ltidsnavn"
+    m_Localized: "Skriv inn navnet p\xE5 en rett"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000078
@@ -855,36 +849,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000081
-    m_Localized: "Kunne ikke loggf\xF8re m\xE5ltidet"
+    m_Localized: "Kunne ikke registrere m\xE5ltidet"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000082
-    m_Localized: "M\xE5ltidet er logget, men matkassen kunne ikke oppdateres. Sjekk
-      matkassen din."
+    m_Localized: "M\xE5ltidet er registrert, men det var ikke mulig \xE5 oppdatere
+      beholdningen. Vennligst sjekk varene i matskapet ditt."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000083
-    m_Localized: "Feil ved lasting av m\xE5ltidslogg"
+    m_Localized: "Kunne ikke laste inn m\xE5ltidsloggen"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000084
-    m_Localized: "Velg en vare i matskapet f\xF8rst"
+    m_Localized: "Velg en vare fra matskapet f\xF8rst"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
-    m_Localized: "Mengden m\xE5 v\xE6re st\xF8rre enn 0"
+    m_Localized: "Antall m\xE5 v\xE6re st\xF8rre enn 0"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000086
-    m_Localized: Kunne ikke lagre avfallsposten
+    m_Localized: Kunne ikke lagre avfallsregistreringen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000087
-    m_Localized: Kunne ikke oppdatere. Viser hurtigbufrede data.
+    m_Localized: Kunne ikke oppdatere. Viser lagret data.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
-    m_Localized: Feil ved lasting av matsvinnslogg
+    m_Localized: Kunne ikke laste inn loggen for matavfall
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000089
@@ -896,7 +890,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000091
-    m_Localized: Feil ved lasting av spiskammerset
+    m_Localized: Kunne ikke laste inn matlageret
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000092
@@ -904,15 +898,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000093
-    m_Localized: "Kunne ikke legge til vare: produktet kan mangle n\xF8dvendige data"
+    m_Localized: "Kunne ikke legge til elementet: Produktet mangler muligens n\xF8dvendige
+      data"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000094
-    m_Localized: Kunne ikke legge til kategorielement
+    m_Localized: Kunne ikke legge til kategorivaren
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000095
-    m_Localized: "Automatisk oppdaget utl\xF8pt vare"
+    m_Localized: "Utl\xF8pt vare er automatisk identifisert"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -920,7 +915,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000097
-    m_Localized: Kunne ikke laste inn elementer
+    m_Localized: Kunne ikke laste inn elementene
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000098
@@ -952,11 +947,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000105
-    m_Localized: Feil ved lasting av lister
+    m_Localized: Kunne ikke laste inn listene
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000106
-    m_Localized: Listenavn er obligatorisk
+    m_Localized: Liste navn er obligatorisk
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000107
@@ -972,7 +967,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000110
-    m_Localized: Ugyldig invitasjonskode eller allerede medlem
+    m_Localized: Ugyldig invitasjonskode eller du er allerede medlem
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000111
@@ -980,15 +975,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000112
-    m_Localized: Feil ved oppretting av gruppe
+    m_Localized: Kunne ikke opprette gruppe
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000113
-    m_Localized: Feil ved lasting av grupper
+    m_Localized: Kunne ikke laste inn gruppene
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000114
-    m_Localized: "Innlogging mislyktes. Pr\xF8v p\xE5 nytt."
+    m_Localized: "Innlogging mislyktes. Vennligst pr\xF8v igjen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000115
@@ -996,27 +991,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000116
-    m_Localized: Laster inn data ...
+    m_Localized: Laster inn data
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000117
-    m_Localized: "Kunne ikke laste inn data. Pr\xF8v p\xE5 nytt."
+    m_Localized: "Kunne ikke laste inn data. Vennligst pr\xF8v igjen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000118
-    m_Localized: Feil ved innlasting av data.
+    m_Localized: Kunne ikke laste inn data.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000119
-    m_Localized: "Kunne ikke lagre profilen. Pr\xF8v p\xE5 nytt."
+    m_Localized: "Kunne ikke lagre profilen. Vennligst pr\xF8v igjen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000120
-    m_Localized: "Uventet feil. Pr\xF8v p\xE5 nytt."
+    m_Localized: "Uventet feil. Vennligst pr\xF8v igjen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000121
-    m_Localized: Det oppsto en uventet feil
+    m_Localized: En uventet feil oppstod
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000122
@@ -1040,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985730
-    m_Localized: Matbit
+    m_Localized: Snacks
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985731
@@ -1048,7 +1043,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985732
-    m_Localized: Annen
+    m_Localized: Annet
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985733
@@ -1056,7 +1051,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985734
-    m_Localized: Bortskjemt
+    m_Localized: "Forkj\xE6let"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985735
@@ -1068,11 +1063,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985737
-    m_Localized: Porsjonen er for stor
+    m_Localized: For stor porsjon
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985738
-    m_Localized: Annen
+    m_Localized: Annet
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985739
@@ -1080,11 +1075,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985740
-    m_Localized: "H\xE5ndbok"
+    m_Localized: Bruksanvisning
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985741
-    m_Localized: Brikker
+    m_Localized: deler
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985742
@@ -1112,11 +1107,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985748
-    m_Localized: Fryseboks
+    m_Localized: fryser
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985749
-    m_Localized: Spiskammershylle
+    m_Localized: Matlageskap
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985750
@@ -1124,19 +1119,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985751
-    m_Localized: Skap
+    m_Localized: skap
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985752
-    m_Localized: Laster inn lokaliseringer ...
+    m_Localized: Laster inn lokaliseringer
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
-    m_Localized: Laster inn brukergrensesnittet ...
+    m_Localized: Laster inn brukergrensesnittet
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985754
-    m_Localized: "S\xF8k..."
+    m_Localized: "S\xF8k"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985755
@@ -1176,7 +1171,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986008
-    m_Localized: Blir med...
+    m_Localized: Kobler til
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986009
@@ -1192,7 +1187,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
-    m_Localized: Regenerer
+    m_Localized: "Generer p\xE5 nytt"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986013
@@ -1208,7 +1203,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986016
-    m_Localized: "Gj\xF8r administrator"
+    m_Localized: "Gj\xF8r til administrator"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986017
@@ -1220,7 +1215,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986019
-    m_Localized: Admin
+    m_Localized: Administrator
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986020
@@ -1245,7 +1240,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7590950986025
     m_Localized: "Opprett eller bli med i en gruppe for \xE5 dele handlelister og
-      fremdrift med familien din."
+      f\xF8lge med p\xE5 fremgangen sammen med familien din."
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986026
@@ -1269,7 +1264,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 319685458386944
-    m_Localized: Laster inn avataren
+    m_Localized: Laster avatar
     m_Metadata:
       m_Items: []
   - m_Id: 346294877937664
@@ -1277,7 +1272,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1352600405401600
-    m_Localized: Sjekker etter oppdateringer ...
+    m_Localized: Ser etter oppdateringer
     m_Metadata:
       m_Items: []
   - m_Id: 1674160731316224
@@ -1293,15 +1288,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1675915250622464
-    m_Localized: Oppdatering
+    m_Localized: Oppdater
     m_Metadata:
       m_Items: []
   - m_Id: 1675915254816768
-    m_Localized: Seinere
+    m_Localized: Senere
     m_Metadata:
       m_Items: []
   - m_Id: 3882568704319488
-    m_Localized: "\U0001F4DD Handleliste"
+    m_Localized: Handleliste
     m_Metadata:
       m_Items: []
   - m_Id: 6145026047336448
@@ -1313,7 +1308,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530753
-    m_Localized: Kornprodukter og meltyper
+    m_Localized: Frokostblandinger og typer mel
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530754
@@ -1321,7 +1316,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530755
-    m_Localized: "Kaldt kj\xF8ttp\xE5legg"
+    m_Localized: "Kj\xF8ttp\xE5legg"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530756
@@ -1333,11 +1328,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530758
-    m_Localized: Fisk, krepsdyr og skalldyr
+    m_Localized: "Fisk, krepsdyr og bl\xF8tdyr"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530759
-    m_Localized: "Matvarer til spesiell ern\xE6ringsmessig bruk"
+    m_Localized: "Matvarer for spesielle ern\xE6ringsmessige behov"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530760
@@ -1357,11 +1352,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530764
-    m_Localized: "Kj\xF8tterstatninger og meieriprodukter"
+    m_Localized: "Kj\xF8tterstatninger og melkeerstatninger"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530765
-    m_Localized: Melk og melkeprodukter
+    m_Localized: Melk og meieriprodukter
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530766
@@ -1373,7 +1368,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530768
-    m_Localized: Alkoholfrie drikker
+    m_Localized: alkoholfrie drikker
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530769
@@ -1381,7 +1376,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530770
-    m_Localized: Bakverk og kjeks
+    m_Localized: Kaker og kjeks
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530771
@@ -1389,7 +1384,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530772
-    m_Localized: "Smakfulle br\xF8dp\xE5legg"
+    m_Localized: "Smakfulle p\xE5legg til br\xF8d"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530773
@@ -1397,7 +1392,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530774
-    m_Localized: Smakfulle snacks
+    m_Localized: Salte snacks
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530775
@@ -1410,6 +1405,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6145026055725056
     m_Localized: "Gr\xF8nnsaker"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6413218154012672
+    m_Localized: Ingen resultater funnet
     m_Metadata:
       m_Items: []
   references:

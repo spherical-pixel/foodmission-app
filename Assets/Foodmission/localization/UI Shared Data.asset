@@ -1387,6 +1387,10 @@ MonoBehaviour:
     m_Key: SHOPPING_LIST_APP_BAR
     m_Metadata:
       m_Items: []
+  - m_Id: 6413218154012672
+    m_Key: NO_RESULTS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

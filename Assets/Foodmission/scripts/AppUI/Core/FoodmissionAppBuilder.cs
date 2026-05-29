@@ -41,6 +41,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IFoodWasteService, FoodWasteService>();
             builder.services.AddSingleton<ITemplateService, TemplateService>();
             builder.services.AddSingleton<IAppUpdateService, AppUpdateService>();
+            builder.services.AddSingleton<IRemoteLocalizationService, RemoteLocalizationService>();
             builder.services.AddSingleton<IAccessibilityService, AccessibilityService>();
 
             // ViewModels (Transient - new instance each time)

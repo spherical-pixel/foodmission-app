@@ -278,6 +278,7 @@ namespace eu.foodmission.platform
 
         private static void ApplyLocale(string lang)
         {
+            lang = "en"; // TEMP: force English until translations are reviewed
             Debug.Log($"[FoodmissionApp] - ApplyLocale -  Applying locale: {lang}");
             var locale = LocalizationSettings.AvailableLocales.GetLocale(lang);
             if (locale != null)

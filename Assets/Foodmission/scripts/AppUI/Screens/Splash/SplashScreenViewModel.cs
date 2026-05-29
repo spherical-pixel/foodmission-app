@@ -16,6 +16,7 @@ namespace eu.foodmission.platform
         private readonly IAuthService _authService;
         private readonly ITemplateService _templateService;
         private readonly IAppUpdateService _appUpdateService;
+        private readonly IRemoteLocalizationService _remoteLocalizationService;
 
         [ObservableProperty]
         private string _loadingText = "Loading...";
@@ -27,11 +28,13 @@ namespace eu.foodmission.platform
             IStoreService storeService,
             IAuthService authService,
             ITemplateService templateService,
-            IAppUpdateService appUpdateService) : base(storeService)
+            IAppUpdateService appUpdateService,
+            IRemoteLocalizationService remoteLocalizationService) : base(storeService)
         {
             _authService = authService;
             _templateService = templateService;
             _appUpdateService = appUpdateService;
+            _remoteLocalizationService = remoteLocalizationService;
         }
 
         public async Task<string> InitializeAppAsync()
@@ -43,6 +46,8 @@ namespace eu.foodmission.platform
             {
                 await LocalizationSettings.InitializationOperation.Task;
             }
+
+            await _remoteLocalizationService.InitializeAsync();
 
             await Task.Delay(100);
 

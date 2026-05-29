@@ -28,7 +28,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8970780532736
-    m_Localized: Maaltijdlogboek
+    m_Localized: Maaltijddagboek
     m_Metadata:
       m_Items: []
   - m_Id: 9243779391488
@@ -36,19 +36,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2541068313681920
-    m_Localized: Laden
+    m_Localized: Bezig met laden
     m_Metadata:
       m_Items: []
   - m_Id: 18113535941795840
-    m_Localized: Activa laden
+    m_Localized: Activa worden geladen
     m_Metadata:
       m_Items: []
   - m_Id: 18114763199340544
-    m_Localized: Authenticatie controleren
+    m_Localized: Authenticatie wordt gecontroleerd
     m_Metadata:
       m_Items: []
   - m_Id: 18417184911908864
-    m_Localized: 'Spelen, leren en gezonder eten: samen voeden we de verandering.'
+    m_Localized: 'Spelen, leren en beter eten: samen zorgen we voor verandering.'
     m_Metadata:
       m_Items: []
   - m_Id: 18417602513592320
@@ -56,7 +56,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18417848396275712
-    m_Localized: Je gebruikersnaam
+    m_Localized: Uw gebruikersnaam
     m_Metadata:
       m_Items: []
   - m_Id: 18418052671463424
@@ -108,38 +108,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25351921299611648
-    m_Localized: '<b>Algemene voorwaarden van FOODMISSION</b>
-
-
-      Door deze applicatie
-      te gebruiken, gaat u akkoord met de volgende voorwaarden:
-
-
-      <b>1. ACCOUNTREGISTRATIE</b>
-
-      U
-      dient bij de registratie accurate en volledige informatie te verstrekken. U
-      bent verantwoordelijk voor de vertrouwelijkheid van uw accountgegevens.
-
-
-      <b>2.
-      PRIVACY</b>
-
-      Wij verzamelen en verwerken uw persoonsgegevens in overeenstemming
-      met ons privacybeleid. Dit omvat voedingsgegevens, locatiegegevens en gebruiksstatistieken.
-
-
-      Voor
-      meer informatie kunt u contact met ons opnemen via support@foodmission.eu<b>Algemene
-      voorwaarden van FOODMISSION</b>
-
-
-      Door deze applicatie te gebruiken,
-      gaat u akkoord met de volgende voorwaarden:
-
-
-      Voor meer informatie kunt
-      u contact met ons opnemen via support@foodmission.eu'
+    m_Localized: FOODMISSION Algemene voorwaarden
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -151,7 +120,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25353803774550016
-    m_Localized: OK
+    m_Localized: Ok
     m_Metadata:
       m_Items: []
   - m_Id: 25354482861727744
@@ -159,7 +128,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25354925167861760
-    m_Localized: Veldvalidatie mislukt
+    m_Localized: De veldvalidatie is mislukt
     m_Metadata:
       m_Items: []
   - m_Id: 25355658118291456
@@ -179,7 +148,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284417
-    m_Localized: Je moet 18 jaar of ouder zijn om het platform te gebruiken.
+    m_Localized: U moet 18 jaar of ouder zijn om het platform te gebruiken.
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284418
@@ -191,15 +160,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284420
-    m_Localized: Ongeldig postcodeformaat.
+    m_Localized: Ongeldig postcodenummer.
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284421
-    m_Localized: U dient de algemene voorwaarden te accepteren om verder te gaan.
+    m_Localized: U moet de algemene voorwaarden accepteren om verder te gaan.
     m_Metadata:
       m_Items: []
   - m_Id: 25367919163596800
-    m_Localized: Inloggen
+    m_Localized: Aanmelden
     m_Metadata:
       m_Items: []
   - m_Id: 25368981371084800
@@ -207,7 +176,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25369431499595776
-    m_Localized: Nog geen account? Meld je aan
+    m_Localized: Heeft u geen account? Maak er dan een aan
     m_Metadata:
       m_Items: []
   - m_Id: 25394900353671168
@@ -215,19 +184,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25395075277119488
-    m_Localized: Voer je e-mailadres in en we sturen je een link om je wachtwoord
+    m_Localized: Voer uw e-mailadres in en wij sturen u een link om uw wachtwoord
+      opnieuw in te stellen.
     m_Metadata:
       m_Items: []
   - m_Id: 25395779614007296
-    m_Localized: Doorgaan
+    m_Localized: Ga verder
     m_Metadata:
       m_Items: []
   - m_Id: 25395959562231808
-    m_Localized: Rug
+    m_Localized: Terug
     m_Metadata:
       m_Items: []
   - m_Id: 27512489452232704
-    m_Localized: Laden van {global.PET_NAME}
+    m_Localized: '{global.PET_NAME} wordt geladen'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
@@ -240,22 +210,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: 'Samen verbinden we jouw keuken met zorg voor de planeet.
-
-
-      Kook,
-      leer, deel en groei elke dag.
-
-
-      Klaar om te beginnen?'
+    m_Localized: Samen zorgen we ervoor dat uw keuken bijdraagt aan een beter milieu.
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
-    m_Localized: Maak je avatar aan
+    m_Localized: Maak je avatar
     m_Metadata:
       m_Items: []
   - m_Id: 35549934412357632
-    m_Localized: Voltooi je profiel
+    m_Localized: Vul uw profiel in
     m_Metadata:
       m_Items: []
   - m_Id: 35550076637011968
@@ -271,7 +234,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38373203972710400
-    m_Localized: Ongeldig verzoek
+    m_Localized: Ongeldige aanvraag
     m_Metadata:
       m_Items: []
   - m_Id: 38373263087230976
@@ -283,7 +246,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38380494998462464
-    m_Localized: Ongeldige reactie van de server
+    m_Localized: Ongeldig antwoord van de server
     m_Metadata:
       m_Items: []
   - m_Id: 38381013338939392
@@ -299,15 +262,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465117124288512
-    m_Localized: Aandacht!
+    m_Localized: Let op!
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: 'Door deze actie worden al uw gegevens permanent van het platform
-      verwijderd.
-
-
-      Weet u het zeker?'
+    m_Localized: Deze actie verwijdert al uw gegevens permanent van het platform.
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -395,7 +354,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897194361249792
-    m_Localized: Medium
+    m_Localized: Middelgroot
     m_Metadata:
       m_Items: []
   - m_Id: 39897246425145344
@@ -403,7 +362,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897565464879104
-    m_Localized: Op
+    m_Localized: Aan
     m_Metadata:
       m_Items: []
   - m_Id: 39897588734877696
@@ -411,7 +370,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897610318766080
-    m_Localized: Vlak
+    m_Localized: Eenvoudig
     m_Metadata:
       m_Items: []
   - m_Id: 39897672927141888
@@ -423,11 +382,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39903344821526528
-    m_Localized: Login
+    m_Localized: Inloggen
     m_Metadata:
       m_Items: []
   - m_Id: 39903457170153472
-    m_Localized: Register
+    m_Localized: Registreren
     m_Metadata:
       m_Items: []
   - m_Id: 39903535817547776
@@ -451,7 +410,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39906149892349952
-    m_Localized: Badges bekijken
+    m_Localized: Bekijk badges
     m_Metadata:
       m_Items: []
   - m_Id: 39906172642254848
@@ -459,7 +418,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39906262576521216
-    m_Localized: Uitloggen
+    m_Localized: Afmelden
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
@@ -475,11 +434,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910325154209792
-    m_Localized: Voorraadkast
+    m_Localized: voorraadkast
     m_Metadata:
       m_Items: []
   - m_Id: 39910356015898624
-    m_Localized: Receptenboek
+    m_Localized: Kookboek
     m_Metadata:
       m_Items: []
   - m_Id: 39910387632562176
@@ -499,7 +458,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910482159591424
-    m_Localized: Alles als gelezen markeren
+    m_Localized: Markeer alles als gelezen
     m_Metadata:
       m_Items: []
   - m_Id: 39910503894335488
@@ -507,7 +466,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915502649204736
-    m_Localized: Uw status op het gebied van voedingsintelligentie
+    m_Localized: Uw huidige kennis over voeding
     m_Metadata:
       m_Items: []
   - m_Id: 39915588338835456
@@ -515,7 +474,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: Duurzaamheid
+    m_Localized: duurzaamheid
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
@@ -535,7 +494,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39916799158902784
-    m_Localized: Mij
+    m_Localized: Ik
     m_Metadata:
       m_Items: []
   - m_Id: 39916808910659584
@@ -551,19 +510,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 40270509588340736
-    m_Localized: Voltooi je profiel
+    m_Localized: Vul uw profiel in
     m_Metadata:
       m_Items: []
   - m_Id: 40270634402439168
-    m_Localized: Deze informatie helpt ons om uw ervaring op maat te maken.
+    m_Localized: Deze informatie helpt ons om uw ervaring te personaliseren
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000001
-    m_Localized: E-mail verzonden. Controleer je inbox.
+    m_Localized: E-mail verzonden. Controleer uw inbox.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000002
-    m_Localized: Het lukte niet om de reset-e-mail te verzenden. Probeer het opnieuw.
+    m_Localized: Kon de e-mail voor het opnieuw instellen van het wachtwoord niet
+      verzenden. Probeer het opnieuw.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000003
@@ -571,7 +531,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000004
-    m_Localized: Log Maaltijd
+    m_Localized: Maaltijd registreren
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000005
@@ -579,7 +539,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000006
-    m_Localized: Zoek maaltijden...
+    m_Localized: Zoek naar maaltijden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000007
@@ -595,15 +555,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000010
-    m_Localized: Uit eten
+    m_Localized: Uit eten geweest
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000011
-    m_Localized: Selecteer artikelen die u uit de voorraadkast wilt halen.
+    m_Localized: Selecteer de artikelen die u van de voorraad wilt aftrekken
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000012
-    m_Localized: Log Maaltijd
+    m_Localized: Maaltijd registreren
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000013
@@ -615,11 +575,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000015
-    m_Localized: Hoeveelheid verspild
+    m_Localized: Verspilde hoeveelheid
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
-    m_Localized: Reden voor verspilling
+    m_Localized: Verspilde moeite
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000017
@@ -635,11 +595,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000020
-    m_Localized: Redden
+    m_Localized: Opslaan
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000021
-    m_Localized: Filter items...
+    m_Localized: Items filteren
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
@@ -659,12 +619,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000026
-    m_Localized: Maaltijdlogboek
+    m_Localized: Maaltijddagboek
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000027
-    m_Localized: Nog geen maaltijden geregistreerd. Tik op + om je eerste maaltijd
-      te registreren.
+    m_Localized: Er zijn nog geen maaltijden geregistreerd. Tik op + om uw eerste
+      maaltijd te registreren.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000028
@@ -672,8 +632,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000029
-    m_Localized: Nog geen boodschappenlijstjes. Tik op Nieuwe lijst om er een te
-      maken.
+    m_Localized: Er zijn nog geen boodschappenlijstjes. Tik op 'Nieuw lijstje' om
+      er een aan te maken.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000030
@@ -685,15 +645,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000032
-    m_Localized: Duidelijk gedaan
+    m_Localized: Klaar
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: Nog geen items. Tik op + om items toe te voegen.
+    m_Localized: Er zijn nog geen items. Tik op + om items toe te voegen.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
-    m_Localized: Item
+    m_Localized: Artikel
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000035
@@ -709,7 +669,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
-    m_Localized: Vervaldatum
+    m_Localized: Houdbaarheidsdatum
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000039
@@ -733,7 +693,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000044
-    m_Localized: Verantwoordelijk winkelen
+    m_Localized: Verantwoord winkelen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000045
@@ -749,11 +709,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000048
-    m_Localized: Opslaan en verdergaan
+    m_Localized: Opslaan en doorgaan
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000049
-    m_Localized: Afsluiten zonder op te slaan
+    m_Localized: Sluit af zonder op te slaan
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000050
@@ -761,11 +721,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000051
-    m_Localized: "Calorie\xEBn, Koolstofvoetafdruk, Verbruikte hoeveelheid, Eiwitten"
+    m_Localized: "Calorie\xEBn, koolstofvoetafdruk, besteed bedrag, eiwitten"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
-    m_Localized: "Verbruikte calorie\xEBn"
+    m_Localized: "Geconsumeerde calorie\xEBn"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000053
@@ -773,11 +733,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000054
-    m_Localized: Verwijder "{0}"?
+    m_Localized: '"{0}" verwijderen?'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000055
-    m_Localized: Verwijder logboek
+    m_Localized: Logbestand verwijderen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000056
@@ -785,7 +745,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000057
-    m_Localized: Verwijder afvalinvoer
+    m_Localized: Verwijder de afvalinvoer
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -797,7 +757,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000060
-    m_Localized: Voeg item toe
+    m_Localized: Item toevoegen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000061
@@ -809,15 +769,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000063
-    m_Localized: '{0} items verlopen'
+    m_Localized: '{0} artikelen zijn verlopen'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000064
-    m_Localized: '{0} item verplaatst naar afval'
+    m_Localized: '{0} item verplaatst naar de prullenbak'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000065
-    m_Localized: '{0} items verplaatst naar de afvalbak'
+    m_Localized: '{0} items naar de prullenbak verplaatst'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000066
@@ -829,7 +789,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000068
-    m_Localized: Weergave
+    m_Localized: Bekijken
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
@@ -849,11 +809,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000073
-    m_Localized: "E\xE9n verlopen product bij het GFT-afval gooien?"
+    m_Localized: 1 verlopen product naar het afval voor voedselresten verplaatsen?
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000074
-    m_Localized: Verplaats {0} verlopen artikelen naar de GFT-bak?
+    m_Localized: Verplaats {0} verlopen producten naar de afvalbak voor voedselresten?
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000075
@@ -861,19 +821,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000076
-    m_Localized: Maaltijden konden niet worden gevonden. Controleer uw internetverbinding.
+    m_Localized: Kon geen maaltijden vinden. Controleer uw internetverbinding.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000077
-    m_Localized: Voer een maaltijdnaam in
+    m_Localized: Voer de naam van een gerecht in
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000078
-    m_Localized: Kon geen maaltijd aanmaken
+    m_Localized: Kon de maaltijd niet aanmaken
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000079
-    m_Localized: Kies eerst een maaltijd
+    m_Localized: Selecteer eerst een maaltijd
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000080
@@ -881,57 +841,57 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000081
-    m_Localized: Kon de maaltijd niet registreren
+    m_Localized: De maaltijd kon niet worden geregistreerd
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000082
-    m_Localized: De maaltijd is wel geregistreerd, maar de voorraadkast kon niet
-      worden bijgewerkt. Controleer uw voorraadkast.
+    m_Localized: Maaltijd geregistreerd, maar de voorraadkast kon niet worden bijgewerkt.
+      Controleer uw voorraadartikelen.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000083
-    m_Localized: Fout bij het laden van het maaltijdlogboek.
+    m_Localized: Fout bij het laden van het maaltijdoverzicht
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000084
-    m_Localized: Selecteer eerst een artikel uit de voorraadkast.
+    m_Localized: Selecteer eerst een artikel uit de voorraadkast
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
-    m_Localized: De hoeveelheid moet groter zijn dan 0.
+    m_Localized: De hoeveelheid moet groter zijn dan 0
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000086
-    m_Localized: Kon afvalinvoer niet opslaan
+    m_Localized: Kon de afvalregistratie niet opslaan
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000087
-    m_Localized: Kon niet vernieuwen. Gegevens uit de cache worden weergegeven.
+    m_Localized: Kon de gegevens niet vernieuwen. Er worden opgeslagen gegevens weergegeven.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
-    m_Localized: Fout bij het laden van het logboek voor voedselverspilling.
+    m_Localized: Fout bij het laden van het logboek voor voedselafval
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000089
-    m_Localized: Het item kon niet worden geladen.
+    m_Localized: Kon het item niet laden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000090
-    m_Localized: Het item kon niet worden opgeslagen.
+    m_Localized: Item kon niet worden opgeslagen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000091
-    m_Localized: Fout bij het laden van de voorraadkast.
+    m_Localized: Kon de voorraadkast niet laden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000092
-    m_Localized: 'Importeren van voedsel mislukt: {0}'
+    m_Localized: 'Het importeren van voedsel is mislukt: {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000093
-    m_Localized: 'Het product kon niet worden toegevoegd: mogelijk ontbreken er vereiste
-      gegevens.'
+    m_Localized: 'Het item kon niet worden toegevoegd: mogelijk ontbreken er vereiste
+      gegevens voor het product'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000094
@@ -939,7 +899,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000095
-    m_Localized: Automatisch gedetecteerd verlopen artikel
+    m_Localized: Automatisch gedetecteerd verlopen product
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -947,59 +907,59 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000097
-    m_Localized: Kon items niet laden
+    m_Localized: Kon de items niet laden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000098
-    m_Localized: Producten konden niet worden gevonden.
+    m_Localized: Kon geen producten vinden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000099
-    m_Localized: Het item kon niet worden toegevoegd.
+    m_Localized: Het item kon niet worden toegevoegd
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000100
-    m_Localized: "Het geselecteerde product kon niet worden ge\xEFmporteerd."
+    m_Localized: "Het geselecteerde product kon niet worden ge\xEFmporteerd"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000101
-    m_Localized: Het item kon niet aan de lijst worden toegevoegd.
+    m_Localized: Het item kon niet aan de lijst worden toegevoegd
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000102
-    m_Localized: Het item kon niet worden bijgewerkt.
+    m_Localized: Het item kon niet worden bijgewerkt
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000103
-    m_Localized: Het item kon niet worden verwijderd.
+    m_Localized: Het item kon niet worden verwijderd
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000104
-    m_Localized: Voltooide items konden niet worden verwijderd.
+    m_Localized: Kon de voltooide items niet wissen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000105
-    m_Localized: Fout bij het laden van lijsten
+    m_Localized: Fout bij het laden van de lijsten
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000106
-    m_Localized: De lijstnaam is verplicht.
+    m_Localized: Naam van de lijst is verplicht
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000107
-    m_Localized: De lijst kon niet worden aangemaakt.
+    m_Localized: De lijst kon niet worden aangemaakt
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000108
-    m_Localized: De lijst kon niet worden verwijderd.
+    m_Localized: De lijst kon niet worden verwijderd
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000109
-    m_Localized: Een uitnodigingscode is vereist.
+    m_Localized: Een uitnodigingscode is vereist
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000110
-    m_Localized: Ongeldige uitnodigingscode of u bent al lid.
+    m_Localized: Ongeldige uitnodigingscode of u bent al lid
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000111
@@ -1015,27 +975,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000114
-    m_Localized: Aanmelden mislukt. Probeer het opnieuw.
+    m_Localized: Inloggen mislukt. Probeer het opnieuw.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000115
-    m_Localized: U dient de algemene voorwaarden te accepteren.
+    m_Localized: U moet de algemene voorwaarden accepteren
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000116
-    m_Localized: Gegevens laden...
+    m_Localized: Gegevens worden geladen...
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000117
-    m_Localized: Gegevens konden niet worden geladen. Probeer het opnieuw.
+    m_Localized: Kon de gegevens niet laden. Probeer het opnieuw.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000118
-    m_Localized: Fout bij het laden van gegevens.
+    m_Localized: Er is een fout opgetreden bij het laden van de gegevens.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000119
-    m_Localized: Profiel kon niet worden opgeslagen. Probeer het opnieuw.
+    m_Localized: Het profiel kon niet worden opgeslagen. Probeer het opnieuw.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000120
@@ -1043,7 +1003,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000121
-    m_Localized: Er is een onverwachte fout opgetreden.
+    m_Localized: Er is een onverwachte fout opgetreden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000122
@@ -1063,7 +1023,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985729
-    m_Localized: Diner
+    m_Localized: Avondeten
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985730
@@ -1075,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985732
-    m_Localized: Ander
+    m_Localized: Anders
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985733
@@ -1083,7 +1043,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985734
-    m_Localized: Bevuild
+    m_Localized: Verpest
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985735
@@ -1091,15 +1051,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985736
-    m_Localized: Ongewenst
+    m_Localized: Ongepast
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985737
-    m_Localized: Portie te groot
+    m_Localized: De portie is te groot
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985738
-    m_Localized: Ander
+    m_Localized: Anders
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985739
@@ -1107,11 +1067,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985740
-    m_Localized: Handmatig
+    m_Localized: Handleiding
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985741
-    m_Localized: Stukken
+    m_Localized: stukken
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985742
@@ -1131,7 +1091,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985746
-    m_Localized: Kopjes
+    m_Localized: bekers
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985747
@@ -1147,7 +1107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985750
-    m_Localized: Aanrechtblad
+    m_Localized: Aanrecht
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985751
@@ -1159,15 +1119,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
-    m_Localized: Gebruikersinterface wordt geladen...
+    m_Localized: UI wordt geladen...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985754
-    m_Localized: Zoekopdracht...
+    m_Localized: Zoeken
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985755
-    m_Localized: Voeg item toe
+    m_Localized: Item toevoegen
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986000
@@ -1175,11 +1135,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986001
-    m_Localized: Nog geen groepen.
+    m_Localized: Er zijn nog geen groepen.
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986002
-    m_Localized: Groep aanmaken
+    m_Localized: Maak groep
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986003
@@ -1187,7 +1147,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986004
-    m_Localized: Groepsnaam
+    m_Localized: Naam van de groep
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986005
@@ -1195,7 +1155,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986006
-    m_Localized: Een groep aanmaken of lid worden van een groep
+    m_Localized: Maak of voeg je toe aan een groep
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986007
@@ -1203,7 +1163,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986008
-    m_Localized: Deelnemen...
+    m_Localized: Bezig met verbinden...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986009
@@ -1215,15 +1175,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986011
-    m_Localized: Kopieer code
+    m_Localized: "Code kopi\xEBren"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
-    m_Localized: Regenereren
+    m_Localized: Opnieuw genereren
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986013
-    m_Localized: Groep verlaten
+    m_Localized: Verlaat groep
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986014
@@ -1235,15 +1195,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986016
-    m_Localized: Beheerder maken
+    m_Localized: Maak beheerder
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986017
-    m_Localized: Weet je zeker dat je deze groep wilt verlaten?
+    m_Localized: Ben je er zeker van dat je deze groep wilt verlaten?
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986018
-    m_Localized: Weet je zeker dat je deze groep wilt verwijderen?
+    m_Localized: Weet u zeker dat u deze groep wilt verwijderen?
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986019
@@ -1271,8 +1231,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986025
-    m_Localized: Maak een groep aan of sluit je aan bij een bestaande groep om boodschappenlijsten
-      en de voortgang met je gezin te delen.
+    m_Localized: Maak een groep of word lid van een groep om boodschappenlijstjes
+      te delen en de voortgang met uw gezin te bespreken.
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986026
@@ -1284,7 +1244,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986028
-    m_Localized: Sla dit voorlopig over.
+    m_Localized: Sla dit voor nu over
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986029
@@ -1292,11 +1252,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986030
-    m_Localized: Lid geworden van de groep!
+    m_Localized: Toegetreden tot de groep!
     m_Metadata:
       m_Items: []
   - m_Id: 319685458386944
-    m_Localized: Avatar laden
+    m_Localized: Avatar wordt geladen
     m_Metadata:
       m_Items: []
   - m_Id: 346294877937664
@@ -1312,15 +1272,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1674295611744256
-    m_Localized: Er is een nieuwe versie beschikbaar.
+    m_Localized: Een nieuwe versie is beschikbaar.
     m_Metadata:
       m_Items: []
   - m_Id: 1674465741103104
-    m_Localized: 'Release-opmerkingen:'
+    m_Localized: 'Versie-informatie:'
     m_Metadata:
       m_Items: []
   - m_Id: 1675915250622464
-    m_Localized: Update
+    m_Localized: Bijwerken
     m_Metadata:
       m_Items: []
   - m_Id: 1675915254816768
@@ -1328,7 +1288,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3882568704319488
-    m_Localized: "\U0001F4DD Boodschappenlijst"
+    m_Localized: Boodschappenlijst
     m_Metadata:
       m_Items: []
   - m_Id: 6145026047336448
@@ -1340,7 +1300,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530753
-    m_Localized: Graanproducten en soorten meel
+    m_Localized: Graanproducten en soorten bloem
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530754
@@ -1364,11 +1324,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530759
-    m_Localized: Voedingsmiddelen voor speciaal nutritioneel gebruik
+    m_Localized: Voedingsmiddelen voor speciale voedingsdoeleinden
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530760
-    m_Localized: Vruchten
+    m_Localized: Fruit
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530761
@@ -1376,7 +1336,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530762
-    m_Localized: Peulvruchten
+    m_Localized: Vruchtgewassen
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530763
@@ -1392,7 +1352,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530766
-    m_Localized: Diverse voedingsmiddelen
+    m_Localized: Diverse soorten voedsel
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530767
@@ -1412,7 +1372,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530771
-    m_Localized: Aardappelen en knollen
+    m_Localized: Aardappelen en knolgewassen
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530772
@@ -1432,11 +1392,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530776
-    m_Localized: Suiker, snoep en zoete sauzen
+    m_Localized: Suiker, zoetwaren en zoete sauzen
     m_Metadata:
       m_Items: []
   - m_Id: 6145026055725056
     m_Localized: Groenten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6413218154012672
+    m_Localized: Geen resultaten gevonden
     m_Metadata:
       m_Items: []
   references:
