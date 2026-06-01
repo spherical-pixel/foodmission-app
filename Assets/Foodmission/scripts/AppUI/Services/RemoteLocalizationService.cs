@@ -66,12 +66,12 @@ namespace eu.foodmission.platform
             }
 
             // Fall back to cache
-            LocalizationOverrides cachedData = LoadCache();
-            if (cachedData != null && !IsObsoleteForCurrentBuild(cachedData))
+            LocalizationOverrides pendingCachedData = LoadCache();
+            if (pendingCachedData != null && !IsObsoleteForCurrentBuild(pendingCachedData))
             {
-                _overrides = cachedData;
+                _overrides = pendingCachedData;
                 RegisterPatcher();
-                Debug.Log($"[RemoteLocalizationService] Applied cached overrides v{cachedData.version}");
+                Debug.Log($"[RemoteLocalizationService] Applied cached overrides v{pendingCachedData.version}");
                 return;
             }
 
