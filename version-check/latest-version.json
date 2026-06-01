@@ -1,15 +1,15 @@
 {
   "ios": {
-    "latestVersion": "0.0.4",
-    "isForced": false,
+    "latestVersion": "0.0.5",
+    "isForced": true,
     "storeUrl": "https://testflight.apple.com/join/eVPDEzhq",
-    "releaseNotes": "- Added: Screen reader preliminary support for accessibility\n- Added: App update checker\n- Added: Search or create field in shopping lists\n- Changed: Shopping list design updated\n- Changed: Environment selector for development\n- Fixed: Stepper controls now adapt to screen size\n- Fixed: Avatar editor buttons behavior\n- Fixed: Various style and layout improvements\n- Fixed: Dialog spacing"
+    "releaseNotes": "- Changed: Model naming migration — food → foodProduct, foodCategory → genericFood to align with backend API\n- Added: Unified search, category browsing and barcode scanning item for pantry and shopping lists\n- Changed: Shopping list design updated\n- Changed: Avatar editor styles\n- Changed: Changed preliminary machine translations to only English by now"
   },
   "android": {
-    "latestVersion": "0.0.4",
-    "isForced": false,
+    "latestVersion": "0.0.5",
+    "isForced": true,
     "storeUrl": "https://play.google.com/apps/testing/eu.foodmission.platform",
-    "releaseNotes": "- Added: Screen reader preliminary support for accessibility\n- Added: App update checker\n- Added: Search or create field in shopping lists\n- Changed: Shopping list design updated\n- Changed: Environment selector for development\n- Fixed: Stepper controls now adapt to screen size\n- Fixed: Avatar editor buttons behavior\n- Fixed: Various style and layout improvements\n- Fixed: Dialog spacing"
+    "releaseNotes": "- Changed: Model naming migration — food → foodProduct, foodCategory → genericFood to align with backend API\n- Added: Unified search, category browsing and barcode scanning item for pantry and shopping lists\n- Changed: Shopping list design updated\n- Changed: Avatar editor styles\n- Changed: Changed preliminary machine translations to only English by now"
   }
 }
 
