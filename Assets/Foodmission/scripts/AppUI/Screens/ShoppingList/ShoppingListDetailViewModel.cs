@@ -101,6 +101,17 @@ namespace eu.foodmission.platform
             return GenericFoods;
         }
 
+        public async Task<List<GenericFood>> SearchGenericFoodsAsync(string query)
+        {
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(query, pageSize: 100);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<GenericFood>();
+            }
+            return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
+        }
+
         public async Task LoadAsync(string listId, string listName = null)
         {
             if (string.IsNullOrEmpty(listId))
@@ -323,6 +334,18 @@ namespace eu.foodmission.platform
             if (string.IsNullOrEmpty(_currentListId) || food == null)
             {
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_LIST_ITEM");
+                return false;
+            }
+
+            if (!Guid.TryParse(food.id, out _))
+            {
+                ErrorDetail = new ApiErrorResponse
+                {
+                    statusCode = 400,
+                    error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GENERIC_FOOD_NOT_AVAILABLE"),
+                    message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GENERIC_FOOD_NOT_AVAILABLE_DESC")
+                };
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_TO_LIST");
                 return false;
             }
 

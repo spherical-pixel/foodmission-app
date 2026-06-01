@@ -1453,6 +1453,23 @@ MonoBehaviour:
     m_Localized: Changing the environment will log you out. Are you sure?
     m_Metadata:
       m_Items: []
+  - m_Id: 7834217718210560
+    m_Localized: Generic foods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7834734070587392
+    m_Localized: Products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835105786585088
+    m_Localized: Generic food not available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835562022002688
+    m_Localized: This generic food is not available in the backend database for this
+      environment.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1412,6 +1412,23 @@ MonoBehaviour:
     m_Localized: Ni bilo najdenih rezultatov
     m_Metadata:
       m_Items: []
+  - m_Id: 7834217718210560
+    m_Localized: "Splo\u0161na \u017Eivila"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7834734070587392
+    m_Localized: Izdelki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835105786585088
+    m_Localized: "Splo\u0161no \u017Eivilo ni na voljo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835562022002688
+    m_Localized: "To splo\u0161no \u017Eivilo ni na voljo v zbirki podatkov backend
+      za to okolje."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

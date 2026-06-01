@@ -1432,6 +1432,23 @@ MonoBehaviour:
     m_Localized: "Nie znaleziono wynik\xF3w"
     m_Metadata:
       m_Items: []
+  - m_Id: 7834217718210560
+    m_Localized: "Og\xF3lne produkty spo\u017Cywcze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7834734070587392
+    m_Localized: Produkty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835105786585088
+    m_Localized: "Og\xF3lna \u017Cywno\u015B\u0107 niedost\u0119pna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835562022002688
+    m_Localized: "Ta og\xF3lna \u017Cywno\u015B\u0107 nie jest dost\u0119pna w bazie
+      danych backendu dla tego \u015Brodowiska."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

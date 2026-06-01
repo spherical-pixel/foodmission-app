@@ -1414,6 +1414,23 @@ MonoBehaviour:
     m_Localized: Nessun risultato trovato
     m_Metadata:
       m_Items: []
+  - m_Id: 7834217718210560
+    m_Localized: Alimenti generici
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7834734070587392
+    m_Localized: Prodotti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835105786585088
+    m_Localized: Alimento generico non disponibile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835562022002688
+    m_Localized: "Questo alimento generico non \xE8 disponibile nel database backend
+      per questo ambiente."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1411,6 +1411,22 @@ MonoBehaviour:
     m_Key: ENV_CHANGE_MSG
     m_Metadata:
       m_Items: []
+  - m_Id: 7834217718210560
+    m_Key: SECTION_GENERIC_FOODS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7834734070587392
+    m_Key: SECTION_PRODUCTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835105786585088
+    m_Key: GENERIC_FOOD_NOT_AVAILABLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835562022002688
+    m_Key: GENERIC_FOOD_NOT_AVAILABLE_DESC
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

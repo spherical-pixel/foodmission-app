@@ -216,6 +216,17 @@ namespace eu.foodmission.platform
             return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
         }
 
+        public async Task<List<GenericFood>> SearchGenericFoodsAsync(string query)
+        {
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(query, pageSize: 100);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<GenericFood>();
+            }
+            return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
+        }
+
         private static bool IsCacheFresh(long cachedAtTicks)
         {
             if (cachedAtTicks <= 0) return false;
@@ -278,6 +289,18 @@ namespace eu.foodmission.platform
 
         public async Task AddGenericFoodItemAsync(GenericFood genericFood, float quantity, string unit)
         {
+            if (!Guid.TryParse(genericFood.id, out _))
+            {
+                ErrorDetail = new ApiErrorResponse
+                {
+                    statusCode = 400,
+                    error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GENERIC_FOOD_NOT_AVAILABLE"),
+                    message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GENERIC_FOOD_NOT_AVAILABLE_DESC")
+                };
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_CATEGORY_ITEM");
+                return;
+            }
+
             var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity, unit);
 
             if (error != null)

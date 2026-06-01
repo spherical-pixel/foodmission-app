@@ -1411,6 +1411,23 @@ MonoBehaviour:
     m_Localized: Ingen resultater funnet
     m_Metadata:
       m_Items: []
+  - m_Id: 7834217718210560
+    m_Localized: Generiske matvarer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7834734070587392
+    m_Localized: Produkter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835105786585088
+    m_Localized: Generisk mat ikke tilgjengelig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835562022002688
+    m_Localized: "Denne generiske maten er ikke tilgjengelig i backend-databasen
+      for dette milj\xF8et."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

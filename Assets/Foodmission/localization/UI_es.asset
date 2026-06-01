@@ -1418,6 +1418,23 @@ MonoBehaviour:
     m_Localized: No se encontraron resultados
     m_Metadata:
       m_Items: []
+  - m_Id: 7834217718210560
+    m_Localized: "Alimentos gen\xE9ricos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7834734070587392
+    m_Localized: Productos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835105786585088
+    m_Localized: "Alimento gen\xE9rico no disponible"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7835562022002688
+    m_Localized: "Este alimento gen\xE9rico no est\xE1 disponible en la base de datos
+      del backend para este entorno."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

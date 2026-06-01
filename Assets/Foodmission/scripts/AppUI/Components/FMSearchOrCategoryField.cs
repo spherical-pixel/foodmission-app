@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,6 +37,7 @@ namespace eu.foodmission.platform.Components
         public Func<Task<List<GenericFood>>> GetGenericFoodsAsync { get; set; }
         public Func<OpenFoodFactsProduct, float, string, Task> OnProductConfirmed { get; set; }
         public Func<GenericFood, float, string, Task> OnGenericFoodConfirmed { get; set; }
+        public Func<string, Task<List<GenericFood>>> SearchGenericFoodsAsync { get; set; }
         public Func<string, Task> OnCreateItemAsync { get; set; }
         public Action<string> OnTextChanged { get; set; }
         public Action<bool> OnPopoverVisibilityChanged { get; set; }
@@ -434,46 +436,69 @@ namespace eu.foodmission.platform.Components
             _searchResultsContainer.Clear();
             _spinner.style.display = DisplayStyle.Flex;
 
-            if (SearchProductsAsync != null)
+            Task<List<GenericFood>> genericTask = SearchGenericFoodsAsync != null
+                ? SearchGenericFoodsAsync(query)
+                : Task.FromResult<List<GenericFood>>(null);
+
+            Task<List<OpenFoodFactsProduct>> productTask = SearchProductsAsync != null
+                ? SearchProductsAsync(query)
+                : Task.FromResult<List<OpenFoodFactsProduct>>(null);
+
+            await Task.WhenAll(genericTask, productTask);
+
+            if (ct.IsCancellationRequested) return;
+
+            _spinner.style.display = DisplayStyle.None;
+
+            List<GenericFood> genericResults = genericTask.Result;
+            List<OpenFoodFactsProduct> productResults = productTask.Result;
+
+            bool hasGeneric = genericResults != null && genericResults.Count > 0;
+            bool hasProducts = productResults != null && productResults.Count > 0;
+
+            if (hasGeneric)
             {
-                List<OpenFoodFactsProduct> results = await SearchProductsAsync(query);
-
-                if (ct.IsCancellationRequested) return;
-
-                _spinner.style.display = DisplayStyle.None;
-
-                if (results != null && results.Count > 0)
-                {
-                    foreach (var product in results)
-                    {
-                        var row = MakeResultRow(product, OnResultClicked);
-                        _searchResultsContainer.Add(row);
-                    }
-                }
-                else
-                {
-                    var noResults = new Text
-                    {
-                        text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_RESULTS")
-                    };
-                    noResults.AddToClassList("fm-scf-no-results");
-                    _searchResultsContainer.Add(noResults);
-
-                    if (OnCreateItemAsync != null)
-                    {
-                        var createRow = new VisualElement();
-                        createRow.AddToClassList("fm-scf-create-row");
-                        var createLabel = new Text { text = $"+ Create \"{query}\"" };
-                        createRow.Add(createLabel);
-                        string capturedQuery = query;
-                        createRow.RegisterCallback<ClickEvent>(_ => OnCreateClicked(capturedQuery));
-                        _searchResultsContainer.Add(createRow);
-                    }
-                }
-
-                _resultsContainer.style.display = DisplayStyle.Flex;
-                _searchResultsContainer.style.display = DisplayStyle.Flex;
+                var items = genericResults.Cast<object>().ToList();
+                BuildCollapsibleSection(
+                    _searchResultsContainer,
+                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SECTION_GENERIC_FOODS"),
+                    items
+                );
             }
+
+            if (hasProducts)
+            {
+                var items = productResults.Cast<object>().ToList();
+                BuildCollapsibleSection(
+                    _searchResultsContainer,
+                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SECTION_PRODUCTS"),
+                    items
+                );
+            }
+
+            if (!hasGeneric && !hasProducts)
+            {
+                var noResults = new Text
+                {
+                    text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_RESULTS")
+                };
+                noResults.AddToClassList("fm-scf-no-results");
+                _searchResultsContainer.Add(noResults);
+
+                if (OnCreateItemAsync != null)
+                {
+                    var createRow = new VisualElement();
+                    createRow.AddToClassList("fm-scf-create-row");
+                    var createLabel = new Text { text = $"+ Create \"{query}\"" };
+                    createRow.Add(createLabel);
+                    string capturedQuery = query;
+                    createRow.RegisterCallback<ClickEvent>(_ => OnCreateClicked(capturedQuery));
+                    _searchResultsContainer.Add(createRow);
+                }
+            }
+
+            _resultsContainer.style.display = DisplayStyle.Flex;
+            _searchResultsContainer.style.display = DisplayStyle.Flex;
         }
 
         private void OnResultClicked(object item)
@@ -634,6 +659,44 @@ namespace eu.foodmission.platform.Components
             object captured = item;
             row.RegisterCallback<ClickEvent>(_ => onClick(captured));
             return row;
+        }
+
+        private void BuildCollapsibleSection(VisualElement container, string headingText, List<object> items)
+        {
+            var headerRow = new VisualElement();
+            headerRow.style.flexDirection = FlexDirection.Row;
+            headerRow.style.alignItems = Align.Center;
+            headerRow.AddToClassList("fm-scf-result-row");
+
+            var heading = new Unity.AppUI.UI.Heading
+            {
+                text = headingText,
+                size = HeadingSize.M
+            };
+            heading.style.flexGrow = 1;
+            heading.AddToClassList("fm-scf-heading");
+            headerRow.Add(heading);
+
+            var chevron = new Unity.AppUI.UI.Icon { iconName = "fm-arrow-down" };
+            headerRow.Add(chevron);
+
+            var itemsContainer = new VisualElement();
+
+            bool expanded = true;
+            headerRow.RegisterCallback<ClickEvent>(_ =>
+            {
+                expanded = !expanded;
+                itemsContainer.style.display = expanded ? DisplayStyle.Flex : DisplayStyle.None;
+                chevron.iconName = expanded ? "fm-arrow-down" : "fm-arrow-right";
+            });
+
+            container.Add(headerRow);
+            container.Add(itemsContainer);
+
+            foreach (var item in items)
+            {
+                itemsContainer.Add(MakeResultRow(item, OnResultClicked));
+            }
         }
     }
 }
