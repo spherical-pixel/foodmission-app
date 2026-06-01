@@ -345,6 +345,7 @@
     background-color: var(--appui-backgrounds-100);
     border-radius: 35px;
     --box-shadow-offset-y: 10;
+    --box-shadow-offset-x: 10;
     --box-shadow-spread: 20;
     --box-shadow-blur: 30;
     --box-shadow-color: rgba(0, 0, 0, 0.65);
@@ -771,6 +772,14 @@
 
 .fm-button {
     background-color: var(--appui-accent-100);
+}
+
+.fm-button-shadow {
+    --box-shadow-offset-y: 10;
+    --box-shadow-offset-x: 10;
+    --box-shadow-spread: 20;
+    --box-shadow-blur: 30;
+    --box-shadow-color: rgba(0, 0, 0, 0.65);
 }
 
 .appui-drawer .appui-button,

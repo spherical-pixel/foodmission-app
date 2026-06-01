@@ -71,13 +71,12 @@
                 </Bindings>
             </fm:FormFieldItemDropDownField>
             <appui:Spacer spacing="XL"/>
-            <ui:VisualElement class="auth-actions">
-                <appui:Button name="submit-button" text="Continuar" variant="Accent" trailing-icon="fm-arrow-right" title="Aceptar" class="auth-button fm-button fm-button-align-left">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000020)"/>
-                    </Bindings>
-                </appui:Button>
-            </ui:VisualElement>
+            <ui:VisualElement class="auth-actions"/>
+            <fm:FMButton variant="Accent" title="Save" name="submit-button" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000020)"/>
+                </Bindings>
+            </fm:FMButton>
             <appui:Spacer spacing="XL"/>
         </ui:VisualElement>
         <ui:VisualElement class="fm-bottom-nav-padding" style="flex-grow: 1;"/>
