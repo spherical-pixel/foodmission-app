@@ -1,6 +1,7 @@
 using NUnit.Framework;
-using Newtonsoft.Json;
 using UnityEngine;
+
+using eu.foodmission.platform;
 
 namespace eu.foodmission.platform.Tests
 {

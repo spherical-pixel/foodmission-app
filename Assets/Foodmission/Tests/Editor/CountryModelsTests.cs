@@ -42,7 +42,7 @@ namespace eu.foodmission.platform.Tests
             string json = JsonUtility.ToJson(country);
             var result = JsonUtility.FromJson<CountryData>(json);
             Assert.AreEqual("FR", result.country_iso);
-            Assert.IsNull(result.regions);
+            Assert.That(result.regions, Is.Empty);
         }
 
         [Test]

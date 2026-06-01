@@ -7,7 +7,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Unity.AppUI",
-        "Unity.AppUI.Editor"
+        "Unity.AppUI.Editor",
+        "Unity.AppUI.Navigation"
     ],
     "includePlatforms": [
         "Editor"
