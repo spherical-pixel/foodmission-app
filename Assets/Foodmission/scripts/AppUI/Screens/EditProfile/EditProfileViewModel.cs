@@ -333,20 +333,19 @@ namespace eu.foodmission.platform
 
                 var request = new ProfileUpdateRequest
                 {
-                    // gender = _selectedGenderIndex >= 0 ? _catalogData.genders[_selectedGenderIndex].code : null,
-                    // activityLevel = _selectedActivityLevelIndex >= 0 ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
-                    // educationLevel = _selectedEducationLevelIndex >= 0 ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
-                    // annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
-                    // yearOfBirth = YearOfBirth > 0 ? YearOfBirth : (int?)null,
+                    gender = _selectedGenderIndex >= 0 ? _catalogData.genders[_selectedGenderIndex].code : null,
+                    activityLevel = _selectedActivityLevelIndex >= 0 ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
+                    educationLevel = _selectedEducationLevelIndex >= 0 ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
+                    annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
+                    yearOfBirth = YearOfBirth > 0 ? YearOfBirth : (int?)null,
                     
-                    // TODO: Uncomment this once backend is fixed to accept preferences object
-                    // preferences = (shoppingResponsibilityCode != null || dietaryCode != null)
-                    //     ? new ProfileUpdatePreferences
-                    //     {
-                    //         shoppingResponsibility = shoppingResponsibilityCode,
-                    //         dietaryPreference = dietaryCode
-                    //     }
-                    //     : null
+                    preferences = (shoppingResponsibilityCode != null || dietaryCode != null)
+                        ? new ProfileUpdatePreferences
+                        {
+                            shoppingResponsibility = shoppingResponsibilityCode,
+                            dietaryPreference = dietaryCode
+                        }
+                        : null
                 };
 
                 AppState state = _storeService.GetAppState();
@@ -391,17 +390,6 @@ namespace eu.foodmission.platform
                 {
                     request.zip = PostalCode;
                 }
-
-
-
-                // TODO: Add preferences object back once backend is fixed to accept it
-                // preferences = (shoppingResponsibilityCode != null || dietaryCode != null)
-                //     ? new ProfileUpdatePreferences
-                //     {
-                //         shoppingResponsibility = shoppingResponsibilityCode,
-                //         dietaryPreference = dietaryCode
-                //     }
-                //     : null
 
                 Debug.Log($"[EditProfileViewModel] Submitting profile update: {request.ToJson()}");
 
