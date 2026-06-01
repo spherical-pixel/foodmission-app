@@ -899,7 +899,7 @@
     margin-top: 12px;
     margin-bottom: 4px;
     padding-left: 4px;
-    font-weight: bold;
+    -unity-font-style: bold;
 }
 
 .fm-scf-back-row {
@@ -908,7 +908,7 @@
     padding: 8px 12px;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
+    -unity-font-style: bold;
     border-bottom-width: 1px;
     border-bottom-color: rgba(128, 128, 128, 0.15);
     margin-bottom: 4px;
