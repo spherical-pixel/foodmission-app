@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/MealLog/MealLogScreen.uss?fileID=7433441132597879392&amp;guid=7c47805ff89384bd8a8e9d462a00c7a5&amp;type=3#MealLogScreen"/>
     <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.ShoppingListViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
-    <ui:VisualElement name="root" class="fm-root appui appui--light appui--en appui--ltr">
+    <ui:VisualElement name="root" class="fm-root">
         <appui:ExVisualElement name="log-meal-zone">
             <appui:ExVisualElement name="step-1" class="fm-ml-step">
                 <appui:Heading name="step-1-heading" text="What type of meal do you want to log?" size="M" primary="false" class="fm-ml-step-heading"/>
@@ -10,12 +10,12 @@
             </appui:ExVisualElement>
             <appui:ExVisualElement name="step-2" class="fm-ml-step">
                 <appui:Heading name="step-2-heading" text="Where was your meal from?" size="M" primary="false" class="fm-ml-step-heading"/>
-                <appui:Text name="btn-back-step-2" text="← Back" class="fm-ml-back-inline"/>
+                <fm:FMButton name="btn-back-step-2" title="Back" leading-icon="fm-arrow-left" class="fm-ml-back-inline fm-button-align-left fm-button-list" quiet="true" size="M"/>
                 <ui:VisualElement name="step-2-buttons" class="fm-ml-step-buttons"/>
             </appui:ExVisualElement>
             <appui:ExVisualElement name="step-3" class="fm-ml-step">
                 <appui:Heading name="step-3-heading" text="What did you eat?" size="M" primary="false" class="fm-ml-step-heading"/>
-                <appui:Text name="btn-back-step-3" text="← Back" class="fm-ml-back-inline"/>
+                <fm:FMButton name="btn-back-step-3" title="Back" leading-icon="fm-arrow-left" class="fm-ml-back-inline fm-button-align-left fm-button-list" quiet="true" size="M"/>
                 <ui:VisualElement name="meal-name-row" class="fm-ml-search-row">
                     <appui:TextField name="meal-name-field" placeholder="Meal name (or search presets)..." class="fm-ml-search-field"/>
                 </ui:VisualElement>

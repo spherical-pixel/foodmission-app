@@ -153,27 +153,40 @@ namespace eu.foodmission.platform
                     if (recipe?.ingredients == null || recipe.ingredients.Length == 0)
                         return;
 
-                    var items = new List<MealLogItem>();
+                    var itemsDict = new Dictionary<string, MealLogItem>();
                     foreach (RecipeIngredient ing in recipe.ingredients)
                     {
                         if (string.IsNullOrEmpty(ing.foodProductId) && string.IsNullOrEmpty(ing.genericFoodId))
                             continue;
 
+                        string key;
+                        if (!string.IsNullOrEmpty(ing.foodProductId))
+                            key = "fp:" + ing.foodProductId;
+                        else
+                            key = "gf:" + ing.genericFoodId;
                         var (qty, unit) = TryParseMeasure(ing.measure);
-                        items.Add(new MealLogItem
+
+                        if (itemsDict.TryGetValue(key, out var existing))
                         {
-                            foodProductId = ing.foodProductId,
-                            genericFoodId = ing.genericFoodId,
-                            name = ing.name,
-                            quantity = qty,
-                            unit = unit,
-                            isProduct = !string.IsNullOrEmpty(ing.foodProductId),
-                            isGenericFood = !string.IsNullOrEmpty(ing.genericFoodId),
-                        });
+                            existing.quantity += qty;
+                        }
+                        else
+                        {
+                            itemsDict[key] = new MealLogItem
+                            {
+                                foodProductId = ing.foodProductId,
+                                genericFoodId = ing.genericFoodId,
+                                name = ing.name,
+                                quantity = qty,
+                                unit = unit,
+                                isProduct = !string.IsNullOrEmpty(ing.foodProductId),
+                                isGenericFood = !string.IsNullOrEmpty(ing.genericFoodId),
+                            };
+                        }
                     }
 
-                    if (items.Count > 0)
-                        SelectedItems = new List<MealLogItem>(items);
+                    if (itemsDict.Count > 0)
+                        SelectedItems = new List<MealLogItem>(itemsDict.Values);
                 }
                 else if (!string.IsNullOrEmpty(meal.id))
                 {
@@ -243,23 +256,23 @@ namespace eu.foodmission.platform
             IsSearchingPresets = true;
 
             string trimmed = query?.Trim() ?? "";
-            Task<(PaginatedMealResponse, ApiErrorResponse)> mealsTask = _mealService.GetMealsAsync(search: trimmed, limit: 10);
+            // TODO: re-enable meals search alongside recipes once dedup is resolved
+            // Task<(PaginatedMealResponse, ApiErrorResponse)> mealsTask = _mealService.GetMealsAsync(search: trimmed, limit: 10);
             Task<(PaginatedRecipeResponse, ApiErrorResponse)> recipesTask = _recipeService.GetRecipesAsync(search: trimmed, limit: 10);
 
-            await Task.WhenAll(mealsTask, recipesTask);
+            await recipesTask;
 
             if (ct.IsCancellationRequested) return;
 
-            var (mealsResp, mealsErr) = mealsTask.Result;
             var (recipesResp, recipesErr) = recipesTask.Result;
 
             var results = new List<Meal>();
 
-            if (mealsErr == null && mealsResp?.data != null)
-            {
-                foreach (Meal m in mealsResp.data)
-                    results.Add(m);
-            }
+            // if (mealsErr == null && mealsResp?.data != null)
+            // {
+            //     foreach (Meal m in mealsResp.data)
+            //         results.Add(m);
+            // }
 
             if (recipesErr == null && recipesResp?.data != null)
             {
@@ -408,9 +421,8 @@ namespace eu.foodmission.platform
 
                 if (!string.IsNullOrEmpty(SelectedMealPreset?.recipeId))
                 {
-                    string recipeMealName = SelectedMealPreset.name;
-                    if (SelectedItems.Count > 0)
-                        recipeMealName += $" +{SelectedItems.Count}";
+                    string mealTimestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+                    string recipeMealName = $"{SelectedMealPreset.name} ({mealTimestamp})";
 
                     var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
                     {
