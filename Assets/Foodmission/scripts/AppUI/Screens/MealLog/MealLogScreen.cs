@@ -30,6 +30,7 @@ namespace eu.foodmission.platform
         private VisualElement _btnBackStep3;
         private Unity.AppUI.UI.TextField _mealNameField;
         private UnityEngine.UIElements.TextField _mealNameInnerField;
+        private VisualElement _mealNameRow;
         private VisualElement _presetResults;
         private FMSearchOrCategoryField _searchCategoryField;
         private VisualElement _selectionAndButton;
@@ -57,24 +58,25 @@ namespace eu.foodmission.platform
             CacheUIElements();
         }
 
-        private void CacheUIElements()
-        {
-            _step1 = contentContainer.Q<VisualElement>("step-1");
-            _step2 = contentContainer.Q<VisualElement>("step-2");
-            _step3 = contentContainer.Q<VisualElement>("step-3");
-            _step1Buttons = contentContainer.Q<VisualElement>("step-1-buttons");
-            _step2Buttons = contentContainer.Q<VisualElement>("step-2-buttons");
-            _btnBackStep2 = contentContainer.Q<VisualElement>("btn-back-step-2");
-            _btnBackStep3 = contentContainer.Q<VisualElement>("btn-back-step-3");
-            _mealNameField = contentContainer.Q<Unity.AppUI.UI.TextField>("meal-name-field");
-            _presetResults = contentContainer.Q<VisualElement>("preset-results");
-            _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
-            _selectionAndButton = contentContainer.Q<VisualElement>("selection-and-button");
-            _selectedChips = contentContainer.Q<VisualElement>("selected-chips");
-            _btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
-            _loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
-            _mealList = contentContainer.Q<VisualElement>("list-meals-today");
-        }
+private void CacheUIElements()
+{
+	_step1 = contentContainer.Q<VisualElement>("step-1");
+	_step2 = contentContainer.Q<VisualElement>("step-2");
+	_step3 = contentContainer.Q<VisualElement>("step-3");
+	_step1Buttons = contentContainer.Q<VisualElement>("step-1-buttons");
+	_step2Buttons = contentContainer.Q<VisualElement>("step-2-buttons");
+	_btnBackStep2 = contentContainer.Q<VisualElement>("btn-back-step-2");
+	_btnBackStep3 = contentContainer.Q<VisualElement>("btn-back-step-3");
+	_mealNameField = contentContainer.Q<Unity.AppUI.UI.TextField>("meal-name-field");
+	_mealNameRow = contentContainer.Q<VisualElement>("meal-name-row");
+	_presetResults = contentContainer.Q<VisualElement>("preset-results");
+	_searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
+	_selectionAndButton = contentContainer.Q<VisualElement>("selection-and-button");
+	_selectedChips = contentContainer.Q<VisualElement>("selected-chips");
+	_btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
+	_loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
+	_mealList = contentContainer.Q<VisualElement>("list-meals-today");
+}
 
         protected override void OnViewModelBound()
         {
@@ -209,8 +211,10 @@ namespace eu.foodmission.platform
                         FMLoadingOverlay.Hide(_step3);
                     break;
                 case nameof(_viewModel.SelectedMealPreset):
-                    if (_viewModel.SelectedMealPreset != null)
-                        _mealNameField.value = _viewModel.SelectedMealPreset.name;
+                    _mealNameRow.style.display = _viewModel.SelectedMealPreset != null
+                        ? DisplayStyle.None
+                        : DisplayStyle.Flex;
+                    RebuildSelectedChips();
                     UpdateLogButtonState();
                     break;
                 case nameof(_viewModel.SelectedItems):
@@ -432,52 +436,125 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void RebuildSelectedChips()
-        {
-            _selectedChips?.Clear();
-            if (_viewModel.SelectedItems.Count == 0) return;
+	private void RebuildSelectedChips()
+	{
+		_selectedChips?.Clear();
+		if (_viewModel.SelectedMealPreset != null)
+		{
+			bool isRecipe = !string.IsNullOrEmpty(_viewModel.SelectedMealPreset.recipeId);
+			var card = new FMItemShoppingListDetail
+			{
+				Text = isRecipe
+					? $"\U0001F9D3\u200D\U0001F373 {_viewModel.SelectedMealPreset.name}"
+					: $"\U0001F372 {_viewModel.SelectedMealPreset.name}"
+			};
+			card.Checkbox.style.display = DisplayStyle.None;
+			card.AddToClassList("fm-ml-chip-preset");
+			card.RemoveButton.clicked += () => _viewModel.ClearMealPreset();
+			card.EditButton.style.display = DisplayStyle.None;
+			_selectedChips.Add(card);
+		}
+		if (_viewModel.SelectedItems.Count == 0) return;
+		foreach (MealLogItem entry in _viewModel.SelectedItems)
+		{
+			MealLogItem captured = entry;
+			var card = new FMItemShoppingListDetail
+			{
+				Text = $"{entry.name} \u00d7 {entry.quantity} {entry.unit}"
+			};
+			card.Checkbox.style.display = DisplayStyle.None;
+			card.EditButton.clicked += () => ShowEditItemDialog(captured);
+			card.RemoveButton.clicked += () => _viewModel.RemoveItem(captured);
+			_selectedChips.Add(card);
+		}
+	}
 
-            foreach (MealLogItem entry in _viewModel.SelectedItems)
-            {
-                MealLogItem captured = entry;
-                var chip = new VisualElement();
-                chip.AddToClassList("fm-ml-chip");
+	private static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
 
-                var label = new Text
-                {
-                    text = $"{entry.name} × {entry.quantity} {entry.unit}"
-                };
-                label.AddToClassList("fm-ml-chip-label");
-                label.pickingMode = PickingMode.Ignore;
-                chip.Add(label);
+	private static List<string> _unitChoices;
+	private static List<string> UnitChoices
+	{
+		get
+		{
+			if (_unitChoices == null)
+			{
+				_unitChoices = new List<string>
+				{
+					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
+					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
+					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
+					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
+					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
+					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
+				};
+			}
+			return _unitChoices;
+		}
+	}
 
-                var removeBtn = new Text { text = "\u2715" };
-                removeBtn.AddToClassList("fm-ml-chip-remove");
-                removeBtn.pickingMode = PickingMode.Ignore;
-                chip.Add(removeBtn);
+	private void ShowEditItemDialog(MealLogItem item)
+	{
+		var container = new VisualElement();
+		container.style.flexDirection = FlexDirection.Column;
 
-                chip.RegisterCallback<ClickEvent>(_ => _viewModel.RemoveItem(captured));
+		var qtyLabel = new Text { text = "Quantity" };
+		qtyLabel.style.marginBottom = 4;
+		container.Add(qtyLabel);
 
-                _selectedChips.Add(chip);
-            }
-        }
+		var qtyField = new Unity.AppUI.UI.FloatField { value = item.quantity };
+		qtyField.style.marginBottom = 8;
+		container.Add(qtyField);
 
-        private async void OnLogSelectedClicked()
-        {
-            try
-            {
-                bool success = await _viewModel.SaveAsync();
-                if (success)
-                {
-                    RebuildMealCards();
-                    UpdateStepVisibility();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[{GetType().Name}] OnLogSelectedClicked failed: {ex.Message}");
-            }
-        }
+		var unitLabel = new Text { text = "Unit" };
+		unitLabel.style.marginBottom = 4;
+		container.Add(unitLabel);
+
+		var unitDropdown = new Dropdown
+		{
+			sourceItems = UnitChoices
+		};
+		unitDropdown.bindItem = (item_, i) => item_.label = UnitChoices[i];
+		int unitIdx = UnitValues.IndexOf(item.unit);
+		if (unitIdx >= 0)
+			unitDropdown.SetValueWithoutNotify(new[] { unitIdx });
+		unitDropdown.style.marginBottom = 8;
+		container.Add(unitDropdown);
+
+		string name = item.name;
+		FMDialog.ShowCustom(
+			this,
+			name,
+			container,
+			new FMDialogAction("@UI:TXT_CANCEL", null),
+			new FMDialogAction("@UI:SAVE", () =>
+			{
+				float qty = qtyField.value;
+				string unit = unitDropdown.selectedIndex >= 0
+					? UnitValues[unitDropdown.selectedIndex]
+					: item.unit ?? "PIECES";
+				item.quantity = qty;
+				item.unit = unit;
+				_viewModel.SelectedItems = new List<MealLogItem>(_viewModel.SelectedItems);
+			}, isPrimary: true));
+	}
+
+		private async void OnLogSelectedClicked()
+		{
+			try
+			{
+				bool success = await _viewModel.SaveAsync();
+				if (success)
+				{
+					RebuildMealCards();
+					UpdateStepVisibility();
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"[{GetType().Name}] OnLogSelectedClicked failed: {ex.Message}");
+			}
+		}
+
 
         private void UpdateLogButtonState()
         {

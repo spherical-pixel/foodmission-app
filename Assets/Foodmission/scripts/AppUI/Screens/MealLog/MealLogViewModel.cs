@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -132,11 +133,85 @@ namespace eu.foodmission.platform
             CurrentStep = MealLogStep.SelectingDishes;
         }
 
-        public void SelectMealPreset(Meal meal)
+        public async void SelectMealPreset(Meal meal)
         {
-            SelectedMealPreset = meal;
-            MealContainerName = meal.name;
-            PresetResults = new List<Meal>();
+            try
+            {
+                SelectedMealPreset = meal;
+                MealContainerName = meal.name;
+                PresetResults = new List<Meal>();
+
+                if (!string.IsNullOrEmpty(meal.recipeId))
+                {
+                    var (recipe, err) = await _recipeService.GetRecipeAsync(meal.recipeId);
+                    if (err != null)
+                    {
+                        ErrorDetail = err;
+                        return;
+                    }
+
+                    if (recipe?.ingredients == null || recipe.ingredients.Length == 0)
+                        return;
+
+                    var items = new List<MealLogItem>();
+                    foreach (RecipeIngredient ing in recipe.ingredients)
+                    {
+                        if (string.IsNullOrEmpty(ing.foodProductId) && string.IsNullOrEmpty(ing.genericFoodId))
+                            continue;
+
+                        var (qty, unit) = TryParseMeasure(ing.measure);
+                        items.Add(new MealLogItem
+                        {
+                            foodProductId = ing.foodProductId,
+                            genericFoodId = ing.genericFoodId,
+                            name = ing.name,
+                            quantity = qty,
+                            unit = unit,
+                            isProduct = !string.IsNullOrEmpty(ing.foodProductId),
+                            isGenericFood = !string.IsNullOrEmpty(ing.genericFoodId),
+                        });
+                    }
+
+                    if (items.Count > 0)
+                        SelectedItems = new List<MealLogItem>(items);
+                }
+                else if (!string.IsNullOrEmpty(meal.id))
+                {
+                    var (details, err) = await _mealItemService.GetByMealIdAsync(meal.id);
+                    if (err != null)
+                    {
+                        ErrorDetail = err;
+                        return;
+                    }
+
+                    if (details == null || details.Length == 0)
+                        return;
+
+                    var items = new List<MealLogItem>();
+                    foreach (MealItemDetail d in details)
+                    {
+                        string name = d.foodProduct?.name ?? d.genericFood?.foodName ?? "Unknown";
+                        items.Add(new MealLogItem
+                        {
+                            foodProductId = d.foodProductId,
+                            genericFoodId = d.genericFoodId,
+                            name = name,
+                            quantity = d.quantity,
+                            unit = d.unit,
+                            isProduct = d.itemType == "food_product",
+                            isGenericFood = d.itemType == "generic_food",
+                        });
+                    }
+
+                    if (items.Count > 0)
+                        SelectedItems = new List<MealLogItem>(items);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SelectMealPreset failed: {ex.Message}");
+                ErrorMessage = "Could not load preset items";
+            }
         }
 
         public void ClearMealPreset()
@@ -533,6 +608,37 @@ namespace eu.foodmission.platform
             _presetSearchCts?.Cancel();
             _presetSearchCts?.Dispose();
             _presetSearchCts = null;
+        }
+
+        public static (float quantity, string unit) TryParseMeasure(string measure)
+        {
+            if (string.IsNullOrWhiteSpace(measure))
+                return (1f, "PIECES");
+
+            Match match = Regex.Match(measure.Trim(), @"^([\d.]+)\s*(.*)$");
+            if (match.Success && float.TryParse(match.Groups[1].Value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float qty))
+            {
+                string unitText = match.Groups[2].Value.Trim().ToLowerInvariant();
+                return (qty, TryParseUnit(unitText));
+            }
+
+            return (1f, "PIECES");
+        }
+
+        private static string TryParseUnit(string unitText)
+        {
+            if (string.IsNullOrEmpty(unitText)) return "PIECES";
+
+            return unitText switch
+            {
+                "g" or "gr" or "gram" or "grams" => "G",
+                "kg" or "kgs" or "kilogram" or "kilograms" => "KG",
+                "ml" or "milliliter" or "milliliters" => "ML",
+                "l" or "liter" or "liters" or "litre" or "litres" => "L",
+                "cup" or "cups" => "CUPS",
+                "piece" or "pieces" or "pcs" or "unit" or "units" => "PIECES",
+                _ => "PIECES",
+            };
         }
     }
 

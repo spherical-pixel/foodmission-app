@@ -27,6 +27,42 @@ namespace eu.foodmission.platform
         public int totalPages;
     }
 
+    [Serializable]
+    public class MealItemDetail
+    {
+        public string id;
+        public string mealId;
+        public string itemType;
+        public string foodProductId;
+        public string genericFoodId;
+        public int quantity;
+        public string unit;
+        public string notes;
+        public MealItemFoodProduct foodProduct;
+        public MealItemGenericFood genericFood;
+    }
+
+    [Serializable]
+    public class MealItemFoodProduct
+    {
+        public string id;
+        public string name;
+        public string barcode;
+    }
+
+    [Serializable]
+    public class MealItemGenericFood
+    {
+        public string id;
+        public string foodName;
+    }
+
+    [Serializable]
+    public class MealItemDetailList
+    {
+        public MealItemDetail[] data;
+    }
+
     public class CreateMealItemRequest
     {
         [JsonProperty("foodProductId")]

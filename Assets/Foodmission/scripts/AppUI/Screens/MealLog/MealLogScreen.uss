@@ -84,34 +84,21 @@
     margin-left: 8px;
 }
 
-/* Selected chips */
+/* Selected items */
 .fm-ml-selected-chips {
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     margin: 8px 0;
+    gap: 4px;
 }
 
 .fm-ml-selected-chips > * {
-    margin: 4px;
+    margin: 2px 0;
 }
 
-.fm-ml-chip {
-    flex-direction: row;
-    align-items: center;
-    padding: 4px 12px;
-    border-radius: 16px;
-    background-color: var(--appui-color-primary-100);
-}
-
-.fm-ml-chip-label {
-    font-size: var(--appui-font-sizes-body-sm);
-    margin-right: 8px;
-}
-
-.fm-ml-chip-remove {
-    cursor: link;
-    font-size: var(--appui-font-sizes-body-sm);
-    color: var(--appui-color-danger-500);
+/* Preset card accent border */
+.fm-ml-chip-preset {
+    border-color: var(--appui-color-accent);
+    border-width: 1px;
 }
 
 /* Log button */
@@ -138,3 +125,5 @@
     background-color: var(--appui-color-warning-100);
     color: var(--appui-color-warning-700);
 }
+
+
