@@ -17,7 +17,6 @@ namespace eu.foodmission.platform
         public const string Pantry              = "Foodmission/AppUI/Templates/PantryScreen.uxml";
         public const string PantryItemDetail    = "Foodmission/AppUI/Templates/PantryItemDetailScreen.uxml";
         public const string MealLog             = "Foodmission/AppUI/Templates/MealLogScreen.uxml";
-        public const string MealLogAdd          = "Foodmission/AppUI/Templates/MealLogAddScreen.uxml";
         public const string FoodWaste           = "Foodmission/AppUI/Templates/FoodWasteScreen.uxml";
         public const string FoodWasteAdd        = "Foodmission/AppUI/Templates/FoodWasteAddScreen.uxml";
         public const string Groups              = "Foodmission/AppUI/Templates/GroupsScreen.uxml";

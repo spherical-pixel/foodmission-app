@@ -30,7 +30,6 @@ namespace eu.foodmission.platform
             TemplateAddresses.Pantry,
             TemplateAddresses.PantryItemDetail,
             TemplateAddresses.MealLog,
-            TemplateAddresses.MealLogAdd,
             TemplateAddresses.FoodWaste,
             TemplateAddresses.FoodWasteAdd,
             TemplateAddresses.Groups,

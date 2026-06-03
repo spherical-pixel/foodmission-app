@@ -259,8 +259,7 @@ namespace eu.foodmission.platform.Components
             if (_currentMode == Mode.Idle || _currentMode == Mode.Confirmed) return;
             if (evt.target is not VisualElement target) return;
 
-            if (_resultsContainer.Contains(target)) return;
-            if (target == _textField || _textField.Contains(target)) return;
+            if (Contains(target)) return;
 
             ResetToIdle();
         }
@@ -385,6 +384,11 @@ namespace eu.foodmission.platform.Components
 
         private void OnGenericFoodClicked(GenericFood genericFood)
         {
+            Debug.Log($"[FMSearch] OnGenericFoodClicked: {genericFood.foodName} mode={_currentMode}");
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = null;
+
             SetMode(Mode.Confirmed);
             _selectedItem = genericFood;
 
@@ -398,6 +402,7 @@ namespace eu.foodmission.platform.Components
 
         private void OnTextFieldValueChanged(ChangeEvent<string> evt)
         {
+            Debug.Log($"[FMSearch] OnTextFieldValueChanged: '{evt.newValue}' mode={_currentMode}");
             OnTextChanged?.Invoke(evt.newValue);
 
             string query = evt.newValue;
@@ -405,6 +410,7 @@ namespace eu.foodmission.platform.Components
             {
                 if (_currentMode == Mode.Searching)
                 {
+                    Debug.Log($"[FMSearch] OnTextFieldValueChanged -> ResetToIdle (empty query, mode=Searching)");
                     ResetToIdle();
                 }
                 return;
@@ -430,6 +436,8 @@ namespace eu.foodmission.platform.Components
             }
 
             if (ct.IsCancellationRequested) return;
+
+            if (_currentMode != Mode.Categories && _currentMode != Mode.Searching) return;
 
             SetMode(Mode.Searching);
             _categoryContainer.style.display = DisplayStyle.None;
@@ -503,6 +511,12 @@ namespace eu.foodmission.platform.Components
 
         private void OnResultClicked(object item)
         {
+            string itemDesc = item is OpenFoodFactsProduct p ? p.name : (item is GenericFood g ? g.foodName : item.ToString());
+            Debug.Log($"[FMSearch] OnResultClicked: {itemDesc} type={item.GetType().Name} mode={_currentMode}");
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = null;
+
             SetMode(Mode.Confirmed);
             _selectedItem = item;
 
@@ -610,6 +624,7 @@ namespace eu.foodmission.platform.Components
 
         private void ResetToIdle()
         {
+            Debug.Log($"[FMSearch] ResetToIdle called, prevMode={_currentMode}");
             SetMode(Mode.Idle);
             _selectedItem = null;
             _textField.value = "";

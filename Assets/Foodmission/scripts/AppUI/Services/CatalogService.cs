@@ -11,15 +11,15 @@ namespace eu.foodmission.platform
     /// </summary>
     public class CatalogService : ICatalogService
     {
+        private readonly IStoreService _storeService;
         private CatalogData _cachedData;
         private string _cachedLang;
 
-        /// <summary>
-        /// Loads catalog data from the backend. Returns cached data
-        /// if available for the requested language, otherwise fetches from API.
-        /// </summary>
-        /// <param name="lang">Language code for localized labels (e.g. "es", "en").</param>
-        /// <returns>Tuple of CatalogData and ApiErrorResponse. Error is null on success.</returns>
+        public CatalogService(IStoreService storeService)
+        {
+            _storeService = storeService;
+        }
+
         public async Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang)
         {
             // Return cache if language matches
@@ -69,5 +69,41 @@ namespace eu.foodmission.platform
                 return (null, null);
             }
         }
+
+        private async Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetCatalogListAsync(string endpoint)
+        {
+            try
+            {
+                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/{endpoint}";
+                using UnityWebRequest request = UnityWebRequest.Get(url);
+                request.SetRequestHeader("Authorization", _storeService.GetAppState().tokenType + " " + _storeService.GetAppState().accessToken);
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                    await Task.Yield();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                    return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] Get{endpoint}"));
+
+                string raw = request.downloadHandler.text;
+                CatalogListResponse response = JsonUtility.FromJson<CatalogListResponse>(raw);
+                return (response?.data, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] GetCatalogListAsync({endpoint}) exception: {ex.Message}");
+                return (null, null);
+            }
+        }
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetTypeOfMealsAsync()
+            => GetCatalogListAsync("type-of-meals");
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCategoriesAsync()
+            => GetCatalogListAsync("meal-categories");
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCoursesAsync()
+            => GetCatalogListAsync("meal-courses");
     }
 }

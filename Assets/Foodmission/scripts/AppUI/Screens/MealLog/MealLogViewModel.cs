@@ -1,142 +1,478 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
+using UnityEngine;
+
 using Unity.AppUI.MVVM;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
+    public enum MealLogStep
+    {
+        SelectingTypeOfMeal,
+        SelectingSource,
+        SelectingDishes,
+        Saving
+    }
+
     [ObservableObject]
     public partial class MealLogViewModel : ViewModelBase
     {
         private readonly IMealLogService _mealLogService;
+        private readonly IMealService _mealService;
+        private readonly IRecipeService _recipeService;
+        private readonly IFoodProductService _foodProductService;
+        private readonly IGenericFoodService _genericFoodService;
+        private readonly IMealItemService _mealItemService;
+        private readonly ICatalogService _catalogService;
         private readonly ILocalStorageService _localStorage;
 
-        private const int PageSize = 20;
-
-        private string CacheKey => BuildCacheKey();
-
-        private string BuildCacheKey()
-        {
-            string type = string.IsNullOrEmpty(FilterTypeOfMeal) ? "all" : FilterTypeOfMeal;
-            string from = string.IsNullOrEmpty(FilterDateFrom) ? "any" : FilterDateFrom;
-            string to = string.IsNullOrEmpty(FilterDateTo) ? "any" : FilterDateTo;
-            return $"meallog_cache_{type}_{from}_{to}";
-        }
-
         private List<MealLog> _allLogs = new();
-        private int _currentPage = 1;
-        private int _totalPages = 1;
 
-        [ObservableProperty]
-        private List<MealLogGroup> m_Groups = new();
+        private CancellationTokenSource _presetSearchCts;
 
-        [ObservableProperty]
-        private bool m_IsLoading;
+        private static readonly Dictionary<string, string> TypeOfMealEmojis = new()
+        {
+            { "BREAKFAST", "\U0001F305" },
+            { "LUNCH", "\u2600\uFE0F" },
+            { "DINNER", "\U0001F319" },
+            { "SNACK", "\U0001F97F" },
+            { "DRINKS", "\U0001F964" },
+            { "OTHER", "\U0001F37D\uFE0F" },
+        };
 
-        [ObservableProperty]
-        private string m_ErrorMessage = "";
+        [ObservableProperty] private MealLogStep m_CurrentStep = MealLogStep.SelectingTypeOfMeal;
 
-        [ObservableProperty]
-        private string m_FilterDateFrom = "";
+        [ObservableProperty] private CatalogItem[] m_TypeOfMealOptions = Array.Empty<CatalogItem>();
 
-        [ObservableProperty]
-        private string m_FilterDateTo = "";
+        [ObservableProperty] private int m_SelectedTypeOfMealIndex = -1;
 
-        [ObservableProperty]
-        private string m_FilterTypeOfMeal = "";
+        public CatalogItem SelectedTypeOfMeal => SelectedTypeOfMealIndex >= 0 && SelectedTypeOfMealIndex < TypeOfMealOptions.Length
+            ? TypeOfMealOptions[SelectedTypeOfMealIndex] : null;
 
-        [ObservableProperty]
-        private bool m_HasMorePages;
+        [ObservableProperty] private bool m_MealFromPantry;
 
-        [ObservableProperty]
-        private ApiErrorResponse m_ErrorDetail;
+        [ObservableProperty] private bool m_EatenOut;
 
-        public MealLogViewModel(IStoreService storeService, IMealLogService mealLogService, ILocalStorageService localStorage)
+        [ObservableProperty] private string m_MealContainerName = "";
+
+        [ObservableProperty] private Meal m_SelectedMealPreset;
+
+        [ObservableProperty] private List<Meal> m_PresetResults = new();
+
+        [ObservableProperty] private bool m_IsSearching;
+
+        [ObservableProperty] private List<MealLogItem> m_SelectedItems = new();
+
+        [ObservableProperty] private bool m_IsSaving;
+
+        [ObservableProperty] private string m_ErrorMessage = "";
+
+        [ObservableProperty] private ApiErrorResponse m_ErrorDetail;
+
+        [ObservableProperty] private List<MealLogGroup> m_Groups = new();
+
+        [ObservableProperty] private bool m_TodayLoaded;
+
+        [ObservableProperty] private int m_CaloriesConsumed = 0;
+
+        [ObservableProperty] private int m_CaloriesLeft = 2200;
+
+        [ObservableProperty] private float m_CaloriesProgress = 0f;
+
+        [ObservableProperty] private bool m_IsSearchingPresets;
+
+        public MealLogViewModel(
+            IStoreService storeService,
+            IMealLogService mealLogService,
+            IMealService mealService,
+            IRecipeService recipeService,
+            IFoodProductService foodProductService,
+            IGenericFoodService genericFoodService,
+            IMealItemService mealItemService,
+            ICatalogService catalogService,
+            ILocalStorageService localStorage)
             : base(storeService)
         {
             _mealLogService = mealLogService;
+            _mealService = mealService;
+            _recipeService = recipeService;
+            _foodProductService = foodProductService;
+            _genericFoodService = genericFoodService;
+            _mealItemService = mealItemService;
+            _catalogService = catalogService;
             _localStorage = localStorage;
         }
 
-        public async Task LoadAsync(int page = 1)
+        public async Task InitializeAsync()
         {
-            IsLoading = true;
-            ErrorMessage = "";
+            IsSearching = true;
 
+            var (types, typeErr) = await _catalogService.GetTypeOfMealsAsync();
+            if (typeErr == null && types != null)
+                TypeOfMealOptions = types;
+
+            IsSearching = false;
+        }
+
+        public void SelectTypeOfMeal(int index)
+        {
+            SelectedTypeOfMealIndex = index;
+            if (SelectedTypeOfMeal != null)
+                CurrentStep = MealLogStep.SelectingSource;
+        }
+
+        public void SetSource(bool fromPantry, bool eatenOut)
+        {
+            MealFromPantry = fromPantry;
+            EatenOut = eatenOut;
+            CurrentStep = MealLogStep.SelectingDishes;
+        }
+
+        public void SelectMealPreset(Meal meal)
+        {
+            SelectedMealPreset = meal;
+            MealContainerName = meal.name;
+            PresetResults = new List<Meal>();
+        }
+
+        public void ClearMealPreset()
+        {
+            SelectedMealPreset = null;
+            MealContainerName = "";
+        }
+
+        public async Task SearchPresetsAsync(string query)
+        {
+            _presetSearchCts?.Cancel();
+            _presetSearchCts?.Dispose();
+            _presetSearchCts = new CancellationTokenSource();
+            CancellationToken ct = _presetSearchCts.Token;
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                try
+                {
+                    await Task.Delay(300, ct);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+                if (ct.IsCancellationRequested) return;
+            }
+
+            IsSearchingPresets = true;
+
+            string trimmed = query?.Trim() ?? "";
+            Task<(PaginatedMealResponse, ApiErrorResponse)> mealsTask = _mealService.GetMealsAsync(search: trimmed, limit: 10);
+            Task<(PaginatedRecipeResponse, ApiErrorResponse)> recipesTask = _recipeService.GetRecipesAsync(search: trimmed, limit: 10);
+
+            await Task.WhenAll(mealsTask, recipesTask);
+
+            if (ct.IsCancellationRequested) return;
+
+            var (mealsResp, mealsErr) = mealsTask.Result;
+            var (recipesResp, recipesErr) = recipesTask.Result;
+
+            var results = new List<Meal>();
+
+            if (mealsErr == null && mealsResp?.data != null)
+            {
+                foreach (Meal m in mealsResp.data)
+                    results.Add(m);
+            }
+
+            if (recipesErr == null && recipesResp?.data != null)
+            {
+                foreach (Recipe r in recipesResp.data)
+                {
+                    results.Add(new Meal
+                    {
+                        id = r.id,
+                        name = r.title,
+                        recipeId = r.id,
+                    });
+                }
+            }
+
+            PresetResults = results;
+            IsSearchingPresets = false;
+        }
+
+        // ========= FMSearchOrCategoryField delegates =========
+
+        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
+        {
+            var (response, error) = await _foodProductService.SearchOpenFoodFactsAsync(query, 1, 20);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<OpenFoodFactsProduct>();
+            }
+            return response?.products != null ? new List<OpenFoodFactsProduct>(response.products) : new List<OpenFoodFactsProduct>();
+        }
+
+        public async Task<List<GenericFood>> GetGenericFoodsAsync()
+        {
+            var (response, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<GenericFood>();
+            }
+            return response?.items != null ? new List<GenericFood>(response.items) : new List<GenericFood>();
+        }
+
+        public async Task<List<GenericFood>> SearchGenericFoodsAsync(string query)
+        {
+            var (response, error) = await _genericFoodService.SearchGenericFoodsAsync(query, pageSize: 20);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<GenericFood>();
+            }
+            return response?.items != null ? new List<GenericFood>(response.items) : new List<GenericFood>();
+        }
+
+        public async Task AddProductItem(OpenFoodFactsProduct product, float qty, string unit)
+        {
+            var (foodItem, foodError) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
+            if (foodError != null)
+            {
+                if (foodError.statusCode == 400)
+                {
+                    var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode);
+                    if (findError == null && existingFood != null)
+                    {
+                        foodItem = existingFood;
+                        foodError = null;
+                    }
+                }
+            }
+
+            if (foodError != null)
+            {
+                ErrorDetail = foodError;
+                return;
+            }
+
+            var newItem = new MealLogItem
+            {
+                foodProductId = foodItem.id,
+                name = product.name ?? foodItem.name,
+                quantity = qty,
+                unit = unit,
+                isProduct = true,
+            };
+            SelectedItems = new List<MealLogItem>(SelectedItems) { newItem };
+        }
+
+        public async Task AddGenericFoodItem(GenericFood food, float qty, string unit)
+        {
+            if (!Guid.TryParse(food.id, out _))
+            {
+                ErrorDetail = new ApiErrorResponse
+                {
+                    statusCode = 400,
+                    error = "Generic food not available",
+                    message = "This generic food is not available yet",
+                };
+                return;
+            }
+
+            var newItem = new MealLogItem
+            {
+                genericFoodId = food.id,
+                name = food.foodName,
+                quantity = qty,
+                unit = unit,
+                isGenericFood = true,
+            };
+            SelectedItems = new List<MealLogItem>(SelectedItems) { newItem };
+        }
+
+        public async Task<FoodProduct> ImportByBarcodeAsync(string barcode)
+        {
+            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(barcode);
+            if (error != null && error.statusCode == 400)
+            {
+                var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(barcode);
+                if (findError == null && existingFood != null)
+                    return existingFood;
+            }
+            return foodItem;
+        }
+
+        public void RemoveItem(MealLogItem item)
+        {
+            SelectedItems = new List<MealLogItem>(SelectedItems.Where(i => i != item));
+        }
+
+        // ========= Save =========
+
+        public async Task<bool> SaveAsync()
+        {
+            if (SelectedTypeOfMeal == null)
+            {
+                ErrorMessage = "Select a meal type";
+                return false;
+            }
+
+            IsSaving = true;
+            ErrorMessage = "";
+            string timestamp = DateTime.UtcNow.ToString("o");
+
+            try
+            {
+                string mealId = SelectedMealPreset?.id;
+                bool createdMeal = false;
+
+                if (!string.IsNullOrEmpty(SelectedMealPreset?.recipeId))
+                {
+                    string recipeMealName = SelectedMealPreset.name;
+                    if (SelectedItems.Count > 0)
+                        recipeMealName += $" +{SelectedItems.Count}";
+
+                    var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
+                    {
+                        name = recipeMealName,
+                        recipeId = SelectedMealPreset.recipeId,
+                    });
+                    if (err != null)
+                    {
+                        ErrorDetail = err;
+                        IsSaving = false;
+                        return false;
+                    }
+                    mealId = created.id;
+                    createdMeal = true;
+                }
+                else if (string.IsNullOrEmpty(mealId))
+                {
+                    string mealName = !string.IsNullOrWhiteSpace(MealContainerName)
+                        ? MealContainerName.Trim()
+                        : SelectedTypeOfMeal.label;
+
+                    var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
+                    {
+                        name = mealName,
+                    });
+                    if (err != null)
+                    {
+                        ErrorDetail = err;
+                        IsSaving = false;
+                        return false;
+                    }
+                    mealId = created.id;
+                    createdMeal = true;
+                }
+
+                foreach (MealLogItem entry in SelectedItems)
+                {
+                    var req = new CreateMealItemRequest
+                    {
+                        quantity = Math.Max(1, (int)entry.quantity),
+                        unit = entry.unit,
+                    };
+
+                    if (entry.isProduct && !string.IsNullOrEmpty(entry.foodProductId))
+                        req.foodProductId = entry.foodProductId;
+                    else if (entry.isGenericFood && !string.IsNullOrEmpty(entry.genericFoodId))
+                        req.genericFoodId = entry.genericFoodId;
+                    else
+                        continue;
+
+                    var (_, itemErr) = await _mealItemService.CreateAsync(mealId, req);
+                    if (itemErr != null)
+                    {
+                        ErrorDetail = itemErr;
+                        IsSaving = false;
+                        return false;
+                    }
+                }
+
+                var logRequest = new CreateMealLogRequest
+                {
+                    mealId = mealId,
+                    typeOfMeal = SelectedTypeOfMeal.code,
+                    timestamp = timestamp,
+                    mealFromPantry = MealFromPantry,
+                    eatenOut = EatenOut
+                };
+
+                var (_, logErr) = await _mealLogService.CreateAsync(logRequest);
+                if (logErr != null)
+                {
+                    ErrorDetail = logErr;
+                    IsSaving = false;
+                    return false;
+                }
+
+                ErrorDetail = null;
+                SelectedItems = new List<MealLogItem>();
+                ResetToStep1();
+                await LoadTodayAsync();
+                IsSaving = false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SaveAsync failed: {ex.Message}");
+                ErrorMessage = "Unexpected error saving meal log";
+                IsSaving = false;
+                return false;
+            }
+        }
+
+        // ========= Load / Delete =========
+
+        public async Task LoadTodayAsync()
+        {
             var (response, error) = await _mealLogService.GetLogsAsync(
-                page, PageSize,
-                string.IsNullOrEmpty(FilterTypeOfMeal) ? null : FilterTypeOfMeal,
-                string.IsNullOrEmpty(FilterDateFrom) ? null : FilterDateFrom,
-                string.IsNullOrEmpty(FilterDateTo) ? null : FilterDateTo);
+                page: 1,
+                limit: 50);
 
             if (error != null)
             {
                 ErrorDetail = error;
-                LoadFromCache();
-                IsLoading = false;
                 return;
             }
+
             ErrorDetail = null;
-
-            _currentPage = page;
-            _totalPages = response.totalPages;
-            HasMorePages = _currentPage < _totalPages;
-
-            if (page == 1)
-            {
-                _allLogs = response.data != null ? new List<MealLog>(response.data) : new List<MealLog>();
-            }
-            else
-            {
-                _allLogs.AddRange(response.data ?? Array.Empty<MealLog>());
-            }
-
-            SaveCache();
+            _allLogs = response?.data != null ? new List<MealLog>(response.data) : new List<MealLog>();
             BuildGroups();
-            IsLoading = false;
+            UpdateCalorieStats();
+            TodayLoaded = true;
         }
 
-        public async Task LoadNextPageAsync()
+        public void ResetToStep1()
         {
-            if (!HasMorePages || IsLoading) return;
-            await LoadAsync(_currentPage + 1);
+            MealContainerName = "";
+            SelectedMealPreset = null;
+            PresetResults = new List<Meal>();
+            SelectedTypeOfMealIndex = -1;
+            MealFromPantry = false;
+            EatenOut = false;
+            SelectedItems = new List<MealLogItem>();
+            ErrorMessage = "";
+            CurrentStep = MealLogStep.SelectingTypeOfMeal;
         }
 
-        private void LoadFromCache()
+        public void GoBack()
         {
-            MealLog[] cached = _localStorage.GetValue<PaginatedMealLogResponse>(CacheKey)?.data;
-            _allLogs = cached != null ? new List<MealLog>(cached) : new List<MealLog>();
-            BuildGroups();
-
-            if (_allLogs.Count == 0)
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_LOADING_MEAL_LOG");
-        }
-
-        private void SaveCache()
-        {
-            _localStorage.SetValue(CacheKey, new PaginatedMealLogResponse { data = _allLogs.ToArray() });
-        }
-
-        private void BuildGroups()
-        {
-            if (_allLogs.Count == 0)
+            switch (CurrentStep)
             {
-                Groups = new List<MealLogGroup>();
-                return;
+                case MealLogStep.SelectingSource:
+                    CurrentStep = MealLogStep.SelectingTypeOfMeal;
+                    break;
+                case MealLogStep.SelectingDishes:
+                    CurrentStep = MealLogStep.SelectingSource;
+                    break;
             }
-
-            List<MealLogGroup> groups = new();
-
-            foreach (IGrouping<string, MealLog> g in _allLogs.GroupBy(l => l.typeOfMeal))
-            {
-                groups.Add(new MealLogGroup { TypeOfMeal = g.Key, Logs = g.ToList() });
-            }
-
-            Groups = groups;
         }
 
         public async Task DeleteLogAsync(string logId)
@@ -150,9 +486,53 @@ namespace eu.foodmission.platform
             {
                 ErrorDetail = null;
                 _allLogs = _allLogs.FindAll(l => l.id != logId);
-                SaveCache();
                 BuildGroups();
+                UpdateCalorieStats();
             }
+        }
+
+        // ========= Helpers =========
+
+        private void BuildGroups()
+        {
+            if (_allLogs.Count == 0)
+            {
+                Groups = new List<MealLogGroup>();
+                return;
+            }
+
+            List<MealLogGroup> groups = new();
+            foreach (IGrouping<string, MealLog> g in _allLogs.GroupBy(l => l.typeOfMeal))
+                groups.Add(new MealLogGroup { TypeOfMeal = g.Key, Logs = g.ToList() });
+
+            Groups = groups;
+        }
+
+        private void UpdateCalorieStats()
+        {
+            int consumed = 0;
+            foreach (var log in _allLogs)
+            {
+                consumed += (int)(log.meal?.calories ?? 0f);
+            }
+            int target = 2200;
+            int left = Mathf.Max(0, target - consumed);
+
+            CaloriesConsumed = consumed;
+            CaloriesLeft = left;
+            CaloriesProgress = target > 0 ? (float)consumed / target : 0f;
+        }
+
+        public static string GetEmojiForTypeOfMeal(string type)
+        {
+            return TypeOfMealEmojis.TryGetValue(type, out string emoji) ? emoji : "\U0001F37D\uFE0F";
+        }
+
+        public void DisposeSearchCts()
+        {
+            _presetSearchCts?.Cancel();
+            _presetSearchCts?.Dispose();
+            _presetSearchCts = null;
         }
     }
 
