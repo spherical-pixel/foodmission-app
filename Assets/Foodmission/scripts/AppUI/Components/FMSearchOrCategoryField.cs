@@ -102,9 +102,8 @@ namespace eu.foodmission.platform.Components
         private CircularProgress _spinner;
         private Unity.AppUI.UI.IconButton _scanButton;
         private VisualElement _confirmContainer;
-        private Unity.AppUI.UI.FloatField _qtyField;
-        private Dropdown _unitDropdown;
         private Text _selectedNameLabel;
+        private FMQuantityUnitPanel _confirmPanel;
 
         // ========= CONSTRUCTOR =========
         public FMSearchOrCategoryField()
@@ -183,31 +182,8 @@ namespace eu.foodmission.platform.Components
             _selectedNameLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
             _confirmContainer.Add(_selectedNameLabel);
 
-            var qtyLabel = new Text { text = "Quantity" };
-            qtyLabel.style.marginBottom = 4;
-            _confirmContainer.Add(qtyLabel);
-
-            _qtyField = new Unity.AppUI.UI.FloatField { value = 1f };
-            _qtyField.style.marginBottom = 8;
-            _confirmContainer.Add(_qtyField);
-
-            var unitLabel = new Text { text = "Unit" };
-            unitLabel.style.marginBottom = 4;
-            _confirmContainer.Add(unitLabel);
-
-            var unitChoices = new List<string>
-            {
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-            };
-            _unitDropdown = new Dropdown { sourceItems = unitChoices, selectedIndex = 0 };
-            _unitDropdown.bindItem = (item, i) => item.label = unitChoices[i];
-            _unitDropdown.style.marginBottom = 8;
-            _confirmContainer.Add(_unitDropdown);
+            _confirmPanel = new FMQuantityUnitPanel();
+            _confirmContainer.Add(_confirmPanel);
 
             var confirmRow = new VisualElement();
             confirmRow.style.flexDirection = FlexDirection.Row;
@@ -541,10 +517,8 @@ namespace eu.foodmission.platform.Components
 
         private async void OnAddClicked()
         {
-            float qty = _qtyField.value;
-            int unitIdx = _unitDropdown.selectedIndex >= 0 ? _unitDropdown.selectedIndex : 0;
-            string[] unitValues = { "PIECES", "G", "KG", "ML", "L", "CUPS" };
-            string unit = unitValues[unitIdx];
+            float qty = _confirmPanel.Quantity;
+            string unit = _confirmPanel.Unit;
 
             if (_selectedItem is OpenFoodFactsProduct product && OnProductConfirmed != null)
             {

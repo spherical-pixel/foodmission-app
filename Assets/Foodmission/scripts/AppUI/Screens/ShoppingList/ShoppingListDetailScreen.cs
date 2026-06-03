@@ -326,67 +326,21 @@ namespace eu.foodmission.platform
                 }, isPrimary: true));
         }
 
-        private static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
-
-        private static List<string> _unitChoices;
-        private static List<string> UnitChoices
-        {
-            get
-            {
-                if (_unitChoices == null)
-                {
-                    _unitChoices = new List<string>
-                    {
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-                    };
-                }
-                return _unitChoices;
-            }
-        }
-
         private void ShowEditItemDialog(ShoppingListItemView captured)
         {
-            var container = new VisualElement();
-            container.style.flexDirection = FlexDirection.Column;
-
-            var qtyField = new Unity.AppUI.UI.TextField
-            {
-                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUANTITY_PLACEHOLDER"),
-                value = $"{captured.Item.quantity:0.##}"
-            };
-
-            var unitDropdown = new Dropdown
-            {
-                sourceItems = UnitChoices
-            };
-            unitDropdown.bindItem = (item, i) => item.label = UnitChoices[i];
-            int unitIdx = UnitValues.IndexOf(captured.Item.unit);
-            if (unitIdx >= 0)
-            {
-                unitDropdown.SetValueWithoutNotify(new[] { unitIdx });
-            }
-
-            container.Add(qtyField);
-            container.Add(unitDropdown);
+            var panel = new FMQuantityUnitPanel();
+            panel.SetQuantityWithoutNotify(captured.Item.quantity);
+            panel.SetUnitWithoutNotify(captured.Item.unit ?? "");
 
             string editItemId = captured.Item.id;
             FMDialog.ShowCustom(
                 this,
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EDIT_ITEM_TITLE", new object[] { captured.FoodName }),
-                container,
+                panel,
                 new FMDialogAction("@UI:TXT_CANCEL", null),
                 new FMDialogAction("@UI:SAVE", () =>
                 {
-                    float.TryParse(qtyField.value, out float qty);
-                    string unit = unitDropdown.selectedIndex >= 0
-                        ? UnitValues[unitDropdown.selectedIndex]
-                        : captured.Item.unit ?? "";
-                    _ = SafeUpdateItemAsync(editItemId, qty, unit);
+                    _ = SafeUpdateItemAsync(editItemId, panel.Quantity, panel.Unit);
                 }, isPrimary: true));
         }
 

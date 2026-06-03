@@ -469,71 +469,21 @@ private void CacheUIElements()
 		}
 	}
 
-	private static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
-
-	private static List<string> _unitChoices;
-	private static List<string> UnitChoices
-	{
-		get
-		{
-			if (_unitChoices == null)
-			{
-				_unitChoices = new List<string>
-				{
-					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-					LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-				};
-			}
-			return _unitChoices;
-		}
-	}
-
 	private void ShowEditItemDialog(MealLogItem item)
 	{
-		var container = new VisualElement();
-		container.style.flexDirection = FlexDirection.Column;
+		var panel = new FMQuantityUnitPanel();
+		panel.SetQuantityWithoutNotify(item.quantity);
+		panel.SetUnitWithoutNotify(item.unit);
 
-		var qtyLabel = new Text { text = "Quantity" };
-		qtyLabel.style.marginBottom = 4;
-		container.Add(qtyLabel);
-
-		var qtyField = new Unity.AppUI.UI.FloatField { value = item.quantity };
-		qtyField.style.marginBottom = 8;
-		container.Add(qtyField);
-
-		var unitLabel = new Text { text = "Unit" };
-		unitLabel.style.marginBottom = 4;
-		container.Add(unitLabel);
-
-		var unitDropdown = new Dropdown
-		{
-			sourceItems = UnitChoices
-		};
-		unitDropdown.bindItem = (item_, i) => item_.label = UnitChoices[i];
-		int unitIdx = UnitValues.IndexOf(item.unit);
-		if (unitIdx >= 0)
-			unitDropdown.SetValueWithoutNotify(new[] { unitIdx });
-		unitDropdown.style.marginBottom = 8;
-		container.Add(unitDropdown);
-
-		string name = item.name;
 		FMDialog.ShowCustom(
 			this,
-			name,
-			container,
+			item.name,
+			panel,
 			new FMDialogAction("@UI:TXT_CANCEL", null),
 			new FMDialogAction("@UI:SAVE", () =>
 			{
-				float qty = qtyField.value;
-				string unit = unitDropdown.selectedIndex >= 0
-					? UnitValues[unitDropdown.selectedIndex]
-					: item.unit ?? "PIECES";
-				item.quantity = qty;
-				item.unit = unit;
+				item.quantity = panel.Quantity;
+				item.unit = panel.Unit;
 				_viewModel.SelectedItems = new List<MealLogItem>(_viewModel.SelectedItems);
 			}, isPrimary: true));
 	}

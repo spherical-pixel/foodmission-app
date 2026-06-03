@@ -40,28 +40,6 @@ namespace eu.foodmission.platform
         private AccessibilityNode _saveButtonNode;
         private AccessibilityNode _deleteButtonNode;
 
-        private static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
-
-        private static List<string> _unitChoices;
-        private static List<string> UnitChoices
-        {
-            get
-            {
-                if (_unitChoices == null)
-                {
-                    _unitChoices = new List<string>
-                    {
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-                    };
-                }
-                return _unitChoices;
-            }
-        }
         private static readonly List<string> LocationValues = new() { "", "Fridge", "Freezer", "Pantry shelf", "Countertop", "Cupboard" };
 
         private static List<string> _locationChoices;
@@ -135,8 +113,8 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
 
-            _unitDropdown.sourceItems = UnitChoices;
-            _unitDropdown.bindItem = (item, i) => item.label = UnitChoices[i];
+            _unitDropdown.sourceItems = FMQuantityUnitPanel.UnitChoices;
+            _unitDropdown.bindItem = (item, i) => item.label = FMQuantityUnitPanel.UnitChoices[i];
             _locationDropdown.sourceItems = LocationChoices;
             _locationDropdown.bindItem = (item, i) => item.label = LocationChoices[i];
 
@@ -302,7 +280,7 @@ namespace eu.foodmission.platform
 
             _quantityField.SetValueWithoutNotify(_viewModel.Quantity);
 
-            int unitIdx = UnitValues.IndexOf(_viewModel.Unit);
+            int unitIdx = FMQuantityUnitPanel.UnitValues.IndexOf(_viewModel.Unit);
             _unitDropdown.SetValueWithoutNotify(unitIdx >= 0 ? new[] { unitIdx } : new int[0]);
 
             int locIdx = LocationValues.IndexOf(_viewModel.Location);
@@ -370,7 +348,7 @@ namespace eu.foodmission.platform
         private async void OnSaveClicked()
         {
             _viewModel.Quantity = _quantityField.value;
-            _viewModel.Unit = UnitValues[_unitDropdown.selectedIndex];
+            _viewModel.Unit = FMQuantityUnitPanel.UnitValues[_unitDropdown.selectedIndex];
             _viewModel.Location = LocationValues[_locationDropdown.selectedIndex];
             _viewModel.Notes = _notesField.value;
             _viewModel.ExpiryDate = _expiryField.value;
