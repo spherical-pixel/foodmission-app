@@ -9,21 +9,30 @@
                 <ui:VisualElement name="step-1-buttons" class="fm-ml-step-buttons"/>
             </appui:ExVisualElement>
             <appui:ExVisualElement name="step-2" class="fm-ml-step">
+                <fm:FMButton name="btn-back-step-2" title="Back" leading-icon="fm-arrow-left" quiet="true" size="M" class="fm-ml-back-inline fm-button-align-left fm-button-list"/>
                 <appui:Heading name="step-2-heading" text="Where was your meal from?" size="M" primary="false" class="fm-ml-step-heading"/>
-                <fm:FMButton name="btn-back-step-2" title="Back" leading-icon="fm-arrow-left" class="fm-ml-back-inline fm-button-align-left fm-button-list" quiet="true" size="M"/>
                 <ui:VisualElement name="step-2-buttons" class="fm-ml-step-buttons"/>
             </appui:ExVisualElement>
             <appui:ExVisualElement name="step-3" class="fm-ml-step">
+                <fm:FMButton name="btn-back-step-3" title="Back" leading-icon="fm-arrow-left" quiet="true" size="M" class="fm-ml-back-inline fm-button-align-left fm-button-list"/>
+                <appui:Spacer spacing="L"/>
                 <appui:Heading name="step-3-heading" text="What did you eat?" size="M" primary="false" class="fm-ml-step-heading"/>
-                <fm:FMButton name="btn-back-step-3" title="Back" leading-icon="fm-arrow-left" class="fm-ml-back-inline fm-button-align-left fm-button-list" quiet="true" size="M"/>
-                <ui:VisualElement name="meal-name-row" class="fm-ml-search-row">
-                    <appui:TextField name="meal-name-field" placeholder="Meal name (or search presets)..." class="fm-ml-search-field"/>
+                <fm:FMButton name="btn-load-preset" title="Load previous meal or recipe" quiet="false" leading-icon="fm-search" variant="Accent" class="fm-button-align-left fm-button"/>
+                <appui:Spacer spacing="L"/>
+                <ui:VisualElement name="preset-results" class="fm-ml-preset-results" style="display: none;">
+                    <appui:TextField name="preset-search-field" placeholder="Search meals and recipes..." class="fm-ml-search-field"/>
+                    <ui:VisualElement name="preset-results-list" class="fm-ml-preset-results-list"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="preset-results" class="fm-ml-preset-results"/>
-                <fm:FMSearchOrCategoryField name="search-category-field"/>
-                <appui:ExVisualElement name="selection-and-button">
-                    <ui:VisualElement name="selected-chips" class="fm-ml-selected-chips"/>
-                    <fm:FMButton name="btn-log-selected" title="Log Selected" variant="Accent" class="fm-ml-log-btn"/>
+                <appui:ExVisualElement name="step-3-content" style="display: flex;">
+                    <ui:VisualElement name="meal-name-row" class="fm-ml-search-row">
+                        <appui:TextField name="meal-name-field" placeholder="Meal name" class="fm-ml-search-field"/>
+                    </ui:VisualElement>
+                    <appui:Spacer spacing="L"/>
+                    <fm:FMSearchOrCategoryField name="search-category-field"/>
+                    <appui:ExVisualElement name="selection-and-button">
+                        <ui:VisualElement name="selected-chips" class="fm-ml-selected-chips"/>
+                        <fm:FMButton name="btn-log-selected" title="Log Selected" variant="Accent" class="fm-ml-log-btn"/>
+                    </appui:ExVisualElement>
                 </appui:ExVisualElement>
             </appui:ExVisualElement>
         </appui:ExVisualElement>

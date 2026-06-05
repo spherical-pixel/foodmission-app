@@ -20,6 +20,7 @@ namespace eu.foodmission.platform
         public string id;
         public string name;
         public string recipeId;
+        public bool isRecipe;
         public float calories;
         public float proteins;
         public MealNutritionalInfo nutritionalInfo;

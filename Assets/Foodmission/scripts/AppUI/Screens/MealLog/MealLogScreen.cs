@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using eu.foodmission.platform.Components;
 
+using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.UI;
 
@@ -32,7 +33,12 @@ namespace eu.foodmission.platform
         private UnityEngine.UIElements.TextField _mealNameInnerField;
         private VisualElement _mealNameRow;
         private VisualElement _presetResults;
+        private FMButton _btnLoadPreset;
+        private Unity.AppUI.UI.TextField _presetSearchField;
+        private UnityEngine.UIElements.TextField _presetSearchInnerField;
+        private VisualElement _presetResultsList;
         private FMSearchOrCategoryField _searchCategoryField;
+        private VisualElement _step3Content;
         private VisualElement _selectionAndButton;
         private VisualElement _selectedChips;
         private FMButton _btnLogSelected;
@@ -70,7 +76,11 @@ private void CacheUIElements()
 	_mealNameField = contentContainer.Q<Unity.AppUI.UI.TextField>("meal-name-field");
 	_mealNameRow = contentContainer.Q<VisualElement>("meal-name-row");
 	_presetResults = contentContainer.Q<VisualElement>("preset-results");
+	_btnLoadPreset = contentContainer.Q<FMButton>("btn-load-preset");
+	_presetSearchField = contentContainer.Q<Unity.AppUI.UI.TextField>("preset-search-field");
+	_presetResultsList = contentContainer.Q<VisualElement>("preset-results-list");
 	_searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
+	_step3Content = contentContainer.Q<VisualElement>("step-3-content");
 	_selectionAndButton = contentContainer.Q<VisualElement>("selection-and-button");
 	_selectedChips = contentContainer.Q<VisualElement>("selected-chips");
 	_btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
@@ -87,6 +97,8 @@ private void CacheUIElements()
             _btnBackStep3?.RegisterCallback<ClickEvent>(OnBackClicked);
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
+            _viewModel.OnConfirmUpdateRequired += OnConfirmUpdateRequired;
+
             UpdateStepVisibility();
 
             _mealNameField?.schedule.Execute(() =>
@@ -94,6 +106,16 @@ private void CacheUIElements()
                 _mealNameInnerField = _mealNameField.Q<UnityEngine.UIElements.TextField>();
                 if (_mealNameInnerField != null)
                     _mealNameInnerField.RegisterValueChangedCallback(OnMealNameChanged);
+            }).ExecuteLater(0);
+
+            if (_btnLoadPreset != null)
+                _btnLoadPreset.clicked += OnLoadPresetClicked;
+
+            _presetSearchField?.schedule.Execute(() =>
+            {
+                _presetSearchInnerField = _presetSearchField.Q<UnityEngine.UIElements.TextField>();
+                if (_presetSearchInnerField != null)
+                    _presetSearchInnerField.RegisterValueChangedCallback(OnPresetSearchChanged);
             }).ExecuteLater(0);
 
             if (_searchCategoryField != null)
@@ -140,6 +162,8 @@ private void CacheUIElements()
             _btnBackStep2?.UnregisterCallback<ClickEvent>(OnBackClicked);
             _btnBackStep3?.UnregisterCallback<ClickEvent>(OnBackClicked);
 
+            _viewModel.OnConfirmUpdateRequired -= OnConfirmUpdateRequired;
+
             if (_searchCategoryField != null)
                 _searchCategoryField.OnPopoverVisibilityChanged -= OnPopoverVisibilityChanged;
 
@@ -148,6 +172,16 @@ private void CacheUIElements()
                 _mealNameInnerField.UnregisterValueChangedCallback(OnMealNameChanged);
                 _mealNameInnerField = null;
             }
+
+            if (_btnLoadPreset != null)
+                _btnLoadPreset.clicked -= OnLoadPresetClicked;
+
+            if (_presetSearchInnerField != null)
+            {
+                _presetSearchInnerField.UnregisterValueChangedCallback(OnPresetSearchChanged);
+                _presetSearchInnerField = null;
+            }
+
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
         }
@@ -211,11 +245,11 @@ private void CacheUIElements()
                         FMLoadingOverlay.Hide(_step3);
                     break;
                 case nameof(_viewModel.SelectedMealPreset):
-                    _mealNameRow.style.display = _viewModel.SelectedMealPreset != null
-                        ? DisplayStyle.None
-                        : DisplayStyle.Flex;
+                    if (_mealNameField != null)
+                        _mealNameField.value = _viewModel.MealContainerName;
                     RebuildSelectedChips();
                     UpdateLogButtonState();
+                    ClosePresetPanel();
                     break;
                 case nameof(_viewModel.SelectedItems):
                     RebuildSelectedChips();
@@ -227,10 +261,15 @@ private void CacheUIElements()
                     else
                         FMLoadingOverlay.Hide(contentContainer);
                     break;
-                case nameof(_viewModel.Groups):
+                case nameof(_viewModel.LastTenLogs):
                     RebuildMealCards();
                     break;
                 case nameof(_viewModel.ErrorMessage):
+                    if (!string.IsNullOrEmpty(_viewModel.ErrorMessage))
+                    {
+                        Toast.Build(this, _viewModel.ErrorMessage, NotificationDuration.Short).Show();
+                        _viewModel.ErrorMessage = "";
+                    }
                     break;
                 case nameof(_viewModel.ErrorDetail):
                     if (_viewModel.ErrorDetail != null)
@@ -262,6 +301,10 @@ private void CacheUIElements()
                 var heading = _step3?.Q<Heading>("step-3-heading");
                 if (heading != null && _viewModel.SelectedTypeOfMeal != null)
                     heading.text = $"What did you have for {_viewModel.SelectedTypeOfMeal.label.ToLowerInvariant()}?";
+            }
+            else
+            {
+                ResetStep3VisualState();
             }
         }
 
@@ -323,58 +366,53 @@ private void CacheUIElements()
         private void RebuildMealCards()
         {
             _mealList?.Clear();
-            if (_viewModel.Groups == null || _viewModel.Groups.Count == 0)
+            if (_viewModel.LastTenLogs == null || _viewModel.LastTenLogs.Count == 0)
             {
-                _mealList?.Add(new Text { text = "No meals logged today." });
+                _mealList?.Add(new Text { text = "No recent meals logged." });
                 return;
             }
 
-            foreach (MealLogGroup group in _viewModel.Groups)
+            foreach (MealLog log in _viewModel.LastTenLogs)
             {
-                string emoji = GetEmojiForType(group.TypeOfMeal);
-                string typeLabel = FormatTypeOfMeal(group.TypeOfMeal);
-                int totalCalories = group.Logs.Sum(l => (int)(l.meal?.calories ?? 0f));
+                string emoji = GetEmojiForType(log.typeOfMeal);
+                string typeLabel = FormatTypeOfMeal(log.typeOfMeal);
+                int calories = (int)(log.meal?.calories ?? 0f);
 
                 var card = new VisualElement();
                 card.AddToClassList("fm-meal-card");
 
                 var title = new Heading
                 {
-                    text = $"{emoji} {typeLabel}:",
+                    text = $"{emoji} {typeLabel} - {DateTime.Parse(log.timestamp).ToLocalTime():g}",
                     size = HeadingSize.M,
                 };
                 title.AddToClassList("bold-text");
-                title.style.paddingBottom = 16;
-                title.style.paddingTop = 0;
+                title.AddToClassList("fm-meal-card-text");
+                title.style.paddingBottom = 8;
                 card.Add(title);
 
-                var info = new Text
-                {
-                    text = $"{totalCalories} kcal",
-                };
+                var nameMeal = new Text { text = $"{log.meal?.name ?? "Meal"}" };
+                nameMeal.AddToClassList("fm-meal-card-text");
+                card.Add(nameMeal);
+
+                var info = new Text { text = $"{calories} kcal" };
                 info.AddToClassList("fm-meal-card-text");
-                info.style.paddingBottom = 0;
                 card.Add(info);
 
-                bool firstSource = group.Logs[0].mealFromPantry;
-                bool allSameSource = group.Logs.All(l => l.mealFromPantry == firstSource && l.eatenOut == group.Logs[0].eatenOut);
-                if (allSameSource)
+                // Add source badge
+                if (log.mealFromPantry)
                 {
-                    var badge = new Text();
-                    if (firstSource)
-                    {
-                        badge.text = "From pantry";
-                        badge.AddToClassList("fm-ml-card-badge");
-                        badge.AddToClassList("fm-ml-card-badge--pantry");
-                    }
-                    else if (group.Logs[0].eatenOut)
-                    {
-                        badge.text = "Eaten out";
-                        badge.AddToClassList("fm-ml-card-badge");
-                        badge.AddToClassList("fm-ml-card-badge--out");
-                    }
-                    if (!string.IsNullOrEmpty(badge.text))
-                        card.Add(badge);
+                    var badge = new Text { text = "From pantry" };
+                    badge.AddToClassList("fm-ml-card-badge");
+                    badge.AddToClassList("fm-ml-card-badge--pantry");
+                    card.Add(badge);
+                }
+                else if (log.eatenOut)
+                {
+                    var badge = new Text { text = "Eaten out" };
+                    badge.AddToClassList("fm-ml-card-badge");
+                    badge.AddToClassList("fm-ml-card-badge--out");
+                    card.Add(badge);
                 }
 
                 _mealList.Add(card);
@@ -389,42 +427,82 @@ private void CacheUIElements()
             }
         }
 
-        private async void OnMealNameChanged(ChangeEvent<string> evt)
+        private void OnLoadPresetClicked()
+        {
+            if (_presetResults == null) return;
+            bool isOpen = _presetResults.style.display == DisplayStyle.Flex;
+            _presetResults.style.display = isOpen ? DisplayStyle.None : DisplayStyle.Flex;
+            if (_step3Content != null)
+                _step3Content.style.display = isOpen ? DisplayStyle.Flex : DisplayStyle.None;
+            _btnLoadPreset.title = isOpen ? "Load previous meal or recipe" : "Cancel search";
+            if (!isOpen && _presetSearchField != null)
+                _presetSearchField.SetValueWithoutNotify("");
+        }
+
+        private void ClosePresetPanel()
+        {
+            if (_presetResults != null)
+                _presetResults.style.display = DisplayStyle.None;
+            if (_step3Content != null)
+                _step3Content.style.display = DisplayStyle.Flex;
+            if (_btnLoadPreset != null)
+                _btnLoadPreset.title = "Load previous meal or recipe";
+        }
+
+        private void ResetStep3VisualState()
+        {
+            ClosePresetPanel();
+            if (_mealNameField != null)
+                _mealNameField.value = "";
+            if (_searchCategoryField != null)
+                _searchCategoryField.SearchText = "";
+            if (_presetSearchField != null)
+                _presetSearchField.SetValueWithoutNotify("");
+        }
+
+        private async void OnPresetSearchChanged(ChangeEvent<string> evt)
+        {
+            await _viewModel.SearchPresetsAsync(evt.newValue);
+        }
+
+        private void OnConfirmUpdateRequired(string mealName)
+        {
+            FMDialog.ShowConfirm(
+                this,
+                "Update existing meal?",
+                $"The ingredients of \"{mealName}\" have changed. Update the existing meal? If not, change the name to create a new meal.",
+                async () => await _viewModel.ConfirmUpdateAndSaveAsync(),
+                () => _viewModel.CancelUpdate(),
+                confirmLabel: "Update",
+                cancelLabel: "Cancel");
+        }
+
+        private void OnMealNameChanged(ChangeEvent<string> evt)
         {
             _viewModel.MealContainerName = evt.newValue;
-            if (string.IsNullOrWhiteSpace(evt.newValue))
-            {
-                _viewModel.ClearMealPreset();
-                await _viewModel.SearchPresetsAsync("");
-            }
-            else
-            {
-                await _viewModel.SearchPresetsAsync(evt.newValue);
-            }
         }
 
         private void RebuildPresetResults()
         {
-            _presetResults?.Clear();
+            _presetResultsList?.Clear();
             List<Meal> presets = _viewModel.PresetResults;
             if (presets.Count == 0) return;
 
             foreach (Meal preset in presets)
             {
-                bool isRecipe = !string.IsNullOrEmpty(preset.recipeId);
+                bool isRecipe = preset.isRecipe;
 
                 var row = new VisualElement();
-                row.AddToClassList("fm-ml-search-result-row");
+                row.AddToClassList("fm-scf-result-row");
 
                 var nameLabel = new Text { text = preset.name };
-                nameLabel.AddToClassList("fm-ml-search-result-name");
+                nameLabel.style.flexGrow = 1;
                 nameLabel.pickingMode = PickingMode.Ignore;
                 row.Add(nameLabel);
 
                 if (isRecipe)
                 {
                     var badge = new Text { text = "Recipe" };
-                    badge.AddToClassList("fm-ml-search-result-badge");
                     badge.pickingMode = PickingMode.Ignore;
                     row.Add(badge);
                 }
@@ -432,7 +510,7 @@ private void CacheUIElements()
                 Meal captured = preset;
                 row.RegisterCallback<ClickEvent>(_ => _viewModel.SelectMealPreset(captured));
 
-                _presetResults?.Add(row);
+                _presetResultsList?.Add(row);
             }
         }
 
@@ -441,7 +519,7 @@ private void CacheUIElements()
 		_selectedChips?.Clear();
 		if (_viewModel.SelectedMealPreset != null)
 		{
-			bool isRecipe = !string.IsNullOrEmpty(_viewModel.SelectedMealPreset.recipeId);
+			bool isRecipe = _viewModel.SelectedMealPreset.isRecipe;
 			var card = new FMItemShoppingListDetail
 			{
 				Text = isRecipe
@@ -516,6 +594,8 @@ private void CacheUIElements()
 
         private void OnBackClicked(ClickEvent evt)
         {
+            if (_viewModel.CurrentStep == MealLogStep.SelectingDishes)
+                ResetStep3VisualState();
             _viewModel.GoBack();
         }
 

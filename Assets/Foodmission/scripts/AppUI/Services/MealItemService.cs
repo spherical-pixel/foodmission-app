@@ -70,5 +70,53 @@ namespace eu.foodmission.platform
 
             return (JsonUtility.FromJson<MealItem>(req.downloadHandler.text), null);
         }
+
+        public async Task<(MealItem Result, ApiErrorResponse Error)> UpdateAsync(string mealId, string itemId, CreateMealItemRequest request)
+        {
+            if (string.IsNullOrEmpty(mealId) || string.IsNullOrEmpty(itemId) || request == null)
+                return (null, null);
+
+            byte[] body = request.ToJsonBody();
+            string url = $"{ApiConfig.BaseUrl}/api/v1/meals/{mealId}/meal-items/{itemId}";
+
+            using UnityWebRequest req = new UnityWebRequest(url, "PATCH")
+            {
+                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                downloadHandler = new DownloadHandlerBuffer()
+            };
+            req.SetRequestHeader("Authorization", AuthHeader);
+            req.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = req.SendWebRequest();
+            while (!op.isDone) await Task.Yield();
+
+            if (req.result != UnityWebRequest.Result.Success)
+                return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] UpdateAsync"));
+
+            return (JsonUtility.FromJson<MealItem>(req.downloadHandler.text), null);
+        }
+
+        public async Task<(bool Success, ApiErrorResponse Error)> DeleteAsync(string mealId, string itemId)
+        {
+            if (string.IsNullOrEmpty(mealId) || string.IsNullOrEmpty(itemId))
+                return (true, null);
+
+            string url = $"{ApiConfig.BaseUrl}/api/v1/meals/{mealId}/meal-items/{itemId}";
+
+            using UnityWebRequest req = new UnityWebRequest(url, "DELETE")
+            {
+                downloadHandler = new DownloadHandlerBuffer()
+            };
+            req.SetRequestHeader("Authorization", AuthHeader);
+            req.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = req.SendWebRequest();
+            while (!op.isDone) await Task.Yield();
+
+            if (req.result != UnityWebRequest.Result.Success)
+                return (false, ApiErrorHelper.Parse(req, $"[{GetType().Name}] DeleteAsync"));
+
+            return (true, null);
+        }
     }
 }

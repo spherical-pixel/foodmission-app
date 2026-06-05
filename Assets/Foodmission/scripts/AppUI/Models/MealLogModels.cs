@@ -62,6 +62,7 @@ namespace eu.foodmission.platform
 
     public class MealLogItem
     {
+        public string id;
         public string foodProductId;
         public string genericFoodId;
         public string name;

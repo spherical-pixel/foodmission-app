@@ -56,8 +56,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void Constructor_InitializesDefaults()
         {
-            Assert.IsNotNull(_vm.Groups);
-            Assert.AreEqual(0, _vm.Groups.Count);
+            Assert.IsNotNull(_vm.LastTenLogs);
+            Assert.AreEqual(0, _vm.LastTenLogs.Count);
             Assert.AreEqual(MealLogStep.SelectingTypeOfMeal, _vm.CurrentStep);
             Assert.IsEmpty(_vm.TypeOfMealOptions);
             Assert.AreEqual(-1, _vm.SelectedTypeOfMealIndex);
@@ -313,13 +313,14 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SaveAsync_WithPresetAndItems_CreatesMealItemsAndOneLog()
+        public async Task SaveAsync_WithPresetAndItems_DifferentName_CreatesNewMeal()
         {
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "DINNER", label = "Dinner" } };
             _vm.SelectTypeOfMeal(0);
             _vm.SetSource(false, true);
 
             _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
+            _vm.MealContainerName = "Mi cena modificada";
 
             var prodItem = new MealLogItem
             {
@@ -339,23 +340,28 @@ namespace eu.foodmission.platform.Tests
             };
             _vm.SelectedItems = new System.Collections.Generic.List<MealLogItem> { prodItem, genItem };
 
+            var createdMeal = new Meal { id = "new-meal", name = "Mi cena modificada" };
+            _mockMealService
+                .Setup(x => x.CreateMealAsync(It.Is<CreateMealRequest>(r => r.name == "Mi cena modificada")))
+                .ReturnsAsync((createdMeal, null));
+
             _mockMealItemService
-                .Setup(x => x.CreateAsync("existing-meal", It.Is<CreateMealItemRequest>(r => r.foodProductId == prodItem.foodProductId)))
+                .Setup(x => x.CreateAsync("new-meal", It.Is<CreateMealItemRequest>(r => r.foodProductId == prodItem.foodProductId)))
                 .ReturnsAsync((new MealItem { id = "mi-1" }, null));
             _mockMealItemService
-                .Setup(x => x.CreateAsync("existing-meal", It.Is<CreateMealItemRequest>(r => r.genericFoodId == genItem.genericFoodId)))
+                .Setup(x => x.CreateAsync("new-meal", It.Is<CreateMealItemRequest>(r => r.genericFoodId == genItem.genericFoodId)))
                 .ReturnsAsync((new MealItem { id = "mi-2" }, null));
 
             _mockMealLogService
-                .Setup(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.mealId == "existing-meal" && r.typeOfMeal == "DINNER")))
+                .Setup(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.mealId == "new-meal" && r.typeOfMeal == "DINNER")))
                 .ReturnsAsync((new MealLog { id = "log-1" }, null));
 
             bool result = await _vm.SaveAsync();
 
             Assert.IsTrue(result);
-            _mockMealItemService.Verify(x => x.CreateAsync("existing-meal", It.IsAny<CreateMealItemRequest>()), Times.Exactly(2));
+            _mockMealService.Verify(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()), Times.Once);
+            _mockMealItemService.Verify(x => x.CreateAsync("new-meal", It.IsAny<CreateMealItemRequest>()), Times.Exactly(2));
             _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Once);
-            _mockMealService.Verify(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()), Times.Never);
         }
 
         [Test]
@@ -453,15 +459,15 @@ namespace eu.foodmission.platform.Tests
         // ========= Load / Delete tests =========
 
         [Test]
-        public async Task LoadTodayAsync_ParsesAndGroupsLogs()
+        public async Task LoadTodayAsync_ParsesAndReturnsLastTen()
         {
             var response = new PaginatedMealLogResponse
             {
                 data = new[]
                 {
-                    new MealLog { id = "1", typeOfMeal = "BREAKFAST", meal = new Meal { name = "Toast" } },
-                    new MealLog { id = "2", typeOfMeal = "BREAKFAST", meal = new Meal { name = "Juice" } },
-                    new MealLog { id = "3", typeOfMeal = "LUNCH", meal = new Meal { name = "Salad" } }
+                    new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T09:00:00Z", meal = new Meal { name = "Toast" } },
+                    new MealLog { id = "2", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T08:00:00Z", meal = new Meal { name = "Juice" } },
+                    new MealLog { id = "3", typeOfMeal = "LUNCH", timestamp = "2026-06-04T13:00:00Z", meal = new Meal { name = "Salad" } }
                 },
                 total = 3, page = 1, limit = 20, totalPages = 1
             };
@@ -473,16 +479,17 @@ namespace eu.foodmission.platform.Tests
             await _vm.LoadTodayAsync();
 
             Assert.IsTrue(_vm.TodayLoaded);
-            Assert.AreEqual(2, _vm.Groups.Count);
-            Assert.AreEqual(2, _vm.Groups.First(g => g.TypeOfMeal == "BREAKFAST").Logs.Count);
+            Assert.AreEqual(3, _vm.LastTenLogs.Count);
+            Assert.AreEqual("Salad", _vm.LastTenLogs[0].meal.name);
+            Assert.AreEqual("BREAKFAST", _vm.LastTenLogs[2].typeOfMeal);
         }
 
         [Test]
-        public async Task DeleteLogAsync_Success_RemovesFromGroups()
+        public async Task DeleteLogAsync_Success_RemovesFromLogs()
         {
             var response = new PaginatedMealLogResponse
             {
-                data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST", meal = new Meal { name = "Toast" } } },
+                data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T09:00:00Z", meal = new Meal { name = "Toast" } } },
                 total = 1, page = 1, limit = 20, totalPages = 1
             };
             _mockMealLogService
@@ -490,7 +497,7 @@ namespace eu.foodmission.platform.Tests
                 .ReturnsAsync((response, null));
 
             await _vm.LoadTodayAsync();
-            Assert.AreEqual(1, _vm.Groups.SelectMany(g => g.Logs).Count());
+            Assert.AreEqual(1, _vm.LastTenLogs.Count);
 
             _mockMealLogService
                 .Setup(x => x.DeleteLogAsync("1"))
@@ -499,7 +506,7 @@ namespace eu.foodmission.platform.Tests
             await _vm.DeleteLogAsync("1");
 
             Assert.IsNull(_vm.ErrorDetail);
-            Assert.AreEqual(0, _vm.Groups.SelectMany(g => g.Logs).Count());
+            Assert.AreEqual(0, _vm.LastTenLogs.Count);
         }
 
         [Test]
@@ -507,7 +514,7 @@ namespace eu.foodmission.platform.Tests
         {
             _mockMealLogService
                 .Setup(x => x.GetLogsAsync(1, 50, null, It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync((new PaginatedMealLogResponse { data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST" } }, total = 1, page = 1, limit = 20, totalPages = 1 }, null));
+                .ReturnsAsync((new PaginatedMealLogResponse { data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T09:00:00Z" } }, total = 1, page = 1, limit = 20, totalPages = 1 }, null));
 
             await _vm.LoadTodayAsync();
 
@@ -519,6 +526,219 @@ namespace eu.foodmission.platform.Tests
             await _vm.DeleteLogAsync("1");
 
             Assert.IsNotNull(_vm.ErrorDetail);
+        }
+
+        // ========= HasModifications tests =========
+
+        [Test]
+        public async Task HasModifications_WithNoChanges_ReturnsFalse()
+        {
+            var detail = new MealItemDetail
+            {
+                id = "i1",
+                foodProductId = "fp-1",
+                quantity = 2,
+                unit = "G",
+                itemType = "food_product",
+                foodProduct = new MealItemFoodProduct { id = "fp-1", name = "Item1" },
+            };
+            _mockMealItemService
+                .Setup(x => x.GetByMealIdAsync("existing-meal"))
+                .ReturnsAsync((new[] { detail }, null));
+
+            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+
+            Assert.IsFalse(_vm.HasModifications());
+        }
+
+        [Test]
+        public async Task HasModifications_WithDifferentQuantity_ReturnsTrue()
+        {
+            var detail = new MealItemDetail
+            {
+                id = "i1",
+                foodProductId = "fp-1",
+                quantity = 2,
+                unit = "G",
+                itemType = "food_product",
+                foodProduct = new MealItemFoodProduct { id = "fp-1", name = "Item1" },
+            };
+            _mockMealItemService
+                .Setup(x => x.GetByMealIdAsync("existing-meal"))
+                .ReturnsAsync((new[] { detail }, null));
+
+            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+            _vm.SelectedItems[0].quantity = 5f;
+
+            Assert.IsTrue(_vm.HasModifications());
+        }
+
+        [Test]
+        public async Task HasModifications_WithRemovedItem_ReturnsTrue()
+        {
+            var detail = new MealItemDetail
+            {
+                id = "i1",
+                foodProductId = "fp-1",
+                quantity = 2,
+                unit = "G",
+                itemType = "food_product",
+                foodProduct = new MealItemFoodProduct { id = "fp-1", name = "Item1" },
+            };
+            _mockMealItemService
+                .Setup(x => x.GetByMealIdAsync("existing-meal"))
+                .ReturnsAsync((new[] { detail }, null));
+
+            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+            _vm.SelectedItems = new System.Collections.Generic.List<MealLogItem>();
+
+            Assert.IsTrue(_vm.HasModifications());
+        }
+
+        // ========= SaveAsync preset scenarios =========
+
+        [Test]
+        public async Task SaveAsync_WithPresetNoModifications_LogsDirectly()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(true, false);
+
+            var detail = new MealItemDetail
+            {
+                id = "i1",
+                foodProductId = "fp-1",
+                quantity = 2,
+                unit = "G",
+                itemType = "food_product",
+                foodProduct = new MealItemFoodProduct { id = "fp-1", name = "Item1" },
+            };
+            _mockMealItemService
+                .Setup(x => x.GetByMealIdAsync("existing-meal"))
+                .ReturnsAsync((new[] { detail }, null));
+
+            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+
+            _mockMealLogService
+                .Setup(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.mealId == "existing-meal")))
+                .ReturnsAsync((new MealLog { id = "log-1" }, null));
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsTrue(result);
+            _mockMealService.Verify(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()), Times.Never);
+            _mockMealItemService.Verify(x => x.CreateAsync(It.IsAny<string>(), It.IsAny<CreateMealItemRequest>()), Times.Never);
+            _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Once);
+        }
+
+        [Test]
+        public async Task SaveAsync_WithPresetModificationsAndSameName_FiresEvent()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "DINNER", label = "Dinner" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(false, true);
+
+            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
+
+            var prodItem = new MealLogItem
+            {
+                foodProductId = Guid.NewGuid().ToString(),
+                name = "Arroz",
+                quantity = 2f,
+                unit = "G",
+                isProduct = true,
+            };
+            _vm.SelectedItems = new System.Collections.Generic.List<MealLogItem> { prodItem };
+
+            string capturedName = null;
+            _vm.OnConfirmUpdateRequired += name => capturedName = name;
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsFalse(result);
+            Assert.AreEqual("Mi cena", capturedName);
+            _mockMealService.Verify(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()), Times.Never);
+        }
+
+        [Test]
+        public async Task SaveAsync_WithRecipeAndName_CreatesMealWithRecipeId()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "DINNER", label = "Dinner" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(true, false);
+
+            _vm.MealContainerName = "Recipe dinner";
+            _vm.SelectMealPreset(new Meal { id = "recipe-1", name = "My Recipe", recipeId = "recipe-1", isRecipe = true });
+
+            var createdMeal = new Meal { id = "new-meal", name = "Recipe dinner" };
+            _mockMealService
+                .Setup(x => x.CreateMealAsync(It.Is<CreateMealRequest>(r => r.name == "Recipe dinner" && r.recipeId == "recipe-1")))
+                .ReturnsAsync((createdMeal, null));
+
+            _mockMealLogService
+                .Setup(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.mealId == "new-meal")))
+                .ReturnsAsync((new MealLog { id = "log-1" }, null));
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsTrue(result);
+            _mockMealService.Verify(x => x.CreateMealAsync(It.Is<CreateMealRequest>(r => r.recipeId == "recipe-1")), Times.Once);
+        }
+
+        [Test]
+        public async Task SaveAsync_WithNoPresetAndEmptyName_ShowsError()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(true, false);
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsFalse(result);
+            Assert.IsNotEmpty(_vm.ErrorMessage);
+        }
+
+        [Test]
+        public async Task ConfirmUpdateAndSaveAsync_UpdatesExistingMeal()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "DINNER", label = "Dinner" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(false, true);
+
+            var detail = new MealItemDetail
+            {
+                id = "item-1",
+                foodProductId = "fp-1",
+                quantity = 2,
+                unit = "G",
+                itemType = "food_product",
+                foodProduct = new MealItemFoodProduct { id = "fp-1", name = "Arroz" },
+            };
+            _mockMealItemService
+                .Setup(x => x.GetByMealIdAsync("existing-meal"))
+                .ReturnsAsync((new[] { detail }, null));
+
+            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
+
+            MealLogItem prodItem = _vm.SelectedItems[0];
+            prodItem.quantity = 3f;
+
+            _mockMealItemService
+                .Setup(x => x.CreateAsync("existing-meal", It.IsAny<CreateMealItemRequest>()))
+                .ReturnsAsync((new MealItem { id = "new-item" }, null));
+            _mockMealItemService
+                .Setup(x => x.UpdateAsync("existing-meal", "item-1", It.Is<CreateMealItemRequest>(r => r.quantity == 3)))
+                .ReturnsAsync((new MealItem { id = "item-1" }, null));
+
+            _mockMealLogService
+                .Setup(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.mealId == "existing-meal")))
+                .ReturnsAsync((new MealLog { id = "log-1" }, null));
+
+            bool result = await _vm.ConfirmUpdateAndSaveAsync();
+
+            Assert.IsTrue(result);
+            _mockMealItemService.Verify(x => x.UpdateAsync("existing-meal", "item-1", It.Is<CreateMealItemRequest>(r => r.quantity == 3)), Times.Once);
+            _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Once);
         }
     }
 }

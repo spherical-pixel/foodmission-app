@@ -64,32 +64,6 @@
     margin-bottom: 8px;
 }
 
-.fm-ml-search-result-row {
-    flex-direction: row;
-    align-items: center;
-    padding: 10px 8px;
-    border-radius: 4px;
-    cursor: link;
-}
-
-.fm-ml-search-result-row:active {
-    background-color: var(--appui-color-primary-100);
-}
-
-.fm-ml-search-result-name {
-    font-size: var(--appui-font-sizes-body-md);
-    flex: 1;
-}
-
-.fm-ml-search-result-badge {
-    font-size: var(--appui-font-sizes-body-sm);
-    padding: 2px 8px;
-    border-radius: 4px;
-    background-color: var(--appui-color-secondary-100);
-    color: var(--appui-color-secondary-700);
-    margin-left: 8px;
-}
-
 /* Selected items */
 .fm-ml-selected-chips {
     flex-direction: column;
@@ -115,7 +89,8 @@
 
 /* Meal card badge */
 .fm-ml-card-badge {
-    font-size: var(--appui-font-sizes-body-sm);
+    /*color: var(--appui-base-100);*/
+    font-size: var(--appui-font-sizes-body-md);
     padding: 2px 8px;
     border-radius: 4px;
     margin-top: 8px;
@@ -123,13 +98,13 @@
 }
 
 .fm-ml-card-badge--pantry {
-    background-color: var(--appui-color-danger-100);
-    color: var(--appui-color-danger-700);
+    background-color: var(--appui-destructive-25);
+    color: var(--appui-destructive-300);
 }
 
 .fm-ml-card-badge--out {
-    background-color: var(--appui-color-warning-100);
-    color: var(--appui-color-warning-700);
+    background-color: var(--appui-warning-25);
+    color: var(--appui-warning-300);
 }
 
 
