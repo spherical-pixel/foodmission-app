@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:eu="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Pantry/PantryScreen.uss?fileID=7433441132597879392&amp;guid=abaccea1e09c4989b8f5630ef0501136&amp;type=3#PantryScreen"/>
+    <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.ShoppingListViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
     <ui:VisualElement name="root" class="fm-root">
         <ui:VisualElement name="header" class="fm-p-header">
             <appui:Heading name="screen-title" size="L" text="Pantry">

@@ -22,6 +22,12 @@ namespace eu.foodmission.platform
     [Preserve]
     class MealLogScreen : NavigationScreenBase<MealLogViewModel>
     {
+        protected override bool IsFixedContent => false;
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+
         private VisualElement _step1;
         private VisualElement _step2;
         private VisualElement _step3;
