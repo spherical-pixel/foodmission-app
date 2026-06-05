@@ -1,3 +1,25 @@
+v0.0.6 - Changelog
+✨ New Features
+- Meal Log redesigned: 3-step progressive flow (type → source → compose) with separate meal name field and dedicated "Load preset" popover
+- Smart save logic: snapshot diff detects modifications — reuses existing meal when unchanged, updates when modified with same name, creates new meal when name changed
+- Recipe ingredient dedup: duplicate generic foods in recipe ingredients are now merged (quantities combined)
+- FMButton component: new reusable button built on AppUI.UI.Button with shadow support
+- Settings screens: un-commented and wired up settings/preferences now that API supports them
+
+🐛 Bug Fixes
+- Recipe detection: added isRecipe discriminator to Meal model — recipeId alone is unreliable since meals created from recipes also have it
+- Search result labels: FMSearchOrCategoryField now correctly shows GenericFood.foodName instead of C# type name in confirmation panel
+- Async void safety: OnPresetSearchChanged wrapped in try-catch to prevent crashes on API failure
+- ShoppingListDetail: _progressLabel now properly assigned in CacheUIElements
+- Safe area: removed duplicate safearea check from MealLogScreen, restored in PantryScreen.uxml
+
+♻️ Refactors
+- FMQuantityUnitPanel: extracted from 5 duplicate qty/unit implementations into reusable component
+- Preset search results: now use global fm-scf-result-row class for visual consistency with search results
+
+🧪 Tests
+- 8 new tests covering HasModifications, SaveAsync branches, and ConfirmUpdateAndSave
+
 v0.0.5 — Changelog
 🆕 Added
 - FMSearchOrCategoryField — unified search, category browsing, and barcode scan button for Pantry and ShoppingListDetail screens, replacing FMProductSearchDialog
