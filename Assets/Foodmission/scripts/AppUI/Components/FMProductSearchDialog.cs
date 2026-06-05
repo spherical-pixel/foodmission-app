@@ -15,28 +15,6 @@ namespace eu.foodmission.platform.Components
 {
     public static class FMProductSearchDialog
     {
-        private static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
-
-        private static List<string> _unitChoices;
-        private static List<string> UnitChoices
-        {
-            get
-            {
-                if (_unitChoices == null)
-                {
-                    _unitChoices = new List<string>
-                    {
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-                    };
-                }
-                return _unitChoices;
-            }
-        }
         private static CancellationTokenSource _searchCts;
 
         public static void ShowFoodSearch(
@@ -69,7 +47,7 @@ namespace eu.foodmission.platform.Components
             WireScanButton(ui, anchor, title, importFromBarcodeAsync, OnItemSelected);
 
             ShowDialog(anchor, title, ui, () => selectedItem != null,
-                       () => onConfirmed((OpenFoodFactsProduct)selectedItem, ui.qtyField.value, UnitValues[ui.unitDropdown.selectedIndex]));
+                       () => onConfirmed((OpenFoodFactsProduct)selectedItem, ui.qtyUnitPanel.Quantity, ui.qtyUnitPanel.Unit));
         }
 
         public static void ShowDualSearch(
@@ -156,7 +134,7 @@ namespace eu.foodmission.platform.Components
             });
 
             ShowDialog(anchor, title, ui, () => selectedItem != null,
-                       () => onConfirmed(selectedItem, ui.qtyField.value, UnitValues[ui.unitDropdown.selectedIndex]));
+                       () => onConfirmed(selectedItem, ui.qtyUnitPanel.Quantity, ui.qtyUnitPanel.Unit));
         }
 
         private struct SearchUI
@@ -170,8 +148,7 @@ namespace eu.foodmission.platform.Components
             public VisualElement resultsContainer;
             public VisualElement confirmContainer;
             public Text selectedNameLabel;
-            public Unity.AppUI.UI.FloatField qtyField;
-            public Dropdown unitDropdown;
+            public FMQuantityUnitPanel qtyUnitPanel;
         }
 
         private static SearchUI BuildBaseUI(out VisualElement toggleRow)
@@ -251,20 +228,10 @@ namespace eu.foodmission.platform.Components
             var selectedNameLabel = new Text();
             selectedNameLabel.style.marginBottom = 8;
 
-            var qtyLabel = new Text { text = "Quantity" };
-            qtyLabel.style.marginBottom = 4;
-
-            var qtyField = new Unity.AppUI.UI.FloatField { value = 1f };
-            qtyField.style.marginBottom = 8;
-
-            var unitDropdown = new Dropdown { sourceItems = UnitChoices, selectedIndex = 0 };
-            unitDropdown.bindItem = (item, i) => item.label = UnitChoices[i];
-            unitDropdown.style.marginBottom = 8;
+            var qtyUnitPanel = new FMQuantityUnitPanel();
 
             confirmContainer.Add(selectedNameLabel);
-            confirmContainer.Add(qtyLabel);
-            confirmContainer.Add(qtyField);
-            confirmContainer.Add(unitDropdown);
+            confirmContainer.Add(qtyUnitPanel);
             container.Add(confirmContainer);
 
             return new SearchUI
@@ -278,8 +245,7 @@ namespace eu.foodmission.platform.Components
                 resultsContainer = resultsContainer,
                 confirmContainer = confirmContainer,
                 selectedNameLabel = selectedNameLabel,
-                qtyField = qtyField,
-                unitDropdown = unitDropdown
+                qtyUnitPanel = qtyUnitPanel
             };
         }
 

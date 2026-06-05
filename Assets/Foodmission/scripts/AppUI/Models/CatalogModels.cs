@@ -36,4 +36,14 @@ namespace eu.foodmission.platform
     {
         public CatalogData data;
     }
+
+    /// <summary>
+    /// Response wrapper for individual catalog list endpoints (type-of-meals,
+    /// meal-categories, meal-courses, etc.) that return { data: [CatalogItem] }.
+    /// </summary>
+    [Serializable]
+    public class CatalogListResponse
+    {
+        public CatalogItem[] data;
+    }
 }

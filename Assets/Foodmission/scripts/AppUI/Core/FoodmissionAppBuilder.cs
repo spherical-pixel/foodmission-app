@@ -38,6 +38,8 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IPantryService, PantryService>();
             builder.services.AddSingleton<IMealService, MealService>();
             builder.services.AddSingleton<IMealLogService, MealLogService>();
+            builder.services.AddSingleton<IMealItemService, MealItemService>();
+            builder.services.AddSingleton<IRecipeService, RecipeService>();
             builder.services.AddSingleton<IFoodWasteService, FoodWasteService>();
             builder.services.AddSingleton<ITemplateService, TemplateService>();
             builder.services.AddSingleton<IAppUpdateService, AppUpdateService>();
@@ -51,7 +53,6 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<RegisterViewModel>();
             builder.services.AddTransient<ForgotPasswordViewModel>();
             builder.services.AddTransient<MealLogViewModel>();
-            builder.services.AddTransient<MealLogAddViewModel>();
             builder.services.AddTransient<FoodWasteViewModel>();
             builder.services.AddTransient<FoodWasteAddViewModel>();
             builder.services.AddTransient<ProfileViewModel>();

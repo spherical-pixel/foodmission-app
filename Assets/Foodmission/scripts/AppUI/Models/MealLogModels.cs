@@ -17,6 +17,10 @@ namespace eu.foodmission.platform
         public string createdAt;
         public string updatedAt;
         public Meal meal;
+
+        // Client-only markers (never from API)
+        public bool isProduct;
+        public bool isGenericFood;
     }
 
     [Serializable]
@@ -54,6 +58,18 @@ namespace eu.foodmission.platform
             });
             return Encoding.UTF8.GetBytes(json);
         }
+    }
+
+    public class MealLogItem
+    {
+        public string id;
+        public string foodProductId;
+        public string genericFoodId;
+        public string name;
+        public float quantity = 1f;
+        public string unit = "PIECES";
+        public bool isProduct;
+        public bool isGenericFood;
     }
 
     public class PantryDeduction

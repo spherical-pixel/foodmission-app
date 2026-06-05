@@ -62,7 +62,6 @@ namespace eu.foodmission.platform
                     return NavTab.Menu;
 
                 case "MealLog":
-                case "MealLogAdd":
                     return NavTab.MealLog;
 
                 case "Profile":

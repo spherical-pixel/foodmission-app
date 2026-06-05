@@ -172,12 +172,6 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void GetActiveTab_ReturnsMealLog_ForMealLogAddScreen()
-        {
-            Assert.AreEqual(NavTab.MealLog, BottomNavBarHelper.GetActiveTab("MealLogAdd"));
-        }
-
-        [Test]
         public void GetActiveTab_ReturnsProfile_ForGroupsJoinScreen()
         {
             Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("GroupsJoin"));

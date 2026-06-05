@@ -98,6 +98,41 @@
     font-size: var(--appui-font-sizes-500);
 }
 
+.appui-button--accent.appui-button--quiet.fm-button-list{
+    /*font-size: var(--appui-font-sizes-600);*/
+    color: var(--appui-primary-100);
+    
+}
+
+.appui-button--accent.appui-button--quiet.fm-button-list .appui-icon ,
+.appui-button--primary.appui-button--quiet.fm-button-list .appui-icon,
+.appui-button--destructive.appui-button--quiet.fm-button-list .appui-icon{
+    --unity-image-tint-color: var(--appui-primary-100);
+}
+
+.appui-button--size-s.fm-button-list {
+    min-height: var(--appui-sizing-600);
+    min-width: var(--appui-sizing-700);
+    padding-top: var(--appui-spacing-25);
+    padding-bottom: var(--appui-spacing-25);
+}
+
+.appui-button--size-m.fm-button-list {
+    min-height: var(--appui-sizing-650);
+    min-width: var(--appui-sizing-750);
+    padding-top: var(--appui-spacing-50);
+    padding-bottom: var(--appui-spacing-50);
+}
+
+.appui-button--size-l.fm-button-list {
+    min-height: var(--appui-sizing-700);
+    min-width: var(--appui-sizing-800);
+    padding-top: var(--appui-spacing-100);
+    padding-bottom: var(--appui-spacing-100);
+}
+
+
+
 .fm-button-drawer .appui-icon {
     --unity-image-tint-color: var(--fm-icon-tint);
 }
@@ -973,4 +1008,26 @@
 
 .fm-scf-create-row:hover {
     background-color: rgba(128, 128, 128, 0.1);
+}
+
+.fm-meal-card {
+    background-color: var(--appui-backgrounds-200);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    --box-shadow-offset-y: 5;
+    --box-shadow-offset-x: 5;
+    --box-shadow-spread: 20;
+    --box-shadow-blur: 30;
+    --box-shadow-color: rgba(0, 0, 0, 0.65);
+    margin-bottom: 15px;
+}
+
+.fm-meal-card-text {
+    color: var(--appui-base-100);
 }
