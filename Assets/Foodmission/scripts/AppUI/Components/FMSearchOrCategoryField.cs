@@ -505,6 +505,10 @@ namespace eu.foodmission.platform.Components
                 string brands = food.brands?.Length > 0 ? string.Join(", ", food.brands) : "";
                 name = string.IsNullOrEmpty(brands) ? food.name : $"{food.name} · {brands}";
             }
+            else if (item is GenericFood gf)
+            {
+                name = gf.foodName;
+            }
             else
             {
                 name = item.ToString();

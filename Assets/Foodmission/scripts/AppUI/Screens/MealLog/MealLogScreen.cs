@@ -462,7 +462,14 @@ private void CacheUIElements()
 
         private async void OnPresetSearchChanged(ChangeEvent<string> evt)
         {
-            await _viewModel.SearchPresetsAsync(evt.newValue);
+            try
+            {
+                await _viewModel.SearchPresetsAsync(evt.newValue);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] OnPresetSearchChanged failed: {ex.Message}");
+            }
         }
 
         private void OnConfirmUpdateRequired(string mealName)

@@ -57,6 +57,7 @@ namespace eu.foodmission.platform
             _listTitle = contentContainer.Q<Heading>("list-title");
             _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
             _mainContent = contentContainer.Q<VisualElement>("main-content");
+            _progressLabel = contentContainer.Q<Text>("progress-label");
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
