@@ -1,15 +1,14 @@
 {
   "ios": {
-    "latestVersion": "0.0.5",
-    "isForced": true,
+    "latestVersion": "0.0.6",
+    "isForced": false,
     "storeUrl": "https://testflight.apple.com/join/eVPDEzhq",
-    "releaseNotes": "- Changed: Model naming migration — food → foodProduct, foodCategory → genericFood to align with backend API\n- Added: Unified search, category browsing and barcode scanning item for pantry and shopping lists\n- Changed: Shopping list design updated\n- Changed: Avatar editor styles\n- Changed: Changed preliminary machine translations to only English by now"
+    "releaseNotes": "- Added: Redesigned meal logging with step-by-step flow and smart save\n- Added: Separate meal name field and preset/recipe search popup\n- Added: FMQuantityUnitPanel and FMButton reusable components\n- Changed: Settings screens now fully functional\n- Fixed: Recipe vs meal detection, generic food labels, crash on search failure\n- Fixed: Various safe area and layout improvements"
   },
   "android": {
-    "latestVersion": "0.0.5",
-    "isForced": true,
+    "latestVersion": "0.0.6",
+    "isForced": false,
     "storeUrl": "https://play.google.com/apps/testing/eu.foodmission.platform",
-    "releaseNotes": "- Changed: Model naming migration — food → foodProduct, foodCategory → genericFood to align with backend API\n- Added: Unified search, category browsing and barcode scanning item for pantry and shopping lists\n- Changed: Shopping list design updated\n- Changed: Avatar editor styles\n- Changed: Changed preliminary machine translations to only English by now"
+    "releaseNotes": "- Added: Redesigned meal logging with step-by-step flow and smart save\n- Added: Separate meal name field and preset/recipe search popup\n- Added: FMQuantityUnitPanel and FMButton reusable components\n- Changed: Settings screens now fully functional\n- Fixed: Recipe vs meal detection, generic food labels, crash on search failure\n- Fixed: Various safe area and layout improvements"
   }
 }
-
