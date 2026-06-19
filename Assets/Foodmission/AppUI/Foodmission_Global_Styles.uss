@@ -1028,6 +1028,11 @@
     margin-bottom: 15px;
 }
 
+.fm-meal-card-heading {
+    color: var(--appui-foregrounds-50);
+    padding-bottom: 8px;
+}
+
 .fm-meal-card-text {
-    color: var(--appui-base-100);
+    color: var(--appui-foregrounds-50);
 }

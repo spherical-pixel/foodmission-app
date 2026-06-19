@@ -42,16 +42,6 @@ namespace eu.foodmission.platform
 
         public event Action<string> OnConfirmUpdateRequired;
 
-        private static readonly Dictionary<string, string> TypeOfMealEmojis = new()
-        {
-            { "BREAKFAST", "\U0001F305" },
-            { "LUNCH", "\u2600\uFE0F" },
-            { "DINNER", "\U0001F319" },
-            { "SNACK", "\U0001F97F" },
-            { "DRINKS", "\U0001F964" },
-            { "OTHER", "\U0001F37D\uFE0F" },
-        };
-
         [ObservableProperty] private MealLogStep m_CurrentStep = MealLogStep.SelectingTypeOfMeal;
 
         [ObservableProperty] private CatalogItem[] m_TypeOfMealOptions = Array.Empty<CatalogItem>();
@@ -814,11 +804,6 @@ namespace eu.foodmission.platform
             CaloriesConsumed = consumed;
             CaloriesLeft = left;
             CaloriesProgress = target > 0 ? (float)consumed / target : 0f;
-        }
-
-        public static string GetEmojiForTypeOfMeal(string type)
-        {
-            return TypeOfMealEmojis.TryGetValue(type, out string emoji) ? emoji : "\U0001F37D\uFE0F";
         }
 
         public void DisposeSearchCts()
