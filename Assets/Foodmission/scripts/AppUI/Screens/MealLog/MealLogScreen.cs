@@ -52,16 +52,6 @@ namespace eu.foodmission.platform
         private VisualElement _mealList;
         private AccessibilityNode _logButtonNode;
 
-        private static readonly Dictionary<string, string> TypeEmojis = new()
-        {
-            { "BREAKFAST", "\U0001F305" },
-            { "LUNCH", "\u2600\uFE0F" },
-            { "DINNER", "\U0001F319" },
-            { "SNACK", "\U0001F97F" },
-            { "DRINKS", "\U0001F964" },
-            { "OTHER", "\U0001F37D\uFE0F" },
-        };
-
         public MealLogScreen()
         {
             InitializeComponent(App.current.services
@@ -70,29 +60,29 @@ namespace eu.foodmission.platform
             CacheUIElements();
         }
 
-private void CacheUIElements()
-{
-	_step1 = contentContainer.Q<VisualElement>("step-1");
-	_step2 = contentContainer.Q<VisualElement>("step-2");
-	_step3 = contentContainer.Q<VisualElement>("step-3");
-	_step1Buttons = contentContainer.Q<VisualElement>("step-1-buttons");
-	_step2Buttons = contentContainer.Q<VisualElement>("step-2-buttons");
-	_btnBackStep2 = contentContainer.Q<VisualElement>("btn-back-step-2");
-	_btnBackStep3 = contentContainer.Q<VisualElement>("btn-back-step-3");
-	_mealNameField = contentContainer.Q<Unity.AppUI.UI.TextField>("meal-name-field");
-	_mealNameRow = contentContainer.Q<VisualElement>("meal-name-row");
-	_presetResults = contentContainer.Q<VisualElement>("preset-results");
-	_btnLoadPreset = contentContainer.Q<FMButton>("btn-load-preset");
-	_presetSearchField = contentContainer.Q<Unity.AppUI.UI.TextField>("preset-search-field");
-	_presetResultsList = contentContainer.Q<VisualElement>("preset-results-list");
-	_searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
-	_step3Content = contentContainer.Q<VisualElement>("step-3-content");
-	_selectionAndButton = contentContainer.Q<VisualElement>("selection-and-button");
-	_selectedChips = contentContainer.Q<VisualElement>("selected-chips");
-	_btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
-	_loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
-	_mealList = contentContainer.Q<VisualElement>("list-meals-today");
-}
+        private void CacheUIElements()
+        {
+            _step1 = contentContainer.Q<VisualElement>("step-1");
+            _step2 = contentContainer.Q<VisualElement>("step-2");
+            _step3 = contentContainer.Q<VisualElement>("step-3");
+            _step1Buttons = contentContainer.Q<VisualElement>("step-1-buttons");
+            _step2Buttons = contentContainer.Q<VisualElement>("step-2-buttons");
+            _btnBackStep2 = contentContainer.Q<VisualElement>("btn-back-step-2");
+            _btnBackStep3 = contentContainer.Q<VisualElement>("btn-back-step-3");
+            _mealNameField = contentContainer.Q<Unity.AppUI.UI.TextField>("meal-name-field");
+            _mealNameRow = contentContainer.Q<VisualElement>("meal-name-row");
+            _presetResults = contentContainer.Q<VisualElement>("preset-results");
+            _btnLoadPreset = contentContainer.Q<FMButton>("btn-load-preset");
+            _presetSearchField = contentContainer.Q<Unity.AppUI.UI.TextField>("preset-search-field");
+            _presetResultsList = contentContainer.Q<VisualElement>("preset-results-list");
+            _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
+            _step3Content = contentContainer.Q<VisualElement>("step-3-content");
+            _selectionAndButton = contentContainer.Q<VisualElement>("selection-and-button");
+            _selectedChips = contentContainer.Q<VisualElement>("selected-chips");
+            _btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
+            _loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
+            _mealList = contentContainer.Q<VisualElement>("list-meals-today");
+        }
 
         protected override void OnViewModelBound()
         {
@@ -322,7 +312,7 @@ private void CacheUIElements()
             for (int i = 0; i < _viewModel.TypeOfMealOptions.Length; i++)
             {
                 CatalogItem item = _viewModel.TypeOfMealOptions[i];
-                string emoji = GetEmojiForType(item.code);
+                string emoji = MealLogHelpers.GetEmojiForTypeOfMeal(item.code);
                 string label = item.label;
                 int capturedIndex = i;
 
@@ -378,48 +368,19 @@ private void CacheUIElements()
                 return;
             }
 
+            CatalogItem[] typeOptions = _viewModel.TypeOfMealOptions;
+
             foreach (MealLog log in _viewModel.LastTenLogs)
             {
-                string emoji = GetEmojiForType(log.typeOfMeal);
-                string typeLabel = FormatTypeOfMeal(log.typeOfMeal);
-                int calories = (int)(log.meal?.calories ?? 0f);
+                string typeLabel = typeOptions != null
+                    ? Array.Find(typeOptions, o => o.code == log.typeOfMeal)?.label ?? log.typeOfMeal
+                    : log.typeOfMeal;
 
-                var card = new VisualElement();
-                card.AddToClassList("fm-meal-card");
-
-                var title = new Heading
+                FMMealLogCard card = new FMMealLogCard
                 {
-                    text = $"{emoji} {typeLabel} - {DateTime.Parse(log.timestamp).ToLocalTime():g}",
-                    size = HeadingSize.M,
+                    MealLogData = log,
+                    TypeLabel = typeLabel
                 };
-                title.AddToClassList("bold-text");
-                title.AddToClassList("fm-meal-card-text");
-                title.style.paddingBottom = 8;
-                card.Add(title);
-
-                var nameMeal = new Text { text = $"{log.meal?.name ?? "Meal"}" };
-                nameMeal.AddToClassList("fm-meal-card-text");
-                card.Add(nameMeal);
-
-                var info = new Text { text = $"{calories} kcal" };
-                info.AddToClassList("fm-meal-card-text");
-                card.Add(info);
-
-                // Add source badge
-                if (log.mealFromPantry)
-                {
-                    var badge = new Text { text = "From pantry" };
-                    badge.AddToClassList("fm-ml-card-badge");
-                    badge.AddToClassList("fm-ml-card-badge--pantry");
-                    card.Add(badge);
-                }
-                else if (log.eatenOut)
-                {
-                    var badge = new Text { text = "Eaten out" };
-                    badge.AddToClassList("fm-ml-card-badge");
-                    badge.AddToClassList("fm-ml-card-badge--out");
-                    card.Add(badge);
-                }
 
                 _mealList.Add(card);
             }
@@ -617,24 +578,7 @@ private void CacheUIElements()
             _step1?.schedule.Execute(action).ExecuteLater(0);
         }
 
-        private static string FormatTypeOfMeal(string type)
-        {
-            return type switch
-            {
-                "BREAKFAST" => "Breakfast",
-                "LUNCH" => "Lunch",
-                "DINNER" => "Dinner",
-                "SNACK" => "Snack",
-                "DRINKS" => "Drinks",
-                "OTHER" => "Other",
-                _ => type
-            };
-        }
 
-        private static string GetEmojiForType(string type)
-        {
-            return TypeEmojis.TryGetValue(type, out string emoji) ? emoji : "\U0001F37D\uFE0F";
-        }
     }
 
 }

@@ -299,8 +299,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void GetEmojiForTypeOfMeal_ReturnsCorrectEmoji()
         {
-            Assert.AreEqual("\U0001F305", MealLogViewModel.GetEmojiForTypeOfMeal("BREAKFAST"));
-            Assert.AreEqual("\U0001F37D\uFE0F", MealLogViewModel.GetEmojiForTypeOfMeal("UNKNOWN"));
+            Assert.AreEqual("🌅", MealLogHelpers.GetEmojiForTypeOfMeal("BREAKFAST"));
+            Assert.AreEqual("🍽️", MealLogHelpers.GetEmojiForTypeOfMeal("UNKNOWN"));
         }
 
         // ========= Save tests =========
