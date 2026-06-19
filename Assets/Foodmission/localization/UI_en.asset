@@ -1470,6 +1470,14 @@ MonoBehaviour:
       environment.
     m_Metadata:
       m_Items: []
+  - m_Id: 14120235996012544
+    m_Localized: From Pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120384667312128
+    m_Localized: Eaten Out
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
