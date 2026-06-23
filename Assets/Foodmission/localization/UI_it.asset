@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 4008881209995690409
   m_TableData:
   - m_Id: 15417204736
-    m_Localized: Casa
+    m_Localized: Home
     m_Metadata:
       m_Items: []
   - m_Id: 467936468992
@@ -36,7 +36,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2541068313681920
-    m_Localized: Caricamento
+    m_Localized: Caricamento in corso
     m_Metadata:
       m_Items: []
   - m_Id: 18113535941795840
@@ -48,7 +48,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18417184911908864
-    m_Localized: 'Gioca, impara e mangia meglio: insieme possiamo promuovere il cambiamento.'
+    m_Localized: 'Giocare, imparare e mangiare meglio: insieme alimentiamo il cambiamento.'
     m_Metadata:
       m_Items: []
   - m_Id: 18417602513592320
@@ -68,11 +68,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22812687661522944
-    m_Localized: e-mail
+    m_Localized: E-mail
     m_Metadata:
       m_Items: []
   - m_Id: 22812856394178560
-    m_Localized: La tua email
+    m_Localized: La tua e-mail
     m_Metadata:
       m_Items: []
   - m_Id: 22815397693612032
@@ -84,7 +84,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22819860558897152
-    m_Localized: Seleziona il tuo paese
+    m_Localized: Seleziona il tuo Paese
     m_Metadata:
       m_Items: []
   - m_Id: 22820314747494400
@@ -108,14 +108,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25351921299611648
-    m_Localized: "Termini e condizioni di FOODMISSION\n\nUtilizzando questa applicazione,
-      accetti i seguenti termini:\n\n1. REGISTRAZIONE DELL'ACCOUNT\n\xC8 necessario
-      fornire informazioni accurate e complete durante la registrazione. Sei responsabile
-      della protezione della riservatezza delle credenziali del tuo account.\n\n2.
-      PRIVACY\nRaccogliamo ed elaboriamo i tuoi dati personali in conformit\xE0 con
-      la nostra Informativa sulla privacy. Ci\xF2 include dati nutrizionali, informazioni
-      sulla posizione e statistiche sull'utilizzo.\n\nPer maggiori informazioni,
-      contattaci all'indirizzo support@foodmission.eu"
+    m_Localized: "<b>Termini e condizioni di FOODMISSION</b>\n\nUtilizzando questa
+      applicazione, l'utente accetta i seguenti termini:\n\n<b>1. REGISTRAZIONE DELL'ACCOUNT</b>\nAl
+      momento della registrazione, l'utente \xE8 tenuto a fornire informazioni accurate
+      e complete. L'utente \xE8 responsabile del mantenimento della riservatezza
+      delle credenziali del proprio account.\n\n<b>2. PRIVACY</b>\nRaccogliamo e
+      trattiamo i dati personali dell\u2019utente in conformit\xE0 con la nostra
+      Informativa sulla privacy. Ci\xF2 include dati nutrizionali, informazioni sulla
+      posizione e statistiche di utilizzo.\n\nPer ulteriori informazioni, contattaci
+      all\u2019indirizzo support@foodmission.eu<b>Termini e condizioni di FOODMISSION</b>\n\nUtilizzando
+      questa applicazione, accetti i seguenti termini:\n\nPer ulteriori informazioni,
+      contattaci all\u2019indirizzo support@foodmission.eu"
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -135,7 +138,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25354925167861760
-    m_Localized: "La convalida dei campi non \xE8 riuscita"
+    m_Localized: Convalida dei campi non riuscita
     m_Metadata:
       m_Items: []
   - m_Id: 25355658118291456
@@ -143,11 +146,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25358434474909696
-    m_Localized: Inserisci un indirizzo email valido.
+    m_Localized: Inserisci un indirizzo e-mail valido.
     m_Metadata:
       m_Items: []
   - m_Id: 25358751560097792
-    m_Localized: La password deve essere lunga almeno 6 caratteri.
+    m_Localized: La password deve contenere almeno 6 caratteri.
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284416
@@ -155,7 +158,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284417
-    m_Localized: "\xC8 necessario avere pi\xF9 di 18 anni per utilizzare la piattaforma."
+    m_Localized: "Per utilizzare la piattaforma \xE8 necessario avere pi\xF9 di 18
+      anni."
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284418
@@ -171,7 +175,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284421
-    m_Localized: "\xC8 necessario accettare i Termini e le Condizioni per proseguire."
+    m_Localized: "Per continuare \xE8 necessario accettare i Termini e le Condizioni."
     m_Metadata:
       m_Items: []
   - m_Id: 25367919163596800
@@ -191,7 +195,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25395075277119488
-    m_Localized: Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare
+    m_Localized: Inserisci il tuo indirizzo e-mail e ti invieremo un link per reimpostare
       la password.
     m_Metadata:
       m_Items: []
@@ -217,8 +221,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: Insieme, metteremo in contatto la tua cucina con la cura per il
-      pianeta.
+    m_Localized: 'Insieme, uniremo la tua cucina alla tutela del pianeta.
+
+
+      Cucina,
+      impara, condividi e cresci ogni giorno.
+
+
+      Pronto a iniziare?'
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -230,7 +240,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35550076637011968
-    m_Localized: Apri l'app
+    m_Localized: Accedi all'app
     m_Metadata:
       m_Items: []
   - m_Id: 38372841320603648
@@ -254,11 +264,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38380494998462464
-    m_Localized: Risposta non valida dal server
+    m_Localized: Risposta non valida del server
     m_Metadata:
       m_Items: []
   - m_Id: 38381013338939392
-    m_Localized: 'Errore inatteso: {0}'
+    m_Localized: 'Errore imprevisto: {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 38381665582571520
@@ -275,7 +285,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38465306467753984
     m_Localized: "Questa operazione canceller\xE0 definitivamente tutti i tuoi dati
-      dalla piattaforma."
+      dalla piattaforma.\n\nSei sicuro?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -287,7 +297,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39878882189369344
-    m_Localized: Sfondo
+    m_Localized: Contesto
     m_Metadata:
       m_Items: []
   - m_Id: 39878980084424704
@@ -303,7 +313,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39879128504066048
-    m_Localized: Suono
+    m_Localized: Audio
     m_Metadata:
       m_Items: []
   - m_Id: 39879174494609408
@@ -311,11 +321,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39892766241579008
-    m_Localized: Chiaro
+    m_Localized: Luce
     m_Metadata:
       m_Items: []
   - m_Id: 39892875138293760
-    m_Localized: Scuro
+    m_Localized: Buio
     m_Metadata:
       m_Items: []
   - m_Id: 39892914422145024
@@ -323,7 +333,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39894833018429440
-    m_Localized: olandese
+    m_Localized: Olandese
     m_Metadata:
       m_Items: []
   - m_Id: 39895260770328576
@@ -331,7 +341,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895302340075520
-    m_Localized: tedesco
+    m_Localized: Tedesco
     m_Metadata:
       m_Items: []
   - m_Id: 39895357172211712
@@ -339,15 +349,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895410716696576
-    m_Localized: Italiano
+    m_Localized: italiano
     m_Metadata:
       m_Items: []
   - m_Id: 39895456581410816
-    m_Localized: Norvegese
+    m_Localized: norvegese
     m_Metadata:
       m_Items: []
   - m_Id: 39895644041633792
-    m_Localized: Lucidare
+    m_Localized: polacco
     m_Metadata:
       m_Items: []
   - m_Id: 39895706960388096
@@ -371,7 +381,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897565464879104
-    m_Localized: Su
+    m_Localized: Il
     m_Metadata:
       m_Items: []
   - m_Id: 39897588734877696
@@ -383,7 +393,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897672927141888
-    m_Localized: modello
+    m_Localized: Motivo
     m_Metadata:
       m_Items: []
   - m_Id: 39898680386379776
@@ -403,7 +413,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39903585188700160
-    m_Localized: Processo di inserimento
+    m_Localized: Inserimento
     m_Metadata:
       m_Items: []
   - m_Id: 39906068652875776
@@ -427,7 +437,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39906262576521216
-    m_Localized: Disconnetti
+    m_Localized: Esci
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
@@ -447,7 +457,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910356015898624
-    m_Localized: Ricettario
+    m_Localized: Libro di ricette
     m_Metadata:
       m_Items: []
   - m_Id: 39910387632562176
@@ -467,7 +477,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910482159591424
-    m_Localized: Segna tutto come letto
+    m_Localized: Contrassegna tutto come letto
     m_Metadata:
       m_Items: []
   - m_Id: 39910503894335488
@@ -507,7 +517,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39916808910659584
-    m_Localized: gruppo
+    m_Localized: Gruppo
     m_Metadata:
       m_Items: []
   - m_Id: 40182439656546304
@@ -527,7 +537,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000001
-    m_Localized: Email inviata. Controlla la tua casella di posta.
+    m_Localized: "L'e-mail \xE8 stata inviata. Controlla la tua casella di posta."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000002
@@ -539,7 +549,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000004
-    m_Localized: Registra il pasto
+    m_Localized: Pasto del log
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000005
@@ -563,23 +573,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000010
-    m_Localized: Mangiare fuori
+    m_Localized: Mangiato fuori
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000011
-    m_Localized: Seleziona gli articoli da sottrarre dalla dispensa
+    m_Localized: Seleziona gli articoli da prelevare dalla dispensa
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000012
-    m_Localized: Registra il pasto
+    m_Localized: Pasto del log
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000013
-    m_Localized: Scarti di legno
+    m_Localized: Rifiuti di legname
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000014
-    m_Localized: Articolo per la dispensa
+    m_Localized: Prodotto da dispensa
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000015
@@ -587,7 +597,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
-    m_Localized: motivo futile
+    m_Localized: Motivo infondato
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000017
@@ -607,7 +617,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000021
-    m_Localized: Filtra gli elementi...
+    m_Localized: Filtra gli articoli...
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
@@ -615,8 +625,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000023
-    m_Localized: "La tua dispensa \xE8 vuota. Tocca il simbolo + per aggiungere degli
-      articoli."
+    m_Localized: "La tua dispensa \xE8 vuota. Tocca + per aggiungere prodotti."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000024
@@ -624,8 +633,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000025
-    m_Localized: Nessun dato sui rifiuti registrato finora. Tocca il pulsante + per
-      registrare i rifiuti.
+    m_Localized: Non sono stati registrati rifiuti. Tocca + per registrare i rifiuti.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000026
@@ -633,7 +641,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000027
-    m_Localized: Nessun pasto registrato finora. Tocca il pulsante + per registrare
+    m_Localized: Non sono stati registrati ancora pasti. Tocca il segno "+" per registrare
       il tuo primo pasto.
     m_Metadata:
       m_Items: []
@@ -642,12 +650,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000029
-    m_Localized: Non hai ancora creato nessuna lista della spesa. Tocca "Nuova lista"
-      per crearne una.
+    m_Localized: Non ci sono ancora liste della spesa. Tocca "Nuova lista" per crearne
+      una.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000030
-    m_Localized: Nuova lista
+    m_Localized: Nuovo elenco
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000031
@@ -655,11 +663,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000032
-    m_Localized: Completato
+    m_Localized: Fatto, chiaro
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: Nessun elemento presente. Tocca il simbolo + per aggiungere elementi.
+    m_Localized: Non ci sono ancora articoli. Tocca + per aggiungere articoli.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -675,7 +683,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000037
-    m_Localized: Posizione
+    m_Localized: Ubicazione
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
@@ -703,7 +711,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000044
-    m_Localized: "Responsabilit\xE0 negli acquisti"
+    m_Localized: Acquisti responsabili
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000045
@@ -711,7 +719,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000046
-    m_Localized: Reddito annuale
+    m_Localized: Reddito annuo
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -731,11 +739,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000051
-    m_Localized: Calorie, impronta di carbonio, spesa, proteine
+    m_Localized: Calorie, Impronta di carbonio, Importo speso, Proteine
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
-    m_Localized: Calorie assunte
+    m_Localized: Calorie consumate
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000053
@@ -747,7 +755,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000055
-    m_Localized: Elimina il registro
+    m_Localized: Elimina registro
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000056
@@ -755,7 +763,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000057
-    m_Localized: Elimina la voce relativa ai rifiuti
+    m_Localized: Elimina la registrazione dei rifiuti
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -763,11 +771,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000059
-    m_Localized: Rinomina elenco
+    m_Localized: Elenco delle rinominazioni
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000060
-    m_Localized: Aggiungi elemento
+    m_Localized: Aggiungi articolo
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000061
@@ -779,19 +787,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000063
-    m_Localized: '{0} articoli sono scaduti'
+    m_Localized: '{0} articoli scaduti'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000064
-    m_Localized: '{0} elemento spostato nel cestino'
+    m_Localized: '{0} articolo trasferito ai rifiuti'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000065
-    m_Localized: '{0} elementi spostati nel cestino'
+    m_Localized: '{0} articoli destinati allo smaltimento'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000066
-    m_Localized: Nome della lista
+    m_Localized: Nome dell'elenco
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000067
@@ -803,7 +811,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
-    m_Localized: Seleziona prima un elemento.
+    m_Localized: Seleziona prima un articolo.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000070
@@ -819,11 +827,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000073
-    m_Localized: Spostare 1 articolo scaduto nei rifiuti alimentari?
+    m_Localized: Spostare 1 prodotto scaduto nei rifiuti alimentari?
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000074
-    m_Localized: Spostare {0} articoli scaduti nella categoria dei rifiuti alimentari?
+    m_Localized: Spostare {0} articoli scaduti nel contenitore dei rifiuti alimentari?
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000075
@@ -843,7 +851,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000079
-    m_Localized: Seleziona prima un pasto
+    m_Localized: Scegli prima un pasto
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000080
@@ -855,8 +863,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000082
-    m_Localized: "Pasto registrato, ma non \xE8 stato possibile aggiornare la dispensa.
-      Si prega di controllare gli articoli presenti nella dispensa."
+    m_Localized: "Il pasto \xE8 stato registrato, ma non \xE8 stato possibile aggiornare
+      la dispensa. Si prega di controllare gli articoli presenti nella dispensa."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000083
@@ -864,11 +872,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000084
-    m_Localized: Seleziona prima un articolo dalla dispensa
+    m_Localized: Scegli prima un prodotto da dispensa
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
-    m_Localized: "La quantit\xE0 deve essere superiore a 0"
+    m_Localized: "La quantit\xE0 deve essere maggiore di 0"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000086
@@ -881,7 +889,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
-    m_Localized: Errore durante il caricamento del registro dei rifiuti alimentari
+    m_Localized: Errore durante il caricamento del registro degli scarti alimentari
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000089
@@ -901,12 +909,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000093
-    m_Localized: 'Impossibile aggiungere l''articolo: il prodotto potrebbe non contenere
-      tutti i dati necessari'
+    m_Localized: 'Impossibile aggiungere l''articolo: potrebbero mancare alcuni dati
+      obbligatori relativi al prodotto'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000094
-    m_Localized: Impossibile aggiungere l'elemento alla categoria
+    m_Localized: Impossibile aggiungere la voce alla categoria
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000095
@@ -918,7 +926,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000097
-    m_Localized: Impossibile caricare gli elementi
+    m_Localized: Impossibile caricare gli articoli
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000098
@@ -946,31 +954,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000104
-    m_Localized: Impossibile eliminare gli elementi completati
+    m_Localized: Impossibile cancellare le voci completate
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000105
-    m_Localized: Errore durante il caricamento delle liste
+    m_Localized: Errore durante il caricamento degli elenchi
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000106
-    m_Localized: "\xC8 necessario specificare il nome della lista"
+    m_Localized: "Il nome della lista \xE8 obbligatorio"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000107
-    m_Localized: Impossibile creare la lista
+    m_Localized: Impossibile creare l'elenco
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000108
-    m_Localized: Impossibile eliminare la lista
+    m_Localized: Impossibile eliminare l'elenco
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000109
-    m_Localized: "\xC8 necessario il codice di invito"
+    m_Localized: "\xC8 necessario un codice di invito"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000110
-    m_Localized: "Codice di invito non valido o sei gi\xE0 un membro"
+    m_Localized: "Codice di invito non valido o sei gi\xE0 iscritto"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000111
@@ -986,7 +994,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000114
-    m_Localized: Accesso non riuscito. Si prega di riprovare.
+    m_Localized: Accesso non riuscito. Riprova.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000115
@@ -994,11 +1002,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000116
-    m_Localized: Caricamento dati...
+    m_Localized: Caricamento dati in corso...
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000117
-    m_Localized: Impossibile caricare i dati. Riprova.
+    m_Localized: Impossibile caricare i dati. Riprovare.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000118
@@ -1010,11 +1018,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000120
-    m_Localized: "Si \xE8 verificato un errore inatteso. Si prega di riprovare."
+    m_Localized: Errore imprevisto. Riprova.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000121
-    m_Localized: "Si \xE8 verificato un errore inatteso"
+    m_Localized: "Si \xE8 verificato un errore imprevisto"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000122
@@ -1038,7 +1046,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985730
-    m_Localized: spuntino
+    m_Localized: Spuntino
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985731
@@ -1058,7 +1066,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985735
-    m_Localized: Troppo cotto
+    m_Localized: Cotto troppo
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985736
@@ -1122,15 +1130,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985751
-    m_Localized: Armadio
+    m_Localized: Credenza
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985752
-    m_Localized: Caricamento delle localizzazioni...
+    m_Localized: Caricamento delle localizzazioni in corso...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
-    m_Localized: Caricamento dell'interfaccia utente...
+    m_Localized: Caricamento dell'interfaccia utente in corso...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985754
@@ -1138,7 +1146,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985755
-    m_Localized: Aggiungi elemento
+    m_Localized: Aggiungi articolo
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986000
@@ -1146,7 +1154,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986001
-    m_Localized: Nessun gruppo al momento.
+    m_Localized: Non ci sono ancora gruppi.
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986002
@@ -1154,7 +1162,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986003
-    m_Localized: Unisciti al gruppo
+    m_Localized: Entra nel gruppo
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986004
@@ -1162,7 +1170,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986005
-    m_Localized: Descrizione (opzionale)
+    m_Localized: Descrizione (facoltativa)
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986006
@@ -1170,11 +1178,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986007
-    m_Localized: Codice di invito
+    m_Localized: Codice invito
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986008
-    m_Localized: In corso...
+    m_Localized: Connessione in corso...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986009
@@ -1182,19 +1190,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986010
-    m_Localized: Codice di invito
+    m_Localized: Codice invito
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986011
-    m_Localized: Copia codice
+    m_Localized: Copia il codice
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
-    m_Localized: Rigenera
+    m_Localized: Rigenerare
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986013
-    m_Localized: Abbandona il gruppo
+    m_Localized: Esci dal gruppo
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986014
@@ -1206,11 +1214,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986016
-    m_Localized: Rendi amministratore
+    m_Localized: Diventa amministratore
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986017
-    m_Localized: Sei sicuro di voler lasciare questo gruppo?
+    m_Localized: Sei sicuro di voler uscire da questo gruppo?
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986018
@@ -1242,8 +1250,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986025
-    m_Localized: Crea o unisciti a un gruppo per condividere le liste della spesa
-      e monitorare i progressi con la tua famiglia.
+    m_Localized: "Crea un gruppo o unisciti a uno gi\xE0 esistente per condividere
+      le liste della spesa e i progressi con la tua famiglia."
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986026
@@ -1255,15 +1263,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986028
-    m_Localized: Salta per ora
+    m_Localized: Per ora salta questo passaggio
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986029
-    m_Localized: Gruppo creato!
+    m_Localized: "Il gruppo \xE8 stato creato!"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986030
-    m_Localized: Sono entrato nel gruppo!
+    m_Localized: Mi sono unito al gruppo!
     m_Metadata:
       m_Items: []
   - m_Id: 319685458386944
@@ -1275,7 +1283,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1352600405401600
-    m_Localized: Verifica degli aggiornamenti...
+    m_Localized: "Verifica della disponibilit\xE0 di aggiornamenti..."
     m_Metadata:
       m_Items: []
   - m_Id: 1674160731316224
@@ -1291,7 +1299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1675915250622464
-    m_Localized: Aggiorna
+    m_Localized: Aggiornamento
     m_Metadata:
       m_Items: []
   - m_Id: 1675915254816768
@@ -1299,7 +1307,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3882568704319488
-    m_Localized: Lista della spesa
+    m_Localized: "\U0001F4DD Lista della spesa"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026047336448
@@ -1319,7 +1327,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530755
-    m_Localized: Tagli di carne fredda
+    m_Localized: Tagli di salumi
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530756
@@ -1335,7 +1343,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530759
-    m_Localized: Alimenti per usi nutrizionali specifici
+    m_Localized: Alimenti destinati a un'alimentazione speciale
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530760
@@ -1359,11 +1367,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530765
-    m_Localized: Latte e derivati del latte
+    m_Localized: Latte e prodotti lattiero-caseari
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530766
-    m_Localized: Varie pietanze
+    m_Localized: Alimenti vari
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530767
@@ -1379,7 +1387,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530770
-    m_Localized: Pasticcini e biscotti
+    m_Localized: Pasticceria e biscotti
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530771
@@ -1387,11 +1395,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530772
-    m_Localized: Spalmabili salate per il pane
+    m_Localized: Crema spalmabile salata per il pane
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530773
-    m_Localized: Salse saporite
+    m_Localized: Salse salate
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530774
@@ -1423,12 +1431,41 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7835105786585088
-    m_Localized: Alimento generico non disponibile
+    m_Localized: Alimenti generici non disponibili
     m_Metadata:
       m_Items: []
   - m_Id: 7835562022002688
-    m_Localized: "Questo alimento generico non \xE8 disponibile nel database backend
+    m_Localized: "Questo alimento generico non \xE8 disponibile nel database di backend
       per questo ambiente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798748049989632
+    m_Localized: Backend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798836050681856
+    m_Localized: URL dell'API
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798909413253120
+    m_Localized: Versione dell'app
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798978623463424
+    m_Localized: Cambia ambiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800027757305856
+    m_Localized: "La modifica dell'ambiente comporter\xE0 la disconnessione. Sei
+      sicuro?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120235996012544
+    m_Localized: Dalla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120384667312128
+    m_Localized: Mangiato fuori
     m_Metadata:
       m_Items: []
   references:

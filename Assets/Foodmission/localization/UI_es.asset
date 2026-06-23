@@ -1435,6 +1435,35 @@ MonoBehaviour:
       del backend para este entorno."
     m_Metadata:
       m_Items: []
+  - m_Id: 6798748049989632
+    m_Localized: Backend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798836050681856
+    m_Localized: URL de la API
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798909413253120
+    m_Localized: "Versi\xF3n de la aplicaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798978623463424
+    m_Localized: Cambiar de entorno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800027757305856
+    m_Localized: "Si cambias de entorno, se cerrar\xE1 tu sesi\xF3n. \xBFEst\xE1s
+      seguro?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120235996012544
+    m_Localized: De la despensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120384667312128
+    m_Localized: "Com\xED fuera"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
