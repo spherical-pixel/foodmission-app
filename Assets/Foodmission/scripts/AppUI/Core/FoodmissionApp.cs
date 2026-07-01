@@ -27,6 +27,11 @@ namespace eu.foodmission.platform
         private IDisposableSubscription _backgroundSubscription;
         private Panel _panel;
 
+#if UNITY_EDITOR
+        private UIDocument _editorUidoc;
+        private float _lastEditorDpi;
+#endif
+
         public FoodmissionApp()
         {
             Debug.Log($"[{GetType().Name}] FoodmissionApp");
@@ -88,6 +93,11 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[{GetType().Name}] Cannot initialize - panel is null");
                 return;
             }
+
+#if UNITY_EDITOR
+            ApplyEditorDpiCorrection();
+            _panel.RegisterCallback<GeometryChangedEvent>(_ => ApplyEditorDpiCorrection());
+#endif
 
             // Initialize the theme service
             _themeService.Initialize(_panel);
@@ -160,6 +170,33 @@ namespace eu.foodmission.platform
             _visualController = null;
             _panel = null;
         }
+
+#if UNITY_EDITOR
+        private void ApplyEditorDpiCorrection()
+        {
+            if (_panel == null) return;
+
+            float dpi = Screen.dpi;
+            if (dpi <= 0f) return;
+
+            const float referenceDpi = 264f;
+            if (Mathf.Approximately(dpi, _lastEditorDpi)) return;
+
+            if (_editorUidoc == null)
+            {
+                _editorUidoc = Object.FindObjectOfType<UIDocument>();
+                if (_editorUidoc == null || _editorUidoc.panelSettings == null) return;
+            }
+
+            var settings = Object.Instantiate(_editorUidoc.panelSettings);
+            settings.referenceDpi = dpi;
+            _editorUidoc.panelSettings = settings;
+
+            _lastEditorDpi = dpi;
+
+            Debug.Log($"[{GetType().Name}] Editor DPI: {referenceDpi} \u2192 {dpi}");
+        }
+#endif
 
         private void ApplyBackgroundFromState()
         {

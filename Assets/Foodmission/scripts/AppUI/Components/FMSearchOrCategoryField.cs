@@ -102,9 +102,8 @@ namespace eu.foodmission.platform.Components
         private CircularProgress _spinner;
         private Unity.AppUI.UI.IconButton _scanButton;
         private VisualElement _confirmContainer;
-        private Unity.AppUI.UI.FloatField _qtyField;
-        private Dropdown _unitDropdown;
         private Text _selectedNameLabel;
+        private FMQuantityUnitPanel _confirmPanel;
 
         // ========= CONSTRUCTOR =========
         public FMSearchOrCategoryField()
@@ -183,31 +182,8 @@ namespace eu.foodmission.platform.Components
             _selectedNameLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
             _confirmContainer.Add(_selectedNameLabel);
 
-            var qtyLabel = new Text { text = "Quantity" };
-            qtyLabel.style.marginBottom = 4;
-            _confirmContainer.Add(qtyLabel);
-
-            _qtyField = new Unity.AppUI.UI.FloatField { value = 1f };
-            _qtyField.style.marginBottom = 8;
-            _confirmContainer.Add(_qtyField);
-
-            var unitLabel = new Text { text = "Unit" };
-            unitLabel.style.marginBottom = 4;
-            _confirmContainer.Add(unitLabel);
-
-            var unitChoices = new List<string>
-            {
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-            };
-            _unitDropdown = new Dropdown { sourceItems = unitChoices, selectedIndex = 0 };
-            _unitDropdown.bindItem = (item, i) => item.label = unitChoices[i];
-            _unitDropdown.style.marginBottom = 8;
-            _confirmContainer.Add(_unitDropdown);
+            _confirmPanel = new FMQuantityUnitPanel();
+            _confirmContainer.Add(_confirmPanel);
 
             var confirmRow = new VisualElement();
             confirmRow.style.flexDirection = FlexDirection.Row;
@@ -259,8 +235,7 @@ namespace eu.foodmission.platform.Components
             if (_currentMode == Mode.Idle || _currentMode == Mode.Confirmed) return;
             if (evt.target is not VisualElement target) return;
 
-            if (_resultsContainer.Contains(target)) return;
-            if (target == _textField || _textField.Contains(target)) return;
+            if (Contains(target)) return;
 
             ResetToIdle();
         }
@@ -385,6 +360,11 @@ namespace eu.foodmission.platform.Components
 
         private void OnGenericFoodClicked(GenericFood genericFood)
         {
+            Debug.Log($"[FMSearch] OnGenericFoodClicked: {genericFood.foodName} mode={_currentMode}");
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = null;
+
             SetMode(Mode.Confirmed);
             _selectedItem = genericFood;
 
@@ -398,6 +378,7 @@ namespace eu.foodmission.platform.Components
 
         private void OnTextFieldValueChanged(ChangeEvent<string> evt)
         {
+            Debug.Log($"[FMSearch] OnTextFieldValueChanged: '{evt.newValue}' mode={_currentMode}");
             OnTextChanged?.Invoke(evt.newValue);
 
             string query = evt.newValue;
@@ -405,6 +386,7 @@ namespace eu.foodmission.platform.Components
             {
                 if (_currentMode == Mode.Searching)
                 {
+                    Debug.Log($"[FMSearch] OnTextFieldValueChanged -> ResetToIdle (empty query, mode=Searching)");
                     ResetToIdle();
                 }
                 return;
@@ -430,6 +412,8 @@ namespace eu.foodmission.platform.Components
             }
 
             if (ct.IsCancellationRequested) return;
+
+            if (_currentMode != Mode.Categories && _currentMode != Mode.Searching) return;
 
             SetMode(Mode.Searching);
             _categoryContainer.style.display = DisplayStyle.None;
@@ -503,6 +487,12 @@ namespace eu.foodmission.platform.Components
 
         private void OnResultClicked(object item)
         {
+            string itemDesc = item is OpenFoodFactsProduct p ? p.name : (item is GenericFood g ? g.foodName : item.ToString());
+            Debug.Log($"[FMSearch] OnResultClicked: {itemDesc} type={item.GetType().Name} mode={_currentMode}");
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = null;
+
             SetMode(Mode.Confirmed);
             _selectedItem = item;
 
@@ -514,6 +504,10 @@ namespace eu.foodmission.platform.Components
             {
                 string brands = food.brands?.Length > 0 ? string.Join(", ", food.brands) : "";
                 name = string.IsNullOrEmpty(brands) ? food.name : $"{food.name} · {brands}";
+            }
+            else if (item is GenericFood gf)
+            {
+                name = gf.foodName;
             }
             else
             {
@@ -527,10 +521,8 @@ namespace eu.foodmission.platform.Components
 
         private async void OnAddClicked()
         {
-            float qty = _qtyField.value;
-            int unitIdx = _unitDropdown.selectedIndex >= 0 ? _unitDropdown.selectedIndex : 0;
-            string[] unitValues = { "PIECES", "G", "KG", "ML", "L", "CUPS" };
-            string unit = unitValues[unitIdx];
+            float qty = _confirmPanel.Quantity;
+            string unit = _confirmPanel.Unit;
 
             if (_selectedItem is OpenFoodFactsProduct product && OnProductConfirmed != null)
             {
@@ -610,6 +602,7 @@ namespace eu.foodmission.platform.Components
 
         private void ResetToIdle()
         {
+            Debug.Log($"[FMSearch] ResetToIdle called, prevMode={_currentMode}");
             SetMode(Mode.Idle);
             _selectedItem = null;
             _textField.value = "";

@@ -18,11 +18,11 @@ MonoBehaviour:
   m_RenderMode: 0
   m_ColliderUpdateMode: 0
   m_ColliderIsTrigger: 1
-  m_ScaleMode: 2
+  m_ScaleMode: 1
   m_ReferenceSpritePixelsPerUnit: 100
   m_PixelsPerUnit: 100
   m_Scale: 1
-  m_ReferenceDpi: 326
+  m_ReferenceDpi: 400
   m_FallbackDpi: 96
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0

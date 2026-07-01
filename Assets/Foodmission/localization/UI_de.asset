@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 4008881209995690407
   m_TableData:
   - m_Id: 15417204736
-    m_Localized: Zuhause
+    m_Localized: Startseite
     m_Metadata:
       m_Items: []
   - m_Id: 467936468992
@@ -28,7 +28,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8970780532736
-    m_Localized: "Ern\xE4hrungstagebuch"
+    m_Localized: Essensprotokoll
     m_Metadata:
       m_Items: []
   - m_Id: 9243779391488
@@ -40,16 +40,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18113535941795840
-    m_Localized: Ressourcen werden geladen
+    m_Localized: Assets werden geladen
     m_Metadata:
       m_Items: []
   - m_Id: 18114763199340544
-    m_Localized: "Authentifizierung wird gepr\xFCft"
+    m_Localized: "\xDCberpr\xFCfung der Authentifizierung"
     m_Metadata:
       m_Items: []
   - m_Id: 18417184911908864
-    m_Localized: "Spielen, lernen und sich besser ern\xE4hren: gemeinsam gestalten
-      wir die Ver\xE4nderung."
+    m_Localized: "Spielen, lernen und sich besser ern\xE4hren: Gemeinsam treiben
+      wir den Wandel voran."
     m_Metadata:
       m_Items: []
   - m_Id: 18417602513592320
@@ -57,7 +57,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18417848396275712
-    m_Localized: Ihr Benutzername
+    m_Localized: Dein Benutzername
     m_Metadata:
       m_Items: []
   - m_Id: 18418052671463424
@@ -101,7 +101,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25345767223844864
-    m_Localized: "Ich stimme den Nutzungsbedingungen und der Datenschutzerkl\xE4rung
+    m_Localized: "Ich stimme den <b>Nutzungsbedingungen</b> und der <b>Datenschutzerkl\xE4rung</b>
       zu."
     m_Metadata:
       m_Items: []
@@ -110,14 +110,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25351921299611648
-    m_Localized: "FOODMISSION-Nutzungsbedingungen\n\nMit der Nutzung dieser Anwendung
-      stimmen Sie den folgenden Bedingungen zu:\n\n1. KONTOREGISTRIERUNG\nSie m\xFCssen
-      bei der Registrierung korrekte und vollst\xE4ndige Angaben machen. Sie sind
-      daf\xFCr verantwortlich, die Vertraulichkeit Ihrer Kontozugangsdaten zu wahren.\n\n2.
-      DATENSCHUTZ\nWir erfassen und verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF
-      unserer Datenschutzerkl\xE4rung. Dazu geh\xF6ren Ern\xE4hrungsdaten, Standortinformationen
-      und Nutzungsstatistiken.\n\nF\xFCr weitere Informationen kontaktieren Sie uns
-      unter support@foodmission.eu"
+    m_Localized: "<b>FOODMISSION \u2013 Allgemeine Gesch\xE4ftsbedingungen</b>\n\nDurch
+      die Nutzung dieser Anwendung erkl\xE4ren Sie sich mit den folgenden Bedingungen
+      einverstanden:\n\n<b>1. KONTOANLEGUNG</b>\nBei der Registrierung m\xFCssen
+      Sie korrekte und vollst\xE4ndige Angaben machen. Sie sind f\xFCr die Geheimhaltung
+      Ihrer Zugangsdaten verantwortlich.\n\n<b>2. DATENSCHUTZ</b>\nWir erheben und
+      verarbeiten Ihre personenbezogenen Daten gem\xE4\xDF unserer Datenschutzerkl\xE4rung.
+      Dazu geh\xF6ren Ern\xE4hrungsdaten, Standortinformationen und Nutzungsstatistiken.\n\nF\xFCr
+      weitere Informationen kontaktieren Sie uns bitte unter support@foodmission.eu<b>FOODMISSION
+      Nutzungsbedingungen</b>\n\nDurch die Nutzung dieser App erkl\xE4ren Sie sich
+      mit den folgenden Bedingungen einverstanden:\n\nF\xFCr weitere Informationen
+      kontaktieren Sie uns bitte unter support@foodmission.eu"
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -170,7 +173,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284420
-    m_Localized: "Ung\xFCltiges Postleitzahlformat."
+    m_Localized: "Ung\xFCltiges Postleitzahlenformat."
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284421
@@ -183,11 +186,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25368981371084800
-    m_Localized: Haben Sie Ihr Passwort vergessen?
+    m_Localized: Passwort vergessen?
     m_Metadata:
       m_Items: []
   - m_Id: 25369431499595776
-    m_Localized: Haben Sie kein Konto? Registrieren Sie sich
+    m_Localized: Sie haben noch kein Konto? Registrieren Sie sich
     m_Metadata:
       m_Items: []
   - m_Id: 25394900353671168
@@ -195,12 +198,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25395075277119488
-    m_Localized: "Geben Sie Ihre E-Mail-Adresse ein, und wir senden Ihnen einen Link
-      zum Zur\xFCcksetzen Ihres Passworts."
+    m_Localized: "Geben Sie Ihre E-Mail-Adresse ein, dann senden wir Ihnen einen
+      Link zum Zur\xFCcksetzen Ihres Passworts."
     m_Metadata:
       m_Items: []
   - m_Id: 25395779614007296
-    m_Localized: Fortsetzen
+    m_Localized: Weiter
     m_Metadata:
       m_Items: []
   - m_Id: 25395959562231808
@@ -208,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27512489452232704
-    m_Localized: Lade {global.PET_NAME}
+    m_Localized: '{global.PET_NAME} wird geladen'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
@@ -221,11 +224,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Gemeinsam verbinden wir Ihre K\xFCche mit dem Schutz unseres Planeten."
+    m_Localized: "Gemeinsam verbinden wir Ihre K\xFCche mit dem Schutz unseres Planeten.\n\nKochen,
+      lernen, teilen und jeden Tag wachsen.\n\nSind Sie bereit, loszulegen?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
-    m_Localized: Erstelle dein Avatar
+    m_Localized: Erstelle deinen Avatar
     m_Metadata:
       m_Items: []
   - m_Id: 35549934412357632
@@ -233,7 +237,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35550076637011968
-    m_Localized: "\xD6ffnen Sie die App"
+    m_Localized: "Die App \xF6ffnen"
     m_Metadata:
       m_Items: []
   - m_Id: 38372841320603648
@@ -257,7 +261,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38380494998462464
-    m_Localized: "Ung\xFCltige Serverantwort"
+    m_Localized: "Ung\xFCltige Antwort des Servers"
     m_Metadata:
       m_Items: []
   - m_Id: 38381013338939392
@@ -269,7 +273,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38382047729803264
-    m_Localized: Benutzer existiert bereits
+    m_Localized: Der Benutzer existiert bereits
     m_Metadata:
       m_Items: []
   - m_Id: 38465117124288512
@@ -277,12 +281,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: "Durch diese Aktion werden alle Ihre Daten dauerhaft von der Plattform
-      gel\xF6scht."
+    m_Localized: "Durch diesen Vorgang werden alle Ihre Daten dauerhaft von der Plattform
+      gel\xF6scht.\n\nSind Sie sicher?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
-    m_Localized: "Textgr\xF6\xDFe"
+    m_Localized: "Schriftgr\xF6\xDFe"
     m_Metadata:
       m_Items: []
   - m_Id: 39878840065974272
@@ -306,7 +310,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39879128504066048
-    m_Localized: Klang
+    m_Localized: Ton
     m_Metadata:
       m_Items: []
   - m_Id: 39879174494609408
@@ -314,7 +318,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39892766241579008
-    m_Localized: Hell
+    m_Localized: Licht
     m_Metadata:
       m_Items: []
   - m_Id: 39892875138293760
@@ -350,7 +354,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895644041633792
-    m_Localized: Polieren
+    m_Localized: Polnisch
     m_Metadata:
       m_Items: []
   - m_Id: 39895706960388096
@@ -362,7 +366,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897152762142720
-    m_Localized: klein
+    m_Localized: Klein
     m_Metadata:
       m_Items: []
   - m_Id: 39897194361249792
@@ -374,7 +378,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897565464879104
-    m_Localized: An
+    m_Localized: Am
     m_Metadata:
       m_Items: []
   - m_Id: 39897588734877696
@@ -446,7 +450,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910325154209792
-    m_Localized: Speisekammer
+    m_Localized: Vorratskammer
     m_Metadata:
       m_Items: []
   - m_Id: 39910356015898624
@@ -478,7 +482,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915502649204736
-    m_Localized: "Ihr Ern\xE4hrungs-Wissensstand"
+    m_Localized: "Ihr Ern\xE4hrungsintelligenz-Status"
     m_Metadata:
       m_Items: []
   - m_Id: 39915588338835456
@@ -526,16 +530,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 40270634402439168
-    m_Localized: Diese Informationen helfen uns dabei, Ihr Nutzungserlebnis zu personalisieren
+    m_Localized: Diese Informationen helfen uns dabei, Ihr Erlebnis individuell anzupassen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000001
-    m_Localized: "E-Mail gesendet. Bitte \xFCberpr\xFCfen Sie Ihren Posteingang."
+    m_Localized: Die E-Mail wurde gesendet. Bitte sehen Sie in Ihrem Posteingang
+      nach.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000002
-    m_Localized: "E-Mail zum Zur\xFCcksetzen des Passworts konnte nicht gesendet
-      werden. Bitte erneut versuchen."
+    m_Localized: "Die E-Mail zum Zur\xFCcksetzen konnte nicht gesendet werden. Bitte
+      versuchen Sie es erneut."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000003
@@ -543,7 +548,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000004
-    m_Localized: Mahlzeit protokollieren
+    m_Localized: Tagesbericht
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000005
@@ -551,7 +556,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000006
-    m_Localized: Gerichte suchen
+    m_Localized: Gerichte suchen...
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000007
@@ -563,28 +568,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000009
-    m_Localized: Aus der Vorratskammer
+    m_Localized: Aus der Speisekammer
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000010
-    m_Localized: "ausw\xE4rts gegessen"
+    m_Localized: "Ausw\xE4rts gegessen"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000011
-    m_Localized: "W\xE4hlen Sie die Artikel aus, die aus dem Vorratsschrank abgezogen
+    m_Localized: "W\xE4hlen Sie Artikel aus, die aus der Vorratskammer abgezogen
       werden sollen"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000012
-    m_Localized: Mahlzeit protokollieren
+    m_Localized: Tagebucheintrag
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000013
-    m_Localized: Holzabfall
+    m_Localized: "Holzabf\xE4lle"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000014
-    m_Localized: Lebensmittelvorrat
+    m_Localized: Vorratsartikel
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000015
@@ -592,11 +597,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
-    m_Localized: Verschwendeter Grund
+    m_Localized: Unsinniger Grund
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000017
-    m_Localized: Erkennungsmethode
+    m_Localized: Nachweismethode
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000018
@@ -604,7 +609,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000019
-    m_Localized: Notizen
+    m_Localized: Anmerkungen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000020
@@ -612,15 +617,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000021
-    m_Localized: Elemente filtern
+    m_Localized: Artikel filtern...
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
-    m_Localized: In den Abfall geben
+    m_Localized: "In den M\xFCll werfen"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000023
-    m_Localized: "Ihre Vorratskammer ist leer. Tippen Sie auf +, um Artikel hinzuzuf\xFCgen."
+    m_Localized: "Deine Vorratskammer ist leer. Tippe auf \u201E+\u201C, um Artikel
+      hinzuzuf\xFCgen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000024
@@ -628,17 +634,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000025
-    m_Localized: "Es wurden noch keine Abf\xE4lle erfasst. Tippen Sie auf +, um Abf\xE4lle
-      zu erfassen."
+    m_Localized: "Es wurde noch kein Abfall erfasst. Tippen Sie auf \u201E+\u201C,
+      um Abfall zu erfassen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000026
-    m_Localized: "Ern\xE4hrungstagebuch"
+    m_Localized: Essensprotokoll
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000027
-    m_Localized: Es wurden noch keine Mahlzeiten erfasst. Tippen Sie auf +, um Ihre
-      erste Mahlzeit zu erfassen.
+    m_Localized: "Es wurden noch keine Mahlzeiten erfasst. Tippe auf \u201E+\u201C,
+      um deine erste Mahlzeit zu erfassen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000028
@@ -659,12 +665,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000032
-    m_Localized: Erledigt
+    m_Localized: Fertig
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: "Es sind noch keine Elemente vorhanden. Tippen Sie auf +, um Elemente
-      hinzuzuf\xFCgen."
+    m_Localized: "Noch keine Artikel. Tippen Sie auf \u201E+\u201C, um Artikel hinzuzuf\xFCgen."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -672,7 +677,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000035
-    m_Localized: Menge
+    m_Localized: Anzahl
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000036
@@ -680,7 +685,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000037
-    m_Localized: Ort
+    m_Localized: Standort
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
@@ -696,7 +701,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000041
-    m_Localized: "Aktivit\xE4tslevel"
+    m_Localized: "Aktivit\xE4tsniveau"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000042
@@ -708,7 +713,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000044
-    m_Localized: Verantwortungsvolles Einkaufen
+    m_Localized: Verantwortungsbewusstes Einkaufen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000045
@@ -716,7 +721,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000046
-    m_Localized: "J\xE4hrliches Einkommen"
+    m_Localized: Jahreseinkommen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -724,11 +729,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000048
-    m_Localized: Speichern und fortfahren
+    m_Localized: Speichern und weiter
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000049
-    m_Localized: Ohne Speichern beenden
+    m_Localized: Beenden ohne zu speichern
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000050
@@ -736,7 +741,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000051
-    m_Localized: "Kalorien, CO2-Fu\xDFabdruck, Ausgaben, Proteine"
+    m_Localized: "Kalorien, CO\u2082-Fu\xDFabdruck, Ausgaben, Proteine"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
@@ -748,7 +753,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000054
-    m_Localized: "\"{0}\" l\xF6schen?"
+    m_Localized: "\u201E{0}\u201C l\xF6schen?"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000055
@@ -760,7 +765,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000057
-    m_Localized: "Eintrag zum Abfall l\xF6schen"
+    m_Localized: "Abfallbuchung l\xF6schen"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -772,7 +777,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000060
-    m_Localized: "Element hinzuf\xFCgen"
+    m_Localized: "Artikel hinzuf\xFCgen"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000061
@@ -788,27 +793,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000064
-    m_Localized: '{0} Artikel in den Papierkorb verschoben'
+    m_Localized: '{0} Artikel in den Abfall verschoben'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000065
-    m_Localized: '{0} Elemente wurden in den Papierkorb verschoben'
+    m_Localized: '{0} Artikel wurden in den Abfall verschoben'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000066
-    m_Localized: Listenname
+    m_Localized: Name der Liste
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000067
-    m_Localized: Menge
+    m_Localized: Anzahl
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000068
-    m_Localized: Ansehen
+    m_Localized: Anzeigen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
-    m_Localized: "W\xE4hlen Sie zuerst einen Artikel aus."
+    m_Localized: "W\xE4hlen Sie zun\xE4chst einen Artikel aus."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000070
@@ -824,12 +829,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000073
-    m_Localized: "Ein abgelaufenes Produkt in den Biom\xFCll verschieben?"
+    m_Localized: 1 abgelaufenen Artikel in den Lebensmittelabfall werfen?
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000074
-    m_Localized: "Sollen die {0} abgelaufenen Artikel in den Biom\xFCll verschoben
-      werden?"
+    m_Localized: '{0} abgelaufene Artikel in den Lebensmittelabfall geben?'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000075
@@ -837,16 +841,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000076
-    m_Localized: "Die Suche nach Rezepten war nicht m\xF6glich. Bitte \xFCberpr\xFCfen
-      Sie Ihre Verbindung."
+    m_Localized: "Die Suche nach Gerichten war nicht m\xF6glich. Bitte \xFCberpr\xFCfen
+      Sie Ihre Internetverbindung."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000077
-    m_Localized: Geben Sie einen Gerichtnamen ein
+    m_Localized: Geben Sie den Namen einer Mahlzeit ein
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000078
-    m_Localized: Mahlzeit konnte nicht erstellt werden
+    m_Localized: Mahlzeit konnte nicht angelegt werden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000079
@@ -854,24 +858,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000080
-    m_Localized: "Art der Mahlzeit ausw\xE4hlen"
+    m_Localized: "W\xE4hlen Sie die Art der Mahlzeit aus"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000081
-    m_Localized: Die Mahlzeit konnte nicht protokolliert werden
+    m_Localized: Die Mahlzeit konnte nicht erfasst werden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000082
-    m_Localized: "Mahlzeit erfasst, aber die Vorratsliste konnte nicht aktualisiert
-      werden. Bitte \xFCberpr\xFCfen Sie Ihre Vorratsposten."
+    m_Localized: "Die Mahlzeit wurde erfasst, aber die Vorratsliste konnte nicht
+      aktualisiert werden. Bitte \xFCberpr\xFCfen Sie Ihre Vorratsartikel."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000083
-    m_Localized: Fehler beim Laden des Essensprotokolls
+    m_Localized: "Fehler beim Laden des Ern\xE4hrungsprotokolls"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000084
-    m_Localized: "W\xE4hlen Sie zuerst einen Artikel aus dem Vorratsschrank aus"
+    m_Localized: "W\xE4hlen Sie zun\xE4chst ein Produkt aus dem Vorratsschrank aus"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
@@ -879,16 +883,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000086
-    m_Localized: Abfalleintrag konnte nicht gespeichert werden
+    m_Localized: Der Abfall-Eintrag konnte nicht gespeichert werden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000087
-    m_Localized: Aktualisierung fehlgeschlagen. Es werden zwischengespeicherte Daten
-      angezeigt.
+    m_Localized: Die Aktualisierung ist fehlgeschlagen. Es werden zwischengespeicherte
+      Daten angezeigt.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
-    m_Localized: "Fehler beim Laden des Protokolls f\xFCr Lebensmittelabf\xE4lle"
+    m_Localized: Fehler beim Laden des Lebensmittelabfallprotokolls
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000089
@@ -896,28 +900,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000090
-    m_Localized: Artikel konnte nicht gespeichert werden
+    m_Localized: Element konnte nicht gespeichert werden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000091
-    m_Localized: Fehler beim Laden des Vorratsschranks
+    m_Localized: Fehler beim Laden der Vorratskammer
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000092
-    m_Localized: 'Fehler beim Importieren von Lebensmitteln: {0}'
+    m_Localized: 'Der Import der Lebensmittel ist fehlgeschlagen: {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000093
-    m_Localized: "Artikel konnte nicht hinzugef\xFCgt werden: M\xF6glicherweise fehlen
-      dem Produkt erforderliche Daten"
+    m_Localized: "Artikel konnte nicht hinzugef\xFCgt werden: Dem Produkt fehlen
+      m\xF6glicherweise erforderliche Angaben"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000094
-    m_Localized: "Kategorieelement konnte nicht hinzugef\xFCgt werden"
+    m_Localized: "Kategorieeintrag konnte nicht hinzugef\xFCgt werden"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000095
-    m_Localized: Automatisch erkanntes, abgelaufenes Produkt
+    m_Localized: Automatisch erkannter abgelaufener Artikel
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -925,7 +929,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000097
-    m_Localized: Elemente konnten nicht geladen werden
+    m_Localized: Die Elemente konnten nicht geladen werden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000098
@@ -933,7 +937,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000099
-    m_Localized: "Artikel konnte nicht hinzugef\xFCgt werden"
+    m_Localized: "Der Artikel konnte nicht hinzugef\xFCgt werden"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000100
@@ -941,11 +945,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000101
-    m_Localized: "Der Artikel konnte nicht zur Liste hinzugef\xFCgt werden"
+    m_Localized: "Der Eintrag konnte nicht zur Liste hinzugef\xFCgt werden"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000102
-    m_Localized: Artikel konnte nicht aktualisiert werden
+    m_Localized: Der Eintrag konnte nicht aktualisiert werden
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000103
@@ -973,15 +977,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000109
-    m_Localized: Einladungscode erforderlich
+    m_Localized: Ein Einladungscode ist erforderlich
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000110
-    m_Localized: "Ung\xFCltiger Einladungscode oder Sie sind bereits Mitglied"
+    m_Localized: "Ung\xFCltiger Einladungscode oder bereits Mitglied"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000111
-    m_Localized: Name ist erforderlich
+    m_Localized: Der Name ist ein Pflichtfeld
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000112
@@ -993,11 +997,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000114
-    m_Localized: Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.
+    m_Localized: Die Anmeldung ist fehlgeschlagen. Bitte versuchen Sie es erneut.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000115
-    m_Localized: "Sie m\xFCssen die Allgemeinen Gesch\xE4ftsbedingungen akzeptieren"
+    m_Localized: "Sie m\xFCssen die Allgemeinen Gesch\xE4ftsbedingungen akzeptieren."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000116
@@ -1005,7 +1009,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000117
-    m_Localized: Daten konnten nicht geladen werden. Bitte versuchen Sie es erneut.
+    m_Localized: Die Daten konnten nicht geladen werden. Bitte versuchen Sie es erneut.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000118
@@ -1013,7 +1017,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000119
-    m_Localized: Profil konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.
+    m_Localized: Das Profil konnte nicht gespeichert werden. Bitte versuchen Sie
+      es erneut.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000120
@@ -1021,7 +1026,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000121
-    m_Localized: Ein unerwarteter Fehler ist aufgetreten
+    m_Localized: Es ist ein unerwarteter Fehler aufgetreten.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000122
@@ -1053,15 +1058,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985732
-    m_Localized: Andere
+    m_Localized: Sonstiges
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985733
-    m_Localized: abgelaufen
+    m_Localized: Abgelaufen
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985734
-    m_Localized: verdorben
+    m_Localized: "Verw\xF6hnt"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985735
@@ -1069,15 +1074,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985736
-    m_Localized: "unerw\xFCnscht"
+    m_Localized: "Unerw\xFCnscht"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985737
-    m_Localized: "Portionsgr\xF6\xDFe zu gro\xDF"
+    m_Localized: "Die Portion ist zu gro\xDF"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985738
-    m_Localized: Andere
+    m_Localized: Sonstiges
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985739
@@ -1109,7 +1114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985746
-    m_Localized: Tassen
+    m_Localized: Becher
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985747
@@ -1121,7 +1126,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985749
-    m_Localized: Speiseschrankregal
+    m_Localized: Regal in der Speisekammer
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985750
@@ -1133,7 +1138,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985752
-    m_Localized: Lade die Sprachdateien...
+    m_Localized: Lokalisierungen werden geladen...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
@@ -1145,7 +1150,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985755
-    m_Localized: "Element hinzuf\xFCgen"
+    m_Localized: "Artikel hinzuf\xFCgen"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986000
@@ -1153,7 +1158,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986001
-    m_Localized: Bisher keine Gruppen.
+    m_Localized: Noch keine Gruppen.
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986002
@@ -1161,7 +1166,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986003
-    m_Localized: Gruppe beitreten
+    m_Localized: Der Gruppe beitreten
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986004
@@ -1181,7 +1186,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986008
-    m_Localized: Verbinde...
+    m_Localized: Beitritt...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986009
@@ -1197,7 +1202,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
-    m_Localized: Erneuern
+    m_Localized: Regenerieren
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986013
@@ -1213,23 +1218,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986016
-    m_Localized: Mache ihn/sie zum Administrator
+    m_Localized: Als Administrator festlegen
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986017
-    m_Localized: "Sind Sie sicher, dass Sie diese Gruppe verlassen m\xF6chten?"
+    m_Localized: "M\xF6chtest du diese Gruppe wirklich verlassen?"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986018
-    m_Localized: "Sind Sie sicher, dass Sie diese Gruppe l\xF6schen m\xF6chten?"
+    m_Localized: "M\xF6chten Sie diese Gruppe wirklich l\xF6schen?"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986019
-    m_Localized: Administrator
+    m_Localized: Admin
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986020
-    m_Localized: virtuell
+    m_Localized: Virtuell
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986021
@@ -1249,8 +1254,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986025
-    m_Localized: Erstellen oder treten Sie einer Gruppe bei, um Einkaufslisten mit
-      Ihrer Familie zu teilen und den Fortschritt zu verfolgen.
+    m_Localized: "Erstelle eine Gruppe oder schlie\xDFe dich einer an, um Einkaufslisten
+      und Fortschritte mit deiner Familie zu teilen."
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986026
@@ -1258,11 +1263,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986027
-    m_Localized: Bestehender Gruppe beitreten
+    m_Localized: Einer bestehenden Gruppe beitreten
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986028
-    m_Localized: "\xDCberspringen Sie dies vorerst"
+    m_Localized: "Vorerst \xFCberspringen"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986029
@@ -1270,7 +1275,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986030
-    m_Localized: Gruppe beigetreten!
+    m_Localized: Der Gruppe beigetreten!
     m_Metadata:
       m_Items: []
   - m_Id: 319685458386944
@@ -1282,7 +1287,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1352600405401600
-    m_Localized: Es wird nach Updates gesucht...
+    m_Localized: Nach Updates suchen...
     m_Metadata:
       m_Items: []
   - m_Id: 1674160731316224
@@ -1290,7 +1295,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1674295611744256
-    m_Localized: "Eine neue Version ist verf\xFCgbar."
+    m_Localized: "Es ist eine neue Version verf\xFCgbar."
     m_Metadata:
       m_Items: []
   - m_Id: 1674465741103104
@@ -1298,7 +1303,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1675915250622464
-    m_Localized: Aktualisieren
+    m_Localized: Aktualisierung
     m_Metadata:
       m_Items: []
   - m_Id: 1675915254816768
@@ -1306,7 +1311,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3882568704319488
-    m_Localized: Einkaufsliste
+    m_Localized: "\U0001F4DD Einkaufsliste"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026047336448
@@ -1326,7 +1331,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530755
-    m_Localized: Aufschnitt von kaltem Fleisch
+    m_Localized: Aufschnitt
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530756
@@ -1362,7 +1367,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530764
-    m_Localized: Fleischersatzprodukte und Milchalternativen
+    m_Localized: Fleischersatzprodukte und Milchersatzprodukte
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530765
@@ -1378,7 +1383,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530768
-    m_Localized: "alkoholfreie Getr\xE4nke"
+    m_Localized: "Alkoholfreie Getr\xE4nke"
     m_Metadata:
       m_Items: []
   - m_Id: 6145026051530769
@@ -1418,11 +1423,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6413218154012672
-    m_Localized: Keine Ergebnisse gefunden
+    m_Localized: Es wurden keine Ergebnisse gefunden
     m_Metadata:
       m_Items: []
   - m_Id: 7834217718210560
-    m_Localized: Allgemeine Lebensmittel
+    m_Localized: No-Name-Lebensmittel
     m_Metadata:
       m_Items: []
   - m_Id: 7834734070587392
@@ -1430,12 +1435,41 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7835105786585088
-    m_Localized: "Allgemeines Lebensmittel nicht verf\xFCgbar"
+    m_Localized: "Generische Lebensmittel nicht verf\xFCgbar"
     m_Metadata:
       m_Items: []
   - m_Id: 7835562022002688
-    m_Localized: "Dieses allgemeine Lebensmittel ist in der Backend-Datenbank f\xFCr
+    m_Localized: "Dieses generische Lebensmittel ist in der Backend-Datenbank f\xFCr
       diese Umgebung nicht verf\xFCgbar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798748049989632
+    m_Localized: Backend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798836050681856
+    m_Localized: API-URL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798909413253120
+    m_Localized: App-Version
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6798978623463424
+    m_Localized: "Umgebung \xE4ndern"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6800027757305856
+    m_Localized: "Durch das \xC4ndern der Umgebung werden Sie abgemeldet. Sind Sie
+      sicher?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120235996012544
+    m_Localized: Aus der Speisekammer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120384667312128
+    m_Localized: "Ausw\xE4rts gegessen"
     m_Metadata:
       m_Items: []
   references:

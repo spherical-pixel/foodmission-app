@@ -125,7 +125,7 @@ namespace eu.foodmission.platform
             SubscribeToScreenReaderStatus();
             TryActivateAccessibility();
 
-            appBar.showDrawerButton = false;
+            //appBar.showDrawerButton = false;
         }
 
         /// <summary>

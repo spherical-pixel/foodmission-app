@@ -1465,6 +1465,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 18736389118570496
     m_Key: Shoes
+  - m_Id: 14120235996012544
+    m_Key: From_Pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14120384667312128
+    m_Key: Eaten_Out
     m_Metadata:
       m_Items: []
   m_Metadata:

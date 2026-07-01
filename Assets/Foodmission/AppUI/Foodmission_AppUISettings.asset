@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb967f5a24a54604901b45e4e09c426d, type: 3}
   m_Name: Foodmission_AppUISettings
   m_EditorClassIdentifier: Unity.AppUI::Unity.AppUI.Core.AppUISettings
-  m_AutoCorrectUiScale: 1
+  m_AutoCorrectUiScale: 0
   m_UseCustomEditorUpdateFrequency: 0
   m_EditorUpdateFrequency: 60
   m_AutoOverrideAndroidManifest: 1

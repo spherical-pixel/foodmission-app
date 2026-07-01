@@ -695,7 +695,7 @@ namespace eu.foodmission.platform
 
             _profileDrawer = drawer;
             _profileDrawer.Clear();
-            _profileDrawer.swipeAreaWidth = 0;
+            //_profileDrawer.swipeAreaWidth = 0;
             BuildDrawerContent(_profileDrawer);
             _profileDrawer.opened += OnDrawerOpened;
         }

@@ -1,103 +1,110 @@
-.fm-ml-root {
-    flex-grow: 1;
+/* Step visibility */
+.fm-ml-step {
+    display: none;
     flex-direction: column;
-    padding: 16px;
 }
 
-.fm-ml-header {
-    margin-bottom: 16px;
-}
-
-.fm-ml-error {
-    color: var(--appui-color-danger-500);
-    align-self: center;
-    margin-top: 16px;
-    display: none;
-}
-
-.fm-ml-error.visible {
+.fm-ml-step.visible {
     display: flex;
 }
 
-.fm-ml-empty {
-    align-self: center;
-    margin-top: 48px;
-    opacity: 0.5;
-    display: none;
+/* Step heading */
+.fm-ml-step-heading {
+    margin-bottom: 12px;
 }
 
-.fm-ml-empty.visible {
+/* Step buttons container */
+.fm-ml-step-buttons {
+    flex-direction: column;
+}
+
+/* Back inline */
+.fm-ml-back-inline {
+    display: none;
+    /*font-size: var(--appui-font-sizes-body-md);*/
+    color: var(--appui-primary-100);
+    margin-bottom: 8px;
+    padding: 0;
+    min-height: auto;
+    background-color: transparent;
+    
+}
+
+.fm-ml-back-inline .appui-icon {
+    --unity-image-tint-color: var(--appui-primary-100);
+}
+
+.fm-ml-back-inline.visible {
     display: flex;
 }
 
-.fm-ml-scroll {
-    flex-grow: 1;
+.fm-ml-back-inline:hover {
+    opacity: 0.8;
+}
+
+/* Logged meals zone */
+.fm-ml-logged-zone {
+    display: none;
+    flex-direction: column;
+    margin-top: 24px;
+}
+
+.fm-ml-logged-zone.visible {
+    display: flex;
+}
+
+.fm-ml-meals-list {
+    flex-direction: column;
+    margin-top: 12px;
+}
+
+/* Preset results */
+.fm-ml-preset-results {
+    flex-direction: column;
     margin-bottom: 8px;
 }
 
-.fm-ml-container {
-    flex-grow: 1;
+/* Selected items */
+.fm-ml-selected-chips {
     flex-direction: column;
+    margin: 8px 0;
+    gap: 4px;
 }
 
-.fm-ml-fab {
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
+.fm-ml-selected-chips > * {
+    margin: 2px 0;
 }
 
-.fm-ml-section-header {
-    font-size: var(--appui-font-sizes-body-sm);
-    font-weight: var(--appui-font-weight-bold);
-    text-transform: uppercase;
-    opacity: 0.6;
-    padding: 8px 8px 4px;
+/* Preset card accent border */
+.fm-ml-chip-preset {
+    border-color: var(--appui-color-accent);
+    border-width: 1px;
+}
+
+/* Log button */
+.fm-ml-log-btn {
     margin-top: 8px;
+    align-self: flex-end;
 }
 
-.fm-ml-row {
-    flex-direction: row;
-    align-items: center;
-    padding: 12px 8px;
-    border-bottom-width: 1px;
-    border-bottom-color: rgba(128, 128, 128, 0.2);
-}
-
-.fm-ml-row:active {
-    background-color: rgb(var(--fm-color-surface-pressed));
-}
-
-.fm-ml-row-info {
-    flex-grow: 1;
-    flex-direction: column;
-    margin-left: 8px;
-}
-
-.fm-ml-row-name {
+/* Meal card badge */
+.fm-ml-card-badge {
+    /*color: var(--appui-base-100);*/
     font-size: var(--appui-font-sizes-body-md);
-}
-
-.fm-ml-row-time {
-    font-size: var(--appui-font-sizes-body-sm);
-    opacity: 0.7;
-}
-
-.fm-ml-row-badge {
-    font-size: var(--appui-font-sizes-body-sm);
     padding: 2px 8px;
     border-radius: 4px;
-    margin-left: 8px;
+    margin-top: 8px;
+    align-self: flex-start;
 }
 
-.fm-ml-row-badge--pantry {
-    background-color: var(--appui-color-danger-100);
-    color: var(--appui-color-danger-700);
+.fm-ml-card-badge--pantry {
+    background-color: var(--appui-destructive-25);
+    color: var(--appui-destructive-300);
 }
 
-.fm-ml-row-badge--out {
-    background-color: var(--appui-color-warning-100);
-    color: var(--appui-color-warning-700);
+.fm-ml-card-badge--out {
+    background-color: var(--appui-warning-25);
+    color: var(--appui-warning-300);
 }
+
+
