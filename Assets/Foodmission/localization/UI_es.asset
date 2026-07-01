@@ -1435,6 +1435,46 @@ MonoBehaviour:
       del backend para este entorno."
     m_Metadata:
       m_Items: []
+  - m_Id: 18736000059125760
+    m_Localized: Pelo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736120376930304
+    m_Localized: Cejas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736148403269632
+    m_Localized: Ojos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736209866600448
+    m_Localized: Nariz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736222906691584
+    m_Localized: Boca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736267513114624
+    m_Localized: Pelo facial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736302107734016
+    m_Localized: Piel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736328280190976
+    m_Localized: Camiseta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736361163534336
+    m_Localized: Pantalones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736389118570496
+    m_Localized: Zapatos
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
