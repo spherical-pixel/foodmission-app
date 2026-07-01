@@ -57,9 +57,6 @@
     align-items: flex-start;
 }
 
-.fm-button-avatar {
-}
-
 .fm-button-avatar-list {
     flex-direction: row;
     align-content: center;
@@ -791,9 +788,8 @@
 }
 
 .box-background {
-    background-color: var(--fm-surface-bg-transparent);
+    --background-color: var(--fm-surface-bg-transparent);
     border-radius: 35px;
-    border-width: 1px;
     padding: 25px;
 }
 
@@ -810,11 +806,29 @@
 }
 
 .fm-button-shadow {
-    --box-shadow-offset-y: 10;
-    --box-shadow-offset-x: 10;
-    --box-shadow-spread: 20;
+    --box-shadow-offset-y: 5;
+    --box-shadow-offset-x: 5;
+    --box-shadow-spread: 15;
+    --box-shadow-blur: 20;
+    --box-shadow-color: rgba(0, 0, 0, 0.95);
+}
+
+.fm-shadow-wrapper {
+    --box-shadow-offset-y: 0;
+    --box-shadow-offset-x: 0;
+    --box-shadow-spread: 30;
     --box-shadow-blur: 30;
     --box-shadow-color: rgba(0, 0, 0, 0.65);
+    --box-shadow-type: 0; /* 0 = outset */
+}
+
+.fm-inner-shadow-wrapper {
+    --box-shadow-offset-y: -2;
+    --box-shadow-offset-x: -2;
+    --box-shadow-spread: 10;
+    --box-shadow-blur: 30;
+    --box-shadow-color: rgba(255, 255, 255, 0.65);
+    --box-shadow-type: 1; /* 1 = inset */
 }
 
 .appui-drawer .appui-button,

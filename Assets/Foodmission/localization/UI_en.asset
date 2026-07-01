@@ -1470,6 +1470,44 @@ MonoBehaviour:
       environment.
     m_Metadata:
       m_Items: []
+  - m_Id: 18736000059125760
+    m_Localized: Hair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736120376930304
+    m_Localized: Eyebrows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736148403269632
+    m_Localized: Eyes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736209866600448
+    m_Localized: Nose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736222906691584
+    m_Localized: Mouth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736267513114624
+    m_Localized: Facial hair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736302107734016
+    m_Localized: Skin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736328280190976
+    m_Localized: T-shirt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736361163534336
+    m_Localized: Trousers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736389118570496
+    m_Localized: Shoes
   - m_Id: 14120235996012544
     m_Localized: From Pantry
     m_Metadata:

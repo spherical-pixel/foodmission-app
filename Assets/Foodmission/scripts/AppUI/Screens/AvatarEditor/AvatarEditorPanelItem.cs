@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.AppUI.MVVM;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -51,7 +52,8 @@ namespace eu.foodmission.platform
             _avatarService = avatarService;
             _configSnapshot = avatarService.GetCurrentAvatarConfig?.Copy();
             _editingConfig = avatarService.GetCurrentAvatarConfig?.Copy();
-            _heading.text = itemEnum.ToString();
+            var localizedString = new LocalizedString("UI", itemEnum.ToString());
+            _heading.text = localizedString.GetLocalizedString();
 
             PrepareButtonsForItem();
         }
@@ -153,7 +155,7 @@ namespace eu.foodmission.platform
                 int partIndex = i;
                 bool isSelected = partIndex == targetPart.idPart;
 
-                var partBtn = CreatePartOption(partIndex, isSelected,_itemEnum);
+                var partBtn = CreatePartOption(partIndex, isSelected, _itemEnum);
                 partBtn.clicked += () => OnPartSelected(partIndex);
                 _scrollParts?.Add(partBtn);
             }
@@ -172,7 +174,7 @@ namespace eu.foodmission.platform
             {
                 if (_btLeftParts != null) _btLeftParts.style.display = DisplayStyle.None;
                 if (_btRightParts != null) _btRightParts.style.display = DisplayStyle.None;
-                if( _selectorParts != null) _selectorParts.style.display = DisplayStyle.None;
+                if (_selectorParts != null) _selectorParts.style.display = DisplayStyle.None;
             }
 
             if (_itemEnum == AvatarEditorItemEnum.Mouth || _itemEnum == AvatarEditorItemEnum.Nose)
@@ -267,20 +269,20 @@ namespace eu.foodmission.platform
 
         // --- UI element builders ---
 
-        private static Unity.AppUI.UI.Button CreatePartOption(int index, bool selected,AvatarEditorItemEnum itemEnum)
+        private static Unity.AppUI.UI.Button CreatePartOption(int index, bool selected, AvatarEditorItemEnum itemEnum)
         {
             var btn = new Unity.AppUI.UI.Button();
 
-            if ( index == 0)
+            if (index == 0)
             {
                 btn.leadingIcon = "fm-item-none";
             }
             else
             {
-                btn.leadingIcon = "fm-icon-"+ itemEnum.ToString().ToLowerInvariant()+"-"+index.ToString();
+                btn.leadingIcon = "fm-icon-" + itemEnum.ToString().ToLowerInvariant() + "-" + index.ToString();
             }
             btn.variant = Unity.AppUI.UI.ButtonVariant.Accent;
-            
+
             btn.AddToClassList("fm-button-avatar-scroll");
             if (selected) btn.AddToClassList("option-selected");
             return btn;

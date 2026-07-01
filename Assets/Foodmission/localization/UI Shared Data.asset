@@ -1427,6 +1427,44 @@ MonoBehaviour:
     m_Key: GENERIC_FOOD_NOT_AVAILABLE_DESC
     m_Metadata:
       m_Items: []
+  - m_Id: 18736000059125760
+    m_Key: Hair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736120376930304
+    m_Key: Eyebrows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736148403269632
+    m_Key: Eyes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736209866600448
+    m_Key: Nose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736222906691584
+    m_Key: Mouth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736267513114624
+    m_Key: FacialHair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736302107734016
+    m_Key: Skin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736328280190976
+    m_Key: Tshirt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736361163534336
+    m_Key: Trousers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736389118570496
+    m_Key: Shoes
   - m_Id: 14120235996012544
     m_Key: From_Pantry
     m_Metadata:
