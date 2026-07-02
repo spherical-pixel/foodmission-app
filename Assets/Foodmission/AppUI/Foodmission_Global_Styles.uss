@@ -1036,3 +1036,25 @@
 .fm-meal-card-text {
     color: var(--appui-foregrounds-50);
 }
+
+/* ── Navigation Rail ── */
+
+.appui-navigation-rail {
+    background-color: var(--appui-backgrounds-100);
+    border-right: 1px solid var(--appui-backgrounds-300);
+    z-index: 2;
+    justify-content: flex-start;
+    width: 180px;
+}
+
+.appui-navigation-rail__leading-container {
+    padding: var(--appui-spacing-150) var(--appui-alias-control-gap-sm);
+}
+
+.appui-navigation-rail-item {
+    padding: var(--appui-spacing-100) var(--appui-spacing-50);
+}
+
+.appui-navigation-rail-item__icon {
+    font-size: var(--appui-sizing-500);
+}

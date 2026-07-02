@@ -11,8 +11,10 @@ using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
 {
-    public class FoodmissionVisualController : INavVisualController
+    public class FoodmissionVisualController : INavVisualController, IDisposable
     {
+        private const float k_RailBreakpoint = 768f;
+
         private Drawer _profileDrawer;
         private VisualElement _menuBackdrop;
         private VisualElement _menuPanel;
@@ -28,6 +30,14 @@ namespace eu.foodmission.platform
         private VisualTreeAsset _notificationCardTemplate;
         private NavController _cachedNavController;
         private TextElement _userNameLabel;
+
+        private BottomNavBar _cachedBottomNavBar;
+        private NavigationRail _cachedNavigationRail;
+        private string _currentDestinationName;
+        private bool _navResizeRegistered;
+        private float _railBaselineWidth;
+        private bool _railBaselineWidthSet;
+        private bool _safeAreaSubscribed;
 
         // --------------------------------------------------------------------
         // Profile Drawer
@@ -593,8 +603,25 @@ namespace eu.foodmission.platform
 
         public void SetupBottomNavBar(BottomNavBar bottomNavBar, NavDestination destination, NavController navController)
         {
+            RegisterSafeAreaCallback();
+            _cachedBottomNavBar = bottomNavBar;
             _cachedNavController = navController;
+            _currentDestinationName = destination.name;
+            _cachedNavigationRail = bottomNavBar.GetFirstAncestorOfType<NavigationScreen>()?.navigationRail;
+            _railBaselineWidth = 0f;
+            _railBaselineWidthSet = false;
+
             bottomNavBar.Clear();
+
+            if (!BottomNavBarHelper.IsNavBarVisible(destination.name))
+            {
+                bottomNavBar.style.display = DisplayStyle.None;
+                if (_cachedNavigationRail != null)
+                    _cachedNavigationRail.style.display = DisplayStyle.None;
+                return;
+            }
+
+            bottomNavBar.style.display = DisplayStyle.Flex;
 
             var activeTab = BottomNavBarHelper.GetActiveTab(destination.name);
 
@@ -616,6 +643,10 @@ namespace eu.foodmission.platform
             profileItem.isSelected = false;
             profileItem.AddToClassList("no-tint");
             bottomNavBar.Add(profileItem);
+
+            PopulateNavigationRail(activeTab, navController);
+            RegisterNavResizeListener(bottomNavBar);
+            bottomNavBar.schedule.Execute(UpdateNavVisibility).StartingIn(1);
         }
 
         public void SetupAppBar(AppBar appBar, NavDestination destination, NavController navController)
@@ -702,7 +733,71 @@ namespace eu.foodmission.platform
 
         public void SetupNavigationRail(NavigationRail navigationRail, NavDestination destination, NavController navController)
         {
-            // Empty by now
+            RegisterSafeAreaCallback();
+            _cachedNavigationRail = navigationRail;
+            _cachedNavController = navController;
+            _currentDestinationName = destination.name;
+            _railBaselineWidth = 0f;
+            _railBaselineWidthSet = false;
+
+            if (!BottomNavBarHelper.IsNavBarVisible(destination.name))
+            {
+                navigationRail.style.display = DisplayStyle.None;
+                navigationRail.schedule.Execute(() => UpdateRailScreenClass(false)).StartingIn(1);
+                return;
+            }
+
+            var activeTab = BottomNavBarHelper.GetActiveTab(destination.name);
+            PopulateNavigationRail(activeTab, navController);
+            RegisterNavResizeListener(navigationRail);
+            navigationRail.schedule.Execute(UpdateNavVisibility).StartingIn(1);
+        }
+
+        private void PopulateNavigationRail(NavTab activeTab, NavController navController)
+        {
+            if (_cachedNavigationRail == null) return;
+
+            _cachedNavigationRail.Clear();
+            _cachedNavigationRail.anchor = NavigationRailAnchor.Start;
+            _cachedNavigationRail.labelType = LabelType.All;
+            _cachedNavigationRail.groupAlignment = GroupAlignment.Start;
+
+            AddNavRailItem(_cachedNavigationRail, "fm-home",     "@UI:NAV_HOME",     activeTab == NavTab.Home,    navController, Actions.go_to_home);
+            AddNavRailItem(_cachedNavigationRail, "fm-meal-log", "@UI:NAV_MEAL_LOG", activeTab == NavTab.MealLog, navController, Actions.go_to_meallog);
+
+            // Notifications — toggles bottom sheet
+            var notificationsItem = new NavigationRailItem
+            {
+                icon = "fm-notifications",
+                label = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NAV_NOTIFICATIONS"),
+                selected = activeTab == NavTab.Notifications
+            };
+            notificationsItem.clickable.clicked += ToggleNotificationsPanel;
+            _cachedNavigationRail.Add(notificationsItem);
+
+            // Menu — toggles bottom sheet
+            var menuItem = new NavigationRailItem
+            {
+                icon = "fm-menu",
+                label = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NAV_MENU"),
+                selected = activeTab == NavTab.Menu
+            };
+            menuItem.clickable.clicked += ToggleMenuDrawer;
+            _cachedNavigationRail.Add(menuItem);
+
+            // Profile — toggles drawer
+            var profileItem = new NavigationRailItem
+            {
+                icon = "fm-avatar",
+                label = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NAV_PROFILE"),
+                selected = false
+            };
+            profileItem.clickable.clicked += () => _profileDrawer?.Toggle();
+            _cachedNavigationRail.Add(profileItem);
+
+            // Extend rail into safe areas so its background covers notch/home indicator
+            // while items are padded inward to avoid them
+            ApplyRailSafeArea();
         }
 
         // --------------------------------------------------------------------
@@ -728,6 +823,160 @@ namespace eu.foodmission.platform
             }
 
             bottomNavBar.Add(item);
+        }
+
+        static void AddNavRailItem(
+            NavigationRail navigationRail,
+            string iconName,
+            string label,
+            bool isSelected,
+            NavController navController,
+            string action)
+        {
+            var item = new NavigationRailItem
+            {
+                icon = iconName,
+                label = label,
+                selected = isSelected
+            };
+            string captured = action;
+            item.clickable.clicked += () => navController.Navigate(captured);
+            navigationRail.Add(item);
+        }
+
+        private void UpdateNavVisibility()
+        {
+            if (!BottomNavBarHelper.IsNavBarVisible(_currentDestinationName))
+                return;
+
+            // Screen.width is in pixels. Convert to CSS points using DPI.
+            // Standard baseline is 160 DPI for 1x scaling.
+            float cssPointWidth = Screen.dpi > 0 ? Screen.width / (Screen.dpi / 160f) : Screen.width;
+            bool isWide = cssPointWidth >= k_RailBreakpoint;
+
+            if (_cachedBottomNavBar != null)
+                _cachedBottomNavBar.style.display = isWide ? DisplayStyle.None : DisplayStyle.Flex;
+
+            if (_cachedNavigationRail != null)
+            {
+                _cachedNavigationRail.style.display = isWide ? DisplayStyle.Flex : DisplayStyle.None;
+                UpdateRailScreenClass(isWide);
+
+                if (isWide)
+                    ApplyRailSafeArea();
+            }
+        }
+
+        private void UpdateRailScreenClass(bool showRail)
+        {
+            if (_cachedNavigationRail == null) return;
+            var screen = _cachedNavigationRail.GetFirstAncestorOfType<NavigationScreen>();
+            if (screen == null) return;
+
+            string railClass = "appui-navigation-screen--with-rail--start";
+            if (showRail)
+                screen.AddToClassList(railClass);
+            else
+                screen.RemoveFromClassList(railClass);
+        }
+
+        private void ApplyRailSafeArea()
+        {
+            if (_cachedNavigationRail == null) return;
+
+            var themeService = App.current?.services?.GetService<IThemeService>();
+            if (themeService == null) return;
+
+            float safeLeft = themeService.safeAreaLeft;
+            float safeTop = themeService.safeAreaTop;
+            float safeBottom = themeService.safeAreaBottom;
+
+            Debug.Log($"[FoodmissionVisualController] ApplyRailSafeArea - safeLeft: {safeLeft}, safeTop: {safeTop}, safeBottom: {safeBottom}");
+
+            if (safeLeft > 0f)
+            {
+                if (!_railBaselineWidthSet)
+                {
+                    _railBaselineWidth = _cachedNavigationRail.layout.width;
+                    if (_railBaselineWidth <= 0f || float.IsNaN(_railBaselineWidth))
+                        _railBaselineWidth = _cachedNavigationRail.resolvedStyle.width;
+                    if (_railBaselineWidth <= 0f || float.IsNaN(_railBaselineWidth))
+                        _railBaselineWidth = 72f;
+                    _railBaselineWidthSet = true;
+                }
+
+                _cachedNavigationRail.style.left = StyleKeyword.Null;
+                _cachedNavigationRail.style.marginLeft = StyleKeyword.Null;
+                _cachedNavigationRail.style.width = _railBaselineWidth + safeLeft;
+                _cachedNavigationRail.style.paddingLeft = safeLeft;
+            }
+            else
+            {
+                _cachedNavigationRail.style.left = StyleKeyword.Null;
+                _cachedNavigationRail.style.marginLeft = StyleKeyword.Null;
+                _cachedNavigationRail.style.width = StyleKeyword.Null;
+                _cachedNavigationRail.style.paddingLeft = StyleKeyword.Null;
+            }
+
+            if (safeTop > 0f)
+            {
+                _cachedNavigationRail.style.paddingTop = safeTop;
+            }
+            else
+            {
+                _cachedNavigationRail.style.paddingTop = StyleKeyword.Null;
+            }
+
+            if (safeBottom > 0f)
+            {
+                _cachedNavigationRail.style.paddingBottom = safeBottom;
+            }
+            else
+            {
+                _cachedNavigationRail.style.paddingBottom = StyleKeyword.Null;
+            }
+        }
+
+        private void RegisterNavResizeListener(VisualElement element)
+        {
+            if (_navResizeRegistered) return;
+            _navResizeRegistered = true;
+
+            var panel = element.panel;
+            panel?.visualTree?.RegisterCallback<GeometryChangedEvent>(_ => UpdateNavVisibility());
+        }
+
+        private void RegisterSafeAreaCallback()
+        {
+            if (_safeAreaSubscribed) return;
+
+            var themeService = App.current?.services?.GetService<IThemeService>();
+            if (themeService != null)
+            {
+                themeService.SafeAreaChanged += OnSafeAreaChanged;
+                _safeAreaSubscribed = true;
+            }
+        }
+
+        private void OnSafeAreaChanged()
+        {
+            if (_cachedNavigationRail != null && _cachedNavigationRail.style.display == DisplayStyle.Flex)
+            {
+                ApplyRailSafeArea();
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_safeAreaSubscribed)
+            {
+                var themeService = App.current?.services?.GetService<IThemeService>();
+                if (themeService != null)
+                {
+                    themeService.SafeAreaChanged -= OnSafeAreaChanged;
+                }
+                _safeAreaSubscribed = false;
+            }
         }
     }
 }

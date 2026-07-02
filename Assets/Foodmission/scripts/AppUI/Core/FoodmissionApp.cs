@@ -157,7 +157,11 @@ namespace eu.foodmission.platform
             _themeService = null;
 
             _storeService = null;
-            _visualController = null;
+            if (_visualController != null)
+            {
+                _visualController.Dispose();
+                _visualController = null;
+            }
             _panel = null;
         }
 

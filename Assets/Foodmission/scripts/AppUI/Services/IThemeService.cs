@@ -13,6 +13,7 @@ namespace eu.foodmission.platform
         float safeAreaRight { get; }
         float safeAreaBottom { get; }
         float safeAreaLeft { get; }
+        event System.Action SafeAreaChanged;
         void ApplySafeAreaPadding(VisualElement element,bool applyTop,bool applyBottom,bool applyLeft, bool applyRight);
         void ApplySafeAreaMargin(VisualElement element);
     }
