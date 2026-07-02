@@ -193,7 +193,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.dt.app-ui": {
-      "version": "2.1.9",
+      "version": "2.1.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {
