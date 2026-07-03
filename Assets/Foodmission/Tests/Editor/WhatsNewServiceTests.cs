@@ -35,14 +35,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task CheckShouldShowAsync_ReturnsTrue_WhenVersionNotSeen()
+        public async Task CheckShouldShowAsync_ReturnsTrueAndReleaseNotes_WhenVersionNotSeen()
         {
             _localStorage.DeleteValue("whats_new_last_seen_version");
 
             var (shouldShow, notes) = await _service.CheckShouldShowAsync();
 
-            // Returns true even on network failure (version not seen before)
+            // Editor has network access: downloads real JSON, returns true with release notes.
+            // On devices without network, returns (false, null) and retries next launch.
             Assert.IsTrue(shouldShow);
+            Assert.IsNotNull(notes);
         }
 
         [Test]

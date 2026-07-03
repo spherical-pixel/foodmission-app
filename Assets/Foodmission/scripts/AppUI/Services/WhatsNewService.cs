@@ -39,13 +39,13 @@ namespace eu.foodmission.platform
                     await Task.Yield();
 
                 if (request.result != UnityWebRequest.Result.Success)
-                    return (true, null);
+                    return (false, null);
 
                 string json = request.downloadHandler.text;
                 var response = JsonUtility.FromJson<AppVersionCheckResponse>(json);
 
                 if (response == null)
-                    return (true, null);
+                    return (false, null);
 
                 PlatformVersionInfo platformInfo = null;
 #if UNITY_IOS
@@ -54,7 +54,7 @@ namespace eu.foodmission.platform
                 platformInfo = response.android;
 #endif
                 if (platformInfo == null)
-                    return (true, null);
+                    return (false, null);
 
                 string localeCode = "en";
                 if (LocalizationSettings.SelectedLocale != null)
@@ -75,10 +75,10 @@ namespace eu.foodmission.platform
             }
         }
 
-        public Task MarkAsSeenAsync()
+        public async Task MarkAsSeenAsync()
         {
+            await Task.Yield();
             _localStorage.SetValue(LastSeenVersionKey, Application.version);
-            return Task.CompletedTask;
         }
     }
 }
