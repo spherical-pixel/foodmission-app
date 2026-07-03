@@ -334,24 +334,40 @@ namespace eu.foodmission.platform
 
         public async Task AddProductItem(OpenFoodFactsProduct product, float qty, string unit)
         {
-            var (foodItem, foodError) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
-            if (foodError != null)
+            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
+            FoodProduct foodItem;
+            if (findError == null && existing != null)
             {
-                if (foodError.statusCode == 400)
+                foodItem = existing;
+            }
+            else
+            {
+                var (imported, importError) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
+                if (importError != null)
                 {
-                    var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode);
-                    if (findError == null && existingFood != null)
+                    if (importError.statusCode == 400)
                     {
-                        foodItem = existingFood;
-                        foodError = null;
+                        var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
+                        if (findErr2 == null && existingFood != null)
+                        {
+                            foodItem = existingFood;
+                        }
+                        else
+                        {
+                            ErrorDetail = importError;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        ErrorDetail = importError;
+                        return;
                     }
                 }
-            }
-
-            if (foodError != null)
-            {
-                ErrorDetail = foodError;
-                return;
+                else
+                {
+                    foodItem = imported;
+                }
             }
 
             var newItem = new MealLogItem
@@ -389,16 +405,21 @@ namespace eu.foodmission.platform
             SelectedItems = new List<MealLogItem>(SelectedItems) { newItem };
         }
 
-        public async Task<FoodProduct> ImportByBarcodeAsync(string barcode)
+        public async Task<(FoodProduct Result, ApiErrorResponse Error)> ImportByBarcodeAsync(string barcode)
         {
-            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(barcode);
-            if (error != null && error.statusCode == 400)
+            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: false);
+            if (findError == null && existing != null)
+                return (existing, null);
+
+            var (foodItem, importError) = await _foodProductService.ImportFromBarcodeAsync(barcode);
+            if (importError != null)
             {
-                var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(barcode);
-                if (findError == null && existingFood != null)
-                    return existingFood;
+                var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: true);
+                if (findErr2 == null && existingFood != null)
+                    return (existingFood, null);
+                return (null, importError);
             }
-            return foodItem;
+            return (foodItem, null);
         }
 
         public void RemoveItem(MealLogItem item)

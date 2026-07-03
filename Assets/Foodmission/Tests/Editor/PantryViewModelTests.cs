@@ -279,28 +279,54 @@ namespace eu.foodmission.platform.Tests
         {
             FoodProduct expected = new FoodProduct { id = "fp1", name = "Product", barcode = "123" };
             _mockFoodProductService
+                .Setup(x => x.FindByBarcodeAsync("123", false))
+                .Returns(Task.FromResult<(FoodProduct Result, ApiErrorResponse Error)>(((FoodProduct)null, null)));
+            _mockFoodProductService
                 .Setup(x => x.ImportFromBarcodeAsync("123"))
                 .Returns(Task.FromResult<(FoodProduct Result, ApiErrorResponse Error)>((expected, null)));
 
-            FoodProduct result = await _vm.ImportByBarcodeAsync("123");
+            var (result, error) = await _vm.ImportByBarcodeAsync("123");
 
+            Assert.IsNull(error);
             Assert.IsNotNull(result);
             Assert.AreEqual("fp1", result.id);
         }
 
         [Test]
-        public async Task ImportByBarcodeAsync_With400_FallsBackToFindByBarcode()
+        public async Task ImportByBarcodeAsync_LocalNotFound_ImportsFromOff()
+        {
+            FoodProduct imported = new FoodProduct { id = "fp3", name = "Imported", barcode = "123" };
+            _mockFoodProductService
+                .Setup(x => x.FindByBarcodeAsync("123", false))
+                .Returns(Task.FromResult<(FoodProduct Result, ApiErrorResponse Error)>(((FoodProduct)null, null)));
+            _mockFoodProductService
+                .Setup(x => x.ImportFromBarcodeAsync("123"))
+                .Returns(Task.FromResult<(FoodProduct Result, ApiErrorResponse Error)>((imported, null)));
+
+            var (result, error) = await _vm.ImportByBarcodeAsync("123");
+
+            Assert.IsNull(error);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("fp3", result.id);
+        }
+
+        [Test]
+        public async Task ImportByBarcodeAsync_LocalNotFound_ImportFails_FindsWithOff()
         {
             FoodProduct fallback = new FoodProduct { id = "fp2", name = "Existing", barcode = "123" };
+            _mockFoodProductService
+                .Setup(x => x.FindByBarcodeAsync("123", false))
+                .Returns(Task.FromResult<(FoodProduct Result, ApiErrorResponse Error)>(((FoodProduct)null, null)));
             _mockFoodProductService
                 .Setup(x => x.ImportFromBarcodeAsync("123"))
                 .Returns(Task.FromResult<(FoodProduct Result, ApiErrorResponse Error)>(((FoodProduct)null, new ApiErrorResponse { statusCode = 400 })));
             _mockFoodProductService
-                .Setup(x => x.FindByBarcodeAsync("123"))
+                .Setup(x => x.FindByBarcodeAsync("123", true))
                 .Returns(Task.FromResult<(FoodProduct Result, ApiErrorResponse Error)>((fallback, null)));
 
-            FoodProduct result = await _vm.ImportByBarcodeAsync("123");
+            var (result, error) = await _vm.ImportByBarcodeAsync("123");
 
+            Assert.IsNull(error);
             Assert.IsNotNull(result);
             Assert.AreEqual("fp2", result.id);
         }

@@ -1508,12 +1508,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 18736389118570496
     m_Localized: Shoes
+    m_Metadata:
+      m_Items: []
   - m_Id: 14120235996012544
     m_Localized: From Pantry
     m_Metadata:
       m_Items: []
   - m_Id: 14120384667312128
     m_Localized: Ate Out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453347131023360
+    m_Localized: Generic Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453408372056064
+    m_Localized: Open Food Facts
     m_Metadata:
       m_Items: []
   references:

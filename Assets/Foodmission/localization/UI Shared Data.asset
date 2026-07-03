@@ -1475,6 +1475,14 @@ MonoBehaviour:
     m_Key: Eaten_Out
     m_Metadata:
       m_Items: []
+  - m_Id: 19453347131023360
+    m_Key: TitleGenericFood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453408372056064
+    m_Key: TitleOpenFoodFactsProducts
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

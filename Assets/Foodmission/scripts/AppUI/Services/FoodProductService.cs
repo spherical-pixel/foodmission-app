@@ -148,7 +148,7 @@ namespace eu.foodmission.platform
             return (food, null);
         }
 
-        public async Task<(FoodProduct Result, ApiErrorResponse Error)> FindByBarcodeAsync(string barcode)
+        public async Task<(FoodProduct Result, ApiErrorResponse Error)> FindByBarcodeAsync(string barcode, bool includeOpenFoodFacts = false)
         {
             if (string.IsNullOrEmpty(barcode))
             {
@@ -156,7 +156,7 @@ namespace eu.foodmission.platform
             }
 
             AppState state = _storeService.GetAppState();
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/barcode/{Uri.EscapeDataString(barcode)}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/barcode/{Uri.EscapeDataString(barcode)}?includeOpenFoodFacts={(includeOpenFoodFacts ? "true" : "false")}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");

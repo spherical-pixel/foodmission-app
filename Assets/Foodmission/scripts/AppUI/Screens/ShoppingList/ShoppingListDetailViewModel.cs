@@ -283,26 +283,42 @@ namespace eu.foodmission.platform
             }
 
             ErrorMessage = "";
-            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
-
-            if (error != null)
+            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
+            FoodProduct foodItem;
+            if (findError == null && existing != null)
             {
-                if (error.statusCode == 400)
+                foodItem = existing;
+            }
+            else
+            {
+                var (imported, importError) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
+                if (importError != null)
                 {
-                    var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode);
-                    if (findError == null && existingFood != null)
+                    if (importError.statusCode == 400)
                     {
-                        foodItem = existingFood;
-                        error = null;
+                        var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
+                        if (findErr2 == null && existingFood != null)
+                        {
+                            foodItem = existingFood;
+                        }
+                        else
+                        {
+                            ErrorDetail = importError;
+                            ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        ErrorDetail = importError;
+                        ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
+                        return false;
                     }
                 }
-            }
-
-            if (error != null)
-            {
-                ErrorDetail = error;
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
-                return false;
+                else
+                {
+                    foodItem = imported;
+                }
             }
 
             var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity, unit);
@@ -374,16 +390,21 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public async Task<FoodProduct> ImportByBarcodeAsync(string barcode)
+        public async Task<(FoodProduct Result, ApiErrorResponse Error)> ImportByBarcodeAsync(string barcode)
         {
-            var (foodItem, error) = await _foodProductService.ImportFromBarcodeAsync(barcode);
-            if (error != null && error.statusCode == 400)
+            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: false);
+            if (findError == null && existing != null)
+                return (existing, null);
+
+            var (foodItem, importError) = await _foodProductService.ImportFromBarcodeAsync(barcode);
+            if (importError != null)
             {
-                var (existingFood, findError) = await _foodProductService.FindByBarcodeAsync(barcode);
-                if (findError == null && existingFood != null)
-                    return existingFood;
+                var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: true);
+                if (findErr2 == null && existingFood != null)
+                    return (existingFood, null);
+                return (null, importError);
             }
-            return foodItem;
+            return (foodItem, null);
         }
 
         public async Task ToggleItemAsync(string itemId)

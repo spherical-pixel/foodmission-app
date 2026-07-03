@@ -12,6 +12,8 @@ using UnityEngine.Localization.Settings;
 using UnityEngine;
 using Unity.Properties;
 
+using eu.foodmission.platform;
+
 namespace eu.foodmission.platform.Components
 {
     [UxmlElement]
@@ -73,8 +75,8 @@ namespace eu.foodmission.platform.Components
             { "Vegetables", "🥦" },
         };
 
-        private Func<string, Task<FoodProduct>> _importFromBarcodeAsync;
-        public Func<string, Task<FoodProduct>> ImportFromBarcodeAsync
+        private Func<string, Task<(FoodProduct Result, ApiErrorResponse Error)>> _importFromBarcodeAsync;
+        public Func<string, Task<(FoodProduct Result, ApiErrorResponse Error)>> ImportFromBarcodeAsync
         {
             get => _importFromBarcodeAsync;
             set
@@ -566,6 +568,7 @@ namespace eu.foodmission.platform.Components
             SetMode(Mode.Confirmed);
             _selectedItem = item;
 
+            _resultsContainer.style.display = DisplayStyle.Flex;
             _searchResultsContainer.style.display = DisplayStyle.None;
             _categoryContainer.style.display = DisplayStyle.None;
 
@@ -626,15 +629,33 @@ namespace eu.foodmission.platform.Components
             {
                 BarcodeScanOverlay.Show(this, async barcode =>
                 {
-                    var foodItem = await ImportFromBarcodeAsync(barcode);
-                    if (foodItem != null)
+                    try
                     {
-                        OnResultClicked(new OpenFoodFactsProduct
+                        var (foodItem, error) = await ImportFromBarcodeAsync(barcode);
+                        if (error != null)
                         {
-                            name = foodItem.name,
-                            barcode = foodItem.barcode,
-                            brands = Array.Empty<string>(),
-                        });
+                            FMDialog.ShowApiError(this,
+                                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ALERT_ERROR_TITLE"),
+                                error);
+                            return;
+                        }
+                        if (foodItem != null)
+                        {
+                            OnResultClicked(new OpenFoodFactsProduct
+                            {
+                                name = foodItem.name,
+                                barcode = foodItem.barcode,
+                                brands = Array.Empty<string>(),
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"[FMSearchOrCategoryField] Barcode scan error: {ex.Message}");
+                        FMDialog.ShowAlert(this,
+                            LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ALERT_ERROR_TITLE"),
+                            ex.Message,
+                            AlertSemantic.Error);
                     }
                 });
             }

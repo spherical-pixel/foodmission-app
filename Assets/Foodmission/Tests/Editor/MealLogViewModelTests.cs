@@ -194,6 +194,9 @@ namespace eu.foodmission.platform.Tests
             var foodProduct = new FoodProduct { id = Guid.NewGuid().ToString(), name = "Imported Product" };
 
             _mockFoodProductService
+                .Setup(x => x.FindByBarcodeAsync("123456", true))
+                .ReturnsAsync(((FoodProduct)null, (ApiErrorResponse)null));
+            _mockFoodProductService
                 .Setup(x => x.ImportFromBarcodeAsync("123456"))
                 .ReturnsAsync((foodProduct, null));
 
@@ -219,11 +222,12 @@ namespace eu.foodmission.platform.Tests
             var existingFood = new FoodProduct { id = Guid.NewGuid().ToString(), name = "Existing Product" };
 
             _mockFoodProductService
+                .SetupSequence(x => x.FindByBarcodeAsync("123456", true))
+                .ReturnsAsync(((FoodProduct)null, (ApiErrorResponse)null))
+                .ReturnsAsync((existingFood, null));
+            _mockFoodProductService
                 .Setup(x => x.ImportFromBarcodeAsync("123456"))
                 .ReturnsAsync(((FoodProduct)null, apiError));
-            _mockFoodProductService
-                .Setup(x => x.FindByBarcodeAsync("123456"))
-                .ReturnsAsync((existingFood, null));
 
             _vm.AddProductItem(product, 1f, "G").GetAwaiter().GetResult();
 
@@ -241,6 +245,9 @@ namespace eu.foodmission.platform.Tests
             };
             var apiError = new ApiErrorResponse { statusCode = 500, message = "Server error" };
 
+            _mockFoodProductService
+                .Setup(x => x.FindByBarcodeAsync("123456", true))
+                .ReturnsAsync(((FoodProduct)null, (ApiErrorResponse)null));
             _mockFoodProductService
                 .Setup(x => x.ImportFromBarcodeAsync("123456"))
                 .ReturnsAsync(((FoodProduct)null, apiError));
@@ -411,6 +418,7 @@ namespace eu.foodmission.platform.Tests
             _vm.SetSource(true, false);
 
             _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Dinner" });
+            _vm.MealContainerName = "New dinner";
 
             var item = new MealLogItem
             {
@@ -423,6 +431,9 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectedItems = new System.Collections.Generic.List<MealLogItem> { item };
 
             var apiError = new ApiErrorResponse { statusCode = 500, message = "MealItem error" };
+            _mockMealService
+                .Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
+                .ReturnsAsync((new Meal { id = "existing-meal" }, null));
             _mockMealItemService
                 .Setup(x => x.CreateAsync("existing-meal", It.IsAny<CreateMealItemRequest>()))
                 .ReturnsAsync(((MealItem)null, apiError));
