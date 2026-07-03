@@ -93,6 +93,9 @@ namespace eu.foodmission.platform.Components
         private List<GenericFood> _genericFoods = new();
         private List<object> _recentProducts = new();
         private object _selectedItem;
+        private bool _genericEnabled = true;
+        private bool _productsEnabled;
+        private const int MaxSearchResults = 20;
 
         private Unity.AppUI.UI.TextField _textField;
         protected Unity.AppUI.UI.Button _actionButton;
@@ -104,6 +107,10 @@ namespace eu.foodmission.platform.Components
         private VisualElement _confirmContainer;
         private Text _selectedNameLabel;
         private FMQuantityUnitPanel _confirmPanel;
+
+        private ExVisualElement _checkboxContainer;
+        private Checkbox _checkboxGeneric;
+        private Checkbox _checkboxOpenFoodFacts;
 
         // ========= CONSTRUCTOR =========
         public FMSearchOrCategoryField()
@@ -138,6 +145,8 @@ namespace eu.foodmission.platform.Components
             _actionButton.size = Size.L;
             searchField.Add(_actionButton);
 
+            _actionButton.style.display = DisplayStyle.None; // By now it's not in use here
+
             _scanButton = new Unity.AppUI.UI.IconButton
             {
                 icon = "barcode",
@@ -151,6 +160,33 @@ namespace eu.foodmission.platform.Components
             searchRow.Add(_scanButton);
 
             Add(searchRow);
+
+            _checkboxContainer = new ExVisualElement();
+            _checkboxContainer.style.flexDirection = FlexDirection.Row;
+            
+            _checkboxContainer.style.justifyContent = Justify.FlexStart;
+            _checkboxContainer.style.paddingLeft = 36;
+            _checkboxContainer.style.paddingRight = 36;
+            _checkboxContainer.style.marginTop = 16;
+            _checkboxContainer.style.marginBottom = 16;
+
+            Add(_checkboxContainer);
+
+            _checkboxGeneric = new Checkbox();
+            _checkboxGeneric.value = CheckboxState.Checked;
+            _checkboxGeneric.label = "@UI:TitleGenericFood";
+            _checkboxContainer.Add(_checkboxGeneric);
+
+            Spacer space = new Spacer
+            {
+                spacing = Unity.AppUI.UI.SpacerSpacing.M
+            };
+            _checkboxContainer.Add(space);
+
+            _checkboxOpenFoodFacts = new Checkbox();
+            _checkboxOpenFoodFacts.value = CheckboxState.Unchecked;
+            _checkboxOpenFoodFacts.label = "@UI:TitleOpenFoodFactsProducts";
+            _checkboxContainer.Add(_checkboxOpenFoodFacts);
 
             _spinner = new CircularProgress { size = Size.S };
             _spinner.style.display = DisplayStyle.None;
@@ -213,6 +249,8 @@ namespace eu.foodmission.platform.Components
             }).ExecuteLater(0);
 
             _scanButton.clicked += OnScanClicked;
+
+            
 
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
