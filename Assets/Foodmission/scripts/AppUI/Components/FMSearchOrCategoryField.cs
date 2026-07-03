@@ -468,47 +468,72 @@ namespace eu.foodmission.platform.Components
             _searchResultsContainer.Clear();
             _spinner.style.display = DisplayStyle.Flex;
 
-            Task<List<GenericFood>> genericTask = SearchGenericFoodsAsync != null
-                ? SearchGenericFoodsAsync(query)
-                : Task.FromResult<List<GenericFood>>(null);
+            // Run only the enabled search sources
+            var tasks = new List<Task>();
 
-            Task<List<OpenFoodFactsProduct>> productTask = SearchProductsAsync != null
-                ? SearchProductsAsync(query)
-                : Task.FromResult<List<OpenFoodFactsProduct>>(null);
+            Task<List<GenericFood>> genericTask = null;
+            Task<List<OpenFoodFactsProduct>> productTask = null;
 
-            await Task.WhenAll(genericTask, productTask);
+            if (_genericEnabled && SearchGenericFoodsAsync != null)
+            {
+                genericTask = SearchGenericFoodsAsync(query);
+                tasks.Add(genericTask);
+            }
+
+            if (_productsEnabled && SearchProductsAsync != null)
+            {
+                productTask = SearchProductsAsync(query);
+                tasks.Add(productTask);
+            }
+
+            if (tasks.Count > 0)
+            {
+                await Task.WhenAll(tasks);
+            }
 
             if (ct.IsCancellationRequested) return;
 
             _spinner.style.display = DisplayStyle.None;
 
-            List<GenericFood> genericResults = genericTask.Result;
-            List<OpenFoodFactsProduct> productResults = productTask.Result;
+            // Collect and score results
+            var scored = new List<(object item, int score, string name)>();
 
-            bool hasGeneric = genericResults != null && genericResults.Count > 0;
-            bool hasProducts = productResults != null && productResults.Count > 0;
-
-            if (hasGeneric)
+            if (_genericEnabled && genericTask?.Result != null)
             {
-                var items = genericResults.Cast<object>().ToList();
-                BuildCollapsibleSection(
-                    _searchResultsContainer,
-                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SECTION_GENERIC_FOODS"),
-                    items
-                );
+                foreach (var gf in genericTask.Result)
+                {
+                    int score = ScoreRelevance(query, gf.foodName);
+                    scored.Add((gf, score, gf.foodName));
+                }
             }
 
-            if (hasProducts)
+            if (_productsEnabled && productTask?.Result != null)
             {
-                var items = productResults.Cast<object>().ToList();
-                BuildCollapsibleSection(
-                    _searchResultsContainer,
-                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SECTION_PRODUCTS"),
-                    items
-                );
+                foreach (var prod in productTask.Result)
+                {
+                    int score = ScoreRelevance(query, prod.name);
+                    scored.Add((prod, score, prod.name));
+                }
             }
 
-            if (!hasGeneric && !hasProducts)
+            // Sort: descending score, then ascending name
+            scored.Sort((a, b) =>
+            {
+                int cmp = b.score.CompareTo(a.score);
+                return cmp != 0 ? cmp : string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase);
+            });
+
+            // Take top N
+            var topResults = scored.Take(MaxSearchResults).ToList();
+
+            if (topResults.Count > 0)
+            {
+                foreach (var (item, _, _) in topResults)
+                {
+                    _searchResultsContainer.Add(MakeResultRow(item, OnResultClicked));
+                }
+            }
+            else
             {
                 var noResults = new Text
                 {
@@ -516,21 +541,18 @@ namespace eu.foodmission.platform.Components
                 };
                 noResults.AddToClassList("fm-scf-no-results");
                 _searchResultsContainer.Add(noResults);
-
-                if (OnCreateItemAsync != null)
-                {
-                    var createRow = new VisualElement();
-                    createRow.AddToClassList("fm-scf-create-row");
-                    var createLabel = new Text { text = $"+ Create \"{query}\"" };
-                    createRow.Add(createLabel);
-                    string capturedQuery = query;
-                    createRow.RegisterCallback<ClickEvent>(_ => OnCreateClicked(capturedQuery));
-                    _searchResultsContainer.Add(createRow);
-                }
             }
 
             _resultsContainer.style.display = DisplayStyle.Flex;
             _searchResultsContainer.style.display = DisplayStyle.Flex;
+        }
+
+        private static int ScoreRelevance(string query, string name)
+        {
+            if (string.IsNullOrEmpty(name)) return 0;
+            if (name.StartsWith(query, StringComparison.OrdinalIgnoreCase)) return 200;
+            if (name.Contains(query, StringComparison.OrdinalIgnoreCase)) return 100;
+            return 0;
         }
 
         private void OnResultClicked(object item)
@@ -668,7 +690,7 @@ namespace eu.foodmission.platform.Components
         {
             string query = _textField?.value;
             if (string.IsNullOrWhiteSpace(query)) return;
-            if (_currentMode != Mode.Searching && _currentMode != Mode.Idle) return;
+            if (_currentMode != Mode.Searching) return;
 
             _debounceCts?.Cancel();
             _debounceCts?.Dispose();
