@@ -1,5 +1,6 @@
 using System;
 using eu.foodmission.platform.Components;
+using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
@@ -76,6 +77,8 @@ namespace eu.foodmission.platform
             RegisterEvents();
             RefreshStats();
             SetupSteppers();
+
+            CheckWhatsNewAsync();
         }
 
         private void RegisterEvents()
@@ -153,6 +156,81 @@ namespace eu.foodmission.platform
 
             if (_caloriesConsumedLabel != null) _caloriesConsumedLabel.text = _viewModel.CaloriesConsumed.ToString();
             if (_caloriesLeftLabel != null)     _caloriesLeftLabel.text     = _viewModel.CaloriesLeft.ToString();
+        }
+
+        private async void CheckWhatsNewAsync()
+        {
+            try
+            {
+                var whatsNewService = App.current?.services?.GetService<IWhatsNewService>();
+                if (whatsNewService == null) return;
+
+                var (shouldShow, notes) = await whatsNewService.CheckShouldShowAsync();
+                if (shouldShow)
+                {
+                    ShowWhatsNewModal(notes);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[HomeScreen] What's New check failed: {ex.Message}");
+            }
+        }
+
+        private void ShowWhatsNewModal(string releaseNotes)
+        {
+            var root = new VisualElement();
+            root.style.paddingLeft = 24;
+            root.style.paddingRight = 24;
+            root.style.paddingTop = 24;
+            root.style.paddingBottom = 24;
+            root.style.maxWidth = 500;
+            root.style.alignSelf = Align.Center;
+
+            var versionLabel = new Label($"What's New in v{Application.version}");
+            versionLabel.style.fontSize = 22;
+            versionLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+            versionLabel.style.marginBottom = 16;
+            versionLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+            root.Add(versionLabel);
+
+            var scrollView = new ScrollView();
+            scrollView.style.maxHeight = 400;
+            scrollView.style.marginBottom = 20;
+            var notesLabel = new Label(releaseNotes ?? "");
+            notesLabel.style.whiteSpace = WhiteSpace.Normal;
+            notesLabel.style.fontSize = 14;
+            scrollView.Add(notesLabel);
+            root.Add(scrollView);
+
+            var gotItButton = new Unity.AppUI.UI.Button { title = "Got it!" };
+            gotItButton.style.width = Length.Percent(100);
+            root.Add(gotItButton);
+
+            var modal = Modal.Build(contentContainer, root);
+            modal.SetFullScreenMode(ModalFullScreenMode.None);
+
+            gotItButton.clickable.clicked += () =>
+            {
+                modal.Dismiss();
+                MarkWhatsNewSeen();
+            };
+
+            modal.Show();
+        }
+
+        private async void MarkWhatsNewSeen()
+        {
+            try
+            {
+                var whatsNewService = App.current?.services?.GetService<IWhatsNewService>();
+                if (whatsNewService != null)
+                    await whatsNewService.MarkAsSeenAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[HomeScreen] Failed to mark What's New as seen: {ex.Message}");
+            }
         }
 
         protected override void OnViewModelUnbinding()
