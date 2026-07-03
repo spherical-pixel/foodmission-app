@@ -175,6 +175,11 @@ namespace eu.foodmission.platform.Components
             _checkboxGeneric = new Checkbox();
             _checkboxGeneric.value = CheckboxState.Checked;
             _checkboxGeneric.label = "@UI:TitleGenericFood";
+            _checkboxGeneric.RegisterValueChangedCallback(evt =>
+            {
+                _genericEnabled = evt.newValue == CheckboxState.Checked;
+                ReRunSearchIfActive();
+            });
             _checkboxContainer.Add(_checkboxGeneric);
 
             Spacer space = new Spacer
@@ -186,6 +191,11 @@ namespace eu.foodmission.platform.Components
             _checkboxOpenFoodFacts = new Checkbox();
             _checkboxOpenFoodFacts.value = CheckboxState.Unchecked;
             _checkboxOpenFoodFacts.label = "@UI:TitleOpenFoodFactsProducts";
+            _checkboxOpenFoodFacts.RegisterValueChangedCallback(evt =>
+            {
+                _productsEnabled = evt.newValue == CheckboxState.Checked;
+                ReRunSearchIfActive();
+            });
             _checkboxContainer.Add(_checkboxOpenFoodFacts);
 
             _spinner = new CircularProgress { size = Size.S };
@@ -652,6 +662,20 @@ namespace eu.foodmission.platform.Components
             _searchResultsContainer.Clear();
             _confirmContainer.style.display = DisplayStyle.None;
             _spinner.style.display = DisplayStyle.None;
+        }
+
+        private void ReRunSearchIfActive()
+        {
+            string query = _textField?.value;
+            if (string.IsNullOrWhiteSpace(query)) return;
+            if (_currentMode != Mode.Searching && _currentMode != Mode.Idle) return;
+
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = new CancellationTokenSource();
+            CancellationToken ct = _debounceCts.Token;
+
+            _ = DebouncedSearchAsync(query, ct);
         }
 
         private void ShowError(string message)
