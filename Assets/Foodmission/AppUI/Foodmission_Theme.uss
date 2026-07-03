@@ -5,13 +5,16 @@
 
 .appui {
    /* Sizing */
-   
+    
     --appui-sizing-60: 21px;
     --appui-sizing-100: 25px;
     --appui-sizing-150: 29px;
     --appui-sizing-200: 35px;
     --appui-sizing-250: 41px;
     --appui-sizing-300: 48px;
+    --appui-sizing-320: 51px;
+    
+    --appui-checkbox__box-size-md: var(--appui-sizing-250);
     --appui-sizing-400: 57px;
     --appui-sizing-500: 65px; /* 90*/
     --appui-sizing-550: 75px; 
