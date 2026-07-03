@@ -620,22 +620,6 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        private async void OnCreateClicked(string query)
-        {
-            if (OnCreateItemAsync != null)
-            {
-                try
-                {
-                    await OnCreateItemAsync(query);
-                    ResetToIdle();
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError($"[{GetType().Name}] OnCreateItemAsync failed: {ex.Message}");
-                }
-            }
-        }
-
         private async void OnScanClicked()
         {
             if (ImportFromBarcodeAsync != null)
@@ -738,42 +722,5 @@ namespace eu.foodmission.platform.Components
             return row;
         }
 
-        private void BuildCollapsibleSection(VisualElement container, string headingText, List<object> items)
-        {
-            var headerRow = new VisualElement();
-            headerRow.style.flexDirection = FlexDirection.Row;
-            headerRow.style.alignItems = Align.Center;
-            headerRow.AddToClassList("fm-scf-result-row");
-
-            var heading = new Unity.AppUI.UI.Heading
-            {
-                text = headingText,
-                size = HeadingSize.M
-            };
-            heading.style.flexGrow = 1;
-            heading.AddToClassList("fm-scf-heading");
-            headerRow.Add(heading);
-
-            var chevron = new Unity.AppUI.UI.Icon { iconName = "fm-arrow-down" };
-            headerRow.Add(chevron);
-
-            var itemsContainer = new VisualElement();
-
-            bool expanded = true;
-            headerRow.RegisterCallback<ClickEvent>(_ =>
-            {
-                expanded = !expanded;
-                itemsContainer.style.display = expanded ? DisplayStyle.Flex : DisplayStyle.None;
-                chevron.iconName = expanded ? "fm-arrow-down" : "fm-arrow-right";
-            });
-
-            container.Add(headerRow);
-            container.Add(itemsContainer);
-
-            foreach (var item in items)
-            {
-                itemsContainer.Add(MakeResultRow(item, OnResultClicked));
-            }
-        }
     }
 }
