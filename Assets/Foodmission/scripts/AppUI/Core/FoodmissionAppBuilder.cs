@@ -43,6 +43,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IFoodWasteService, FoodWasteService>();
             builder.services.AddSingleton<ITemplateService, TemplateService>();
             builder.services.AddSingleton<IAppUpdateService, AppUpdateService>();
+            builder.services.AddSingleton<IWhatsNewService, WhatsNewService>();
             builder.services.AddSingleton<IRemoteLocalizationService, RemoteLocalizationService>();
             builder.services.AddSingleton<IAccessibilityService, AccessibilityService>();
 
@@ -71,6 +72,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<EditProfileViewModel>();
             builder.services.AddTransient<AvatarEditorViewModel>();
             builder.services.AddTransient<ForceUpdateScreenViewModel>();
+            builder.services.AddTransient<WhatsNewViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)
