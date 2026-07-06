@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -28,6 +29,24 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("Cancel", action.Label);
             Assert.IsNull(action.Callback);
             Assert.IsFalse(action.IsPrimary);
+        }
+    }
+
+    [TestFixture]
+    public class FMDialogShowInfoTests
+    {
+        [Test]
+        public void ShowInfo_ThrowsWhenActionsNull()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                FMDialog.ShowInfo(null, "title", "body", null));
+        }
+
+        [Test]
+        public void ShowInfo_ThrowsWhenActionsEmpty()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                FMDialog.ShowInfo(null, "title", "body", new FMDialogAction[0]));
         }
     }
 

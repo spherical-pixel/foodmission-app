@@ -193,6 +193,90 @@ namespace eu.foodmission.platform.Components
             modal.Show();
         }
 
+        /// <summary>
+        /// Show a large, scrollable info popup: a heading, a scrollable text body,
+        /// and one or more action buttons. The modal content card is sized as a
+        /// percentage of the screen (default 80% × 60%).
+        /// </summary>
+        /// <param name="anchor">Reference view for the Modal (e.g. a screen's contentContainer).</param>
+        /// <param name="title">Heading text.</param>
+        /// <param name="body">Body text rendered inside a ScrollView. Null is coerced to empty.</param>
+        /// <param name="actions">Buttons. Must contain at least one action.</param>
+        /// <param name="widthPercent">Modal card width as % of screen (default 80).</param>
+        /// <param name="heightPercent">Modal card height as % of screen (default 60).</param>
+        public static void ShowInfo(
+            VisualElement anchor,
+            string title,
+            string body,
+            FMDialogAction[] actions,
+            float widthPercent = 80f,
+            float heightPercent = 60f)
+        {
+            if (actions == null || actions.Length == 0)
+            {
+                throw new ArgumentException("ShowInfo requires at least one action.", nameof(actions));
+            }
+
+            var root = new VisualElement();
+            root.AddToClassList("fm-info-dialog");
+
+            var heading = new Heading(title) { size = HeadingSize.XL };
+            heading.AddToClassList("fm-info-dialog__heading");
+            root.Add(heading);
+
+            var scrollView = new ScrollView();
+            scrollView.AddToClassList("fm-info-dialog__scroll");
+
+            var bodyText = new Unity.AppUI.UI.Text(body ?? "") { size = TextSize.M };
+            bodyText.AddToClassList("fm-info-dialog__body");
+            scrollView.Add(bodyText);
+            root.Add(scrollView);
+
+            var actionsRow = new VisualElement();
+            actionsRow.AddToClassList("fm-info-dialog__actions");
+
+            Modal modal = null;
+
+            for (int i = 0; i < actions.Length; i++)
+            {
+                var action = actions[i];
+
+                if (i > 0)
+                {
+                    actionsRow.Add(new Spacer { spacing = SpacerSpacing.M });
+                }
+
+                var button = new Unity.AppUI.UI.Button
+                {
+                    title = action.Label,
+                    variant = action.IsPrimary ? ButtonVariant.Accent : ButtonVariant.Default
+                };
+                button.AddToClassList("fm-button");
+                button.style.flexGrow = 1;
+
+                var captured = action;
+                button.clicked += () =>
+                {
+                    captured.Callback?.Invoke();
+                    modal?.Dismiss(DismissType.Action);
+                };
+
+                actionsRow.Add(button);
+            }
+
+            root.Add(actionsRow);
+
+            modal = Modal.Build(anchor, root);
+            modal.SetFullScreenMode(ModalFullScreenMode.None);
+
+            var modalContent = modal.view.contentContainer;
+            modalContent.style.width = Length.Percent(widthPercent);
+            modalContent.style.height = Length.Percent(heightPercent);
+
+            NotifyScreenReaderOfDialog(modal, title, body ?? "");
+            modal.Show();
+        }
+
         private static void NotifyScreenReaderOfDialog(Modal modal, string title, string content)
         {
             if (!AssistiveSupport.isScreenReaderEnabled) return;

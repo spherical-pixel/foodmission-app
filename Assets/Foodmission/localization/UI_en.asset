@@ -1526,6 +1526,15 @@ MonoBehaviour:
     m_Localized: Open Food Facts
     m_Metadata:
       m_Items: []
+  - m_Id: 20518970774773760
+    m_Localized: What's New in v{0}
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 20629525997019136
+    m_Localized: Got It!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1535,3 +1544,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 27512489452232704
+        - id: 20518970774773760

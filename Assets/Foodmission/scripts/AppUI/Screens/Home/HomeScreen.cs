@@ -1,10 +1,12 @@
 using System;
 using eu.foodmission.platform.Components;
+using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -76,6 +78,8 @@ namespace eu.foodmission.platform
             RegisterEvents();
             RefreshStats();
             SetupSteppers();
+
+            CheckWhatsNewAsync();
         }
 
         private void RegisterEvents()
@@ -153,6 +157,48 @@ namespace eu.foodmission.platform
 
             if (_caloriesConsumedLabel != null) _caloriesConsumedLabel.text = _viewModel.CaloriesConsumed.ToString();
             if (_caloriesLeftLabel != null)     _caloriesLeftLabel.text     = _viewModel.CaloriesLeft.ToString();
+        }
+
+        private async void CheckWhatsNewAsync()
+        {
+            try
+            {
+                var whatsNewService = App.current?.services?.GetService<IWhatsNewService>();
+                if (whatsNewService == null) return;
+
+                var (shouldShow, notes) = await whatsNewService.CheckShouldShowAsync();
+                if (shouldShow)
+                {
+                    ShowWhatsNewModal(notes);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[HomeScreen] What's New check failed: {ex.Message}");
+            }
+        }
+
+        private void ShowWhatsNewModal(string releaseNotes)
+        {
+            FMDialog.ShowInfo(
+                contentContainer,
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "txtWhatsNew", new object[] { Application.version }),
+                releaseNotes ?? "No release notes available.",
+                new[] { new FMDialogAction("@UI:txtGotIt", MarkWhatsNewSeen, isPrimary: true) });
+        }
+
+        private async void MarkWhatsNewSeen()
+        {
+            try
+            {
+                var whatsNewService = App.current?.services?.GetService<IWhatsNewService>();
+                if (whatsNewService != null)
+                    await whatsNewService.MarkAsSeenAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[HomeScreen] Failed to mark What's New as seen: {ex.Message}");
+            }
         }
 
         protected override void OnViewModelUnbinding()
