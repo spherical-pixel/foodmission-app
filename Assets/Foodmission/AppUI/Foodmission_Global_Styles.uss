@@ -403,6 +403,7 @@
 
 .fm-info-dialog__heading {
     margin-bottom: var(--appui-spacing-50);
+    white-space: normal;
 }
 
 .fm-info-dialog__scroll {
