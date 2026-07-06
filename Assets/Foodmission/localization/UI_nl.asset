@@ -1490,10 +1490,62 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20518970774773760
-    m_Localized: 
+    m_Localized: Nieuwe functies in v{0}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
+  - m_Id: 18736000059125760
+    m_Localized: Haar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736120376930304
+    m_Localized: Wenkbrauwen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736148403269632
+    m_Localized: Ogen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736209866600448
+    m_Localized: Neus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736222906691584
+    m_Localized: Mond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736267513114624
+    m_Localized: Gezichtshaar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736302107734016
+    m_Localized: Huid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736328280190976
+    m_Localized: T-shirt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736361163534336
+    m_Localized: Broeken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736389118570496
+    m_Localized: Schoenen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453347131023360
+    m_Localized: Algemene levensmiddelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453408372056064
+    m_Localized: Open Food Facts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20629525997019136
+    m_Localized: "Ok\xE9, begrepen!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

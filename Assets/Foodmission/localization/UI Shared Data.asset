@@ -1481,6 +1481,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 19453408372056064
     m_Key: TitleOpenFoodFactsProducts
+    m_Metadata:
+      m_Items: []
   - m_Id: 20518970774773760
     m_Key: txtWhatsNew
     m_Metadata:

@@ -1469,10 +1469,62 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20518970774773760
-    m_Localized: 
+    m_Localized: "Novit\xE0 della versione v{0}"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
+  - m_Id: 18736000059125760
+    m_Localized: Capelli
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736120376930304
+    m_Localized: Sopracciglia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736148403269632
+    m_Localized: Occhi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736209866600448
+    m_Localized: Naso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736222906691584
+    m_Localized: Bocca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736267513114624
+    m_Localized: Peli sul viso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736302107734016
+    m_Localized: Pelle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736328280190976
+    m_Localized: Maglietta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736361163534336
+    m_Localized: Pantaloni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18736389118570496
+    m_Localized: Scarpe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453347131023360
+    m_Localized: Alimenti generici
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453408372056064
+    m_Localized: Open Food Facts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20629525997019136
+    m_Localized: Capito!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

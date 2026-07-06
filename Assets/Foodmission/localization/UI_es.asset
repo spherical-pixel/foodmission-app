@@ -1505,10 +1505,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20518970774773760
-    m_Localized: 
+    m_Localized: "Novedades de la versi\xF3n {0}"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
+  - m_Id: 19453347131023360
+    m_Localized: "Alimentos gen\xE9ricos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19453408372056064
+    m_Localized: Open Food Facts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20629525997019136
+    m_Localized: "\xA1Entendido!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
