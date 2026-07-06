@@ -393,6 +393,32 @@
     width: 900px;
 }
 
+/* FMDialog.ShowInfo — reusable large scrollable info popup */
+.fm-info-dialog {
+    padding: var(--appui-spacing-200);
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.fm-info-dialog__heading {
+    margin-bottom: var(--appui-spacing-50);
+}
+
+.fm-info-dialog__scroll {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.fm-info-dialog__body {
+    white-space: normal;
+    font-size: var(--appui-font-sizes-body-md);
+}
+
+.fm-info-dialog__actions {
+    flex-direction: row;
+}
+
 .fm-nutri-dialog {
     opacity: 0;
     scale: 0.95;
