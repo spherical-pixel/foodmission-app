@@ -179,44 +179,11 @@ namespace eu.foodmission.platform
 
         private void ShowWhatsNewModal(string releaseNotes)
         {
-            var root = new VisualElement();
-            root.style.paddingLeft = 24;
-            root.style.paddingRight = 24;
-            root.style.paddingTop = 24;
-            root.style.paddingBottom = 24;
-            root.style.maxWidth = 500;
-            root.style.alignSelf = Align.Center;
-
-            var versionLabel = new Label($"What's New in v{Application.version}");
-            versionLabel.style.fontSize = 22;
-            versionLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
-            versionLabel.style.marginBottom = 16;
-            versionLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
-            root.Add(versionLabel);
-
-            var scrollView = new ScrollView();
-            scrollView.style.maxHeight = 400;
-            scrollView.style.marginBottom = 20;
-            var notesLabel = new Label(releaseNotes ?? "");
-            notesLabel.style.whiteSpace = WhiteSpace.Normal;
-            notesLabel.style.fontSize = 14;
-            scrollView.Add(notesLabel);
-            root.Add(scrollView);
-
-            var gotItButton = new Unity.AppUI.UI.Button { title = "Got it!" };
-            gotItButton.style.width = Length.Percent(100);
-            root.Add(gotItButton);
-
-            var modal = Modal.Build(contentContainer, root);
-            modal.SetFullScreenMode(ModalFullScreenMode.None);
-
-            gotItButton.clickable.clicked += () =>
-            {
-                modal.Dismiss();
-                MarkWhatsNewSeen();
-            };
-
-            modal.Show();
+            FMDialog.ShowInfo(
+                contentContainer,
+                $"What's New in v{Application.version}",
+                releaseNotes ?? "",
+                new[] { new FMDialogAction("Got it!", MarkWhatsNewSeen, isPrimary: true) });
         }
 
         private async void MarkWhatsNewSeen()
