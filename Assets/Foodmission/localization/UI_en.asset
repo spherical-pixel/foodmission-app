@@ -1508,12 +1508,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 18736389118570496
     m_Localized: Shoes
+    m_Metadata:
+      m_Items: []
   - m_Id: 14120235996012544
     m_Localized: From Pantry
     m_Metadata:
       m_Items: []
   - m_Id: 14120384667312128
     m_Localized: Ate Out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20518970774773760
+    m_Localized: What's New in v{0}
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 20629525997019136
+    m_Localized: Got It!
     m_Metadata:
       m_Items: []
   references:
@@ -1525,3 +1536,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 27512489452232704
+        - id: 20518970774773760

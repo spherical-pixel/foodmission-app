@@ -6,6 +6,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -181,9 +182,9 @@ namespace eu.foodmission.platform
         {
             FMDialog.ShowInfo(
                 contentContainer,
-                $"What's New in v{Application.version}",
-                releaseNotes ?? "",
-                new[] { new FMDialogAction("Got it!", MarkWhatsNewSeen, isPrimary: true) });
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "txtWhatsNew", new object[] { Application.version }),
+                releaseNotes ?? "No release notes available.",
+                new[] { new FMDialogAction("@UI:txtGotIt", MarkWhatsNewSeen, isPrimary: true) });
         }
 
         private async void MarkWhatsNewSeen()
