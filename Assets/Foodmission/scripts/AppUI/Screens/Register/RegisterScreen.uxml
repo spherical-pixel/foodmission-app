@@ -34,14 +34,14 @@
                     <ui:DataBinding property="HelpTextVariant" data-source-path="PasswordHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemPassword>
-            <eu.foodmission.platform.Components.FormFieldItemIntField name="yearofbirth">
+            <eu.foodmission.platform.Components.FormFieldItemDropDownField name="yearofbirth-dropdown" dropdown-defaultmessage="Selecciona">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22815397693612032)"/>
-                    <ui:DataBinding property="IntFieldValue" data-source-path="YearOfBirth" binding-mode="ToSource"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
                     <ui:DataBinding property="HelpTextText" data-source-path="YearOfBirthHelpTextValue" binding-mode="TwoWay"/>
                     <ui:DataBinding property="HelpTextVariant" data-source-path="YearOfBirthHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
-            </eu.foodmission.platform.Components.FormFieldItemIntField>
+            </eu.foodmission.platform.Components.FormFieldItemDropDownField>
             <eu.foodmission.platform.Components.FormFieldItemDropDownField name="country">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22819860558897152)"/>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -40,7 +41,8 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("", _vm.Username);
             Assert.AreEqual("", _vm.Email);
             Assert.AreEqual("", _vm.Password);
-            Assert.AreEqual(0, _vm.YearOfBirth);
+            Assert.AreEqual(-1, _vm.SelectedYearOfBirthIndex);
+            Assert.Greater(_vm.YearOfBirthOptions.Count, 0);
             Assert.AreEqual(-1, _vm.SelectedCountryIndex);
             Assert.AreEqual(-1, _vm.SelectedRegionIndex);
             Assert.AreEqual("", _vm.PostalCode);
@@ -74,13 +76,64 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ValidateYearOfBirth_WithValidValue_ReturnsTrue()
         {
-            _vm.YearOfBirth = 2000;
+            int index2000 = _vm.YearOfBirthOptions.IndexOf("2000");
+            Assert.AreNotEqual(-1, index2000, "Year 2000 should be in the options list");
+
+            _vm.SelectedYearOfBirthIndex = index2000;
 
             bool result = _vm.ValidateYearOfBirth();
 
             Assert.IsTrue(result);
             Assert.AreEqual("", _vm.YearOfBirthHelpTextValue);
             Assert.AreEqual(HelpTextVariant.Default, _vm.YearOfBirthHelpTextVariant);
+        }
+
+        [Test]
+        public void ValidateYearOfBirth_WithUnsetIndex_ReturnsTrue()
+        {
+            _vm.SelectedYearOfBirthIndex = -1;
+
+            bool result = _vm.ValidateYearOfBirth();
+
+            Assert.IsTrue(result);
+            Assert.AreEqual("", _vm.YearOfBirthHelpTextValue);
+            Assert.AreEqual(HelpTextVariant.Default, _vm.YearOfBirthHelpTextVariant);
+        }
+
+        [Test]
+        public void YearOfBirthOptions_AreDescendingAndInRange()
+        {
+            var options = _vm.YearOfBirthOptions;
+            Assert.Greater(options.Count, 0, "Options should not be empty");
+
+            int firstYear = int.Parse(options[0]);
+            int lastYear = int.Parse(options[options.Count - 1]);
+
+            Assert.AreEqual(DateTime.Now.Year - 18, firstYear, "First year should be 18 years ago (newest)");
+            Assert.AreEqual(DateTime.Now.Year - 100, lastYear, "Last year should be 100 years ago (oldest)");
+            Assert.Greater(firstYear, lastYear, "Options should be in descending order");
+        }
+
+        [Test]
+        public void ValidateYearOfBirth_WithOutOfRangeIndex_ReturnsFalse()
+        {
+            _vm.SelectedYearOfBirthIndex = _vm.YearOfBirthOptions.Count;
+
+            bool result = _vm.ValidateYearOfBirth();
+
+            Assert.IsFalse(result);
+            Assert.AreEqual("@UI:ERROR_BIRTH_1", _vm.YearOfBirthHelpTextValue);
+            Assert.AreEqual(HelpTextVariant.Destructive, _vm.YearOfBirthHelpTextVariant);
+        }
+
+        [Test]
+        public void YearOfBirthOptions_ExcludesMinors()
+        {
+            int minorYear = DateTime.Now.Year - 17;
+            string minorYearStr = minorYear.ToString();
+
+            Assert.IsFalse(_vm.YearOfBirthOptions.Contains(minorYearStr),
+                $"Year {minorYearStr} (under 18) should not be selectable");
         }
 
         [Test]
@@ -167,7 +220,8 @@ namespace eu.foodmission.platform.Tests
             _vm.Username = "testuser";
             _vm.Email = "test@example.com";
             _vm.Password = "password123";
-            _vm.YearOfBirth = 2000;
+            int index2000 = _vm.YearOfBirthOptions.IndexOf("2000");
+            _vm.SelectedYearOfBirthIndex = index2000;
             _vm.SelectedCountryIndex = 0;
             _vm.SelectedRegionIndex = 0;
             _vm.PostalCode = "12345";

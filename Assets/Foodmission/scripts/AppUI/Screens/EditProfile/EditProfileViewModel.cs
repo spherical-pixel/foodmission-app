@@ -23,7 +23,10 @@ namespace eu.foodmission.platform
         private CatalogData _catalogData;
 
         [ObservableProperty]
-        private int _yearOfBirth = 0;
+        private IList<string> _yearOfBirthOptions = new List<string>();
+
+        [ObservableProperty]
+        private int _selectedYearOfBirthIndex = -1;
 
         [ObservableProperty]
         private string _yearOfBirthHelpTextValue = "";
@@ -146,6 +149,54 @@ namespace eu.foodmission.platform
         {
             _catalogService = catalogService;
             _authService = authService;
+
+            BuildYearOfBirthOptions();
+        }
+
+        private void BuildYearOfBirthOptions()
+        {
+            var maxYear = DateTime.Now.Year - 18;
+            var minYear = DateTime.Now.Year - 100;
+            YearOfBirthOptions = Enumerable.Range(0, maxYear - minYear + 1)
+                .Select(i => (maxYear - i).ToString())
+                .ToList();
+        }
+
+        public bool ValidateYearOfBirth()
+        {
+            if (SelectedYearOfBirthIndex < 0)
+            {
+                YearOfBirthHelpTextValue = string.Empty;
+                YearOfBirthHelpTextVariant = HelpTextVariant.Default;
+                return true;
+            }
+
+            if (SelectedYearOfBirthIndex >= YearOfBirthOptions.Count)
+            {
+                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
+                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            int year = int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]);
+
+            if (year < DateTime.Now.Year - 100)
+            {
+                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
+                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            if (year > DateTime.Now.Year - 18)
+            {
+                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_2";
+                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            YearOfBirthHelpTextValue = string.Empty;
+            YearOfBirthHelpTextVariant = HelpTextVariant.Default;
+            return true;
         }
 
         /// <summary>
@@ -268,7 +319,10 @@ namespace eu.foodmission.platform
 
             AppState state = _storeService.GetAppState();
 
-            YearOfBirth = state.userYearOfBirth;
+            if (state.userYearOfBirth > 0)
+            {
+                SelectedYearOfBirthIndex = YearOfBirthOptions.IndexOf(state.userYearOfBirth.ToString());
+            }
             SelectedCountryIndex = _countries.FindIndex(c => c.code == state.userCountry);
             await UpdateRegionsForSelectedCountryAsync();
             if (SelectedCountryIndex >= 0 && SelectedRegionIndex >= 0)
@@ -349,7 +403,7 @@ namespace eu.foodmission.platform
                     activityLevel = _selectedActivityLevelIndex >= 0 ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
                     annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
-                    yearOfBirth = YearOfBirth > 0 ? YearOfBirth : (int?)null,
+                    yearOfBirth = SelectedYearOfBirthIndex >= 0 ? (int?)int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : null,
                     
                     preferences = (shoppingResponsibilityCode != null || dietaryCodes != null)
                         ? new ProfileUpdatePreferences
@@ -383,9 +437,10 @@ namespace eu.foodmission.platform
                     request.annualIncome = _catalogData.annualIncomeLevels[SelectedAnnualIncomeIndex].code;
                 }
 
-                if( YearOfBirth != state.userYearOfBirth)
+                int currentYear = SelectedYearOfBirthIndex >= 0 ? int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : 0;
+                if (currentYear > 0 && currentYear != state.userYearOfBirth)
                 {
-                    request.yearOfBirth = YearOfBirth;
+                    request.yearOfBirth = currentYear;
                 }
 
                 if( SelectedCountryIndex >= 0 && _countries[SelectedCountryIndex].code != state.userCountry)

@@ -58,7 +58,8 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(0, _vm.SelectedDietaryPreferenceIndices.Length);
             Assert.AreEqual(-1, _vm.SelectedCountryIndex);
             Assert.AreEqual(-1, _vm.SelectedRegionIndex);
-            Assert.AreEqual(0, _vm.YearOfBirth);
+            Assert.AreEqual(-1, _vm.SelectedYearOfBirthIndex);
+            Assert.Greater(_vm.YearOfBirthOptions.Count, 0);
             Assert.AreEqual("", _vm.PostalCode);
             Assert.IsFalse(_vm.IsLoading);
             Assert.IsFalse(_vm.IsSubmitting);
@@ -222,7 +223,63 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(0, _vm.SelectedActivityLevelIndex);
             Assert.AreEqual(0, _vm.SelectedEducationLevelIndex);
             Assert.AreEqual(0, _vm.SelectedAnnualIncomeIndex);
-            Assert.AreEqual(1990, _vm.YearOfBirth);
+            Assert.AreEqual(_vm.YearOfBirthOptions.IndexOf("1990"), _vm.SelectedYearOfBirthIndex);
+        }
+
+        [Test]
+        public async Task PrePopulateFromState_WithUnsetYear_KeepsNegativeIndex()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                activityLevels = new[] { new CatalogItem { code = "moderate", label = "Moderate" } },
+                educationLevels = new[] { new CatalogItem { code = "bachelor", label = "Bachelor" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" } },
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _storeService.SetAppState(new AppState { userYearOfBirth = 0 });
+
+            await _vm.PrePopulateFromState();
+
+            Assert.AreEqual(-1, _vm.SelectedYearOfBirthIndex,
+                "Year of birth index should stay -1 when stored value is 0 (unset)");
+        }
+
+        [Test]
+        public async Task SubmitAsync_SendsCorrectYearOfBirth()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                activityLevels = new[] { new CatalogItem { code = "moderate", label = "Moderate" } },
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _vm.SelectedGenderIndex = 0;
+            _vm.SelectedActivityLevelIndex = 0;
+            _vm.SelectedYearOfBirthIndex = _vm.YearOfBirthOptions.IndexOf("1995");
+
+            ProfileUpdateRequest capturedRequest = null;
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
+                .ReturnsAsync(true);
+
+            await _vm.SubmitAsync();
+
+            Assert.IsNotNull(capturedRequest);
+            Assert.AreEqual(1995, capturedRequest.yearOfBirth);
         }
 
         [Test]

@@ -50,7 +50,10 @@ namespace eu.foodmission.platform
         private HelpTextVariant _passwordHelpTextVariant = HelpTextVariant.Default;
 
         [ObservableProperty]
-        private int _yearOfBirth = 0;
+        private IList<string> _yearOfBirthOptions = new List<string>();
+
+        [ObservableProperty]
+        private int _selectedYearOfBirthIndex = -1;
 
         [ObservableProperty]
         private string _yearOfBirthHelpTextValue = "";
@@ -113,10 +116,21 @@ namespace eu.foodmission.platform
             _authService = authService;
             _catalogService = catalogService;
 
+            BuildYearOfBirthOptions();
+
             _storeSubscription = _store.Subscribe(
                 SelectAuthState,
                 OnAuthStateChanged
             );
+        }
+
+        private void BuildYearOfBirthOptions()
+        {
+            var maxYear = DateTime.Now.Year - 18;
+            var minYear = DateTime.Now.Year - 100;
+            YearOfBirthOptions = Enumerable.Range(0, maxYear - minYear + 1)
+                .Select(i => (maxYear - i).ToString())
+                .ToList();
         }
 
         /// <summary>
@@ -278,7 +292,7 @@ namespace eu.foodmission.platform
                     Username,
                     Email,
                     Password,
-                    YearOfBirth,
+                    SelectedYearOfBirthIndex >= 0 ? int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : 0,
                     country: !string.IsNullOrEmpty(countryIso) ? countryIso : null,
                     region: !string.IsNullOrEmpty(regionIso) ? regionIso : null,
                     zip: !string.IsNullOrEmpty(PostalCode) ? PostalCode : null
@@ -379,14 +393,30 @@ namespace eu.foodmission.platform
 
         public bool ValidateYearOfBirth()
         {
-            if (YearOfBirth != 0 && YearOfBirth < DateTime.Now.Year - 100)
+            if (SelectedYearOfBirthIndex < 0)
+            {
+                YearOfBirthHelpTextValue = string.Empty;
+                YearOfBirthHelpTextVariant = HelpTextVariant.Default;
+                return true;
+            }
+
+            if (SelectedYearOfBirthIndex >= YearOfBirthOptions.Count)
             {
                 YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
                 YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
                 return false;
             }
 
-            if (YearOfBirth != 0 && YearOfBirth > DateTime.Now.Year - 18)
+            int year = int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]);
+
+            if (year < DateTime.Now.Year - 100)
+            {
+                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
+                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
+            if (year > DateTime.Now.Year - 18)
             {
                 YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_2";
                 YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;

@@ -24,7 +24,7 @@ namespace eu.foodmission.platform
         private FormFieldItemTextField _usernameField;
         private FormFieldItemTextField _emailField;
         private FormFieldItemPassword _passwordField;
-        private FormFieldItemIntField _yearOfBirthField;
+        private FormFieldItemDropDownField _yearOfBirthDropdown;
         private FormFieldItemTextField _postalCodeField;
         private Unity.AppUI.UI.Heading _heading;
 
@@ -57,13 +57,18 @@ namespace eu.foodmission.platform
                 if (_countryDropdown != null && _viewModel.CountryOptions.Count > 0)
                 {
                     _countryDropdown.Dropdown.sourceItems = _viewModel.CountryOptions;
-                    _countryDropdown.Dropdown.bindItem = (item, index) =>
-                    {
-                        item.label = _viewModel.CountryOptions[index];
-                        item.icon = null;
-                    };
-                }
+                _countryDropdown.Dropdown.bindItem = (item, index) =>
+                {
+                    item.label = _viewModel.CountryOptions[index];
+                    item.icon = null;
+                };
             }
+
+            if (_yearOfBirthDropdown != null && _viewModel.YearOfBirthOptions.Count > 0)
+            {
+                ConfigureDropdown(_yearOfBirthDropdown, _viewModel.YearOfBirthOptions);
+            }
+        }
         }
 
         private void CacheUIElements()
@@ -75,7 +80,7 @@ namespace eu.foodmission.platform
             _usernameField = contentContainer.Q<FormFieldItemTextField>("username");
             _emailField = contentContainer.Q<FormFieldItemTextField>("email");
             _passwordField = contentContainer.Q<FormFieldItemPassword>("password");
-            _yearOfBirthField = contentContainer.Q<FormFieldItemIntField>("yearofbirth");
+            _yearOfBirthDropdown = contentContainer.Q<FormFieldItemDropDownField>("yearofbirth-dropdown");
             _postalCodeField = contentContainer.Q<FormFieldItemTextField>("postalcode");
             _heading = contentContainer.Q<Unity.AppUI.UI.Heading>();
         }
@@ -110,6 +115,11 @@ namespace eu.foodmission.platform
             if (_regionDropdown != null)
             {
                 _regionDropdown.Dropdown.RegisterValueChangedCallback(OnRegionChanged);
+            }
+
+            if (_yearOfBirthDropdown != null)
+            {
+                _yearOfBirthDropdown.Dropdown.RegisterValueChangedCallback(OnYearOfBirthChanged);
             }
         }
 
@@ -160,6 +170,26 @@ namespace eu.foodmission.platform
             _viewModel.SelectedRegionIndex = value[0];
         }
 
+        private void OnYearOfBirthChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            var value = evt.newValue?.ToArray();
+            if (_viewModel == null || value == null || value.Length == 0) return;
+
+            _viewModel.SelectedYearOfBirthIndex = value[0];
+            _viewModel.ValidateYearOfBirth();
+        }
+
+        private void ConfigureDropdown(FormFieldItemDropDownField dropdown, IList<string> options)
+        {
+            if (dropdown == null || options == null || options.Count == 0) return;
+            dropdown.Dropdown.sourceItems = (System.Collections.IList)options;
+            dropdown.Dropdown.bindItem = (item, index) =>
+            {
+                item.label = options[index];
+                item.icon = null;
+            };
+        }
+
         private void RegisterManualEvents()
         {
             if (_registerButton != null)
@@ -202,13 +232,18 @@ namespace eu.foodmission.platform
                 _regionDropdown.Dropdown.UnregisterValueChangedCallback(OnRegionChanged);
             }
 
+            if (_yearOfBirthDropdown != null)
+            {
+                _yearOfBirthDropdown.Dropdown.UnregisterValueChangedCallback(OnYearOfBirthChanged);
+            }
+
             _registerButton = null;
             _countryDropdown = null;
             _regionDropdown = null;
+            _yearOfBirthDropdown = null;
             _usernameField = null;
             _emailField = null;
             _passwordField = null;
-            _yearOfBirthField = null;
             _postalCodeField = null;
             _termsCheckbox = null;
             _heading = null;
@@ -230,7 +265,7 @@ namespace eu.foodmission.platform
             _usernameField?.CreateAccessibilityNode(h, "Username");
             _emailField?.CreateAccessibilityNode(h, "Email");
             _passwordField?.CreateAccessibilityNode(h, "Password");
-            _yearOfBirthField?.CreateAccessibilityNode(h, "Year of birth");
+            _yearOfBirthDropdown?.CreateAccessibilityNode(h, "Year of birth");
             _countryDropdown?.CreateAccessibilityNode(h, "Country");
             _regionDropdown?.CreateAccessibilityNode(h, "Region");
             _postalCodeField?.CreateAccessibilityNode(h, "Postal code");
@@ -254,7 +289,7 @@ namespace eu.foodmission.platform
             _usernameField?.DestroyAccessibilityNode();
             _emailField?.DestroyAccessibilityNode();
             _passwordField?.DestroyAccessibilityNode();
-            _yearOfBirthField?.DestroyAccessibilityNode();
+            _yearOfBirthDropdown?.DestroyAccessibilityNode();
             _countryDropdown?.DestroyAccessibilityNode();
             _regionDropdown?.DestroyAccessibilityNode();
             _postalCodeField?.DestroyAccessibilityNode();
@@ -340,8 +375,7 @@ namespace eu.foodmission.platform
                     case nameof(RegisterViewModel.Password):
                         _viewModel.ValidatePassword();
                         break;
-                    case nameof(RegisterViewModel.YearOfBirth):
-                        _viewModel.ValidateYearOfBirth();
+                    case nameof(RegisterViewModel.SelectedYearOfBirthIndex):
                         break;
                     case nameof(RegisterViewModel.PostalCode):
                         _viewModel.ValidatePostalCode();

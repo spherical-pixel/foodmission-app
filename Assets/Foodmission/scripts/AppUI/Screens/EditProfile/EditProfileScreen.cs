@@ -26,6 +26,7 @@ namespace eu.foodmission.platform
         private FormFieldItemDropDownField _shoppingResponsibilityDropdown;
         private FormFieldItemDropDownField _countryDropdown;
         private FormFieldItemDropDownField _regionDropdown;
+        private FormFieldItemDropDownField _yearOfBirthDropdown;
 
         private AccessibilityNode _submitButtonNode;
 
@@ -55,6 +56,7 @@ namespace eu.foodmission.platform
             _shoppingResponsibilityDropdown = contentContainer.Q<FormFieldItemDropDownField>("shopping-responsibility-dropdown");
             _countryDropdown = contentContainer.Q<FormFieldItemDropDownField>("country");
             _regionDropdown = contentContainer.Q<FormFieldItemDropDownField>("region");
+            _yearOfBirthDropdown = contentContainer.Q<FormFieldItemDropDownField>("yearofbirth-dropdown");
             
         }
 
@@ -104,6 +106,11 @@ namespace eu.foodmission.platform
             {
                 _regionDropdown.Dropdown.RegisterValueChangedCallback(OnRegionChanged);
             }
+
+            if (_yearOfBirthDropdown != null)
+            {
+                _yearOfBirthDropdown.Dropdown.RegisterValueChangedCallback(OnYearOfBirthChanged);
+            }
         }
 
         private void UnregisterManualEvents()
@@ -142,6 +149,11 @@ namespace eu.foodmission.platform
             {
                 _shoppingResponsibilityDropdown.Dropdown.UnregisterValueChangedCallback(OnShoppingResponsibilityChanged);
             }
+
+            if (_yearOfBirthDropdown != null)
+            {
+                _yearOfBirthDropdown.Dropdown.UnregisterValueChangedCallback(OnYearOfBirthChanged);
+            }
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -177,6 +189,7 @@ namespace eu.foodmission.platform
             ConfigureDropdown(_shoppingResponsibilityDropdown, _viewModel.ShoppingResponsibilityOptions);
             ConfigureDropdown(_countryDropdown, _viewModel.CountryOptions);
             ConfigureDropdown(_regionDropdown, _viewModel.RegionOptions);
+            ConfigureDropdown(_yearOfBirthDropdown, _viewModel.YearOfBirthOptions);
         }
 
         private void ConfigureDropdown(FormFieldItemDropDownField dropdown, IList<string> options)
@@ -201,6 +214,7 @@ namespace eu.foodmission.platform
             SetDropdownSelection(_shoppingResponsibilityDropdown, _viewModel.SelectedShoppingResponsibilityIndex);
             SetDropdownSelection(_countryDropdown, _viewModel.SelectedCountryIndex);
             SetDropdownSelection(_regionDropdown, _viewModel.SelectedRegionIndex);
+            SetDropdownSelection(_yearOfBirthDropdown, _viewModel.SelectedYearOfBirthIndex);
             SetDropdownSelectionMulti(_dietaryPreferencesDropdown, _viewModel.SelectedDietaryPreferenceIndices);
         }
 
@@ -282,6 +296,17 @@ namespace eu.foodmission.platform
             if (value != null && value.Length > 0)
             {
                 _viewModel.SelectedShoppingResponsibilityIndex = value[0];
+            }
+            UpdateSubmitButtonState();
+        }
+
+        private void OnYearOfBirthChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            if (_viewModel == null) return;
+            var value = evt.newValue?.ToArray();
+            if (value != null && value.Length > 0)
+            {
+                _viewModel.SelectedYearOfBirthIndex = value[0];
             }
             UpdateSubmitButtonState();
         }
@@ -398,11 +423,13 @@ namespace eu.foodmission.platform
             if (_accessibilityHierarchy == null) return;
 
             _submitButtonNode = CreateButtonNode(_accessibilityHierarchy, _submitButton, "Save profile");
+            _yearOfBirthDropdown?.CreateAccessibilityNode(_accessibilityHierarchy, "Year of birth");
         }
 
         protected override void TeardownAccessibilityNodes()
         {
             _submitButtonNode = null;
+            _yearOfBirthDropdown?.DestroyAccessibilityNode();
             base.TeardownAccessibilityNodes();
         }
 
