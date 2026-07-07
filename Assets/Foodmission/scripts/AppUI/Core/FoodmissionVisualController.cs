@@ -264,6 +264,7 @@ namespace eu.foodmission.platform
 
         private void OnDrawerOpened(Drawer drawer)
         {
+            drawer.RemoveFromClassList("fm-drawer-pre-init");
             var storeService = App.current?.services?.GetService<IStoreService>();
             if (_userNameLabel != null && storeService != null)
             {
@@ -695,6 +696,7 @@ namespace eu.foodmission.platform
 
             _profileDrawer = drawer;
             _profileDrawer.Clear();
+            _profileDrawer.AddToClassList("fm-drawer-pre-init");
             //_profileDrawer.swipeAreaWidth = 0;
             BuildDrawerContent(_profileDrawer);
             _profileDrawer.opened += OnDrawerOpened;

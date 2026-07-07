@@ -210,6 +210,10 @@
     background-color: var(--fm-surface-bg);
 }
 
+.appui-drawer.fm-drawer-pre-init .appui-drawer__drawer-container {
+    visibility: hidden;
+}
+
 .fm-menu-backdrop {
     position: absolute;
     left: 0;
