@@ -104,9 +104,7 @@ namespace eu.foodmission.platform
 
             // Initialize accessibility service and apply system settings
             _accessibilityService = services.GetRequiredService<IAccessibilityService>();
-            ApplyFontScaleFromSystem();
             ApplyBoldTextFromSystem();
-            _accessibilityService.FontScaleChanged += OnSystemFontScaleChanged;
             _accessibilityService.BoldTextStatusChanged += OnSystemBoldTextChanged;
 
             // Apply the initial scale from state
@@ -159,7 +157,6 @@ namespace eu.foodmission.platform
 
             if (_accessibilityService != null)
             {
-                _accessibilityService.FontScaleChanged -= OnSystemFontScaleChanged;
                 _accessibilityService.BoldTextStatusChanged -= OnSystemBoldTextChanged;
             }
 
@@ -326,33 +323,6 @@ namespace eu.foodmission.platform
             {
                 Debug.LogWarning($"[FoodmissionApp] Locale not found for lang: {lang}");
             }
-        }
-
-        private void ApplyFontScaleFromSystem()
-        {
-            if (_panel == null || _accessibilityService == null) return;
-
-            var systemScale = _accessibilityService.FontScale;
-            if (Mathf.Approximately(systemScale, 1f)) return;
-
-            float currentScale = float.TryParse(_panel.scale, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float parsed) ? parsed : 1f;
-            _panel.scale = (currentScale * systemScale).ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
-        }
-
-        private void OnSystemFontScaleChanged(float scale)
-        {
-            if (_panel == null) return;
-            var appState = _storeService?.GetAppState();
-            var baseScale = appState != null ? appState.scale : "medium";
-
-            float baseValue = baseScale switch
-            {
-                "small" => 0.85f,
-                "large" => 1.15f,
-                _ => 1.0f
-            };
-
-            _panel.scale = (baseValue * scale).ToString("F2");
         }
 
         private void ApplyBoldTextFromSystem()
