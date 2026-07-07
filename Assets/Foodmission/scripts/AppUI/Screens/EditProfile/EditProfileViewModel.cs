@@ -293,6 +293,18 @@ namespace eu.foodmission.platform
             SelectedActivityLevelIndex = FindCatalogIndex(_catalogData.activityLevels, state.userActivityLevel);
             SelectedEducationLevelIndex = FindCatalogIndex(_catalogData.educationLevels, state.userEducationLevel);
             SelectedAnnualIncomeIndex = FindCatalogIndex(_catalogData.annualIncomeLevels, state.userAnnualIncome);
+            SelectedShoppingResponsibilityIndex = FindCatalogIndex(_catalogData.shoppingResponsibilities, state.userShoppingResponsibility);
+
+            var dietaryIndices = new List<int>();
+            if (state.userDietaryPreference != null)
+            {
+                foreach (string code in state.userDietaryPreference)
+                {
+                    int idx = FindCatalogIndex(_catalogData.dietaryPreferences, code);
+                    if (idx >= 0) dietaryIndices.Add(idx);
+                }
+            }
+            SelectedDietaryPreferenceIndices = dietaryIndices.ToArray();
         }
 
         private static int FindCatalogIndex(CatalogItem[] items, string code)
@@ -326,10 +338,21 @@ namespace eu.foodmission.platform
                     ? _catalogData.shoppingResponsibilities[_selectedShoppingResponsibilityIndex].code
                     : null;
 
-                // Backend supports a single dietary preference — take the first selected index
-                string dietaryCode = _selectedDietaryPreferenceIndices.Length > 0
-                    ? _catalogData.dietaryPreferences[_selectedDietaryPreferenceIndices[0]].code
-                    : null;
+                // Build array of all selected dietary preference codes
+                string[] dietaryCodes = null;
+                if (_selectedDietaryPreferenceIndices != null && _selectedDietaryPreferenceIndices.Length > 0
+                    && _catalogData.dietaryPreferences != null)
+                {
+                    var codes = new List<string>();
+                    foreach (int idx in _selectedDietaryPreferenceIndices)
+                    {
+                        if (idx >= 0 && idx < _catalogData.dietaryPreferences.Length)
+                        {
+                            codes.Add(_catalogData.dietaryPreferences[idx].code);
+                        }
+                    }
+                    if (codes.Count > 0) dietaryCodes = codes.ToArray();
+                }
 
                 var request = new ProfileUpdateRequest
                 {
@@ -339,11 +362,11 @@ namespace eu.foodmission.platform
                     annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
                     yearOfBirth = YearOfBirth > 0 ? YearOfBirth : (int?)null,
                     
-                    preferences = (shoppingResponsibilityCode != null || dietaryCode != null)
+                    preferences = (shoppingResponsibilityCode != null || dietaryCodes != null)
                         ? new ProfileUpdatePreferences
                         {
                             shoppingResponsibility = shoppingResponsibilityCode,
-                            dietaryPreference = dietaryCode
+                            dietaryPreference = dietaryCodes
                         }
                         : null
                 };

@@ -19,7 +19,8 @@
     "precompiledReferences": [
         "nunit.framework.dll",
         "Moq.dll",
-        "Castle.Core.dll"
+        "Castle.Core.dll",
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

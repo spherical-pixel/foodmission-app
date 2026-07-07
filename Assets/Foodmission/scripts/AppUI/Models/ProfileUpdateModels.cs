@@ -67,12 +67,12 @@ namespace eu.foodmission.platform
 
     /// <summary>
     /// Nested preferences object for dietary and shopping data.
-    /// Backend currently supports a single dietary preference value.
+    /// dietaryPreference is an array to support multi-select.
     /// </summary>
     public class ProfileUpdatePreferences
     {
         [JsonProperty("dietaryPreference", NullValueHandling = NullValueHandling.Ignore)]
-        public string dietaryPreference;
+        public string[] dietaryPreference;
 
         [JsonProperty("shoppingResponsibility", NullValueHandling = NullValueHandling.Ignore)]
         public string shoppingResponsibility;

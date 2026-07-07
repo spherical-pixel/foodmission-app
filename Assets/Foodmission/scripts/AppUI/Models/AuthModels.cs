@@ -158,8 +158,6 @@ namespace eu.foodmission.platform
         public string email;
         public string username;
         public string keycloakId;
-        public string firstName;
-        public string lastName;
         public int yearOfBirth;
         public string country;
         public string region;
@@ -168,9 +166,56 @@ namespace eu.foodmission.platform
         public string annualIncome;
         public string educationLevel;
         public string activityLevel;
-        public float weightKg;
-        public float heightCm;
         public string language;
         public UserSettingsDto settings;
+        public ProfilePreferences preferences;
+    }
+
+    /// <summary>
+    /// Newtonsoft.Json converter that accepts either a JSON string or a JSON array
+    /// of strings and deserializes both into a <c>string[]</c>.
+    /// Used for <see cref="ProfilePreferences.dietaryPreference"/> to handle
+    /// backward compatibility with old DB records that stored a single string.
+    /// </summary>
+    public class StringOrArrayConverter : Newtonsoft.Json.JsonConverter
+    {
+        public override bool CanConvert(System.Type objectType)
+        {
+            return objectType == typeof(string[]);
+        }
+
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            if (reader.TokenType == Newtonsoft.Json.JsonToken.String)
+            {
+                string value = (string)reader.Value;
+                return string.IsNullOrEmpty(value) ? new string[0] : new[] { value };
+            }
+            if (reader.TokenType == Newtonsoft.Json.JsonToken.StartArray)
+            {
+                return serializer.Deserialize<string[]>(reader) ?? new string[0];
+            }
+            return new string[0];
+        }
+
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            serializer.Serialize(writer, value);
+        }
+
+        public override bool CanRead => true;
+        public override bool CanWrite => true;
+    }
+
+    /// <summary>
+    /// Nested preferences object returned by GET /api/v1/auth/profile.
+    /// Mirrors the free-form JSON stored in the users.preferences column.
+    /// </summary>
+    [Serializable]
+    public class ProfilePreferences
+    {
+        [Newtonsoft.Json.JsonConverter(typeof(StringOrArrayConverter))]
+        public string[] dietaryPreference;
+        public string shoppingResponsibility;
     }
 }

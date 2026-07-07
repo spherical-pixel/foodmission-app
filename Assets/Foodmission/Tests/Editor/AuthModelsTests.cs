@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using Newtonsoft.Json;
 
 using eu.foodmission.platform;
 
@@ -115,19 +116,66 @@ namespace eu.foodmission.platform.Tests
                 id = "uid1",
                 email = "a@b.com",
                 username = "testuser",
-                firstName = "Test",
-                lastName = "User",
                 yearOfBirth = 1990,
-                country = "ES",
-                weightKg = 75.5f,
-                heightCm = 180f
+                country = "ES"
             };
             string json = JsonUtility.ToJson(resp);
             var result = JsonUtility.FromJson<ProfileResponse>(json);
             Assert.AreEqual("uid1", result.id);
             Assert.AreEqual("testuser", result.username);
             Assert.AreEqual(1990, result.yearOfBirth);
-            Assert.AreEqual(75.5f, result.weightKg, 0.001f);
+        }
+
+        [Test]
+        public void ProfileResponse_Deserializes_OldSingleStringDietaryPreference_AsSingleElementArray()
+        {
+            // Simulates an old DB record where dietaryPreference was stored as a string
+            string json = @"{""id"":""uid1"",""email"":""a@b.com"",""preferences"":{""dietaryPreference"":""VEGETARIAN"",""shoppingResponsibility"":""PRIMARY""}}";
+
+            var result = JsonConvert.DeserializeObject<ProfileResponse>(json);
+
+            Assert.IsNotNull(result.preferences);
+            Assert.IsNotNull(result.preferences.dietaryPreference);
+            Assert.AreEqual(1, result.preferences.dietaryPreference.Length);
+            Assert.AreEqual("VEGETARIAN", result.preferences.dietaryPreference[0]);
+            Assert.AreEqual("PRIMARY", result.preferences.shoppingResponsibility);
+        }
+
+        [Test]
+        public void ProfileResponse_Deserializes_ArrayDietaryPreference()
+        {
+            // New format: dietaryPreference is an array
+            string json = @"{""id"":""uid1"",""email"":""a@b.com"",""preferences"":{""dietaryPreference"":[""VEGAN"",""GLUTEN_FREE""],""shoppingResponsibility"":""PRIMARY""}}";
+
+            var result = JsonConvert.DeserializeObject<ProfileResponse>(json);
+
+            Assert.IsNotNull(result.preferences);
+            CollectionAssert.AreEqual(new[] { "VEGAN", "GLUTEN_FREE" }, result.preferences.dietaryPreference);
+            Assert.AreEqual("PRIMARY", result.preferences.shoppingResponsibility);
+        }
+
+        [Test]
+        public void ProfileResponse_Deserializes_MissingDietaryPreference_AsEmptyArray()
+        {
+            // No preferences at all
+            string json = @"{""id"":""uid1"",""email"":""a@b.com""}";
+
+            var result = JsonConvert.DeserializeObject<ProfileResponse>(json);
+
+            Assert.IsNull(result.preferences);
+        }
+
+        [Test]
+        public void ProfileResponse_Deserializes_EmptyPreferencesObject()
+        {
+            // Empty preferences object
+            string json = @"{""id"":""uid1"",""email"":""a@b.com"",""preferences"":{}}";
+
+            var result = JsonConvert.DeserializeObject<ProfileResponse>(json);
+
+            Assert.IsNotNull(result.preferences);
+            // dietaryPreference should be null (not in JSON) — AuthService handles null via ?? new string[0]
+            Assert.IsNull(result.preferences.dietaryPreference);
         }
 
         [Test]

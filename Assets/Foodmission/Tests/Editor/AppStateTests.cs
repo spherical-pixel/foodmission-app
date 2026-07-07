@@ -26,9 +26,6 @@ namespace eu.foodmission.platform.Tests
                 tokenType = "Bearer",
                 tokenExpiresAt = 999999,
                 refreshToken = "ref-123",
-                userFirstName = "Test",
-                userWeightKg = 70.5f,
-                userHeightCm = 175f,
                 isAuthenticating = false,
                 authError = ""
             };
@@ -36,8 +33,6 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("ca", copy.lang);
             Assert.AreEqual("dark", copy.theme);
             Assert.AreEqual("user-1", copy.userId);
-            Assert.AreEqual(70.5f, copy.userWeightKg, 0.001f);
-            Assert.AreEqual(175f, copy.userHeightCm, 0.001f);
         }
 
         [Test]
@@ -93,8 +88,6 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState
             {
-                userFirstName = "John",
-                userLastName = "Doe",
                 userYearOfBirth = 1990,
                 userCountry = "ES",
                 userRegion = "CT",
@@ -105,8 +98,6 @@ namespace eu.foodmission.platform.Tests
                 userActivityLevel = "ACTIVE"
             };
             var copy = state.Copy();
-            Assert.AreEqual("John", copy.userFirstName);
-            Assert.AreEqual("Doe", copy.userLastName);
             Assert.AreEqual(1990, copy.userYearOfBirth);
             Assert.AreEqual("ES", copy.userCountry);
             Assert.AreEqual("CT", copy.userRegion);

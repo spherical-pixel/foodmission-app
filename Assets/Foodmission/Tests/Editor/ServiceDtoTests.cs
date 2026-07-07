@@ -208,7 +208,7 @@ namespace eu.foodmission.platform.Tests
                 activityLevel = "ACTIVE",
                 preferences = new ProfileUpdatePreferences
                 {
-                    dietaryPreference = "VEGAN",
+                    dietaryPreference = new[] { "VEGAN" },
                     shoppingResponsibility = "PRIMARY"
                 }
             };

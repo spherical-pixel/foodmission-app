@@ -288,5 +288,188 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(eventFired);
             Assert.IsFalse(_vm.IsSubmitting);
         }
+
+        [Test]
+        public async Task PrePopulateFromState_PopulatesDietaryAndShoppingIndices()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                activityLevels = new[] { new CatalogItem { code = "moderate", label = "Moderate" } },
+                educationLevels = new[] { new CatalogItem { code = "bachelor", label = "Bachelor" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" } },
+                shoppingResponsibilities = new[] { new CatalogItem { code = "primary", label = "Primary" } },
+                dietaryPreferences = new[] { new CatalogItem { code = "vegetarian", label = "Vegetarian" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _storeService.SetAppState(new AppState
+            {
+                userDietaryPreference = new[] { "vegetarian" },
+                userShoppingResponsibility = "primary"
+            });
+
+            _vm.PrePopulateFromState();
+
+            Assert.AreEqual(0, _vm.SelectedShoppingResponsibilityIndex);
+            Assert.AreEqual(1, _vm.SelectedDietaryPreferenceIndices.Length);
+            Assert.AreEqual(0, _vm.SelectedDietaryPreferenceIndices[0]);
+        }
+
+        [Test]
+        public async Task PrePopulateFromState_PopulatesMultipleDietaryIndices()
+        {
+            var catalogData = new CatalogData
+            {
+                dietaryPreferences = new[]
+                {
+                    new CatalogItem { code = "VEGAN", label = "Vegan" },
+                    new CatalogItem { code = "GLUTEN_FREE", label = "Gluten Free" },
+                    new CatalogItem { code = "HALAL", label = "Halal" }
+                }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _storeService.SetAppState(new AppState
+            {
+                userDietaryPreference = new[] { "GLUTEN_FREE", "HALAL" }
+            });
+
+            _vm.PrePopulateFromState();
+
+            Assert.AreEqual(2, _vm.SelectedDietaryPreferenceIndices.Length);
+            CollectionAssert.AreEqual(new[] { 1, 2 }, _vm.SelectedDietaryPreferenceIndices);
+        }
+
+        [Test]
+        public async Task PrePopulateFromState_WithUnknownDietaryCode_LeavesEmpty()
+        {
+            var catalogData = new CatalogData
+            {
+                dietaryPreferences = new[] { new CatalogItem { code = "vegetarian", label = "Vegetarian" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _storeService.SetAppState(new AppState { userDietaryPreference = new[] { "unknown_code" } });
+
+            _vm.PrePopulateFromState();
+
+            Assert.AreEqual(0, _vm.SelectedDietaryPreferenceIndices.Length);
+        }
+
+        [Test]
+        public async Task SubmitAsync_IncludesDietaryPreferenceInRequest()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                dietaryPreferences = new[] { new CatalogItem { code = "VEGETARIAN", label = "Vegetarian" } },
+                shoppingResponsibilities = new[] { new CatalogItem { code = "PRIMARY", label = "Primary" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _vm.SelectedGenderIndex = 0;
+            _vm.SelectedDietaryPreferenceIndices = new[] { 0 };
+
+            ProfileUpdateRequest capturedRequest = null;
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
+                .ReturnsAsync(true);
+
+            await _vm.SubmitAsync();
+
+            Assert.IsNotNull(capturedRequest);
+            Assert.IsNotNull(capturedRequest.preferences);
+            CollectionAssert.AreEqual(new[] { "VEGETARIAN" }, capturedRequest.preferences.dietaryPreference);
+        }
+
+        [Test]
+        public async Task SubmitAsync_IncludesMultipleDietaryPreferencesInRequest()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                dietaryPreferences = new[]
+                {
+                    new CatalogItem { code = "VEGAN", label = "Vegan" },
+                    new CatalogItem { code = "GLUTEN_FREE", label = "Gluten Free" },
+                    new CatalogItem { code = "HALAL", label = "Halal" }
+                },
+                shoppingResponsibilities = new[] { new CatalogItem { code = "PRIMARY", label = "Primary" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _vm.SelectedGenderIndex = 0;
+            _vm.SelectedDietaryPreferenceIndices = new[] { 0, 2 }; // VEGAN + HALAL
+
+            ProfileUpdateRequest capturedRequest = null;
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
+                .ReturnsAsync(true);
+
+            await _vm.SubmitAsync();
+
+            Assert.IsNotNull(capturedRequest);
+            Assert.IsNotNull(capturedRequest.preferences);
+            CollectionAssert.AreEqual(new[] { "VEGAN", "HALAL" }, capturedRequest.preferences.dietaryPreference);
+        }
+
+        [Test]
+        public async Task SubmitAsync_WithNoDietarySelection_SendsNullPreferencesWhenShoppingAlsoEmpty()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                dietaryPreferences = new[] { new CatalogItem { code = "VEGETARIAN", label = "Vegetarian" } },
+                shoppingResponsibilities = new[] { new CatalogItem { code = "PRIMARY", label = "Primary" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _vm.SelectedGenderIndex = 0;
+            // No dietary / shopping selection
+
+            ProfileUpdateRequest capturedRequest = null;
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
+                .ReturnsAsync(true);
+
+            await _vm.SubmitAsync();
+
+            Assert.IsNotNull(capturedRequest);
+            Assert.IsNull(capturedRequest.preferences);
+        }
     }
 }

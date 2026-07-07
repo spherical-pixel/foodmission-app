@@ -51,7 +51,7 @@ namespace eu.foodmission.platform.Tests
             {
                 preferences = new ProfileUpdatePreferences
                 {
-                    dietaryPreference = "VEGAN"
+                    dietaryPreference = new[] { "VEGAN" }
                 }
             };
 

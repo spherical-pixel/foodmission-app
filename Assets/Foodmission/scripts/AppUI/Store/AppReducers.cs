@@ -95,8 +95,6 @@ namespace eu.foodmission.platform
 
         public readonly struct ProfilePayload
         {
-            public readonly string firstName;
-            public readonly string lastName;
             public readonly int yearOfBirth;
             public readonly string country;
             public readonly string region;
@@ -105,19 +103,19 @@ namespace eu.foodmission.platform
             public readonly string annualIncome;
             public readonly string educationLevel;
             public readonly string activityLevel;
-            public readonly float weightKg;
-            public readonly float heightCm;
             public readonly string language;
             public readonly UserSettingsDto settings;
+            public readonly string[] dietaryPreference;
+            public readonly string shoppingResponsibility;
 
-            public ProfilePayload(string firstName, string lastName, int yearOfBirth,
+            public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
                 string annualIncome, string educationLevel, string activityLevel,
-                float weightKg, float heightCm, string language = null,
-                UserSettingsDto settings = null)
+                string language = null,
+                UserSettingsDto settings = null,
+                string[] dietaryPreference = null,
+                string shoppingResponsibility = "")
             {
-                this.firstName = firstName;
-                this.lastName = lastName;
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
                 this.region = region;
@@ -126,10 +124,10 @@ namespace eu.foodmission.platform
                 this.annualIncome = annualIncome;
                 this.educationLevel = educationLevel;
                 this.activityLevel = activityLevel;
-                this.weightKg = weightKg;
-                this.heightCm = heightCm;
                 this.language = language;
                 this.settings = settings;
+                this.dietaryPreference = dietaryPreference;
+                this.shoppingResponsibility = shoppingResponsibility;
             }
         }
     }
@@ -226,8 +224,6 @@ namespace eu.foodmission.platform
             newState.tokenExpiresAt = 0;
             newState.refreshToken = "";
             // Clear profile data
-            newState.userFirstName = "";
-            newState.userLastName = "";
             newState.userYearOfBirth = 0;
             newState.userCountry = "";
             newState.userRegion = "";
@@ -236,8 +232,8 @@ namespace eu.foodmission.platform
             newState.userAnnualIncome = "";
             newState.userEducationLevel = "";
             newState.userActivityLevel = "";
-            newState.userWeightKg = 0f;
-            newState.userHeightCm = 0f;
+            newState.userDietaryPreference = new string[0];
+            newState.userShoppingResponsibility = "";
             // Reset preferences to defaults
             newState.theme = "system";
             newState.scale = "medium";
@@ -345,8 +341,6 @@ namespace eu.foodmission.platform
         public static AppState ProfileSyncedReducer(AppState state, IAction<AppActions.ProfilePayload> action)
         {
             var newState = state.Copy();
-            newState.userFirstName = action.payload.firstName ?? "";
-            newState.userLastName = action.payload.lastName ?? "";
             newState.userYearOfBirth = action.payload.yearOfBirth;
             newState.userCountry = action.payload.country ?? "";
             newState.userRegion = action.payload.region ?? "";
@@ -355,8 +349,10 @@ namespace eu.foodmission.platform
             newState.userAnnualIncome = action.payload.annualIncome ?? "";
             newState.userEducationLevel = action.payload.educationLevel ?? "";
             newState.userActivityLevel = action.payload.activityLevel ?? "";
-            newState.userWeightKg = action.payload.weightKg;
-            newState.userHeightCm = action.payload.heightCm;
+            newState.userDietaryPreference = action.payload.dietaryPreference != null
+                ? (string[])action.payload.dietaryPreference.Clone()
+                : new string[0];
+            newState.userShoppingResponsibility = action.payload.shoppingResponsibility ?? "";
 
             if (!string.IsNullOrEmpty(action.payload.language))
             {

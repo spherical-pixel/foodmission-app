@@ -108,8 +108,6 @@ namespace eu.foodmission.platform
 
         // ==================== User profile (synced from server) ====================
 
-        public string userFirstName = "";
-        public string userLastName = "";
         public int userYearOfBirth = 0;
         public string userCountry = "";
         public string userRegion = "";
@@ -118,8 +116,8 @@ namespace eu.foodmission.platform
         public string userAnnualIncome = "";
         public string userEducationLevel = "";
         public string userActivityLevel = "";
-        public float userWeightKg = 0f;
-        public float userHeightCm = 0f;
+        public string[] userDietaryPreference = new string[0];
+        public string userShoppingResponsibility = "";
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -164,8 +162,6 @@ namespace eu.foodmission.platform
                 refreshToken = this.refreshToken,
                 refreshTokenExpiresAt = this.refreshTokenExpiresAt,
                 lastSessionTimestamp = this.lastSessionTimestamp,
-                userFirstName = this.userFirstName,
-                userLastName = this.userLastName,
                 userYearOfBirth = this.userYearOfBirth,
                 userCountry = this.userCountry,
                 userRegion = this.userRegion,
@@ -174,8 +170,8 @@ namespace eu.foodmission.platform
                 userAnnualIncome = this.userAnnualIncome,
                 userEducationLevel = this.userEducationLevel,
                 userActivityLevel = this.userActivityLevel,
-                userWeightKg = this.userWeightKg,
-                userHeightCm = this.userHeightCm,
+                userDietaryPreference = this.userDietaryPreference != null ? (string[])this.userDietaryPreference.Clone() : new string[0],
+                userShoppingResponsibility = this.userShoppingResponsibility,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError
             };

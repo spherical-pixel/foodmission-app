@@ -296,18 +296,15 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState();
             var payload = new AppActions.ProfilePayload(
-                firstName: "Antonio", lastName: "Duran", yearOfBirth: 1990,
+                yearOfBirth: 1990,
                 country: "ES", region: "ES-VC", zip: "03450",
                 gender: "MALE", annualIncome: "FROM_20000_TO_34999",
-                educationLevel: "UNIVERSITY", activityLevel: "MODERATE",
-                weightKg: 75f, heightCm: 180f
+                educationLevel: "UNIVERSITY", activityLevel: "MODERATE"
             );
             var action = AppActions.profileSynced.Invoke(payload);
 
             var newState = AppReducers.ProfileSyncedReducer(state, action);
 
-            Assert.AreEqual("Antonio", newState.userFirstName);
-            Assert.AreEqual("Duran", newState.userLastName);
             Assert.AreEqual(1990, newState.userYearOfBirth);
             Assert.AreEqual("ES", newState.userCountry);
             Assert.AreEqual("ES-VC", newState.userRegion);
@@ -316,8 +313,42 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("FROM_20000_TO_34999", newState.userAnnualIncome);
             Assert.AreEqual("UNIVERSITY", newState.userEducationLevel);
             Assert.AreEqual("MODERATE", newState.userActivityLevel);
-            Assert.AreEqual(75f, newState.userWeightKg);
-            Assert.AreEqual(180f, newState.userHeightCm);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_AppliesPreferences()
+        {
+            var state = new AppState();
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
+                dietaryPreference: new[] { "VEGETARIAN", "GLUTEN_FREE" }, shoppingResponsibility: "PRIMARY"
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            CollectionAssert.AreEqual(new[] { "VEGETARIAN", "GLUTEN_FREE" }, newState.userDietaryPreference);
+            Assert.AreEqual("PRIMARY", newState.userShoppingResponsibility);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithNullPreferences_KeepsEmptyDefaults()
+        {
+            var state = new AppState { userDietaryPreference = new[] { "VEGAN" } };
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: ""
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            // Null preferences (default "") overwrite any stale local value
+            Assert.IsEmpty(newState.userDietaryPreference);
+            Assert.IsEmpty(newState.userShoppingResponsibility);
         }
 
         [Test]
@@ -331,10 +362,10 @@ namespace eu.foodmission.platform.Tests
                 pushNotificationsEnabled = true, backgroundPattern = false
             };
             var payload = new AppActions.ProfilePayload(
-                firstName: "", lastName: "", yearOfBirth: 0,
+                yearOfBirth: 0,
                 country: "", region: "", zip: "",
                 gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
-                weightKg: 0f, heightCm: 0f, settings: settings
+                settings: settings
             );
             var action = AppActions.profileSynced.Invoke(payload);
 
@@ -356,10 +387,10 @@ namespace eu.foodmission.platform.Tests
             var state = new AppState { theme = "dark", scale = "large", soundVolume = 50 };
             var emptySettings = new UserSettingsDto(); // theme == null
             var payload = new AppActions.ProfilePayload(
-                firstName: "", lastName: "", yearOfBirth: 0,
+                yearOfBirth: 0,
                 country: "", region: "", zip: "",
                 gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
-                weightKg: 0f, heightCm: 0f, settings: emptySettings
+                settings: emptySettings
             );
             var action = AppActions.profileSynced.Invoke(payload);
 
@@ -375,10 +406,10 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState { theme = "dark" };
             var payload = new AppActions.ProfilePayload(
-                firstName: "", lastName: "", yearOfBirth: 0,
+                yearOfBirth: 0,
                 country: "", region: "", zip: "",
                 gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
-                weightKg: 0f, heightCm: 0f, settings: null
+                settings: null
             );
             var action = AppActions.profileSynced.Invoke(payload);
 
@@ -392,10 +423,10 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState { lang = "en" };
             var payload = new AppActions.ProfilePayload(
-                firstName: "", lastName: "", yearOfBirth: 0,
+                yearOfBirth: 0,
                 country: "", region: "", zip: "",
                 gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
-                weightKg: 0f, heightCm: 0f, language: "es"
+                language: "es"
             );
             var action = AppActions.profileSynced.Invoke(payload);
 
@@ -409,10 +440,10 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState { lang = "en" };
             var payload = new AppActions.ProfilePayload(
-                firstName: "", lastName: "", yearOfBirth: 0,
+                yearOfBirth: 0,
                 country: "", region: "", zip: "",
                 gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
-                weightKg: 0f, heightCm: 0f, language: null
+                language: null
             );
             var action = AppActions.profileSynced.Invoke(payload);
 
@@ -426,20 +457,20 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState
             {
-                userFirstName = "Antonio", userLastName = "Duran",
                 userYearOfBirth = 1990, userCountry = "ES",
-                userGender = "MALE", userActivityLevel = "MODERATE"
+                userGender = "MALE", userActivityLevel = "MODERATE",
+                userDietaryPreference = new[] { "VEGETARIAN", "GLUTEN_FREE" }, userShoppingResponsibility = "PRIMARY"
             };
             var action = AppActions.logout.Invoke();
 
             var newState = AppReducers.LogoutReducer(state, action);
 
-            Assert.IsEmpty(newState.userFirstName);
-            Assert.IsEmpty(newState.userLastName);
             Assert.AreEqual(0, newState.userYearOfBirth);
             Assert.IsEmpty(newState.userCountry);
             Assert.IsEmpty(newState.userGender);
             Assert.IsEmpty(newState.userActivityLevel);
+            Assert.IsEmpty(newState.userDietaryPreference);
+            Assert.IsEmpty(newState.userShoppingResponsibility);
         }
 
         [Test]
@@ -447,18 +478,15 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState
             {
-                userFirstName = "Antonio", userLastName = "Duran",
                 userYearOfBirth = 1990, userCountry = "ES", userRegion = "ES-VC",
                 userZip = "03450", userGender = "MALE",
                 userAnnualIncome = "FROM_20000_TO_34999",
                 userEducationLevel = "UNIVERSITY", userActivityLevel = "MODERATE",
-                userWeightKg = 75f, userHeightCm = 180f
+                userDietaryPreference = new[] { "VEGETARIAN" }, userShoppingResponsibility = "PRIMARY"
             };
 
             var copy = state.Copy();
 
-            Assert.AreEqual("Antonio", copy.userFirstName);
-            Assert.AreEqual("Duran", copy.userLastName);
             Assert.AreEqual(1990, copy.userYearOfBirth);
             Assert.AreEqual("ES", copy.userCountry);
             Assert.AreEqual("ES-VC", copy.userRegion);
@@ -467,8 +495,8 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("FROM_20000_TO_34999", copy.userAnnualIncome);
             Assert.AreEqual("UNIVERSITY", copy.userEducationLevel);
             Assert.AreEqual("MODERATE", copy.userActivityLevel);
-            Assert.AreEqual(75f, copy.userWeightKg);
-            Assert.AreEqual(180f, copy.userHeightCm);
+            CollectionAssert.AreEqual(new[] { "VEGETARIAN" }, copy.userDietaryPreference);
+            Assert.AreEqual("PRIMARY", copy.userShoppingResponsibility);
         }
     }
 }

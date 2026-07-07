@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Networking;
@@ -405,8 +406,6 @@ namespace eu.foodmission.platform
         private void DispatchProfileSynced(ProfileResponse profile)
         {
             var payload = new AppActions.ProfilePayload(
-                firstName: profile.firstName ?? "",
-                lastName: profile.lastName ?? "",
                 yearOfBirth: profile.yearOfBirth,
                 country: profile.country ?? "",
                 region: profile.region ?? "",
@@ -415,10 +414,10 @@ namespace eu.foodmission.platform
                 annualIncome: profile.annualIncome ?? "",
                 educationLevel: profile.educationLevel ?? "",
                 activityLevel: profile.activityLevel ?? "",
-                weightKg: profile.weightKg,
-                heightCm: profile.heightCm,
                 language: profile.language,
-                settings: profile.settings
+                settings: profile.settings,
+                dietaryPreference: profile.preferences?.dietaryPreference,
+                shoppingResponsibility: profile.preferences?.shoppingResponsibility ?? ""
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
         }
@@ -474,7 +473,10 @@ namespace eu.foodmission.platform
                     string responseJson = request.downloadHandler.text;
                     Debug.Log($"[{GetType().Name}] Profile response: {responseJson}");
 
-                    ProfileResponse profile = JsonUtility.FromJson<ProfileResponse>(responseJson);
+                    // Use Newtonsoft.Json (not JsonUtility) so the StringOrArrayConverter
+                    // on ProfilePreferences.dietaryPreference handles both old single-string
+                    // DB records and new array format during migration.
+                    ProfileResponse profile = JsonConvert.DeserializeObject<ProfileResponse>(responseJson);
                     if (profile != null && !string.IsNullOrEmpty(profile.id))
                     {
                         return profile;

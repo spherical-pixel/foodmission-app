@@ -197,14 +197,22 @@ namespace eu.foodmission.platform
             SetDropdownSelection(_activityLevelDropdown, _viewModel.SelectedActivityLevelIndex);
             SetDropdownSelection(_educationLevelDropdown, _viewModel.SelectedEducationLevelIndex);
             SetDropdownSelection(_annualIncomeDropdown, _viewModel.SelectedAnnualIncomeIndex);
+            SetDropdownSelection(_shoppingResponsibilityDropdown, _viewModel.SelectedShoppingResponsibilityIndex);
             SetDropdownSelection(_countryDropdown, _viewModel.SelectedCountryIndex);
             SetDropdownSelection(_regionDropdown, _viewModel.SelectedRegionIndex);
+            SetDropdownSelectionMulti(_dietaryPreferencesDropdown, _viewModel.SelectedDietaryPreferenceIndices);
         }
 
         private static void SetDropdownSelection(FormFieldItemDropDownField dropdown, int index)
         {
             if (dropdown == null || index < 0) return;
             dropdown.Dropdown.value = new[] { index };
+        }
+
+        private static void SetDropdownSelectionMulti(FormFieldItemDropDownField dropdown, int[] indices)
+        {
+            if (dropdown == null || indices == null || indices.Length == 0) return;
+            dropdown.Dropdown.SetValueWithoutNotify(indices);
         }
 
         private void UpdateSubmitButtonState()
@@ -239,15 +247,10 @@ namespace eu.foodmission.platform
 
         private void OnDietaryPreferencesChanged(ChangeEvent<IEnumerable<int>> evt)
         {
-            // This callback may not be needed if we're using individual checkboxes for dietary preferences
-            // But if the dropdown is used for something else related to dietary preferences, handle it here
+            // Multi-select dropdown: always sync (including empty selection) so deselection clears the array.
             if( _viewModel == null) return;
-            var value = evt.newValue?.ToArray();
-            if (value != null && value.Length > 0)
-            {
-                _viewModel.SelectedDietaryPreferenceIndices = value.ToArray<int>();
-            }
-        }  
+            _viewModel.SelectedDietaryPreferenceIndices = evt.newValue?.ToArray() ?? new int[0];
+        }
 
         private void OnEducationLevelChanged(ChangeEvent<IEnumerable<int>> evt)
         {
