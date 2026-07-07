@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Moq;
@@ -138,10 +139,64 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void PrePopulateFromState_WithoutCatalogData_DoesNothing()
+        public async Task PrePopulateFromState_WithoutCatalogData_DoesNothing()
         {
-            _vm.PrePopulateFromState();
+            await _vm.PrePopulateFromState();
             Assert.AreEqual(-1, _vm.SelectedGenderIndex);
+        }
+
+        [Test]
+        public async Task LoadCountriesAsync_PopulatesCountryOptionsWithFlags()
+        {
+            var countries = new List<CatalogItem>
+            {
+                new CatalogItem { code = "ES", label = "Spain" },
+                new CatalogItem { code = "AT", label = "Austria" }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.GetCountriesAsync())
+                .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((countries, null)));
+
+            await _vm.LoadCountriesAsync();
+
+            Assert.AreEqual(2, _vm.CountryOptions.Count);
+            Assert.IsTrue(_vm.CountryOptions[0].Contains("Spain"));
+            Assert.IsTrue(_vm.CountryOptions[0].Contains("\U0001F1EA\U0001F1F8")); // 🇪🇸
+            Assert.IsTrue(_vm.CountryOptions[1].Contains("Austria"));
+        }
+
+        [Test]
+        public async Task LoadCountriesAsync_ThenPrePopulate_RestoresCountryIndex()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                activityLevels = new[] { new CatalogItem { code = "moderate", label = "Moderate" } },
+                educationLevels = new[] { new CatalogItem { code = "bachelor", label = "Bachelor" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" } }
+            };
+            var countries = new List<CatalogItem>
+            {
+                new CatalogItem { code = "ES", label = "Spain" },
+                new CatalogItem { code = "AT", label = "Austria" }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+            _mockCatalogService
+                .Setup(x => x.GetCountriesAsync())
+                .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((countries, null)));
+
+            await _vm.LoadCatalogDataAsync();
+            await _vm.LoadCountriesAsync();
+
+            _storeService.SetAppState(new AppState { userCountry = "AT" });
+
+            await _vm.PrePopulateFromState();
+
+            Assert.AreEqual(1, _vm.SelectedCountryIndex);
         }
 
         [Test]
@@ -161,7 +216,7 @@ namespace eu.foodmission.platform.Tests
 
             await _vm.LoadCatalogDataAsync();
 
-            _vm.PrePopulateFromState();
+            await _vm.PrePopulateFromState();
 
             Assert.AreEqual(0, _vm.SelectedGenderIndex);
             Assert.AreEqual(0, _vm.SelectedActivityLevelIndex);
@@ -171,9 +226,9 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void UpdateRegionsForSelectedCountry_WithInvalidIndex_ClearsRegions()
+        public async Task UpdateRegionsForSelectedCountry_WithInvalidIndex_ClearsRegions()
         {
-            _vm.UpdateRegionsForSelectedCountry();
+            await _vm.UpdateRegionsForSelectedCountryAsync();
 
             Assert.AreEqual(0, _vm.RegionOptions.Count);
             Assert.AreEqual(-1, _vm.SelectedRegionIndex);
@@ -314,7 +369,7 @@ namespace eu.foodmission.platform.Tests
                 userShoppingResponsibility = "primary"
             });
 
-            _vm.PrePopulateFromState();
+            await _vm.PrePopulateFromState();
 
             Assert.AreEqual(0, _vm.SelectedShoppingResponsibilityIndex);
             Assert.AreEqual(1, _vm.SelectedDietaryPreferenceIndices.Length);
@@ -345,7 +400,7 @@ namespace eu.foodmission.platform.Tests
                 userDietaryPreference = new[] { "GLUTEN_FREE", "HALAL" }
             });
 
-            _vm.PrePopulateFromState();
+            await _vm.PrePopulateFromState();
 
             Assert.AreEqual(2, _vm.SelectedDietaryPreferenceIndices.Length);
             CollectionAssert.AreEqual(new[] { 1, 2 }, _vm.SelectedDietaryPreferenceIndices);
@@ -367,7 +422,7 @@ namespace eu.foodmission.platform.Tests
 
             _storeService.SetAppState(new AppState { userDietaryPreference = new[] { "unknown_code" } });
 
-            _vm.PrePopulateFromState();
+            await _vm.PrePopulateFromState();
 
             Assert.AreEqual(0, _vm.SelectedDietaryPreferenceIndices.Length);
         }

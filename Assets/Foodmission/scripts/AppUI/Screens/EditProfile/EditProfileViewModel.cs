@@ -120,8 +120,9 @@ namespace eu.foodmission.platform
         /// </summary>
         public List<string> RegionOptions { get; private set; } = new();
 
-        // Country data loaded from JSON
-        private List<CountryData> _countriesData = new();
+        // Country/region data loaded from backend catalog (with JSON fallback)
+        private List<CatalogItem> _countries = new();
+        private List<CatalogItem> _regions = new();
 
         /// <summary>
         /// Whether all required fields have a value.
@@ -145,53 +146,46 @@ namespace eu.foodmission.platform
         {
             _catalogService = catalogService;
             _authService = authService;
-
-            LoadCountriesData();
-
-
         }
 
         /// <summary>
-        /// Loads country data from the JSON in Resources
+        /// Loads country data from the backend catalog (with local JSON fallback).
+        /// Call this from the Screen's OnEnter before PrePopulateFromState.
         /// </summary>
-        private void LoadCountriesData()
+        public async Task LoadCountriesAsync()
         {
-            var jsonAsset = Resources.Load<TextAsset>("ue_countries_regions");
-            if (jsonAsset == null)
+            var (countries, _) = await _catalogService.GetCountriesAsync();
+
+            if (countries == null || countries.Count == 0)
             {
-                Debug.LogError($"[{GetType().Name}] - LoadCountriesData - ue_countries_regions.json could not be loaded");
+                Debug.LogError($"[{GetType().Name}] LoadCountriesAsync — no countries loaded");
                 return;
             }
 
-            var wrapper = JsonUtility.FromJson<CountriesList>("{\"countries\":" + jsonAsset.text + "}");
-            if (wrapper?.countries == null)
-            {
-                Debug.LogError($"[{GetType().Name}] - LoadCountriesData - Error parsing countries JSON");
-                return;
-            }
-
-            _countriesData = wrapper.countries;
-
-            CountryOptions = _countriesData.Select(c => $"{c.flag} {c.country_name_local}").ToList();
+            _countries = countries;
+            CountryOptions = _countries
+                .Select(c => $"{CountryUtils.CountryCodeToFlag(c.code)} {c.label}")
+                .ToList();
         }
 
         /// <summary>
-        /// Updates available regions based on the selected country
+        /// Updates available regions based on the selected country (async — fetches from backend).
         /// </summary>
-        public void UpdateRegionsForSelectedCountry()
+        public async Task UpdateRegionsForSelectedCountryAsync()
         {
-            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countriesData.Count)
+            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countries.Count)
             {
+                _regions = new List<CatalogItem>();
                 RegionOptions = new List<string>();
                 SelectedRegionIndex = -1;
                 return;
             }
 
-            var country = _countriesData[SelectedCountryIndex];
-            RegionOptions = country.regions?
-                .Select(r => r.region_name_local)
-                .ToList() ?? new List<string>();
+            string countryCode = _countries[SelectedCountryIndex].code;
+            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode);
 
+            _regions = regions ?? new List<CatalogItem>();
+            RegionOptions = _regions.Select(r => r.label).ToList();
             SelectedRegionIndex = RegionOptions.Count > 0 ? 0 : -1;
         }
 
@@ -200,9 +194,9 @@ namespace eu.foodmission.platform
         /// </summary>
         public string GetSelectedCountryIso()
         {
-            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countriesData.Count)
+            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countries.Count)
                 return null;
-            return _countriesData[SelectedCountryIndex].country_iso;
+            return _countries[SelectedCountryIndex].code;
         }
 
         /// <summary>
@@ -210,14 +204,9 @@ namespace eu.foodmission.platform
         /// </summary>
         public string GetSelectedRegionIso()
         {
-            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countriesData.Count)
+            if (SelectedRegionIndex < 0 || SelectedRegionIndex >= _regions.Count)
                 return null;
-
-            var country = _countriesData[SelectedCountryIndex];
-            if (SelectedRegionIndex < 0 || SelectedRegionIndex >= country.regions?.Count)
-                return null;
-
-            return country.regions[SelectedRegionIndex].region_iso;
+            return _regions[SelectedRegionIndex].code;
         }
 
         /// <summary>
@@ -271,20 +260,20 @@ namespace eu.foodmission.platform
 
         /// <summary>
         /// Pre-populates dropdown indices from the current AppState profile data.
-        /// Call this after LoadCatalogDataAsync() so _catalogData is available.
+        /// Call this after LoadCatalogDataAsync() and LoadCountriesAsync() so data is available.
         /// </summary>
-        public void PrePopulateFromState()
+        public async Task PrePopulateFromState()
         {
             if (_catalogData == null) return;
 
             AppState state = _storeService.GetAppState();
 
             YearOfBirth = state.userYearOfBirth;
-            SelectedCountryIndex = _countriesData.FindIndex(c => c.country_iso == state.userCountry);
-            UpdateRegionsForSelectedCountry();
-            if ( SelectedCountryIndex >= 0 && SelectedRegionIndex >= 0)
+            SelectedCountryIndex = _countries.FindIndex(c => c.code == state.userCountry);
+            await UpdateRegionsForSelectedCountryAsync();
+            if (SelectedCountryIndex >= 0 && SelectedRegionIndex >= 0)
             {
-                SelectedRegionIndex = _countriesData[SelectedCountryIndex].regions.FindIndex(r => r.region_iso == state.userRegion);
+                SelectedRegionIndex = _regions.FindIndex(r => r.code == state.userRegion);
             }
 
             PostalCode = state.userZip;
@@ -399,14 +388,14 @@ namespace eu.foodmission.platform
                     request.yearOfBirth = YearOfBirth;
                 }
 
-                if( SelectedCountryIndex >= 0 && _countriesData[SelectedCountryIndex].country_iso != state.userCountry)
+                if( SelectedCountryIndex >= 0 && _countries[SelectedCountryIndex].code != state.userCountry)
                 {
-                    request.country = _countriesData[SelectedCountryIndex].country_iso;
+                    request.country = _countries[SelectedCountryIndex].code;
                 }
 
-                if(SelectedRegionIndex >= 0 && _countriesData[SelectedCountryIndex].regions != null && _countriesData[SelectedCountryIndex].regions[SelectedRegionIndex].region_iso != state.userRegion)
+                if(SelectedRegionIndex >= 0 && SelectedRegionIndex < _regions.Count && _regions[SelectedRegionIndex].code != state.userRegion)
                 {
-                    request.region = _countriesData[SelectedCountryIndex].regions[SelectedRegionIndex].region_iso;
+                    request.region = _regions[SelectedRegionIndex].code;
                 }
 
                 if( !string.IsNullOrEmpty(PostalCode) && PostalCode != state.userZip)

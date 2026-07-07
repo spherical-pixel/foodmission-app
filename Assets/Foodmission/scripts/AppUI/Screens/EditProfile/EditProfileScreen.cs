@@ -157,7 +157,8 @@ namespace eu.foodmission.platform
             if (_viewModel != null)
             {
                 await _viewModel.LoadCatalogDataAsync();
-                _viewModel.PrePopulateFromState();
+                await _viewModel.LoadCountriesAsync();
+                await _viewModel.PrePopulateFromState();
                 PopulateDropdowns();
                 PrePopulateDropdownSelections();
                 UpdateSubmitButtonState();
@@ -302,32 +303,39 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Updates the region dropdown based on selected country
+        /// Updates the region dropdown based on selected country (async — fetches from backend)
         /// </summary>
-        private void UpdateRegionDropdown()
+        private async void UpdateRegionDropdown()
         {
             if (_regionDropdown == null || _viewModel == null)
             {
                 return;
             }
 
-            _viewModel.UpdateRegionsForSelectedCountry();
-
-            _regionDropdown.Dropdown.sourceItems = _viewModel.RegionOptions;
-            _regionDropdown.Dropdown.bindItem = (item, index) =>
+            try
             {
-                item.label = _viewModel.RegionOptions[index];
-                item.icon = null;
-            };
+                await _viewModel.UpdateRegionsForSelectedCountryAsync();
 
-            // Set value to first item or clear
-            if (_viewModel.SelectedRegionIndex >= 0)
-            {
-                _regionDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedRegionIndex });
+                _regionDropdown.Dropdown.sourceItems = _viewModel.RegionOptions;
+                _regionDropdown.Dropdown.bindItem = (item, index) =>
+                {
+                    item.label = _viewModel.RegionOptions[index];
+                    item.icon = null;
+                };
+
+                // Set value to first item or clear
+                if (_viewModel.SelectedRegionIndex >= 0)
+                {
+                    _regionDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedRegionIndex });
+                }
+                else
+                {
+                    _regionDropdown.Dropdown.SetValueWithoutNotify(new int[0]);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _regionDropdown.Dropdown.SetValueWithoutNotify(new int[0]);
+                Debug.LogError($"[EditProfileScreen] UpdateRegionDropdown exception: {ex.Message}");
             }
         }
 

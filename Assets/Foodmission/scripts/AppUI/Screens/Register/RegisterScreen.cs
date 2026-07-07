@@ -1,15 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Core;
+using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
-using System;
 
 namespace eu.foodmission.platform
 {
@@ -43,6 +44,26 @@ namespace eu.foodmission.platform
                 .Get(TemplateAddresses.Register));
             CacheUIElements();
             RegisterManualEvents();
+        }
+
+        public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            base.OnEnter(controller, destination, args);
+
+            if (_viewModel != null)
+            {
+                await _viewModel.LoadCountriesAsync();
+
+                if (_countryDropdown != null && _viewModel.CountryOptions.Count > 0)
+                {
+                    _countryDropdown.Dropdown.sourceItems = _viewModel.CountryOptions;
+                    _countryDropdown.Dropdown.bindItem = (item, index) =>
+                    {
+                        item.label = _viewModel.CountryOptions[index];
+                        item.icon = null;
+                    };
+                }
+            }
         }
 
         private void CacheUIElements()
@@ -92,26 +113,33 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void UpdateRegionDropdown()
+        private async void UpdateRegionDropdown()
         {
             if (_regionDropdown == null || _viewModel == null) return;
 
-            _viewModel.UpdateRegionsForSelectedCountry();
-
-            _regionDropdown.Dropdown.sourceItems = _viewModel.RegionOptions;
-            _regionDropdown.Dropdown.bindItem = (item, index) =>
+            try
             {
-                item.label = _viewModel.RegionOptions[index];
-                item.icon = null;
-            };
+                await _viewModel.UpdateRegionsForSelectedCountryAsync();
 
-            if (_viewModel.SelectedRegionIndex >= 0)
-            {
-                _regionDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedRegionIndex });
+                _regionDropdown.Dropdown.sourceItems = _viewModel.RegionOptions;
+                _regionDropdown.Dropdown.bindItem = (item, index) =>
+                {
+                    item.label = _viewModel.RegionOptions[index];
+                    item.icon = null;
+                };
+
+                if (_viewModel.SelectedRegionIndex >= 0)
+                {
+                    _regionDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedRegionIndex });
+                }
+                else
+                {
+                    _regionDropdown.Dropdown.SetValueWithoutNotify(new int[0]);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _regionDropdown.Dropdown.SetValueWithoutNotify(new int[0]);
+                Debug.LogError($"[RegisterScreen] UpdateRegionDropdown exception: {ex.Message}");
             }
         }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eu.foodmission.platform
@@ -11,5 +12,9 @@ namespace eu.foodmission.platform
         Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCategoriesAsync();
 
         Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCoursesAsync();
+
+        Task<(List<CatalogItem> Result, ApiErrorResponse Error)> GetCountriesAsync();
+
+        Task<(List<CatalogItem> Result, ApiErrorResponse Error)> GetRegionsAsync(string countryCode);
     }
 }

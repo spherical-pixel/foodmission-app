@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Moq;
@@ -13,6 +14,7 @@ namespace eu.foodmission.platform.Tests
     public class RegisterViewModelTests
     {
         private Mock<IAuthService> _mockAuthService;
+        private Mock<ICatalogService> _mockCatalogService;
         private TestStoreService _storeService;
         private RegisterViewModel _vm;
 
@@ -20,8 +22,9 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _mockAuthService = new Mock<IAuthService>();
+            _mockCatalogService = new Mock<ICatalogService>();
             _storeService = new TestStoreService();
-            _vm = new RegisterViewModel(_mockAuthService.Object, _storeService);
+            _vm = new RegisterViewModel(_mockAuthService.Object, _mockCatalogService.Object, _storeService);
         }
 
         [TearDown]

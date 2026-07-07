@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
@@ -15,9 +16,11 @@ namespace eu.foodmission.platform
     public partial class RegisterViewModel : ViewModelBase
     {
         private readonly IAuthService _authService;
+        private readonly ICatalogService _catalogService;
 
-        // Country data loaded from JSON
-        private List<CountryData> _countriesData = new();
+        // Country/region data loaded from backend catalog (with JSON fallback)
+        private List<CatalogItem> _countries = new();
+        private List<CatalogItem> _regions = new();
 
         [ObservableProperty]
         private string _username = "";
@@ -105,11 +108,10 @@ namespace eu.foodmission.platform
 
         private bool _registrationCompleted = false;
 
-        public RegisterViewModel(IAuthService authService, IStoreService storeService) : base(storeService)
+        public RegisterViewModel(IAuthService authService, ICatalogService catalogService, IStoreService storeService) : base(storeService)
         {
             _authService = authService;
-
-            LoadCountriesData();
+            _catalogService = catalogService;
 
             _storeSubscription = _store.Subscribe(
                 SelectAuthState,
@@ -118,46 +120,43 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Loads country data from the JSON in Resources
+        /// Loads country data from the backend catalog (with local JSON fallback).
+        /// Call this from the Screen's OnEnter.
         /// </summary>
-        private void LoadCountriesData()
+        public async Task LoadCountriesAsync()
         {
-            var jsonAsset = Resources.Load<TextAsset>("ue_countries_regions");
-            if (jsonAsset == null)
+            var (countries, _) = await _catalogService.GetCountriesAsync();
+
+            if (countries == null || countries.Count == 0)
             {
-                Debug.LogError($"[{GetType().Name}] - LoadCountriesData - ue_countries_regions.json could not be loaded");
+                Debug.LogError($"[{GetType().Name}] LoadCountriesAsync — no countries loaded");
                 return;
             }
 
-            var wrapper = JsonUtility.FromJson<CountriesList>("{\"countries\":" + jsonAsset.text + "}");
-            if (wrapper?.countries == null)
-            {
-                Debug.LogError($"[{GetType().Name}] - LoadCountriesData - Error parsing countries JSON");
-                return;
-            }
-
-            _countriesData = wrapper.countries;
-
-            CountryOptions = _countriesData.Select(c => $"{c.flag} {c.country_name_local}").ToList();
+            _countries = countries;
+            CountryOptions = _countries
+                .Select(c => $"{CountryUtils.CountryCodeToFlag(c.code)} {c.label}")
+                .ToList();
         }
 
         /// <summary>
-        /// Updates available regions based on the selected country
+        /// Updates available regions based on the selected country (async — fetches from backend).
         /// </summary>
-        public void UpdateRegionsForSelectedCountry()
+        public async Task UpdateRegionsForSelectedCountryAsync()
         {
-            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countriesData.Count)
+            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countries.Count)
             {
+                _regions = new List<CatalogItem>();
                 RegionOptions = new List<string>();
                 SelectedRegionIndex = -1;
                 return;
             }
 
-            var country = _countriesData[SelectedCountryIndex];
-            RegionOptions = country.regions?
-                .Select(r => r.region_name_local)
-                .ToList() ?? new List<string>();
+            string countryCode = _countries[SelectedCountryIndex].code;
+            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode);
 
+            _regions = regions ?? new List<CatalogItem>();
+            RegionOptions = _regions.Select(r => r.label).ToList();
             SelectedRegionIndex = RegionOptions.Count > 0 ? 0 : -1;
         }
 
@@ -166,9 +165,9 @@ namespace eu.foodmission.platform
         /// </summary>
         public string GetSelectedCountryIso()
         {
-            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countriesData.Count)
+            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countries.Count)
                 return null;
-            return _countriesData[SelectedCountryIndex].country_iso;
+            return _countries[SelectedCountryIndex].code;
         }
 
         /// <summary>
@@ -176,14 +175,9 @@ namespace eu.foodmission.platform
         /// </summary>
         public string GetSelectedRegionIso()
         {
-            if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countriesData.Count)
+            if (SelectedRegionIndex < 0 || SelectedRegionIndex >= _regions.Count)
                 return null;
-
-            var country = _countriesData[SelectedCountryIndex];
-            if (SelectedRegionIndex < 0 || SelectedRegionIndex >= country.regions?.Count)
-                return null;
-
-            return country.regions[SelectedRegionIndex].region_iso;
+            return _regions[SelectedRegionIndex].code;
         }
 
         private (bool isAuthenticating, string authError, string userId) SelectAuthState(AppState state)

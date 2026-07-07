@@ -46,4 +46,18 @@ namespace eu.foodmission.platform
     {
         public CatalogItem[] data;
     }
+
+    /// <summary>
+    /// Paginated response wrapper for endpoints like GET /catalog/countries and
+    /// GET /catalog/regions that return { data, total, page, limit, totalPages }.
+    /// </summary>
+    [Serializable]
+    public class PaginatedCatalogResponse
+    {
+        public CatalogItem[] data;
+        public int total;
+        public int page;
+        public int limit;
+        public int totalPages;
+    }
 }
