@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation.Generated;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
@@ -69,6 +70,14 @@ namespace eu.foodmission.platform
             _foodProductService = foodProductService;
             _genericFoodService = genericFoodService;
             _localStorage = localStorage;
+        }
+
+        public void RequestFoodInfo(FoodInfoType foodType, string foodId)
+        {
+            RaiseNavigationRequested(Actions.go_to_food_info,
+                new Unity.AppUI.Navigation.Argument("foodType", foodType == FoodInfoType.Product ? "product" : "generic"),
+                new Unity.AppUI.Navigation.Argument("foodId", foodId),
+                new Unity.AppUI.Navigation.Argument("entryContext", "shoppingList"));
         }
 
         public void ApplyFilter()
