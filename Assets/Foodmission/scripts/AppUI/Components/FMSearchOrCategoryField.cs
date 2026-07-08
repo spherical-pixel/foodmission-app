@@ -43,6 +43,8 @@ namespace eu.foodmission.platform.Components
         public Func<string, Task> OnCreateItemAsync { get; set; }
         public Action<string> OnTextChanged { get; set; }
         public Action<bool> OnPopoverVisibilityChanged { get; set; }
+        public Action<OpenFoodFactsProduct> OnProductInfoRequested { get; set; }
+        public Action<GenericFood> OnGenericFoodInfoRequested { get; set; }
 
         private static readonly Dictionary<string, string> CategoryEmojis = new()
         {
@@ -716,7 +718,7 @@ namespace eu.foodmission.platform.Components
             _resultsContainer.style.display = DisplayStyle.Flex;
         }
 
-        private static VisualElement MakeResultRow(object item, Action<object> onClick)
+        private VisualElement MakeResultRow(object item, Action<object> onClick)
         {
             var row = new VisualElement();
             row.AddToClassList("fm-scf-result-row");
@@ -739,6 +741,17 @@ namespace eu.foodmission.platform.Components
             var label = new Text { text = text };
             label.style.flexGrow = 1;
             row.Add(label);
+
+            var infoBtn = new IconButton { icon = "info", quiet = true };
+            infoBtn.AddToClassList("fm-scf-result-info-btn");
+            infoBtn.clicked += () =>
+            {
+                if (item is OpenFoodFactsProduct p)
+                    OnProductInfoRequested?.Invoke(p);
+                else if (item is GenericFood g)
+                    OnGenericFoodInfoRequested?.Invoke(g);
+            };
+            row.Add(infoBtn);
 
             object captured = item;
             row.RegisterCallback<ClickEvent>(_ => onClick(captured));
