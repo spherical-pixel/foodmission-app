@@ -54,6 +54,12 @@ namespace eu.foodmission.platform
             _btnMoveToWaste = contentContainer.Q<Unity.AppUI.UI.Button>("btn-move-to-waste");
         }
 
+        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            base.OnEnter(controller, destination, args);
+            _viewModel?.CheckPendingFoodInfoAddRequest();
+        }
+
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();

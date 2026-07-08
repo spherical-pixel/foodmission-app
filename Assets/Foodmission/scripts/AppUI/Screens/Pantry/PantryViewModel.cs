@@ -243,6 +243,79 @@ namespace eu.foodmission.platform
             return (DateTime.UtcNow - cachedAt) < CacheTtl;
         }
 
+        public void CheckPendingFoodInfoAddRequest()
+        {
+            var state = _storeService.GetAppState();
+            if (state.foodInfoAddRequest == null)
+                return;
+
+            var request = state.foodInfoAddRequest;
+            _store.Dispatch(AppActions.foodInfoAddRequestConsumed.Invoke());
+
+            if (request.EntryContext != "pantry")
+                return;
+
+            if (request.FoodType == FoodInfoType.Product)
+                _ = SafeAddProductFromFoodInfoAsync(request.FoodId);
+            else
+                _ = SafeAddGenericFoodFromFoodInfoAsync(request.FoodId);
+        }
+
+        private async Task SafeAddProductFromFoodInfoAsync(string foodId)
+        {
+            try
+            {
+                var (food, foodError) = await _foodProductService.GetFoodByIdAsync(foodId);
+                if (foodError != null || food == null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Could not load food product for add: {foodError?.message}");
+                    return;
+                }
+                await AddFoodProductToPantryAsync(food);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SafeAddProductFromFoodInfoAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeAddGenericFoodFromFoodInfoAsync(string foodId)
+        {
+            try
+            {
+                var (genericFood, gfError) = await _genericFoodService.GetGenericFoodByIdAsync(foodId);
+                if (gfError != null || genericFood == null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Could not load generic food for add: {gfError?.message}");
+                    return;
+                }
+                await AddGenericFoodItemAsync(genericFood, 1f, "PIECES");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SafeAddGenericFoodFromFoodInfoAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task AddFoodProductToPantryAsync(FoodProduct food)
+        {
+            var (added, addError) = await _pantryService.AddItemAsync(food.id, null, 1f, "PIECES");
+
+            if (addError != null)
+            {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_ITEM_MISSING");
+                ErrorDetail = addError;
+                return;
+            }
+
+            ErrorDetail = null;
+            var newItem = new PantryItemView { Item = added, DisplayName = food.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN") };
+            _allItems.Add(newItem);
+            FilterText = "";
+            ApplyFilter();
+            SaveCacheFromAllItems();
+        }
+
         public async Task ImportAndAddFoodItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
         {
             var (existing, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
