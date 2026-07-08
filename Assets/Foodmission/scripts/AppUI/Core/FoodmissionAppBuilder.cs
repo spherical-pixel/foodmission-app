@@ -46,6 +46,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IWhatsNewService, WhatsNewService>();
             builder.services.AddSingleton<IRemoteLocalizationService, RemoteLocalizationService>();
             builder.services.AddSingleton<IAccessibilityService, AccessibilityService>();
+            builder.services.AddSingleton<IImageService, ImageService>();
 
             // ViewModels (Transient - new instance each time)
             builder.services.AddTransient<SplashScreenViewModel>();
@@ -72,6 +73,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<EditProfileViewModel>();
             builder.services.AddTransient<AvatarEditorViewModel>();
             builder.services.AddTransient<ForceUpdateScreenViewModel>();
+            builder.services.AddTransient<FoodInfoViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

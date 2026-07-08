@@ -26,5 +26,6 @@ namespace eu.foodmission.platform
         public const string OnboardingGroups    = "Foodmission/AppUI/Templates/OnboardingGroupsScreen.uxml";
         public const string AvatarEditorPanelItem = "Foodmission/AppUI/Templates/AvatarEditorPanelItem.uxml";
         public const string ForceUpdate = "Foodmission/AppUI/Templates/ForceUpdateScreen.uxml";
+        public const string FoodInfo = "Foodmission/AppUI/Templates/FoodInfoScreen.uxml";
     }
 }

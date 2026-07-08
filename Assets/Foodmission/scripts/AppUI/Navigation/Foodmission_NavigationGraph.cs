@@ -34,6 +34,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string go_to_foodwaste = "go_to_foodwaste";
         public const string go_to_foodwaste_add = "go_to_foodwaste_add";
         public const string loading_to_forceupdate = "loading_to_forceupdate";
+        public const string go_to_food_info = "go_to_food_info";
     }
     public static partial class Destinations
     {
@@ -62,6 +63,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string foodwaste = "FoodWaste";
         public const string foodwasteadd = "FoodWasteAdd";
         public const string forceupdate = "ForceUpdate";
+        public const string foodinfo = "FoodInfo";
     }
     public static partial class Graphs
     {
