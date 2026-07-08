@@ -75,6 +75,14 @@ namespace eu.foodmission.platform
                 };
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
                 _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
+                _searchCategoryField.OnProductInfoRequested = product =>
+                {
+                    _viewModel.RequestFoodInfo(FoodInfoType.Product, product.id);
+                };
+                _searchCategoryField.OnGenericFoodInfoRequested = genericFood =>
+                {
+                    _viewModel.RequestFoodInfo(FoodInfoType.Generic, genericFood.id);
+                };
                 _searchCategoryField.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
             }
 
