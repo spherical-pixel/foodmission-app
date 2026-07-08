@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation.Generated;
 
 namespace eu.foodmission.platform
 {
@@ -101,6 +102,14 @@ namespace eu.foodmission.platform
             _mealItemService = mealItemService;
             _catalogService = catalogService;
             _localStorage = localStorage;
+        }
+
+        public void RequestFoodInfo(FoodInfoType foodType, string foodId)
+        {
+            RaiseNavigationRequested(Actions.go_to_food_info,
+                new Unity.AppUI.Navigation.Argument("foodType", foodType == FoodInfoType.Product ? "product" : "generic"),
+                new Unity.AppUI.Navigation.Argument("foodId", foodId),
+                new Unity.AppUI.Navigation.Argument("entryContext", "mealLog"));
         }
 
         public async Task InitializeAsync()
