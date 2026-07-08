@@ -75,6 +75,8 @@ namespace eu.foodmission.platform.Components
             { "Vegetables", "🥦" },
         };
 
+        public static IReadOnlyDictionary<string, string> CategoryEmojisPublic => CategoryEmojis;
+
         private Func<string, Task<(FoodProduct Result, ApiErrorResponse Error)>> _importFromBarcodeAsync;
         public Func<string, Task<(FoodProduct Result, ApiErrorResponse Error)>> ImportFromBarcodeAsync
         {
