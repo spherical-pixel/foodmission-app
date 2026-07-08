@@ -131,6 +131,8 @@ namespace eu.foodmission.platform
         /// </summary>
         public string authError = "";
 
+        public AddToContextRequestedAction foodInfoAddRequest;
+
         /// <summary>
         /// Default constructor for JsonUtility
         /// </summary>
@@ -173,7 +175,8 @@ namespace eu.foodmission.platform
                 userDietaryPreference = this.userDietaryPreference != null ? (string[])this.userDietaryPreference.Clone() : new string[0],
                 userShoppingResponsibility = this.userShoppingResponsibility,
                 isAuthenticating = this.isAuthenticating,
-                authError = this.authError
+                authError = this.authError,
+                foodInfoAddRequest = this.foodInfoAddRequest
             };
         }
     }

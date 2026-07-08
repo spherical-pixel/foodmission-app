@@ -59,7 +59,10 @@ namespace eu.foodmission.platform
                 // Extended profile
                 .AddCase(AppActions.setExtendedProfile, AppReducers.SetExtendedProfileReducer)
                 // Profile sync
-                .AddCase(AppActions.profileSynced, AppReducers.ProfileSyncedReducer);
+                .AddCase(AppActions.profileSynced, AppReducers.ProfileSyncedReducer)
+                // Food Info
+                .AddCase(AppActions.foodInfoAddRequested, AppReducers.FoodInfoAddRequestedReducer)
+                .AddCase(AppActions.foodInfoAddRequestConsumed, AppReducers.FoodInfoAddRequestConsumedReducer);
 
             var reducer = reducerBuilder.GetReducer();
 
