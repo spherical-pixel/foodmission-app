@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -192,6 +194,44 @@ namespace eu.foodmission.platform
             }
 
             return (category, null);
+        }
+
+        public async Task<(GenericFoodDetail Result, ApiErrorResponse Error)> GetGenericFoodDetailAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return (null, null);
+
+            if (!Guid.TryParse(id, out _))
+            {
+                Debug.LogWarning($"[{GetType().Name}] GetGenericFoodDetailAsync — invalid UUID: {id}");
+                return (null, null);
+            }
+
+            string url = $"{ApiConfig.BaseUrl}/api/v1/generic-foods/{Uri.EscapeDataString(id)}";
+
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+            request.SetRequestHeader("Authorization", AuthHeader);
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetGenericFoodDetail {id}"));
+
+            try
+            {
+                GenericFoodDetail detail = JsonConvert.DeserializeObject<GenericFoodDetail>(request.downloadHandler.text);
+                return (detail, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Parse error: {ex.Message}");
+                return (null, null);
+            }
         }
 
         public async Task<(string[] Result, ApiErrorResponse Error)> GetFoodGroupsAsync()
