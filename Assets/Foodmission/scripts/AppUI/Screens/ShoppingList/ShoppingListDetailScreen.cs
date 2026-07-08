@@ -82,6 +82,8 @@ namespace eu.foodmission.platform
 
                 if (!string.IsNullOrEmpty(listId))
                     await _viewModel.LoadAsync(listId, listTitle);
+
+                _viewModel?.CheckPendingFoodInfoAddRequest();
             }
             catch (Exception ex)
             {
