@@ -66,4 +66,39 @@ namespace eu.foodmission.platform
         public int pageSize;
         public int totalPages;
     }
+
+    [Serializable]
+    public class FoodProductDetail
+    {
+        public string id;
+        public string name;
+        public string description;
+        public string barcode;
+        public string brands;
+        public string[] categories;
+        public string[] labels;
+        public string quantity;
+        public string servingSize;
+        public string ingredientsText;
+        public string[] allergens;
+        public string[] traces;
+        public string[] countries;
+        public string origins;
+        public string manufacturingPlaces;
+        public string imageUrl;
+        public string imageFrontUrl;
+
+        public string nutrimentsRaw;
+
+        public string nutritionGrade;
+        public int? novaGroup;
+        public string ecoscoreGrade;
+        public float? carbonFootprint;
+
+        public string nutrientLevels;
+
+        public bool? isVegan;
+        public bool? isVegetarian;
+        public bool? isPalmOilFree;
+    }
 }
