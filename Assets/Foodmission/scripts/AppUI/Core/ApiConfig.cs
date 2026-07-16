@@ -162,5 +162,57 @@ namespace eu.foodmission.platform
                 return env.AuthBaseUrl;
             }
         }
+
+        public static bool UseDirectOpenFoodFactsClient
+        {
+            get
+            {
+                EnsureLoaded();
+                var env = GetActiveEnvironment();
+                return env?.UseDirectOpenFoodFactsClient ?? false;
+            }
+        }
+
+        public static string OpenFoodFactsBaseUrl
+        {
+            get
+            {
+                EnsureLoaded();
+                var env = GetActiveEnvironment();
+                return env != null && !string.IsNullOrEmpty(env.OpenFoodFactsBaseUrl)
+                    ? env.OpenFoodFactsBaseUrl
+                    : "https://world.openfoodfacts.org";
+            }
+        }
+
+        public static int OpenFoodFactsSearchMinIntervalMs
+        {
+            get
+            {
+                EnsureLoaded();
+                var env = GetActiveEnvironment();
+                return env?.OpenFoodFactsSearchMinIntervalMs ?? 6000;
+            }
+        }
+
+        public static int OpenFoodFactsSearchCacheTtlMinutes
+        {
+            get
+            {
+                EnsureLoaded();
+                var env = GetActiveEnvironment();
+                return env?.OpenFoodFactsSearchCacheTtlMinutes ?? 1440;
+            }
+        }
+
+        public static int OpenFoodFactsSearchPageSize
+        {
+            get
+            {
+                EnsureLoaded();
+                var env = GetActiveEnvironment();
+                return env?.OpenFoodFactsSearchPageSize ?? 20;
+            }
+        }
     }
 }

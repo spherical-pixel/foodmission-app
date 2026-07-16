@@ -32,6 +32,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IAvatarService, AvatarService>();
             builder.services.AddSingleton<ICatalogService, CatalogService>();
             builder.services.AddSingleton<IFoodProductService, FoodProductService>();
+            builder.services.AddSingleton<IOpenFoodFactsClientService, OpenFoodFactsClientService>();
             builder.services.AddSingleton<IShoppingListService, ShoppingListService>();
             builder.services.AddSingleton<IGroupService, GroupService>();
             builder.services.AddSingleton<IGenericFoodService, GenericFoodService>();

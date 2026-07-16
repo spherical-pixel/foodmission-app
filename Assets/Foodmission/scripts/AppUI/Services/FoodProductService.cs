@@ -170,7 +170,51 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] FindByBarcode {barcode}"));
+                bool is404 = request.responseCode == 404;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] FindByBarcode {barcode}", logAsError: !is404));
+            }
+
+            FoodProduct food = JsonUtility.FromJson<FoodProduct>(request.downloadHandler.text);
+
+            if (food != null && !string.IsNullOrEmpty(food.id))
+            {
+                _cache[food.id] = food;
+            }
+
+            return (food, null);
+        }
+
+        public async Task<(FoodProduct Result, ApiErrorResponse Error)> CreateAsync(CreateFoodProductRequest requestDto)
+        {
+            if (requestDto == null)
+            {
+                return (null, null);
+            }
+
+            AppState state = _storeService.GetAppState();
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products";
+            string bodyJson = requestDto.ToJsonBody();
+
+            using UnityWebRequest request = new UnityWebRequest(url, "POST")
+            {
+                uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(bodyJson))
+                {
+                    contentType = "application/json"
+                },
+                downloadHandler = new DownloadHandlerBuffer()
+            };
+            request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] Create"));
             }
 
             FoodProduct food = JsonUtility.FromJson<FoodProduct>(request.downloadHandler.text);

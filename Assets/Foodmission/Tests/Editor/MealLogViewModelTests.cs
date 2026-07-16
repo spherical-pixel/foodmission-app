@@ -18,6 +18,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IMealItemService> _mockMealItemService;
         private Mock<ICatalogService> _mockCatalogService;
         private Mock<ILocalStorageService> _mockLocalStorage;
+        private Mock<IOpenFoodFactsClientService> _mockOpenFoodFactsClient;
         private TestStoreService _storeService;
         private MealLogViewModel _vm;
 
@@ -32,6 +33,7 @@ namespace eu.foodmission.platform.Tests
             _mockMealItemService = new Mock<IMealItemService>();
             _mockCatalogService = new Mock<ICatalogService>();
             _mockLocalStorage = new Mock<ILocalStorageService>();
+            _mockOpenFoodFactsClient = new Mock<IOpenFoodFactsClientService>();
             _storeService = new TestStoreService();
             _vm = new MealLogViewModel(
                 _storeService,
@@ -42,7 +44,8 @@ namespace eu.foodmission.platform.Tests
                 _mockGenericFoodService.Object,
                 _mockMealItemService.Object,
                 _mockCatalogService.Object,
-                _mockLocalStorage.Object);
+                _mockLocalStorage.Object,
+                _mockOpenFoodFactsClient.Object);
         }
 
         [TearDown]

@@ -30,6 +30,7 @@ namespace eu.foodmission.platform
         private readonly IMealItemService _mealItemService;
         private readonly ICatalogService _catalogService;
         private readonly ILocalStorageService _localStorage;
+        private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
 
         [ObservableProperty] private List<MealLog> m_LastTenLogs = new();
 
@@ -90,7 +91,8 @@ namespace eu.foodmission.platform
             IGenericFoodService genericFoodService,
             IMealItemService mealItemService,
             ICatalogService catalogService,
-            ILocalStorageService localStorage)
+            ILocalStorageService localStorage,
+            IOpenFoodFactsClientService openFoodFactsClientService)
             : base(storeService)
         {
             _mealLogService = mealLogService;
@@ -101,6 +103,7 @@ namespace eu.foodmission.platform
             _mealItemService = mealItemService;
             _catalogService = catalogService;
             _localStorage = localStorage;
+            _openFoodFactsClientService = openFoodFactsClientService;
         }
 
         public async Task InitializeAsync()
@@ -301,13 +304,13 @@ namespace eu.foodmission.platform
 
         public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
         {
-            var (response, error) = await _foodProductService.SearchOpenFoodFactsAsync(query, 1, 20);
+            var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
             if (error != null)
             {
                 ErrorDetail = error;
                 return new List<OpenFoodFactsProduct>();
             }
-            return response?.products != null ? new List<OpenFoodFactsProduct>(response.products) : new List<OpenFoodFactsProduct>();
+            return products ?? new List<OpenFoodFactsProduct>();
         }
 
         public async Task<List<GenericFood>> GetGenericFoodsAsync()
@@ -334,40 +337,11 @@ namespace eu.foodmission.platform
 
         public async Task AddProductItem(OpenFoodFactsProduct product, float qty, string unit)
         {
-            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
-            FoodProduct foodItem;
-            if (findError == null && existing != null)
+            var (foodItem, importError) = await ImportByBarcodeAsync(product.barcode);
+            if (importError != null)
             {
-                foodItem = existing;
-            }
-            else
-            {
-                var (imported, importError) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
-                if (importError != null)
-                {
-                    if (importError.statusCode == 400)
-                    {
-                        var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
-                        if (findErr2 == null && existingFood != null)
-                        {
-                            foodItem = existingFood;
-                        }
-                        else
-                        {
-                            ErrorDetail = importError;
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        ErrorDetail = importError;
-                        return;
-                    }
-                }
-                else
-                {
-                    foodItem = imported;
-                }
+                ErrorDetail = importError;
+                return;
             }
 
             var newItem = new MealLogItem
@@ -407,19 +381,7 @@ namespace eu.foodmission.platform
 
         public async Task<(FoodProduct Result, ApiErrorResponse Error)> ImportByBarcodeAsync(string barcode)
         {
-            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: false);
-            if (findError == null && existing != null)
-                return (existing, null);
-
-            var (foodItem, importError) = await _foodProductService.ImportFromBarcodeAsync(barcode);
-            if (importError != null)
-            {
-                var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: true);
-                if (findErr2 == null && existingFood != null)
-                    return (existingFood, null);
-                return (null, importError);
-            }
-            return (foodItem, null);
+            return await FoodProductFlow.ImportByBarcodeAsync(_foodProductService, _openFoodFactsClientService, barcode);
         }
 
         public void RemoveItem(MealLogItem item)
