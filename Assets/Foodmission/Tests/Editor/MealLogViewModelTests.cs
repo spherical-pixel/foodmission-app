@@ -21,10 +21,13 @@ namespace eu.foodmission.platform.Tests
         private Mock<IOpenFoodFactsClientService> _mockOpenFoodFactsClient;
         private TestStoreService _storeService;
         private MealLogViewModel _vm;
+        private System.Func<bool> _originalOverride;
 
         [SetUp]
         public void SetUp()
         {
+            _originalOverride = FoodProductFlow.UseDirectClientOverride;
+            FoodProductFlow.UseDirectClientOverride = () => false;
             _mockMealLogService = new Mock<IMealLogService>();
             _mockMealService = new Mock<IMealService>();
             _mockRecipeService = new Mock<IRecipeService>();
@@ -51,6 +54,7 @@ namespace eu.foodmission.platform.Tests
         [TearDown]
         public void TearDown()
         {
+            FoodProductFlow.UseDirectClientOverride = _originalOverride;
             _vm?.DisposeSearchCts();
             _vm?.Dispose();
             _storeService?.Dispose();
@@ -225,9 +229,11 @@ namespace eu.foodmission.platform.Tests
             var existingFood = new FoodProduct { id = Guid.NewGuid().ToString(), name = "Existing Product" };
 
             _mockFoodProductService
-                .SetupSequence(x => x.FindByBarcodeAsync("123456", true))
-                .ReturnsAsync(((FoodProduct)null, (ApiErrorResponse)null))
-                .ReturnsAsync((existingFood, null));
+                .Setup(x => x.FindByBarcodeAsync("123456", false))
+                .ReturnsAsync(((FoodProduct)null, (ApiErrorResponse)null));
+            _mockFoodProductService
+                .Setup(x => x.FindByBarcodeAsync("123456", true))
+                .ReturnsAsync((existingFood, (ApiErrorResponse)null));
             _mockFoodProductService
                 .Setup(x => x.ImportFromBarcodeAsync("123456"))
                 .ReturnsAsync(((FoodProduct)null, apiError));

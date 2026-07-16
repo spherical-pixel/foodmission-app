@@ -234,6 +234,16 @@ namespace eu.foodmission.platform
                 return SearchResults;
             }
 
+            string normalized = query.Trim().ToLowerInvariant();
+            string cacheKey = FoodSearchCachePrefix + normalized;
+
+            CachedFoodSearch cached = _localStorage.GetValue<CachedFoodSearch>(cacheKey);
+            if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
+            {
+                SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                return SearchResults;
+            }
+
             IsSearching = true;
             var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
             IsSearching = false;
@@ -242,11 +252,38 @@ namespace eu.foodmission.platform
             {
                 ErrorDetail = error;
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SEARCH_PRODUCTS");
-                SearchResults = new List<OpenFoodFactsProduct>();
+                if (cached?.data?.products != null)
+                {
+                    SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                }
+                else
+                {
+                    SearchResults = new List<OpenFoodFactsProduct>();
+                }
             }
             else
             {
-                SearchResults = products ?? new List<OpenFoodFactsProduct>();
+                if (products != null && products.Count > 0)
+                {
+                    var response = new OpenFoodFactsSearchResponse
+                    {
+                        products = products.ToArray()
+                    };
+                    _localStorage.SetValue(cacheKey, new CachedFoodSearch
+                    {
+                        data = response,
+                        cachedAtTicks = DateTime.UtcNow.Ticks
+                    });
+                    SearchResults = products;
+                }
+                else if (cached?.data?.products != null)
+                {
+                    SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                }
+                else
+                {
+                    SearchResults = new List<OpenFoodFactsProduct>();
+                }
             }
 
             return SearchResults;

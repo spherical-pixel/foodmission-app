@@ -174,13 +174,51 @@ namespace eu.foodmission.platform
 
         public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
         {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return new List<OpenFoodFactsProduct>();
+            }
+
+            string normalized = query.Trim().ToLowerInvariant();
+            string cacheKey = FoodSearchCachePrefix + normalized;
+
+            CachedFoodSearch cached = _localStorage.GetValue<CachedFoodSearch>(cacheKey);
+            if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
+            {
+                return new List<OpenFoodFactsProduct>(cached.data.products);
+            }
+
             var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
             if (error != null)
             {
                 ErrorDetail = error;
+                if (cached?.data?.products != null)
+                {
+                    return new List<OpenFoodFactsProduct>(cached.data.products);
+                }
                 return new List<OpenFoodFactsProduct>();
             }
-            return products ?? new List<OpenFoodFactsProduct>();
+
+            if (products != null && products.Count > 0)
+            {
+                var response = new OpenFoodFactsSearchResponse
+                {
+                    products = products.ToArray()
+                };
+                _localStorage.SetValue(cacheKey, new CachedFoodSearch
+                {
+                    data = response,
+                    cachedAtTicks = DateTime.UtcNow.Ticks
+                });
+                return products;
+            }
+
+            if (cached?.data?.products != null)
+            {
+                return new List<OpenFoodFactsProduct>(cached.data.products);
+            }
+
+            return new List<OpenFoodFactsProduct>();
         }
 
         public async Task<List<GenericFood>> GetGenericFoodsAsync()
