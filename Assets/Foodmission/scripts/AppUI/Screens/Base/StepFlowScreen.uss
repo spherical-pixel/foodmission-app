@@ -1,0 +1,72 @@
+/* Root step flow layout */
+.fm-step-flow {
+    flex-grow: 1;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    /*background-color: var(--fm-main-bg, transparent);*/
+    background-color: transparent;
+}
+
+/* Progress bar alignment */
+.fm-step-flow__progress {
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+/* Companion Slot (e.g. Nutri Pet dialog) styling */
+.fm-step-flow__companion {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-bottom: 12px;
+}
+
+/* SwipeView container occupying the main screen space */
+.fm-step-flow__swipeview {
+    flex-grow: 1;
+    width: 100%;
+    height: auto;
+}
+
+/* SwipeViewItem styling to ensure inner views fill correctly */
+.appui-swipeview-item {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    padding: 16px 24px;
+}
+
+/* Bottom navigation buttons layout */
+.fm-step-flow__buttons {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-top-width: 1px;
+    border-top-color: var(--appui-backgrounds-200, rgba(0,0,0,0.1));
+}
+
+.fm-step-flow__btn-back {
+    flex-grow: 1;
+    margin-right: 8px;
+}
+
+.fm-step-flow__btn-next {
+    flex-grow: 1;
+    margin-left: 8px;
+}
+
+/* Guide Card within companion slot */
+.fm-step-flow__guide-card {
+    background-color: var(--appui-backgrounds-200, rgba(230, 245, 230, 1.0));
+    padding: 12px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: var(--appui-backgrounds-300, rgba(200, 230, 200, 1.0));
+    margin-bottom: 12px;
+}
+

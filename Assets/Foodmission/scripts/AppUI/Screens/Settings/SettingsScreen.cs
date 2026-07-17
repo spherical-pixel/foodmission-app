@@ -25,6 +25,7 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.TextField _localUrlInnerField;
         private Unity.AppUI.UI.Text _versionValue;
         private bool _isSettingEnvironment;
+        private FMButton _testSurveyButton;
 
         private static Func<Rect> MakeElementFrameGetter(VisualElement element)
         {
@@ -82,12 +83,23 @@ namespace eu.foodmission.platform
             _environmentStepper   = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-environment");
             _localUrlFieldComponent = contentContainer.Q<FormFieldItemTextField>("local-url-field");
             _versionValue         = contentContainer.Q<Unity.AppUI.UI.Text>("version-value");
+            _testSurveyButton     = contentContainer.Q<FMButton>("btn-test-survey");
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
             SetupSteppers();
+
+            if (_testSurveyButton != null)
+            {
+                _testSurveyButton.clicked += OnTestSurveyClicked;
+            }
+        }
+
+        private void OnTestSurveyClicked()
+        {
+            _navController?.Navigate(Unity.AppUI.Navigation.Generated.Actions.goto_test_survey);
         }
 
         // --------------------------------------------------------------------
@@ -210,6 +222,11 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
+            if (_testSurveyButton != null)
+            {
+                _testSurveyButton.clicked -= OnTestSurveyClicked;
+            }
+
             if (_themeStepper != null)
             {
                 _themeStepper.UnregisterValueChangedCallback(OnThemeChanged);

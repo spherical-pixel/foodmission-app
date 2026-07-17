@@ -64,6 +64,7 @@
                         </appui:Heading>
                         <appui:Text name="version-value" text="0.0.0"/>
                     </ui:VisualElement>
+                    <components:FMButton name="btn-test-survey" title="Launch Test Survey" variant="Default" size="M" style="margin-top: 10px; width: 100%;" />
                 </appui:AccordionItem>
             </appui:Accordion>
             <ui:VisualElement class="fm-bottom-nav-padding" style="flex-grow: 1;"/>

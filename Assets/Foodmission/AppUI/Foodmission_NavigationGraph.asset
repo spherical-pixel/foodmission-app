@@ -878,6 +878,8 @@ MonoBehaviour:
   - {fileID: 1000003}
   - {fileID: 1371056722271922227}
   - {fileID: 142085582493077005}
+  - {fileID: 930171435224601288}
+  - {fileID: 6946922476416249955}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,6 +994,39 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &930171435224601288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: TestSurvey
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 410, y: 1425}
+  m_Guid: b28ad19894fda49fb9893b8ee2ecf0f6
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: TestSurvey
+  m_TemplateSettings:
+    rid: 4448174737455317345
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4448174737455317345
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.TestSurveyScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 0
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &1371056722271922227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1604,8 +1639,36 @@ MonoBehaviour:
   - {fileID: -1943232225755662504}
   - {fileID: 6475924670633165201}
   - {fileID: -1716996974998973278}
+  - {fileID: 6946922476416249955}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
+--- !u!114 &6946922476416249955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: goto_test_survey
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: -153, y: 1367}
+  m_Guid: 50350828-79c3-4fb0-8fb4-6d908faf3c56
+  m_Destination: {fileID: 930171435224601288}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &7153593643151026913
 MonoBehaviour:
   m_ObjectHideFlags: 0

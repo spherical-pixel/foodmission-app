@@ -73,6 +73,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<EditProfileViewModel>();
             builder.services.AddTransient<AvatarEditorViewModel>();
             builder.services.AddTransient<ForceUpdateScreenViewModel>();
+            builder.services.AddTransient<TestSurveyViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

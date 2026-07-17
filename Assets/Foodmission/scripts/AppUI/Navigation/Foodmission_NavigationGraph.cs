@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit it directly.
-// Date: 2026-05-14 12:27:13
+// Date: 2026-07-17 12:54:25
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +34,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string go_to_foodwaste = "go_to_foodwaste";
         public const string go_to_foodwaste_add = "go_to_foodwaste_add";
         public const string loading_to_forceupdate = "loading_to_forceupdate";
+        public const string goto_test_survey = "goto_test_survey";
     }
     public static partial class Destinations
     {
@@ -62,6 +63,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string foodwaste = "FoodWaste";
         public const string foodwasteadd = "FoodWasteAdd";
         public const string forceupdate = "ForceUpdate";
+        public const string testsurvey = "TestSurvey";
     }
     public static partial class Graphs
     {
