@@ -57,9 +57,16 @@ namespace eu.foodmission.platform
         public float? carbon_footprint_from_known_ingredients_product { get; set; }
     }
 
+    public class OffNutriscoreRaw
+    {
+        public int? score { get; set; }
+    }
+
     public class OffProductRaw
     {
         public string _id { get; set; }
+        public int? nutriscore_score { get; set; }
+        public OffNutriscoreRaw nutriscore_data { get; set; }
         public string product_name { get; set; }
         public string product_name_en { get; set; }
         public string generic_name { get; set; }
@@ -168,6 +175,7 @@ namespace eu.foodmission.platform
                 origins = raw.origins,
                 manufacturingPlaces = raw.manufacturing_places,
                 novaGroup = raw.nova_group,
+                nutriscoreScore = raw.nutriscore_score ?? raw.nutriscore_data?.score,
                 nutritionDataPer = raw.nutrition_data_per,
                 imageNutritionUrl = raw.image_nutrition_url,
                 imageIngredientsUrl = raw.image_ingredients_url,

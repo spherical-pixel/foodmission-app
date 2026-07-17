@@ -195,6 +195,8 @@ namespace eu.foodmission.platform
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-products";
             string bodyJson = requestDto.ToJsonBody();
 
+            UnityEngine.Debug.Log($"[FoodProductService] CreateAsync request JSON payload: {bodyJson}");
+
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {
                 uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(bodyJson))

@@ -13,6 +13,10 @@ namespace eu.foodmission.platform
         public string description;
         public string imageUrl;
         public string imageFrontUrl;
+        public string nutriscoreGrade;
+        public int? nutriscoreScore;
+        public int? novaGroup;
+        public string ecoscoreGrade;
     }
 
     [Serializable]
@@ -65,6 +69,7 @@ namespace eu.foodmission.platform
         public string origins;
         public string manufacturingPlaces;
         public int? novaGroup;
+        public int? nutriscoreScore;
         public float? carbonFootprint;
         public string nutritionDataPer;
         public string imageNutritionUrl;

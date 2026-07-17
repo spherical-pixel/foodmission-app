@@ -27,6 +27,10 @@ namespace eu.foodmission.platform
                 ManufacturingPlaces = p.manufacturingPlaces,
                 ImageUrl = p.imageUrl,
                 ImageFrontUrl = p.imageFrontUrl,
+                //NutriscoreGrade = p.nutritionGrade,
+                //NutriscoreScore = p.nutriscoreScore,
+                //NovaGroup = p.novaGroup,
+                //EcoscoreGrade = p.ecoscoreGrade,
             };
 
             // Detect vegan/vegetarian/palm-oil free flags from labels tags

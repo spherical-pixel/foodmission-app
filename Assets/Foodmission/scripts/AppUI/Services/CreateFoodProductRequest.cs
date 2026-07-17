@@ -69,6 +69,18 @@ namespace eu.foodmission.platform
         [JsonProperty("nutrientLevels", NullValueHandling = NullValueHandling.Ignore)]
         public object NutrientLevels { get; set; }
 
+        [JsonProperty("nutriscoreGrade", NullValueHandling = NullValueHandling.Ignore)]
+        public string NutriscoreGrade { get; set; }
+
+        [JsonProperty("nutriscoreScore", NullValueHandling = NullValueHandling.Ignore)]
+        public int? NutriscoreScore { get; set; }
+
+        [JsonProperty("novaGroup", NullValueHandling = NullValueHandling.Ignore)]
+        public int? NovaGroup { get; set; }
+
+        [JsonProperty("ecoscoreGrade", NullValueHandling = NullValueHandling.Ignore)]
+        public string EcoscoreGrade { get; set; }
+
         public string ToJsonBody()
         {
             return JsonConvert.SerializeObject(this);
