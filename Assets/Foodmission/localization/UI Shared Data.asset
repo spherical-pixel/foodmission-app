@@ -1491,6 +1491,62 @@ MonoBehaviour:
     m_Key: txtGotIt
     m_Metadata:
       m_Items: []
+  - m_Id: 25682128132890624
+    m_Key: txtMealsPerWeek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683680096673792
+    m_Key: txtNever
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Key: txtLessOnceWeek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25687180457271296
+    m_Key: txtTimesPerWeek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25699605365645312
+    m_Key: txtActionsPerWeek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Key: txtNext
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Key: txtSubmit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25708140598124544
+    m_Key: txtStepOf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Key: txtOnboardSurvey_Step_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Key: txtOnboardSurvey_Step_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Key: txtOnboardSurvey_Step_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Key: txtOnboardSurvey_Step_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Key: txtOnboardSurvey_Step_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Key: txtOnboardSurvey_Step_5
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

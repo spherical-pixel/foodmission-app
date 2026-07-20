@@ -1,0 +1,67 @@
+using Unity.AppUI.UI;
+using UnityEngine;
+using UnityEngine.UIElements;
+using Unity.Properties;
+using Unity.AppUI.MVVM;
+
+namespace eu.foodmission.platform.Components
+{
+    [UxmlElement]
+    public partial class FMNutriView : VisualElement
+    {
+        private Image _nutriImage;
+        private INutriService _nutriService;
+
+        // Static count to manage overlapping/simultaneous views (e.g., during screen transitions)
+        private static int s_ActiveViewsCount = 0;
+
+        public FMNutriView()
+        {
+            AddToClassList("fm-nutri-view");
+
+            // Internal image that renders the mascot texture
+            _nutriImage = new Image();
+            _nutriImage.AddToClassList("fm-nutri-view__image");
+            _nutriImage.scaleMode = ScaleMode.ScaleAndCrop;
+            Add(_nutriImage);
+
+            RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
+            RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
+        }
+
+        private void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            _nutriService = App.current?.services?.GetService<INutriService>();
+            if (_nutriService != null)
+            {
+                if (s_ActiveViewsCount == 0)
+                {
+                    _nutriService.SetActive(true);
+                    _nutriService.SetCameraActive(true);
+                }
+
+                s_ActiveViewsCount++;
+
+                // Bind the render texture to our image
+                _nutriImage.image = _nutriService.NutriCameraRenderTexture;
+            }
+        }
+
+        private void OnDetachFromPanel(DetachFromPanelEvent evt)
+        {
+            _nutriImage.image = null;
+
+            if (_nutriService != null)
+            {
+                s_ActiveViewsCount = Mathf.Max(0, s_ActiveViewsCount - 1);
+
+                if (s_ActiveViewsCount == 0)
+                {
+                    _nutriService.SetCameraActive(false);
+                    _nutriService.SetActive(false);
+                }
+                _nutriService = null;
+            }
+        }
+    }
+}

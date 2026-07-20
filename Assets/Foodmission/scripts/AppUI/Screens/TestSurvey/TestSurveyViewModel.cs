@@ -30,9 +30,10 @@ namespace eu.foodmission.platform
         {
             return stepIndex switch
             {
-                0 => "Diet Preference",
-                1 => "Rating",
-                2 => "Feedback",
+                0 => "Welcome",
+                1 => "Diet Preference",
+                2 => "Rating",
+                3 => "Feedback",
                 _ => ""
             };
         }
@@ -41,9 +42,10 @@ namespace eu.foodmission.platform
         {
             return stepIndex switch
             {
-                0 => IsVegan || IsVegetarian || IsOmnivore,
-                1 => RatingValue > 0,
-                2 => !string.IsNullOrWhiteSpace(FeedbackText),
+                0 => true, // No validation for the welcome step
+                1 => IsVegan || IsVegetarian || IsOmnivore,
+                2 => RatingValue > 0,
+                3 => !string.IsNullOrWhiteSpace(FeedbackText),
                 _ => false
             };
         }

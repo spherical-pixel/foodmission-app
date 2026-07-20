@@ -46,8 +46,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 24px;
-    border-top-width: 1px;
-    border-top-color: var(--appui-backgrounds-200, rgba(0,0,0,0.1));
 }
 
 .fm-step-flow__btn-back {
@@ -60,13 +58,39 @@
     margin-left: 8px;
 }
 
+.fm-step-flow__guide-nutri {
+    margin-top: -120px;
+    margin-bottom: 25px;
+    height: 800px;
+}
+
 /* Guide Card within companion slot */
 .fm-step-flow__guide-card {
-    background-color: var(--appui-backgrounds-200, rgba(230, 245, 230, 1.0));
-    padding: 12px;
-    border-radius: 8px;
-    border-width: 1px;
-    border-color: var(--appui-backgrounds-300, rgba(200, 230, 200, 1.0));
-    margin-bottom: 12px;
+    background-color: var(--fm-surface-bg);
+    padding: 35px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    min-height: 200px;   
+    opacity: 0;
+    translate: 0 10px;
+    scale: 0.95;
+    transition-property: opacity, translate, scale;
+    transition-duration: 250ms, 250ms, 250ms;
+    transition-timing-function: ease-out, ease-out, ease-out;
+}
+
+/* Visible status (in animation) */
+.fm-step-flow__guide-card--visible {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+}
+/* Exit status (quick transition to change the message) */
+.fm-step-flow__guide-card--exit {
+    opacity: 0;
+    translate: 0 -6px;
+    scale: 0.97;
+    transition-duration: 150ms, 150ms, 150ms;
+    transition-timing-function: ease-in, ease-in, ease-in;
 }
 

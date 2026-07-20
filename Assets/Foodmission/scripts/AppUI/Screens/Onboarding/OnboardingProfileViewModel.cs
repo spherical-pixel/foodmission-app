@@ -47,7 +47,7 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private int _selectedActivityLevelIndex = -1;
-        
+
         [ObservableProperty]
         private int[] _selectedDietaryPreferenceIndices = new int[] { };
 
@@ -68,6 +68,9 @@ namespace eu.foodmission.platform
         private bool _isSubmitting = false;
 
         [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
+        [ObservableProperty]
         private string _errorMessage = "";
 
         [ObservableProperty]
@@ -82,10 +85,10 @@ namespace eu.foodmission.platform
             _selectedActivityLevelIndex >= 0 ||
             _selectedEducationLevelIndex >= 0 ||
             _selectedAnnualIncomeIndex >= 0 ||
-            _selectedShoppingResponsibilityIndex >= 0 || 
+            _selectedShoppingResponsibilityIndex >= 0 ||
             (_selectedDietaryPreferenceIndices != null);
 
-        
+
         /// <summary>
         /// Event to show an error toast.
         /// </summary>
@@ -132,7 +135,7 @@ namespace eu.foodmission.platform
                 ShoppingResponsibilityOptions = data.shoppingResponsibilities?.Select(s => s.label).ToList() ?? new List<string>();
                 DietaryPreferenceOptions = data.dietaryPreferences?.Select(d => d.label).ToList() ?? new List<string>();
 
-                
+
                 Debug.Log($"[OnboardingProfileViewModel] Catalog loaded: {GenderOptions.Count} genders, {ActivityLevelOptions.Count} activity levels");
             }
             catch (Exception ex)
@@ -190,7 +193,7 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Actions.go_to_home);
         }
 
-        
+
         /// <summary>
         /// Submits the profile data to the backend.
         /// </summary>
@@ -226,25 +229,26 @@ namespace eu.foodmission.platform
                     if (codes.Count > 0) dietaryCodes = codes.ToArray();
                 }
 
+                AppState state = _storeService.GetAppState();
+
                 var request = new ProfileUpdateRequest
                 {
                     gender = _selectedGenderIndex >= 0 ? _catalogData.genders[_selectedGenderIndex].code : null,
                     activityLevel = _selectedActivityLevelIndex >= 0 ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
                     annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
-                    
-                    preferences = (shoppingResponsibilityCode != null || dietaryCodes != null)
-                        ? new ProfileUpdatePreferences
-                        {
-                            shoppingResponsibility = shoppingResponsibilityCode,
-                            dietaryPreference = dietaryCodes
-                        }
-                        : null
+
+                    preferences = new ProfileUpdatePreferences
+                    {
+                        shoppingResponsibility = shoppingResponsibilityCode ?? state.userShoppingResponsibility,
+                        dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
+                        onboardingSurvey = state.userOnboardingSurvey
+                    }
                 };
 
                 Debug.Log($"[OnboardingProfileViewModel] Submitting profile update: {request.ToJson()}");
 
-                bool success = await _authService.UpdateProfileAsync(request);
+                var (success, error) = await _authService.UpdateProfileAsync(request);
 
                 if (success)
                 {
@@ -252,12 +256,12 @@ namespace eu.foodmission.platform
                     _storeService.store.Dispatch(AppActions.setExtendedProfile.Invoke());
                     // When ready, uncomment to navigate to avatar editor with onboarding flag:
                     //RaiseNavigationRequested(Actions.go_to_avatar_editor, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
-                    RaiseNavigationRequested(Actions.go_to_home);
+                    RaiseNavigationRequested(Actions.onboardingprofile_to_onboarding_survey);
+                    ErrorDetail = null;
                 }
                 else
                 {
-                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SAVE_PROFILE");
-                    ShowErrorRequest?.Invoke(ErrorMessage);
+                    ErrorDetail = error ?? new ApiErrorResponse { statusCode = 500, error = "COULD_NOT_SAVE_PROFILE", message = "Could not save profile" };
                 }
             }
             catch (Exception ex)

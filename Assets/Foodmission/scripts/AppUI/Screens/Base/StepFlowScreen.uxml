@@ -15,8 +15,8 @@
         
         <!-- Button Row (fixed) -->
         <ui:VisualElement class="fm-step-flow__buttons">
-            <fm:FMButton name="btn-previous" title="Back" variant="Default" size="L" class="fm-step-flow__btn-back" />
-            <fm:FMButton name="btn-next" title="Next" variant="Accent" size="L" class="fm-step-flow__btn-next" />
+            <fm:FMButton name="btn-previous" title="Back" variant="Default" size="L" class="fm-step-flow__btn-back fm-button fm-button-shadow" />
+            <fm:FMButton name="btn-next" title="Next" variant="Accent" size="L" class="fm-step-flow__btn-next fm-button fm-button-shadow" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

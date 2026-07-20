@@ -31,7 +31,8 @@ namespace eu.foodmission.platform.Components
         // Internal UI Elements
         private readonly VisualElement _container;
 
-        [UxmlAttribute("step-count")] [CreateProperty]
+        [UxmlAttribute("step-count")]
+        [CreateProperty]
         public int StepCount
         {
             get => _stepCount;
@@ -48,7 +49,8 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        [UxmlAttribute("current-step")] [CreateProperty]
+        [UxmlAttribute("current-step")]
+        [CreateProperty]
         public int CurrentStep
         {
             get => _currentStep;
@@ -64,7 +66,8 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        [UxmlAttribute("mode")] [CreateProperty]
+        [UxmlAttribute("mode")]
+        [CreateProperty]
         public StepProgressMode Mode
         {
             get => _mode;
@@ -79,7 +82,8 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        [UxmlAttribute("labels")] [CreateProperty]
+        [UxmlAttribute("labels")]
+        [CreateProperty]
         public string[] Labels
         {
             get => _labels ?? Array.Empty<string>();
@@ -100,7 +104,7 @@ namespace eu.foodmission.platform.Components
             _container = new VisualElement { name = "progress-container" };
             _container.style.flexGrow = 1;
             Add(_container);
-            
+
             Rebuild();
         }
 
@@ -132,12 +136,12 @@ namespace eu.foodmission.platform.Components
             // Progress bar track
             var track = new VisualElement { name = "progress-track" };
             track.AddToClassList("fm-step-progress__track");
-            
+
             // Progress bar fill
             var fill = new VisualElement { name = "progress-fill" };
             fill.AddToClassList("fm-step-progress__fill");
             track.Add(fill);
-            
+
             _container.Add(track);
 
             UpdateProgress();
@@ -162,7 +166,7 @@ namespace eu.foodmission.platform.Components
                 // Step circle
                 var stepCircle = new VisualElement();
                 stepCircle.AddToClassList("fm-step-progress__circle");
-                
+
                 var numberText = new Unity.AppUI.UI.Text { text = (i + 1).ToString() };
                 numberText.AddToClassList("fm-step-progress__circle-text");
                 stepCircle.Add(numberText);
@@ -198,7 +202,8 @@ namespace eu.foodmission.platform.Components
                 var title = _container.Q<Unity.AppUI.UI.Text>("progress-text");
                 if (title != null)
                 {
-                    title.text = $"Step {_currentStep + 1} of {_stepCount}";
+                    //title.text = $"Step {_currentStep + 1} of {_stepCount}";
+                    title.text = new LocalizedOption("UI", "txtStepOf", _currentStep + 1, _stepCount).GetText();
                 }
 
                 var fill = _container.Q<VisualElement>("progress-fill");
@@ -242,7 +247,7 @@ namespace eu.foodmission.platform.Components
                         {
                             child.RemoveFromClassList("active");
                             child.RemoveFromClassList("pending");
-                            
+
                             if (circleIndex <= _currentStep)
                             {
                                 child.AddToClassList("active");

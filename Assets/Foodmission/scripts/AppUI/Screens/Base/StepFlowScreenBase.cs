@@ -90,8 +90,8 @@ namespace eu.foodmission.platform
                 _btnPrevious.clicked += OnPreviousClicked;
             }
 
-            BuildSteps();
             SetupCompanionSlotInternal();
+            BuildSteps();
 
             _viewModel.Initialize();
 
@@ -194,7 +194,15 @@ namespace eu.foodmission.platform
             {
                 _progressBar.CurrentStep = index;
             }
+
+            OnStepChanged(index);
         }
+
+        /// <summary>
+        /// Called whenever the current step index changes.
+        /// </summary>
+        /// <param name="stepIndex">The new active step index.</param>
+        protected virtual void OnStepChanged(int stepIndex) { }
 
         private void UpdateNavigationControls()
         {

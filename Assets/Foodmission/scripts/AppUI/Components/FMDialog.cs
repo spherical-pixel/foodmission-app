@@ -138,14 +138,17 @@ namespace eu.foodmission.platform.Components
             VisualElement anchor,
             string title,
             ApiErrorResponse error,
-            string okLabel = "@UI:TXT_OK")
+            string okLabel = "@UI:TXT_OK",
+            Action onOk = null,
+            string koLabel = null,
+            Action onKo = null)
         {
             string message = error?.message ?? "Unknown error";
             string traceInfo = !string.IsNullOrEmpty(error?.traceId)
                 ? $"\n\nTrace ID: {error.traceId}"
                 : "";
 
-            ShowAlert(anchor, title, $"{message}{traceInfo}", AlertSemantic.Error, okLabel);
+            ShowAlert(anchor, title, $"{message}{traceInfo}", AlertSemantic.Error, okLabel, onOk, koLabel, onKo);
         }
 
         public static void ShowCustom(

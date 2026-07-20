@@ -76,5 +76,30 @@ namespace eu.foodmission.platform
 
         [JsonProperty("shoppingResponsibility", NullValueHandling = NullValueHandling.Ignore)]
         public string shoppingResponsibility;
+
+        [JsonProperty("onboardingSurvey", NullValueHandling = NullValueHandling.Ignore)]
+        public OnboardingSurveyData onboardingSurvey;
+    }
+
+    /// <summary>
+    /// Survey answers payload stored in preferences using language-agnostic enum codes.
+    /// </summary>
+    [Serializable]
+    public class OnboardingSurveyData
+    {
+        [JsonProperty("meatMeals", NullValueHandling = NullValueHandling.Ignore)]
+        public string meatMeals;
+
+        [JsonProperty("beefFrequency", NullValueHandling = NullValueHandling.Ignore)]
+        public string beefFrequency;
+
+        [JsonProperty("foodWasteFrequency", NullValueHandling = NullValueHandling.Ignore)]
+        public string foodWasteFrequency;
+
+        [JsonProperty("ultraProcessedFrequency", NullValueHandling = NullValueHandling.Ignore)]
+        public string ultraProcessedFrequency;
+
+        [JsonProperty("reusableContainersFrequency", NullValueHandling = NullValueHandling.Ignore)]
+        public string reusableContainersFrequency;
     }
 }

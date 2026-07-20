@@ -417,7 +417,8 @@ namespace eu.foodmission.platform
                 language: profile.language,
                 settings: profile.settings,
                 dietaryPreference: profile.preferences?.dietaryPreference,
-                shoppingResponsibility: profile.preferences?.shoppingResponsibility ?? ""
+                shoppingResponsibility: profile.preferences?.shoppingResponsibility ?? "",
+                onboardingSurvey: profile.preferences?.onboardingSurvey
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
         }
@@ -443,7 +444,7 @@ namespace eu.foodmission.platform
                 }
             };
 
-            bool success = await UpdateProfileAsync(request);
+            var (success, _) = await UpdateProfileAsync(request);
             if (!success)
             {
                 Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
@@ -598,16 +599,16 @@ namespace eu.foodmission.platform
 
         /// <summary>
         /// Updates the current user's extended profile via PATCH /api/v1/users/me.
-        /// Returns true on success, false on failure.
+        /// Returns (true, null) on success, or (false, ApiErrorResponse) on failure.
         /// </summary>
-        public async Task<bool> UpdateProfileAsync(ProfileUpdateRequest request)
+        public async Task<(bool success, ApiErrorResponse error)> UpdateProfileAsync(ProfileUpdateRequest request)
         {
             AppState state = _storeService.GetAppState();
 
             if (string.IsNullOrEmpty(state.accessToken))
             {
                 Debug.LogError($"[{GetType().Name}] UpdateProfile — no access token");
-                return false;
+                return (false, new ApiErrorResponse { statusCode = 401, error = "NO_ACCESS_TOKEN", message = "No access token available. Please log in again." });
             }
 
             try
@@ -618,10 +619,10 @@ namespace eu.foodmission.platform
                 string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
                 byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
 
-                bool success = await SendPatchRequest(url, bodyRaw, state.tokenType, state.accessToken);
+                var (success, error) = await SendPatchRequest(url, bodyRaw, state.tokenType, state.accessToken);
                 if (!success)
                 {
-                    return false;
+                    return (false, error);
                 }
 
                 ProfileResponse profile = await FetchProfileAsync(state.accessToken);
@@ -634,12 +635,12 @@ namespace eu.foodmission.platform
                     Debug.LogWarning($"[{GetType().Name}] UpdateProfileAsync — PATCH succeeded but profile refresh failed");
                 }
 
-                return success;
+                return (true, null);
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] UpdateProfileAsync exception: {ex.Message}");
-                return false;
+                return (false, new ApiErrorResponse { statusCode = 500, error = "UNEXPECTED_ERROR", message = ex.Message });
             }
         }
 
@@ -689,7 +690,7 @@ namespace eu.foodmission.platform
         /// Sends a PATCH request for profile updates.
         /// Uses new UnityWebRequest(url, "PATCH") which works correctly with NestJS.
         /// </summary>
-        private async Task<bool> SendPatchRequest(string url, byte[] bodyRaw, string tokenType, string accessToken)
+        private async Task<(bool success, ApiErrorResponse error)> SendPatchRequest(string url, byte[] bodyRaw, string tokenType, string accessToken)
         {
             using UnityWebRequest request = new UnityWebRequest(url, "PATCH");
             request.uploadHandler = new UploadHandlerRaw(bodyRaw)
@@ -708,13 +709,12 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                string responseBody = request.downloadHandler?.text ?? "no body";
-                Debug.LogError($"[{GetType().Name}] UpdateProfile PATCH failed: {request.responseCode} {request.error} — Body: {responseBody}");
-                return false;
+                ApiErrorResponse apiError = ApiErrorHelper.Parse(request, "AuthService.UpdateProfile");
+                return (false, apiError);
             }
 
             Debug.Log($"[{GetType().Name}] Profile updated successfully via PATCH");
-            return true;
+            return (true, null);
         }
     }
 }

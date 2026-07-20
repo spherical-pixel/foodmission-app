@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit it directly.
-// Date: 2026-07-17 12:54:25
+// Date: 2026-07-20 18:09:57
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +17,6 @@ namespace Unity.AppUI.Navigation.Generated
         public const string onboardingprofile_to_onboardingavatar = "onboardingprofile_to_onboardingavatar";
         public const string onboardingavatar_to_onboardinggroups = "onboardingavatar_to_onboardinggroups";
         public const string go_to_meallog = "go_to_meallog";
-        public const string go_to_meallog_add = "go_to_meallog_add";
         public const string go_to_profile = "go_to_profile";
         public const string go_to_settings = "go_to_settings";
         public const string go_to_groups = "go_to_groups";
@@ -35,6 +34,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string go_to_foodwaste_add = "go_to_foodwaste_add";
         public const string loading_to_forceupdate = "loading_to_forceupdate";
         public const string goto_test_survey = "goto_test_survey";
+        public const string onboardingprofile_to_onboarding_survey = "onboardingprofile_to_onboarding_survey";
     }
     public static partial class Destinations
     {
@@ -47,7 +47,6 @@ namespace Unity.AppUI.Navigation.Generated
         public const string onboardingavatar = "OnboardingAvatar";
         public const string onboardinggroups = "OnboardingGroups";
         public const string meallog = "MealLog";
-        public const string meallogadd = "MealLogAdd";
         public const string profile = "Profile";
         public const string settings = "Settings";
         public const string groups = "Groups";
@@ -64,6 +63,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string foodwasteadd = "FoodWasteAdd";
         public const string forceupdate = "ForceUpdate";
         public const string testsurvey = "TestSurvey";
+        public const string onboardingsurvey = "OnboardingSurvey";
     }
     public static partial class Graphs
     {

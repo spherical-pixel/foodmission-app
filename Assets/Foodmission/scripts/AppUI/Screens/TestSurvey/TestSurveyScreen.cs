@@ -18,6 +18,10 @@ namespace eu.foodmission.platform
         protected override string PreviousButtonLabel => "Back";
         protected override string CompleteButtonLabel => "Submit";
 
+        private ExVisualElement _messageCard;
+        private Unity.AppUI.UI.Text _messageText;
+        private FMNutriView _nutriView;
+
         protected override VisualElement CreateStepContent(int stepIndex)
         {
             switch (stepIndex)
@@ -28,6 +32,8 @@ namespace eu.foodmission.platform
                     return BuildStep2();
                 case 2:
                     return BuildStep3();
+                case 3:
+                    return BuildStep4();
                 default:
                     return new VisualElement();
             }
@@ -36,78 +42,117 @@ namespace eu.foodmission.platform
         protected override void SetupCompanionSlot(VisualElement slot)
         {
             // Simple companion guide card styled via USS
-            var card = new VisualElement();
-            card.AddToClassList("fm-step-flow__guide-card");
+            var container = new VisualElement();
+            slot.Add(container);
 
-            var title = new Unity.AppUI.UI.Heading { text = "Nutri Guide 🌱" };
 
+            var title = new Unity.AppUI.UI.Heading { text = "📊 Your opinion matters" };
+            title.AddToClassList("centered-text");
             title.style.unityFontStyleAndWeight = FontStyle.Bold;
             title.size = HeadingSize.XL;
-            card.Add(title);
+            container.Add(title);
 
-            var message = new Unity.AppUI.UI.Text { text = "Please answer the questions below to customize your experience!" };
-            message.style.whiteSpace = WhiteSpace.Normal;
-            card.Add(message);
+            _nutriView = new FMNutriView();
+            _nutriView.AddToClassList("fm-step-flow__guide-nutri");
+            container.Add(_nutriView);
 
-            slot.Add(card);
+
+            _messageCard = new ExVisualElement();
+            _messageCard.AddToClassList("box-background");
+            _messageCard.AddToClassList("fm-shadow-wrapper");
+            _messageCard.AddToClassList("fm-step-flow__guide-card");
+
+            _messageText = new Unity.AppUI.UI.Text { text = "" };
+            _messageText.style.whiteSpace = WhiteSpace.Normal;
+            _messageText.primary = false;
+            _messageCard.Add(_messageText);
+
+            slot.Add(_messageCard);
+
+            _messageCard.schedule.Execute(() =>
+            {
+                _messageCard.AddToClassList("fm-step-flow__guide-card--visible");
+            }).StartingIn(50);
+        }
+
+        public void UpdateMascotMessage(string newMessage)
+        {
+            if (_messageText.text == newMessage) return;
+
+            // 1. Ocultar con fade-out/exit
+            _messageCard.RemoveFromClassList("fm-step-flow__guide-card--visible");
+            _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
+
+            // 2. Tras la duración de la salida (150ms), cambiar texto y hacer fade-in
+            _messageCard.schedule.Execute(() =>
+            {
+                _messageText.text = newMessage;
+                _messageCard.RemoveFromClassList("fm-step-flow__guide-card--exit");
+                _messageCard.AddToClassList("fm-step-flow__guide-card--visible");
+            }).StartingIn(150);
+        }
+
+
+        protected override void OnStepChanged(int stepIndex)
+        {
+            base.OnStepChanged(stepIndex);
+
+            string message = stepIndex switch
+            {
+                0 => "We want to hear from you! Let's start with a warm welcome.",
+                1 => "How many meals containing meat do you typically eat each week?",
+                2 => "How would you rate the app?",
+                3 => "Any additional feedback?",
+                _ => ""
+            };
+
+            UpdateMascotMessage(message);
         }
 
         private VisualElement BuildStep1()
         {
-            var root = new VisualElement();
+            var root = new ExVisualElement();
+            return root;
+        }
+
+
+        private VisualElement BuildStep2()
+        {
+            var root = new ExVisualElement();
+            root.AddToClassList("box-background");
+            root.AddToClassList("fm-shadow-wrapper");
             root.style.flexDirection = FlexDirection.Column;
+            root.style.width = new StyleLength(Length.Percent(100));
 
-            var title = new Unity.AppUI.UI.Heading { text = "What is your diet preference?", size = HeadingSize.M };
-            title.style.marginBottom = 16;
-            root.Add(title);
-
-            var veganCheckbox = new FormFieldItemCheckbox { Text = "Vegan", CheckboxValue = _viewModel.IsVegan ? CheckboxState.Checked : CheckboxState.Unchecked };
-            var veganCb = veganCheckbox.Q<Checkbox>();
-            if (veganCb != null)
-            {
-                veganCb.RegisterValueChangedCallback(evt =>
-                {
-                    _viewModel.IsVegan = evt.newValue == CheckboxState.Checked;
-                    _viewModel.InvalidateValidation();
-                });
-            }
-            root.Add(veganCheckbox);
-
-            var vegetarianCheckbox = new FormFieldItemCheckbox { Text = "Vegetarian", CheckboxValue = _viewModel.IsVegetarian ? CheckboxState.Checked : CheckboxState.Unchecked };
-            var vegCb = vegetarianCheckbox.Q<Checkbox>();
-            if (vegCb != null)
-            {
-                vegCb.RegisterValueChangedCallback(evt =>
-                {
-                    _viewModel.IsVegetarian = evt.newValue == CheckboxState.Checked;
-                    _viewModel.InvalidateValidation();
-                });
-            }
-            root.Add(vegetarianCheckbox);
-
-            var omnivoreCheckbox = new FormFieldItemCheckbox { Text = "Omnivore", CheckboxValue = _viewModel.IsOmnivore ? CheckboxState.Checked : CheckboxState.Unchecked };
-            var omniCb = omnivoreCheckbox.Q<Checkbox>();
-            if (omniCb != null)
-            {
-                omniCb.RegisterValueChangedCallback(evt =>
-                {
-                    _viewModel.IsOmnivore = evt.newValue == CheckboxState.Checked;
-                    _viewModel.InvalidateValidation();
-                });
-            }
+            var veganCheckbox = CreateItemCheckbox("Vegan", _viewModel.IsVegan, value => _viewModel.IsVegan = value);
+            var vegetarianCheckBox = CreateItemCheckbox("Vegetarian", _viewModel.IsVegetarian, value => _viewModel.IsVegetarian = value);
+            var omnivoreCheckbox = CreateItemCheckbox("Omnivore", _viewModel.IsOmnivore, value => _viewModel.IsOmnivore = value);
+            root.Add(vegetarianCheckBox);
             root.Add(omnivoreCheckbox);
+            root.Add(veganCheckbox);
 
             return root;
         }
 
-        private VisualElement BuildStep2()
+        private VisualElement CreateItemCheckbox(string label, bool isChecked, Action<bool> onValueChanged)
+        {
+            var checkbox = new FormFieldItemCheckbox { Text = label, CheckboxValue = isChecked ? CheckboxState.Checked : CheckboxState.Unchecked };
+            var cb = checkbox.Q<Checkbox>();
+            if (cb != null)
+            {
+                cb.RegisterValueChangedCallback(evt =>
+                {
+                    onValueChanged?.Invoke(evt.newValue == CheckboxState.Checked);
+                    _viewModel.InvalidateValidation();
+                });
+            }
+            return checkbox;
+        }
+
+        private VisualElement BuildStep3()
         {
             var root = new VisualElement();
             root.style.flexDirection = FlexDirection.Column;
-
-            var title = new Unity.AppUI.UI.Heading { text = "How would you rate the app?", size = HeadingSize.M };
-            title.style.marginBottom = 16;
-            root.Add(title);
 
             var stepper = new FMArrowStepper
             {
@@ -125,14 +170,10 @@ namespace eu.foodmission.platform
             return root;
         }
 
-        private VisualElement BuildStep3()
+        private VisualElement BuildStep4()
         {
             var root = new VisualElement();
             root.style.flexDirection = FlexDirection.Column;
-
-            var title = new Unity.AppUI.UI.Heading { text = "Any additional feedback?", size = HeadingSize.M };
-            title.style.marginBottom = 16;
-            root.Add(title);
 
             var textField = new Unity.AppUI.UI.TextField
             {

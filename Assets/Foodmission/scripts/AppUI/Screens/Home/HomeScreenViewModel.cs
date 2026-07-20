@@ -30,16 +30,14 @@ namespace eu.foodmission.platform
 
         
 
-        [ObservableProperty]
-        private RenderTexture _nutriCameraTexture;
+
 
         public HomeScreenViewModel(IStoreService storeService) : base(storeService)
         {
             // Get initial state
             AppState state = _storeService.GetAppState();
 
-            _nutriCameraTexture = App.current?.services?.GetService<INutriService>()?.NutriCameraRenderTexture;
-            
+
 
             // Subscribe to user state changes
             _storeSubscription = _store.Subscribe(
