@@ -1001,6 +1001,7 @@
     border-bottom-width: 1px;
     border-bottom-color: rgba(128, 128, 128, 0.15);
     margin-bottom: 4px;
+    overflow: hidden;
 }
 
 .fm-scf-back-row:hover {
@@ -1008,10 +1009,14 @@
 }
 
 .fm-scf-category-row {
+    flex-direction: row;
+    align-items: center;
     color: var(--appui-foregrounds-50);
     --unity-image-tint-color: var(--appui-foregrounds-50);
     height: var(--appui-sizing-700);
     min-height: var(--appui-sizing-700);
+    background-color: var(--fm-surface-bg-transparent);
+    margin-bottom: 5px;
 }
 
 .fm-scf-category-row .appui-icon {
@@ -1022,11 +1027,12 @@
 .fm-scf-result-row {
     flex-direction: row;
     align-items: center;
-    padding: 8px 12px;
     color: var(--appui-foregrounds-50);
     --unity-image-tint-color: var(--appui-foregrounds-50);
     height: var(--appui-sizing-700);
     min-height: var(--appui-sizing-700);
+    background-color: var(--fm-surface-bg-transparent);
+    margin-bottom: 5px;
 }
 
 .fm-scf-result-row:hover {

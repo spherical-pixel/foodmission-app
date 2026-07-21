@@ -335,6 +335,17 @@ namespace eu.foodmission.platform
             return response?.items != null ? new List<GenericFood>(response.items) : new List<GenericFood>();
         }
 
+        public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)
+        {
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(foodGroup: foodGroup, page: page, pageSize: pageSize);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return null;
+            }
+            return result;
+        }
+
         public async Task AddProductItem(OpenFoodFactsProduct product, float qty, string unit)
         {
             var (foodItem, importError) = await ImportByBarcodeAsync(product.barcode);

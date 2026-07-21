@@ -115,6 +115,17 @@ namespace eu.foodmission.platform
             return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
         }
 
+        public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)
+        {
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(foodGroup: foodGroup, page: page, pageSize: pageSize);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return null;
+            }
+            return result;
+        }
+
         public async Task LoadAsync(string listId, string listName = null)
         {
             if (string.IsNullOrEmpty(listId))

@@ -20,14 +20,16 @@ namespace eu.foodmission.platform.Components
     public partial class FMSearchOrCategoryField : VisualElement
     {
         // ========= UXML ATTRIBUTES =========
-        [UxmlAttribute("placeholder")][CreateProperty]
+        [UxmlAttribute("placeholder")]
+        [CreateProperty]
         public string Placeholder
         {
             get => _textField?.placeholder ?? "";
             set { if (_textField != null) _textField.placeholder = value; }
         }
 
-        [UxmlAttribute("search-text")][CreateProperty]
+        [UxmlAttribute("search-text")]
+        [CreateProperty]
         public string SearchText
         {
             get => _textField?.value ?? "";
@@ -40,6 +42,7 @@ namespace eu.foodmission.platform.Components
         public Func<OpenFoodFactsProduct, float, string, Task> OnProductConfirmed { get; set; }
         public Func<GenericFood, float, string, Task> OnGenericFoodConfirmed { get; set; }
         public Func<string, Task<List<GenericFood>>> SearchGenericFoodsAsync { get; set; }
+        public Func<string, int, int, Task<PaginatedGenericFoodResponse>> SearchByFoodGroupAsync { get; set; }
         public Func<string, Task> OnCreateItemAsync { get; set; }
         public Action<string> OnTextChanged { get; set; }
         public Action<bool> OnPopoverVisibilityChanged { get; set; }
@@ -97,7 +100,13 @@ namespace eu.foodmission.platform.Components
         private object _selectedItem;
         private bool _genericEnabled = true;
         private bool _productsEnabled;
-        private const int MaxSearchResults = 20;
+        private const int MaxSearchResults = 10;
+        private const int PageSize = 10;
+        private int _currentPage;
+        private int _totalPages;
+        private string _currentFoodGroup;
+        private VisualElement _paginationContainer;
+        private CancellationTokenSource _categoryLoadCts;
 
         private Unity.AppUI.UI.TextField _textField;
         protected Unity.AppUI.UI.Button _actionButton;
@@ -165,7 +174,7 @@ namespace eu.foodmission.platform.Components
 
             _checkboxContainer = new ExVisualElement();
             _checkboxContainer.style.flexDirection = FlexDirection.Row;
-            
+
             _checkboxContainer.style.justifyContent = Justify.FlexStart;
             _checkboxContainer.style.paddingLeft = 36;
             _checkboxContainer.style.paddingRight = 36;
@@ -249,6 +258,16 @@ namespace eu.foodmission.platform.Components
 
             _confirmContainer.Add(confirmRow);
 
+            _paginationContainer = new VisualElement();
+            _paginationContainer.style.display = DisplayStyle.None;
+            _paginationContainer.style.flexDirection = FlexDirection.Row;
+            _paginationContainer.style.justifyContent = Justify.SpaceBetween;
+            _paginationContainer.style.alignItems = Align.Center;
+            _paginationContainer.style.marginTop = 8;
+            _paginationContainer.style.marginBottom = 8;
+            _paginationContainer.AddToClassList("fm-scf-pagination");
+            _resultsContainer.Add(_paginationContainer);
+
             // Wire events
             _textField.RegisterCallback<FocusEvent>(OnTextFieldFocused);
 
@@ -264,7 +283,7 @@ namespace eu.foodmission.platform.Components
 
             _scanButton.clicked += OnScanClicked;
 
-            
+
 
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
@@ -307,6 +326,10 @@ namespace eu.foodmission.platform.Components
         {
             if (GetGenericFoodsAsync == null) return;
 
+            _categoryLoadCts?.Cancel();
+            _categoryLoadCts?.Dispose();
+            _categoryLoadCts = null;
+
             SetMode(Mode.Categories);
             _categoryContainer.Clear();
 
@@ -326,7 +349,7 @@ namespace eu.foodmission.platform.Components
             // Recent products heading
             if (_recentProducts.Count > 0)
             {
-                var recentHeading = new Unity.AppUI.UI.Heading { text = "RECENTLY ADDED" };
+                var recentHeading = new Unity.AppUI.UI.Heading { text = "@UI:txtRECENTLY_ADDED" };
                 recentHeading.AddToClassList("fm-scf-heading");
                 recentHeading.size = HeadingSize.M;
                 _categoryContainer.Add(recentHeading);
@@ -340,7 +363,7 @@ namespace eu.foodmission.platform.Components
 
             // Food groups heading
             //var groupHeading = new Text { text = "CATEGORIES" };
-            var groupHeading = new Unity.AppUI.UI.Heading { text = "CATEGORIES" };
+            var groupHeading = new Unity.AppUI.UI.Heading { text = "@UI:txtCATEGORIES" };
             groupHeading.size = HeadingSize.M;
 
             groupHeading.AddToClassList("fm-scf-heading");
@@ -349,7 +372,7 @@ namespace eu.foodmission.platform.Components
             foreach (var group in groups)
             {
                 string emoji = CategoryEmojis.TryGetValue(group, out string e) ? e : "📦";
-                string localized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", group + "_title");
+                string localized = group;//LocalizationSettings.StringDatabase.GetLocalizedString("UI", group + "_title");
                 var btn = new Unity.AppUI.UI.Button();
                 btn.trailingIcon = "fm-arrow-right";
                 btn.style.flexGrow = 1;
@@ -371,15 +394,46 @@ namespace eu.foodmission.platform.Components
 
         private void ShowItemsForGroup(string foodGroup)
         {
+            _currentFoodGroup = foodGroup;
+            _currentPage = 1;
+            _ = LoadCategoryPageAsync();
+        }
+
+        private async Task LoadCategoryPageAsync()
+        {
+            if (SearchByFoodGroupAsync == null) return;
+
+            _categoryLoadCts?.Cancel();
+            _categoryLoadCts?.Dispose();
+            _categoryLoadCts = new CancellationTokenSource();
+            CancellationToken ct = _categoryLoadCts.Token;
+
             _categoryContainer.Clear();
+            _paginationContainer.style.display = DisplayStyle.None;
+            _spinner.style.display = DisplayStyle.Flex;
+
+            PaginatedGenericFoodResponse response = null;
+            try
+            {
+                response = await SearchByFoodGroupAsync(_currentFoodGroup, _currentPage, PageSize);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] LoadCategoryPageAsync failed: {ex.Message}");
+            }
+
+            if (ct.IsCancellationRequested) return;
+
+            _spinner.style.display = DisplayStyle.None;
 
             // Back button row
             var backRow = new VisualElement();
             backRow.AddToClassList("fm-scf-back-row");
-            string backEmoji = CategoryEmojis.TryGetValue(foodGroup, out string be) ? be : "📦";
-            string backLocalized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", foodGroup + "_title");
+            string backEmoji = CategoryEmojis.TryGetValue(_currentFoodGroup, out string be) ? be : "📦";
+            string backLocalized = _currentFoodGroup;
             var backLabel = new Unity.AppUI.UI.Heading { text = $"{backEmoji} {backLocalized}" };
             backLabel.size = HeadingSize.M;
+            backLabel.style.flexGrow = 1;
 
             var icon = new Unity.AppUI.UI.Icon { iconName = "fm-arrow-left" };
             icon.style.marginRight = 5;
@@ -389,25 +443,83 @@ namespace eu.foodmission.platform.Components
             backRow.RegisterCallback<ClickEvent>(evt => { _ = ShowGenericFoodsAsync(); });
             _categoryContainer.Add(backRow);
 
-            // Items in this group
-            foreach (var gf in _genericFoods)
+            var items = response?.items;
+            _totalPages = response?.totalPages ?? 1;
+
+            if (items != null && items.Length > 0)
             {
-                string group = string.IsNullOrEmpty(gf.foodGroup) ? "Other" : gf.foodGroup;
-                if (group != foodGroup) continue;
+                foreach (var gf in items)
+                {
+                    var btn = new Unity.AppUI.UI.Button();
+                    btn.AddToClassList("fm-scf-category-row");
+                    btn.style.flexGrow = 1;
+                    btn.AddToClassList("fm-button-align-left");
+                    btn.title = $"{gf.foodName}";
+                    btn.quiet = true;
+                    btn.size = Size.M;
 
-                //var row = new VisualElement();
-                var btn = new Unity.AppUI.UI.Button();
-                btn.AddToClassList("fm-scf-category-row");
-                btn.style.flexGrow = 1;
-                btn.AddToClassList("fm-button-align-left");
-                btn.title = $"{gf.foodName}";
-                btn.quiet = true;
-                btn.size = Size.M;
-
-                GenericFood captured = gf;
-                btn.RegisterCallback<ClickEvent>(_ => OnGenericFoodClicked(captured));
-                _categoryContainer.Add(btn);
+                    GenericFood captured = gf;
+                    btn.RegisterCallback<ClickEvent>(_ => OnGenericFoodClicked(captured));
+                    _categoryContainer.Add(btn);
+                }
             }
+            else
+            {
+                var noResults = new Text { text = "No items in this category" };
+                noResults.AddToClassList("fm-scf-no-results");
+                _categoryContainer.Add(noResults);
+            }
+
+            if (_totalPages > 1)
+            {
+                BuildPaginationBar();
+            }
+
+            _categoryContainer.style.display = DisplayStyle.Flex;
+            _searchResultsContainer.style.display = DisplayStyle.None;
+            _confirmContainer.style.display = DisplayStyle.None;
+            _resultsContainer.style.display = DisplayStyle.Flex;
+        }
+
+        private void BuildPaginationBar()
+        {
+            _paginationContainer.Clear();
+
+            var prevBtn = new Unity.AppUI.UI.Button { title = "@UI:txtPrevious", quiet = true };
+            prevBtn.leadingIcon = "fm-arrow-left";
+            prevBtn.SetEnabled(_currentPage > 1);
+            prevBtn.RegisterCallback<ClickEvent>(evt =>
+            {
+                evt.StopPropagation();
+                if (_currentPage > 1)
+                {
+                    _currentPage--;
+                    _ = LoadCategoryPageAsync();
+                }
+            });
+            _paginationContainer.Add(prevBtn);
+
+            //var pageLabel = new Text { text = $"Page {_currentPage} of {_totalPages}" };
+            var pageLabel = new Text { text = new LocalizedOption("UI", "txtPage_n_of_pages", _currentPage, _totalPages).GetText() };
+            pageLabel.style.flexGrow = 1;
+            pageLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+            _paginationContainer.Add(pageLabel);
+
+            var nextBtn = new Unity.AppUI.UI.Button { title = "@UI:txtNext", quiet = true };
+            nextBtn.trailingIcon = "fm-arrow-right";
+            nextBtn.SetEnabled(_currentPage < _totalPages);
+            nextBtn.RegisterCallback<ClickEvent>(evt =>
+            {
+                evt.StopPropagation();
+                if (_currentPage < _totalPages)
+                {
+                    _currentPage++;
+                    _ = LoadCategoryPageAsync();
+                }
+            });
+            _paginationContainer.Add(nextBtn);
+
+            _paginationContainer.style.display = DisplayStyle.Flex;
         }
 
         private void OnGenericFoodClicked(GenericFood genericFood)
@@ -682,6 +794,9 @@ namespace eu.foodmission.platform.Components
             Debug.Log($"[FMSearch] ResetToIdle called, prevMode={_currentMode}");
             SetMode(Mode.Idle);
             _selectedItem = null;
+            _categoryLoadCts?.Cancel();
+            _categoryLoadCts?.Dispose();
+            _categoryLoadCts = null;
             _textField.value = "";
             _textField.Blur();
             _resultsContainer.style.display = DisplayStyle.None;
@@ -690,6 +805,7 @@ namespace eu.foodmission.platform.Components
             _searchResultsContainer.style.display = DisplayStyle.None;
             _searchResultsContainer.Clear();
             _confirmContainer.style.display = DisplayStyle.None;
+            _paginationContainer.style.display = DisplayStyle.None;
             _spinner.style.display = DisplayStyle.None;
         }
 
@@ -718,8 +834,13 @@ namespace eu.foodmission.platform.Components
 
         private static VisualElement MakeResultRow(object item, Action<object> onClick)
         {
-            var row = new VisualElement();
-            row.AddToClassList("fm-scf-result-row");
+            var btn = new Unity.AppUI.UI.Button();
+            btn.AddToClassList("fm-scf-result-row");
+            btn.style.flexGrow = 1;
+            btn.AddToClassList("fm-button-align-left");
+
+            btn.quiet = true;
+            btn.size = Size.M;
 
             string text;
             if (item is OpenFoodFactsProduct food)
@@ -736,13 +857,13 @@ namespace eu.foodmission.platform.Components
                 text = item.ToString();
             }
 
-            var label = new Text { text = text };
-            label.style.flexGrow = 1;
-            row.Add(label);
+            btn.title = $"{text}";
 
             object captured = item;
-            row.RegisterCallback<ClickEvent>(_ => onClick(captured));
-            return row;
+            btn.RegisterCallback<ClickEvent>(_ => onClick(captured));
+
+
+            return btn;
         }
 
     }

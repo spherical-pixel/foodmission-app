@@ -273,6 +273,17 @@ namespace eu.foodmission.platform
             return new List<GenericFood>();
         }
 
+        public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)
+        {
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(foodGroup: foodGroup, page: page, pageSize: pageSize);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return null;
+            }
+            return result;
+        }
+
         private static bool IsCacheFresh(long cachedAtTicks)
         {
             if (cachedAtTicks <= 0) return false;
