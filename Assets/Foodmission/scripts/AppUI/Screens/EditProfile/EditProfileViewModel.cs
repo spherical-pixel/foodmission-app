@@ -403,6 +403,16 @@ namespace eu.foodmission.platform
 
                 AppState state = _storeService.GetAppState();
 
+                bool hasShopping = shoppingResponsibilityCode != null || !string.IsNullOrEmpty(state.userShoppingResponsibility);
+                bool hasDietary = (dietaryCodes != null && dietaryCodes.Length > 0)
+                    || (state.userDietaryPreference != null && state.userDietaryPreference.Length > 0);
+                bool hasSurvey = state.userOnboardingSurvey != null
+                    && (state.userOnboardingSurvey.meatMeals != null
+                        || state.userOnboardingSurvey.beefFrequency != null
+                        || state.userOnboardingSurvey.foodWasteFrequency != null
+                        || state.userOnboardingSurvey.ultraProcessedFrequency != null
+                        || state.userOnboardingSurvey.reusableContainersFrequency != null);
+
                 var request = new ProfileUpdateRequest
                 {
                     gender = _selectedGenderIndex >= 0 ? _catalogData.genders[_selectedGenderIndex].code : null,
@@ -411,12 +421,14 @@ namespace eu.foodmission.platform
                     annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
                     yearOfBirth = SelectedYearOfBirthIndex >= 0 ? (int?)int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : null,
                     
-                    preferences = new ProfileUpdatePreferences
-                    {
-                        shoppingResponsibility = shoppingResponsibilityCode ?? state.userShoppingResponsibility,
-                        dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
-                        onboardingSurvey = state.userOnboardingSurvey
-                    }
+                    preferences = (hasShopping || hasDietary || hasSurvey)
+                        ? new ProfileUpdatePreferences
+                        {
+                            shoppingResponsibility = shoppingResponsibilityCode ?? state.userShoppingResponsibility,
+                            dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
+                            onboardingSurvey = state.userOnboardingSurvey
+                        }
+                        : null
                 };
                 
 

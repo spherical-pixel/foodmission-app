@@ -114,7 +114,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("MEALS_0_4", appState.userOnboardingSurvey.meatMeals);
             Assert.AreEqual("LESS_THAN_ONCE", appState.userOnboardingSurvey.beefFrequency);
             Assert.AreEqual("NEVER", appState.userOnboardingSurvey.foodWasteFrequency);
-            Assert.AreEqual("TIMES_10_15", appState.userOnboardingSurvey.ultraProcessedFrequency);
+            Assert.AreEqual("TIMES_10_14", appState.userOnboardingSurvey.ultraProcessedFrequency);
             Assert.AreEqual("ACTIONS_10_PLUS", appState.userOnboardingSurvey.reusableContainersFrequency);
         }
 
@@ -136,14 +136,15 @@ namespace eu.foodmission.platform.Tests
             vm.UltraProcessedFrequencyIndex = 0;
             vm.ReusableContainersFrequencyIndex = 0;
 
-            // Complete flow
-            await vm.GoNextAsync();
-
-            Assert.IsNotNull(vm.ErrorDetail);
-            Assert.AreEqual("Server error occurred", vm.ErrorDetail.message);
+            // Navigate through all 6 steps (0→1→2→3→4→5→complete)
+            for (int i = 0; i < 6; i++)
+                await vm.GoNextAsync();
 
             // Log warning is expected when UpdateProfileAsync returns false
             UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Warning, "[OnboardingSurveyViewModel] Failed to sync survey data with server via PATCH");
+
+            Assert.IsNotNull(vm.ErrorDetail);
+            Assert.AreEqual("Server error occurred", vm.ErrorDetail.message);
         }
     }
 }

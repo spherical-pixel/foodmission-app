@@ -305,6 +305,9 @@ namespace eu.foodmission.platform
                     // Registration and auto-login successful - navigation handled by auth state change
                     Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
 
+                    string lang = _storeService.GetAppState().lang ?? "en";
+                    _ = Components.FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
+
                     NutriMessageDialog.Show(
                         message: "@UI:COMPLETE_WELCOME_MESSAGE",
                         actions: new[]

@@ -53,9 +53,6 @@ namespace eu.foodmission.platform
 
             await _remoteLocalizationService.InitializeAsync();
 
-            string lang = _storeService.GetAppState().lang ?? "en";
-            await FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
-
             await Task.Delay(100);
 
             LoadingText = await LocalizationSettings.StringDatabase
@@ -85,6 +82,11 @@ namespace eu.foodmission.platform
             if (!isAuthenticated)
             {
                 _authService.Logout();
+            }
+            else
+            {
+                string lang = _storeService.GetAppState().lang ?? "en";
+                await FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
             }
 
             string returnAction = isAuthenticated ? Actions.loading_to_home : Actions.loading_to_auth;
