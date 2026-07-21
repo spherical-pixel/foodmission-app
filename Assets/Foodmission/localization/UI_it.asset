@@ -1418,25 +1418,89 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25687180457271296
-    m_Localized: 
+    m_Localized: '{0} volte alla settimana'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 25682128132890624
-    m_Localized: 
+    m_Localized: '{0} pasti a settimana'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 25699605365645312
-    m_Localized: 
+    m_Localized: '{0} azioni a settimana'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 25708140598124544
-    m_Localized: 
+    m_Localized: Passo {0} di {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
+  - m_Id: 25683680096673792
+    m_Localized: Mai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: Meno di una volta alla settimana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Avanti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Invia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: 'Benvenuto su Foodmission!
+
+      Questo breve sondaggio ci aiuta
+      a capire le tue abitudini alimentari, la tua consapevolezza riguardo allo spreco
+      alimentare e le tue scelte sostenibili, in modo che Nutri possa personalizzare
+      i consigli per te.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: Quanti pasti a base di carne consumi in genere ogni settimana?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: Con quale frequenza mangi carne di manzo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: Con quale frequenza butti via del cibo ancora commestibile?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: Con quale frequenza consumi alimenti ultra-trasformati come snack
+      confezionati, bevande zuccherate, piatti pronti o prodotti a base di carne
+      lavorata?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: Con quale frequenza utilizzi contenitori riutilizzabili o acquisti
+      prodotti ricaricabili?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: CATEGORIE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: AGGIUNTI DI RECENTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Precedente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Pagina {0} di {1}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

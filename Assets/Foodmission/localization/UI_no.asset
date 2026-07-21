@@ -1413,25 +1413,84 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25687180457271296
-    m_Localized: 
+    m_Localized: '{0} ganger i uken'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 25682128132890624
-    m_Localized: 
+    m_Localized: "{0} m\xE5ltider per uke"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 25699605365645312
-    m_Localized: 
+    m_Localized: '{0} aktiviteter per uke'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 25708140598124544
-    m_Localized: 
+    m_Localized: Trinn {0} av {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690410
+  - m_Id: 25683680096673792
+    m_Localized: Aldri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: "Mindre enn \xE9n gang i uken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Neste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Send inn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "Velkommen til Foodmission!\nDenne korte unders\xF8kelsen hjelper
+      oss \xE5 forst\xE5 dine spisevaner, din bevissthet rundt matsvinn og dine b\xE6rekraftige
+      valg, slik at Nutri kan skreddersy anbefalinger til deg."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: "Hvor mange m\xE5ltider med kj\xF8tt spiser du vanligvis hver uke?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: Hvor ofte spiser du biff?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: Hvor ofte kaster du mat som fortsatt er spiselig?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: "Hvor ofte spiser du ultraprosesserte matvarer som ferdigpakkede
+      snacks, sukkerholdige drikker, ferdigretter eller bearbeidede kj\xF8ttprodukter?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: "Hvor ofte bruker du gjenbrukbare beholdere eller kj\xF8per p\xE5fyllingsprodukter?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: KATEGORIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: NYTT INNHOLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Forrige
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Side {0} av {1}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

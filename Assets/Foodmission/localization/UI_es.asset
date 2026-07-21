@@ -1414,25 +1414,87 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25687180457271296
-    m_Localized: 
+    m_Localized: '{0} veces a la semana'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
   - m_Id: 25682128132890624
-    m_Localized: 
+    m_Localized: '{0} comidas a la semana'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
   - m_Id: 25699605365645312
-    m_Localized: 
+    m_Localized: '{0} acciones a la semana'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
   - m_Id: 25708140598124544
-    m_Localized: 
+    m_Localized: Paso {0} de {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
+  - m_Id: 25683680096673792
+    m_Localized: Nunca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: Menos de una vez a la semana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Siguiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Enviar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "\xA1Bienvenido a Foodmission!\nEsta breve encuesta nos ayuda a
+      conocer tus h\xE1bitos alimenticios, tu concienciaci\xF3n sobre el desperdicio
+      de alimentos y tus elecciones sostenibles, para que Nutri pueda ofrecerte recomendaciones
+      personalizadas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: "\xBFCu\xE1ntas comidas que contengan carne sueles tomar cada semana?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: "\xBFCon qu\xE9 frecuencia comes carne de vacuno?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: "\xBFCon qu\xE9 frecuencia tiras comida que a\xFAn se puede comer?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: "\xBFCon qu\xE9 frecuencia consumes alimentos ultraprocesados, como
+      aperitivos envasados, bebidas azucaradas, platos preparados o productos c\xE1rnicos
+      procesados?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: "\xBFCon qu\xE9 frecuencia utilizas envases reutilizables o compras
+      productos recargables?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: "CATEGOR\xCDAS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: "A\xD1ADIDOS RECIENTEMENTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Anterior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: "P\xE1gina {0} de {1}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

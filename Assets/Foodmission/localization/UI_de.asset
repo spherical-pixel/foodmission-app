@@ -1422,25 +1422,86 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25687180457271296
-    m_Localized: 
+    m_Localized: '{0} Mal pro Woche'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
   - m_Id: 25682128132890624
-    m_Localized: 
+    m_Localized: '{0} Mahlzeiten pro Woche'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
   - m_Id: 25699605365645312
-    m_Localized: 
+    m_Localized: '{0} Aktionen pro Woche'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
   - m_Id: 25708140598124544
-    m_Localized: 
+    m_Localized: Schritt {0} von {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
+  - m_Id: 25683680096673792
+    m_Localized: Niemals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: Weniger als einmal pro Woche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Weiter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Absenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "Willkommen bei Foodmission!\nDiese kurze Umfrage hilft uns dabei,
+      Ihre Ern\xE4hrungsgewohnheiten, Ihr Bewusstsein f\xFCr Lebensmittelverschwendung
+      und Ihre Entscheidungen im Hinblick auf Nachhaltigkeit besser zu verstehen,
+      damit Nutri Ihnen ma\xDFgeschneiderte Empfehlungen geben kann."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: Wie viele Mahlzeiten mit Fleisch essen Sie normalerweise pro Woche?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: Wie oft isst du Rindfleisch?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: Wie oft werfen Sie noch essbare Lebensmittel weg?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: "Wie oft verzehren Sie hochverarbeitete Lebensmittel wie abgepackte
+      Snacks, zuckerhaltige Getr\xE4nke, Fertiggerichte oder verarbeitete Fleischprodukte?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: "Wie oft verwenden Sie wiederverwendbare Beh\xE4lter oder kaufen
+      Nachf\xFCllprodukte?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: KATEGORIEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: "NEU HINZUGEF\xDCGT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: "Zur\xFCck"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Seite {0} von {1}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1411,25 +1411,85 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25687180457271296
-    m_Localized: 
+    m_Localized: '{0}-krat na teden'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 25682128132890624
-    m_Localized: 
+    m_Localized: '{0} obrokov na teden'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 25699605365645312
-    m_Localized: 
+    m_Localized: '{0} dejavnosti na teden'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 25708140598124544
-    m_Localized: 
+    m_Localized: Korak {0} od {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
+  - m_Id: 25683680096673792
+    m_Localized: Nikoli
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: Manj kot enkrat na teden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Naprej
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: "Po\u0161lji"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "Dobrodo\u0161li v Foodmission!\nTa kratka anketa nam pomaga razumeti
+      va\u0161e prehranjevalne navade, ozave\u0161\u010Denost o izgubi hrane in trajnostne
+      odlo\u010Ditve, da vam bo Nutri lahko pripravil priporo\u010Dila po meri."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: "Koliko obrokov z mesom obi\u010Dajno pojeste na teden?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: Kako pogosto jeste goveje meso?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: "Kako pogosto zavr\u017Ee\u0161 hrano, ki je \u0161e u\u017Eitna?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: "Kako pogosto u\u017Eivate visoko predelano hrano, kot so pakirani
+      prigrizki, sladke pija\u010De, pripravljene jedi ali predelani mesni izdelki?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: "Kako pogosto uporabljate posode za ve\u010Dkratno uporabo ali kupujete
+      izdelke za ponovno polnjenje?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: KATEGORIJE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: "NAJNOVEJ\u0160E DODATKE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: "Prej\u0161nja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Stran {0} od {1}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

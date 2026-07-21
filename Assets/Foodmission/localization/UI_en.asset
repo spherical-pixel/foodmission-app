@@ -1492,6 +1492,22 @@ MonoBehaviour:
     m_Localized: How often do you use reusable containers or purchase refill products?
     m_Metadata:
       m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: CATEGORIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: RECENTLY ADDED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Previous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Page {0} of {1}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

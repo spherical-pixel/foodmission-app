@@ -1439,25 +1439,85 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25687180457271296
-    m_Localized: 
+    m_Localized: '{0} keer per week'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 25682128132890624
-    m_Localized: 
+    m_Localized: '{0} maaltijden per week'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 25699605365645312
-    m_Localized: 
+    m_Localized: '{0} activiteiten per week'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 25708140598124544
-    m_Localized: 
+    m_Localized: Stap {0} van {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
+  - m_Id: 25683680096673792
+    m_Localized: Nooit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: "Minder dan \xE9\xE9n keer per week"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Volgende
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Verzenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "Welkom bij Foodmission!\nDeze korte enqu\xEAte helpt ons inzicht
+      te krijgen in je eetgewoonten, je bewustzijn rond voedselverspilling en je
+      duurzame keuzes, zodat Nutri aanbevelingen op maat voor je kan doen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: Hoeveel maaltijden met vlees eet je doorgaans per week?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: Hoe vaak eet je rundvlees?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: Hoe vaak gooi je nog eetbaar voedsel weg?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: Hoe vaak eet of drinkt u ultraverwerkte voedingsmiddelen, zoals
+      verpakte snacks, suikerrijke dranken, kant-en-klaarmaaltijden of verwerkte
+      vleesproducten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: Hoe vaak gebruik je herbruikbare verpakkingen of koop je navulproducten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: "CATEGORIE\xCBN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: ONLANGS TOEGEVOEGD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Vorige
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Pagina {0} van {1}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

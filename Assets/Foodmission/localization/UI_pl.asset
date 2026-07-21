@@ -1432,25 +1432,90 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25687180457271296
-    m_Localized: 
+    m_Localized: '{0} razy w tygodniu'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
   - m_Id: 25682128132890624
-    m_Localized: 
+    m_Localized: "{0} posi\u0142k\xF3w tygodniowo"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
   - m_Id: 25699605365645312
-    m_Localized: 
+    m_Localized: "{0} dzia\u0142a\u0144 tygodniowo"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
   - m_Id: 25708140598124544
-    m_Localized: 
+    m_Localized: Krok {0} z {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
+  - m_Id: 25683680096673792
+    m_Localized: Nigdy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: "Rzadziej ni\u017C raz w tygodniu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Dalej
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: "Wy\u015Blij"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "Witamy w Foodmission!\nTa kr\xF3tka ankieta pomo\u017Ce nam pozna\u0107
+      Twoje nawyki \u017Cywieniowe, \u015Bwiadomo\u015B\u0107 w zakresie marnotrawstwa
+      \u017Cywno\u015Bci oraz wybory zgodne z zasadami zr\xF3wnowa\u017Conego rozwoju,
+      dzi\u0119ki czemu Nutri b\u0119dzie mog\u0142o dostosowa\u0107 rekomendacje
+      specjalnie dla Ciebie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: "Ile posi\u0142k\xF3w zawieraj\u0105cych mi\u0119so zazwyczaj spo\u017Cywasz
+      w ci\u0105gu tygodnia?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: "Jak cz\u0119sto jesz wo\u0142owin\u0119?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: "Jak cz\u0119sto wyrzucasz jedzenie, kt\xF3re nadaje si\u0119 jeszcze
+      do spo\u017Cycia?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: "Jak cz\u0119sto spo\u017Cywasz \u017Cywno\u015B\u0107 wysoko przetworzon\u0105,
+      tak\u0105 jak pakowane przek\u0105ski, s\u0142odkie napoje, dania gotowe czy
+      przetworzone produkty mi\u0119sne?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: "Jak cz\u0119sto korzystasz z pojemnik\xF3w wielokrotnego u\u017Cytku
+      lub kupujesz produkty do ponownego nape\u0142niania?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: KATEGORIE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: OSTATNIO DODANE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Poprzedni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Strona {0} z {1}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
