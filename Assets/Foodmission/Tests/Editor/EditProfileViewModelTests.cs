@@ -156,7 +156,7 @@ namespace eu.foodmission.platform.Tests
             };
 
             _mockCatalogService
-                .Setup(x => x.GetCountriesAsync())
+                .Setup(x => x.GetCountriesAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((countries, null)));
 
             await _vm.LoadCountriesAsync();
@@ -187,7 +187,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
             _mockCatalogService
-                .Setup(x => x.GetCountriesAsync())
+                .Setup(x => x.GetCountriesAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((countries, null)));
 
             await _vm.LoadCatalogDataAsync();

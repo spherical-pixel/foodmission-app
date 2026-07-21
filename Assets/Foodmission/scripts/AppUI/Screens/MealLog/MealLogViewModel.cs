@@ -72,13 +72,13 @@ namespace eu.foodmission.platform
 
         [ObservableProperty] private ApiErrorResponse m_ErrorDetail;
 
-        [ObservableProperty] private bool m_TodayLoaded;
+        // [ObservableProperty] private bool m_TodayLoaded;
 
-        [ObservableProperty] private int m_CaloriesConsumed = 0;
+        // [ObservableProperty] private int m_CaloriesConsumed = 0;
 
-        [ObservableProperty] private int m_CaloriesLeft = 2200;
+        // [ObservableProperty] private int m_CaloriesLeft = 2200;
 
-        [ObservableProperty] private float m_CaloriesProgress = 0f;
+        // [ObservableProperty] private float m_CaloriesProgress = 0f;
 
         [ObservableProperty] private bool m_IsSearchingPresets;
 
@@ -110,7 +110,8 @@ namespace eu.foodmission.platform
         {
             IsSearching = true;
 
-            var (types, typeErr) = await _catalogService.GetTypeOfMealsAsync();
+            string lang = _storeService.GetAppState().lang ?? "en";
+            var (types, typeErr) = await _catalogService.GetTypeOfMealsAsync(lang);
             if (typeErr == null && types != null)
                 TypeOfMealOptions = types;
 
@@ -460,12 +461,12 @@ namespace eu.foodmission.platform
 
                 if (isRecipe)
                 {
-                    if (string.IsNullOrWhiteSpace(trimmedName))
-                    {
-                        ErrorMessage = "Enter a meal name";
-                        IsSaving = false;
-                        return false;
-                    }
+                    // if (string.IsNullOrWhiteSpace(trimmedName))
+                    // {
+                    //     ErrorMessage = "Enter a meal name";
+                    //     IsSaving = false;
+                    //     return false;
+                    // }
 
                     var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
                     {
@@ -726,14 +727,14 @@ namespace eu.foodmission.platform
 
             ErrorDetail = null;
             _allLogs = response?.data != null ? new List<MealLog>(response.data) : new List<MealLog>();
-            
+
             LastTenLogs = _allLogs
                 .OrderByDescending(l => DateTime.TryParse(l.timestamp, out var t) ? t : DateTime.MinValue)
                 .Take(10)
                 .ToList();
-            
-            UpdateCalorieStats();
-            TodayLoaded = true;
+
+            //UpdateCalorieStats();
+            //TodayLoaded = true;
         }
 
         public void ResetToStep1()
@@ -779,26 +780,26 @@ namespace eu.foodmission.platform
                     .OrderByDescending(l => DateTime.Parse(l.timestamp))
                     .Take(10)
                     .ToList();
-                UpdateCalorieStats();
+                // UpdateCalorieStats();
             }
         }
 
         // ========= Helpers =========
 
-        private void UpdateCalorieStats()
-        {
-            int consumed = 0;
-            foreach (var log in _allLogs)
-            {
-                consumed += (int)(log.meal?.calories ?? 0f);
-            }
-            int target = 2200;
-            int left = Mathf.Max(0, target - consumed);
+        // private void UpdateCalorieStats()
+        // {
+        //     int consumed = 0;
+        //     foreach (var log in _allLogs)
+        //     {
+        //         consumed += (int)(log.meal?.calories ?? 0f);
+        //     }
+        //     int target = 2200;
+        //     int left = Mathf.Max(0, target - consumed);
 
-            CaloriesConsumed = consumed;
-            CaloriesLeft = left;
-            CaloriesProgress = target > 0 ? (float)consumed / target : 0f;
-        }
+        //     CaloriesConsumed = consumed;
+        //     CaloriesLeft = left;
+        //     CaloriesProgress = target > 0 ? (float)consumed / target : 0f;
+        // }
 
         public void DisposeSearchCts()
         {
@@ -836,7 +837,7 @@ namespace eu.foodmission.platform
                 "piece" or "pieces" or "pcs" or "unit" or "units" => "PIECES",
                 _ => "PIECES",
             };
+        }
     }
-}
 
 }

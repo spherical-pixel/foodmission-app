@@ -12,6 +12,7 @@ namespace eu.foodmission.platform.Tests
     public class SettingsViewModelTests
     {
         private Mock<IAuthService> _mockAuthService;
+        private Mock<ICatalogService> _mockCatalogService;
         private TestStoreService _storeService;
         private SettingsViewModel _vm;
 
@@ -19,8 +20,9 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _mockAuthService = new Mock<IAuthService>();
+            _mockCatalogService = new Mock<ICatalogService>();
             _storeService = new TestStoreService();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object);
         }
 
         [TearDown]
@@ -62,7 +64,7 @@ namespace eu.foodmission.platform.Tests
             _storeService.SetAppState(state);
 
             _vm?.Dispose();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object);
 
             Assert.AreEqual("dark", _vm.Theme);
             Assert.AreEqual("en", _vm.Lang);
@@ -236,7 +238,7 @@ namespace eu.foodmission.platform.Tests
             _storeService.SetAppState(state);
 
             _vm?.Dispose();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object);
 
             Assert.AreEqual("User", _vm.UserName);
         }

@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 using Unity.AppUI.UI;
 
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Components
@@ -11,28 +12,41 @@ namespace eu.foodmission.platform.Components
     [UxmlElement]
     public partial class FMQuantityUnitPanel : ExVisualElement
     {
-        public static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
 
-        private static List<string> _unitChoices;
+        private static List<string> _unitValues;
+        private static List<string> _unitLabels;
+        private static string _cachedLang;
 
-        public static List<string> UnitChoices
+        public static List<string> UnitValues => _unitValues;
+        public static List<string> UnitChoices => _unitLabels;
+
+        public static async Task InitializeAsync(ICatalogService catalogService, string lang)
         {
-            get
+            if (_unitValues != null && _cachedLang == lang) return;
+
+            try
             {
-                if (_unitChoices == null)
+                var (units, error) = await catalogService.GetUnitsAsync(lang);
+                if (error == null && units != null && units.Length > 0)
                 {
-                    _unitChoices = new List<string>
+                    _unitValues = new List<string>(units.Length);
+                    _unitLabels = new List<string>(units.Length);
+                    foreach (var u in units)
                     {
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-                    };
+                        _unitValues.Add(u.code);
+                        _unitLabels.Add(u.label);
+                    }
+                    Debug.Log($"[FMQuantityUnitPanel] Units loaded from API: {_unitValues.Count} (lang={lang})");
+                    _cachedLang = lang;
+                    return;
                 }
-                return _unitChoices;
             }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[FMQuantityUnitPanel] Failed to load units from API: {ex.Message}");
+            }
+
+            Debug.Log("[FMQuantityUnitPanel] Using default unit catalog");
         }
 
         public float Quantity
@@ -43,9 +57,12 @@ namespace eu.foodmission.platform.Components
 
         public string Unit
         {
-            get => _unitDropdown.selectedIndex >= 0 ? UnitValues[_unitDropdown.selectedIndex] : "PIECES";
+            get => _unitDropdown != null && _unitDropdown.selectedIndex >= 0
+                ? UnitValues[_unitDropdown.selectedIndex]
+                : "PIECES";
             set
             {
+                if (_unitDropdown == null) return;
                 int idx = UnitValues.IndexOf(value);
                 if (idx >= 0)
                     _unitDropdown.SetValueWithoutNotify(new[] { idx });
@@ -86,6 +103,7 @@ namespace eu.foodmission.platform.Components
 
         public void SetUnitWithoutNotify(string unit)
         {
+            if (_unitDropdown == null) return;
             int idx = UnitValues.IndexOf(unit);
             if (idx >= 0)
                 _unitDropdown.SetValueWithoutNotify(new[] { idx });

@@ -139,7 +139,8 @@ namespace eu.foodmission.platform
         /// </summary>
         public async Task LoadCountriesAsync()
         {
-            var (countries, _) = await _catalogService.GetCountriesAsync();
+            string lang = _storeService.GetAppState().lang ?? "en";
+            var (countries, _) = await _catalogService.GetCountriesAsync(lang);
 
             if (countries == null || countries.Count == 0)
             {
@@ -167,7 +168,8 @@ namespace eu.foodmission.platform
             }
 
             string countryCode = _countries[SelectedCountryIndex].code;
-            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode);
+            string lang = _storeService.GetAppState().lang ?? "en";
+            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode, lang);
 
             _regions = regions ?? new List<CatalogItem>();
             RegionOptions = _regions.Select(r => r.label).ToList();
