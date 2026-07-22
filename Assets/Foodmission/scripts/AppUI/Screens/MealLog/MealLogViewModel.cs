@@ -110,8 +110,8 @@ namespace eu.foodmission.platform
 
 
         /// <summary>
-        /// Called on re-entry from FoodInfoScreen. Checks if FoodInfoScreen dispatched
-        /// an "add to meal log" request and, if so, processes it.
+        /// Called from the FoodInfoOverlay action callback. Checks if FoodInfoOverlay
+        /// dispatched an "add to meal log" request and, if so, processes it.
         /// </summary>
         public void CheckPendingFoodInfoAddRequest()
         {

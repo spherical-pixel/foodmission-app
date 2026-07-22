@@ -18,6 +18,7 @@ namespace eu.foodmission.platform
         public string id;
         public string shoppingListId;
         public string foodProductId;
+        public string genericFoodId;
         public float quantity;
         public string unit;     // PIECES, G, KG, ML, L, CUPS
         public string notes;

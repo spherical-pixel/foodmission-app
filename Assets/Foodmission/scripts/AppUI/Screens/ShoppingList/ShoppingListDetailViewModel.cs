@@ -21,6 +21,7 @@ namespace eu.foodmission.platform
         private readonly IGenericFoodService _genericFoodService;
         private readonly ILocalStorageService _localStorage;
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
+        private readonly IAuthService _authService;
 
         private const string CacheKeyPrefix = "shoppinglist_items_";
         private const string FoodSearchCachePrefix = "food_search_";
@@ -68,7 +69,8 @@ namespace eu.foodmission.platform
             IFoodProductService foodProductService,
             IGenericFoodService genericFoodService,
             ILocalStorageService localStorage,
-            IOpenFoodFactsClientService openFoodFactsClientService)
+            IOpenFoodFactsClientService openFoodFactsClientService,
+            IAuthService authService)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
@@ -76,6 +78,7 @@ namespace eu.foodmission.platform
             _genericFoodService = genericFoodService;
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
+            _authService = authService;
         }
 
 
@@ -250,6 +253,22 @@ namespace eu.foodmission.platform
                 ListName = listName.Trim();
             }
 
+            var state = _storeService.GetAppState();
+            if (state.userLastShoppingListId != listId)
+            {
+                var updateRequest = new ProfileUpdateRequest
+                {
+                    preferences = new ProfileUpdatePreferences
+                    {
+                        shoppingResponsibility = state.userShoppingResponsibility,
+                        dietaryPreference = state.userDietaryPreference,
+                        onboardingSurvey = state.userOnboardingSurvey,
+                        lastShoppingListId = listId
+                    }
+                };
+                _ = _authService.UpdateProfileAsync(updateRequest);
+            }
+
             IsLoadingItems = true;
             ErrorMessage = "";
 
@@ -286,7 +305,7 @@ namespace eu.foodmission.platform
 
         /// <summary>
         /// Reloads the shopping list items using the already-stored list ID.
-        /// Used when returning from FoodInfoScreen (back navigation passes no args).
+        /// Used when the FoodInfoOverlay action callback requires a refresh.
         /// </summary>
         public Task ReloadAsync()
         {
@@ -335,6 +354,12 @@ namespace eu.foodmission.platform
                 {
                     var (fetched, _) = await _foodProductService.GetFoodByIdAsync(item.foodProductId);
                     foodName = fetched?.name;
+                }
+
+                if (string.IsNullOrEmpty(foodName) && !string.IsNullOrEmpty(item.genericFoodId))
+                {
+                    var (fetched, _) = await _genericFoodService.GetGenericFoodByIdAsync(item.genericFoodId);
+                    foodName = fetched?.foodName;
                 }
 
                 if (string.IsNullOrEmpty(foodName))

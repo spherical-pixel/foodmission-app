@@ -14,8 +14,9 @@ using eu.foodmission.platform.Components;
 namespace eu.foodmission.platform
 {
     /// <summary>
-    /// Shows FoodInfoScreen as a fullscreen overlay without affecting the navigation back-stack.
+    /// Shows food information as a fullscreen overlay without affecting the navigation back-stack.
     /// The underlying screen (Pantry, ShoppingList, MealLog) stays alive so its state is preserved.
+    /// Clones the FoodInfoScreen.uxml template and manages the ViewModel lifecycle manually.
     /// Call <see cref="Show"/> to open and <see cref="Dismiss"/> to close.
     /// </summary>
     public static class FoodInfoOverlay
@@ -25,7 +26,7 @@ namespace eu.foodmission.platform
         private static Unity.AppUI.UI.Modal _modal;
         private static Action _onActionCompleted;
 
-        // UI references (duplicated from FoodInfoScreen — same IDs)
+        // UI references (must match the element IDs in FoodInfoScreen.uxml)
         private static VisualElement _foodImageContainer;
         private static UnityEngine.UIElements.Image _foodImage;
         private static Text _foodEmoji;
@@ -37,6 +38,7 @@ namespace eu.foodmission.platform
         private static Text _ecoBadge;
         private static VisualElement _trafficLights;
         private static VisualElement _macroCards;
+        private static Text _macroHeader;
         private static VisualElement _ingredientsSection;
         private static Text _ingredientsBody;
         private static VisualElement _allergensSection;
@@ -157,6 +159,7 @@ namespace eu.foodmission.platform
             _ecoBadge = content.Q<Text>("eco-badge");
             _trafficLights = content.Q<VisualElement>("traffic-lights");
             _macroCards = content.Q<VisualElement>("macro-cards");
+            _macroHeader = content.Q<Text>("macro-header");
             _ingredientsSection = content.Q<VisualElement>("ingredients-section");
             _ingredientsBody = content.Q<Text>("ingredients-body");
             _allergensSection = content.Q<VisualElement>("allergens-section");
@@ -177,6 +180,11 @@ namespace eu.foodmission.platform
 
             // ── Add to Panel ──────────────────────────────────────────────
             container.Add(_overlay);
+
+            if (_macroHeader != null)
+            {
+                _macroHeader.text = FoodInfoViewModel.GetLocStringOrFallback("NUTR_VALUES_PER_100G", "Values per 100g / ml");
+            }
 
             // ── Initial UI state ──────────────────────────────────────────
             UpdateAllSections();
@@ -217,7 +225,7 @@ namespace eu.foodmission.platform
             _foodImageContainer = null;
             _foodImage = null; _foodEmoji = null; _foodName = null; _foodSubtitle = null;
             _badgesRow = null; _nutriscoreBadge = null; _novaBadge = null; _ecoBadge = null;
-            _trafficLights = null; _macroCards = null;
+            _trafficLights = null; _macroCards = null; _macroHeader = null;
             _ingredientsSection = null; _ingredientsBody = null;
             _allergensSection = null; _allergensBody = null;
             _nutritionDetailSection = null; _nutritionDetailTable = null;
@@ -302,7 +310,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        // ── Update helpers (mirrors FoodInfoScreen) ───────────────────────
+        // ── Update helpers (must stay in sync with FoodInfoScreen.uxml structure) ──
 
         private static void UpdateAllSections()
         {

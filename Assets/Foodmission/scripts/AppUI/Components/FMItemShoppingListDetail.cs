@@ -59,7 +59,6 @@ namespace eu.foodmission.platform.Components
 
             _text = new Unity.AppUI.UI.Text();
             _text.primary = true;
-            _text.style.width = Length.Percent(65);
             this.Add(_text);
 
             _openButton = new Unity.AppUI.UI.Button();

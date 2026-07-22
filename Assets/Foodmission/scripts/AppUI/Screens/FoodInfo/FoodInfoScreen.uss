@@ -218,6 +218,13 @@
 
 /* ── MACRO CARDS ─────────────────────────────────────────── */
 
+.fm-fi-macro-header {
+    font-size: var(--appui-font-sizes-body-sm);
+    /*opacity: 0.6;*/
+    margin-left: 6px;
+    margin-bottom: 6px;
+}
+
 .fm-fi-macro-cards {
     flex-direction: row;
     flex-wrap: wrap;

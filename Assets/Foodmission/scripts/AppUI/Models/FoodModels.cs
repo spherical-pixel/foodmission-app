@@ -113,14 +113,14 @@ namespace eu.foodmission.platform
         public string imageUrl;
         public string imageFrontUrl;
 
-        public string nutrimentsRaw;
+        public object nutrimentsRaw;
 
         public string nutritionGrade;
         public int? novaGroup;
         public string ecoscoreGrade;
         public float? carbonFootprint;
 
-        public string nutrientLevels;
+        public object nutrientLevels;
 
         public bool? isVegan;
         public bool? isVegetarian;

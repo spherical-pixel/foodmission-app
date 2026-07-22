@@ -31,12 +31,12 @@ namespace eu.foodmission.platform
         protected override bool IsFixedContent => false;
 
 
+        private bool _shouldRedirect;
+
         private FMSearchOrCreateField _searchOrCreateField;
         private VisualElement _listsContainer;
         private Unity.AppUI.UI.Text _emptyState;
         private UnityEngine.UIElements.TextField _searchField;
-        
-        
 
         public ShoppingListScreen()
         {
@@ -54,6 +54,23 @@ namespace eu.foodmission.platform
             _searchField = _searchOrCreateField.Q<UnityEngine.UIElements.TextField>();
         }
 
+        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            _shouldRedirect = false;
+            if (args != null)
+            {
+                foreach (var arg in args)
+                {
+                    if (arg.name == "fromMenu" && arg.value?.ToString() == "true")
+                    {
+                        _shouldRedirect = true;
+                        break;
+                    }
+                }
+            }
+            base.OnEnter(controller, destination, args);
+        }
+
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
@@ -66,11 +83,55 @@ namespace eu.foodmission.platform
             UpdateLoadingState();
             UpdateErrorState();
 
-            _ = _viewModel.LoadListsAsync().ContinueWith(t =>
+            if (_shouldRedirect)
             {
-                if (t.IsFaulted)
-                    Debug.LogError($"[{GetType().Name}] LoadListsAsync failed: {t.Exception}");
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                _shouldRedirect = false;
+                _ = AutoRedirectToLastOpenedListAsync();
+            }
+            else
+            {
+                _ = _viewModel.LoadListsAsync().ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                        Debug.LogError($"[{GetType().Name}] LoadListsAsync failed: {t.Exception}");
+                }, TaskContinuationOptions.OnlyOnFaulted);
+            }
+        }
+
+        private async Task AutoRedirectToLastOpenedListAsync()
+        {
+            FMLoadingOverlay.Show(contentContainer);
+            try
+            {
+                var (lastList, error) = await _viewModel.ResolveLastOpenedListAsync();
+                if (error != null)
+                {
+                    Debug.LogError($"[{GetType().Name}] ResolveLastOpenedListAsync failed: {error.message}");
+                    await _viewModel.LoadListsAsync();
+                    return;
+                }
+
+                if (lastList != null)
+                {
+                    _navController?.PopBackStack();
+                    _navController?.Navigate(
+                        Actions.shopping_list_to_detail,
+                        new[]
+                        {
+                            new Argument("listId", lastList.id),
+                            new Argument("listTitle", lastList.title)
+                        });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] AutoRedirectToLastOpenedListAsync failed: {ex.Message}");
+                await _viewModel.LoadListsAsync();
+            }
+            finally
+            {
+                FMLoadingOverlay.Hide(contentContainer);
+            }
         }
 
         protected override void OnViewModelUnbinding()

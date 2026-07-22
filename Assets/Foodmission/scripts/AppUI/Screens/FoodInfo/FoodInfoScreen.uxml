@@ -29,6 +29,7 @@
             <ui:VisualElement name="traffic-lights" class="fm-fi-traffic"/>
         </ui:VisualElement>
         <ui:VisualElement name="content" class="fm-fi-content">
+            <appui:Text name="macro-header" class="fm-fi-macro-header"/>
             <ui:VisualElement name="macro-cards" class="fm-fi-macro-cards"/>
             <appui:Accordion name="sections-accordion">
                 <appui:AccordionItem name="ingredients-section" label="Ingredients" title="Ingredients" expanded="true" class="fm-fi-section">

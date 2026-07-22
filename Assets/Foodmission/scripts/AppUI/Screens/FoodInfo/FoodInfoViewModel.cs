@@ -175,9 +175,9 @@ namespace eu.foodmission.platform
             Ingredients = detail.ingredientsText ?? "";
             Allergens = detail.allergens != null ? FormatTagsList(detail.allergens, "es") : "";
 
-            TrafficLights = BuildTrafficLights(detail.nutrientLevels);
-            MacroCards = BuildProductMacroCards(detail.nutrimentsRaw);
-            NutritionDetail = BuildProductNutritionDetail(detail.nutrimentsRaw);
+            TrafficLights = BuildTrafficLights(detail.nutrientLevels?.ToString());
+            MacroCards = BuildProductMacroCards(detail.nutrimentsRaw?.ToString());
+            NutritionDetail = BuildProductNutritionDetail(detail.nutrimentsRaw?.ToString());
             MetaRows = BuildProductMetaRows(detail);
 
             if (!string.IsNullOrEmpty(detail.barcode))
@@ -378,7 +378,9 @@ namespace eu.foodmission.platform
         private List<TrafficLight> BuildTrafficLights(string nutrientLevelsJson)
         {
             if (string.IsNullOrEmpty(nutrientLevelsJson))
+            {
                 return new List<TrafficLight>();
+            }
 
             try
             {
@@ -597,7 +599,7 @@ namespace eu.foodmission.platform
             return LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
         }
 
-        private static string GetLocStringOrFallback(string key, string fallback)
+        public static string GetLocStringOrFallback(string key, string fallback)
         {
             string result = LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
             if (string.IsNullOrEmpty(result) || result == key) return fallback;

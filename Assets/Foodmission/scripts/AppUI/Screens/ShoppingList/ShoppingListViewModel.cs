@@ -12,6 +12,7 @@ namespace eu.foodmission.platform
     {
         private readonly IShoppingListService _shoppingListService;
         private readonly ILocalStorageService _localStorage;
+        private readonly IAuthService _authService;
 
         private const string CacheKey = "shoppinglists_cache";
 
@@ -37,11 +38,77 @@ namespace eu.foodmission.platform
         public ShoppingListViewModel(
             IStoreService storeService,
             IShoppingListService shoppingListService,
-            ILocalStorageService localStorage)
+            ILocalStorageService localStorage,
+            IAuthService authService)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
             _localStorage = localStorage;
+            _authService = authService;
+        }
+
+        public async Task<(ShoppingList Result, ApiErrorResponse Error)> ResolveLastOpenedListAsync()
+        {
+            var state = _storeService.GetAppState();
+            string lastListId = state.userLastShoppingListId;
+
+            var (lists, error) = await _shoppingListService.GetListsAsync();
+            if (error != null)
+            {
+                return (null, error);
+            }
+
+            ShoppingList targetList = null;
+
+            if (!string.IsNullOrEmpty(lastListId) && lists != null)
+            {
+                targetList = System.Array.Find(lists, l => l.id == lastListId);
+            }
+
+            if (targetList == null && lists != null && lists.Length > 0)
+            {
+                targetList = lists[0];
+            }
+
+            if (targetList != null)
+            {
+                if (targetList.id != lastListId)
+                {
+                    var request = new ProfileUpdateRequest
+                    {
+                        preferences = new ProfileUpdatePreferences
+                        {
+                            shoppingResponsibility = state.userShoppingResponsibility,
+                            dietaryPreference = state.userDietaryPreference,
+                            onboardingSurvey = state.userOnboardingSurvey,
+                            lastShoppingListId = targetList.id
+                        }
+                    };
+                    _ = _authService.UpdateProfileAsync(request);
+                }
+                return (targetList, null);
+            }
+
+            string defaultName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST") ?? "Default";
+            var (created, createError) = await _shoppingListService.CreateListAsync(defaultName);
+            if (createError != null)
+            {
+                return (null, createError);
+            }
+
+            var createRequest = new ProfileUpdateRequest
+            {
+                preferences = new ProfileUpdatePreferences
+                {
+                    shoppingResponsibility = state.userShoppingResponsibility,
+                    dietaryPreference = state.userDietaryPreference,
+                    onboardingSurvey = state.userOnboardingSurvey,
+                    lastShoppingListId = created.id
+                }
+            };
+            _ = _authService.UpdateProfileAsync(createRequest);
+
+            return (created, null);
         }
 
         public async Task LoadListsAsync()

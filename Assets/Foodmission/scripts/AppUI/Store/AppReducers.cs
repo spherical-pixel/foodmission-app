@@ -113,6 +113,7 @@ namespace eu.foodmission.platform
             public readonly string[] dietaryPreference;
             public readonly string shoppingResponsibility;
             public readonly OnboardingSurveyData onboardingSurvey;
+            public readonly string lastShoppingListId;
 
             public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
@@ -121,7 +122,8 @@ namespace eu.foodmission.platform
                 UserSettingsDto settings = null,
                 string[] dietaryPreference = null,
                 string shoppingResponsibility = "",
-                OnboardingSurveyData onboardingSurvey = null)
+                OnboardingSurveyData onboardingSurvey = null,
+                string lastShoppingListId = "")
             {
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
@@ -136,6 +138,7 @@ namespace eu.foodmission.platform
                 this.dietaryPreference = dietaryPreference;
                 this.shoppingResponsibility = shoppingResponsibility;
                 this.onboardingSurvey = onboardingSurvey;
+                this.lastShoppingListId = lastShoppingListId;
             }
         }
     }
@@ -361,6 +364,7 @@ namespace eu.foodmission.platform
                 ? (string[])action.payload.dietaryPreference.Clone()
                 : new string[0];
             newState.userShoppingResponsibility = action.payload.shoppingResponsibility ?? "";
+            newState.userLastShoppingListId = action.payload.lastShoppingListId ?? "";
 
             if (action.payload.onboardingSurvey != null)
             {

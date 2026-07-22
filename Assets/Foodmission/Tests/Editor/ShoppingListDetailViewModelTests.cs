@@ -15,6 +15,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IGenericFoodService> _mockGenericFoodService;
         private Mock<ILocalStorageService> _mockLocalStorage;
         private Mock<IOpenFoodFactsClientService> _mockOpenFoodFactsClient;
+        private Mock<IAuthService> _mockAuthService;
         private TestStoreService _storeService;
         private ShoppingListDetailViewModel _vm;
 
@@ -26,6 +27,7 @@ namespace eu.foodmission.platform.Tests
             _mockGenericFoodService = new Mock<IGenericFoodService>();
             _mockLocalStorage = new Mock<ILocalStorageService>();
             _mockOpenFoodFactsClient = new Mock<IOpenFoodFactsClientService>();
+            _mockAuthService = new Mock<IAuthService>();
             _storeService = new TestStoreService();
             _vm = new ShoppingListDetailViewModel(
                 _storeService,
@@ -33,7 +35,8 @@ namespace eu.foodmission.platform.Tests
                 _mockFoodProductService.Object,
                 _mockGenericFoodService.Object,
                 _mockLocalStorage.Object,
-                _mockOpenFoodFactsClient.Object);
+                _mockOpenFoodFactsClient.Object,
+                _mockAuthService.Object);
         }
 
         [TearDown]
@@ -301,6 +304,35 @@ namespace eu.foodmission.platform.Tests
             await _vm.ClearCheckedItemsAsync();
 
             Assert.IsNotNull(_vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task LoadAsync_WithGenericFoodItems_EnrichesNamesCorrectly()
+        {
+            // Arrange
+            ShoppingListItem[] items = new[]
+            {
+                new ShoppingListItem { id = "item1", genericFoodId = "gf1", genericFood = null }
+            };
+            _mockShoppingListService
+                .Setup(x => x.GetItemsAsync("list1"))
+                .Returns(Task.FromResult<(ShoppingListItem[] Result, ApiErrorResponse Error)>((items, null)));
+
+            _mockGenericFoodService
+                .Setup(x => x.GetGenericFoodByIdAsync("gf1"))
+                .Returns(Task.FromResult<(GenericFood Result, ApiErrorResponse Error)>((new GenericFood { id = "gf1", foodName = "Apple sauce" }, null)));
+
+            _mockLocalStorage
+                .Setup(x => x.GetValue<ShoppingListItemPagedResponse>(It.IsAny<string>(), It.IsAny<ShoppingListItemPagedResponse>()))
+                .Returns((ShoppingListItemPagedResponse)null);
+
+            // Act
+            await _vm.LoadAsync("list1");
+
+            // Assert
+            Assert.AreEqual(1, _vm.Items.Count);
+            Assert.AreEqual("Apple sauce", _vm.Items[0].FoodName);
+            _mockGenericFoodService.Verify(x => x.GetGenericFoodByIdAsync("gf1"), Times.Once);
         }
     }
 }

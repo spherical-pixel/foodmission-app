@@ -352,7 +352,7 @@ namespace eu.foodmission.platform
             AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
             {
                 CloseMenuDrawer();
-                _cachedNavController?.Navigate(Actions.go_to_shopping_list);
+                _cachedNavController?.Navigate(Actions.go_to_shopping_list, new[] { new Argument("fromMenu", "true") });
             });
             AddMenuItem(container, "🧺 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY"), () =>
             {

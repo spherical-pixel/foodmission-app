@@ -594,6 +594,17 @@ namespace eu.foodmission.platform
                 card.Checkbox.style.display = DisplayStyle.None;
                 card.EditButton.clicked += () => ShowEditItemDialog(captured);
                 card.RemoveButton.clicked += () => _viewModel.RemoveItem(captured);
+                card.OpenButton.clicked += () =>
+                {
+                    if (captured.isProduct && !string.IsNullOrEmpty(captured.foodProductId))
+                    {
+                        FoodInfoOverlay.Show(this, FoodInfoType.Product, captured.foodProductId, "none");
+                    }
+                    else if (captured.isGenericFood && !string.IsNullOrEmpty(captured.genericFoodId))
+                    {
+                        FoodInfoOverlay.Show(this, FoodInfoType.Generic, captured.genericFoodId, "none");
+                    }
+                };
                 _selectedChips.Add(card);
             }
         }

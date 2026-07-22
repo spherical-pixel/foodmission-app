@@ -35,6 +35,7 @@ namespace eu.foodmission.platform
 
 
         private VisualElement _itemsContainer;
+        private Unity.AppUI.UI.Button _changeListButton;
         
         private Text _emptyState;
         private Heading _listTitle;
@@ -55,6 +56,7 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _itemsContainer = contentContainer.Q<VisualElement>("items-container");
+            _changeListButton = contentContainer.Q<Unity.AppUI.UI.Button>("change-list-button");
             _emptyState = contentContainer.Q<Text>("empty-state");
             _listTitle = contentContainer.Q<Heading>("list-title");
             _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
@@ -99,6 +101,13 @@ namespace eu.foodmission.platform
             base.OnViewModelBound();
 
             _listTitle.RegisterCallback<ClickEvent>(_ => ShowRenameDialog());
+
+            if (_changeListButton != null)
+            {
+                string label = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CHANGE_LIST") ?? (LocalizationSettings.SelectedLocale.Identifier.Code == "es" ? "Cambiar lista" : "Change list");
+                _changeListButton.title = label;
+                _changeListButton.clicked += OnChangeListClicked;
+            }
 
             if (_searchCategoryField != null)
             {
@@ -151,7 +160,11 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            
+            if (_changeListButton != null)
+            {
+                _changeListButton.clicked -= OnChangeListClicked;
+                _changeListButton = null;
+            }
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
         }
@@ -271,6 +284,17 @@ namespace eu.foodmission.platform
                 item.Checkbox.RegisterValueChangedCallback(evt =>_ = SafeToggleItemAsync(captured.Item.id));
                 item.EditButton.clicked += () => ShowEditItemDialog(captured);
                 item.RemoveButton.clicked += () => _ = SafeDeleteItemAsync(captured.Item.id);
+                item.OpenButton.clicked += () =>
+                {
+                    if (!string.IsNullOrEmpty(captured.Item.foodProductId))
+                    {
+                        FoodInfoOverlay.Show(this, FoodInfoType.Product, captured.Item.foodProductId, "none");
+                    }
+                    else if (!string.IsNullOrEmpty(captured.Item.genericFoodId))
+                    {
+                        FoodInfoOverlay.Show(this, FoodInfoType.Generic, captured.Item.genericFoodId, "none");
+                    }
+                };
                 _itemsContainer.Add(item);
             }
         }
@@ -444,6 +468,11 @@ namespace eu.foodmission.platform
             {
                 Debug.LogError($"[{GetType().Name}] UpdateItemAsync failed: {ex.Message}");
             }
+        }
+
+        private void OnChangeListClicked()
+        {
+            _navController?.Navigate(Actions.go_to_shopping_list);
         }
     }
 }

@@ -50,9 +50,16 @@ namespace eu.foodmission.platform.Components
             _iconText.text = ResolveEmoji(label, unit);
 
             if (value.HasValue && value.Value > 0)
-                _valueText.text = $"{value.Value:F0} {unit}";
+            {
+                if (unit == "kcal" || unit == "kJ")
+                    _valueText.text = $"{value.Value:F0} {unit}";
+                else
+                    _valueText.text = $"{value.Value.ToString("0.##")} {unit}";
+            }
             else
+            {
                 _valueText.text = "\u2014"; // em dash
+            }
         }
 
         private static string ResolveEmoji(string label, string unit)

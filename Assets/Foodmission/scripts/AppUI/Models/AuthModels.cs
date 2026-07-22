@@ -218,5 +218,6 @@ namespace eu.foodmission.platform
         public string[] dietaryPreference;
         public string shoppingResponsibility;
         public OnboardingSurveyData onboardingSurvey;
+        public string lastShoppingListId;
     }
 }

@@ -418,7 +418,8 @@ namespace eu.foodmission.platform
                 settings: profile.settings,
                 dietaryPreference: profile.preferences?.dietaryPreference,
                 shoppingResponsibility: profile.preferences?.shoppingResponsibility ?? "",
-                onboardingSurvey: profile.preferences?.onboardingSurvey
+                onboardingSurvey: profile.preferences?.onboardingSurvey,
+                lastShoppingListId: profile.preferences?.lastShoppingListId ?? ""
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
         }

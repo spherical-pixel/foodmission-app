@@ -79,6 +79,9 @@ namespace eu.foodmission.platform
 
         [JsonProperty("onboardingSurvey", NullValueHandling = NullValueHandling.Ignore)]
         public OnboardingSurveyData onboardingSurvey;
+
+        [JsonProperty("lastShoppingListId", NullValueHandling = NullValueHandling.Ignore)]
+        public string lastShoppingListId;
     }
 
     /// <summary>

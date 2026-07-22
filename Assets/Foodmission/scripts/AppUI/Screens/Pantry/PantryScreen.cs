@@ -316,6 +316,18 @@ namespace eu.foodmission.platform
 
                 var nameLabel = new Text { text = captured.DisplayName };
                 nameLabel.AddToClassList("fm-p-item-name");
+                nameLabel.RegisterCallback<ClickEvent>(evt =>
+                {
+                    evt.StopPropagation();
+                    if (!string.IsNullOrEmpty(captured.Item.foodProductId))
+                    {
+                        FoodInfoOverlay.Show(this, FoodInfoType.Product, captured.Item.foodProductId, "none");
+                    }
+                    else if (!string.IsNullOrEmpty(captured.Item.genericFoodId))
+                    {
+                        FoodInfoOverlay.Show(this, FoodInfoType.Generic, captured.Item.genericFoodId, "none");
+                    }
+                });
 
                 string detail = $"{captured.Item.quantity:0.##} {captured.Item.unit}";
                 if (!string.IsNullOrEmpty(captured.Item.location))

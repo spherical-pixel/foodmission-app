@@ -2,11 +2,14 @@
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.ShoppingListViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.ShoppingListDetailViewModel, Foodmission" class="fm-root">
-        <appui:Heading name="list-title" text="Nombre de la lista" size="L">
-            <Bindings>
-                <ui:DataBinding property="text" data-source-path="ListName" binding-mode="ToTarget"/>
-            </Bindings>
-        </appui:Heading>
+        <ui:VisualElement style="flex-direction: row; align-items: center; justify-content: space-between; margin-top: 20px; padding-left: 40px; padding-right: 40px;">
+            <appui:Heading name="list-title" text="Nombre de la lista" size="L" style="margin-top: 0; margin-bottom: 0;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="ListName" binding-mode="ToTarget"/>
+                </Bindings>
+            </appui:Heading>
+            <appui:Button name="change-list-button" title="Cambiar lista" size="S" variant="Default" quiet="true"/>
+        </ui:VisualElement>
         <appui:Text text="What do you want to add to the list?" style="margin-bottom: 8px; margin-top: 20px; padding-left: 40px; padding-right: 40px;"/>
         <eu:FMSearchOrCategoryField name="search-category-field"/>
         <ui:VisualElement name="main-content" style="flex-grow: 1;">

@@ -938,9 +938,14 @@
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
-    padding-right: 100px;
+    padding-right: 120px;
     color: var(--appui-foregrounds-50);
     flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .fm-icon-button-item-list,
