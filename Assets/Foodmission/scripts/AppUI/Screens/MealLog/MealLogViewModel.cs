@@ -32,6 +32,7 @@ namespace eu.foodmission.platform
         private readonly ICatalogService _catalogService;
         private readonly ILocalStorageService _localStorage;
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
+        private readonly IPantryService _pantryService;
 
         [ObservableProperty] private List<MealLog> m_LastTenLogs = new();
 
@@ -90,7 +91,8 @@ namespace eu.foodmission.platform
             IMealItemService mealItemService,
             ICatalogService catalogService,
             ILocalStorageService localStorage,
-            IOpenFoodFactsClientService openFoodFactsClientService)
+            IOpenFoodFactsClientService openFoodFactsClientService,
+            IPantryService pantryService = null)
             : base(storeService)
         {
             _mealLogService = mealLogService;
@@ -102,6 +104,7 @@ namespace eu.foodmission.platform
             _catalogService = catalogService;
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
+            _pantryService = pantryService;
         }
 
 
@@ -656,6 +659,12 @@ namespace eu.foodmission.platform
                     return false;
                 }
 
+                if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
+                {
+                    var snapshotToDeduct = SelectedItems.ToList();
+                    await DeductPantryItemsAsync(snapshotToDeduct);
+                }
+
                 ErrorDetail = null;
                 SelectedItems = new List<MealLogItem>();
                 _originalItemsSnapshot = new List<MealLogItem>();
@@ -769,6 +778,12 @@ namespace eu.foodmission.platform
                     return false;
                 }
 
+                if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
+                {
+                    var snapshotToDeduct = SelectedItems.ToList();
+                    await DeductPantryItemsAsync(snapshotToDeduct);
+                }
+
                 _pendingPresetName = null;
                 ErrorDetail = null;
                 SelectedItems = new List<MealLogItem>();
@@ -784,6 +799,78 @@ namespace eu.foodmission.platform
                 ErrorMessage = "Unexpected error saving meal log";
                 IsSaving = false;
                 return false;
+            }
+        }
+
+        private async Task DeductPantryItemsAsync(IReadOnlyList<MealLogItem> loggedItems)
+        {
+            if (loggedItems == null || loggedItems.Count == 0 || _pantryService == null)
+                return;
+
+            try
+            {
+                var (pantryItems, error) = await _pantryService.GetItemsAsync();
+                if (error != null || pantryItems == null || pantryItems.Length == 0)
+                {
+                    if (error != null)
+                        Debug.LogWarning($"[{GetType().Name}] Failed to fetch pantry items for deduction: {error.message}");
+                    return;
+                }
+
+                foreach (var item in loggedItems)
+                {
+                    var matches = pantryItems.Where(p =>
+                        (item.isProduct && !string.IsNullOrEmpty(item.foodProductId) && p.foodProductId == item.foodProductId) ||
+                        (item.isGenericFood && !string.IsNullOrEmpty(item.genericFoodId) && p.genericFoodId == item.genericFoodId)
+                    ).OrderBy(p => p.ExpiryDateTime.HasValue ? 0 : 1)
+                     .ThenBy(p => p.ExpiryDateTime)
+                     .ToList();
+
+                    if (matches.Count == 0) continue;
+
+                    bool sameUnit = item.quantity.HasValue &&
+                                     item.quantity.Value > 0 &&
+                                     matches.Any(m => string.Equals(m.unit, item.unit, StringComparison.OrdinalIgnoreCase));
+
+                    if (sameUnit)
+                    {
+                        float needed = item.quantity.Value;
+                        foreach (var match in matches)
+                        {
+                            if (needed <= 0) break;
+
+                            if (!string.Equals(match.unit, item.unit, StringComparison.OrdinalIgnoreCase))
+                                continue;
+
+                            if (match.quantity > needed)
+                            {
+                                float newQty = match.quantity - needed;
+                                needed = 0;
+                                await _pantryService.UpdateItemAsync(
+                                    match.id,
+                                    newQty,
+                                    match.unit,
+                                    match.notes,
+                                    match.location,
+                                    match.expiryDate
+                                );
+                            }
+                            else
+                            {
+                                needed -= match.quantity;
+                                await _pantryService.DeleteItemAsync(match.id);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await _pantryService.DeleteItemAsync(matches[0].id);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Exception during DeductPantryItemsAsync: {ex.Message}");
             }
         }
 

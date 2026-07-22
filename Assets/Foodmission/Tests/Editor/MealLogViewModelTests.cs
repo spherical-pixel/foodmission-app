@@ -19,6 +19,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<ICatalogService> _mockCatalogService;
         private Mock<ILocalStorageService> _mockLocalStorage;
         private Mock<IOpenFoodFactsClientService> _mockOpenFoodFactsClient;
+        private Mock<IPantryService> _mockPantryService;
         private TestStoreService _storeService;
         private MealLogViewModel _vm;
         private System.Func<bool> _originalOverride;
@@ -37,6 +38,7 @@ namespace eu.foodmission.platform.Tests
             _mockCatalogService = new Mock<ICatalogService>();
             _mockLocalStorage = new Mock<ILocalStorageService>();
             _mockOpenFoodFactsClient = new Mock<IOpenFoodFactsClientService>();
+            _mockPantryService = new Mock<IPantryService>();
             _storeService = new TestStoreService();
             _vm = new MealLogViewModel(
                 _storeService,
@@ -48,7 +50,8 @@ namespace eu.foodmission.platform.Tests
                 _mockMealItemService.Object,
                 _mockCatalogService.Object,
                 _mockLocalStorage.Object,
-                _mockOpenFoodFactsClient.Object);
+                _mockOpenFoodFactsClient.Object,
+                _mockPantryService.Object);
         }
 
         [TearDown]
@@ -770,6 +773,93 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(result);
             _mockMealItemService.Verify(x => x.UpdateAsync("existing-meal", "item-1", It.Is<CreateMealItemRequest>(r => r.quantity == 3)), Times.Once);
             _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Once);
+        }
+
+        [Test]
+        public async Task SaveAsync_MealFromPantryFalse_DoesNotTouchPantry()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(mealFromPantry: false, eatenOut: false);
+            _vm.SelectedItems.Add(new MealLogItem { isProduct = true, foodProductId = "fp-1", quantity = 2f, unit = "PIECES" });
+
+            _mockMealService.Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
+                .ReturnsAsync((new Meal { id = "meal-1" }, null));
+            _mockMealItemService.Setup(x => x.CreateAsync(It.IsAny<string>(), It.IsAny<CreateMealItemRequest>()))
+                .ReturnsAsync((new MealItem { id = "mi-1" }, null));
+            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "log-1" }, null));
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsTrue(result);
+            _mockPantryService.Verify(x => x.GetItemsAsync(), Times.Never);
+        }
+
+        [Test]
+        public async Task SaveAsync_MealFromPantryTrue_DeductsQuantityWhenUnitsMatch()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(mealFromPantry: true, eatenOut: false);
+            _vm.SelectedItems.Add(new MealLogItem { isProduct = true, foodProductId = "fp-1", quantity = 2f, unit = "PIECES" });
+
+            var pantryItem = new PantryItem
+            {
+                id = "pantry-1",
+                foodProductId = "fp-1",
+                quantity = 5f,
+                unit = "PIECES",
+                expiryDate = "2026-08-01"
+            };
+
+            _mockPantryService.Setup(x => x.GetItemsAsync())
+                .ReturnsAsync((new[] { pantryItem }, null));
+            _mockPantryService.Setup(x => x.UpdateItemAsync("pantry-1", 3f, "PIECES", null, null, "2026-08-01", null, null))
+                .ReturnsAsync((pantryItem, null));
+
+            _mockMealService.Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
+                .ReturnsAsync((new Meal { id = "meal-1" }, null));
+            _mockMealItemService.Setup(x => x.CreateAsync(It.IsAny<string>(), It.IsAny<CreateMealItemRequest>()))
+                .ReturnsAsync((new MealItem { id = "mi-1" }, null));
+            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "log-1" }, null));
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsTrue(result);
+            _mockPantryService.Verify(x => x.GetItemsAsync(), Times.Once);
+            _mockPantryService.Verify(x => x.UpdateItemAsync("pantry-1", 3f, "PIECES", null, null, "2026-08-01", null, null), Times.Once);
+        }
+
+        [Test]
+        public async Task SaveAsync_MealFromPantryTrue_DeletesEarliestExpiringOnUnitMismatch()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(mealFromPantry: true, eatenOut: false);
+            _vm.SelectedItems.Add(new MealLogItem { isGenericFood = true, genericFoodId = "gf-1", quantity = 200f, unit = "G" });
+
+            var item1 = new PantryItem { id = "pantry-1", genericFoodId = "gf-1", quantity = 1f, unit = "PIECES", expiryDate = "2026-08-10" };
+            var item2 = new PantryItem { id = "pantry-2", genericFoodId = "gf-1", quantity = 1f, unit = "PIECES", expiryDate = "2026-07-25" };
+
+            _mockPantryService.Setup(x => x.GetItemsAsync())
+                .ReturnsAsync((new[] { item1, item2 }, null));
+            _mockPantryService.Setup(x => x.DeleteItemAsync("pantry-2"))
+                .ReturnsAsync((true, null));
+
+            _mockMealService.Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
+                .ReturnsAsync((new Meal { id = "meal-1" }, null));
+            _mockMealItemService.Setup(x => x.CreateAsync(It.IsAny<string>(), It.IsAny<CreateMealItemRequest>()))
+                .ReturnsAsync((new MealItem { id = "mi-1" }, null));
+            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "log-1" }, null));
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsTrue(result);
+            _mockPantryService.Verify(x => x.DeleteItemAsync("pantry-2"), Times.Once);
+            _mockPantryService.Verify(x => x.DeleteItemAsync("pantry-1"), Times.Never);
         }
     }
 }
