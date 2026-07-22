@@ -1,0 +1,79 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
+         xsi="http://www.w3.org/2001/XMLSchema-instance"
+         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="FoodInfoScreen.uss"/>
+    <ui:VisualElement name="root" class="fm-fi-root">
+
+        <!-- ── HERO ──────────────────────────────────────── -->
+        <ui:VisualElement name="hero" class="fm-fi-hero">
+            <ui:VisualElement name="hero-bg" class="fm-fi-hero-bg"/>
+            <ui:VisualElement name="hero-content" class="fm-fi-hero-content">
+                <ui:Image name="food-image" class="fm-fi-image"/>
+                <appui:Text name="food-emoji" class="fm-fi-emoji"/>
+                <appui:Heading name="food-name" size="L" class="fm-fi-food-name"/>
+                <appui:Text name="food-subtitle" class="fm-fi-food-subtitle"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- ── SCORE BADGES ──────────────────────────────── -->
+        <ui:VisualElement name="badges-row" class="fm-fi-scores-strip">
+            <!-- Nutri-Score pill -->
+            <ui:VisualElement name="nutriscore-pill" class="fm-fi-score-pill">
+                <appui:Text name="nutriscore-badge" class="fm-fi-nutriscore fm-fi-score-pill__badge"/>
+                <appui:Text name="nutriscore-label" class="fm-fi-score-pill__label" text="NUTRI-SCORE"/>
+            </ui:VisualElement>
+            <!-- NOVA pill -->
+            <ui:VisualElement name="nova-pill" class="fm-fi-score-pill">
+                <appui:Text name="nova-badge" class="fm-fi-nova fm-fi-score-pill__badge"/>
+                <appui:Text name="nova-label" class="fm-fi-score-pill__label" text="NOVA"/>
+            </ui:VisualElement>
+            <!-- Eco-Score pill -->
+            <ui:VisualElement name="eco-pill" class="fm-fi-score-pill">
+                <appui:Text name="eco-badge" class="fm-fi-eco fm-fi-score-pill__badge"/>
+                <appui:Text name="eco-label" class="fm-fi-score-pill__label" text="ECO-SCORE"/>
+            </ui:VisualElement>
+            <!-- Traffic lights inline in badges row -->
+            <ui:VisualElement name="traffic-lights" class="fm-fi-traffic"/>
+        </ui:VisualElement>
+
+        <!-- ── SCROLLABLE CONTENT ─────────────────────────── -->
+        <ui:VisualElement name="content" class="fm-fi-content">
+
+            <!-- Macro nutrition cards -->
+            <ui:VisualElement name="macro-cards" class="fm-fi-macro-cards"/>
+
+            <!-- Ingredients -->
+            <ui:VisualElement name="ingredients-section" class="fm-fi-section">
+                <appui:Heading name="ingredients-header" size="S" class="fm-fi-section-header"/>
+                <appui:Text name="ingredients-body" class="fm-fi-section-body"/>
+            </ui:VisualElement>
+
+            <!-- Allergens -->
+            <ui:VisualElement name="allergens-section" class="fm-fi-section">
+                <appui:Heading name="allergens-header" size="S" class="fm-fi-section-header"/>
+                <appui:Text name="allergens-body" class="fm-fi-section-body"/>
+            </ui:VisualElement>
+
+            <!-- Full nutrition table -->
+            <ui:VisualElement name="nutrition-detail-section" class="fm-fi-section">
+                <appui:Heading name="nutrition-detail-header" size="S" class="fm-fi-section-header"/>
+                <ui:VisualElement name="nutrition-detail-table" class="fm-fi-nutrition-table"/>
+            </ui:VisualElement>
+
+            <!-- Product meta -->
+            <ui:VisualElement name="meta-section" class="fm-fi-section">
+                <appui:Heading name="meta-header" size="S" class="fm-fi-section-header"/>
+                <ui:VisualElement name="meta-body" class="fm-fi-meta-body"/>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <!-- ── ACTION BUTTON ─────────────────────────────── -->
+        <ui:VisualElement name="action-container" class="fm-fi-action-container">
+            <appui:Button name="action-button" variant="Accent" class="fm-fi-action"/>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

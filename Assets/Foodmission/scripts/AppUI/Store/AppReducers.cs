@@ -94,6 +94,10 @@ namespace eu.foodmission.platform
         // Profile sync
         public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
 
+        // Food Info
+        public static readonly ActionCreator<AddToContextRequestedAction> foodInfoAddRequested = "app/foodInfo/addRequested";
+        public static readonly ActionCreator foodInfoAddRequestConsumed = "app/foodInfo/addRequestConsumed";
+
         public readonly struct ProfilePayload
         {
             public readonly int yearOfBirth;
@@ -384,6 +388,20 @@ namespace eu.foodmission.platform
             return newState;
         }
 
+        public static AppState FoodInfoAddRequestedReducer(AppState state, IAction<AddToContextRequestedAction> action)
+        {
+            var newState = state.Copy();
+            newState.foodInfoAddRequest = action.payload;
+            return newState;
+        }
+
+        public static AppState FoodInfoAddRequestConsumedReducer(AppState state, IAction action)
+        {
+            var newState = state.Copy();
+            newState.foodInfoAddRequest = null;
+            return newState;
+        }
+        
         public static AppState SetOnboardingSurveyReducer(AppState state, IAction<OnboardingSurveyData> action)
         {
             var newState = state.Copy();

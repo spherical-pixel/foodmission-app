@@ -1556,6 +1556,122 @@ MonoBehaviour:
     m_Localized: "Bitte f\xFCgen Sie mindestens ein Lebensmittel hinzu"
     m_Metadata:
       m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: "Element l\xF6schen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: Barcode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Marke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Marken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: "CO2-Fu\xDFabdruck"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: "Verkaufsl\xE4nder"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Labels & Zertifizierungen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: Herstellungsorte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: Herkunft der Zutaten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: Menge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: "Portionsgr\xF6\xDFe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: "Keine Daten verf\xFCgbar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: Kohlenhydrate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: Energie (kcal)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energie (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: Fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: Ballaststoffe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: "Makron\xE4hrstoffe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: "Eiwei\xDF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: Salz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: "Ges\xE4ttigte Fetts\xE4uren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: Natrium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: Zucker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: Fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: Salz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: "Ges\xE4ttigte Fetts\xE4uren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: Zucker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: Fertig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Weiter
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

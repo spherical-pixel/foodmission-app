@@ -9,6 +9,8 @@ namespace eu.foodmission.platform
 
         Task<(GenericFood Result, ApiErrorResponse Error)> GetGenericFoodByIdAsync(string id);
 
+        Task<(GenericFoodDetail Result, ApiErrorResponse Error)> GetGenericFoodDetailAsync(string id);
+
         Task<(string[] Result, ApiErrorResponse Error)> GetFoodGroupsAsync();
     }
 }

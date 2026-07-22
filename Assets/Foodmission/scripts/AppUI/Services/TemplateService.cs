@@ -39,6 +39,7 @@ namespace eu.foodmission.platform
             TemplateAddresses.OnboardingGroups,
             TemplateAddresses.AvatarEditorPanelItem,
             TemplateAddresses.ForceUpdate,
+            TemplateAddresses.FoodInfo,
             TemplateAddresses.StepFlow
         };
 

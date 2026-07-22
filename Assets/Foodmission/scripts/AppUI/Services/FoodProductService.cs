@@ -228,5 +228,44 @@ namespace eu.foodmission.platform
 
             return (food, null);
         }
+
+        public async Task<(FoodProductDetail Result, ApiErrorResponse Error)> GetFoodProductDetailAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return (null, null);
+
+            if (!Guid.TryParse(id, out _))
+            {
+                Debug.LogWarning($"[{GetType().Name}] GetFoodProductDetailAsync — invalid UUID: {id}");
+                return (null, null);
+            }
+
+            AppState state = _storeService.GetAppState();
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/{Uri.EscapeDataString(id)}?includeOff=true";
+
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+            request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetFoodProductDetail {id}"));
+
+            try
+            {
+                FoodProductDetail detail = JsonConvert.DeserializeObject<FoodProductDetail>(request.downloadHandler.text);
+                return (detail, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Parse error: {ex.Message}");
+                return (null, null);
+            }
+        }
     }
 }

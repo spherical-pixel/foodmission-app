@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation.Generated;
 
 using UnityEngine;
 using UnityEngine.Localization;
@@ -65,6 +68,8 @@ namespace eu.foodmission.platform
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
         }
+
+
 
         public void ApplyFilter()
         {
@@ -291,17 +296,114 @@ namespace eu.foodmission.platform
             return (DateTime.UtcNow - cachedAt) < CacheTtl;
         }
 
-        public async Task ImportAndAddFoodItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
+        public void CheckPendingFoodInfoAddRequest()
         {
+            var state = _storeService.GetAppState();
+            if (state.foodInfoAddRequest == null)
+                return;
+
+            var request = state.foodInfoAddRequest;
+            _store.Dispatch(AppActions.foodInfoAddRequestConsumed.Invoke());
+
+            if (request.EntryContext != "pantry")
+                return;
+
+            if (request.FoodType == FoodInfoType.Product)
+                _ = SafeAddProductFromFoodInfoAsync(request);
+            else
+                _ = SafeAddGenericFoodFromFoodInfoAsync(request);
+        }
+
+        private async Task SafeAddProductFromFoodInfoAsync(AddToContextRequestedAction request)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(request.FoodData))
+                {
+                    var product = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
+                    if (product != null)
+                    {
+                        await ImportAndAddFoodItemAsync(product, null, null);
+                        return;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(request.FoodId)) return;
+                var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
+                if (foodError != null || food == null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Could not load food product for add: {foodError?.message}");
+                    return;
+                }
+                await AddFoodProductToPantryAsync(food);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SafeAddProductFromFoodInfoAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeAddGenericFoodFromFoodInfoAsync(AddToContextRequestedAction request)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(request.FoodData))
+                {
+                    var gf = JsonConvert.DeserializeObject<GenericFood>(request.FoodData);
+                    if (gf != null)
+                    {
+                        await AddGenericFoodItemAsync(gf, null, null);
+                        return;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(request.FoodId)) return;
+                var (genericFood, gfError) = await _genericFoodService.GetGenericFoodByIdAsync(request.FoodId);
+                if (gfError != null || genericFood == null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Could not load generic food for add: {gfError?.message}");
+                    return;
+                }
+                await AddGenericFoodItemAsync(genericFood, 1f, "PIECES");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SafeAddGenericFoodFromFoodInfoAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task AddFoodProductToPantryAsync(FoodProduct food)
+        {
+            var (added, addError) = await _pantryService.AddItemAsync(food.id, null, 1f, "PIECES");
+
+            if (addError != null)
+            {
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_ITEM_MISSING");
+                ErrorDetail = addError;
+                return;
+            }
+
+            ErrorDetail = null;
+            var newItem = new PantryItemView { Item = added, DisplayName = food.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN") };
+            _allItems.Add(newItem);
+            FilterText = "";
+            ApplyFilter();
+            SaveCacheFromAllItems();
+        }
+
+        public async Task ImportAndAddFoodItemAsync(OpenFoodFactsProduct product, float? quantity = null, string unit = null)
+        {
+            if (product == null) return;
+
             var (foodItem, importError) = await ImportByBarcodeAsync(product.barcode);
             if (importError != null)
             {
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FAILED_IMPORT_FOOD", new object[] { product.name });
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
                 ErrorDetail = importError;
                 return;
             }
 
-            var (added, addError) = await _pantryService.AddItemAsync(foodItem.id, null, quantity, unit);
+            var (added, addError) = await _pantryService.AddItemAsync(foodItem.id, null, quantity ?? 1f, unit ?? "PIECES");
 
             if (addError != null)
             {
@@ -323,7 +425,7 @@ namespace eu.foodmission.platform
             return await FoodProductFlow.ImportByBarcodeAsync(_foodProductService, _openFoodFactsClientService, barcode);
         }
 
-        public async Task AddGenericFoodItemAsync(GenericFood genericFood, float quantity, string unit)
+        public async Task AddGenericFoodItemAsync(GenericFood genericFood, float? quantity = null, string unit = null)
         {
             if (!Guid.TryParse(genericFood.id, out _))
             {
@@ -337,7 +439,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity, unit);
+            var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity ?? 1f, unit ?? "PIECES");
 
             if (error != null)
             {

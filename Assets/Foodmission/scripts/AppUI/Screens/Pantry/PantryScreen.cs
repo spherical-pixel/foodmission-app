@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
+using Newtonsoft.Json;
+
 using eu.foodmission.platform.Components;
 
 using Unity.AppUI.Core;
@@ -54,12 +56,20 @@ namespace eu.foodmission.platform
             _btnMoveToWaste = contentContainer.Q<Unity.AppUI.UI.Button>("btn-move-to-waste");
         }
 
+        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            base.OnEnter(controller, destination, args);
+            // State is preserved — no reload needed. CheckPendingFoodInfoAddRequest no
+            // longer required since FoodInfo is now shown as an overlay.
+        }
+
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
 
             if (_searchCategoryField != null)
             {
+                _searchCategoryField.OpenFoodInfoOnSelect = true;
                 _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
                 _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
                 _searchCategoryField.SearchGenericFoodsAsync = query => _viewModel.SearchGenericFoodsAsync(query);
@@ -77,6 +87,18 @@ namespace eu.foodmission.platform
 
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
                 _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
+                _searchCategoryField.OnProductInfoRequested = product =>
+                {
+                    FoodInfoOverlay.Show(this, FoodInfoType.Product, product.id, "pantry",
+                        JsonConvert.SerializeObject(product),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
+                };
+                _searchCategoryField.OnGenericFoodInfoRequested = genericFood =>
+                {
+                    FoodInfoOverlay.Show(this, FoodInfoType.Generic, genericFood.id, "pantry",
+                        JsonConvert.SerializeObject(genericFood),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
+                };
                 _searchCategoryField.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
             }
 

@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using eu.foodmission.platform.Components;
 
 using Unity.AppUI.Core;
@@ -16,6 +18,7 @@ using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using Unity.AppUI.Navigation;
 
 namespace eu.foodmission.platform
 {
@@ -115,6 +118,7 @@ namespace eu.foodmission.platform
 
             if (_searchCategoryField != null)
             {
+                _searchCategoryField.OpenFoodInfoOnSelect = true;
                 _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
                 _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
                 _searchCategoryField.SearchGenericFoodsAsync = query => _viewModel.SearchGenericFoodsAsync(query);
@@ -128,6 +132,18 @@ namespace eu.foodmission.platform
                     await _viewModel.AddGenericFoodItem(food, qty, unit);
                 };
                 _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
+                _searchCategoryField.OnProductInfoRequested = product =>
+                {
+                    FoodInfoOverlay.Show(this, FoodInfoType.Product, product.id, "mealLog",
+                        JsonConvert.SerializeObject(product),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
+                };
+                _searchCategoryField.OnGenericFoodInfoRequested = genericFood =>
+                {
+                    FoodInfoOverlay.Show(this, FoodInfoType.Generic, genericFood.id, "mealLog",
+                        JsonConvert.SerializeObject(genericFood),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
+                };
                 _searchCategoryField.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
             }
 

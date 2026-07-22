@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation.Generated;
 
 namespace eu.foodmission.platform
 {
@@ -101,6 +102,87 @@ namespace eu.foodmission.platform
             _catalogService = catalogService;
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
+        }
+
+
+
+        /// <summary>
+        /// Called on re-entry from FoodInfoScreen. Checks if FoodInfoScreen dispatched
+        /// an "add to meal log" request and, if so, processes it.
+        /// </summary>
+        public void CheckPendingFoodInfoAddRequest()
+        {
+            var state = _storeService.GetAppState();
+            if (state.foodInfoAddRequest == null)
+                return;
+
+            var request = state.foodInfoAddRequest;
+            _store.Dispatch(AppActions.foodInfoAddRequestConsumed.Invoke());
+
+            if (request.EntryContext != "mealLog")
+                return;
+
+            // Add the food to the current meal log step 3 (selected items)
+            if (request.FoodType == FoodInfoType.Generic)
+                _ = SafeAddGenericFoodFromFoodInfoAsync(request);
+            else
+                _ = SafeAddProductFromFoodInfoAsync(request);
+        }
+
+        private async Task SafeAddGenericFoodFromFoodInfoAsync(AddToContextRequestedAction request)
+        {
+            try
+            {
+                GenericFood gf = null;
+                if (!string.IsNullOrEmpty(request.FoodData))
+                    gf = Newtonsoft.Json.JsonConvert.DeserializeObject<GenericFood>(request.FoodData);
+
+                if (gf == null && !string.IsNullOrEmpty(request.FoodId))
+                {
+                    var (fetched, err) = await _genericFoodService.GetGenericFoodByIdAsync(request.FoodId);
+                    if (err == null) gf = fetched;
+                }
+
+                if (gf != null)
+                    await AddGenericFoodItem(gf, null, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SafeAddGenericFoodFromFoodInfoAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeAddProductFromFoodInfoAsync(AddToContextRequestedAction request)
+        {
+            try
+            {
+                OpenFoodFactsProduct product = null;
+                if (!string.IsNullOrEmpty(request.FoodData))
+                    product = Newtonsoft.Json.JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
+
+                if (product != null)
+                {
+                    await AddProductItem(product, null, null);
+                }
+                else if (!string.IsNullOrEmpty(request.FoodId))
+                {
+                    var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
+                    if (foodError == null && food != null)
+                    {
+                        await AddProductItem(new OpenFoodFactsProduct
+                        {
+                            id = food.id,
+                            name = food.name,
+                            barcode = food.barcode,
+                            brands = Array.Empty<string>(),
+                        }, null, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SafeAddProductFromFoodInfoAsync failed: {ex.Message}");
+            }
         }
 
         public async Task InitializeAsync()

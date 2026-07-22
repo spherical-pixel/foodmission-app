@@ -1543,6 +1543,122 @@ MonoBehaviour:
     m_Localized: "Prosimo, dodajte vsaj eno \u017Eivilo"
     m_Metadata:
       m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: "Izbri\u0161i element"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: "\u010Crtna koda"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Blagovna znamka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Blagovne znamke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: "Oglji\u010Dni odtis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: "Dr\u017Eave prodaje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Oznake in certifikati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: Kraji proizvodnje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: Izvor sestavin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: "Koli\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: Velikost obroka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: "Ni razpolo\u017Eljivih podatkov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: Ogljikovi hidrati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: Energija (kcal)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energija (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: "Ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: Prehranske vlaknine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: Makronutraetov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: Beljakovine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: Sol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: "Nasi\u010Dene ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: Natrij
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: Sladkorji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: "Ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: Sol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: "Nasi\u010Dene ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: Sladkorji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: "Kon\u010Dano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Naprej
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

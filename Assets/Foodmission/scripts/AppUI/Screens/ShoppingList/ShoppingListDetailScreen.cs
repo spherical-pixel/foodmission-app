@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using UnityEngine;
 using UnityEngine.Accessibility;
 
@@ -81,7 +83,10 @@ namespace eu.foodmission.platform
                 }
 
                 if (!string.IsNullOrEmpty(listId))
+                {
                     await _viewModel.LoadAsync(listId, listTitle);
+                }
+                // else: returning from overlay — state is already preserved, no reload needed.
             }
             catch (Exception ex)
             {
@@ -97,6 +102,7 @@ namespace eu.foodmission.platform
 
             if (_searchCategoryField != null)
             {
+                _searchCategoryField.OpenFoodInfoOnSelect = true;
                 _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
                 _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
                 _searchCategoryField.SearchGenericFoodsAsync = query => _viewModel.SearchGenericFoodsAsync(query);
@@ -114,6 +120,18 @@ namespace eu.foodmission.platform
 
                 _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
+                _searchCategoryField.OnProductInfoRequested = product =>
+                {
+                    FoodInfoOverlay.Show(this, FoodInfoType.Product, product.id, "shoppingList",
+                        JsonConvert.SerializeObject(product),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
+                };
+                _searchCategoryField.OnGenericFoodInfoRequested = genericFood =>
+                {
+                    FoodInfoOverlay.Show(this, FoodInfoType.Generic, genericFood.id, "shoppingList",
+                        JsonConvert.SerializeObject(genericFood),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
+                };
 
                 _searchCategoryField.OnPopoverVisibilityChanged += isVisible =>
                 {
