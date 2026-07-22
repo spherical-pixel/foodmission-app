@@ -74,7 +74,7 @@ namespace eu.foodmission.platform
                     if (type == FoodInfoType.Product)
                         LoadProductFromData(foodData);
                     else
-                        LoadGenericFromData(foodData);
+                        await LoadGenericFromData(foodData);
                 }
                 else if (!string.IsNullOrEmpty(foodId))
                 {
@@ -132,12 +132,13 @@ namespace eu.foodmission.platform
 
             if (!string.IsNullOrEmpty(product.name)) FoodName = product.name;
             if (product.brands != null && product.brands.Length > 0) FoodSubtitle = string.Join(", ", product.brands);
-            if (!string.IsNullOrEmpty(product.imageFrontUrl)) ImageUrl = product.imageFrontUrl;
-            if (!string.IsNullOrEmpty(product.nutritionGrade)) NutritionGrade = product.nutritionGrade;
-            if (product.novaGroup.HasValue && product.novaGroup.Value > 0) NovaGroup = product.novaGroup.Value;
-            if (!string.IsNullOrEmpty(product.ecoscoreGrade)) EcoScoreGrade = product.ecoscoreGrade;
+            string imgUrl = !string.IsNullOrEmpty(product.imageFrontUrl) ? product.imageFrontUrl : product.imageUrl;
+            if (!string.IsNullOrEmpty(imgUrl)) ImageUrl = imgUrl;
+            NutritionGrade = !string.IsNullOrEmpty(product.nutritionGrade) ? product.nutritionGrade : "unknown";
+            NovaGroup = product.novaGroup.HasValue && product.novaGroup.Value >= 1 && product.novaGroup.Value <= 4 ? product.novaGroup.Value : 0;
+            EcoScoreGrade = !string.IsNullOrEmpty(product.ecoscoreGrade) ? product.ecoscoreGrade : "unknown";
             if (!string.IsNullOrEmpty(product.ingredients)) Ingredients = product.ingredients;
-            if (product.allergens != null && product.allergens.Length > 0) Allergens = string.Join(", ", product.allergens);
+            if (product.allergens != null && product.allergens.Length > 0) Allergens = FormatTagsList(product.allergens, "es");
 
             if (product.nutritionalInfo != null)
             {
@@ -168,11 +169,11 @@ namespace eu.foodmission.platform
             FoodName = detail.name ?? "";
             FoodSubtitle = detail.brands ?? "";
             ImageUrl = detail.imageFrontUrl ?? detail.imageUrl ?? "";
-            NutritionGrade = detail.nutritionGrade ?? "";
-            NovaGroup = detail.novaGroup ?? 0;
-            EcoScoreGrade = detail.ecoscoreGrade ?? "";
+            NutritionGrade = !string.IsNullOrEmpty(detail.nutritionGrade) && !detail.nutritionGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase) ? detail.nutritionGrade : "";
+            NovaGroup = detail.novaGroup.HasValue && detail.novaGroup.Value >= 1 && detail.novaGroup.Value <= 4 ? detail.novaGroup.Value : 0;
+            EcoScoreGrade = !string.IsNullOrEmpty(detail.ecoscoreGrade) && !detail.ecoscoreGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase) ? detail.ecoscoreGrade : "";
             Ingredients = detail.ingredientsText ?? "";
-            Allergens = detail.allergens != null ? string.Join(", ", detail.allergens) : "";
+            Allergens = detail.allergens != null ? FormatTagsList(detail.allergens, "es") : "";
 
             TrafficLights = BuildTrafficLights(detail.nutrientLevels);
             MacroCards = BuildProductMacroCards(detail.nutrimentsRaw);
@@ -198,12 +199,19 @@ namespace eu.foodmission.platform
             if (detail == null)
                 return;
 
+            PopulateFromGenericFoodDetail(detail);
+        }
+
+        private void PopulateFromGenericFoodDetail(GenericFoodDetail detail)
+        {
+            if (detail == null) return;
+
             FoodName = detail.foodName ?? "";
             FoodSubtitle = detail.foodGroup ?? "";
             Emoji = GetEmojiForFoodGroup(detail.foodGroup);
-            NutritionGrade = "";
+            NutritionGrade = "unknown";
             NovaGroup = 0;
-            EcoScoreGrade = "";
+            EcoScoreGrade = "unknown";
             Ingredients = "";
             Allergens = detail.containsTracesOf ?? "";
 
@@ -222,10 +230,10 @@ namespace eu.foodmission.platform
 
                 FoodName = product.name ?? "";
                 FoodSubtitle = product.brands != null && product.brands.Length > 0 ? string.Join(", ", product.brands) : "";
-                ImageUrl = product.imageFrontUrl ?? "";
-                NutritionGrade = product.nutritionGrade ?? "";
-                NovaGroup = 0;
-                EcoScoreGrade = product.ecoscoreGrade ?? "";
+                ImageUrl = !string.IsNullOrEmpty(product.imageFrontUrl) ? product.imageFrontUrl : (product.imageUrl ?? "");
+                NutritionGrade = !string.IsNullOrEmpty(product.nutritionGrade) ? product.nutritionGrade : "unknown";
+                NovaGroup = product.novaGroup ?? 0;
+                EcoScoreGrade = !string.IsNullOrEmpty(product.ecoscoreGrade) ? product.ecoscoreGrade : "unknown";
                 Ingredients = product.ingredients ?? "";
                 Allergens = product.allergens != null ? string.Join(", ", product.allergens) : "";
 
@@ -247,10 +255,17 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void LoadGenericFromData(string foodData)
+        private async Task LoadGenericFromData(string foodData)
         {
             try
             {
+                var genericDetail = JsonConvert.DeserializeObject<GenericFoodDetail>(foodData);
+                if (genericDetail != null && (!string.IsNullOrEmpty(genericDetail.synonym) || genericDetail.energyKcal.HasValue || !string.IsNullOrEmpty(genericDetail.containsTracesOf) || !string.IsNullOrEmpty(genericDetail.isFortifiedWith)))
+                {
+                    PopulateFromGenericFoodDetail(genericDetail);
+                    return;
+                }
+
                 var genericFood = JsonConvert.DeserializeObject<GenericFood>(foodData);
                 if (genericFood == null)
                     return;
@@ -258,9 +273,9 @@ namespace eu.foodmission.platform
                 FoodName = genericFood.foodName ?? "";
                 FoodSubtitle = genericFood.foodGroup ?? "";
                 Emoji = GetEmojiForFoodGroup(genericFood.foodGroup);
-                NutritionGrade = "";
+                NutritionGrade = "unknown";
                 NovaGroup = 0;
-                EcoScoreGrade = "";
+                EcoScoreGrade = "unknown";
                 Ingredients = "";
                 Allergens = "";
 
@@ -276,7 +291,7 @@ namespace eu.foodmission.platform
 
                 if (!string.IsNullOrEmpty(genericFood.id) && Guid.TryParse(genericFood.id, out _))
                 {
-                    _ = LoadGenericAsync(genericFood.id);
+                    await LoadGenericAsync(genericFood.id);
                 }
             }
             catch (Exception ex)
@@ -450,26 +465,31 @@ namespace eu.foodmission.platform
         private List<NutritionGroup> BuildGenericNutritionDetail(GenericFoodDetail d)
         {
             string L(string key) => GetLocString(key);
+            string LF(string key, string fallback) => GetLocStringOrFallback(key, fallback);
 
             var macros = new List<NutritionRow>
             {
+                new(L("NUTR_ENERGY_KCAL"), d.energyKcal, "kcal"),
                 new(L("NUTR_ENERGY_KJ"), d.energyKj, "kJ"),
-                new(L("NUTR_WATER"), d.water, "g"),
-                new(L("NUTR_PROTEINS_PLANT"), d.proteinsPlant, "g"),
-                new(L("NUTR_PROTEINS_ANIMAL"), d.proteinsAnimal, "g"),
+                new(LF("NUTR_WATER", "Agua"), d.water, "g"),
+                new(L("NUTR_PROTEINS"), d.proteins, "g"),
+                new(LF("NUTR_PROTEINS_PLANT", "Proteínas vegetales"), d.proteinsPlant, "g"),
+                new(LF("NUTR_PROTEINS_ANIMAL", "Proteínas animales"), d.proteinsAnimal, "g"),
+                new(L("NUTR_CARBOHYDRATES"), d.carbohydrates, "g"),
                 new(L("NUTR_SUGARS"), d.sugars, "g"),
-                new(L("NUTR_ADDED_SUGARS"), d.addedSugars, "g"),
-                new(L("NUTR_STARCH"), d.starch, "g"),
-                new(L("NUTR_FIBER"), d.fiber, "g")
+                new(LF("NUTR_ADDED_SUGARS", "Azúcares añadidos"), d.addedSugars, "g"),
+                new(LF("NUTR_STARCH", "Almidón"), d.starch, "g"),
+                new(L("NUTR_FIBER"), d.fiber, "g"),
+                new(L("NUTR_FAT"), d.fat, "g")
             };
 
             var fats = new List<NutritionRow>
             {
                 new(L("NUTR_SATURATED_FAT"), d.saturatedFat, "g"),
-                new(L("NUTR_MONO_UNSATURATED_FAT"), d.monoUnsaturatedFat, "g"),
-                new(L("NUTR_POLY_UNSATURATED_FAT"), d.polyUnsaturatedFat, "g"),
-                new(L("NUTR_OMEGA3_FAT"), d.omega3Fat, "g"),
-                new(L("NUTR_OMEGA6_FAT"), d.omega6Fat, "g"),
+                new(LF("NUTR_MONO_UNSATURATED_FAT", "Grasas monoinsaturadas"), d.monoUnsaturatedFat, "g"),
+                new(LF("NUTR_POLY_UNSATURATED_FAT", "Grasas poliinsaturadas"), d.polyUnsaturatedFat, "g"),
+                new(LF("NUTR_OMEGA3_FAT", "Omega 3"), d.omega3Fat, "g"),
+                new(LF("NUTR_OMEGA6_FAT", "Omega 6"), d.omega6Fat, "g"),
                 new(L("NUTR_TRANS_FAT"), d.transFat, "g")
             };
 
@@ -484,18 +504,18 @@ namespace eu.foodmission.platform
                 new(L("NUTR_RIBOFLAVIN"), d.riboflavin, "mg"),
                 new(L("NUTR_VITAMIN_B6"), d.vitaminB6, "mg"),
                 new(L("NUTR_VITAMIN_B12"), d.vitaminB12, "\u00b5g"),
-                new(L("NUTR_FOLATE_TOTAL"), d.folateTotal, "\u00b5g")
+                new(LF("NUTR_FOLATE_TOTAL", "Folatos"), d.folateTotal, "\u00b5g")
             };
 
             var minerals = new List<NutritionRow>
             {
                 new(L("NUTR_SODIUM"), d.sodium, "mg"),
-                new(L("NUTR_POTASSIUM"), d.potassium, "mg"),
+                new(LF("NUTR_POTASSIUM", "Potasio"), d.potassium, "mg"),
                 new(L("NUTR_CALCIUM"), d.calcium, "mg"),
-                new(L("NUTR_PHOSPHORUS"), d.phosphorus, "mg"),
-                new(L("NUTR_MAGNESIUM"), d.magnesium, "mg"),
+                new(LF("NUTR_PHOSPHORUS", "Fósforo"), d.phosphorus, "mg"),
+                new(LF("NUTR_MAGNESIUM", "Magnesio"), d.magnesium, "mg"),
                 new(L("NUTR_IRON"), d.iron, "mg"),
-                new(L("NUTR_ZINC"), d.zinc, "mg")
+                new(LF("NUTR_ZINC", "Zinc"), d.zinc, "mg")
             };
 
             string GT(string key) => GetLocString(key);
@@ -539,10 +559,14 @@ namespace eu.foodmission.platform
         {
             var rows = new List<MetaRow>();
 
+            if (!string.IsNullOrEmpty(d.foodGroup))
+                rows.Add(new MetaRow(GetLocStringOrFallback("META_FOOD_GROUP", "Grupo de alimentos"), d.foodGroup));
             if (!string.IsNullOrEmpty(d.quantity))
-                rows.Add(new MetaRow(GetLocString("META_QUANTITY"), d.quantity));
+                rows.Add(new MetaRow(GetLocStringOrFallback("META_QUANTITY", "Cantidad de referencia"), d.quantity));
             if (!string.IsNullOrEmpty(d.synonym))
-                rows.Add(new MetaRow(GetLocString("NO_DATA_AVAILABLE"), d.synonym));
+                rows.Add(new MetaRow(GetLocStringOrFallback("META_SYNONYMS", "Sinónimos"), d.synonym));
+            if (!string.IsNullOrEmpty(d.isFortifiedWith))
+                rows.Add(new MetaRow(GetLocStringOrFallback("META_FORTIFIED_WITH", "Fortificado con"), d.isFortifiedWith));
 
             return rows;
         }
@@ -576,7 +600,56 @@ namespace eu.foodmission.platform
         private static string GetLocStringOrFallback(string key, string fallback)
         {
             string result = LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
-            return string.IsNullOrEmpty(result) || result == key ? fallback : result;
+            if (string.IsNullOrEmpty(result) || result == key) return fallback;
+            if (result.StartsWith("No translation found")) return fallback;
+            return result;
+        }
+        public static string FormatTagsList(IEnumerable<string> rawTags, string preferredLang = "es")
+        {
+            if (rawTags == null) return "";
+
+            var tagList = rawTags
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .SelectMany(t => t.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries))
+                .Select(t => t.Trim())
+                .ToList();
+
+            if (tagList.Count == 0) return "";
+
+            string prefPrefix = preferredLang.ToLowerInvariant() + ":";
+            var prefTags = tagList.Where(t => t.StartsWith(prefPrefix, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            List<string> selectedTags;
+            if (prefTags.Count > 0)
+            {
+                selectedTags = prefTags;
+            }
+            else
+            {
+                var enTags = tagList.Where(t => t.StartsWith("en:", StringComparison.OrdinalIgnoreCase)).ToList();
+                selectedTags = enTags.Count > 0 ? enTags : tagList;
+            }
+
+            var result = new List<string>();
+            foreach (var tag in selectedTags)
+            {
+                string val = tag;
+                int colonIdx = val.IndexOf(':');
+                if (colonIdx >= 0 && colonIdx < val.Length - 1)
+                {
+                    val = val.Substring(colonIdx + 1).Trim();
+                }
+                if (!string.IsNullOrEmpty(val))
+                {
+                    string formatted = char.ToUpper(val[0]) + (val.Length > 1 ? val.Substring(1) : "");
+                    if (!result.Contains(formatted, StringComparer.OrdinalIgnoreCase))
+                    {
+                        result.Add(formatted);
+                    }
+                }
+            }
+
+            return string.Join(", ", result);
         }
     }
 }

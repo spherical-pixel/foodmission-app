@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace eu.foodmission.platform
 {
@@ -68,7 +69,6 @@ namespace eu.foodmission.platform
         public int? nutriscore_score { get; set; }
         public OffNutriscoreRaw nutriscore_data { get; set; }
         public string product_name { get; set; }
-        public string product_name_en { get; set; }
         public string generic_name { get; set; }
         public string brands { get; set; }
         public string[] categories_tags { get; set; }
@@ -79,7 +79,6 @@ namespace eu.foodmission.platform
         public string origins { get; set; }
         public string manufacturing_places { get; set; }
         public string ingredients_text { get; set; }
-        public string ingredients_text_en { get; set; }
         public string[] allergens_tags { get; set; }
         public string[] traces_tags { get; set; }
         public string nutrition_grades { get; set; }
@@ -96,6 +95,9 @@ namespace eu.foodmission.platform
         public long? last_modified_t { get; set; }
         public string nutrition_data_per { get; set; }
         public OffNutrimentsRaw nutriments { get; set; }
+
+        [JsonExtensionData]
+        public IDictionary<string, JToken> ExtraData { get; set; }
     }
 
     public class OffSearchResponseRaw
@@ -108,7 +110,7 @@ namespace eu.foodmission.platform
 
     public static class OpenFoodFactsParser
     {
-        public static OpenFoodFactsProduct ParseProduct(string json)
+        public static OpenFoodFactsProduct ParseProduct(string json, string targetLang = "es")
         {
             if (string.IsNullOrEmpty(json)) return null;
 
@@ -117,13 +119,13 @@ namespace eu.foodmission.platform
             if (wrapper != null && wrapper.TryGetValue("product", out object productObj))
             {
                 var rawProduct = JsonConvert.DeserializeObject<OffProductRaw>(JsonConvert.SerializeObject(productObj));
-                return MapProduct(rawProduct);
+                return MapProduct(rawProduct, targetLang);
             }
 
             return null;
         }
 
-        public static OpenFoodFactsSearchResponse ParseSearch(string json)
+        public static OpenFoodFactsSearchResponse ParseSearch(string json, string targetLang = "es")
         {
             if (string.IsNullOrEmpty(json)) return null;
 
@@ -136,7 +138,7 @@ namespace eu.foodmission.platform
                 page = raw.page,
                 pageSize = raw.page_size,
                 products = raw.products != null 
-                    ? Array.ConvertAll(raw.products.ToArray(), MapProduct) 
+                    ? Array.ConvertAll(raw.products.ToArray(), p => MapProduct(p, targetLang)) 
                     : Array.Empty<OpenFoodFactsProduct>(),
                 totalPages = raw.page_size > 0 ? (int)Math.Ceiling((double)raw.count / raw.page_size) : 0
             };
@@ -146,21 +148,24 @@ namespace eu.foodmission.platform
 
         public static OpenFoodFactsProduct MapProduct(OffProductRaw raw)
         {
+            return MapProduct(raw, "es");
+        }
+
+        public static OpenFoodFactsProduct MapProduct(OffProductRaw raw, string targetLang)
+        {
             if (raw == null) return null;
 
             var mapped = new OpenFoodFactsProduct
             {
                 id = raw._id,
                 barcode = raw._id,
-                name = string.IsNullOrEmpty(raw.product_name_en) 
-                    ? (string.IsNullOrEmpty(raw.product_name) ? (string.IsNullOrEmpty(raw.generic_name) ? "Unknown Product" : raw.generic_name) : raw.product_name) 
-                    : raw.product_name_en,
+                name = GetLocalizedField(raw, "product_name", targetLang),
                 genericName = raw.generic_name,
                 brands = !string.IsNullOrEmpty(raw.brands)
                     ? Array.ConvertAll(raw.brands.Split(','), b => b.Trim())
                     : Array.Empty<string>(),
                 quantity = raw.quantity,
-                ingredients = string.IsNullOrEmpty(raw.ingredients_text_en) ? raw.ingredients_text : raw.ingredients_text_en,
+                ingredients = GetLocalizedField(raw, "ingredients_text", targetLang),
                 allergens = raw.allergens_tags ?? Array.Empty<string>(),
                 traces = raw.traces_tags ?? Array.Empty<string>(),
                 nutritionGrade = raw.nutrition_grades,
@@ -205,6 +210,43 @@ namespace eu.foodmission.platform
             }
 
             return mapped;
+        }
+
+        public static string GetLocalizedField(OffProductRaw raw, string fieldName, string targetLang = "es")
+        {
+            if (raw == null) return "";
+
+            string lang = string.IsNullOrEmpty(targetLang) ? "es" : targetLang.ToLowerInvariant();
+            if (lang.Contains("-")) lang = lang.Split('-')[0];
+
+            // 1. Check ExtraData for fieldName_lang (e.g. product_name_es, product_name_fr, ingredients_text_ca)
+            if (raw.ExtraData != null && raw.ExtraData.TryGetValue($"{fieldName}_{lang}", out JToken token))
+            {
+                string val = token?.ToString()?.Trim();
+                if (!string.IsNullOrEmpty(val)) return val;
+            }
+
+            // 2. Check main field (product_name, ingredients_text)
+            if (fieldName == "product_name" && !string.IsNullOrEmpty(raw.product_name))
+                return raw.product_name;
+            if (fieldName == "ingredients_text" && !string.IsNullOrEmpty(raw.ingredients_text))
+                return raw.ingredients_text;
+
+            // 3. Check English fallback (fieldName_en)
+            if (lang != "en" && raw.ExtraData != null && raw.ExtraData.TryGetValue($"{fieldName}_en", out JToken enToken))
+            {
+                string val = enToken?.ToString()?.Trim();
+                if (!string.IsNullOrEmpty(val)) return val;
+            }
+
+            // 4. Fallback to main field or generic name
+            if (fieldName == "product_name")
+                return !string.IsNullOrEmpty(raw.product_name) ? raw.product_name : (!string.IsNullOrEmpty(raw.generic_name) ? raw.generic_name : "Unknown Product");
+
+            if (fieldName == "ingredients_text")
+                return raw.ingredients_text ?? "";
+
+            return "";
         }
     }
 }

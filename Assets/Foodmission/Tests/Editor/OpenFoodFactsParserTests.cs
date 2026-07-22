@@ -50,7 +50,7 @@ namespace eu.foodmission.platform.Tests
                 }
             }";
 
-            OpenFoodFactsProduct product = OpenFoodFactsParser.ParseProduct(json);
+            OpenFoodFactsProduct product = OpenFoodFactsParser.ParseProduct(json, "en");
 
             Assert.IsNotNull(product);
             Assert.AreEqual("3017620422003", product.id);
@@ -127,6 +127,30 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("22222", response.products[1].id);
             Assert.AreEqual("Orange", response.products[1].name);
             Assert.AreEqual("Citrus", response.products[1].brands[0]);
+        }
+
+        [Test]
+        public void GetLocalizedField_DynamicLanguages_ParsesAnyLocale()
+        {
+            string json = @"{
+                ""status"": 1,
+                ""product"": {
+                    ""_id"": ""999"",
+                    ""product_name"": ""Nom Generique"",
+                    ""product_name_fr"": ""Jus d'orange"",
+                    ""product_name_es"": ""Zumo de naranja"",
+                    ""product_name_ca"": ""Suc de taronja""
+                }
+            }";
+
+            var pEs = OpenFoodFactsParser.ParseProduct(json, "es");
+            Assert.AreEqual("Zumo de naranja", pEs.name);
+
+            var pFr = OpenFoodFactsParser.ParseProduct(json, "fr");
+            Assert.AreEqual("Jus d'orange", pFr.name);
+
+            var pCa = OpenFoodFactsParser.ParseProduct(json, "ca");
+            Assert.AreEqual("Suc de taronja", pCa.name);
         }
     }
 }

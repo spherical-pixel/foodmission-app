@@ -84,7 +84,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual("Test Food", vm.FoodName);
             Assert.AreEqual("Fruits", vm.FoodSubtitle);
-            Assert.AreEqual("", vm.NutritionGrade);
+            Assert.AreEqual("unknown", vm.NutritionGrade);
             Assert.AreEqual(0, vm.NovaGroup);
             Assert.IsTrue(vm.ShowActionButton);
             Assert.IsFalse(vm.IsLoading);
@@ -275,6 +275,45 @@ namespace eu.foodmission.platform.Tests
             vm.OnActionButtonClicked();
 
             Assert.Contains("app/foodInfo/addRequested", _storeService.DispatchedActionTypes);
+        }
+
+        [Test]
+        public async Task LoadProductFromData_FallbackToImageUrl_WhenFrontUrlIsNull()
+        {
+            string foodData = "{\"id\":\"12345\",\"name\":\"Test Product\",\"imageUrl\":\"https://images.openfoodfacts.org/test.jpg\"}";
+            var vm = CreateViewModel();
+            await vm.LoadAsync(FoodInfoType.Product, "", "none", foodData);
+
+            Assert.AreEqual("https://images.openfoodfacts.org/test.jpg", vm.ImageUrl);
+        }
+
+        [Test]
+        public void FormatTagsList_ParsesLanguagePrefix_WithFallback()
+        {
+            var tags = new[] { "en:fish", "es:Caballa" };
+            string result = FoodInfoViewModel.FormatTagsList(tags, "es");
+
+            Assert.AreEqual("Caballa", result);
+        }
+
+        [Test]
+        public void FormatTagsList_FallbackToEnglish_WhenSpanishMissing()
+        {
+            var tags = new[] { "en:fish", "fr:poisson" };
+            string result = FoodInfoViewModel.FormatTagsList(tags, "es");
+
+            Assert.AreEqual("Fish", result);
+        }
+
+        [Test]
+        public void LoadProductFromData_IgnoresUnknownScoreGrades()
+        {
+            string foodData = "{\"id\":\"12345\",\"name\":\"Test Product\",\"nutritionGrade\":\"unknown\",\"ecoscoreGrade\":\"UNKNOWN\"}";
+            var vm = CreateViewModel();
+            vm.LoadAsync(FoodInfoType.Product, "", "none", foodData).Wait();
+
+            Assert.AreEqual("unknown", vm.NutritionGrade);
+            Assert.AreEqual("UNKNOWN", vm.EcoScoreGrade);
         }
     }
 }

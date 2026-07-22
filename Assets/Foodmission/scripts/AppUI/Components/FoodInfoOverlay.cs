@@ -26,6 +26,7 @@ namespace eu.foodmission.platform
         private static Action _onActionCompleted;
 
         // UI references (duplicated from FoodInfoScreen — same IDs)
+        private static VisualElement _foodImageContainer;
         private static UnityEngine.UIElements.Image _foodImage;
         private static Text _foodEmoji;
         private static Heading _foodName;
@@ -145,6 +146,7 @@ namespace eu.foodmission.platform
             scrollView.Add(content);
 
             // ── Cache references ──────────────────────────────────────────
+            _foodImageContainer = content.Q<VisualElement>("food-image-container");
             _foodImage = content.Q<UnityEngine.UIElements.Image>("food-image");
             _foodEmoji = content.Q<Text>("food-emoji");
             _foodName = content.Q<Heading>("food-name");
@@ -177,7 +179,7 @@ namespace eu.foodmission.platform
             container.Add(_overlay);
 
             // ── Initial UI state ──────────────────────────────────────────
-            UpdateSectionHeaders();
+            UpdateAllSections();
 
             // ── Load data ─────────────────────────────────────────────────
             _ = _viewModel.LoadAsync(foodType, foodId, entryContext, foodData).ContinueWith(t =>
@@ -212,6 +214,7 @@ namespace eu.foodmission.platform
             }
             _overlay = null;
 
+            _foodImageContainer = null;
             _foodImage = null; _foodEmoji = null; _foodName = null; _foodSubtitle = null;
             _badgesRow = null; _nutriscoreBadge = null; _novaBadge = null; _ecoBadge = null;
             _trafficLights = null; _macroCards = null;
@@ -248,6 +251,7 @@ namespace eu.foodmission.platform
                     if (_foodSubtitle != null) _foodSubtitle.text = _viewModel.FoodSubtitle;
                     break;
                 case nameof(FoodInfoViewModel.ImageUrl):
+                    UpdateSectionVisibility();
                     _ = LoadImageAsync(_viewModel.ImageUrl);
                     break;
                 case nameof(FoodInfoViewModel.Emoji):
@@ -300,20 +304,55 @@ namespace eu.foodmission.platform
 
         // ── Update helpers (mirrors FoodInfoScreen) ───────────────────────
 
-        private static void UpdateSectionHeaders()
+        private static void UpdateAllSections()
         {
-            SetHeading("ingredients-header", "SECTION_INGREDIENTS", "Ingredients");
-            SetHeading("allergens-header", "SECTION_ALLERGENS", "Allergens");
-            SetHeading("nutrition-detail-header", "SECTION_NUTRITION_DETAIL", "Full nutrition");
-            SetHeading("meta-header", "SECTION_META", "Product details");
+            if (_viewModel == null) return;
+            UpdateSectionHeaders();
+            if (_foodName != null) _foodName.text = _viewModel.FoodName;
+            if (_foodSubtitle != null) _foodSubtitle.text = _viewModel.FoodSubtitle;
+            if (_foodEmoji != null) _foodEmoji.text = _viewModel.Emoji;
+            if (_actionButton != null)
+            {
+                _actionButton.title = _viewModel.ActionButtonText;
+                _actionButton.EnableInClassList("hidden", !_viewModel.ShowActionButton);
+            }
+            UpdateNutriScoreBadge();
+            UpdateNovaBadge();
+            UpdateEcoBadge();
+            UpdateTrafficLights();
+            UpdateMacroCards();
+            UpdateNutritionDetail();
+            UpdateIngredients();
+            UpdateAllergens();
+            UpdateMetaRows();
+            UpdateSectionVisibility();
+            UpdateLoadingState();
+            _ = LoadImageAsync(_viewModel.ImageUrl);
         }
 
-        private static void SetHeading(string name, string locKey, string fallback)
+        private static void UpdateSectionHeaders()
         {
-            var heading = _overlay?.Q<Heading>(name);
-            if (heading == null) return;
+            SetSectionTitle(_ingredientsSection, "SECTION_INGREDIENTS", "Ingredients");
+            SetSectionTitle(_allergensSection, "SECTION_ALLERGENS", "Allergens");
+            SetSectionTitle(_nutritionDetailSection, "SECTION_NUTRITION_DETAIL", "Full nutrition");
+            SetSectionTitle(_metaSection, "SECTION_META", "Product details");
+        }
+
+        private static void SetSectionTitle(VisualElement section, string locKey, string fallback)
+        {
+            if (section == null) return;
             string loc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", locKey);
-            heading.text = string.IsNullOrEmpty(loc) || loc == locKey ? fallback : loc;
+            string title = (string.IsNullOrEmpty(loc) || loc == locKey || loc.StartsWith("No translation found")) ? fallback : loc;
+
+            if (section is AccordionItem accordionItem)
+            {
+                accordionItem.title = title;
+            }
+            else
+            {
+                var heading = section.Q<Heading>();
+                if (heading != null) heading.text = title;
+            }
         }
 
         private static void UpdateSectionVisibility()
@@ -321,33 +360,23 @@ namespace eu.foodmission.platform
             if (_viewModel == null) return;
             bool isProduct = _viewModel.FoodType == FoodInfoType.Product;
 
+            bool showImg = isProduct && !string.IsNullOrEmpty(_viewModel.ImageUrl);
+            if (_foodImageContainer != null)
+                _foodImageContainer.EnableInClassList("fm-fi-section--hidden", !showImg);
             if (_foodImage != null)
             {
-                _foodImage.style.display = isProduct && !string.IsNullOrEmpty(_viewModel.ImageUrl)
-                    ? DisplayStyle.Flex : DisplayStyle.None;
+                _foodImage.EnableInClassList("hidden", !showImg);
             }
             if (_foodEmoji != null)
             {
-                _foodEmoji.style.display = !isProduct && !string.IsNullOrEmpty(_viewModel.Emoji)
-                    ? DisplayStyle.Flex : DisplayStyle.None;
+                _foodEmoji.EnableInClassList("fm-fi-section--hidden",
+                    !(!isProduct && !string.IsNullOrEmpty(_viewModel.Emoji)));
             }
             if (_badgesRow != null)
-                _badgesRow.style.display = isProduct ? DisplayStyle.Flex : DisplayStyle.None;
-            if (_ingredientsSection != null)
-            {
-                _ingredientsSection.style.display = isProduct && !string.IsNullOrEmpty(_viewModel.Ingredients)
-                    ? DisplayStyle.Flex : DisplayStyle.None;
-            }
-            if (_nutritionDetailSection != null)
-            {
-                _nutritionDetailSection.style.display = _viewModel.NutritionDetail != null
-                    && _viewModel.NutritionDetail.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            }
-            if (_metaSection != null)
-            {
-                _metaSection.style.display = _viewModel.MetaRows != null
-                    && _viewModel.MetaRows.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            }
+                _badgesRow.EnableInClassList("fm-fi-section--hidden", !isProduct);
+
+            // Ingredients, allergens, nutrition-detail and meta sections
+            // are self-managed by their respective Update*() methods.
         }
 
         private static void UpdateNutriScoreBadge()
@@ -355,15 +384,20 @@ namespace eu.foodmission.platform
             if (_nutriscoreBadge == null || _viewModel == null) return;
             var pill = _nutriscoreBadge.parent;
             _nutriscoreBadge.RemoveFromClassList(_lastNutriScoreClass);
-            if (string.IsNullOrEmpty(_viewModel.NutritionGrade))
+            string grade = _viewModel.NutritionGrade?.Trim().ToLowerInvariant();
+            if (string.IsNullOrEmpty(grade) || grade == "unknown" || grade == "not-applicable" || grade.Length > 2)
             {
-                if (pill != null) pill.style.display = DisplayStyle.None;
-                _lastNutriScoreClass = "";
+                if (pill != null) pill.style.display = DisplayStyle.Flex;
+                _nutriscoreBadge.style.display = DisplayStyle.Flex;
+                _nutriscoreBadge.text = "—";
+                _lastNutriScoreClass = "fm-fi-score-badge--unknown";
+                _nutriscoreBadge.AddToClassList(_lastNutriScoreClass);
                 return;
             }
             if (pill != null) pill.style.display = DisplayStyle.Flex;
-            _nutriscoreBadge.text = _viewModel.NutritionGrade.ToUpper();
-            _lastNutriScoreClass = $"fm-fi-score-badge--{_viewModel.NutritionGrade.ToLower()}";
+            _nutriscoreBadge.style.display = DisplayStyle.Flex;
+            _nutriscoreBadge.text = grade.ToUpper();
+            _lastNutriScoreClass = $"fm-fi-score-badge--{grade}";
             _nutriscoreBadge.AddToClassList(_lastNutriScoreClass);
         }
 
@@ -374,11 +408,15 @@ namespace eu.foodmission.platform
             _novaBadge.RemoveFromClassList(_lastNovaClass);
             if (_viewModel.NovaGroup < 1 || _viewModel.NovaGroup > 4)
             {
-                if (pill != null) pill.style.display = DisplayStyle.None;
-                _lastNovaClass = "";
+                if (pill != null) pill.style.display = DisplayStyle.Flex;
+                _novaBadge.style.display = DisplayStyle.Flex;
+                _novaBadge.text = "—";
+                _lastNovaClass = "fm-fi-nova-badge--unknown";
+                _novaBadge.AddToClassList(_lastNovaClass);
                 return;
             }
             if (pill != null) pill.style.display = DisplayStyle.Flex;
+            _novaBadge.style.display = DisplayStyle.Flex;
             _novaBadge.text = $"{_viewModel.NovaGroup}";
             _lastNovaClass = $"fm-fi-nova-badge--{_viewModel.NovaGroup}";
             _novaBadge.AddToClassList(_lastNovaClass);
@@ -389,15 +427,20 @@ namespace eu.foodmission.platform
             if (_ecoBadge == null || _viewModel == null) return;
             var pill = _ecoBadge.parent;
             _ecoBadge.RemoveFromClassList(_lastEcoClass);
-            if (string.IsNullOrEmpty(_viewModel.EcoScoreGrade))
+            string grade = _viewModel.EcoScoreGrade?.Trim().ToLowerInvariant();
+            if (string.IsNullOrEmpty(grade) || grade == "unknown" || grade == "not-applicable" || grade.Length > 2)
             {
-                if (pill != null) pill.style.display = DisplayStyle.None;
-                _lastEcoClass = "";
+                if (pill != null) pill.style.display = DisplayStyle.Flex;
+                _ecoBadge.style.display = DisplayStyle.Flex;
+                _ecoBadge.text = "—";
+                _lastEcoClass = "fm-fi-eco-badge--unknown";
+                _ecoBadge.AddToClassList(_lastEcoClass);
                 return;
             }
             if (pill != null) pill.style.display = DisplayStyle.Flex;
-            _ecoBadge.text = _viewModel.EcoScoreGrade.ToUpper();
-            _lastEcoClass = $"fm-fi-eco-badge--{_viewModel.EcoScoreGrade.ToLower()}";
+            _ecoBadge.style.display = DisplayStyle.Flex;
+            _ecoBadge.text = grade.ToUpper();
+            _lastEcoClass = $"fm-fi-eco-badge--{grade}";
             _ecoBadge.AddToClassList(_lastEcoClass);
         }
 
@@ -440,15 +483,23 @@ namespace eu.foodmission.platform
 
         private static void UpdateNutritionDetail()
         {
-            if (_nutritionDetailTable == null || _viewModel?.NutritionDetail == null) return;
+            if (_nutritionDetailTable == null || _viewModel == null) return;
             _nutritionDetailTable.Clear();
+            if (_viewModel.NutritionDetail == null || _viewModel.NutritionDetail.Count == 0)
+            {
+                _nutritionDetailSection?.EnableInClassList("fm-fi-section--hidden", true);
+                return;
+            }
+
+            bool hasAnyRows = false;
             int globalRowIndex = 0;
             foreach (var group in _viewModel.NutritionDetail)
             {
                 if (group.Rows == null || group.Rows.Count == 0) continue;
+                hasAnyRows = true;
                 if (!string.IsNullOrEmpty(group.Title))
                 {
-                    var groupTitle = new Text { size = TextSize.S, text = group.Title };
+                    var groupTitle = new Text { size = TextSize.M, text = group.Title };
                     groupTitle.AddToClassList("fm-fi-nutrition-group-title");
                     _nutritionDetailTable.Add(groupTitle);
                 }
@@ -462,23 +513,26 @@ namespace eu.foodmission.platform
                     globalRowIndex++;
                 }
             }
+
+            _nutritionDetailSection?.EnableInClassList("fm-fi-section--hidden", !hasAnyRows);
         }
 
         private static void UpdateIngredients()
         {
-            if (_ingredientsBody != null && _viewModel != null)
+            if (_viewModel == null) return;
+            if (_ingredientsBody != null)
                 _ingredientsBody.text = _viewModel.Ingredients;
+            bool isProduct = _viewModel.FoodType == FoodInfoType.Product;
+            bool show = isProduct && !string.IsNullOrEmpty(_viewModel.Ingredients);
+            _ingredientsSection?.EnableInClassList("fm-fi-section--hidden", !show);
         }
 
         private static void UpdateAllergens()
         {
             if (_allergensBody == null || _viewModel == null) return;
             _allergensBody.text = _viewModel.Allergens;
-            if (_allergensSection != null)
-            {
-                _allergensSection.style.display = !string.IsNullOrEmpty(_viewModel.Allergens)
-                    ? DisplayStyle.Flex : DisplayStyle.None;
-            }
+            bool show = !string.IsNullOrEmpty(_viewModel.Allergens);
+            _allergensSection?.EnableInClassList("fm-fi-section--hidden", !show);
         }
 
         private static void UpdateMetaRows()
@@ -487,10 +541,10 @@ namespace eu.foodmission.platform
             _metaBody.Clear();
             if (_viewModel.MetaRows == null || _viewModel.MetaRows.Count == 0)
             {
-                if (_metaSection != null) _metaSection.style.display = DisplayStyle.None;
+                _metaSection?.EnableInClassList("fm-fi-section--hidden", true);
                 return;
             }
-            if (_metaSection != null) _metaSection.style.display = DisplayStyle.Flex;
+            _metaSection?.EnableInClassList("fm-fi-section--hidden", false);
             int rowIndex = 0;
             foreach (var row in _viewModel.MetaRows)
             {
@@ -498,9 +552,9 @@ namespace eu.foodmission.platform
                 rowContainer.AddToClassList("fm-fi-meta-row");
                 if (rowIndex % 2 != 0)
                     rowContainer.AddToClassList("fm-fi-meta-row--odd");
-                var labelEl = new Text { size = TextSize.S, text = row.Label };
+                var labelEl = new Text { size = TextSize.M, text = row.Label };
                 labelEl.AddToClassList("fm-fi-meta-row__label");
-                var valueEl = new Text { size = TextSize.S, text = row.Value };
+                var valueEl = new Text { size = TextSize.M, text = row.Value };
                 valueEl.AddToClassList("fm-fi-meta-row__value");
                 rowContainer.Add(labelEl);
                 rowContainer.Add(valueEl);
@@ -529,10 +583,18 @@ namespace eu.foodmission.platform
 
         private static async Task LoadImageAsync(string url)
         {
-            if (_foodImage == null) return;
             if (string.IsNullOrEmpty(url))
             {
-                _foodImage.style.display = DisplayStyle.None;
+                if (_foodImageContainer != null)
+                {
+                    _foodImageContainer.EnableInClassList("fm-fi-section--hidden", true);
+                    _foodImageContainer.style.display = DisplayStyle.None;
+                }
+                if (_foodImage != null)
+                {
+                    _foodImage.EnableInClassList("hidden", true);
+                    _foodImage.style.display = DisplayStyle.None;
+                }
                 return;
             }
             try
@@ -543,17 +605,47 @@ namespace eu.foodmission.platform
                 {
                     var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
                     _foodImage.sprite = sprite;
+                    _foodImage.scaleMode = ScaleMode.StretchToFill;
+                    if (texture.width > 0 && texture.height > 0)
+                    {
+                        _foodImage.style.aspectRatio = (float)texture.width / texture.height;
+                        _foodImage.style.height = StyleKeyword.Null;
+                    }
+                    _foodImage.EnableInClassList("hidden", false);
                     _foodImage.style.display = DisplayStyle.Flex;
+                    if (_foodImageContainer != null)
+                    {
+                        _foodImageContainer.EnableInClassList("fm-fi-section--hidden", false);
+                        _foodImageContainer.style.display = DisplayStyle.Flex;
+                    }
                 }
-                else if (_foodImage != null)
+                else
                 {
-                    _foodImage.style.display = DisplayStyle.None;
+                    if (_foodImageContainer != null)
+                    {
+                        _foodImageContainer.EnableInClassList("fm-fi-section--hidden", true);
+                        _foodImageContainer.style.display = DisplayStyle.None;
+                    }
+                    if (_foodImage != null)
+                    {
+                        _foodImage.EnableInClassList("hidden", true);
+                        _foodImage.style.display = DisplayStyle.None;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogWarning($"[FoodInfoOverlay] LoadImageAsync failed: {ex.Message}");
-                if (_foodImage != null) _foodImage.style.display = DisplayStyle.None;
+                if (_foodImageContainer != null)
+                {
+                    _foodImageContainer.EnableInClassList("fm-fi-section--hidden", true);
+                    _foodImageContainer.style.display = DisplayStyle.None;
+                }
+                if (_foodImage != null)
+                {
+                    _foodImage.EnableInClassList("hidden", true);
+                    _foodImage.style.display = DisplayStyle.None;
+                }
             }
         }
     }

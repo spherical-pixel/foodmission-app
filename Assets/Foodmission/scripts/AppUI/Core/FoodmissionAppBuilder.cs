@@ -43,6 +43,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IRecipeService, RecipeService>();
             builder.services.AddSingleton<IFoodWasteService, FoodWasteService>();
             builder.services.AddSingleton<ITemplateService, TemplateService>();
+            builder.services.AddSingleton<IImageService, ImageService>();
             builder.services.AddSingleton<IAppUpdateService, AppUpdateService>();
             builder.services.AddSingleton<IWhatsNewService, WhatsNewService>();
             builder.services.AddSingleton<IRemoteLocalizationService, RemoteLocalizationService>();
