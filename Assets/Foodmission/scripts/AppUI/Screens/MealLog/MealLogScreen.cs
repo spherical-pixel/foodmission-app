@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using eu.foodmission.platform.Components;
 
 using Unity.AppUI.Core;
@@ -16,6 +18,7 @@ using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using Unity.AppUI.Navigation;
 
 namespace eu.foodmission.platform
 {
@@ -84,6 +87,12 @@ namespace eu.foodmission.platform
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
         }
 
+        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            base.OnEnter(controller, destination, args);
+            // State preserved by overlay approach — no extra reload or pending check needed.
+        }
+
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
@@ -130,11 +139,15 @@ namespace eu.foodmission.platform
                 _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchCategoryField.OnProductInfoRequested = product =>
                 {
-                    _viewModel.RequestFoodInfo(FoodInfoType.Product, product.id);
+                    FoodInfoOverlay.Show(this, FoodInfoType.Product, product.id, "mealLog",
+                        JsonConvert.SerializeObject(product),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
                 };
                 _searchCategoryField.OnGenericFoodInfoRequested = genericFood =>
                 {
-                    _viewModel.RequestFoodInfo(FoodInfoType.Generic, genericFood.id);
+                    FoodInfoOverlay.Show(this, FoodInfoType.Generic, genericFood.id, "mealLog",
+                        JsonConvert.SerializeObject(genericFood),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
                 };
                 _searchCategoryField.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
             }

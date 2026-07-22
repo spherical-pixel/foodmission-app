@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Unity.AppUI.MVVM;
@@ -21,6 +22,7 @@ namespace eu.foodmission.platform
 
         private string _foodId;
         private string _entryContext;
+        private string _foodData;
 
         [ObservableProperty] private FoodInfoType m_FoodType;
         [ObservableProperty] private string m_FoodName = "";
@@ -51,28 +53,37 @@ namespace eu.foodmission.platform
             _foodProductService = foodProductService;
         }
 
-        public async Task LoadAsync(FoodInfoType type, string foodId, string entryContext)
+        public async Task LoadAsync(FoodInfoType type, string foodId, string entryContext, string foodData = null)
         {
             _foodId = foodId;
             _entryContext = entryContext;
+            _foodData = foodData;
             FoodType = type;
             IsLoading = true;
             ErrorDetail = null;
 
             SetActionButton(entryContext);
 
-            if (string.IsNullOrEmpty(foodId) || !Guid.TryParse(foodId, out _))
-            {
-                IsLoading = false;
-                return;
-            }
-
             try
             {
-                if (type == FoodInfoType.Product)
-                    await LoadProductAsync(foodId);
+                if (!string.IsNullOrEmpty(foodData))
+                {
+                    if (type == FoodInfoType.Product)
+                        LoadProductFromData(foodData);
+                    else
+                        LoadGenericFromData(foodData);
+                }
+                else if (!string.IsNullOrEmpty(foodId) && Guid.TryParse(foodId, out _))
+                {
+                    if (type == FoodInfoType.Product)
+                        await LoadProductAsync(foodId);
+                    else
+                        await LoadGenericAsync(foodId);
+                }
                 else
-                    await LoadGenericAsync(foodId);
+                {
+                    Debug.LogWarning($"[{GetType().Name}] LoadAsync — no foodData and foodId is not a valid UUID: {foodId}");
+                }
             }
             catch (Exception ex)
             {
@@ -137,21 +148,129 @@ namespace eu.foodmission.platform
             MetaRows = BuildGenericMetaRows(detail);
         }
 
+        private void LoadProductFromData(string foodData)
+        {
+            try
+            {
+                var product = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(foodData);
+                if (product == null)
+                    return;
+
+                FoodName = product.name ?? "";
+                FoodSubtitle = product.brands != null && product.brands.Length > 0 ? string.Join(", ", product.brands) : "";
+                ImageUrl = product.imageFrontUrl ?? "";
+                NutritionGrade = product.nutritionGrade ?? "";
+                NovaGroup = 0;
+                EcoScoreGrade = product.ecoscoreGrade ?? "";
+                Ingredients = product.ingredients ?? "";
+                Allergens = product.allergens != null ? string.Join(", ", product.allergens) : "";
+
+                MacroCards = BuildMacroCardsFromNutritionalInfo(product.nutritionalInfo);
+                NutritionDetail = BuildNutritionDetailFromNutritionalInfo(product.nutritionalInfo);
+                MetaRows = new List<MetaRow>();
+
+                if (!string.IsNullOrEmpty(product.quantity))
+                    MetaRows.Add(new MetaRow(GetLocString("META_QUANTITY"), product.quantity));
+                if (!string.IsNullOrEmpty(product.barcode))
+                    MetaRows.Add(new MetaRow(GetLocString("META_BARCODE"), product.barcode));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] LoadProductFromData parse error: {ex.Message}");
+            }
+        }
+
+        private void LoadGenericFromData(string foodData)
+        {
+            try
+            {
+                var genericFood = JsonConvert.DeserializeObject<GenericFood>(foodData);
+                if (genericFood == null)
+                    return;
+
+                FoodName = genericFood.foodName ?? "";
+                FoodSubtitle = genericFood.foodGroup ?? "";
+                Emoji = GetEmojiForFoodGroup(genericFood.foodGroup);
+                NutritionGrade = "";
+                NovaGroup = 0;
+                EcoScoreGrade = "";
+                Ingredients = "";
+                Allergens = "";
+
+                MacroCards = new List<NutritionRow>
+                {
+                    new(GetLocString("NUTR_ENERGY_KCAL"), null, "kcal"),
+                    new(GetLocString("NUTR_PROTEINS"), null, "g"),
+                    new(GetLocString("NUTR_FAT"), null, "g"),
+                    new(GetLocString("NUTR_CARBOHYDRATES"), null, "g")
+                };
+                NutritionDetail = new List<NutritionGroup>();
+                MetaRows = new List<MetaRow>();
+
+                if (!string.IsNullOrEmpty(genericFood.id) && Guid.TryParse(genericFood.id, out _))
+                {
+                    _ = LoadGenericAsync(genericFood.id);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] LoadGenericFromData parse error: {ex.Message}");
+            }
+        }
+
+        private List<NutritionRow> BuildMacroCardsFromNutritionalInfo(NutritionalInfo info)
+        {
+            if (info == null)
+                return new List<NutritionRow>();
+
+            return new List<NutritionRow>
+            {
+                new(GetLocString("NUTR_ENERGY_KCAL"), info.energyKcal > 0 ? info.energyKcal : (float?)null, "kcal"),
+                new(GetLocString("NUTR_PROTEINS"), info.proteins > 0 ? info.proteins : (float?)null, "g"),
+                new(GetLocString("NUTR_FAT"), info.fat > 0 ? info.fat : (float?)null, "g"),
+                new(GetLocString("NUTR_CARBOHYDRATES"), info.carbohydrates > 0 ? info.carbohydrates : (float?)null, "g")
+            };
+        }
+
+        private List<NutritionGroup> BuildNutritionDetailFromNutritionalInfo(NutritionalInfo info)
+        {
+            if (info == null)
+                return new List<NutritionGroup>();
+
+            var rows = new List<NutritionRow>
+            {
+                new(GetLocString("NUTR_ENERGY_KJ"), info.energyKj > 0 ? info.energyKj : (float?)null, "kJ"),
+                new(GetLocString("NUTR_SATURATED_FAT"), info.saturatedFat > 0 ? info.saturatedFat : (float?)null, "g"),
+                new(GetLocString("NUTR_SUGARS"), info.sugars > 0 ? info.sugars : (float?)null, "g"),
+                new(GetLocString("NUTR_SALT"), info.salt > 0 ? info.salt : (float?)null, "g"),
+                new(GetLocString("NUTR_SODIUM"), info.sodium > 0 ? info.sodium : (float?)null, "mg")
+            };
+
+            var filtered = rows.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList();
+            if (filtered.Count == 0)
+                return new List<NutritionGroup>();
+
+            return new List<NutritionGroup>
+            {
+                new(GetLocString("NUTR_GROUP_MACROS"), filtered)
+            };
+        }
+
         private void SetActionButton(string context)
         {
             switch (context)
             {
                 case "pantry":
-                    ActionButtonText = GetLocString("ADD_TO_PANTRY");
+                    ActionButtonText = GetLocStringOrFallback("ADD_TO_PANTRY", "Add to pantry");
                     ShowActionButton = true;
                     break;
                 case "shoppingList":
-                    ActionButtonText = GetLocString("ADD_TO_SHOPPING_LIST");
+                    ActionButtonText = GetLocStringOrFallback("ADD_TO_SHOPPING_LIST", "Add to shopping list");
                     ShowActionButton = true;
                     break;
                 case "mealLog":
-                    ActionButtonText = GetLocString("ADD_TO_MEAL_LOG");
-                    ShowActionButton = true;
+                    ActionButtonText = "";
+                    ShowActionButton = false;
                     break;
                 default:
                     ActionButtonText = "";
@@ -162,14 +281,15 @@ namespace eu.foodmission.platform
 
         public void OnActionButtonClicked()
         {
-            if (!ShowActionButton || string.IsNullOrEmpty(_foodId))
+            if (!ShowActionButton)
                 return;
 
             _store.Dispatch(AppActions.foodInfoAddRequested.Invoke(new AddToContextRequestedAction
             {
                 FoodType = FoodType,
                 FoodId = _foodId,
-                EntryContext = _entryContext
+                EntryContext = _entryContext,
+                FoodData = _foodData
             }));
         }
 
@@ -384,6 +504,12 @@ namespace eu.foodmission.platform
         private static string GetLocString(string key)
         {
             return LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
+        }
+
+        private static string GetLocStringOrFallback(string key, string fallback)
+        {
+            string result = LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
+            return string.IsNullOrEmpty(result) || result == key ? fallback : result;
         }
     }
 }

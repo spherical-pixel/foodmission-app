@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using UnityEngine;
@@ -73,12 +75,18 @@ namespace eu.foodmission.platform
             _localStorage = localStorage;
         }
 
-        public void RequestFoodInfo(FoodInfoType foodType, string foodId)
+        public void RequestFoodInfo(FoodInfoType foodType, string foodId, string foodData = null)
         {
-            RaiseNavigationRequested(Actions.go_to_food_info,
-                new Unity.AppUI.Navigation.Argument("foodType", foodType == FoodInfoType.Product ? "product" : "generic"),
-                new Unity.AppUI.Navigation.Argument("foodId", foodId),
-                new Unity.AppUI.Navigation.Argument("entryContext", "shoppingList"));
+            var args = new List<Unity.AppUI.Navigation.Argument>
+            {
+                new("foodType", foodType == FoodInfoType.Product ? "product" : "generic"),
+                new("foodId", foodId),
+                new("entryContext", "shoppingList")
+            };
+            if (!string.IsNullOrEmpty(foodData))
+                args.Add(new Unity.AppUI.Navigation.Argument("foodData", foodData));
+
+            RaiseNavigationRequested(Actions.go_to_food_info, args.ToArray());
         }
 
         public void ApplyFilter()
@@ -107,16 +115,27 @@ namespace eu.foodmission.platform
                 return;
 
             if (request.FoodType == FoodInfoType.Product)
-                _ = SafeAddProductFromFoodInfoAsync(request.FoodId);
+                _ = SafeAddProductFromFoodInfoAsync(request);
             else
-                _ = SafeAddGenericFoodFromFoodInfoAsync(request.FoodId);
+                _ = SafeAddGenericFoodFromFoodInfoAsync(request);
         }
 
-        private async Task SafeAddProductFromFoodInfoAsync(string foodId)
+        private async Task SafeAddProductFromFoodInfoAsync(AddToContextRequestedAction request)
         {
             try
             {
-                var (food, foodError) = await _foodProductService.GetFoodByIdAsync(foodId);
+                if (!string.IsNullOrEmpty(request.FoodData))
+                {
+                    var product = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
+                    if (product != null)
+                    {
+                        await ImportAndAddItemAsync(product, 1f, "PIECES");
+                        return;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(request.FoodId)) return;
+                var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
                 if (foodError != null || food == null)
                 {
                     Debug.LogWarning($"[{GetType().Name}] Could not load food product for add: {foodError?.message}");
@@ -130,15 +149,25 @@ namespace eu.foodmission.platform
             }
         }
 
-        private async Task SafeAddGenericFoodFromFoodInfoAsync(string foodId)
+        private async Task SafeAddGenericFoodFromFoodInfoAsync(AddToContextRequestedAction request)
         {
             try
             {
-                var (genericFood, gfError) = await _genericFoodService.GetGenericFoodByIdAsync(foodId);
+                if (!string.IsNullOrEmpty(request.FoodData))
+                {
+                    var gf = JsonConvert.DeserializeObject<GenericFood>(request.FoodData);
+                    if (gf != null)
+                    {
+                        await AddGenericFoodItemAsync(gf, 1f, "PIECES");
+                        return;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(request.FoodId)) return;
+                var (genericFood, gfError) = await _genericFoodService.GetGenericFoodByIdAsync(request.FoodId);
                 if (gfError != null || genericFood == null)
                 {
                     Debug.LogWarning($"[{GetType().Name}] Could not load generic food for add: {gfError?.message}");
-                    return;
                 }
                 await AddGenericFoodItemAsync(genericFood, 1f, "PIECES");
             }
@@ -251,6 +280,19 @@ namespace eu.foodmission.platform
             _allItems = new List<ShoppingListItemView>(enrichedItems);
             IsLoadingItems = false;
             ApplyFilter();
+        }
+
+        /// <summary>
+        /// Reloads the shopping list items using the already-stored list ID.
+        /// Used when returning from FoodInfoScreen (back navigation passes no args).
+        /// </summary>
+        public Task ReloadAsync()
+        {
+            if (string.IsNullOrEmpty(_currentListId))
+            {
+                return Task.CompletedTask;
+            }
+            return LoadAsync(_currentListId);
         }
 
         private string GetCacheKey()

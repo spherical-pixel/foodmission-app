@@ -1535,6 +1535,286 @@ MonoBehaviour:
     m_Localized: Got It!
     m_Metadata:
       m_Items: []
+  - m_Id: 21294142465236992
+    m_Localized: Food Information
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625600
+    m_Localized: Add to pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625601
+    m_Localized: Add to shopping list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625602
+    m_Localized: Add to meal log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625603
+    m_Localized: Ingredients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625604
+    m_Localized: Allergens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625605
+    m_Localized: Full nutrition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625606
+    m_Localized: Product details
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: No data available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: Energy (kcal)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energy (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: Protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: Fat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: Saturated fat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: Carbohydrates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: Sugars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: Fiber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: Salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: Sodium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625618
+    m_Localized: Water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625619
+    m_Localized: Plant protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625620
+    m_Localized: Animal protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625621
+    m_Localized: Starch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625622
+    m_Localized: Added sugars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625623
+    m_Localized: Monounsaturated fat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625624
+    m_Localized: Polyunsaturated fat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625625
+    m_Localized: Omega-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625626
+    m_Localized: Omega-6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625627
+    m_Localized: Trans fat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625628
+    m_Localized: Potassium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625629
+    m_Localized: Calcium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625630
+    m_Localized: Phosphorus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625631
+    m_Localized: Magnesium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625632
+    m_Localized: Iron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625633
+    m_Localized: Zinc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625634
+    m_Localized: Vitamin A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625635
+    m_Localized: Vitamin D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625636
+    m_Localized: Vitamin E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625637
+    m_Localized: Vitamin K
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625638
+    m_Localized: Vitamin C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625639
+    m_Localized: Thiamin (B1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625640
+    m_Localized: Riboflavin (B2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625641
+    m_Localized: Vitamin B6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625642
+    m_Localized: Vitamin B12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625643
+    m_Localized: Folate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: Macronutrients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625645
+    m_Localized: Fats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625646
+    m_Localized: Vitamins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625647
+    m_Localized: Minerals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625648
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625649
+    m_Localized: NOVA Group
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625650
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625651
+    m_Localized: Nutrient levels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: Fat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: Saturated fat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: Sugars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: Salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625656
+    m_Localized: Unprocessed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625657
+    m_Localized: Culinary ingredients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819904
+    m_Localized: Processed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819905
+    m_Localized: Ultra-processed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: Quantity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: Serving size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Brands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: Origins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: Manufacturing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: Countries
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Labels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: Carbon footprint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: Barcode
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

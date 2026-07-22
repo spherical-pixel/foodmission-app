@@ -1081,3 +1081,53 @@
 .fm-meal-card-text {
     color: var(--appui-foregrounds-50);
 }
+
+/* ============================================================
+   FoodInfoOverlay — Fullscreen overlay (no navigation push)
+   ============================================================ */
+
+.fm-food-info-overlay {
+    flex-direction: column;
+    /* Use the opaque surface alt (light=#F5F5F5, dark=#0f1f1c) so it fully
+       covers the underlying green screen background */
+    background-color: var(--fm-surface-bg-alt);
+    color: var(--appui-foregrounds-100);
+    flex-grow: 1;
+}
+
+.fm-food-info-overlay__appbar {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 4px;
+    padding-right: 16px;
+    min-height: 56px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--appui-foregrounds-10);
+    /* Match the header region bg of the FoodInfo hero */
+    background-color: var(--fm-surface-bg-alt);
+    color: var(--appui-foregrounds-100);
+    flex-shrink: 0;
+}
+
+.fm-food-info-overlay__back-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    margin-right: 4px;
+    --unity-image-tint-color: var(--appui-foregrounds-100);
+}
+
+.fm-food-info-overlay__title {
+    flex-grow: 1;
+    overflow: hidden;
+    -unity-text-overflow-position: end;
+    white-space: nowrap;
+}
+
+/* The cloned FoodInfo root inside the overlay scroll view */
+.fm-food-info-overlay .fm-fi-root {
+    background-color: var(--fm-surface-bg-alt);
+    flex-grow: 1;
+}

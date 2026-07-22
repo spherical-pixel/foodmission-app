@@ -1,139 +1,365 @@
+/* ============================================================
+   FoodInfoScreen — Visual Redesign
+   ============================================================ */
+
+/* Root */
 .fm-fi-root {
     flex-grow: 1;
-    padding: 16px;
-    flex-direction: column;
+    padding: 0;
 }
-.fm-fi-header {
-    flex-direction: row;
-    margin-bottom: 16px;
-    align-items: flex-start;
+
+/* ── HERO HEADER ─────────────────────────────────────────── */
+
+.fm-fi-hero {
+    position: relative;
+    min-height: 220px;
+    margin-bottom: 0;
+    align-items: center;
+    overflow: hidden;
 }
+
+.fm-fi-hero-bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: var(--fm-surface-bg-alt);
+}
+
 .fm-fi-image {
-    width: 80px;
-    height: 80px;
-    margin-right: 12px;
-    border-radius: 12px;
-}
-.fm-fi-emoji {
-    font-size: 48px;
-    margin-right: 12px;
-    display: none;
-}
-.fm-fi-header-text {
-    flex-grow: 1;
-    flex-direction: column;
-}
-.fm-fi-food-name {
-    margin-bottom: 4px;
-}
-.fm-fi-food-subtitle {
-    color: rgb(var(--appui-texts-secondary));
-    font-size: var(--appui-font-sizes-body-sm);
-}
-.fm-fi-badges-row {
-    flex-direction: row;
-    margin-top: 8px;
-    flex-wrap: wrap;
-    display: none;
-}
-.fm-fi-nutriscore, .fm-fi-nova, .fm-fi-eco {
-    width: 32px;
-    height: 32px;
+    width: 120px;
+    height: 120px;
     border-radius: 16px;
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.15);
+    display: none;
+    align-self: center;
+    margin-bottom: 12px;
+}
+
+.fm-fi-emoji {
+    font-size: 72px;
+    -unity-text-align: middle-center;
+    align-self: center;
+    margin-bottom: 8px;
+    display: none;
+}
+
+.fm-fi-hero-content {
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px 20px 20px;
+    width: 100%;
+}
+
+.fm-fi-food-name {
+    -unity-text-align: middle-center;
+    margin-bottom: 6px;
+    -unity-font-style: bold;
+    white-space: normal;
+}
+
+.fm-fi-food-subtitle {
+    -unity-text-align: middle-center;
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-sm);
+    white-space: normal;
+}
+
+/* ── SCORES STRIP ────────────────────────────────────────── */
+
+.fm-fi-scores-strip {
+    flex-direction: row;
+    justify-content: center;
+    padding: 14px 16px;
+    background-color: var(--fm-surface-bg-transparent);
+    margin-bottom: 0;
+    flex-wrap: wrap;
+}
+
+.fm-fi-score-pill {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.fm-fi-score-pill__badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
-    font-weight: bold;
+    -unity-font-style: bold;
     color: white;
+    font-size: 18px;
+    margin-bottom: 4px;
 }
+
+.fm-fi-score-pill__label {
+    font-size: 10px;
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Nutri-Score colors */
+.fm-fi-score-badge--a { background-color: #008b3a; }
+.fm-fi-score-badge--b { background-color: #7fc241; }
+.fm-fi-score-badge--c { background-color: #ffa700; }
+.fm-fi-score-badge--d { background-color: #ff7a00; }
+.fm-fi-score-badge--e { background-color: #e63329; }
+
+/* NOVA colors */
+.fm-fi-nova-badge--1 { background-color: #008b3a; }
+.fm-fi-nova-badge--2 { background-color: #7fc241; }
+.fm-fi-nova-badge--3 { background-color: #ffa700; }
+.fm-fi-nova-badge--4 { background-color: #e63329; }
+
+/* Eco-Score same as Nutri */
+.fm-fi-eco-badge--a { background-color: #008b3a; }
+.fm-fi-eco-badge--b { background-color: #7fc241; }
+.fm-fi-eco-badge--c { background-color: #ffa700; }
+.fm-fi-eco-badge--d { background-color: #ff7a00; }
+.fm-fi-eco-badge--e { background-color: #e63329; }
+
+/* Visibility helpers */
+.fm-fi-nutriscore,
+.fm-fi-nova,
+.fm-fi-eco {
+    display: none;
+}
+
+.fm-fi-badges-row {
+    display: none;
+}
+
+/* ── TRAFFIC LIGHTS ──────────────────────────────────────── */
+
+.fm-fi-traffic-strip {
+    flex-direction: row;
+    justify-content: center;
+    padding: 12px 16px 4px 16px;
+    flex-wrap: wrap;
+}
+
 .fm-fi-traffic {
     flex-direction: row;
-    margin-left: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
+
+.fm-fi-traffic-dot-container {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 8px;
+}
+
+.fm-fi-traffic-pill {
+    flex-direction: row;
+    align-items: center;
+    border-radius: 12px;
+    padding-left: 10px;
+    padding-right: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.fm-fi-traffic-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.fm-fi-traffic-dot--low      { background-color: #2ecc71; }
+.fm-fi-traffic-dot--moderate { background-color: #f39c12; }
+.fm-fi-traffic-dot--high     { background-color: #e74c3c; }
+.fm-fi-traffic-dot--unknown  { background-color: rgba(128,128,128,0.5); }
+
+.fm-fi-traffic-dot__label {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-50);
+}
+
+/* ── CONTENT AREA ────────────────────────────────────────── */
+
+.fm-fi-content {
+    flex-direction: column;
+    padding: 16px 16px 0 16px;
+}
+
+/* ── MACRO CARDS ─────────────────────────────────────────── */
+
 .fm-fi-macro-cards {
     flex-direction: row;
     margin-bottom: 16px;
     flex-wrap: wrap;
 }
+
 .fm-fi-macro-card {
     flex-grow: 1;
-    flex-basis: 22%;
-    padding: 12px;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    border-radius: 12px;
-    background-color: rgb(var(--appui-backgrounds-200));
-    flex-direction: column;
+    flex-basis: 40%;
+    padding: 14px 12px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    border-radius: 14px;
+    background-color: var(--fm-surface-bg-alt);
     align-items: center;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.06);
 }
-.fm-fi-macro-card__value {
-    font-size: 20px;
-    font-weight: bold;
+
+.fm-fi-macro-card__icon {
+    font-size: 28px;
+    -unity-text-align: middle-center;
     margin-bottom: 4px;
 }
+
+.fm-fi-macro-card__value {
+    font-size: var(--appui-font-sizes-body-lg);
+    -unity-font-style: bold;
+    margin-bottom: 2px;
+}
+
 .fm-fi-macro-card__label {
-    color: rgb(var(--appui-texts-secondary));
-    text-align: center;
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-text-align: middle-center;
 }
-.fm-fi-sections {
-    flex-direction: column;
-}
+
+/* ── SECTION COMMON ──────────────────────────────────────── */
+
 .fm-fi-section {
-    margin-bottom: 16px;
+    margin-bottom: 0;
+    border-top-width: 1px;
+    border-top-color: rgba(255, 255, 255, 0.06);
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
+
 .fm-fi-section-header {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    -unity-font-style: bold;
 }
+
 .fm-fi-section-body {
-    color: rgb(var(--appui-texts-primary));
+    color: var(--appui-foregrounds-50);
     font-size: var(--appui-font-sizes-body-md);
     white-space: normal;
+    line-height: 1.5;
 }
+
+/* ── NUTRITION TABLE ─────────────────────────────────────── */
+
 .fm-fi-nutrition-table {
     flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.07);
 }
+
+.fm-fi-nutrition-group-title {
+    -unity-font-style: bold;
+    padding: 8px 14px 4px 14px;
+    font-size: var(--appui-font-sizes-body-sm);
+    background-color: var(--fm-surface-bg-alt);
+    color: var(--appui-foregrounds-50);
+    letter-spacing: 0.5px;
+}
+
 .fm-fi-nutrition-row {
     flex-direction: row;
     justify-content: space-between;
-    padding: 4px 0;
-    border-bottom: 1px solid rgb(var(--appui-borders-100));
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.05);
 }
+
+/* Zebra striping handled in C# via even/odd class */
+.fm-fi-nutrition-row--odd {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
 .fm-fi-nutrition-row__label {
-    color: rgb(var(--appui-texts-primary));
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-md);
 }
+
 .fm-fi-nutrition-row__value {
-    color: rgb(var(--appui-texts-secondary));
+    font-size: var(--appui-font-sizes-body-md);
+    -unity-font-style: bold;
 }
-.fm-fi-action {
-    margin-top: 16px;
+
+/* ── META ROWS ───────────────────────────────────────────── */
+
+.fm-fi-meta-body {
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+.fm-fi-meta-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.fm-fi-meta-row--odd {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.fm-fi-meta-row__label {
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-md);
+    flex-shrink: 0;
+    margin-right: 12px;
+    max-width: 45%;
+}
+
+.fm-fi-meta-row__value {
+    font-size: var(--appui-font-sizes-body-md);
+    -unity-text-align: middle-right;
+    white-space: normal;
     flex-grow: 1;
 }
+
+/* ── ACTION BUTTON ───────────────────────────────────────── */
+
+.fm-fi-action-container {
+    padding: 16px;
+    padding-top: 20px;
+}
+
+.fm-fi-action {
+    width: 100%;
+}
+
 .fm-fi-action.hidden {
     display: none;
 }
-.fm-fi-score-badge--a, .fm-fi-nutriscore.fm-fi-score-badge--a { background-color: #008b3a; }
-.fm-fi-score-badge--b, .fm-fi-nutriscore.fm-fi-score-badge--b { background-color: #7fc241; }
-.fm-fi-score-badge--c, .fm-fi-nutriscore.fm-fi-score-badge--c { background-color: #ffa700; }
-.fm-fi-score-badge--d, .fm-fi-nutriscore.fm-fi-score-badge--d { background-color: #ff7a00; }
-.fm-fi-score-badge--e, .fm-fi-nutriscore.fm-fi-score-badge--e { background-color: #e63329; }
-.fm-fi-nova-badge--1 { background-color: #008b3a; }
-.fm-fi-nova-badge--2 { background-color: #7fc241; }
-.fm-fi-nova-badge--3 { background-color: #ffa700; }
-.fm-fi-nova-badge--4 { background-color: #e63329; }
-.fm-fi-traffic-dot {
-    width: 16px;
+
+/* ── SCROLL PADDING ──────────────────────────────────────── */
+
+.fm-fi-scroll-bottom-padding {
     height: 16px;
-    border-radius: 8px;
-    margin-bottom: 4px;
-}
-.fm-fi-traffic-dot--low { background-color: #008b3a; }
-.fm-fi-traffic-dot--moderate { background-color: #ffa700; }
-.fm-fi-traffic-dot--high { background-color: #e63329; }
-.fm-fi-traffic-dot-container {
-    margin-right: 12px;
-    align-items: center;
-}
-.fm-fi-traffic-dot__label {
-    font-size: 10px;
-    color: rgb(var(--appui-texts-secondary));
 }

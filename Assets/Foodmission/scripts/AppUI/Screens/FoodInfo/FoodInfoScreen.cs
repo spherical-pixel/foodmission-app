@@ -40,6 +40,11 @@ namespace eu.foodmission.platform
         private VisualElement _metaBody;
         private Unity.AppUI.UI.Button _actionButton;
 
+        // Badge class tracking for clean removal
+        private string _lastNutriScoreClass = "";
+        private string _lastNovaClass = "";
+        private string _lastEcoClass = "";
+
         private AccessibilityNode _actionButtonNode;
         private AccessibilityNode _foodImageNode;
 
@@ -79,6 +84,7 @@ namespace eu.foodmission.platform
             FoodInfoType foodType = FoodInfoType.Product;
             string foodId = "";
             string entryContext = "none";
+            string foodData = null;
 
             if (args != null)
             {
@@ -90,12 +96,14 @@ namespace eu.foodmission.platform
                         foodId = arg.value?.ToString() ?? "";
                     else if (arg.name == "entryContext")
                         entryContext = arg.value?.ToString() ?? "none";
+                    else if (arg.name == "foodData")
+                        foodData = arg.value?.ToString();
                 }
             }
 
             base.OnEnter(controller, destination, args);
 
-            _ = _viewModel?.LoadAsync(foodType, foodId, entryContext).ContinueWith(t =>
+            _ = _viewModel?.LoadAsync(foodType, foodId, entryContext, foodData).ContinueWith(t =>
             {
                 if (t.IsFaulted)
                     Debug.LogError($"[{GetType().Name}] LoadAsync failed: {t.Exception}");
@@ -189,8 +197,15 @@ namespace eu.foodmission.platform
             }
         }
 
+        private static string GetLocOrFallback(string key, string fallback)
+        {
+            string result = LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
+            return string.IsNullOrEmpty(result) || result == key ? fallback : result;
+        }
+
         private void UpdateAllSections()
         {
+            UpdateSectionHeaders();
             _foodName.text = _viewModel.FoodName;
             _foodSubtitle.text = _viewModel.FoodSubtitle;
             _foodEmoji.text = _viewModel.Emoji;
@@ -214,77 +229,106 @@ namespace eu.foodmission.platform
         {
             bool isProduct = _viewModel.FoodType == FoodInfoType.Product;
 
-            _foodImage.style.display = isProduct && !string.IsNullOrEmpty(_viewModel.ImageUrl) ? DisplayStyle.Flex : DisplayStyle.None;
-            _foodEmoji.style.display = !isProduct && !string.IsNullOrEmpty(_viewModel.Emoji) ? DisplayStyle.Flex : DisplayStyle.None;
+            _foodImage.EnableInClassList("hidden",
+                !isProduct || string.IsNullOrEmpty(_viewModel.ImageUrl));
+            _foodImage.style.display = isProduct && !string.IsNullOrEmpty(_viewModel.ImageUrl)
+                ? DisplayStyle.Flex : DisplayStyle.None;
+
+            _foodEmoji.style.display = !isProduct && !string.IsNullOrEmpty(_viewModel.Emoji)
+                ? DisplayStyle.Flex : DisplayStyle.None;
+
             _badgesRow.style.display = isProduct ? DisplayStyle.Flex : DisplayStyle.None;
-            _ingredientsSection.style.display = isProduct && !string.IsNullOrEmpty(_viewModel.Ingredients) ? DisplayStyle.Flex : DisplayStyle.None;
-            _nutritionDetailSection.style.display = _viewModel.NutritionDetail != null && _viewModel.NutritionDetail.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            _metaSection.style.display = _viewModel.MetaRows != null && _viewModel.MetaRows.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+
+            _ingredientsSection.style.display = isProduct && !string.IsNullOrEmpty(_viewModel.Ingredients)
+                ? DisplayStyle.Flex : DisplayStyle.None;
+
+            _nutritionDetailSection.style.display = _viewModel.NutritionDetail != null
+                && _viewModel.NutritionDetail.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+
+            _metaSection.style.display = _viewModel.MetaRows != null
+                && _viewModel.MetaRows.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void UpdateNutriScoreBadge()
         {
+            var pill = _nutriscoreBadge?.parent;
+
+            _nutriscoreBadge.RemoveFromClassList(_lastNutriScoreClass);
             if (string.IsNullOrEmpty(_viewModel.NutritionGrade))
             {
-                _nutriscoreBadge.style.display = DisplayStyle.None;
+                if (pill != null) { pill.style.display = DisplayStyle.None; }
+                _lastNutriScoreClass = "";
                 return;
             }
+            if (pill != null) { pill.style.display = DisplayStyle.Flex; }
             _nutriscoreBadge.style.display = DisplayStyle.Flex;
             _nutriscoreBadge.text = _viewModel.NutritionGrade.ToUpper();
-            _nutriscoreBadge.AddToClassList($"fm-fi-score-badge--{_viewModel.NutritionGrade.ToLower()}");
+            _lastNutriScoreClass = $"fm-fi-score-badge--{_viewModel.NutritionGrade.ToLower()}";
+            _nutriscoreBadge.AddToClassList(_lastNutriScoreClass);
         }
 
         private void UpdateNovaBadge()
         {
+            var pill = _novaBadge?.parent;
+
+            _novaBadge.RemoveFromClassList(_lastNovaClass);
             if (_viewModel.NovaGroup < 1 || _viewModel.NovaGroup > 4)
             {
-                _novaBadge.style.display = DisplayStyle.None;
+                if (pill != null) { pill.style.display = DisplayStyle.None; }
+                _lastNovaClass = "";
                 return;
             }
+            if (pill != null) { pill.style.display = DisplayStyle.Flex; }
             _novaBadge.style.display = DisplayStyle.Flex;
-            _novaBadge.text = $"NOVA {_viewModel.NovaGroup}";
-            _novaBadge.AddToClassList($"fm-fi-nova-badge--{_viewModel.NovaGroup}");
+            _novaBadge.text = $"{_viewModel.NovaGroup}";
+            _lastNovaClass = $"fm-fi-nova-badge--{_viewModel.NovaGroup}";
+            _novaBadge.AddToClassList(_lastNovaClass);
         }
 
         private void UpdateEcoBadge()
         {
+            var pill = _ecoBadge?.parent;
+
+            _ecoBadge.RemoveFromClassList(_lastEcoClass);
             if (string.IsNullOrEmpty(_viewModel.EcoScoreGrade))
             {
-                _ecoBadge.style.display = DisplayStyle.None;
+                if (pill != null) { pill.style.display = DisplayStyle.None; }
+                _lastEcoClass = "";
                 return;
             }
+            if (pill != null) { pill.style.display = DisplayStyle.Flex; }
             _ecoBadge.style.display = DisplayStyle.Flex;
             _ecoBadge.text = _viewModel.EcoScoreGrade.ToUpper();
-            _ecoBadge.AddToClassList($"fm-fi-eco-badge--{_viewModel.EcoScoreGrade.ToLower()}");
+            _lastEcoClass = $"fm-fi-eco-badge--{_viewModel.EcoScoreGrade.ToLower()}";
+            _ecoBadge.AddToClassList(_lastEcoClass);
         }
 
         private void UpdateTrafficLights()
         {
+            _trafficLights.Clear();
+
             if (_viewModel.TrafficLights == null || _viewModel.TrafficLights.Count == 0)
             {
                 _trafficLights.style.display = DisplayStyle.None;
                 return;
             }
             _trafficLights.style.display = DisplayStyle.Flex;
-            _trafficLights.Clear();
 
             foreach (var light in _viewModel.TrafficLights)
             {
-                var dotContainer = new VisualElement();
-                dotContainer.AddToClassList("fm-fi-traffic-dot-container");
-                dotContainer.style.flexDirection = FlexDirection.Column;
-                dotContainer.style.alignItems = Align.Center;
+                var pill = new VisualElement();
+                pill.AddToClassList("fm-fi-traffic-dot-container");
 
                 var dot = new VisualElement();
                 dot.AddToClassList("fm-fi-traffic-dot");
                 dot.AddToClassList($"fm-fi-traffic-dot--{light.Level?.ToLower() ?? "unknown"}");
-                dotContainer.Add(dot);
+                pill.Add(dot);
 
                 var label = new Text { size = TextSize.S, text = light.Label };
                 label.AddToClassList("fm-fi-traffic-dot__label");
-                dotContainer.Add(label);
+                pill.Add(label);
 
-                _trafficLights.Add(dotContainer);
+                _trafficLights.Add(pill);
             }
         }
 
@@ -306,19 +350,30 @@ namespace eu.foodmission.platform
             _nutritionDetailTable.Clear();
             if (_viewModel.NutritionDetail == null) return;
 
+            int globalRowIndex = 0;
+
             foreach (var group in _viewModel.NutritionDetail)
             {
                 if (group.Rows == null || group.Rows.Count == 0) continue;
 
-                var groupTitle = new Text { size = TextSize.S, text = group.Title };
-                groupTitle.AddToClassList("fm-fi-nutrition-group-title");
-                _nutritionDetailTable.Add(groupTitle);
+                if (!string.IsNullOrEmpty(group.Title))
+                {
+                    var groupTitle = new Text { size = TextSize.S, text = group.Title };
+                    groupTitle.AddToClassList("fm-fi-nutrition-group-title");
+                    _nutritionDetailTable.Add(groupTitle);
+                }
 
                 foreach (var row in group.Rows)
                 {
                     var detailRow = new NutritionDetailRow();
                     detailRow.SetData(row.Label, row.Value, row.Unit);
+                    // Zebra striping via USS class
+                    if (globalRowIndex % 2 != 0)
+                    {
+                        detailRow.AddToClassList("fm-fi-nutrition-row--odd");
+                    }
                     _nutritionDetailTable.Add(detailRow);
+                    globalRowIndex++;
                 }
             }
         }
@@ -328,10 +383,19 @@ namespace eu.foodmission.platform
             _ingredientsBody.text = _viewModel.Ingredients;
         }
 
+        private void UpdateSectionHeaders()
+        {
+            _ingredientsSection.Q<Heading>("ingredients-header").text = GetLocOrFallback("SECTION_INGREDIENTS", "Ingredients");
+            _allergensSection.Q<Heading>("allergens-header").text = GetLocOrFallback("SECTION_ALLERGENS", "Allergens");
+            _nutritionDetailSection.Q<Heading>("nutrition-detail-header").text = GetLocOrFallback("SECTION_NUTRITION_DETAIL", "Full nutrition");
+            _metaSection.Q<Heading>("meta-header").text = GetLocOrFallback("SECTION_META", "Product details");
+        }
+
         private void UpdateAllergens()
         {
             _allergensBody.text = _viewModel.Allergens;
-            _allergensSection.style.display = !string.IsNullOrEmpty(_viewModel.Allergens) ? DisplayStyle.Flex : DisplayStyle.None;
+            _allergensSection.style.display = !string.IsNullOrEmpty(_viewModel.Allergens)
+                ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void UpdateMetaRows()
@@ -344,25 +408,26 @@ namespace eu.foodmission.platform
             }
             _metaSection.style.display = DisplayStyle.Flex;
 
+            int rowIndex = 0;
             foreach (var row in _viewModel.MetaRows)
             {
                 var rowContainer = new VisualElement();
-                rowContainer.style.flexDirection = FlexDirection.Row;
-                rowContainer.style.justifyContent = Justify.SpaceBetween;
-                rowContainer.style.paddingTop = 4;
-                rowContainer.style.paddingBottom = 4;
-                rowContainer.style.borderBottomWidth = 1;
-                rowContainer.style.borderBottomColor = new StyleColor(new Color(0.8f, 0.8f, 0.8f, 0.3f));
+                rowContainer.AddToClassList("fm-fi-meta-row");
+                if (rowIndex % 2 != 0)
+                {
+                    rowContainer.AddToClassList("fm-fi-meta-row--odd");
+                }
 
-                var label = new Text { size = TextSize.S, text = row.Label };
-                label.style.color = new StyleColor(new Color(0.5f, 0.5f, 0.5f));
+                var labelEl = new Text { size = TextSize.S, text = row.Label };
+                labelEl.AddToClassList("fm-fi-meta-row__label");
 
-                var value = new Text { size = TextSize.S, text = row.Value };
-                value.style.color = new StyleColor(Color.white);
+                var valueEl = new Text { size = TextSize.S, text = row.Value };
+                valueEl.AddToClassList("fm-fi-meta-row__value");
 
-                rowContainer.Add(label);
-                rowContainer.Add(value);
+                rowContainer.Add(labelEl);
+                rowContainer.Add(valueEl);
                 _metaBody.Add(rowContainer);
+                rowIndex++;
             }
         }
 

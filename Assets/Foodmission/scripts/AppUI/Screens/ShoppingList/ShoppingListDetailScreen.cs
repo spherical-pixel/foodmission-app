@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using UnityEngine;
 using UnityEngine.Accessibility;
 
@@ -81,9 +83,10 @@ namespace eu.foodmission.platform
                 }
 
                 if (!string.IsNullOrEmpty(listId))
+                {
                     await _viewModel.LoadAsync(listId, listTitle);
-
-                _viewModel?.CheckPendingFoodInfoAddRequest();
+                }
+                // else: returning from overlay — state is already preserved, no reload needed.
             }
             catch (Exception ex)
             {
@@ -116,11 +119,15 @@ namespace eu.foodmission.platform
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
                 _searchCategoryField.OnProductInfoRequested = product =>
                 {
-                    _viewModel.RequestFoodInfo(FoodInfoType.Product, product.id);
+                    FoodInfoOverlay.Show(this, FoodInfoType.Product, product.id, "shoppingList",
+                        JsonConvert.SerializeObject(product),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
                 };
                 _searchCategoryField.OnGenericFoodInfoRequested = genericFood =>
                 {
-                    _viewModel.RequestFoodInfo(FoodInfoType.Generic, genericFood.id);
+                    FoodInfoOverlay.Show(this, FoodInfoType.Generic, genericFood.id, "shoppingList",
+                        JsonConvert.SerializeObject(genericFood),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
                 };
 
                 _searchCategoryField.OnPopoverVisibilityChanged += isVisible =>

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
+using Newtonsoft.Json;
+
 using eu.foodmission.platform.Components;
 
 using Unity.AppUI.Core;
@@ -57,7 +59,8 @@ namespace eu.foodmission.platform
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
-            _viewModel?.CheckPendingFoodInfoAddRequest();
+            // State is preserved — no reload needed. CheckPendingFoodInfoAddRequest no
+            // longer required since FoodInfo is now shown as an overlay.
         }
 
         protected override void OnViewModelBound()
@@ -83,11 +86,15 @@ namespace eu.foodmission.platform
                 _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchCategoryField.OnProductInfoRequested = product =>
                 {
-                    _viewModel.RequestFoodInfo(FoodInfoType.Product, product.id);
+                    FoodInfoOverlay.Show(this, FoodInfoType.Product, product.id, "pantry",
+                        JsonConvert.SerializeObject(product),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
                 };
                 _searchCategoryField.OnGenericFoodInfoRequested = genericFood =>
                 {
-                    _viewModel.RequestFoodInfo(FoodInfoType.Generic, genericFood.id);
+                    FoodInfoOverlay.Show(this, FoodInfoType.Generic, genericFood.id, "pantry",
+                        JsonConvert.SerializeObject(genericFood),
+                        () => _viewModel?.CheckPendingFoodInfoAddRequest());
                 };
                 _searchCategoryField.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
             }
