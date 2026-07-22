@@ -1085,30 +1085,6 @@ MonoBehaviour:
     m_Localized: Bruksanvisning
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Localized: Stykker
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Localized: kg
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Localized: ml
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Localized: l
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Localized: Kopper
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: "Kj\xF8leskap"
     m_Metadata:
@@ -1489,6 +1465,83 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25973559573602304
     m_Localized: Side {0} av {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Localized: "S\xF8ker etter m\xE5ltider og oppskrifter..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Localized: Hva spiste du til {0}?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Localized: "Det er ikke registrert noen m\xE5ltider i det siste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Localized: "Last inn forrige m\xE5ltid eller oppskrift"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Localized: "Avbryt s\xF8ket"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Localized: "Ingrediensene i \xAB{0}\xBB har endret seg. Vil du oppdatere den
+      eksisterende forh\xE5ndsinnstillingen eller lagre den som en ny forh\xE5ndsinnstilling?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Localized: "Forh\xE5ndsinnstillingen er endret."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Localized: Lagre som nytt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Localized: "Forh\xE5ndsinnstilt navn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Localized: "Lagre som ny forh\xE5ndsinnstilling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Localized: "Vennligst skriv inn et navn p\xE5 den nye forh\xE5ndsinnstillingen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Localized: Oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Localized: "Velg en m\xE5ltidstype"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Localized: "Hvilken type m\xE5ltid \xF8nsker du \xE5 registrere?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Localized: "Hvor kom m\xE5ltidet ditt fra?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Localized: "S\xF8k etter m\xE5ltider og oppskrifter..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Localized: "S\xF8k etter produkter eller velg kategori..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Localized: "M\xE5ltider jeg har spist i dag"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Localized: "Vennligst legg til minst \xE9n matvare"
     m_Metadata:
       m_Items: []
   references:

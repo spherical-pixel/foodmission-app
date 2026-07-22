@@ -73,7 +73,9 @@ namespace eu.foodmission.platform.Tests
             Assert.IsEmpty(_vm.PresetResults);
             Assert.IsEmpty(_vm.SelectedItems);
             Assert.IsEmpty(_vm.MealContainerName);
+            Assert.IsFalse(_vm.SaveAsPreset);
             Assert.IsNull(_vm.SelectedMealPreset);
+
             Assert.IsFalse(_vm.IsSaving);
             Assert.AreEqual("", _vm.ErrorMessage);
             Assert.IsNull(_vm.ErrorDetail);
@@ -159,8 +161,10 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_vm.MealFromPantry);
             Assert.IsEmpty(_vm.PresetResults);
             Assert.IsEmpty(_vm.SelectedItems);
+            Assert.IsFalse(_vm.SaveAsPreset);
             Assert.IsEmpty(_vm.MealContainerName);
             Assert.IsNull(_vm.SelectedMealPreset);
+
         }
 
         // ========= Preset tests =========
@@ -207,15 +211,16 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.ImportFromBarcodeAsync("123456"))
                 .ReturnsAsync((foodProduct, null));
 
-            _vm.AddProductItem(product, 2f, "PIECES").GetAwaiter().GetResult();
+            _vm.AddProductItem(product, null, null).GetAwaiter().GetResult();
 
             Assert.AreEqual(1, _vm.SelectedItems.Count);
             Assert.AreEqual(foodProduct.id, _vm.SelectedItems[0].foodProductId);
             Assert.AreEqual("Test Product", _vm.SelectedItems[0].name);
-            Assert.AreEqual(2f, _vm.SelectedItems[0].quantity);
-            Assert.AreEqual("PIECES", _vm.SelectedItems[0].unit);
+            Assert.IsNull(_vm.SelectedItems[0].quantity);
+            Assert.IsNull(_vm.SelectedItems[0].unit);
             Assert.IsTrue(_vm.SelectedItems[0].isProduct);
         }
+
 
         [Test]
         public void AddProductItem_ImportFails_FallsBackToFindByBarcode()

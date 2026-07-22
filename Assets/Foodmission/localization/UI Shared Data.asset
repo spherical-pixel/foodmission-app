@@ -1059,30 +1059,6 @@ MonoBehaviour:
     m_Key: DETECT_MANUAL
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Key: UNIT_PIECES
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Key: UNIT_G
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Key: UNIT_KG
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Key: UNIT_ML
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Key: UNIT_L
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Key: UNIT_CUPS
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Key: LOC_FRIDGE
     m_Metadata:
@@ -1453,6 +1429,82 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25973559573602304
     m_Key: txtPage_n_of_pages
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Key: SEARCHING_PRESETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Key: txtWHAT_DID_YOU_HAVE_FOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Key: txtNO_RECENT_MEALS_LOGGED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Key: LOAD_PRESET_OR_RECIPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Key: CANCEL_SEARCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Key: PRESET_MODIFIED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Key: PRESET_MODIFIED_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Key: SAVE_AS_NEW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Key: PLACEHOLDER_PRESET_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Key: SAVE_AS_NEW_PRESET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Key: ERROR_PRESET_NAME_REQUIRED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Key: RECIPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Key: SELECT_MEAL_TYP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Key: WHAT_MEAL_TYPE_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Key: WHERE_MEAL_FROM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Key: SEARCH_PRESET_RECIPES_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Key: SEARCH_PRODUCTS_OR_SELECT_CATEGORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Key: MEALS_EATEN_TODAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Key: ERROR_NO_ITEMS_SELECTED
     m_Metadata:
       m_Items: []
   m_Metadata:

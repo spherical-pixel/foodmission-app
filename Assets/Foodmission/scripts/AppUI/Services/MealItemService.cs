@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -41,9 +43,8 @@ namespace eu.foodmission.platform
                 return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] GetByMealIdAsync"));
 
             string raw = req.downloadHandler.text;
-            string wrapped = "{\"data\":" + raw + "}";
-            var response = JsonUtility.FromJson<MealItemDetailList>(wrapped);
-            return (response?.data, null);
+            MealItemDetail[] items = JsonConvert.DeserializeObject<MealItemDetail[]>(raw);
+            return (items, null);
         }
 
         public async Task<(MealItem Result, ApiErrorResponse Error)> CreateAsync(string mealId, CreateMealItemRequest request)
@@ -68,7 +69,7 @@ namespace eu.foodmission.platform
             if (req.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] CreateAsync"));
 
-            return (JsonUtility.FromJson<MealItem>(req.downloadHandler.text), null);
+            return (JsonConvert.DeserializeObject<MealItem>(req.downloadHandler.text), null);
         }
 
         public async Task<(MealItem Result, ApiErrorResponse Error)> UpdateAsync(string mealId, string itemId, CreateMealItemRequest request)
@@ -93,7 +94,7 @@ namespace eu.foodmission.platform
             if (req.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] UpdateAsync"));
 
-            return (JsonUtility.FromJson<MealItem>(req.downloadHandler.text), null);
+            return (JsonConvert.DeserializeObject<MealItem>(req.downloadHandler.text), null);
         }
 
         public async Task<(bool Success, ApiErrorResponse Error)> DeleteAsync(string mealId, string itemId)

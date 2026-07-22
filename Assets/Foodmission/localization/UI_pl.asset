@@ -1103,30 +1103,6 @@ MonoBehaviour:
     m_Localized: "Instrukcja obs\u0142ugi"
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Localized: Utwory
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Localized: kg
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Localized: ml
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Localized: l
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Localized: Kubki
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: "Lod\xF3wka"
     m_Metadata:
@@ -1514,6 +1490,83 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25973559573602304
     m_Localized: Strona {0} z {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Localized: "Wyszukiwanie posi\u0142k\xF3w i przepis\xF3w..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Localized: "Co jad\u0142e\u015B na {0}?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Localized: "Nie zarejestrowano \u017Cadnych ostatnich posi\u0142k\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Localized: "Za\u0142aduj poprzedni posi\u0142ek lub przepis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Localized: Anuluj wyszukiwanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Localized: "Sk\u0142adniki \u201E{0}\u201D uleg\u0142y zmianie. Czy chcesz
+      zaktualizowa\u0107 istniej\u0105cy profil, czy zapisa\u0107 go jako nowy?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Localized: "Zmodyfikowano ustawienie wst\u0119pne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Localized: Zapisz jako nowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Localized: "Nazwa ustawienia wst\u0119pnego"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Localized: "Zapisz jako nowe ustawienie wst\u0119pne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Localized: "Wprowad\u017A nazw\u0119 nowego ustawienia wst\u0119pnego"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Localized: Przepis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Localized: "Wybierz rodzaj posi\u0142ku"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Localized: "Jaki rodzaj posi\u0142ku chcesz zarejestrowa\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Localized: "Sk\u0105d pochodzi\u0142o twoje danie?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Localized: Wyszukaj dania i przepisy...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Localized: "Wyszukaj produkty lub wybierz kategori\u0119..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Localized: "Dzisiejsze posi\u0142ki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Localized: "Prosz\u0119 doda\u0107 co najmniej jeden produkt spo\u017Cywczy"
     m_Metadata:
       m_Items: []
   references:

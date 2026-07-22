@@ -66,11 +66,12 @@ namespace eu.foodmission.platform
         public string foodProductId;
         public string genericFoodId;
         public string name;
-        public float quantity = 1f;
-        public string unit = "PIECES";
+        public float? quantity;
+        public string unit;
         public bool isProduct;
         public bool isGenericFood;
     }
+
 
     public class PantryDeduction
     {

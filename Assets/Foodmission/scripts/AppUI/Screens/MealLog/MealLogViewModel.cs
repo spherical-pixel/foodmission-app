@@ -58,7 +58,10 @@ namespace eu.foodmission.platform
 
         [ObservableProperty] private string m_MealContainerName = "";
 
+        [ObservableProperty] private bool m_SaveAsPreset;
+
         [ObservableProperty] private Meal m_SelectedMealPreset;
+
 
         [ObservableProperty] private List<Meal> m_PresetResults = new();
 
@@ -72,13 +75,7 @@ namespace eu.foodmission.platform
 
         [ObservableProperty] private ApiErrorResponse m_ErrorDetail;
 
-        // [ObservableProperty] private bool m_TodayLoaded;
 
-        // [ObservableProperty] private int m_CaloriesConsumed = 0;
-
-        // [ObservableProperty] private int m_CaloriesLeft = 2200;
-
-        // [ObservableProperty] private float m_CaloriesProgress = 0f;
 
         [ObservableProperty] private bool m_IsSearchingPresets;
 
@@ -206,14 +203,14 @@ namespace eu.foodmission.platform
                     {
                         foreach (MealItemDetail d in details)
                         {
-                            string name = d.foodProduct?.name ?? d.genericFood?.foodName ?? "Unknown";
+                            string name = d.foodProduct?.name ?? d.genericFood?.foodName ?? "@UI:UNKNOWN";
                             items.Add(new MealLogItem
                             {
                                 id = d.id,
                                 foodProductId = d.foodProductId,
                                 genericFoodId = d.genericFoodId,
                                 name = name,
-                                quantity = d.quantity,
+                                quantity = (d.quantity.HasValue && d.quantity.Value > 0) ? (float?)d.quantity.Value : null,
                                 unit = d.unit,
                                 isProduct = d.itemType == "food_product",
                                 isGenericFood = d.itemType == "generic_food",
@@ -347,7 +344,7 @@ namespace eu.foodmission.platform
             return result;
         }
 
-        public async Task AddProductItem(OpenFoodFactsProduct product, float qty, string unit)
+        public async Task AddProductItem(OpenFoodFactsProduct product, float? qty, string unit)
         {
             var (foodItem, importError) = await ImportByBarcodeAsync(product.barcode);
             if (importError != null)
@@ -367,15 +364,15 @@ namespace eu.foodmission.platform
             SelectedItems = new List<MealLogItem>(SelectedItems) { newItem };
         }
 
-        public async Task AddGenericFoodItem(GenericFood food, float qty, string unit)
+        public async Task AddGenericFoodItem(GenericFood food, float? qty, string unit)
         {
             if (!Guid.TryParse(food.id, out _))
             {
                 ErrorDetail = new ApiErrorResponse
                 {
                     statusCode = 400,
-                    error = "Generic food not available",
-                    message = "This generic food is not available yet",
+                    error = "@UI:GENERIC_FOOD_NOT_AVAILABLE",
+                    message = "@UI:GENERIC_FOOD_NOT_AVAILABLE_DESC",
                 };
                 return;
             }
@@ -390,6 +387,7 @@ namespace eu.foodmission.platform
             };
             SelectedItems = new List<MealLogItem>(SelectedItems) { newItem };
         }
+
 
         public async Task<(FoodProduct Result, ApiErrorResponse Error)> ImportByBarcodeAsync(string barcode)
         {
@@ -430,18 +428,28 @@ namespace eu.foodmission.platform
                     (i.isGenericFood && i.genericFoodId == snap.genericFoodId));
                 if (current == null)
                     return true;
-                if (Math.Abs(current.quantity - snap.quantity) > 0.001f || current.unit != snap.unit)
+                bool quantityChanged = (!current.quantity.HasValue && snap.quantity.HasValue) ||
+                                       (current.quantity.HasValue && !snap.quantity.HasValue) ||
+                                       (current.quantity.HasValue && snap.quantity.HasValue && Math.Abs(current.quantity.Value - snap.quantity.Value) > 0.001f);
+                if (quantityChanged || current.unit != snap.unit)
                     return true;
             }
 
             return false;
         }
 
+
         public async Task<bool> SaveAsync()
         {
             if (SelectedTypeOfMeal == null)
             {
-                ErrorMessage = "Select a meal type";
+                ErrorMessage = "@UI:SELECT_MEAL_TYPE";
+                return false;
+            }
+
+            if (SelectedItems == null || SelectedItems.Count == 0)
+            {
+                ErrorMessage = "@UI:ERROR_NO_ITEMS_SELECTED";
                 return false;
             }
 
@@ -461,12 +469,7 @@ namespace eu.foodmission.platform
 
                 if (isRecipe)
                 {
-                    // if (string.IsNullOrWhiteSpace(trimmedName))
-                    // {
-                    //     ErrorMessage = "Enter a meal name";
-                    //     IsSaving = false;
-                    //     return false;
-                    // }
+
 
                     var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
                     {
@@ -488,12 +491,7 @@ namespace eu.foodmission.platform
                 }
                 else if (hasPreset && hasModifications && trimmedName != SelectedMealPreset.name)
                 {
-                    if (string.IsNullOrWhiteSpace(trimmedName))
-                    {
-                        ErrorMessage = "Enter a meal name";
-                        IsSaving = false;
-                        return false;
-                    }
+
 
                     var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
                     {
@@ -517,13 +515,6 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(trimmedName))
-                    {
-                        ErrorMessage = "Enter a meal name";
-                        IsSaving = false;
-                        return false;
-                    }
-
                     var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
                     {
                         name = trimmedName,
@@ -544,9 +535,10 @@ namespace eu.foodmission.platform
                     {
                         var req = new CreateMealItemRequest
                         {
-                            quantity = Math.Max(1, (int)entry.quantity),
-                            unit = entry.unit,
+                            quantity = entry.quantity.HasValue ? (int?)Math.Max(1, (int)entry.quantity.Value) : null,
+                            unit = !string.IsNullOrEmpty(entry.unit) ? entry.unit : null,
                         };
+
 
                         if (entry.isProduct && !string.IsNullOrEmpty(entry.foodProductId))
                             req.foodProductId = entry.foodProductId;
@@ -638,8 +630,8 @@ namespace eu.foodmission.platform
 
                     var req = new CreateMealItemRequest
                     {
-                        quantity = Math.Max(1, (int)current.quantity),
-                        unit = current.unit,
+                        quantity = current.quantity.HasValue ? (int?)Math.Max(1, (int)current.quantity.Value) : null,
+                        unit = !string.IsNullOrEmpty(current.unit) ? current.unit : null,
                     };
                     if (current.isProduct && !string.IsNullOrEmpty(current.foodProductId))
                         req.foodProductId = current.foodProductId;
@@ -658,17 +650,24 @@ namespace eu.foodmission.platform
                             return false;
                         }
                     }
-                    else if (Math.Abs(current.quantity - snap.quantity) > 0.001f || current.unit != snap.unit)
+                    else
                     {
-                        if (string.IsNullOrEmpty(snap.id)) continue;
-                        var (_, updateErr) = await _mealItemService.UpdateAsync(mealId, snap.id, req);
-                        if (updateErr != null)
+                        bool qtyChanged = (!current.quantity.HasValue && snap.quantity.HasValue) ||
+                                          (current.quantity.HasValue && !snap.quantity.HasValue) ||
+                                          (current.quantity.HasValue && snap.quantity.HasValue && Math.Abs(current.quantity.Value - snap.quantity.Value) > 0.001f);
+                        if (qtyChanged || current.unit != snap.unit)
                         {
-                            ErrorDetail = updateErr;
-                            IsSaving = false;
-                            return false;
+                            if (string.IsNullOrEmpty(snap.id)) continue;
+                            var (_, updateErr) = await _mealItemService.UpdateAsync(mealId, snap.id, req);
+                            if (updateErr != null)
+                            {
+                                ErrorDetail = updateErr;
+                                IsSaving = false;
+                                return false;
+                            }
                         }
                     }
+
                 }
 
                 var logRequest = new CreateMealLogRequest
@@ -733,13 +732,12 @@ namespace eu.foodmission.platform
                 .Take(10)
                 .ToList();
 
-            //UpdateCalorieStats();
-            //TodayLoaded = true;
         }
 
         public void ResetToStep1()
         {
             MealContainerName = "";
+            SaveAsPreset = false;
             SelectedMealPreset = null;
             PresetResults = new List<Meal>();
             SelectedTypeOfMealIndex = -1;
@@ -751,6 +749,7 @@ namespace eu.foodmission.platform
             ErrorMessage = "";
             CurrentStep = MealLogStep.SelectingTypeOfMeal;
         }
+
 
         public void GoBack()
         {
@@ -780,26 +779,11 @@ namespace eu.foodmission.platform
                     .OrderByDescending(l => DateTime.Parse(l.timestamp))
                     .Take(10)
                     .ToList();
-                // UpdateCalorieStats();
+
             }
         }
 
-        // ========= Helpers =========
 
-        // private void UpdateCalorieStats()
-        // {
-        //     int consumed = 0;
-        //     foreach (var log in _allLogs)
-        //     {
-        //         consumed += (int)(log.meal?.calories ?? 0f);
-        //     }
-        //     int target = 2200;
-        //     int left = Mathf.Max(0, target - consumed);
-
-        //     CaloriesConsumed = consumed;
-        //     CaloriesLeft = left;
-        //     CaloriesProgress = target > 0 ? (float)consumed / target : 0f;
-        // }
 
         public void DisposeSearchCts()
         {

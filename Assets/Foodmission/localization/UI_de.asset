@@ -1093,30 +1093,6 @@ MonoBehaviour:
     m_Localized: Handbuch
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Localized: "St\xFCcke"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Localized: kg
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Localized: ml
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Localized: l
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Localized: Becher
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: "K\xFChlschrank"
     m_Metadata:
@@ -1500,6 +1476,84 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25973559573602304
     m_Localized: Seite {0} von {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Localized: Suche nach Gerichten und Rezepten...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Localized: Was hast du zum {0} gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Localized: Es wurden keine Mahlzeiten aus der letzten Zeit erfasst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Localized: Vorherige Mahlzeit oder Rezept laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Localized: Suche abbrechen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Localized: "Die Zutaten von \u201E{0}\u201C haben sich ge\xE4ndert. M\xF6chten
+      Sie die vorhandene Voreinstellung aktualisieren oder als neue Voreinstellung
+      speichern?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Localized: "Voreinstellung ge\xE4ndert."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Localized: Als neue Datei speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Localized: Name der Voreinstellung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Localized: Als neue Voreinstellung speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Localized: "Bitte geben Sie einen Namen f\xFCr die neue Voreinstellung ein"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Localized: Rezept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Localized: "W\xE4hlen Sie eine Mahlzeitart aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Localized: "Welche Art von Mahlzeit m\xF6chtest du eintragen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Localized: Woher stammte dein Essen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Localized: Gerichte und Rezepte suchen...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Localized: "Produkte suchen oder Kategorie ausw\xE4hlen..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Localized: Heute eingenommene Mahlzeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Localized: "Bitte f\xFCgen Sie mindestens ein Lebensmittel hinzu"
     m_Metadata:
       m_Items: []
   references:

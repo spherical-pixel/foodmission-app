@@ -45,7 +45,7 @@ namespace eu.foodmission.platform
                     VisualElement filler = new VisualElement();
                     filler.name = "safe-area-filler";
                     filler.style.height = safeAreaTop;
-                    filler.style.backgroundColor = new Color(0f, 0f, 0f,0f);
+                    filler.style.backgroundColor = new Color(0f, 0f, 0f, 0f);
                     drawer.Add(filler);
                 }
             }
@@ -131,27 +131,27 @@ namespace eu.foodmission.platform
             content.Add(menuContainer);
 
             // No-op items (functionality to be added later)
-            AddDrawerButton(menuContainer, "✏️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","EDIT_PROFILE"), ()=>
+            AddDrawerButton(menuContainer, "✏️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EDIT_PROFILE"), () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_editprofile);
             });
-            AddDrawerButton(menuContainer, "🧑‍💻 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","EDIT_AVATAR"), () =>
+            AddDrawerButton(menuContainer, "🧑‍💻 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EDIT_AVATAR"), () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_avatar_editor);
             });
 
-            AddDrawerButton(menuContainer, "👥 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MANAGE_GROUPS"), () =>
+            AddDrawerButton(menuContainer, "👥 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MANAGE_GROUPS"), () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_groups);
             });
 
-            AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","VIEW_BADGES"), null);
+            AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES"), null);
 
-            
-            AddDrawerButton(menuContainer, "⚙️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","SETTINGS"), () =>
+
+            AddDrawerButton(menuContainer, "⚙️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SETTINGS"), () =>
             {
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_settings);
@@ -164,7 +164,7 @@ namespace eu.foodmission.platform
             dangerContainer.style.paddingTop = 4;
             content.Add(dangerContainer);
 
-            AddDrawerButton(dangerContainer, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","DELETE_ACCOUNT"), () =>
+            AddDrawerButton(dangerContainer, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DELETE_ACCOUNT"), () =>
             {
                 FMDialog.ShowAlert(
                     App.current?.rootVisualElement,
@@ -192,12 +192,12 @@ namespace eu.foodmission.platform
                             Debug.LogError($"[FoodmissionVisualController] Delete account failed: {error}");
                         }
                     },
-                    "@UI:TXT_CANCEL", onKo: () => {}
+                    "@UI:TXT_CANCEL", onKo: () => { }
                 );
-                
+
             });
 
-            AddDrawerButton(menuContainer, "🚪 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","LOG_OUT"), () =>
+            AddDrawerButton(menuContainer, "🚪 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOG_OUT"), () =>
             {
                 _profileDrawer.Close();
                 var storeService = App.current?.services?.GetService<IStoreService>();
@@ -345,36 +345,36 @@ namespace eu.foodmission.platform
         private void BuildMenuContent(VisualElement container)
         {
             // Phase 2 — disabled
-            AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","DAILY_CHALLENGE"),  null);
-            AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MISSIONS"),         null);
+            AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DAILY_CHALLENGE"), null);
+            AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSIONS"), null);
 
             // Phase 1 Sprint 3 — active
-            AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","SHOPPING_LIST"),    () =>
+            AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_shopping_list);
             });
-            AddMenuItem(container, "🧺 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","PANTRY"),           () =>
+            AddMenuItem(container, "🧺 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY"), () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_pantry);
             });
 
             // Phase 3 — disabled
-            AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","RECIPE_BOOK"),      null);
-            AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","FOOD_WASTE"),       () =>
+            AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_BOOK"), null);
+            AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOOD_WASTE"), () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_foodwaste);
             });
-            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","KNOWLEDGE"),        null);
-            AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","GLOBAL_COMMUNITY"), null);
-            AddMenuItem(container, "🗺️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI","MAP"),              null);
+            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "KNOWLEDGE"), null);
+            AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GLOBAL_COMMUNITY"), null);
+            AddMenuItem(container, "🗺️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAP"), null);
         }
 
         private void AddMenuItem(VisualElement container, string label, Action onClick)
         {
-            
+
             var btn = new Unity.AppUI.UI.Button();
             btn.AddToClassList("fm-button-align-left");
             btn.AddToClassList("fm-button-drawer");
@@ -383,7 +383,7 @@ namespace eu.foodmission.platform
             btn.quiet = true;
             btn.size = Size.L;
             btn.style.width = Length.Percent(100);
-            
+
             if (onClick != null)
             {
                 btn.clicked += onClick;
@@ -599,13 +599,13 @@ namespace eu.foodmission.platform
 
             var activeTab = BottomNavBarHelper.GetActiveTab(destination.name);
 
-            AddNavItem(bottomNavBar, "fm-home",     "@UI:NAV_HOME",     activeTab == NavTab.Home,    navController, Actions.go_to_home);
+            AddNavItem(bottomNavBar, "fm-home", "@UI:NAV_HOME", activeTab == NavTab.Home, navController, Actions.go_to_home);
             AddNavItem(bottomNavBar, "fm-meal-log", "@UI:NAV_MEAL_LOG", activeTab == NavTab.MealLog, navController, Actions.go_to_meallog);
 
             // Notifications tab toggles the bottom sheet — does not navigate
-            var notificationsItem = new BottomNavBarItem("fm-notifications", "@UI:NAV_NOTIFICATIONS", () => ToggleNotificationsPanel());
-            notificationsItem.isSelected = activeTab == NavTab.Notifications;
-            bottomNavBar.Insert(1, notificationsItem);
+            // var notificationsItem = new BottomNavBarItem("fm-notifications", "@UI:NAV_NOTIFICATIONS", () => ToggleNotificationsPanel());
+            // notificationsItem.isSelected = activeTab == NavTab.Notifications;
+            // bottomNavBar.Insert(1, notificationsItem);
 
             // Menu tab toggles the bottom sheet — does not navigate
             var menuItem = new BottomNavBarItem("fm-menu", "@UI:NAV_MENU", () => ToggleMenuDrawer());
@@ -629,9 +629,9 @@ namespace eu.foodmission.platform
 
             appBar.title = destination.label;
             appBar.stretch = false;
-            
 
-            
+
+
             var themeService = App.current?.services.GetService<IThemeService>();
             if (themeService != null)
             {
@@ -639,12 +639,12 @@ namespace eu.foodmission.platform
                 if (safeAreaTop > 0)
                 {
 
-                     VisualElement filler = new VisualElement();
+                    VisualElement filler = new VisualElement();
                     filler.name = "appbar-safe-area-filler";
                     filler.style.height = safeAreaTop;
                     filler.AddToClassList("appui-appbar__bar"); // same background as __bar to seamlessly fill the safe area
 
-                    appBar.hierarchy.Insert(0, filler); 
+                    appBar.hierarchy.Insert(0, filler);
                 }
             }
 

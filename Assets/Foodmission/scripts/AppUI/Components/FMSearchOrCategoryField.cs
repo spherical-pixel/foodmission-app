@@ -36,11 +36,16 @@ namespace eu.foodmission.platform.Components
             set { if (_textField != null) _textField.value = value; }
         }
 
+        [UxmlAttribute("skip-quantity-confirmation")]
+        [CreateProperty]
+        public bool SkipQuantityConfirmation { get; set; }
+
         // ========= CALLBACKS (set by consuming screen) =========
         public Func<string, Task<List<OpenFoodFactsProduct>>> SearchProductsAsync { get; set; }
         public Func<Task<List<GenericFood>>> GetGenericFoodsAsync { get; set; }
-        public Func<OpenFoodFactsProduct, float, string, Task> OnProductConfirmed { get; set; }
-        public Func<GenericFood, float, string, Task> OnGenericFoodConfirmed { get; set; }
+        public Func<OpenFoodFactsProduct, float?, string, Task> OnProductConfirmed { get; set; }
+        public Func<GenericFood, float?, string, Task> OnGenericFoodConfirmed { get; set; }
+
         public Func<string, Task<List<GenericFood>>> SearchGenericFoodsAsync { get; set; }
         public Func<string, int, int, Task<PaginatedGenericFoodResponse>> SearchByFoodGroupAsync { get; set; }
         public Func<string, Task> OnCreateItemAsync { get; set; }
@@ -525,6 +530,12 @@ namespace eu.foodmission.platform.Components
         private void OnGenericFoodClicked(GenericFood genericFood)
         {
             Debug.Log($"[FMSearch] OnGenericFoodClicked: {genericFood.foodName} mode={_currentMode}");
+            if (SkipQuantityConfirmation)
+            {
+                ConfirmItemDirectly(genericFood);
+                return;
+            }
+
             _debounceCts?.Cancel();
             _debounceCts?.Dispose();
             _debounceCts = null;
@@ -539,6 +550,7 @@ namespace eu.foodmission.platform.Components
             _confirmContainer.style.display = DisplayStyle.Flex;
             _textField.value = "";
         }
+
 
         private void OnTextFieldValueChanged(ChangeEvent<string> evt)
         {
@@ -675,6 +687,12 @@ namespace eu.foodmission.platform.Components
         {
             string itemDesc = item is OpenFoodFactsProduct p ? p.name : (item is GenericFood g ? g.foodName : item.ToString());
             Debug.Log($"[FMSearch] OnResultClicked: {itemDesc} type={item.GetType().Name} mode={_currentMode}");
+            if (SkipQuantityConfirmation)
+            {
+                ConfirmItemDirectly(item);
+                return;
+            }
+
             _debounceCts?.Cancel();
             _debounceCts?.Dispose();
             _debounceCts = null;
@@ -705,6 +723,39 @@ namespace eu.foodmission.platform.Components
             _confirmContainer.style.display = DisplayStyle.Flex;
             _textField.value = "";
         }
+
+        private async void ConfirmItemDirectly(object item)
+        {
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = null;
+
+            if (item is OpenFoodFactsProduct product && OnProductConfirmed != null)
+            {
+                try
+                {
+                    await OnProductConfirmed(product, null, null);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] OnProductConfirmed failed: {ex.Message}");
+                }
+            }
+            else if (item is GenericFood genericFood && OnGenericFoodConfirmed != null)
+            {
+                try
+                {
+                    await OnGenericFoodConfirmed(genericFood, null, null);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] OnGenericFoodConfirmed failed: {ex.Message}");
+                }
+            }
+            ResetToIdle();
+        }
+
+
 
         private async void OnAddClicked()
         {

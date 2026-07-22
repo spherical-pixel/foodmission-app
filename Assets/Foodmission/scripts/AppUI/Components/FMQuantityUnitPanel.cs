@@ -20,6 +20,18 @@ namespace eu.foodmission.platform.Components
         public static List<string> UnitValues => _unitValues;
         public static List<string> UnitChoices => _unitLabels;
 
+        public static string GetUnitLabel(string unitCode)
+        {
+            if (string.IsNullOrEmpty(unitCode)) return "";
+            if (_unitValues != null && _unitLabels != null)
+            {
+                int idx = _unitValues.IndexOf(unitCode);
+                if (idx >= 0 && idx < _unitLabels.Count)
+                    return _unitLabels[idx];
+            }
+            return unitCode;
+        }
+
         public static async Task InitializeAsync(ICatalogService catalogService, string lang)
         {
             if (_unitValues != null && _cachedLang == lang) return;
@@ -69,6 +81,9 @@ namespace eu.foodmission.platform.Components
             }
         }
 
+        public bool IsQuantityModified { get; private set; }
+        public bool IsUnitModified { get; private set; }
+
         private readonly Unity.AppUI.UI.FloatField _qtyField;
         private readonly Dropdown _unitDropdown;
 
@@ -94,6 +109,9 @@ namespace eu.foodmission.platform.Components
             _unitDropdown.SetValueWithoutNotify(new[] { 0 });
             _unitDropdown.style.marginBottom = 8;
             Add(_unitDropdown);
+
+            _qtyField.RegisterValueChangedCallback(evt => IsQuantityModified = true);
+            _unitDropdown.RegisterValueChangedCallback(evt => IsUnitModified = true);
         }
 
         public void SetQuantityWithoutNotify(float value)

@@ -67,7 +67,7 @@ namespace eu.foodmission.platform
                         : 0;
                     ScheduleProactiveRefresh(remaining, refreshRemaining);
                     // TODO: Remove this log or change to Debug after testing
-                    // Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
+                    Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
 
                     ProfileResponse profile = await FetchProfileAsync(state.accessToken);
                     if (profile != null)
@@ -233,11 +233,11 @@ namespace eu.foodmission.platform
                 {
                     string errorMessage = request.responseCode switch
                     {
-                        401 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_LOGIN_401"), 
-                        404 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_404"),
-                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_400"),
-                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_500"),
-                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_CONNECTION",new object[]{ request.error})
+                        401 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_LOGIN_401"),
+                        404 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_404"),
+                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_400"),
+                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_500"),
+                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_CONNECTION", new object[] { request.error })
                     };
 
                     Debug.LogError($"[{GetType().Name}] Login failed: {errorMessage} (Code: {request.responseCode})");
@@ -252,7 +252,7 @@ namespace eu.foodmission.platform
 
                 if (string.IsNullOrEmpty(response?.access_token))
                 {
-                    string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_INVALID_RESPONSE");
+                    string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_INVALID_RESPONSE");
                     _storeService.store.Dispatch(AppActions.loginFailure.Invoke(error));
                     return (false, null, error);
                 }
@@ -299,7 +299,7 @@ namespace eu.foodmission.platform
             }
             catch (Exception ex)
             {
-                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_UNEXPECTED",new object[]{ ex.Message});
+                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_UNEXPECTED", new object[] { ex.Message });
                 Debug.LogError($"[{GetType().Name}] Login exception: {ex}");
                 _storeService.store.Dispatch(AppActions.loginFailure.Invoke(error));
                 return (false, null, error);
@@ -351,10 +351,10 @@ namespace eu.foodmission.platform
                 {
                     string errorMessage = request.responseCode switch
                     {
-                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_REGISTER_400"),
-                        409 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_REGISTER_409"),
-                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_500"),
-                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_CONNECTION", new object[]{ request.error })
+                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_400"),
+                        409 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_409"),
+                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_500"),
+                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_CONNECTION", new object[] { request.error })
                     };
 
                     Debug.LogError($"[{GetType().Name}] Register failed: {errorMessage} (Code: {request.responseCode})");
@@ -369,7 +369,7 @@ namespace eu.foodmission.platform
 
                 if (response?.createdUser == null || string.IsNullOrEmpty(response.createdUser.id))
                 {
-                    string errorMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_INVALID_RESPONSE");
+                    string errorMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_INVALID_RESPONSE");
                     _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMsg));
                     return (false, null, errorMsg);
                 }
@@ -396,7 +396,7 @@ namespace eu.foodmission.platform
             }
             catch (Exception ex)
             {
-                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_UNEXPECTED", new object[]{ ex.Message });
+                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_UNEXPECTED", new object[] { ex.Message });
                 Debug.LogError($"[{GetType().Name}] Register exception: {ex}");
                 _storeService.store.Dispatch(AppActions.registerFailure.Invoke(error));
                 return (false, null, error);
@@ -431,7 +431,7 @@ namespace eu.foodmission.platform
             var request = new ProfileUpdateRequest
             {
                 language = state.lang,
-                
+
                 settings = new UserSettingsDto
                 {
                     theme = state.theme,

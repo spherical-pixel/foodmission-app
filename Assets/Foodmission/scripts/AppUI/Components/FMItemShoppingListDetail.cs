@@ -17,16 +17,17 @@ namespace eu.foodmission.platform.Components
     [UxmlElement]
     public partial class FMItemShoppingListDetail : VisualElement
     {
-        
+
 
         /* ========= UXML ATTRIBUTES ========= */
-        [UxmlAttribute("text")][CreateProperty]
+        [UxmlAttribute("text")]
+        [CreateProperty]
         public string Text
         {
             get => _text?.text ?? "";
             set
             {
-                if( _text != null)
+                if (_text != null)
                 {
                     _text.text = value;
                 }
@@ -57,7 +58,8 @@ namespace eu.foodmission.platform.Components
             this.Add(_checkbox);
 
             _text = new Unity.AppUI.UI.Text();
-            _text.primary = true;            
+            _text.primary = true;
+            _text.style.width = Length.Percent(65);
             this.Add(_text);
 
             _openButton = new Unity.AppUI.UI.Button();
@@ -96,9 +98,9 @@ namespace eu.foodmission.platform.Components
             _buttonsContainer.Add(_removeButton);
 
 
-            
+
         }
-        
-        
+
+
     }
 }

@@ -33,18 +33,21 @@ namespace eu.foodmission.platform.Components
             overlay.pickingMode = PickingMode.Ignore;
 
             var spinner = new CircularProgress();
-            spinner.style.width = 48;
-            spinner.style.height = 48;
+            spinner.style.width = 128;
+            spinner.style.height = 128;
             overlay.Add(spinner);
 
             if (!string.IsNullOrEmpty(message))
             {
-                var label = new Text { text = message };
-                label.style.marginTop = 12;
+                var label = new Text { text = message, size = TextSize.L };
+                label.style.marginTop = 32;
                 label.style.color = Color.white;
-                label.style.fontSize = 16;
+                label.style.fontSize = 28;
+                label.style.unityFontStyleAndWeight = FontStyle.Bold;
+
                 overlay.Add(label);
             }
+
 
             anchor.Add(overlay);
             s_Overlays[anchor] = overlay;

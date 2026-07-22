@@ -1111,30 +1111,6 @@ MonoBehaviour:
     m_Localized: Handleiding
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Localized: Stukken
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Localized: kg
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Localized: ml
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Localized: l
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Localized: Bekers
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: Koelkast
     m_Metadata:
@@ -1516,6 +1492,83 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25973559573602304
     m_Localized: Pagina {0} van {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Localized: Zoeken naar maaltijden en recepten...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Localized: Wat heb je gegeten als {0}?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Localized: Er zijn geen recente maaltijden geregistreerd.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Localized: Vorige maaltijd of recept laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Localized: Zoekopdracht annuleren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Localized: "De ingredi\xEBnten van \u201E{0}\u201C zijn gewijzigd. Wilt u de
+      bestaande voorinstelling bijwerken of opslaan als een nieuwe voorinstelling?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Localized: Voorinstelling aangepast.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Localized: Opslaan als nieuw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Localized: Naam van de voorinstelling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Localized: Opslaan als nieuwe voorinstelling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Localized: Voer een naam in voor de nieuwe voorinstelling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Localized: Recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Localized: Kies een maaltijdtype
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Localized: Wat voor soort maaltijd wil je vastleggen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Localized: Waar kwam je maaltijd vandaan?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Localized: Zoek maaltijden en recepten...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Localized: Zoek producten of kies een categorie...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Localized: Maaltijden die ik vandaag heb gegeten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Localized: "Voeg alstublieft ten minste \xE9\xE9n voedingsmiddel toe"
     m_Metadata:
       m_Items: []
   references:

@@ -5,39 +5,74 @@
     <ui:VisualElement name="root" class="fm-root">
         <appui:ExVisualElement name="log-meal-zone">
             <appui:ExVisualElement name="step-1" class="fm-ml-step">
-                <appui:Heading name="step-1-heading" text="What type of meal do you want to log?" size="M" primary="false" class="fm-ml-step-heading"/>
+                <appui:Heading name="step-1-heading" text="What type of meal do you want to log?" size="M" primary="false" class="fm-ml-step-heading">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26305215656353792)"/>
+                    </Bindings>
+                </appui:Heading>
                 <ui:VisualElement name="step-1-buttons" class="fm-ml-step-buttons"/>
             </appui:ExVisualElement>
             <appui:ExVisualElement name="step-2" class="fm-ml-step">
-                <fm:FMButton name="btn-back-step-2" title="Back" leading-icon="fm-arrow-left" quiet="true" size="M" class="fm-ml-back-inline fm-button-align-left fm-button-list"/>
-                <appui:Heading name="step-2-heading" text="Where was your meal from?" size="M" primary="false" class="fm-ml-step-heading"/>
+                <fm:FMButton name="btn-back-step-2" title="Back" leading-icon="fm-arrow-left" quiet="true" size="M" class="fm-ml-back-inline fm-button-align-left fm-button-list">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395959562231808)"/>
+                    </Bindings>
+                </fm:FMButton>
+                <appui:Heading name="step-2-heading" text="Where was your meal from?" size="M" primary="false" class="fm-ml-step-heading">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26305695111438336)"/>
+                    </Bindings>
+                </appui:Heading>
                 <ui:VisualElement name="step-2-buttons" class="fm-ml-step-buttons"/>
             </appui:ExVisualElement>
             <appui:ExVisualElement name="step-3" class="fm-ml-step">
-                <fm:FMButton name="btn-back-step-3" title="Back" leading-icon="fm-arrow-left" quiet="true" size="M" class="fm-ml-back-inline fm-button-align-left fm-button-list"/>
+                <fm:FMButton name="btn-back-step-3" title="Back" leading-icon="fm-arrow-left" quiet="true" size="M" class="fm-ml-back-inline fm-button-align-left fm-button-list">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395959562231808)"/>
+                    </Bindings>
+                </fm:FMButton>
                 <appui:Spacer spacing="L"/>
                 <appui:Heading name="step-3-heading" text="What did you eat?" size="M" primary="false" class="fm-ml-step-heading"/>
-                <fm:FMButton name="btn-load-preset" title="Load previous meal or recipe" quiet="false" leading-icon="fm-search" variant="Accent" class="fm-button-align-left fm-button"/>
+                <fm:FMButton name="btn-load-preset" title="Load previous meal or recipe" quiet="false" variant="Accent" trailing-icon="list-magnifying-glass" class="fm-button-align-left fm-button"/>
                 <appui:Spacer spacing="L"/>
                 <ui:VisualElement name="preset-results" class="fm-ml-preset-results" style="display: none;">
-                    <appui:TextField name="preset-search-field" placeholder="Search meals and recipes..." class="fm-ml-search-field"/>
+                    <appui:TextField name="preset-search-field" placeholder="Search meals and recipes..." class="fm-ml-search-field">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26308100574142464)"/>
+                        </Bindings>
+                    </appui:TextField>
                     <ui:VisualElement name="preset-results-list" class="fm-ml-preset-results-list"/>
                 </ui:VisualElement>
                 <appui:ExVisualElement name="step-3-content" style="display: flex;">
-                    <ui:VisualElement name="meal-name-row" class="fm-ml-search-row">
-                        <appui:TextField name="meal-name-field" placeholder="Meal name" class="fm-ml-search-field"/>
-                    </ui:VisualElement>
-                    <appui:Spacer spacing="L"/>
-                    <fm:FMSearchOrCategoryField name="search-category-field"/>
+                    <fm:FMSearchOrCategoryField name="search-category-field" skip-quantity-confirmation="true">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="Placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26308484147437568)"/>
+                        </Bindings>
+                    </fm:FMSearchOrCategoryField>
                     <appui:ExVisualElement name="selection-and-button">
                         <ui:VisualElement name="selected-chips" class="fm-ml-selected-chips"/>
-                        <fm:FMButton name="btn-log-selected" title="Log Selected" variant="Accent" class="fm-ml-log-btn"/>
+                        <ui:VisualElement name="log-actions-row" class="fm-ml-log-actions-row">
+                            <appui:Checkbox name="chk-save-preset" label="Save as preset" class="fm-ml-save-preset-chk">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26085108048977920)"/>
+                                </Bindings>
+                            </appui:Checkbox>
+                            <fm:FMButton name="btn-log-selected" title="Log Selected" variant="Accent" trailing-icon="upload-simple" class="fm-ml-log-btn fm-button fm-button-align-left">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000004)"/>
+                                </Bindings>
+                            </fm:FMButton>
+                        </ui:VisualElement>
                     </appui:ExVisualElement>
                 </appui:ExVisualElement>
             </appui:ExVisualElement>
         </appui:ExVisualElement>
         <appui:ExVisualElement name="logged-meals-zone" class="fm-ml-logged-zone">
-            <appui:Heading name="heading-today" text="Meals eaten today" size="M" primary="false"/>
+            <appui:Heading name="heading-today" text="Meals eaten today" size="M" primary="false">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26309328330809344)"/>
+                </Bindings>
+            </appui:Heading>
             <appui:ExVisualElement name="list-meals-today" class="fm-ml-meals-list"/>
         </appui:ExVisualElement>
         <ui:VisualElement class="fm-bottom-nav-padding"/>

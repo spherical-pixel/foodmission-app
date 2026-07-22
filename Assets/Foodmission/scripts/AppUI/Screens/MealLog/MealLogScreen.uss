@@ -67,12 +67,16 @@
 /* Selected items */
 .fm-ml-selected-chips {
     flex-direction: column;
+    justify-content: flex-start;
     margin: 8px 0;
     gap: 4px;
+    min-height: 700px;
 }
 
 .fm-ml-selected-chips > * {
     margin: 2px 0;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 /* Preset card accent border */
@@ -81,11 +85,25 @@
     border-width: 1px;
 }
 
+/* Log actions row */
+.fm-ml-log-actions-row {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.fm-ml-save-preset-chk {
+    align-self: flex-start;
+}
+
 /* Log button */
 .fm-ml-log-btn {
-    margin-top: 8px;
-    align-self: flex-end;
+    align-self: flex-start;
+    margin-top: 12px;
+    width: 100%;
 }
+
 
 /* Meal card badge */
 .fm-ml-card-badge {
