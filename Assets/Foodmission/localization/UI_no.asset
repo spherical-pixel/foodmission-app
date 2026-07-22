@@ -1544,6 +1544,122 @@ MonoBehaviour:
     m_Localized: "Vennligst legg til minst \xE9n matvare"
     m_Metadata:
       m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: Slett element
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: Strekkode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Merke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Merker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: Karbonavtrykk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: Salgsland
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Etiketter og sertifiseringer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: Produksjonssteder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: Ingrediensenes opprinnelse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: Mengde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: "Porsjonsst\xF8rrelse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: Ingen data tilgjengelig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: Karbohydrater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: Energi (kcal)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energi (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: Fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: Kostfiber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: "Makron\xE6ringsstoffer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: Proteiner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: Salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: Mettet fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: Natrium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: Sukkerarter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: Fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: Salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: Mettet fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: Sukkerarter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: Ferdig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Neste
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

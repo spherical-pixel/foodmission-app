@@ -40,6 +40,10 @@ namespace eu.foodmission.platform.Components
         [CreateProperty]
         public bool SkipQuantityConfirmation { get; set; }
 
+        [UxmlAttribute("open-food-info-on-select")]
+        [CreateProperty]
+        public bool OpenFoodInfoOnSelect { get; set; }
+
         // ========= CALLBACKS (set by consuming screen) =========
         public Func<string, Task<List<OpenFoodFactsProduct>>> SearchProductsAsync { get; set; }
         public Func<Task<List<GenericFood>>> GetGenericFoodsAsync { get; set; }
@@ -533,7 +537,14 @@ namespace eu.foodmission.platform.Components
 
         private void OnGenericFoodClicked(GenericFood genericFood)
         {
-            Debug.Log($"[FMSearch] OnGenericFoodClicked: {genericFood.foodName} mode={_currentMode}");
+            Debug.Log($"[FMSearch] OnGenericFoodClicked: {genericFood.foodName} mode={_currentMode} openInfo={OpenFoodInfoOnSelect}");
+
+            if (OpenFoodInfoOnSelect)
+            {
+                OnGenericFoodInfoRequested?.Invoke(genericFood);
+                return;
+            }
+
             if (SkipQuantityConfirmation)
             {
                 ConfirmItemDirectly(genericFood);
@@ -690,7 +701,17 @@ namespace eu.foodmission.platform.Components
         private void OnResultClicked(object item)
         {
             string itemDesc = item is OpenFoodFactsProduct p ? p.name : (item is GenericFood g ? g.foodName : item.ToString());
-            Debug.Log($"[FMSearch] OnResultClicked: {itemDesc} type={item.GetType().Name} mode={_currentMode}");
+            Debug.Log($"[FMSearch] OnResultClicked: {itemDesc} type={item.GetType().Name} mode={_currentMode} openInfo={OpenFoodInfoOnSelect}");
+
+            if (OpenFoodInfoOnSelect)
+            {
+                if (item is OpenFoodFactsProduct product)
+                    OnProductInfoRequested?.Invoke(product);
+                else if (item is GenericFood genericFood)
+                    OnGenericFoodInfoRequested?.Invoke(genericFood);
+                return;
+            }
+
             if (SkipQuantityConfirmation)
             {
                 ConfirmItemDirectly(item);
@@ -812,8 +833,13 @@ namespace eu.foodmission.platform.Components
                         {
                             OnResultClicked(new OpenFoodFactsProduct
                             {
+                                id = foodItem.id,
                                 name = foodItem.name,
                                 barcode = foodItem.barcode,
+                                imageFrontUrl = foodItem.imageFrontUrl ?? foodItem.imageUrl,
+                                nutritionGrade = foodItem.nutriscoreGrade,
+                                ecoscoreGrade = foodItem.ecoscoreGrade,
+                                novaGroup = foodItem.novaGroup,
                                 brands = Array.Empty<string>(),
                             });
                         }
@@ -889,11 +915,6 @@ namespace eu.foodmission.platform.Components
 
         private VisualElement MakeResultRow(object item, Action<object> onClick)
         {
-            var row = new VisualElement();
-            row.AddToClassList("fm-scf-result-row-container");
-            row.style.flexDirection = FlexDirection.Row;
-            row.style.alignItems = Align.Center;
-
             var btn = new Unity.AppUI.UI.Button();
             btn.AddToClassList("fm-scf-result-row");
             btn.style.flexGrow = 1;
@@ -919,22 +940,10 @@ namespace eu.foodmission.platform.Components
 
             btn.title = $"{text}";
 
-            var infoBtn = new IconButton { icon = "info", quiet = true };
-            infoBtn.AddToClassList("fm-scf-result-info-btn");
-            infoBtn.clicked += () =>
-            {
-                if (item is OpenFoodFactsProduct p)
-                    OnProductInfoRequested?.Invoke(p);
-                else if (item is GenericFood g)
-                    OnGenericFoodInfoRequested?.Invoke(g);
-            };
-            row.Add(btn);
-            row.Add(infoBtn);
-
             object captured = item;
             btn.RegisterCallback<ClickEvent>(_ => onClick(captured));
 
-            return row;
+            return btn;
         }
 
     }

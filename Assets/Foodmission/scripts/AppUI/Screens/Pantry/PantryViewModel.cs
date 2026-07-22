@@ -323,7 +323,7 @@ namespace eu.foodmission.platform
                     var product = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
                     if (product != null)
                     {
-                        await ImportAndAddFoodItemAsync(product, 1f, "PIECES");
+                        await ImportAndAddFoodItemAsync(product, null, null);
                         return;
                     }
                 }
@@ -352,7 +352,7 @@ namespace eu.foodmission.platform
                     var gf = JsonConvert.DeserializeObject<GenericFood>(request.FoodData);
                     if (gf != null)
                     {
-                        await AddGenericFoodItemAsync(gf, 1f, "PIECES");
+                        await AddGenericFoodItemAsync(gf, null, null);
                         return;
                     }
                 }
@@ -391,17 +391,19 @@ namespace eu.foodmission.platform
             SaveCacheFromAllItems();
         }
 
-        public async Task ImportAndAddFoodItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
+        public async Task ImportAndAddFoodItemAsync(OpenFoodFactsProduct product, float? quantity = null, string unit = null)
         {
+            if (product == null) return;
+
             var (foodItem, importError) = await ImportByBarcodeAsync(product.barcode);
             if (importError != null)
             {
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FAILED_IMPORT_FOOD", new object[] { product.name });
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
                 ErrorDetail = importError;
                 return;
             }
 
-            var (added, addError) = await _pantryService.AddItemAsync(foodItem.id, null, quantity, unit);
+            var (added, addError) = await _pantryService.AddItemAsync(foodItem.id, null, quantity ?? 1f, unit ?? "PIECES");
 
             if (addError != null)
             {
@@ -423,7 +425,7 @@ namespace eu.foodmission.platform
             return await FoodProductFlow.ImportByBarcodeAsync(_foodProductService, _openFoodFactsClientService, barcode);
         }
 
-        public async Task AddGenericFoodItemAsync(GenericFood genericFood, float quantity, string unit)
+        public async Task AddGenericFoodItemAsync(GenericFood genericFood, float? quantity = null, string unit = null)
         {
             if (!Guid.TryParse(genericFood.id, out _))
             {
@@ -437,7 +439,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity, unit);
+            var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity ?? 1f, unit ?? "PIECES");
 
             if (error != null)
             {

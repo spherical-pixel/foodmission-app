@@ -1548,6 +1548,122 @@ MonoBehaviour:
     m_Localized: "Por favor, a\xF1ade al menos un producto alimenticio"
     m_Metadata:
       m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: Eliminar elemento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: "C\xF3digo de barras"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Marca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Marcas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: Huella de carbono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: "Pa\xEDses de venta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Etiquetas y certificaciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: "Lugares de fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: Origen de los ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: Cantidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: "Tama\xF1o de la raci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: No hay datos disponibles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: Carbohidratos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: "Energ\xEDa (kcal)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energija (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: Grasas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: Fibra alimentaria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: Macronutrientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: "Prote\xEDnas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: Sal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: Grasas saturadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: Sodio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: "Az\xFAcares"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: Grasa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: Sal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: Grasas saturadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: "Az\xFAcares"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: Hecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Siguiente
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

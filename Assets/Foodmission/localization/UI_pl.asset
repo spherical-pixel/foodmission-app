@@ -1569,6 +1569,122 @@ MonoBehaviour:
     m_Localized: "Prosz\u0119 doda\u0107 co najmniej jeden produkt spo\u017Cywczy"
     m_Metadata:
       m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: "Usu\u0144 element"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: Kod kreskowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Marka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Marki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: "\u015Alad w\u0119glowy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: "Kraje sprzeda\u017Cy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Etykiety i certyfikaty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: Miejsca produkcji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: "Pochodzenie sk\u0142adnik\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: "Ilo\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: "Wielko\u015B\u0107 porcji"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: "Brak dost\u0119pnych danych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: "W\u0119glowodany"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: Energia (kcal)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energia (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: "T\u0142uszcz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: "B\u0142onnik pokarmowy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: "Makrosk\u0142adniki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: "Bia\u0142ko"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: "S\xF3l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: "T\u0142uszcze nasycone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: "S\xF3d"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: Cukry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: "T\u0142uszcz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: "S\xF3l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: "T\u0142uszcze nasycone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: Cukry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: Gotowe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Dalej
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

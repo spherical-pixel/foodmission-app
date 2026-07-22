@@ -1571,6 +1571,122 @@ MonoBehaviour:
     m_Localized: "Voeg alstublieft ten minste \xE9\xE9n voedingsmiddel toe"
     m_Metadata:
       m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: Item verwijderen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: Barcode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Merk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Merken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: CO2-voetafdruk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: Landen waar verkocht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Labels & certificeringen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: Productielocaties
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: "Herkomst van ingredi\xEBnten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: Hoeveelheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: Portiegrootte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: Geen gegevens beschikbaar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: Koolhydraten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: Energie (kcal)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energie (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: Vetten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: Voedingsvezels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: "Macronutri\xEBnten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: Eiwitten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: Zout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: Verzadigde vetten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: Natrium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: Suikers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: Vetten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: Zout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: Verzadigde vetten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: Suikers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: Klaar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Volgende
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

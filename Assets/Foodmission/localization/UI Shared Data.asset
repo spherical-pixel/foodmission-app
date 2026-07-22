@@ -15,6 +15,122 @@ MonoBehaviour:
   m_TableCollectionName: UI
   m_TableCollectionNameGuidString: e58ac225f892840658d216244603ef45
   m_Entries:
+  - m_Id: 26341658550329344
+    m_Key: DELETE_ITEM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Key: META_BARCODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Key: META_BRAND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Key: META_BRANDS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Key: META_CARBON_FOOTPRINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Key: META_COUNTRIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Key: META_LABELS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Key: META_MANUFACTURING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Key: META_ORIGINS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Key: META_QUANTITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Key: META_SERVING_SIZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Key: NO_DATA_AVAILABLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Key: NUTR_CARBOHYDRATES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Key: NUTR_ENERGY_KCAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Key: NUTR_ENERGY_KJ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Key: NUTR_FAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Key: NUTR_FIBER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Key: NUTR_GROUP_MACROS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Key: NUTR_PROTEINS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Key: NUTR_SALT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Key: NUTR_SATURATED_FAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Key: NUTR_SODIUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Key: NUTR_SUGARS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Key: TL_FAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Key: TL_SALT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Key: TL_SATURATED_FAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Key: TL_SUGARS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Key: TXT_DONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Key: TXT_NEXT
+    m_Metadata:
+      m_Items: []
   - m_Id: 21294142465236992
     m_Key: FOOD_INFO_TITLE
     m_Metadata:
@@ -45,50 +161,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142473625606
     m_Key: SECTION_META
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625607
-    m_Key: NO_DATA_AVAILABLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625608
-    m_Key: NUTR_ENERGY_KCAL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625609
-    m_Key: NUTR_ENERGY_KJ
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625610
-    m_Key: NUTR_PROTEINS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625611
-    m_Key: NUTR_FAT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625612
-    m_Key: NUTR_SATURATED_FAT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625613
-    m_Key: NUTR_CARBOHYDRATES
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625614
-    m_Key: NUTR_SUGARS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625615
-    m_Key: NUTR_FIBER
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625616
-    m_Key: NUTR_SALT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625617
-    m_Key: NUTR_SODIUM
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625618
@@ -195,10 +267,6 @@ MonoBehaviour:
     m_Key: NUTR_FOLATE_TOTAL
     m_Metadata:
       m_Items: []
-  - m_Id: 21294142473625644
-    m_Key: NUTR_GROUP_MACROS
-    m_Metadata:
-      m_Items: []
   - m_Id: 21294142473625645
     m_Key: NUTR_GROUP_FATS
     m_Metadata:
@@ -227,22 +295,6 @@ MonoBehaviour:
     m_Key: TRAFFIC_LIGHT_LABEL
     m_Metadata:
       m_Items: []
-  - m_Id: 21294142473625652
-    m_Key: TL_FAT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625653
-    m_Key: TL_SATURATED_FAT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625654
-    m_Key: TL_SUGARS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625655
-    m_Key: TL_SALT
-    m_Metadata:
-      m_Items: []
   - m_Id: 21294142473625656
     m_Key: NOVA_1
     m_Metadata:
@@ -257,42 +309,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819905
     m_Key: NOVA_4
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819906
-    m_Key: META_QUANTITY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819907
-    m_Key: META_SERVING_SIZE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819908
-    m_Key: META_BRANDS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819909
-    m_Key: META_ORIGINS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819910
-    m_Key: META_MANUFACTURING
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819911
-    m_Key: META_COUNTRIES
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819912
-    m_Key: META_LABELS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819913
-    m_Key: META_CARBON_FOOTPRINT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819914
-    m_Key: META_BARCODE
     m_Metadata:
       m_Items: []
   - m_Id: 6145026047336448

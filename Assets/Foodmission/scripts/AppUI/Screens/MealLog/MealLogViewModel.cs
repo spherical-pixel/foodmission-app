@@ -144,7 +144,7 @@ namespace eu.foodmission.platform
                 }
 
                 if (gf != null)
-                    await AddGenericFoodItem(gf, 1f, "PIECES");
+                    await AddGenericFoodItem(gf, null, null);
             }
             catch (Exception ex)
             {
@@ -162,7 +162,7 @@ namespace eu.foodmission.platform
 
                 if (product != null)
                 {
-                    await AddProductItem(product, 1f, "PIECES");
+                    await AddProductItem(product, null, null);
                 }
                 else if (!string.IsNullOrEmpty(request.FoodId))
                 {
@@ -175,7 +175,7 @@ namespace eu.foodmission.platform
                             name = food.name,
                             barcode = food.barcode,
                             brands = Array.Empty<string>(),
-                        }, 1f, "PIECES");
+                        }, null, null);
                     }
                 }
             }

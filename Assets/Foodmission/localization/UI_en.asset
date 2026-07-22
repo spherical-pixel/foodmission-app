@@ -1559,6 +1559,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26318181705441280
     m_Localized: Please add at least one food item
+    m_Metadata:
+      m_Items: []
   - m_Id: 21294142465236992
     m_Localized: Food Information
     m_Metadata:
@@ -1604,7 +1606,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625610
-    m_Localized: Protein
+    m_Localized: Proteins
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625611
@@ -1624,7 +1626,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625615
-    m_Localized: Fiber
+    m_Localized: Dietary fiber
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625616
@@ -1816,19 +1818,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819909
-    m_Localized: Origins
+    m_Localized: Origin of ingredients
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819910
-    m_Localized: Manufacturing
+    m_Localized: Manufacturing places
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819911
-    m_Localized: Countries
+    m_Localized: Countries where sold
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819912
-    m_Localized: Labels
+    m_Localized: Labels & certifications
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819913
@@ -1837,6 +1839,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819914
     m_Localized: Barcode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: Delete item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Brand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Next
     m_Metadata:
       m_Items: []
   references:

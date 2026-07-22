@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
     {
         private readonly IGenericFoodService _genericFoodService;
         private readonly IFoodProductService _foodProductService;
+        private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
 
         private string _foodId;
         private string _entryContext;
@@ -46,11 +47,13 @@ namespace eu.foodmission.platform
         public FoodInfoViewModel(
             IStoreService storeService,
             IGenericFoodService genericFoodService,
-            IFoodProductService foodProductService)
+            IFoodProductService foodProductService,
+            IOpenFoodFactsClientService openFoodFactsClientService = null)
             : base(storeService)
         {
             _genericFoodService = genericFoodService;
             _foodProductService = foodProductService;
+            _openFoodFactsClientService = openFoodFactsClientService ?? App.current?.services?.GetService<IOpenFoodFactsClientService>();
         }
 
         public async Task LoadAsync(FoodInfoType type, string foodId, string entryContext, string foodData = null)
@@ -73,16 +76,24 @@ namespace eu.foodmission.platform
                     else
                         LoadGenericFromData(foodData);
                 }
-                else if (!string.IsNullOrEmpty(foodId) && Guid.TryParse(foodId, out _))
+                else if (!string.IsNullOrEmpty(foodId))
                 {
                     if (type == FoodInfoType.Product)
-                        await LoadProductAsync(foodId);
+                    {
+                        if (Guid.TryParse(foodId, out _))
+                            await LoadProductAsync(foodId);
+                        else
+                            await TryEnrichFromOpenFoodFactsAsync(foodId);
+                    }
                     else
-                        await LoadGenericAsync(foodId);
+                    {
+                        if (Guid.TryParse(foodId, out _))
+                            await LoadGenericAsync(foodId);
+                    }
                 }
                 else
                 {
-                    Debug.LogWarning($"[{GetType().Name}] LoadAsync — no foodData and foodId is not a valid UUID: {foodId}");
+                    Debug.LogWarning($"[{GetType().Name}] LoadAsync — no foodData and foodId is empty");
                 }
             }
             catch (Exception ex)
@@ -91,6 +102,54 @@ namespace eu.foodmission.platform
             }
 
             IsLoading = false;
+        }
+
+        private async Task TryEnrichFromOpenFoodFactsAsync(string barcode)
+        {
+            if (string.IsNullOrEmpty(barcode) || _openFoodFactsClientService == null)
+                return;
+
+            try
+            {
+                var (product, error) = await _openFoodFactsClientService.GetByBarcodeAsync(barcode);
+                if (error != null || product == null)
+                {
+                    Debug.Log($"[{GetType().Name}] OFF lookup for barcode {barcode} returned no product");
+                    return;
+                }
+
+                PopulateFromOpenFoodFactsProduct(product);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] TryEnrichFromOpenFoodFactsAsync failed for barcode {barcode}: {ex.Message}");
+            }
+        }
+
+        private void PopulateFromOpenFoodFactsProduct(OpenFoodFactsProduct product)
+        {
+            if (product == null) return;
+
+            if (!string.IsNullOrEmpty(product.name)) FoodName = product.name;
+            if (product.brands != null && product.brands.Length > 0) FoodSubtitle = string.Join(", ", product.brands);
+            if (!string.IsNullOrEmpty(product.imageFrontUrl)) ImageUrl = product.imageFrontUrl;
+            if (!string.IsNullOrEmpty(product.nutritionGrade)) NutritionGrade = product.nutritionGrade;
+            if (product.novaGroup.HasValue && product.novaGroup.Value > 0) NovaGroup = product.novaGroup.Value;
+            if (!string.IsNullOrEmpty(product.ecoscoreGrade)) EcoScoreGrade = product.ecoscoreGrade;
+            if (!string.IsNullOrEmpty(product.ingredients)) Ingredients = product.ingredients;
+            if (product.allergens != null && product.allergens.Length > 0) Allergens = string.Join(", ", product.allergens);
+
+            if (product.nutritionalInfo != null)
+            {
+                MacroCards = BuildMacroCardsFromNutritionalInfo(product.nutritionalInfo);
+                NutritionDetail = BuildNutritionDetailFromNutritionalInfo(product.nutritionalInfo);
+            }
+
+            var meta = new List<MetaRow>();
+            if (!string.IsNullOrEmpty(product.quantity)) meta.Add(new MetaRow(GetLocString("META_QUANTITY"), product.quantity));
+            if (!string.IsNullOrEmpty(product.barcode)) meta.Add(new MetaRow(GetLocString("META_BARCODE"), product.barcode));
+            if (product.brands != null && product.brands.Length > 0) meta.Add(new MetaRow(GetLocString("META_BRAND"), string.Join(", ", product.brands)));
+            if (meta.Count > 0) MetaRows = meta;
         }
 
         private async Task LoadProductAsync(string foodId)
@@ -119,6 +178,11 @@ namespace eu.foodmission.platform
             MacroCards = BuildProductMacroCards(detail.nutrimentsRaw);
             NutritionDetail = BuildProductNutritionDetail(detail.nutrimentsRaw);
             MetaRows = BuildProductMetaRows(detail);
+
+            if (!string.IsNullOrEmpty(detail.barcode))
+            {
+                await TryEnrichFromOpenFoodFactsAsync(detail.barcode);
+            }
         }
 
         private async Task LoadGenericAsync(string foodId)
@@ -172,7 +236,10 @@ namespace eu.foodmission.platform
                 if (!string.IsNullOrEmpty(product.quantity))
                     MetaRows.Add(new MetaRow(GetLocString("META_QUANTITY"), product.quantity));
                 if (!string.IsNullOrEmpty(product.barcode))
+                {
                     MetaRows.Add(new MetaRow(GetLocString("META_BARCODE"), product.barcode));
+                    _ = TryEnrichFromOpenFoodFactsAsync(product.barcode);
+                }
             }
             catch (Exception ex)
             {
@@ -269,8 +336,8 @@ namespace eu.foodmission.platform
                     ShowActionButton = true;
                     break;
                 case "mealLog":
-                    ActionButtonText = "";
-                    ShowActionButton = false;
+                    ActionButtonText = GetLocStringOrFallback("ADD_TO_MEAL_LOG", "Add to meal");
+                    ShowActionButton = true;
                     break;
                 default:
                     ActionButtonText = "";

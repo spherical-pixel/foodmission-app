@@ -120,7 +120,7 @@ namespace eu.foodmission.platform
                     var product = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
                     if (product != null)
                     {
-                        await ImportAndAddItemAsync(product, 1f, "PIECES");
+                        await ImportAndAddItemAsync(product, null, null);
                         return;
                     }
                 }
@@ -149,7 +149,7 @@ namespace eu.foodmission.platform
                     var gf = JsonConvert.DeserializeObject<GenericFood>(request.FoodData);
                     if (gf != null)
                     {
-                        await AddGenericFoodItemAsync(gf, 1f, "PIECES");
+                        await AddGenericFoodItemAsync(gf, null, null);
                         return;
                     }
                 }
@@ -160,7 +160,7 @@ namespace eu.foodmission.platform
                 {
                     Debug.LogWarning($"[{GetType().Name}] Could not load generic food for add: {gfError?.message}");
                 }
-                await AddGenericFoodItemAsync(genericFood, 1f, "PIECES");
+                await AddGenericFoodItemAsync(genericFood, null, null);
             }
             catch (Exception ex)
             {
@@ -430,7 +430,7 @@ namespace eu.foodmission.platform
             return (DateTime.UtcNow - cachedAt) < CacheTtl;
         }
 
-        public async Task<bool> ImportAndAddItemAsync(OpenFoodFactsProduct product, float quantity, string unit)
+        public async Task<bool> ImportAndAddItemAsync(OpenFoodFactsProduct product, float? quantity = null, string unit = null)
         {
             if (string.IsNullOrEmpty(_currentListId) || product == null)
             {
@@ -447,7 +447,7 @@ namespace eu.foodmission.platform
                 return false;
             }
 
-            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity, unit);
+            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity ?? 1f, unit ?? "PIECES");
 
             if (addError != null)
             {
@@ -471,7 +471,7 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public async Task<bool> AddGenericFoodItemAsync(GenericFood food, float quantity, string unit)
+        public async Task<bool> AddGenericFoodItemAsync(GenericFood food, float? quantity = null, string unit = null)
         {
             if (string.IsNullOrEmpty(_currentListId) || food == null)
             {
@@ -492,7 +492,7 @@ namespace eu.foodmission.platform
             }
 
             ErrorMessage = "";
-            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, genericFoodId: food.id, quantity: quantity, unit: unit);
+            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, genericFoodId: food.id, quantity: quantity ?? 1f, unit: unit ?? "PIECES");
 
             if (addError != null)
             {

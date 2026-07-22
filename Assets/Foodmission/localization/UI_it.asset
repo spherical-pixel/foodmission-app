@@ -1554,6 +1554,122 @@ MonoBehaviour:
     m_Localized: Si prega di aggiungere almeno un prodotto alimentare
     m_Metadata:
       m_Items: []
+  - m_Id: 26341658550329344
+    m_Localized: Elimina elemento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819914
+    m_Localized: Codice a barre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658554523648
+    m_Localized: Marca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819908
+    m_Localized: Marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819913
+    m_Localized: Impronta ecologica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819911
+    m_Localized: Paesi di vendita
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819912
+    m_Localized: Etichette e certificazioni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819910
+    m_Localized: Luoghi di produzione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819909
+    m_Localized: Origine degli ingredienti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819906
+    m_Localized: "Quantit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819907
+    m_Localized: Dimensione della porzione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625607
+    m_Localized: Nessun dato disponibile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625613
+    m_Localized: Carboidrati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625608
+    m_Localized: Energia (kcal)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625609
+    m_Localized: Energia (kJ)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625611
+    m_Localized: Grassi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625615
+    m_Localized: Fibre alimentari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625644
+    m_Localized: Macronutrienti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625610
+    m_Localized: Proteine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625616
+    m_Localized: Sale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625612
+    m_Localized: Grassi saturi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625617
+    m_Localized: Sodio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625614
+    m_Localized: Zuccheri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625652
+    m_Localized: Grassi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625655
+    m_Localized: Sale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625653
+    m_Localized: Grassi saturi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625654
+    m_Localized: Zuccheri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717952
+    m_Localized: Fatto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26341658558717953
+    m_Localized: Avanti
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

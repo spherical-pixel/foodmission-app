@@ -69,6 +69,7 @@ namespace eu.foodmission.platform
 
             if (_searchCategoryField != null)
             {
+                _searchCategoryField.OpenFoodInfoOnSelect = true;
                 _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
                 _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
                 _searchCategoryField.SearchGenericFoodsAsync = query => _viewModel.SearchGenericFoodsAsync(query);
