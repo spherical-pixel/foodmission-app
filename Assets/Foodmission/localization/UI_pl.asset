@@ -1685,6 +1685,186 @@ MonoBehaviour:
     m_Localized: Dalej
     m_Metadata:
       m_Items: []
+  - m_Id: 21294142465236992
+    m_Localized: "Informacje o produktach spo\u017Cywczych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625600
+    m_Localized: "Dodaj do spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625601
+    m_Localized: "Dodaj do listy zakup\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625602
+    m_Localized: "Dodaj do dziennika posi\u0142k\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625603
+    m_Localized: "Sk\u0142adniki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625604
+    m_Localized: Alergeny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625605
+    m_Localized: "Pe\u0142nowarto\u015Bciowe od\u017Cywianie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625606
+    m_Localized: "Szczeg\xF3\u0142y produktu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625618
+    m_Localized: Woda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625619
+    m_Localized: "Bia\u0142ko ro\u015Blinne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625620
+    m_Localized: "Bia\u0142ko zwierz\u0119ce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625621
+    m_Localized: Skrobia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625622
+    m_Localized: Cukry dodane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625623
+    m_Localized: "T\u0142uszcze jednonienasycone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625624
+    m_Localized: "T\u0142uszcze wielonienasycone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625625
+    m_Localized: Omega-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625626
+    m_Localized: Omega-6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625627
+    m_Localized: "T\u0142uszcze trans"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625628
+    m_Localized: Potas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625629
+    m_Localized: "Wap\u0144"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625630
+    m_Localized: Fosfor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625631
+    m_Localized: Magnez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625632
+    m_Localized: "\u017Belazo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625633
+    m_Localized: Cynk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625634
+    m_Localized: Witamina A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625635
+    m_Localized: Witamina D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625636
+    m_Localized: Witamina E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625637
+    m_Localized: Witamina K
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625638
+    m_Localized: Witamina C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625639
+    m_Localized: Tiamina (B1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625640
+    m_Localized: Ryboflawina (B2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625641
+    m_Localized: Witamina B6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625642
+    m_Localized: Witamina B12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625643
+    m_Localized: Kwas foliowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625645
+    m_Localized: "T\u0142uszcze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625646
+    m_Localized: Witaminy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625647
+    m_Localized: "Minera\u0142y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625648
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625649
+    m_Localized: Grupa NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625650
+    m_Localized: Wynik ekologiczny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625651
+    m_Localized: "Poziomy sk\u0142adnik\xF3w od\u017Cywczych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625656
+    m_Localized: Nieprzetworzone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625657
+    m_Localized: "Sk\u0142adniki kulinarne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819904
+    m_Localized: Przetworzone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819905
+    m_Localized: Wysoce przetworzone
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

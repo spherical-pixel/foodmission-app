@@ -1660,6 +1660,186 @@ MonoBehaviour:
     m_Localized: Neste
     m_Metadata:
       m_Items: []
+  - m_Id: 21294142465236992
+    m_Localized: Informasjon om mat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625600
+    m_Localized: Legg til i spiskammeret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625601
+    m_Localized: "Legg til p\xE5 handlelisten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625602
+    m_Localized: "Legg til i m\xE5ltidsloggen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625603
+    m_Localized: Ingredienser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625604
+    m_Localized: Allergener
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625605
+    m_Localized: "Fullverdig ern\xE6ring"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625606
+    m_Localized: Produktdetaljer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625618
+    m_Localized: Vann
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625619
+    m_Localized: Vegetabilsk protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625620
+    m_Localized: Animalsk protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625621
+    m_Localized: Stivelse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625622
+    m_Localized: Tilsatt sukker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625623
+    m_Localized: Enumettet fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625624
+    m_Localized: Flerumettet fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625625
+    m_Localized: Omega-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625626
+    m_Localized: Omega-6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625627
+    m_Localized: Transfett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625628
+    m_Localized: Kalium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625629
+    m_Localized: Kalsium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625630
+    m_Localized: Fosfor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625631
+    m_Localized: Magnesium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625632
+    m_Localized: Jern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625633
+    m_Localized: Sink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625634
+    m_Localized: Vitamin A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625635
+    m_Localized: Vitamin D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625636
+    m_Localized: E-vitamin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625637
+    m_Localized: Vitamin K
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625638
+    m_Localized: C-vitamin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625639
+    m_Localized: Tiamin (B1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625640
+    m_Localized: Riboflavin (B2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625641
+    m_Localized: Vitamin B6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625642
+    m_Localized: Vitamin B12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625643
+    m_Localized: Folat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625645
+    m_Localized: Fett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625646
+    m_Localized: Vitaminer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625647
+    m_Localized: Mineraler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625648
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625649
+    m_Localized: NOVA-konsernet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625650
+    m_Localized: "Milj\xF8poeng"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625651
+    m_Localized: "N\xE6ringsstoffniv\xE5er"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625656
+    m_Localized: Ubehandlet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625657
+    m_Localized: Kulinariske ingredienser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819904
+    m_Localized: Behandlet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819905
+    m_Localized: Ultrabearbeidet
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

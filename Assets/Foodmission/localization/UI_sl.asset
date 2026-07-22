@@ -1659,6 +1659,186 @@ MonoBehaviour:
     m_Localized: Naprej
     m_Metadata:
       m_Items: []
+  - m_Id: 21294142465236992
+    m_Localized: "Podatki o \u017Eivilih"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625600
+    m_Localized: Dodaj v shrambo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625601
+    m_Localized: Dodaj na nakupovalni seznam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625602
+    m_Localized: Dodaj v dnevnik obrokov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625603
+    m_Localized: Sestavine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625604
+    m_Localized: Alergeni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625605
+    m_Localized: Celovita prehrana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625606
+    m_Localized: Podrobnosti o izdelku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625618
+    m_Localized: Voda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625619
+    m_Localized: Rastlinske beljakovine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625620
+    m_Localized: "\u017Divalske beljakovine"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625621
+    m_Localized: "\u0160krob"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625622
+    m_Localized: Dodani sladkorji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625623
+    m_Localized: "Enokratno nenasi\u010Dene ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625624
+    m_Localized: "Ve\u010Dkrat nenasi\u010Dene ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625625
+    m_Localized: Omega-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625626
+    m_Localized: Omega-6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625627
+    m_Localized: "Trans ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625628
+    m_Localized: Kalij
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625629
+    m_Localized: Kalcij
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625630
+    m_Localized: Fosfor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625631
+    m_Localized: Magnezij
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625632
+    m_Localized: "\u017Delezo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625633
+    m_Localized: Cink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625634
+    m_Localized: Vitamin A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625635
+    m_Localized: Vitamin D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625636
+    m_Localized: Vitamin E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625637
+    m_Localized: Vitamin K
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625638
+    m_Localized: Vitamin C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625639
+    m_Localized: Tiamin (B1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625640
+    m_Localized: Riboflavin (B2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625641
+    m_Localized: Vitamin B6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625642
+    m_Localized: Vitamin B12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625643
+    m_Localized: Folna kislina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625645
+    m_Localized: "Ma\u0161\u010Dobe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625646
+    m_Localized: Vitamini
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625647
+    m_Localized: Minerali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625648
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625649
+    m_Localized: Skupina NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625650
+    m_Localized: Eko-ocena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625651
+    m_Localized: Vsebnost hranilnih snovi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625656
+    m_Localized: Nepredelano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625657
+    m_Localized: "Kulinari\u010Dne sestavine"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819904
+    m_Localized: Obdelano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819905
+    m_Localized: Ultrapredelano
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

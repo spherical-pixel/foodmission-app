@@ -1670,6 +1670,186 @@ MonoBehaviour:
     m_Localized: Avanti
     m_Metadata:
       m_Items: []
+  - m_Id: 21294142465236992
+    m_Localized: Informazioni sugli alimenti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625600
+    m_Localized: Aggiungi alla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625601
+    m_Localized: Aggiungi alla lista della spesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625602
+    m_Localized: Aggiungi al diario alimentare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625603
+    m_Localized: Ingredienti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625604
+    m_Localized: Allergeni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625605
+    m_Localized: Alimentazione completa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625606
+    m_Localized: Dettagli sul prodotto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625618
+    m_Localized: Acqua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625619
+    m_Localized: Proteine vegetali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625620
+    m_Localized: Proteine animali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625621
+    m_Localized: Amido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625622
+    m_Localized: Zuccheri aggiunti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625623
+    m_Localized: Grassi monoinsaturi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625624
+    m_Localized: Grassi polinsaturi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625625
+    m_Localized: Omega-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625626
+    m_Localized: Omega-6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625627
+    m_Localized: Grassi trans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625628
+    m_Localized: Potassio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625629
+    m_Localized: Calcio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625630
+    m_Localized: Fosforo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625631
+    m_Localized: Magnesio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625632
+    m_Localized: Ferro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625633
+    m_Localized: Zinco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625634
+    m_Localized: Vitamina A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625635
+    m_Localized: Vitamina D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625636
+    m_Localized: Vitamina E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625637
+    m_Localized: Vitamina K
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625638
+    m_Localized: Vitamina C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625639
+    m_Localized: Tiamina (B1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625640
+    m_Localized: Riboflavina (B2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625641
+    m_Localized: Vitamina B6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625642
+    m_Localized: Vitamina B12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625643
+    m_Localized: Folato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625645
+    m_Localized: Grassi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625646
+    m_Localized: Vitamine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625647
+    m_Localized: Minerali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625648
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625649
+    m_Localized: Gruppo NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625650
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625651
+    m_Localized: Livelli di nutrienti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625656
+    m_Localized: Non lavorato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625657
+    m_Localized: Ingredienti culinari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819904
+    m_Localized: Elaborato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819905
+    m_Localized: Ultra-trasformati
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

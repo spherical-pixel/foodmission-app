@@ -1664,6 +1664,186 @@ MonoBehaviour:
     m_Localized: Siguiente
     m_Metadata:
       m_Items: []
+  - m_Id: 21294142465236992
+    m_Localized: "Informaci\xF3n sobre los alimentos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625600
+    m_Localized: "A\xF1adir a la despensa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625601
+    m_Localized: "A\xF1adir a la lista de la compra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625602
+    m_Localized: "A\xF1adir al registro de comidas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625603
+    m_Localized: Ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625604
+    m_Localized: "Al\xE9rgenos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625605
+    m_Localized: "Nutrici\xF3n completa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625606
+    m_Localized: Detalles del producto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625618
+    m_Localized: Agua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625619
+    m_Localized: "Prote\xEDna vegetal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625620
+    m_Localized: "Prote\xEDna animal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625621
+    m_Localized: "Almid\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625622
+    m_Localized: "Az\xFAcares a\xF1adidos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625623
+    m_Localized: Grasas monoinsaturadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625624
+    m_Localized: Grasas poliinsaturadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625625
+    m_Localized: Omega-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625626
+    m_Localized: Omega-6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625627
+    m_Localized: Grasas trans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625628
+    m_Localized: Potasio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625629
+    m_Localized: Calcio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625630
+    m_Localized: "F\xF3sforo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625631
+    m_Localized: Magnesio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625632
+    m_Localized: Hierro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625633
+    m_Localized: Zinc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625634
+    m_Localized: Vitamina A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625635
+    m_Localized: Vitamina D
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625636
+    m_Localized: Vitamina E
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625637
+    m_Localized: Vitamina K
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625638
+    m_Localized: Vitamina C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625639
+    m_Localized: Tiamina (B1)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625640
+    m_Localized: Riboflavina (B2)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625641
+    m_Localized: Vitamina B6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625642
+    m_Localized: Vitamina B12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625643
+    m_Localized: "\xC1cido f\xF3lico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625645
+    m_Localized: Grasas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625646
+    m_Localized: Vitaminas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625647
+    m_Localized: Minerales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625648
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625649
+    m_Localized: Grupo NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625650
+    m_Localized: "Puntuaci\xF3n ecol\xF3gica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625651
+    m_Localized: Niveles de nutrientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625656
+    m_Localized: Sin procesar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142473625657
+    m_Localized: Ingredientes culinarios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819904
+    m_Localized: Procesado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21294142477819905
+    m_Localized: Ultraprocesados
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
