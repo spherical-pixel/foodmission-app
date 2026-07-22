@@ -780,7 +780,7 @@ namespace eu.foodmission.platform.Tests
         {
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
             _vm.SelectTypeOfMeal(0);
-            _vm.SetSource(mealFromPantry: false, eatenOut: false);
+            _vm.SetSource(fromPantry: false, eatenOut: false);
             _vm.SelectedItems.Add(new MealLogItem { isProduct = true, foodProductId = "fp-1", quantity = 2f, unit = "PIECES" });
 
             _mockMealService.Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
@@ -801,7 +801,7 @@ namespace eu.foodmission.platform.Tests
         {
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
             _vm.SelectTypeOfMeal(0);
-            _vm.SetSource(mealFromPantry: true, eatenOut: false);
+            _vm.SetSource(fromPantry: true, eatenOut: false);
             _vm.SelectedItems.Add(new MealLogItem { isProduct = true, foodProductId = "fp-1", quantity = 2f, unit = "PIECES" });
 
             var pantryItem = new PantryItem
@@ -837,7 +837,7 @@ namespace eu.foodmission.platform.Tests
         {
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
             _vm.SelectTypeOfMeal(0);
-            _vm.SetSource(mealFromPantry: true, eatenOut: false);
+            _vm.SetSource(fromPantry: true, eatenOut: false);
             _vm.SelectedItems.Add(new MealLogItem { isGenericFood = true, genericFoodId = "gf-1", quantity = 200f, unit = "G" });
 
             var item1 = new PantryItem { id = "pantry-1", genericFoodId = "gf-1", quantity = 1f, unit = "PIECES", expiryDate = "2026-08-10" };
