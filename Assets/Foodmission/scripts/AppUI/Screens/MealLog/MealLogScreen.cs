@@ -38,9 +38,7 @@ namespace eu.foodmission.platform
         private VisualElement _step2Buttons;
         private VisualElement _btnBackStep2;
         private VisualElement _btnBackStep3;
-        private Unity.AppUI.UI.TextField _mealNameField;
-        private UnityEngine.UIElements.TextField _mealNameInnerField;
-        private VisualElement _mealNameRow;
+        private Unity.AppUI.UI.Checkbox _chkSavePreset;
         private VisualElement _presetResults;
         private FMButton _btnLoadPreset;
         private Unity.AppUI.UI.TextField _presetSearchField;
@@ -72,8 +70,7 @@ namespace eu.foodmission.platform
             _step2Buttons = contentContainer.Q<VisualElement>("step-2-buttons");
             _btnBackStep2 = contentContainer.Q<VisualElement>("btn-back-step-2");
             _btnBackStep3 = contentContainer.Q<VisualElement>("btn-back-step-3");
-            _mealNameField = contentContainer.Q<Unity.AppUI.UI.TextField>("meal-name-field");
-            _mealNameRow = contentContainer.Q<VisualElement>("meal-name-row");
+            _chkSavePreset = contentContainer.Q<Unity.AppUI.UI.Checkbox>("chk-save-preset");
             _presetResults = contentContainer.Q<VisualElement>("preset-results");
             _btnLoadPreset = contentContainer.Q<FMButton>("btn-load-preset");
             _presetSearchField = contentContainer.Q<Unity.AppUI.UI.TextField>("preset-search-field");
@@ -87,11 +84,6 @@ namespace eu.foodmission.platform
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
         }
 
-        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
-        {
-            base.OnEnter(controller, destination, args);
-            // State preserved by overlay approach — no extra reload or pending check needed.
-        }
 
         protected override void OnViewModelBound()
         {
@@ -105,13 +97,14 @@ namespace eu.foodmission.platform
             _viewModel.OnConfirmUpdateRequired += OnConfirmUpdateRequired;
 
             UpdateStepVisibility();
+            UpdateSavePresetCheckboxVisibility();
 
-            _mealNameField?.schedule.Execute(() =>
+            if (_chkSavePreset != null)
             {
-                _mealNameInnerField = _mealNameField.Q<UnityEngine.UIElements.TextField>();
-                if (_mealNameInnerField != null)
-                    _mealNameInnerField.RegisterValueChangedCallback(OnMealNameChanged);
-            }).ExecuteLater(0);
+                _chkSavePreset.value = _viewModel.SaveAsPreset ? CheckboxState.Checked : CheckboxState.Unchecked;
+                _chkSavePreset.RegisterValueChangedCallback(OnSavePresetChanged);
+            }
+
 
             if (_btnLoadPreset != null)
                 _btnLoadPreset.clicked += OnLoadPresetClicked;
@@ -128,6 +121,7 @@ namespace eu.foodmission.platform
                 _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
                 _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
                 _searchCategoryField.SearchGenericFoodsAsync = query => _viewModel.SearchGenericFoodsAsync(query);
+                _searchCategoryField.SearchByFoodGroupAsync = (foodGroup, page, pageSize) => _viewModel.SearchByFoodGroupAsync(foodGroup, page, pageSize);
                 _searchCategoryField.OnProductConfirmed = async (product, qty, unit) =>
                 {
                     await _viewModel.AddProductItem(product, qty, unit);
@@ -155,20 +149,27 @@ namespace eu.foodmission.platform
             _viewModel.InitializeAsync().ContinueWith(t =>
             {
                 if (t.IsFaulted)
+                {
                     Debug.LogError($"[{GetType().Name}] InitializeAsync failed: {t.Exception?.InnerException?.Message}");
+
+                }
                 else
+                {
                     ExecuteOnMainThread(() =>
                     {
                         RebuildTypeButtons();
                         RebuildSourceButtons();
                         UpdateStepVisibility();
                     });
+                }
             });
 
             _viewModel.LoadTodayAsync().ContinueWith(t =>
             {
                 if (t.IsFaulted)
+                {
                     Debug.LogError($"[{GetType().Name}] LoadTodayAsync failed: {t.Exception?.InnerException?.Message}");
+                }
             }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
@@ -184,10 +185,9 @@ namespace eu.foodmission.platform
             if (_searchCategoryField != null)
                 _searchCategoryField.OnPopoverVisibilityChanged -= OnPopoverVisibilityChanged;
 
-            if (_mealNameInnerField != null)
+            if (_chkSavePreset != null)
             {
-                _mealNameInnerField.UnregisterValueChangedCallback(OnMealNameChanged);
-                _mealNameInnerField = null;
+                _chkSavePreset.UnregisterValueChangedCallback(OnSavePresetChanged);
             }
 
             if (_btnLoadPreset != null)
@@ -202,6 +202,24 @@ namespace eu.foodmission.platform
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
         }
+
+        private void OnSavePresetChanged(ChangeEvent<CheckboxState> evt)
+        {
+            _viewModel.SaveAsPreset = evt.newValue == CheckboxState.Checked;
+        }
+
+        private void UpdateSavePresetCheckboxVisibility()
+        {
+            if (_chkSavePreset == null) return;
+            bool hasPreset = _viewModel.SelectedMealPreset != null;
+            _chkSavePreset.style.display = hasPreset ? DisplayStyle.None : DisplayStyle.Flex;
+            if (hasPreset)
+            {
+                _viewModel.SaveAsPreset = false;
+            }
+        }
+
+
 
         protected override void SetupAccessibilityNodes()
         {
@@ -257,17 +275,22 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(_viewModel.IsSearchingPresets):
                     if (_viewModel.IsSearchingPresets)
-                        FMLoadingOverlay.Show(_step3, "Searching presets...");
+                        FMLoadingOverlay.Show(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEARCHING_PRESETS"));
                     else
-                        FMLoadingOverlay.Hide(_step3);
+                        FMLoadingOverlay.Hide(this);
+                    break;
+                case nameof(_viewModel.SaveAsPreset):
+                    if (_chkSavePreset != null)
+                        _chkSavePreset.value = _viewModel.SaveAsPreset ? CheckboxState.Checked : CheckboxState.Unchecked;
                     break;
                 case nameof(_viewModel.SelectedMealPreset):
-                    if (_mealNameField != null)
-                        _mealNameField.value = _viewModel.MealContainerName;
+                    UpdateSavePresetCheckboxVisibility();
                     RebuildSelectedChips();
                     UpdateLogButtonState();
                     ClosePresetPanel();
                     break;
+
+
                 case nameof(_viewModel.SelectedItems):
                     RebuildSelectedChips();
                     UpdateLogButtonState();
@@ -317,7 +340,7 @@ namespace eu.foodmission.platform
             {
                 var heading = _step3?.Q<Heading>("step-3-heading");
                 if (heading != null && _viewModel.SelectedTypeOfMeal != null)
-                    heading.text = $"What did you have for {_viewModel.SelectedTypeOfMeal.label.ToLowerInvariant()}?";
+                    heading.text = new LocalizedOption("UI", "txtWHAT_DID_YOU_HAVE_FOR", _viewModel.SelectedTypeOfMeal.label.ToLowerInvariant()).GetText();
             }
             else
             {
@@ -356,7 +379,7 @@ namespace eu.foodmission.platform
             _step2Buttons?.Clear();
 
             var pantryBtn = new FMButton();
-            pantryBtn.title = "\U0001F9FA From the pantry";
+            pantryBtn.title = "\U0001F9FA " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FROM_PANTRY");
             pantryBtn.variant = ButtonVariant.Accent;
             pantryBtn.trailingIcon = "fm-arrow-right";
             pantryBtn.size = Size.L;
@@ -368,7 +391,7 @@ namespace eu.foodmission.platform
             _step2Buttons.Add(pantryBtn);
 
             var eatenOutBtn = new FMButton();
-            eatenOutBtn.title = "\U0001F37D\uFE0F Eaten out";
+            eatenOutBtn.title = "\U0001F37D\uFE0F " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EATEN_OUT");
             eatenOutBtn.variant = ButtonVariant.Accent;
             eatenOutBtn.trailingIcon = "fm-arrow-right";
             eatenOutBtn.size = Size.L;
@@ -385,7 +408,7 @@ namespace eu.foodmission.platform
             _mealList?.Clear();
             if (_viewModel.LastTenLogs == null || _viewModel.LastTenLogs.Count == 0)
             {
-                _mealList?.Add(new Text { text = "No recent meals logged." });
+                _mealList?.Add(new Text { text = "@UI:txtNO_RECENT_MEALS_LOGGED" });
                 return;
             }
 
@@ -422,7 +445,7 @@ namespace eu.foodmission.platform
             _presetResults.style.display = isOpen ? DisplayStyle.None : DisplayStyle.Flex;
             if (_step3Content != null)
                 _step3Content.style.display = isOpen ? DisplayStyle.Flex : DisplayStyle.None;
-            _btnLoadPreset.title = isOpen ? "Load previous meal or recipe" : "Cancel search";
+            _btnLoadPreset.title = isOpen ? "@UI:LOAD_PRESET_OR_RECIPE" : "@UI:CANCEL_SEARCH";
             if (!isOpen && _presetSearchField != null)
                 _presetSearchField.SetValueWithoutNotify("");
         }
@@ -434,14 +457,12 @@ namespace eu.foodmission.platform
             if (_step3Content != null)
                 _step3Content.style.display = DisplayStyle.Flex;
             if (_btnLoadPreset != null)
-                _btnLoadPreset.title = "Load previous meal or recipe";
+                _btnLoadPreset.title = "@UI:LOAD_PRESET_OR_RECIPE";
         }
 
         private void ResetStep3VisualState()
         {
             ClosePresetPanel();
-            if (_mealNameField != null)
-                _mealNameField.value = "";
             if (_searchCategoryField != null)
                 _searchCategoryField.SearchText = "";
             if (_presetSearchField != null)
@@ -462,20 +483,49 @@ namespace eu.foodmission.platform
 
         private void OnConfirmUpdateRequired(string mealName)
         {
-            FMDialog.ShowConfirm(
+            var textContainer = new VisualElement();
+            var text = new Unity.AppUI.UI.Text
+            {
+                text = new LocalizedOption("UI", "PRESET_MODIFIED", mealName).GetText()
+            };
+            textContainer.Add(text);
+
+            FMDialog.ShowCustom(
                 this,
-                "Update existing meal?",
-                $"The ingredients of \"{mealName}\" have changed. Update the existing meal? If not, change the name to create a new meal.",
-                async () => await _viewModel.ConfirmUpdateAndSaveAsync(),
-                () => _viewModel.CancelUpdate(),
-                confirmLabel: "Update",
-                cancelLabel: "Cancel");
+                "@UI:PRESET_MODIFIED_TITLE",
+                textContainer,
+                new FMDialogAction("@UI:TXT_CANCEL", () => _viewModel.CancelUpdate()),
+                new FMDialogAction("@UI:SAVE_AS_NEW", () => PromptNewMealPresetNameAndSave()),
+                new FMDialogAction("@UI:UPDATE", async () => await _viewModel.ConfirmUpdateAndSaveAsync(), isPrimary: true));
         }
 
-        private void OnMealNameChanged(ChangeEvent<string> evt)
+        private void PromptNewMealPresetNameAndSave()
         {
-            _viewModel.MealContainerName = evt.newValue;
+            var nameField = new Unity.AppUI.UI.TextField
+            {
+                placeholder = "@UI:PLACEHOLDER_PRESET_NAME",
+                value = _viewModel.SelectedMealPreset?.name ?? ""
+            };
+
+            FMDialog.ShowCustom(
+                this,
+                "@UI:SAVE_AS_NEW_PRESET",
+                nameField,
+                new FMDialogAction("@UI:TXT_CANCEL", () => _viewModel.CancelUpdate()),
+                new FMDialogAction("@UI:SAVE", async () =>
+                {
+                    string newName = nameField.value?.Trim();
+                    if (string.IsNullOrEmpty(newName))
+                    {
+                        _viewModel.ErrorMessage = "@UI:ERROR_PRESET_NAME_REQUIRED";
+                        return;
+                    }
+                    _viewModel.MealContainerName = newName;
+                    await PerformSaveAsync();
+                }, isPrimary: true));
         }
+
+
 
         private void RebuildPresetResults()
         {
@@ -493,11 +543,12 @@ namespace eu.foodmission.platform
                 var nameLabel = new Text { text = preset.name };
                 nameLabel.style.flexGrow = 1;
                 nameLabel.pickingMode = PickingMode.Ignore;
+                nameLabel.style.width = Length.Percent(70);
                 row.Add(nameLabel);
 
                 if (isRecipe)
                 {
-                    var badge = new Text { text = "Recipe" };
+                    var badge = new Text { text = "@UI:RECIPE" };
                     badge.pickingMode = PickingMode.Ignore;
                     row.Add(badge);
                 }
@@ -509,82 +560,122 @@ namespace eu.foodmission.platform
             }
         }
 
-	private void RebuildSelectedChips()
-	{
-		_selectedChips?.Clear();
-		if (_viewModel.SelectedMealPreset != null)
-		{
-			bool isRecipe = _viewModel.SelectedMealPreset.isRecipe;
-			var card = new FMItemShoppingListDetail
-			{
-				Text = isRecipe
-					? $"\U0001F9D3\u200D\U0001F373 {_viewModel.SelectedMealPreset.name}"
-					: $"\U0001F372 {_viewModel.SelectedMealPreset.name}"
-			};
-			card.Checkbox.style.display = DisplayStyle.None;
-			card.AddToClassList("fm-ml-chip-preset");
-			card.RemoveButton.clicked += () => _viewModel.ClearMealPreset();
-			card.EditButton.style.display = DisplayStyle.None;
-			_selectedChips.Add(card);
-		}
-		if (_viewModel.SelectedItems.Count == 0) return;
-		foreach (MealLogItem entry in _viewModel.SelectedItems)
-		{
-			MealLogItem captured = entry;
-			var card = new FMItemShoppingListDetail
-			{
-				Text = $"{entry.name} \u00d7 {entry.quantity} {entry.unit}"
-			};
-			card.Checkbox.style.display = DisplayStyle.None;
-			card.EditButton.clicked += () => ShowEditItemDialog(captured);
-			card.RemoveButton.clicked += () => _viewModel.RemoveItem(captured);
-			_selectedChips.Add(card);
-		}
-	}
+        private void RebuildSelectedChips()
+        {
+            _selectedChips?.Clear();
+            if (_viewModel.SelectedMealPreset != null)
+            {
+                bool isRecipe = _viewModel.SelectedMealPreset.isRecipe;
+                var card = new FMItemShoppingListDetail
+                {
+                    Text = isRecipe
+                        ? $"\U0001F9D3\u200D\U0001F373 {_viewModel.SelectedMealPreset.name}"
+                        : $"\U0001F372 {_viewModel.SelectedMealPreset.name}"
+                };
+                card.Checkbox.style.display = DisplayStyle.None;
+                card.AddToClassList("fm-ml-chip-preset");
+                card.RemoveButton.clicked += () => _viewModel.ClearMealPreset();
+                card.EditButton.style.display = DisplayStyle.None;
+                _selectedChips.Add(card);
+            }
+            if (_viewModel.SelectedItems.Count == 0) return;
+            foreach (MealLogItem entry in _viewModel.SelectedItems)
+            {
+                MealLogItem captured = entry;
+                string unitLabel = FMQuantityUnitPanel.GetUnitLabel(entry.unit);
+                string label = (entry.quantity.HasValue && entry.quantity.Value > 0)
+                    ? $"{entry.name} \u00d7 {entry.quantity.Value}{(string.IsNullOrEmpty(unitLabel) ? "" : " " + unitLabel)}"
+                    : entry.name;
+                var card = new FMItemShoppingListDetail
+                {
+                    Text = label
+                };
+                card.Checkbox.style.display = DisplayStyle.None;
+                card.EditButton.clicked += () => ShowEditItemDialog(captured);
+                card.RemoveButton.clicked += () => _viewModel.RemoveItem(captured);
+                _selectedChips.Add(card);
+            }
+        }
 
-	private void ShowEditItemDialog(MealLogItem item)
-	{
-		var panel = new FMQuantityUnitPanel();
-		panel.SetQuantityWithoutNotify(item.quantity);
-		panel.SetUnitWithoutNotify(item.unit);
+        private void ShowEditItemDialog(MealLogItem item)
+        {
+            var panel = new FMQuantityUnitPanel();
+            panel.SetQuantityWithoutNotify(item.quantity ?? 1f);
+            panel.SetUnitWithoutNotify(!string.IsNullOrEmpty(item.unit) ? item.unit : "PIECES");
 
-		FMDialog.ShowCustom(
-			this,
-			item.name,
-			panel,
-			new FMDialogAction("@UI:TXT_CANCEL", null),
-			new FMDialogAction("@UI:SAVE", () =>
-			{
-				item.quantity = panel.Quantity;
-				item.unit = panel.Unit;
-				_viewModel.SelectedItems = new List<MealLogItem>(_viewModel.SelectedItems);
-			}, isPrimary: true));
-	}
+            FMDialog.ShowCustom(
+                this,
+                item.name,
+                panel,
+                new FMDialogAction("@UI:TXT_CANCEL", null),
+                new FMDialogAction("@UI:SAVE", () =>
+                {
+                    item.quantity = panel.Quantity;
+                    item.unit = panel.Unit;
+                    _viewModel.SelectedItems = new List<MealLogItem>(_viewModel.SelectedItems);
+                }, isPrimary: true));
+        }
 
-		private async void OnLogSelectedClicked()
-		{
-			try
-			{
-				bool success = await _viewModel.SaveAsync();
-				if (success)
-				{
-					RebuildMealCards();
-					UpdateStepVisibility();
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.LogError($"[{GetType().Name}] OnLogSelectedClicked failed: {ex.Message}");
-			}
-		}
+
+        private void OnLogSelectedClicked()
+        {
+            if (_viewModel.SaveAsPreset)
+            {
+                var nameField = new Unity.AppUI.UI.TextField
+                {
+                    placeholder = "@UI:PLACEHOLDER_PRESET_NAME",
+                    value = _viewModel.MealContainerName
+                };
+
+                FMDialog.ShowCustom(
+                    this,
+                    "@UI:SAVE_AS_NEW_PRESET",
+                    nameField,
+                    new FMDialogAction("@UI:TXT_CANCEL", null),
+                    new FMDialogAction("@UI:SAVE", async () =>
+                    {
+                        string presetName = nameField.value?.Trim();
+                        if (string.IsNullOrEmpty(presetName))
+                        {
+                            _viewModel.ErrorMessage = "@UI:ERROR_PRESET_NAME_REQUIRED";
+                            return;
+                        }
+                        _viewModel.MealContainerName = presetName;
+                        await PerformSaveAsync();
+                    }, isPrimary: true));
+            }
+            else
+            {
+                if (_viewModel.SelectedMealPreset == null)
+                    _viewModel.MealContainerName = "";
+
+                _ = PerformSaveAsync();
+            }
+        }
+
+        private async Task PerformSaveAsync()
+        {
+            try
+            {
+                bool success = await _viewModel.SaveAsync();
+                if (success)
+                {
+                    RebuildMealCards();
+                    UpdateStepVisibility();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] PerformSaveAsync failed: {ex.Message}");
+            }
+        }
+
 
 
         private void UpdateLogButtonState()
         {
             if (_btnLogSelected == null) return;
-            _btnLogSelected.SetEnabled(
-                _viewModel.SelectedItems.Count > 0 ||
-                _viewModel.SelectedMealPreset != null);
+            _btnLogSelected.SetEnabled(_viewModel.SelectedItems != null && _viewModel.SelectedItems.Count > 0);
         }
 
         private void OnBackClicked(ClickEvent evt)

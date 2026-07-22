@@ -152,6 +152,8 @@
     --fm-icon-tint: var(--appui-primary-100);
     --fm-icon-tint-selected: var(--appui-primary-15);
     --fm-bg-screen-trans: rgba(255, 255, 255, 0.45);
+    --fm-shadowColor: rgba(0, 0, 0, 0.65);
+    --fm-shadowColorInner: rgba(255, 255, 255, 0.65);
 }
 
 .appui--dark {
@@ -281,6 +283,8 @@
     --fm-icon-tint-selected: var(--appui-primary-900);
 
    --fm-bg-screen-trans: rgba(0, 0, 0, 0.45);
+   --fm-shadowColor: rgba(255, 255, 255, 0.65);
+   --fm-shadowColorInner: rgba(0, 0, 0, 0.65);
 
 
     /* ============================================

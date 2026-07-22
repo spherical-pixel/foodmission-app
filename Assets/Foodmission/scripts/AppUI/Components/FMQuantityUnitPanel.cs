@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 using Unity.AppUI.UI;
 
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Components
@@ -11,28 +12,53 @@ namespace eu.foodmission.platform.Components
     [UxmlElement]
     public partial class FMQuantityUnitPanel : ExVisualElement
     {
-        public static readonly List<string> UnitValues = new() { "PIECES", "G", "KG", "ML", "L", "CUPS" };
 
-        private static List<string> _unitChoices;
+        private static List<string> _unitValues;
+        private static List<string> _unitLabels;
+        private static string _cachedLang;
 
-        public static List<string> UnitChoices
+        public static List<string> UnitValues => _unitValues;
+        public static List<string> UnitChoices => _unitLabels;
+
+        public static string GetUnitLabel(string unitCode)
         {
-            get
+            if (string.IsNullOrEmpty(unitCode)) return "";
+            if (_unitValues != null && _unitLabels != null)
             {
-                if (_unitChoices == null)
-                {
-                    _unitChoices = new List<string>
-                    {
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_PIECES"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_G"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_KG"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_ML"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_L"),
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNIT_CUPS"),
-                    };
-                }
-                return _unitChoices;
+                int idx = _unitValues.IndexOf(unitCode);
+                if (idx >= 0 && idx < _unitLabels.Count)
+                    return _unitLabels[idx];
             }
+            return unitCode;
+        }
+
+        public static async Task InitializeAsync(ICatalogService catalogService, string lang)
+        {
+            if (_unitValues != null && _cachedLang == lang) return;
+
+            try
+            {
+                var (units, error) = await catalogService.GetUnitsAsync(lang);
+                if (error == null && units != null && units.Length > 0)
+                {
+                    _unitValues = new List<string>(units.Length);
+                    _unitLabels = new List<string>(units.Length);
+                    foreach (var u in units)
+                    {
+                        _unitValues.Add(u.code);
+                        _unitLabels.Add(u.label);
+                    }
+                    Debug.Log($"[FMQuantityUnitPanel] Units loaded from API: {_unitValues.Count} (lang={lang})");
+                    _cachedLang = lang;
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[FMQuantityUnitPanel] Failed to load units from API: {ex.Message}");
+            }
+
+            Debug.Log("[FMQuantityUnitPanel] Using default unit catalog");
         }
 
         public float Quantity
@@ -43,14 +69,20 @@ namespace eu.foodmission.platform.Components
 
         public string Unit
         {
-            get => _unitDropdown.selectedIndex >= 0 ? UnitValues[_unitDropdown.selectedIndex] : "PIECES";
+            get => _unitDropdown != null && _unitDropdown.selectedIndex >= 0
+                ? UnitValues[_unitDropdown.selectedIndex]
+                : "PIECES";
             set
             {
+                if (_unitDropdown == null) return;
                 int idx = UnitValues.IndexOf(value);
                 if (idx >= 0)
                     _unitDropdown.SetValueWithoutNotify(new[] { idx });
             }
         }
+
+        public bool IsQuantityModified { get; private set; }
+        public bool IsUnitModified { get; private set; }
 
         private readonly Unity.AppUI.UI.FloatField _qtyField;
         private readonly Dropdown _unitDropdown;
@@ -77,6 +109,9 @@ namespace eu.foodmission.platform.Components
             _unitDropdown.SetValueWithoutNotify(new[] { 0 });
             _unitDropdown.style.marginBottom = 8;
             Add(_unitDropdown);
+
+            _qtyField.RegisterValueChangedCallback(evt => IsQuantityModified = true);
+            _unitDropdown.RegisterValueChangedCallback(evt => IsUnitModified = true);
         }
 
         public void SetQuantityWithoutNotify(float value)
@@ -86,6 +121,7 @@ namespace eu.foodmission.platform.Components
 
         public void SetUnitWithoutNotify(string unit)
         {
+            if (_unitDropdown == null) return;
             int idx = UnitValues.IndexOf(unit);
             if (idx >= 0)
                 _unitDropdown.SetValueWithoutNotify(new[] { idx });

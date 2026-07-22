@@ -14,6 +14,8 @@ namespace eu.foodmission.platform
 
         Task<(FoodProduct Result, ApiErrorResponse Error)> FindByBarcodeAsync(string barcode, bool includeOpenFoodFacts = false);
 
+        Task<(FoodProduct Result, ApiErrorResponse Error)> CreateAsync(CreateFoodProductRequest request);
+        
         Task<(FoodProductDetail Result, ApiErrorResponse Error)> GetFoodProductDetailAsync(string id);
     }
 }

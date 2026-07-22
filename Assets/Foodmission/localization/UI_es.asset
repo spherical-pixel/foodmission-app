@@ -1085,30 +1085,6 @@ MonoBehaviour:
     m_Localized: Manual
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Localized: Piezas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Localized: kg
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Localized: ml
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Localized: l
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Localized: Tazas
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: Refrigerador
     m_Metadata:
@@ -1306,114 +1282,6 @@ MonoBehaviour:
     m_Localized: Lista de compras
     m_Metadata:
       m_Items: []
-  - m_Id: 6145026047336448
-    m_Localized: "Bebidas alcoh\xF3licas"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530752
-    m_Localized: Pan
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530753
-    m_Localized: Productos de cereales y tipos de harina
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530754
-    m_Localized: Queso
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530755
-    m_Localized: Fiambres
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530756
-    m_Localized: Huevos
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530757
-    m_Localized: Grasas y aceites
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530758
-    m_Localized: "Pescado, crust\xE1ceos y mariscos"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530759
-    m_Localized: Alimentos para usos nutricionales especiales
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530760
-    m_Localized: Frutas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530761
-    m_Localized: Hierbas y especias
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530762
-    m_Localized: Leguminosas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530763
-    m_Localized: Carne y aves de corral
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530764
-    m_Localized: "Sustitutos de la carne y sustitutos de los productos l\xE1cteos"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530765
-    m_Localized: "Leche y productos l\xE1cteos"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530766
-    m_Localized: Alimentos variados
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530767
-    m_Localized: Platos variados
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530768
-    m_Localized: "Bebidas no alcoh\xF3licas"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530769
-    m_Localized: Frutos secos y semillas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530770
-    m_Localized: Pasteles y galletas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530771
-    m_Localized: "Patatas y tub\xE9rculos"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530772
-    m_Localized: Untables salados para el pan
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530773
-    m_Localized: Salsas saladas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530774
-    m_Localized: Aperitivos salados
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530775
-    m_Localized: Sopas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530776
-    m_Localized: "Az\xFAcar, dulces y salsas dulces"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026055725056
-    m_Localized: Verduras
-    m_Metadata:
-      m_Items: []
   - m_Id: 6413218154012672
     m_Localized: No se encontraron resultados
     m_Metadata:
@@ -1521,6 +1389,165 @@ MonoBehaviour:
     m_Localized: "\xA1Entendido!"
     m_Metadata:
       m_Items: []
+  - m_Id: 25687180457271296
+    m_Localized: '{0} veces a la semana'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 25682128132890624
+    m_Localized: '{0} comidas a la semana'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 25699605365645312
+    m_Localized: '{0} acciones a la semana'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 25708140598124544
+    m_Localized: Paso {0} de {1}
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 25683680096673792
+    m_Localized: Nunca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: Menos de una vez a la semana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Siguiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Enviar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "\xA1Bienvenido a Foodmission!\nEsta breve encuesta nos ayuda a
+      conocer tus h\xE1bitos alimenticios, tu concienciaci\xF3n sobre el desperdicio
+      de alimentos y tus elecciones sostenibles, para que Nutri pueda ofrecerte recomendaciones
+      personalizadas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: "\xBFCu\xE1ntas comidas que contengan carne sueles tomar cada semana?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: "\xBFCon qu\xE9 frecuencia comes carne de vacuno?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: "\xBFCon qu\xE9 frecuencia tiras comida que a\xFAn se puede comer?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: "\xBFCon qu\xE9 frecuencia consumes alimentos ultraprocesados, como
+      aperitivos envasados, bebidas azucaradas, platos preparados o productos c\xE1rnicos
+      procesados?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: "\xBFCon qu\xE9 frecuencia utilizas envases reutilizables o compras
+      productos recargables?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: "CATEGOR\xCDAS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: "A\xD1ADIDOS RECIENTEMENTE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Anterior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: "P\xE1gina {0} de {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Localized: "\xBFQue has comido para el {0}?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Localized: Buscando platos y recetas...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Localized: No hay comidas registradas recientemente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Localized: Cargar la comida o receta anterior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Localized: "Cancelar b\xFAsqueda"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Localized: "Los ingredientes de \xAB{0}\xBB han cambiado. \xBFQuieres actualizar
+      el preajuste existente o guardarlo como un nuevo preajuste?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Localized: Se ha modificado el ajuste preestablecido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Localized: Guardar como nuevo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Localized: Nombre del preajuste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Localized: Guardar como nuevo ajuste preestablecido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Localized: Introduce un nombre para el nuevo ajuste preestablecido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Localized: Receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Localized: Selecciona un tipo de comida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Localized: "\xBFQu\xE9 tipo de comida quieres registrar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Localized: "\xBFDe d\xF3nde era tu comida?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Localized: Buscar platos y recetas...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Localized: "Busca productos o selecciona una categor\xEDa..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Localized: Comidas que he tomado hoy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Localized: "Por favor, a\xF1ade al menos un producto alimenticio"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1531,3 +1558,7 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 27512489452232704
         - id: 20518970774773760
+        - id: 25687180457271296
+        - id: 25682128132890624
+        - id: 25699605365645312
+        - id: 25708140598124544

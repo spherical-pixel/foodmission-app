@@ -9,17 +9,21 @@ namespace eu.foodmission.platform
 {
     /// <summary>
     /// Implementation of ICatalogService that fetches reference data
-    /// from GET /api/v1/catalog/startup with in-memory caching by language.
+    /// from GET /api/v1/catalog/* endpoints with in-memory caching by language.
     /// </summary>
     public class CatalogService : ICatalogService
     {
         private readonly IStoreService _storeService;
-        private CatalogData _cachedData;
-        private string _cachedLang;
 
-        // Country/region caches (separate from startup data)
+        // Startup cache (keyed by lang)
+        private CatalogData _cachedData;
+        private string _cachedStartupLang;
+
+        // Country/region caches (keyed by lang)
         private List<CatalogItem> _cachedCountries;
+        private string _cachedCountriesLang;
         private readonly Dictionary<string, List<CatalogItem>> _cachedRegions = new();
+        private string _cachedRegionsLang;
 
         /// <summary>
         /// EU member states + Norway (EEA). Used to filter the backend's full
@@ -37,10 +41,11 @@ namespace eu.foodmission.platform
             _storeService = storeService;
         }
 
+        // ── Startup (bulk) ───────────────────────────────────────────────
+
         public async Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang)
         {
-            // Return cache if language matches
-            if (_cachedData != null && _cachedLang == lang)
+            if (_cachedData != null && _cachedStartupLang == lang)
             {
                 return (_cachedData, null);
             }
@@ -75,7 +80,7 @@ namespace eu.foodmission.platform
                 }
 
                 _cachedData = response.data;
-                _cachedLang = lang;
+                _cachedStartupLang = lang;
 
                 Debug.Log($"[{GetType().Name}] Catalog loaded successfully (lang={lang})");
                 return (_cachedData, null);
@@ -87,11 +92,14 @@ namespace eu.foodmission.platform
             }
         }
 
-        private async Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetCatalogListAsync(string endpoint)
+        // ── Non-paginated catalog lists (type-of-meals, meal-categories, etc.) ──
+
+        private async Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetCatalogListAsync(
+            string endpoint, string lang)
         {
             try
             {
-                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/{endpoint}";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/{endpoint}?lang={Uri.EscapeDataString(lang)}";
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Authorization", _storeService.GetAppState().tokenType + " " + _storeService.GetAppState().accessToken);
                 request.SetRequestHeader("Accept", "application/json");
@@ -114,28 +122,69 @@ namespace eu.foodmission.platform
             }
         }
 
-        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetTypeOfMealsAsync()
-            => GetCatalogListAsync("type-of-meals");
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetTypeOfMealsAsync(string lang)
+            => GetCatalogListAsync("type-of-meals", lang);
 
-        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCategoriesAsync()
-            => GetCatalogListAsync("meal-categories");
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCategoriesAsync(string lang)
+            => GetCatalogListAsync("meal-categories", lang);
 
-        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCoursesAsync()
-            => GetCatalogListAsync("meal-courses");
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMealCoursesAsync(string lang)
+            => GetCatalogListAsync("meal-courses", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetUnitsAsync(string lang)
+            => GetCatalogListAsync("units", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetGroupRolesAsync(string lang)
+            => GetCatalogListAsync("group-roles", lang);
+
+        // ── Paginated catalog lists (languages) ──────────────────────────
+
+        private async Task<(PaginatedCatalogResponse Result, ApiErrorResponse Error)>
+            GetPaginatedCatalogListAsync(string endpoint, string lang, int page, int limit, string search = null)
+        {
+            try
+            {
+                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/{endpoint}?page={page}&limit={limit}&lang={Uri.EscapeDataString(lang)}";
+                if (!string.IsNullOrEmpty(search))
+                    url += $"&search={Uri.EscapeDataString(search)}";
+
+                using UnityWebRequest request = UnityWebRequest.Get(url);
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                    await Task.Yield();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                    return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] Get{endpoint}"));
+
+                string raw = request.downloadHandler.text;
+                PaginatedCatalogResponse response = JsonUtility.FromJson<PaginatedCatalogResponse>(raw);
+                return (response, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] GetPaginatedCatalogListAsync({endpoint}) exception: {ex.Message}");
+                return (null, null);
+            }
+        }
+
+        public Task<(PaginatedCatalogResponse Result, ApiErrorResponse Error)> GetLanguagesAsync(
+            string lang, string search = null)
+            => GetPaginatedCatalogListAsync("languages", lang, page: 1, limit: 100, search);
 
         // ── Countries & Regions (paginated endpoints) ──────────────────────
 
-        public async Task<(List<CatalogItem> Result, ApiErrorResponse Error)> GetCountriesAsync()
+        public async Task<(List<CatalogItem> Result, ApiErrorResponse Error)> GetCountriesAsync(string lang)
         {
-            // Return cache if available
-            if (_cachedCountries != null)
+            if (_cachedCountries != null && _cachedCountriesLang == lang)
             {
                 return (_cachedCountries, null);
             }
 
             try
             {
-                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/countries?page=1&limit=300";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/countries?page=1&limit=300&lang={Uri.EscapeDataString(lang)}";
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
 
@@ -167,7 +216,8 @@ namespace eu.foodmission.platform
                 _cachedCountries = response.data
                     .Where(c => EUCountryCodes.Contains(c.code))
                     .ToList();
-                Debug.Log($"[{GetType().Name}] Countries loaded: {_cachedCountries.Count} (filtered to EU + Norway)");
+                _cachedCountriesLang = lang;
+                Debug.Log($"[{GetType().Name}] Countries loaded: {_cachedCountries.Count} (filtered to EU + Norway, lang={lang})");
                 return (_cachedCountries, null);
             }
             catch (Exception ex)
@@ -180,7 +230,8 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(List<CatalogItem> Result, ApiErrorResponse Error)> GetRegionsAsync(string countryCode)
+        public async Task<(List<CatalogItem> Result, ApiErrorResponse Error)> GetRegionsAsync(
+            string countryCode, string lang)
         {
             string cc = (countryCode ?? "").Trim().ToUpperInvariant();
             if (cc.Length != 2)
@@ -188,7 +239,13 @@ namespace eu.foodmission.platform
                 return (new List<CatalogItem>(), null);
             }
 
-            // Return cache if available for this country
+            // Invalidate regions cache if lang changed
+            if (_cachedRegionsLang != lang)
+            {
+                _cachedRegions.Clear();
+                _cachedRegionsLang = lang;
+            }
+
             if (_cachedRegions.TryGetValue(cc, out var cached))
             {
                 return (cached, null);
@@ -196,7 +253,7 @@ namespace eu.foodmission.platform
 
             try
             {
-                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/regions?countryCode={cc}&page=1&limit=200";
+                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/regions?countryCode={cc}&page=1&limit=200&lang={Uri.EscapeDataString(lang)}";
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
 
@@ -227,7 +284,7 @@ namespace eu.foodmission.platform
 
                 var result = response.data.ToList();
                 _cachedRegions[cc] = result;
-                Debug.Log($"[{GetType().Name}] Regions loaded for {cc}: {result.Count}");
+                Debug.Log($"[{GetType().Name}] Regions loaded for {cc}: {result.Count} (lang={lang})");
                 return (result, null);
             }
             catch (Exception ex)

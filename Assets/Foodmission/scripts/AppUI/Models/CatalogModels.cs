@@ -3,6 +3,16 @@ using System;
 namespace eu.foodmission.platform
 {
     /// <summary>
+    /// Optional metadata attached to a catalog entry.
+    /// Currently used by regions to carry the parent country code.
+    /// </summary>
+    [Serializable]
+    public class CatalogMeta
+    {
+        public string countryCode;
+    }
+
+    /// <summary>
     /// A single catalog entry with a code and display label.
     /// Used for genders, activity levels, dietary preferences, etc.
     /// </summary>
@@ -11,6 +21,7 @@ namespace eu.foodmission.platform
     {
         public string code;
         public string label;
+        public CatalogMeta meta;
     }
 
     /// <summary>

@@ -1,0 +1,153 @@
+/* Root and Container Styling */
+.fm-step-progress-bar {
+    width: 100%;
+    padding: 16px 24px;
+    box-sizing: border-box;
+}
+
+#progress-container {
+    flex-direction: column;
+    width: 100%;
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   COMPACT MODE (Text + Progress Bar)
+   ─────────────────────────────────────────────────────────────────────── */
+.fm-step-progress-bar--compact .fm-step-progress__text {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-100);
+    -unity-font-style: bold;
+    margin-bottom: 8px;
+}
+
+.fm-step-progress-bar--compact .fm-step-progress__track {
+    height: 6px;
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 3px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.fm-step-progress-bar--compact .fm-step-progress__fill {
+    height: 100%;
+    background-color: var(--appui-primary-100);
+    border-radius: 3px;
+    transition-property: width;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-back;
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   DETAILED MODE (Circles + Lines + Labels)
+   ─────────────────────────────────────────────────────────────────────── */
+.fm-step-progress-bar--detailed .fm-step-progress__row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+}
+
+/* Step Circle */
+.fm-step-progress-bar--detailed .fm-step-progress__circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    border-width: 2px;
+    border-style: solid;
+    transition-property: background-color, border-color;
+    transition-duration: 0.3s;
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__circle-text {
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    transition-property: color;
+    transition-duration: 0.3s;
+}
+
+/* Connector Line */
+.fm-step-progress-bar--detailed .fm-step-progress__line {
+    flex-grow: 1;
+    height: 2px;
+    margin-left: 4px;
+    margin-right: 4px;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+
+/* Labels Row */
+.fm-step-progress-bar--detailed .fm-step-progress__labels-row {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__label {
+    flex-grow: 1;
+    flex-basis: 0;
+    font-size: var(--appui-font-sizes-body-xs);
+    -unity-text-align: top-center;
+    white-space: normal;
+    transition-property: color;
+    transition-duration: 0.3s;
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   STATE CLASSES (Active, Completed, Pending)
+   ─────────────────────────────────────────────────────────────────────── */
+/* Completed Steps */
+.fm-step-progress-bar--detailed .fm-step-progress__circle.completed {
+    background-color: var(--appui-primary-100);
+    border-color: var(--appui-primary-100);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__circle.completed .fm-step-progress__circle-text {
+    color: var(--appui-backgrounds-100);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__line.active {
+    background-color: var(--appui-primary-100);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__label.completed {
+    color: var(--appui-primary-100);
+    -unity-font-style: normal;
+}
+
+/* Active Step */
+.fm-step-progress-bar--detailed .fm-step-progress__circle.active {
+    background-color: var(--appui-backgrounds-100);
+    border-color: var(--appui-primary-100);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__circle.active .fm-step-progress__circle-text {
+    color: var(--appui-primary-100);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__label.active {
+    color: var(--appui-primary-100);
+    -unity-font-style: bold;
+}
+
+/* Pending Steps */
+.fm-step-progress-bar--detailed .fm-step-progress__circle.pending {
+    background-color: var(--appui-backgrounds-200);
+    border-color: var(--appui-backgrounds-300);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__circle.pending .fm-step-progress__circle-text {
+    color: var(--appui-foregrounds-50);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__line.pending {
+    background-color: var(--appui-backgrounds-300);
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__label.pending {
+    color: var(--appui-foregrounds-50);
+}

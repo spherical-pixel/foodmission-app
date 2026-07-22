@@ -12,7 +12,7 @@ namespace eu.foodmission.platform
         public string mealId;
         public string foodProductId;
         public string genericFoodId;
-        public int quantity;
+        public int? quantity;
         public string unit;
         public string notes;
     }
@@ -35,7 +35,7 @@ namespace eu.foodmission.platform
         public string itemType;
         public string foodProductId;
         public string genericFoodId;
-        public int quantity;
+        public int? quantity;
         public string unit;
         public string notes;
         public MealItemFoodProduct foodProduct;
@@ -71,11 +71,12 @@ namespace eu.foodmission.platform
         [JsonProperty("genericFoodId")]
         public string genericFoodId;
 
-        [JsonProperty("quantity")]
-        public int quantity = 1;
+        [JsonProperty("quantity", NullValueHandling = NullValueHandling.Ignore)]
+        public int? quantity;
 
-        [JsonProperty("unit")]
+        [JsonProperty("unit", NullValueHandling = NullValueHandling.Ignore)]
         public string unit;
+
 
         [JsonProperty("notes")]
         public string notes;

@@ -156,7 +156,7 @@ namespace eu.foodmission.platform.Tests
             };
 
             _mockCatalogService
-                .Setup(x => x.GetCountriesAsync())
+                .Setup(x => x.GetCountriesAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((countries, null)));
 
             await _vm.LoadCountriesAsync();
@@ -187,7 +187,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
             _mockCatalogService
-                .Setup(x => x.GetCountriesAsync())
+                .Setup(x => x.GetCountriesAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((countries, null)));
 
             await _vm.LoadCatalogDataAsync();
@@ -274,7 +274,7 @@ namespace eu.foodmission.platform.Tests
             _mockAuthService
                 .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
                 .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
-                .ReturnsAsync(true);
+                .ReturnsAsync((true, null));
 
             await _vm.SubmitAsync();
 
@@ -329,7 +329,7 @@ namespace eu.foodmission.platform.Tests
 
             _mockAuthService
                 .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
-                .ReturnsAsync(true);
+                .ReturnsAsync((true, null));
 
             await _vm.SubmitAsync();
 
@@ -338,7 +338,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SubmitAsync_WhenApiFails_FiresShowErrorRequest()
+        public async Task SubmitAsync_WhenApiFails_SetsErrorDetail()
         {
             var catalogData = new CatalogData
             {
@@ -355,16 +355,14 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectedGenderIndex = 0;
             _vm.SelectedActivityLevelIndex = 0;
 
+            var expectedError = new ApiErrorResponse { statusCode = 500, error = "ERR", message = "Save failed" };
             _mockAuthService
                 .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
-                .ReturnsAsync(false);
-
-            bool eventFired = false;
-            _vm.ShowErrorRequest += (msg) => eventFired = true;
+                .ReturnsAsync((false, expectedError));
 
             await _vm.SubmitAsync();
 
-            Assert.IsTrue(eventFired);
+            Assert.IsNotNull(_vm.ErrorDetail);
             Assert.IsFalse(_vm.IsSubmitting);
         }
 
@@ -507,7 +505,7 @@ namespace eu.foodmission.platform.Tests
             _mockAuthService
                 .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
                 .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
-                .ReturnsAsync(true);
+                .ReturnsAsync((true, null));
 
             await _vm.SubmitAsync();
 
@@ -544,7 +542,7 @@ namespace eu.foodmission.platform.Tests
             _mockAuthService
                 .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
                 .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
-                .ReturnsAsync(true);
+                .ReturnsAsync((true, null));
 
             await _vm.SubmitAsync();
 
@@ -576,7 +574,7 @@ namespace eu.foodmission.platform.Tests
             _mockAuthService
                 .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
                 .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
-                .ReturnsAsync(true);
+                .ReturnsAsync((true, null));
 
             await _vm.SubmitAsync();
 

@@ -72,16 +72,18 @@ namespace eu.foodmission.platform
                 _searchCategoryField.SearchProductsAsync = query => _viewModel.SearchFoodsAsync(query);
                 _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
                 _searchCategoryField.SearchGenericFoodsAsync = query => _viewModel.SearchGenericFoodsAsync(query);
+                _searchCategoryField.SearchByFoodGroupAsync = (foodGroup, page, pageSize) => _viewModel.SearchByFoodGroupAsync(foodGroup, page, pageSize);
                 _searchCategoryField.OnProductConfirmed = async (product, qty, unit) =>
                 {
-                    await SafeImportAndAddFoodItemAsync(product, qty, unit);
+                    await SafeImportAndAddFoodItemAsync(product, qty ?? 1f, unit ?? "PIECES");
                     RebuildItems();
                 };
                 _searchCategoryField.OnGenericFoodConfirmed = async (food, qty, unit) =>
                 {
-                    await SafeAddGenericFoodItemAsync(food, qty, unit);
+                    await SafeAddGenericFoodItemAsync(food, qty ?? 1f, unit ?? "PIECES");
                     RebuildItems();
                 };
+
                 _searchCategoryField.OnTextChanged = text => _viewModel.FilterText = text;
                 _searchCategoryField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchCategoryField.OnProductInfoRequested = product =>

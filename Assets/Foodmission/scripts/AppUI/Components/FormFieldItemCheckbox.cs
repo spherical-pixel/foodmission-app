@@ -73,13 +73,23 @@ namespace eu.foodmission.platform.Components
             {
                 quiet = true
             };
+            _button.clicked += OnButtonClicked;
 
-            
             ve.Add(_button);
 
             _headingContainer.style.display = DisplayStyle.None;
 
             _checkBox.RegisterValueChangedCallback(OnCheckBoxValueChanged);
+        }
+
+        private void OnButtonClicked()
+        {
+            if (_checkBox != null)
+            {
+                _checkBox.value = _checkBox.value == CheckboxState.Checked
+                    ? CheckboxState.Unchecked
+                    : CheckboxState.Checked;
+            }
         }
 
         public override AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)

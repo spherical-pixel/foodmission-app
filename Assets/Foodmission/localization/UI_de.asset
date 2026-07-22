@@ -1093,30 +1093,6 @@ MonoBehaviour:
     m_Localized: Handbuch
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Localized: "St\xFCcke"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Localized: kg
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Localized: ml
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Localized: l
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Localized: Becher
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: "K\xFChlschrank"
     m_Metadata:
@@ -1314,114 +1290,6 @@ MonoBehaviour:
     m_Localized: "\U0001F4DD Einkaufsliste"
     m_Metadata:
       m_Items: []
-  - m_Id: 6145026047336448
-    m_Localized: "Alkoholische Getr\xE4nke"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530752
-    m_Localized: Brot
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530753
-    m_Localized: Getreideprodukte und Mehlsorten
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530754
-    m_Localized: "K\xE4se"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530755
-    m_Localized: Aufschnitt
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530756
-    m_Localized: Eier
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530757
-    m_Localized: "Fette und \xD6le"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530758
-    m_Localized: Fisch, Krebstiere und Schalentiere
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530759
-    m_Localized: "Lebensmittel f\xFCr besondere Ern\xE4hrungszwecke"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530760
-    m_Localized: Obst
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530761
-    m_Localized: "Kr\xE4uter und Gew\xFCrze"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530762
-    m_Localized: "H\xFClsenfr\xFCchte"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530763
-    m_Localized: "Fleisch und Gefl\xFCgel"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530764
-    m_Localized: Fleischersatzprodukte und Milchersatzprodukte
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530765
-    m_Localized: Milch und Milchprodukte
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530766
-    m_Localized: Verschiedene Lebensmittel
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530767
-    m_Localized: Gemischte Gerichte
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530768
-    m_Localized: "Alkoholfreie Getr\xE4nke"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530769
-    m_Localized: "N\xFCsse und Samen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530770
-    m_Localized: "Geb\xE4ck und Kekse"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530771
-    m_Localized: Kartoffeln und Knollen
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530772
-    m_Localized: Herzhafte Brotaufstriche
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530773
-    m_Localized: "Herzhafte So\xDFen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530774
-    m_Localized: Herzhafte Snacks
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530775
-    m_Localized: Suppen
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530776
-    m_Localized: "Zucker, S\xFC\xDFigkeiten und s\xFC\xDFe So\xDFen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026055725056
-    m_Localized: "Gem\xFCse"
-    m_Metadata:
-      m_Items: []
   - m_Id: 6413218154012672
     m_Localized: Es wurden keine Ergebnisse gefunden
     m_Metadata:
@@ -1529,6 +1397,165 @@ MonoBehaviour:
     m_Localized: Verstanden!
     m_Metadata:
       m_Items: []
+  - m_Id: 25687180457271296
+    m_Localized: '{0} Mal pro Woche'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 25682128132890624
+    m_Localized: '{0} Mahlzeiten pro Woche'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 25699605365645312
+    m_Localized: '{0} Aktionen pro Woche'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 25708140598124544
+    m_Localized: Schritt {0} von {1}
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 25683680096673792
+    m_Localized: Niemals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: Weniger als einmal pro Woche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25706952255332352
+    m_Localized: Weiter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Absenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709632411394048
+    m_Localized: "Willkommen bei Foodmission!\nDiese kurze Umfrage hilft uns dabei,
+      Ihre Ern\xE4hrungsgewohnheiten, Ihr Bewusstsein f\xFCr Lebensmittelverschwendung
+      und Ihre Entscheidungen im Hinblick auf Nachhaltigkeit besser zu verstehen,
+      damit Nutri Ihnen ma\xDFgeschneiderte Empfehlungen geben kann."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: Wie viele Mahlzeiten mit Fleisch essen Sie normalerweise pro Woche?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: Wie oft isst du Rindfleisch?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: Wie oft werfen Sie noch essbare Lebensmittel weg?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: "Wie oft verzehren Sie hochverarbeitete Lebensmittel wie abgepackte
+      Snacks, zuckerhaltige Getr\xE4nke, Fertiggerichte oder verarbeitete Fleischprodukte?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: "Wie oft verwenden Sie wiederverwendbare Beh\xE4lter oder kaufen
+      Nachf\xFCllprodukte?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: KATEGORIEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: "NEU HINZUGEF\xDCGT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: "Zur\xFCck"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Seite {0} von {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Localized: Suche nach Gerichten und Rezepten...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Localized: Was hast du zum {0} gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Localized: Es wurden keine Mahlzeiten aus der letzten Zeit erfasst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Localized: Vorherige Mahlzeit oder Rezept laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Localized: Suche abbrechen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Localized: "Die Zutaten von \u201E{0}\u201C haben sich ge\xE4ndert. M\xF6chten
+      Sie die vorhandene Voreinstellung aktualisieren oder als neue Voreinstellung
+      speichern?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Localized: "Voreinstellung ge\xE4ndert."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Localized: Als neue Datei speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Localized: Name der Voreinstellung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Localized: Als neue Voreinstellung speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Localized: "Bitte geben Sie einen Namen f\xFCr die neue Voreinstellung ein"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Localized: Rezept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Localized: "W\xE4hlen Sie eine Mahlzeitart aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Localized: "Welche Art von Mahlzeit m\xF6chtest du eintragen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Localized: Woher stammte dein Essen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Localized: Gerichte und Rezepte suchen...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Localized: "Produkte suchen oder Kategorie ausw\xE4hlen..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Localized: Heute eingenommene Mahlzeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Localized: "Bitte f\xFCgen Sie mindestens ein Lebensmittel hinzu"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1539,3 +1566,7 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 27512489452232704
         - id: 20518970774773760
+        - id: 25687180457271296
+        - id: 25682128132890624
+        - id: 25699605365645312
+        - id: 25708140598124544

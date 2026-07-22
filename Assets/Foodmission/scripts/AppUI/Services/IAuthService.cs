@@ -17,7 +17,7 @@ namespace eu.foodmission.platform
             string zip = null);
         void Logout();
         Task<(bool success, string message)> RequestPasswordResetAsync(string email);
-        Task<bool> UpdateProfileAsync(ProfileUpdateRequest request);
+        Task<(bool success, ApiErrorResponse error)> UpdateProfileAsync(ProfileUpdateRequest request);
         Task SyncSettingsAsync();
         Task<(bool success, string error)> DeleteAccountAsync();
     }

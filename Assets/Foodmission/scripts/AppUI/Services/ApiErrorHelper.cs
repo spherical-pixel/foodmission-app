@@ -5,7 +5,7 @@ namespace eu.foodmission.platform
 {
     public static class ApiErrorHelper
     {
-        public static ApiErrorResponse Parse(UnityWebRequest request, string context)
+        public static ApiErrorResponse Parse(UnityWebRequest request, string context, bool logAsError = true)
         {
             string body = request.downloadHandler?.text;
             int code = (int)request.responseCode;
@@ -19,13 +19,27 @@ namespace eu.foodmission.platform
 
             if (isValid)
             {
-                Debug.LogError($"{context}: {code} [{error.error}] {error.message} traceId={error.traceId}");
-                Debug.LogError($"{context}:  full log: {body}");
+                if (logAsError)
+                {
+                    Debug.LogError($"{context}: {code} [{error.error}] {error.message} traceId={error.traceId}");
+                    Debug.LogError($"{context}:  full log: {body}");
+                }
+                else
+                {
+                    Debug.LogWarning($"{context}: {code} [{error.error}] {error.message} traceId={error.traceId}");
+                }
             }
             else
             {
                 string snippet = body != null && body.Length > 200 ? body[..200] + "..." : body;
-                Debug.LogError($"{context}: {code} — {snippet}");
+                if (logAsError)
+                {
+                    Debug.LogError($"{context}: {code} — {snippet}");
+                }
+                else
+                {
+                    Debug.LogWarning($"{context}: {code} — {snippet}");
+                }
 
                 error = new ApiErrorResponse
                 {

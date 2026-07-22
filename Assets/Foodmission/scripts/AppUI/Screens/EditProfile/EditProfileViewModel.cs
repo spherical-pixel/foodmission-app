@@ -139,7 +139,9 @@ namespace eu.foodmission.platform
             _selectedShoppingResponsibilityIndex >= 0 || 
             (_selectedDietaryPreferenceIndices != null);
 
-        
+        [ObservableProperty]
+        private ApiErrorResponse m_ErrorDetail;
+
         /// <summary>
         /// Event to show an error toast.
         /// </summary>
@@ -205,7 +207,8 @@ namespace eu.foodmission.platform
         /// </summary>
         public async Task LoadCountriesAsync()
         {
-            var (countries, _) = await _catalogService.GetCountriesAsync();
+            string lang = _storeService.GetAppState().lang ?? "en";
+            var (countries, _) = await _catalogService.GetCountriesAsync(lang);
 
             if (countries == null || countries.Count == 0)
             {
@@ -233,7 +236,8 @@ namespace eu.foodmission.platform
             }
 
             string countryCode = _countries[SelectedCountryIndex].code;
-            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode);
+            string lang = _storeService.GetAppState().lang ?? "en";
+            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode, lang);
 
             _regions = regions ?? new List<CatalogItem>();
             RegionOptions = _regions.Select(r => r.label).ToList();
@@ -272,7 +276,7 @@ namespace eu.foodmission.platform
             try
             {
                 AppState state = _storeService.GetAppState();
-                string lang = state.lang ?? "es";
+                string lang = state.lang ?? "en";
 
                 var (data, _) = await _catalogService.LoadStartupAsync(lang);
 
@@ -397,6 +401,18 @@ namespace eu.foodmission.platform
                     if (codes.Count > 0) dietaryCodes = codes.ToArray();
                 }
 
+                AppState state = _storeService.GetAppState();
+
+                bool hasShopping = shoppingResponsibilityCode != null || !string.IsNullOrEmpty(state.userShoppingResponsibility);
+                bool hasDietary = (dietaryCodes != null && dietaryCodes.Length > 0)
+                    || (state.userDietaryPreference != null && state.userDietaryPreference.Length > 0);
+                bool hasSurvey = state.userOnboardingSurvey != null
+                    && (state.userOnboardingSurvey.meatMeals != null
+                        || state.userOnboardingSurvey.beefFrequency != null
+                        || state.userOnboardingSurvey.foodWasteFrequency != null
+                        || state.userOnboardingSurvey.ultraProcessedFrequency != null
+                        || state.userOnboardingSurvey.reusableContainersFrequency != null);
+
                 var request = new ProfileUpdateRequest
                 {
                     gender = _selectedGenderIndex >= 0 ? _catalogData.genders[_selectedGenderIndex].code : null,
@@ -405,16 +421,15 @@ namespace eu.foodmission.platform
                     annualIncome = _selectedAnnualIncomeIndex >= 0 ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
                     yearOfBirth = SelectedYearOfBirthIndex >= 0 ? (int?)int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : null,
                     
-                    preferences = (shoppingResponsibilityCode != null || dietaryCodes != null)
+                    preferences = (hasShopping || hasDietary || hasSurvey)
                         ? new ProfileUpdatePreferences
                         {
-                            shoppingResponsibility = shoppingResponsibilityCode,
-                            dietaryPreference = dietaryCodes
+                            shoppingResponsibility = shoppingResponsibilityCode ?? state.userShoppingResponsibility,
+                            dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
+                            onboardingSurvey = state.userOnboardingSurvey
                         }
                         : null
                 };
-
-                AppState state = _storeService.GetAppState();
                 
 
                 if( SelectedGenderIndex >= 0 && _catalogData.genders[SelectedGenderIndex].code != state.userGender)
@@ -460,7 +475,7 @@ namespace eu.foodmission.platform
 
                 Debug.Log($"[EditProfileViewModel] Submitting profile update: {request.ToJson()}");
 
-                bool success = await _authService.UpdateProfileAsync(request);
+                var (success, error) = await _authService.UpdateProfileAsync(request);
 
                 if (success)
                 {
@@ -468,11 +483,11 @@ namespace eu.foodmission.platform
                     //_storeService.store.Dispatch(AppActions.setExtendedProfile.Invoke());
                     //RaiseNavigationRequested(Actions.onboardingprofile_to_onboardingavatar);
                     //RaiseNavigationRequested(Actions.go_to_home);
+                    ErrorDetail = null;
                 }
                 else
                 {
-                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SAVE_PROFILE");
-                    ShowErrorRequest?.Invoke(ErrorMessage);
+                    ErrorDetail = error ?? new ApiErrorResponse { statusCode = 500, error = "COULD_NOT_SAVE_PROFILE", message = "Could not save profile" };
                 }
             }
             catch (Exception ex)

@@ -50,13 +50,6 @@ namespace eu.foodmission.platform
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
-
-            var nutriService = App.current?.services?.GetService<INutriService>();
-            if (nutriService != null)
-            {
-                nutriService.SetActive(true);
-                nutriService.SetCameraActive(true);
-            }
         }
 
         private void CacheUIElements()
@@ -203,13 +196,6 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            var nutriService = App.current?.services?.GetService<INutriService>();
-            if (nutriService != null)
-            {
-                nutriService.SetCameraActive(false);
-                nutriService.SetActive(false);
-            }
-
             UnregisterEvents();
 
             _healthProgress         = null;

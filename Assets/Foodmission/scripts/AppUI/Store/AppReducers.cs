@@ -89,6 +89,7 @@ namespace eu.foodmission.platform
 
         // Extended profile
         public static readonly ActionCreator setExtendedProfile = "app/setExtendedProfile";
+        public static readonly ActionCreator<OnboardingSurveyData> setOnboardingSurvey = "app/setOnboardingSurvey";
 
         // Profile sync
         public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
@@ -111,6 +112,7 @@ namespace eu.foodmission.platform
             public readonly UserSettingsDto settings;
             public readonly string[] dietaryPreference;
             public readonly string shoppingResponsibility;
+            public readonly OnboardingSurveyData onboardingSurvey;
 
             public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
@@ -118,7 +120,8 @@ namespace eu.foodmission.platform
                 string language = null,
                 UserSettingsDto settings = null,
                 string[] dietaryPreference = null,
-                string shoppingResponsibility = "")
+                string shoppingResponsibility = "",
+                OnboardingSurveyData onboardingSurvey = null)
             {
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
@@ -132,6 +135,7 @@ namespace eu.foodmission.platform
                 this.settings = settings;
                 this.dietaryPreference = dietaryPreference;
                 this.shoppingResponsibility = shoppingResponsibility;
+                this.onboardingSurvey = onboardingSurvey;
             }
         }
     }
@@ -358,6 +362,11 @@ namespace eu.foodmission.platform
                 : new string[0];
             newState.userShoppingResponsibility = action.payload.shoppingResponsibility ?? "";
 
+            if (action.payload.onboardingSurvey != null)
+            {
+                newState.userOnboardingSurvey = action.payload.onboardingSurvey;
+            }
+
             if (!string.IsNullOrEmpty(action.payload.language))
             {
                 newState.lang = action.payload.language;
@@ -390,6 +399,13 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.foodInfoAddRequest = null;
+            return newState;
+        }
+        
+        public static AppState SetOnboardingSurveyReducer(AppState state, IAction<OnboardingSurveyData> action)
+        {
+            var newState = state.Copy();
+            newState.userOnboardingSurvey = action.payload;
             return newState;
         }
     }

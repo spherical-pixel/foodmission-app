@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 
+using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.Redux;
@@ -17,6 +18,7 @@ namespace eu.foodmission.platform
         private readonly ITemplateService _templateService;
         private readonly IAppUpdateService _appUpdateService;
         private readonly IRemoteLocalizationService _remoteLocalizationService;
+        private readonly ICatalogService _catalogService;
 
         [ObservableProperty]
         private string _loadingText = "Loading...";
@@ -29,12 +31,14 @@ namespace eu.foodmission.platform
             IAuthService authService,
             ITemplateService templateService,
             IAppUpdateService appUpdateService,
-            IRemoteLocalizationService remoteLocalizationService) : base(storeService)
+            IRemoteLocalizationService remoteLocalizationService,
+            ICatalogService catalogService) : base(storeService)
         {
             _authService = authService;
             _templateService = templateService;
             _appUpdateService = appUpdateService;
             _remoteLocalizationService = remoteLocalizationService;
+            _catalogService = catalogService;
         }
 
         public async Task<string> InitializeAppAsync()
@@ -78,6 +82,11 @@ namespace eu.foodmission.platform
             if (!isAuthenticated)
             {
                 _authService.Logout();
+            }
+            else
+            {
+                string lang = _storeService.GetAppState().lang ?? "en";
+                await FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
             }
 
             string returnAction = isAuthenticated ? Actions.loading_to_home : Actions.loading_to_auth;

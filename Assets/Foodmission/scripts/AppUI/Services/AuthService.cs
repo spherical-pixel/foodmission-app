@@ -67,7 +67,7 @@ namespace eu.foodmission.platform
                         : 0;
                     ScheduleProactiveRefresh(remaining, refreshRemaining);
                     // TODO: Remove this log or change to Debug after testing
-                    // Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
+                    Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
 
                     ProfileResponse profile = await FetchProfileAsync(state.accessToken);
                     if (profile != null)
@@ -233,11 +233,11 @@ namespace eu.foodmission.platform
                 {
                     string errorMessage = request.responseCode switch
                     {
-                        401 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_LOGIN_401"), 
-                        404 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_404"),
-                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_400"),
-                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_500"),
-                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_CONNECTION",new object[]{ request.error})
+                        401 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_LOGIN_401"),
+                        404 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_404"),
+                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_400"),
+                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_500"),
+                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_CONNECTION", new object[] { request.error })
                     };
 
                     Debug.LogError($"[{GetType().Name}] Login failed: {errorMessage} (Code: {request.responseCode})");
@@ -252,7 +252,7 @@ namespace eu.foodmission.platform
 
                 if (string.IsNullOrEmpty(response?.access_token))
                 {
-                    string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_INVALID_RESPONSE");
+                    string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_INVALID_RESPONSE");
                     _storeService.store.Dispatch(AppActions.loginFailure.Invoke(error));
                     return (false, null, error);
                 }
@@ -299,7 +299,7 @@ namespace eu.foodmission.platform
             }
             catch (Exception ex)
             {
-                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_UNEXPECTED",new object[]{ ex.Message});
+                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_UNEXPECTED", new object[] { ex.Message });
                 Debug.LogError($"[{GetType().Name}] Login exception: {ex}");
                 _storeService.store.Dispatch(AppActions.loginFailure.Invoke(error));
                 return (false, null, error);
@@ -351,10 +351,10 @@ namespace eu.foodmission.platform
                 {
                     string errorMessage = request.responseCode switch
                     {
-                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_REGISTER_400"),
-                        409 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_REGISTER_409"),
-                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_500"),
-                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_CONNECTION", new object[]{ request.error })
+                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_400"),
+                        409 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_409"),
+                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_500"),
+                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_CONNECTION", new object[] { request.error })
                     };
 
                     Debug.LogError($"[{GetType().Name}] Register failed: {errorMessage} (Code: {request.responseCode})");
@@ -369,7 +369,7 @@ namespace eu.foodmission.platform
 
                 if (response?.createdUser == null || string.IsNullOrEmpty(response.createdUser.id))
                 {
-                    string errorMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_INVALID_RESPONSE");
+                    string errorMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_INVALID_RESPONSE");
                     _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMsg));
                     return (false, null, errorMsg);
                 }
@@ -396,7 +396,7 @@ namespace eu.foodmission.platform
             }
             catch (Exception ex)
             {
-                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI","API_ERROR_UNEXPECTED", new object[]{ ex.Message });
+                string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_UNEXPECTED", new object[] { ex.Message });
                 Debug.LogError($"[{GetType().Name}] Register exception: {ex}");
                 _storeService.store.Dispatch(AppActions.registerFailure.Invoke(error));
                 return (false, null, error);
@@ -417,7 +417,8 @@ namespace eu.foodmission.platform
                 language: profile.language,
                 settings: profile.settings,
                 dietaryPreference: profile.preferences?.dietaryPreference,
-                shoppingResponsibility: profile.preferences?.shoppingResponsibility ?? ""
+                shoppingResponsibility: profile.preferences?.shoppingResponsibility ?? "",
+                onboardingSurvey: profile.preferences?.onboardingSurvey
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
         }
@@ -430,7 +431,7 @@ namespace eu.foodmission.platform
             var request = new ProfileUpdateRequest
             {
                 language = state.lang,
-                
+
                 settings = new UserSettingsDto
                 {
                     theme = state.theme,
@@ -443,7 +444,7 @@ namespace eu.foodmission.platform
                 }
             };
 
-            bool success = await UpdateProfileAsync(request);
+            var (success, _) = await UpdateProfileAsync(request);
             if (!success)
             {
                 Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
@@ -598,16 +599,16 @@ namespace eu.foodmission.platform
 
         /// <summary>
         /// Updates the current user's extended profile via PATCH /api/v1/users/me.
-        /// Returns true on success, false on failure.
+        /// Returns (true, null) on success, or (false, ApiErrorResponse) on failure.
         /// </summary>
-        public async Task<bool> UpdateProfileAsync(ProfileUpdateRequest request)
+        public async Task<(bool success, ApiErrorResponse error)> UpdateProfileAsync(ProfileUpdateRequest request)
         {
             AppState state = _storeService.GetAppState();
 
             if (string.IsNullOrEmpty(state.accessToken))
             {
                 Debug.LogError($"[{GetType().Name}] UpdateProfile — no access token");
-                return false;
+                return (false, new ApiErrorResponse { statusCode = 401, error = "NO_ACCESS_TOKEN", message = "No access token available. Please log in again." });
             }
 
             try
@@ -618,10 +619,10 @@ namespace eu.foodmission.platform
                 string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
                 byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
 
-                bool success = await SendPatchRequest(url, bodyRaw, state.tokenType, state.accessToken);
+                var (success, error) = await SendPatchRequest(url, bodyRaw, state.tokenType, state.accessToken);
                 if (!success)
                 {
-                    return false;
+                    return (false, error);
                 }
 
                 ProfileResponse profile = await FetchProfileAsync(state.accessToken);
@@ -634,12 +635,12 @@ namespace eu.foodmission.platform
                     Debug.LogWarning($"[{GetType().Name}] UpdateProfileAsync — PATCH succeeded but profile refresh failed");
                 }
 
-                return success;
+                return (true, null);
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] UpdateProfileAsync exception: {ex.Message}");
-                return false;
+                return (false, new ApiErrorResponse { statusCode = 500, error = "UNEXPECTED_ERROR", message = ex.Message });
             }
         }
 
@@ -689,7 +690,7 @@ namespace eu.foodmission.platform
         /// Sends a PATCH request for profile updates.
         /// Uses new UnityWebRequest(url, "PATCH") which works correctly with NestJS.
         /// </summary>
-        private async Task<bool> SendPatchRequest(string url, byte[] bodyRaw, string tokenType, string accessToken)
+        private async Task<(bool success, ApiErrorResponse error)> SendPatchRequest(string url, byte[] bodyRaw, string tokenType, string accessToken)
         {
             using UnityWebRequest request = new UnityWebRequest(url, "PATCH");
             request.uploadHandler = new UploadHandlerRaw(bodyRaw)
@@ -708,13 +709,12 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                string responseBody = request.downloadHandler?.text ?? "no body";
-                Debug.LogError($"[{GetType().Name}] UpdateProfile PATCH failed: {request.responseCode} {request.error} — Body: {responseBody}");
-                return false;
+                ApiErrorResponse apiError = ApiErrorHelper.Parse(request, "AuthService.UpdateProfile");
+                return (false, apiError);
             }
 
             Debug.Log($"[{GetType().Name}] Profile updated successfully via PATCH");
-            return true;
+            return (true, null);
         }
     }
 }

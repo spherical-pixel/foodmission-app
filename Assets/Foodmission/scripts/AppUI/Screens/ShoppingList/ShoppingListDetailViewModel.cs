@@ -20,6 +20,7 @@ namespace eu.foodmission.platform
         private readonly IFoodProductService _foodProductService;
         private readonly IGenericFoodService _genericFoodService;
         private readonly ILocalStorageService _localStorage;
+        private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
 
         private const string CacheKeyPrefix = "shoppinglist_items_";
         private const string FoodSearchCachePrefix = "food_search_";
@@ -66,28 +67,18 @@ namespace eu.foodmission.platform
             IShoppingListService shoppingListService,
             IFoodProductService foodProductService,
             IGenericFoodService genericFoodService,
-            ILocalStorageService localStorage)
+            ILocalStorageService localStorage,
+            IOpenFoodFactsClientService openFoodFactsClientService)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
             _foodProductService = foodProductService;
             _genericFoodService = genericFoodService;
             _localStorage = localStorage;
+            _openFoodFactsClientService = openFoodFactsClientService;
         }
 
-        public void RequestFoodInfo(FoodInfoType foodType, string foodId, string foodData = null)
-        {
-            var args = new List<Unity.AppUI.Navigation.Argument>
-            {
-                new("foodType", foodType == FoodInfoType.Product ? "product" : "generic"),
-                new("foodId", foodId),
-                new("entryContext", "shoppingList")
-            };
-            if (!string.IsNullOrEmpty(foodData))
-                args.Add(new Unity.AppUI.Navigation.Argument("foodData", foodData));
 
-            RaiseNavigationRequested(Actions.go_to_food_info, args.ToArray());
-        }
 
         public void ApplyFilter()
         {
@@ -234,6 +225,17 @@ namespace eu.foodmission.platform
             return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
         }
 
+        public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)
+        {
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(foodGroup: foodGroup, page: page, pageSize: pageSize);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return null;
+            }
+            return result;
+        }
+
         public async Task LoadAsync(string listId, string listName = null)
         {
             if (string.IsNullOrEmpty(listId))
@@ -377,26 +379,45 @@ namespace eu.foodmission.platform
             }
 
             IsSearching = true;
-            var (response, _) = await _foodProductService.SearchOpenFoodFactsAsync(query);
+            var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
             IsSearching = false;
 
-            if (response?.products != null)
+            if (error != null)
             {
-                _localStorage.SetValue(cacheKey, new CachedFoodSearch
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SEARCH_PRODUCTS");
+                if (cached?.data?.products != null)
                 {
-                    data = response,
-                    cachedAtTicks = DateTime.UtcNow.Ticks
-                });
-                SearchResults = new List<OpenFoodFactsProduct>(response.products);
-            }
-            else if (cached?.data?.products != null)
-            {
-                SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                    SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                }
+                else
+                {
+                    SearchResults = new List<OpenFoodFactsProduct>();
+                }
             }
             else
             {
-                SearchResults = new List<OpenFoodFactsProduct>();
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SEARCH_PRODUCTS");
+                if (products != null && products.Count > 0)
+                {
+                    var response = new OpenFoodFactsSearchResponse
+                    {
+                        products = products.ToArray()
+                    };
+                    _localStorage.SetValue(cacheKey, new CachedFoodSearch
+                    {
+                        data = response,
+                        cachedAtTicks = DateTime.UtcNow.Ticks
+                    });
+                    SearchResults = products;
+                }
+                else if (cached?.data?.products != null)
+                {
+                    SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
+                }
+                else
+                {
+                    SearchResults = new List<OpenFoodFactsProduct>();
+                }
             }
 
             return SearchResults;
@@ -418,42 +439,12 @@ namespace eu.foodmission.platform
             }
 
             ErrorMessage = "";
-            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
-            FoodProduct foodItem;
-            if (findError == null && existing != null)
+            var (foodItem, importError) = await ImportByBarcodeAsync(product.barcode);
+            if (importError != null)
             {
-                foodItem = existing;
-            }
-            else
-            {
-                var (imported, importError) = await _foodProductService.ImportFromBarcodeAsync(product.barcode);
-                if (importError != null)
-                {
-                    if (importError.statusCode == 400)
-                    {
-                        var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(product.barcode, includeOpenFoodFacts: true);
-                        if (findErr2 == null && existingFood != null)
-                        {
-                            foodItem = existingFood;
-                        }
-                        else
-                        {
-                            ErrorDetail = importError;
-                            ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        ErrorDetail = importError;
-                        ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
-                        return false;
-                    }
-                }
-                else
-                {
-                    foodItem = imported;
-                }
+                ErrorDetail = importError;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_IMPORT_PRODUCT");
+                return false;
             }
 
             var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity, unit);
@@ -527,19 +518,7 @@ namespace eu.foodmission.platform
 
         public async Task<(FoodProduct Result, ApiErrorResponse Error)> ImportByBarcodeAsync(string barcode)
         {
-            var (existing, findError) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: false);
-            if (findError == null && existing != null)
-                return (existing, null);
-
-            var (foodItem, importError) = await _foodProductService.ImportFromBarcodeAsync(barcode);
-            if (importError != null)
-            {
-                var (existingFood, findErr2) = await _foodProductService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: true);
-                if (findErr2 == null && existingFood != null)
-                    return (existingFood, null);
-                return (null, importError);
-            }
-            return (foodItem, null);
+            return await FoodProductFlow.ImportByBarcodeAsync(_foodProductService, _openFoodFactsClientService, barcode);
         }
 
         public async Task ToggleItemAsync(string itemId)

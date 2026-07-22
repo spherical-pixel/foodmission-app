@@ -17,9 +17,24 @@ MonoBehaviour:
   - Name: Staging
     ApiBaseUrl: https://staging.api.foodmission.eu
     AuthBaseUrl: https://staging.auth.foodmission.eu
+    UseDirectOpenFoodFactsClient: 1
+    OpenFoodFactsBaseUrl: https://world.openfoodfacts.org
+    OpenFoodFactsSearchMinIntervalMs: 6000
+    OpenFoodFactsSearchCacheTtlMinutes: 1440
+    OpenFoodFactsSearchPageSize: 20
   - Name: Test
     ApiBaseUrl: https://test.api.foodmission.eu
     AuthBaseUrl: https://test.auth.foodmission.eu
+    UseDirectOpenFoodFactsClient: 1
+    OpenFoodFactsBaseUrl: https://world.openfoodfacts.org
+    OpenFoodFactsSearchMinIntervalMs: 6000
+    OpenFoodFactsSearchCacheTtlMinutes: 1440
+    OpenFoodFactsSearchPageSize: 20
   - Name: Local
     ApiBaseUrl: http://localhost:3000
     AuthBaseUrl: http://localhost:8080
+    UseDirectOpenFoodFactsClient: 1
+    OpenFoodFactsBaseUrl: https://world.openfoodfacts.org
+    OpenFoodFactsSearchMinIntervalMs: 6000
+    OpenFoodFactsSearchCacheTtlMinutes: 1440
+    OpenFoodFactsSearchPageSize: 20

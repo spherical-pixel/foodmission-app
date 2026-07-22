@@ -14,28 +14,35 @@ namespace eu.foodmission.platform.Tests
         private Mock<IFoodProductService> _mockFoodProductService;
         private Mock<IGenericFoodService> _mockGenericFoodService;
         private Mock<ILocalStorageService> _mockLocalStorage;
+        private Mock<IOpenFoodFactsClientService> _mockOpenFoodFactsClient;
         private TestStoreService _storeService;
         private PantryViewModel _vm;
+        private System.Func<bool> _originalOverride;
 
         [SetUp]
         public void SetUp()
         {
+            _originalOverride = FoodProductFlow.UseDirectClientOverride;
+            FoodProductFlow.UseDirectClientOverride = () => false;
             _mockPantryService = new Mock<IPantryService>();
             _mockFoodProductService = new Mock<IFoodProductService>();
             _mockGenericFoodService = new Mock<IGenericFoodService>();
             _mockLocalStorage = new Mock<ILocalStorageService>();
+            _mockOpenFoodFactsClient = new Mock<IOpenFoodFactsClientService>();
             _storeService = new TestStoreService();
             _vm = new PantryViewModel(
                 _storeService,
                 _mockPantryService.Object,
                 _mockFoodProductService.Object,
                 _mockGenericFoodService.Object,
-                _mockLocalStorage.Object);
+                _mockLocalStorage.Object,
+                _mockOpenFoodFactsClient.Object);
         }
 
         [TearDown]
         public void TearDown()
         {
+            FoodProductFlow.UseDirectClientOverride = _originalOverride;
             _vm?.Dispose();
             _storeService?.Dispose();
         }

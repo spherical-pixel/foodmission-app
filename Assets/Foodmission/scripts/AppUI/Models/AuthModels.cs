@@ -217,5 +217,6 @@ namespace eu.foodmission.platform
         [Newtonsoft.Json.JsonConverter(typeof(StringOrArrayConverter))]
         public string[] dietaryPreference;
         public string shoppingResponsibility;
+        public OnboardingSurveyData onboardingSurvey;
     }
 }

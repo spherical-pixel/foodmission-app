@@ -118,6 +118,7 @@ namespace eu.foodmission.platform
         public string userActivityLevel = "";
         public string[] userDietaryPreference = new string[0];
         public string userShoppingResponsibility = "";
+        public OnboardingSurveyData userOnboardingSurvey = new OnboardingSurveyData();
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -174,6 +175,7 @@ namespace eu.foodmission.platform
                 userActivityLevel = this.userActivityLevel,
                 userDietaryPreference = this.userDietaryPreference != null ? (string[])this.userDietaryPreference.Clone() : new string[0],
                 userShoppingResponsibility = this.userShoppingResponsibility,
+                userOnboardingSurvey = this.userOnboardingSurvey,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
                 foodInfoAddRequest = this.foodInfoAddRequest

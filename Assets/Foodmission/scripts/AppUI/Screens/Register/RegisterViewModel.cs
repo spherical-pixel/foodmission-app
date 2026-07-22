@@ -139,7 +139,8 @@ namespace eu.foodmission.platform
         /// </summary>
         public async Task LoadCountriesAsync()
         {
-            var (countries, _) = await _catalogService.GetCountriesAsync();
+            string lang = _storeService.GetAppState().lang ?? "en";
+            var (countries, _) = await _catalogService.GetCountriesAsync(lang);
 
             if (countries == null || countries.Count == 0)
             {
@@ -167,7 +168,8 @@ namespace eu.foodmission.platform
             }
 
             string countryCode = _countries[SelectedCountryIndex].code;
-            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode);
+            string lang = _storeService.GetAppState().lang ?? "en";
+            var (regions, _) = await _catalogService.GetRegionsAsync(countryCode, lang);
 
             _regions = regions ?? new List<CatalogItem>();
             RegionOptions = _regions.Select(r => r.label).ToList();
@@ -302,6 +304,9 @@ namespace eu.foodmission.platform
                 {
                     // Registration and auto-login successful - navigation handled by auth state change
                     Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
+
+                    string lang = _storeService.GetAppState().lang ?? "en";
+                    _ = Components.FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
 
                     NutriMessageDialog.Show(
                         message: "@UI:COMPLETE_WELCOME_MESSAGE",

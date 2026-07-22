@@ -14,6 +14,7 @@ namespace eu.foodmission.platform
     public partial class LoginViewModel : ViewModelBase
     {
         private readonly IAuthService _authService;
+        private readonly ICatalogService _catalogService;
         private bool _hasNavigated; // Prevents double navigation
 
         /// <summary>
@@ -57,9 +58,10 @@ namespace eu.foodmission.platform
 
         public event System.Action<string> ShowErrorRequest;
 
-        public LoginViewModel(IAuthService authService, IStoreService storeService) : base(storeService)
+        public LoginViewModel(IAuthService authService, IStoreService storeService, ICatalogService catalogService) : base(storeService)
         {
             _authService = authService;
+            _catalogService = catalogService;
 
             // Get's initial state of Redux and synchronizes it with the ViewModel
             AppState state = _storeService.GetAppState();
@@ -109,18 +111,8 @@ namespace eu.foodmission.platform
                 {
                     _hasNavigated = true;
 
-                    // // Check if extended profile is needed
-                    // AppState state = _storeService.GetAppState();
-                    // if (!state.hasCompletedExtendedProfile)
-                    // {
-                    //     Debug.Log($"[{GetType().Name}] Authentication successful - navigating to onboarding profile");
-                    //     RaiseNavigationRequested(Actions.register_to_onboarding);
-                    // }
-                    // else
-                    // {
-                    //     Debug.Log($"[{GetType().Name}] Authentication successful - navigating to home");
-                    //     RaiseNavigationRequested(Actions.go_to_home);
-                    // }
+                    string lang = _storeService.GetAppState().lang ?? "en";
+                    _ = Components.FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
 
                     RaiseNavigationRequested(Actions.go_to_home);
                 }

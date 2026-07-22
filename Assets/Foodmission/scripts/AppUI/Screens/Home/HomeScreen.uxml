@@ -1,11 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.HomeScreenViewModel, Foodmission" class="fm-root">
-        <ui:Image name="nutri-render" source="project://database/Assets/Foodmission/RenderTextures/NutriRenderTexture.renderTexture?fileID=8400000&amp;guid=70b891fe7178443c7b15210d9bd22e0e&amp;type=2#NutriRenderTexture" class="fm-home-nutri-image">
-            <Bindings>
-                <ui:DataBinding property="source" data-source-path="NutriCameraTexture" binding-mode="ToTarget"/>
-            </Bindings>
-        </ui:Image>
+        <eu.foodmission.platform.Components.FMNutriView name="nutri-render" class="fm-home-nutri-image"/>
         <appui:Heading text="Your nutritional intelligence status" size="S" class="centered-text" style="margin-top: -100px;">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39915502649204736)"/>

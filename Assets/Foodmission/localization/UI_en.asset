@@ -1100,30 +1100,6 @@ MonoBehaviour:
     m_Localized: Manual
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985741
-    m_Localized: Pieces
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985742
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985743
-    m_Localized: kg
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985744
-    m_Localized: ml
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985745
-    m_Localized: l
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985746
-    m_Localized: Cups
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: Fridge
     m_Metadata:
@@ -1321,114 +1297,6 @@ MonoBehaviour:
     m_Localized: "\U0001F4DD Shopping list"
     m_Metadata:
       m_Items: []
-  - m_Id: 6145026047336448
-    m_Localized: Alcoholic beverages
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530752
-    m_Localized: Bread
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530753
-    m_Localized: Cereal products and types of flour
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530754
-    m_Localized: Cheese
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530755
-    m_Localized: Cold meat cuts
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530756
-    m_Localized: Eggs
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530757
-    m_Localized: Fats and oils
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530758
-    m_Localized: Fish, crustacean and shellfish
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530759
-    m_Localized: Foods for special nutritional use
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530760
-    m_Localized: Fruits
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530761
-    m_Localized: Herbs and spices
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530762
-    m_Localized: Legumes
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530763
-    m_Localized: Meat and poultry
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530764
-    m_Localized: Meat substitutes and dairy substitutes
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530765
-    m_Localized: Milk and milk products
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530766
-    m_Localized: Miscellaneous foods
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530767
-    m_Localized: Mixed dishes
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530768
-    m_Localized: Non-alcoholic beverages
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530769
-    m_Localized: Nuts and seeds
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530770
-    m_Localized: Pastry and biscuits
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530771
-    m_Localized: Potatoes and tubers
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530772
-    m_Localized: Savoury bread spreads
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530773
-    m_Localized: Savoury sauces
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530774
-    m_Localized: Savoury snacks
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530775
-    m_Localized: Soups
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530776
-    m_Localized: Sugar, sweets and sweet sauces
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026055725056
-    m_Localized: Vegetables
-    m_Metadata:
-      m_Items: []
   - m_Id: 6413218154012672
     m_Localized: No results found
     m_Metadata:
@@ -1535,6 +1403,162 @@ MonoBehaviour:
     m_Localized: Got It!
     m_Metadata:
       m_Items: []
+  - m_Id: 25682128132890624
+    m_Localized: '{0} meals per week'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 25683680096673792
+    m_Localized: Never
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25683693593944064
+    m_Localized: Less than once per week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25687180457271296
+    m_Localized: '{0} times per week'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 25699605365645312
+    m_Localized: '{0} actions per week'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 25706952255332352
+    m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25707081205014528
+    m_Localized: Submit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25708140598124544
+    m_Localized: Step {0} of {1}
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 25709632411394048
+    m_Localized: 'Welcome to Foodmission!
+
+      This quick survey helps us understand
+      your dietary habits, food waste awareness, and sustainable choices so Nutri
+      can tailor recommendations for you.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25709899143962624
+    m_Localized: How many meals containing meat do you typically eat each week?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710060687581184
+    m_Localized: How often do you consume beef?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710112776642560
+    m_Localized: How often do you throw away edible food?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710126802395136
+    m_Localized: How often do you consume ultra-processed foods such as packaged
+      snacks, sugary drinks, ready meals, or processed meat products?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25710140115116032
+    m_Localized: How often do you use reusable containers or purchase refill products?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25970700069101568
+    m_Localized: CATEGORIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25971230925381632
+    m_Localized: RECENTLY ADDED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25972618610860032
+    m_Localized: Previous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25973559573602304
+    m_Localized: Page {0} of {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26077910317129728
+    m_Localized: Searching meals and recipes...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26079908550664192
+    m_Localized: What did you have for {0}?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082273878073344
+    m_Localized: No recent meals logged.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082769774829568
+    m_Localized: Load previous meal or recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26082930148237312
+    m_Localized: Cancel search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083312333217792
+    m_Localized: The ingredients of \"{0}\" have changed. Would you like to update
+      the existing preset or save as a new preset?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26083867323523072
+    m_Localized: Preset modified.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084472809054208
+    m_Localized: Save as New
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26084697950904320
+    m_Localized: Preset name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085108048977920
+    m_Localized: Save as New Preset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085312869425152
+    m_Localized: Please enter a name for the new preset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26085540183924736
+    m_Localized: Recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26299707348213760
+    m_Localized: Select a meal type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305215656353792
+    m_Localized: What type of meal do you want to log?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26305695111438336
+    m_Localized: Where was your meal from?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308100574142464
+    m_Localized: Search meals and recipes...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26308484147437568
+    m_Localized: Search products or select category...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26309328330809344
+    m_Localized: Meals eaten today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26318181705441280
+    m_Localized: Please add at least one food item
   - m_Id: 21294142465236992
     m_Localized: Food Information
     m_Metadata:
@@ -1825,3 +1849,7 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 27512489452232704
         - id: 20518970774773760
+        - id: 25687180457271296
+        - id: 25682128132890624
+        - id: 25699605365645312
+        - id: 25708140598124544

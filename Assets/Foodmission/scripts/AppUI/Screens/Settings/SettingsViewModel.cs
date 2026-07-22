@@ -1,7 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
+using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
+using UnityEngine;
 
 namespace eu.foodmission.platform
 {
@@ -9,6 +11,7 @@ namespace eu.foodmission.platform
     public partial class SettingsViewModel : ViewModelBase
     {
         private readonly IAuthService _authService;
+        private readonly ICatalogService _catalogService;
         private CancellationTokenSource _syncCts;
         private const int SyncDelayMs = 1500;
 
@@ -39,9 +42,10 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_UserName = "User";
 
-        public SettingsViewModel(IStoreService storeService, IAuthService authService) : base(storeService)
+        public SettingsViewModel(IStoreService storeService, IAuthService authService, ICatalogService catalogService) : base(storeService)
         {
             _authService = authService;
+            _catalogService = catalogService;
             SynchronizeState(_storeService.GetAppState());
             _storeSubscription = _store.Subscribe(SelectSettingsState, OnSettingsStateChanged);
         }
@@ -85,6 +89,11 @@ namespace eu.foodmission.platform
         {
             _store.Dispatch(AppActions.setLanguage.Invoke(lang));
             ScheduleSettingsSync();
+            FMQuantityUnitPanel.InitializeAsync(_catalogService, lang)
+                .ContinueWith(t => {
+                    if (t.IsFaulted)
+                        Debug.LogError($"[SettingsViewModel] Failed to refresh units: {t.Exception?.InnerException?.Message}");
+                }, TaskContinuationOptions.OnlyOnFaulted);
         }
 
         public void SetScale(string scale)
