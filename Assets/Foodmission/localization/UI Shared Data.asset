@@ -1859,6 +1859,42 @@ MonoBehaviour:
     m_Key: NUTR_VALUES_PER_100G
     m_Metadata:
       m_Items: []
+  - m_Id: 26697861683994624
+    m_Key: TXT_NO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26697882789732352
+    m_Key: TXT_YES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698185257771008
+    m_Key: META_PALM_OIL_FREE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698245924184064
+    m_Key: META_VEGETARIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698315646099456
+    m_Key: META_VEGAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698358113427456
+    m_Key: META_STORES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698401734189056
+    m_Key: META_CATEGORIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698610480504832
+    m_Key: META_TRACES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698676893114368
+    m_Key: DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -7,6 +7,8 @@
     flex-grow: 1;
     padding: 0;
     background-color: var(--fm-main-bg);
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
 /* ── HERO HEADER ─────────────────────────────────────────── */
@@ -353,7 +355,6 @@
 .fm-fi-meta-body {
     flex-direction: column;
     border-radius: 14px;
-    overflow: hidden;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.08);
     background-color: var(--fm-surface-bg-transparent);
@@ -362,13 +363,24 @@
 .fm-fi-meta-row {
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding-left: 16px;
     padding-right: 16px;
     padding-top: 12px;
     padding-bottom: 12px;
     border-bottom-width: 1px;
     border-bottom-color: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.fm-fi-meta-row:first-child {
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+.fm-fi-meta-row:last-child {
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
 }
 
 .fm-fi-meta-row--odd {
@@ -390,6 +402,9 @@
     -unity-text-align: middle-right;
     white-space: normal;
     flex-grow: 1;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ── ACTION BUTTON ───────────────────────────────────────── */

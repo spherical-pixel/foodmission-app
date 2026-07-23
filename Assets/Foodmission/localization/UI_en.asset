@@ -1913,6 +1913,42 @@ MonoBehaviour:
     m_Localized: Values per 100g
     m_Metadata:
       m_Items: []
+  - m_Id: 26697861683994624
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26697882789732352
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698185257771008
+    m_Localized: Palm Oil Free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698245924184064
+    m_Localized: Vegetarian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698315646099456
+    m_Localized: Vegan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698358113427456
+    m_Localized: Stores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698401734189056
+    m_Localized: Categories
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698610480504832
+    m_Localized: Traces
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698676893114368
+    m_Localized: Description
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

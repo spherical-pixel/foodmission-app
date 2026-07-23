@@ -38,6 +38,9 @@
                 <appui:AccordionItem name="allergens-section" label="Allergens" title="Allergens" expanded="true" class="fm-fi-section">
                     <appui:Text name="allergens-body" size="M" class="fm-fi-section-body"/>
                 </appui:AccordionItem>
+                <appui:AccordionItem name="description-section" label="Description" title="Description" expanded="false" class="fm-fi-section">
+                    <appui:Text name="description-body" size="M" class="fm-fi-section-body"/>
+                </appui:AccordionItem>
                 <appui:AccordionItem name="nutrition-detail-section" label="Full nutrition" title="Full nutrition" expanded="true" class="fm-fi-section">
                     <ui:VisualElement name="nutrition-detail-table" class="fm-fi-nutrition-table"/>
                 </appui:AccordionItem>

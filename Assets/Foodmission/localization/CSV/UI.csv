@@ -644,3 +644,12 @@ META_SYNONYMS,26684223598354432,Synonyms,Synoniemen,Synonyme,Συνώνυμα,Si
 META_FORTIFIED_WITH,26684271409225728,Fortified with,Verrijkt met,Angereichert mit,Εμπλουτισμένο με,Arricchito con,Beriket med,Wzbogacony o,Obogaten z,Enriquecido con
 COULD_NOT_UPDATE_PREFERENCES,26684341949030400,Could not update preferences,De instellingen konden niet worden bijgewerkt,Einstellungen konnten nicht aktualisiert werden,Δεν ήταν δυνατή η ενημέρωση των ρυθμίσεων,Impossibile aggiornare le preferenze,Det var ikke mulig å oppdatere innstillingene,Nie udało się zaktualizować ustawień,Nastavitev ni bilo mogoče posodobiti,No se han podido actualizar las preferencias
 NUTR_VALUES_PER_100G,26684380855394304,Values per 100g,Waarden per 100 g,Nährwerte pro 100 g,Τιμές ανά 100 γρ.,Valori per 100 g,Næringsinnhold per 100 g,Wartości w przeliczeniu na 100 g,Vrednosti na 100 g,Valores por cada 100 g
+TXT_NO,26697861683994624,No,Nee,Nein,Όχι,No,Nei,Nie,Ne,No
+TXT_YES,26697882789732352,Yes,Ja,Ja,Ναι,Sì,Ja,Tak,Da,Sí
+META_PALM_OIL_FREE,26698185257771008,Palm Oil Free,Zonder palmolie,Ohne Palmöl,Χωρίς φοινικέλαιο,Senza olio di palma,Uten palmeolje,Bez oleju palmowego,Brez palmovega olja,Sin aceite de palma
+META_VEGETARIAN,26698245924184064,Vegetarian,Vegetarisch,Vegetarisch,Χορτοφαγική,Vegetariano,Vegetarisk,Wegetariański,Vegetarijanski,Vegetariano
+META_VEGAN,26698315646099456,Vegan,Veganistisch,Vegan,Βίγκαν,Vegano,Vegansk,Wegańskie,Veganski,Vegano
+META_STORES,26698358113427456,Stores,Winkels,Geschäfte,Καταστήματα,Negozi,Butikker,Sklepy,Trgovine,Tiendas
+META_CATEGORIES,26698401734189056,Categories,Categorieën,Kategorien,Κατηγορίες,Categorie,Kategorier,Kategorie,Kategorije,Categorías
+META_TRACES,26698610480504832,Traces,Sporen,Spuren,Ίχνη,Tracce,Spor,Ślady,Sledi,Huellas
+DESCRIPTION,26698676893114368,Description,Beschrijving,Beschreibung,Περιγραφή,Descrizione,Beskrivelse,Opis,Opis,Descripción

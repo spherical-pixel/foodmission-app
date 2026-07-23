@@ -1896,6 +1896,42 @@ MonoBehaviour:
     m_Localized: "N\xE6ringsinnhold per 100 g"
     m_Metadata:
       m_Items: []
+  - m_Id: 26697861683994624
+    m_Localized: Nei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26697882789732352
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698185257771008
+    m_Localized: Uten palmeolje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698245924184064
+    m_Localized: Vegetarisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698315646099456
+    m_Localized: Vegansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698358113427456
+    m_Localized: Butikker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698401734189056
+    m_Localized: Kategorier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698610480504832
+    m_Localized: Spor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698676893114368
+    m_Localized: Beskrivelse
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

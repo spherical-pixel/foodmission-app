@@ -56,6 +56,9 @@ namespace eu.foodmission.platform
 
         [JsonProperty("carbon-footprint-from-known-ingredients_product")]
         public float? carbon_footprint_from_known_ingredients_product { get; set; }
+
+        [JsonExtensionData]
+        public IDictionary<string, JToken> ExtraNutriments { get; set; }
     }
 
     public class OffNutriscoreRaw

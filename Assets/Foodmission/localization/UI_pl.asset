@@ -1920,6 +1920,42 @@ MonoBehaviour:
     m_Localized: "Warto\u015Bci w przeliczeniu na 100 g"
     m_Metadata:
       m_Items: []
+  - m_Id: 26697861683994624
+    m_Localized: Nie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26697882789732352
+    m_Localized: Tak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698185257771008
+    m_Localized: Bez oleju palmowego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698245924184064
+    m_Localized: "Wegetaria\u0144ski"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698315646099456
+    m_Localized: "Wega\u0144skie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698358113427456
+    m_Localized: Sklepy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698401734189056
+    m_Localized: Kategorie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698610480504832
+    m_Localized: "\u015Alady"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698676893114368
+    m_Localized: Opis
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

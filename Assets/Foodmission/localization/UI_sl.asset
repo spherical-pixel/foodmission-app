@@ -1895,6 +1895,42 @@ MonoBehaviour:
     m_Localized: Vrednosti na 100 g
     m_Metadata:
       m_Items: []
+  - m_Id: 26697861683994624
+    m_Localized: Ne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26697882789732352
+    m_Localized: Da
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698185257771008
+    m_Localized: Brez palmovega olja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698245924184064
+    m_Localized: Vegetarijanski
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698315646099456
+    m_Localized: Veganski
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698358113427456
+    m_Localized: Trgovine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698401734189056
+    m_Localized: Kategorije
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698610480504832
+    m_Localized: Sledi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26698676893114368
+    m_Localized: Opis
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

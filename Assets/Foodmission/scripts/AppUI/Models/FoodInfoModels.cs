@@ -12,6 +12,8 @@ namespace eu.foodmission.platform
 
     public record MetaRow(string Label, string Value);
 
+    public record DietaryFlags(bool? Vegan, bool? Vegetarian, bool? PalmOilFree);
+
     public class AddToContextRequestedAction
     {
         public FoodInfoType FoodType;

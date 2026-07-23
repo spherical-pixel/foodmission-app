@@ -48,6 +48,8 @@ namespace eu.foodmission.platform
         private static VisualElement _metaSection;
         private static VisualElement _metaBody;
         private static Unity.AppUI.UI.Button _actionButton;
+        private static VisualElement _descriptionSection;
+        private static Text _descriptionBody;
 
         private static string _lastNutriScoreClass = "";
         private static string _lastNovaClass = "";
@@ -169,6 +171,8 @@ namespace eu.foodmission.platform
             _metaSection = content.Q<VisualElement>("meta-section");
             _metaBody = content.Q<VisualElement>("meta-body");
             _actionButton = content.Q<Unity.AppUI.UI.Button>("action-button");
+            _descriptionSection = content.Q<VisualElement>("description-section");
+            _descriptionBody = content.Q<Text>("description-body");
 
             // ── Wire VM events ────────────────────────────────────────────
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -230,6 +234,7 @@ namespace eu.foodmission.platform
             _allergensSection = null; _allergensBody = null;
             _nutritionDetailSection = null; _nutritionDetailTable = null;
             _metaSection = null; _metaBody = null;
+            _descriptionSection = null; _descriptionBody = null;
             _lastNutriScoreClass = ""; _lastNovaClass = ""; _lastEcoClass = "";
         }
 
@@ -307,6 +312,15 @@ namespace eu.foodmission.platform
                 case nameof(FoodInfoViewModel.ShowActionButton):
                     _actionButton?.EnableInClassList("hidden", !_viewModel.ShowActionButton);
                     break;
+                case nameof(FoodInfoViewModel.Description):
+                    UpdateDescription();
+                    break;
+                case nameof(FoodInfoViewModel.Traces):
+                case nameof(FoodInfoViewModel.Categories):
+                case nameof(FoodInfoViewModel.Stores):
+                case nameof(FoodInfoViewModel.DietaryFlags):
+                    UpdateMetaRows();
+                    break;
             }
         }
 
@@ -331,6 +345,7 @@ namespace eu.foodmission.platform
             UpdateMacroCards();
             UpdateNutritionDetail();
             UpdateIngredients();
+            UpdateDescription();
             UpdateAllergens();
             UpdateMetaRows();
             UpdateSectionVisibility();
@@ -342,6 +357,7 @@ namespace eu.foodmission.platform
         {
             SetSectionTitle(_ingredientsSection, "SECTION_INGREDIENTS", "Ingredients");
             SetSectionTitle(_allergensSection, "SECTION_ALLERGENS", "Allergens");
+            SetSectionTitle(_descriptionSection, "DESCRIPTION", "Description");
             SetSectionTitle(_nutritionDetailSection, "SECTION_NUTRITION_DETAIL", "Full nutrition");
             SetSectionTitle(_metaSection, "SECTION_META", "Product details");
         }
@@ -533,6 +549,16 @@ namespace eu.foodmission.platform
             bool isProduct = _viewModel.FoodType == FoodInfoType.Product;
             bool show = isProduct && !string.IsNullOrEmpty(_viewModel.Ingredients);
             _ingredientsSection?.EnableInClassList("fm-fi-section--hidden", !show);
+        }
+
+        private static void UpdateDescription()
+        {
+            if (_viewModel == null) return;
+            if (_descriptionBody != null)
+                _descriptionBody.text = _viewModel.Description;
+            bool isProduct = _viewModel.FoodType == FoodInfoType.Product;
+            bool show = isProduct && !string.IsNullOrEmpty(_viewModel.Description);
+            _descriptionSection?.EnableInClassList("fm-fi-section--hidden", !show);
         }
 
         private static void UpdateAllergens()
