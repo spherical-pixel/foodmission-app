@@ -19,7 +19,7 @@ namespace eu.foodmission.platform
         private string m_Theme = "system";
 
         [ObservableProperty]
-        private string m_Lang = "es";
+        private string m_Lang = "en";
 
         [ObservableProperty]
         private string m_Scale = "medium";
@@ -90,7 +90,8 @@ namespace eu.foodmission.platform
             _store.Dispatch(AppActions.setLanguage.Invoke(lang));
             ScheduleSettingsSync();
             FMQuantityUnitPanel.InitializeAsync(_catalogService, lang)
-                .ContinueWith(t => {
+                .ContinueWith(t =>
+                {
                     if (t.IsFaulted)
                         Debug.LogError($"[SettingsViewModel] Failed to refresh units: {t.Exception?.InnerException?.Message}");
                 }, TaskContinuationOptions.OnlyOnFaulted);
@@ -173,7 +174,7 @@ namespace eu.foodmission.platform
             }
             catch (System.OperationCanceledException)
             {
-                
+
             }
         }
 

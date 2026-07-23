@@ -680,7 +680,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: No items yet. Tap + to add items.
+    m_Localized: No items yet. Add some products.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -1855,6 +1855,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26341658558717953
     m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Localized: Change list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Localized: Automatic add to pantry when checked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Localized: Reset list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Localized: Reset list?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Localized: This will uncheck all items.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Localized: Could not reset list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Localized: Could not add item to pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Localized: Item added to pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Localized: What do you want to add to the list?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Localized: Food group
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Localized: Synonyms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Localized: Fortified with
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Localized: Could not update preferences
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Localized: Values per 100g
     m_Metadata:
       m_Items: []
   references:

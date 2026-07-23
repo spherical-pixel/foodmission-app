@@ -671,8 +671,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: "Jeszcze nie ma \u017Cadnych pozycji. Naci\u015Bnij \u201E+\u201D,
-      aby doda\u0107 pozycje."
+    m_Localized: "Jeszcze nie ma \u017Cadnych produkt\xF3w. Dodaj kilka produkt\xF3w."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -1863,6 +1862,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819905
     m_Localized: Wysoce przetworzone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Localized: Lista zmian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Localized: "Po zaznaczeniu automatycznie dodaj do spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Localized: "Wyczy\u015B\u0107 list\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Localized: "Wyczy\u015Bci\u0107 list\u0119?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Localized: Spowoduje to odznaczenie wszystkich pozycji.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Localized: "Nie uda\u0142o si\u0119 zresetowa\u0107 listy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Localized: "Nie uda\u0142o si\u0119 doda\u0107 produktu do spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Localized: "Produkt dodany do spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Localized: "Co chcesz doda\u0107 do tej listy?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Localized: "Grupa produkt\xF3w spo\u017Cywczych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Localized: Synonimy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Localized: Wzbogacony o
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Localized: "Nie uda\u0142o si\u0119 zaktualizowa\u0107 ustawie\u0144"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Localized: "Warto\u015Bci w przeliczeniu na 100 g"
     m_Metadata:
       m_Items: []
   references:

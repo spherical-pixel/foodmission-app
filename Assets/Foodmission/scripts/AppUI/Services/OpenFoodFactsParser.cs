@@ -110,7 +110,7 @@ namespace eu.foodmission.platform
 
     public static class OpenFoodFactsParser
     {
-        public static OpenFoodFactsProduct ParseProduct(string json, string targetLang = "es")
+        public static OpenFoodFactsProduct ParseProduct(string json, string targetLang = "en")
         {
             if (string.IsNullOrEmpty(json)) return null;
 
@@ -125,7 +125,7 @@ namespace eu.foodmission.platform
             return null;
         }
 
-        public static OpenFoodFactsSearchResponse ParseSearch(string json, string targetLang = "es")
+        public static OpenFoodFactsSearchResponse ParseSearch(string json, string targetLang = "en")
         {
             if (string.IsNullOrEmpty(json)) return null;
 
@@ -148,7 +148,7 @@ namespace eu.foodmission.platform
 
         public static OpenFoodFactsProduct MapProduct(OffProductRaw raw)
         {
-            return MapProduct(raw, "es");
+            return MapProduct(raw, "en");
         }
 
         public static OpenFoodFactsProduct MapProduct(OffProductRaw raw, string targetLang)
@@ -212,11 +212,11 @@ namespace eu.foodmission.platform
             return mapped;
         }
 
-        public static string GetLocalizedField(OffProductRaw raw, string fieldName, string targetLang = "es")
+        public static string GetLocalizedField(OffProductRaw raw, string fieldName, string targetLang = "en")
         {
             if (raw == null) return "";
 
-            string lang = string.IsNullOrEmpty(targetLang) ? "es" : targetLang.ToLowerInvariant();
+            string lang = string.IsNullOrEmpty(targetLang) ? "en" : targetLang.ToLowerInvariant();
             if (lang.Contains("-")) lang = lang.Split('-')[0];
 
             // 1. Check ExtraData for fieldName_lang (e.g. product_name_es, product_name_fr, ingredients_text_ca)

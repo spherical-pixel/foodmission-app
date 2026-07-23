@@ -35,14 +35,20 @@ namespace eu.foodmission.platform
 
 
         private VisualElement _itemsContainer;
-        private Unity.AppUI.UI.Button _changeListButton;
-        
+        private Unity.AppUI.UI.ActionButton _changeListButton;
+
         private Text _emptyState;
         private Heading _listTitle;
         private Text _progressLabel;
+        private Unity.AppUI.UI.Checkbox _autoAddCheckbox;
+        private Text _autoAddLabel;
+        private Unity.AppUI.UI.ActionButton _resetButton;
+        private EventCallback<ChangeEvent<CheckboxState>> _autoAddCheckboxCallback;
+        private AccessibilityNode _autoAddToggleNode;
+        private AccessibilityNode _resetButtonNode;
         private FMSearchOrCategoryField _searchCategoryField;
         private VisualElement _mainContent;
-        
+
 
 
         public ShoppingListDetailScreen()
@@ -56,12 +62,15 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _itemsContainer = contentContainer.Q<VisualElement>("items-container");
-            _changeListButton = contentContainer.Q<Unity.AppUI.UI.Button>("change-list-button");
+            _changeListButton = contentContainer.Q<Unity.AppUI.UI.ActionButton>("change-list-button");
             _emptyState = contentContainer.Q<Text>("empty-state");
             _listTitle = contentContainer.Q<Heading>("list-title");
             _searchCategoryField = contentContainer.Q<FMSearchOrCategoryField>("search-category-field");
             _mainContent = contentContainer.Q<VisualElement>("main-content");
             _progressLabel = contentContainer.Q<Text>("progress-label");
+            _autoAddCheckbox = contentContainer.Q<Unity.AppUI.UI.Checkbox>("auto-add-pantry-checkbox");
+            _autoAddLabel = contentContainer.Q<Text>("auto-add-label");
+            _resetButton = contentContainer.Q<Unity.AppUI.UI.ActionButton>("reset-list-button");
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -104,9 +113,11 @@ namespace eu.foodmission.platform
 
             if (_changeListButton != null)
             {
-                string label = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CHANGE_LIST") ?? (LocalizationSettings.SelectedLocale.Identifier.Code == "es" ? "Cambiar lista" : "Change list");
-                _changeListButton.title = label;
                 _changeListButton.clicked += OnChangeListClicked;
+            }
+            else
+            {
+                Debug.LogError($"[{GetType().Name}] _changeListButton is null. Check the UI template.");
             }
 
             if (_searchCategoryField != null)
@@ -152,6 +163,30 @@ namespace eu.foodmission.platform
                 };
             }
 
+            if (_autoAddLabel != null)
+            {
+                _autoAddLabel.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_PANTRY");
+            }
+
+            if (_autoAddCheckbox != null)
+            {
+                _autoAddCheckbox.value = _viewModel.AutoAddToPantry ? CheckboxState.Checked : CheckboxState.Unchecked;
+                _autoAddCheckboxCallback = evt =>
+                {
+                    bool enabled = evt.newValue == CheckboxState.Checked;
+                    _viewModel.AutoAddToPantry = enabled;
+                    _ = SafeSyncAutoAddToPantryAsync(enabled);
+                };
+                _autoAddCheckbox.RegisterValueChangedCallback(_autoAddCheckboxCallback);
+            }
+
+            if (_resetButton != null)
+            {
+                _resetButton.clicked += OnResetClicked;
+            }
+
+            _viewModel.OnPantryItemAdded += OnPantryItemAdded;
+
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
             UpdateLoadingState();
             UpdateErrorState();
@@ -165,6 +200,22 @@ namespace eu.foodmission.platform
                 _changeListButton.clicked -= OnChangeListClicked;
                 _changeListButton = null;
             }
+            if (_autoAddCheckbox != null && _autoAddCheckboxCallback != null)
+            {
+                _autoAddCheckbox.UnregisterValueChangedCallback(_autoAddCheckboxCallback);
+            }
+            if (_resetButton != null)
+            {
+                _resetButton.clicked -= OnResetClicked;
+            }
+            if (_viewModel != null)
+            {
+                _viewModel.OnPantryItemAdded -= OnPantryItemAdded;
+            }
+            _autoAddCheckbox = null;
+            _autoAddCheckboxCallback = null;
+            _autoAddLabel = null;
+            _resetButton = null;
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
         }
@@ -204,12 +255,22 @@ namespace eu.foodmission.platform
 
             var h = _accessibilityHierarchy;
 
-            
+            if (_autoAddCheckbox != null)
+            {
+                _autoAddToggleNode = h.AddNode(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_PANTRY"));
+                _autoAddToggleNode.role = AccessibilityRole.Toggle;
+                _autoAddToggleNode.frameGetter = MakeElementFrameGetter(_autoAddCheckbox);
+            }
+            if (_resetButton != null)
+            {
+                _resetButtonNode = CreateButtonNode(h, _resetButton, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RESET_LIST"));
+            }
         }
 
         protected override void TeardownAccessibilityNodes()
         {
-            
+            _autoAddToggleNode = null;
+            _resetButtonNode = null;
             base.TeardownAccessibilityNodes();
         }
 
@@ -259,20 +320,79 @@ namespace eu.foodmission.platform
             }
         }
 
+        private async Task SafeSyncAutoAddToPantryAsync(bool value)
+        {
+            try
+            {
+                await _viewModel.SyncAutoAddToPantryAsync(value);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SyncAutoAddToPantryAsync failed: {ex.Message}");
+            }
+        }
+
+        private void OnResetClicked()
+        {
+            FMDialog.ShowConfirm(
+                this,
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RESET_LIST_CONFIRM_TITLE"),
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RESET_LIST_CONFIRM_DESC"),
+                onConfirm: () => _ = SafeResetListAsync(),
+                confirmLabel: "@UI:CONFIRM");
+        }
+
+        private async Task SafeResetListAsync()
+        {
+            try
+            {
+                await _viewModel.ResetListAsync();
+                RebuildItems();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] ResetListAsync failed: {ex.Message}");
+            }
+        }
+
+        private void OnPantryItemAdded(string foodName)
+        {
+            Toast.Build(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_ADDED_TO_PANTRY"), NotificationDuration.Short)
+                .SetStyle(NotificationStyle.Positive)
+                .SetPosition(PopupNotificationPlacement.Bottom)
+                .Show();
+        }
+
+        private void UpdateResetButtonState()
+        {
+            int checkedCount = 0;
+            if (_viewModel.Items != null)
+            {
+                foreach (var v in _viewModel.Items)
+                {
+                    if (v.Item.@checked) checkedCount++;
+                }
+            }
+            if (_resetButton != null) _resetButton.SetEnabled(checkedCount > 0);
+        }
+
         private void RebuildItems()
         {
             Debug.Log($"[{GetType().Name}] RebuildItems - Rebuilding items, count: {_viewModel.Items?.Count ?? 0}");
             _itemsContainer.Clear();
 
+            _emptyState.style.display = DisplayStyle.None;
+
             if (_viewModel.Items == null || _viewModel.Items.Count == 0)
             {
-                _emptyState.style.visibility = Visibility.Visible;
+                _emptyState.style.display = DisplayStyle.Flex;
                 UpdateProgress();
+                UpdateResetButtonState();
                 return;
             }
 
-            _emptyState.style.visibility = Visibility.Hidden;
             UpdateProgress();
+            UpdateResetButtonState();
 
             foreach (ShoppingListItemView view in _viewModel.Items)
             {
@@ -281,7 +401,7 @@ namespace eu.foodmission.platform
                 FMItemShoppingListDetail item = new FMItemShoppingListDetail { Text = captured.FoodName };
 
                 item.Checkbox.value = captured.Item.@checked ? CheckboxState.Checked : CheckboxState.Unchecked;
-                item.Checkbox.RegisterValueChangedCallback(evt =>_ = SafeToggleItemAsync(captured.Item.id));
+                item.Checkbox.RegisterValueChangedCallback(evt => _ = SafeToggleItemAsync(captured.Item.id));
                 item.EditButton.clicked += () => ShowEditItemDialog(captured);
                 item.RemoveButton.clicked += () => _ = SafeDeleteItemAsync(captured.Item.id);
                 item.OpenButton.clicked += () =>
@@ -306,7 +426,7 @@ namespace eu.foodmission.platform
                 FMLoadingOverlay.Show(contentContainer);
             else
                 FMLoadingOverlay.Hide(contentContainer);
-            
+
         }
 
         private void UpdateErrorState()
@@ -472,6 +592,7 @@ namespace eu.foodmission.platform
 
         private void OnChangeListClicked()
         {
+            Debug.Log($"[{GetType().Name}] OnChangeListClicked - Navigating to shopping list selection screen");
             _navController?.Navigate(Actions.go_to_shopping_list);
         }
     }

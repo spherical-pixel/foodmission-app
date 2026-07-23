@@ -661,7 +661,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: Zaenkrat ni nobenih elementov. Tapnite +, da dodate elemente.
+    m_Localized: "\u0160e ni nobenih izdelkov. Dodajte nekaj izdelkov."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -1837,6 +1837,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819905
     m_Localized: Ultrapredelano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Localized: Seznam sprememb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Localized: "Ob ozna\u010Ditvi se samodejno doda v shrambo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Localized: Ponastavi seznam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Localized: Ponastaviti seznam?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Localized: "S tem se bodo odkljukale vse mo\u017Enosti."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Localized: "Seznama ni bilo mogo\u010De ponastaviti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Localized: "Elementa ni bilo mogo\u010De dodati v shrambo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Localized: Izdelek dodan v shrambo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Localized: Kaj bi rad dodal na seznam?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Localized: "Skupina \u017Eivil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Localized: Sinonimi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Localized: Obogaten z
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Localized: "Nastavitev ni bilo mogo\u010De posodobiti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Localized: Vrednosti na 100 g
     m_Metadata:
       m_Items: []
   references:

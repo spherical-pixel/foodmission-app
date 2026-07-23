@@ -426,7 +426,8 @@ namespace eu.foodmission.platform
                         {
                             shoppingResponsibility = shoppingResponsibilityCode ?? state.userShoppingResponsibility,
                             dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
-                            onboardingSurvey = state.userOnboardingSurvey
+                            onboardingSurvey = state.userOnboardingSurvey,
+                            autoAddToPantry = state.userAutoAddToPantry
                         }
                         : null
                 };

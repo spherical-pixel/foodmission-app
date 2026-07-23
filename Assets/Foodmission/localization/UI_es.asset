@@ -662,7 +662,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: "No hay elementos todav\xEDa. Toque el bot\xF3n + para agregar elementos."
+    m_Localized: "A\xFAn no hay art\xEDculos. A\xF1ade algunos productos."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -1842,6 +1842,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819905
     m_Localized: Ultraprocesados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Localized: Lista de cambios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Localized: "Se a\xF1ade autom\xE1ticamente a la despensa al marcar la casilla"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Localized: Restablecer lista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Localized: "\xBFRestablecer la lista?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Localized: "Esto desmarcar\xE1 todos los elementos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Localized: No se ha podido restablecer la lista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Localized: "No se ha podido a\xF1adir el art\xEDculo a la despensa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Localized: "Art\xEDculo a\xF1adido a la despensa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Localized: "\xBFQu\xE9 quieres a\xF1adir a la lista?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Localized: Grupo de alimentos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Localized: "Sin\xF3nimos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Localized: Enriquecido con
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Localized: No se han podido actualizar las preferencias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Localized: Valores por cada 100 g
     m_Metadata:
       m_Items: []
   references:

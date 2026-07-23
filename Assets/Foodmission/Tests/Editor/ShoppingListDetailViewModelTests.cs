@@ -16,6 +16,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<ILocalStorageService> _mockLocalStorage;
         private Mock<IOpenFoodFactsClientService> _mockOpenFoodFactsClient;
         private Mock<IAuthService> _mockAuthService;
+        private Mock<IPantryService> _mockPantryService;
         private TestStoreService _storeService;
         private ShoppingListDetailViewModel _vm;
 
@@ -28,6 +29,7 @@ namespace eu.foodmission.platform.Tests
             _mockLocalStorage = new Mock<ILocalStorageService>();
             _mockOpenFoodFactsClient = new Mock<IOpenFoodFactsClientService>();
             _mockAuthService = new Mock<IAuthService>();
+            _mockPantryService = new Mock<IPantryService>();
             _storeService = new TestStoreService();
             _vm = new ShoppingListDetailViewModel(
                 _storeService,
@@ -36,7 +38,8 @@ namespace eu.foodmission.platform.Tests
                 _mockGenericFoodService.Object,
                 _mockLocalStorage.Object,
                 _mockOpenFoodFactsClient.Object,
-                _mockAuthService.Object);
+                _mockAuthService.Object,
+                _mockPantryService.Object);
         }
 
         [TearDown]
@@ -333,6 +336,283 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, _vm.Items.Count);
             Assert.AreEqual("Apple sauce", _vm.Items[0].FoodName);
             _mockGenericFoodService.Verify(x => x.GetGenericFoodByIdAsync("gf1"), Times.Once);
+        }
+
+        private void SetupMockItems(ShoppingListItem[] items)
+        {
+            _mockShoppingListService
+                .Setup(x => x.GetItemsAsync("list1"))
+                .Returns(Task.FromResult<(ShoppingListItem[] Result, ApiErrorResponse Error)>((items, null)));
+            foreach (var item in items)
+            {
+                if (!string.IsNullOrEmpty(item.foodProductId))
+                {
+                    _mockFoodProductService
+                        .Setup(x => x.GetFoodByIdAsync(item.foodProductId))
+                        .Returns(Task.FromResult<(FoodProduct, ApiErrorResponse)>((new FoodProduct { id = item.foodProductId, name = item.foodProductId + "-name" }, null)));
+                }
+                if (!string.IsNullOrEmpty(item.genericFoodId))
+                {
+                    _mockGenericFoodService
+                        .Setup(x => x.GetGenericFoodByIdAsync(item.genericFoodId))
+                        .Returns(Task.FromResult<(GenericFood, ApiErrorResponse)>((new GenericFood { id = item.genericFoodId, foodName = item.genericFoodId + "-name" }, null)));
+                }
+            }
+            _mockLocalStorage
+                .Setup(x => x.GetValue<ShoppingListItemPagedResponse>(It.IsAny<string>(), It.IsAny<ShoppingListItemPagedResponse>()))
+                .Returns((ShoppingListItemPagedResponse)null);
+        }
+
+        [Test]
+        public void AutoAddToPantry_LoadsFromAppState()
+        {
+            var state = _storeService.GetAppState();
+            state.userAutoAddToPantry = true;
+            _storeService.SetAppState(state);
+
+            _vm.Dispose();
+            _vm = new ShoppingListDetailViewModel(
+                _storeService,
+                _mockShoppingListService.Object,
+                _mockFoodProductService.Object,
+                _mockGenericFoodService.Object,
+                _mockLocalStorage.Object,
+                _mockOpenFoodFactsClient.Object,
+                _mockAuthService.Object,
+                _mockPantryService.Object);
+
+            Assert.IsTrue(_vm.AutoAddToPantry);
+        }
+
+        [Test]
+        public async Task ToggleItemAsync_WhenAutoAddEnabled_AndChecked_AddsToPantry()
+        {
+            var item = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 2, unit = "pcs", @checked = false };
+            var updated = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 2, unit = "pcs", @checked = true };
+            var pantryItem = new PantryItem { id = "p1", foodProductId = "fp1" };
+
+            SetupMockItems(new[] { item });
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, true))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((updated, null)));
+            _mockPantryService
+                .Setup(x => x.AddItemAsync("fp1", null, 2f, "pcs", null, null, null))
+                .Returns(Task.FromResult<(PantryItem, ApiErrorResponse)>((pantryItem, null)));
+
+            _vm.AutoAddToPantry = true;
+            await _vm.LoadAsync("list1");
+
+            await _vm.ToggleItemAsync("item1");
+
+            _mockPantryService.Verify(x => x.AddItemAsync("fp1", null, 2f, "pcs", null, null, null), Times.Once);
+            _mockShoppingListService.Verify(x => x.UpdateItemAsync("list1", "item1", null, null, null, true), Times.Once);
+        }
+
+        [Test]
+        public async Task ToggleItemAsync_WhenAutoAddDisabled_DoesNotAddToPantry()
+        {
+            var item = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = false };
+            var updated = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = true };
+
+            SetupMockItems(new[] { item });
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, true))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((updated, null)));
+
+            _vm.AutoAddToPantry = false;
+            await _vm.LoadAsync("list1");
+
+            await _vm.ToggleItemAsync("item1");
+
+            _mockPantryService.Verify(x => x.AddItemAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ToggleItemAsync_WhenUnchecking_DoesNotRemoveFromPantry()
+        {
+            var item = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = true };
+            var updated = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = false };
+
+            SetupMockItems(new[] { item });
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, false))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((updated, null)));
+
+            _vm.AutoAddToPantry = true;
+            await _vm.LoadAsync("list1");
+
+            await _vm.ToggleItemAsync("item1");
+
+            _mockPantryService.Verify(x => x.AddItemAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ToggleItemAsync_AutoAddedItemId_DoesNotDuplicateOnRecheck()
+        {
+            var item = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = false };
+            var checkedItem = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = true };
+            var uncheckedItem = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = false };
+            var pantryItem = new PantryItem { id = "p1", foodProductId = "fp1" };
+
+            SetupMockItems(new[] { item });
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, true))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((checkedItem, null)));
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, false))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((uncheckedItem, null)));
+            _mockPantryService
+                .Setup(x => x.AddItemAsync("fp1", null, 1f, "pcs", null, null, null))
+                .Returns(Task.FromResult<(PantryItem, ApiErrorResponse)>((pantryItem, null)));
+
+            _vm.AutoAddToPantry = true;
+            await _vm.LoadAsync("list1");
+
+            await _vm.ToggleItemAsync("item1"); // check -> add to pantry
+            await _vm.ToggleItemAsync("item1"); // uncheck -> no pantry removal
+            await _vm.ToggleItemAsync("item1"); // recheck -> skip (idempotency)
+
+            _mockPantryService.Verify(x => x.AddItemAsync("fp1", null, 1f, "pcs", null, null, null), Times.Once);
+        }
+
+        [Test]
+        public async Task ToggleItemAsync_PantryAddFails_SetsErrorDetail()
+        {
+            var item = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = false };
+            var updated = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = true };
+
+            SetupMockItems(new[] { item });
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, true))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((updated, null)));
+            _mockPantryService
+                .Setup(x => x.AddItemAsync("fp1", null, 1f, "pcs", null, null, null))
+                .Returns(Task.FromResult<(PantryItem, ApiErrorResponse)>((null, new ApiErrorResponse { statusCode = 500, message = "Pantry full" })));
+
+            _vm.AutoAddToPantry = true;
+            await _vm.LoadAsync("list1");
+
+            await _vm.ToggleItemAsync("item1");
+
+            Assert.IsNotNull(_vm.ErrorDetail);
+            Assert.AreEqual(500, _vm.ErrorDetail.statusCode);
+        }
+
+        [Test]
+        public async Task ResetListAsync_UnchecksAllCheckedItems()
+        {
+            var items = new[]
+            {
+                new ShoppingListItem { id = "c1", foodProductId = "fp1", @checked = true },
+                new ShoppingListItem { id = "c2", foodProductId = "fp2", @checked = true },
+                new ShoppingListItem { id = "u1", foodProductId = "fp3", @checked = false },
+            };
+
+            SetupMockItems(items);
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "c1", null, null, null, false))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((new ShoppingListItem { id = "c1", @checked = false }, null)));
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "c2", null, null, null, false))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((new ShoppingListItem { id = "c2", @checked = false }, null)));
+
+            await _vm.LoadAsync("list1");
+            await _vm.ResetListAsync();
+
+            Assert.IsNull(_vm.ErrorDetail);
+            _mockShoppingListService.Verify(x => x.UpdateItemAsync("list1", "c1", null, null, null, false), Times.Once);
+            _mockShoppingListService.Verify(x => x.UpdateItemAsync("list1", "c2", null, null, null, false), Times.Once);
+            foreach (var v in _vm.Items)
+            {
+                Assert.IsFalse(v.Item.@checked);
+            }
+        }
+
+        [Test]
+        public async Task ResetListAsync_WhenNoCheckedItems_DoesNothing()
+        {
+            var items = new[]
+            {
+                new ShoppingListItem { id = "u1", foodProductId = "fp1", @checked = false },
+            };
+
+            SetupMockItems(items);
+
+            await _vm.LoadAsync("list1");
+            await _vm.ResetListAsync();
+
+            _mockShoppingListService.Verify(x => x.UpdateItemAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>()), Times.Never);
+            Assert.IsNull(_vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task ResetListAsync_WithApiError_SetsErrorDetail()
+        {
+            var items = new[]
+            {
+                new ShoppingListItem { id = "c1", foodProductId = "fp1", @checked = true },
+            };
+
+            SetupMockItems(items);
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "c1", null, null, null, false))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((null, new ApiErrorResponse { statusCode = 500, message = "Reset failed" })));
+            _mockShoppingListService
+                .Setup(x => x.GetItemsAsync("list1"))
+                .Returns(Task.FromResult<(ShoppingListItem[] Result, ApiErrorResponse Error)>((items, null)));
+
+            await _vm.LoadAsync("list1");
+            await _vm.ResetListAsync();
+
+            Assert.IsNotNull(_vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task ResetListAsync_ClearsAutoAddedTracker()
+        {
+            var item = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = false };
+            var checkedItem = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = true };
+            var uncheckedItem = new ShoppingListItem { id = "item1", foodProductId = "fp1", quantity = 1, unit = "pcs", @checked = false };
+            var pantryItem = new PantryItem { id = "p1", foodProductId = "fp1" };
+
+            SetupMockItems(new[] { item });
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, true))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((checkedItem, null)));
+            _mockShoppingListService
+                .Setup(x => x.UpdateItemAsync("list1", "item1", null, null, null, false))
+                .Returns(Task.FromResult<(ShoppingListItem, ApiErrorResponse)>((uncheckedItem, null)));
+            _mockPantryService
+                .Setup(x => x.AddItemAsync("fp1", null, 1f, "pcs", null, null, null))
+                .Returns(Task.FromResult<(PantryItem, ApiErrorResponse)>((pantryItem, null)));
+
+            _vm.AutoAddToPantry = true;
+            await _vm.LoadAsync("list1");
+
+            // Check -> add to pantry
+            await _vm.ToggleItemAsync("item1");
+            _mockPantryService.Verify(x => x.AddItemAsync("fp1", null, 1f, "pcs", null, null, null), Times.Once);
+
+            // Reset -> clears tracker
+            await _vm.ResetListAsync();
+
+            // Re-check -> should add to pantry AGAIN (tracker was cleared)
+            await _vm.ToggleItemAsync("item1");
+            _mockPantryService.Verify(x => x.AddItemAsync("fp1", null, 1f, "pcs", null, null, null), Times.Exactly(2));
+        }
+
+        [Test]
+        public async Task SyncAutoAddToPantryAsync_PersistsViaUpdateProfile()
+        {
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Returns(Task.FromResult<(bool success, ApiErrorResponse error)>((true, null)));
+
+            await _vm.SyncAutoAddToPantryAsync(true);
+
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r =>
+                r.preferences != null && r.preferences.autoAddToPantry == true)), Times.Once);
+            Assert.IsNull(_vm.ErrorDetail);
         }
     }
 }

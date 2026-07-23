@@ -311,114 +311,6 @@ MonoBehaviour:
     m_Key: NOVA_4
     m_Metadata:
       m_Items: []
-  - m_Id: 6145026047336448
-    m_Key: Alcoholic beverages_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530752
-    m_Key: Bread_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530753
-    m_Key: Cereal products and types of flour_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530754
-    m_Key: Cheese_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530755
-    m_Key: Cold meat cuts_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530756
-    m_Key: Eggs_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530757
-    m_Key: Fats and oils_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530758
-    m_Key: Fish, crustacean and shellfish_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530759
-    m_Key: Foods for special nutritional use_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530760
-    m_Key: Fruits_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530761
-    m_Key: Herbs and spices_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530762
-    m_Key: Legumes_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530763
-    m_Key: Meat and poultry_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530764
-    m_Key: Meat substitutes and dairy substitutes_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530765
-    m_Key: Milk and milk products_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530766
-    m_Key: Miscellaneous foods_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530767
-    m_Key: Mixed dishes_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530768
-    m_Key: Non-alcoholic beverages_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530769
-    m_Key: Nuts and seeds_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530770
-    m_Key: Pastry and biscuits_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530771
-    m_Key: Potatoes and tubers_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530772
-    m_Key: Savoury bread spreads_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530773
-    m_Key: Savoury sauces_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530774
-    m_Key: Savoury snacks_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530775
-    m_Key: Soups_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026051530776
-    m_Key: Sugar, sweets and sweet sauces_title
-    m_Metadata:
-      m_Items: []
-  - m_Id: 6145026055725056
-    m_Key: Vegetables_title
-    m_Metadata:
-      m_Items: []
   - m_Id: 15417204736
     m_Key: NAV_HOME
     m_Metadata:
@@ -1909,6 +1801,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26318181705441280
     m_Key: ERROR_NO_ITEMS_SELECTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Key: CHANGE_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Key: AUTO_PANTRY_ADD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Key: RESET_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Key: RESET_LIST_CONFIRM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Key: RESET_LIST_CONFIRM_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Key: COULD_NOT_RESET_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Key: COULD_NOT_ADD_TO_PANTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Key: ITEM_ADDED_TO_PANTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Key: SHOPPING_LIST_SUB_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Key: META_FOOD_GROUP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Key: META_SYNONYMS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Key: META_FORTIFIED_WITH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Key: COULD_NOT_UPDATE_PREFERENCES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Key: NUTR_VALUES_PER_100G
     m_Metadata:
       m_Items: []
   m_Metadata:

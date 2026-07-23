@@ -667,7 +667,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: Non ci sono ancora articoli. Tocca + per aggiungere articoli.
+    m_Localized: Non ci sono ancora articoli. Aggiungi qualche prodotto.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -1848,6 +1848,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819905
     m_Localized: Ultra-trasformati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Localized: Elenco delle modifiche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Localized: Aggiungi automaticamente alla dispensa se selezionato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Localized: Ripristina elenco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Localized: Azzerare l'elenco?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Localized: In questo modo si deselezioneranno tutte le voci.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Localized: Impossibile reimpostare l'elenco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Localized: Impossibile aggiungere l'articolo alla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Localized: Articolo aggiunto alla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Localized: Cosa vorresti aggiungere alla lista?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Localized: Gruppo alimentare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Localized: Sinonimi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Localized: Arricchito con
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Localized: Impossibile aggiornare le preferenze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Localized: Valori per 100 g
     m_Metadata:
       m_Items: []
   references:

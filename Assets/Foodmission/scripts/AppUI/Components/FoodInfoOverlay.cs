@@ -183,7 +183,7 @@ namespace eu.foodmission.platform
 
             if (_macroHeader != null)
             {
-                _macroHeader.text = FoodInfoViewModel.GetLocStringOrFallback("NUTR_VALUES_PER_100G", "Values per 100g / ml");
+                _macroHeader.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NUTR_VALUES_PER_100G");
             }
 
             // ── Initial UI state ──────────────────────────────────────────

@@ -81,7 +81,8 @@ namespace eu.foodmission.platform
                             shoppingResponsibility = state.userShoppingResponsibility,
                             dietaryPreference = state.userDietaryPreference,
                             onboardingSurvey = state.userOnboardingSurvey,
-                            lastShoppingListId = targetList.id
+                            lastShoppingListId = targetList.id,
+                            autoAddToPantry = state.userAutoAddToPantry
                         }
                     };
                     _ = _authService.UpdateProfileAsync(request);
@@ -103,7 +104,8 @@ namespace eu.foodmission.platform
                     shoppingResponsibility = state.userShoppingResponsibility,
                     dietaryPreference = state.userDietaryPreference,
                     onboardingSurvey = state.userOnboardingSurvey,
-                    lastShoppingListId = created.id
+                    lastShoppingListId = created.id,
+                    autoAddToPantry = state.userAutoAddToPantry
                 }
             };
             _ = _authService.UpdateProfileAsync(createRequest);

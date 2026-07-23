@@ -95,15 +95,13 @@
     font-size: var(--appui-font-sizes-500);
 }
 
-.appui-button--accent.appui-button--quiet.fm-button-list{
-    /*font-size: var(--appui-font-sizes-600);*/
+.appui-button--accent.appui-button--quiet.fm-button-list {
     color: var(--appui-primary-100);
-    
 }
 
-.appui-button--accent.appui-button--quiet.fm-button-list .appui-icon ,
+.appui-button--accent.appui-button--quiet.fm-button-list .appui-icon,
 .appui-button--primary.appui-button--quiet.fm-button-list .appui-icon,
-.appui-button--destructive.appui-button--quiet.fm-button-list .appui-icon{
+.appui-button--destructive.appui-button--quiet.fm-button-list .appui-icon {
     --unity-image-tint-color: var(--appui-primary-100);
 }
 
@@ -127,8 +125,6 @@
     padding-top: var(--appui-spacing-100);
     padding-bottom: var(--appui-spacing-100);
 }
-
-
 
 .fm-button-drawer .appui-icon {
     --unity-image-tint-color: var(--fm-icon-tint);
@@ -397,7 +393,6 @@
     width: 900px;
 }
 
-/* FMDialog.ShowInfo — reusable large scrollable info popup */
 .fm-info-dialog {
     padding: var(--appui-spacing-200);
     flex-direction: column;
@@ -818,7 +813,7 @@
     padding: 25px;
 }
 
-.box-background .appui-text{
+.box-background .appui-text {
     color: var(--appui-foregrounds-50);
 }
 
@@ -848,7 +843,7 @@
     --box-shadow-spread: 30;
     --box-shadow-blur: 30;
     --box-shadow-color: var(--fm-shadowColor);
-    --box-shadow-type: 0; /* 0 = outset */
+    --box-shadow-type: 0;
 }
 
 .fm-inner-shadow-wrapper {
@@ -857,7 +852,7 @@
     --box-shadow-spread: 10;
     --box-shadow-blur: 30;
     --box-shadow-color: var(--fm-shadowColorInner);
-    --box-shadow-type: 1; /* 1 = inset */
+    --box-shadow-type: 1;
 }
 
 .appui-drawer .appui-button,
@@ -929,8 +924,6 @@
 .fm-shopping-list-detail-item .appui-checkbox__box {
     border-color: var(--appui-foregrounds-50);
 }
-
-
 
 .fm-shopping-list-item-list .appui-text,
 .fm-shopping-list-detail-item .appui-text {
@@ -1093,17 +1086,12 @@
     color: var(--appui-foregrounds-50);
 }
 
-/* ============================================================
-   FoodInfoOverlay — Fullscreen overlay (no navigation push)
-   ============================================================ */
-
 .fm-food-info-overlay {
     flex-direction: column;
     background-color: var(--fm-main-bg);
     color: var(--appui-foregrounds-100);
     flex-grow: 1;
 }
-
 
 .fm-food-info-overlay__appbar {
     flex-direction: row;
@@ -1115,7 +1103,6 @@
     min-height: 56px;
     border-bottom-width: 1px;
     border-bottom-color: var(--appui-foregrounds-10);
-    /* Match the header region bg of the FoodInfo hero */
     background-color: var(--fm-main-bg);
     color: var(--appui-foregrounds-100);
     flex-shrink: 0;
@@ -1136,7 +1123,6 @@
     white-space: nowrap;
 }
 
-/* The cloned FoodInfo root inside the overlay scroll view */
 .fm-food-info-overlay .fm-fi-root {
     background-color: var(--fm-surface-bg-alt);
     flex-grow: 1;
@@ -1156,3 +1142,5 @@
     width: 100%;
     height: 100%;
 }
+
+

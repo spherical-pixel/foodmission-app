@@ -669,7 +669,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: "Noch keine Artikel. Tippen Sie auf \u201E+\u201C, um Artikel hinzuzuf\xFCgen."
+    m_Localized: "Noch keine Artikel. F\xFCgen Sie einige Produkte hinzu."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -1850,6 +1850,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819905
     m_Localized: Hochverarbeitet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Localized: "\xC4nderungsliste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Localized: "Bei Auswahl automatisch zur Vorratskammer hinzuf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Localized: "Liste zur\xFCcksetzen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Localized: "Liste zur\xFCcksetzen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Localized: Dadurch werden alle Markierungen aufgehoben.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Localized: "Liste konnte nicht zur\xFCckgesetzt werden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Localized: "Der Artikel konnte nicht zur Vorratskammer hinzugef\xFCgt werden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Localized: Artikel in die Vorratskammer aufgenommen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Localized: "Was m\xF6chtest du der Liste hinzuf\xFCgen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Localized: Lebensmittelgruppe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Localized: Synonyme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Localized: Angereichert mit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Localized: Einstellungen konnten nicht aktualisiert werden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Localized: "N\xE4hrwerte pro 100 g"
     m_Metadata:
       m_Items: []
   references:

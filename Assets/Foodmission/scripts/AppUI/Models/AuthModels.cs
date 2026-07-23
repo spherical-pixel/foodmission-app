@@ -219,5 +219,6 @@ namespace eu.foodmission.platform
         public string shoppingResponsibility;
         public OnboardingSurveyData onboardingSurvey;
         public string lastShoppingListId;
+        public bool autoAddToPantry;
     }
 }

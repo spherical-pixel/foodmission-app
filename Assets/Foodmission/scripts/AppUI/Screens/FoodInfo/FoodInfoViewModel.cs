@@ -138,7 +138,7 @@ namespace eu.foodmission.platform
             NovaGroup = product.novaGroup.HasValue && product.novaGroup.Value >= 1 && product.novaGroup.Value <= 4 ? product.novaGroup.Value : 0;
             EcoScoreGrade = !string.IsNullOrEmpty(product.ecoscoreGrade) ? product.ecoscoreGrade : "unknown";
             if (!string.IsNullOrEmpty(product.ingredients)) Ingredients = product.ingredients;
-            if (product.allergens != null && product.allergens.Length > 0) Allergens = FormatTagsList(product.allergens, "es");
+            if (product.allergens != null && product.allergens.Length > 0) Allergens = FormatTagsList(product.allergens, "en");
 
             if (product.nutritionalInfo != null)
             {
@@ -147,9 +147,9 @@ namespace eu.foodmission.platform
             }
 
             var meta = new List<MetaRow>();
-            if (!string.IsNullOrEmpty(product.quantity)) meta.Add(new MetaRow(GetLocString("META_QUANTITY"), product.quantity));
-            if (!string.IsNullOrEmpty(product.barcode)) meta.Add(new MetaRow(GetLocString("META_BARCODE"), product.barcode));
-            if (product.brands != null && product.brands.Length > 0) meta.Add(new MetaRow(GetLocString("META_BRAND"), string.Join(", ", product.brands)));
+            if (!string.IsNullOrEmpty(product.quantity)) meta.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_QUANTITY"), product.quantity));
+            if (!string.IsNullOrEmpty(product.barcode)) meta.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BARCODE"), product.barcode));
+            if (product.brands != null && product.brands.Length > 0) meta.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BRAND"), string.Join(", ", product.brands)));
             if (meta.Count > 0) MetaRows = meta;
         }
 
@@ -173,7 +173,7 @@ namespace eu.foodmission.platform
             NovaGroup = detail.novaGroup.HasValue && detail.novaGroup.Value >= 1 && detail.novaGroup.Value <= 4 ? detail.novaGroup.Value : 0;
             EcoScoreGrade = !string.IsNullOrEmpty(detail.ecoscoreGrade) && !detail.ecoscoreGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase) ? detail.ecoscoreGrade : "";
             Ingredients = detail.ingredientsText ?? "";
-            Allergens = detail.allergens != null ? FormatTagsList(detail.allergens, "es") : "";
+            Allergens = detail.allergens != null ? FormatTagsList(detail.allergens, "en") : "";
 
             TrafficLights = BuildTrafficLights(detail.nutrientLevels?.ToString());
             MacroCards = BuildProductMacroCards(detail.nutrimentsRaw?.ToString());
@@ -242,10 +242,10 @@ namespace eu.foodmission.platform
                 MetaRows = new List<MetaRow>();
 
                 if (!string.IsNullOrEmpty(product.quantity))
-                    MetaRows.Add(new MetaRow(GetLocString("META_QUANTITY"), product.quantity));
+                    MetaRows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_QUANTITY"), product.quantity));
                 if (!string.IsNullOrEmpty(product.barcode))
                 {
-                    MetaRows.Add(new MetaRow(GetLocString("META_BARCODE"), product.barcode));
+                    MetaRows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BARCODE"), product.barcode));
                     _ = TryEnrichFromOpenFoodFactsAsync(product.barcode);
                 }
             }
@@ -281,10 +281,10 @@ namespace eu.foodmission.platform
 
                 MacroCards = new List<NutritionRow>
                 {
-                    new(GetLocString("NUTR_ENERGY_KCAL"), null, "kcal"),
-                    new(GetLocString("NUTR_PROTEINS"), null, "g"),
-                    new(GetLocString("NUTR_FAT"), null, "g"),
-                    new(GetLocString("NUTR_CARBOHYDRATES"), null, "g")
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KCAL"), null, "kcal"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PROTEINS"), null, "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FAT"), null, "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_CARBOHYDRATES"), null, "g")
                 };
                 NutritionDetail = new List<NutritionGroup>();
                 MetaRows = new List<MetaRow>();
@@ -307,10 +307,10 @@ namespace eu.foodmission.platform
 
             return new List<NutritionRow>
             {
-                new(GetLocString("NUTR_ENERGY_KCAL"), info.energyKcal > 0 ? info.energyKcal : (float?)null, "kcal"),
-                new(GetLocString("NUTR_PROTEINS"), info.proteins > 0 ? info.proteins : (float?)null, "g"),
-                new(GetLocString("NUTR_FAT"), info.fat > 0 ? info.fat : (float?)null, "g"),
-                new(GetLocString("NUTR_CARBOHYDRATES"), info.carbohydrates > 0 ? info.carbohydrates : (float?)null, "g")
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KCAL"), info.energyKcal > 0 ? info.energyKcal : (float?)null, "kcal"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PROTEINS"), info.proteins > 0 ? info.proteins : (float?)null, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FAT"), info.fat > 0 ? info.fat : (float?)null, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_CARBOHYDRATES"), info.carbohydrates > 0 ? info.carbohydrates : (float?)null, "g")
             };
         }
 
@@ -321,11 +321,11 @@ namespace eu.foodmission.platform
 
             var rows = new List<NutritionRow>
             {
-                new(GetLocString("NUTR_ENERGY_KJ"), info.energyKj > 0 ? info.energyKj : (float?)null, "kJ"),
-                new(GetLocString("NUTR_SATURATED_FAT"), info.saturatedFat > 0 ? info.saturatedFat : (float?)null, "g"),
-                new(GetLocString("NUTR_SUGARS"), info.sugars > 0 ? info.sugars : (float?)null, "g"),
-                new(GetLocString("NUTR_SALT"), info.salt > 0 ? info.salt : (float?)null, "g"),
-                new(GetLocString("NUTR_SODIUM"), info.sodium > 0 ? info.sodium : (float?)null, "mg")
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KJ"), info.energyKj > 0 ? info.energyKj : (float?)null, "kJ"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SATURATED_FAT"), info.saturatedFat > 0 ? info.saturatedFat : (float?)null, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SUGARS"), info.sugars > 0 ? info.sugars : (float?)null, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SALT"), info.salt > 0 ? info.salt : (float?)null, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SODIUM"), info.sodium > 0 ? info.sodium : (float?)null, "mg")
             };
 
             var filtered = rows.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList();
@@ -334,7 +334,7 @@ namespace eu.foodmission.platform
 
             return new List<NutritionGroup>
             {
-                new(GetLocString("NUTR_GROUP_MACROS"), filtered)
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_GROUP_MACROS"), filtered)
             };
         }
 
@@ -343,15 +343,15 @@ namespace eu.foodmission.platform
             switch (context)
             {
                 case "pantry":
-                    ActionButtonText = GetLocStringOrFallback("ADD_TO_PANTRY", "Add to pantry");
+                    ActionButtonText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_PANTRY");
                     ShowActionButton = true;
                     break;
                 case "shoppingList":
-                    ActionButtonText = GetLocStringOrFallback("ADD_TO_SHOPPING_LIST", "Add to shopping list");
+                    ActionButtonText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_SHOPPING_LIST");
                     ShowActionButton = true;
                     break;
                 case "mealLog":
-                    ActionButtonText = GetLocStringOrFallback("ADD_TO_MEAL_LOG", "Add to meal");
+                    ActionButtonText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_MEAL_LOG");
                     ShowActionButton = true;
                     break;
                 default:
@@ -387,10 +387,10 @@ namespace eu.foodmission.platform
                 JObject obj = JObject.Parse(nutrientLevelsJson);
                 return new List<TrafficLight>
                 {
-                    new(GetLocString("TL_FAT"), obj["fat"]?.ToString()),
-                    new(GetLocString("TL_SATURATED_FAT"), obj["saturated-fat"]?.ToString()),
-                    new(GetLocString("TL_SUGARS"), obj["sugars"]?.ToString()),
-                    new(GetLocString("TL_SALT"), obj["salt"]?.ToString())
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","TL_FAT"), obj["fat"]?.ToString()),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","TL_SATURATED_FAT"), obj["saturated-fat"]?.ToString()),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","TL_SUGARS"), obj["sugars"]?.ToString()),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","TL_SALT"), obj["salt"]?.ToString())
                 };
             }
             catch (Exception ex)
@@ -410,10 +410,10 @@ namespace eu.foodmission.platform
                 JObject n = JObject.Parse(nutrimentsRawJson);
                 return new List<NutritionRow>
                 {
-                    new(GetLocString("NUTR_ENERGY_KCAL"), GetFloat(n, "energy-kcal_100g") ?? GetFloat(n, "energy-kcal"), "kcal"),
-                    new(GetLocString("NUTR_PROTEINS"), GetFloat(n, "proteins_100g") ?? GetFloat(n, "proteins"), "g"),
-                    new(GetLocString("NUTR_FAT"), GetFloat(n, "fat_100g") ?? GetFloat(n, "fat"), "g"),
-                    new(GetLocString("NUTR_CARBOHYDRATES"), GetFloat(n, "carbohydrates_100g") ?? GetFloat(n, "carbohydrates"), "g")
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KCAL"), GetFloat(n, "energy-kcal_100g") ?? GetFloat(n, "energy-kcal"), "kcal"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PROTEINS"), GetFloat(n, "proteins_100g") ?? GetFloat(n, "proteins"), "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FAT"), GetFloat(n, "fat_100g") ?? GetFloat(n, "fat"), "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_CARBOHYDRATES"), GetFloat(n, "carbohydrates_100g") ?? GetFloat(n, "carbohydrates"), "g")
                 };
             }
             catch (Exception ex)
@@ -433,17 +433,17 @@ namespace eu.foodmission.platform
                 JObject n = JObject.Parse(nutrimentsRawJson);
                 var rows = new List<NutritionRow>
                 {
-                    new(GetLocString("NUTR_ENERGY_KJ"), GetFloat(n, "energy-kj_100g") ?? GetFloat(n, "energy-kj"), "kJ"),
-                    new(GetLocString("NUTR_SATURATED_FAT"), GetFloat(n, "saturated-fat_100g") ?? GetFloat(n, "saturated-fat"), "g"),
-                    new(GetLocString("NUTR_SUGARS"), GetFloat(n, "sugars_100g") ?? GetFloat(n, "sugars"), "g"),
-                    new(GetLocString("NUTR_FIBER"), GetFloat(n, "fiber_100g") ?? GetFloat(n, "fiber"), "g"),
-                    new(GetLocString("NUTR_SALT"), GetFloat(n, "salt_100g") ?? GetFloat(n, "salt"), "g"),
-                    new(GetLocString("NUTR_SODIUM"), GetFloat(n, "sodium_100g") ?? GetFloat(n, "sodium"), "mg")
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KJ"), GetFloat(n, "energy-kj_100g") ?? GetFloat(n, "energy-kj"), "kJ"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SATURATED_FAT"), GetFloat(n, "saturated-fat_100g") ?? GetFloat(n, "saturated-fat"), "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SUGARS"), GetFloat(n, "sugars_100g") ?? GetFloat(n, "sugars"), "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FIBER"), GetFloat(n, "fiber_100g") ?? GetFloat(n, "fiber"), "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SALT"), GetFloat(n, "salt_100g") ?? GetFloat(n, "salt"), "g"),
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SODIUM"), GetFloat(n, "sodium_100g") ?? GetFloat(n, "sodium"), "mg")
                 };
 
                 return new List<NutritionGroup>
                 {
-                    new(GetLocString("NUTR_GROUP_MACROS"), rows.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList())
+                    new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_GROUP_MACROS"), rows.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList())
                 };
             }
             catch (Exception ex)
@@ -457,77 +457,73 @@ namespace eu.foodmission.platform
         {
             return new List<NutritionRow>
             {
-                new(GetLocString("NUTR_ENERGY_KCAL"), d.energyKcal, "kcal"),
-                new(GetLocString("NUTR_PROTEINS"), d.proteins, "g"),
-                new(GetLocString("NUTR_FAT"), d.fat, "g"),
-                new(GetLocString("NUTR_CARBOHYDRATES"), d.carbohydrates, "g")
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KCAL"), d.energyKcal, "kcal"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PROTEINS"), d.proteins, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FAT"), d.fat, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_CARBOHYDRATES"), d.carbohydrates, "g")
             };
         }
 
         private List<NutritionGroup> BuildGenericNutritionDetail(GenericFoodDetail d)
         {
-            string L(string key) => GetLocString(key);
-            string LF(string key, string fallback) => GetLocStringOrFallback(key, fallback);
-
             var macros = new List<NutritionRow>
             {
-                new(L("NUTR_ENERGY_KCAL"), d.energyKcal, "kcal"),
-                new(L("NUTR_ENERGY_KJ"), d.energyKj, "kJ"),
-                new(LF("NUTR_WATER", "Agua"), d.water, "g"),
-                new(L("NUTR_PROTEINS"), d.proteins, "g"),
-                new(LF("NUTR_PROTEINS_PLANT", "Proteínas vegetales"), d.proteinsPlant, "g"),
-                new(LF("NUTR_PROTEINS_ANIMAL", "Proteínas animales"), d.proteinsAnimal, "g"),
-                new(L("NUTR_CARBOHYDRATES"), d.carbohydrates, "g"),
-                new(L("NUTR_SUGARS"), d.sugars, "g"),
-                new(LF("NUTR_ADDED_SUGARS", "Azúcares añadidos"), d.addedSugars, "g"),
-                new(LF("NUTR_STARCH", "Almidón"), d.starch, "g"),
-                new(L("NUTR_FIBER"), d.fiber, "g"),
-                new(L("NUTR_FAT"), d.fat, "g")
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KCAL"), d.energyKcal, "kcal"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ENERGY_KJ"), d.energyKj, "kJ"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_WATER"), d.water, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PROTEINS"), d.proteins, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PROTEINS_PLANT"), d.proteinsPlant, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PROTEINS_ANIMAL"), d.proteinsAnimal, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_CARBOHYDRATES"), d.carbohydrates, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SUGARS"), d.sugars, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ADDED_SUGARS"), d.addedSugars, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_STARCH"), d.starch, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FIBER"), d.fiber, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FAT"), d.fat, "g")
             };
 
             var fats = new List<NutritionRow>
             {
-                new(L("NUTR_SATURATED_FAT"), d.saturatedFat, "g"),
-                new(LF("NUTR_MONO_UNSATURATED_FAT", "Grasas monoinsaturadas"), d.monoUnsaturatedFat, "g"),
-                new(LF("NUTR_POLY_UNSATURATED_FAT", "Grasas poliinsaturadas"), d.polyUnsaturatedFat, "g"),
-                new(LF("NUTR_OMEGA3_FAT", "Omega 3"), d.omega3Fat, "g"),
-                new(LF("NUTR_OMEGA6_FAT", "Omega 6"), d.omega6Fat, "g"),
-                new(L("NUTR_TRANS_FAT"), d.transFat, "g")
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SATURATED_FAT"), d.saturatedFat, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_MONO_UNSATURATED_FAT"), d.monoUnsaturatedFat, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_POLY_UNSATURATED_FAT"), d.polyUnsaturatedFat, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_OMEGA3_FAT"), d.omega3Fat, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_OMEGA6_FAT"), d.omega6Fat, "g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_TRANS_FAT"), d.transFat, "g")
             };
 
             var vitamins = new List<NutritionRow>
             {
-                new(L("NUTR_VITAMIN_A"), d.vitaminARae, "\u00b5g"),
-                new(L("NUTR_VITAMIN_D"), d.vitaminD, "\u00b5g"),
-                new(L("NUTR_VITAMIN_E"), d.vitaminE, "mg"),
-                new(L("NUTR_VITAMIN_K"), d.vitaminK, "\u00b5g"),
-                new(L("NUTR_VITAMIN_C"), d.vitaminC, "mg"),
-                new(L("NUTR_THIAMIN"), d.thiamin, "mg"),
-                new(L("NUTR_RIBOFLAVIN"), d.riboflavin, "mg"),
-                new(L("NUTR_VITAMIN_B6"), d.vitaminB6, "mg"),
-                new(L("NUTR_VITAMIN_B12"), d.vitaminB12, "\u00b5g"),
-                new(LF("NUTR_FOLATE_TOTAL", "Folatos"), d.folateTotal, "\u00b5g")
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_VITAMIN_A"), d.vitaminARae, "\u00b5g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_VITAMIN_D"), d.vitaminD, "\u00b5g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_VITAMIN_E"), d.vitaminE, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_VITAMIN_K"), d.vitaminK, "\u00b5g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_VITAMIN_C"), d.vitaminC, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_THIAMIN"), d.thiamin, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_RIBOFLAVIN"), d.riboflavin, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_VITAMIN_B6"), d.vitaminB6, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_VITAMIN_B12"), d.vitaminB12, "\u00b5g"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_FOLATE_TOTAL"), d.folateTotal, "\u00b5g")
             };
 
             var minerals = new List<NutritionRow>
             {
-                new(L("NUTR_SODIUM"), d.sodium, "mg"),
-                new(LF("NUTR_POTASSIUM", "Potasio"), d.potassium, "mg"),
-                new(L("NUTR_CALCIUM"), d.calcium, "mg"),
-                new(LF("NUTR_PHOSPHORUS", "Fósforo"), d.phosphorus, "mg"),
-                new(LF("NUTR_MAGNESIUM", "Magnesio"), d.magnesium, "mg"),
-                new(L("NUTR_IRON"), d.iron, "mg"),
-                new(LF("NUTR_ZINC", "Zinc"), d.zinc, "mg")
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_SODIUM"), d.sodium, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_POTASSIUM"), d.potassium, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_CALCIUM"), d.calcium, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_PHOSPHORUS"), d.phosphorus, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_MAGNESIUM"), d.magnesium, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_IRON"), d.iron, "mg"),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_ZINC"), d.zinc, "mg")
             };
 
-            string GT(string key) => GetLocString(key);
 
             return new List<NutritionGroup>
             {
-                new(GT("NUTR_GROUP_MACROS"), macros.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList()),
-                new(GT("NUTR_GROUP_FATS"), fats.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList()),
-                new(GT("NUTR_GROUP_VITAMINS"), vitamins.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList()),
-                new(GT("NUTR_GROUP_MINERALS"), minerals.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList())
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_GROUP_MACROS"), macros.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList()),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_GROUP_FATS"), fats.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList()),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_GROUP_VITAMINS"), vitamins.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList()),
+                new(LocalizationSettings.StringDatabase.GetLocalizedString("UI","NUTR_GROUP_MINERALS"), minerals.Where(r => r.Value.HasValue && r.Value.Value > 0).ToList())
             };
         }
 
@@ -536,23 +532,49 @@ namespace eu.foodmission.platform
             var rows = new List<MetaRow>();
 
             if (!string.IsNullOrEmpty(d.quantity))
-                rows.Add(new MetaRow(GetLocString("META_QUANTITY"), d.quantity));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_QUANTITY"), d.quantity));
+            }
+
             if (!string.IsNullOrEmpty(d.servingSize))
-                rows.Add(new MetaRow(GetLocString("META_SERVING_SIZE"), d.servingSize));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_SERVING_SIZE"), d.servingSize));
+            }
+
             if (!string.IsNullOrEmpty(d.brands))
-                rows.Add(new MetaRow(GetLocString("META_BRANDS"), d.brands));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BRANDS"), d.brands));
+            }
+
             if (!string.IsNullOrEmpty(d.origins))
-                rows.Add(new MetaRow(GetLocString("META_ORIGINS"), d.origins));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_ORIGINS"), d.origins));
+            }
+
             if (!string.IsNullOrEmpty(d.manufacturingPlaces))
-                rows.Add(new MetaRow(GetLocString("META_MANUFACTURING"), d.manufacturingPlaces));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_MANUFACTURING"), d.manufacturingPlaces));
+            }
+
             if (d.countries != null && d.countries.Length > 0)
-                rows.Add(new MetaRow(GetLocString("META_COUNTRIES"), string.Join(", ", d.countries)));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_COUNTRIES"), string.Join(", ", d.countries)));
+            }
+
             if (d.labels != null && d.labels.Length > 0)
-                rows.Add(new MetaRow(GetLocString("META_LABELS"), string.Join(", ", d.labels)));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_LABELS"), string.Join(", ", d.labels)));
+            }
+
             if (!string.IsNullOrEmpty(d.barcode))
-                rows.Add(new MetaRow(GetLocString("META_BARCODE"), d.barcode));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BARCODE"), d.barcode));
+            }
+
             if (d.carbonFootprint.HasValue && d.carbonFootprint.Value > 0)
-                rows.Add(new MetaRow(GetLocString("META_CARBON_FOOTPRINT"), $"{d.carbonFootprint.Value:F1} kg CO\u2082e/kg"));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_CARBON_FOOTPRINT"), $"{d.carbonFootprint.Value:F1} kg CO\u2082e/kg"));
+            }
 
             return rows;
         }
@@ -562,13 +584,24 @@ namespace eu.foodmission.platform
             var rows = new List<MetaRow>();
 
             if (!string.IsNullOrEmpty(d.foodGroup))
-                rows.Add(new MetaRow(GetLocStringOrFallback("META_FOOD_GROUP", "Grupo de alimentos"), d.foodGroup));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_FOOD_GROUP"), d.foodGroup));
+            }
+
             if (!string.IsNullOrEmpty(d.quantity))
-                rows.Add(new MetaRow(GetLocStringOrFallback("META_QUANTITY", "Cantidad de referencia"), d.quantity));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_QUANTITY"), d.quantity));
+            }
+
             if (!string.IsNullOrEmpty(d.synonym))
-                rows.Add(new MetaRow(GetLocStringOrFallback("META_SYNONYMS", "Sinónimos"), d.synonym));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_SYNONYMS"), d.synonym));
+            }
+
             if (!string.IsNullOrEmpty(d.isFortifiedWith))
-                rows.Add(new MetaRow(GetLocStringOrFallback("META_FORTIFIED_WITH", "Fortificado con"), d.isFortifiedWith));
+            {
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_FORTIFIED_WITH"), d.isFortifiedWith));
+            }
 
             return rows;
         }
@@ -594,19 +627,7 @@ namespace eu.foodmission.platform
             return emojis.TryGetValue(foodGroup, out string emoji) ? emoji : "\ud83c\udf7d\ufe0f";
         }
 
-        private static string GetLocString(string key)
-        {
-            return LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
-        }
-
-        public static string GetLocStringOrFallback(string key, string fallback)
-        {
-            string result = LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
-            if (string.IsNullOrEmpty(result) || result == key) return fallback;
-            if (result.StartsWith("No translation found")) return fallback;
-            return result;
-        }
-        public static string FormatTagsList(IEnumerable<string> rawTags, string preferredLang = "es")
+        public static string FormatTagsList(IEnumerable<string> rawTags, string preferredLang = "en")
         {
             if (rawTags == null) return "";
 

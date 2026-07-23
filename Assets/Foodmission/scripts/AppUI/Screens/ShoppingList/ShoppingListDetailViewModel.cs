@@ -22,6 +22,7 @@ namespace eu.foodmission.platform
         private readonly ILocalStorageService _localStorage;
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
         private readonly IAuthService _authService;
+        private readonly IPantryService _pantryService;
 
         private const string CacheKeyPrefix = "shoppinglist_items_";
         private const string FoodSearchCachePrefix = "food_search_";
@@ -29,6 +30,7 @@ namespace eu.foodmission.platform
 
         private string _currentListId;
         private List<ShoppingListItemView> _allItems = new();
+        private readonly HashSet<string> _autoAddedItemIds = new();
 
         [ObservableProperty]
         private List<ShoppingListItemView> _items = new();
@@ -63,6 +65,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool _isLoadingGenericFoods;
 
+        [ObservableProperty]
+        private bool _autoAddToPantry;
+
         public ShoppingListDetailViewModel(
             IStoreService storeService,
             IShoppingListService shoppingListService,
@@ -70,7 +75,8 @@ namespace eu.foodmission.platform
             IGenericFoodService genericFoodService,
             ILocalStorageService localStorage,
             IOpenFoodFactsClientService openFoodFactsClientService,
-            IAuthService authService)
+            IAuthService authService,
+            IPantryService pantryService)
             : base(storeService)
         {
             _shoppingListService = shoppingListService;
@@ -79,6 +85,8 @@ namespace eu.foodmission.platform
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
             _authService = authService;
+            _pantryService = pantryService;
+            AutoAddToPantry = storeService.GetAppState().userAutoAddToPantry;
         }
 
 
@@ -263,7 +271,8 @@ namespace eu.foodmission.platform
                         shoppingResponsibility = state.userShoppingResponsibility,
                         dietaryPreference = state.userDietaryPreference,
                         onboardingSurvey = state.userOnboardingSurvey,
-                        lastShoppingListId = listId
+                        lastShoppingListId = listId,
+                        autoAddToPantry = state.userAutoAddToPantry
                     }
                 };
                 _ = _authService.UpdateProfileAsync(updateRequest);
@@ -546,6 +555,8 @@ namespace eu.foodmission.platform
             return await FoodProductFlow.ImportByBarcodeAsync(_foodProductService, _openFoodFactsClientService, barcode);
         }
 
+        public event Action<string> OnPantryItemAdded;
+
         public async Task ToggleItemAsync(string itemId)
         {
             ErrorMessage = "";
@@ -566,8 +577,35 @@ namespace eu.foodmission.platform
 
             ErrorDetail = null;
             view.Item.@checked = updated.@checked;
+
+            if (newChecked && AutoAddToPantry && !_autoAddedItemIds.Contains(itemId))
+            {
+                await AutoAddToPantryAsync(view, itemId);
+            }
+
             ApplyFilter();
             SaveCache();
+        }
+
+        private async Task AutoAddToPantryAsync(ShoppingListItemView view, string itemId)
+        {
+            string foodProductId = view.Item.foodProductId;
+            string genericFoodId = view.Item.genericFoodId;
+            float quantity = view.Item.quantity > 0 ? view.Item.quantity : 1f;
+            string unit = !string.IsNullOrEmpty(view.Item.unit) ? view.Item.unit : "PIECES";
+
+            var (pantryItem, pantryError) = await _pantryService.AddItemAsync(
+                foodProductId, genericFoodId, quantity, unit);
+
+            if (pantryError != null)
+            {
+                ErrorDetail = pantryError;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_ADD_TO_PANTRY");
+                return;
+            }
+
+            _autoAddedItemIds.Add(itemId);
+            OnPantryItemAdded?.Invoke(view.FoodName);
         }
 
         public async Task RenameListAsync(string newName)
@@ -647,6 +685,61 @@ namespace eu.foodmission.platform
             _allItems = new List<ShoppingListItemView>(_allItems.FindAll(v => !v.Item.@checked));
             ApplyFilter();
             SaveCache();
+        }
+
+        public async Task ResetListAsync()
+        {
+            ErrorMessage = "";
+
+            var checkedItems = _allItems.Where(v => v.Item.@checked).ToList();
+            if (checkedItems.Count == 0) return;
+
+            var tasks = checkedItems.Select(v =>
+                _shoppingListService.UpdateItemAsync(_currentListId, v.Item.id, null, null, null, false)).ToArray();
+            var results = await Task.WhenAll(tasks);
+
+            var firstError = results.FirstOrDefault(r => r.Error != null);
+            if (firstError.Error != null)
+            {
+                ErrorDetail = firstError.Error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_RESET_LIST");
+                await LoadAsync(_currentListId, ListName);
+                return;
+            }
+
+            ErrorDetail = null;
+            foreach (var v in checkedItems)
+            {
+                v.Item.@checked = false;
+            }
+            _autoAddedItemIds.Clear();
+            ApplyFilter();
+            SaveCache();
+        }
+
+        public async Task SyncAutoAddToPantryAsync(bool value)
+        {
+            var state = _storeService.GetAppState();
+            var request = new ProfileUpdateRequest
+            {
+                preferences = new ProfileUpdatePreferences
+                {
+                    shoppingResponsibility = state.userShoppingResponsibility,
+                    dietaryPreference = state.userDietaryPreference,
+                    onboardingSurvey = state.userOnboardingSurvey,
+                    lastShoppingListId = state.userLastShoppingListId,
+                    autoAddToPantry = value
+                }
+            };
+
+            var (success, error) = await _authService.UpdateProfileAsync(request);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_UPDATE_PREFERENCES");
+                return;
+            }
+            ErrorDetail = null;
         }
     }
 }

@@ -29,6 +29,10 @@
     font-size: var(--appui-font-sizes-body-md);
 }
 
+.fm-sl-scroll {
+    margin-top: 48px;
+}
+
 .fm-sld-item-name--checked {
     opacity: 0.4;
 }
@@ -71,4 +75,17 @@
 
 .fm-sld-loading-overlay.visible {
     display: flex;
+}
+
+.fm-sld-action-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 40px;
+    margin-bottom: 4px;
+}
+
+.fm-sld-auto-add-label {
+    margin-left: 8px;
+    font-size: var(--appui-font-sizes-body-md);
 }

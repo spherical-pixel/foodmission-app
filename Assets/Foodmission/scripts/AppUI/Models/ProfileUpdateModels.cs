@@ -82,6 +82,9 @@ namespace eu.foodmission.platform
 
         [JsonProperty("lastShoppingListId", NullValueHandling = NullValueHandling.Ignore)]
         public string lastShoppingListId;
+
+        [JsonProperty("autoAddToPantry", NullValueHandling = NullValueHandling.Ignore)]
+        public bool autoAddToPantry;
     }
 
     /// <summary>

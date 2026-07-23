@@ -120,6 +120,7 @@ namespace eu.foodmission.platform
         public string userShoppingResponsibility = "";
         public OnboardingSurveyData userOnboardingSurvey = new OnboardingSurveyData();
         public string userLastShoppingListId = "";
+        public bool userAutoAddToPantry = false;
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -178,6 +179,7 @@ namespace eu.foodmission.platform
                 userShoppingResponsibility = this.userShoppingResponsibility,
                 userOnboardingSurvey = this.userOnboardingSurvey,
                 userLastShoppingListId = this.userLastShoppingListId,
+                userAutoAddToPantry = this.userAutoAddToPantry,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
                 foodInfoAddRequest = this.foodInfoAddRequest

@@ -690,7 +690,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: Er zijn nog geen items. Tik op + om items toe te voegen.
+    m_Localized: Er zijn nog geen artikelen. Voeg wat producten toe.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000034
@@ -1865,6 +1865,62 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819905
     m_Localized: Ultraverbeterd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26661509051441152
+    m_Localized: Wijzigingslijst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664242240282624
+    m_Localized: Wordt automatisch aan de voorraad toegevoegd als het vakje is aangevinkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26664711310270464
+    m_Localized: Lijst opnieuw instellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665383497818112
+    m_Localized: Lijst opnieuw instellen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665444902428672
+    m_Localized: Hiermee worden alle selectievakjes uitgeschakeld.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665526003490816
+    m_Localized: De lijst kon niet worden gereset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665593070411776
+    m_Localized: Het artikel kon niet aan de voorraadkast worden toegevoegd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26665665698979840
+    m_Localized: Artikel toegevoegd aan de voorraadkast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26666342005334016
+    m_Localized: Wat wil je aan de lijst toevoegen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26683190063128576
+    m_Localized: Voedingsgroep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684223598354432
+    m_Localized: Synoniemen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684271409225728
+    m_Localized: Verrijkt met
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684341949030400
+    m_Localized: De instellingen konden niet worden bijgewerkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26684380855394304
+    m_Localized: Waarden per 100 g
     m_Metadata:
       m_Items: []
   references:
