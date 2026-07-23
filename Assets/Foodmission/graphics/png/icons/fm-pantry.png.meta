@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 986875ff361f84a2c833f1ad9a9248af
+guid: 96abc2076715a4006bb7e9970f35c2b2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1827304794292501557
-    second: fm-avatar-skin_0
+      213: 4912968061212972923
+    second: fm-pantry_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: iOS
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -123,11 +123,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fm-avatar-skin_0
+      name: fm-pantry_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 18
-        width: 105
-        height: 114
+        x: 12
+        y: 0
+        width: 101
+        height: 92
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 53c3c286704eb5910800000000000000
-      internalID: 1827304794292501557
+      spriteID: b775071fb6e5e2440800000000000000
+      internalID: 4912968061212972923
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      fm-avatar-skin_0: 1827304794292501557
+      fm-pantry_0: 4912968061212972923
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

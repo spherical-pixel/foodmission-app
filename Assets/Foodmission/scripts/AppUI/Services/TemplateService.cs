@@ -40,7 +40,8 @@ namespace eu.foodmission.platform
             TemplateAddresses.AvatarEditorPanelItem,
             TemplateAddresses.ForceUpdate,
             TemplateAddresses.FoodInfo,
-            TemplateAddresses.StepFlow
+            TemplateAddresses.StepFlow,
+            TemplateAddresses.QuickSearchScreen
         };
 
         public async Task PreloadAllAsync()

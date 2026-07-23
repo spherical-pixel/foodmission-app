@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:eu="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.QuickSearchViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.QuickSearchViewModel, Foodmission" class="fm-root">
+        <ui:VisualElement>
+            <appui:Heading name="screen-title" text="Búsqueda Rápida" size="L">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26764712233394176)"/>
+                </Bindings>
+            </appui:Heading>
+            <appui:Text name="screen-subtitle" text="Busca un producto o alimento genérico, o escanea un código de barras" size="M" style="margin-bottom: 10px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26777752722989056)"/>
+                </Bindings>
+            </appui:Text>
+        </ui:VisualElement>
+        <eu:FMSearchOrCategoryField name="search-category-field">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="Placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26308484147437568)"/>
+            </Bindings>
+        </eu:FMSearchOrCategoryField>
+        <ui:VisualElement name="main-content"/>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
+    </ui:VisualElement>
+</ui:UXML>

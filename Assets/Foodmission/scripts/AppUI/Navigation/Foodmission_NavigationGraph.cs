@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit it directly.
-// Date: 2026-07-20 18:09:57
+// Date: 2026-07-23 16:42:15
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +35,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string loading_to_forceupdate = "loading_to_forceupdate";
         public const string goto_test_survey = "goto_test_survey";
         public const string onboardingprofile_to_onboarding_survey = "onboardingprofile_to_onboarding_survey";
+        public const string go_to_quicksearch = "go_to_quicksearch";
     }
     public static partial class Destinations
     {
@@ -58,12 +59,13 @@ namespace Unity.AppUI.Navigation.Generated
         public const string pantry = "Pantry";
         public const string pantryitemdetail = "PantryItemDetail";
         public const string editprofile = "EditProfile";
-        public const string new_destination = "new_destination";
+        public const string edit_avatar = "EDIT_AVATAR";
         public const string foodwaste = "FoodWaste";
         public const string foodwasteadd = "FoodWasteAdd";
         public const string forceupdate = "ForceUpdate";
         public const string testsurvey = "TestSurvey";
         public const string onboardingsurvey = "OnboardingSurvey";
+        public const string quick_search = "QUICK_SEARCH";
     }
     public static partial class Graphs
     {

@@ -12,7 +12,10 @@ namespace eu.foodmission.platform
         Menu,
         Notifications,
         MealLog,
-        Profile
+        Profile,
+        ShoppingList,
+        Pantry,
+        Search
     }
 
     /// <summary>
@@ -51,26 +54,23 @@ namespace eu.foodmission.platform
             {
                 case "Home":
                     return NavTab.Home;
-
                 case "Notifications":
                     return NavTab.Notifications;
-
                 case "ShoppingList":
                 case "ShoppingListDetail":
+                    return NavTab.ShoppingList;
                 case "Pantry":
                 case "PantryItemDetail":
-                    return NavTab.Menu;
-
+                    return NavTab.Pantry;
                 case "MealLog":
                     return NavTab.MealLog;
-
                 case "Profile":
                 case "Settings":
                 case "Groups":
                 case "GroupsCreate":
                 case "GroupsJoin":
                 case "GroupDetail":
-                    return NavTab.Profile;
+                    return NavTab.None;
 
                 default:
                     return NavTab.None;

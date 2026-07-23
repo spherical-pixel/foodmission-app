@@ -43,6 +43,7 @@ namespace eu.foodmission.platform
         [ObservableProperty] private ApiErrorResponse m_ErrorDetail;
         [ObservableProperty] private string m_ActionButtonText = "";
         [ObservableProperty] private bool m_ShowActionButton;
+        [ObservableProperty] private bool m_ShowMultipleActions;
         [ObservableProperty] private string m_Description = "";
         [ObservableProperty] private string m_Traces = "";
         [ObservableProperty] private string m_Categories = "";
@@ -441,18 +442,28 @@ namespace eu.foodmission.platform
                 case "pantry":
                     ActionButtonText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_PANTRY");
                     ShowActionButton = true;
+                    ShowMultipleActions = false;
                     break;
                 case "shoppingList":
                     ActionButtonText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_SHOPPING_LIST");
                     ShowActionButton = true;
+                    ShowMultipleActions = false;
                     break;
                 case "mealLog":
                     ActionButtonText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADD_TO_MEAL_LOG");
                     ShowActionButton = true;
+                    ShowMultipleActions = false;
+                    break;
+                case "quickSearch":
+                case "multi":
+                    ActionButtonText = "";
+                    ShowActionButton = false;
+                    ShowMultipleActions = true;
                     break;
                 default:
                     ActionButtonText = "";
                     ShowActionButton = false;
+                    ShowMultipleActions = false;
                     break;
             }
         }

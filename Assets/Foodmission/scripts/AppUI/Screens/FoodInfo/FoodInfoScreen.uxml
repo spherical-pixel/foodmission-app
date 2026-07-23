@@ -49,8 +49,27 @@
                 </appui:AccordionItem>
             </appui:Accordion>
         </ui:VisualElement>
-        <ui:VisualElement name="action-container" class="fm-fi-action-container">
-            <appui:Button name="action-button" variant="Accent" class="fm-fi-action"/>
+        <ui:VisualElement name="action-container" class="fm-fi-action-container hidden">
+            <eu.foodmission.platform.Components.FMButton name="action-button" variant="Accent" class="fm-button fm-fi-action hidden"/>
+            <ui:VisualElement name="multi-action-container" class="fm-fi-multi-action-container hidden">
+                <eu.foodmission.platform.Components.FMButton name="btn-add-to-shopping-list" variant="Accent" class="fm-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(21294142473625601)"/>
+                    </Bindings>
+                </eu.foodmission.platform.Components.FMButton>
+                <appui:Spacer/>
+                <eu.foodmission.platform.Components.FMButton name="btn-add-to-pantry" variant="Accent" class="fm-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(21294142473625600)"/>
+                    </Bindings>
+                </eu.foodmission.platform.Components.FMButton>
+                <appui:Spacer/>
+                <eu.foodmission.platform.Components.FMButton name="btn-add-to-meal-log" variant="Accent" class="fm-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(21294142473625602)"/>
+                    </Bindings>
+                </eu.foodmission.platform.Components.FMButton>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

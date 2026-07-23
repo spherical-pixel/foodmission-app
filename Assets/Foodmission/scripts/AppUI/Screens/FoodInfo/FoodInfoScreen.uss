@@ -413,6 +413,10 @@
     padding: 20px 16px 32px 16px;
 }
 
+.fm-fi-action-container.hidden {
+    display: none;
+}
+
 .fm-fi-action {
     width: 100%;
     height: 50px;
@@ -423,6 +427,46 @@
     display: none;
 }
 
+/* ── MULTI-ACTION GROUP (responsive vertical layout) ────── */
+
+.fm-fi-multi-action-container {
+    flex-direction: column;
+    width: 100%;
+}
+
+.fm-fi-multi-action-container.hidden {
+    display: none;
+}
+/*
+.fm-fi-multi-action-container .appui-actiongroup {
+    flex-direction: column;
+    width: 100%;
+}
+
+.fm-fi-multi-action-container .appui-actiongroup__container {
+    flex-direction: column;
+    width: 100%;
+}
+
+.fm-fi-multi-action-container .appui-actionbutton {
+    width: 100%;
+    min-height: 50px;
+    margin-bottom: 10px;
+    justify-content: center;
+    border-radius: 14px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.fm-fi-multi-action-container .appui-actionbutton__label {
+    white-space: normal;
+    -unity-text-align: middle-center;
+    font-size: var(--appui-font-sizes-body-lg);
+    -unity-font-style: bold;
+}
+*/
 /* ── VISIBILITY HELPERS ─────────────────────────────────── */
 
 .fm-fi-section--hidden {

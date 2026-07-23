@@ -84,6 +84,25 @@ namespace eu.foodmission.platform
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
         }
 
+        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            base.OnEnter(controller, destination, args);
+
+            if (args != null && args.Length >= 5)
+            {
+                int.TryParse(args[0].value, out int mealTypeIndex);
+                bool.TryParse(args[1].value, out bool eatenOut);
+                int.TryParse(args[2].value, out int foodTypeInt);
+                FoodInfoType foodType = (FoodInfoType)foodTypeInt;
+                string foodId = args[3].value;
+                string foodName = args[4].value;
+
+                _viewModel?.InitializeForQuickAdd(mealTypeIndex, eatenOut, foodType, foodId, foodName);
+                UpdateStepVisibility();
+                RebuildSelectedChips();
+            }
+        }
+
 
         protected override void OnViewModelBound()
         {

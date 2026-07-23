@@ -1895,6 +1895,22 @@ MonoBehaviour:
     m_Key: DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 26764712233394176
+    m_Key: QUICK_SEARCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777548250669056
+    m_Key: ITEM_ADDED_TO_SHOPPING_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777752722989056
+    m_Key: QUICK_SEARCH_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26799037893042176
+    m_Key: ORIGIN
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

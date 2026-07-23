@@ -526,6 +526,24 @@ namespace eu.foodmission.platform
 
         public async Task<bool> SaveAsync()
         {
+            if (TypeOfMealOptions == null || TypeOfMealOptions.Length == 0)
+            {
+                string lang = _storeService.GetAppState()?.lang ?? "en";
+                var (types, typeErr) = await _catalogService.GetTypeOfMealsAsync(lang);
+                if (typeErr == null && types != null)
+                {
+                    TypeOfMealOptions = types;
+                }
+            }
+
+            if (SelectedTypeOfMealIndex >= 0 && TypeOfMealOptions != null && TypeOfMealOptions.Length > 0)
+            {
+                if (SelectedTypeOfMealIndex >= TypeOfMealOptions.Length)
+                {
+                    SelectedTypeOfMealIndex = 0;
+                }
+            }
+
             if (SelectedTypeOfMeal == null)
             {
                 ErrorMessage = "@UI:SELECT_MEAL_TYPE";
@@ -917,6 +935,30 @@ namespace eu.foodmission.platform
             _pendingPresetName = null;
             ErrorMessage = "";
             CurrentStep = MealLogStep.SelectingTypeOfMeal;
+        }
+
+        public void InitializeForQuickAdd(int mealTypeIndex, bool eatenOut, FoodInfoType foodType, string foodId, string foodName)
+        {
+            ResetToStep1();
+
+            SelectedTypeOfMealIndex = mealTypeIndex >= 0 ? mealTypeIndex : 0;
+
+            EatenOut = eatenOut;
+            MealFromPantry = !eatenOut;
+
+            var newItem = new MealLogItem
+            {
+                isProduct = foodType == FoodInfoType.Product,
+                isGenericFood = foodType == FoodInfoType.Generic,
+                foodProductId = foodType == FoodInfoType.Product ? foodId : null,
+                genericFoodId = foodType == FoodInfoType.Generic ? foodId : null,
+                name = foodName ?? "Alimento",
+                quantity = 1f,
+                unit = "PIECES"
+            };
+
+            SelectedItems = new List<MealLogItem> { newItem };
+            CurrentStep = MealLogStep.SelectingDishes;
         }
 
 

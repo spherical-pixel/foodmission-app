@@ -47,9 +47,17 @@ namespace eu.foodmission.platform
         private static VisualElement _nutritionDetailTable;
         private static VisualElement _metaSection;
         private static VisualElement _metaBody;
-        private static Unity.AppUI.UI.Button _actionButton;
+        private static VisualElement _actionContainer;
+        private static FMButton _actionButton;
+        private static VisualElement _multiActionContainer;
+        private static FMButton _btnAddToShoppingList;
+        private static FMButton _btnAddToPantry;
+        private static FMButton _btnAddToMealLog;
         private static VisualElement _descriptionSection;
         private static Text _descriptionBody;
+
+        private static string _overlayFoodId;
+        private static string _overlayFoodData;
 
         private static string _lastNutriScoreClass = "";
         private static string _lastNovaClass = "";
@@ -170,9 +178,17 @@ namespace eu.foodmission.platform
             _nutritionDetailTable = content.Q<VisualElement>("nutrition-detail-table");
             _metaSection = content.Q<VisualElement>("meta-section");
             _metaBody = content.Q<VisualElement>("meta-body");
-            _actionButton = content.Q<Unity.AppUI.UI.Button>("action-button");
+            _actionContainer = content.Q<VisualElement>("action-container");
+            _actionButton = content.Q<FMButton>("action-button");
+            _multiActionContainer = content.Q<VisualElement>("multi-action-container");
+            _btnAddToShoppingList = content.Q<FMButton>("btn-add-to-shopping-list");
+            _btnAddToPantry = content.Q<FMButton>("btn-add-to-pantry");
+            _btnAddToMealLog = content.Q<FMButton>("btn-add-to-meal-log");
             _descriptionSection = content.Q<VisualElement>("description-section");
             _descriptionBody = content.Q<Text>("description-body");
+
+            _overlayFoodId = foodId;
+            _overlayFoodData = foodData;
 
             // ── Wire VM events ────────────────────────────────────────────
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -181,6 +197,10 @@ namespace eu.foodmission.platform
             {
                 _actionButton.clicked += OnActionClicked;
             }
+
+            if (_btnAddToShoppingList != null) _btnAddToShoppingList.clicked += OnAddToShoppingListClicked;
+            if (_btnAddToPantry != null) _btnAddToPantry.clicked += OnAddToPantryClicked;
+            if (_btnAddToMealLog != null) _btnAddToMealLog.clicked += OnAddToMealLogClicked;
 
             // ── Add to Panel ──────────────────────────────────────────────
             container.Add(_overlay);
@@ -220,6 +240,26 @@ namespace eu.foodmission.platform
                 _actionButton = null;
             }
 
+            if (_btnAddToShoppingList != null)
+            {
+                _btnAddToShoppingList.clicked -= OnAddToShoppingListClicked;
+                _btnAddToShoppingList = null;
+            }
+            if (_btnAddToPantry != null)
+            {
+                _btnAddToPantry.clicked -= OnAddToPantryClicked;
+                _btnAddToPantry = null;
+            }
+            if (_btnAddToMealLog != null)
+            {
+                _btnAddToMealLog.clicked -= OnAddToMealLogClicked;
+                _btnAddToMealLog = null;
+            }
+            _multiActionContainer = null;
+            _actionContainer = null;
+            _overlayFoodId = null;
+            _overlayFoodData = null;
+
             if (_overlay != null && _overlay.parent != null)
             {
                 _overlay.RemoveFromHierarchy();
@@ -239,6 +279,25 @@ namespace eu.foodmission.platform
         }
 
         // ── VM event handler ──────────────────────────────────────────────
+
+        private static void OnAddToShoppingListClicked() => OnMultiActionClicked("shoppingList");
+        private static void OnAddToPantryClicked() => OnMultiActionClicked("pantry");
+        private static void OnAddToMealLogClicked() => OnMultiActionClicked("mealLog");
+
+        private static void OnMultiActionClicked(string targetContext)
+        {
+            var storeService = App.current.services.GetRequiredService<IStoreService>();
+            storeService?.store.Dispatch(AppActions.foodInfoAddRequested.Invoke(new AddToContextRequestedAction
+            {
+                FoodType = _viewModel != null ? _viewModel.FoodType : FoodInfoType.Product,
+                FoodId = _overlayFoodId,
+                EntryContext = targetContext,
+                FoodData = _overlayFoodData
+            }));
+            var callback = _onActionCompleted;
+            Dismiss();
+            callback?.Invoke();
+        }
 
         private static void OnActionClicked()
         {
@@ -307,10 +366,9 @@ namespace eu.foodmission.platform
                     UpdateApiErrorState();
                     break;
                 case nameof(FoodInfoViewModel.ActionButtonText):
-                    if (_actionButton != null) _actionButton.title = _viewModel.ActionButtonText;
-                    break;
                 case nameof(FoodInfoViewModel.ShowActionButton):
-                    _actionButton?.EnableInClassList("hidden", !_viewModel.ShowActionButton);
+                case nameof(FoodInfoViewModel.ShowMultipleActions):
+                    UpdateActionButtonsVisibility();
                     break;
                 case nameof(FoodInfoViewModel.Description):
                     UpdateDescription();
@@ -333,11 +391,7 @@ namespace eu.foodmission.platform
             if (_foodName != null) _foodName.text = _viewModel.FoodName;
             if (_foodSubtitle != null) _foodSubtitle.text = _viewModel.FoodSubtitle;
             if (_foodEmoji != null) _foodEmoji.text = _viewModel.Emoji;
-            if (_actionButton != null)
-            {
-                _actionButton.title = _viewModel.ActionButtonText;
-                _actionButton.EnableInClassList("hidden", !_viewModel.ShowActionButton);
-            }
+            UpdateActionButtonsVisibility();
             UpdateNutriScoreBadge();
             UpdateNovaBadge();
             UpdateEcoBadge();
@@ -360,6 +414,25 @@ namespace eu.foodmission.platform
             SetSectionTitle(_descriptionSection, "DESCRIPTION", "Description");
             SetSectionTitle(_nutritionDetailSection, "SECTION_NUTRITION_DETAIL", "Full nutrition");
             SetSectionTitle(_metaSection, "SECTION_META", "Product details");
+        }
+
+        private static void UpdateActionButtonsVisibility()
+        {
+            if (_viewModel == null) return;
+            if (_actionButton != null)
+            {
+                _actionButton.title = _viewModel.ActionButtonText;
+                _actionButton.EnableInClassList("hidden", !_viewModel.ShowActionButton);
+            }
+            if (_multiActionContainer != null)
+            {
+                _multiActionContainer.EnableInClassList("hidden", !_viewModel.ShowMultipleActions);
+            }
+            if (_actionContainer != null)
+            {
+                bool showContainer = _viewModel.ShowActionButton || _viewModel.ShowMultipleActions;
+                _actionContainer.EnableInClassList("hidden", !showContainer);
+            }
         }
 
         private static void SetSectionTitle(VisualElement section, string locKey, string fallback)

@@ -1932,6 +1932,22 @@ MonoBehaviour:
     m_Localized: Beskrivelse
     m_Metadata:
       m_Items: []
+  - m_Id: 26764712233394176
+    m_Localized: "Hurtigs\xF8k"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777548250669056
+    m_Localized: Varen er lagt til i handlelisten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777752722989056
+    m_Localized: "S\xF8k etter eller skann et produkt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26799037893042176
+    m_Localized: Opprinnelse
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -653,3 +653,7 @@ META_STORES,26698358113427456,Stores,Winkels,Geschäfte,Καταστήματα,N
 META_CATEGORIES,26698401734189056,Categories,Categorieën,Kategorien,Κατηγορίες,Categorie,Kategorier,Kategorie,Kategorije,Categorías
 META_TRACES,26698610480504832,Traces,Sporen,Spuren,Ίχνη,Tracce,Spor,Ślady,Sledi,Huellas
 DESCRIPTION,26698676893114368,Description,Beschrijving,Beschreibung,Περιγραφή,Descrizione,Beskrivelse,Opis,Opis,Descripción
+QUICK_SEARCH,26764712233394176,Quick search,Snel zoeken,Schnellsuche,Γρήγορη αναζήτηση,Ricerca rapida,Hurtigsøk,Szybkie wyszukiwanie,Hitro iskanje,Búsqueda rápida
+ITEM_ADDED_TO_SHOPPING_LIST,26777548250669056,Item added to shopping list,Artikel toegevoegd aan het boodschappenlijstje,Artikel zur Einkaufsliste hinzugefügt,Το προϊόν προστέθηκε στη λίστα αγορών,Articolo aggiunto alla lista della spesa,Varen er lagt til i handlelisten,Produkt dodano do listy zakupów,Izdelek je bil dodan na nakupovalni seznam,Artículo añadido a la lista de la compra
+QUICK_SEARCH_SUBTITLE,26777752722989056,Search or scan a product,Een product zoeken of scannen,Ein Produkt suchen oder scannen,Αναζήτηση ή σάρωση προϊόντος,Cerca o scansiona un prodotto,Søk etter eller skann et produkt,Wyszukaj lub zeskanuj produkt,Iskanje ali skeniranje izdelka,Buscar o escanear un producto
+ORIGIN,26799037893042176,Origin,Herkomst,Herkunft,Προέλευση,Origine,Opprinnelse,Pochodzenie,Izvor,Origen

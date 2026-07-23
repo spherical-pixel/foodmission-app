@@ -1942,6 +1942,22 @@ MonoBehaviour:
     m_Localized: Descrizione
     m_Metadata:
       m_Items: []
+  - m_Id: 26764712233394176
+    m_Localized: Ricerca rapida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777548250669056
+    m_Localized: Articolo aggiunto alla lista della spesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777752722989056
+    m_Localized: Cerca o scansiona un prodotto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26799037893042176
+    m_Localized: Origine
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

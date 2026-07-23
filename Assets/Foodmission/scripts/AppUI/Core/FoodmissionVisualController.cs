@@ -345,29 +345,29 @@ namespace eu.foodmission.platform
         private void BuildMenuContent(VisualElement container)
         {
             // Phase 2 — disabled
-            AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DAILY_CHALLENGE"), null);
+            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "KNOWLEDGE"), null);
             AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSIONS"), null);
+            AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DAILY_CHALLENGE"), null);
 
-            // Phase 1 Sprint 3 — active
-            AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
-            {
-                CloseMenuDrawer();
-                _cachedNavController?.Navigate(Actions.go_to_shopping_list, new[] { new Argument("fromMenu", "true") });
-            });
-            AddMenuItem(container, "🧺 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY"), () =>
-            {
-                CloseMenuDrawer();
-                _cachedNavController?.Navigate(Actions.go_to_pantry);
-            });
+
+            // AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
+            // {
+            //     CloseMenuDrawer();
+            //     _cachedNavController?.Navigate(Actions.go_to_shopping_list, new[] { new Argument("fromMenu", "true") });
+            // });
+            // AddMenuItem(container, "🧺 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY"), () =>
+            // {
+            //     CloseMenuDrawer();
+            //     _cachedNavController?.Navigate(Actions.go_to_pantry);
+            // });
 
             // Phase 3 — disabled
             AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_BOOK"), null);
-            AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOOD_WASTE"), () =>
-            {
-                CloseMenuDrawer();
-                _cachedNavController?.Navigate(Actions.go_to_foodwaste);
-            });
-            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "KNOWLEDGE"), null);
+            // AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOOD_WASTE"), () =>
+            // {
+            //     CloseMenuDrawer();
+            //     _cachedNavController?.Navigate(Actions.go_to_foodwaste);
+            // });
             AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GLOBAL_COMMUNITY"), null);
             AddMenuItem(container, "🗺️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAP"), null);
         }
@@ -601,6 +601,14 @@ namespace eu.foodmission.platform
 
             AddNavItem(bottomNavBar, "fm-home", "@UI:NAV_HOME", activeTab == NavTab.Home, navController, Actions.go_to_home);
             AddNavItem(bottomNavBar, "fm-meal-log", "@UI:NAV_MEAL_LOG", activeTab == NavTab.MealLog, navController, Actions.go_to_meallog);
+            AddNavItem(bottomNavBar, "fm-search", "@UI:QUICK_SEARCH", activeTab == NavTab.Search, navController, Actions.go_to_quicksearch);
+            AddNavItem(bottomNavBar, "fm-shopping-list", "@UI:SHOPPING_LIST", activeTab == NavTab.ShoppingList, navController, Actions.go_to_shopping_list, false, new[] { new Argument("fromMenu", "true") });
+            AddNavItem(bottomNavBar, "fm-pantry", "@UI:PANTRY", activeTab == NavTab.Pantry, navController, Actions.go_to_pantry);
+            // AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
+            // {
+            //     CloseMenuDrawer();
+            //     _cachedNavController?.Navigate(Actions.go_to_shopping_list, new[] { new Argument("fromMenu", "true") });
+            // });
 
             // Notifications tab toggles the bottom sheet — does not navigate
             // var notificationsItem = new BottomNavBarItem("fm-notifications", "@UI:NAV_NOTIFICATIONS", () => ToggleNotificationsPanel());
@@ -608,15 +616,15 @@ namespace eu.foodmission.platform
             // bottomNavBar.Insert(1, notificationsItem);
 
             // Menu tab toggles the bottom sheet — does not navigate
-            var menuItem = new BottomNavBarItem("fm-menu", "@UI:NAV_MENU", () => ToggleMenuDrawer());
-            menuItem.isSelected = activeTab == NavTab.Menu;
-            bottomNavBar.Insert(1, menuItem);
+            // var menuItem = new BottomNavBarItem("fm-menu", "@UI:NAV_MENU", () => ToggleMenuDrawer());
+            // menuItem.isSelected = activeTab == NavTab.Menu;
+            // bottomNavBar.Insert(1, menuItem);
 
             // Profile tab toggles the drawer — does not navigate
-            var profileItem = new BottomNavBarItem("fm-avatar", "@UI:NAV_PROFILE", () => _profileDrawer?.Toggle());
-            profileItem.isSelected = false;
-            profileItem.AddToClassList("no-tint");
-            bottomNavBar.Add(profileItem);
+            // var profileItem = new BottomNavBarItem("fm-avatar", "@UI:NAV_PROFILE", () => _profileDrawer?.Toggle());
+            // profileItem.isSelected = false;
+            // profileItem.AddToClassList("no-tint");
+            // bottomNavBar.Add(profileItem);
         }
 
         public void SetupAppBar(AppBar appBar, NavDestination destination, NavController navController)
@@ -630,7 +638,64 @@ namespace eu.foodmission.platform
             appBar.title = destination.label;
             appBar.stretch = false;
 
+            // Customize drawer button icon (on the left) to fm-avatar and ensure vertical centering
+            var drawerButton = appBar.Q<ActionButton>(className: "appui-appbar__drawer-button");
+            if (drawerButton != null)
+            {
+                drawerButton.icon = "fm-avatar";
+                drawerButton.style.marginTop = 0;
+                drawerButton.style.marginBottom = 0;
+                drawerButton.style.height = 40;
+                drawerButton.style.alignSelf = Align.Center;
+            }
 
+            // Ensure the action container is centered vertically
+            var actionContainer = appBar.Q(className: "appui-appbar__action-container");
+            if (actionContainer != null)
+            {
+                actionContainer.style.marginTop = 0;
+                actionContainer.style.marginBottom = 0;
+                actionContainer.style.height = 40;
+                actionContainer.style.alignSelf = Align.Center;
+            }
+
+            // Clean up old menu button to prevent duplicates
+            var existingMenuBtn = appBar.Q("appbar-menu-button");
+            existingMenuBtn?.RemoveFromHierarchy();
+            // Also clean up the old home-menu-button name if it was left from previous sessions
+            var existingHomeMenuBtn = appBar.Q("home-menu-button");
+            existingHomeMenuBtn?.RemoveFromHierarchy();
+
+            // Determine if the menu button should be shown.
+            // By default, show it on all main screens (where the bottom navigation bar is visible).
+            bool showMenu = BottomNavBarHelper.IsNavBarVisible(destination.name);
+
+            // Allow overriding via custom argument defined in the navigation graph destination
+            if (destination.arguments != null)
+            {
+                var arg = destination.arguments.Find(a => a.name == "showMenuButton");
+                if (arg != null && bool.TryParse(arg.value, out bool overrideShow))
+                {
+                    showMenu = overrideShow;
+                }
+            }
+
+            if (showMenu)
+            {
+                // Use ActionButton to align perfectly with the AppBar design and standard styling
+                var menuButton = new ActionButton
+                {
+                    name = "appbar-menu-button",
+                    icon = "fm-menu",
+                    quiet = true
+                };
+                menuButton.style.marginTop = 0;
+                menuButton.style.marginBottom = 0;
+                menuButton.style.height = 40;
+                menuButton.style.alignSelf = Align.Center;
+                menuButton.clicked += () => ToggleMenuDrawer();
+                appBar.Add(menuButton);
+            }
 
             var themeService = App.current?.services.GetService<IThemeService>();
             if (themeService != null)
@@ -638,13 +703,21 @@ namespace eu.foodmission.platform
                 var safeAreaTop = themeService.safeAreaTop;
                 if (safeAreaTop > 0)
                 {
+                    // Check if it already exists to prevent duplication on re-entry/re-load
+                    var existingFiller = appBar.Q("appbar-safe-area-filler");
+                    if (existingFiller == null)
+                    {
+                        VisualElement filler = new VisualElement();
+                        filler.name = "appbar-safe-area-filler";
+                        filler.style.height = safeAreaTop;
+                        filler.AddToClassList("appui-appbar__bar"); // same background as __bar to seamlessly fill the safe area
 
-                    VisualElement filler = new VisualElement();
-                    filler.name = "appbar-safe-area-filler";
-                    filler.style.height = safeAreaTop;
-                    filler.AddToClassList("appui-appbar__bar"); // same background as __bar to seamlessly fill the safe area
-
-                    appBar.hierarchy.Insert(0, filler);
+                        appBar.hierarchy.Insert(0, filler);
+                    }
+                    else
+                    {
+                        existingFiller.style.height = safeAreaTop;
+                    }
                 }
             }
 
@@ -674,6 +747,30 @@ namespace eu.foodmission.platform
                     });
                 }
             }
+
+
+
+
+
+            // var bar = appBar.Q(className: "appui-appbar__bar");
+            // var border = appBar.Q(className: "appui-appbar__bottom-border");
+            // var safeAreaFiller = appBar.Q("appbar-safe-area-filler");
+
+            // if (makeTransparent)
+            // {
+            //     appBar.style.backgroundColor = Color.clear;
+            //     if (bar != null) bar.style.backgroundColor = Color.clear;
+            //     if (safeAreaFiller != null) safeAreaFiller.style.backgroundColor = Color.clear;
+            //     if (border != null) border.style.display = DisplayStyle.None;
+            //     appBar.elevation = 0;
+            // }
+            // else
+            // {
+            //     appBar.style.backgroundColor = StyleKeyword.Null;
+            //     if (bar != null) bar.style.backgroundColor = StyleKeyword.Null;
+            //     if (safeAreaFiller != null) safeAreaFiller.style.backgroundColor = StyleKeyword.Null;
+            //     if (border != null) border.style.display = StyleKeyword.Null;
+            // }
         }
 
         public void SetupDrawer(Drawer drawer, NavDestination destination, NavController navController)
@@ -718,9 +815,10 @@ namespace eu.foodmission.platform
             bool isSelected,
             NavController navController,
             string action,
-            bool isNoTint = false)
+            bool isNoTint = false,
+            params Argument[] args)
         {
-            var item = new BottomNavBarItem(icon, label, () => navController.Navigate(action));
+            var item = new BottomNavBarItem(icon, label, () => navController.Navigate(action, args));
             item.isSelected = isSelected;
             item.EnableInClassList("active", isSelected);
 

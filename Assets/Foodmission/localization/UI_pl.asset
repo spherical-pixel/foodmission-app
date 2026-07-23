@@ -1956,6 +1956,22 @@ MonoBehaviour:
     m_Localized: Opis
     m_Metadata:
       m_Items: []
+  - m_Id: 26764712233394176
+    m_Localized: Szybkie wyszukiwanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777548250669056
+    m_Localized: "Produkt dodano do listy zakup\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777752722989056
+    m_Localized: Wyszukaj lub zeskanuj produkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26799037893042176
+    m_Localized: Pochodzenie
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

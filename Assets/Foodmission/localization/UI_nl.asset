@@ -1959,6 +1959,22 @@ MonoBehaviour:
     m_Localized: Beschrijving
     m_Metadata:
       m_Items: []
+  - m_Id: 26764712233394176
+    m_Localized: Snel zoeken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777548250669056
+    m_Localized: Artikel toegevoegd aan het boodschappenlijstje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26777752722989056
+    m_Localized: Een product zoeken of scannen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26799037893042176
+    m_Localized: Herkomst
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
