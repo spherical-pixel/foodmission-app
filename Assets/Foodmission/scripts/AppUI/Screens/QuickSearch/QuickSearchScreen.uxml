@@ -14,7 +14,7 @@
                 </Bindings>
             </appui:Text>
         </ui:VisualElement>
-        <eu:FMSearchOrCategoryField name="search-category-field">
+        <eu:FMSearchOrCategoryField name="search-category-field" auto-open-categories="true">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="Placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26308484147437568)"/>
             </Bindings>

@@ -1124,7 +1124,7 @@
 }
 
 .fm-food-info-overlay .fm-fi-root {
-    background-color: var(--fm-surface-bg-alt);
+    background-color: var(--fm-main-bg);
     flex-grow: 1;
 }
 

@@ -14,6 +14,9 @@ namespace eu.foodmission.platform
     {
         private readonly IStoreService _storeService;
         private readonly Dictionary<string, GenericFood> _cache = new();
+        private string _cachedLang;
+        private PaginatedGenericFoodResponse _defaultSearchCache;
+        private string[] _foodGroupsCache;
 
         public GenericFoodService(IStoreService storeService)
         {
@@ -38,9 +41,28 @@ namespace eu.foodmission.platform
             }
         }
 
+        private void InvalidateCacheIfLangChanged()
+        {
+            string currentLang = Lang;
+            if (_cachedLang != currentLang)
+            {
+                _cachedLang = currentLang;
+                _defaultSearchCache = null;
+                _foodGroupsCache = null;
+            }
+        }
+
         public async Task<(PaginatedGenericFoodResponse Result, ApiErrorResponse Error)> SearchGenericFoodsAsync(
             string query = null, string foodGroup = null, int page = 1, int pageSize = 20)
         {
+            InvalidateCacheIfLangChanged();
+
+            bool isDefaultSearch = string.IsNullOrEmpty(query) && string.IsNullOrEmpty(foodGroup) && page == 1 && pageSize >= 100;
+            if (isDefaultSearch && _defaultSearchCache != null)
+            {
+                return (_defaultSearchCache, null);
+            }
+
             var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/generic-foods?page={page}&limit={pageSize}");
 
             if (!string.IsNullOrEmpty(query))
@@ -73,10 +95,12 @@ namespace eu.foodmission.platform
 
             var response = JsonUtility.FromJson<PaginatedGenericFoodResponse>(request.downloadHandler.text);
 
-            // if (response?.items != null && response.items.Length > 0)
-            // {
+            if (isDefaultSearch && response != null)
+            {
+                _defaultSearchCache = response;
+            }
+
             return (response, null);
-            // }
         }
 
 
@@ -160,6 +184,13 @@ namespace eu.foodmission.platform
 
         public async Task<(string[] Result, ApiErrorResponse Error)> GetFoodGroupsAsync()
         {
+            InvalidateCacheIfLangChanged();
+
+            if (_foodGroupsCache != null)
+            {
+                return (_foodGroupsCache, null);
+            }
+
             string url = $"{ApiConfig.BaseUrl}/api/v1/generic-foods/food-groups?lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
@@ -179,6 +210,10 @@ namespace eu.foodmission.platform
 
             string json = request.downloadHandler.text;
             StringArrayWrapper wrapper = JsonUtility.FromJson<StringArrayWrapper>("{\"items\":" + json + "}");
+            if (wrapper?.items != null)
+            {
+                _foodGroupsCache = wrapper.items;
+            }
             return (wrapper?.items, null);
         }
     }

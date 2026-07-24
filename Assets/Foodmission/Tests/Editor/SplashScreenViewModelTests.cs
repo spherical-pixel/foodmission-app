@@ -17,6 +17,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IAppUpdateService> _mockAppUpdateService;
         private Mock<IRemoteLocalizationService> _mockRemoteLocalizationService;
         private Mock<ICatalogService> _mockCatalogService;
+        private Mock<IGenericFoodService> _mockGenericFoodService;
         private TestStoreService _storeService;
         private SplashScreenViewModel _vm;
 
@@ -28,6 +29,7 @@ namespace eu.foodmission.platform.Tests
             _mockAppUpdateService = new Mock<IAppUpdateService>();
             _mockRemoteLocalizationService = new Mock<IRemoteLocalizationService>();
             _mockCatalogService = new Mock<ICatalogService>();
+            _mockGenericFoodService = new Mock<IGenericFoodService>();
             _storeService = new TestStoreService();
             _vm = new SplashScreenViewModel(
                 _storeService,
@@ -35,7 +37,8 @@ namespace eu.foodmission.platform.Tests
                 _mockTemplateService.Object,
                 _mockAppUpdateService.Object,
                 _mockRemoteLocalizationService.Object,
-                _mockCatalogService.Object);
+                _mockCatalogService.Object,
+                _mockGenericFoodService.Object);
         }
 
         [TearDown]

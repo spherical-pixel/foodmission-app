@@ -44,6 +44,10 @@ namespace eu.foodmission.platform.Components
         [CreateProperty]
         public bool OpenFoodInfoOnSelect { get; set; }
 
+        [UxmlAttribute("auto-open-categories")]
+        [CreateProperty]
+        public bool AutoOpenCategories { get; set; }
+
         // ========= CALLBACKS (set by consuming screen) =========
         public Func<string, Task<List<OpenFoodFactsProduct>>> SearchProductsAsync { get; set; }
         public Func<Task<List<GenericFood>>> GetGenericFoodsAsync { get; set; }
@@ -108,6 +112,7 @@ namespace eu.foodmission.platform.Components
 
         private Mode _currentMode = Mode.Idle;
         private CancellationTokenSource _debounceCts;
+        private static List<GenericFood> s_SessionGenericFoodsCache;
         private List<GenericFood> _genericFoods = new();
         private List<object> _recentProducts = new();
         private object _selectedItem;
@@ -283,6 +288,7 @@ namespace eu.foodmission.platform.Components
 
             // Wire events
             _textField.RegisterCallback<FocusEvent>(OnTextFieldFocused);
+            _textField.RegisterCallback<ClickEvent>(OnTextFieldClicked);
 
             // Use inner field for real-time keystroke changes (AppUI wrapper only fires on Enter/blur)
             _textField.schedule.Execute(() =>
@@ -302,10 +308,29 @@ namespace eu.foodmission.platform.Components
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
         }
 
+        public void OpenCategories()
+        {
+            if (string.IsNullOrWhiteSpace(_textField?.value))
+            {
+                _ = ShowGenericFoodsAsync();
+            }
+        }
+
         private void OnAttachToPanel(AttachToPanelEvent evt)
         {
             if (panel?.visualTree != null)
                 panel.visualTree.RegisterCallback<PointerDownEvent>(OnPanelPointerDown, TrickleDown.TrickleDown);
+
+            if (AutoOpenCategories)
+            {
+                schedule.Execute(() =>
+                {
+                    if (_currentMode == Mode.Idle && string.IsNullOrWhiteSpace(_textField?.value))
+                    {
+                        _ = ShowGenericFoodsAsync();
+                    }
+                }).ExecuteLater(0);
+            }
         }
 
         private void OnDetachFromPanel(DetachFromPanelEvent evt)
@@ -321,6 +346,25 @@ namespace eu.foodmission.platform.Components
 
             if (Contains(target)) return;
 
+            if (AutoOpenCategories)
+            {
+                if (_currentMode == Mode.Categories)
+                {
+                    // In AutoOpenCategories mode, clicking outside when categories are showing does NOT close them
+                    return;
+                }
+
+                if (_currentMode == Mode.Searching)
+                {
+                    _textField?.Blur();
+                    if (string.IsNullOrWhiteSpace(_textField?.value))
+                    {
+                        _ = ShowGenericFoodsAsync();
+                    }
+                    return;
+                }
+            }
+
             ResetToIdle();
         }
 
@@ -335,32 +379,94 @@ namespace eu.foodmission.platform.Components
             }
         }
 
+        private void OnTextFieldClicked(ClickEvent evt)
+        {
+            if (_currentMode != Mode.Idle) return;
+
+            string val = _textField.value;
+            if (string.IsNullOrWhiteSpace(val))
+            {
+                _ = ShowGenericFoodsAsync();
+            }
+        }
+
         private async Task ShowGenericFoodsAsync()
         {
-            if (GetGenericFoodsAsync == null) return;
+            if (GetGenericFoodsAsync == null && CategoryEmojis.Count == 0) return;
 
             _categoryLoadCts?.Cancel();
             _categoryLoadCts?.Dispose();
-            _categoryLoadCts = null;
+            _categoryLoadCts = new CancellationTokenSource();
+            CancellationToken ct = _categoryLoadCts.Token;
 
             SetMode(Mode.Categories);
-            _categoryContainer.Clear();
 
-            List<GenericFood> genericFoods = await GetGenericFoodsAsync();
+            _searchResultsContainer.style.display = DisplayStyle.None;
+            _confirmContainer.style.display = DisplayStyle.None;
+            _categoryContainer.style.display = DisplayStyle.Flex;
+            _resultsContainer.style.display = DisplayStyle.Flex;
+            _spinner.style.display = DisplayStyle.None;
 
-            _genericFoods = genericFoods ?? new List<GenericFood>();
+            // Check static session cache if instance _genericFoods is empty
+            if ((_genericFoods == null || _genericFoods.Count == 0) && s_SessionGenericFoodsCache != null && s_SessionGenericFoodsCache.Count > 0)
+            {
+                _genericFoods = s_SessionGenericFoodsCache;
+            }
 
-            // Collect unique food groups (Level 1)
+            // 1. If we already have generic foods loaded, render immediately
+            if (_genericFoods != null && _genericFoods.Count > 0)
+            {
+                RenderCategoryList(ExtractGroups(_genericFoods));
+                return;
+            }
+
+            // 2. Pre-render instantly using default CategoryEmojis keys (0ms latency visual feedback)
+            RenderCategoryList(CategoryEmojis.Keys);
+
+            // 3. Perform background fetch if callback is supplied and not yet cached
+            if (GetGenericFoodsAsync != null)
+            {
+                try
+                {
+                    List<GenericFood> genericFoods = await GetGenericFoodsAsync();
+                    if (ct.IsCancellationRequested) return;
+
+                    if (genericFoods != null && genericFoods.Count > 0)
+                    {
+                        _genericFoods = genericFoods;
+                        s_SessionGenericFoodsCache = genericFoods;
+                        var groups = ExtractGroups(_genericFoods);
+                        if (groups.Count > 0)
+                        {
+                            RenderCategoryList(groups);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] Background category load failed: {ex.Message}");
+                }
+            }
+        }
+
+        private List<string> ExtractGroups(List<GenericFood> foods)
+        {
             var groups = new List<string>();
             var seen = new HashSet<string>();
-            foreach (var gf in _genericFoods)
+            foreach (var gf in foods)
             {
                 string group = string.IsNullOrEmpty(gf.foodGroup) ? "Other" : gf.foodGroup;
                 if (seen.Add(group)) groups.Add(group);
             }
+            return groups;
+        }
+
+        private void RenderCategoryList(IEnumerable<string> groups)
+        {
+            _categoryContainer.Clear();
 
             // Recent products heading
-            if (_recentProducts.Count > 0)
+            if (_recentProducts != null && _recentProducts.Count > 0)
             {
                 var recentHeading = new Unity.AppUI.UI.Heading { text = "@UI:txtRECENTLY_ADDED" };
                 recentHeading.AddToClassList("fm-scf-heading");
@@ -375,17 +481,15 @@ namespace eu.foodmission.platform.Components
             }
 
             // Food groups heading
-            //var groupHeading = new Text { text = "CATEGORIES" };
             var groupHeading = new Unity.AppUI.UI.Heading { text = "@UI:txtCATEGORIES" };
             groupHeading.size = HeadingSize.M;
-
             groupHeading.AddToClassList("fm-scf-heading");
             _categoryContainer.Add(groupHeading);
 
             foreach (var group in groups)
             {
                 string emoji = CategoryEmojis.TryGetValue(group, out string e) ? e : "📦";
-                string localized = group;//LocalizationSettings.StringDatabase.GetLocalizedString("UI", group + "_title");
+                string localized = group;
                 var btn = new Unity.AppUI.UI.Button();
                 btn.trailingIcon = "fm-arrow-right";
                 btn.style.flexGrow = 1;
@@ -394,15 +498,9 @@ namespace eu.foodmission.platform.Components
                 btn.title = $"{emoji} {localized}";
                 btn.quiet = true;
                 btn.RegisterCallback<ClickEvent>(_ => ShowItemsForGroup(group));
-                //btn.variant = ButtonVariant.Accent;
                 btn.size = Size.M;
                 _categoryContainer.Add(btn);
             }
-
-            _categoryContainer.style.display = DisplayStyle.Flex;
-            _searchResultsContainer.style.display = DisplayStyle.None;
-            _confirmContainer.style.display = DisplayStyle.None;
-            _resultsContainer.style.display = DisplayStyle.Flex;
         }
 
         private void ShowItemsForGroup(string foodGroup)
@@ -577,8 +675,15 @@ namespace eu.foodmission.platform.Components
             {
                 if (_currentMode == Mode.Searching)
                 {
-                    Debug.Log($"[FMSearch] OnTextFieldValueChanged -> ResetToIdle (empty query, mode=Searching)");
-                    ResetToIdle();
+                    Debug.Log($"[FMSearch] OnTextFieldValueChanged -> empty query, AutoOpen={AutoOpenCategories}");
+                    if (AutoOpenCategories)
+                    {
+                        _ = ShowGenericFoodsAsync();
+                    }
+                    else
+                    {
+                        ResetToIdle();
+                    }
                 }
                 return;
             }
@@ -872,14 +977,21 @@ namespace eu.foodmission.platform.Components
 
         private void ResetToIdle()
         {
-            Debug.Log($"[FMSearch] ResetToIdle called, prevMode={_currentMode}");
-            SetMode(Mode.Idle);
+            Debug.Log($"[FMSearch] ResetToIdle called, prevMode={_currentMode}, AutoOpen={AutoOpenCategories}");
             _selectedItem = null;
             _categoryLoadCts?.Cancel();
             _categoryLoadCts?.Dispose();
             _categoryLoadCts = null;
             _textField.value = "";
             _textField.Blur();
+
+            if (AutoOpenCategories)
+            {
+                _ = ShowGenericFoodsAsync();
+                return;
+            }
+
+            SetMode(Mode.Idle);
             _resultsContainer.style.display = DisplayStyle.None;
             _categoryContainer.style.display = DisplayStyle.None;
             _categoryContainer.Clear();

@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
         private readonly IAppUpdateService _appUpdateService;
         private readonly IRemoteLocalizationService _remoteLocalizationService;
         private readonly ICatalogService _catalogService;
+        private readonly IGenericFoodService _genericFoodService;
 
         [ObservableProperty]
         private string _loadingText = "Loading...";
@@ -32,13 +33,15 @@ namespace eu.foodmission.platform
             ITemplateService templateService,
             IAppUpdateService appUpdateService,
             IRemoteLocalizationService remoteLocalizationService,
-            ICatalogService catalogService) : base(storeService)
+            ICatalogService catalogService,
+            IGenericFoodService genericFoodService = null) : base(storeService)
         {
             _authService = authService;
             _templateService = templateService;
             _appUpdateService = appUpdateService;
             _remoteLocalizationService = remoteLocalizationService;
             _catalogService = catalogService;
+            _genericFoodService = genericFoodService;
         }
 
         public async Task<string> InitializeAppAsync()
@@ -87,6 +90,12 @@ namespace eu.foodmission.platform
             {
                 string lang = _storeService.GetAppState().lang ?? "en";
                 await FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
+
+                // Pre-warm generic foods & categories cache in background during splash load
+                if (_genericFoodService != null)
+                {
+                    _ = _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+                }
             }
 
             string returnAction = isAuthenticated ? Actions.loading_to_home : Actions.loading_to_auth;
