@@ -657,8 +657,18 @@ namespace eu.foodmission.platform
             {
                 var rowContainer = new VisualElement();
                 rowContainer.AddToClassList("fm-fi-meta-row");
+                if (rowIndex == 0)
+                {
+                    rowContainer.AddToClassList("fm-fi-meta-row--first");
+                }
+                if (rowIndex == _viewModel.MetaRows.Count - 1)
+                {
+                    rowContainer.AddToClassList("fm-fi-meta-row--last");
+                }
                 if (rowIndex % 2 != 0)
+                {
                     rowContainer.AddToClassList("fm-fi-meta-row--odd");
+                }
                 var labelEl = new Text { size = TextSize.M, text = row.Label };
                 labelEl.AddToClassList("fm-fi-meta-row__label");
                 var valueEl = new Text { size = TextSize.M, text = row.Value };

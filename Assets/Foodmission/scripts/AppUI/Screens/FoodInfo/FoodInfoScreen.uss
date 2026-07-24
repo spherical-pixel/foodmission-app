@@ -373,12 +373,12 @@
     overflow: hidden;
 }
 
-.fm-fi-meta-row:first-child {
+.fm-fi-meta-row--first {
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
 }
 
-.fm-fi-meta-row:last-child {
+.fm-fi-meta-row--last {
     border-bottom-left-radius: 14px;
     border-bottom-right-radius: 14px;
 }
