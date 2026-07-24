@@ -1,0 +1,83 @@
+.fm-pido-error {
+    color: var(--appui-color-danger-500);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 16px;
+    display: none;
+}
+
+.fm-pido-error.visible {
+    display: flex;
+}
+
+.fm-pido-form {
+    flex-direction: column;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.fm-pido-field-group {
+    margin-bottom: 24px;
+}
+
+.fm-pido-field-label {
+    font-size: var(--appui-font-sizes-body-md);
+    -unity-font-definition: var(--appui-font-weights-200);
+    margin-bottom: 8px;
+    color: var(--appui-foregrounds-100);
+}
+
+.fm-pido-qty-unit-row {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.fm-pido-qty-field {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fm-pido-unit-dropdown {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fm-pido-date-field {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fm-pido-quick-date-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+.fm-pido-quick-btn {
+    margin-right: 8px;
+}
+
+.fm-pido-notes-field {
+    width: 100%;
+    min-height: 300px;
+    margin-top: 10px;
+    max-height: 600px;
+}
+
+.fm-pido-actions {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.fm-pido-btn-save {
+    flex-grow: 1;
+}
+
+.fm-pido-btn-delete {
+    flex-grow: 1;
+}

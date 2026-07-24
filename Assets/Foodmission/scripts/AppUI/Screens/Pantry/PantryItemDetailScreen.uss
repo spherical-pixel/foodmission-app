@@ -43,7 +43,7 @@
 
 .fm-pid-label {
     font-size: var(--appui-font-sizes-body-lg);
-    font-weight: var(--appui-font-weight-bold);
+    -unity-font-definition: var(--appui-font-weights-200);
     margin-bottom: 16px;
 }
 

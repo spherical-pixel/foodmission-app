@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 using Newtonsoft.Json;
 
@@ -253,13 +254,24 @@ namespace eu.foodmission.platform
 
             _emptyState?.EnableInClassList("visible", false);
 
+            DateTime today = DateTime.UtcNow.Date;
+
+            // Ensure items are sorted by expiry date (earliest / expired first, items without expiry last)
+            var sortedItems = _viewModel.Items
+                .OrderBy(view =>
+                {
+                    if (string.IsNullOrEmpty(view.Item?.expiryDate)) return DateTime.MaxValue;
+                    if (DateTime.TryParse(view.Item.expiryDate, out DateTime dt)) return dt.Date;
+                    return DateTime.MaxValue;
+                })
+                .ThenBy(view => view.DisplayName)
+                .ToList();
+
             List<PantryItemView> expired = new();
             List<PantryItemView> expiringSoon = new();
             List<PantryItemView> ok = new();
 
-            DateTime today = DateTime.UtcNow.Date;
-
-            foreach (PantryItemView view in _viewModel.Items)
+            foreach (PantryItemView view in sortedItems)
             {
                 if (string.IsNullOrEmpty(view.Item.expiryDate))
                 {
@@ -269,11 +281,11 @@ namespace eu.foodmission.platform
 
                 if (DateTime.TryParse(view.Item.expiryDate, out DateTime expiry))
                 {
-                    if (expiry < today)
+                    if (expiry.Date < today)
                     {
                         expired.Add(view);
                     }
-                    else if (expiry <= today.AddDays(3))
+                    else if (expiry.Date <= today.AddDays(3))
                     {
                         expiringSoon.Add(view);
                     }
@@ -290,10 +302,10 @@ namespace eu.foodmission.platform
 
             BuildItemGroup(expired, "Expired", "fm-p-item-expiry--expired");
             BuildItemGroup(expiringSoon, "Expiring soon", "fm-p-item-expiry--soon");
-            BuildItemGroup(ok, null, null);
+            BuildItemGroup(ok, null, "fm-p-item-expiry--ok");
         }
 
-        private void BuildItemGroup(List<PantryItemView> items, string sectionName, string expiryClass)
+        private void BuildItemGroup(List<PantryItemView> items, string sectionName, string defaultExpiryClass)
         {
             if (items.Count == 0) return;
 
@@ -304,21 +316,72 @@ namespace eu.foodmission.platform
                 _itemsContainer.Add(header);
             }
 
+            DateTime today = DateTime.UtcNow.Date;
+
             foreach (PantryItemView view in items)
             {
                 PantryItemView captured = view;
 
-                var row = new VisualElement();
-                row.AddToClassList("fm-p-item-row");
-
-                var info = new VisualElement();
-                info.AddToClassList("fm-p-item-info");
-
-                var nameLabel = new Text { text = captured.DisplayName };
-                nameLabel.AddToClassList("fm-p-item-name");
-                nameLabel.RegisterCallback<ClickEvent>(evt =>
+                string detail = $"{captured.Item.quantity:0.##} {captured.Item.unit}";
+                if (!string.IsNullOrEmpty(captured.Item.location))
                 {
-                    evt.StopPropagation();
+                    detail += $" · {captured.Item.location}";
+                }
+
+                string formattedExpiry = "";
+                string expiryColorClass = defaultExpiryClass;
+
+                if (!string.IsNullOrEmpty(captured.Item.expiryDate))
+                {
+                    if (DateTime.TryParse(captured.Item.expiryDate, out DateTime expiry))
+                    {
+                        formattedExpiry = expiry.ToString("yyyy-MM-dd");
+
+                        if (expiry.Date < today)
+                        {
+                            expiryColorClass = "fm-p-item-expiry--expired";
+                        }
+                        else if (expiry.Date <= today.AddDays(3))
+                        {
+                            expiryColorClass = "fm-p-item-expiry--soon";
+                        }
+                        else
+                        {
+                            expiryColorClass = "fm-p-item-expiry--ok";
+                        }
+                    }
+                    else
+                    {
+                        formattedExpiry = captured.Item.expiryDate;
+                    }
+                }
+
+                var itemCard = new FMItemPantry
+                {
+                    Text = captured.DisplayName,
+                    Detail = detail,
+                    ExpiryText = formattedExpiry
+                };
+
+                if (!string.IsNullOrEmpty(expiryColorClass) && !string.IsNullOrEmpty(formattedExpiry))
+                {
+                    itemCard.ExpiryLabel.AddToClassList(expiryColorClass);
+                }
+
+                bool hasFoodInfo = !string.IsNullOrEmpty(captured.Item.foodProductId) || !string.IsNullOrEmpty(captured.Item.genericFoodId);
+                itemCard.InfoButton.style.display = hasFoodInfo ? DisplayStyle.Flex : DisplayStyle.None;
+
+                itemCard.OpenButton.clicked += () =>
+                {
+                    PantryItemDetailOverlay.Show(
+                        this,
+                        captured.Item.id,
+                        onSaved: () => _ = _viewModel.LoadAsync(),
+                        onDeleted: () => _ = _viewModel.LoadAsync());
+                };
+
+                itemCard.InfoButton.clicked += () =>
+                {
                     if (!string.IsNullOrEmpty(captured.Item.foodProductId))
                     {
                         FoodInfoOverlay.Show(this, FoodInfoType.Product, captured.Item.foodProductId, "none");
@@ -327,65 +390,19 @@ namespace eu.foodmission.platform
                     {
                         FoodInfoOverlay.Show(this, FoodInfoType.Generic, captured.Item.genericFoodId, "none");
                     }
-                });
+                };
 
-                string detail = $"{captured.Item.quantity:0.##} {captured.Item.unit}";
-                if (!string.IsNullOrEmpty(captured.Item.location))
+                itemCard.RemoveButton.clicked += () =>
                 {
-                    detail += $" · {captured.Item.location}";
-                }
-
-                var detailLabel = new Text { text = detail };
-                detailLabel.AddToClassList("fm-p-item-detail");
-
-                info.Add(nameLabel);
-                info.Add(detailLabel);
-
-                var expiryLabel = new Text();
-                if (!string.IsNullOrEmpty(captured.Item.expiryDate))
-                {
-                    expiryLabel.text = captured.Item.expiryDate;
-                    expiryLabel.AddToClassList("fm-p-item-expiry");
-
-                    if (DateTime.TryParse(captured.Item.expiryDate, out DateTime expiry))
-                    {
-                        if (expiry < DateTime.UtcNow.Date && expiryClass == "fm-p-item-expiry--expired")
-                        {
-                            expiryLabel.AddToClassList(expiryClass);
-                        }
-                        else if (expiry <= DateTime.UtcNow.Date.AddDays(3) && expiryClass == "fm-p-item-expiry--soon")
-                        {
-                            expiryLabel.AddToClassList(expiryClass);
-                        }
-                    }
-                }
-
-                var deleteBtn = new IconButton { icon = "trash" };
-
-                row.Add(info);
-                row.Add(expiryLabel);
-                row.Add(deleteBtn);
-
-                row.RegisterCallback<ClickEvent>(_ =>
-                    _navController?.Navigate(
-                        Actions.pantry_to_item_detail,
-                        new[]
-                        {
-                            new Argument("itemId", captured.Item.id)
-                        }));
-
-                deleteBtn.RegisterCallback<ClickEvent>(evt =>
-                {
-                    evt.StopPropagation();
                     FMDialog.ShowConfirm(
                         this,
                         "@UI:DELETE_ITEM",
                         LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { captured.DisplayName }),
                         onConfirm: async () => await _viewModel.DeleteItemAsync(captured.Item.id),
                         semantic: AlertSemantic.Destructive);
-                });
+                };
 
-                _itemsContainer.Add(row);
+                _itemsContainer.Add(itemCard);
             }
         }
 

@@ -158,12 +158,12 @@ namespace eu.foodmission.platform
 
             AddPantryItemRequest body = new()
             {
-                foodProductId = foodProductId,
-                genericFoodId = genericFoodId,
+                foodProductId = string.IsNullOrEmpty(foodProductId) ? null : foodProductId,
+                genericFoodId = string.IsNullOrEmpty(genericFoodId) ? null : genericFoodId,
                 quantity = quantity,
                 unit = unit ?? "PIECES",
                 notes = notes,
-                location = location,
+                location = string.IsNullOrEmpty(location) ? null : location,
                 expiryDate = effectiveExpiryDate
             };
 
@@ -219,10 +219,8 @@ namespace eu.foodmission.platform
                 quantity = quantity,
                 unit = unit,
                 notes = notes,
-                location = location,
-                expiryDate = expiryDate,
-                foodProductId = foodProductId,
-                genericFoodId = genericFoodId
+                location = string.IsNullOrEmpty(location) ? null : location,
+                expiryDate = expiryDate
             };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/{Uri.EscapeDataString(itemId)}";
@@ -389,12 +387,6 @@ namespace eu.foodmission.platform
 
             [JsonProperty("expiryDate")]
             public string expiryDate;
-
-            [JsonProperty("foodProductId")]
-            public string foodProductId;
-
-            [JsonProperty("genericFoodId")]
-            public string genericFoodId;
 
             public byte[] ToJsonBody()
             {

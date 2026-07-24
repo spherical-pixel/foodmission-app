@@ -1952,6 +1952,22 @@ MonoBehaviour:
     m_Localized: Plasser strekkoden innenfor rammen
     m_Metadata:
       m_Items: []
+  - m_Id: 27100895719186432
+    m_Localized: Antall og enhet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27100946763866112
+    m_Localized: +3 dager
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27101012291477504
+    m_Localized: +1 uke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27101090557190144
+    m_Localized: "+1 m\xE5ned"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

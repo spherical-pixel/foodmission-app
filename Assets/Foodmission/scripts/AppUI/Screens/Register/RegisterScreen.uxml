@@ -77,7 +77,7 @@
             </eu.foodmission.platform.Components.FormFieldItemCheckbox>
             <appui:Spacer spacing="XL"/>
             <ui:VisualElement class="auth-actions">
-                <appui:Button name="register-button" text="Registrar" variant="Accent" title="Register" trailing-icon="fm-arrow-right" class="auth-button fm-button fm-button-align-left"/>
+                <appui:Button name="register-button" variant="Accent" title="Register" trailing-icon="fm-arrow-right" class="auth-button fm-button fm-button-align-left"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

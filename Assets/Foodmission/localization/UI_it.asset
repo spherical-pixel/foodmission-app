@@ -1962,6 +1962,22 @@ MonoBehaviour:
     m_Localized: Allinea il codice a barre all'interno del riquadro
     m_Metadata:
       m_Items: []
+  - m_Id: 27100895719186432
+    m_Localized: "Quantit\xE0 e unit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27100946763866112
+    m_Localized: +3 giorni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27101012291477504
+    m_Localized: +1 settimana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27101090557190144
+    m_Localized: +1 mese
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

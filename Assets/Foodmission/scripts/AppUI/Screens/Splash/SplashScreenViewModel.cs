@@ -56,23 +56,23 @@ namespace eu.foodmission.platform
 
             await _remoteLocalizationService.InitializeAsync();
 
-            await Task.Delay(100);
+            // await Task.Delay(100);
 
             LoadingText = await LocalizationSettings.StringDatabase
                 .GetLocalizedStringAsync("UI", "LOADING_ASSETS").Task;
-            await Task.Delay(500);
+            // await Task.Delay(500);
 
             LoadingText = await LocalizationSettings.StringDatabase
                 .GetLocalizedStringAsync("UI", "LOADING_NUTRI").Task;
             var nutriService = App.current.services.GetService<INutriService>();
             await nutriService.InitializeAsync();
-            await Task.Delay(500);
+            // await Task.Delay(500);
 
             LoadingText = await LocalizationSettings.StringDatabase
                 .GetLocalizedStringAsync("UI", "LOADING_AVATAR").Task;
             var avatarService = App.current.services.GetService<IAvatarService>();
             await avatarService.InitializeAsync();
-            await Task.Delay(500);
+            // await Task.Delay(500);
 
             LoadingText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOADING_UI");
             await _templateService.PreloadAllAsync();
@@ -111,7 +111,7 @@ namespace eu.foodmission.platform
                 return Actions.loading_to_forceupdate;
             }
 
-            await Task.Delay(500);
+            //await Task.Delay(500);
 
             return returnAction;
         }

@@ -64,25 +64,61 @@
 
 .fm-p-item-expiry {
     font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-definition: var(--appui-font-weights-200);
+    padding: 4px 10px;
+    border-radius: 12px;
+    border-width: 1px;
     margin-right: 8px;
     white-space: nowrap;
+    align-self: center;
 }
 
+/* Light Mode Defaults */
 .fm-p-item-expiry--expired {
-    color: var(--appui-color-danger-500);
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
 }
 
 .fm-p-item-expiry--soon {
-    color: var(--appui-color-warning-500);
+    background-color: #fef3c7;
+    color: #92400e;
+    border-color: #fcd34d;
+}
+
+.fm-p-item-expiry--ok {
+    background-color: #dcfce7;
+    color: #166534;
+    border-color: #86efac;
+}
+
+/* Dark Mode Overrides */
+.appui--dark .fm-p-item-expiry--expired {
+    background-color: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.appui--dark .fm-p-item-expiry--soon {
+    background-color: rgba(245, 158, 11, 0.25);
+    color: #fcd34d;
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+.appui--dark .fm-p-item-expiry--ok {
+    background-color: rgba(34, 197, 94, 0.25);
+    color: #86efac;
+    border-color: rgba(34, 197, 94, 0.4);
 }
 
 .fm-p-section-header {
     font-size: var(--appui-font-sizes-body-sm);
-    font-weight: var(--appui-font-weight-bold);
+    -unity-font-definition: var(--appui-font-weights-200);
     text-transform: uppercase;
     opacity: 0.6;
-    padding: 8px 8px 4px;
-    margin-top: 8px;
+    padding: 8px 12px 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
 }
 
 .fm-p-expired-banner {

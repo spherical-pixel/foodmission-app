@@ -658,3 +658,7 @@ ITEM_ADDED_TO_SHOPPING_LIST,26777548250669056,Item added to shopping list,Artike
 QUICK_SEARCH_SUBTITLE,26777752722989056,Search or scan a product,Een product zoeken of scannen,Ein Produkt suchen oder scannen,Αναζήτηση ή σάρωση προϊόντος,Cerca o scansiona un prodotto,Søk etter eller skann et produkt,Wyszukaj lub zeskanuj produkt,Iskanje ali skeniranje izdelka,Buscar o escanear un producto
 ORIGIN,26799037893042176,Origin,Herkomst,Herkunft,Προέλευση,Origine,Opprinnelse,Pochodzenie,Izvor,Origen
 SCAN_HELP,27039676689801216,Align the barcode within the frame,Lijn de barcode uit binnen het kader,Richten Sie den Barcode innerhalb des Rahmens aus,Ευθυγραμμίστε τον γραμμωτό κώδικα μέσα στο πλαίσιο,Allinea il codice a barre all'interno del riquadro,Plasser strekkoden innenfor rammen,Wyrównaj kod kreskowy w ramce,Poravnajte črtno kodo znotraj okvirja,Alinea el código de barras dentro del recuadro
+QUANTITY_AND_UNIT,27100895719186432,Quantity & Unit,Aantal & Eenheid,Menge & Einheit,Ποσότητα & Μονάδα,Quantità e unità,Antall og enhet,Ilość i jednostka miary,Količina in enota,Cantidad y unidad
+DATE_PLUS_3_DAYS,27100946763866112,+3 days,+3 dagen,+3 Tage,+3 ημέρες,+3 giorni,+3 dager,+3 dni,+3 dni,+3 días
+DATE_PLUS_1_WEEK,27101012291477504,+1 week,+1 week,+1 Woche,+1 εβδομάδα,+1 settimana,+1 uke,+1 tydzień,+1 teden,+1 semana
+DATE_PLUS_1_MONTH,27101090557190144,+1 month,+1 maand,+1 Monat,+1 μήνας,+1 mese,+1 måned,+1 miesiąc,+1 mesec,+1 mes

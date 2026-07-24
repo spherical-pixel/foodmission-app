@@ -125,9 +125,7 @@ namespace eu.foodmission.platform
                 Unit,
                 Notes,
                 Location,
-                ExpiryDate,
-                item?.foodProductId,
-                item?.genericFoodId);
+                ExpiryDate);
 
             IsSaving = false;
 
@@ -155,7 +153,6 @@ namespace eu.foodmission.platform
             else
             {
                 ErrorDetail = null;
-                RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_pantry);
             }
         }
     }

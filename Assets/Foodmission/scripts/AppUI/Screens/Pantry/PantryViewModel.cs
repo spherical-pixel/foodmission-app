@@ -73,15 +73,31 @@ namespace eu.foodmission.platform
 
         public void ApplyFilter()
         {
+            IEnumerable<PantryItemView> filtered;
             if (string.IsNullOrWhiteSpace(FilterText))
             {
-                Items = new List<PantryItemView>(_allItems);
+                filtered = _allItems;
             }
             else
             {
                 string filter = FilterText.ToLowerInvariant();
-                Items = _allItems.Where(v => v.DisplayName.ToLowerInvariant().Contains(filter)).ToList();
+                filtered = _allItems.Where(v => v.DisplayName.ToLowerInvariant().Contains(filter));
             }
+
+            Items = SortByExpiryDate(filtered);
+        }
+
+        private List<PantryItemView> SortByExpiryDate(IEnumerable<PantryItemView> items)
+        {
+            return items
+                .OrderBy(view =>
+                {
+                    if (string.IsNullOrEmpty(view.Item?.expiryDate)) return DateTime.MaxValue;
+                    if (DateTime.TryParse(view.Item.expiryDate, out DateTime dt)) return dt.Date;
+                    return DateTime.MaxValue;
+                })
+                .ThenBy(view => view.DisplayName)
+                .ToList();
         }
 
         public async Task LoadAsync()

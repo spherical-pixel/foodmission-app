@@ -1,79 +1,50 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
-         xsi="http://www.w3.org/2001/XMLSchema-instance"
-         noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
-         editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <Style src="PantryItemDetailScreen.uss"/>
-
-    <ui:VisualElement name="root" class="fm-pid-root">
-        <ui:VisualElement name="toolbar" class="fm-pid-toolbar">
-            <appui:Heading name="item-title" size="M" text="Item" class="fm-pid-title">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000034)"/>
-                </Bindings>
-</appui:Heading>
-        </ui:VisualElement>
-
-        <appui:Text name="error-message" class="fm-pid-error"/>
-
-        <ui:VisualElement name="form" class="fm-pid-form">
-            <appui:Text name="lbl-name" class="fm-pid-label"/>
-            <ui:VisualElement name="field-quantity" class="fm-pid-field-row">
-                <appui:Text text="Quantity" class="fm-pid-field-label">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000035)"/>
-                </Bindings>
-</appui:Text>
-                <appui:FloatField name="quantity-field" value="1"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Pantry/PantryItemDetailOverlay.uss?fileID=7433441132597879392&amp;guid=863081d0cfb654ec28728a325431228d&amp;type=3#PantryItemDetailOverlay"/>
+    <ui:VisualElement name="pid-overlay-root" class="fm-pid-overlay-root">
+        <appui:Text name="error-message" class="fm-pido-error"/>
+        <ui:VisualElement name="form" class="fm-pido-form">
+            <ui:VisualElement class="fm-pido-field-group">
+                <appui:Text class="fm-pido-field-label">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="QUANTITY_AND_UNIT"/>
+                    </Bindings>
+                </appui:Text>
+                <ui:VisualElement class="fm-pido-qty-unit-row">
+                    <appui:FloatField name="quantity-field" value="1" class="fm-pido-qty-field"/>
+                    <appui:Dropdown name="unit-field" class="fm-pido-unit-dropdown"/>
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="field-unit" class="fm-pid-field-row">
-                <appui:Text text="Unit" class="fm-pid-field-label">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000036)"/>
-                </Bindings>
-</appui:Text>
-                <appui:Dropdown name="unit-field" class="fm-pid-dropdown"/>
+            <ui:VisualElement class="fm-pido-field-group">
+                <appui:Text class="fm-pido-field-label">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="EXPIRY_DATE"/>
+                    </Bindings>
+                </appui:Text>
+                <appui:DateField name="expiry-date-field" class="fm-pido-date-field"/>
+                <ui:VisualElement name="quick-date-row" class="fm-pido-quick-date-row"/>
             </ui:VisualElement>
-            <ui:VisualElement name="field-location" class="fm-pid-field-row">
-                <appui:Text text="Location" class="fm-pid-field-label">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000037)"/>
-                </Bindings>
-</appui:Text>
-                <appui:Dropdown name="location-field" class="fm-pid-dropdown"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="field-notes" class="fm-pid-field-row">
-                <appui:Text text="Notes" class="fm-pid-field-label">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000019)"/>
-                </Bindings>
-</appui:Text>
-                <appui:TextField name="notes-field" multiline="true"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="field-expiry" class="fm-pid-field-row">
-                <appui:Text text="Expiry date" class="fm-pid-field-label">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000038)"/>
-                </Bindings>
-</appui:Text>
-                <appui:TextField name="expiry-field" placeholder="YYYY-MM-DD"/>
+            <ui:VisualElement class="fm-pido-field-group">
+                <appui:Text class="fm-pido-field-label">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="NOTES"/>
+                    </Bindings>
+                </appui:Text>
+                <appui:TextArea name="notes-field" class="fm-pido-notes-field"/>
             </ui:VisualElement>
         </ui:VisualElement>
-
-        <appui:Spacer/>
-
-        <ui:VisualElement name="actions" class="fm-pid-actions">
-            <appui:Button name="btn-save" title="Save" variant="Accent" class="fm-pid-btn-save">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000020)"/>
+        <ui:VisualElement name="actions" class="fm-pido-actions">
+            <appui:Button name="btn-save" variant="Accent" size="L" class="fm-pido-btn-save">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="SAVE"/>
                 </Bindings>
-</appui:Button>
-            <appui:Button name="btn-delete" title="Delete" variant="Destructive" class="fm-pid-btn-delete">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000040)"/>
+            </appui:Button>
+            <appui:Spacer spacing="L"/>
+            <appui:Button name="btn-delete" variant="Destructive" size="L" class="fm-pido-btn-delete">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="DELETE"/>
                 </Bindings>
-</appui:Button>
+            </appui:Button>
         </ui:VisualElement>
-
     </ui:VisualElement>
 </ui:UXML>
