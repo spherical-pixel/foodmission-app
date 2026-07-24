@@ -1960,6 +1960,10 @@ MonoBehaviour:
     m_Localized: Herkunft
     m_Metadata:
       m_Items: []
+  - m_Id: 27039676689801216
+    m_Localized: Richten Sie den Barcode innerhalb des Rahmens aus
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

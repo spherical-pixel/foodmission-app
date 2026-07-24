@@ -1952,6 +1952,10 @@ MonoBehaviour:
     m_Localized: Origen
     m_Metadata:
       m_Items: []
+  - m_Id: 27039676689801216
+    m_Localized: "Alinea el c\xF3digo de barras dentro del recuadro"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

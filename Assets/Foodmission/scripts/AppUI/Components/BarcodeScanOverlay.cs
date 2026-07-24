@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 using ZXing;
 
@@ -34,25 +35,57 @@ namespace eu.foodmission.platform.Components
             _overlay.style.top = 0;
             _overlay.style.bottom = 0;
             _overlay.style.backgroundColor = new Color(0, 0, 0, 1);
-            _overlay.style.unityBackgroundScaleMode = ScaleMode.ScaleAndCrop;
+            _overlay.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Cover));
             _overlay.pickingMode = PickingMode.Position;
 
             _pendingCancelled = onCancelled;
 
-            var closeBtn = new Button(() =>
+            Unity.AppUI.UI.Button torchBtn = null;
+            torchBtn = new Unity.AppUI.UI.Button(() =>
+            {
+                if (_controller != null)
+                {
+                    bool isOn = _controller.ToggleTorch();
+                    if (isOn)
+                    {
+                        torchBtn.style.backgroundColor = new Color(1.0f, 0.8f, 0.2f, 1.0f);
+                        torchBtn.style.color = Color.black;
+                    }
+                    else
+                    {
+                        torchBtn.style.backgroundColor = new Color(0, 0, 0, 1.0f);
+                        torchBtn.style.color = Color.white;
+                    }
+                }
+            });
+            torchBtn.title = "🔦";
+            torchBtn.style.position = Position.Absolute;
+            torchBtn.style.top = 160;
+            torchBtn.style.left = 80;
+            torchBtn.style.width = 160;
+            torchBtn.style.height = 160;
+            torchBtn.style.fontSize = 44;
+            torchBtn.style.backgroundColor = new Color(0, 0, 0, 1.0f);
+            torchBtn.style.color = Color.white;
+            torchBtn.style.borderLeftColor = torchBtn.style.borderRightColor = torchBtn.style.borderTopColor = torchBtn.style.borderBottomColor = new Color(1, 1, 1, 0.5f);
+            torchBtn.style.borderLeftWidth = torchBtn.style.borderRightWidth = torchBtn.style.borderTopWidth = torchBtn.style.borderBottomWidth = 1;
+            torchBtn.style.borderTopLeftRadius = torchBtn.style.borderTopRightRadius = torchBtn.style.borderBottomLeftRadius = torchBtn.style.borderBottomRightRadius = 22;
+            _overlay.Add(torchBtn);
+
+            var closeBtn = new Unity.AppUI.UI.Button(() =>
             {
                 Dismiss();
                 _pendingCancelled?.Invoke();
                 _pendingCancelled = null;
             });
-            closeBtn.text = "\u2715";
+            closeBtn.title = "X";
             closeBtn.style.position = Position.Absolute;
-            closeBtn.style.top = 80;
-            closeBtn.style.right = 20;
-            closeBtn.style.width = 80;
-            closeBtn.style.height = 80;
+            closeBtn.style.top = 160;
+            closeBtn.style.right = 80;
+            closeBtn.style.width = 160;
+            closeBtn.style.height = 160;
             closeBtn.style.fontSize = 44;
-            closeBtn.style.backgroundColor = new Color(0, 0, 0, 0.3f);
+            closeBtn.style.backgroundColor = new Color(0, 0, 0, 1.0f);
             closeBtn.style.color = Color.white;
             closeBtn.style.borderLeftColor = closeBtn.style.borderRightColor = closeBtn.style.borderTopColor = closeBtn.style.borderBottomColor = new Color(1, 1, 1, 0.5f);
             closeBtn.style.borderLeftWidth = closeBtn.style.borderRightWidth = closeBtn.style.borderTopWidth = closeBtn.style.borderBottomWidth = 1;
@@ -70,14 +103,15 @@ namespace eu.foodmission.platform.Components
             scanFrame.style.borderTopLeftRadius = scanFrame.style.borderTopRightRadius = scanFrame.style.borderBottomLeftRadius = scanFrame.style.borderBottomRightRadius = 8;
             _overlay.Add(scanFrame);
 
-            var guide = new Label("Align the barcode within the frame");
+            var guide = new Unity.AppUI.UI.LocalizedTextElement();
+            guide.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SCAN_HELP");
             guide.style.position = Position.Absolute;
             guide.style.bottom = 100;
             guide.style.left = 0;
             guide.style.right = 0;
             guide.style.unityTextAlign = TextAnchor.MiddleCenter;
             guide.style.color = Color.white;
-            guide.style.fontSize = 16;
+            guide.style.fontSize = 48;
             guide.style.whiteSpace = WhiteSpace.Normal;
             _overlay.Add(guide);
 
@@ -119,18 +153,22 @@ namespace eu.foodmission.platform.Components
         private VisualElement _overlay;
         private WebCamTexture _webCamTexture;
         private Texture2D _previewTexture;
-        private BarcodeReader<RGBLuminanceSource> _reader;
+        private BarcodeReader<PlanarYUVLuminanceSource> _reader;
         private Action _onCancelled;
         private Action<string> _onDetected;
-        private int _frameSkip = 4;
+        private int _frameSkip = 2;
         private int _frameCount;
         private bool _isRunning;
+        private bool _isTorchEnabled;
+
+        private string _lastCandidate;
+        private int _candidateCount;
 
         private int _rotationAngle;
         private bool _mirrored;
         private ScreenOrientation _lastOrientation;
         private Color32[] _rotatedBuffer;
-        private byte[] _rgbBuffer;
+        private byte[] _luminanceBuffer;
 
         public void Initialize(
             VisualElement overlay,
@@ -141,6 +179,8 @@ namespace eu.foodmission.platform.Components
             _onCancelled = onCancelled;
             _onDetected = onDetected;
             _isRunning = true;
+            _lastCandidate = null;
+            _candidateCount = 0;
         }
 
         private IEnumerator Start()
@@ -148,7 +188,7 @@ namespace eu.foodmission.platform.Components
             yield return RequestCameraPermission();
             if (!_isRunning) yield break;
 
-            _webCamTexture = new WebCamTexture();
+            _webCamTexture = new WebCamTexture(1280, 720, 30);
             _webCamTexture.Play();
 
             for (int i = 0; i < 30; i++)
@@ -170,7 +210,7 @@ namespace eu.foodmission.platform.Components
 
             _rotationAngle = (360 - _rotationAngle) % 360;
 
-            _reader = new BarcodeReader<RGBLuminanceSource>(s => s)
+            _reader = new BarcodeReader<PlanarYUVLuminanceSource>(s => s)
             {
                 AutoRotate = true,
                 Options = new ZXing.Common.DecodingOptions
@@ -182,8 +222,8 @@ namespace eu.foodmission.platform.Components
                         BarcodeFormat.EAN_8,
                         BarcodeFormat.UPC_A,
                         BarcodeFormat.UPC_E,
-                        BarcodeFormat.CODE_39,
                         BarcodeFormat.CODE_128,
+                        BarcodeFormat.CODE_39
                     }
                 }
             };
@@ -205,6 +245,49 @@ namespace eu.foodmission.platform.Components
 #endif
             yield break;
         }
+
+        public bool ToggleTorch()
+        {
+            _isTorchEnabled = !_isTorchEnabled;
+            SetTorchState(_isTorchEnabled);
+            return _isTorchEnabled;
+        }
+
+        private void SetTorchState(bool enabled)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            try
+            {
+                using (var pluginClass = new AndroidJavaClass("eu.foodmission.platform.AndroidTorchPlugin"))
+                using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                {
+                    bool success = pluginClass.CallStatic<bool>("setTorchEnabled", activity, enabled);
+                    Debug.Log($"[BarcodeScanner] AndroidTorchPlugin setTorchEnabled({enabled}) result: {success}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[BarcodeScanner] Android torch error: {ex.Message}");
+            }
+#elif UNITY_IOS && !UNITY_EDITOR
+            try
+            {
+                _SetIOSTorchEnabled(enabled);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[BarcodeScanner] iOS torch set error: {ex.Message}");
+            }
+#else
+            Debug.Log($"[BarcodeScanner] Torch set to {enabled} (Editor fallback)");
+#endif
+        }
+
+#if UNITY_IOS && !UNITY_EDITOR
+        [System.Runtime.InteropServices.DllImport("__Internal")]
+        private static extern void _SetIOSTorchEnabled(bool enabled);
+#endif
 
         private void Update()
         {
@@ -258,29 +341,59 @@ namespace eu.foodmission.platform.Components
 
             try
             {
-                int decodeW = texW;
-                int decodeH = texH;
                 Color32[] decodeSrc = needsRotation ? _rotatedBuffer : pixels;
-                int count = decodeW * decodeH;
 
-                if (_rgbBuffer == null || _rgbBuffer.Length != count * 3)
-                    _rgbBuffer = new byte[count * 3];
+                // Crop Region of Interest (ROI) matching visual frame (center 70% width, 45% height)
+                int cropW = (int)(texW * 0.70f);
+                int cropH = (int)(texH * 0.45f);
+                int cropLeft = (texW - cropW) / 2;
+                int cropTop = (texH - cropH) / 2;
+                int cropCount = cropW * cropH;
 
-                for (int i = 0; i < count; i++)
+                if (_luminanceBuffer == null || _luminanceBuffer.Length != cropCount)
+                    _luminanceBuffer = new byte[cropCount];
+
+                for (int y = 0; y < cropH; y++)
                 {
-                    _rgbBuffer[i * 3] = decodeSrc[i].r;
-                    _rgbBuffer[i * 3 + 1] = decodeSrc[i].g;
-                    _rgbBuffer[i * 3 + 2] = decodeSrc[i].b;
+                    int srcRowOffset = (cropTop + y) * texW + cropLeft;
+                    int dstRowOffset = y * cropW;
+                    for (int x = 0; x < cropW; x++)
+                    {
+                        Color32 c = decodeSrc[srcRowOffset + x];
+                        _luminanceBuffer[dstRowOffset + x] = (byte)((c.r * 19595 + c.g * 38470 + c.b * 7471) >> 16);
+                    }
                 }
 
-                var source = new RGBLuminanceSource(_rgbBuffer, decodeW, decodeH);
+                var source = new PlanarYUVLuminanceSource(_luminanceBuffer, cropW, cropH, 0, 0, cropW, cropH, false);
                 var result = _reader.Decode(source);
 
-                if (result != null && !string.IsNullOrEmpty(result.Text))
+                if (result != null && !string.IsNullOrEmpty(result.Text) && result.Text.Length >= 6)
                 {
-                    _isRunning = false;
-                    _webCamTexture.Stop();
-                    _onDetected?.Invoke(result.Text);
+                    if (_lastCandidate == result.Text)
+                    {
+                        _candidateCount++;
+                        if (_candidateCount >= 2)
+                        {
+                            _isRunning = false;
+                            if (_isTorchEnabled)
+                            {
+                                SetTorchState(false);
+                                _isTorchEnabled = false;
+                            }
+                            _webCamTexture.Stop();
+                            _onDetected?.Invoke(result.Text);
+                        }
+                    }
+                    else
+                    {
+                        _lastCandidate = result.Text;
+                        _candidateCount = 1;
+                    }
+                }
+                else
+                {
+                    _lastCandidate = null;
+                    _candidateCount = 0;
                 }
             }
             catch (Exception ex)
@@ -291,37 +404,54 @@ namespace eu.foodmission.platform.Components
 
         private void RotatePixels(Color32[] src, int srcW, int srcH, Color32[] dst, int dstW, int dstH)
         {
-            for (int y = 0; y < srcH; y++)
+            switch (_rotationAngle)
             {
-                for (int x = 0; x < srcW; x++)
-                {
-                    int srcIdx = y * srcW + x;
-                    int dstIdx;
-
-                    switch (_rotationAngle)
+                case 90:
+                    for (int y = 0; y < srcH; y++)
                     {
-                        case 90:
-                            dstIdx = x * srcH + (srcH - 1 - y);
-                            break;
-                        case 180:
-                            dstIdx = (srcH - 1 - y) * srcW + (srcW - 1 - x);
-                            break;
-                        case 270:
-                            dstIdx = (srcW - 1 - x) * srcH + y;
-                            break;
-                        default:
-                            dstIdx = srcIdx;
-                            break;
+                        int yOffset = y * srcW;
+                        int dstX = srcH - 1 - y;
+                        for (int x = 0; x < srcW; x++)
+                        {
+                            dst[x * srcH + dstX] = src[yOffset + x];
+                        }
                     }
-
-                    dst[dstIdx] = src[srcIdx];
-                }
+                    break;
+                case 180:
+                    for (int y = 0; y < srcH; y++)
+                    {
+                        int yOffset = y * srcW;
+                        int dstYRow = (srcH - 1 - y) * srcW;
+                        for (int x = 0; x < srcW; x++)
+                        {
+                            dst[dstYRow + (srcW - 1 - x)] = src[yOffset + x];
+                        }
+                    }
+                    break;
+                case 270:
+                    for (int y = 0; y < srcH; y++)
+                    {
+                        int yOffset = y * srcW;
+                        for (int x = 0; x < srcW; x++)
+                        {
+                            dst[(srcW - 1 - x) * srcH + y] = src[yOffset + x];
+                        }
+                    }
+                    break;
+                default:
+                    Array.Copy(src, dst, src.Length);
+                    break;
             }
         }
 
         public void Stop()
         {
             _isRunning = false;
+            if (_isTorchEnabled)
+            {
+                SetTorchState(false);
+                _isTorchEnabled = false;
+            }
             if (_webCamTexture != null)
             {
                 if (_webCamTexture.isPlaying) _webCamTexture.Stop();
@@ -334,8 +464,10 @@ namespace eu.foodmission.platform.Components
                 _previewTexture = null;
             }
             _rotatedBuffer = null;
-            _rgbBuffer = null;
+            _luminanceBuffer = null;
             _reader = null;
+            _lastCandidate = null;
+            _candidateCount = 0;
         }
 
         private void OnDestroy()

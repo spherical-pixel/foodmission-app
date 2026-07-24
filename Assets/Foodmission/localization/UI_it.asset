@@ -1958,6 +1958,10 @@ MonoBehaviour:
     m_Localized: Origine
     m_Metadata:
       m_Items: []
+  - m_Id: 27039676689801216
+    m_Localized: Allinea il codice a barre all'interno del riquadro
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1948,6 +1948,10 @@ MonoBehaviour:
     m_Localized: Opprinnelse
     m_Metadata:
       m_Items: []
+  - m_Id: 27039676689801216
+    m_Localized: Plasser strekkoden innenfor rammen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1965,6 +1965,10 @@ MonoBehaviour:
     m_Localized: Origin
     m_Metadata:
       m_Items: []
+  - m_Id: 27039676689801216
+    m_Localized: Align the barcode within the frame
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

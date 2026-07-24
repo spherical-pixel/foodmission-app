@@ -1911,6 +1911,10 @@ MonoBehaviour:
     m_Key: ORIGIN
     m_Metadata:
       m_Items: []
+  - m_Id: 27039676689801216
+    m_Key: SCAN_HELP
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
