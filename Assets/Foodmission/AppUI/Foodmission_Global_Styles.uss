@@ -1253,5 +1253,10 @@
 
 .appui-date-picker{
     min-width: 800px;
+    /*max-height: 800px;*/
+}
+
+.appui-text.appui-date-picker-pane__day-button{
+    min-height: 15px;
 }
 
