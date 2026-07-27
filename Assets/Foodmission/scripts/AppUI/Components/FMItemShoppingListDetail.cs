@@ -83,7 +83,7 @@ namespace eu.foodmission.platform.Components
             // _editButton.style.right = 30;
             _editButton.quiet = true;
             _editButton.leadingIcon = "fm-edit";
-            _editButton.size = Size.L;
+            _editButton.size = Size.S;
             _editButton.AddToClassList("fm-icon-button-item-list");
             _buttonsContainer.Add(_editButton);
 
@@ -92,7 +92,7 @@ namespace eu.foodmission.platform.Components
             // _removeButton.style.right = 0;
             _removeButton.quiet = true;
             _removeButton.leadingIcon = "fm-trash";
-            _removeButton.size = Size.L;
+            _removeButton.size = Size.S;
             _removeButton.AddToClassList("fm-icon-button-item-list");
             _buttonsContainer.Add(_removeButton);
 

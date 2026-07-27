@@ -635,6 +635,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            appBar.compact = false;
             appBar.title = destination.label;
             appBar.stretch = false;
 

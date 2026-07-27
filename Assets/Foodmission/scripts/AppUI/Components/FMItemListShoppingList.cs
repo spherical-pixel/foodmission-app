@@ -17,16 +17,17 @@ namespace eu.foodmission.platform.Components
     [UxmlElement]
     public partial class FMItemListShoppingList : VisualElement
     {
-        
+
 
         /* ========= UXML ATTRIBUTES ========= */
-        [UxmlAttribute("text")][CreateProperty]
+        [UxmlAttribute("text")]
+        [CreateProperty]
         public string Text
         {
             get => _text?.text ?? "";
             set
             {
-                if( _text != null)
+                if (_text != null)
                 {
                     _text.text = value;
                 }
@@ -47,7 +48,7 @@ namespace eu.foodmission.platform.Components
             this.AddToClassList("fm-shopping-list-item-list");
 
             _text = new Unity.AppUI.UI.Text();
-            _text.primary = true;            
+            _text.primary = true;
             this.Add(_text);
 
             _openButton = new Unity.AppUI.UI.Button();
@@ -61,14 +62,14 @@ namespace eu.foodmission.platform.Components
             _removeButton.style.right = 0;
             _removeButton.quiet = true;
             _removeButton.leadingIcon = "fm-trash";
-            _removeButton.size = Size.L;
+            _removeButton.size = Size.S;
             _removeButton.AddToClassList("fm-icon-button-item-list");
             this.Add(_removeButton);
 
 
-            
+
         }
-        
-        
+
+
     }
 }

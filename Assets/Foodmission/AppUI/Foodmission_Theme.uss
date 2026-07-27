@@ -4,6 +4,8 @@
    ============================================ */
 
 .appui {
+
+   
    /* Sizing */
     
     --appui-sizing-60: 21px;
@@ -15,7 +17,9 @@
     --appui-sizing-320: 51px;
     
     --appui-checkbox__box-size-md: var(--appui-sizing-250);
+    --appui-sizing-350: 54px;
     --appui-sizing-400: 57px;
+    --appui-sizing-450: 61px;
     --appui-sizing-500: 65px; /* 90*/
     --appui-sizing-550: 75px; 
     --appui-sizing-600: 86px;
@@ -31,6 +35,11 @@
     --appui-sizing-1100: 350px;
     --appui-sizing-1150: 402px;
     --appui-sizing-1200: 462px;
+
+
+   /* AppBar */
+   --appui-appbar-height-default: var(--appui-sizing-800);
+   --appui-appbar-height-compact: var(--appui-sizing-600);
 
    
    /* TextField - transparent background for both modes */

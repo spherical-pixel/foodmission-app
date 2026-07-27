@@ -110,14 +110,14 @@ namespace eu.foodmission.platform.Components
             _infoButton = new Unity.AppUI.UI.Button();
             _infoButton.quiet = true;
             _infoButton.leadingIcon = "info";
-            _infoButton.size = Size.L;
+            _infoButton.size = Size.S;
             _infoButton.AddToClassList("fm-icon-button-item-list");
             _buttonsContainer.Add(_infoButton);
 
             _removeButton = new Unity.AppUI.UI.Button();
             _removeButton.quiet = true;
             _removeButton.leadingIcon = "fm-trash";
-            _removeButton.size = Size.L;
+            _removeButton.size = Size.S;
             _removeButton.AddToClassList("fm-icon-button-item-list");
             _buttonsContainer.Add(_removeButton);
         }

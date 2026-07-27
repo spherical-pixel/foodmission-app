@@ -1260,3 +1260,40 @@
     min-height: 15px;
 }
 
+
+.appui-icon--size-s {
+    width: var(--appui-sizing-400);
+    height: var(--appui-sizing-400);
+}
+
+.appui-icon--size-m {
+    width: var(--appui-sizing-600);
+    height: var(--appui-sizing-600);
+}
+
+.appui-icon--size-l {
+    width: var(--appui-sizing-700);
+    height: var(--appui-sizing-700);
+}
+
+
+.appui-icon--size-s.appui-icon--fm-arrow-left ,
+.appui-icon--size-s.appui-icon--fm-arrow-right {
+    width: var(--appui-sizing-350);
+    height: var(--appui-sizing-350);
+}
+
+.appui-icon--size-m.appui-icon--fm-arrow-left ,
+.appui-icon--size-m.appui-icon--fm-arrow-right {
+    width: var(--appui-sizing-400);
+    height: var(--appui-sizing-400);
+}
+
+.appui-icon--size-l.appui-icon--fm-arrow-left ,
+.appui-icon--size-l.appui-icon--fm-arrow-right {
+    width: var(--appui-sizing-450);
+    height: var(--appui-sizing-450);
+}
+
+
+
