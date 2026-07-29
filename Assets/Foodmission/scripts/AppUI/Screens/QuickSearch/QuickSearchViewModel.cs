@@ -216,7 +216,7 @@ namespace eu.foodmission.platform
                     if (!string.IsNullOrEmpty(request.FoodData))
                     {
                         var offProduct = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
-                        if (offProduct != null)
+                        if (offProduct != null && !string.IsNullOrEmpty(offProduct.barcode))
                         {
                             var (impProduct, impErr) = await ImportByBarcodeAsync(offProduct.barcode);
                             if (impProduct != null) productId = impProduct.id;
@@ -224,7 +224,15 @@ namespace eu.foodmission.platform
                     }
                     if (string.IsNullOrEmpty(productId) && !string.IsNullOrEmpty(request.FoodId))
                     {
-                        productId = request.FoodId;
+                        if (Guid.TryParse(request.FoodId, out _))
+                        {
+                            productId = request.FoodId;
+                        }
+                        else
+                        {
+                            var (impProduct, impErr) = await ImportByBarcodeAsync(request.FoodId);
+                            if (impProduct != null) productId = impProduct.id;
+                        }
                     }
                 }
                 else
@@ -301,7 +309,7 @@ namespace eu.foodmission.platform
                     if (!string.IsNullOrEmpty(request.FoodData))
                     {
                         var offProduct = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
-                        if (offProduct != null)
+                        if (offProduct != null && !string.IsNullOrEmpty(offProduct.barcode))
                         {
                             var (impProduct, impErr) = await ImportByBarcodeAsync(offProduct.barcode);
                             if (impProduct != null) productId = impProduct.id;
@@ -309,7 +317,15 @@ namespace eu.foodmission.platform
                     }
                     if (string.IsNullOrEmpty(productId) && !string.IsNullOrEmpty(request.FoodId))
                     {
-                        productId = request.FoodId;
+                        if (Guid.TryParse(request.FoodId, out _))
+                        {
+                            productId = request.FoodId;
+                        }
+                        else
+                        {
+                            var (impProduct, impErr) = await ImportByBarcodeAsync(request.FoodId);
+                            if (impProduct != null) productId = impProduct.id;
+                        }
                     }
                 }
                 else
@@ -332,7 +348,34 @@ namespace eu.foodmission.platform
                     if (createErr == null && newList != null)
                     {
                         (added, itemError) = await _shoppingListService.AddItemAsync(newList.id, productId, 1f, "PIECES", null, false, genericId);
+                        targetListId = newList.id;
                     }
+                }
+
+                // If 409 Conflict (item already exists in shopping list), increment quantity instead of displaying error
+                if (itemError != null && (itemError.statusCode == 409 || (itemError.error != null && itemError.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (itemError.message != null && itemError.message.ToLowerInvariant().Contains("already"))))
+                {
+                    try
+                    {
+                        var (items, getItemsErr) = await _shoppingListService.GetItemsAsync(targetListId);
+                        if (getItemsErr == null && items != null)
+                        {
+                            var existingItem = System.Array.Find(items, i =>
+                                (!string.IsNullOrEmpty(productId) && i.foodProductId == productId) ||
+                                (!string.IsNullOrEmpty(genericId) && i.genericFoodId == genericId));
+
+                            if (existingItem != null)
+                            {
+                                float newQty = existingItem.quantity + 1f;
+                                await _shoppingListService.UpdateItemAsync(targetListId, existingItem.id, newQty, existingItem.unit, existingItem.notes, existingItem.@checked);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogWarning($"[QuickSearchViewModel] Conflict quantity increment failed: {ex.Message}");
+                    }
+                    itemError = null;
                 }
 
                 if (itemError != null)

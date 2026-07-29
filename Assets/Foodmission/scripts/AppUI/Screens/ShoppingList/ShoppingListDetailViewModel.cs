@@ -129,7 +129,7 @@ namespace eu.foodmission.platform
                 if (!string.IsNullOrEmpty(request.FoodData))
                 {
                     var product = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
-                    if (product != null)
+                    if (product != null && !string.IsNullOrEmpty(product.barcode))
                     {
                         await ImportAndAddItemAsync(product, null, null);
                         return;
@@ -137,13 +137,27 @@ namespace eu.foodmission.platform
                 }
 
                 if (string.IsNullOrEmpty(request.FoodId)) return;
-                var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
-                if (foodError != null || food == null)
+
+                if (Guid.TryParse(request.FoodId, out _))
                 {
-                    Debug.LogWarning($"[{GetType().Name}] Could not load food product for add: {foodError?.message}");
-                    return;
+                    var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
+                    if (foodError != null || food == null)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] Could not load food product for add: {foodError?.message}");
+                        return;
+                    }
+                    await AddFoodProductToShoppingListAsync(food);
                 }
-                await AddFoodProductToShoppingListAsync(food);
+                else
+                {
+                    var (imported, importError) = await ImportByBarcodeAsync(request.FoodId);
+                    if (importError != null || imported == null)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] Could not import food product by barcode {request.FoodId}: {importError?.message}");
+                        return;
+                    }
+                    await AddFoodProductToShoppingListAsync(imported);
+                }
             }
             catch (Exception ex)
             {
@@ -189,6 +203,23 @@ namespace eu.foodmission.platform
 
             var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, food.id, 1f, "PIECES");
 
+            if (addError != null && (addError.statusCode == 409 || (addError.error != null && addError.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (addError.message != null && addError.message.ToLowerInvariant().Contains("already"))))
+            {
+                var match = _allItems.Find(i => i.Item?.foodProductId == food.id);
+                if (match != null && match.Item != null)
+                {
+                    float newQty = match.Item.quantity + 1f;
+                    var (updated, updateErr) = await _shoppingListService.UpdateItemAsync(_currentListId, match.Item.id, newQty, match.Item.unit, match.Item.notes, match.Item.@checked);
+                    if (updateErr == null && updated != null)
+                    {
+                        match.Item.quantity = newQty;
+                        ApplyFilter();
+                        SaveCache();
+                    }
+                }
+                addError = null;
+            }
+
             if (addError != null)
             {
                 ErrorDetail = addError;
@@ -197,12 +228,15 @@ namespace eu.foodmission.platform
             }
 
             ErrorDetail = null;
-            var newItem = new ShoppingListItemView
+            if (added != null)
             {
-                Item = added,
-                FoodName = food.name ?? added.foodProduct?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
-            };
-            _allItems.Add(newItem);
+                var newItem = new ShoppingListItemView
+                {
+                    Item = added,
+                    FoodName = food.name ?? added.foodProduct?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
+                };
+                _allItems.Add(newItem);
+            }
             FilterText = "";
             ApplyFilter();
             SaveCache();
@@ -481,7 +515,26 @@ namespace eu.foodmission.platform
                 return false;
             }
 
-            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, quantity ?? 1f, unit ?? "PIECES");
+            float addQty = quantity ?? 1f;
+            string addUnit = unit ?? "PIECES";
+            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, addQty, addUnit);
+
+            if (addError != null && (addError.statusCode == 409 || (addError.error != null && addError.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (addError.message != null && addError.message.ToLowerInvariant().Contains("already"))))
+            {
+                var match = _allItems.Find(i => i.Item?.foodProductId == foodItem.id);
+                if (match != null && match.Item != null)
+                {
+                    float newQty = match.Item.quantity + addQty;
+                    var (updated, updateErr) = await _shoppingListService.UpdateItemAsync(_currentListId, match.Item.id, newQty, match.Item.unit, match.Item.notes, match.Item.@checked);
+                    if (updateErr == null && updated != null)
+                    {
+                        match.Item.quantity = newQty;
+                        ApplyFilter();
+                        SaveCache();
+                    }
+                }
+                addError = null;
+            }
 
             if (addError != null)
             {
@@ -493,12 +546,15 @@ namespace eu.foodmission.platform
             ErrorDetail = null;
             SearchResults = new List<OpenFoodFactsProduct>();
             SearchQuery = "";
-            var newItem = new ShoppingListItemView
+            if (added != null)
             {
-                Item = added,
-                FoodName = product.name ?? added.foodProduct?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
-            };
-            _allItems.Add(newItem);
+                var newItem = new ShoppingListItemView
+                {
+                    Item = added,
+                    FoodName = product.name ?? added.foodProduct?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
+                };
+                _allItems.Add(newItem);
+            }
             FilterText = "";
             ApplyFilter();
             SaveCache();
@@ -526,7 +582,26 @@ namespace eu.foodmission.platform
             }
 
             ErrorMessage = "";
-            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, genericFoodId: food.id, quantity: quantity ?? 1f, unit: unit ?? "PIECES");
+            float addQty = quantity ?? 1f;
+            string addUnit = unit ?? "PIECES";
+            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, genericFoodId: food.id, quantity: addQty, unit: addUnit);
+
+            if (addError != null && (addError.statusCode == 409 || (addError.error != null && addError.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (addError.message != null && addError.message.ToLowerInvariant().Contains("already"))))
+            {
+                var match = _allItems.Find(i => i.Item?.genericFoodId == food.id);
+                if (match != null && match.Item != null)
+                {
+                    float newQty = match.Item.quantity + addQty;
+                    var (updated, updateErr) = await _shoppingListService.UpdateItemAsync(_currentListId, match.Item.id, newQty, match.Item.unit, match.Item.notes, match.Item.@checked);
+                    if (updateErr == null && updated != null)
+                    {
+                        match.Item.quantity = newQty;
+                        ApplyFilter();
+                        SaveCache();
+                    }
+                }
+                addError = null;
+            }
 
             if (addError != null)
             {
@@ -538,12 +613,15 @@ namespace eu.foodmission.platform
             ErrorDetail = null;
             SearchResults = new List<OpenFoodFactsProduct>();
             SearchQuery = "";
-            var newItem = new ShoppingListItemView
+            if (added != null)
             {
-                Item = added,
-                FoodName = added.genericFood?.foodName ?? food.foodName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
-            };
-            _allItems.Add(newItem);
+                var newItem = new ShoppingListItemView
+                {
+                    Item = added,
+                    FoodName = added.genericFood?.foodName ?? food.foodName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN"),
+                };
+                _allItems.Add(newItem);
+            }
             FilterText = "";
             ApplyFilter();
             SaveCache();

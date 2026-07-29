@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace eu.foodmission.platform
@@ -45,8 +46,8 @@ namespace eu.foodmission.platform
                     return ConvertPrimitive<T>(json, defaultValue);
                 }
 
-                // For complex objects, use JsonUtility
-                var result = JsonUtility.FromJson<T>(json);
+                // For complex objects, use JsonConvert
+                var result = JsonConvert.DeserializeObject<T>(json);
                 return result ?? defaultValue;
             }
             catch (Exception ex)
@@ -85,8 +86,8 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
-                    // For complex objects, use JsonUtility
-                    json = JsonUtility.ToJson(value);
+                    // For complex objects, use JsonConvert
+                    json = JsonConvert.SerializeObject(value);
                 }
 
                 PlayerPrefs.SetString(fullKey, json);

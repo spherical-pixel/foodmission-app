@@ -137,5 +137,48 @@ namespace eu.foodmission.platform.Tests
             _mockOffService.Verify(o => o.GetByBarcodeAsync("12345"), Times.Once);
             _mockFoodService.Verify(f => f.CreateAsync(It.Is<CreateFoodProductRequest>(r => r.Name == "OFF Product" && r.Brands == "BrandA")), Times.Once);
         }
+
+        [Test]
+        public async Task ImportByBarcode_WhenUseDirectClientFalse_AndAlreadyInDb_ReturnsExistingWithoutImporting()
+        {
+            FoodProductFlow.UseDirectClientOverride = () => false;
+
+            var existingProduct = new FoodProduct { id = "550e8400-e29b-41d4-a716-446655440000", name = "Existing DB Product", barcode = "12345" };
+
+            _mockFoodService
+                .Setup(f => f.SearchFoodsByBarcodeAsync("12345"))
+                .ReturnsAsync((new PaginatedFoodProductResponse { data = new[] { existingProduct } }, null));
+
+            var (result, error) = await FoodProductFlow.ImportByBarcodeAsync(_mockFoodService.Object, _mockOffService.Object, "12345");
+
+            Assert.IsNull(error);
+            Assert.AreEqual(existingProduct, result);
+
+            _mockFoodService.Verify(f => f.SearchFoodsByBarcodeAsync("12345"), Times.Once);
+            _mockFoodService.Verify(f => f.ImportFromBarcodeAsync(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ImportByBarcode_WhenUseDirectClientFalse_AndNotInDb_ImportsFromBackendProxy()
+        {
+            FoodProductFlow.UseDirectClientOverride = () => false;
+
+            var importedProduct = new FoodProduct { id = "550e8400-e29b-41d4-a716-446655440000", name = "Proxy Imported Product", barcode = "12345" };
+
+            _mockFoodService
+                .Setup(f => f.SearchFoodsByBarcodeAsync("12345"))
+                .ReturnsAsync(((PaginatedFoodProductResponse)null, null));
+
+            _mockFoodService
+                .Setup(f => f.ImportFromBarcodeAsync("12345"))
+                .ReturnsAsync((importedProduct, null));
+
+            var (result, error) = await FoodProductFlow.ImportByBarcodeAsync(_mockFoodService.Object, _mockOffService.Object, "12345");
+
+            Assert.IsNull(error);
+            Assert.AreEqual(importedProduct, result);
+
+            _mockFoodService.Verify(f => f.ImportFromBarcodeAsync("12345"), Times.Once);
+        }
     }
 }

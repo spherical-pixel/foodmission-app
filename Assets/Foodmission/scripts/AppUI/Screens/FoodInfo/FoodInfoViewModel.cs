@@ -86,10 +86,7 @@ namespace eu.foodmission.platform
                 {
                     if (type == FoodInfoType.Product)
                     {
-                        if (Guid.TryParse(foodId, out _))
-                            await LoadProductAsync(foodId);
-                        else
-                            await TryEnrichFromOpenFoodFactsAsync(foodId);
+                        await LoadProductAsync(foodId);
                     }
                     else
                     {
@@ -112,23 +109,35 @@ namespace eu.foodmission.platform
 
         private async Task TryEnrichFromOpenFoodFactsAsync(string barcode)
         {
-            if (string.IsNullOrEmpty(barcode) || _openFoodFactsClientService == null)
+            if (string.IsNullOrEmpty(barcode))
                 return;
 
-            try
+            if (ApiConfig.UseDirectOpenFoodFactsClient)
             {
-                var (product, error) = await _openFoodFactsClientService.GetByBarcodeAsync(barcode);
-                if (error != null || product == null)
+                if (_openFoodFactsClientService == null) return;
+                try
                 {
-                    Debug.Log($"[{GetType().Name}] OFF lookup for barcode {barcode} returned no product");
-                    return;
+                    var (product, error) = await _openFoodFactsClientService.GetByBarcodeAsync(barcode);
+                    if (error != null || product == null) return;
+                    PopulateFromOpenFoodFactsProduct(product);
                 }
-
-                PopulateFromOpenFoodFactsProduct(product);
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Direct OFF lookup failed for barcode {barcode}: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Debug.LogWarning($"[{GetType().Name}] TryEnrichFromOpenFoodFactsAsync failed for barcode {barcode}: {ex.Message}");
+                try
+                {
+                    var (detail, error) = await _foodProductService.GetFoodProductDetailAsync(barcode);
+                    if (error != null || detail == null) return;
+                    PopulateFromFoodProductDetail(detail);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Backend detail lookup failed for barcode {barcode}: {ex.Message}");
+                }
             }
         }
 
@@ -169,6 +178,85 @@ namespace eu.foodmission.platform
             }
         }
 
+        private void PopulateFromFoodProductDetail(FoodProductDetail detail)
+        {
+            if (detail == null) return;
+
+            var off = detail.openFoodFactsInfo;
+
+            string name = !string.IsNullOrEmpty(detail.name) ? detail.name : off?.name;
+            if (!string.IsNullOrEmpty(name)) FoodName = name;
+
+            string brandsStr = !string.IsNullOrEmpty(detail.brands)
+                ? detail.brands
+                : (off?.brands != null && off.brands.Length > 0 ? string.Join(", ", off.brands) : null);
+            if (!string.IsNullOrEmpty(brandsStr)) FoodSubtitle = brandsStr;
+
+            string img = !string.IsNullOrEmpty(detail.imageFrontUrl) ? detail.imageFrontUrl
+                : (!string.IsNullOrEmpty(detail.imageUrl) ? detail.imageUrl : off?.imageUrl);
+            if (!string.IsNullOrEmpty(img)) ImageUrl = img;
+
+            string grade = !string.IsNullOrEmpty(detail.nutritionGrade) && !detail.nutritionGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase)
+                ? detail.nutritionGrade
+                : (off != null && !string.IsNullOrEmpty(off.nutritionGrade) && !off.nutritionGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase) ? off.nutritionGrade : "");
+            NutritionGrade = grade;
+
+            int nova = detail.novaGroup.HasValue && detail.novaGroup.Value >= 1 && detail.novaGroup.Value <= 4
+                ? detail.novaGroup.Value
+                : (off != null && off.novaGroup.HasValue && off.novaGroup.Value >= 1 && off.novaGroup.Value <= 4 ? off.novaGroup.Value : 0);
+            NovaGroup = nova;
+
+            EcoScoreGrade = !string.IsNullOrEmpty(detail.ecoscoreGrade) && !detail.ecoscoreGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase) ? detail.ecoscoreGrade : "";
+
+            string ing = !string.IsNullOrEmpty(detail.ingredientsText) ? detail.ingredientsText : off?.ingredients;
+            if (!string.IsNullOrEmpty(ing)) Ingredients = ing;
+
+            string[] allergensArr = (detail.allergens != null && detail.allergens.Length > 0) ? detail.allergens : off?.allergens;
+            if (allergensArr != null && allergensArr.Length > 0) Allergens = FormatTagsList(allergensArr, "en");
+
+            Description = detail.description ?? "";
+
+            if (detail.traces != null && detail.traces.Length > 0) Traces = FormatTagsList(detail.traces, "en");
+
+            string[] catArr = (detail.categories != null && detail.categories.Length > 0) ? detail.categories : off?.categories;
+            if (catArr != null && catArr.Length > 0) Categories = FormatTagsList(catArr, "en");
+
+            DietaryFlags = new DietaryFlags(detail.isVegan, detail.isVegetarian, detail.isPalmOilFree);
+
+            if (detail.nutrientLevels != null)
+            {
+                var lights = BuildTrafficLights(detail.nutrientLevels.ToString());
+                if (lights != null && lights.Count > 0) TrafficLights = lights;
+            }
+
+            if (detail.nutrimentsRaw != null)
+            {
+                var macroCards = BuildProductMacroCards(detail.nutrimentsRaw.ToString());
+                if (macroCards != null && macroCards.Count > 0) MacroCards = macroCards;
+
+                var nutDetail = BuildProductNutritionDetail(detail.nutrimentsRaw.ToString());
+                if (nutDetail != null && nutDetail.Count > 0) NutritionDetail = nutDetail;
+            }
+            else if (off?.nutritionalInfo != null)
+            {
+                try
+                {
+                    NutritionalInfo info = JsonConvert.DeserializeObject<NutritionalInfo>(off.nutritionalInfo.ToString());
+                    if (info != null)
+                    {
+                        MacroCards = BuildMacroCardsFromNutritionalInfo(info);
+                        NutritionDetail = BuildNutritionDetailFromNutritionalInfo(info);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Failed to parse off.nutritionalInfo: {ex.Message}");
+                }
+            }
+
+            MetaRows = BuildProductMetaRows(detail);
+        }
+
         private async Task LoadProductAsync(string foodId)
         {
             var (detail, error) = await _foodProductService.GetFoodProductDetailAsync(foodId);
@@ -182,69 +270,7 @@ namespace eu.foodmission.platform
             if (detail == null)
                 return;
 
-            FoodName = detail.name ?? "";
-            FoodSubtitle = detail.brands ?? "";
-            ImageUrl = detail.imageFrontUrl ?? detail.imageUrl ?? "";
-            NutritionGrade = !string.IsNullOrEmpty(detail.nutritionGrade) && !detail.nutritionGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase) ? detail.nutritionGrade : "";
-            NovaGroup = detail.novaGroup.HasValue && detail.novaGroup.Value >= 1 && detail.novaGroup.Value <= 4 ? detail.novaGroup.Value : 0;
-            EcoScoreGrade = !string.IsNullOrEmpty(detail.ecoscoreGrade) && !detail.ecoscoreGrade.Equals("unknown", StringComparison.OrdinalIgnoreCase) ? detail.ecoscoreGrade : "";
-            Ingredients = detail.ingredientsText ?? "";
-            Allergens = detail.allergens != null ? FormatTagsList(detail.allergens, "en") : "";
-            Description = detail.description ?? "";
-            Traces = detail.traces != null ? FormatTagsList(detail.traces, "en") : "";
-            Categories = detail.categories != null && detail.categories.Length > 0
-                ? FormatTagsList(detail.categories, "en")
-                : "";
-            DietaryFlags = new DietaryFlags(detail.isVegan, detail.isVegetarian, detail.isPalmOilFree);
-
-            TrafficLights = BuildTrafficLights(detail.nutrientLevels?.ToString());
-            MacroCards = BuildProductMacroCards(detail.nutrimentsRaw?.ToString());
-            NutritionDetail = BuildProductNutritionDetail(detail.nutrimentsRaw?.ToString());
-            MetaRows = BuildProductMetaRows(detail);
-
-            if (!string.IsNullOrEmpty(detail.barcode))
-            {
-                await TryEnrichFromOpenFoodFactsAsync(detail.barcode);
-                MetaRows = BuildProductMetaRows(detail);
-                if (!string.IsNullOrEmpty(Stores))
-                {
-                    var rows = new List<MetaRow>(MetaRows ?? new List<MetaRow>());
-                    rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_STORES"), Stores));
-                    MetaRows = rows;
-                }
-                if (!string.IsNullOrEmpty(Traces))
-                {
-                    var rows = MetaRows ?? new List<MetaRow>();
-                    bool hasTracesRow = false;
-                    for (int i = 0; i < rows.Count; i++)
-                    {
-                        if (rows[i].Label == LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_TRACES"))
-                        {
-                            hasTracesRow = true;
-                            break;
-                        }
-                    }
-                    if (!hasTracesRow)
-                    {
-                        var newRows = new List<MetaRow>(rows);
-                        newRows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_TRACES"), Traces));
-                        MetaRows = newRows;
-                    }
-                }
-                if (!string.IsNullOrEmpty(Categories) && Categories != string.Join(", ", detail.categories ?? new string[0]))
-                {
-                    var rows = MetaRows ?? new List<MetaRow>();
-                    var newRows = new List<MetaRow>();
-                    foreach (var row in rows)
-                    {
-                        if (row.Label == LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_CATEGORIES"))
-                            newRows.Add(new MetaRow(row.Label, Categories));
-                        else
-                            newRows.Add(row);
-                    }
-                    MetaRows = newRows;
-                }
-            }
+            PopulateFromFoodProductDetail(detail);
         }
 
         private async Task LoadGenericAsync(string foodId)
@@ -708,6 +734,7 @@ namespace eu.foodmission.platform
         private List<MetaRow> BuildProductMetaRows(FoodProductDetail d)
         {
             var rows = new List<MetaRow>();
+            var off = d.openFoodFactsInfo;
 
             if (!string.IsNullOrEmpty(d.quantity))
             {
@@ -719,9 +746,12 @@ namespace eu.foodmission.platform
                 rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_SERVING_SIZE"), d.servingSize));
             }
 
-            if (!string.IsNullOrEmpty(d.brands))
+            string brandsStr = !string.IsNullOrEmpty(d.brands)
+                ? d.brands
+                : (off?.brands != null && off.brands.Length > 0 ? string.Join(", ", off.brands) : null);
+            if (!string.IsNullOrEmpty(brandsStr))
             {
-                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BRANDS"), d.brands));
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BRANDS"), brandsStr));
             }
 
             if (!string.IsNullOrEmpty(d.origins))
@@ -734,9 +764,10 @@ namespace eu.foodmission.platform
                 rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_MANUFACTURING"), d.manufacturingPlaces));
             }
 
-            if (d.categories != null && d.categories.Length > 0)
+            string[] catArr = (d.categories != null && d.categories.Length > 0) ? d.categories : off?.categories;
+            if (catArr != null && catArr.Length > 0)
             {
-                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_CATEGORIES"), FormatTagsList(d.categories, "en")));
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_CATEGORIES"), FormatTagsList(catArr, "en")));
             }
 
             if (d.countries != null && d.countries.Length > 0)
@@ -749,14 +780,16 @@ namespace eu.foodmission.platform
                 rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_LABELS"), FormatTagsList(d.labels, "en")));
             }
 
-            if (d.traces != null && d.traces.Length > 0)
+            string[] tracesArr = (d.traces != null && d.traces.Length > 0) ? d.traces : off?.allergens;
+            if (tracesArr != null && tracesArr.Length > 0)
             {
-                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_TRACES"), FormatTagsList(d.traces, "en")));
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_TRACES"), FormatTagsList(tracesArr, "en")));
             }
 
-            if (!string.IsNullOrEmpty(d.barcode))
+            string barcodeStr = !string.IsNullOrEmpty(d.barcode) ? d.barcode : off?.barcode;
+            if (!string.IsNullOrEmpty(barcodeStr))
             {
-                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BARCODE"), d.barcode));
+                rows.Add(new MetaRow(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "META_BARCODE"), barcodeStr));
             }
 
             if (d.carbonFootprint.HasValue && d.carbonFootprint.Value > 0)

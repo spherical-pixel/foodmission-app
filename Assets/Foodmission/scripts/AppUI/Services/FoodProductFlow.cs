@@ -81,25 +81,37 @@ namespace eu.foodmission.platform
             }
             else
             {
-                // Execute old proxy chain
-                var (existing, findError) = await foodService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: false);
-                if (findError == null && existing != null)
+                // Proxy flow via backend food-products endpoints:
+                // 1. Search backend SQL database first by barcode via GET /api/v1/food-products?barcode={barcode}
+                var (dbRes, dbErr) = await foodService.SearchFoodsByBarcodeAsync(barcode);
+                if (dbErr == null && dbRes?.data != null && dbRes.data.Length > 0)
                 {
-                    return (existing, null);
+                    var match = Array.Find(dbRes.data, p => string.Equals(p.barcode, barcode, StringComparison.OrdinalIgnoreCase));
+                    if (match != null && Guid.TryParse(match.id, out _))
+                    {
+                        return (match, null);
+                    }
                 }
 
+                // 2. Not in backend SQL DB yet: import from OpenFoodFacts via backend POST /api/v1/food-products/import/openfoodfacts/{barcode}
                 var (imported, importError) = await foodService.ImportFromBarcodeAsync(barcode);
-                if (importError != null)
+                if (importError == null && imported != null && Guid.TryParse(imported.id, out _))
                 {
-                    // Fallback to searching if already imported or conflict
-                    var (existingFood, findErr2) = await foodService.FindByBarcodeAsync(barcode, includeOpenFoodFacts: true);
-                    if (findErr2 == null && existingFood != null)
-                    {
-                        return (existingFood, null);
-                    }
-                    return (null, importError);
+                    return (imported, null);
                 }
-                return (imported, null);
+
+                // 3. Fallback: if import returned error (e.g. 400 because product exists), query DB again by barcode
+                var (dbRes2, dbErr2) = await foodService.SearchFoodsByBarcodeAsync(barcode);
+                if (dbErr2 == null && dbRes2?.data != null && dbRes2.data.Length > 0)
+                {
+                    var match2 = Array.Find(dbRes2.data, p => string.Equals(p.barcode, barcode, StringComparison.OrdinalIgnoreCase));
+                    if (match2 != null && Guid.TryParse(match2.id, out _))
+                    {
+                        return (match2, null);
+                    }
+                }
+
+                return (null, importError ?? dbErr ?? dbErr2);
             }
         }
     }

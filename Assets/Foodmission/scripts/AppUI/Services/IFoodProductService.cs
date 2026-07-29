@@ -6,6 +6,8 @@ namespace eu.foodmission.platform
     {
         Task<(PaginatedFoodProductResponse Result, ApiErrorResponse Error)> SearchFoodsAsync(string query, int page = 1, int pageSize = 20);
 
+        Task<(PaginatedFoodProductResponse Result, ApiErrorResponse Error)> SearchFoodsByBarcodeAsync(string barcode);
+
         Task<(FoodProduct Result, ApiErrorResponse Error)> GetFoodByIdAsync(string id);
 
         Task<(OpenFoodFactsSearchResponse Result, ApiErrorResponse Error)> SearchOpenFoodFactsAsync(string query, int page = 1, int pageSize = 20);
@@ -15,7 +17,7 @@ namespace eu.foodmission.platform
         Task<(FoodProduct Result, ApiErrorResponse Error)> FindByBarcodeAsync(string barcode, bool includeOpenFoodFacts = false);
 
         Task<(FoodProduct Result, ApiErrorResponse Error)> CreateAsync(CreateFoodProductRequest request);
-        
-        Task<(FoodProductDetail Result, ApiErrorResponse Error)> GetFoodProductDetailAsync(string id);
+
+        Task<(FoodProductDetail Result, ApiErrorResponse Error)> GetFoodProductDetailAsync(string idOrBarcode);
     }
 }

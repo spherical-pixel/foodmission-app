@@ -93,6 +93,22 @@ namespace eu.foodmission.platform
     }
 
     [Serializable]
+    public class OpenFoodFactsInfoDto
+    {
+        public string barcode;
+        public string name;
+        public string[] brands;
+        public string[] categories;
+        public string ingredients;
+        public string[] allergens;
+        public string nutritionGrade;
+        public int? novaGroup;
+        public object nutritionalInfo;
+        public string imageUrl;
+        public float? completeness;
+    }
+
+    [Serializable]
     public class FoodProductDetail
     {
         public string id;
@@ -125,5 +141,7 @@ namespace eu.foodmission.platform
         public bool? isVegan;
         public bool? isVegetarian;
         public bool? isPalmOilFree;
+
+        public OpenFoodFactsInfoDto openFoodFactsInfo;
     }
 }

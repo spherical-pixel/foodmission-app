@@ -42,6 +42,32 @@ namespace eu.foodmission.platform
             return (JsonUtility.FromJson<PaginatedFoodProductResponse>(request.downloadHandler.text), null);
         }
 
+        public async Task<(PaginatedFoodProductResponse Result, ApiErrorResponse Error)> SearchFoodsByBarcodeAsync(string barcode)
+        {
+            if (string.IsNullOrEmpty(barcode))
+                return (null, null);
+
+            AppState state = _storeService.GetAppState();
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products?barcode={Uri.EscapeDataString(barcode)}&page=1&limit=10";
+
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+            request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] SearchFoodsByBarcode {barcode}"));
+            }
+
+            return (JsonUtility.FromJson<PaginatedFoodProductResponse>(request.downloadHandler.text), null);
+        }
+
         public async Task<(FoodProduct Result, ApiErrorResponse Error)> GetFoodByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -229,21 +255,17 @@ namespace eu.foodmission.platform
             return (food, null);
         }
 
-        public async Task<(FoodProductDetail Result, ApiErrorResponse Error)> GetFoodProductDetailAsync(string id)
+        public async Task<(FoodProductDetail Result, ApiErrorResponse Error)> GetFoodProductDetailAsync(string idOrBarcode)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(idOrBarcode))
                 return (null, null);
-
-            if (!Guid.TryParse(id, out _))
-            {
-                Debug.LogWarning($"[{GetType().Name}] GetFoodProductDetailAsync — invalid UUID: {id}");
-                return (null, null);
-            }
 
             AppState state = _storeService.GetAppState();
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/{Uri.EscapeDataString(id)}?includeOff=true";
+            string endpoint = Guid.TryParse(idOrBarcode, out _)
+                ? $"{ApiConfig.BaseUrl}/api/v1/food-products/{Uri.EscapeDataString(idOrBarcode)}?includeOpenFoodFacts=true"
+                : $"{ApiConfig.BaseUrl}/api/v1/food-products/barcode/{Uri.EscapeDataString(idOrBarcode)}?includeOpenFoodFacts=true";
 
-            using UnityWebRequest request = UnityWebRequest.Get(url);
+            using UnityWebRequest request = UnityWebRequest.Get(endpoint);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
             request.SetRequestHeader("Accept", "application/json");
 
@@ -254,7 +276,7 @@ namespace eu.foodmission.platform
             }
 
             if (request.result != UnityWebRequest.Result.Success)
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetFoodProductDetail {id}"));
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetFoodProductDetail {idOrBarcode}"));
 
             try
             {

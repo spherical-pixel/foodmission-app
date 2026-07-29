@@ -212,6 +212,12 @@ namespace eu.foodmission.platform
                     genericFoodId: ing.genericFoodId,
                     quantity: 1f,
                     unit: "PIECES");
+
+                if (itemErr != null && (itemErr.statusCode == 409 || (itemErr.error != null && itemErr.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (itemErr.message != null && itemErr.message.ToLowerInvariant().Contains("already"))))
+                {
+                    itemErr = null;
+                }
+
                 if (itemErr != null && firstError == null)
                 {
                     firstError = itemErr;

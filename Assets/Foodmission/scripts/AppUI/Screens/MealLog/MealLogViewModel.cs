@@ -163,22 +163,39 @@ namespace eu.foodmission.platform
                 if (!string.IsNullOrEmpty(request.FoodData))
                     product = Newtonsoft.Json.JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
 
-                if (product != null)
+                if (product != null && !string.IsNullOrEmpty(product.barcode))
                 {
                     await AddProductItem(product, null, null);
                 }
                 else if (!string.IsNullOrEmpty(request.FoodId))
                 {
-                    var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
-                    if (foodError == null && food != null)
+                    if (Guid.TryParse(request.FoodId, out _))
                     {
-                        await AddProductItem(new OpenFoodFactsProduct
+                        var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
+                        if (foodError == null && food != null)
                         {
-                            id = food.id,
-                            name = food.name,
-                            barcode = food.barcode,
-                            brands = Array.Empty<string>(),
-                        }, null, null);
+                            await AddProductItem(new OpenFoodFactsProduct
+                            {
+                                id = food.id,
+                                name = food.name,
+                                barcode = food.barcode,
+                                brands = Array.Empty<string>(),
+                            }, null, null);
+                        }
+                    }
+                    else
+                    {
+                        var (food, foodError) = await ImportByBarcodeAsync(request.FoodId);
+                        if (foodError == null && food != null)
+                        {
+                            await AddProductItem(new OpenFoodFactsProduct
+                            {
+                                id = food.id,
+                                name = food.name,
+                                barcode = food.barcode,
+                                brands = Array.Empty<string>(),
+                            }, null, null);
+                        }
                     }
                 }
             }

@@ -227,7 +227,7 @@ namespace eu.foodmission.platform.Components
             });
             _checkboxContainer.Add(_checkboxOpenFoodFacts);
             // TODO: Hidded checkbox selector as OFF kicks off by reaching limit with this searchs
-            _checkboxContainer.style.display = DisplayStyle.None;
+            //_checkboxContainer.style.display = DisplayStyle.None;
 
             _spinner = new CircularProgress { size = Size.S };
             _spinner.style.display = DisplayStyle.None;

@@ -337,7 +337,7 @@ namespace eu.foodmission.platform
                 if (!string.IsNullOrEmpty(request.FoodData))
                 {
                     var product = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
-                    if (product != null)
+                    if (product != null && !string.IsNullOrEmpty(product.barcode))
                     {
                         await ImportAndAddFoodItemAsync(product, null, null);
                         return;
@@ -345,13 +345,27 @@ namespace eu.foodmission.platform
                 }
 
                 if (string.IsNullOrEmpty(request.FoodId)) return;
-                var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
-                if (foodError != null || food == null)
+
+                if (Guid.TryParse(request.FoodId, out _))
                 {
-                    Debug.LogWarning($"[{GetType().Name}] Could not load food product for add: {foodError?.message}");
-                    return;
+                    var (food, foodError) = await _foodProductService.GetFoodByIdAsync(request.FoodId);
+                    if (foodError != null || food == null)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] Could not load food product for add: {foodError?.message}");
+                        return;
+                    }
+                    await AddFoodProductToPantryAsync(food);
                 }
-                await AddFoodProductToPantryAsync(food);
+                else
+                {
+                    var (imported, importError) = await ImportByBarcodeAsync(request.FoodId);
+                    if (importError != null || imported == null)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] Could not import food product by barcode {request.FoodId}: {importError?.message}");
+                        return;
+                    }
+                    await AddFoodProductToPantryAsync(imported);
+                }
             }
             catch (Exception ex)
             {
