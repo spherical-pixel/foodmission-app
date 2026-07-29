@@ -1,1 +1,44 @@
-Key,Id,Shared Comments,English(en),English(en) Comments,Dutch(nl),Dutch(nl) Comments,German(de),German(de) Comments,Greek(el),Greek(el) Comments,Italian(it),Italian(it) Comments,Norwegian(no),Norwegian(no) Comments,Polish(pl),Polish(pl) Comments,Slovenian(sl),Slovenian(sl) Comments,Spanish(es),Spanish(es) Comments
+Key,English(en),English(en) Comments,Dutch(nl),Dutch(nl) Comments,German(de),German(de) Comments,Greek(el),Greek(el) Comments,Italian(it),Italian(it) Comments,Norwegian(no),Norwegian(no) Comments,Polish(pl),Polish(pl) Comments,Slovenian(sl),Slovenian(sl) Comments,Spanish(es),Spanish(es) Comments
+RECIPE_BOOK_TITLE,Recipes,Recepten,Rezepte,Συνταγές,Ricette,Oppskrifter,Przepisy,Recepti,Recetas
+RECIPE_TAB_DISCOVER,Discover,Ontdekken,Entdecken,Ανακάλυψη,Scopri,Oppdag,Odkrywaj,Odkrij,Descubrir
+RECIPE_TAB_MY_RECIPES,My Recipes,Mijn recepten,Meine Rezepte,Οι συνταγές μου,Le mie ricette,Mine oppskrifter,Moje przepisy,Moji recepti,Mis recetas
+RECIPE_SEARCH_PLACEHOLDER,Search recipes...,Recepten zoeken...,Rezepte suchen...,Αναζήτηση συνταγών...,Cerca ricette...,Søk etter oppskrifter...,Szukaj przepisów...,Išči recepte...,Buscar recetas...
+RECIPE_RECOMMENDED_TITLE,Recommended for You,Aanbevolen voor jou,Für dich empfohlen,Προτεινόμενα για εσάς,Consigliati per te,Anbefalt for deg,Polecane dla Ciebie,Priporočeno za vas,Recomendados para ti
+RECIPE_FILTER_MORE,More Filters,Meer filters,Mehr Filter,Περισσότερα φίλτρα,Altri filtri,Flere filtre,Więcej filtrów,Več filtrov,Más filtros
+RECIPE_EMPTY_LIST,No recipes found,Geen recepten gevonden,Keine Rezepte gefunden,Δεν βρέθηκαν συνταγές,Nessuna ricetta trovata,Ingen oppskrifter funnet,Nie znaleziono przepisów,Ni najdenih receptov,No se encontraron recetas
+RECIPE_BTN_CREATE,Create Recipe,Recept maken,Rezept erstellen,Δημιουργία συνταγής,Crea ricetta,Opprett oppskrift,Stwórz przepis,Ustvari recept,Crear receta
+RECIPE_D_LOG,Log Recipe,Recept loggen,Rezept protokollieren,Καταγραφή συνταγής,Registra ricetta,Logg oppskrift,Zapisz przepis,Zabeleži recept,Registrar receta
+RECIPE_D_ADD_TO_SHOPPING_LIST,Add Ingredients to Shopping List,Ingrediënten toevoegen aan boodschappenlijst,Zutaten zur Einkaufsliste hinzufügen,Προσθήκη συστατικών στη λίστα αγορών,Aggiungi ingredienti alla lista della spesa,Legg til ingredienser i handlelisten,Dodaj składniki do listy zakupów,Dodaj sestavine na nakupovalni seznam,Añadir ingredientes a la lista de la compra
+RECIPE_D_EDIT,Edit Recipe,Recept bewerken,Rezept bearbeiten,Επεξεργασία συνταγής,Modifica ricetta,Rediger oppskrift,Edytuj przepis,Uredi recept,Editar receta
+RECIPE_D_DELETE,Delete Recipe,Recept verwijderen,Rezept löschen,Διαγραφή συνταγής,Elimina ricetta,Slett oppskrift,Usuń przepis,Izbriši recept,Eliminar receta
+RECIPE_D_NUTRITION_HEADER,Nutritional Information,Voedingswaarde,Nährwertinformationen,Διατροφικές πληροφορίες,Informazioni nutrizionali,Næringsinnhold,Informacje odżywcze,Hranilne vrednosti,Información nutricional
+RECIPE_D_INGREDIENTS_HEADER,Ingredients,Ingrediënten,Zutaten,Συστατικά,Ingredienti,Ingredienser,Składniki,Sestavine,Ingredientes
+RECIPE_D_INSTRUCTIONS_HEADER,Instructions,Instructies,Zubereitung,Οδηγίες,Istruzioni,Instruksjoner,Instrukcje,Navodila,Instrucciones
+RECIPE_A_DELETE_CONFIRM_TITLE,Delete Recipe?,Recept verwijderen?,Rezept löschen?,Διαγραφή συνταγής;,Eliminare la ricetta?,Slette oppskrift?,Usuń przepis?,Izbrišem recept?,¿Eliminar receta?
+RECIPE_A_DELETE_CONFIRM_MSG,Are you sure you want to delete this recipe?,Weet u zeker dat u dit recept wilt verwijderen?,Möchten Sie dieses Rezept wirklich löschen?,Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη συνταγή;,Sei sicuro di voler eliminare questa ricetta?,Er du sikker på at du vil slette denne oppskriften?,Czy na pewno chcesz usunąć ten przepis?,Ali ste prepričani, da želite izbrisati ta recept?,¿Seguro que quieres eliminar esta receta?
+RECIPE_E_CREATE_TITLE,Create Recipe,Recept maken,Rezept erstellen,Δημιουργία συνταγής,Crea ricetta,Opprett oppskrift,Stwórz przepis,Ustvari recept,Crear receta
+RECIPE_E_EDIT_TITLE,Edit Recipe,Recept bewerken,Rezept bearbeiten,Επεξεργασία συνταγής,Modifica ricetta,Rediger oppskrift,Edytuj przepis,Uredi recept,Editar receta
+RECIPE_E_STEP_META,General Info,Algemene info,Allgemeine Infos,Γενικές πληροφορίες,Info generali,Generell info,Informacje ogólne,Splošne informacije,Información general
+RECIPE_E_STEP_INGREDIENTS,Ingredients,Ingrediënten,Zutaten,Συστατικά,Ingredienti,Ingredienser,Składniki,Sestavine,Ingredientes
+RECIPE_E_STEP_REVIEW,Instructions & Save,Instructies & Opslaan,Zubereitung & Speichern,Οδηγίες & Αποθήκευση,Istruzioni e salva,Instruksjoner og lagre,Instrukcje i zapis,Navodila in shranjevanje,Instrucciones y guardar
+RECIPE_E_TITLE_LABEL,Recipe Title,Recepttitel,Rezepttitel,Τίτλος συνταγής,Titolo ricetta,Tittel på oppskrift,Tytuł przepisu,Naslov recepta,Título de la receta
+RECIPE_E_DESC_LABEL,Description,Beschrijving,Beschreibung,Περιγραφή,Descrizione,Beskrivelse,Opis,Opis,Descripción
+RECIPE_E_PREP_LABEL,Prep Time (minutes),Bereidingstijd (minuten),Zubereitungszeit (Minuten),Χρόνος προετοιμασίας (λεπτά),Tempo di preparazione (minuti),Forberedelsestid (minutter),Czas przygotowania (minuty),Čas priprave (minute),Tiempo de preparación (minutos)
+RECIPE_E_COOK_LABEL,Cook Time (minutes),Kooktijd (minuten),Kochzeit (Minuten),Χρόνος μαγειρέματος (λεπτά),Tempo di cottura (minuti),Koketid (minutter),Czas gotowania (minuty),Čas kuhanja (minute),Tiempo de cocción (minutos)
+RECIPE_E_SERVINGS_LABEL,Servings,Porties,Portionen,Μερίδες,Porzioni,Porsjoner,Porcje,Obroki,Raciones
+RECIPE_E_DIFFICULTY_LABEL,Difficulty,Moeilijkheidsgraad,Schwierigkeitsgrad,Βαθμός δυσκολίας,Difficoltà,Vanskegrad,Poziom trudności,Zahtevnost,Dificultad
+RECIPE_E_CATEGORY_LABEL,Category,Categorie,Kategorie,Κατηγορία,Categoria,Kategori,Kategorie,Kategorija,Categoría
+RECIPE_E_CUISINE_LABEL,Cuisine,Keuken,Küche,Κουζίνα,Cucina,Kjøkken,Kuchnia,Kuhinja,Cocina
+RECIPE_E_PUBLIC_LABEL,Public Recipe,Openbaar recept,Öffentliches Rezept,Δημόσια συνταγή,Ricetta pubblica,Offentlig oppskrift,Przepis publiczny,Javni recept,Receta pública
+RECIPE_E_ADD_ING_TITLE,Add Ingredient,Ingrediënt toevoegen,Zutat hinzufügen,Προσθήκη συστατικού,Aggiungi ingrediente,Legg til ingrediens,Dodaj składnik,Dodaj sestavino,Añadir ingrediente
+RECIPE_E_FREE_TEXT_NAME,Ingredient name...,Ingrediëntnaam...,Zutatenname...,Όνομα συστατικού...,Nome ingrediente...,Navn på ingrediens...,Nazwa składnika...,Ime sestavine...,Nombre del ingrediente...
+RECIPE_E_FREE_TEXT_MEASURE,Measure (e.g. 200g, 1 cup),Maat (bijv. 200g, 1 kop),Maß (z.B. 200g, 1 Tasse),Μέτρηση (π.χ. 200g, 1 φλιτζάνι),Misura (es. 200g, 1 tazza),Mål (f.eks. 200g, 1 kopp),Miara (np. 200g, 1 szklanka),Mera (npr. 200g, 1 skodelica),Medida (ej. 200g, 1 taza)
+RECIPE_E_FREE_TEXT_ADD_BTN,Add,Toevoegen,Hinzufügen,Προσθήκη,Aggiungi,Legg til,Dodaj,Dodaj,Añadir
+RECIPE_E_NO_ING_WARN,No ingredients added yet,Nog geen ingrediënten toegevoegd,Noch keine Zutaten hinzugefügt,Δεν έχουν προστεθεί ακόμη συστατικά,Nessun ingrediente ancora aggiunto,Ingen ingredienser lagt til ennå,Nie dodano jeszcze żadnych składników,Še ni dodanih sestavin,Aún no se han añadido ingredientes
+RECIPE_E_INSTRUCTIONS_LABEL,Preparation Instructions,Bereidingsinstructies,Zubereitungsanweisung,Οδηγίες παρασκευής,Istruzioni di preparazione,Tilberedningsinstruksjoner,Instrukcje przygotowania,Navodila za pripravo,Instrucciones de preparación
+RECIPE_E_IMAGE_URL_LABEL,Image URL (optional),Afbeeldings-URL (optioneel),Bild-URL (optional),URL εικόνας (προαιρετικό),URL immagine (opzionale),Bilde-URL (valgfritt),URL obrazu (opcjonalnie),URL slike (neobvezno),URL de imagen (opcional)
+RECIPE_E_SAVE_BTN,Save Recipe,Recept opslaan,Rezept speichern,Αποθήκευση συνταγής,Salva ricetta,Lagre oppskrift,Zapisz przepis,Shrani recept,Guardar receta
+RECIPE_E_ERROR_TITLE_REQUIRED,Title is required,Titel is verplicht,Titel ist erforderlich,Ο τίτλος είναι υποχρεωτικός,Il titolo è obbligatorio,Tittel kreves,Tytuł jest wymagany,Naslov je obvezen,El título es obligatorio
+RECIPE_ERROR_LOAD,Could not load recipes,Recepten konden niet worden geladen,Rezepte konnten nicht geladen werden,Δεν ήταν δυνατή η φόρτωση των συνταγών,Impossibile caricare le ricette,Kunne ikke laste inn oppskrifter,Nie udało się załadować przepisów,Ni bilo mogoče naložiti receptov,No se pudieron cargar las recetas
+RECIPE_ERROR_SAVE,Could not save recipe,Recept kon niet worden opgeslagen,Rezept konnte nicht gespeichert werden,Δεν ήταν δυνατή η αποθήκευση της συνταγής,Impossibile salvare la ricetta,Kunne ikke lagre oppskrift,Nie udało się zapisać przepisu,Ni bilo mogoče shraniti recepta,No se pudo guardar la receta
+RECIPE_ERROR_DELETE,Could not delete recipe,Recept kon niet worden verwijderd,Rezept konnte nicht gelöscht werden,Δεν ήταν δυνατή η διαγραφή της συνταγής,Impossibile eliminare la ricetta,Kunne ikke slette oppskrift,Nie udało się usunąć przepisu,Ni bilo mogoče izbrisati recepta,No se pudo eliminar la receta

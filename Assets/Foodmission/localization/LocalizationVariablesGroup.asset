@@ -16,6 +16,12 @@ MonoBehaviour:
   - name: PET_NAME
     variable:
       rid: 3341417644789858557
+  - name: TIME_MIN
+    variable:
+      rid: 4448175011165110907
+  - name: SERVINGS
+    variable:
+      rid: 4448175011165110956
   references:
     version: 2
     RefIds:
@@ -26,6 +32,28 @@ MonoBehaviour:
           m_TableCollectionName: GUID:e58ac225f892840658d216244603ef45
         m_TableEntryReference:
           m_KeyId: 27515040654417920
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+    - rid: 4448175011165110907
+      type: {class: LocalizedString, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:e58ac225f892840658d216244603ef45
+        m_TableEntryReference:
+          m_KeyId: 28903160583020544
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+    - rid: 4448175011165110956
+      type: {class: LocalizedString, ns: UnityEngine.Localization, asm: Unity.Localization}
+      data:
+        m_TableReference:
+          m_TableCollectionName: GUID:e58ac225f892840658d216244603ef45
+        m_TableEntryReference:
+          m_KeyId: 28908420210876416
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0

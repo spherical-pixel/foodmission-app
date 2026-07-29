@@ -261,10 +261,30 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                string targetListId = lists != null && lists.Length > 0 ? lists[0].id : null;
+                string targetListId = null;
+                var state = _storeService.GetAppState();
+                string lastListId = state.userLastShoppingListId;
+
+                if (!string.IsNullOrEmpty(lastListId) && lists != null)
+                {
+                    var match = System.Array.Find(lists, l => l.id == lastListId);
+                    if (match != null) targetListId = match.id;
+                }
+
+                if (string.IsNullOrEmpty(targetListId) && lists != null && lists.Length > 0)
+                {
+                    targetListId = lists[0].id;
+                }
+
                 if (string.IsNullOrEmpty(targetListId))
                 {
-                    var (newList, createErr) = await _shoppingListService.CreateListAsync("Mi Lista");
+                    string defaultName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DEFAULT_SHOPPING_LIST_NAME");
+                    if (string.IsNullOrEmpty(defaultName) || defaultName.StartsWith("No translation found"))
+                    {
+                        defaultName = "Mi Lista de la Compra";
+                    }
+
+                    var (newList, createErr) = await _shoppingListService.CreateListAsync(defaultName);
                     if (createErr != null || newList == null)
                     {
                         ErrorDetail = createErr;
@@ -298,6 +318,23 @@ namespace eu.foodmission.platform
                 }
 
                 var (added, itemError) = await _shoppingListService.AddItemAsync(targetListId, productId, 1f, "PIECES", null, false, genericId);
+
+                // If 404 (list was deleted/not found), clear stale target, create a new default list and retry once
+                if (itemError != null && (itemError.statusCode == 404 || (itemError.message != null && itemError.message.ToLowerInvariant().Contains("not found"))))
+                {
+                    string defaultName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DEFAULT_SHOPPING_LIST_NAME");
+                    if (string.IsNullOrEmpty(defaultName) || defaultName.StartsWith("No translation found"))
+                    {
+                        defaultName = "Mi Lista de la Compra";
+                    }
+
+                    var (newList, createErr) = await _shoppingListService.CreateListAsync(defaultName);
+                    if (createErr == null && newList != null)
+                    {
+                        (added, itemError) = await _shoppingListService.AddItemAsync(newList.id, productId, 1f, "PIECES", null, false, genericId);
+                    }
+                }
+
                 if (itemError != null)
                 {
                     ErrorDetail = itemError;

@@ -1597,7 +1597,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625608
-    m_Localized: Energi (kcal)
+    m_Localized: Kalorier
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625609
@@ -1968,6 +1968,117 @@ MonoBehaviour:
     m_Localized: "+1 m\xE5ned"
     m_Metadata:
       m_Items: []
+  - m_Id: 28899582313226240
+    m_Localized: "\u23F1 {0} {global.TIME_MIN}"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 28906308236206080
+    m_Localized: '{0} {global.TIME_MIN}'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 28898960193085440
+    m_Localized: "\U0001F37D {0} {global.SERVINGS}"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 28537754026500096
+    m_Localized: Vurdering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28538423429029888
+    m_Localized: Ingen anmeldelser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28538760755929088
+    m_Localized: Oppskrifter funnet ({0})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28540443628134400
+    m_Localized: "S\xF8k etter oppskrifter..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28541196946104320
+    m_Localized: Ingen oppskrifter funnet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870311913971712
+    m_Localized: Informasjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870675795009536
+    m_Localized: Veiledning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870860768010240
+    m_Localized: "Ern\xE6ring"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28872804286849024
+    m_Localized: Kosthold og livsstil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28873180532695040
+    m_Localized: Tags
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901602873040896
+    m_Localized: "\U0001F534 Vanskelig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901779868475392
+    m_Localized: "\U0001F7E0 Middels"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901897447399424
+    m_Localized: "\U0001F7E2 Enkelt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28902986997555200
+    m_Localized: Total tid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28903160583020544
+    m_Localized: min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28907246254546944
+    m_Localized: Tilberedningstid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28907620969472000
+    m_Localized: Steketid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28908420210876416
+    m_Localized: Porsjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28909425992392704
+    m_Localized: Vanskelighetsgrad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28910041263235072
+    m_Localized: "Kj\xF8kken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28910081239146496
+    m_Localized: Kategori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28911397441101824
+    m_Localized: "Milj\xF8poeng"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28911707144314880
+    m_Localized: "Ansl\xE5tt pris"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28917113388261376
+    m_Localized: Min liste
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1982,3 +2093,6 @@ MonoBehaviour:
         - id: 25682128132890624
         - id: 25699605365645312
         - id: 25708140598124544
+        - id: 28899582313226240
+        - id: 28906308236206080
+        - id: 28898960193085440

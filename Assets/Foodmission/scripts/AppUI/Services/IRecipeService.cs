@@ -18,5 +18,16 @@ namespace eu.foodmission.platform
             string search = null,
             int page = 1,
             int limit = 20);
+
+        Task<(Recipe Result, ApiErrorResponse Error)> CreateRecipeAsync(CreateRecipeRequest req);
+
+        Task<(Recipe Result, ApiErrorResponse Error)> UpdateRecipeAsync(string id, CreateRecipeRequest req);
+
+        Task<(bool Success, ApiErrorResponse Error)> DeleteRecipeAsync(string id);
+
+        Task<(MultipleRecommendationResponse Result, ApiErrorResponse Error)> GetRecommendationsAsync(
+            int expiringWithinDays = 7,
+            int limit = 10,
+            int offset = 0);
     }
 }

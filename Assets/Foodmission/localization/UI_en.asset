@@ -1598,7 +1598,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625608
-    m_Localized: Energy (kcal)
+    m_Localized: Calories
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625609
@@ -1985,6 +1985,117 @@ MonoBehaviour:
     m_Localized: +1 month
     m_Metadata:
       m_Items: []
+  - m_Id: 28537754026500096
+    m_Localized: Rating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28538423429029888
+    m_Localized: No reviews
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28538760755929088
+    m_Localized: Recipes found ({0})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28540443628134400
+    m_Localized: Search recipes...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28541196946104320
+    m_Localized: No recipes found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870311913971712
+    m_Localized: Information
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870675795009536
+    m_Localized: Instructions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870860768010240
+    m_Localized: Nutrition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28872804286849024
+    m_Localized: Diet & Lifestyle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28873180532695040
+    m_Localized: Tags
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28898960193085440
+    m_Localized: "\U0001F37D {0} {global.SERVINGS}"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 28899582313226240
+    m_Localized: "\u23F1 {0} {global.TIME_MIN}"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 28901602873040896
+    m_Localized: "\U0001F534 Hard"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901779868475392
+    m_Localized: "\U0001F7E0 Medium"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901897447399424
+    m_Localized: "\U0001F7E2 Easy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28902986997555200
+    m_Localized: Total time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28903160583020544
+    m_Localized: min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28906308236206080
+    m_Localized: '{0} {global.TIME_MIN}'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 28907246254546944
+    m_Localized: Preparation time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28907620969472000
+    m_Localized: Cook time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28908420210876416
+    m_Localized: Servings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28909425992392704
+    m_Localized: Difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28910041263235072
+    m_Localized: Cuisine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28910081239146496
+    m_Localized: Category
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28911397441101824
+    m_Localized: Eco Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28911707144314880
+    m_Localized: Estimated price
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28917113388261376
+    m_Localized: My List
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1999,3 +2110,6 @@ MonoBehaviour:
         - id: 25682128132890624
         - id: 25699605365645312
         - id: 25708140598124544
+        - id: 28899582313226240
+        - id: 28906308236206080
+        - id: 28898960193085440

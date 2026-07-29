@@ -41,7 +41,10 @@ namespace eu.foodmission.platform
             TemplateAddresses.ForceUpdate,
             TemplateAddresses.FoodInfo,
             TemplateAddresses.StepFlow,
-            TemplateAddresses.QuickSearchScreen
+            TemplateAddresses.QuickSearchScreen,
+            TemplateAddresses.RecipeBook,
+            TemplateAddresses.RecipeDetail,
+            TemplateAddresses.RecipeEditor
         };
 
         public async Task PreloadAllAsync()

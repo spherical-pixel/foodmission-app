@@ -1,0 +1,47 @@
+<UXML xmlns="UnityEngine.UIElements"
+      xmlns:ui="UnityEngine.UIElements"
+      xmlns:appui="Unity.AppUI.UI"
+      xmlns:fm="eu.foodmission.platform.Components"
+      xmlns:eu="eu.foodmission.platform">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Recipes/RecipeEditorScreen.uss"/>
+    <ui:VisualElement name="back" class="fm-back-screen-transparent"/>
+    <ui:VisualElement name="root" class="fm-root fm-re-root">
+        <appui:Heading name="screen-title" size="L" text="Create Recipe"/>
+        <fm:FMStepProgressBar name="step-progress-bar" step-count="3" current-step="0"/>
+        <appui:SwipeView name="step-swipe" class="fm-re-swipe">
+            <!-- Step 1: Meta -->
+            <appui:SwipeViewItem name="step-1" class="fm-re-step">
+                <appui:TextField name="title-field" label="Title"/>
+                <appui:TextArea name="description-field" label="Description"/>
+                <appui:TextField name="prep-time-field" label="Prep time (min)"/>
+                <appui:TextField name="cook-time-field" label="Cook time (min)"/>
+                <appui:TextField name="servings-field" label="Servings"/>
+                <appui:TextField name="difficulty-field" label="Difficulty (Easy/Medium/Hard)"/>
+                <appui:TextField name="category-field" label="Category"/>
+                <appui:TextField name="cuisine-field" label="Cuisine"/>
+                <appui:Checkbox name="is-public-checkbox" label="Public recipe"/>
+            </appui:SwipeViewItem>
+            <!-- Step 2: Ingredients -->
+            <appui:SwipeViewItem name="step-2" class="fm-re-step">
+                <fm:FMSearchOrCategoryField name="search-ingredients-field" skip-quantity-confirmation="true"/>
+                <ui:VisualElement name="free-text-row" class="fm-re-free-text-row">
+                    <appui:TextField name="free-text-name" placeholder="Ingredient name"/>
+                    <appui:TextField name="free-text-measure" placeholder="Measure"/>
+                    <appui:Button name="btn-add-free-text" text="Add"/>
+                </ui:VisualElement>
+                <appui:Text name="no-ingredients-warning" class="fm-re-warning" text="No ingredients yet — recipe can still be saved"/>
+                <ui:ScrollView name="ingredients-scroll" class="fm-re-ingredients-scroll" mode="Vertical">
+                    <ui:VisualElement name="ingredients-container" class="fm-re-ingredients-container"/>
+                </ui:ScrollView>
+            </appui:SwipeViewItem>
+            <!-- Step 3: Review -->
+            <appui:SwipeViewItem name="step-3" class="fm-re-step">
+                <appui:TextArea name="instructions-field" label="Instructions"/>
+                <appui:TextField name="image-url-field" label="Image URL"/>
+                <appui:Button name="btn-save" variant="Primary" text="Save"/>
+            </appui:SwipeViewItem>
+        </appui:SwipeView>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
+    </ui:VisualElement>
+</UXML>

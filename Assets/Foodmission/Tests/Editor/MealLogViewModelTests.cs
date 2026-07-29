@@ -861,5 +861,24 @@ namespace eu.foodmission.platform.Tests
             _mockPantryService.Verify(x => x.DeleteItemAsync("pantry-2"), Times.Once);
             _mockPantryService.Verify(x => x.DeleteItemAsync("pantry-1"), Times.Never);
         }
+
+        [Test]
+        public async Task LoadRecipePresetAsync_OnSuccess_CallsSelectMealPresetWithConstructedMeal()
+        {
+            _mockRecipeService.Setup(s => s.GetRecipeAsync("r1"))
+                .ReturnsAsync((new Recipe
+                {
+                    id = "r1",
+                    title = "Pasta",
+                    ingredients = new[] { new RecipeIngredient { name = "Pasta", genericFoodId = "gf1", measure = "200g" } }
+                }, null));
+
+            await _vm.LoadRecipePresetAsync("r1");
+
+            Assert.IsNotNull(_vm.SelectedMealPreset);
+            Assert.AreEqual("Pasta", _vm.SelectedMealPreset.name);
+            Assert.IsTrue(_vm.SelectedMealPreset.isRecipe);
+            Assert.AreEqual("r1", _vm.SelectedMealPreset.recipeId);
+        }
     }
 }

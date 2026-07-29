@@ -362,7 +362,11 @@ namespace eu.foodmission.platform
             // });
 
             // Phase 3 — disabled
-            AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_BOOK"), null);
+            AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_BOOK"), () =>
+            {
+                CloseMenuDrawer();
+                _cachedNavController?.Navigate(Actions.go_to_recipes);
+            });
             // AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOOD_WASTE"), () =>
             // {
             //     CloseMenuDrawer();

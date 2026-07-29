@@ -214,7 +214,7 @@ namespace eu.foodmission.platform
             CurrentStep = MealLogStep.SelectingDishes;
         }
 
-        public async void SelectMealPreset(Meal meal)
+        public async Task SelectMealPreset(Meal meal)
         {
             try
             {
@@ -222,7 +222,7 @@ namespace eu.foodmission.platform
 
                 if (meal.isRecipe)
                 {
-                    SelectedMealPreset = meal; // name field stays as-is
+                    SelectedMealPreset = meal;
 
                     var (recipe, err) = await _recipeService.GetRecipeAsync(meal.recipeId);
                     if (err != null)
@@ -265,11 +265,13 @@ namespace eu.foodmission.platform
                                 };
                             }
                         }
-                        items = new List<MealLogItem>(itemsDict.Values);
+                        items = itemsDict.Values.ToList();
                     }
 
                     SelectedItems = items;
                     _originalItemsSnapshot = DeepCopyItems(items);
+                    CurrentStep = MealLogStep.SelectingDishes;
+                    return;
                 }
                 else if (!string.IsNullOrEmpty(meal.id))
                 {
@@ -319,6 +321,41 @@ namespace eu.foodmission.platform
             SelectedMealPreset = null;
             MealContainerName = "";
             _originalItemsSnapshot = new List<MealLogItem>();
+        }
+
+        public async Task LoadRecipePresetAsync(string recipeId, int? mealTypeIndex = null, bool eatenOut = false)
+        {
+            if (string.IsNullOrEmpty(recipeId)) return;
+            IsSearchingPresets = true;
+            try
+            {
+                if (mealTypeIndex.HasValue)
+                {
+                    SelectedTypeOfMealIndex = mealTypeIndex.Value >= 0 ? mealTypeIndex.Value : 0;
+                    EatenOut = eatenOut;
+                    MealFromPantry = !eatenOut;
+                }
+
+                var (recipe, error) = await _recipeService.GetRecipeAsync(recipeId);
+                if (error != null) { ErrorDetail = error; return; }
+                if (recipe == null) return;
+
+                var constructedMeal = new Meal
+                {
+                    id = recipe.id,
+                    name = recipe.title,
+                    recipeId = recipe.id,
+                    isRecipe = true
+                };
+
+                await SelectMealPreset(constructedMeal);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[MealLogViewModel] LoadRecipePresetAsync: {ex}");
+                ErrorDetail = new ApiErrorResponse { message = ex.Message };
+            }
+            finally { IsSearchingPresets = false; }
         }
 
         public async Task SearchPresetsAsync(string query)

@@ -88,18 +88,67 @@ namespace eu.foodmission.platform
         {
             base.OnEnter(controller, destination, args);
 
+            string recipeId = null;
+            int mealTypeIndex = 0;
+            bool eatenOut = false;
+            bool hasMealType = false;
+
+            if (args != null)
+            {
+                foreach (var a in args)
+                {
+                    if (a.name == "recipeId")
+                    {
+                        recipeId = a.value;
+                    }
+                    else if (a.name == "mealTypeIndex" && int.TryParse(a.value, out int mIdx))
+                    {
+                        mealTypeIndex = mIdx;
+                        hasMealType = true;
+                    }
+                    else if (a.name == "eatenOut" && bool.TryParse(a.value, out bool eo))
+                    {
+                        eatenOut = eo;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(recipeId))
+            {
+                _ = SafeLoadRecipePresetAsync(recipeId, hasMealType ? mealTypeIndex : (int?)null, eatenOut);
+                return;
+            }
+
             if (args != null && args.Length >= 5)
             {
-                int.TryParse(args[0].value, out int mealTypeIndex);
-                bool.TryParse(args[1].value, out bool eatenOut);
+                int.TryParse(args[0].value, out int mIdx);
+                bool.TryParse(args[1].value, out bool eo);
                 int.TryParse(args[2].value, out int foodTypeInt);
                 FoodInfoType foodType = (FoodInfoType)foodTypeInt;
                 string foodId = args[3].value;
                 string foodName = args[4].value;
 
-                _viewModel?.InitializeForQuickAdd(mealTypeIndex, eatenOut, foodType, foodId, foodName);
+                _viewModel?.InitializeForQuickAdd(mIdx, eo, foodType, foodId, foodName);
                 UpdateStepVisibility();
                 RebuildSelectedChips();
+            }
+        }
+
+        private async Task SafeLoadRecipePresetAsync(string recipeId, int? mealTypeIndex = null, bool eatenOut = false)
+        {
+            try
+            {
+                if (_viewModel != null)
+                {
+                    await _viewModel.LoadRecipePresetAsync(recipeId, mealTypeIndex, eatenOut);
+                    ResetStep3VisualState();
+                    UpdateStepVisibility();
+                    RebuildSelectedChips();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[MealLogScreen] SafeLoadRecipePresetAsync: {ex}");
             }
         }
 

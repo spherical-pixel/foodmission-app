@@ -1,0 +1,284 @@
+.fm-rd-scroll {
+    flex-grow: 1;
+}
+
+.fm-rd-hero {
+    position: relative;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.fm-rd-hero-image {
+    max-height: 560px;
+    margin-left: -16px;
+    margin-right: -16px;
+    align-self: stretch;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 16px;
+    background-color: var(--appui-backgrounds-200);
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
+    border-bottom-left-radius: 45px;
+}
+
+.fm-rd-hero-img {
+    width: 100%;
+    height: auto;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+.fm-rd-hero-emoji {
+    font-size: 96px;
+    display: none;
+}
+
+.fm-rd-rating {
+    margin-top: 6px;
+    margin-bottom: 12px;
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-foregrounds-200);
+}
+
+.fm-rd-badges {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 16px 12px 16px;
+}
+
+.fm-r-badge {
+    padding: 8px 16px;
+    min-height: 64px;
+    border-radius: 18px;
+    font-size: 28px;
+    -unity-font-style: bold;
+    white-space: nowrap;
+    margin: 4px 6px;
+    background-color: var(--appui-backgrounds-200);
+    color: var(--appui-foregrounds-100);
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.12);
+    -unity-text-align: middle-center;
+}
+
+.fm-r-badge--metric {
+    background-color: var(--appui-backgrounds-200);
+    color: var(--appui-foregrounds-50);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.fm-r-badge--easy {
+    background-color: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.45);
+    color: rgb(52, 211, 153);
+}
+
+.fm-r-badge--medium {
+    background-color: rgba(245, 158, 11, 0.2);
+    border-color: rgba(245, 158, 11, 0.45);
+    color: rgb(251, 191, 36);
+}
+
+.fm-r-badge--hard {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.45);
+    color: rgb(248, 113, 113);
+}
+
+.fm-r-badge--dietary {
+    background-color: rgba(20, 184, 166, 0.2);
+    border-color: rgba(20, 184, 166, 0.45);
+    color: rgb(45, 212, 191);
+}
+
+.fm-r-badge--allergen {
+    background-color: rgba(244, 63, 94, 0.22);
+    border-color: rgba(244, 63, 94, 0.5);
+    color: rgb(251, 113, 133);
+}
+
+.fm-r-badge--tag {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--appui-foregrounds-100);
+}
+
+.fm-rd-accordion {
+    padding: 0 16px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.fm-rd-section {
+    padding: 0;
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+.fm-rd-section--hidden {
+    display: none;
+}
+
+.fm-rd-description {
+    color: var(--appui-foregrounds-100);
+    font-size: var(--appui-font-sizes-body-md);
+    white-space: normal;
+    padding: 0 16px 12px 16px;
+}
+
+.fm-rd-badges-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--fm-surface-bg-transparent);
+    margin: 8px 0;
+}
+
+.fm-rd-detail-card {
+    flex-direction: column;
+    border-radius: 14px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--fm-surface-bg-transparent);
+    margin: 8px 0;
+    overflow: hidden;
+}
+
+.fm-rd-detail-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.fm-rd-detail-row--odd {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.fm-rd-detail-row__label {
+    color: var(--appui-foregrounds-70);
+    font-size: var(--appui-font-sizes-body-md);
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-right: 12px;
+}
+
+.fm-rd-detail-row__value {
+    font-size: var(--appui-font-sizes-body-md);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-right;
+    white-space: normal;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fm-rd-meta-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 8px 4px;
+}
+
+.fm-rd-meta-item {
+    width: 50%;
+    padding: 8px 12px;
+}
+
+.fm-rd-meta-item__label {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-200);
+}
+
+.fm-rd-meta-item__value {
+    font-size: var(--appui-font-sizes-body-md);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin-top: 2px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fm-rd-instructions {
+    color: var(--appui-foregrounds-100);
+    font-size: var(--appui-font-sizes-body-md);
+    white-space: normal;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--fm-surface-bg-transparent);
+    margin: 8px 0;
+}
+
+.fm-rd-instruction-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.fm-rd-video-button {
+    margin: 4px 16px 16px 16px;
+    border-radius: 14px;
+    position: absolute;
+    flex-grow: 1;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.fm-rd-actions {
+    padding: 16px;
+    border-top-width: 1px;
+    border-top-color: var(--appui-backgrounds-300);
+    flex-grow: 1;
+}
+
+
+
+.fm-rd-action--hidden {
+    display: none;
+}
+
+.appui--dark .fm-rd-hero-image {
+    background-color: var(--appui-backgrounds-300);
+}
+
+.appui--dark .fm-rd-detail-card,
+.appui--dark .fm-rd-badges-container,
+.appui--dark .fm-rd-instructions {
+    background-color: var(--appui-backgrounds-300);
+}

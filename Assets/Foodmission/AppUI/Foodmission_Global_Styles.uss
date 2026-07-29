@@ -805,6 +805,11 @@
     -unity-background-scale-mode: scale-to-fit;
     background-repeat: repeat no-repeat;
     -unity-background-image-tint-color: var(--fm-bg-screen-trans);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .box-background {
@@ -1251,15 +1256,13 @@
     height: 100%;
 }
 
-.appui-date-picker{
+.appui-date-picker {
     min-width: 800px;
-    /*max-height: 800px;*/
 }
 
-.appui-text.appui-date-picker-pane__day-button{
+.appui-text.appui-date-picker-pane__day-button {
     min-height: 15px;
 }
-
 
 .appui-icon--size-s {
     width: var(--appui-sizing-400);
@@ -1276,24 +1279,20 @@
     height: var(--appui-sizing-700);
 }
 
-
-.appui-icon--size-s.appui-icon--fm-arrow-left ,
+.appui-icon--size-s.appui-icon--fm-arrow-left,
 .appui-icon--size-s.appui-icon--fm-arrow-right {
     width: var(--appui-sizing-350);
     height: var(--appui-sizing-350);
 }
 
-.appui-icon--size-m.appui-icon--fm-arrow-left ,
+.appui-icon--size-m.appui-icon--fm-arrow-left,
 .appui-icon--size-m.appui-icon--fm-arrow-right {
     width: var(--appui-sizing-400);
     height: var(--appui-sizing-400);
 }
 
-.appui-icon--size-l.appui-icon--fm-arrow-left ,
+.appui-icon--size-l.appui-icon--fm-arrow-left,
 .appui-icon--size-l.appui-icon--fm-arrow-right {
     width: var(--appui-sizing-450);
     height: var(--appui-sizing-450);
 }
-
-
-

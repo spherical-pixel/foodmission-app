@@ -1,0 +1,66 @@
+.fm-re-root {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 16px;
+}
+.fm-re-swipe {
+    flex-grow: 1;
+}
+.fm-re-step {
+    padding: 16px 8px;
+    flex-direction: column;
+}
+.fm-re-step > * {
+    margin-bottom: 16px;
+}
+.fm-re-free-text-row {
+    flex-direction: row;
+    margin-bottom: 16px;
+    align-items: center;
+}
+.fm-re-free-text-row > * {
+    margin-right: 8px;
+    flex-grow: 1;
+}
+.fm-re-free-text-row > .appui-button {
+    min-height: 44px;
+    min-width: 80px;
+    flex-grow: 0;
+}
+.fm-re-warning {
+    color: #92400e;
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+}
+.fm-re-ingredients-scroll {
+    flex-grow: 1;
+    margin-top: 8px;
+}
+.fm-re-ingredients-container {
+    flex-direction: column;
+}
+.fm-re-ingredient-row {
+    flex-direction: row;
+    min-height: 48px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background-color: var(--appui-backgrounds-200);
+    margin-bottom: 8px;
+    align-items: center;
+}
+.fm-re-ingredient-name {
+    flex-grow: 1;
+    font-size: var(--appui-font-sizes-body-md);
+    color: var(--appui-foregrounds-100);
+}
+.fm-re-ingredient-remove {
+    min-height: 44px;
+    min-width: 44px;
+}
+.appui--dark .fm-re-warning {
+    color: #fcd34d;
+}
+.appui--dark .fm-re-ingredient-row {
+    background-color: var(--appui-backgrounds-300);
+}

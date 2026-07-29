@@ -1931,6 +1931,114 @@ MonoBehaviour:
     m_Key: DATE_PLUS_1_MONTH
     m_Metadata:
       m_Items: []
+  - m_Id: 28537754026500096
+    m_Key: RATING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28538423429029888
+    m_Key: NO_REVIEWS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28538760755929088
+    m_Key: RECIPES_FOUND_N
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28540443628134400
+    m_Key: SEARCH_RECIPES_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28541196946104320
+    m_Key: NO_RECIPES_FOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870311913971712
+    m_Key: INFORMATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870675795009536
+    m_Key: INSTRUCTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28870860768010240
+    m_Key: NUTRITION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28872804286849024
+    m_Key: DIET_AND_LIFESTILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28873180532695040
+    m_Key: TAGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28898960193085440
+    m_Key: SERVINGS_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28899582313226240
+    m_Key: TIME_BADGE_MIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901602873040896
+    m_Key: DIFF_HARD_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901779868475392
+    m_Key: DIFF_MED_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28901897447399424
+    m_Key: DIFF_EASY_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28902986997555200
+    m_Key: TOTAL_TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28903160583020544
+    m_Key: TIME_MINUTES_MIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28906308236206080
+    m_Key: TIME_ROW_MIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28907246254546944
+    m_Key: PREPARATION_TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28907620969472000
+    m_Key: COOK_TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28908420210876416
+    m_Key: SERVINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28909425992392704
+    m_Key: DIFFICULTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28910041263235072
+    m_Key: CUISINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28910081239146496
+    m_Key: CATEGORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28911397441101824
+    m_Key: ECO_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28911707144314880
+    m_Key: ESTIMATED_PRICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28917113388261376
+    m_Key: DEFAULT_SHOPPING_LIST_NAME
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

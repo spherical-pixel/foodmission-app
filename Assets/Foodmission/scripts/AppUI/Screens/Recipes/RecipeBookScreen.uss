@@ -1,0 +1,306 @@
+.fm-r-header {
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.fm-r-tabs {
+    margin-top: 8px;
+    flex-grow: 1;
+    min-height: 44px;
+}
+
+.fm-r-carousel {
+    display: none;
+    margin-bottom: 16px;
+}
+
+.fm-r-carousel.visible {
+    display: flex;
+}
+
+.fm-r-carousel-card {
+    width: 240px;
+    height: 160px;
+    margin-right: 12px;
+    border-radius: 20px;
+    background-color: var(--appui-color-primary-500);
+    padding: 16px;
+    transition-duration: 0.15s;
+    transition-property: scale, opacity;
+}
+
+.fm-r-carousel-card:hover {
+    scale: 1.02 1.02;
+}
+
+.fm-r-carousel-card:active {
+    scale: 0.98 0.98;
+}
+
+.fm-r-carousel-card-title {
+    font-size: var(--appui-font-sizes-body-lg);
+    -unity-font-style: bold;
+    color: white;
+    margin-top: 8px;
+}
+
+.fm-r-carousel-card-badge {
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    color: rgb(254, 243, 199);
+    background-color: rgba(146, 64, 14, 0.85);
+    padding: 4px 10px;
+    border-radius: 12px;
+    align-self: flex-start;
+}
+
+.fm-r-search-section {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.fm-r-filter-chips-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+    height: 200px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.fm-r-chips-scroll {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-right: 8px;
+}
+
+.fm-r-chips-container {
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
+.fm-r-filter-chip {
+    /*min-height: 64px;*/
+    /*padding: 4px 14px;*/
+    min-width: 200px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    
+    /* border-radius: 16px; */
+    /* margin-right: 8px; */
+    /* background-color: var(--appui-backgrounds-200); */
+    /*color: var(--appui-foregrounds-100);*/
+    /* font-size: var(--appui-font-sizes-body-sm); */
+    /* -unity-font-style: bold; */
+    /* transition-duration: 0.15s; */
+    /* transition-property: background-color, scale; */
+}
+
+.fm-r-filter-chip:hover {
+    background-color: var(--appui-backgrounds-300);
+}
+
+.fm-r-filter-chip:active {
+    scale: 0.96 0.96;
+}
+
+.fm-r-filter-chip--active {
+    background-color: var(--appui-color-primary-500);
+    color: white;
+}
+
+.fm-r-more-filters-btn {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.fm-r-results-header {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: 38px;
+}
+
+.fm-r-counter {
+    flex-grow: 1;
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-200);
+    -unity-font-style: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fm-r-sort {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-color-primary-500);
+    -unity-font-style: bold;
+}
+
+.fm-r-filter-label {
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.fm-r-search {
+    flex-shrink: 0;
+    margin-bottom: 12px;
+}
+
+.fm-r-scroll {
+    flex-grow: 1;
+    margin-bottom: 8px;
+}
+
+.fm-r-container {
+    flex-direction: column;
+}
+
+.fm-r-sentinel {
+    height: 1px;
+}
+
+.fm-r-empty {
+    align-self: center;
+    margin-top: 48px;
+    font-size: var(--appui-font-sizes-body-lg);
+    color: var(--appui-foregrounds-200);
+    -unity-text-align: middle-center;
+    display: none;
+}
+
+.fm-r-empty.visible {
+    display: flex;
+}
+
+.fm-r-card {
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: var(--appui-backgrounds-200);
+    padding: 35px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transition-duration: 0.15s;
+    transition-property: background-color, scale;
+}
+
+.fm-r-card:hover {
+    background-color: var(--appui-backgrounds-300);
+}
+
+.fm-r-card:active {
+    scale: 0.99 0.99;
+}
+
+.fm-r-card-header {
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.fm-r-card-title {
+    /*font-size: var(--appui-font-sizes-body-lg);*/
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    white-space: normal;
+}
+
+.fm-r-card-author {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-50);
+    margin-top: 2px;
+}
+
+.fm-r-card-hero {
+    height: 340px;
+    border-radius: 14px;
+    background-color: var(--appui-backgrounds-100);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.fm-r-card-hero-emoji {
+    font-size: 64px;
+}
+
+.fm-r-card-rating {
+    /*font-size: var(--appui-font-sizes-body-sm);*/
+    color: var(--appui-foregrounds-50);
+    margin-bottom: 4px;
+}
+
+.fm-r-filter-panel {
+    padding: 16px;
+    width: 270px;
+    min-width: 270px;
+    border-radius: 16px;
+    border-width: 1px;
+}
+
+.fm-r-filter-panel Text {
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.fm-r-filter-panel .appui-textfield {
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.fm-r-filter-panel .appui-dropdown {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.fm-r-filter-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+.fm-r-filter-actions > * {
+    margin-left: 8px;
+    flex-grow: 1;
+}
+
+.appui--light .fm-r-filter-panel {
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(229, 231, 235);
+}
+
+.appui--light .fm-r-filter-panel Text {
+    color: rgb(31, 41, 55);
+}
+
+.appui--light .fm-r-filter-actions .appui-button--default {
+    background-color: rgb(229, 231, 235);
+    color: rgb(31, 41, 55);
+}
+
+.appui--light .fm-r-filter-actions .appui-button--accent {
+    background-color: var(--appui-color-primary-500, rgb(0, 120, 90));
+    color: rgb(255, 255, 255);
+}
+
+.appui--dark .fm-r-filter-panel {
+    background-color: rgb(18, 40, 32);
+    border-color: rgb(36, 71, 56);
+}
+
+.appui--dark .fm-r-filter-panel Text {
+    color: rgb(255, 255, 255);
+}
+
+.appui--dark .fm-r-filter-actions .appui-button--default {
+    background-color: rgb(36, 71, 56);
+    color: rgb(255, 255, 255);
+}

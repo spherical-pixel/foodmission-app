@@ -153,6 +153,33 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &-7349625825304333666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_recipes
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 2025, y: 545}
+  m_Guid: b5e7acc0-df13-4f7a-8f52-21fdc1b80ecd
+  m_Destination: {fileID: 6514935397078223794}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &-6196883293665439386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +289,33 @@ MonoBehaviour:
   m_Position: {x: 969, y: 1960}
   m_Guid: 4f114b92-7791-479f-9be9-b1320001c860
   m_Destination: {fileID: -2965649022661221946}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &-3281430989788778340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: recipe_detail_to_editor
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 3973, y: 665}
+  m_Guid: c7b36ef7-f97e-4e81-97a8-85303d73a126
+  m_Destination: {fileID: -2411287861360381585}
   m_Options:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}
@@ -481,6 +535,39 @@ MonoBehaviour:
         m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
+--- !u!114 &-2411287861360381585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: RecipesEditor
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 4545, y: 1276}
+  m_Guid: e90bf21523603446cae20f16e2dfb21c
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: '@UI:RECIPES_EDITOR'
+  m_TemplateSettings:
+    rid: 4448174966193258788
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4448174966193258788
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.RecipeEditorScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
 --- !u!114 &-2017724658979243455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,6 +778,40 @@ MonoBehaviour:
       data:
         m_ScreenType: eu.foodmission.platform.ShoppingListDetailScreen, Foodmission,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
+--- !u!114 &-1271847245592751178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: RecipeDetail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 3478, y: 665}
+  m_Guid: 364b3cd778d5a4260b6890fe5d047f08
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions:
+  - {fileID: -3281430989788778340}
+  m_Label: '@UI:RECIPE'
+  m_TemplateSettings:
+    rid: 4448174966193258787
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4448174966193258787
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.RecipeDetailScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 1
@@ -942,6 +1063,13 @@ MonoBehaviour:
   - {fileID: -2824669300076319144}
   - {fileID: -2513852977472789739}
   - {fileID: -7616555657261677819}
+  - {fileID: 6514935397078223794}
+  - {fileID: -7349625825304333666}
+  - {fileID: -1271847245592751178}
+  - {fileID: 493088208824764709}
+  - {fileID: -2411287861360381585}
+  - {fileID: 4900769893359248207}
+  - {fileID: -3281430989788778340}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -984,6 +1112,33 @@ MonoBehaviour:
   m_Position: {x: 550.5, y: 853.5}
   m_Guid: 04acdf5f-e325-4b29-be53-4ba4437fcb6a
   m_Destination: {fileID: 1371056722271922227}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &493088208824764709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: recipes_to_detail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 3074, y: 621}
+  m_Guid: 5458b228-3c59-45b9-b85a-92e8a8d02b1f
+  m_Destination: {fileID: -1271847245592751178}
   m_Options:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}
@@ -1467,8 +1622,36 @@ MonoBehaviour:
   - {fileID: 1000002}
   - {fileID: 1000003}
   - {fileID: -7616555657261677819}
+  - {fileID: -7349625825304333666}
   m_Label: 
   m_StartDestination: {fileID: -8582299972390442400}
+--- !u!114 &4900769893359248207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: recipes_to_editor
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 3046, y: 1431}
+  m_Guid: 4c0c4f58-e735-40e9-ac50-66b7e2f29b46
+  m_Destination: {fileID: -2411287861360381585}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &5199080988345134681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1649,6 +1832,41 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &6514935397078223794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: RecipeBook
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 2505, y: 545}
+  m_Guid: a9acff14572e04c79bc02bbba3b78767
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions:
+  - {fileID: 493088208824764709}
+  - {fileID: 4900769893359248207}
+  m_Label: '@UI:RECIPE_BOOK'
+  m_TemplateSettings:
+    rid: 4448174966193258786
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4448174966193258786
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.RecipeBookScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
 --- !u!114 &6576446744998733474
 MonoBehaviour:
   m_ObjectHideFlags: 0
