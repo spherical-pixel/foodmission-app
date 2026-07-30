@@ -1,65 +1,63 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI"
-         xsi="http://www.w3.org/2001/XMLSchema-instance"
-         noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd"
-         editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:eu="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
-    <Style src="GroupDetailScreen.uss"/>
-
-    <ui:VisualElement name="root" class="fm-gd-root fm-plain-background">
-
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Groups/GroupDetailScreen.uss?fileID=7433441132597879392&amp;guid=c16d637d72fac47c8b52b4c5b58e2f60&amp;type=3#GroupDetailScreen"/>
+    <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.GroupsViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.GroupsViewModel, Foodmission" class="fm-root">
         <ui:VisualElement name="toolbar" class="fm-gd-toolbar">
             <appui:Heading name="group-title" size="M" class="fm-gd-title"/>
-            <appui:Button name="btn-leave" title="Leave" variant="Default" size="S">
-    <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986013)"/>
-                </Bindings>
-</appui:Button>
+            <ui:VisualElement style="flex-direction: row; align-items: center; flex-shrink: 2;">
+                <appui:Button name="btn-edit-group" title="Edit" variant="Quiet" size="S" style="margin-right: 8px;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(29219345275019264)"/>
+                    </Bindings>
+                </appui:Button>
+            </ui:VisualElement>
         </ui:VisualElement>
-
-        <appui:Text name="error-message" class="fm-gd-error"/>
-
         <ui:VisualElement name="group-info" class="fm-gd-info">
             <appui:Text name="group-desc" class="fm-gd-desc"/>
             <appui:Text name="group-count" class="fm-gd-count"/>
         </ui:VisualElement>
-
         <ui:VisualElement name="invite-section" class="fm-gd-section">
             <appui:Heading name="invite-heading" size="S" text="Invite Code" class="fm-gd-section-heading">
-    <Bindings>
+                <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986010)"/>
                 </Bindings>
-</appui:Heading>
+            </appui:Heading>
             <ui:VisualElement class="fm-gd-invite-row">
                 <appui:Text name="invite-code-text" class="fm-gd-invite-code"/>
                 <appui:Button name="btn-regenerate" title="Regenerate" variant="Quiet" size="S" class="fm-gd-invite-btn">
-    <Bindings>
+                    <Bindings>
                         <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986012)"/>
                     </Bindings>
-</appui:Button>
+                </appui:Button>
+                <appui:Button name="btn-copy" variant="Quiet" size="S" leading-icon="copy-simple" class="fm-gd-invite-btn"/>
             </ui:VisualElement>
         </ui:VisualElement>
-
-        <ui:VisualElement name="members-section" class="fm-gd-section">
+        <ui:VisualElement name="members-section" class="fm-gd-section" style="flex-grow: 1;">
             <ui:VisualElement class="fm-gd-section-header">
                 <appui:Heading name="members-heading" size="S" text="Members" class="fm-gd-section-heading">
-    <Bindings>
+                    <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986009)"/>
                     </Bindings>
-</appui:Heading>
-                <appui:Button name="btn-add-member" title="Add Member" variant="Accent" size="S" class="fm-gd-add-btn fm-button"/>
+                </appui:Heading>
+                <appui:Button name="btn-add-member" title="Add Member" variant="Accent" size="S" class="fm-gd-add-btn fm-button" style="display: none;"/>
             </ui:VisualElement>
             <ui:ScrollView name="members-scroll" class="fm-gd-members-scroll">
                 <ui:VisualElement name="members-container" class="fm-gd-members-container"/>
             </ui:ScrollView>
         </ui:VisualElement>
-
+        <appui:Button name="btn-leave" title="Leave" variant="Accent" size="S" class="fm-button" style="flex-shrink: 1;">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986013)"/>
+            </Bindings>
+        </appui:Button>
         <ui:VisualElement name="admin-actions" class="fm-gd-admin-actions">
             <appui:Button name="btn-delete" title="Delete Group" variant="Destructive">
-    <Bindings>
+                <Bindings>
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986014)"/>
                 </Bindings>
-</appui:Button>
+            </appui:Button>
         </ui:VisualElement>
-
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
     </ui:VisualElement>
 </ui:UXML>

@@ -2079,6 +2079,23 @@ MonoBehaviour:
     m_Localized: Min liste
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Rediger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: Invitasjonskoden er kopiert!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: "Er du sikker p\xE5 at du vil gj\xF8re denne brukeren til administrator
+      for gruppen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: Brukeren har blitt oppgradert til administrator
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

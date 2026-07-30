@@ -12,7 +12,7 @@ Key,Id,English(en),Dutch(nl),German(de),Greek(el),Italian(it),Norwegian(no),Poli
 "META_SERVING_SIZE",21294142477819907,"Serving size","Portiegrootte","Portionsgröße","Μέγεθος μερίδας","Dimensione della porzione","Porsjonsstørrelse","Wielkość porcji","Velikost obroka","Tamaño de la ración"
 "NO_DATA_AVAILABLE",21294142473625607,"No data available","Geen gegevens beschikbaar","Keine Daten verfügbar","Δεν υπάρχουν διαθέσιμα δεδομένα","Nessun dato disponibile","Ingen data tilgjengelig","Brak dostępnych danych","Ni razpoložljivih podatkov","No hay datos disponibles"
 "NUTR_CARBOHYDRATES",21294142473625613,"Carbohydrates","Koolhydraten","Kohlenhydrate","Υδατάνθρακες","Carboidrati","Karbohydrater","Węglowodany","Ogljikovi hidrati","Carbohidratos"
-"NUTR_ENERGY_KCAL",21294142473625608,"Calories","","","","","","","",""
+"NUTR_ENERGY_KCAL",21294142473625608,"Calories","Calorieën","Kalorien","Θερμίδες","Calorie","Kalorier","Kalorie","Kalorije","Calorías"
 "NUTR_ENERGY_KJ",21294142473625609,"Energy (kJ)","Energie (kJ)","Energie (kJ)","Ενέργεια (kJ)","Energia (kJ)","Energi (kJ)","Energia (kJ)","Energija (kJ)","Energija (kJ)"
 "NUTR_FAT",21294142473625611,"Fat","Vetten","Fett","Λιπαρά","Grassi","Fett","Tłuszcz","Maščobe","Grasas"
 "NUTR_FIBER",21294142473625615,"Dietary fiber","Voedingsvezels","Ballaststoffe","Φυτικές ίνες","Fibre alimentari","Kostfiber","Błonnik pokarmowy","Prehranske vlaknine","Fibra alimentaria"
@@ -662,30 +662,34 @@ Esta breve encuesta nos ayuda a conocer tus hábitos alimenticios, tu conciencia
 "DATE_PLUS_3_DAYS",27100946763866112,"+3 days","+3 dagen","+3 Tage","+3 ημέρες","+3 giorni","+3 dager","+3 dni","+3 dni","+3 días"
 "DATE_PLUS_1_WEEK",27101012291477504,"+1 week","+1 week","+1 Woche","+1 εβδομάδα","+1 settimana","+1 uke","+1 tydzień","+1 teden","+1 semana"
 "DATE_PLUS_1_MONTH",27101090557190144,"+1 month","+1 maand","+1 Monat","+1 μήνας","+1 mese","+1 måned","+1 miesiąc","+1 mesec","+1 mes"
-"RATING",28537754026500096,"Rating",,,,,,,,
-"NO_REVIEWS",28538423429029888,"No reviews",,,,,,,,
-"RECIPES_FOUND_N",28538760755929088,"Recipes found ({0})",,,,,,,,
-"SEARCH_RECIPES_PLACEHOLDER",28540443628134400,"Search recipes...",,,,,,,,
-"NO_RECIPES_FOUND",28541196946104320,"No recipes found",,,,,,,,
-"INFORMATION",28870311913971712,"Information",,,,,,,,
-"INSTRUCTIONS",28870675795009536,"Instructions",,,,,,,,
-"NUTRITION",28870860768010240,"Nutrition",,,,,,,,
-"DIET_AND_LIFESTILE",28872804286849024,"Diet & Lifestyle",,,,,,,,
-"TAGS",28873180532695040,"Tags",,,,,,,,
-"SERVINGS_BADGE",28898960193085440,"🍽 {0} {global.SERVINGS}","","","","","","","","Porciones"
-"TIME_BADGE_MIN",28899582313226240,"⏱ {0} {global.TIME_MIN}","","","","","","","",""
-"DIFF_HARD_BADGE",28901602873040896,"🔴 Hard",,,,,,,,
-"DIFF_MED_BADGE",28901779868475392,"🟠 Medium",,,,,,,,
-"DIFF_EASY_BADGE",28901897447399424,"🟢 Easy",,,,,,,,
-"TOTAL_TIME",28902986997555200,"Total time",,,,,,,,
-"TIME_MINUTES_MIN",28903160583020544,"min",,,,,,,,
-"TIME_ROW_MIN",28906308236206080,"{0} {global.TIME_MIN}","","","","","","","",""
-"PREPARATION_TIME",28907246254546944,"Preparation time",,,,,,,,
-"COOK_TIME",28907620969472000,"Cook time",,,,,,,,
-"SERVINGS",28908420210876416,"Servings",,,,,,,,
-"DIFFICULTY",28909425992392704,"Difficulty",,,,,,,,
-"CUISINE",28910041263235072,"Cuisine",,,,,,,,
-"CATEGORY",28910081239146496,"Category",,,,,,,,
-"ECO_SCORE",28911397441101824,"Eco Score",,,,,,,,
-"ESTIMATED_PRICE",28911707144314880,"Estimated price",,,,,,,,
-"DEFAULT_SHOPPING_LIST_NAME",28917113388261376,"My List",,,,,,,,
+"RATING",28537754026500096,"Rating","Beoordeling","Bewertung","Αξιολόγηση","Valutazione","Vurdering","Ocena","Ocena","Valoración"
+"NO_REVIEWS",28538423429029888,"No reviews","Geen beoordelingen","Keine Bewertungen","Δεν υπάρχουν κριτικές","Nessuna recensione","Ingen anmeldelser","Brak recenzji","Ni mnenj","No hay opiniones"
+"RECIPES_FOUND_N",28538760755929088,"Recipes found ({0})","Gevonden recepten ({0})","Gefundene Rezepte ({0})","Βρέθηκαν συνταγές ({0})","Ricette trovate ({0})","Oppskrifter funnet ({0})","Znaleziono przepisów ({0})","Najdeni recepti ({0})","Recetas encontradas ({0})"
+"SEARCH_RECIPES_PLACEHOLDER",28540443628134400,"Search recipes...","Recepten zoeken...","Rezepte suchen...","Αναζήτηση συνταγών...","Cerca ricette...","Søk etter oppskrifter...","Wyszukaj przepisy...","Iskanje receptov...","Buscar recetas..."
+"NO_RECIPES_FOUND",28541196946104320,"No recipes found","Er zijn geen recepten gevonden","Es wurden keine Rezepte gefunden","Δεν βρέθηκαν συνταγές","Nessuna ricetta trovata","Ingen oppskrifter funnet","Nie znaleziono żadnych przepisów","Receptov ni bilo najdenih","No se han encontrado recetas"
+"INFORMATION",28870311913971712,"Information","Informatie","Informationen","Πληροφορίες","Informazioni","Informasjon","Informacje","Informacije","Información"
+"INSTRUCTIONS",28870675795009536,"Instructions","Instructies","Anleitung","Οδηγίες","Istruzioni","Veiledning","Instrukcje","Navodila","Instrucciones"
+"NUTRITION",28870860768010240,"Nutrition","Voeding","Ernährung","Διατροφή","Alimentazione","Ernæring","Żywienie","Prehrana","Nutrición"
+"DIET_AND_LIFESTILE",28872804286849024,"Diet & Lifestyle","Voeding en levensstijl","Ernährung & Lebensstil","Διατροφή και τρόπος ζωής","Alimentazione e stile di vita","Kosthold og livsstil","Dieta i styl życia","Prehrana in življenjski slog","Alimentación y estilo de vida"
+"TAGS",28873180532695040,"Tags","Tags","Stichwörter","Ετικέτες","Tag","Tags","Tagi","Oznake","Etiquetas"
+"SERVINGS_BADGE",28898960193085440,"🍽 {0} {global.SERVINGS}","🍽 {0} {global.SERVINGS}","🍽 {0} {global.SERVINGS}","🍽 {0} {global.SERVINGS}","🍽 {0} {global.SERVINGS}","🍽 {0} {global.SERVINGS}","🍽 {0} {global.SERVINGS}","🍽 {0} {global.SERVINGS}","Porciones"
+"TIME_BADGE_MIN",28899582313226240,"⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}","⏱ {0} {global.TIME_MIN}"
+"DIFF_HARD_BADGE",28901602873040896,"🔴 Hard","🔴 Moeilijk","🔴 Schwer","🔴 Δύσκολο","🔴 Difficile","🔴 Vanskelig","🔴 Trudne","🔴 Težko","🔴 Difícil"
+"DIFF_MED_BADGE",28901779868475392,"🟠 Medium","🟠 Medium","🟠 Mittel","🟠 Μεσαίο","🟠 Medio","🟠 Middels","🟠 Średni","🟠 Srednje","🟠 Medio"
+"DIFF_EASY_BADGE",28901897447399424,"🟢 Easy","🟢 Makkelijk","🟢 Einfach","🟢 Εύκολο","🟢 Facile","🟢 Enkelt","🟢 Łatwe","🟢 Enostavno","🟢 Fácil"
+"TOTAL_TIME",28902986997555200,"Total time","Totale tijd","Gesamtzeit","Συνολικός χρόνος","Tempo totale","Total tid","Czas całkowity","Skupni čas","Tiempo total"
+"TIME_MINUTES_MIN",28903160583020544,"min","min","min","λεπτό","min","min","min","min","min"
+"TIME_ROW_MIN",28906308236206080,"{0} {global.TIME_MIN}","{0} {global.TIME_MIN}","{0} {global.TIME_MIN}","{0} {global.TIME_MIN}","{0} {global.TIME_MIN}","{0} {global.TIME_MIN}","{0} {global.TIME_MIN}","{0} {global.TIME_MIN}","{0} {global.TIME_MIN}"
+"PREPARATION_TIME",28907246254546944,"Preparation time","Bereidingstijd","Zubereitungszeit","Χρόνος προετοιμασίας","Tempo di preparazione","Tilberedningstid","Czas przygotowania","Čas priprave","Tiempo de preparación"
+"COOK_TIME",28907620969472000,"Cook time","Kooktijd","Garzeit","Χρόνος μαγειρέματος","Tempo di cottura","Steketid","Czas gotowania","Čas kuhanja","Tiempo de cocción"
+"SERVINGS",28908420210876416,"Servings","Porties","Portionen","Μερίδες","Porzioni","Porsjoner","Porcje","Porcije","Raciones"
+"DIFFICULTY",28909425992392704,"Difficulty","Moeilijkheidsgraad","Schwierigkeitsgrad","Δυσκολία","Difficoltà","Vanskelighetsgrad","Poziom trudności","Težavnost","Dificultad"
+"CUISINE",28910041263235072,"Cuisine","Keuken","Küche","Κουζίνα","Cucina","Kjøkken","Kuchnia","Kuhinja","Gastronomía"
+"CATEGORY",28910081239146496,"Category","Categorie","Kategorie","Κατηγορία","Categoria","Kategori","Kategoria","Kategorija","Categoría"
+"ECO_SCORE",28911397441101824,"Eco Score","Eco-score","Öko-Score","Οικολογική βαθμολογία","Punteggio ecologico","Miljøpoeng","Wynik ekologiczny","Eko-ocena","Puntuación ecológica"
+"ESTIMATED_PRICE",28911707144314880,"Estimated price","Geschatte prijs","Geschätzter Preis","Εκτιμώμενη τιμή","Prezzo stimato","Anslått pris","Szacunkowa cena","Predvidena cena","Precio estimado"
+"DEFAULT_SHOPPING_LIST_NAME",28917113388261376,"My List","Mijn lijst","Meine Liste","Η λίστα μου","La mia lista","Min liste","Moja lista","Moj seznam","Mi lista"
+"EDIT",29219345275019264,"Edit",,,,,,,,"Editar"
+"INVITE_CODE_COPIED",29226776210169856,"Invite code copied!",,,,,,,,
+"CONFIRM_MAKE_ADMIN",29234156377464832,"Are you sure you want to make this user admin of the group?",,,,,,,,
+"MEMBER_PROMOTED_ADMIN",29234503556784128,"The user has been promoted to admin",,,,,,,,

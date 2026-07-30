@@ -266,5 +266,37 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNotNull(_vm.ErrorDetail);
         }
+
+        [Test]
+        public async Task UpdateVirtualMemberAsync_OnSuccess_ReloadsGroup()
+        {
+            _mockGroupService
+                .Setup(x => x.GetGroupAsync("group1"))
+                .Returns(Task.FromResult<(UserGroup Result, ApiErrorResponse Error)>((new UserGroup { id = "group1" }, null)));
+            _mockGroupService
+                .Setup(x => x.UpdateVirtualMemberAsync("group1", "vm1", "Updated Name", 1995))
+                .Returns(Task.FromResult<(bool Success, ApiErrorResponse Error)>((true, null)));
+
+            await _vm.LoadAsync("group1");
+            await _vm.UpdateVirtualMemberAsync("vm1", "Updated Name", 1995);
+
+            _mockGroupService.Verify(x => x.GetGroupAsync("group1"), Times.AtLeast(2));
+        }
+
+        [Test]
+        public async Task UpdateVirtualMemberAsync_WithApiError_SetsErrorDetail()
+        {
+            _mockGroupService
+                .Setup(x => x.GetGroupAsync("group1"))
+                .Returns(Task.FromResult<(UserGroup Result, ApiErrorResponse Error)>((new UserGroup { id = "group1", members = new GroupMember[0] }, null)));
+            _mockGroupService
+                .Setup(x => x.UpdateVirtualMemberAsync("group1", "vm1", "Updated Name", 1995))
+                .Returns(Task.FromResult<(bool Success, ApiErrorResponse Error)>((false, new ApiErrorResponse { statusCode = 500 })));
+
+            await _vm.LoadAsync("group1");
+            await _vm.UpdateVirtualMemberAsync("vm1", "Updated Name", 1995);
+
+            Assert.IsNotNull(_vm.ErrorDetail);
+        }
     }
 }

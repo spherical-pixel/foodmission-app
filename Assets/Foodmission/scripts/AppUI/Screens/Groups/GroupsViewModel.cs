@@ -14,8 +14,13 @@ namespace eu.foodmission.platform
     {
         private readonly IGroupService _groupService;
 
+        private List<UserGroup> _allGroups = new();
+
         [ObservableProperty]
         private List<UserGroup> m_Groups = new();
+
+        [ObservableProperty]
+        private string m_SearchText = "";
 
         [ObservableProperty]
         private bool m_IsLoading;
@@ -45,12 +50,29 @@ namespace eu.foodmission.platform
             {
                 ErrorDetail = error;
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_LOADING_GROUPS");
-                Groups = new List<UserGroup>();
+                _allGroups = new List<UserGroup>();
+                ApplyFilter();
                 return;
             }
 
             ErrorDetail = null;
-            Groups = new List<UserGroup>(groups);
+            _allGroups = new List<UserGroup>(groups ?? System.Array.Empty<UserGroup>());
+            ApplyFilter();
+        }
+
+        public void ApplyFilter()
+        {
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                Groups = new List<UserGroup>(_allGroups);
+            }
+            else
+            {
+                string query = SearchText.Trim();
+                Groups = _allGroups.FindAll(g =>
+                    (!string.IsNullOrEmpty(g.name) && g.name.Contains(query, System.StringComparison.OrdinalIgnoreCase)) ||
+                    (!string.IsNullOrEmpty(g.description) && g.description.Contains(query, System.StringComparison.OrdinalIgnoreCase)));
+            }
         }
 
         public async Task LeaveGroupAsync(string groupId)
@@ -64,7 +86,8 @@ namespace eu.foodmission.platform
             else
             {
                 ErrorDetail = null;
-                Groups = new List<UserGroup>(Groups.FindAll(g => g.id != groupId));
+                _allGroups.RemoveAll(g => g.id == groupId);
+                ApplyFilter();
             }
         }
 
@@ -79,7 +102,8 @@ namespace eu.foodmission.platform
             else
             {
                 ErrorDetail = null;
-                Groups = new List<UserGroup>(Groups.FindAll(g => g.id != groupId));
+                _allGroups.RemoveAll(g => g.id == groupId);
+                ApplyFilter();
             }
         }
     }

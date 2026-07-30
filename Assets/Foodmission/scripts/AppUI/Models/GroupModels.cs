@@ -22,6 +22,7 @@ namespace eu.foodmission.platform
         public string name;
         public string nickname;
         public string email;
+        public string username;
         public string role;       // "ADMIN" | "MEMBER"
         public bool isVirtual;
         public string userId;     // empty string for virtual members

@@ -22,10 +22,18 @@ namespace eu.foodmission.platform
     [Preserve]
     class GroupsScreen : NavigationScreenBase<GroupsViewModel>
     {
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool IsFixedContent => false;
+
         private VisualElement _groupsContainer;
         private Text _errorText;
         private Text _emptyState;
         private Unity.AppUI.UI.Button _btnFab;
+        private FMSearchOrCreateField _searchOrCreateField;
+        private UnityEngine.UIElements.TextField _searchField;
 
         private AccessibilityNode _fabButtonNode;
 
@@ -43,13 +51,23 @@ namespace eu.foodmission.platform
             _errorText = contentContainer.Q<Text>("error-message");
             _emptyState = contentContainer.Q<Text>("empty-state");
             _btnFab = contentContainer.Q<Unity.AppUI.UI.Button>("btn-fab");
+            _searchOrCreateField = contentContainer.Q<FMSearchOrCreateField>("search-or-create-field");
+            _searchField = _searchOrCreateField?.Q<UnityEngine.UIElements.TextField>();
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
 
-            _btnFab.clicked += OnFabClicked;
+            if (_btnFab != null)
+                _btnFab.clicked += OnFabClicked;
+
+            if (_searchOrCreateField?.ActionButton != null)
+                _searchOrCreateField.ActionButton.clicked += OnFabClicked;
+
+            if (_searchField != null)
+                _searchField.RegisterValueChangedCallback(OnSearchTextChanged);
+
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             RebuildGroups();
@@ -65,7 +83,15 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            _btnFab.clicked -= OnFabClicked;
+            if (_btnFab != null)
+                _btnFab.clicked -= OnFabClicked;
+
+            if (_searchOrCreateField?.ActionButton != null)
+                _searchOrCreateField.ActionButton.clicked -= OnFabClicked;
+
+            if (_searchField != null)
+                _searchField.UnregisterValueChangedCallback(OnSearchTextChanged);
+
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
         }
@@ -118,6 +144,9 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.Groups):
                     RebuildGroups();
                     break;
+                case nameof(_viewModel.SearchText):
+                    _viewModel.ApplyFilter();
+                    break;
                 case nameof(_viewModel.IsLoading):
                     UpdateLoadingState();
                     break;
@@ -130,56 +159,53 @@ namespace eu.foodmission.platform
             }
         }
 
+        private void OnSearchTextChanged(ChangeEvent<string> evt)
+        {
+            _viewModel.SearchText = evt.newValue;
+        }
+
         private void RebuildGroups()
         {
             _groupsContainer.Clear();
 
             if (_viewModel.Groups == null || _viewModel.Groups.Count == 0)
             {
-                _emptyState?.EnableInClassList("visible", true);
+                if (_emptyState != null)
+                {
+                    _emptyState.style.display = DisplayStyle.Flex;
+                    _emptyState.EnableInClassList("visible", true);
+                }
                 return;
             }
 
-            _emptyState?.EnableInClassList("visible", false);
+            if (_emptyState != null)
+            {
+                _emptyState.style.display = DisplayStyle.None;
+                _emptyState.EnableInClassList("visible", false);
+            }
 
             foreach (UserGroup group in _viewModel.Groups)
             {
                 UserGroup captured = group;
 
-                var row = new VisualElement();
-                row.AddToClassList("fm-grp-row");
+                FMItemGroup item = new FMItemGroup
+                {
+                    Text = captured.name,
+                    Detail = !string.IsNullOrEmpty(captured.description) ? captured.description : "",
+                    CountText = captured.members != null ? $"{captured.members.Length}" : "0"
+                };
 
-                var info = new VisualElement();
-                info.AddToClassList("fm-grp-row-info");
+                item.OpenButton.clicked += () => OnGroupClicked(captured);
 
-                var nameLabel = new Text { text = captured.name };
-                nameLabel.AddToClassList("fm-grp-row-name");
-
-                string desc = !string.IsNullOrEmpty(captured.description)
-                    ? captured.description
-                    : "";
-                var descLabel = new Text { text = desc };
-                descLabel.AddToClassList("fm-grp-row-desc");
-
-                info.Add(nameLabel);
-                info.Add(descLabel);
-
-                string memberCount = captured.members != null
-                    ? $"{captured.members.Length}"
-                    : "0";
-                var countLabel = new Text { text = memberCount };
-                countLabel.AddToClassList("fm-grp-row-count");
-
-                row.Add(info);
-                row.Add(countLabel);
-
-                row.RegisterCallback<ClickEvent>(_ =>
-                    _navController?.Navigate(
-                        Actions.groups_to_detail,
-                        new[] { new Argument("groupId", captured.id) }));
-
-                _groupsContainer.Add(row);
+                _groupsContainer.Add(item);
             }
+        }
+
+        private void OnGroupClicked(UserGroup group)
+        {
+            _navController?.Navigate(
+                Actions.groups_to_detail,
+                new[] { new Argument("groupId", group.id) });
         }
 
         private void UpdateLoadingState()
@@ -221,6 +247,7 @@ namespace eu.foodmission.platform
                 this,
                 "@UI:CREATE_OR_JOIN",
                 null,
+                new FMDialogAction("@UI:TXT_CANCEL", null),
                 new FMDialogAction(createLabel, () => _navController?.Navigate(Actions.go_to_groups_create)),
                 new FMDialogAction(joinLabel, () => _navController?.Navigate(Actions.go_to_groups_join), isPrimary: true));
         }

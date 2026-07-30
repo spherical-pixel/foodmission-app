@@ -2103,6 +2103,23 @@ MonoBehaviour:
     m_Localized: Moja lista
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Edytuj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: "Kod zaproszeniowy zosta\u0142 skopiowany!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: "Czy na pewno chcesz nada\u0107 temu u\u017Cytkownikowi uprawnienia
+      administratora w tej grupie?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: "U\u017Cytkownik zosta\u0142 mianowany administratorem"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

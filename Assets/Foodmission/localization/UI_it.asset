@@ -2089,6 +2089,22 @@ MonoBehaviour:
     m_Localized: La mia lista
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Modifica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: Codice invito copiato!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: Sei sicuro di voler nominare questo utente amministratore del gruppo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: "L'utente \xE8 stato promosso ad amministratore"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

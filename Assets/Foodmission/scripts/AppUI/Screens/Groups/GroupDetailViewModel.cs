@@ -113,6 +113,21 @@ namespace eu.foodmission.platform
             }
         }
 
+        public async Task UpdateVirtualMemberAsync(string memberId, string name, int yearOfBirth = 0)
+        {
+            var (success, error) = await _groupService.UpdateVirtualMemberAsync(_groupId, memberId, name, yearOfBirth);
+
+            if (error != null)
+            {
+                ErrorDetail = error;
+            }
+            else
+            {
+                ErrorDetail = null;
+                await LoadAsync(_groupId);
+            }
+        }
+
         public async Task RemoveMemberAsync(string memberId)
         {
             var (success, error) = await _groupService.RemoveMemberAsync(_groupId, memberId);

@@ -2091,6 +2091,23 @@ MonoBehaviour:
     m_Localized: Meine Liste
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Bearbeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: Einladungscode kopiert!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: "M\xF6chten Sie diesen Benutzer wirklich zum Administrator der Gruppe
+      ernennen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: "Der Benutzer wurde zum Administrator bef\xF6rdert."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

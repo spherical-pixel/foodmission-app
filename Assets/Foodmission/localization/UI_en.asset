@@ -2096,6 +2096,22 @@ MonoBehaviour:
     m_Localized: My List
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Edit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: Invite code copied!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: Are you sure you want to make this user admin of the group?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: The user has been promoted to admin
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

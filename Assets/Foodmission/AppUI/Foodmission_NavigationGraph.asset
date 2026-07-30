@@ -271,7 +271,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &-5093508927337335151
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
     m_PopUpToStrategy: 2
-    m_PopUpToRoute: {fileID: -8582299972390442400}
+    m_PopUpToRoute: {fileID: -1477136575185016345}
     m_PopUpToInclusive: 1
     m_EnterAnim: 3
     m_ExitAnim: 4
@@ -1181,7 +1181,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &673415384649435719
@@ -1388,7 +1388,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &2695106299898621552
@@ -1536,7 +1536,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &4519001266055914913
@@ -1569,7 +1569,7 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
 --- !u!114 &4520152674340125327
@@ -2034,6 +2034,6 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
-        m_ShowBackButton: 0
+        m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0

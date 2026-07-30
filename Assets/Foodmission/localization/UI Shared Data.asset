@@ -2039,6 +2039,22 @@ MonoBehaviour:
     m_Key: DEFAULT_SHOPPING_LIST_NAME
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Key: EDIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Key: INVITE_CODE_COPIED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Key: CONFIRM_MAKE_ADMIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Key: MEMBER_PROMOTED_ADMIN
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

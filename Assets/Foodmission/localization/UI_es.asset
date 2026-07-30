@@ -2083,6 +2083,23 @@ MonoBehaviour:
     m_Localized: Mi lista
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Editar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: "\xA1C\xF3digo de invitaci\xF3n copiado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: "\xBFEst\xE1s seguro de que quieres nombrar a este usuario administrador
+      del grupo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: El usuario ha sido ascendido a administrador
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

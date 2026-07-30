@@ -2078,6 +2078,23 @@ MonoBehaviour:
     m_Localized: Moj seznam
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Uredi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: Koda za povabilo je kopirana!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite tega uporabnika imenovati
+      za skrbnika skupine?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: "Uporabnik je bil povi\u0161an v administratorja"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

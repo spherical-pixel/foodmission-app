@@ -2106,6 +2106,23 @@ MonoBehaviour:
     m_Localized: Mijn lijst
     m_Metadata:
       m_Items: []
+  - m_Id: 29219345275019264
+    m_Localized: Bewerken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29226776210169856
+    m_Localized: De uitnodigingscode is gekopieerd!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234156377464832
+    m_Localized: Weet je zeker dat je deze gebruiker beheerder van de groep wilt
+      maken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29234503556784128
+    m_Localized: De gebruiker is gepromoveerd tot beheerder
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

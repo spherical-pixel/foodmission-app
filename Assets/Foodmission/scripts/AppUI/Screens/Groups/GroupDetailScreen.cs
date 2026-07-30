@@ -7,6 +7,7 @@ using eu.foodmission.platform.Components;
 using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 
 using UnityEngine;
@@ -15,12 +16,19 @@ using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using System.Text;
 
 namespace eu.foodmission.platform
 {
     [Preserve]
     class GroupDetailScreen : NavigationScreenBase<GroupDetailViewModel>
     {
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool IsFixedContent => false;
+
         private Heading _groupTitle;
         private Text _groupDesc;
         private Text _groupCount;
@@ -31,8 +39,9 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Button _btnLeave;
         private Unity.AppUI.UI.Button _btnDelete;
         private Unity.AppUI.UI.Button _btnRegenerate;
+        private Unity.AppUI.UI.Button _btnCopy;
         private Unity.AppUI.UI.Button _btnAddMember;
-        private Text _errorText;
+        private Unity.AppUI.UI.Button _btnEditGroup;
 
         private AccessibilityNode _leaveButtonNode;
         private AccessibilityNode _deleteButtonNode;
@@ -60,8 +69,10 @@ namespace eu.foodmission.platform
             _btnLeave = contentContainer.Q<Unity.AppUI.UI.Button>("btn-leave");
             _btnDelete = contentContainer.Q<Unity.AppUI.UI.Button>("btn-delete");
             _btnRegenerate = contentContainer.Q<Unity.AppUI.UI.Button>("btn-regenerate");
+            _btnCopy = contentContainer.Q<Unity.AppUI.UI.Button>("btn-copy");
             _btnAddMember = contentContainer.Q<Unity.AppUI.UI.Button>("btn-add-member");
-            _errorText = contentContainer.Q<Text>("error-message");
+            _btnEditGroup = contentContainer.Q<Unity.AppUI.UI.Button>("btn-edit-group");
+
         }
 
         private void RegisterManualEvents()
@@ -75,8 +86,14 @@ namespace eu.foodmission.platform
             if (_btnRegenerate != null)
                 _btnRegenerate.clicked += OnRegenerateClicked;
 
+            if (_btnCopy != null)
+                _btnCopy.clicked += OnCopyClicked;
+
             if (_btnAddMember != null)
                 _btnAddMember.clicked += OnAddMemberClicked;
+
+            if (_btnEditGroup != null)
+                _btnEditGroup.clicked += OnEditGroupClicked;
         }
 
         private void UnregisterManualEvents()
@@ -90,8 +107,14 @@ namespace eu.foodmission.platform
             if (_btnRegenerate != null)
                 _btnRegenerate.clicked -= OnRegenerateClicked;
 
+            if (_btnCopy != null)
+                _btnCopy.clicked -= OnCopyClicked;
+
             if (_btnAddMember != null)
                 _btnAddMember.clicked -= OnAddMemberClicked;
+
+            if (_btnEditGroup != null)
+                _btnEditGroup.clicked -= OnEditGroupClicked;
         }
 
         protected override void OnViewModelBound()
@@ -155,6 +178,7 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(_viewModel.Members):
                     RebuildMembers();
+                    UpdateGroupInfo();
                     break;
                 case nameof(_viewModel.IsAdmin):
                     UpdateAdminVisibility();
@@ -188,7 +212,9 @@ namespace eu.foodmission.platform
 
             if (_groupCount != null)
             {
-                int count = _viewModel.Members?.Count ?? 0;
+                int count = _viewModel.Members != null && _viewModel.Members.Count > 0
+                    ? _viewModel.Members.Count
+                    : (_viewModel.Group?.members?.Length ?? 0);
                 _groupCount.text = count.ToString();
             }
         }
@@ -198,6 +224,11 @@ namespace eu.foodmission.platform
             bool isAdmin = _viewModel.IsAdmin;
             _inviteSection?.EnableInClassList("visible", isAdmin);
             _adminActions?.EnableInClassList("visible", isAdmin);
+
+            if (_btnEditGroup != null)
+            {
+                _btnEditGroup.style.display = isAdmin ? DisplayStyle.Flex : DisplayStyle.None;
+            }
         }
 
         private void UpdateInviteCode()
@@ -279,69 +310,153 @@ namespace eu.foodmission.platform
 
             if (_viewModel.Members == null) return;
 
+            string adminLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADMIN_BADGE") ?? "ADMIN";
+            string virtualLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIRTUAL_MEMBER_BADGE") ?? "VIRTUAL";
+
             foreach (GroupMember member in _viewModel.Members)
             {
-                var row = new VisualElement();
-                row.AddToClassList("fm-gd-member-row");
+                GroupMember capturedMember = member;
+                string memberUsername = GetMemberUsername(capturedMember);
+                string memberDetail = !string.IsNullOrEmpty(capturedMember.nickname) && capturedMember.nickname != memberUsername
+                    ? capturedMember.nickname
+                    : "";
 
-                var info = new VisualElement();
-                info.AddToClassList("fm-gd-member-info");
-
-                var nameLabel = new Text
+                FMItemMember memberItem = new FMItemMember
                 {
-                    text = !string.IsNullOrEmpty(member.name)
-                        ? member.name
-                        : (!string.IsNullOrEmpty(member.email) ? member.email : "Unknown")
+                    Text = memberUsername,
+                    Detail = memberDetail
                 };
-                nameLabel.AddToClassList("fm-gd-member-name");
 
-                info.Add(nameLabel);
+                memberItem.SetAdminBadge(capturedMember.role == "ADMIN", adminLabel);
+                memberItem.SetVirtualBadge(capturedMember.isVirtual, virtualLabel);
 
-                if (!string.IsNullOrEmpty(member.nickname))
+                bool isMemberAdmin = string.Equals(capturedMember.role, "ADMIN", StringComparison.OrdinalIgnoreCase);
+                if (!isMemberAdmin && !capturedMember.isVirtual)
                 {
-                    var nickLabel = new Text { text = member.nickname };
-                    nickLabel.AddToClassList("fm-gd-member-email");
-                    info.Add(nickLabel);
-                }
-
-                row.Add(info);
-
-                if (member.role == "ADMIN")
-                {
-                    var badge = new Text
+                    memberItem.MakeAdminButton.style.display = DisplayStyle.Flex;
+                    memberItem.MakeAdminButton.clicked += () =>
                     {
-                        text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADMIN_BADGE")
+                        Debug.Log($"[GroupDetailScreen] MakeAdminButton clicked for member {capturedMember.id}");
+                        OnMakeAdminClicked(capturedMember);
                     };
-                    badge.AddToClassList("fm-gd-member-badge");
-                    badge.AddToClassList("fm-gd-member-badge--admin");
-                    row.Add(badge);
                 }
 
-                if (member.isVirtual)
-                {
-                    var badge = new Text
-                    {
-                        text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIRTUAL_MEMBER_BADGE")
-                    };
-                    badge.AddToClassList("fm-gd-member-badge");
-                    badge.AddToClassList("fm-gd-member-badge--virtual");
-                    row.Add(badge);
-                }
+                // if (capturedMember.isVirtual)
+                // {
+                //     memberItem.EditButton.style.display = DisplayStyle.Flex;
+                //     memberItem.EditButton.clicked += () => OnEditVirtualMemberClicked(capturedMember);
+                // }
 
-                if (_viewModel.IsAdmin && member.role != "ADMIN")
-                {
-                    string capturedMemberId = member.id;
-                    var makeAdminBtn = new Unity.AppUI.UI.Button
-                    {
-                        title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAKE_ADMIN")
-                    };
-                    makeAdminBtn.clicked += () => _ = SafeMakeAdminAsync(capturedMemberId);
-                    makeAdminBtn.AddToClassList("fm-gd-member-actions");
-                    row.Add(makeAdminBtn);
-                }
+                // if (_viewModel.IsAdmin || capturedMember.isVirtual)
+                // {
+                //     memberItem.RemoveButton.style.display = DisplayStyle.Flex;
+                //     memberItem.RemoveButton.clicked += () => OnRemoveMemberClicked(capturedMember);
+                // }
 
-                _membersContainer?.Add(row);
+                _membersContainer?.Add(memberItem);
             }
+        }
+
+        private string GetMemberUsername(GroupMember m)
+        {
+            if (m == null) return "Unknown";
+            if (!string.IsNullOrEmpty(m.username)) return m.username;
+            if (!string.IsNullOrEmpty(m.nickname)) return m.nickname;
+            if (!string.IsNullOrEmpty(m.name) && !m.name.Contains("@")) return m.name;
+            if (!string.IsNullOrEmpty(m.email))
+            {
+                int atIndex = m.email.IndexOf('@');
+                return atIndex > 0 ? m.email.Substring(0, atIndex) : m.email;
+            }
+            return !string.IsNullOrEmpty(m.name) ? m.name : "Unknown";
+        }
+
+        private void OnEditGroupClicked()
+        {
+            var container = new VisualElement();
+
+            var nameField = new Unity.AppUI.UI.TextField
+            {
+                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GROUP_NAME"),
+                value = _viewModel.Group?.name ?? ""
+            };
+            nameField.style.marginBottom = 8;
+            container.Add(nameField);
+
+            var descField = new Unity.AppUI.UI.TextField
+            {
+                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GROUP_DESCRIPTION"),
+                value = _viewModel.Group?.description ?? ""
+            };
+            container.Add(descField);
+
+            FMDialog.ShowCustom(
+                this,
+                "@UI:EDIT_GROUP",
+                container,
+                new FMDialogAction("@UI:TXT_CANCEL", null),
+                new FMDialogAction("@UI:SAVE", () =>
+                {
+                    string name = nameField.value?.Trim();
+                    string desc = descField.value?.Trim();
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        _ = SafeUpdateGroupAsync(name, desc);
+                    }
+                }, isPrimary: true));
+        }
+
+        private void OnEditVirtualMemberClicked(GroupMember member)
+        {
+            var container = new VisualElement();
+
+            var nameField = new Unity.AppUI.UI.TextField
+            {
+                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEMBER_NAME"),
+                value = member.nickname ?? member.name ?? ""
+            };
+            container.Add(nameField);
+
+            FMDialog.ShowCustom(
+                this,
+                "@UI:EDIT_MEMBER",
+                container,
+                new FMDialogAction("@UI:TXT_CANCEL", null),
+                new FMDialogAction("@UI:SAVE", () =>
+                {
+                    string name = nameField.value?.Trim();
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        _ = SafeUpdateVirtualMemberAsync(member.id, name);
+                    }
+                }, isPrimary: true));
+        }
+
+        private void OnMakeAdminClicked(GroupMember member)
+        {
+            Debug.LogError("OnMakeAdminClicked CLICK ->>> ");
+            string displayName = GetMemberUsername(member);
+            string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAKE_ADMIN") ?? "Make Admin";
+            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_MAKE_ADMIN", new object[] { displayName })
+                ?? $"Are you sure you want to promote {displayName} to group administrator?";
+
+            FMDialog.ShowConfirm(
+                this,
+                title,
+                message,
+                onConfirm: () => _ = SafeMakeAdminAsync(member.id, displayName));
+        }
+
+        private void OnRemoveMemberClicked(GroupMember member)
+        {
+            string displayName = !string.IsNullOrEmpty(member.name) ? member.name : (member.nickname ?? "member");
+
+            FMDialog.ShowConfirm(
+                this,
+                "@UI:REMOVE_MEMBER",
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_REMOVE_MEMBER", new object[] { displayName }),
+                onConfirm: () => _ = SafeRemoveMemberAsync(member.id),
+                semantic: AlertSemantic.Destructive);
         }
 
         private void OnLeaveClicked()
@@ -369,17 +484,45 @@ namespace eu.foodmission.platform
             _ = SafeRegenerateCodeAsync();
         }
 
+        private void OnCopyClicked()
+        {
+            string code = _viewModel?.InviteCode;
+            if (string.IsNullOrEmpty(code))
+            {
+                code = _inviteCodeText?.text;
+            }
+
+            if (string.IsNullOrEmpty(code))
+            {
+                return;
+            }
+
+            Platform.SetPasteboardData(PasteboardType.Text, Encoding.UTF8.GetBytes(code));
+
+            string copiedMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "INVITE_CODE_COPIED");
+            if (string.IsNullOrEmpty(copiedMsg))
+            {
+                copiedMsg = "Code copied to clipboard";
+            }
+
+            Toast.Build(this, copiedMsg, NotificationDuration.Short)
+                .SetPosition(PopupNotificationPlacement.Bottom)
+                .Show();
+        }
+
         private void OnAddMemberClicked()
         {
+            var container = new VisualElement();
             var nameField = new Unity.AppUI.UI.TextField
             {
                 placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEMBER_NAME")
             };
+            container.Add(nameField);
 
             FMDialog.ShowCustom(
                 this,
                 "@UI:ADD_VIRTUAL_MEMBER",
-                nameField,
+                container,
                 new FMDialogAction("@UI:TXT_CANCEL", null),
                 new FMDialogAction("@UI:ADD_MEMBER", () =>
                 {
@@ -391,11 +534,55 @@ namespace eu.foodmission.platform
                 }, isPrimary: true));
         }
 
-        private async Task SafeMakeAdminAsync(string memberId)
+        private async Task SafeUpdateGroupAsync(string name, string description)
+        {
+            try
+            {
+                await _viewModel.UpdateGroupAsync(name, description);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] UpdateGroupAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeUpdateVirtualMemberAsync(string memberId, string name)
+        {
+            try
+            {
+                await _viewModel.UpdateVirtualMemberAsync(memberId, name);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] UpdateVirtualMemberAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeRemoveMemberAsync(string memberId)
+        {
+            try
+            {
+                await _viewModel.RemoveMemberAsync(memberId);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] RemoveMemberAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeMakeAdminAsync(string memberId, string displayName)
         {
             try
             {
                 await _viewModel.MakeAdminAsync(memberId);
+                if (_viewModel.ErrorDetail == null)
+                {
+                    string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEMBER_PROMOTED_ADMIN", new object[] { displayName })
+                        ?? $"{displayName} is now an administrator";
+                    Toast.Build(this, toastMsg, NotificationDuration.Short)
+                        .SetPosition(PopupNotificationPlacement.Bottom)
+                        .Show();
+                }
             }
             catch (Exception ex)
             {
