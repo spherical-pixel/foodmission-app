@@ -67,7 +67,7 @@ namespace eu.foodmission.platform.Tests
         public async Task LoadAsync_OnError_FallsBackToCache()
         {
             var cached = new List<RecipeView> { new() { DisplayTitle = "Cached", Item = new Recipe { id = "c1" } } };
-            _localStorage.SetValue("recipes_cache_0", cached);
+            _localStorage.SetValue("recipes_cache_", cached);
 
             _mockRecipeService.Setup(s => s.GetRecipesAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),

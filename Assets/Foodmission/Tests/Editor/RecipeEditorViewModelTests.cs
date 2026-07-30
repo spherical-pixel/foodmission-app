@@ -91,6 +91,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task SaveAsync_OnCreate_CallsCreateRecipeAsyncAndDispatchesNav()
         {
+            string navAction = null;
+            _viewModel.NavigationRequested += (action, args) => navAction = action;
             _viewModel.Title = "Pasta";
             _mockRecipeService.Setup(s => s.CreateRecipeAsync(It.IsAny<CreateRecipeRequest>()))
                 .ReturnsAsync((new Recipe { id = "new-1", title = "Pasta" }, null));
@@ -99,7 +101,7 @@ namespace eu.foodmission.platform.Tests
 
             _mockRecipeService.Verify(s => s.CreateRecipeAsync(It.IsAny<CreateRecipeRequest>()), Times.Once);
             Assert.IsFalse(_viewModel.IsEditMode);
-            Assert.Contains("recipes_to_detail", _storeService.DispatchedActionTypes);
+            Assert.AreEqual("recipes_to_detail", navAction);
         }
 
         [Test]

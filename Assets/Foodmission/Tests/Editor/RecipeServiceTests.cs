@@ -61,6 +61,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task GetRecommendationsAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
         {
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex(".*GetRecommendationsAsync.*"));
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex(".*GetRecommendationsAsync.*"));
             // No real backend in test env — expect a network error.
             var (result, error) = await _service.GetRecommendationsAsync();
             Assert.IsNull(result);

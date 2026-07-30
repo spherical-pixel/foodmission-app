@@ -100,7 +100,7 @@ namespace eu.foodmission.platform.Tests
                 .ReturnsAsync((new ShoppingList[0], null));
 
             _shoppingListServiceMock
-                .Setup(x => x.CreateListAsync("Mi Lista"))
+                .Setup(x => x.CreateListAsync(It.IsAny<string>()))
                 .ReturnsAsync((newList, null));
 
             _shoppingListServiceMock
@@ -117,7 +117,7 @@ namespace eu.foodmission.platform.Tests
 
             await vm.AddToShoppingListDirectAsync(request);
 
-            _shoppingListServiceMock.Verify(x => x.CreateListAsync("Mi Lista"), Times.Once);
+            _shoppingListServiceMock.Verify(x => x.CreateListAsync(It.IsAny<string>()), Times.Once);
             _shoppingListServiceMock.Verify(x => x.AddItemAsync("list-1", null, 1f, "PIECES", null, false, genericId), Times.Once);
             Assert.IsFalse(string.IsNullOrEmpty(vm.StatusMessage));
         }

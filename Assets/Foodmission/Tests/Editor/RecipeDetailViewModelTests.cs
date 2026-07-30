@@ -66,27 +66,33 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void LogRecipe_DispatchesNavWithRecipeIdAndMealOptions()
         {
+            string navAction = null;
+            _viewModel.NavigationRequested += (action, args) => navAction = action;
             _viewModel.Recipe = new Recipe { id = "r1" };
             _viewModel.LogRecipe(2, true);
-            Assert.Contains("go_to_meallog", _storeService.DispatchedActionTypes);
+            Assert.AreEqual("go_to_meallog", navAction);
         }
 
         [Test]
         public void Edit_DispatchesNavToEditor()
         {
+            string navAction = null;
+            _viewModel.NavigationRequested += (action, args) => navAction = action;
             _viewModel.Recipe = new Recipe { id = "r1" };
             _viewModel.Edit();
-            Assert.Contains("recipes_to_editor", _storeService.DispatchedActionTypes);
+            Assert.AreEqual("recipes_to_editor", navAction);
         }
 
         [Test]
         public async Task DeleteAsync_OnSuccess_NavigatesToRecipes()
         {
+            string navAction = null;
+            _viewModel.NavigationRequested += (action, args) => navAction = action;
             _viewModel.Recipe = new Recipe { id = "r1", userId = "user-1" };
             _mockRecipeService.Setup(s => s.DeleteRecipeAsync("r1"))
                 .ReturnsAsync((true, null));
             await _viewModel.DeleteAsync();
-            Assert.Contains("go_to_recipes", _storeService.DispatchedActionTypes);
+            Assert.AreEqual("go_to_recipes", navAction);
         }
 
         [Test]
@@ -101,6 +107,9 @@ namespace eu.foodmission.platform.Tests
                     new RecipeIngredient { genericFoodId = "gf1" }
                 }
             };
+            _mockShoppingListService.Setup(s => s.GetListsAsync())
+                .ReturnsAsync((new[] { new ShoppingList { id = "list-1" } }, null));
+
             _mockShoppingListService.Setup(s => s.AddItemAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(),
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>(),
@@ -189,6 +198,9 @@ namespace eu.foodmission.platform.Tests
                     new RecipeIngredient { foodProductId = "fp1" }
                 }
             };
+
+            _mockShoppingListService.Setup(s => s.GetListsAsync())
+                .ReturnsAsync((new[] { new ShoppingList { id = "list-1" } }, null));
 
             _mockShoppingListService.Setup(s => s.GetItemsAsync("list-1"))
                 .ReturnsAsync((new[] { new ShoppingListItem { id = "item-1", foodProductId = "fp1", quantity = 2f, unit = "PIECES", @checked = false } }, null));

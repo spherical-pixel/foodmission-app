@@ -779,9 +779,10 @@ namespace eu.foodmission.platform
             var firstError = results.FirstOrDefault(r => r.Error != null);
             if (firstError.Error != null)
             {
-                ErrorDetail = firstError.Error;
+                var resetErr = firstError.Error;
                 ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_RESET_LIST");
                 await LoadAsync(_currentListId, ListName);
+                ErrorDetail = resetErr;
                 return;
             }
 

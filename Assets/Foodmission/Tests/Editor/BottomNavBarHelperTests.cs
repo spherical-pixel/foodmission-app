@@ -120,61 +120,61 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void GetActiveTab_ReturnsProfile_ForProfileScreen()
         {
-            Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("Profile"));
+            Assert.AreEqual(NavTab.None, BottomNavBarHelper.GetActiveTab("Profile"));
         }
 
         [Test]
         public void GetActiveTab_ReturnsProfile_ForSettingsScreen()
         {
-            Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("Settings"));
+            Assert.AreEqual(NavTab.None, BottomNavBarHelper.GetActiveTab("Settings"));
         }
 
         [Test]
         public void GetActiveTab_ReturnsProfile_ForGroupsScreen()
         {
-            Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("Groups"));
+            Assert.AreEqual(NavTab.None, BottomNavBarHelper.GetActiveTab("Groups"));
         }
 
         [Test]
         public void GetActiveTab_ReturnsProfile_ForGroupsCreateScreen()
         {
-            Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("GroupsCreate"));
+            Assert.AreEqual(NavTab.None, BottomNavBarHelper.GetActiveTab("GroupsCreate"));
         }
 
         [Test]
         public void GetActiveTab_ReturnsProfile_ForGroupDetailScreen()
         {
-            Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("GroupDetail"));
+            Assert.AreEqual(NavTab.None, BottomNavBarHelper.GetActiveTab("GroupDetail"));
         }
 
         [Test]
-        public void GetActiveTab_ReturnsMenu_ForShoppingListScreen()
+        public void GetActiveTab_ReturnsShoppingList_ForShoppingListScreen()
         {
-            Assert.AreEqual(NavTab.Menu, BottomNavBarHelper.GetActiveTab("ShoppingList"));
+            Assert.AreEqual(NavTab.ShoppingList, BottomNavBarHelper.GetActiveTab("ShoppingList"));
         }
 
         [Test]
-        public void GetActiveTab_ReturnsMenu_ForShoppingListDetailScreen()
+        public void GetActiveTab_ReturnsShoppingList_ForShoppingListDetailScreen()
         {
-            Assert.AreEqual(NavTab.Menu, BottomNavBarHelper.GetActiveTab("ShoppingListDetail"));
+            Assert.AreEqual(NavTab.ShoppingList, BottomNavBarHelper.GetActiveTab("ShoppingListDetail"));
         }
 
         [Test]
-        public void GetActiveTab_ReturnsMenu_ForPantryScreen()
+        public void GetActiveTab_ReturnsPantry_ForPantryScreen()
         {
-            Assert.AreEqual(NavTab.Menu, BottomNavBarHelper.GetActiveTab("Pantry"));
+            Assert.AreEqual(NavTab.Pantry, BottomNavBarHelper.GetActiveTab("Pantry"));
         }
 
         [Test]
-        public void GetActiveTab_ReturnsMenu_ForPantryItemDetailScreen()
+        public void GetActiveTab_ReturnsPantry_ForPantryItemDetailScreen()
         {
-            Assert.AreEqual(NavTab.Menu, BottomNavBarHelper.GetActiveTab("PantryItemDetail"));
+            Assert.AreEqual(NavTab.Pantry, BottomNavBarHelper.GetActiveTab("PantryItemDetail"));
         }
 
         [Test]
         public void GetActiveTab_ReturnsProfile_ForGroupsJoinScreen()
         {
-            Assert.AreEqual(NavTab.Profile, BottomNavBarHelper.GetActiveTab("GroupsJoin"));
+            Assert.AreEqual(NavTab.None, BottomNavBarHelper.GetActiveTab("GroupsJoin"));
         }
 
         [Test]

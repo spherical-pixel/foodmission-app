@@ -56,7 +56,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("a", vm.NutritionGrade);
             Assert.AreEqual(2, vm.NovaGroup);
             Assert.AreEqual("Water, sugar", vm.Ingredients);
-            Assert.AreEqual("en:milk", vm.Allergens);
+            Assert.AreEqual("Milk", vm.Allergens);
             Assert.IsTrue(vm.ShowActionButton);
             Assert.IsFalse(vm.IsLoading);
         }

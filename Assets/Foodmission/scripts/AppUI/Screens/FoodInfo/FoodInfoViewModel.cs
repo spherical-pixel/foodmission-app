@@ -86,7 +86,8 @@ namespace eu.foodmission.platform
                 {
                     if (type == FoodInfoType.Product)
                     {
-                        await LoadProductAsync(foodId);
+                        if (Guid.TryParse(foodId, out _) || (foodId.Length >= 8 && foodId.All(char.IsDigit)))
+                            await LoadProductAsync(foodId);
                     }
                     else
                     {
@@ -226,7 +227,11 @@ namespace eu.foodmission.platform
             if (detail.nutrientLevels != null)
             {
                 var lights = BuildTrafficLights(detail.nutrientLevels.ToString());
-                if (lights != null && lights.Count > 0) TrafficLights = lights;
+                TrafficLights = lights ?? new List<TrafficLight>();
+            }
+            else
+            {
+                TrafficLights = new List<TrafficLight>();
             }
 
             if (detail.nutrimentsRaw != null)

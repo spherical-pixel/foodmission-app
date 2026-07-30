@@ -234,14 +234,19 @@ namespace eu.foodmission.platform.Tests
                 name = "Test Product",
             };
             var apiError = new ApiErrorResponse { statusCode = 400, message = "Already exists" };
-            var existingFood = new FoodProduct { id = Guid.NewGuid().ToString(), name = "Existing Product" };
+            var existingFood = new FoodProduct { id = Guid.NewGuid().ToString(), name = "Existing Product", barcode = "123456" };
 
+            int callCount = 0;
             _mockFoodProductService
-                .Setup(x => x.FindByBarcodeAsync("123456", false))
-                .ReturnsAsync(((FoodProduct)null, (ApiErrorResponse)null));
-            _mockFoodProductService
-                .Setup(x => x.FindByBarcodeAsync("123456", true))
-                .ReturnsAsync((existingFood, (ApiErrorResponse)null));
+                .Setup(x => x.SearchFoodsByBarcodeAsync("123456"))
+                .ReturnsAsync(() =>
+                {
+                    callCount++;
+                    if (callCount == 1)
+                        return (new PaginatedFoodProductResponse { data = new FoodProduct[0] }, (ApiErrorResponse)null);
+                    else
+                        return (new PaginatedFoodProductResponse { data = new[] { existingFood } }, (ApiErrorResponse)null);
+                });
             _mockFoodProductService
                 .Setup(x => x.ImportFromBarcodeAsync("123456"))
                 .ReturnsAsync(((FoodProduct)null, apiError));
@@ -468,6 +473,7 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectTypeOfMeal(0);
             _vm.SetSource(false, false);
             _vm.MealContainerName = "My meal";
+            _vm.SelectedItems = new System.Collections.Generic.List<MealLogItem> { new MealLogItem { name = "Item 1" } };
 
             _mockMealService
                 .Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
@@ -701,8 +707,11 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectTypeOfMeal(0);
             _vm.SetSource(true, false);
 
+            _mockRecipeService.Setup(r => r.GetRecipeAsync("recipe-1"))
+                .ReturnsAsync((new Recipe { id = "recipe-1", ingredients = new[] { new RecipeIngredient { foodProductId = "fp-1", name = "Ing 1" } } }, null));
+
             _vm.MealContainerName = "Recipe dinner";
-            _vm.SelectMealPreset(new Meal { id = "recipe-1", name = "My Recipe", recipeId = "recipe-1", isRecipe = true });
+            await _vm.SelectMealPreset(new Meal { id = "recipe-1", name = "My Recipe", recipeId = "recipe-1", isRecipe = true });
 
             var createdMeal = new Meal { id = "new-meal", name = "Recipe dinner" };
             _mockMealService
