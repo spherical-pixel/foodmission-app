@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-
+using Unity.AppUI.MVVM;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
@@ -9,28 +8,41 @@ namespace eu.foodmission.platform.Components
 {
     public static class FMLoadingOverlay
     {
-        private static readonly Dictionary<VisualElement, VisualElement> s_Overlays = new();
+        private static VisualElement s_CurrentOverlay;
 
-        public static void Show(VisualElement anchor, string message = null)
+        public static void Show(string message = null)
         {
-            if (anchor == null) return;
-
-            if (s_Overlays.TryGetValue(anchor, out VisualElement existing))
+            if (s_CurrentOverlay != null && s_CurrentOverlay.parent != null)
             {
-                if (existing.parent != null) return;
-                s_Overlays.Remove(anchor);
+                return;
+            }
+
+            var root = App.current?.rootVisualElement;
+            VisualElement targetContainer = root?.Q<Unity.AppUI.UI.Panel>() ?? root;
+
+            if (targetContainer == null)
+            {
+                Debug.LogWarning("[FMLoadingOverlay] Cannot find root visual element or AppUI Panel to attach loading overlay.");
+                return;
             }
 
             var overlay = new VisualElement();
+            overlay.name = "fm-loading-overlay";
             overlay.style.position = Position.Absolute;
             overlay.style.top = 0;
             overlay.style.bottom = 0;
             overlay.style.left = 0;
             overlay.style.right = 0;
+            overlay.style.width = Length.Percent(100);
+            overlay.style.height = Length.Percent(100);
             overlay.style.justifyContent = Justify.Center;
             overlay.style.alignItems = Align.Center;
             overlay.style.backgroundColor = new StyleColor(new Color(0, 0, 0, 0.47f));
-            overlay.pickingMode = PickingMode.Ignore;
+            overlay.pickingMode = PickingMode.Position;
+
+            // Intercept pointer down and click events to prevent user interaction while loading
+            overlay.RegisterCallback<PointerDownEvent>(evt => evt.StopPropagation());
+            overlay.RegisterCallback<ClickEvent>(evt => evt.StopPropagation());
 
             var spinner = new CircularProgress();
             spinner.style.width = 128;
@@ -48,41 +60,22 @@ namespace eu.foodmission.platform.Components
                 overlay.Add(label);
             }
 
-
-            anchor.Add(overlay);
-            s_Overlays[anchor] = overlay;
-
-            NotifyLayoutChanged();
-        }
-
-        public static void Hide(VisualElement anchor)
-        {
-            if (anchor == null) return;
-
-            if (s_Overlays.TryGetValue(anchor, out VisualElement overlay))
-            {
-                if (overlay.parent != null)
-                {
-                    anchor.Remove(overlay);
-                }
-
-                s_Overlays.Remove(anchor);
-            }
+            targetContainer.Add(overlay);
+            s_CurrentOverlay = overlay;
 
             NotifyLayoutChanged();
         }
 
-        public static void HideAll()
+        public static void Hide()
         {
-            foreach (KeyValuePair<VisualElement, VisualElement> kvp in s_Overlays)
+            if (s_CurrentOverlay != null)
             {
-                if (kvp.Value.parent != null)
+                if (s_CurrentOverlay.parent != null)
                 {
-                    kvp.Key.Remove(kvp.Value);
+                    s_CurrentOverlay.parent.Remove(s_CurrentOverlay);
                 }
+                s_CurrentOverlay = null;
             }
-
-            s_Overlays.Clear();
 
             NotifyLayoutChanged();
         }

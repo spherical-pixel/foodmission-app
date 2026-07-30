@@ -227,9 +227,9 @@ namespace eu.foodmission.platform
         {
             bool isLoading = _viewModel.IsLoading;
             if (isLoading)
-                FMLoadingOverlay.Show(contentContainer);
+                FMLoadingOverlay.Show();
             else
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
             _btnAdd?.SetEnabled(!isLoading);
         }
 

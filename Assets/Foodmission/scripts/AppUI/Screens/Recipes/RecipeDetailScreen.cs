@@ -188,6 +188,7 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(_viewModel.IsAddingToShoppingList):
                     UpdateAddToShoppingListState();
+                    UpdateLoadingState();
                     break;
                 case nameof(_viewModel.ErrorDetail):
                     UpdateErrorState();
@@ -705,13 +706,13 @@ namespace eu.foodmission.platform
 
         private void UpdateLoadingState()
         {
-            if (_viewModel.IsLoading)
+            if (_viewModel.IsLoading || _viewModel.IsAddingToShoppingList)
             {
-                FMLoadingOverlay.Show(contentContainer);
+                FMLoadingOverlay.Show();
             }
             else
             {
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
             }
         }
 

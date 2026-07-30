@@ -344,9 +344,9 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(_viewModel.IsSearchingPresets):
                     if (_viewModel.IsSearchingPresets)
-                        FMLoadingOverlay.Show(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEARCHING_PRESETS"));
+                        FMLoadingOverlay.Show(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEARCHING_PRESETS"));
                     else
-                        FMLoadingOverlay.Hide(this);
+                        FMLoadingOverlay.Hide();
                     break;
                 case nameof(_viewModel.SaveAsPreset):
                     if (_chkSavePreset != null)
@@ -366,9 +366,9 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(_viewModel.IsSaving):
                     if (_viewModel.IsSaving)
-                        FMLoadingOverlay.Show(contentContainer);
+                        FMLoadingOverlay.Show();
                     else
-                        FMLoadingOverlay.Hide(contentContainer);
+                        FMLoadingOverlay.Hide();
                     break;
                 case nameof(_viewModel.LastTenLogs):
                     RebuildMealCards();

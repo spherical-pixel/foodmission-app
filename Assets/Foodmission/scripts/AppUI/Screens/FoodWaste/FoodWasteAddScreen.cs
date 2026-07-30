@@ -316,9 +316,9 @@ namespace eu.foodmission.platform
         {
             bool busy = _viewModel.IsLoading || _viewModel.IsSaving;
             if (busy)
-                FMLoadingOverlay.Show(contentContainer);
+                FMLoadingOverlay.Show();
             else
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
             _btnSave?.SetEnabled(!busy);
             _pantryDropdown?.SetEnabled(!busy);
         }

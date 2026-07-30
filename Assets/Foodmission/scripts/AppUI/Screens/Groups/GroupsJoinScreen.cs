@@ -170,7 +170,7 @@ namespace eu.foodmission.platform
             switch (e.PropertyName)
             {
                 case nameof(_viewModel.IsJoining):
-                    UpdateJoiningState();
+                    UpdateLoadingState();
                     break;
                 case nameof(_viewModel.ErrorMessage):
                     UpdateErrorState();
@@ -181,13 +181,13 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void UpdateJoiningState()
+        private void UpdateLoadingState()
         {
             bool isJoining = _viewModel.IsJoining;
             if (isJoining)
-                FMLoadingOverlay.Show(contentContainer);
+                FMLoadingOverlay.Show();
             else
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
 
             if (_btnJoin != null) _btnJoin.SetEnabled(!isJoining);
             if (_inviteCodeField != null) _inviteCodeField.SetEnabled(!isJoining);

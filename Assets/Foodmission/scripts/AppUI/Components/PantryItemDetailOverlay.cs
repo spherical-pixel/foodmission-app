@@ -256,9 +256,9 @@ namespace eu.foodmission.platform
         {
             if (_overlay == null || _viewModel == null) return;
             if (_viewModel.IsLoading || _viewModel.IsSaving)
-                FMLoadingOverlay.Show(_overlay);
+                FMLoadingOverlay.Show();
             else
-                FMLoadingOverlay.Hide(_overlay);
+                FMLoadingOverlay.Hide();
             _btnSave?.SetEnabled(!_viewModel.IsLoading && !_viewModel.IsSaving);
             _btnDelete?.SetEnabled(!_viewModel.IsLoading && !_viewModel.IsSaving);
         }

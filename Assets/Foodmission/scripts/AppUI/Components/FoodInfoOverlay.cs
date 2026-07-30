@@ -684,9 +684,9 @@ namespace eu.foodmission.platform
         {
             if (_overlay == null || _viewModel == null) return;
             if (_viewModel.IsLoading)
-                FMLoadingOverlay.Show(_overlay);
+                FMLoadingOverlay.Show();
             else
-                FMLoadingOverlay.Hide(_overlay);
+                FMLoadingOverlay.Hide();
         }
 
         private static void UpdateApiErrorState()

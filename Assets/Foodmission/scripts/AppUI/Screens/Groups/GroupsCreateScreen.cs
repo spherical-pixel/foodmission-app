@@ -180,9 +180,9 @@ namespace eu.foodmission.platform
         {
             bool isCreating = _viewModel.IsCreating;
             if (isCreating)
-                FMLoadingOverlay.Show(contentContainer);
+                FMLoadingOverlay.Show();
             else
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
 
             if (_btnCreate != null) _btnCreate.SetEnabled(!isCreating);
             if (_nameField != null) _nameField.SetEnabled(!isCreating);

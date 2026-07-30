@@ -100,7 +100,7 @@ namespace eu.foodmission.platform
 
         private async Task AutoRedirectToLastOpenedListAsync()
         {
-            FMLoadingOverlay.Show(contentContainer);
+            FMLoadingOverlay.Show();
             try
             {
                 var (lastList, error) = await _viewModel.ResolveLastOpenedListAsync();
@@ -130,7 +130,7 @@ namespace eu.foodmission.platform
             }
             finally
             {
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
             }
         }
 
@@ -221,11 +221,11 @@ namespace eu.foodmission.platform
             bool isLoading = _viewModel.IsLoading;
             if (isLoading)
             {
-                FMLoadingOverlay.Show(contentContainer);
+                FMLoadingOverlay.Show();
             }
             else
             {
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
             }
         }
 

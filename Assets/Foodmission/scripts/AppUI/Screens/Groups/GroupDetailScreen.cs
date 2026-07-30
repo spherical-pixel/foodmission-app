@@ -210,9 +210,9 @@ namespace eu.foodmission.platform
         {
             bool loading = _viewModel.IsLoading;
             if (loading)
-                FMLoadingOverlay.Show(contentContainer);
+                FMLoadingOverlay.Show();
             else
-                FMLoadingOverlay.Hide(contentContainer);
+                FMLoadingOverlay.Hide();
         }
 
         private void UpdateApiErrorState()
