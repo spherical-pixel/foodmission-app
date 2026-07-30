@@ -9,8 +9,8 @@
                     <ui:DataBinding property="text" data-source-path="ListName" binding-mode="ToTarget"/>
                 </Bindings>
             </appui:Heading>
-            <ui:VisualElement style="flex-grow: 0; flex-direction: row-reverse; flex-shrink: 0;">
-                <appui:ActionGroup compact="true" quiet="true">
+            <ui:VisualElement style="flex-grow: 0; flex-direction: row; flex-shrink: 0; justify-content: flex-end; align-self: stretch; align-content: flex-end; align-items: stretch;">
+                <appui:ActionGroup compact="true" quiet="false" direction="Horizontal" style="max-width: 200px;">
                     <appui:ActionButton name="change-list-button" label="hkjkhj">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26661509051441152)"/>

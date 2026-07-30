@@ -1299,6 +1299,25 @@
     height: var(--appui-sizing-450);
 }
 
+/* Fix for App UI Checkbox checkmark sizing and alignment on mobile devices */
+.appui-checkbox__box {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.appui-checkbox__box > .appui-icon,
+.appui-checkbox__box > .appui-checkbox__checkmark,
+.appui-checkbox__box > .appui-checkbox__partialcheckmark {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+
 
 .fm-groups-item {
     overflow: hidden;
