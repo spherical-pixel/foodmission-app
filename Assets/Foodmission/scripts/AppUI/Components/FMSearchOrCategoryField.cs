@@ -64,6 +64,45 @@ namespace eu.foodmission.platform.Components
 
         private static readonly Dictionary<string, string> CategoryEmojis = new()
         {
+            // Slug keys (Primary for icon matching)
+            { "alcoholic-beverages", "🍺" },
+            { "bread", "🍞" },
+            { "cereal-products-and-seeds", "🌾" },
+            { "cereal-products-and-types-of-flour", "🌾" },
+            { "cheese", "🧀" },
+            { "cold-meat-cuts", "🥩" },
+            { "eggs", "🥚" },
+            { "fats-and-oils", "🫒" },
+            { "fats-oils-and-savoury-spreads", "🫒" },
+            { "fish-crustacean-shellfish", "🐟" },
+            { "fish-crustacean-and-shellfish", "🐟" },
+            { "foods-for-special-nutritional-use", "🍼" },
+            { "fruit", "🍎" },
+            { "fruits", "🍎" },
+            { "herbs-and-spices", "🌿" },
+            { "legumes", "🫘" },
+            { "meat-and-poultry", "🍗" },
+            { "meat-substitutes-and-dairy-substitutes", "🧈" },
+            { "milk-and-milk-products", "🥛" },
+            { "miscellaneous", "📦" },
+            { "miscellaneous-foods", "📦" },
+            { "mixed-dishes", "🍽️" },
+            { "prepared-dishes", "🍽️" },
+            { "non-alcoholic-beverages", "🥤" },
+            { "nuts-and-seeds", "🥜" },
+            { "pastry-and-biscuits", "🥐" },
+            { "potatoes-and-tubers", "🥔" },
+            { "savoury-bread-spreads", "🧴" },
+            { "savoury-sauces", "🥫" },
+            { "savouries", "🍿" },
+            { "savoury-snacks", "🍿" },
+            { "snacks", "🍿" },
+            { "soups", "🍜" },
+            { "sugar-sweets-sweet-spreads-and-sauce", "🍯" },
+            { "sugar-sweets-and-sweet-sauces", "🍯" },
+            { "vegetables", "🥦" },
+
+            // Legacy English string keys (backward compatibility & test compatibility)
             { "Alcoholic beverages", "🍺" },
             { "Bread", "🍞" },
             { "Cereal products and types of flour", "🌾" },
@@ -95,6 +134,53 @@ namespace eu.foodmission.platform.Components
 
         public static IReadOnlyDictionary<string, string> CategoryEmojisPublic => CategoryEmojis;
 
+        private static readonly List<FoodGroupItem> DefaultFoodGroupItems = new()
+        {
+            new FoodGroupItem { slug = "alcoholic-beverages", name = "Alcoholic beverages" },
+            new FoodGroupItem { slug = "bread", name = "Bread" },
+            new FoodGroupItem { slug = "cereal-products-and-types-of-flour", name = "Cereal products and types of flour" },
+            new FoodGroupItem { slug = "cheese", name = "Cheese" },
+            new FoodGroupItem { slug = "cold-meat-cuts", name = "Cold meat cuts" },
+            new FoodGroupItem { slug = "eggs", name = "Eggs" },
+            new FoodGroupItem { slug = "fats-and-oils", name = "Fats and oils" },
+            new FoodGroupItem { slug = "fish-crustacean-shellfish", name = "Fish, crustacean and shellfish" },
+            new FoodGroupItem { slug = "foods-for-special-nutritional-use", name = "Foods for special nutritional use" },
+            new FoodGroupItem { slug = "fruits", name = "Fruits" },
+            new FoodGroupItem { slug = "herbs-and-spices", name = "Herbs and spices" },
+            new FoodGroupItem { slug = "legumes", name = "Legumes" },
+            new FoodGroupItem { slug = "meat-and-poultry", name = "Meat and poultry" },
+            new FoodGroupItem { slug = "meat-substitutes-and-dairy-substitutes", name = "Meat substitutes and dairy substitutes" },
+            new FoodGroupItem { slug = "milk-and-milk-products", name = "Milk and milk products" },
+            new FoodGroupItem { slug = "miscellaneous-foods", name = "Miscellaneous foods" },
+            new FoodGroupItem { slug = "mixed-dishes", name = "Mixed dishes" },
+            new FoodGroupItem { slug = "non-alcoholic-beverages", name = "Non-alcoholic beverages" },
+            new FoodGroupItem { slug = "nuts-and-seeds", name = "Nuts and seeds" },
+            new FoodGroupItem { slug = "pastry-and-biscuits", name = "Pastry and biscuits" },
+            new FoodGroupItem { slug = "potatoes-and-tubers", name = "Potatoes and tubers" },
+            new FoodGroupItem { slug = "savoury-bread-spreads", name = "Savoury bread spreads" },
+            new FoodGroupItem { slug = "savoury-sauces", name = "Savoury sauces" },
+            new FoodGroupItem { slug = "savoury-snacks", name = "Savoury snacks" },
+            new FoodGroupItem { slug = "soups", name = "Soups" },
+            new FoodGroupItem { slug = "sugar-sweets-and-sweet-sauces", name = "Sugar, sweets and sweet sauces" },
+            new FoodGroupItem { slug = "vegetables", name = "Vegetables" },
+        };
+
+        public static string ToSlug(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+            string cleaned = System.Text.RegularExpressions.Regex.Replace(input.Trim().ToLowerInvariant(), @"[^a-z0-9]+", "-");
+            return cleaned.Trim('-');
+        }
+
+        public static string GetCategoryEmoji(string groupOrSlug)
+        {
+            if (string.IsNullOrEmpty(groupOrSlug)) return "📦";
+            if (CategoryEmojis.TryGetValue(groupOrSlug, out string emoji)) return emoji;
+            string slug = ToSlug(groupOrSlug);
+            if (CategoryEmojis.TryGetValue(slug, out string slugEmoji)) return slugEmoji;
+            return "📦";
+        }
+
         private Func<string, Task<(FoodProduct Result, ApiErrorResponse Error)>> _importFromBarcodeAsync;
         public Func<string, Task<(FoodProduct Result, ApiErrorResponse Error)>> ImportFromBarcodeAsync
         {
@@ -113,6 +199,11 @@ namespace eu.foodmission.platform.Components
         private Mode _currentMode = Mode.Idle;
         private CancellationTokenSource _debounceCts;
         private static List<GenericFood> s_SessionGenericFoodsCache;
+
+        public static void ClearSessionCache()
+        {
+            s_SessionGenericFoodsCache = null;
+        }
         private List<GenericFood> _genericFoods = new();
         private List<object> _recentProducts = new();
         private object _selectedItem;
@@ -123,6 +214,7 @@ namespace eu.foodmission.platform.Components
         private int _currentPage;
         private int _totalPages;
         private string _currentFoodGroup;
+        private string _currentFoodGroupSlug;
         private VisualElement _paginationContainer;
         private CancellationTokenSource _categoryLoadCts;
 
@@ -407,21 +499,19 @@ namespace eu.foodmission.platform.Components
             _resultsContainer.style.display = DisplayStyle.Flex;
             _spinner.style.display = DisplayStyle.None;
 
-            // Check static session cache if instance _genericFoods is empty
-            if ((_genericFoods == null || _genericFoods.Count == 0) && s_SessionGenericFoodsCache != null && s_SessionGenericFoodsCache.Count > 0)
+            // 1. If session cache exists, use it immediately
+            if (s_SessionGenericFoodsCache != null && s_SessionGenericFoodsCache.Count > 0)
             {
                 _genericFoods = s_SessionGenericFoodsCache;
-            }
-
-            // 1. If we already have generic foods loaded, render immediately
-            if (_genericFoods != null && _genericFoods.Count > 0)
-            {
-                RenderCategoryList(ExtractGroups(_genericFoods));
+                var cachedGroups = ExtractGroups(_genericFoods);
+                RenderCategoryList(cachedGroups.Count > 0 ? cachedGroups : DefaultFoodGroupItems);
                 return;
             }
 
-            // 2. Pre-render instantly using default CategoryEmojis keys (0ms latency visual feedback)
-            RenderCategoryList(CategoryEmojis.Keys);
+            _genericFoods.Clear();
+
+            // 2. Pre-render instantly using default items (0ms latency visual feedback)
+            RenderCategoryList(DefaultFoodGroupItems);
 
             // 3. Perform background fetch if callback is supplied and not yet cached
             if (GetGenericFoodsAsync != null)
@@ -449,19 +539,24 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        private List<string> ExtractGroups(List<GenericFood> foods)
+        private List<FoodGroupItem> ExtractGroups(List<GenericFood> foods)
         {
-            var groups = new List<string>();
+            var groups = new List<FoodGroupItem>();
             var seen = new HashSet<string>();
             foreach (var gf in foods)
             {
-                string group = string.IsNullOrEmpty(gf.foodGroup) ? "Other" : gf.foodGroup;
-                if (seen.Add(group)) groups.Add(group);
+                string name = string.IsNullOrEmpty(gf.foodGroup) ? "Other" : gf.foodGroup;
+                string slug = string.IsNullOrEmpty(gf.foodGroupSlug) ? ToSlug(name) : gf.foodGroupSlug;
+                string key = !string.IsNullOrEmpty(slug) ? slug : name;
+                if (seen.Add(key))
+                {
+                    groups.Add(new FoodGroupItem { slug = slug, name = name });
+                }
             }
             return groups;
         }
 
-        private void RenderCategoryList(IEnumerable<string> groups)
+        private void RenderCategoryList(IEnumerable<FoodGroupItem> groups)
         {
             _categoryContainer.Clear();
 
@@ -488,8 +583,8 @@ namespace eu.foodmission.platform.Components
 
             foreach (var group in groups)
             {
-                string emoji = CategoryEmojis.TryGetValue(group, out string e) ? e : "📦";
-                string localized = group;
+                string emoji = GetCategoryEmoji(group.slug);
+                string localized = group.name;
                 var btn = new Unity.AppUI.UI.Button();
                 btn.trailingIcon = "fm-arrow-right";
                 btn.style.flexGrow = 1;
@@ -497,15 +592,16 @@ namespace eu.foodmission.platform.Components
                 btn.AddToClassList("fm-button-align-left");
                 btn.title = $"{emoji} {localized}";
                 btn.quiet = true;
-                btn.RegisterCallback<ClickEvent>(_ => ShowItemsForGroup(group));
+                btn.RegisterCallback<ClickEvent>(_ => ShowItemsForGroup(group.name, group.slug));
                 btn.size = Size.M;
                 _categoryContainer.Add(btn);
             }
         }
 
-        private void ShowItemsForGroup(string foodGroup)
+        private void ShowItemsForGroup(string foodGroup, string foodGroupSlug = null)
         {
             _currentFoodGroup = foodGroup;
+            _currentFoodGroupSlug = foodGroupSlug;
             _currentPage = 1;
             _ = LoadCategoryPageAsync();
         }
@@ -540,7 +636,7 @@ namespace eu.foodmission.platform.Components
             // Back button row
             var backRow = new VisualElement();
             backRow.AddToClassList("fm-scf-back-row");
-            string backEmoji = CategoryEmojis.TryGetValue(_currentFoodGroup, out string be) ? be : "📦";
+            string backEmoji = GetCategoryEmoji(_currentFoodGroupSlug ?? _currentFoodGroup);
             string backLocalized = _currentFoodGroup;
             var backLabel = new Unity.AppUI.UI.Heading { text = $"{backEmoji} {backLocalized}" };
             backLabel.size = HeadingSize.M;

@@ -63,30 +63,14 @@ namespace eu.foodmission.platform.Tests
             var dict = field.GetValue(null) as Dictionary<string, string>;
             Assert.IsNotNull(dict);
 
-            Assert.IsTrue(dict.ContainsKey("Fruits"));
-            Assert.IsTrue(dict.ContainsKey("Vegetables"));
-            Assert.IsTrue(dict.ContainsKey("Bread"));
-            Assert.IsTrue(dict.ContainsKey("Eggs"));
-            Assert.IsTrue(dict.ContainsKey("Cheese"));
-            Assert.IsTrue(dict.ContainsKey("Meat and poultry"));
-            Assert.IsTrue(dict.ContainsKey("Fish, crustacean and shellfish"));
-            Assert.IsTrue(dict.ContainsKey("Legumes"));
-            Assert.IsTrue(dict.ContainsKey("Nuts and seeds"));
-            Assert.IsTrue(dict.ContainsKey("Milk and milk products"));
-            Assert.IsTrue(dict.ContainsKey("Fats and oils"));
-            Assert.IsTrue(dict.ContainsKey("Non-alcoholic beverages"));
-            Assert.IsTrue(dict.ContainsKey("Alcoholic beverages"));
-            Assert.IsTrue(dict.ContainsKey("Soups"));
-            Assert.IsTrue(dict.ContainsKey("Savoury sauces"));
-            Assert.IsTrue(dict.ContainsKey("Savoury snacks"));
-            Assert.IsTrue(dict.ContainsKey("Herbs and spices"));
-            Assert.IsTrue(dict.ContainsKey("Cereal products and types of flour"));
-            Assert.IsTrue(dict.ContainsKey("Potatoes and tubers"));
-            Assert.IsTrue(dict.ContainsKey("Sugar, sweets and sweet sauces"));
-            Assert.IsTrue(dict.ContainsKey("Pastry and biscuits"));
-            Assert.IsTrue(dict.ContainsKey("Miscellaneous foods"));
-            Assert.IsTrue(dict.ContainsKey("Mixed dishes"));
-            Assert.AreEqual(27, dict.Count);
+            Assert.IsTrue(dict.ContainsKey("alcoholic-beverages"));
+            Assert.IsTrue(dict.ContainsKey("vegetables"));
+            Assert.IsTrue(dict.ContainsKey("potatoes-and-tubers"));
+
+            Assert.AreEqual("🍺", FMSearchOrCategoryField.GetCategoryEmoji("alcoholic-beverages"));
+            Assert.AreEqual("🥦", FMSearchOrCategoryField.GetCategoryEmoji("Vegetables"));
+            Assert.AreEqual("🥔", FMSearchOrCategoryField.GetCategoryEmoji("potatoes-and-tubers"));
+            Assert.AreEqual("🥛", FMSearchOrCategoryField.GetCategoryEmoji("Milk and milk products"));
         }
     }
 }

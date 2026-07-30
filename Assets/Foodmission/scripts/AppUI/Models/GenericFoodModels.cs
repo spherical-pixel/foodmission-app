@@ -5,11 +5,19 @@ using UnityEngine;
 namespace eu.foodmission.platform
 {
     [Serializable]
+    public class FoodGroupItem
+    {
+        public string slug;
+        public string name;
+    }
+
+    [Serializable]
     public class GenericFood
     {
         public string id;
         public string foodName;
         public string foodGroup;
+        public string foodGroupSlug;
     }
 
     [Serializable]
@@ -28,6 +36,7 @@ namespace eu.foodmission.platform
         public string id;
         public string foodName;
         public string foodGroup;
+        public string foodGroupSlug;
         public string synonym;
         public string quantity;
         public string containsTracesOf;

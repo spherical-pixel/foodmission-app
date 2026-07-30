@@ -643,15 +643,23 @@ namespace eu.foodmission.platform
             appBar.title = destination.label;
             appBar.stretch = false;
 
-            // Customize drawer button icon (on the left) to fm-avatar and ensure vertical centering
+            // Customize drawer button icon (on the left) to fm-avatar and ensure vertical centering and standard 44x44 touch target
             var drawerButton = appBar.Q<ActionButton>(className: "appui-appbar__drawer-button");
             if (drawerButton != null)
             {
                 drawerButton.icon = "fm-avatar";
                 drawerButton.style.marginTop = 0;
                 drawerButton.style.marginBottom = 0;
-                drawerButton.style.height = 40;
                 drawerButton.style.alignSelf = Align.Center;
+            }
+
+            // Ensure back button (on nested screens) also has standard 44x44 touch target
+            var backButton = appBar.Q<ActionButton>(className: "appui-appbar__back-button");
+            if (backButton != null)
+            {
+                backButton.style.marginTop = 0;
+                backButton.style.marginBottom = 0;
+                backButton.style.alignSelf = Align.Center;
             }
 
             // Ensure the action container is centered vertically
@@ -660,7 +668,6 @@ namespace eu.foodmission.platform
             {
                 actionContainer.style.marginTop = 0;
                 actionContainer.style.marginBottom = 0;
-                actionContainer.style.height = 40;
                 actionContainer.style.alignSelf = Align.Center;
             }
 
@@ -687,7 +694,7 @@ namespace eu.foodmission.platform
 
             if (showMenu)
             {
-                // Use ActionButton to align perfectly with the AppBar design and standard styling
+                // Use ActionButton to align perfectly with the AppBar design and standard styling with 44x44 touch target
                 var menuButton = new ActionButton
                 {
                     name = "appbar-menu-button",
@@ -696,10 +703,17 @@ namespace eu.foodmission.platform
                 };
                 menuButton.style.marginTop = 0;
                 menuButton.style.marginBottom = 0;
-                menuButton.style.height = 40;
                 menuButton.style.alignSelf = Align.Center;
                 menuButton.clicked += () => ToggleMenuDrawer();
-                appBar.Add(menuButton);
+
+                if (actionContainer != null)
+                {
+                    actionContainer.Add(menuButton);
+                }
+                else
+                {
+                    appBar.Add(menuButton);
+                }
             }
 
             var themeService = App.current?.services.GetService<IThemeService>();

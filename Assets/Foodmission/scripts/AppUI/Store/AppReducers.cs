@@ -164,6 +164,7 @@ namespace eu.foodmission.platform
 
         public static AppState SetLanguageReducer(AppState state, IAction<string> action)
         {
+            Components.FMSearchOrCategoryField.ClearSessionCache();
             var newState = state.Copy();
             newState.lang = action.payload;
             return newState;

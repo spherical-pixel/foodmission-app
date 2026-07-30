@@ -204,18 +204,74 @@ namespace eu.foodmission.platform
         private async Task<(bool Success, ApiErrorResponse Error)> TryAddIngredientsAsync(string targetListId, RecipeIngredient[] ingredients)
         {
             ApiErrorResponse firstError = null;
-            foreach (var ing in ingredients)
-            {
-                var (_, itemErr) = await _shoppingListService.AddItemAsync(
-                    targetListId,
-                    foodProductId: ing.foodProductId,
-                    genericFoodId: ing.genericFoodId,
-                    quantity: 1f,
-                    unit: "PIECES");
+            var (existingItems, _) = await _shoppingListService.GetItemsAsync(targetListId);
+            var itemsList = existingItems != null ? new System.Collections.Generic.List<ShoppingListItem>(existingItems) : new System.Collections.Generic.List<ShoppingListItem>();
 
-                if (itemErr != null && (itemErr.statusCode == 409 || (itemErr.error != null && itemErr.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (itemErr.message != null && itemErr.message.ToLowerInvariant().Contains("already"))))
+            for (int i = 0; i < ingredients.Length; i++)
+            {
+                var ing = ingredients[i];
+                if (i > 0)
                 {
-                    itemErr = null;
+                    await Task.Delay(150);
+                }
+
+                ShoppingListItem existingItem = itemsList.FirstOrDefault(x =>
+                    (!string.IsNullOrEmpty(ing.foodProductId) && x.foodProductId == ing.foodProductId) ||
+                    (!string.IsNullOrEmpty(ing.genericFoodId) && x.genericFoodId == ing.genericFoodId));
+
+                ApiErrorResponse itemErr = null;
+
+                if (existingItem != null)
+                {
+                    float newQty = existingItem.quantity + 1f;
+                    var (updated, updateErr) = await _shoppingListService.UpdateItemAsync(
+                        targetListId, existingItem.id, newQty, existingItem.unit, existingItem.notes, existingItem.@checked);
+
+                    if (updated != null)
+                    {
+                        existingItem.quantity = newQty;
+                    }
+                    else if (updateErr != null && (updateErr.statusCode == 409 || (updateErr.error != null && updateErr.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase))))
+                    {
+                        updateErr = null;
+                    }
+                    else
+                    {
+                        itemErr = updateErr;
+                    }
+                }
+                else
+                {
+                    var (added, addErr) = await _shoppingListService.AddItemAsync(
+                        targetListId,
+                        foodProductId: ing.foodProductId,
+                        genericFoodId: ing.genericFoodId,
+                        quantity: 1f,
+                        unit: "PIECES");
+
+                    if (addErr != null && (addErr.statusCode == 429 || (addErr.error != null && addErr.error.Equals("ThrottlerException", StringComparison.OrdinalIgnoreCase))))
+                    {
+                        await Task.Delay(500);
+                        (added, addErr) = await _shoppingListService.AddItemAsync(
+                            targetListId,
+                            foodProductId: ing.foodProductId,
+                            genericFoodId: ing.genericFoodId,
+                            quantity: 1f,
+                            unit: "PIECES");
+                    }
+
+                    if (added != null)
+                    {
+                        itemsList.Add(added);
+                    }
+                    else if (addErr != null && (addErr.statusCode == 409 || (addErr.error != null && addErr.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (addErr.message != null && addErr.message.ToLowerInvariant().Contains("already"))))
+                    {
+                        addErr = null;
+                    }
+                    else
+                    {
+                        itemErr = addErr;
+                    }
                 }
 
                 if (itemErr != null && firstError == null)

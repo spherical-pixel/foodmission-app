@@ -177,5 +177,29 @@ namespace eu.foodmission.platform.Tests
             _mockShoppingListService.Verify(s => s.CreateListAsync(It.IsAny<string>()), Times.Once);
             _mockShoppingListService.Verify(s => s.AddItemAsync("new-list-id", "fp1", It.IsAny<float>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>(), It.IsAny<string>()), Times.Once);
         }
+
+        [Test]
+        public async Task AddIngredientsToShoppingListAsync_WhenItemExists_IncrementsQuantity()
+        {
+            _viewModel.Recipe = new Recipe
+            {
+                id = "r1",
+                ingredients = new[]
+                {
+                    new RecipeIngredient { foodProductId = "fp1" }
+                }
+            };
+
+            _mockShoppingListService.Setup(s => s.GetItemsAsync("list-1"))
+                .ReturnsAsync((new[] { new ShoppingListItem { id = "item-1", foodProductId = "fp1", quantity = 2f, unit = "PIECES", @checked = false } }, null));
+
+            _mockShoppingListService.Setup(s => s.UpdateItemAsync("list-1", "item-1", 3f, "PIECES", null, false))
+                .ReturnsAsync((new ShoppingListItem { id = "item-1", quantity = 3f }, null));
+
+            bool success = await _viewModel.AddIngredientsToShoppingListAsync("list-1");
+
+            Assert.IsTrue(success);
+            _mockShoppingListService.Verify(s => s.UpdateItemAsync("list-1", "item-1", 3f, "PIECES", null, false), Times.Once);
+        }
     }
 }

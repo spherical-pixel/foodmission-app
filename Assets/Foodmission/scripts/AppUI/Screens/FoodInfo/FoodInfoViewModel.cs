@@ -295,7 +295,7 @@ namespace eu.foodmission.platform
 
             FoodName = detail.foodName ?? "";
             FoodSubtitle = detail.foodGroup ?? "";
-            Emoji = GetEmojiForFoodGroup(detail.foodGroup);
+            Emoji = GetEmojiForFoodGroup(detail.foodGroup, detail.foodGroupSlug);
             NutritionGrade = "unknown";
             NovaGroup = 0;
             EcoScoreGrade = "unknown";
@@ -395,7 +395,7 @@ namespace eu.foodmission.platform
 
                 FoodName = genericFood.foodName ?? "";
                 FoodSubtitle = genericFood.foodGroup ?? "";
-                Emoji = GetEmojiForFoodGroup(genericFood.foodGroup);
+                Emoji = GetEmojiForFoodGroup(genericFood.foodGroup, genericFood.foodGroupSlug);
                 NutritionGrade = "unknown";
                 NovaGroup = 0;
                 EcoScoreGrade = "unknown";
@@ -857,13 +857,14 @@ namespace eu.foodmission.platform
             return null;
         }
 
-        private static string GetEmojiForFoodGroup(string foodGroup)
+        private static string GetEmojiForFoodGroup(string foodGroup, string foodGroupSlug = null)
         {
-            if (string.IsNullOrEmpty(foodGroup))
-                return "\ud83c\udf7d\ufe0f";
+            if (string.IsNullOrEmpty(foodGroup) && string.IsNullOrEmpty(foodGroupSlug))
+                return "🍽️";
 
-            var emojis = Components.FMSearchOrCategoryField.CategoryEmojisPublic;
-            return emojis.TryGetValue(foodGroup, out string emoji) ? emoji : "\ud83c\udf7d\ufe0f";
+            string key = !string.IsNullOrEmpty(foodGroupSlug) ? foodGroupSlug : foodGroup;
+            string emoji = Components.FMSearchOrCategoryField.GetCategoryEmoji(key);
+            return emoji != "📦" ? emoji : "🍽️";
         }
 
         public static string FormatTagsList(IEnumerable<string> rawTags, string preferredLang = "en")

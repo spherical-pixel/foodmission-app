@@ -189,7 +189,8 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] AddItem"));
+                bool isExpectedConflict = request.responseCode == 409;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] AddItem", logAsError: !isExpectedConflict));
             }
 
             return (JsonUtility.FromJson<ShoppingListItem>(request.downloadHandler.text), null);
