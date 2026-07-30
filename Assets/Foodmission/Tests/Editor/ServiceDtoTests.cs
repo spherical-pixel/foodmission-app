@@ -79,6 +79,29 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void BatchWasteRequest_ToJsonBody_SkipsEmptyOrNullFields()
+        {
+            var req = new BatchWasteRequest
+            {
+                items = new[]
+                {
+                    new BatchWasteItemRequest { pantryItemId = "pi1", quantity = null, unit = "", costEstimate = 0f, notes = "  " },
+                    new BatchWasteItemRequest { pantryItemId = "pi2" }
+                }
+            };
+
+            byte[] jsonBytes = req.ToJsonBody();
+            string json = Encoding.UTF8.GetString(jsonBytes);
+
+            Assert.IsTrue(json.Contains("pi1"));
+            Assert.IsTrue(json.Contains("pi2"));
+            Assert.IsFalse(json.Contains("quantity"));
+            Assert.IsFalse(json.Contains("unit"));
+            Assert.IsFalse(json.Contains("costEstimate"));
+            Assert.IsFalse(json.Contains("notes"));
+        }
+
+        [Test]
         public void WasteReason_ContainsExpectedConstants()
         {
             Assert.AreEqual("EXPIRED", WasteReason.Expired);

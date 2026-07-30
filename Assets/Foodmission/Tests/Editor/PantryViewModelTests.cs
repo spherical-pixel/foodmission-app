@@ -181,6 +181,52 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task BatchWasteExpiredAsync_SendsOnlyPantryItemIdForExpiredItems()
+        {
+            _vm.ExpiredItems = new[]
+            {
+                new ExpiredPantryItem { pantryItemId = "exp1", quantity = 2.0f, unit = "kg", foodProductId = "fp1" },
+                new ExpiredPantryItem { pantryItemId = "exp2", quantity = 1.0f, unit = "L", foodProductId = "fp2" }
+            };
+            _vm.ExpiredItemCount = 2;
+
+            BatchWasteRequest capturedRequest = null;
+            _mockPantryService
+                .Setup(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()))
+                .Callback<BatchWasteRequest>(req => capturedRequest = req)
+                .Returns(Task.FromResult<(BatchWasteResult Result, ApiErrorResponse Error)>((new BatchWasteResult { successCount = 2 }, null)));
+            _mockPantryService
+                .Setup(x => x.GetPantryAsync())
+                .Returns(Task.FromResult<(Pantry Result, ApiErrorResponse Error)>((new Pantry { id = "p1", items = Array.Empty<PantryItem>() }, null)));
+            _mockPantryService
+                .Setup(x => x.GetExpiredItemsAsync())
+                .Returns(Task.FromResult<(ExpiredPantryItem[] Result, ApiErrorResponse Error)>((Array.Empty<ExpiredPantryItem>(), null)));
+
+            int count = await _vm.BatchWasteExpiredAsync();
+
+            Assert.AreEqual(2, count);
+            Assert.IsNotNull(capturedRequest);
+            Assert.AreEqual(2, capturedRequest.items.Length);
+
+            foreach (var item in capturedRequest.items)
+            {
+                Assert.IsFalse(string.IsNullOrEmpty(item.pantryItemId));
+                Assert.IsNull(item.quantity);
+                Assert.IsNull(item.unit);
+                Assert.IsNull(item.costEstimate);
+                Assert.IsNull(item.notes);
+            }
+
+            string json = Encoding.UTF8.GetString(capturedRequest.ToJsonBody());
+            Assert.IsTrue(json.Contains("exp1"));
+            Assert.IsTrue(json.Contains("exp2"));
+            Assert.IsFalse(json.Contains("quantity"));
+            Assert.IsFalse(json.Contains("unit"));
+            Assert.IsFalse(json.Contains("costEstimate"));
+            Assert.IsFalse(json.Contains("notes"));
+        }
+
+        [Test]
         public async Task DeleteItemAsync_OnSuccess_RemovesItemFromList()
         {
             _mockPantryService

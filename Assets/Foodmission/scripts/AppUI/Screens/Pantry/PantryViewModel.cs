@@ -511,16 +511,13 @@ namespace eu.foodmission.platform
 
         public async Task<int> BatchWasteExpiredAsync()
         {
-            if (ExpiredItems.Length == 0) return 0;
+            if (ExpiredItems == null || ExpiredItems.Length == 0) return 0;
 
             var batchRequest = new BatchWasteRequest
             {
                 items = ExpiredItems.Select(e => new BatchWasteItemRequest
                 {
-                    pantryItemId = e.pantryItemId,
-                    quantity = e.quantity,
-                    unit = e.unit,
-                    notes = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "AUTO_DETECTED_EXPIRED")
+                    pantryItemId = e.pantryItemId
                 }).ToArray()
             };
 

@@ -166,6 +166,18 @@ namespace eu.foodmission.platform
 
         public byte[] ToJsonBody()
         {
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    if (item == null) continue;
+                    if (item.quantity.HasValue && item.quantity.Value <= 0f) item.quantity = null;
+                    if (string.IsNullOrWhiteSpace(item.unit)) item.unit = null;
+                    if (item.costEstimate.HasValue && item.costEstimate.Value <= 0f) item.costEstimate = null;
+                    if (string.IsNullOrWhiteSpace(item.notes)) item.notes = null;
+                }
+            }
+
             string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
