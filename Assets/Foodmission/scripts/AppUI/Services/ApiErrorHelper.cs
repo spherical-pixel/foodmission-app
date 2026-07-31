@@ -1,3 +1,4 @@
+using Unity.AppUI.MVVM;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -49,6 +50,15 @@ namespace eu.foodmission.platform
                         : $"HTTP {code}",
                     error = snippet ?? string.Empty
                 };
+            }
+
+            if (code == 401 && context != null && !context.Contains("Login") && !context.Contains("Refresh") && !context.Contains("Register"))
+            {
+                var authService = App.current?.services?.GetService<IAuthService>();
+                if (authService != null)
+                {
+                    _ = authService.HandleUnauthorizedAsync();
+                }
             }
 
             return error;

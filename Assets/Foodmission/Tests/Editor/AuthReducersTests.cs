@@ -221,6 +221,24 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task AuthService_HandleUnauthorizedAsync_WithNoRefreshToken_LogsOutAndFiresOnSessionExpired()
+        {
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var localStorageService = new LocalStorageService();
+            var storeService = new StoreService(localStorageService);
+            var authService = new AuthService(storeService);
+
+            bool sessionExpiredFired = false;
+            authService.OnSessionExpired += () => sessionExpiredFired = true;
+
+            var result = await authService.HandleUnauthorizedAsync();
+
+            storeService.Dispose();
+            Assert.IsFalse(result);
+            Assert.IsTrue(sessionExpiredFired);
+        }
+
+        [Test]
         public void AppState_Copy_IncludesFont()
         {
             var state = new AppState { font = "open-sans" };

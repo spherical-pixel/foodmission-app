@@ -12,8 +12,11 @@ namespace eu.foodmission.platform
     /// </summary>
     public class AuthService : IAuthService
     {
+        public event Action OnSessionExpired;
+
         private readonly IStoreService _storeService;
         private System.Threading.CancellationTokenSource _refreshTimerCts;
+        private readonly System.Threading.SemaphoreSlim _refreshLock = new System.Threading.SemaphoreSlim(1, 1);
 
         public AuthService(IStoreService storeService)
         {
@@ -77,11 +80,48 @@ namespace eu.foodmission.platform
 
                     return true;
                 }
+
+                if (request.responseCode == 401)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] CheckSessionAsync token-info returned 401 — attempting refresh");
+                    return await RefreshAsync();
+                }
+
                 return false;
             }
             catch
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// De-duplicated handler for 401 Unauthorized errors returned by API requests.
+        /// Attempts automatic token refresh; if refresh fails, logs out and raises OnSessionExpired.
+        /// </summary>
+        public async Task<bool> HandleUnauthorizedAsync()
+        {
+            await _refreshLock.WaitAsync();
+            try
+            {
+                Debug.LogWarning($"[{GetType().Name}] HTTP 401 Unauthorized detected — attempting session recovery");
+                bool success = await RefreshAsync();
+                if (success)
+                {
+                    Debug.Log($"[{GetType().Name}] Session recovered successfully via token refresh");
+                    return true;
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Session recovery failed — logging out and triggering OnSessionExpired");
+                    Logout();
+                    OnSessionExpired?.Invoke();
+                    return false;
+                }
+            }
+            finally
+            {
+                _refreshLock.Release();
             }
         }
 
@@ -149,7 +189,7 @@ namespace eu.foodmission.platform
                 _storeService.store.Dispatch(AppActions.tokenRefreshed.Invoke(payload));
 
                 ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
-                Debug.Log($"[{GetType().Name}] Token refreshed. Expires in {response.expires_in}s");
+                Debug.Log($"[{GetType().Name}] Token refreshed successfully. Access Token lifespan: {response.expires_in}s ({response.expires_in / 60f:F1} min), Refresh Token lifespan: {response.refresh_expires_in}s ({response.refresh_expires_in / 60f:F1} min)");
                 return true;
             }
             catch (Exception ex)
@@ -194,6 +234,7 @@ namespace eu.foodmission.platform
                 {
                     Debug.LogWarning($"[{GetType().Name}] Proactive refresh failed — logging out");
                     Logout();
+                    OnSessionExpired?.Invoke();
                 }
             }
             catch (OperationCanceledException) { }
@@ -293,7 +334,7 @@ namespace eu.foodmission.platform
                 }
 
                 ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
-                Debug.Log($"[{GetType().Name}] Login successful for user: {userId}");
+                Debug.Log($"[{GetType().Name}] Login successful for user: {userId}. Access Token lifespan: {response.expires_in}s ({response.expires_in / 60f:F1} min), Refresh Token lifespan: {response.refresh_expires_in}s ({response.refresh_expires_in / 60f:F1} min)");
 
                 return (true, userId, null);
             }

@@ -1,5 +1,6 @@
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -90,6 +91,68 @@ namespace eu.foodmission.platform
 
             // Initialize keyboard service and panel adjuster
             InitializeKeyboardSystem();
+
+            // Subscribe to session expiration
+            var authService = App.current?.services?.GetService<IAuthService>();
+            if (authService != null)
+            {
+                authService.OnSessionExpired += HandleSessionExpired;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            var authService = App.current?.services?.GetService<IAuthService>();
+            if (authService != null)
+            {
+                authService.OnSessionExpired -= HandleSessionExpired;
+            }
+        }
+
+        private void HandleSessionExpired()
+        {
+            var navHost = GetComponentInChildren<NavHost>();
+            if (navHost != null && navHost.navController != null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Session expired — navigating to login screen");
+                navHost.navController.Navigate(Actions.go_to_auth);
+            }
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (hasFocus)
+            {
+                CheckSessionOnResume();
+            }
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (!pauseStatus)
+            {
+                CheckSessionOnResume();
+            }
+        }
+
+        private async void CheckSessionOnResume()
+        {
+            var authService = App.current?.services?.GetService<IAuthService>();
+            if (authService != null)
+            {
+                var storeService = App.current?.services?.GetService<IStoreService>();
+                if (storeService != null && !string.IsNullOrEmpty(storeService.GetAppState().accessToken))
+                {
+                    Debug.Log($"[{GetType().Name}] App resumed — verifying auth session");
+                    bool valid = await authService.CheckSessionAsync();
+                    if (!valid)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] Session invalid on app resume — navigating to login");
+                        authService.Logout();
+                        HandleSessionExpired();
+                    }
+                }
+            }
         }
 
         /// <summary>
