@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 60a0b41506ad468aa4721c622aae4a0b
+timeCreated: 1703014227
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/Elements/VisualElementExtensions.cs
+  uploadId: 674590

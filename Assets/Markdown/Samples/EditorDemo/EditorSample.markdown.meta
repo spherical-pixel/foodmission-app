@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d41f2bfb875524573a34d2fab2abd0e0
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 2bfd0dcb8d1240bb830b9ca645061aa5, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/EditorDemo/EditorSample.markdown
+  uploadId: 674590

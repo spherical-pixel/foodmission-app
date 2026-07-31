@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 245b913c5ae04f5aa1a1a0704254379d
+timeCreated: 1702816597
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/RichTextEngine.cs
+  uploadId: 674590

@@ -1,0 +1,190 @@
+
+.heading {
+    -unity-font-style: bold;
+    margin-top: 12px;
+}
+.heading.first-block {
+    margin-top: 0px;
+}
+
+.heading-1 {
+    font-size: 35px;
+}
+.heading-2 {
+    font-size: 30px;
+}
+.heading-3 {
+    font-size: 25px;
+}
+.heading-4 {
+    font-size: 20px;
+}
+.heading-5 {
+    font-size: 20px;
+    -unity-font-style: normal;
+}
+.heading-6 {
+    font-size: 20px;
+    opacity: .7;
+}
+
+.thematic-line {
+    border-bottom-color: rgba(255, 255, 255, .4);
+    border-bottom-width: 2px;
+}
+
+.table {
+    flex-direction: column;
+    flex-grow: 1;
+}
+.table-row {
+    flex-grow: 1;
+    flex-direction: row;
+    border-bottom-width: 1px;
+    border-color: rgba(255, 255, 255, .3);
+}
+.row-data {
+    flex-direction: row;
+}
+.table-row.header .table-cell {
+    padding: 6px;
+}
+.table-cell {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.table-row.header {
+    -unity-font-style: bold;
+    font-size: 14px;
+    border-top-width: 1px;
+    border-bottom-width: 2px;
+    border-right-width: 1px;
+}
+.table-row.header .table-col {
+    border-right-width: 0px;
+}
+
+.table-col {
+    flex-grow:1;
+    border-left-width: 1px;
+    border-color: rgba(255, 255, 255, .3);
+    
+}
+.table-col.last-entry {
+    border-right-width: 1px;
+}
+
+.paragraph {
+    display: flex;
+    flex-direction: column;
+}
+.paragraph .line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: normal;
+    position: relative;
+    overflow: hidden;
+}
+.paragraph .line SelectableLabel,
+.paragraph .line Label {
+    white-space: normal;
+}
+
+.list-element {
+    flex-direction: row;
+    padding-left: 6px;
+}
+
+.list-number {
+    opacity: .8;
+}
+
+.list-element .list-bullet {
+    opacity: .8;
+    background-color: rgba(255, 255, 255, .4);
+    border-radius: 10px;
+    width: 5px;
+    height: 5px;
+    top: 5px;
+    margin-right: 6px;
+}
+
+.list-element .list-element .list-bullet {
+    border-color: rgba(255, 255, 255, .4);
+    background-color: rgba(0,0,0,0);
+    border-width: 1px;
+}
+.list-element .list-element .list-element .list-element .list-bullet {
+    background-color: rgba(255, 255, 255, .4);
+    
+    border-radius: 0;
+}
+
+.link-hidden {
+    position: absolute;
+    color: rgba(64, 150, 240, 1);
+    
+    left: 0;
+    right: 0;
+}
+.link-hidden.hover {
+    color: rgba(90, 200, 255, 1);
+}
+
+LinkImageElement {
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100px;
+}
+
+LinkImageElement.clickable {
+    cursor: link;
+}
+
+.link {
+    position: absolute;
+    cursor: link;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.block {
+    margin-bottom: 12px;
+}
+.block .block {
+    margin-bottom: 0px;
+}
+
+.quote-block {
+    padding-left: 16px;
+    margin-left: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-left-color: rgba(255, 255, 255,.4);
+    border-left-width: 4px;
+}
+
+.code-block-text {
+    white-space: normal;
+}
+.code-block {
+    padding:6px;
+    background-color: rgba(0,0,0,.2);
+}
+.code-block .copy-button {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    border-width: 0;
+    opacity: .5;
+    background-image: resource("uMarkdownCopyIcon");
+    background-size: 12px;
+}
+.code-block .copy-button:hover {
+    opacity: .8;
+}

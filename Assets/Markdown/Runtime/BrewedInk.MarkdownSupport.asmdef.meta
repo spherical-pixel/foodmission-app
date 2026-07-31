@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1059f67f49a09474493db4e90ff111a2
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/BrewedInk.MarkdownSupport.asmdef
+  uploadId: 674590

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c34bf7da905cb41df90c29b928b61154
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/RuntimeDemo/Files/MarkdownRenderTextureSample.renderTexture
+  uploadId: 674590

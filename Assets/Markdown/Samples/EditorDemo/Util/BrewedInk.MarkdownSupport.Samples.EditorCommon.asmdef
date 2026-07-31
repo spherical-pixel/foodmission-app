@@ -1,0 +1,5 @@
+{
+  "name": "BrewedInk.MarkdownSupport.Samples.EditorCommon",
+  "references": ["BrewedInk.MarkdownSupport"],
+  "autoReferenced": true
+}

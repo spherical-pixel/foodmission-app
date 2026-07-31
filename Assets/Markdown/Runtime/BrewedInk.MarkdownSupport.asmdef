@@ -1,0 +1,17 @@
+{
+    "name": "BrewedInk.MarkdownSupport",
+    "rootNamespace": "BrewedInk.MarkdownSupport",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "BrewedInk.MarkdownSupport.Highlight.dll",
+        "BrewedInk.MarkdownSupport.Markdig.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

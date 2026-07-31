@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 1f4fc8f8253d4f699e1f2888798158c9
+timeCreated: 1703152982
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/UMarkdownRichTextStyles.cs
+  uploadId: 674590

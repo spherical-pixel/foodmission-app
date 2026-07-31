@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d4adf47d1f4fc4a1a8bfbdafa77aa7c9
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 13804, guid: 0000000000000000e000000000000000, type: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/RuntimeDemo/Files/NewUXMLTemplate.uxml
+  uploadId: 674590

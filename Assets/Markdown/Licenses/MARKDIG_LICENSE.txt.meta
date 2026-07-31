@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ab4cde6750c8a47a69d92669a9b67081
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Licenses/MARKDIG_LICENSE.txt
+  uploadId: 674590

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 28028c8af30134d8394429db9363373f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/RuntimeDemo/Files/MarkdownSamplePanelSettings.asset
+  uploadId: 674590

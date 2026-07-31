@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ce2b3f0aca8ab4edba34b0e42f713cb8
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 2bfd0dcb8d1240bb830b9ca645061aa5, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Readme.markdown
+  uploadId: 674590

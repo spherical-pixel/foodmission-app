@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: c87f65645705427fb923f17da3112199
+timeCreated: 1702899826
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/Elements/SelectableLabel.cs
+  uploadId: 674590

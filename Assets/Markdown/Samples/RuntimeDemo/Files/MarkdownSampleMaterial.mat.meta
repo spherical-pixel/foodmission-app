@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 793dec6a7c3834359ac50d3642a1fbaf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/RuntimeDemo/Files/MarkdownSampleMaterial.mat
+  uploadId: 674590

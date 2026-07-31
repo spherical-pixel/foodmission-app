@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 6f721cb4280840468e82057147a6aa42
+timeCreated: 1702886128
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/Elements/LinkElement.cs
+  uploadId: 674590

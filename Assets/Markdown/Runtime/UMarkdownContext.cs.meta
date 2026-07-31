@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 219c2f5834444c0c8cd9a3343baf87ba
+timeCreated: 1703086470
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/UMarkdownContext.cs
+  uploadId: 674590

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 032c65fb73f44eb5ab9b1916b45fd014
+timeCreated: 1703055791
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Runtime/Elements/QueryBuilderExtensions.cs
+  uploadId: 674590

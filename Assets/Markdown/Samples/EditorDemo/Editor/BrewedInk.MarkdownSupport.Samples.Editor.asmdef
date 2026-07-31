@@ -1,0 +1,11 @@
+{
+  "name": "BrewedInk.MarkdownSupport.Samples.Editor",
+  "references": [
+    "BrewedInk.MarkdownSupport",
+    "BrewedInk.MarkdownSupport.Editor",
+    "BrewedInk.MarkdownSupport.Samples.EditorCommon"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

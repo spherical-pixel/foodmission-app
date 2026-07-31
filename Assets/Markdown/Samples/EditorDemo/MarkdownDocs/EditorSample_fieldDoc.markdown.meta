@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 1d34ae0870a141b38ef1d7ce47418484
+timeCreated: 1703234285
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/EditorDemo/MarkdownDocs/EditorSample_fieldDoc.markdown
+  uploadId: 674590

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0a742bbb9b78f4b4a95406ea2e537476
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Resources/Fonts & Materials/Roboto-Regular SDF.asset
+  uploadId: 674590

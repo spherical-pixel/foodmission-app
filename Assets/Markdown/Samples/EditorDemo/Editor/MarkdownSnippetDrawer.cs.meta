@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 20c2032df3d949e5b9eb41a9af556ad4
+timeCreated: 1703233903
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/EditorDemo/Editor/MarkdownSnippetDrawer.cs
+  uploadId: 674590

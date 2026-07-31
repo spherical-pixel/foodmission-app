@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 12740f248fc5c4db5a1a030ba9e23e5d
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/RuntimeDemo/RuntimeSample.unity
+  uploadId: 674590

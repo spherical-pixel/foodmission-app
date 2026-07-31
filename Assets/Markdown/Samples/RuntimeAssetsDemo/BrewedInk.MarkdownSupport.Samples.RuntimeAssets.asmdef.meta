@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 07be41d996524180ac801b77e5afd2aa
+timeCreated: 1719742111
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273051
+  packageName: Markdown Support
+  packageVersion: 1.2
+  assetPath: Assets/Markdown/Samples/RuntimeAssetsDemo/BrewedInk.MarkdownSupport.Samples.RuntimeAssets.asmdef
+  uploadId: 674590

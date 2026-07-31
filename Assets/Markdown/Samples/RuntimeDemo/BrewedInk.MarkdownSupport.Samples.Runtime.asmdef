@@ -1,0 +1,4 @@
+{
+  "name": "BrewedInk.MarkdownSupport.Samples.Runtime",
+  "references": ["BrewedInk.MarkdownSupport"]
+}
