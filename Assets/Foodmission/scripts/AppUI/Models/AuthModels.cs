@@ -220,5 +220,7 @@ namespace eu.foodmission.platform
         public OnboardingSurveyData onboardingSurvey;
         public string lastShoppingListId;
         public bool autoAddToPantry;
+        public AvatarConfig avatarConfig;
+        public bool hasAvatar;
     }
 }

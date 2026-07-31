@@ -90,6 +90,7 @@ namespace eu.foodmission.platform
         // Extended profile
         public static readonly ActionCreator setExtendedProfile = "app/setExtendedProfile";
         public static readonly ActionCreator<OnboardingSurveyData> setOnboardingSurvey = "app/setOnboardingSurvey";
+        public static readonly ActionCreator<AvatarPayload> setAvatar = "app/setAvatar";
 
         // Profile sync
         public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
@@ -97,6 +98,18 @@ namespace eu.foodmission.platform
         // Food Info
         public static readonly ActionCreator<AddToContextRequestedAction> foodInfoAddRequested = "app/foodInfo/addRequested";
         public static readonly ActionCreator foodInfoAddRequestConsumed = "app/foodInfo/addRequestConsumed";
+
+        public readonly struct AvatarPayload
+        {
+            public readonly AvatarConfig avatarConfig;
+            public readonly bool hasAvatar;
+
+            public AvatarPayload(AvatarConfig avatarConfig, bool hasAvatar = true)
+            {
+                this.avatarConfig = avatarConfig;
+                this.hasAvatar = hasAvatar;
+            }
+        }
 
         public readonly struct ProfilePayload
         {
@@ -115,6 +128,8 @@ namespace eu.foodmission.platform
             public readonly OnboardingSurveyData onboardingSurvey;
             public readonly string lastShoppingListId;
             public readonly bool autoAddToPantry;
+            public readonly AvatarConfig avatarConfig;
+            public readonly bool hasAvatar;
 
             public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
@@ -125,7 +140,9 @@ namespace eu.foodmission.platform
                 string shoppingResponsibility = "",
                 OnboardingSurveyData onboardingSurvey = null,
                 string lastShoppingListId = "",
-                bool autoAddToPantry = false)
+                bool autoAddToPantry = false,
+                AvatarConfig avatarConfig = null,
+                bool hasAvatar = false)
             {
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
@@ -142,6 +159,8 @@ namespace eu.foodmission.platform
                 this.onboardingSurvey = onboardingSurvey;
                 this.lastShoppingListId = lastShoppingListId;
                 this.autoAddToPantry = autoAddToPantry;
+                this.avatarConfig = avatarConfig;
+                this.hasAvatar = hasAvatar;
             }
         }
     }
@@ -370,6 +389,8 @@ namespace eu.foodmission.platform
             newState.userShoppingResponsibility = action.payload.shoppingResponsibility ?? "";
             newState.userLastShoppingListId = action.payload.lastShoppingListId ?? "";
             newState.userAutoAddToPantry = action.payload.autoAddToPantry;
+            newState.userAvatarConfig = action.payload.avatarConfig?.Copy();
+            newState.userHasAvatar = action.payload.hasAvatar;
 
             if (action.payload.onboardingSurvey != null)
             {
@@ -394,6 +415,14 @@ namespace eu.foodmission.platform
                 newState.backgroundPattern = s.backgroundPattern;
             }
 
+            return newState;
+        }
+
+        public static AppState SetAvatarReducer(AppState state, IAction<AppActions.AvatarPayload> action)
+        {
+            var newState = state.Copy();
+            newState.userAvatarConfig = action.payload.avatarConfig?.Copy();
+            newState.userHasAvatar = action.payload.hasAvatar;
             return newState;
         }
 

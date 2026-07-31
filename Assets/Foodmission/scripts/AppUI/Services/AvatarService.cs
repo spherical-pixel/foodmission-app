@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.AppUI.MVVM;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -11,22 +12,43 @@ namespace eu.foodmission.platform
         private const string PREFAB_ADDRESS = "Assets/Foodmission/prefabs/AvatarController.prefab";
         private const string PLAYER_PREFS_KEY = "AvatarConfig";
 
+        private const string HAS_AVATAR_PREFS_KEY = "HasAvatar";
+
         private GameObject _avatarControllerObject;
         private AvatarController _avatarController;
 
         private bool _isInitialized;
-
         private AvatarConfig _currentConfig = null;
-        
+
+        private readonly IStoreService _storeService;
+        private readonly IAuthService _authService;
+
+        public AvatarService(IStoreService storeService = null, IAuthService authService = null)
+        {
+            _storeService = storeService;
+            _authService = authService;
+        }
 
         public RenderTexture AvatarCameraRenderTexture => _avatarController?.avatarCamera != null ? _avatarController.avatarCamera.targetTexture : null;
         public RenderTexture FullBodyAvatarRenderTexture => _avatarController?.fullBodyCamera != null ? _avatarController.fullBodyCamera.targetTexture : null;
         public AvatarConfig GetCurrentAvatarConfig => _currentConfig;
-        
 
         public bool IsInitialized => _isInitialized;
-        public bool HasSavedConfig => PlayerPrefs.HasKey(PLAYER_PREFS_KEY);
+        public bool HasSavedConfig => HasAvatar && (_currentConfig != null || PlayerPrefs.HasKey(PLAYER_PREFS_KEY));
 
+        public bool HasAvatar
+        {
+            get
+            {
+                var store = _storeService ?? App.current?.services?.GetService<IStoreService>();
+                AppState state = store?.GetAppState();
+                if (state != null && state.userHasAvatar)
+                {
+                    return true;
+                }
+                return PlayerPrefs.GetInt(HAS_AVATAR_PREFS_KEY, 0) == 1;
+            }
+        }
 
         public async Task InitializeAsync()
         {
@@ -42,7 +64,6 @@ namespace eu.foodmission.platform
             {
                 _avatarControllerObject = existing;
                 _avatarController = _avatarControllerObject.GetComponent<AvatarController>();
-                
 
                 if (_avatarController != null)
                 {
@@ -77,11 +98,11 @@ namespace eu.foodmission.platform
 
                 _avatarController = _avatarControllerObject.GetComponent<AvatarController>();
 
-                if (_avatarController == null)                {
+                if (_avatarController == null)
+                {
                     Debug.LogError($"[{GetType().Name}] AvatarController component not found on prefab");
                     return;
                 }
-
 
                 _isInitialized = true;
                 Debug.Log($"[{GetType().Name}] Avatar initialized successfully");
@@ -96,7 +117,10 @@ namespace eu.foodmission.platform
         public void SetAvatarConfig(AvatarConfig config)
         {
             _currentConfig = config;
-            _avatarController.ApplyAvatar(_currentConfig);
+            if (_avatarController != null && _currentConfig != null)
+            {
+                _avatarController.ApplyAvatar(_currentConfig);
+            }
         }
 
         public void SetRandomConfig()
@@ -198,20 +222,86 @@ namespace eu.foodmission.platform
 
         public void SaveCurrentConfig()
         {
-            if (_currentConfig == null)
+            SaveCurrentConfigAsync(true).ConfigureAwait(false);
+        }
+
+        public async Task SaveCurrentConfigAsync(bool hasAvatar = true)
+        {
+            if (_currentConfig == null && hasAvatar)
             {
                 Debug.LogError($"[{GetType().Name}] No config to save");
                 return;
             }
 
-            string json = JsonUtility.ToJson(_currentConfig);
-            PlayerPrefs.SetString(PLAYER_PREFS_KEY, json);
+            if (hasAvatar && _currentConfig != null)
+            {
+                string json = JsonUtility.ToJson(_currentConfig);
+                PlayerPrefs.SetString(PLAYER_PREFS_KEY, json);
+                PlayerPrefs.SetInt(HAS_AVATAR_PREFS_KEY, 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt(HAS_AVATAR_PREFS_KEY, 0);
+            }
             PlayerPrefs.Save();
-            Debug.Log($"[{GetType().Name}] Avatar config saved");
+
+            var store = _storeService ?? App.current?.services?.GetService<IStoreService>();
+            if (store != null)
+            {
+                store.store.Dispatch(AppActions.setAvatar.Invoke(new AppActions.AvatarPayload(_currentConfig, hasAvatar)));
+            }
+
+            var auth = _authService ?? App.current?.services?.GetService<IAuthService>();
+            if (auth != null)
+            {
+                AppState state = store?.GetAppState();
+                var request = new ProfileUpdateRequest
+                {
+                    preferences = new ProfileUpdatePreferences
+                    {
+                        shoppingResponsibility = !string.IsNullOrEmpty(state?.userShoppingResponsibility) ? state.userShoppingResponsibility : null,
+                        dietaryPreference = state?.userDietaryPreference != null && state.userDietaryPreference.Length > 0 ? state.userDietaryPreference : null,
+                        onboardingSurvey = state?.userOnboardingSurvey,
+                        autoAddToPantry = state?.userAutoAddToPantry ?? false,
+                        avatarConfig = hasAvatar ? _currentConfig : null,
+                        hasAvatar = hasAvatar
+                    }
+                };
+
+                var (success, error) = await auth.UpdateProfileAsync(request);
+                if (success)
+                {
+                    Debug.Log($"[{GetType().Name}] Avatar preferences synced with server profile (hasAvatar={hasAvatar})");
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Failed to sync avatar preferences with server: {error?.message}");
+                }
+            }
+        }
+
+        public async Task SetHasAvatarAsync(bool hasAvatar)
+        {
+            if (!hasAvatar)
+            {
+                PlayerPrefs.SetInt(HAS_AVATAR_PREFS_KEY, 0);
+                PlayerPrefs.Save();
+            }
+
+            await SaveCurrentConfigAsync(hasAvatar);
         }
 
         public void LoadSavedConfig()
         {
+            var store = _storeService ?? App.current?.services?.GetService<IStoreService>();
+            AppState state = store?.GetAppState();
+            if (state != null && state.userHasAvatar && state.userAvatarConfig != null)
+            {
+                SetAvatarConfig(state.userAvatarConfig);
+                Debug.Log($"[{GetType().Name}] Avatar config loaded from AppState Redux store");
+                return;
+            }
+
             if (!PlayerPrefs.HasKey(PLAYER_PREFS_KEY))
             {
                 Debug.Log($"[{GetType().Name}] No saved config found");
@@ -223,7 +313,7 @@ namespace eu.foodmission.platform
             if (savedConfig != null)
             {
                 SetAvatarConfig(savedConfig);
-                Debug.Log($"[{GetType().Name}] Avatar config loaded from saves");
+                Debug.Log($"[{GetType().Name}] Avatar config loaded from PlayerPrefs");
             }
         }
     }

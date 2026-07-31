@@ -42,5 +42,21 @@ namespace eu.foodmission.platform
         {
             return _avatarService.GetCurrentAvatarConfig;
         }
+
+        public async System.Threading.Tasks.Task SaveAvatarAsync(bool hasAvatar = true)
+        {
+            if (_avatarService != null)
+            {
+                await _avatarService.SaveCurrentConfigAsync(hasAvatar);
+            }
+        }
+
+        public async System.Threading.Tasks.Task SetHasAvatarAsync(bool hasAvatar)
+        {
+            if (_avatarService != null)
+            {
+                await _avatarService.SetHasAvatarAsync(hasAvatar);
+            }
+        }
     }
 }

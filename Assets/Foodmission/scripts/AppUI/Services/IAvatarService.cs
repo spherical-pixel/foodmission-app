@@ -33,7 +33,10 @@ namespace eu.foodmission.platform
         List<Color> GetColorPalette(AvatarEditorItemEnum itemType);
         int GetMaxPartCount(AvatarEditorItemEnum itemType);
         bool HasSavedConfig { get; }
+        bool HasAvatar { get; }
         void SaveCurrentConfig();
+        Task SaveCurrentConfigAsync(bool hasAvatar = true);
+        Task SetHasAvatarAsync(bool hasAvatar);
         void LoadSavedConfig();
     }
 }

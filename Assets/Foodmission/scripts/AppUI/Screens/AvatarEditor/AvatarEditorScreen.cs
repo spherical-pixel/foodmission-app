@@ -152,18 +152,21 @@ namespace eu.foodmission.platform
         private void OnTrousersClicked() => OpenSelectorItemAvatar(AvatarEditorItemEnum.Trousers);
         private void OnShoesClicked() => OpenSelectorItemAvatar(AvatarEditorItemEnum.Shoes);
 
-        private void OnSaveClicked()
+        private async void OnSaveClicked()
         {
-            _viewModel?.AvatarService.SaveCurrentConfig();
+            if (_viewModel != null)
+            {
+                await _viewModel.SaveAvatarAsync(true);
+            }
             CloseSelectorItemAvatar();
-            OnNavigationRequested(Actions.go_to_home,null);
+            OnNavigationRequested(Actions.go_to_home, null);
         }
 
         private void OnExitClicked()
         {
             _viewModel?.AvatarService.LoadSavedConfig();
             CloseSelectorItemAvatar();
-            OnNavigationRequested(Actions.go_to_home,null);
+            OnNavigationRequested(Actions.go_to_home, null);
         }
 
         protected override void OnViewModelBound()
@@ -175,11 +178,11 @@ namespace eu.foodmission.platform
                 _btExit.style.display = _isFromOnboarding ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
-        protected override void OnViewModelUnbinding()
+        protected override async void OnViewModelUnbinding()
         {
-            if (!_isFromOnboarding)
+            if (!_isFromOnboarding && _viewModel != null)
             {
-                _viewModel?.AvatarService.SaveCurrentConfig();
+                await _viewModel.SaveAvatarAsync(true);
             }
 
             _viewModel?.AvatarService.SetFullBodyCameraActive(false);

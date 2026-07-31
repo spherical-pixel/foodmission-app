@@ -461,7 +461,9 @@ namespace eu.foodmission.platform
                 shoppingResponsibility: profile.preferences?.shoppingResponsibility ?? "",
                 onboardingSurvey: profile.preferences?.onboardingSurvey,
                 lastShoppingListId: profile.preferences?.lastShoppingListId ?? "",
-                autoAddToPantry: profile.preferences?.autoAddToPantry ?? false
+                autoAddToPantry: profile.preferences?.autoAddToPantry ?? false,
+                avatarConfig: profile.preferences?.avatarConfig,
+                hasAvatar: profile.preferences?.hasAvatar ?? false
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
         }

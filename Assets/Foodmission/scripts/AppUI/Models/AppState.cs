@@ -121,6 +121,8 @@ namespace eu.foodmission.platform
         public OnboardingSurveyData userOnboardingSurvey = new OnboardingSurveyData();
         public string userLastShoppingListId = "";
         public bool userAutoAddToPantry = false;
+        public AvatarConfig userAvatarConfig;
+        public bool userHasAvatar = false;
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -180,6 +182,8 @@ namespace eu.foodmission.platform
                 userOnboardingSurvey = this.userOnboardingSurvey,
                 userLastShoppingListId = this.userLastShoppingListId,
                 userAutoAddToPantry = this.userAutoAddToPantry,
+                userAvatarConfig = this.userAvatarConfig?.Copy(),
+                userHasAvatar = this.userHasAvatar,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
                 foodInfoAddRequest = this.foodInfoAddRequest

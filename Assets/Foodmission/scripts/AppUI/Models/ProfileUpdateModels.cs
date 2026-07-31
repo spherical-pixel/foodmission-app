@@ -85,6 +85,12 @@ namespace eu.foodmission.platform
 
         [JsonProperty("autoAddToPantry", NullValueHandling = NullValueHandling.Ignore)]
         public bool autoAddToPantry;
+
+        [JsonProperty("avatarConfig", NullValueHandling = NullValueHandling.Ignore)]
+        public AvatarConfig avatarConfig;
+
+        [JsonProperty("hasAvatar", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? hasAvatar;
     }
 
     /// <summary>
