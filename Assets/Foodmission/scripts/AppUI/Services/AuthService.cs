@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Unity.AppUI.MVVM;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Networking;
@@ -552,8 +553,12 @@ namespace eu.foodmission.platform
             _refreshTimerCts?.Cancel();
             _refreshTimerCts?.Dispose();
             _refreshTimerCts = null;
+
+            var avatarService = App.current?.services?.GetService<IAvatarService>();
+            avatarService?.ClearFaceTexture();
+
             _storeService.store.Dispatch(AppActions.logout.Invoke());
-            Debug.Log($"[{GetType().Name}] User logged out");
+            Debug.Log($"[{GetType().Name}] User logged out and avatar render files cleared");
         }
 
         private async Task RevokeTokenAsync(string token)

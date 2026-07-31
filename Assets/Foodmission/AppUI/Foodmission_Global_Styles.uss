@@ -643,12 +643,24 @@
     border-radius: 125px;
     flex-shrink: 0;
     margin-right: 16px;
-    background-color: var(--appui-primary-1000);
+    background-color: var(--appui-primary-300);
     border-width: 6px;
-    border-color: white;
+    border-color: var(--appui-primary-50);
     --unity-image-tint-color: var(--appui-primary-300);
     --unity-image-size: scale-to-fit;
     padding: 10px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.fm-profile-avatar--appbar {
+    width: 124px;
+    height: 124px;
+    border-radius: 62px;
+    border-width: 4px;
+    margin-right: 0;
+    padding: 6px;
 }
 
 .fm-profile-username {
@@ -1317,8 +1329,6 @@
     align-self: center;
 }
 
-
-
 .fm-groups-item {
     overflow: hidden;
     align-content: flex-start;
@@ -1354,7 +1364,6 @@
     text-overflow: ellipsis;
     width: 100%;
 }
-
 
 .fm-group-member-item {
     overflow: hidden;

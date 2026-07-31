@@ -13,12 +13,18 @@ namespace eu.foodmission.platform
         private const string PLAYER_PREFS_KEY = "AvatarConfig";
 
         private const string HAS_AVATAR_PREFS_KEY = "HasAvatar";
+        private const string FACE_TEXTURE_FILENAME = "avatar_face.png";
 
         private GameObject _avatarControllerObject;
         private AvatarController _avatarController;
 
         private bool _isInitialized;
         private AvatarConfig _currentConfig = null;
+        private Texture2D _cachedFaceTexture = null;
+
+        public event System.Action OnFaceTextureChanged;
+
+        private string FaceTexturePath => System.IO.Path.Combine(Application.persistentDataPath, FACE_TEXTURE_FILENAME);
 
         private readonly IStoreService _storeService;
         private readonly IAuthService _authService;
@@ -27,6 +33,31 @@ namespace eu.foodmission.platform
         {
             _storeService = storeService;
             _authService = authService;
+
+            var activeStore = _storeService ?? App.current?.services?.GetService<IStoreService>();
+            if (activeStore?.store != null)
+            {
+                activeStore.store.Subscribe(state => state, OnAppStateChanged);
+            }
+        }
+
+        private void OnAppStateChanged(AppState state)
+        {
+            if (state == null) return;
+
+            if (state.userHasAvatar && state.userAvatarConfig != null)
+            {
+                if (_currentConfig != state.userAvatarConfig)
+                {
+                    SetAvatarConfig(state.userAvatarConfig);
+                }
+
+                string path = FaceTexturePath;
+                if (!System.IO.File.Exists(path) && _cachedFaceTexture == null)
+                {
+                    _ = EnsureFaceTextureAsync();
+                }
+            }
         }
 
         public RenderTexture AvatarCameraRenderTexture => _avatarController?.avatarCamera != null ? _avatarController.avatarCamera.targetTexture : null;
@@ -40,14 +71,210 @@ namespace eu.foodmission.platform
         {
             get
             {
-                var store = _storeService ?? App.current?.services?.GetService<IStoreService>();
-                AppState state = store?.GetAppState();
-                if (state != null && state.userHasAvatar)
+                var storeService = _storeService ?? App.current?.services?.GetService<IStoreService>();
+                AppState state = storeService?.GetAppState();
+                if (state != null)
                 {
-                    return true;
+                    return state.userHasAvatar;
                 }
                 return PlayerPrefs.GetInt(HAS_AVATAR_PREFS_KEY, 0) == 1;
             }
+        }
+
+        private const string DEFAULT_AVATAR_ADDRESS = "Assets/Foodmission/graphics/png/default-avatar.png";
+        private static Texture2D s_DefaultAvatarTexture;
+
+        public static Texture2D GetDefaultAvatarTexture()
+        {
+            if (s_DefaultAvatarTexture != null)
+            {
+                return s_DefaultAvatarTexture;
+            }
+
+            try
+            {
+                var handle = Addressables.LoadAssetAsync<Texture2D>(DEFAULT_AVATAR_ADDRESS);
+                s_DefaultAvatarTexture = handle.WaitForCompletion();
+                return s_DefaultAvatarTexture;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[AvatarService] Error loading default avatar from Addressables ({DEFAULT_AVATAR_ADDRESS}): {ex.Message}");
+            }
+
+            return null;
+        }
+
+        public Texture2D GetFaceTexture()
+        {
+            if (!HasAvatar)
+            {
+                return GetDefaultAvatarTexture();
+            }
+
+            if (_cachedFaceTexture != null)
+            {
+                return _cachedFaceTexture;
+            }
+
+            string path = FaceTexturePath;
+            if (System.IO.File.Exists(path))
+            {
+                try
+                {
+                    byte[] bytes = System.IO.File.ReadAllBytes(path);
+                    Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                    if (ImageConversion.LoadImage(tex, bytes))
+                    {
+                        _cachedFaceTexture = tex;
+                        return _cachedFaceTexture;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] Error loading face texture: {ex.Message}");
+                }
+            }
+
+            return GetDefaultAvatarTexture();
+        }
+
+        public async Task<Texture2D> EnsureFaceTextureAsync()
+        {
+            if (!HasAvatar)
+            {
+                return GetDefaultAvatarTexture();
+            }
+
+            Texture2D tex = GetFaceTexture();
+            if (tex != null && tex != GetDefaultAvatarTexture())
+            {
+                return tex;
+            }
+
+            LoadSavedConfig();
+            await CaptureAndSaveFaceTextureAsync();
+            return GetFaceTexture();
+        }
+
+        public async Task CaptureAndSaveFaceTextureAsync()
+        {
+            if (!_isInitialized)
+            {
+                await InitializeAsync();
+            }
+
+            if (_avatarController == null || _avatarController.avatarCamera == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Cannot capture face texture — AvatarController or camera not ready");
+                return;
+            }
+
+            try
+            {
+                // Small delay to allow animator, bones, and transforms to settle after instantiation/initialization
+                await Task.Delay(150);
+
+                if (_avatarController == null || _avatarController.avatarCamera == null)
+                {
+                    return;
+                }
+
+                if (_avatarController.animator != null)
+                {
+                    _avatarController.animator.Update(0f);
+                }
+
+                Camera cam = _avatarController.avatarCamera;
+                RenderTexture previousActive = RenderTexture.active;
+
+                RenderTexture rt = cam.targetTexture;
+                bool createdRT = false;
+                if (rt == null)
+                {
+                    rt = RenderTexture.GetTemporary(256, 256, 24, RenderTextureFormat.ARGB32);
+                    cam.targetTexture = rt;
+                    createdRT = true;
+                }
+
+                bool wasCamActive = cam.gameObject.activeSelf;
+                cam.gameObject.SetActive(true);
+                cam.Render();
+
+                RenderTexture.active = rt;
+                Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RGBA32, false);
+                tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+                tex.Apply();
+
+                RenderTexture.active = previousActive;
+                if (!wasCamActive)
+                {
+                    cam.gameObject.SetActive(false);
+                }
+
+                if (createdRT)
+                {
+                    cam.targetTexture = null;
+                    RenderTexture.ReleaseTemporary(rt);
+                }
+
+                byte[] pngBytes = tex.EncodeToPNG();
+                System.IO.File.WriteAllBytes(FaceTexturePath, pngBytes);
+
+                if (_cachedFaceTexture != null)
+                {
+                    UnityEngine.Object.Destroy(_cachedFaceTexture);
+                }
+                _cachedFaceTexture = tex;
+
+                Debug.Log($"[{GetType().Name}] Face texture captured and saved to {FaceTexturePath}");
+                OnFaceTextureChanged?.Invoke();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Error capturing face texture: {ex.Message}");
+            }
+        }
+
+        public void ClearFaceTexture()
+        {
+            try
+            {
+                string dir = Application.persistentDataPath;
+                if (System.IO.Directory.Exists(dir))
+                {
+                    string[] avatarRenders = System.IO.Directory.GetFiles(dir, "avatar_*.png");
+                    foreach (string file in avatarRenders)
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(file);
+                            Debug.Log($"[{GetType().Name}] Deleted avatar render file: {file}");
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Debug.LogWarning($"[{GetType().Name}] Failed to delete render file {file}: {ex.Message}");
+                        }
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Error clearing avatar face textures: {ex.Message}");
+            }
+
+            _currentConfig = null;
+            PlayerPrefs.DeleteKey(PLAYER_PREFS_KEY);
+            PlayerPrefs.SetInt(HAS_AVATAR_PREFS_KEY, 0);
+            PlayerPrefs.Save();
+
+            if (_cachedFaceTexture != null)
+            {
+                UnityEngine.Object.Destroy(_cachedFaceTexture);
+                _cachedFaceTexture = null;
+            }
+
+            OnFaceTextureChanged?.Invoke();
         }
 
         public async Task InitializeAsync()
@@ -244,6 +471,15 @@ namespace eu.foodmission.platform
                 PlayerPrefs.SetInt(HAS_AVATAR_PREFS_KEY, 0);
             }
             PlayerPrefs.Save();
+
+            if (hasAvatar)
+            {
+                await CaptureAndSaveFaceTextureAsync();
+            }
+            else
+            {
+                ClearFaceTexture();
+            }
 
             var store = _storeService ?? App.current?.services?.GetService<IStoreService>();
             if (store != null)

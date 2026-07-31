@@ -34,6 +34,11 @@ namespace eu.foodmission.platform
         int GetMaxPartCount(AvatarEditorItemEnum itemType);
         bool HasSavedConfig { get; }
         bool HasAvatar { get; }
+        event System.Action OnFaceTextureChanged;
+        Texture2D GetFaceTexture();
+        Task<Texture2D> EnsureFaceTextureAsync();
+        Task CaptureAndSaveFaceTextureAsync();
+        void ClearFaceTexture();
         void SaveCurrentConfig();
         Task SaveCurrentConfigAsync(bool hasAvatar = true);
         Task SetHasAvatarAsync(bool hasAvatar);

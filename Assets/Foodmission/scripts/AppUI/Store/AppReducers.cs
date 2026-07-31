@@ -1,3 +1,4 @@
+using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
 
 namespace eu.foodmission.platform
@@ -267,11 +268,17 @@ namespace eu.foodmission.platform
             newState.userEducationLevel = "";
             newState.userActivityLevel = "";
             newState.userDietaryPreference = new string[0];
-            newState.userShoppingResponsibility = "";
+            newState.userAvatarConfig = null;
+            newState.userHasAvatar = false;
             // Reset preferences to defaults
             newState.theme = "system";
             newState.scale = "medium";
             newState.font = "roboto";
+
+            // Clear saved local avatar render files
+            var avatarService = App.current?.services?.GetService<IAvatarService>();
+            avatarService?.ClearFaceTexture();
+
             return newState;
         }
 
@@ -439,7 +446,7 @@ namespace eu.foodmission.platform
             newState.foodInfoAddRequest = null;
             return newState;
         }
-        
+
         public static AppState SetOnboardingSurveyReducer(AppState state, IAction<OnboardingSurveyData> action)
         {
             var newState = state.Copy();

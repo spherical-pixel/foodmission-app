@@ -28,6 +28,71 @@ namespace eu.foodmission.platform
         private VisualTreeAsset _notificationCardTemplate;
         private NavController _cachedNavController;
         private TextElement _userNameLabel;
+        private VisualElement _drawerAvatarElement;
+        private ActionButton _lastAppBarDrawerButton;
+        private bool _avatarSubscribed;
+
+        private void SubscribeAvatarEvents()
+        {
+            if (_avatarSubscribed) return;
+            var avatarService = App.current?.services?.GetService<IAvatarService>();
+            if (avatarService != null)
+            {
+                avatarService.OnFaceTextureChanged += UpdateAvatarVisuals;
+                _avatarSubscribed = true;
+            }
+        }
+
+        public void UpdateAvatarVisuals()
+        {
+            var avatarService = App.current?.services?.GetService<IAvatarService>();
+            if (avatarService == null) return;
+
+            Texture2D tex = avatarService.GetFaceTexture();
+
+            // If user has an avatar but face texture file hasn't been generated yet, trigger asynchronous render
+            if (avatarService.HasAvatar && (tex == null || tex == AvatarService.GetDefaultAvatarTexture()))
+            {
+                _ = avatarService.EnsureFaceTextureAsync();
+            }
+
+            if (_drawerAvatarElement != null)
+            {
+                if (tex != null)
+                {
+                    _drawerAvatarElement.style.backgroundImage = Background.FromTexture2D(tex);
+                }
+                else
+                {
+                    _drawerAvatarElement.style.backgroundImage = StyleKeyword.Null;
+                }
+            }
+
+            if (_lastAppBarDrawerButton != null)
+            {
+                _lastAppBarDrawerButton.icon = null;
+                var avatarImg = _lastAppBarDrawerButton.Q("appbar-avatar-image");
+                if (avatarImg == null)
+                {
+                    avatarImg = new VisualElement();
+                    avatarImg.name = "appbar-avatar-image";
+                    avatarImg.AddToClassList("fm-profile-avatar");
+                    avatarImg.AddToClassList("fm-profile-avatar--appbar");
+                    avatarImg.pickingMode = PickingMode.Ignore;
+                    _lastAppBarDrawerButton.hierarchy.Add(avatarImg);
+                }
+
+                if (tex != null)
+                {
+                    avatarImg.style.display = DisplayStyle.Flex;
+                    avatarImg.style.backgroundImage = Background.FromTexture2D(tex);
+                }
+                else
+                {
+                    avatarImg.style.display = DisplayStyle.None;
+                }
+            }
+        }
 
         // --------------------------------------------------------------------
         // Profile Drawer
@@ -35,6 +100,7 @@ namespace eu.foodmission.platform
 
         private void BuildDrawerContent(Drawer drawer)
         {
+            SubscribeAvatarEvents();
             IThemeService themeService = App.current?.services.GetService<IThemeService>();
             if (themeService != null)
             {
@@ -77,6 +143,8 @@ namespace eu.foodmission.platform
 
             var avatar = new VisualElement();
             avatar.AddToClassList("fm-profile-avatar");
+            _drawerAvatarElement = avatar;
+            UpdateAvatarVisuals();
 
             // Right column
             var rightColumn = new VisualElement();
@@ -270,6 +338,7 @@ namespace eu.foodmission.platform
             {
                 _userNameLabel.text = storeService.GetAppState().userName;
             }
+            UpdateAvatarVisuals();
         }
 
         // --------------------------------------------------------------------
@@ -647,10 +716,12 @@ namespace eu.foodmission.platform
             var drawerButton = appBar.Q<ActionButton>(className: "appui-appbar__drawer-button");
             if (drawerButton != null)
             {
-                drawerButton.icon = "fm-avatar";
+                _lastAppBarDrawerButton = drawerButton;
                 drawerButton.style.marginTop = 0;
                 drawerButton.style.marginBottom = 0;
                 drawerButton.style.alignSelf = Align.Center;
+                SubscribeAvatarEvents();
+                UpdateAvatarVisuals();
             }
 
             // Ensure back button (on nested screens) also has standard 44x44 touch target
