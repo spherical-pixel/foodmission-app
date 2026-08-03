@@ -13,16 +13,36 @@ namespace eu.foodmission.platform
     {
         private readonly IStoreService _storeService;
         private readonly Dictionary<string, FoodProduct> _cache = new();
+        private string _cachedLang;
 
         public FoodProductService(IStoreService storeService)
         {
             _storeService = storeService;
         }
 
+        private string Lang
+        {
+            get
+            {
+                AppState s = _storeService.GetAppState();
+                return s.lang ?? "en";
+            }
+        }
+
+        private void InvalidateCacheIfLangChanged()
+        {
+            string currentLang = Lang;
+            if (_cachedLang != currentLang)
+            {
+                _cachedLang = currentLang;
+                _cache.Clear();
+            }
+        }
+
         public async Task<(PaginatedFoodProductResponse Result, ApiErrorResponse Error)> SearchFoodsAsync(string query, int page = 1, int pageSize = 20)
         {
             AppState state = _storeService.GetAppState();
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products?search={Uri.EscapeDataString(query ?? "")}&page={page}&limit={pageSize}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products?search={Uri.EscapeDataString(query ?? "")}&page={page}&limit={pageSize}&lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
@@ -48,7 +68,7 @@ namespace eu.foodmission.platform
                 return (null, null);
 
             AppState state = _storeService.GetAppState();
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products?barcode={Uri.EscapeDataString(barcode)}&page=1&limit=10";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products?barcode={Uri.EscapeDataString(barcode)}&page=1&limit=10&lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
@@ -75,13 +95,15 @@ namespace eu.foodmission.platform
                 return (null, null);
             }
 
+            InvalidateCacheIfLangChanged();
+
             if (_cache.TryGetValue(id, out FoodProduct cached))
             {
                 return (cached, null);
             }
 
             AppState state = _storeService.GetAppState();
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/{Uri.EscapeDataString(id)}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/{Uri.EscapeDataString(id)}?lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
@@ -112,7 +134,7 @@ namespace eu.foodmission.platform
         {
             AppState state = _storeService.GetAppState();
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/search/openfoodfacts" +
-                         $"?query={Uri.EscapeDataString(query ?? "")}&page={page}&limit={pageSize}";
+                         $"?query={Uri.EscapeDataString(query ?? "")}&page={page}&limit={pageSize}&lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
@@ -181,8 +203,10 @@ namespace eu.foodmission.platform
                 return (null, null);
             }
 
+            InvalidateCacheIfLangChanged();
+
             AppState state = _storeService.GetAppState();
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/barcode/{Uri.EscapeDataString(barcode)}?includeOpenFoodFacts={(includeOpenFoodFacts ? "true" : "false")}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/barcode/{Uri.EscapeDataString(barcode)}?includeOpenFoodFacts={(includeOpenFoodFacts ? "true" : "false")}&lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
@@ -260,10 +284,12 @@ namespace eu.foodmission.platform
             if (string.IsNullOrEmpty(idOrBarcode))
                 return (null, null);
 
+            InvalidateCacheIfLangChanged();
+
             AppState state = _storeService.GetAppState();
             string endpoint = Guid.TryParse(idOrBarcode, out _)
-                ? $"{ApiConfig.BaseUrl}/api/v1/food-products/{Uri.EscapeDataString(idOrBarcode)}?includeOpenFoodFacts=true"
-                : $"{ApiConfig.BaseUrl}/api/v1/food-products/barcode/{Uri.EscapeDataString(idOrBarcode)}?includeOpenFoodFacts=true";
+                ? $"{ApiConfig.BaseUrl}/api/v1/food-products/{Uri.EscapeDataString(idOrBarcode)}?includeOpenFoodFacts=true&lang={Uri.EscapeDataString(Lang)}"
+                : $"{ApiConfig.BaseUrl}/api/v1/food-products/barcode/{Uri.EscapeDataString(idOrBarcode)}?includeOpenFoodFacts=true&lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(endpoint);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
