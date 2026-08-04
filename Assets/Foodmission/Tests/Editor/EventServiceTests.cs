@@ -55,5 +55,16 @@ namespace eu.foodmission.platform.Tests
                 await _eventService.TrackSessionEndAsync();
             });
         }
+
+        [Test]
+        public async Task TrackSessionStartAsync_GeneratesNewSessionId()
+        {
+            string oldSessionId = _eventService.CurrentSessionId;
+            await _eventService.TrackSessionStartAsync();
+            string newSessionId = _eventService.CurrentSessionId;
+
+            Assert.IsFalse(string.IsNullOrEmpty(newSessionId));
+            Assert.AreNotEqual(oldSessionId, newSessionId);
+        }
     }
 }

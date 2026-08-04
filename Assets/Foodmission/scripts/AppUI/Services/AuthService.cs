@@ -337,6 +337,12 @@ namespace eu.foodmission.platform
                 ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
                 Debug.Log($"[{GetType().Name}] Login successful for user: {userId}. Access Token lifespan: {response.expires_in}s ({response.expires_in / 60f:F1} min), Refresh Token lifespan: {response.refresh_expires_in}s ({response.refresh_expires_in / 60f:F1} min)");
 
+                var eventService = App.current?.services?.GetService<IEventService>();
+                if (eventService != null)
+                {
+                    _ = eventService.TrackSessionStartAsync();
+                }
+
                 return (true, userId, null);
             }
             catch (Exception ex)

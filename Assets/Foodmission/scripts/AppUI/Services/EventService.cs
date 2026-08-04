@@ -51,7 +51,7 @@ namespace eu.foodmission.platform
 
             byte[] body = request.ToJsonBody();
             string url = $"{ApiConfig.BaseUrl}/api/v1/events";
-            Debug.Log($"[{GetType().Name}] Recording client event: {request.eventType}]");
+            Debug.Log($"[{GetType().Name}] Recording client event: {request.eventType} to {url} with body: {JsonUtility.ToJson(request)}");
 
             using UnityWebRequest req = new UnityWebRequest(url, "POST")
             {
