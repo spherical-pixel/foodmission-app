@@ -49,6 +49,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IWhatsNewService, WhatsNewService>();
             builder.services.AddSingleton<IRemoteLocalizationService, RemoteLocalizationService>();
             builder.services.AddSingleton<IAccessibilityService, AccessibilityService>();
+            builder.services.AddSingleton<IEventService, EventService>();
 
             // ViewModels (Transient - new instance each time)
             builder.services.AddTransient<SplashScreenViewModel>();
@@ -129,7 +130,15 @@ namespace eu.foodmission.platform
 
         private void OnApplicationPause(bool pauseStatus)
         {
-            if (!pauseStatus)
+            if (pauseStatus)
+            {
+                var eventService = App.current?.services?.GetService<IEventService>();
+                if (eventService != null)
+                {
+                    _ = eventService.TrackSessionEndAsync();
+                }
+            }
+            else
             {
                 CheckSessionOnResume();
             }
@@ -150,6 +159,14 @@ namespace eu.foodmission.platform
                         Debug.LogWarning($"[{GetType().Name}] Session invalid on app resume — navigating to login");
                         authService.Logout();
                         HandleSessionExpired();
+                    }
+                    else
+                    {
+                        var eventService = App.current?.services?.GetService<IEventService>();
+                        if (eventService != null)
+                        {
+                            _ = eventService.TrackSessionStartAsync();
+                        }
                     }
                 }
             }
