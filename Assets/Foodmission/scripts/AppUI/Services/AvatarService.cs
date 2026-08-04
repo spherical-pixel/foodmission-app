@@ -105,11 +105,11 @@ namespace eu.foodmission.platform
             return null;
         }
 
-        public Texture2D GetFaceTexture()
+        public Texture2D GetFaceTexture(bool allowFallback = false)
         {
             if (!HasAvatar)
             {
-                return GetDefaultAvatarTexture();
+                return allowFallback ? GetDefaultAvatarTexture() : null;
             }
 
             if (_cachedFaceTexture != null)
@@ -136,7 +136,7 @@ namespace eu.foodmission.platform
                 }
             }
 
-            return GetDefaultAvatarTexture();
+            return allowFallback ? GetDefaultAvatarTexture() : null;
         }
 
         public async Task<Texture2D> EnsureFaceTextureAsync()
@@ -220,10 +220,9 @@ namespace eu.foodmission.platform
 
                 byte[] pngBytes = tex.EncodeToPNG();
                 System.IO.File.WriteAllBytes(FaceTexturePath, pngBytes);
-
                 if (_cachedFaceTexture != null)
                 {
-                    UnityEngine.Object.Destroy(_cachedFaceTexture);
+                    SafeDestroy(_cachedFaceTexture);
                 }
                 _cachedFaceTexture = tex;
 
@@ -236,26 +235,28 @@ namespace eu.foodmission.platform
             }
         }
 
+        private static void SafeDestroy(UnityEngine.Object obj)
+        {
+            if (obj == null) return;
+            if (Application.isPlaying)
+            {
+                UnityEngine.Object.Destroy(obj);
+            }
+            else
+            {
+                UnityEngine.Object.DestroyImmediate(obj);
+            }
+        }
+
         public void ClearFaceTexture()
         {
             try
             {
-                string dir = Application.persistentDataPath;
-                if (System.IO.Directory.Exists(dir))
+                string path = FaceTexturePath;
+                if (System.IO.File.Exists(path))
                 {
-                    string[] avatarRenders = System.IO.Directory.GetFiles(dir, "avatar_*.png");
-                    foreach (string file in avatarRenders)
-                    {
-                        try
-                        {
-                            System.IO.File.Delete(file);
-                            Debug.Log($"[{GetType().Name}] Deleted avatar render file: {file}");
-                        }
-                        catch (System.Exception ex)
-                        {
-                            Debug.LogWarning($"[{GetType().Name}] Failed to delete render file {file}: {ex.Message}");
-                        }
-                    }
+                    System.IO.File.Delete(path);
+                    Debug.Log($"[{GetType().Name}] Deleted avatar render file: {path}");
                 }
             }
             catch (System.Exception ex)
@@ -270,7 +271,7 @@ namespace eu.foodmission.platform
 
             if (_cachedFaceTexture != null)
             {
-                UnityEngine.Object.Destroy(_cachedFaceTexture);
+                SafeDestroy(_cachedFaceTexture);
                 _cachedFaceTexture = null;
             }
 

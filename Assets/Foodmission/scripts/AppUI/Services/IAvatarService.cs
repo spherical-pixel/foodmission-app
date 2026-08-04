@@ -35,7 +35,7 @@ namespace eu.foodmission.platform
         bool HasSavedConfig { get; }
         bool HasAvatar { get; }
         event System.Action OnFaceTextureChanged;
-        Texture2D GetFaceTexture();
+        Texture2D GetFaceTexture(bool allowFallback = false);
         Task<Texture2D> EnsureFaceTextureAsync();
         Task CaptureAndSaveFaceTextureAsync();
         void ClearFaceTexture();

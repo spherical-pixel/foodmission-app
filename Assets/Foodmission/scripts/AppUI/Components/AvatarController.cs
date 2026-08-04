@@ -104,32 +104,64 @@ namespace eu.foodmission.platform
 
         private void ValidateIds(AvatarConfig avatarConfig)
         {
-            avatarConfig.hair.idPart = Mathf.Clamp(avatarConfig.hair.idPart, 0, 10);
-            avatarConfig.hair.idColor = Mathf.Clamp(avatarConfig.hair.idColor, 1, 10);
-            avatarConfig.eyebrows.idPart = Mathf.Clamp(avatarConfig.eyebrows.idPart, 0, 10);
-            avatarConfig.eyebrows.idColor = Mathf.Clamp(avatarConfig.eyebrows.idColor, 1, 10);
-            avatarConfig.eyes.idPart = Mathf.Clamp(avatarConfig.eyes.idPart, 1, 10);
-            avatarConfig.eyes.idColor = Mathf.Clamp(avatarConfig.eyes.idColor, 1, 10);
-            avatarConfig.nose.idPart = Mathf.Clamp(avatarConfig.nose.idPart, 1, 10);
-            avatarConfig.nose.idColor = Mathf.Clamp(avatarConfig.nose.idColor, 1, 10);
-            avatarConfig.mouth.idPart = Mathf.Clamp(avatarConfig.mouth.idPart, 1, 10);
-            avatarConfig.mouth.idColor = Mathf.Clamp(avatarConfig.mouth.idColor, 1, 10);
-            avatarConfig.facialHair.idPart = Mathf.Clamp(avatarConfig.facialHair.idPart, 0, 5);
-            avatarConfig.facialHair.idColor = Mathf.Clamp(avatarConfig.facialHair.idColor, 1, 10);
-            avatarConfig.skin.idPart = Mathf.Clamp(avatarConfig.skin.idPart, 1, 10);
-            avatarConfig.skin.idColor = Mathf.Clamp(avatarConfig.skin.idColor, 1, 10);
-            avatarConfig.tshirt.idPart = Mathf.Clamp(avatarConfig.tshirt.idPart, 1, 10);
-            avatarConfig.tshirt.idColor = Mathf.Clamp(avatarConfig.tshirt.idColor, 1, 10);
-            avatarConfig.trousers.idPart = Mathf.Clamp(avatarConfig.trousers.idPart, 1, 10);
-            avatarConfig.trousers.idColor = Mathf.Clamp(avatarConfig.trousers.idColor, 1, 10);
-            avatarConfig.shoes.idPart = Mathf.Clamp(avatarConfig.shoes.idPart, 1, 10);
-            avatarConfig.shoes.idColor = Mathf.Clamp(avatarConfig.shoes.idColor, 1, 10);
+            if (avatarConfig == null) return;
+            if (avatarConfig.hair != null)
+            {
+                avatarConfig.hair.idPart = Mathf.Clamp(avatarConfig.hair.idPart, 0, 10);
+                avatarConfig.hair.idColor = Mathf.Clamp(avatarConfig.hair.idColor, 1, 10);
+            }
+            if (avatarConfig.eyebrows != null)
+            {
+                avatarConfig.eyebrows.idPart = Mathf.Clamp(avatarConfig.eyebrows.idPart, 0, 10);
+                avatarConfig.eyebrows.idColor = Mathf.Clamp(avatarConfig.eyebrows.idColor, 1, 10);
+            }
+            if (avatarConfig.eyes != null)
+            {
+                avatarConfig.eyes.idPart = Mathf.Clamp(avatarConfig.eyes.idPart, 1, 10);
+                avatarConfig.eyes.idColor = Mathf.Clamp(avatarConfig.eyes.idColor, 1, 10);
+            }
+            if (avatarConfig.nose != null)
+            {
+                avatarConfig.nose.idPart = Mathf.Clamp(avatarConfig.nose.idPart, 1, 10);
+                avatarConfig.nose.idColor = Mathf.Clamp(avatarConfig.nose.idColor, 1, 10);
+            }
+            if (avatarConfig.mouth != null)
+            {
+                avatarConfig.mouth.idPart = Mathf.Clamp(avatarConfig.mouth.idPart, 1, 10);
+                avatarConfig.mouth.idColor = Mathf.Clamp(avatarConfig.mouth.idColor, 1, 10);
+            }
+            if (avatarConfig.facialHair != null)
+            {
+                avatarConfig.facialHair.idPart = Mathf.Clamp(avatarConfig.facialHair.idPart, 0, 5);
+                avatarConfig.facialHair.idColor = Mathf.Clamp(avatarConfig.facialHair.idColor, 1, 10);
+            }
+            if (avatarConfig.skin != null)
+            {
+                avatarConfig.skin.idPart = Mathf.Clamp(avatarConfig.skin.idPart, 1, 10);
+                avatarConfig.skin.idColor = Mathf.Clamp(avatarConfig.skin.idColor, 1, 10);
+            }
+            if (avatarConfig.tshirt != null)
+            {
+                avatarConfig.tshirt.idPart = Mathf.Clamp(avatarConfig.tshirt.idPart, 1, 10);
+                avatarConfig.tshirt.idColor = Mathf.Clamp(avatarConfig.tshirt.idColor, 1, 10);
+            }
+            if (avatarConfig.trousers != null)
+            {
+                avatarConfig.trousers.idPart = Mathf.Clamp(avatarConfig.trousers.idPart, 1, 10);
+                avatarConfig.trousers.idColor = Mathf.Clamp(avatarConfig.trousers.idColor, 1, 10);
+            }
+            if (avatarConfig.shoes != null)
+            {
+                avatarConfig.shoes.idPart = Mathf.Clamp(avatarConfig.shoes.idPart, 1, 10);
+                avatarConfig.shoes.idColor = Mathf.Clamp(avatarConfig.shoes.idColor, 1, 10);
+            }
         }
 
         private int Clamp(int value, int min, int max) => Mathf.Clamp(value, min, max);
 
         public void ApplyHair(AvatarPartConfig hairConfig)
         {
+            if (hairConfig == null) return;
             if (hairConfig.idPart == 0)
             {
                 foreach (var p in hairParts) if (p != null) p.SetActive(false);
@@ -156,6 +188,7 @@ namespace eu.foodmission.platform
 
         public void ApplyEyebrows(AvatarPartConfig eyebrowsConfig)
         {
+            if (eyebrowsConfig == null) return;
             if (eyebrowsConfig.idPart == 0)
             {
                 if (eyebrowLeftGameObject != null) eyebrowLeftGameObject.SetActive(false);
@@ -187,6 +220,7 @@ namespace eu.foodmission.platform
 
         public void ApplyEyes(AvatarPartConfig eyesConfig)
         {
+            if (eyesConfig == null) return;
             _propertyBlock.Clear();
             int idColor = eyesConfig.idColor - 1;
             if (idColor < eyesColors.Count)
@@ -208,6 +242,7 @@ namespace eu.foodmission.platform
 
         public void ApplyNose(AvatarPartConfig noseConfig)
         {
+            if (noseConfig == null) return;
             int idPart = noseConfig.idPart - 1;
             if (idPart >= 1 && idPart <= noseParts.Count)
             {
@@ -228,6 +263,7 @@ namespace eu.foodmission.platform
 
         public void ApplyMouth(AvatarPartConfig mouthConfig)
         {
+            if (mouthConfig == null) return;
             int idPart = mouthConfig.idPart - 1;
             if (idPart >= 1 && idPart < mouthTextures.Count && mouthRenderer != null && mouthTextures[idPart] != null)
             {
@@ -239,6 +275,7 @@ namespace eu.foodmission.platform
 
         public void ApplyFacialHair(AvatarPartConfig facialHairConfig)
         {
+            if (facialHairConfig == null) return;
             if (facialHairConfig.idPart == 0)
             {
                 if (facialHairGameObject != null) facialHairGameObject.SetActive(false);
@@ -269,6 +306,7 @@ namespace eu.foodmission.platform
 
         public void ApplySkin(AvatarPartConfig skinConfig)
         {
+            if (skinConfig == null) return;
             int idColor = skinConfig.idColor - 1;
             if (idColor < skinColors.Count)
             {
@@ -291,6 +329,7 @@ namespace eu.foodmission.platform
 
         public void ApplyTshirt(AvatarPartConfig tshirtConfig)
         {
+            if (tshirtConfig == null) return;
             int idColor = tshirtConfig.idColor - 1;
             if (idColor < clothesColors.Count)
             {
@@ -308,6 +347,7 @@ namespace eu.foodmission.platform
 
         public void ApplyTrousers(AvatarPartConfig trousersConfig)
         {
+            if (trousersConfig == null) return;
             int idColor = trousersConfig.idColor - 1;
             if (idColor < clothesColors.Count)
             {
@@ -325,6 +365,7 @@ namespace eu.foodmission.platform
 
         public void ApplyShoes(AvatarPartConfig shoesConfig)
         {
+            if (shoesConfig == null) return;
             int idColor = shoesConfig.idColor - 1;
             if (idColor < clothesColors.Count)
             {
@@ -340,6 +381,7 @@ namespace eu.foodmission.platform
 
         public void ApplyAvatar(AvatarConfig avatarConfig)
         {
+            if (avatarConfig == null) return;
             ValidateIds(avatarConfig);
             ApplyHair(avatarConfig.hair);
             ApplyEyebrows(avatarConfig.eyebrows);

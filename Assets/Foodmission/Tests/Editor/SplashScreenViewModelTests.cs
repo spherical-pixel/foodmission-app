@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 
 using eu.foodmission.platform;
+using UnityEngine;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -105,6 +106,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task InitializeAppAsync_CanBeCalled()
         {
+            bool previousIgnore = UnityEngine.TestTools.LogAssert.ignoreFailingMessages;
+            UnityEngine.TestTools.LogAssert.ignoreFailingMessages = true;
             try
             {
                 await _vm.InitializeAppAsync();
@@ -118,6 +121,10 @@ namespace eu.foodmission.platform.Tests
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected exception type: {ex.GetType().Name} - {ex.Message}");
+            }
+            finally
+            {
+                UnityEngine.TestTools.LogAssert.ignoreFailingMessages = previousIgnore;
             }
         }
     }

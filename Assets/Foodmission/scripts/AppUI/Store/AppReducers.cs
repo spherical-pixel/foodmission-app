@@ -268,6 +268,7 @@ namespace eu.foodmission.platform
             newState.userEducationLevel = "";
             newState.userActivityLevel = "";
             newState.userDietaryPreference = new string[0];
+            newState.userShoppingResponsibility = "";
             newState.userAvatarConfig = null;
             newState.userHasAvatar = false;
             // Reset preferences to defaults

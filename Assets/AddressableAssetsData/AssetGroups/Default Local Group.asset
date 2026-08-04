@@ -150,6 +150,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c928be462c52a4862a7c4a0b9e61d8d5
+    m_Address: Assets/Foodmission/graphics/png/default-avatar.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc5288c773c974a9fad507c1523ff373
     m_Address: Foodmission/AppUI/Templates/ShoppingListScreen.uxml
     m_ReadOnly: 0
