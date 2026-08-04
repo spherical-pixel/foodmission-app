@@ -43,7 +43,7 @@ namespace eu.foodmission.platform.Tests
         {
             Assert.AreEqual("", _vm.Username);
             Assert.AreEqual("", _vm.Password);
-            Assert.AreEqual(DisplayStyle.None, _vm.IsLoading);
+            Assert.IsFalse(_vm.IsLoading);
             Assert.IsFalse(_vm.IsAuthenticated);
         }
 

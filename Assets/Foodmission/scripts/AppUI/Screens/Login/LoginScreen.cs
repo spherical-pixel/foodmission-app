@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
@@ -103,15 +104,23 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
-            _viewModel.ShowErrorRequest += OnShowErrorRequested;
+            if (_viewModel != null)
+            {
+                _viewModel.ShowErrorRequest += OnShowErrorRequested;
+                _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+                UpdateLoadingOverlay(_viewModel.IsLoading);
+            }
         }
 
         protected override void OnViewModelUnbinding()
         {
             if (_viewModel != null)
             {
+                _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
                 _viewModel.ShowErrorRequest -= OnShowErrorRequested;
             }
+
+            FMLoadingOverlay.Hide();
 
             UnregisterManualEvents();
 
@@ -122,6 +131,26 @@ namespace eu.foodmission.platform
             _passwordField = null;
 
             base.OnViewModelUnbinding();
+        }
+
+        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LoginViewModel.IsLoading))
+            {
+                UpdateLoadingOverlay(_viewModel.IsLoading);
+            }
+        }
+
+        private void UpdateLoadingOverlay(bool isLoading)
+        {
+            if (isLoading)
+            {
+                FMLoadingOverlay.Show();
+            }
+            else
+            {
+                FMLoadingOverlay.Hide();
+            }
         }
 
         // --------------------------------------------------------------------

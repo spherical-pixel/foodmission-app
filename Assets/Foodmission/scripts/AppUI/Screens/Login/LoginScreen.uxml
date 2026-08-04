@@ -47,11 +47,5 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <appui:Spacer spacing="XL"/>
-        <ui:VisualElement name="loading-overlay" binding-path="IsLoading" class="auth-loading-overlay" style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; justify-content: center; align-self: center; align-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.47); display: none;">
-            <appui:CircularProgress class="auth-loading-spinner"/>
-            <Bindings>
-                <ui:DataBinding property="style.display" data-source-path="IsLoading" binding-mode="TwoWay"/>
-            </Bindings>
-        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -42,12 +42,14 @@ namespace eu.foodmission.platform
         private HelpTextVariant _passwordHelpTextVariant = HelpTextVariant.Default;
 
         /// <summary>
-        /// True if waiting for login results, false otherwise. 
+        /// True if waiting for login results, false otherwise.
         /// </summary>
         [ObservableProperty]
-        private DisplayStyle _isLoading;
+        private bool _isLoading;
 
-        
+
+
+
         /// <summary>
         /// It indicates whether the user is authenticated. 
         /// It is automatically updated when the state of Redux changes. 
@@ -74,7 +76,7 @@ namespace eu.foodmission.platform
             );
         }
 
-        
+
         /// <summary>
         /// Selector for extracting only the relevant auth state
         /// </summary>
@@ -90,14 +92,7 @@ namespace eu.foodmission.platform
         {
             Debug.Log($"[{GetType().Name}] OnAuthStateChanged: isAuthenticating={authState.isAuthenticating}, userId={authState.userId}, authError={authState.authError}");
 
-            if(authState.isAuthenticating)
-            {
-                IsLoading = DisplayStyle.Flex;
-            }
-            else
-            {
-                IsLoading = DisplayStyle.None;
-            }
+            IsLoading = authState.isAuthenticating;
 
             bool wasAuthenticated = IsAuthenticated;
             IsAuthenticated = !string.IsNullOrEmpty(authState.userId);
@@ -121,7 +116,7 @@ namespace eu.foodmission.platform
                     Debug.Log($"[{GetType().Name}] Navigation already triggered - ignoring duplicate");
                 }
             }
-            else if(!string.IsNullOrEmpty(authState.authError))
+            else if (!string.IsNullOrEmpty(authState.authError))
             {
                 Debug.Log($"[{GetType().Name}] Authentication failed: {authState.authError}");
                 ShowErrorRequest?.Invoke(authState.authError);
@@ -133,14 +128,7 @@ namespace eu.foodmission.platform
         /// </summary>
         private void SynchronizeState(AppState state)
         {
-            if(state.isAuthenticating)
-            {
-                IsLoading = DisplayStyle.Flex;
-            }
-            else
-            {
-                IsLoading = DisplayStyle.None;
-            }
+            IsLoading = state.isAuthenticating;
             IsAuthenticated = !string.IsNullOrEmpty(state.userId);
         }
 
@@ -179,7 +167,7 @@ namespace eu.foodmission.platform
                 fieldsOk = false;
             }
 
-            if(fieldsOk)
+            if (fieldsOk)
             {
                 try
                 {
@@ -190,7 +178,7 @@ namespace eu.foodmission.platform
                 {
                     Debug.LogError($"[{GetType().Name}] Login exception: {ex.Message}");
                     ShowErrorRequest?.Invoke("@UI:LOGIN_FAILED");
-                    IsLoading = DisplayStyle.None;
+                    IsLoading = false;
                 }
             }
             else
@@ -237,6 +225,6 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        
+
     }
 }
