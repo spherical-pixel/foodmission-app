@@ -25,8 +25,23 @@ namespace eu.foodmission.platform
     }
 
     /// <summary>
+    /// Dropdown catalog values for gamification onboarding baselines returned in GET /api/v1/catalog/startup.
+    /// </summary>
+    [Serializable]
+    public class CatalogOnboardingStartupData
+    {
+        public CatalogItem[] weeklyMeatRanges;
+        public CatalogItem[] weeklyBeefFrequencies;
+        public CatalogItem[] weeklyFoodWasteRanges;
+        public CatalogItem[] weeklyUpfRanges;
+        public CatalogItem[] weeklyReusableRanges;
+        public CatalogItem[] userSegments;
+        public CatalogItem[] motivations;
+    }
+
+    /// <summary>
     /// Container for all catalog data returned by GET /api/v1/catalog/startup.
-    /// Each field maps to an array of CatalogItem.
+    /// Each field maps to an array of CatalogItem or nested onboarding baselines object.
     /// </summary>
     [Serializable]
     public class CatalogData
@@ -37,6 +52,11 @@ namespace eu.foodmission.platform
         public CatalogItem[] shoppingResponsibilities;
         public CatalogItem[] educationLevels;
         public CatalogItem[] annualIncomeLevels;
+
+        public CatalogOnboardingStartupData onboarding;
+        public CatalogItem[] progressIndicatorKinds;
+        public CatalogItem[] progressPrecisions;
+        public CatalogItem[] walletCurrencies;
     }
 
     /// <summary>

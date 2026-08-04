@@ -137,6 +137,36 @@ namespace eu.foodmission.platform
         public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetGroupRolesAsync(string lang)
             => GetCatalogListAsync("group-roles", lang);
 
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyMeatRangesAsync(string lang)
+            => GetCatalogListAsync("weekly-meat-ranges", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyBeefFrequenciesAsync(string lang)
+            => GetCatalogListAsync("weekly-beef-frequencies", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyFoodWasteRangesAsync(string lang)
+            => GetCatalogListAsync("weekly-food-waste-ranges", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyUpfRangesAsync(string lang)
+            => GetCatalogListAsync("weekly-upf-ranges", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyReusableRangesAsync(string lang)
+            => GetCatalogListAsync("weekly-reusable-ranges", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetUserSegmentsAsync(string lang)
+            => GetCatalogListAsync("user-segments", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMotivationsAsync(string lang)
+            => GetCatalogListAsync("motivations", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetProgressIndicatorKindsAsync(string lang)
+            => GetCatalogListAsync("progress-indicator-kinds", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetProgressPrecisionsAsync(string lang)
+            => GetCatalogListAsync("progress-precisions", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWalletCurrenciesAsync(string lang)
+            => GetCatalogListAsync("wallet-currencies", lang);
+
         // ── Paginated catalog lists (languages) ──────────────────────────
 
         private async Task<(PaginatedCatalogResponse Result, ApiErrorResponse Error)>

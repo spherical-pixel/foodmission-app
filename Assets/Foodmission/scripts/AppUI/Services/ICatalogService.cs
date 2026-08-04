@@ -17,6 +17,26 @@ namespace eu.foodmission.platform
 
         Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetGroupRolesAsync(string lang);
 
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyMeatRangesAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyBeefFrequenciesAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyFoodWasteRangesAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyUpfRangesAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWeeklyReusableRangesAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetUserSegmentsAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetMotivationsAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetProgressIndicatorKindsAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetProgressPrecisionsAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWalletCurrenciesAsync(string lang);
+
         Task<(PaginatedCatalogResponse Result, ApiErrorResponse Error)> GetLanguagesAsync(
             string lang, string search = null);
 
