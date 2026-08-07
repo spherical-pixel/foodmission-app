@@ -67,23 +67,35 @@ namespace eu.foodmission.platform
             _messageText.primary = false;
             _messageCard.Add(_messageText);
 
+            _messageCard.style.display = DisplayStyle.None;
             slot.Add(_messageCard);
-
-            _messageCard.schedule.Execute(() =>
-            {
-                _messageCard.AddToClassList("fm-step-flow__guide-card--visible");
-            }).StartingIn(50);
         }
 
         public void UpdateMascotMessage(string newMessage)
         {
-            if (_messageText.text == newMessage) return;
+            if (_messageCard == null || _messageText == null) return;
 
-            // 1. Ocultar con fade-out/exit
+            newMessage ??= string.Empty;
+
+            if (string.IsNullOrWhiteSpace(newMessage))
+            {
+                _messageCard.RemoveFromClassList("fm-step-flow__guide-card--visible");
+                _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
+                _messageCard.style.display = DisplayStyle.None;
+                _messageText.text = string.Empty;
+                return;
+            }
+
+            if (_messageText.text == newMessage && _messageCard.style.display == DisplayStyle.Flex && _messageCard.ClassListContains("fm-step-flow__guide-card--visible"))
+            {
+                return;
+            }
+
+            _messageCard.style.display = DisplayStyle.Flex;
+
             _messageCard.RemoveFromClassList("fm-step-flow__guide-card--visible");
             _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
 
-            // 2. Tras la duración de la salida (150ms), cambiar texto y hacer fade-in
             _messageCard.schedule.Execute(() =>
             {
                 _messageText.text = newMessage;

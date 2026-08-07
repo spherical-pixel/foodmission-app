@@ -2,11 +2,16 @@
   <Project Path="Foodmission.csproj" />
   <Project Path="Foodmission.Tests.Editor.csproj" />
   <Project Path="Unity.AppUI.Samples.MVVMRedux.csproj" />
+  <Project Path="BrewedInk.MarkdownSupport.Samples.EditorCommon.csproj" />
+  <Project Path="BrewedInk.MarkdownSupport.csproj" />
   <Project Path="Unity.AppUI.Samples.MVVM.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Unity.AppUI.Samples.Navigation.csproj" />
   <Project Path="Unity.AppUI.Samples.Redux.csproj" />
+  <Project Path="BrewedInk.MarkdownSupport.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="BrewedInk.MarkdownSupport.Samples.Editor.csproj" />
+  <Project Path="BrewedInk.MarkdownSupport.Samples.Runtime.csproj" />
   <Project Path="Foodmission.Editor.csproj" />
   <Project Path="Unity.AppUI.Samples.UndoRedo.csproj" />
 </Solution>

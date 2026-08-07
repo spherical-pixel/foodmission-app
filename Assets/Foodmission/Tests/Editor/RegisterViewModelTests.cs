@@ -26,6 +26,7 @@ namespace eu.foodmission.platform.Tests
             _mockCatalogService = new Mock<ICatalogService>();
             _storeService = new TestStoreService();
             _vm = new RegisterViewModel(_mockAuthService.Object, _mockCatalogService.Object, _storeService);
+            _vm.Initialize();
         }
 
         [TearDown]
@@ -47,6 +48,11 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(-1, _vm.SelectedRegionIndex);
             Assert.AreEqual("", _vm.PostalCode);
             Assert.AreEqual(CheckboxState.Unchecked, _vm.HasAcceptedTerms);
+            Assert.AreEqual(CheckboxState.Unchecked, _vm.HasAcceptedPrivacyPolicy);
+            Assert.AreEqual(CheckboxState.Unchecked, _vm.HasAcceptedPilotConsent);
+            Assert.AreEqual(9, _vm.StepCount);
+            Assert.AreEqual(0, _vm.CurrentStepIndex);
+            Assert.IsTrue(_vm.CanGoNext, "Step 0 (Welcome) should allow GoNext");
         }
 
         [Test]
@@ -139,8 +145,6 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ValidateCountry_WithNoSelection_ReturnsFalse()
         {
-            // SelectedCountryIndex defaults to -1
-
             bool result = _vm.ValidateCountry();
 
             Assert.IsFalse(result);
@@ -151,8 +155,6 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ValidateRegion_WithNoSelection_ReturnsFalse()
         {
-            // SelectedRegionIndex defaults to -1
-
             bool result = _vm.ValidateRegion();
 
             Assert.IsFalse(result);
@@ -163,8 +165,6 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ValidateTerms_WithUnchecked_ReturnsFalse()
         {
-            // HasAcceptedTerms defaults to CheckboxState.Unchecked
-
             bool result = _vm.ValidateTerms();
 
             Assert.IsFalse(result);
@@ -173,10 +173,28 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ValidatePrivacyPolicy_WithUnchecked_ReturnsFalse()
+        {
+            bool result = _vm.ValidatePrivacyPolicy();
+
+            Assert.IsFalse(result);
+            Assert.AreEqual("@UI:ACCEPT_PRIVACY", _vm.PrivacyHelpTextValue);
+            Assert.AreEqual(HelpTextVariant.Destructive, _vm.PrivacyHelpTextVariant);
+        }
+
+        [Test]
+        public void ValidatePilotConsent_WithUnchecked_ReturnsFalse()
+        {
+            bool result = _vm.ValidatePilotConsent();
+
+            Assert.IsFalse(result);
+            Assert.AreEqual("@UI:ACCEPT_PILOT_CONSENT", _vm.ConsentHelpTextValue);
+            Assert.AreEqual(HelpTextVariant.Destructive, _vm.ConsentHelpTextVariant);
+        }
+
+        [Test]
         public void ValidatePostalCode_WithEmpty_ReturnsTrue()
         {
-            // PostalCode defaults to ""
-
             bool result = _vm.ValidatePostalCode();
 
             Assert.IsTrue(result);
@@ -209,6 +227,62 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task StepFlow_Progression_ValidatesStepByStep()
+        {
+            Assert.AreEqual(0, _vm.CurrentStepIndex);
+            Assert.IsTrue(_vm.CanGoNext);
+
+            // Move to Step 1 (Username)
+            await _vm.GoNextAsync();
+            Assert.AreEqual(1, _vm.CurrentStepIndex);
+            Assert.IsFalse(_vm.CanGoNext, "Step 1 should be blocked until username is provided");
+
+            _vm.Username = "testuser";
+            Assert.IsTrue(_vm.CanGoNext);
+
+            // Move to Step 2 (Email)
+            await _vm.GoNextAsync();
+            Assert.AreEqual(2, _vm.CurrentStepIndex);
+            Assert.IsFalse(_vm.CanGoNext);
+
+            _vm.Email = "test@example.com";
+            Assert.IsTrue(_vm.CanGoNext);
+
+            // Move to Step 3 (Password)
+            await _vm.GoNextAsync();
+            Assert.AreEqual(3, _vm.CurrentStepIndex);
+            Assert.IsFalse(_vm.CanGoNext);
+
+            _vm.Password = "password123";
+            Assert.IsTrue(_vm.CanGoNext);
+        }
+
+        [Test]
+        public async Task StepFlow_EnteringStep_DoesNotShowErrorInitially()
+        {
+            // Enter Step 1 (Username)
+            await _vm.GoNextAsync();
+            Assert.AreEqual(1, _vm.CurrentStepIndex);
+            Assert.IsFalse(_vm.CanGoNext);
+            Assert.AreEqual(string.Empty, _vm.UsernameHelpTextValue, "Field should not display error on initial step entry");
+            Assert.AreEqual(HelpTextVariant.Default, _vm.UsernameHelpTextVariant);
+        }
+
+        [Test]
+        public async Task StepFlow_GoNextOnInvalidStep_ShowsErrorHelpText()
+        {
+            // Enter Step 1 (Username)
+            await _vm.GoNextAsync();
+            Assert.AreEqual(1, _vm.CurrentStepIndex);
+
+            // Attempt GoNext while Username is empty
+            await _vm.GoNextAsync();
+            Assert.AreEqual(1, _vm.CurrentStepIndex, "Should stay on step 1");
+            Assert.AreEqual("@UI:ERROR_NO_EMPTY", _vm.UsernameHelpTextValue, "GoNext attempt on empty field should show error message");
+            Assert.AreEqual(HelpTextVariant.Destructive, _vm.UsernameHelpTextVariant);
+        }
+
+        [Test]
         public async Task Register_WithAllValid_CallsAuthService()
         {
             _mockAuthService
@@ -226,6 +300,8 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectedRegionIndex = 0;
             _vm.PostalCode = "12345";
             _vm.HasAcceptedTerms = CheckboxState.Checked;
+            _vm.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+            _vm.HasAcceptedPilotConsent = CheckboxState.Checked;
 
             _vm.Register();
 

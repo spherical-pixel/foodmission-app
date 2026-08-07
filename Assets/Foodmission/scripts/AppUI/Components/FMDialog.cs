@@ -1,5 +1,7 @@
 using System;
+using BrewedInk.MarkdownSupport;
 using Unity.AppUI.Core;
+using Unity.AppUI.MVVM;
 using Unity.AppUI.UI;
 
 using UnityEngine;
@@ -32,7 +34,7 @@ namespace eu.foodmission.platform.Components
             dialog.primaryButton.variant = ButtonVariant.Accent;
 
             dialog.SetPrimaryAction(0, okLabel, onOk ?? (() => { }));
-            if( !string.IsNullOrEmpty(koLabel) && onKo != null)
+            if (!string.IsNullOrEmpty(koLabel) && onKo != null)
             {
                 dialog.SetCancelAction(1, koLabel);
                 dialog.cancelButton.clicked += () => onKo?.Invoke();
@@ -99,9 +101,20 @@ namespace eu.foodmission.platform.Components
             // Use AlertDialog so SetPrimaryAction and SetCancelAction are available.
             // The scrollable text content is added directly to the dialog's contentContainer.
             var dialog = new AlertDialog { title = title };
+            dialog.style.flexGrow = 1;
+            dialog.style.height = Length.Percent(100);
+
+            if (dialog.contentContainer != null)
+            {
+                dialog.contentContainer.style.flexGrow = 1;
+                dialog.contentContainer.style.flexShrink = 1;
+                dialog.contentContainer.style.height = Length.Percent(100);
+            }
 
             var scrollView = new ScrollView();
             scrollView.AddToClassList("fm-dialog-scroll");
+            scrollView.style.flexGrow = 1;
+            scrollView.style.flexShrink = 1;
 
             var text = new Unity.AppUI.UI.Text { text = content };
             text.AddToClassList("fm-dialog-scroll-text");
@@ -118,7 +131,24 @@ namespace eu.foodmission.platform.Components
             dialog.cancelButton.AddToClassList("fm-button");
             dialog.cancelButton.variant = ButtonVariant.Accent;
 
+            var themeService = App.current?.services?.GetService<IThemeService>();
+            void ApplySafeArea()
+            {
+                themeService?.ApplySafeAreaPadding(dialog, applyTop: true, applyBottom: true, applyLeft: false, applyRight: false);
+            }
+
+            ApplySafeArea();
+
             var modal = Modal.Build(anchor, dialog);
+            if (themeService != null)
+            {
+                themeService.SafeAreaChanged += ApplySafeArea;
+                modal.dismissed += (_, _) =>
+                {
+                    themeService.SafeAreaChanged -= ApplySafeArea;
+                };
+            }
+
             if (onCancel != null)
             {
                 modal.dismissed += (_, dismissType) =>
@@ -131,6 +161,106 @@ namespace eu.foodmission.platform.Components
             }
 
             NotifyScreenReaderOfDialog(modal, title, content);
+            modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
+            modal.Show();
+        }
+
+        public static void ShowScrollableMD(
+            VisualElement anchor,
+            string title,
+            string contentMD,
+            Action onAccept = null,
+            Action onCancel = null,
+            string acceptLabel = "@UI:TXT_ACCEPT",
+            string cancelLabel = "@UI:TXT_BACK")
+        {
+            // Use AlertDialog so SetPrimaryAction and SetCancelAction are available.
+            // The scrollable text content is added directly to the dialog's contentContainer.
+            var dialog = new AlertDialog { title = title };
+            dialog.style.flexGrow = 1;
+            dialog.style.height = Length.Percent(100);
+
+            if (dialog.contentContainer != null)
+            {
+                dialog.contentContainer.style.flexGrow = 1;
+                dialog.contentContainer.style.flexShrink = 1;
+                dialog.contentContainer.style.height = Length.Percent(100);
+            }
+
+            var scrollView = new ScrollView();
+            scrollView.AddToClassList("fm-dialog-scroll");
+            scrollView.style.flexGrow = 1;
+            scrollView.style.flexShrink = 1;
+
+            var context = UMarkdownContext.Runtime();
+            VisualElement markdownElement = UMarkdown.Parse(contentMD, context);
+
+            // Buscar todos los elementos de tipo LinkElement dentro del Markdown
+            var linkElements = markdownElement.Query<LinkElement>().ToList();
+            foreach (var link in linkElements)
+            {
+                link.RegisterCallback<MouseDownEvent>(evt =>
+                {
+                    // El tooltip o title suele contener la URL o destino
+                    string url = link.Url;
+
+                    if (!string.IsNullOrEmpty(url) && url.StartsWith("mailto:"))
+                    {
+                        Debug.Log($"[FMDialog] - ShowScrollableMD: Se hizo clic en un correo electrónico: {url}");
+                        Application.OpenURL(url);
+                    }
+                    else
+                    {
+                        Debug.Log($"[FMDialog] - ShowScrollableMD: Se hizo clic en un enlace web: {url}");
+                        Application.OpenURL(url);
+                    }
+                });
+            }
+            markdownElement.style.flexGrow = 1;
+
+            scrollView.Add(markdownElement);
+            dialog.contentContainer.Add(scrollView);
+
+            dialog.SetPrimaryAction(0, acceptLabel, onAccept ?? (() => { }));
+            dialog.primaryButton.AddToClassList("fm-button");
+            dialog.primaryButton.variant = ButtonVariant.Accent;
+
+            // SetCancelAction only accepts (actionId, displayText); cancel callback via dismissed event.
+            dialog.SetCancelAction(1, cancelLabel);
+            dialog.cancelButton.AddToClassList("fm-button");
+            dialog.cancelButton.variant = ButtonVariant.Accent;
+
+            var themeService = App.current?.services?.GetService<IThemeService>();
+            void ApplySafeArea()
+            {
+                themeService?.ApplySafeAreaPadding(dialog, applyTop: true, applyBottom: true, applyLeft: false, applyRight: false);
+            }
+
+            ApplySafeArea();
+
+            var modal = Modal.Build(anchor, dialog);
+            if (themeService != null)
+            {
+                themeService.SafeAreaChanged += ApplySafeArea;
+                modal.dismissed += (_, _) =>
+                {
+                    themeService.SafeAreaChanged -= ApplySafeArea;
+                };
+            }
+
+            if (onCancel != null)
+            {
+                modal.dismissed += (_, dismissType) =>
+                {
+                    if (dismissType == DismissType.Manual)
+                    {
+                        onCancel.Invoke();
+                    }
+                };
+            }
+
+            NotifyScreenReaderOfDialog(modal, title, contentMD);
+            modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
             modal.Show();
         }
 

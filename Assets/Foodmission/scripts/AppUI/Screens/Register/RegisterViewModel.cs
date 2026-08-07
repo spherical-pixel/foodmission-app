@@ -13,7 +13,7 @@ using UnityEngine;
 namespace eu.foodmission.platform
 {
     [ObservableObject]
-    public partial class RegisterViewModel : ViewModelBase
+    public partial class RegisterViewModel : StepFlowViewModelBase
     {
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
@@ -96,6 +96,24 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private HelpTextVariant _termsHelpTextVariant = HelpTextVariant.Default;
+
+        [ObservableProperty]
+        private CheckboxState _hasAcceptedPrivacyPolicy = CheckboxState.Unchecked;
+
+        [ObservableProperty]
+        private string _privacyHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _privacyHelpTextVariant = HelpTextVariant.Default;
+
+        [ObservableProperty]
+        private CheckboxState _hasAcceptedPilotConsent = CheckboxState.Unchecked;
+
+        [ObservableProperty]
+        private string _consentHelpTextValue = "";
+
+        [ObservableProperty]
+        private HelpTextVariant _consentHelpTextVariant = HelpTextVariant.Default;
 
         /// <summary>
         /// Country dropdown options list (format: "🇦🇹 Austria")
@@ -283,6 +301,16 @@ namespace eu.foodmission.platform
                 fieldsOk = false;
             }
 
+            if (!ValidatePrivacyPolicy())
+            {
+                fieldsOk = false;
+            }
+
+            if (!ValidatePilotConsent())
+            {
+                fieldsOk = false;
+            }
+
             if (fieldsOk)
             {
                 // Get country and region ISO codes
@@ -340,12 +368,20 @@ namespace eu.foodmission.platform
             }
         }
 
-        public bool ValidateUsername()
+        public bool ValidateUsername(bool showError = true)
         {
             if (string.IsNullOrEmpty(Username))
             {
-                UsernameHelpTextValue = "@UI:ERROR_NO_EMPTY";
-                UsernameHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    UsernameHelpTextValue = "@UI:ERROR_NO_EMPTY";
+                    UsernameHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    UsernameHelpTextValue = string.Empty;
+                    UsernameHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
@@ -354,12 +390,20 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public bool ValidateEmail()
+        public bool ValidateEmail(bool showError = true)
         {
             if (string.IsNullOrEmpty(Email))
             {
-                EmailHelpTextValue = "@UI:ERROR_NO_EMPTY";
-                EmailHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    EmailHelpTextValue = "@UI:ERROR_NO_EMPTY";
+                    EmailHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    EmailHelpTextValue = string.Empty;
+                    EmailHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
@@ -375,12 +419,20 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public bool ValidatePassword()
+        public bool ValidatePassword(bool showError = true)
         {
             if (string.IsNullOrEmpty(Password))
             {
-                PasswordHelpTextValue = "@UI:ERROR_NO_EMPTY";
-                PasswordHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    PasswordHelpTextValue = "@UI:ERROR_NO_EMPTY";
+                    PasswordHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    PasswordHelpTextValue = string.Empty;
+                    PasswordHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
@@ -396,7 +448,7 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public bool ValidateYearOfBirth()
+        public bool ValidateYearOfBirth(bool showError = true)
         {
             if (SelectedYearOfBirthIndex < 0)
             {
@@ -407,8 +459,16 @@ namespace eu.foodmission.platform
 
             if (SelectedYearOfBirthIndex >= YearOfBirthOptions.Count)
             {
-                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
-                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
+                    YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    YearOfBirthHelpTextValue = string.Empty;
+                    YearOfBirthHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
@@ -416,15 +476,31 @@ namespace eu.foodmission.platform
 
             if (year < DateTime.Now.Year - 100)
             {
-                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
-                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_1";
+                    YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    YearOfBirthHelpTextValue = string.Empty;
+                    YearOfBirthHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
             if (year > DateTime.Now.Year - 18)
             {
-                YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_2";
-                YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    YearOfBirthHelpTextValue = "@UI:ERROR_BIRTH_2";
+                    YearOfBirthHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    YearOfBirthHelpTextValue = string.Empty;
+                    YearOfBirthHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
@@ -433,12 +509,20 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public bool ValidateCountry()
+        public bool ValidateCountry(bool showError = true)
         {
             if (_selectedCountryIndex == -1)
             {
-                CountryHelpTextValue = "@UI:ERROR_COUNTRY_SELECT";
-                CountryHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    CountryHelpTextValue = "@UI:ERROR_COUNTRY_SELECT";
+                    CountryHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    CountryHelpTextValue = string.Empty;
+                    CountryHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
@@ -447,12 +531,20 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public bool ValidateRegion()
+        public bool ValidateRegion(bool showError = true)
         {
             if (_selectedRegionIndex == -1)
             {
-                RegionHelpTextValue = "@UI:ERROR_REGION_SELECT";
-                RegionHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    RegionHelpTextValue = "@UI:ERROR_REGION_SELECT";
+                    RegionHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    RegionHelpTextValue = string.Empty;
+                    RegionHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
@@ -465,7 +557,7 @@ namespace eu.foodmission.platform
         /// Validates the postal code field. Since postal code formats vary widely by country,
         /// this only checks length constraints when a value is provided.
         /// </summary>
-        public bool ValidatePostalCode()
+        public bool ValidatePostalCode(bool showError = true)
         {
             // Postal code is optional - only validate if a value is provided
             if (string.IsNullOrEmpty(PostalCode))
@@ -487,18 +579,122 @@ namespace eu.foodmission.platform
             return true;
         }
 
-        public bool ValidateTerms()
+        public bool ValidateTerms(bool showError = true)
         {
             if (HasAcceptedTerms != CheckboxState.Checked)
             {
-                TermsHelpTextValue = "@UI:ACCEPT_TERMS";
-                TermsHelpTextVariant = HelpTextVariant.Destructive;
+                if (showError)
+                {
+                    TermsHelpTextValue = "@UI:ACCEPT_TERMS";
+                    TermsHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    TermsHelpTextValue = string.Empty;
+                    TermsHelpTextVariant = HelpTextVariant.Default;
+                }
                 return false;
             }
 
             TermsHelpTextValue = string.Empty;
             TermsHelpTextVariant = HelpTextVariant.Default;
             return true;
+        }
+
+        public bool ValidatePrivacyPolicy(bool showError = true)
+        {
+            if (HasAcceptedPrivacyPolicy != CheckboxState.Checked)
+            {
+                if (showError)
+                {
+                    PrivacyHelpTextValue = "@UI:ACCEPT_PRIVACY";
+                    PrivacyHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    PrivacyHelpTextValue = string.Empty;
+                    PrivacyHelpTextVariant = HelpTextVariant.Default;
+                }
+                return false;
+            }
+
+            PrivacyHelpTextValue = string.Empty;
+            PrivacyHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
+
+        public bool ValidatePilotConsent(bool showError = true)
+        {
+            if (HasAcceptedPilotConsent != CheckboxState.Checked)
+            {
+                if (showError)
+                {
+                    ConsentHelpTextValue = "@UI:ACCEPT_PILOT_CONSENT";
+                    ConsentHelpTextVariant = HelpTextVariant.Destructive;
+                }
+                else
+                {
+                    ConsentHelpTextValue = string.Empty;
+                    ConsentHelpTextVariant = HelpTextVariant.Default;
+                }
+                return false;
+            }
+
+            ConsentHelpTextValue = string.Empty;
+            ConsentHelpTextVariant = HelpTextVariant.Default;
+            return true;
+        }
+
+        // ── StepFlow Implementation ─────────────────────────────────
+        protected override int GetStepCount() => 9;
+
+        protected override bool ValidateStep(int stepIndex)
+        {
+            return ValidateStep(stepIndex, showError: false);
+        }
+
+        protected override bool ValidateStep(int stepIndex, bool showError)
+        {
+            return stepIndex switch
+            {
+                0 => true, // Welcome step is always valid
+                1 => ValidateUsername(showError),
+                2 => ValidateEmail(showError),
+                3 => ValidatePassword(showError),
+                4 => ValidateYearOfBirth(showError),
+                5 => ValidateCountry(showError) && ValidateRegion(showError) && ValidatePostalCode(showError),
+                6 => ValidateTerms(showError),
+                7 => ValidatePrivacyPolicy(showError),
+                8 => ValidatePilotConsent(showError),
+                _ => true
+            };
+        }
+
+        protected override string GetStepTitle(int stepIndex)
+        {
+            return stepIndex switch
+            {
+                0 => "@UI:STEP_TITLE_WELCOME",
+                1 => "@UI:STEP_TITLE_USERNAME",
+                2 => "@UI:STEP_TITLE_EMAIL",
+                3 => "@UI:STEP_TITLE_PASSWORD",
+                4 => "@UI:STEP_TITLE_BIRTHYEAR",
+                5 => "@UI:STEP_TITLE_LOCATION",
+                6 => "@UI:STEP_TITLE_TERMS",
+                7 => "@UI:STEP_TITLE_PRIVACY",
+                8 => "@UI:STEP_TITLE_CONSENT",
+                _ => ""
+            };
+        }
+
+        protected override Task OnStepEnteredAsync(int stepIndex) => Task.CompletedTask;
+
+        protected override Task OnStepExitingAsync(int stepIndex) => Task.CompletedTask;
+
+        protected override Task OnFlowCompletedAsync()
+        {
+            Register();
+            return Task.CompletedTask;
         }
     }
 }

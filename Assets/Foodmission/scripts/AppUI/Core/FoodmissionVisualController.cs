@@ -48,7 +48,7 @@ namespace eu.foodmission.platform
             var avatarService = App.current?.services?.GetService<IAvatarService>();
             if (avatarService == null) return;
 
-            Texture2D tex = avatarService.GetFaceTexture();
+            Texture2D tex = avatarService.GetFaceTexture(allowFallback: true);
 
             // If user has an avatar but face texture file hasn't been generated yet, trigger asynchronous render
             if (avatarService.HasAvatar && (tex == null || tex == AvatarService.GetDefaultAvatarTexture()))

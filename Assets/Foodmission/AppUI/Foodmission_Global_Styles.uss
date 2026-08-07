@@ -359,8 +359,23 @@
 }
 
 .fm-dialog-scroll {
-    max-height: 1000px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    height: 100%;
     padding: var(--appui-sizing-150);
+}
+
+.fm-dialog-scroll .block {
+    margin-bottom: 16px;
+}
+
+.fm-dialog-scroll .heading {
+    margin-top: 18px;
+    margin-bottom: 8px;
+}
+
+.fm-dialog-scroll .paragraph .line {
+    overflow: visible;
 }
 
 .fm-dialog-scroll-text {
@@ -1411,3 +1426,7 @@
     align-items: center;
     justify-content: flex-end;
 }
+
+/* .appui-swipeview-item{
+    align-items: flex-start;
+} */

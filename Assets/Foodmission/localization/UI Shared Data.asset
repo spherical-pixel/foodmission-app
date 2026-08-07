@@ -2055,6 +2055,150 @@ MonoBehaviour:
     m_Key: MEMBER_PROMOTED_ADMIN
     m_Metadata:
       m_Items: []
+  - m_Id: 31123411232088064
+    m_Key: TXT_REG_STEP_WELCOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31123536339787776
+    m_Key: TXT_REG_STEP_USERNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124113580875776
+    m_Key: TXT_REG_STEP_EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124276500226048
+    m_Key: TXT_REG_STEP_PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124326903177216
+    m_Key: TXT_REG_STEP_BIRTHYEAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124438433914880
+    m_Key: TXT_REG_STEP_LOCATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124560802734080
+    m_Key: TXT_REG_STEP_TERMS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124623998312448
+    m_Key: TXT_REG_STEP_PRIVACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124709910241280
+    m_Key: TXT_REG_STEP_CONSENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31124844652257280
+    m_Key: ACCEPT_PRIVACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125157933211648
+    m_Key: ACCEPT_PILOT_CONSENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125240456142848
+    m_Key: BTN_READ_TERMS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125292482289664
+    m_Key: BTN_READ_PRIVACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125361180794880
+    m_Key: BTN_READ_CONSENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125531389845504
+    m_Key: STEP_TITLE_WELCOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125690362355712
+    m_Key: STEP_TITLE_USERNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125715708534784
+    m_Key: STEP_TITLE_EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125762500190208
+    m_Key: STEP_TITLE_PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125833245515776
+    m_Key: STEP_TITLE_BIRTHYEAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125894994059264
+    m_Key: STEP_TITLE_LOCATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125949671006208
+    m_Key: STEP_TITLE_TERMS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31125995040792576
+    m_Key: STEP_TITLE_PRIVACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126038162432000
+    m_Key: STEP_TITLE_CONSENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126082303287296
+    m_Key: LABEL_USERNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126126712578048
+    m_Key: PLACEHOLDER_USERNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126174418591744
+    m_Key: LABEL_EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126255662260224
+    m_Key: PLACEHOLDER_EMAIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126407701585920
+    m_Key: LABEL_PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126448877068288
+    m_Key: PLACEHOLDER_PASSWORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126514157215744
+    m_Key: LABEL_BIRTH_YEAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126564262371328
+    m_Key: LABEL_COUNTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126611515400192
+    m_Key: LABEL_REGION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126680599781376
+    m_Key: LABEL_POSTAL_CODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31126932849418240
+    m_Key: PLACEHOLDER_POSTAL_CODE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31127125703516160
+    m_Key: PRIVACY_POLICY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31127159106953216
+    m_Key: PILOT_CONSENT_TITLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

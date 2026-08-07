@@ -28,6 +28,7 @@ namespace eu.foodmission.platform
         // ── Abstract & Virtual Methods (subclasses implement) ──
         protected abstract int GetStepCount();
         protected abstract bool ValidateStep(int stepIndex);
+        protected virtual bool ValidateStep(int stepIndex, bool showError) => ValidateStep(stepIndex);
         protected abstract string GetStepTitle(int stepIndex);
         protected abstract Task OnStepEnteredAsync(int stepIndex);
         protected abstract Task OnStepExitingAsync(int stepIndex);
@@ -62,7 +63,7 @@ namespace eu.foodmission.platform
             IsFirstStep = CurrentStepIndex == 0;
             IsLastStep = CurrentStepIndex == StepCount - 1;
             CanGoPrevious = !IsFirstStep;
-            CanGoNext = ValidateStep(CurrentStepIndex);
+            CanGoNext = ValidateStep(CurrentStepIndex, false);
             StepTitle = GetStepTitle(CurrentStepIndex);
         }
 
@@ -74,7 +75,7 @@ namespace eu.foodmission.platform
         // ── Public Navigation Methods ─────────────────────────
         public async Task GoNextAsync()
         {
-            if (!ValidateStep(CurrentStepIndex))
+            if (!ValidateStep(CurrentStepIndex, true))
             {
                 return;
             }
@@ -118,7 +119,7 @@ namespace eu.foodmission.platform
             {
                 for (int i = CurrentStepIndex; i < index; i++)
                 {
-                    if (!ValidateStep(i))
+                    if (!ValidateStep(i, true))
                     {
                         return; // blocked by validation on intermediate steps
                     }

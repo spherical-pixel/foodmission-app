@@ -28,6 +28,7 @@ namespace eu.foodmission.platform
         private VisualElement _companionSlot;
         private FMButton _btnPrevious;
         private FMButton _btnNext;
+        private ScrollView _bodyScroll;
 
         // ── Customization Settings ──────────────────────────
         protected virtual bool AllowSwipeGestures => false;
@@ -59,11 +60,19 @@ namespace eu.foodmission.platform
             _companionSlot = contentContainer.Q<VisualElement>("companion-slot");
             _btnPrevious = contentContainer.Q<FMButton>("btn-previous");
             _btnNext = contentContainer.Q<FMButton>("btn-next");
+            _bodyScroll = contentContainer.Q<ScrollView>("step-body-scroll");
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+
+            if (_bodyScroll != null)
+            {
+                _bodyScroll.touchScrollBehavior = ScrollView.TouchScrollBehavior.Clamped;
+                _bodyScroll.verticalScrollerVisibility = ScrollerVisibility.Hidden;
+                _bodyScroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+            }
 
             if (_swipeView != null)
             {

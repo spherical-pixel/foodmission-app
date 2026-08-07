@@ -11,39 +11,210 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
     [Preserve]
-    class RegisterScreen : NavigationScreenBase<RegisterViewModel>
+    class RegisterScreen : StepFlowScreenBase<RegisterViewModel>
     {
-        private Unity.AppUI.UI.Button _registerButton;
-        private FormFieldItemDropDownField _countryDropdown;
-        private FormFieldItemDropDownField _regionDropdown;
-        private FormFieldItemCheckbox _termsCheckbox;
+        protected override int StepCount => 9;
+
+
+        protected override string NextButtonLabel => "@UI:TXT_NEXT";
+        protected override string PreviousButtonLabel => "@UI:TXT_BACK";
+        protected override string CompleteButtonLabel => "@UI:REGISTER";
+
+        private ExVisualElement _messageCard;
+        private Unity.AppUI.UI.Text _messageText;
+        private FMNutriView _nutriView;
+
+        // Reusable FormFieldItem components
         private FormFieldItemTextField _usernameField;
         private FormFieldItemTextField _emailField;
         private FormFieldItemPassword _passwordField;
         private FormFieldItemDropDownField _yearOfBirthDropdown;
+        private FormFieldItemDropDownField _countryDropdown;
+        private FormFieldItemDropDownField _regionDropdown;
         private FormFieldItemTextField _postalCodeField;
-        private Unity.AppUI.UI.Heading _heading;
+        private FormFieldItemCheckbox _termsCheckbox;
+        private FormFieldItemCheckbox _privacyCheckbox;
+        private FormFieldItemCheckbox _consentCheckbox;
 
-        private AccessibilityNode _headingNode;
-        private AccessibilityNode _registerButtonNode;
-
-        protected override bool IsFixedContent => false;
+        protected override bool IsFixedContent => true;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
         protected override bool ApplySafeAreaRight => false;
         protected override bool ApplySafeAreaTop => false;
 
-        public RegisterScreen()
+        public RegisterScreen() : base()
         {
-            InitializeComponent(App.current.services
-                .GetRequiredService<ITemplateService>()
-                .Get(TemplateAddresses.Register));
-            CacheUIElements();
-            RegisterManualEvents();
+            CreateFormFields();
+        }
+
+        private void CreateFormFields()
+        {
+            _usernameField = new FormFieldItemTextField
+            {
+                name = "username",
+                HeadingText = "@UI:LABEL_USERNAME",
+                TextFieldPlaceholder = "@UI:PLACEHOLDER_USERNAME"
+            };
+
+            _emailField = new FormFieldItemTextField
+            {
+                name = "email",
+                HeadingText = "@UI:LABEL_EMAIL",
+                TextFieldPlaceholder = "@UI:PLACEHOLDER_EMAIL"
+            };
+
+            _passwordField = new FormFieldItemPassword
+            {
+                name = "password",
+                HeadingText = "@UI:LABEL_PASSWORD",
+                TextFieldPlaceholder = "@UI:PLACEHOLDER_PASSWORD"
+            };
+
+            _yearOfBirthDropdown = new FormFieldItemDropDownField
+            {
+                name = "yearofbirth-dropdown",
+                HeadingText = "@UI:LABEL_BIRTH_YEAR",
+                DropdownDefaultMessage = "Selecciona"
+            };
+
+            _countryDropdown = new FormFieldItemDropDownField
+            {
+                name = "country",
+                HeadingText = "@UI:LABEL_COUNTRY",
+                DropdownDefaultMessage = "Selecciona país"
+            };
+
+            _regionDropdown = new FormFieldItemDropDownField
+            {
+                name = "region",
+                HeadingText = "@UI:LABEL_REGION",
+                DropdownDefaultMessage = "Selecciona región"
+            };
+
+            _postalCodeField = new FormFieldItemTextField
+            {
+                name = "postalcode",
+                HeadingText = "@UI:LABEL_POSTAL_CODE",
+                TextFieldPlaceholder = "@UI:PLACEHOLDER_POSTAL_CODE"
+            };
+
+            _termsCheckbox = new FormFieldItemCheckbox
+            {
+                name = "terms-checkbox",
+                Text = "@UI:ACCEPT_TERMS"
+            };
+
+            _privacyCheckbox = new FormFieldItemCheckbox
+            {
+                name = "privacy-checkbox",
+                Text = "@UI:ACCEPT_PRIVACY"
+            };
+
+            _consentCheckbox = new FormFieldItemCheckbox
+            {
+                name = "consent-checkbox",
+                Text = "@UI:ACCEPT_PILOT_CONSENT"
+            };
+        }
+
+        protected override VisualElement CreateStepContent(int stepIndex)
+        {
+            return stepIndex switch
+            {
+                0 => BuildWelcomeStep(),
+                1 => BuildCardStep(_usernameField),
+                2 => BuildCardStep(_emailField),
+                3 => BuildCardStep(_passwordField),
+                4 => BuildCardStep(_yearOfBirthDropdown),
+                5 => BuildLocationStep(),
+                6 => BuildLegalStep(_termsCheckbox, "@UI:BTN_READ_TERMS", ShowTermsDialog),
+                7 => BuildLegalStep(_privacyCheckbox, "@UI:BTN_READ_PRIVACY", ShowPrivacyPolicyDialog),
+                8 => BuildLegalStep(_consentCheckbox, "@UI:BTN_READ_CONSENT", ShowPilotConsentDialog),
+                _ => new VisualElement()
+            };
+        }
+
+        protected override void SetupCompanionSlot(VisualElement slot)
+        {
+            var container = new VisualElement();
+            slot.Add(container);
+
+            _nutriView = new FMNutriView();
+            _nutriView.AddToClassList("fm-step-flow__guide-nutri");
+            container.Add(_nutriView);
+
+            _messageCard = new ExVisualElement();
+            _messageCard.AddToClassList("box-background");
+            _messageCard.AddToClassList("fm-shadow-wrapper");
+            _messageCard.AddToClassList("fm-step-flow__guide-card");
+
+            _messageText = new Unity.AppUI.UI.Text { text = "" };
+            _messageText.style.whiteSpace = WhiteSpace.Normal;
+            _messageText.primary = false;
+            _messageText.size = TextSize.L;
+            _messageCard.Add(_messageText);
+
+            _messageCard.style.display = DisplayStyle.None;
+            slot.Add(_messageCard);
+        }
+
+        public void UpdateMascotMessage(string newMessage)
+        {
+            if (_messageCard == null || _messageText == null) return;
+
+            newMessage ??= string.Empty;
+
+            if (string.IsNullOrWhiteSpace(newMessage))
+            {
+                _messageCard.RemoveFromClassList("fm-step-flow__guide-card--visible");
+                _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
+                _messageCard.style.display = DisplayStyle.None;
+                _messageText.text = string.Empty;
+                return;
+            }
+
+            if (_messageText.text == newMessage && _messageCard.style.display == DisplayStyle.Flex && _messageCard.ClassListContains("fm-step-flow__guide-card--visible"))
+            {
+                return;
+            }
+
+            _messageCard.style.display = DisplayStyle.Flex;
+
+            _messageCard.RemoveFromClassList("fm-step-flow__guide-card--visible");
+            _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
+
+            _messageCard.schedule.Execute(() =>
+            {
+                _messageText.text = newMessage;
+                _messageCard.RemoveFromClassList("fm-step-flow__guide-card--exit");
+                _messageCard.AddToClassList("fm-step-flow__guide-card--visible");
+            }).StartingIn(150);
+        }
+
+        protected override void OnStepChanged(int stepIndex)
+        {
+            base.OnStepChanged(stepIndex);
+
+            string message = stepIndex switch
+            {
+                0 => string.Empty,//"@UI:TXT_REG_STEP_WELCOME",
+                1 => "@UI:TXT_REG_STEP_USERNAME",
+                2 => "@UI:TXT_REG_STEP_EMAIL",
+                3 => "@UI:TXT_REG_STEP_PASSWORD",
+                4 => "@UI:TXT_REG_STEP_BIRTHYEAR",
+                5 => "@UI:TXT_REG_STEP_LOCATION",
+                6 => "@UI:TXT_REG_STEP_TERMS",
+                7 => "@UI:TXT_REG_STEP_PRIVACY",
+                8 => "@UI:TXT_REG_STEP_CONSENT",
+                _ => ""
+            };
+
+            UpdateMascotMessage(message);
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -56,71 +227,266 @@ namespace eu.foodmission.platform
 
                 if (_countryDropdown != null && _viewModel.CountryOptions.Count > 0)
                 {
-                    _countryDropdown.Dropdown.sourceItems = _viewModel.CountryOptions;
-                _countryDropdown.Dropdown.bindItem = (item, index) =>
+                    ConfigureDropdown(_countryDropdown, _viewModel.CountryOptions);
+                }
+
+                if (_yearOfBirthDropdown != null && _viewModel.YearOfBirthOptions.Count > 0)
                 {
-                    item.label = _viewModel.CountryOptions[index];
-                    item.icon = null;
-                };
+                    ConfigureDropdown(_yearOfBirthDropdown, _viewModel.YearOfBirthOptions);
+                }
             }
-
-            if (_yearOfBirthDropdown != null && _viewModel.YearOfBirthOptions.Count > 0)
-            {
-                ConfigureDropdown(_yearOfBirthDropdown, _viewModel.YearOfBirthOptions);
-            }
-        }
-        }
-
-        private void CacheUIElements()
-        {
-            _registerButton = contentContainer.Q<Unity.AppUI.UI.Button>("register-button");
-            _countryDropdown = contentContainer.Q<FormFieldItemDropDownField>("country");
-            _regionDropdown = contentContainer.Q<FormFieldItemDropDownField>("region");
-            _termsCheckbox = contentContainer.Q<FormFieldItemCheckbox>("checkbox");
-            _usernameField = contentContainer.Q<FormFieldItemTextField>("username");
-            _emailField = contentContainer.Q<FormFieldItemTextField>("email");
-            _passwordField = contentContainer.Q<FormFieldItemPassword>("password");
-            _yearOfBirthDropdown = contentContainer.Q<FormFieldItemDropDownField>("yearofbirth-dropdown");
-            _postalCodeField = contentContainer.Q<FormFieldItemTextField>("postalcode");
-            _heading = contentContainer.Q<Unity.AppUI.UI.Heading>();
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
-
             if (_viewModel == null) return;
 
             _viewModel.PropertyChanged += OnPropertyChanged;
             _viewModel.ShowErrorRequest += OnShowErrorRequested;
 
+            BindFieldsToViewModel();
+            SyncUIFromViewModel();
+        }
+
+        protected override void OnViewModelUnbinding()
+        {
+            if (_viewModel != null)
+            {
+                _viewModel.PropertyChanged -= OnPropertyChanged;
+                _viewModel.ShowErrorRequest -= OnShowErrorRequested;
+            }
+
+            UnbindFieldsFromViewModel();
+            base.OnViewModelUnbinding();
+        }
+
+        private void SyncUIFromViewModel()
+        {
+            if (_viewModel == null) return;
+
+            if (_usernameField != null)
+            {
+                _usernameField.TextFieldValue = _viewModel.Username ?? "";
+                _usernameField.HelpTextText = _viewModel.UsernameHelpTextValue ?? "";
+                _usernameField.HelpTextVariant = _viewModel.UsernameHelpTextVariant;
+            }
+
+            if (_emailField != null)
+            {
+                _emailField.TextFieldValue = _viewModel.Email ?? "";
+                _emailField.HelpTextText = _viewModel.EmailHelpTextValue ?? "";
+                _emailField.HelpTextVariant = _viewModel.EmailHelpTextVariant;
+            }
+
+            if (_passwordField != null)
+            {
+                _passwordField.TextFieldValue = _viewModel.Password ?? "";
+                _passwordField.HelpTextText = _viewModel.PasswordHelpTextValue ?? "";
+                _passwordField.HelpTextVariant = _viewModel.PasswordHelpTextVariant;
+            }
+
+            if (_yearOfBirthDropdown != null)
+            {
+                _yearOfBirthDropdown.HelpTextText = _viewModel.YearOfBirthHelpTextValue ?? "";
+                _yearOfBirthDropdown.HelpTextVariant = _viewModel.YearOfBirthHelpTextVariant;
+            }
+
             if (_countryDropdown != null)
             {
-                _countryDropdown.Dropdown.sourceItems = _viewModel.CountryOptions;
-                _countryDropdown.Dropdown.bindItem = (item, index) =>
-                {
-                    item.label = _viewModel.CountryOptions[index];
-                    item.icon = null;
-                };
+                _countryDropdown.HelpTextText = _viewModel.CountryHelpTextValue ?? "";
+                _countryDropdown.HelpTextVariant = _viewModel.CountryHelpTextVariant;
+            }
 
+            if (_regionDropdown != null)
+            {
+                _regionDropdown.HelpTextText = _viewModel.RegionHelpTextValue ?? "";
+                _regionDropdown.HelpTextVariant = _viewModel.RegionHelpTextVariant;
+            }
+
+            if (_postalCodeField != null)
+            {
+                _postalCodeField.TextFieldValue = _viewModel.PostalCode ?? "";
+                _postalCodeField.HelpTextText = _viewModel.PostalCodeHelpTextValue ?? "";
+                _postalCodeField.HelpTextVariant = _viewModel.PostalCodeHelpTextVariant;
+            }
+
+            if (_termsCheckbox != null)
+            {
+                _termsCheckbox.CheckboxValue = _viewModel.HasAcceptedTerms;
+                _termsCheckbox.HelpTextText = _viewModel.TermsHelpTextValue ?? "";
+                _termsCheckbox.HelpTextVariant = _viewModel.TermsHelpTextVariant;
+            }
+
+            if (_privacyCheckbox != null)
+            {
+                _privacyCheckbox.CheckboxValue = _viewModel.HasAcceptedPrivacyPolicy;
+                _privacyCheckbox.HelpTextText = _viewModel.PrivacyHelpTextValue ?? "";
+                _privacyCheckbox.HelpTextVariant = _viewModel.PrivacyHelpTextVariant;
+            }
+
+            if (_consentCheckbox != null)
+            {
+                _consentCheckbox.CheckboxValue = _viewModel.HasAcceptedPilotConsent;
+                _consentCheckbox.HelpTextText = _viewModel.ConsentHelpTextValue ?? "";
+                _consentCheckbox.HelpTextVariant = _viewModel.ConsentHelpTextVariant;
+            }
+        }
+
+        private void BindFieldsToViewModel()
+        {
+            // Username field binding
+            var usernameText = _usernameField?.Q<Unity.AppUI.UI.TextField>();
+            if (usernameText != null)
+            {
+                usernameText.RegisterValueChangedCallback(OnUsernameInputChanged);
+            }
+
+            // Email field binding
+            var emailText = _emailField?.Q<Unity.AppUI.UI.TextField>();
+            if (emailText != null)
+            {
+                emailText.RegisterValueChangedCallback(OnEmailInputChanged);
+            }
+
+            // Password field binding
+            var passwordText = _passwordField?.Q<Unity.AppUI.UI.TextField>();
+            if (passwordText != null)
+            {
+                passwordText.RegisterValueChangedCallback(OnPasswordInputChanged);
+            }
+
+            // Year of Birth dropdown
+            if (_yearOfBirthDropdown != null)
+            {
+                ConfigureDropdown(_yearOfBirthDropdown, _viewModel.YearOfBirthOptions);
+                _yearOfBirthDropdown.Dropdown.RegisterValueChangedCallback(OnYearOfBirthChanged);
+            }
+
+            // Country dropdown
+            if (_countryDropdown != null)
+            {
+                ConfigureDropdown(_countryDropdown, _viewModel.CountryOptions);
                 if (_viewModel.SelectedCountryIndex >= 0)
                 {
                     _countryDropdown.Dropdown.SetValueWithoutNotify(new[] { _viewModel.SelectedCountryIndex });
                     UpdateRegionDropdown();
                 }
-
                 _countryDropdown.Dropdown.RegisterValueChangedCallback(OnCountryChanged);
             }
 
+            // Region dropdown
             if (_regionDropdown != null)
             {
                 _regionDropdown.Dropdown.RegisterValueChangedCallback(OnRegionChanged);
             }
 
-            if (_yearOfBirthDropdown != null)
+            // Postal Code field binding
+            var postalText = _postalCodeField?.Q<Unity.AppUI.UI.TextField>();
+            if (postalText != null)
             {
-                _yearOfBirthDropdown.Dropdown.RegisterValueChangedCallback(OnYearOfBirthChanged);
+                postalText.RegisterValueChangedCallback(OnPostalCodeInputChanged);
             }
+
+            // Checkboxes bindings
+            BindCheckbox(_termsCheckbox, state => _viewModel.HasAcceptedTerms = state, () => _viewModel.ValidateTerms());
+            BindCheckbox(_privacyCheckbox, state => _viewModel.HasAcceptedPrivacyPolicy = state, () => _viewModel.ValidatePrivacyPolicy());
+            BindCheckbox(_consentCheckbox, state => _viewModel.HasAcceptedPilotConsent = state, () => _viewModel.ValidatePilotConsent());
+        }
+
+        private void UnbindFieldsFromViewModel()
+        {
+            var usernameText = _usernameField?.Q<Unity.AppUI.UI.TextField>();
+            if (usernameText != null) usernameText.UnregisterValueChangedCallback(OnUsernameInputChanged);
+
+            var emailText = _emailField?.Q<Unity.AppUI.UI.TextField>();
+            if (emailText != null) emailText.UnregisterValueChangedCallback(OnEmailInputChanged);
+
+            var passwordText = _passwordField?.Q<Unity.AppUI.UI.TextField>();
+            if (passwordText != null) passwordText.UnregisterValueChangedCallback(OnPasswordInputChanged);
+
+            if (_yearOfBirthDropdown != null) _yearOfBirthDropdown.Dropdown.UnregisterValueChangedCallback(OnYearOfBirthChanged);
+            if (_countryDropdown != null) _countryDropdown.Dropdown.UnregisterValueChangedCallback(OnCountryChanged);
+            if (_regionDropdown != null) _regionDropdown.Dropdown.UnregisterValueChangedCallback(OnRegionChanged);
+
+            var postalText = _postalCodeField?.Q<Unity.AppUI.UI.TextField>();
+            if (postalText != null) postalText.UnregisterValueChangedCallback(OnPostalCodeInputChanged);
+        }
+
+        private void BindCheckbox(FormFieldItemCheckbox checkbox, Action<CheckboxState> setter, Func<bool> validator)
+        {
+            if (checkbox == null) return;
+            var cb = checkbox.Q<Checkbox>();
+            if (cb != null)
+            {
+                cb.RegisterValueChangedCallback(evt =>
+                {
+                    setter?.Invoke(evt.newValue);
+                    validator?.Invoke();
+                    _viewModel?.InvalidateValidation();
+                });
+            }
+        }
+
+        private void OnUsernameInputChanged(ChangeEvent<string> evt)
+        {
+            if (_viewModel == null) return;
+            _viewModel.Username = evt.newValue;
+            _viewModel.ValidateUsername();
+            _viewModel.InvalidateValidation();
+        }
+
+        private void OnEmailInputChanged(ChangeEvent<string> evt)
+        {
+            if (_viewModel == null) return;
+            _viewModel.Email = evt.newValue;
+            _viewModel.ValidateEmail();
+            _viewModel.InvalidateValidation();
+        }
+
+        private void OnPasswordInputChanged(ChangeEvent<string> evt)
+        {
+            if (_viewModel == null) return;
+            _viewModel.Password = evt.newValue;
+            _viewModel.ValidatePassword();
+            _viewModel.InvalidateValidation();
+        }
+
+        private void OnPostalCodeInputChanged(ChangeEvent<string> evt)
+        {
+            if (_viewModel == null) return;
+            _viewModel.PostalCode = evt.newValue;
+            _viewModel.ValidatePostalCode();
+            _viewModel.InvalidateValidation();
+        }
+
+        private void OnYearOfBirthChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            var value = evt.newValue?.ToArray();
+            if (_viewModel == null || value == null || value.Length == 0) return;
+
+            _viewModel.SelectedYearOfBirthIndex = value[0];
+            _viewModel.ValidateYearOfBirth();
+            _viewModel.InvalidateValidation();
+        }
+
+        private void OnCountryChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            var value = evt.newValue?.ToArray();
+            if (_viewModel == null || value == null || value.Length == 0) return;
+
+            _viewModel.SelectedCountryIndex = value[0];
+            UpdateRegionDropdown();
+            _viewModel.InvalidateValidation();
+        }
+
+        private void OnRegionChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            var value = evt.newValue?.ToArray();
+            if (_viewModel == null || value == null || value.Length == 0) return;
+
+            _viewModel.SelectedRegionIndex = value[0];
+            _viewModel.InvalidateValidation();
         }
 
         private async void UpdateRegionDropdown()
@@ -146,37 +512,14 @@ namespace eu.foodmission.platform
                 {
                     _regionDropdown.Dropdown.SetValueWithoutNotify(new int[0]);
                 }
+
+                _viewModel.ValidateRegion(showError: false);
+                _viewModel.InvalidateValidation();
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[RegisterScreen] UpdateRegionDropdown exception: {ex.Message}");
             }
-        }
-
-        private void OnCountryChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            var value = evt.newValue?.ToArray();
-            if (_viewModel == null || value == null || value.Length == 0) return;
-
-            _viewModel.SelectedCountryIndex = value[0];
-            UpdateRegionDropdown();
-        }
-
-        private void OnRegionChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            var value = evt.newValue?.ToArray();
-            if (_viewModel == null || value == null || value.Length == 0) return;
-
-            _viewModel.SelectedRegionIndex = value[0];
-        }
-
-        private void OnYearOfBirthChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            var value = evt.newValue?.ToArray();
-            if (_viewModel == null || value == null || value.Length == 0) return;
-
-            _viewModel.SelectedYearOfBirthIndex = value[0];
-            _viewModel.ValidateYearOfBirth();
         }
 
         private void ConfigureDropdown(FormFieldItemDropDownField dropdown, IList<string> options)
@@ -190,71 +533,330 @@ namespace eu.foodmission.platform
             };
         }
 
-        private void RegisterManualEvents()
+        // ── Card Container Builders ──────────────────────────────────
+        private VisualElement BuildWelcomeStep()
         {
-            if (_registerButton != null)
-            {
-                _registerButton.clicked += OnRegisterClicked;
-            }
+            var root = new ExVisualElement();
+            root.AddToClassList("box-background");
+            root.AddToClassList("fm-shadow-wrapper");
+            root.style.flexDirection = FlexDirection.Column;
+            root.style.alignItems = Align.Center;
+            root.style.paddingTop = 40;
+            root.style.paddingBottom = 40;
+            root.style.paddingLeft = 40;
+            root.style.paddingRight = 40;
+            //root.style.height = new StyleLength(Length.Percent(100));
 
-            if (_termsCheckbox != null)
+            var welcomeHeader = new Unity.AppUI.UI.Heading { text = "¡Bienvenido a Foodmission!" };
+            welcomeHeader.size = HeadingSize.L;
+            welcomeHeader.AddToClassList("centered-text");
+            root.Add(welcomeHeader);
+
+            var spacer = new Unity.AppUI.UI.Spacer { spacing = SpacerSpacing.XL };
+            root.Add(spacer);
+
+            var welcomeBody = new Unity.AppUI.UI.Text
             {
-                _termsCheckbox.Button.clicked += OnTermsLinkClicked;
-            }
+                text = "Una plataforma de ciencia ciudadana para investigar tus hábitos alimentarios y la sostenibilidad. Configura tu perfil en solo unos pasos.",
+                primary = false
+            };
+            welcomeBody.style.whiteSpace = WhiteSpace.Normal;
+            welcomeBody.size = TextSize.L;
+            // welcomeBody.AddToClassList("centered-text");
+            root.Add(welcomeBody);
+
+            return root;
         }
 
-        private void UnregisterManualEvents()
+        private VisualElement BuildCardStep(VisualElement element)
         {
-            if (_registerButton != null)
+            var root = new ExVisualElement();
+            root.style.paddingTop = 16;
+            root.style.paddingBottom = 16;
+            root.style.paddingLeft = 16;
+            root.style.paddingRight = 16;
+            root.style.width = new StyleLength(Length.Percent(100));
+
+            var box = new ExVisualElement();
+            box.AddToClassList("box-background");
+            box.AddToClassList("fm-shadow-wrapper");
+            box.style.flexDirection = FlexDirection.Column;
+            box.style.paddingTop = 30;
+            box.style.paddingBottom = 30;
+            box.style.paddingLeft = 30;
+            box.style.paddingRight = 30;
+            box.style.width = new StyleLength(Length.Percent(100));
+
+            root.Add(box);
+
+            if (element != null)
             {
-                _registerButton.clicked -= OnRegisterClicked;
+                box.Add(element);
             }
 
-            if (_termsCheckbox != null)
-            {
-                _termsCheckbox.Button.clicked -= OnTermsLinkClicked;
-            }
+            return root;
         }
 
-        protected override void OnViewModelUnbinding()
+        private VisualElement BuildLocationStep()
         {
-            _viewModel.PropertyChanged -= OnPropertyChanged;
-            _viewModel.ShowErrorRequest -= OnShowErrorRequested;
+            var root = new ExVisualElement();
+            root.style.paddingTop = 16;
+            root.style.paddingBottom = 16;
+            root.style.paddingLeft = 16;
+            root.style.paddingRight = 16;
+            root.style.width = new StyleLength(Length.Percent(100));
 
-            UnregisterManualEvents();
+            var box = new ExVisualElement();
+            box.AddToClassList("box-background");
+            box.AddToClassList("fm-shadow-wrapper");
+            box.style.flexDirection = FlexDirection.Column;
+            box.style.paddingTop = 30;
+            box.style.paddingBottom = 30;
+            box.style.paddingLeft = 30;
+            box.style.paddingRight = 30;
 
             if (_countryDropdown != null)
             {
-                _countryDropdown.Dropdown.UnregisterValueChangedCallback(OnCountryChanged);
+                box.Add(_countryDropdown);
+                box.Add(new Unity.AppUI.UI.Spacer { spacing = SpacerSpacing.XL });
             }
+
             if (_regionDropdown != null)
             {
-                _regionDropdown.Dropdown.UnregisterValueChangedCallback(OnRegionChanged);
+                box.Add(_regionDropdown);
+                box.Add(new Unity.AppUI.UI.Spacer { spacing = SpacerSpacing.XL });
             }
 
-            if (_yearOfBirthDropdown != null)
+            if (_postalCodeField != null)
             {
-                _yearOfBirthDropdown.Dropdown.UnregisterValueChangedCallback(OnYearOfBirthChanged);
+                box.Add(_postalCodeField);
+                box.Add(new Unity.AppUI.UI.Spacer { spacing = SpacerSpacing.XL });
             }
 
-            _registerButton = null;
-            _countryDropdown = null;
-            _regionDropdown = null;
-            _yearOfBirthDropdown = null;
-            _usernameField = null;
-            _emailField = null;
-            _passwordField = null;
-            _postalCodeField = null;
-            _termsCheckbox = null;
-            _heading = null;
-
-            base.OnViewModelUnbinding();
+            root.Add(box);
+            return root;
         }
 
-        // --------------------------------------------------------------------
-        // Accessibility
-        // --------------------------------------------------------------------
+        private VisualElement BuildLegalStep(FormFieldItemCheckbox checkbox, string buttonTitleKey, Action onReadClicked)
+        {
+            var root = new ExVisualElement();
+            root.AddToClassList("box-background");
+            root.AddToClassList("fm-shadow-wrapper");
+            root.style.flexDirection = FlexDirection.Column;
+            root.style.paddingTop = 16;
+            root.style.paddingBottom = 16;
+            root.style.paddingLeft = 16;
+            root.style.paddingRight = 16;
+            root.style.width = new StyleLength(Length.Percent(100));
 
+            if (checkbox != null)
+            {
+                root.Add(checkbox);
+            }
+
+            var btnRead = new FMButton
+            {
+                title = buttonTitleKey,
+                variant = ButtonVariant.Default,
+                size = Size.M
+            };
+            btnRead.AddToClassList("fm-button");
+            btnRead.style.marginTop = 12;
+            btnRead.clicked += onReadClicked;
+            root.Add(btnRead);
+
+            return root;
+        }
+
+        // ── Legal Dialog Helpers ─────────────────────────────────────
+        private void ShowTermsDialog()
+        {
+            FMDialog.ShowScrollableMD(
+                this,
+                "@UI:T&C_TITLE",
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "T&C_TEXT"),
+                onAccept: () =>
+                {
+                    if (_viewModel != null)
+                    {
+                        _viewModel.HasAcceptedTerms = CheckboxState.Checked;
+                        _viewModel.ValidateTerms();
+                        _viewModel.InvalidateValidation();
+                    }
+                }
+            );
+        }
+
+        private void ShowPrivacyPolicyDialog()
+        {
+            FMDialog.ShowScrollable(
+                this,
+                "@UI:PRIVACY_POLICY_TITLE",
+                "@UI:PRIVACY_POLICY_TEXT",
+                onAccept: () =>
+                {
+                    if (_viewModel != null)
+                    {
+                        _viewModel.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+                        _viewModel.ValidatePrivacyPolicy();
+                        _viewModel.InvalidateValidation();
+                    }
+                }
+            );
+        }
+
+        private void ShowPilotConsentDialog()
+        {
+            FMDialog.ShowScrollable(
+                this,
+                "@UI:PILOT_CONSENT_TITLE",
+                "@UI:PILOT_CONSENT_TEXT",
+                onAccept: () =>
+                {
+                    if (_viewModel != null)
+                    {
+                        _viewModel.HasAcceptedPilotConsent = CheckboxState.Checked;
+                        _viewModel.ValidatePilotConsent();
+                        _viewModel.InvalidateValidation();
+                    }
+                }
+            );
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender == _viewModel)
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(RegisterViewModel.Username):
+                        _viewModel.ValidateUsername();
+                        break;
+                    case nameof(RegisterViewModel.UsernameHelpTextValue):
+                    case nameof(RegisterViewModel.UsernameHelpTextVariant):
+                        if (_usernameField != null)
+                        {
+                            _usernameField.HelpTextText = _viewModel.UsernameHelpTextValue ?? "";
+                            _usernameField.HelpTextVariant = _viewModel.UsernameHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.Email):
+                        _viewModel.ValidateEmail();
+                        break;
+                    case nameof(RegisterViewModel.EmailHelpTextValue):
+                    case nameof(RegisterViewModel.EmailHelpTextVariant):
+                        if (_emailField != null)
+                        {
+                            _emailField.HelpTextText = _viewModel.EmailHelpTextValue ?? "";
+                            _emailField.HelpTextVariant = _viewModel.EmailHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.Password):
+                        _viewModel.ValidatePassword();
+                        break;
+                    case nameof(RegisterViewModel.PasswordHelpTextValue):
+                    case nameof(RegisterViewModel.PasswordHelpTextVariant):
+                        if (_passwordField != null)
+                        {
+                            _passwordField.HelpTextText = _viewModel.PasswordHelpTextValue ?? "";
+                            _passwordField.HelpTextVariant = _viewModel.PasswordHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.YearOfBirthHelpTextValue):
+                    case nameof(RegisterViewModel.YearOfBirthHelpTextVariant):
+                        if (_yearOfBirthDropdown != null)
+                        {
+                            _yearOfBirthDropdown.HelpTextText = _viewModel.YearOfBirthHelpTextValue ?? "";
+                            _yearOfBirthDropdown.HelpTextVariant = _viewModel.YearOfBirthHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.CountryHelpTextValue):
+                    case nameof(RegisterViewModel.CountryHelpTextVariant):
+                        if (_countryDropdown != null)
+                        {
+                            _countryDropdown.HelpTextText = _viewModel.CountryHelpTextValue ?? "";
+                            _countryDropdown.HelpTextVariant = _viewModel.CountryHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.RegionHelpTextValue):
+                    case nameof(RegisterViewModel.RegionHelpTextVariant):
+                        if (_regionDropdown != null)
+                        {
+                            _regionDropdown.HelpTextText = _viewModel.RegionHelpTextValue ?? "";
+                            _regionDropdown.HelpTextVariant = _viewModel.RegionHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.PostalCode):
+                        _viewModel.ValidatePostalCode();
+                        break;
+                    case nameof(RegisterViewModel.PostalCodeHelpTextValue):
+                    case nameof(RegisterViewModel.PostalCodeHelpTextVariant):
+                        if (_postalCodeField != null)
+                        {
+                            _postalCodeField.HelpTextText = _viewModel.PostalCodeHelpTextValue ?? "";
+                            _postalCodeField.HelpTextVariant = _viewModel.PostalCodeHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.HasAcceptedTerms):
+                        _viewModel.ValidateTerms();
+                        if (_termsCheckbox != null)
+                        {
+                            _termsCheckbox.CheckboxValue = _viewModel.HasAcceptedTerms;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.TermsHelpTextValue):
+                    case nameof(RegisterViewModel.TermsHelpTextVariant):
+                        if (_termsCheckbox != null)
+                        {
+                            _termsCheckbox.HelpTextText = _viewModel.TermsHelpTextValue ?? "";
+                            _termsCheckbox.HelpTextVariant = _viewModel.TermsHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.HasAcceptedPrivacyPolicy):
+                        _viewModel.ValidatePrivacyPolicy();
+                        if (_privacyCheckbox != null)
+                        {
+                            _privacyCheckbox.CheckboxValue = _viewModel.HasAcceptedPrivacyPolicy;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.PrivacyHelpTextValue):
+                    case nameof(RegisterViewModel.PrivacyHelpTextVariant):
+                        if (_privacyCheckbox != null)
+                        {
+                            _privacyCheckbox.HelpTextText = _viewModel.PrivacyHelpTextValue ?? "";
+                            _privacyCheckbox.HelpTextVariant = _viewModel.PrivacyHelpTextVariant;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.HasAcceptedPilotConsent):
+                        _viewModel.ValidatePilotConsent();
+                        if (_consentCheckbox != null)
+                        {
+                            _consentCheckbox.CheckboxValue = _viewModel.HasAcceptedPilotConsent;
+                        }
+                        break;
+                    case nameof(RegisterViewModel.ConsentHelpTextValue):
+                    case nameof(RegisterViewModel.ConsentHelpTextVariant):
+                        if (_consentCheckbox != null)
+                        {
+                            _consentCheckbox.HelpTextText = _viewModel.ConsentHelpTextValue ?? "";
+                            _consentCheckbox.HelpTextVariant = _viewModel.ConsentHelpTextVariant;
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void OnShowErrorRequested(string message)
+        {
+            if (string.IsNullOrEmpty(message)) return;
+
+            Toast.Build(this, message, NotificationDuration.Long)
+                .SetStyle(NotificationStyle.Negative)
+                .SetPosition(PopupNotificationPlacement.Bottom)
+                .Show();
+        }
+
+        // ── Accessibility ───────────────────────────────────────────
         protected override void SetupAccessibilityNodes()
         {
             base.SetupAccessibilityNodes();
@@ -270,22 +872,12 @@ namespace eu.foodmission.platform
             _regionDropdown?.CreateAccessibilityNode(h, "Region");
             _postalCodeField?.CreateAccessibilityNode(h, "Postal code");
             _termsCheckbox?.CreateAccessibilityNode(h, "Terms and conditions");
-
-            if (_heading != null)
-            {
-                _headingNode = h.AddNode(_heading.text);
-                _headingNode.role = AccessibilityRole.StaticText;
-                _headingNode.frameGetter = MakeElementFrameGetter(_heading);
-            }
-
-            _registerButtonNode = CreateButtonNode(h, _registerButton, "Create account");
+            _privacyCheckbox?.CreateAccessibilityNode(h, "Privacy Policy");
+            _consentCheckbox?.CreateAccessibilityNode(h, "Pilot Study Consent Form");
         }
 
         protected override void TeardownAccessibilityNodes()
         {
-            _headingNode = null;
-            _registerButtonNode = null;
-
             _usernameField?.DestroyAccessibilityNode();
             _emailField?.DestroyAccessibilityNode();
             _passwordField?.DestroyAccessibilityNode();
@@ -294,107 +886,10 @@ namespace eu.foodmission.platform
             _regionDropdown?.DestroyAccessibilityNode();
             _postalCodeField?.DestroyAccessibilityNode();
             _termsCheckbox?.DestroyAccessibilityNode();
+            _privacyCheckbox?.DestroyAccessibilityNode();
+            _consentCheckbox?.DestroyAccessibilityNode();
 
             base.TeardownAccessibilityNodes();
-        }
-
-        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
-        {
-            if (button == null) return null;
-
-            var node = hierarchy.AddNode(label);
-            node.role = AccessibilityRole.Button;
-
-            if (!button.enabledSelf)
-            {
-                node.state = AccessibilityState.Disabled;
-            }
-
-            node.frameGetter = MakeElementFrameGetter(button);
-
-            node.invoked += () =>
-            {
-                using var evt = NavigationSubmitEvent.GetPooled();
-                evt.target = button;
-                button.SendEvent(evt);
-                return true;
-            };
-
-            return node;
-        }
-
-        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
-        {
-            return () =>
-            {
-                if (element == null || element.panel == null) return Rect.zero;
-                var rect = element.worldBound;
-                var scale = element.panel.scaledPixelsPerPoint;
-                return new Rect(rect.position * scale, rect.size * scale);
-            };
-        }
-
-        private void OnRegisterClicked()
-        {
-            _viewModel?.Register();
-        }
-
-        private void OnTermsLinkClicked()
-        {
-            ShowTermsDialog();
-        }
-
-        private void ShowTermsDialog()
-        {
-            FMDialog.ShowScrollable(
-                this,
-                "@UI:T&C_TITLE",
-                "@UI:T&C_TEXT",
-                onAccept: () =>
-                {
-                    if (_viewModel != null)
-                    {
-                        _viewModel.HasAcceptedTerms = CheckboxState.Checked;
-                    }
-                }
-            );
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (sender == _viewModel)
-            {
-                switch (e.PropertyName)
-                {
-                    case nameof(RegisterViewModel.Username):
-                        _viewModel.ValidateUsername();
-                        break;
-                    case nameof(RegisterViewModel.Email):
-                        _viewModel.ValidateEmail();
-                        break;
-                    case nameof(RegisterViewModel.Password):
-                        _viewModel.ValidatePassword();
-                        break;
-                    case nameof(RegisterViewModel.SelectedYearOfBirthIndex):
-                        break;
-                    case nameof(RegisterViewModel.PostalCode):
-                        _viewModel.ValidatePostalCode();
-                        break;
-                    case nameof(RegisterViewModel.HasAcceptedTerms):
-                        _viewModel.ValidateTerms();
-                        break;
-                }
-            }
-        }
-
-        void OnShowErrorRequested(string message)
-        {
-            if (string.IsNullOrEmpty(message)) return;
-
-            Toast.Build(this, message, NotificationDuration.Long)
-                .SetStyle(NotificationStyle.Negative)
-                .SetPosition(PopupNotificationPlacement.Bottom)
-                .Show();
         }
     }
 }

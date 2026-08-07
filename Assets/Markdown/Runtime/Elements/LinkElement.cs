@@ -18,6 +18,9 @@ namespace BrewedInk.MarkdownSupport
         private UMarkdownContext _context;
         private MarkdownLinkUri _uri;
 
+        public MarkdownLinkUri Uri => _uri;
+        public string Url => _uri?.qualifiedLink;
+
         public LinkElement(UMarkdownContext context, VisualElement line, Label label, string title, MarkdownLinkUri uri, string tooltip)
         {
             _uri = uri;

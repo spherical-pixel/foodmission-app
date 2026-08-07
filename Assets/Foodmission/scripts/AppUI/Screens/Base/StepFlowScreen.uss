@@ -1,20 +1,38 @@
-/* Root step flow layout */
 .fm-step-flow {
     flex-grow: 1;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    /*background-color: var(--fm-main-bg, transparent);*/
     background-color: transparent;
 }
 
-/* Progress bar alignment */
 .fm-step-flow__progress {
     flex-grow: 0;
     flex-shrink: 0;
 }
 
-/* Companion Slot (e.g. Nutri Pet dialog) styling */
+.fm-step-flow__body-scroll {
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.fm-step-flow__body-scroll > .unity-scroll-view__content-viewport {
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.fm-step-flow__body-scroll > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+}
+
 .fm-step-flow__companion {
     flex-grow: 0;
     flex-shrink: 0;
@@ -23,22 +41,22 @@
     margin-bottom: 12px;
 }
 
-/* SwipeView container occupying the main screen space */
 .fm-step-flow__swipeview {
     flex-grow: 1;
+    flex-shrink: 0;
+    /* align-items: stretch; */
+    height: 100%;   
     width: 100%;
-    height: auto;
 }
 
-/* SwipeViewItem styling to ensure inner views fill correctly */
 .appui-swipeview-item {
     flex-grow: 1;
     width: 100%;
     height: 100%;
-    padding: 16px 24px;
+    justify-content: flex-start;
+    /* align-items: stretch; */
 }
 
-/* Bottom navigation buttons layout */
 .fm-step-flow__buttons {
     flex-grow: 0;
     flex-shrink: 0;
@@ -64,13 +82,11 @@
     height: 800px;
 }
 
-/* Guide Card within companion slot */
 .fm-step-flow__guide-card {
     background-color: var(--fm-surface-bg);
-    padding: 35px;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    min-height: 200px;   
+    padding: 40px;
+    margin-top: 12px;
+    margin-bottom: 12px;
     opacity: 0;
     translate: 0 10px;
     scale: 0.95;
@@ -79,13 +95,12 @@
     transition-timing-function: ease-out, ease-out, ease-out;
 }
 
-/* Visible status (in animation) */
 .fm-step-flow__guide-card--visible {
     opacity: 1;
     translate: 0 0;
     scale: 1;
 }
-/* Exit status (quick transition to change the message) */
+
 .fm-step-flow__guide-card--exit {
     opacity: 0;
     translate: 0 -6px;
@@ -93,4 +108,3 @@
     transition-duration: 150ms, 150ms, 150ms;
     transition-timing-function: ease-in, ease-in, ease-in;
 }
-
