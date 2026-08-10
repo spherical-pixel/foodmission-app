@@ -167,6 +167,52 @@ namespace eu.foodmission.platform
         public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWalletCurrenciesAsync(string lang)
             => GetCatalogListAsync("wallet-currencies", lang);
 
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetContentLevelsAsync(string lang)
+            => GetCatalogListAsync("content-levels", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetContentTagsAsync(string lang)
+            => GetCatalogListAsync("content-tags", lang);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetQuestContentTypesAsync(string lang)
+            => GetCatalogListAsync("quest-content-types", lang);
+
+        public async Task<(ConsentFormData Result, ApiErrorResponse Error)> GetConsentFormAsync(
+            string countryCode, string lang = null)
+        {
+            try
+            {
+                string cc = (countryCode ?? "").Trim().ToLowerInvariant();
+                string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/consent-forms/{Uri.EscapeDataString(cc)}";
+                if (!string.IsNullOrEmpty(lang))
+                {
+                    url += $"?lang={Uri.EscapeDataString(lang)}";
+                }
+
+                using UnityWebRequest request = UnityWebRequest.Get(url);
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetConsentForm({cc})"));
+                }
+
+                string raw = request.downloadHandler.text;
+                ConsentFormResponse response = JsonUtility.FromJson<ConsentFormResponse>(raw);
+                return (response?.data, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] GetConsentFormAsync({countryCode}) exception: {ex.Message}");
+                return (null, null);
+            }
+        }
+
         // ── Paginated catalog lists (languages) ──────────────────────────
 
         private async Task<(PaginatedCatalogResponse Result, ApiErrorResponse Error)>

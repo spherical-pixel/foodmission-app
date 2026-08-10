@@ -37,6 +37,15 @@ namespace eu.foodmission.platform
 
         Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetWalletCurrenciesAsync(string lang);
 
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetContentLevelsAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetContentTagsAsync(string lang);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetQuestContentTypesAsync(string lang);
+
+        Task<(ConsentFormData Result, ApiErrorResponse Error)> GetConsentFormAsync(
+            string countryCode, string lang = null);
+
         Task<(PaginatedCatalogResponse Result, ApiErrorResponse Error)> GetLanguagesAsync(
             string lang, string search = null);
 

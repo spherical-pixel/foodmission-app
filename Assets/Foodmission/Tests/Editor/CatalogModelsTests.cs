@@ -98,5 +98,17 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(result.data.walletCurrencies);
             Assert.AreEqual("XP", result.data.walletCurrencies[0].code);
         }
+
+        [Test]
+        public void ConsentFormResponse_Deserializes_Via_JsonUtility()
+        {
+            string json = "{\"data\":{\"countryCode\":\"es\",\"content\":\"# Formulario de Consentimiento\\n\\nTexto informativo del piloto...\"}}";
+            var result = JsonUtility.FromJson<ConsentFormResponse>(json);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.data);
+            Assert.AreEqual("es", result.data.countryCode);
+            Assert.IsTrue(result.data.content.Contains("Formulario de Consentimiento"));
+        }
     }
 }

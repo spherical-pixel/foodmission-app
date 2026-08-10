@@ -91,4 +91,23 @@ namespace eu.foodmission.platform
         public int limit;
         public int totalPages;
     }
+
+    /// <summary>
+    /// Consent form payload for GET /api/v1/catalog/consent-forms/{countryCode}.
+    /// </summary>
+    [Serializable]
+    public class ConsentFormData
+    {
+        public string countryCode;
+        public string content;
+    }
+
+    /// <summary>
+    /// Response wrapper for GET /api/v1/catalog/consent-forms/{countryCode}.
+    /// </summary>
+    [Serializable]
+    public class ConsentFormResponse
+    {
+        public ConsentFormData data;
+    }
 }
