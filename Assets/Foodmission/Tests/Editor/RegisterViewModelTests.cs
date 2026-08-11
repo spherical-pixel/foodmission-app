@@ -185,11 +185,59 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void ValidatePilotConsent_WithUnchecked_ReturnsFalse()
         {
+            _vm.IsPilotCountry = true;
             bool result = _vm.ValidatePilotConsent();
 
             Assert.IsFalse(result);
             Assert.AreEqual("@UI:ACCEPT_PILOT_CONSENT", _vm.ConsentHelpTextValue);
             Assert.AreEqual(HelpTextVariant.Destructive, _vm.ConsentHelpTextVariant);
+        }
+
+        [Test]
+        public void ValidatePilotConsent_WhenIsNotPilotCountry_ReturnsTrue()
+        {
+            _vm.IsPilotCountry = false;
+            bool result = _vm.ValidatePilotConsent();
+
+            Assert.IsTrue(result, "Non-pilot country should pass consent validation automatically");
+            Assert.AreEqual("", _vm.ConsentHelpTextValue);
+            Assert.AreEqual(HelpTextVariant.Default, _vm.ConsentHelpTextVariant);
+        }
+
+        [Test]
+        public async Task CheckAndLoadPilotConsentAsync_WithPilotCountryFromCatalog_PopulatesConsentText()
+        {
+            var consentData = new ConsentFormData { countryCode = "de", content = "# Consent Form Content" };
+            _mockCatalogService
+                .Setup(x => x.GetConsentFormAsync("de", It.IsAny<string>()))
+                .ReturnsAsync((consentData, null));
+
+            // Populate catalog countries list in vm via reflection or LoadCountriesAsync test helper
+            var field = typeof(RegisterViewModel).GetField("_countries", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            field.SetValue(_vm, new List<CatalogItem> { new CatalogItem { code = "de", label = "Germany" } });
+            _vm.SelectedCountryIndex = 0;
+
+            await _vm.CheckAndLoadPilotConsentAsync();
+
+            Assert.IsTrue(_vm.IsPilotCountry);
+            Assert.AreEqual("# Consent Form Content", _vm.PilotConsentText);
+        }
+
+        [Test]
+        public async Task CheckAndLoadPilotConsentAsync_WithNonPilotCountry_SetsIsPilotCountryFalse()
+        {
+            _mockCatalogService
+                .Setup(x => x.GetConsentFormAsync("us", It.IsAny<string>()))
+                .ReturnsAsync(((ConsentFormData)null, null));
+
+            var field = typeof(RegisterViewModel).GetField("_countries", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            field.SetValue(_vm, new List<CatalogItem> { new CatalogItem { code = "us", label = "United States" } });
+            _vm.SelectedCountryIndex = 0;
+
+            await _vm.CheckAndLoadPilotConsentAsync();
+
+            Assert.IsFalse(_vm.IsPilotCountry);
+            Assert.AreEqual("", _vm.PilotConsentText);
         }
 
         [Test]

@@ -115,6 +115,15 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private HelpTextVariant _consentHelpTextVariant = HelpTextVariant.Default;
 
+        [ObservableProperty]
+        private bool _isPilotCountry = true;
+
+        [ObservableProperty]
+        private string _pilotConsentText = "";
+
+        [ObservableProperty]
+        private bool _isLoadingConsent = false;
+
         /// <summary>
         /// Country dropdown options list (format: "🇦🇹 Austria")
         /// </summary>
@@ -177,6 +186,8 @@ namespace eu.foodmission.platform
         /// </summary>
         public async Task UpdateRegionsForSelectedCountryAsync()
         {
+            HasAcceptedPilotConsent = CheckboxState.Unchecked;
+
             if (SelectedCountryIndex < 0 || SelectedCountryIndex >= _countries.Count)
             {
                 _regions = new List<CatalogItem>();
@@ -192,6 +203,7 @@ namespace eu.foodmission.platform
             _regions = regions ?? new List<CatalogItem>();
             RegionOptions = _regions.Select(r => r.label).ToList();
             SelectedRegionIndex = RegionOptions.Count > 0 ? 0 : -1;
+            _ = CheckAndLoadPilotConsentAsync();
         }
 
         /// <summary>
@@ -623,8 +635,64 @@ namespace eu.foodmission.platform
             return true;
         }
 
+        /// <summary>
+        /// Checks if the currently selected country participates in the pilot study,
+        /// and fetches its consent form from ICatalogService.
+        /// </summary>
+        public async Task CheckAndLoadPilotConsentAsync()
+        {
+            string countryIso = GetSelectedCountryIso();
+            if (string.IsNullOrEmpty(countryIso))
+            {
+                IsPilotCountry = false;
+                PilotConsentText = string.Empty;
+                HasAcceptedPilotConsent = CheckboxState.Unchecked;
+                InvalidateValidation();
+                return;
+            }
+
+            string cc = countryIso.Trim().ToLowerInvariant();
+
+            // Supported pilot countries in Foodmission project
+            var pilotCodes = new HashSet<string> { "de", "gr", "it", "nl", "no", "si" };
+            if (!pilotCodes.Contains(cc))
+            {
+                IsPilotCountry = false;
+                PilotConsentText = string.Empty;
+                HasAcceptedPilotConsent = CheckboxState.Unchecked;
+                InvalidateValidation();
+                return;
+            }
+
+            IsLoadingConsent = true;
+            string lang = _storeService.GetAppState().lang ?? "en";
+
+            var (consentData, error) = await _catalogService.GetConsentFormAsync(cc, lang);
+
+            if (consentData != null && !string.IsNullOrEmpty(consentData.content))
+            {
+                IsPilotCountry = true;
+                PilotConsentText = consentData.content;
+            }
+            else
+            {
+                IsPilotCountry = true;
+                PilotConsentText = string.Empty; // fallback to localized default if offline
+            }
+
+            IsLoadingConsent = false;
+            InvalidateValidation();
+        }
+
         public bool ValidatePilotConsent(bool showError = true)
         {
+            if (!IsPilotCountry)
+            {
+                ConsentHelpTextValue = string.Empty;
+                ConsentHelpTextVariant = HelpTextVariant.Default;
+                return true;
+            }
+
             if (HasAcceptedPilotConsent != CheckboxState.Checked)
             {
                 if (showError)
@@ -675,7 +743,13 @@ namespace eu.foodmission.platform
             return "";
         }
 
-        protected override Task OnStepEnteredAsync(int stepIndex) => Task.CompletedTask;
+        protected override async Task OnStepEnteredAsync(int stepIndex)
+        {
+            if (stepIndex == 8)
+            {
+                await CheckAndLoadPilotConsentAsync();
+            }
+        }
 
         protected override Task OnStepExitingAsync(int stepIndex) => Task.CompletedTask;
 

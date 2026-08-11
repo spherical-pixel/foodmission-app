@@ -395,10 +395,6 @@ MonoBehaviour:
     m_Key: T&C_TITLE
     m_Metadata:
       m_Items: []
-  - m_Id: 25351921299611648
-    m_Key: T&C_TEXT
-    m_Metadata:
-      m_Items: []
   - m_Id: 25353163560181760
     m_Key: TXT_ACCEPT
     m_Metadata:
@@ -847,10 +843,6 @@ MonoBehaviour:
     m_Key: DEDUCTION_LABEL
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000012
-    m_Key: LOG_MEAL_BTN
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000013
     m_Key: FOOD_WASTE_ADD
     m_Metadata:
@@ -945,10 +937,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000036
     m_Key: UNIT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000037
-    m_Key: LOCATION
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
@@ -1671,10 +1659,6 @@ MonoBehaviour:
     m_Key: txtActionsPerWeek
     m_Metadata:
       m_Items: []
-  - m_Id: 25706952255332352
-    m_Key: txtNext
-    m_Metadata:
-      m_Items: []
   - m_Id: 25707081205014528
     m_Key: txtSubmit
     m_Metadata:
@@ -2107,64 +2091,12 @@ MonoBehaviour:
     m_Key: BTN_READ_CONSENT
     m_Metadata:
       m_Items: []
-  - m_Id: 31125531389845504
-    m_Key: STEP_TITLE_WELCOME
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31125690362355712
-    m_Key: STEP_TITLE_USERNAME
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31125715708534784
-    m_Key: STEP_TITLE_EMAIL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31125762500190208
-    m_Key: STEP_TITLE_PASSWORD
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31125894994059264
-    m_Key: STEP_TITLE_LOCATION
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31125949671006208
-    m_Key: STEP_TITLE_TERMS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31125995040792576
-    m_Key: STEP_TITLE_PRIVACY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126038162432000
-    m_Key: STEP_TITLE_CONSENT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126082303287296
-    m_Key: LABEL_USERNAME
-    m_Metadata:
-      m_Items: []
   - m_Id: 31126126712578048
     m_Key: PLACEHOLDER_USERNAME
     m_Metadata:
       m_Items: []
-  - m_Id: 31126174418591744
-    m_Key: LABEL_EMAIL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126255662260224
-    m_Key: PLACEHOLDER_EMAIL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126407701585920
-    m_Key: LABEL_PASSWORD
-    m_Metadata:
-      m_Items: []
   - m_Id: 31126448877068288
     m_Key: PLACEHOLDER_PASSWORD
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126611515400192
-    m_Key: LABEL_REGION
     m_Metadata:
       m_Items: []
   - m_Id: 31126680599781376
@@ -2183,16 +2115,16 @@ MonoBehaviour:
     m_Key: PILOT_CONSENT_TITLE
     m_Metadata:
       m_Items: []
-  - m_Id: 32177888231940096
-    m_Key: PRIVACY_POLICY_TEXT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 32178042859151360
-    m_Key: PILOT_CONSENT_TEXT
-    m_Metadata:
-      m_Items: []
   - m_Id: 33345134950080512
     m_Key: MEMBER_YEAR_OF_BIRTH_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33550412991684608
+    m_Key: WELCOME_TO_FOODMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33625641466191872
+    m_Key: MSG_NO_PILOT_COUNTRY
     m_Metadata:
       m_Items: []
   m_Metadata:

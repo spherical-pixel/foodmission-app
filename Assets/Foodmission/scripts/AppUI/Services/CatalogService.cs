@@ -199,7 +199,7 @@ namespace eu.foodmission.platform
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
-                    return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetConsentForm({cc})"));
+                    return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetConsentForm({cc})", logAsError: false));
                 }
 
                 string raw = request.downloadHandler.text;

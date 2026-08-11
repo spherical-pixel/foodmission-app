@@ -40,6 +40,9 @@ namespace eu.foodmission.platform
         private FormFieldItemCheckbox _termsCheckbox;
         private FormFieldItemCheckbox _privacyCheckbox;
         private FormFieldItemCheckbox _consentCheckbox;
+        private VisualElement _pilotConsentContainer;
+
+        private Unity.AppUI.UI.Text _noPilotText;
 
         protected override bool IsFixedContent => true;
         protected override bool ApplySafeAreaBottom => false;
@@ -132,9 +135,9 @@ namespace eu.foodmission.platform
                 3 => BuildCardStep(_passwordField),
                 4 => BuildCardStep(_yearOfBirthDropdown),
                 5 => BuildLocationStep(),
-                6 => BuildLegalStep(_termsCheckbox, "@UI:BTN_READ_TERMS", ShowTermsDialog),
-                7 => BuildLegalStep(_privacyCheckbox, "@UI:BTN_READ_PRIVACY", ShowPrivacyPolicyDialog),
-                8 => BuildLegalStep(_consentCheckbox, "@UI:BTN_READ_CONSENT", ShowPilotConsentDialog),
+                6 => BuildTermsStep(),//BuildLegalStep(_termsCheckbox, "@UI:BTN_READ_TERMS", ShowTermsDialog),
+                7 => BuildPrivacyStep(),//BuildLegalStep(_privacyCheckbox, "@UI:BTN_READ_PRIVACY", ShowPrivacyPolicyDialog),
+                8 => BuildConsentStep(),//BuildLegalStep(_consentCheckbox, "@UI:BTN_READ_CONSENT", ShowPilotConsentDialog),
                 _ => new VisualElement()
             };
         }
@@ -200,6 +203,11 @@ namespace eu.foodmission.platform
         {
             base.OnStepChanged(stepIndex);
 
+            if (stepIndex == 8)
+            {
+                UpdateConsentStepUI();
+            }
+
             string message = stepIndex switch
             {
                 0 => string.Empty,//"@UI:TXT_REG_STEP_WELCOME",
@@ -210,7 +218,7 @@ namespace eu.foodmission.platform
                 5 => "@UI:TXT_REG_STEP_LOCATION",
                 6 => "@UI:TXT_REG_STEP_TERMS",
                 7 => "@UI:TXT_REG_STEP_PRIVACY",
-                8 => "@UI:TXT_REG_STEP_CONSENT",
+                8 => _viewModel != null && !_viewModel.IsPilotCountry ? GetNoPilotMessageText() : "@UI:TXT_REG_STEP_CONSENT",
                 _ => ""
             };
 
@@ -637,6 +645,93 @@ namespace eu.foodmission.platform
             return root;
         }
 
+        private VisualElement BuildTermsStep()
+        {
+            return BuildLegalStep(_termsCheckbox, "@UI:BTN_READ_TERMS", ShowTermsDialog);
+        }
+
+        private VisualElement BuildPrivacyStep()
+        {
+            return BuildLegalStep(_privacyCheckbox, "@UI:BTN_READ_PRIVACY", ShowPrivacyPolicyDialog);
+        }
+
+        private VisualElement BuildConsentStep()
+        {
+            var root = new ExVisualElement();
+            root.AddToClassList("box-background");
+            root.AddToClassList("fm-shadow-wrapper");
+            root.style.flexDirection = FlexDirection.Column;
+            root.style.paddingTop = 16;
+            root.style.paddingBottom = 16;
+            root.style.paddingLeft = 16;
+            root.style.paddingRight = 16;
+            root.style.width = new StyleLength(Length.Percent(100));
+
+            // Pilot container (shown when IsPilotCountry is true)
+            _pilotConsentContainer = new VisualElement();
+            _pilotConsentContainer.style.flexDirection = FlexDirection.Column;
+            _pilotConsentContainer.style.width = new StyleLength(Length.Percent(100));
+
+
+            if (_consentCheckbox != null)
+            {
+                _pilotConsentContainer.Add(_consentCheckbox);
+            }
+
+            var btnRead = new FMButton
+            {
+                title = "@UI:BTN_READ_CONSENT",
+                variant = ButtonVariant.Default,
+                size = Size.M
+            };
+            btnRead.AddToClassList("fm-button");
+            btnRead.style.marginTop = 12;
+            btnRead.clicked += ShowPilotConsentDialog;
+            _pilotConsentContainer.Add(btnRead);
+
+            root.Add(_pilotConsentContainer);
+
+
+
+            UpdateConsentStepUI();
+
+            return root;
+        }
+
+        private string GetNoPilotMessageText()
+        {
+            string localized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MSG_NO_PILOT_COUNTRY");
+            if (!string.IsNullOrEmpty(localized) && localized != "MSG_NO_PILOT_COUNTRY")
+            {
+                return localized;
+            }
+            return "Your selected country does not participate in the active pilot study. However, you can register and use Foodmission normally!";
+        }
+
+        private void UpdateConsentStepUI()
+        {
+            if (_viewModel == null || _pilotConsentContainer == null)
+                return;
+
+            bool isPilot = _viewModel.IsPilotCountry;
+
+            if (isPilot)
+            {
+                _pilotConsentContainer.style.display = DisplayStyle.Flex;
+                _pilotConsentContainer.parent.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                _pilotConsentContainer.style.display = DisplayStyle.None;
+                _pilotConsentContainer.parent.style.display = DisplayStyle.None;
+            }
+
+            if (_noPilotText != null)
+            {
+                _noPilotText.text = GetNoPilotMessageText();
+            }
+        }
+
         private VisualElement BuildLegalStep(FormFieldItemCheckbox checkbox, string buttonTitleKey, Action onReadClicked)
         {
             var root = new ExVisualElement();
@@ -674,7 +769,8 @@ namespace eu.foodmission.platform
             FMDialog.ShowScrollableMD(
                 this,
                 "@UI:T&C_TITLE",
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "T&C_TEXT"),
+                // TODO: Right now we don't have text for T&C it should come from backend at some point
+                "Missing Terms and Conditions text.",
                 onAccept: () =>
                 {
                     if (_viewModel != null)
@@ -692,7 +788,8 @@ namespace eu.foodmission.platform
             FMDialog.ShowScrollable(
                 this,
                 "@UI:PRIVACY_POLICY_TITLE",
-                "@UI:PRIVACY_POLICY_TEXT",
+                // TODO: Right now we don't have text for Privacy Policy it should come from backend at some point
+                "Missing Privacy Policy text.",
                 onAccept: () =>
                 {
                     if (_viewModel != null)
@@ -707,10 +804,14 @@ namespace eu.foodmission.platform
 
         private void ShowPilotConsentDialog()
         {
-            FMDialog.ShowScrollable(
+            string consentMD = _viewModel != null && !string.IsNullOrEmpty(_viewModel.PilotConsentText)
+                ? _viewModel.PilotConsentText
+                : "MISSING CONSENT TEXT";
+
+            FMDialog.ShowScrollableMD(
                 this,
                 "@UI:PILOT_CONSENT_TITLE",
-                "@UI:PILOT_CONSENT_TEXT",
+                consentMD,
                 onAccept: () =>
                 {
                     if (_viewModel != null)
@@ -841,6 +942,10 @@ namespace eu.foodmission.platform
                             _consentCheckbox.HelpTextText = _viewModel.ConsentHelpTextValue ?? "";
                             _consentCheckbox.HelpTextVariant = _viewModel.ConsentHelpTextVariant;
                         }
+                        break;
+                    case nameof(RegisterViewModel.IsPilotCountry):
+                    case nameof(RegisterViewModel.PilotConsentText):
+                        UpdateConsentStepUI();
                         break;
                 }
             }
