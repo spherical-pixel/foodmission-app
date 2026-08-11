@@ -712,7 +712,7 @@ namespace eu.foodmission.platform.Components
             pageLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
             _paginationContainer.Add(pageLabel);
 
-            var nextBtn = new Unity.AppUI.UI.Button { title = "@UI:txtNext", quiet = true };
+            var nextBtn = new Unity.AppUI.UI.Button { title = "@UI:TXT_NEXT", quiet = true };
             nextBtn.trailingIcon = "fm-arrow-right";
             nextBtn.SetEnabled(_currentPage < _totalPages);
             nextBtn.RegisterCallback<ClickEvent>(evt =>

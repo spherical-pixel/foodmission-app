@@ -75,16 +75,16 @@ MonoBehaviour:
     m_Localized: Your email
     m_Metadata:
       m_Items: []
-  - m_Id: 22815397693612032
-    m_Localized: Birth year
+  - m_Id: 33345134950080512
+    m_Localized: Select your year of birth
     m_Metadata:
       m_Items: []
   - m_Id: 22819676332482560
-    m_Localized: Country
+    m_Localized: Country of residence
     m_Metadata:
       m_Items: []
   - m_Id: 22819860558897152
-    m_Localized: Select your country
+    m_Localized: Select your country of residence
     m_Metadata:
       m_Items: []
   - m_Id: 22820314747494400
@@ -1274,7 +1274,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986022
-    m_Localized: Year of Birth
+    m_Localized: Year of birth
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986023
@@ -2241,10 +2241,6 @@ MonoBehaviour:
     m_Localized: Password
     m_Metadata:
       m_Items: []
-  - m_Id: 31125833245515776
-    m_Localized: Year of Birth
-    m_Metadata:
-      m_Items: []
   - m_Id: 31125894994059264
     m_Localized: Location
     m_Metadata:
@@ -2283,14 +2279,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 31126448877068288
     m_Localized: Minimum 6 characters
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126514157215744
-    m_Localized: Year of Birth
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126564262371328
-    m_Localized: Country
     m_Metadata:
       m_Items: []
   - m_Id: 31126611515400192

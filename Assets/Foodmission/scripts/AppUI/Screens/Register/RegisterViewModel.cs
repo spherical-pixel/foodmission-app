@@ -353,7 +353,7 @@ namespace eu.foodmission.platform
                                 RaiseNavigationRequested(Actions.loading_to_home);
                             }, isPrimary: true)
                         }
-                    );           
+                    );
 
 
                 }
@@ -672,19 +672,7 @@ namespace eu.foodmission.platform
 
         protected override string GetStepTitle(int stepIndex)
         {
-            return stepIndex switch
-            {
-                0 => "@UI:STEP_TITLE_WELCOME",
-                1 => "@UI:STEP_TITLE_USERNAME",
-                2 => "@UI:STEP_TITLE_EMAIL",
-                3 => "@UI:STEP_TITLE_PASSWORD",
-                4 => "@UI:STEP_TITLE_BIRTHYEAR",
-                5 => "@UI:STEP_TITLE_LOCATION",
-                6 => "@UI:STEP_TITLE_TERMS",
-                7 => "@UI:STEP_TITLE_PRIVACY",
-                8 => "@UI:STEP_TITLE_CONSENT",
-                _ => ""
-            };
+            return "";
         }
 
         protected override Task OnStepEnteredAsync(int stepIndex) => Task.CompletedTask;

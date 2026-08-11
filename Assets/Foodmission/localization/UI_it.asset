@@ -75,16 +75,12 @@ MonoBehaviour:
     m_Localized: La tua e-mail
     m_Metadata:
       m_Items: []
-  - m_Id: 22815397693612032
-    m_Localized: Anno di nascita
-    m_Metadata:
-      m_Items: []
   - m_Id: 22819676332482560
-    m_Localized: Paese
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 22819860558897152
-    m_Localized: Seleziona il tuo Paese
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 22820314747494400
@@ -2255,10 +2251,6 @@ MonoBehaviour:
     m_Localized: Password
     m_Metadata:
       m_Items: []
-  - m_Id: 31125833245515776
-    m_Localized: Anno di nascita
-    m_Metadata:
-      m_Items: []
   - m_Id: 31125894994059264
     m_Localized: Ubicazione
     m_Metadata:
@@ -2297,14 +2289,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 31126448877068288
     m_Localized: Almeno 6 caratteri
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126514157215744
-    m_Localized: Anno di nascita
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126564262371328
-    m_Localized: Paese
     m_Metadata:
       m_Items: []
   - m_Id: 31126611515400192

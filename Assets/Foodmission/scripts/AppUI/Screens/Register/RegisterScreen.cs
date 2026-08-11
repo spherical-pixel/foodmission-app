@@ -57,43 +57,43 @@ namespace eu.foodmission.platform
             _usernameField = new FormFieldItemTextField
             {
                 name = "username",
-                HeadingText = "@UI:LABEL_USERNAME",
+                HeadingText = "@UI:USERNAME",
                 TextFieldPlaceholder = "@UI:PLACEHOLDER_USERNAME"
             };
 
             _emailField = new FormFieldItemTextField
             {
                 name = "email",
-                HeadingText = "@UI:LABEL_EMAIL",
-                TextFieldPlaceholder = "@UI:PLACEHOLDER_EMAIL"
+                HeadingText = "@UI:EMAIL",
+                TextFieldPlaceholder = "@UI:EMAIL_PLACEHOLDER"
             };
 
             _passwordField = new FormFieldItemPassword
             {
                 name = "password",
-                HeadingText = "@UI:LABEL_PASSWORD",
+                HeadingText = "@UI:PASSWORD",
                 TextFieldPlaceholder = "@UI:PLACEHOLDER_PASSWORD"
             };
 
             _yearOfBirthDropdown = new FormFieldItemDropDownField
             {
                 name = "yearofbirth-dropdown",
-                HeadingText = "@UI:LABEL_BIRTH_YEAR",
-                DropdownDefaultMessage = "Selecciona"
+                HeadingText = "@UI:MEMBER_YEAR_OF_BIRTH",
+                DropdownDefaultMessage = "@UI:MEMBER_YEAR_OF_BIRTH_PLACEHOLDER"
             };
 
             _countryDropdown = new FormFieldItemDropDownField
             {
                 name = "country",
-                HeadingText = "@UI:LABEL_COUNTRY",
-                DropdownDefaultMessage = "Selecciona país"
+                HeadingText = "@UI:COUNTRY",
+                DropdownDefaultMessage = "@UI:COUNTRY_PLACEHOLDER"
             };
 
             _regionDropdown = new FormFieldItemDropDownField
             {
                 name = "region",
-                HeadingText = "@UI:LABEL_REGION",
-                DropdownDefaultMessage = "Selecciona región"
+                HeadingText = "@UI:REGION",
+                DropdownDefaultMessage = "@UI:REGION_PLACEHOLDER"
             };
 
             _postalCodeField = new FormFieldItemTextField
@@ -547,7 +547,7 @@ namespace eu.foodmission.platform
             root.style.paddingRight = 40;
             //root.style.height = new StyleLength(Length.Percent(100));
 
-            var welcomeHeader = new Unity.AppUI.UI.Heading { text = "¡Bienvenido a Foodmission!" };
+            var welcomeHeader = new Unity.AppUI.UI.Heading { text = "@UI:WELCOME_TO_FOODMISSION" };
             welcomeHeader.size = HeadingSize.L;
             welcomeHeader.AddToClassList("centered-text");
             root.Add(welcomeHeader);
@@ -557,7 +557,7 @@ namespace eu.foodmission.platform
 
             var welcomeBody = new Unity.AppUI.UI.Text
             {
-                text = "Una plataforma de ciencia ciudadana para investigar tus hábitos alimentarios y la sostenibilidad. Configura tu perfil en solo unos pasos.",
+                text = "@UI:TXT_REG_STEP_WELCOME",
                 primary = false
             };
             welcomeBody.style.whiteSpace = WhiteSpace.Normal;

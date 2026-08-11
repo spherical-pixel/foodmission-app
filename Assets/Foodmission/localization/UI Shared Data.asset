@@ -367,10 +367,6 @@ MonoBehaviour:
     m_Key: EMAIL_PLACEHOLDER
     m_Metadata:
       m_Items: []
-  - m_Id: 22815397693612032
-    m_Key: BIRTH_YEAR
-    m_Metadata:
-      m_Items: []
   - m_Id: 22819676332482560
     m_Key: COUNTRY
     m_Metadata:
@@ -2127,10 +2123,6 @@ MonoBehaviour:
     m_Key: STEP_TITLE_PASSWORD
     m_Metadata:
       m_Items: []
-  - m_Id: 31125833245515776
-    m_Key: STEP_TITLE_BIRTHYEAR
-    m_Metadata:
-      m_Items: []
   - m_Id: 31125894994059264
     m_Key: STEP_TITLE_LOCATION
     m_Metadata:
@@ -2171,14 +2163,6 @@ MonoBehaviour:
     m_Key: PLACEHOLDER_PASSWORD
     m_Metadata:
       m_Items: []
-  - m_Id: 31126514157215744
-    m_Key: LABEL_BIRTH_YEAR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 31126564262371328
-    m_Key: LABEL_COUNTRY
-    m_Metadata:
-      m_Items: []
   - m_Id: 31126611515400192
     m_Key: LABEL_REGION
     m_Metadata:
@@ -2205,6 +2189,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 32178042859151360
     m_Key: PILOT_CONSENT_TEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33345134950080512
+    m_Key: MEMBER_YEAR_OF_BIRTH_PLACEHOLDER
     m_Metadata:
       m_Items: []
   m_Metadata:

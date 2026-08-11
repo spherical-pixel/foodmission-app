@@ -12,9 +12,9 @@ namespace eu.foodmission.platform
     public class OnboardingSurveyScreen : StepFlowScreenBase<OnboardingSurveyViewModel>
     {
         protected override int StepCount => 6;
-        
 
-        protected override string NextButtonLabel => "@UI:txtNext";
+
+        protected override string NextButtonLabel => "@UI:TXT_NEXT";
         protected override string PreviousButtonLabel => "@UI:TXT_BACK";
         protected override string CompleteButtonLabel => "@UI:txtSubmit";
 
