@@ -11,89 +11,27 @@ namespace eu.foodmission.platform
     public partial class OnboardingSurveyViewModel : StepFlowViewModelBase
     {
         private readonly IAuthService _authService;
+        private readonly ICatalogService _catalogService;
 
         [ObservableProperty]
         private bool m_IsSubmitting;
 
-        public static readonly LocalizedOption[] MeatMealsOptions = new LocalizedOption[]
-        {
-            new LocalizedOption("UI","txtMealsPerWeek", "0–4"),
-            new LocalizedOption("UI","txtMealsPerWeek", "5–9"),
-            new LocalizedOption("UI","txtMealsPerWeek", "10–14"),
-            new LocalizedOption("UI","txtMealsPerWeek", "15+")
-        };
 
-        public static readonly string[] MeatMealsCodes = new string[]
-        {
-            "MEALS_0_4",
-            "MEALS_5_9",
-            "MEALS_10_14",
-            "MEALS_15_PLUS"
-        };
 
-        public static readonly LocalizedOption[] BeefFrequencyOptions = new LocalizedOption[]
-        {
-            new LocalizedOption("UI","txtNever"),
-            new LocalizedOption("UI","txtLessOnceWeek"),
-            new LocalizedOption("UI","txtTimesPerWeek", "1–2"),
-            new LocalizedOption("UI","txtTimesPerWeek", "3+")
-        };
+        public string[] MeatMealsOptions { get; private set; } = System.Array.Empty<string>();
+        public string[] MeatMealsCodes { get; private set; } = System.Array.Empty<string>();
 
-        public static readonly string[] BeefFrequencyCodes = new string[]
-        {
-            "NEVER",
-            "LESS_THAN_ONCE",
-            "TIMES_1_2",
-            "TIMES_3_PLUS"
-        };
+        public string[] BeefFrequencyOptions { get; private set; } = System.Array.Empty<string>();
+        public string[] BeefFrequencyCodes { get; private set; } = System.Array.Empty<string>();
 
-        public static readonly LocalizedOption[] FoodWasteFrequencyOptions = new LocalizedOption[]
-        {
-            new LocalizedOption("UI","txtNever"),
-            new LocalizedOption("UI","txtTimesPerWeek", "1–2"),
-            new LocalizedOption("UI","txtTimesPerWeek", "3–4"),
-            new LocalizedOption("UI","txtTimesPerWeek", "5+")
-        };
+        public string[] FoodWasteFrequencyOptions { get; private set; } = System.Array.Empty<string>();
+        public string[] FoodWasteFrequencyCodes { get; private set; } = System.Array.Empty<string>();
 
-        public static readonly string[] FoodWasteFrequencyCodes = new string[]
-        {
-            "NEVER",
-            "TIMES_1_2",
-            "TIMES_3_4",
-            "TIMES_5_PLUS"
-        };
+        public string[] UltraProcessedFrequencyOptions { get; private set; } = System.Array.Empty<string>();
+        public string[] UltraProcessedFrequencyCodes { get; private set; } = System.Array.Empty<string>();
 
-        public static readonly LocalizedOption[] UltraProcessedFrequencyOptions = new LocalizedOption[]
-        {
-            new LocalizedOption("UI","txtTimesPerWeek", "0–3"),
-            new LocalizedOption("UI","txtTimesPerWeek", "4–9"),
-            new LocalizedOption("UI","txtTimesPerWeek", "10–14"),
-            new LocalizedOption("UI","txtTimesPerWeek", "15+")
-        };
-
-        public static readonly string[] UltraProcessedFrequencyCodes = new string[]
-        {
-            "TIMES_0_3",
-            "TIMES_4_9",
-            "TIMES_10_14",
-            "TIMES_15_PLUS"
-        };
-
-        public static readonly LocalizedOption[] ReusableContainersFrequencyOptions = new LocalizedOption[]
-        {
-            new LocalizedOption("UI","txtActionsPerWeek", "0–2"),
-            new LocalizedOption("UI","txtActionsPerWeek", "3–6"),
-            new LocalizedOption("UI","txtActionsPerWeek", "7–9"),
-            new LocalizedOption("UI","txtActionsPerWeek", "10+")
-        };
-
-        public static readonly string[] ReusableContainersFrequencyCodes = new string[]
-        {
-            "ACTIONS_0_2",
-            "ACTIONS_3_6",
-            "ACTIONS_7_9",
-            "ACTIONS_10_PLUS"
-        };
+        public string[] ReusableContainersFrequencyOptions { get; private set; } = System.Array.Empty<string>();
+        public string[] ReusableContainersFrequencyCodes { get; private set; } = System.Array.Empty<string>();
 
         // Step States (-1 means no option selected)
         [ObservableProperty] private int m_MeatMealsIndex = -1;
@@ -102,9 +40,92 @@ namespace eu.foodmission.platform
         [ObservableProperty] private int m_UltraProcessedFrequencyIndex = -1;
         [ObservableProperty] private int m_ReusableContainersFrequencyIndex = -1;
 
-        public OnboardingSurveyViewModel(IStoreService storeService, IAuthService authService = null) : base(storeService)
+        public OnboardingSurveyViewModel(IStoreService storeService, ICatalogService catalogService, IAuthService authService = null) : base(storeService)
         {
+            _catalogService = catalogService;
             _authService = authService;
+
+            _storeSubscription = _store.Subscribe(
+                state => state.lang,
+                OnLanguageChanged
+            );
+        }
+
+        private async void OnLanguageChanged(string newLang)
+        {
+            if (string.IsNullOrEmpty(newLang)) return;
+            await LoadCatalogOptionsAsync();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _ = LoadCatalogOptionsAsync();
+        }
+
+        public async Task LoadCatalogOptionsAsync()
+        {
+            if (_catalogService == null)
+            {
+                Debug.LogWarning("[OnboardingSurveyViewModel] _catalogService is null!");
+                return;
+            }
+
+            try
+            {
+                string lang = _storeService.GetAppState().lang ?? "en";
+
+                var meatTask = _catalogService.GetWeeklyMeatRangesAsync(lang);
+                var beefTask = _catalogService.GetWeeklyBeefFrequenciesAsync(lang);
+                var wasteTask = _catalogService.GetWeeklyFoodWasteRangesAsync(lang);
+                var upfTask = _catalogService.GetWeeklyUpfRangesAsync(lang);
+                var reusableTask = _catalogService.GetWeeklyReusableRangesAsync(lang);
+
+                await Task.WhenAll(meatTask, beefTask, wasteTask, upfTask, reusableTask);
+
+                var (meatItems, _) = meatTask.Result;
+                if (meatItems != null && meatItems.Length > 0)
+                {
+                    MeatMealsCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(meatItems, x => x.code));
+                    MeatMealsOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(meatItems, x => x.label));
+                }
+
+                var (beefItems, _) = beefTask.Result;
+                if (beefItems != null && beefItems.Length > 0)
+                {
+                    BeefFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(beefItems, x => x.code));
+                    BeefFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(beefItems, x => x.label));
+                }
+
+                var (wasteItems, _) = wasteTask.Result;
+                if (wasteItems != null && wasteItems.Length > 0)
+                {
+                    FoodWasteFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(wasteItems, x => x.code));
+                    FoodWasteFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(wasteItems, x => x.label));
+                }
+
+                var (upfItems, _) = upfTask.Result;
+                if (upfItems != null && upfItems.Length > 0)
+                {
+                    UltraProcessedFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(upfItems, x => x.code));
+                    UltraProcessedFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(upfItems, x => x.label));
+                }
+
+                var (reusableItems, _) = reusableTask.Result;
+                if (reusableItems != null && reusableItems.Length > 0)
+                {
+                    ReusableContainersFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(reusableItems, x => x.code));
+                    ReusableContainersFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(reusableItems, x => x.label));
+                }
+
+                Debug.Log($"[OnboardingSurveyViewModel] Catalog options loaded in parallel! Meat count: {MeatMealsOptions.Length}, Beef count: {BeefFrequencyOptions.Length}");
+                OnPropertyChanged(nameof(MeatMealsOptions));
+                InvalidateValidation();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[OnboardingSurveyViewModel] LoadCatalogOptionsAsync exception: {ex.Message}");
+            }
         }
 
         protected override int GetStepCount() => 6;
@@ -151,11 +172,11 @@ namespace eu.foodmission.platform
 
                 var surveyData = new OnboardingSurveyData
                 {
-                    meatMeals = MeatMealsIndex >= 0 && MeatMealsIndex < MeatMealsCodes.Length ? MeatMealsCodes[MeatMealsIndex] : null,
-                    beefFrequency = BeefFrequencyIndex >= 0 && BeefFrequencyIndex < BeefFrequencyCodes.Length ? BeefFrequencyCodes[BeefFrequencyIndex] : null,
-                    foodWasteFrequency = FoodWasteFrequencyIndex >= 0 && FoodWasteFrequencyIndex < FoodWasteFrequencyCodes.Length ? FoodWasteFrequencyCodes[FoodWasteFrequencyIndex] : null,
-                    ultraProcessedFrequency = UltraProcessedFrequencyIndex >= 0 && UltraProcessedFrequencyIndex < UltraProcessedFrequencyCodes.Length ? UltraProcessedFrequencyCodes[UltraProcessedFrequencyIndex] : null,
-                    reusableContainersFrequency = ReusableContainersFrequencyIndex >= 0 && ReusableContainersFrequencyIndex < ReusableContainersFrequencyCodes.Length ? ReusableContainersFrequencyCodes[ReusableContainersFrequencyIndex] : null
+                    weeklyMeatConsumption = MeatMealsIndex >= 0 && MeatMealsIndex < MeatMealsCodes.Length ? MeatMealsCodes[MeatMealsIndex] : null,
+                    weeklyBeefConsumption = BeefFrequencyIndex >= 0 && BeefFrequencyIndex < BeefFrequencyCodes.Length ? BeefFrequencyCodes[BeefFrequencyIndex] : null,
+                    weeklyFoodWaste = FoodWasteFrequencyIndex >= 0 && FoodWasteFrequencyIndex < FoodWasteFrequencyCodes.Length ? FoodWasteFrequencyCodes[FoodWasteFrequencyIndex] : null,
+                    weeklyUpfConsumption = UltraProcessedFrequencyIndex >= 0 && UltraProcessedFrequencyIndex < UltraProcessedFrequencyCodes.Length ? UltraProcessedFrequencyCodes[UltraProcessedFrequencyIndex] : null,
+                    weeklyReusableOrRefill = ReusableContainersFrequencyIndex >= 0 && ReusableContainersFrequencyIndex < ReusableContainersFrequencyCodes.Length ? ReusableContainersFrequencyCodes[ReusableContainersFrequencyIndex] : null
                 };
 
                 // 1. Dispatch survey answers to Redux store (persisted in PlayerPrefs/LocalStorage)

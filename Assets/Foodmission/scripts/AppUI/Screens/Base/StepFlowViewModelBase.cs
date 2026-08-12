@@ -21,6 +21,7 @@ namespace eu.foodmission.platform
         [ObservableProperty] private string m_StepTitle;
         [ObservableProperty] private ApiErrorResponse m_ErrorDetail;
 
+
         protected StepFlowViewModelBase(IStoreService storeService) : base(storeService)
         {
         }
@@ -36,7 +37,7 @@ namespace eu.foodmission.platform
         protected virtual Task OnFlowCancelledAsync() => Task.CompletedTask;
 
         // ── Initialization ────────────────────────────────────
-        public void Initialize()
+        public virtual void Initialize()
         {
             StepCount = GetStepCount();
             CurrentStepIndex = 0;
@@ -70,6 +71,11 @@ namespace eu.foodmission.platform
         public void InvalidateValidation()
         {
             RefreshStepState();
+        }
+
+        public void RequestRebuildSteps()
+        {
+            OnPropertyChanged(nameof(StepCount));
         }
 
         // ── Public Navigation Methods ─────────────────────────

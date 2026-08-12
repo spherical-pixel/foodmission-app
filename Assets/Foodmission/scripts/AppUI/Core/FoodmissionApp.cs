@@ -120,6 +120,10 @@ namespace eu.foodmission.platform
             // Apply the initial locale from state
             ApplyLocaleFromState();
 
+            // Sync Editor Localization Simulator changes to Redux state
+            UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocaleChanged -= OnSelectedLocaleChanged;
+            UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocaleChanged += OnSelectedLocaleChanged;
+
             // Locale change subscription
             _langSubscription?.Dispose();
             _langSubscription = _storeService.store.Subscribe(
@@ -322,6 +326,17 @@ namespace eu.foodmission.platform
             else
             {
                 Debug.LogWarning($"[FoodmissionApp] Locale not found for lang: {lang}");
+            }
+        }
+
+        private void OnSelectedLocaleChanged(UnityEngine.Localization.Locale locale)
+        {
+            if (locale == null || _storeService == null) return;
+            string code = locale.Identifier.Code;
+            if (!string.IsNullOrEmpty(code) && _storeService.GetAppState().lang != code)
+            {
+                Debug.Log($"[FoodmissionApp] Unity Localization locale changed to: {code}, updating Redux state");
+                _storeService.store.Dispatch(AppActions.setLanguage.Invoke(code));
             }
         }
 

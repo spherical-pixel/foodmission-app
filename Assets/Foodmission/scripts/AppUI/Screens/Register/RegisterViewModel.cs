@@ -143,6 +143,23 @@ namespace eu.foodmission.platform
             _authService = authService;
             _catalogService = catalogService;
 
+            PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(Username) ||
+                    args.PropertyName == nameof(Email) ||
+                    args.PropertyName == nameof(Password) ||
+                    args.PropertyName == nameof(SelectedYearOfBirthIndex) ||
+                    args.PropertyName == nameof(SelectedCountryIndex) ||
+                    args.PropertyName == nameof(SelectedRegionIndex) ||
+                    args.PropertyName == nameof(PostalCode) ||
+                    args.PropertyName == nameof(HasAcceptedTerms) ||
+                    args.PropertyName == nameof(HasAcceptedPrivacyPolicy) ||
+                    args.PropertyName == nameof(HasAcceptedPilotConsent))
+                {
+                    InvalidateValidation();
+                }
+            };
+
             BuildYearOfBirthOptions();
 
             _storeSubscription = _store.Subscribe(

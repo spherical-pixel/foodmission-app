@@ -1368,34 +1368,11 @@ MonoBehaviour:
     m_Localized: "\xA1Entendido!"
     m_Metadata:
       m_Items: []
-  - m_Id: 25687180457271296
-    m_Localized: '{0} veces a la semana'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690413
-  - m_Id: 25682128132890624
-    m_Localized: '{0} comidas a la semana'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690413
-  - m_Id: 25699605365645312
-    m_Localized: '{0} acciones a la semana'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690413
   - m_Id: 25708140598124544
     m_Localized: Paso {0} de {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
-  - m_Id: 25683680096673792
-    m_Localized: Nunca
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25683693593944064
-    m_Localized: Menos de una vez a la semana
-    m_Metadata:
-      m_Items: []
   - m_Id: 25707081205014528
     m_Localized: Enviar
     m_Metadata:
@@ -2184,9 +2161,6 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 27512489452232704
         - id: 20518970774773760
-        - id: 25687180457271296
-        - id: 25682128132890624
-        - id: 25699605365645312
         - id: 25708140598124544
         - id: 28899582313226240
         - id: 28906308236206080

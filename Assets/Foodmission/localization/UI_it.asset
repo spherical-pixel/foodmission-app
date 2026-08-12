@@ -1367,34 +1367,11 @@ MonoBehaviour:
     m_Localized: Capito!
     m_Metadata:
       m_Items: []
-  - m_Id: 25687180457271296
-    m_Localized: '{0} volte alla settimana'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690409
-  - m_Id: 25682128132890624
-    m_Localized: '{0} pasti a settimana'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690409
-  - m_Id: 25699605365645312
-    m_Localized: '{0} azioni a settimana'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690409
   - m_Id: 25708140598124544
     m_Localized: Passo {0} di {1}
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
-  - m_Id: 25683680096673792
-    m_Localized: Mai
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25683693593944064
-    m_Localized: Meno di una volta alla settimana
-    m_Metadata:
-      m_Items: []
   - m_Id: 25707081205014528
     m_Localized: Invia
     m_Metadata:
@@ -2188,9 +2165,6 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 27512489452232704
         - id: 20518970774773760
-        - id: 25687180457271296
-        - id: 25682128132890624
-        - id: 25699605365645312
         - id: 25708140598124544
         - id: 28899582313226240
         - id: 28906308236206080

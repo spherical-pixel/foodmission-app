@@ -1361,29 +1361,6 @@ MonoBehaviour:
     m_Localized: Got It!
     m_Metadata:
       m_Items: []
-  - m_Id: 25682128132890624
-    m_Localized: '{0} meals per week'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690406
-  - m_Id: 25683680096673792
-    m_Localized: Never
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25683693593944064
-    m_Localized: Less than once per week
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25687180457271296
-    m_Localized: '{0} times per week'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690406
-  - m_Id: 25699605365645312
-    m_Localized: '{0} actions per week'
-    m_Metadata:
-      m_Items:
-      - rid: 4008881209995690406
   - m_Id: 25707081205014528
     m_Localized: Submit
     m_Metadata:
@@ -2175,9 +2152,6 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 27512489452232704
         - id: 20518970774773760
-        - id: 25687180457271296
-        - id: 25682128132890624
-        - id: 25699605365645312
         - id: 25708140598124544
         - id: 28899582313226240
         - id: 28906308236206080

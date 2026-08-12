@@ -106,5 +106,34 @@ namespace eu.foodmission.platform.Tests
             StringAssert.DoesNotContain("preferences", json);
             StringAssert.DoesNotContain("language", json);
         }
+
+        [Test]
+        public void ToJson_IncludesOnboardingSurveyWithBackendKeys()
+        {
+            var request = new ProfileUpdateRequest
+            {
+                preferences = new ProfileUpdatePreferences
+                {
+                    onboardingSurvey = new OnboardingSurveyData
+                    {
+                        weeklyMeatConsumption = "ZERO_TO_FOUR",
+                        weeklyBeefConsumption = "LESS_THAN_ONCE_PER_WEEK",
+                        weeklyFoodWaste = "ZERO",
+                        weeklyUpfConsumption = "TEN_TO_FOURTEEN",
+                        weeklyReusableOrRefill = "TEN_PLUS"
+                    }
+                }
+            };
+
+            string json = request.ToJson();
+
+            StringAssert.Contains("\"weeklyMeatConsumption\":\"ZERO_TO_FOUR\"", json);
+            StringAssert.Contains("\"weeklyBeefConsumption\":\"LESS_THAN_ONCE_PER_WEEK\"", json);
+            StringAssert.Contains("\"weeklyFoodWaste\":\"ZERO\"", json);
+            StringAssert.Contains("\"weeklyUpfConsumption\":\"TEN_TO_FOURTEEN\"", json);
+            StringAssert.Contains("\"weeklyReusableOrRefill\":\"TEN_PLUS\"", json);
+            StringAssert.DoesNotContain("meatMeals", json);
+            StringAssert.DoesNotContain("foodWasteFrequency", json);
+        }
     }
 }

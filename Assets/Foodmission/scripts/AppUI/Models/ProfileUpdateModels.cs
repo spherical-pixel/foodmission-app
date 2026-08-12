@@ -18,6 +18,7 @@ namespace eu.foodmission.platform
         public int musicVolume;
         public bool pushNotificationsEnabled;
         public bool backgroundPattern;
+        public string notificationPreferredTime;
     }
 
     /// <summary>
@@ -40,6 +41,18 @@ namespace eu.foodmission.platform
 
         [JsonProperty("annualIncome", NullValueHandling = NullValueHandling.Ignore)]
         public string annualIncome;
+
+        [JsonProperty("segment", NullValueHandling = NullValueHandling.Ignore)]
+        public string segment;
+
+        [JsonProperty("currentQuestId", NullValueHandling = NullValueHandling.Ignore)]
+        public string currentQuestId;
+
+        [JsonProperty("healthGoals", NullValueHandling = NullValueHandling.Ignore)]
+        public object healthGoals;
+
+        [JsonProperty("nutritionTargets", NullValueHandling = NullValueHandling.Ignore)]
+        public object nutritionTargets;
 
         [JsonProperty("preferences", NullValueHandling = NullValueHandling.Ignore)]
         public ProfileUpdatePreferences preferences;
@@ -74,6 +87,27 @@ namespace eu.foodmission.platform
         [JsonProperty("dietaryPreference", NullValueHandling = NullValueHandling.Ignore)]
         public string[] dietaryPreference;
 
+        [JsonProperty("allergies", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] allergies;
+
+        [JsonProperty("preferredCategories", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] preferredCategories;
+
+        [JsonProperty("foodExclusions", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] foodExclusions;
+
+        [JsonProperty("motivation", NullValueHandling = NullValueHandling.Ignore)]
+        public string motivation;
+
+        [JsonProperty("dailyTimeCommitmentMinutes", NullValueHandling = NullValueHandling.Ignore)]
+        public int? dailyTimeCommitmentMinutes;
+
+        [JsonProperty("showNutriScore", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? showNutriScore;
+
+        [JsonProperty("avoidUpf", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? avoidUpf;
+
         [JsonProperty("shoppingResponsibility", NullValueHandling = NullValueHandling.Ignore)]
         public string shoppingResponsibility;
 
@@ -95,23 +129,59 @@ namespace eu.foodmission.platform
 
     /// <summary>
     /// Survey answers payload stored in preferences using language-agnostic enum codes.
+    /// Key names match NestJS ONBOARDING_BASELINE_FIELDS contract.
     /// </summary>
     [Serializable]
     public class OnboardingSurveyData
     {
-        [JsonProperty("meatMeals", NullValueHandling = NullValueHandling.Ignore)]
-        public string meatMeals;
+        [JsonProperty("weeklyMeatConsumption", NullValueHandling = NullValueHandling.Ignore)]
+        public string weeklyMeatConsumption;
 
-        [JsonProperty("beefFrequency", NullValueHandling = NullValueHandling.Ignore)]
-        public string beefFrequency;
+        [JsonProperty("weeklyBeefConsumption", NullValueHandling = NullValueHandling.Ignore)]
+        public string weeklyBeefConsumption;
 
-        [JsonProperty("foodWasteFrequency", NullValueHandling = NullValueHandling.Ignore)]
-        public string foodWasteFrequency;
+        [JsonProperty("weeklyFoodWaste", NullValueHandling = NullValueHandling.Ignore)]
+        public string weeklyFoodWaste;
 
-        [JsonProperty("ultraProcessedFrequency", NullValueHandling = NullValueHandling.Ignore)]
-        public string ultraProcessedFrequency;
+        [JsonProperty("weeklyUpfConsumption", NullValueHandling = NullValueHandling.Ignore)]
+        public string weeklyUpfConsumption;
 
-        [JsonProperty("reusableContainersFrequency", NullValueHandling = NullValueHandling.Ignore)]
-        public string reusableContainersFrequency;
+        [JsonProperty("weeklyReusableOrRefill", NullValueHandling = NullValueHandling.Ignore)]
+        public string weeklyReusableOrRefill;
+
+        [JsonIgnore]
+        public string meatMeals
+        {
+            get => weeklyMeatConsumption;
+            set => weeklyMeatConsumption = value;
+        }
+
+        [JsonIgnore]
+        public string beefFrequency
+        {
+            get => weeklyBeefConsumption;
+            set => weeklyBeefConsumption = value;
+        }
+
+        [JsonIgnore]
+        public string foodWasteFrequency
+        {
+            get => weeklyFoodWaste;
+            set => weeklyFoodWaste = value;
+        }
+
+        [JsonIgnore]
+        public string ultraProcessedFrequency
+        {
+            get => weeklyUpfConsumption;
+            set => weeklyUpfConsumption = value;
+        }
+
+        [JsonIgnore]
+        public string reusableContainersFrequency
+        {
+            get => weeklyReusableOrRefill;
+            set => weeklyReusableOrRefill = value;
+        }
     }
 }

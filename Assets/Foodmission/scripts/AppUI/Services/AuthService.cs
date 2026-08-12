@@ -700,7 +700,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(bool success, string error)> DeleteAccountAsync()
+        public async Task<(bool success, string error)> DeleteAccountAsync(bool deleteAll = false)
         {
             AppState state = _storeService.GetAppState();
 
@@ -712,6 +712,10 @@ namespace eu.foodmission.platform
             try
             {
                 string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
+                if (deleteAll)
+                {
+                    url += "?deleteAll=true";
+                }
 
                 using UnityWebRequest request = new UnityWebRequest(url, "DELETE");
                 request.downloadHandler = new DownloadHandlerBuffer();
@@ -726,7 +730,7 @@ namespace eu.foodmission.platform
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
-                    Debug.Log($"[{GetType().Name}] Account deleted successfully");
+                    Debug.Log($"[{GetType().Name}] Account deleted successfully (deleteAll={deleteAll})");
                     Logout();
                     return (true, null);
                 }
@@ -739,6 +743,95 @@ namespace eu.foodmission.platform
             {
                 Debug.LogError($"[{GetType().Name}] DeleteAccount exception: {ex.Message}");
                 return (false, "An unexpected error occurred");
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the basic profile is complete via GET /api/v1/users/me.
+        /// Returns true if complete, false otherwise.
+        /// </summary>
+        public async Task<bool> CheckBasicProfileCompleteAsync()
+        {
+            AppState state = _storeService.GetAppState();
+            if (string.IsNullOrEmpty(state.accessToken)) return false;
+
+            try
+            {
+                string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
+                using UnityWebRequest request = UnityWebRequest.Get(url);
+                request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    string text = request.downloadHandler.text?.Trim();
+                    return bool.TryParse(text, out bool isComplete) && isComplete;
+                }
+
+                if (request.responseCode == 401)
+                {
+                    await HandleUnauthorizedAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] CheckBasicProfileCompleteAsync exception: {ex.Message}");
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Fetches user gamification profile via GET /api/v1/users/me/gamification.
+        /// </summary>
+        public async Task<(bool success, string jsonResponse, ApiErrorResponse error)> GetGamificationProfileAsync(int eventsLimit = 10, int walletEntriesLimit = 10)
+        {
+            AppState state = _storeService.GetAppState();
+            if (string.IsNullOrEmpty(state.accessToken))
+            {
+                return (false, null, new ApiErrorResponse { statusCode = 401, error = "NO_ACCESS_TOKEN", message = "No access token" });
+            }
+
+            try
+            {
+                string url = $"{ApiConfig.BaseUrl}/api/v1/users/me/gamification?eventsLimit={eventsLimit}&walletEntriesLimit={walletEntriesLimit}";
+                using UnityWebRequest request = UnityWebRequest.Get(url);
+                request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
+                request.SetRequestHeader("Accept", "application/json");
+
+                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    return (true, request.downloadHandler.text, null);
+                }
+
+                if (request.responseCode == 401)
+                {
+                    bool refreshed = await HandleUnauthorizedAsync();
+                    if (refreshed)
+                    {
+                        return await GetGamificationProfileAsync(eventsLimit, walletEntriesLimit);
+                    }
+                }
+
+                ApiErrorResponse errResp = ApiErrorHelper.Parse(request, "[AuthService] GetGamificationProfileAsync");
+                return (false, null, errResp);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] GetGamificationProfileAsync exception: {ex.Message}");
+                return (false, null, new ApiErrorResponse { statusCode = 500, error = "UNEXPECTED_ERROR", message = ex.Message });
             }
         }
 

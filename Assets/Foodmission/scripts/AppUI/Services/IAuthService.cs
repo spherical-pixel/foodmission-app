@@ -22,7 +22,9 @@ namespace eu.foodmission.platform
         Task<(bool success, string message)> RequestPasswordResetAsync(string email);
         Task<(bool success, ApiErrorResponse error)> UpdateProfileAsync(ProfileUpdateRequest request);
         Task SyncSettingsAsync();
-        Task<(bool success, string error)> DeleteAccountAsync();
+        Task<(bool success, string error)> DeleteAccountAsync(bool deleteAll = false);
+        Task<bool> CheckBasicProfileCompleteAsync();
+        Task<(bool success, string jsonResponse, ApiErrorResponse error)> GetGamificationProfileAsync(int eventsLimit = 10, int walletEntriesLimit = 10);
     }
 }
 

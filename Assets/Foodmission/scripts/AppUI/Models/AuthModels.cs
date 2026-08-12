@@ -167,6 +167,8 @@ namespace eu.foodmission.platform
         public string educationLevel;
         public string activityLevel;
         public string language;
+        public string segment;
+        public string currentQuestId;
         public UserSettingsDto settings;
         public ProfilePreferences preferences;
     }
@@ -216,6 +218,13 @@ namespace eu.foodmission.platform
     {
         [Newtonsoft.Json.JsonConverter(typeof(StringOrArrayConverter))]
         public string[] dietaryPreference;
+        public string[] allergies;
+        public string[] preferredCategories;
+        public string[] foodExclusions;
+        public string motivation;
+        public int? dailyTimeCommitmentMinutes;
+        public bool? showNutriScore;
+        public bool? avoidUpf;
         public string shoppingResponsibility;
         public OnboardingSurveyData onboardingSurvey;
         public string lastShoppingListId;

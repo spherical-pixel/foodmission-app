@@ -12,7 +12,7 @@ namespace eu.foodmission.platform
     public class OnboardingSurveyScreen : StepFlowScreenBase<OnboardingSurveyViewModel>
     {
         protected override int StepCount => 6;
-        
+
 
         protected override string NextButtonLabel => "@UI:TXT_NEXT";
         protected override string PreviousButtonLabel => "@UI:TXT_BACK";
@@ -22,53 +22,174 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Text _messageText;
         private FMNutriView _nutriView;
 
+        private ExVisualElement _meatContainer;
+        private ExVisualElement _beefContainer;
+        private ExVisualElement _foodWasteContainer;
+        private ExVisualElement _ultraProcessedContainer;
+        private ExVisualElement _reusableContainer;
+
+        protected override void OnViewModelBound()
+        {
+            base.OnViewModelBound();
+            if (_viewModel != null)
+            {
+                _viewModel.PropertyChanged += OnViewModelPropertyChangedInternal;
+            }
+        }
+
+        private void OnViewModelPropertyChangedInternal(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_viewModel.MeatMealsOptions))
+            {
+                PopulateAllQuestionOptions();
+            }
+        }
+
+        public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        {
+            base.OnEnter(controller, destination, args);
+
+            if (_viewModel != null)
+            {
+                await _viewModel.LoadCatalogOptionsAsync();
+                PopulateAllQuestionOptions();
+            }
+        }
+
         protected override VisualElement CreateStepContent(int stepIndex)
         {
             return stepIndex switch
             {
                 0 => BuildWelcomeStep(),
-                1 => CreateSingleChoiceQuestionStep(
-                    OnboardingSurveyViewModel.MeatMealsOptions,
-                    _viewModel.MeatMealsIndex,
-                    index =>
-                    {
-                        _viewModel.MeatMealsIndex = index;
-                        _viewModel.InvalidateValidation();
-                    }),
-                2 => CreateSingleChoiceQuestionStep(
-                    OnboardingSurveyViewModel.BeefFrequencyOptions,
-                    _viewModel.BeefFrequencyIndex,
-                    index =>
-                    {
-                        _viewModel.BeefFrequencyIndex = index;
-                        _viewModel.InvalidateValidation();
-                    }),
-                3 => CreateSingleChoiceQuestionStep(
-                    OnboardingSurveyViewModel.FoodWasteFrequencyOptions,
-                    _viewModel.FoodWasteFrequencyIndex,
-                    index =>
-                    {
-                        _viewModel.FoodWasteFrequencyIndex = index;
-                        _viewModel.InvalidateValidation();
-                    }),
-                4 => CreateSingleChoiceQuestionStep(
-                    OnboardingSurveyViewModel.UltraProcessedFrequencyOptions,
-                    _viewModel.UltraProcessedFrequencyIndex,
-                    index =>
-                    {
-                        _viewModel.UltraProcessedFrequencyIndex = index;
-                        _viewModel.InvalidateValidation();
-                    }),
-                5 => CreateSingleChoiceQuestionStep(
-                    OnboardingSurveyViewModel.ReusableContainersFrequencyOptions,
-                    _viewModel.ReusableContainersFrequencyIndex,
-                    index =>
-                    {
-                        _viewModel.ReusableContainersFrequencyIndex = index;
-                        _viewModel.InvalidateValidation();
-                    }),
+                1 => BuildCardStep(_meatContainer = CreateQuestionStepContainer()),
+                2 => BuildCardStep(_beefContainer = CreateQuestionStepContainer()),
+                3 => BuildCardStep(_foodWasteContainer = CreateQuestionStepContainer()),
+                4 => BuildCardStep(_ultraProcessedContainer = CreateQuestionStepContainer()),
+                5 => BuildCardStep(_reusableContainer = CreateQuestionStepContainer()),
                 _ => new VisualElement()
             };
+        }
+
+        private ExVisualElement CreateQuestionStepContainer()
+        {
+            var container = new ExVisualElement();
+            container.AddToClassList("box-background");
+            container.AddToClassList("fm-shadow-wrapper");
+            container.style.flexDirection = FlexDirection.Column;
+            container.style.width = new StyleLength(Length.Percent(100));
+            container.style.paddingTop = 16;
+            container.style.paddingBottom = 16;
+            container.style.paddingLeft = 16;
+            container.style.paddingRight = 16;
+            return container;
+        }
+
+        private VisualElement BuildCardStep(VisualElement element)
+        {
+            var root = new ExVisualElement();
+            root.style.paddingTop = 16;
+            root.style.paddingBottom = 16;
+            root.style.paddingLeft = 16;
+            root.style.paddingRight = 16;
+            root.style.width = new StyleLength(Length.Percent(100));
+
+            if (element != null)
+            {
+                root.Add(element);
+            }
+            return root;
+        }
+
+        private void PopulateAllQuestionOptions()
+        {
+            if (_viewModel == null) return;
+
+            PopulateSingleChoiceOptions(_meatContainer, _viewModel.MeatMealsOptions, _viewModel.MeatMealsIndex, idx =>
+            {
+                _viewModel.MeatMealsIndex = idx;
+                _viewModel.InvalidateValidation();
+            });
+
+            PopulateSingleChoiceOptions(_beefContainer, _viewModel.BeefFrequencyOptions, _viewModel.BeefFrequencyIndex, idx =>
+            {
+                _viewModel.BeefFrequencyIndex = idx;
+                _viewModel.InvalidateValidation();
+            });
+
+            PopulateSingleChoiceOptions(_foodWasteContainer, _viewModel.FoodWasteFrequencyOptions, _viewModel.FoodWasteFrequencyIndex, idx =>
+            {
+                _viewModel.FoodWasteFrequencyIndex = idx;
+                _viewModel.InvalidateValidation();
+            });
+
+            PopulateSingleChoiceOptions(_ultraProcessedContainer, _viewModel.UltraProcessedFrequencyOptions, _viewModel.UltraProcessedFrequencyIndex, idx =>
+            {
+                _viewModel.UltraProcessedFrequencyIndex = idx;
+                _viewModel.InvalidateValidation();
+            });
+
+            PopulateSingleChoiceOptions(_reusableContainer, _viewModel.ReusableContainersFrequencyOptions, _viewModel.ReusableContainersFrequencyIndex, idx =>
+            {
+                _viewModel.ReusableContainersFrequencyIndex = idx;
+                _viewModel.InvalidateValidation();
+            });
+        }
+
+        private void PopulateSingleChoiceOptions(ExVisualElement container, string[] options, int currentSelectedIndex, Action<int> onOptionSelected)
+        {
+            if (container == null) return;
+            container.Clear();
+
+            options ??= Array.Empty<string>();
+            var checkboxes = new FormFieldItemCheckbox[options.Length];
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                int index = i;
+                var checkboxItem = new FormFieldItemCheckbox
+                {
+                    Text = options[i],
+                    CheckboxValue = (currentSelectedIndex == index) ? CheckboxState.Checked : CheckboxState.Unchecked
+                };
+
+                var cb = checkboxItem.Q<Checkbox>();
+                if (cb != null)
+                {
+                    cb.RegisterValueChangedCallback(evt =>
+                    {
+                        if (evt.newValue == CheckboxState.Checked)
+                        {
+                            for (int j = 0; j < checkboxes.Length; j++)
+                            {
+                                if (j != index && checkboxes[j] != null)
+                                {
+                                    checkboxes[j].CheckboxValue = CheckboxState.Unchecked;
+                                }
+                            }
+                            onOptionSelected?.Invoke(index);
+                        }
+                        else
+                        {
+                            bool anyChecked = false;
+                            for (int j = 0; j < checkboxes.Length; j++)
+                            {
+                                if (checkboxes[j] != null && checkboxes[j].CheckboxValue == CheckboxState.Checked)
+                                {
+                                    anyChecked = true;
+                                    break;
+                                }
+                            }
+                            if (!anyChecked)
+                            {
+                                onOptionSelected?.Invoke(-1);
+                            }
+                        }
+                    });
+                }
+
+                checkboxes[i] = checkboxItem;
+                container.Add(checkboxItem);
+            }
         }
 
         protected override void SetupCompanionSlot(VisualElement slot)
@@ -154,74 +275,7 @@ namespace eu.foodmission.platform
         private VisualElement BuildWelcomeStep()
         {
             var root = new ExVisualElement();
-
-
             return root;
-        }
-
-        private VisualElement CreateSingleChoiceQuestionStep(LocalizedOption[] options, int currentSelectedIndex, Action<int> onOptionSelected)
-        {
-            var container = new ExVisualElement();
-            container.AddToClassList("box-background");
-            container.AddToClassList("fm-shadow-wrapper");
-            container.style.flexDirection = FlexDirection.Column;
-            container.style.width = new StyleLength(Length.Percent(100));
-            container.style.paddingTop = 16;
-            container.style.paddingBottom = 16;
-            container.style.paddingLeft = 16;
-            container.style.paddingRight = 16;
-
-            var checkboxes = new FormFieldItemCheckbox[options.Length];
-
-            for (int i = 0; i < options.Length; i++)
-            {
-                int index = i;
-                var checkboxItem = new FormFieldItemCheckbox
-                {
-                    Text = options[i].GetText(),
-                    CheckboxValue = (currentSelectedIndex == index) ? CheckboxState.Checked : CheckboxState.Unchecked
-                };
-
-                var cb = checkboxItem.Q<Checkbox>();
-                if (cb != null)
-                {
-                    cb.RegisterValueChangedCallback(evt =>
-                    {
-                        if (evt.newValue == CheckboxState.Checked)
-                        {
-                            for (int j = 0; j < checkboxes.Length; j++)
-                            {
-                                if (j != index && checkboxes[j] != null)
-                                {
-                                    checkboxes[j].CheckboxValue = CheckboxState.Unchecked;
-                                }
-                            }
-                            onOptionSelected?.Invoke(index);
-                        }
-                        else
-                        {
-                            bool anyChecked = false;
-                            for (int j = 0; j < checkboxes.Length; j++)
-                            {
-                                if (checkboxes[j] != null && checkboxes[j].CheckboxValue == CheckboxState.Checked)
-                                {
-                                    anyChecked = true;
-                                    break;
-                                }
-                            }
-                            if (!anyChecked)
-                            {
-                                onOptionSelected?.Invoke(-1);
-                            }
-                        }
-                    });
-                }
-
-                checkboxes[i] = checkboxItem;
-                container.Add(checkboxItem);
-            }
-
-            return container;
         }
     }
 }

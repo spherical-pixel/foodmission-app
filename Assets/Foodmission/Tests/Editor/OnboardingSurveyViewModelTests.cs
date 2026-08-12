@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 
 namespace eu.foodmission.platform.Tests
@@ -7,13 +8,31 @@ namespace eu.foodmission.platform.Tests
     public class OnboardingSurveyViewModelTests
     {
         private TestStoreService _storeService;
+        private Mock<ICatalogService> _catalogServiceMock;
         private OnboardingSurveyViewModel _vm;
 
         [SetUp]
         public void SetUp()
         {
             _storeService = new TestStoreService();
-            _vm = new OnboardingSurveyViewModel(_storeService);
+            _catalogServiceMock = new Mock<ICatalogService>();
+
+            _catalogServiceMock.Setup(c => c.GetWeeklyMeatRangesAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO_TO_FOUR", label = "0-4" }, new CatalogItem { code = "FIVE_TO_NINE", label = "5-9" }, new CatalogItem { code = "TEN_TO_FOURTEEN", label = "10-14" }, new CatalogItem { code = "FIFTEEN_PLUS", label = "15+" } }, null));
+
+            _catalogServiceMock.Setup(c => c.GetWeeklyBeefFrequenciesAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[] { new CatalogItem { code = "NEVER", label = "Never" }, new CatalogItem { code = "LESS_THAN_ONCE_PER_WEEK", label = "<1" }, new CatalogItem { code = "ONE_TO_TWO_TIMES_PER_WEEK", label = "1-2" }, new CatalogItem { code = "THREE_PLUS_TIMES_PER_WEEK", label = "3+" } }, null));
+
+            _catalogServiceMock.Setup(c => c.GetWeeklyFoodWasteRangesAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO", label = "0" }, new CatalogItem { code = "ONE_TO_TWO", label = "1-2" }, new CatalogItem { code = "THREE_TO_FOUR", label = "3-4" }, new CatalogItem { code = "FIVE_PLUS", label = "5+" } }, null));
+
+            _catalogServiceMock.Setup(c => c.GetWeeklyUpfRangesAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO_TO_THREE", label = "0-3" }, new CatalogItem { code = "FOUR_TO_NINE", label = "4-9" }, new CatalogItem { code = "TEN_TO_FOURTEEN", label = "10-14" }, new CatalogItem { code = "FIFTEEN_PLUS", label = "15+" } }, null));
+
+            _catalogServiceMock.Setup(c => c.GetWeeklyReusableRangesAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO_TO_TWO", label = "0-2" }, new CatalogItem { code = "THREE_TO_SIX", label = "3-6" }, new CatalogItem { code = "SEVEN_TO_NINE", label = "7-9" }, new CatalogItem { code = "TEN_PLUS", label = "10+" } }, null));
+
+            _vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object);
             _vm.Initialize();
         }
 
@@ -111,11 +130,13 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboardingavatar, requestedAction);
             var appState = _storeService.GetAppState();
             Assert.IsNotNull(appState.userOnboardingSurvey);
-            Assert.AreEqual("MEALS_0_4", appState.userOnboardingSurvey.meatMeals);
-            Assert.AreEqual("LESS_THAN_ONCE", appState.userOnboardingSurvey.beefFrequency);
-            Assert.AreEqual("NEVER", appState.userOnboardingSurvey.foodWasteFrequency);
-            Assert.AreEqual("TIMES_10_14", appState.userOnboardingSurvey.ultraProcessedFrequency);
-            Assert.AreEqual("ACTIONS_10_PLUS", appState.userOnboardingSurvey.reusableContainersFrequency);
+            Assert.AreEqual("ZERO_TO_FOUR", appState.userOnboardingSurvey.weeklyMeatConsumption);
+            Assert.AreEqual("LESS_THAN_ONCE_PER_WEEK", appState.userOnboardingSurvey.weeklyBeefConsumption);
+            Assert.AreEqual("ZERO", appState.userOnboardingSurvey.weeklyFoodWaste);
+            Assert.AreEqual("TEN_TO_FOURTEEN", appState.userOnboardingSurvey.weeklyUpfConsumption);
+            Assert.AreEqual("TEN_PLUS", appState.userOnboardingSurvey.weeklyReusableOrRefill);
+            Assert.AreEqual("ZERO_TO_FOUR", appState.userOnboardingSurvey.meatMeals);
+            Assert.AreEqual("LESS_THAN_ONCE_PER_WEEK", appState.userOnboardingSurvey.beefFrequency);
         }
 
         [Test]
@@ -126,7 +147,7 @@ namespace eu.foodmission.platform.Tests
             mockAuthService.Setup(a => a.UpdateProfileAsync(Moq.It.IsAny<ProfileUpdateRequest>()))
                 .Returns(Task.FromResult((false, expectedError)));
 
-            var vm = new OnboardingSurveyViewModel(_storeService, mockAuthService.Object);
+            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, mockAuthService.Object);
             vm.Initialize();
 
             // Set selections for all steps
