@@ -70,5 +70,10 @@ namespace eu.foodmission.platform
             SelectedUserScope = scope;
             // TODO: Update progress and stats based on selected scope
         }
+
+        public void NavigateToOnboardingProfile()
+        {
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.register_to_onboarding);
+        }
     }
 }

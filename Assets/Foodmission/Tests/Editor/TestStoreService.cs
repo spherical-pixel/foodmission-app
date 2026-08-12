@@ -48,6 +48,7 @@ namespace eu.foodmission.platform.Tests
             reducerBuilder
                 .AddCase(AppActions.setOnboardingSurvey, AppReducers.SetOnboardingSurveyReducer)
                 .AddCase(AppActions.setExtendedProfile, AppReducers.SetExtendedProfileReducer)
+                .AddCase(AppActions.setSkippedExtendedProfile, AppReducers.SetSkippedExtendedProfileReducer)
                 .AddCase(AppActions.setUser, AppReducers.SetUserReducer)
                 .AddCase(AppActions.setAvatar, AppReducers.SetAvatarReducer)
                 .AddCase(AppActions.profileSynced, AppReducers.ProfileSyncedReducer);

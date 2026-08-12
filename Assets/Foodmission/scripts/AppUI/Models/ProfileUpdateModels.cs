@@ -125,6 +125,15 @@ namespace eu.foodmission.platform
 
         [JsonProperty("hasAvatar", NullValueHandling = NullValueHandling.Ignore)]
         public bool? hasAvatar;
+
+        [JsonProperty("onboardingProfileCompleted", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? onboardingProfileCompleted;
+
+        [JsonProperty("onboardingProfileSkippedAt", NullValueHandling = NullValueHandling.Ignore)]
+        public string onboardingProfileSkippedAt;
+
+        [JsonProperty("segment", NullValueHandling = NullValueHandling.Ignore)]
+        public string segment;
     }
 
     /// <summary>

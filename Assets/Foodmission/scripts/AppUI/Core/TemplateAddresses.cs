@@ -8,7 +8,6 @@ namespace eu.foodmission.platform
         public const string ForgotPassword = "Foodmission/AppUI/Templates/ForgotPasswordScreen.uxml";
         public const string Profile = "Foodmission/AppUI/Templates/ProfileScreen.uxml";
         public const string Settings = "Foodmission/AppUI/Templates/SettingsScreen.uxml";
-        public const string OnboardingProfile = "Foodmission/AppUI/Templates/OnboardingProfileScreen.uxml";
         public const string EditProfile = "Foodmission/AppUI/Templates/EditProfileScreen.uxml";
         public const string CompleteWelcome = "Foodmission/AppUI/Templates/CompleteWelcome.uxml";
         public const string ShoppingList = "Foodmission/AppUI/Templates/ShoppingListScreen.uxml";

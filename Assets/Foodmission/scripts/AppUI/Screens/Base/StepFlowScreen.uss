@@ -95,6 +95,10 @@
     transition-timing-function: ease-out, ease-out, ease-out;
 }
 
+.fm-step-flow__guide-card .appui-text {
+    color: var(--appui-foregrounds-50);
+}
+
 .fm-step-flow__guide-card--visible {
     opacity: 1;
     translate: 0 0;

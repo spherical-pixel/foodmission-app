@@ -73,6 +73,29 @@ namespace eu.foodmission.platform
             SetupSteppers();
 
             CheckWhatsNewAsync();
+            CheckPendingProfileReminder();
+        }
+
+        private void CheckPendingProfileReminder()
+        {
+            var storeService = App.current?.services?.GetService<IStoreService>();
+            if (storeService == null) return;
+
+            var state = storeService.GetAppState();
+            if (!state.hasCompletedExtendedProfile && state.hasSkippedExtendedProfile)
+            {
+                NutriMessageDialog.Show(
+                    message: "Tienes pendiente completar tu perfil extendido. ¿Quieres completarlo ahora?",
+                    actions: new[]
+                    {
+                        new FMDialogAction("Completar Perfil", () =>
+                        {
+                            _viewModel?.NavigateToOnboardingProfile();
+                        }, isPrimary: true),
+                        new FMDialogAction("Más Tarde", () => { }, isPrimary: false)
+                    }
+                );
+            }
         }
 
         private void RegisterEvents()

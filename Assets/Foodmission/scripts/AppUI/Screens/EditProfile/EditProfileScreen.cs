@@ -458,8 +458,8 @@ namespace eu.foodmission.platform
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(OnboardingProfileViewModel.IsSubmitting) ||
-                e.PropertyName == nameof(OnboardingProfileViewModel.IsFormValid))
+            if (e.PropertyName == nameof(EditProfileViewModel.IsSubmitting) ||
+                e.PropertyName == nameof(EditProfileViewModel.IsFormValid))
             {
                 UpdateSubmitButtonState();
             }

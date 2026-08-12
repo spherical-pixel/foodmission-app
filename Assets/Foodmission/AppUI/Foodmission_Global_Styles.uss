@@ -846,7 +846,7 @@
 }
 
 .box-background .appui-text {
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
 }
 
 .margin-300 {

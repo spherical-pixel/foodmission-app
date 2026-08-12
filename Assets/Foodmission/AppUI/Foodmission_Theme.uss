@@ -148,10 +148,10 @@
     --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-100);
 
     --appui-alias-control-background-color-disabled: var(--appui-primary-300);
-   --appui-alias-control-background-color-focus: var(--appui-primary-300);
-   --appui-alias-control-background-color-active: var(--appui-primary-300);
-   --appui-alias-control-background-color-hover: var(--appui-primary-300);
-   --appui-alias-control-background-color-default: var(--appui-primary-300);
+    --appui-alias-control-background-color-focus: var(--appui-primary-300);
+    --appui-alias-control-background-color-active: var(--appui-primary-300);
+    --appui-alias-control-background-color-hover: var(--appui-primary-300);
+    --appui-alias-control-background-color-default: var(--appui-primary-300);
 
     /* Surface colors for panels, menus, and cards */
     --fm-surface-bg: rgba(255, 255, 255, 0.90);

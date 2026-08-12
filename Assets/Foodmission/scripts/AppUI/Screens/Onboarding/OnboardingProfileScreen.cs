@@ -6,173 +6,302 @@ using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Core;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
-using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
     [Preserve]
-    class OnboardingProfileScreen : NavigationScreenBase<OnboardingProfileViewModel>
+    class OnboardingProfileScreen : StepFlowScreenBase<OnboardingProfileViewModel>
     {
-        private Unity.AppUI.UI.Button _submitButton;
-        private Unity.AppUI.UI.Button _skipButton;
+        protected override int StepCount => 6;
+
+        protected override string NextButtonLabel => "@UI:TXT_NEXT";
+        protected override string PreviousButtonLabel => "@UI:TXT_BACK";
+        protected override string CompleteButtonLabel => "@UI:SAVE";
+
+        private ExVisualElement _messageCard;
+        private Unity.AppUI.UI.Text _messageText;
+        private FMNutriView _nutriView;
+        //private FMButton _skipHeaderButton;
+
+        // Form dropdowns per step
+        private FormFieldItemDropDownField _motivationDropdown;
         private FormFieldItemDropDownField _genderDropdown;
-        private FormFieldItemDropDownField _activityLevelDropdown;
-        private FormFieldItemDropDownField _dietaryPreferencesDropdown;
         private FormFieldItemDropDownField _educationLevelDropdown;
         private FormFieldItemDropDownField _annualIncomeDropdown;
+        private FormFieldItemDropDownField _dietaryPreferencesDropdown;
+        private FormFieldItemDropDownField _activityLevelDropdown;
         private FormFieldItemDropDownField _shoppingResponsibilityDropdown;
+        private FormFieldItemDropDownField _dailyTimeCommitmentDropdown;
+        private FormFieldItemDropDownField _segmentDropdown;
 
-        private AccessibilityNode _submitButtonNode;
-        private AccessibilityNode _skipButtonNode;
+        private ExVisualElement _step1Container;
+        private ExVisualElement _step2Container;
+        private ExVisualElement _step3Container;
+        private ExVisualElement _step4Container;
+        private ExVisualElement _step5Container;
 
-        protected override bool IsFixedContent => false;
+        protected override bool IsFixedContent => true;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
         protected override bool ApplySafeAreaRight => false;
         protected override bool ApplySafeAreaTop => false;
 
-        public OnboardingProfileScreen()
+        public OnboardingProfileScreen() : base()
         {
-            InitializeComponent(App.current.services
-                .GetRequiredService<ITemplateService>()
-                .Get(TemplateAddresses.OnboardingProfile));
-            CacheUIElements();
-            RegisterManualEvents();
+            CreateFormFields();
         }
 
-        private void CacheUIElements()
+        private void CreateFormFields()
         {
-            _submitButton = contentContainer.Q<Unity.AppUI.UI.Button>("submit-button");
-            _skipButton = contentContainer.Q<Unity.AppUI.UI.Button>("skip-button");
-            _genderDropdown = contentContainer.Q<FormFieldItemDropDownField>("gender-dropdown");
-            _activityLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("activity-level-dropdown");
-            _educationLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("education-level-dropdown");
-            _dietaryPreferencesDropdown = contentContainer.Q<FormFieldItemDropDownField>("dietary-preferences-dropdown");
-            _annualIncomeDropdown = contentContainer.Q<FormFieldItemDropDownField>("annual-income-dropdown");
-            _shoppingResponsibilityDropdown = contentContainer.Q<FormFieldItemDropDownField>("shopping-responsibility-dropdown");
-            
+            _motivationDropdown = new FormFieldItemDropDownField
+            {
+                name = "motivation-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_MOTIVATION",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_MOTIVATION"
+            };
+
+            _genderDropdown = new FormFieldItemDropDownField
+            {
+                name = "gender-dropdown",
+                HeadingText = "@UI:SELECT_GENDER",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_GENDER"
+            };
+
+            _educationLevelDropdown = new FormFieldItemDropDownField
+            {
+                name = "education-level-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_EDUCATION",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_EDUCATION"
+            };
+
+            _annualIncomeDropdown = new FormFieldItemDropDownField
+            {
+                name = "annual-income-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_INCOME",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_INCOME"
+            };
+
+            _dietaryPreferencesDropdown = new FormFieldItemDropDownField
+            {
+                name = "dietary-preferences-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_DIET",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_DIET",
+                DropdownSelectionType = PickerSelectionType.Multiple,
+                DropdownCloseOnSelect = false
+            };
+
+            _activityLevelDropdown = new FormFieldItemDropDownField
+            {
+                name = "activity-level-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_ACTIVITY",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_ACTIVITY"
+            };
+
+            _shoppingResponsibilityDropdown = new FormFieldItemDropDownField
+            {
+                name = "shopping-responsibility-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_SHOPPING",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_SHOPPING"
+            };
+
+            _dailyTimeCommitmentDropdown = new FormFieldItemDropDownField
+            {
+                name = "daily-time-commitment-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_DAILY_TIME",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_DAILY_TIME"
+            };
+
+            _segmentDropdown = new FormFieldItemDropDownField
+            {
+                name = "segment-dropdown",
+                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_SEGMENT",
+                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_SEGMENT"
+            };
         }
 
-        private void RegisterManualEvents()
+        protected override VisualElement CreateStepContent(int stepIndex)
         {
-            if (_submitButton != null)
+            return stepIndex switch
             {
-                _submitButton.clicked += OnSubmitClicked;
-            }
-
-            if (_skipButton != null)
-            {
-                _skipButton.clicked += OnSkipClicked;
-            }
-
-            if (_genderDropdown != null)
-            {
-                _genderDropdown.Dropdown.RegisterValueChangedCallback(OnGenderChanged);
-            }
-
-            if (_activityLevelDropdown != null)
-            {
-                _activityLevelDropdown.Dropdown.RegisterValueChangedCallback(OnActivityLevelChanged);
-            }
-
-            if( _dietaryPreferencesDropdown != null)
-            {
-                _dietaryPreferencesDropdown.Dropdown.RegisterValueChangedCallback(OnDietaryPreferencesChanged);
-            }
-
-            if (_educationLevelDropdown != null)
-            {
-                _educationLevelDropdown.Dropdown.RegisterValueChangedCallback(OnEducationLevelChanged);
-            }
-
-            if (_annualIncomeDropdown != null)
-            {
-                _annualIncomeDropdown.Dropdown.RegisterValueChangedCallback(OnAnnualIncomeChanged);
-            }
-
-            if (_shoppingResponsibilityDropdown != null)
-            {
-                _shoppingResponsibilityDropdown.Dropdown.RegisterValueChangedCallback(OnShoppingResponsibilityChanged);
-            }
+                0 => BuildStep0Welcome(),
+                1 => BuildStepCard(_step1Container = CreateStepContainer(_motivationDropdown)),
+                2 => BuildStepCard(_step2Container = CreateStepContainer(_genderDropdown, _educationLevelDropdown, _annualIncomeDropdown)),
+                3 => BuildStepCard(_step3Container = CreateStepContainer(_dietaryPreferencesDropdown)),
+                4 => BuildStepCard(_step4Container = CreateStepContainer(_activityLevelDropdown, _shoppingResponsibilityDropdown, _dailyTimeCommitmentDropdown)),
+                5 => BuildStepCard(_step5Container = CreateStepContainer(_segmentDropdown)),
+                _ => new VisualElement()
+            };
         }
 
-        private void UnregisterManualEvents()
+        private ExVisualElement CreateStepContainer(params VisualElement[] children)
         {
-            if (_submitButton != null)
+            var container = new ExVisualElement();
+            container.AddToClassList("box-background");
+            container.AddToClassList("fm-shadow-wrapper");
+            container.style.flexDirection = FlexDirection.Column;
+            container.style.width = new StyleLength(Length.Percent(100));
+            container.style.paddingTop = 16;
+            container.style.paddingBottom = 16;
+            container.style.paddingLeft = 16;
+            container.style.paddingRight = 16;
+
+            if (children != null)
             {
-                _submitButton.clicked -= OnSubmitClicked;
+                foreach (var child in children)
+                {
+                    if (child != null) container.Add(child);
+                }
+            }
+            return container;
+        }
+
+        private VisualElement BuildStepCard(VisualElement element)
+        {
+            var root = new ExVisualElement();
+            root.style.paddingTop = 16;
+            root.style.paddingBottom = 16;
+            root.style.paddingLeft = 16;
+            root.style.paddingRight = 16;
+            root.style.width = new StyleLength(Length.Percent(100));
+
+            if (element != null)
+            {
+                root.Add(element);
+            }
+            return root;
+        }
+
+        private VisualElement BuildStep0Welcome()
+        {
+            var root = new ExVisualElement();
+            root.style.paddingTop = 24;
+            root.style.paddingBottom = 24;
+            root.style.paddingLeft = 16;
+            root.style.paddingRight = 16;
+            root.style.width = new StyleLength(Length.Percent(100));
+            root.style.alignItems = Align.Center;
+
+            var welcomeBox = new ExVisualElement();
+            welcomeBox.AddToClassList("box-background");
+            welcomeBox.AddToClassList("fm-shadow-wrapper");
+            welcomeBox.style.width = new StyleLength(Length.Percent(100));
+            welcomeBox.style.paddingTop = 24;
+            welcomeBox.style.paddingBottom = 24;
+            welcomeBox.style.paddingLeft = 20;
+            welcomeBox.style.paddingRight = 20;
+            welcomeBox.style.alignItems = Align.Center;
+
+
+            var desc = new Unity.AppUI.UI.Text
+            {
+                text = "@UI:ONBOARDING_PROFILE.WELCOME_DESC"
+            };
+            desc.style.marginTop = 12;
+            desc.style.whiteSpace = WhiteSpace.Normal;
+            desc.primary = false;
+            desc.AddToClassList("centered-text");
+            welcomeBox.Add(desc);
+
+            root.Add(welcomeBox);
+            return root;
+        }
+
+
+        protected override void SetupCompanionSlot(VisualElement slot)
+        {
+            _nutriView = new FMNutriView();
+            _nutriView.AddToClassList("fm-step-flow__guide-nutri");
+            slot.Add(_nutriView);
+
+            _messageCard = new ExVisualElement();
+            _messageCard.AddToClassList("box-background");
+            _messageCard.AddToClassList("fm-shadow-wrapper");
+            _messageCard.AddToClassList("fm-step-flow__guide-card");
+
+            _messageText = new Unity.AppUI.UI.Text { text = "" };
+            _messageText.style.whiteSpace = WhiteSpace.Normal;
+            _messageText.primary = false;
+            _messageCard.Add(_messageText);
+
+            _messageCard.style.display = DisplayStyle.None;
+            slot.Add(_messageCard);
+        }
+
+        public void UpdateMascotMessage(string newMessage)
+        {
+            if (_messageCard == null || _messageText == null) return;
+
+            newMessage ??= string.Empty;
+
+            if (string.IsNullOrWhiteSpace(newMessage))
+            {
+                _messageCard.RemoveFromClassList("fm-step-flow__guide-card--visible");
+                _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
+                _messageCard.style.display = DisplayStyle.None;
+                _messageText.text = string.Empty;
+                return;
             }
 
-            if (_skipButton != null)
+            if (_messageText.text == newMessage && _messageCard.style.display == DisplayStyle.Flex && _messageCard.ClassListContains("fm-step-flow__guide-card--visible"))
             {
-                _skipButton.clicked -= OnSkipClicked;
+                return;
             }
 
-            if (_genderDropdown != null)
-            {
-                _genderDropdown.Dropdown.UnregisterValueChangedCallback(OnGenderChanged);
-            }
+            _messageCard.style.display = DisplayStyle.Flex;
 
-            if (_activityLevelDropdown != null)
-            {
-                _activityLevelDropdown.Dropdown.UnregisterValueChangedCallback(OnActivityLevelChanged);
-            }
+            _messageCard.RemoveFromClassList("fm-step-flow__guide-card--visible");
+            _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
 
-            if (_dietaryPreferencesDropdown != null)
+            _messageCard.schedule.Execute(() =>
             {
-                _dietaryPreferencesDropdown.Dropdown.UnregisterValueChangedCallback(OnDietaryPreferencesChanged);
-            }
+                _messageText.text = newMessage;
+                _messageCard.RemoveFromClassList("fm-step-flow__guide-card--exit");
+                _messageCard.AddToClassList("fm-step-flow__guide-card--visible");
+            }).StartingIn(150);
+        }
 
-            if (_educationLevelDropdown != null)
-            {
-                _educationLevelDropdown.Dropdown.UnregisterValueChangedCallback(OnEducationLevelChanged);
-            }
+        protected override void OnStepChanged(int stepIndex)
+        {
+            base.OnStepChanged(stepIndex);
 
-            if (_annualIncomeDropdown != null)
-            {
-                _annualIncomeDropdown.Dropdown.UnregisterValueChangedCallback(OnAnnualIncomeChanged);
-            }
+            string message = "@UI:ONBOARDING_PROFILE.NUTRI_STEP_" + stepIndex;
+            UpdateMascotMessage(message);
 
-            if (_shoppingResponsibilityDropdown != null)
-            {
-                _shoppingResponsibilityDropdown.Dropdown.UnregisterValueChangedCallback(OnShoppingResponsibilityChanged);
-            }
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
 
-            if( args != null && args.Length > 0)
-            {
-                // Handle any arguments passed during navigation if needed
-                Debug.Log($"OnboardingProfileScreen received {args.Length} arguments.");
-            }
-
             if (_viewModel != null)
             {
                 await _viewModel.LoadCatalogDataAsync();
                 _viewModel.PrePopulateFromState();
-                PopulateDropdowns();
-                PrePopulateDropdownSelections();
-                UpdateSubmitButtonState();
+                PopulateAllDropdowns();
+                PrePopulateSelections();
+                RegisterDropdownEvents();
             }
         }
 
-        private void PopulateDropdowns()
+        private void PopulateAllDropdowns()
         {
             if (_viewModel == null) return;
 
+            ConfigureDropdown(_motivationDropdown, _viewModel.MotivationOptions);
             ConfigureDropdown(_genderDropdown, _viewModel.GenderOptions);
-            ConfigureDropdown(_activityLevelDropdown, _viewModel.ActivityLevelOptions);
-            ConfigureDropdown(_dietaryPreferencesDropdown, _viewModel.DietaryPreferenceOptions);
             ConfigureDropdown(_educationLevelDropdown, _viewModel.EducationLevelOptions);
             ConfigureDropdown(_annualIncomeDropdown, _viewModel.AnnualIncomeOptions);
+            ConfigureDropdown(_dietaryPreferencesDropdown, _viewModel.DietaryPreferenceOptions);
+            ConfigureDropdown(_activityLevelDropdown, _viewModel.ActivityLevelOptions);
             ConfigureDropdown(_shoppingResponsibilityDropdown, _viewModel.ShoppingResponsibilityOptions);
+            ConfigureDropdown(_dailyTimeCommitmentDropdown, _viewModel.DailyTimeCommitmentOptions);
+            ConfigureDropdown(_segmentDropdown, _viewModel.SegmentOptions);
         }
 
         private void ConfigureDropdown(FormFieldItemDropDownField dropdown, IList<string> options)
@@ -187,14 +316,18 @@ namespace eu.foodmission.platform
             };
         }
 
-        
-        private void PrePopulateDropdownSelections()
+        private void PrePopulateSelections()
         {
+            if (_viewModel == null) return;
+
+            SetDropdownSelection(_motivationDropdown, _viewModel.SelectedMotivationIndex);
             SetDropdownSelection(_genderDropdown, _viewModel.SelectedGenderIndex);
-            SetDropdownSelection(_activityLevelDropdown, _viewModel.SelectedActivityLevelIndex);
             SetDropdownSelection(_educationLevelDropdown, _viewModel.SelectedEducationLevelIndex);
             SetDropdownSelection(_annualIncomeDropdown, _viewModel.SelectedAnnualIncomeIndex);
+            SetDropdownSelection(_activityLevelDropdown, _viewModel.SelectedActivityLevelIndex);
             SetDropdownSelection(_shoppingResponsibilityDropdown, _viewModel.SelectedShoppingResponsibilityIndex);
+            SetDropdownSelection(_dailyTimeCommitmentDropdown, _viewModel.SelectedDailyTimeCommitmentIndex);
+            SetDropdownSelection(_segmentDropdown, _viewModel.SelectedSegmentIndex);
             SetDropdownSelectionMulti(_dietaryPreferencesDropdown, _viewModel.SelectedDietaryPreferenceIndices);
         }
 
@@ -210,82 +343,60 @@ namespace eu.foodmission.platform
             dropdown.Dropdown.SetValueWithoutNotify(indices);
         }
 
-        private void UpdateSubmitButtonState()
+        private void RegisterDropdownEvents()
         {
-            if (_submitButton != null && _viewModel != null)
+            _motivationDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                _submitButton.SetEnabled(/*_viewModel.IsFormValid && */!_viewModel.IsSubmitting);
-            }
-        }
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedMotivationIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
 
-        private void OnGenderChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            if (_viewModel == null) return;
-            var value = evt.newValue?.ToArray();
-            if (value != null && value.Length > 0)
+            _genderDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                _viewModel.SelectedGenderIndex = value[0];
-            }
-            UpdateSubmitButtonState();
-        }
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedGenderIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
 
-        private void OnActivityLevelChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            if (_viewModel == null) return;
-            var value = evt.newValue?.ToArray();
-            if (value != null && value.Length > 0)
+            _educationLevelDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                _viewModel.SelectedActivityLevelIndex = value[0];
-            }
-            UpdateSubmitButtonState();
-        }
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedEducationLevelIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
 
-        private void OnDietaryPreferencesChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            // Multi-select dropdown: always sync (including empty selection) so deselection clears the array.
-            if( _viewModel == null) return;
-            _viewModel.SelectedDietaryPreferenceIndices = evt.newValue?.ToArray() ?? new int[0];
-        }
-
-        private void OnEducationLevelChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            if (_viewModel == null) return;
-            var value = evt.newValue?.ToArray();
-            if (value != null && value.Length > 0)
+            _annualIncomeDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                _viewModel.SelectedEducationLevelIndex = value[0];
-            }
-            UpdateSubmitButtonState();
-        }
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedAnnualIncomeIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
 
-        private void OnAnnualIncomeChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            if (_viewModel == null) return;
-            var value = evt.newValue?.ToArray();
-            if (value != null && value.Length > 0)
+            _dietaryPreferencesDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                _viewModel.SelectedAnnualIncomeIndex = value[0];
-            }
-            UpdateSubmitButtonState();
-        }
+                _viewModel.SelectedDietaryPreferenceIndices = evt.newValue?.ToArray() ?? new int[0];
+            });
 
-        private void OnShoppingResponsibilityChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            if (_viewModel == null) return;
-            var value = evt.newValue?.ToArray();
-            if (value != null && value.Length > 0)
+            _activityLevelDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                _viewModel.SelectedShoppingResponsibilityIndex = value[0];
-            }
-            UpdateSubmitButtonState();
-        }
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedActivityLevelIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
 
-        private async void OnSubmitClicked()
-        {
-            if (_viewModel != null)
+            _shoppingResponsibilityDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                await _viewModel.SubmitAsync();
-            }
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedShoppingResponsibilityIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
+
+            _dailyTimeCommitmentDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
+            {
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedDailyTimeCommitmentIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
+
+            _segmentDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
+            {
+                var val = evt.newValue?.ToArray();
+                _viewModel.SelectedSegmentIndex = val != null && val.Length > 0 ? val[0] : -1;
+            });
         }
 
         private void OnSkipClicked()
@@ -301,9 +412,7 @@ namespace eu.foodmission.platform
             base.OnViewModelBound();
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged += OnPropertyChanged;
                 _viewModel.ShowErrorRequest += OnShowErrorRequested;
-                _viewModel.NavigationRequested += OnNavigationRequested;
             }
         }
 
@@ -311,67 +420,9 @@ namespace eu.foodmission.platform
         {
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged -= OnPropertyChanged;
                 _viewModel.ShowErrorRequest -= OnShowErrorRequested;
-                _viewModel.NavigationRequested -= OnNavigationRequested;
             }
-
-            UnregisterManualEvents();
             base.OnViewModelUnbinding();
-        }
-
-        // --------------------------------------------------------------------
-        // Accessibility
-        // --------------------------------------------------------------------
-
-        protected override void SetupAccessibilityNodes()
-        {
-            base.SetupAccessibilityNodes();
-            if (_accessibilityHierarchy == null) return;
-
-            var h = _accessibilityHierarchy;
-
-            _submitButtonNode = CreateButtonNode(h, _submitButton, "Submit profile");
-            _skipButtonNode = CreateButtonNode(h, _skipButton, "Skip profile setup");
-        }
-
-        protected override void TeardownAccessibilityNodes()
-        {
-            _submitButtonNode = null;
-            _skipButtonNode = null;
-            base.TeardownAccessibilityNodes();
-        }
-
-        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
-        {
-            if (button == null) return null;
-            var node = hierarchy.AddNode(label);
-            node.role = AccessibilityRole.Button;
-            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
-            node.frameGetter = () =>
-            {
-                if (button.panel == null) return Rect.zero;
-                var r = button.worldBound;
-                var s = button.panel.scaledPixelsPerPoint;
-                return new Rect(r.position * s, r.size * s);
-            };
-            node.invoked += () =>
-            {
-                using var evt = NavigationSubmitEvent.GetPooled();
-                evt.target = button;
-                button.SendEvent(evt);
-                return true;
-            };
-            return node;
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(OnboardingProfileViewModel.IsSubmitting) ||
-                e.PropertyName == nameof(OnboardingProfileViewModel.IsFormValid))
-            {
-                UpdateSubmitButtonState();
-            }
         }
 
         private void OnShowErrorRequested(string message)
@@ -383,7 +434,5 @@ namespace eu.foodmission.platform
                 .SetPosition(PopupNotificationPlacement.Bottom)
                 .Show();
         }
-
-        
     }
 }

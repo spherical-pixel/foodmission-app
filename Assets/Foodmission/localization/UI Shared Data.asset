@@ -2107,6 +2107,106 @@ MonoBehaviour:
     m_Key: MSG_NO_PILOT_COUNTRY
     m_Metadata:
       m_Items: []
+  - m_Id: 34022749457342464
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34022967284326400
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023051975712768
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023332885028864
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34027969428054016
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34032508952633344
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037819398676480
+    m_Key: ONBOARDING_PROFILE.LABEL_MOTIVATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037939833921536
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_MOTIVATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038583797997568
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_GENDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038675313516544
+    m_Key: ONBOARDING_PROFILE.LABEL_EDUCATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038791491543040
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_EDUCATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038925629579264
+    m_Key: ONBOARDING_PROFILE.LABEL_INCOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039030617202688
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_INCOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039177296207872
+    m_Key: ONBOARDING_PROFILE.LABEL_DIET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039865006874624
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_DIET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039990223626240
+    m_Key: ONBOARDING_PROFILE.LABEL_ACTIVITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040218603479040
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_ACTIVITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040348811452416
+    m_Key: ONBOARDING_PROFILE.LABEL_SHOPPING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040572049088512
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_SHOPPING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040672355868672
+    m_Key: ONBOARDING_PROFILE.LABEL_DAILY_TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040837200404480
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_DAILY_TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040936672518144
+    m_Key: ONBOARDING_PROFILE.LABEL_SEGMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041135683854336
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_SEGMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041704037212160
+    m_Key: ONBOARDING_PROFILE.WELCOME_HEADER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041809595260928
+    m_Key: ONBOARDING_PROFILE.WELCOME_DESC
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -90,6 +90,7 @@ namespace eu.foodmission.platform
 
         // Extended profile
         public static readonly ActionCreator setExtendedProfile = "app/setExtendedProfile";
+        public static readonly ActionCreator setSkippedExtendedProfile = "app/setSkippedExtendedProfile";
         public static readonly ActionCreator<OnboardingSurveyData> setOnboardingSurvey = "app/setOnboardingSurvey";
         public static readonly ActionCreator<AvatarPayload> setAvatar = "app/setAvatar";
 
@@ -131,6 +132,11 @@ namespace eu.foodmission.platform
             public readonly bool autoAddToPantry;
             public readonly AvatarConfig avatarConfig;
             public readonly bool hasAvatar;
+            public readonly string motivation;
+            public readonly int dailyTimeCommitmentMinutes;
+            public readonly string segment;
+            public readonly bool onboardingProfileCompleted;
+            public readonly string onboardingProfileSkippedAt;
 
             public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
@@ -143,7 +149,12 @@ namespace eu.foodmission.platform
                 string lastShoppingListId = "",
                 bool autoAddToPantry = false,
                 AvatarConfig avatarConfig = null,
-                bool hasAvatar = false)
+                bool hasAvatar = false,
+                string motivation = "",
+                int dailyTimeCommitmentMinutes = 0,
+                string segment = "",
+                bool onboardingProfileCompleted = false,
+                string onboardingProfileSkippedAt = null)
             {
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
@@ -162,6 +173,11 @@ namespace eu.foodmission.platform
                 this.autoAddToPantry = autoAddToPantry;
                 this.avatarConfig = avatarConfig;
                 this.hasAvatar = hasAvatar;
+                this.motivation = motivation;
+                this.dailyTimeCommitmentMinutes = dailyTimeCommitmentMinutes;
+                this.segment = segment;
+                this.onboardingProfileCompleted = onboardingProfileCompleted;
+                this.onboardingProfileSkippedAt = onboardingProfileSkippedAt;
             }
         }
     }
@@ -377,6 +393,14 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.hasCompletedExtendedProfile = true;
+            newState.hasSkippedExtendedProfile = false;
+            return newState;
+        }
+
+        public static AppState SetSkippedExtendedProfileReducer(AppState state, IAction action)
+        {
+            var newState = state.Copy();
+            newState.hasSkippedExtendedProfile = true;
             return newState;
         }
 
@@ -399,6 +423,12 @@ namespace eu.foodmission.platform
             newState.userAutoAddToPantry = action.payload.autoAddToPantry;
             newState.userAvatarConfig = action.payload.avatarConfig?.Copy();
             newState.userHasAvatar = action.payload.hasAvatar;
+
+            newState.userMotivation = action.payload.motivation ?? "";
+            newState.userDailyTimeCommitmentMinutes = action.payload.dailyTimeCommitmentMinutes;
+            newState.userSegment = action.payload.segment ?? "";
+            newState.hasCompletedExtendedProfile = action.payload.onboardingProfileCompleted;
+            newState.hasSkippedExtendedProfile = !action.payload.onboardingProfileCompleted && !string.IsNullOrEmpty(action.payload.onboardingProfileSkippedAt);
 
             if (action.payload.onboardingSurvey != null)
             {

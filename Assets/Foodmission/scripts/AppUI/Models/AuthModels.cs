@@ -231,5 +231,8 @@ namespace eu.foodmission.platform
         public bool autoAddToPantry;
         public AvatarConfig avatarConfig;
         public bool hasAvatar;
+        public bool onboardingProfileCompleted;
+        public string onboardingProfileSkippedAt;
+        public string segment;
     }
 }

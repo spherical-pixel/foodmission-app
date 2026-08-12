@@ -470,7 +470,12 @@ namespace eu.foodmission.platform
                 lastShoppingListId: profile.preferences?.lastShoppingListId ?? "",
                 autoAddToPantry: profile.preferences?.autoAddToPantry ?? false,
                 avatarConfig: profile.preferences?.avatarConfig,
-                hasAvatar: profile.preferences?.hasAvatar ?? false
+                hasAvatar: profile.preferences?.hasAvatar ?? false,
+                motivation: profile.preferences?.motivation ?? "",
+                dailyTimeCommitmentMinutes: profile.preferences?.dailyTimeCommitmentMinutes ?? 0,
+                segment: profile.preferences?.segment ?? "",
+                onboardingProfileCompleted: profile.preferences?.onboardingProfileCompleted ?? false,
+                onboardingProfileSkippedAt: profile.preferences?.onboardingProfileSkippedAt
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
         }

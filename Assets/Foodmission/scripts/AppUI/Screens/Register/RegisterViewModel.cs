@@ -365,24 +365,26 @@ namespace eu.foodmission.platform
                     string lang = _storeService.GetAppState().lang ?? "en";
                     _ = Components.FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
 
-                    NutriMessageDialog.Show(
-                        message: "@UI:COMPLETE_WELCOME_MESSAGE",
-                        actions: new[]
-                        {
-                            new FMDialogAction("@UI:BTN_CREATE_AVATAR", () =>
-                            {
-                                RaiseNavigationRequested(Actions.go_to_avatar_editor, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
-                            }, isPrimary: true),
-                            new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
-                            {
-                                RaiseNavigationRequested(Actions.register_to_onboarding);
-                            }, isPrimary: true),
-                            new FMDialogAction("@UI:BTN_ENTER_APP", () =>
-                            {
-                                RaiseNavigationRequested(Actions.loading_to_home);
-                            }, isPrimary: true)
-                        }
-                    );
+                    // NutriMessageDialog.Show(
+                    //     message: "@UI:COMPLETE_WELCOME_MESSAGE",
+                    //     actions: new[]
+                    //     {
+                    //         new FMDialogAction("@UI:BTN_CREATE_AVATAR", () =>
+                    //         {
+                    //             RaiseNavigationRequested(Actions.go_to_avatar_editor, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
+                    //         }, isPrimary: true),
+                    //         new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
+                    //         {
+                    //             RaiseNavigationRequested(Actions.register_to_onboarding);
+                    //         }, isPrimary: true),
+                    //         new FMDialogAction("@UI:BTN_ENTER_APP", () =>
+                    //         {
+                    //             RaiseNavigationRequested(Actions.loading_to_home);
+                    //         }, isPrimary: true)
+                    //     }
+                    // );
+
+                    RaiseNavigationRequested(Actions.register_to_onboarding);
 
 
                 }

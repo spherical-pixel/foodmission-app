@@ -21,7 +21,6 @@ namespace eu.foodmission.platform
             TemplateAddresses.ForgotPassword,
             TemplateAddresses.Profile,
             TemplateAddresses.Settings,
-            TemplateAddresses.OnboardingProfile,
             TemplateAddresses.CompleteWelcome,
             TemplateAddresses.ShoppingList,
             TemplateAddresses.ShoppingListDetail,

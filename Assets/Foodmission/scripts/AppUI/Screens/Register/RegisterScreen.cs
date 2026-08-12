@@ -681,7 +681,7 @@ namespace eu.foodmission.platform
             var btnRead = new FMButton
             {
                 title = "@UI:BTN_READ_CONSENT",
-                variant = ButtonVariant.Default,
+                variant = ButtonVariant.Accent,
                 size = Size.M
             };
             btnRead.AddToClassList("fm-button");
@@ -752,7 +752,7 @@ namespace eu.foodmission.platform
             var btnRead = new FMButton
             {
                 title = buttonTitleKey,
-                variant = ButtonVariant.Default,
+                variant = ButtonVariant.Accent,
                 size = Size.M
             };
             btnRead.AddToClassList("fm-button");

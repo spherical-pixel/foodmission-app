@@ -57,6 +57,17 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void StepFlow_Initialization_SetsStepCountSevenAndNutriMessages()
+        {
+            _vm.Initialize();
+            Assert.AreEqual(7, _vm.StepCount);
+            Assert.AreEqual(0, _vm.CurrentStepIndex);
+            Assert.IsTrue(_vm.IsFirstStep);
+            Assert.IsFalse(_vm.IsLastStep);
+
+        }
+
+        [Test]
         public void IsFormValid_WithNoSelection_ReturnsTrue()
         {
             Assert.IsTrue(_vm.IsFormValid);
@@ -156,9 +167,19 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Skip_DoesNotThrow()
+        public async Task SkipAsync_DispatchesSetSkippedExtendedProfile()
         {
-            Assert.DoesNotThrow(() => _vm.Skip());
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+
+            _storeService.DispatchedActionTypes.Clear();
+
+            await _vm.SkipAsync();
+
+            Assert.IsFalse(_vm.IsSubmitting);
+            Assert.Contains("app/setSkippedExtendedProfile", _storeService.DispatchedActionTypes);
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Once);
         }
 
         [Test]

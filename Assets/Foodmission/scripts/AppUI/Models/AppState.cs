@@ -62,6 +62,11 @@ namespace eu.foodmission.platform
         public bool hasCompletedExtendedProfile = false;
 
         /// <summary>
+        /// Whether the user explicitly skipped the extended profile step
+        /// </summary>
+        public bool hasSkippedExtendedProfile = false;
+
+        /// <summary>
         /// ID of logged user (empty if no session)
         /// </summary>
         public string userId = "";
@@ -123,6 +128,9 @@ namespace eu.foodmission.platform
         public bool userAutoAddToPantry = false;
         public AvatarConfig userAvatarConfig;
         public bool userHasAvatar = false;
+        public string userMotivation = "";
+        public int userDailyTimeCommitmentMinutes = 0;
+        public string userSegment = "";
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -160,6 +168,7 @@ namespace eu.foodmission.platform
                 backgroundPattern = this.backgroundPattern,
                 hasCompletedOnboarding = this.hasCompletedOnboarding,
                 hasCompletedExtendedProfile = this.hasCompletedExtendedProfile,
+                hasSkippedExtendedProfile = this.hasSkippedExtendedProfile,
                 userId = this.userId,
                 userName = this.userName,
                 userEmail = this.userEmail,
@@ -184,6 +193,9 @@ namespace eu.foodmission.platform
                 userAutoAddToPantry = this.userAutoAddToPantry,
                 userAvatarConfig = this.userAvatarConfig?.Copy(),
                 userHasAvatar = this.userHasAvatar,
+                userMotivation = this.userMotivation,
+                userDailyTimeCommitmentMinutes = this.userDailyTimeCommitmentMinutes,
+                userSegment = this.userSegment,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
                 foodInfoAddRequest = this.foodInfoAddRequest
