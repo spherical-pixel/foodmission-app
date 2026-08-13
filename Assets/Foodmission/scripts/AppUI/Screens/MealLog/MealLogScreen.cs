@@ -616,11 +616,22 @@ namespace eu.foodmission.platform
                 nameLabel.style.width = Length.Percent(70);
                 row.Add(nameLabel);
 
+
+
                 if (isRecipe)
                 {
                     var badge = new Text { text = "@UI:RECIPE" };
                     badge.pickingMode = PickingMode.Ignore;
                     row.Add(badge);
+                }
+                else
+                {
+                    // string formattedDate = DateTime.TryParse(preset.createdAt, out var dt) ? dt.ToString("yyyy-MM-dd") : (preset.createdAt ?? "");
+                    string formattedDate = DateTime.Parse(preset.createdAt).ToLocalTime().ToString("yyyy-MM-dd");
+                    var dateLabel = new Text { text = formattedDate };
+                    dateLabel.style.flexGrow = 1;
+                    dateLabel.pickingMode = PickingMode.Ignore;
+                    row.Add(dateLabel);
                 }
 
                 Meal captured = preset;
