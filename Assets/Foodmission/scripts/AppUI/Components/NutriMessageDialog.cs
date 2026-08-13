@@ -111,18 +111,18 @@ namespace eu.foodmission.platform.Components
             }
 
             // Nutri image
-                if (nutriImage != null)
+            if (nutriImage != null)
+            {
+                if (nutriTexture != null)
                 {
-                    if (nutriTexture != null)
-                    {
-                        nutriImage.image = nutriTexture;
-                    }
-                    else if (nutriService != null)
-                    {
-                        nutriImage.image = nutriService.NutriCameraRenderTexture;
-                    }
-                    nutriImage.style.display = DisplayStyle.Flex;
+                    nutriImage.image = nutriTexture;
                 }
+                else if (nutriService != null)
+                {
+                    nutriImage.image = nutriService.NutriCameraRenderTexture;
+                }
+                nutriImage.style.display = DisplayStyle.Flex;
+            }
 
             // Buttons
             Modal modal = null;
@@ -171,8 +171,8 @@ namespace eu.foodmission.platform.Components
                 buttonsContainer.Add(button);
             }
 
-            App.current?.services?.GetService<IThemeService>()?.ApplySafeAreaPadding(contentContainer,true,false,false,false);
-             
+            App.current?.services?.GetService<IThemeService>()?.ApplySafeAreaPadding(contentContainer, true, false, false, false);
+
             // Final spacer
             var finalSpacer = new Spacer { spacing = SpacerSpacing.XL };
             buttonsContainer.Add(finalSpacer);
@@ -183,6 +183,18 @@ namespace eu.foodmission.platform.Components
             modal.Show();
 
             root.schedule.Execute(() => root.AddToClassList("fm-nutri-dialog--visible")).StartingIn(50);
+
+        }
+
+        public static void ShowNotAvailable(Action onAccept = null)
+        {
+            Show(
+                message: "@UI:NUTRI_MSG_NOT_AVAILABLE_YET",
+                actions: new[]
+                {
+                    new FMDialogAction("@UI:TXT_ACCEPT", onAccept, isPrimary: true)
+                }
+            );
 
         }
     }

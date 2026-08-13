@@ -2187,11 +2187,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: 
+    m_Localized: "J\xE4hrliches Einkommensspektrum"
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: 
+    m_Localized: "W\xE4hlen Sie eine Einkommensspanne aus"
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -2238,6 +2238,14 @@ MonoBehaviour:
     m_Localized: "Bitte beantworte ein paar optionale Fragen, damit wir unsere Tipps,
       Rezeptvorschl\xE4ge und t\xE4glichen Herausforderungen individuell auf dich
       zuschneiden k\xF6nnen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34305618675228672
+    m_Localized: "Hoppla! Dieser Bereich ist noch nicht verf\xFCgbar, aber keine
+      Sorge: Wir arbeiten daran, damit du ihn schon bald nutzen kannst.\n\nFOODMISSION
+      entwickelt sich st\xE4ndig weiter. Dank des Feedbacks von Nutzern wie dir verbessern
+      wir die App und f\xFCgen neue Funktionen hinzu. Vielen Dank, dass du uns dabei
+      hilfst, weiter zu wachsen!"
     m_Metadata:
       m_Items: []
   references:

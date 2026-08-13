@@ -2183,11 +2183,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: 
+    m_Localized: Fascia di reddito annuo
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: 
+    m_Localized: Seleziona la fascia di reddito annuo
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -2234,6 +2234,13 @@ MonoBehaviour:
     m_Localized: Ti preghiamo di rispondere ad alcune domande facoltative, in modo
       da poterti offrire consigli personalizzati, suggerimenti sulle ricette e sfide
       quotidiane.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34305618675228672
+    m_Localized: "Ops! Questa sezione non \xE8 ancora disponibile, ma non preoccuparti:
+      ci stiamo lavorando e potrai usarla molto presto.\n\nFOODMISSION \xE8 in continua
+      evoluzione. Stiamo migliorando l'app e aggiungendo nuove funzionalit\xE0 grazie
+      ai feedback di utenti come te. Grazie per aiutarci a crescere sempre di pi\xF9!"
     m_Metadata:
       m_Items: []
   references:

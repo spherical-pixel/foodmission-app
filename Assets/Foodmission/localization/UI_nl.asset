@@ -2183,11 +2183,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: 
+    m_Localized: Jaarinkomen (bereik)
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: 
+    m_Localized: Selecteer een inkomensklasse
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -2233,6 +2233,17 @@ MonoBehaviour:
   - m_Id: 34041809595260928
     m_Localized: Beantwoord alstublieft een paar optionele vragen, zodat we onze
       tips, receptsuggesties en dagelijkse uitdagingen op u kunnen afstemmen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34305618675228672
+    m_Localized: 'Oeps! Dit gedeelte is nog niet beschikbaar, maar maak je geen zorgen:
+      we zijn ermee bezig, dus je kunt er binnenkort van genieten.
+
+
+      FOODMISSION
+      blijft zich voortdurend ontwikkelen. Dankzij de feedback van mensen zoals jij
+      verbeteren we de app en voegen we nieuwe functies toe. Bedankt dat je ons helpt
+      om te blijven groeien!'
     m_Metadata:
       m_Items: []
   references:

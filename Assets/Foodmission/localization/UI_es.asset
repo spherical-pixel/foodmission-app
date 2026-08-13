@@ -2231,6 +2231,14 @@ MonoBehaviour:
       tus consejos, recomendaciones de recetas y retos diarios.
     m_Metadata:
       m_Items: []
+  - m_Id: 34305618675228672
+    m_Localized: "\xA1Ups! Esta secci\xF3n a\xFAn no est\xE1 disponible, pero no
+      te preocupes: estamos trabajando para que puedas disfrutarla muy pronto.\n\nFOODMISSION
+      sigue en constante evoluci\xF3n. Vamos mejorando la app y a\xF1adiendo nuevas
+      funcionalidades gracias al feedback de personas como t\xFA. \xA1Gracias por
+      ayudarnos a seguir creciendo!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

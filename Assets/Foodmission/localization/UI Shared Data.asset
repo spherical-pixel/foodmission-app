@@ -2179,6 +2179,10 @@ MonoBehaviour:
     m_Key: ONBOARDING_PROFILE.WELCOME_DESC
     m_Metadata:
       m_Items: []
+  - m_Id: 34305618675228672
+    m_Key: NUTRI_MSG_NOT_AVAILABLE_YET
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

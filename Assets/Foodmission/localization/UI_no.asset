@@ -2175,11 +2175,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: 
+    m_Localized: "\xC5rlig inntektsspenn"
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: 
+    m_Localized: "Velg inntektsintervall for \xE5ret"
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -2225,6 +2225,14 @@ MonoBehaviour:
   - m_Id: 34041809595260928
     m_Localized: "Vennligst svar p\xE5 noen valgfrie sp\xF8rsm\xE5l, slik at vi kan
       tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene dine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34305618675228672
+    m_Localized: "Ups! Denne delen er ikke tilgjengelig enn\xE5, men ikke fortvil:
+      vi jobber med saken, s\xE5 du vil kunne nyte godt av den veldig snart.\n\nFOODMISSION
+      er i stadig utvikling. Vi forbedrer appen og legger til nye funksjoner takket
+      v\xE6re tilbakemeldinger fra brukere som deg. Takk for at du hjelper oss med
+      \xE5 fortsette \xE5 vokse!"
     m_Metadata:
       m_Items: []
   references:

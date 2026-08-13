@@ -2203,11 +2203,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: 
+    m_Localized: "Zakres rocznych dochod\xF3w"
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: 
+    m_Localized: "Wybierz przedzia\u0142 rocznego dochodu"
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -2255,6 +2255,14 @@ MonoBehaviour:
     m_Localized: "Prosimy o udzielenie odpowiedzi na kilka opcjonalnych pyta\u0144,
       aby\u015Bmy mogli dostosowa\u0107 do Ciebie porady, propozycje przepis\xF3w
       i codzienne wyzwania."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34305618675228672
+    m_Localized: "Ups! Ta sekcja nie jest jeszcze dost\u0119pna, ale nie martw si\u0119:
+      pracujemy nad ni\u0105, wi\u0119c ju\u017C wkr\xF3tce b\u0119dziesz m\xF3g\u0142
+      z niej korzysta\u0107.\n\nFOODMISSION nieustannie si\u0119 rozwija. Ulepszamy
+      aplikacj\u0119 i dodajemy nowe funkcje dzi\u0119ki opiniom od u\u017Cytkownik\xF3w
+      takich jak Ty. Dzi\u0119kujemy za pomoc w naszym dalszym rozwoju!"
     m_Metadata:
       m_Items: []
   references:

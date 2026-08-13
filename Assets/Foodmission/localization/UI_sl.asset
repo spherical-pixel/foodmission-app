@@ -2176,11 +2176,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: 
+    m_Localized: Razpon letnega dohodka
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: 
+    m_Localized: Izberite razpon letnega dohodka
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -2226,6 +2226,13 @@ MonoBehaviour:
   - m_Id: 34041809595260928
     m_Localized: "Prosimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
       lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34305618675228672
+    m_Localized: "Ups! Ta razdelek \u0161e ni na voljo, a ne skrbite: delamo na tem,
+      da ga boste lahko kmalu uporabljali.\n\nFOODMISSION se nenehno razvija. Aplikacijo
+      izbolj\u0161ujemo in dodajamo nove funkcije na podlagi povratnih informacij
+      od uporabnikov, kot ste vi. Hvala, da nam pomagate rasti!"
     m_Metadata:
       m_Items: []
   references:

@@ -216,7 +216,11 @@ namespace eu.foodmission.platform
                 _cachedNavController?.Navigate(Actions.go_to_groups);
             });
 
-            AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES"), null);
+            AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES"), () =>
+            {
+                _profileDrawer.Close();
+                NutriMessageDialog.ShowNotAvailable();
+            });
 
 
             AddDrawerButton(menuContainer, "⚙️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SETTINGS"), () =>
@@ -414,9 +418,21 @@ namespace eu.foodmission.platform
         private void BuildMenuContent(VisualElement container)
         {
             // Phase 2 — disabled
-            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "KNOWLEDGE"), null);
-            AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSIONS"), null);
-            AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DAILY_CHALLENGE"), null);
+            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "KNOWLEDGE"), () =>
+            {
+                CloseMenuDrawer();
+                NutriMessageDialog.ShowNotAvailable();
+            });
+            AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSIONS"), () =>
+            {
+                CloseMenuDrawer();
+                NutriMessageDialog.ShowNotAvailable();
+            });
+            AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DAILY_CHALLENGE"), () =>
+            {
+                CloseMenuDrawer();
+                NutriMessageDialog.ShowNotAvailable();
+            });
 
 
             // AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
@@ -441,9 +457,18 @@ namespace eu.foodmission.platform
             //     CloseMenuDrawer();
             //     _cachedNavController?.Navigate(Actions.go_to_foodwaste);
             // });
-            AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GLOBAL_COMMUNITY"), null);
-            AddMenuItem(container, "🗺️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAP"), null);
+            AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GLOBAL_COMMUNITY"), () =>
+            {
+                CloseMenuDrawer();
+                NutriMessageDialog.ShowNotAvailable();
+            });
+            AddMenuItem(container, "🗺️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAP"), () =>
+            {
+                CloseMenuDrawer();
+                NutriMessageDialog.ShowNotAvailable();
+            });
         }
+
 
         private void AddMenuItem(VisualElement container, string label, Action onClick)
         {
