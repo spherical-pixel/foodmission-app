@@ -498,7 +498,7 @@ namespace eu.foodmission.platform
                     {
                         shoppingResponsibility = !string.IsNullOrEmpty(state?.userShoppingResponsibility) ? state.userShoppingResponsibility : null,
                         dietaryPreference = state?.userDietaryPreference != null && state.userDietaryPreference.Length > 0 ? state.userDietaryPreference : null,
-                        onboardingSurvey = state?.userOnboardingSurvey,
+                        onboardingSurvey = state?.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers() ? state.userOnboardingSurvey : null,
                         autoAddToPantry = state?.userAutoAddToPantry ?? false,
                         avatarConfig = hasAvatar ? _currentConfig : null,
                         hasAvatar = hasAvatar

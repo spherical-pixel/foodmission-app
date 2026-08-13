@@ -268,8 +268,8 @@ namespace eu.foodmission.platform
             AddDrawerButton(menuContainer, "🚪 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOG_OUT"), () =>
             {
                 _profileDrawer.Close();
-                var storeService = App.current?.services?.GetService<IStoreService>();
-                storeService?.store.Dispatch(AppActions.logout.Invoke());
+                var authService = App.current?.services?.GetService<IAuthService>();
+                authService?.Logout();
                 _cachedNavController?.Navigate(Actions.go_to_auth);
             });
         }

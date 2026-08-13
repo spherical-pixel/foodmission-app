@@ -216,7 +216,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsFalse(_vm.IsSubmitting);
             Assert.Contains("app/setExtendedProfile", _storeService.DispatchedActionTypes);
-            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Once);
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req => req.preferences != null && req.preferences.onboardingSurvey == null)), Times.Once);
         }
 
         [Test]

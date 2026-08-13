@@ -9,8 +9,11 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_UserName = "";
 
-        public ProfileViewModel(IStoreService storeService) : base(storeService)
+        private readonly IAuthService _authService;
+
+        public ProfileViewModel(IStoreService storeService, IAuthService authService = null) : base(storeService)
         {
+            _authService = authService;
             var state = _storeService.GetAppState();
             UserName = state.userName;
 
@@ -26,8 +29,9 @@ namespace eu.foodmission.platform
 
         public void Logout()
         {
-            _store.Dispatch(AppActions.logout.Invoke());
-            RaiseNavigationRequested("go_to_auth");
+            var auth = _authService ?? App.current?.services?.GetService<IAuthService>();
+            auth?.Logout();
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_auth);
         }
     }
 }

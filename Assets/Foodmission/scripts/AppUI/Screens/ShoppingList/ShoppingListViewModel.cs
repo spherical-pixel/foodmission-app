@@ -80,7 +80,7 @@ namespace eu.foodmission.platform
                         {
                             shoppingResponsibility = state.userShoppingResponsibility,
                             dietaryPreference = state.userDietaryPreference,
-                            onboardingSurvey = state.userOnboardingSurvey,
+                            onboardingSurvey = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers() ? state.userOnboardingSurvey : null,
                             lastShoppingListId = targetList.id,
                             autoAddToPantry = state.userAutoAddToPantry
                         }
@@ -103,7 +103,7 @@ namespace eu.foodmission.platform
                 {
                     shoppingResponsibility = state.userShoppingResponsibility,
                     dietaryPreference = state.userDietaryPreference,
-                    onboardingSurvey = state.userOnboardingSurvey,
+                    onboardingSurvey = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers() ? state.userOnboardingSurvey : null,
                     lastShoppingListId = created.id,
                     autoAddToPantry = state.userAutoAddToPantry
                 }

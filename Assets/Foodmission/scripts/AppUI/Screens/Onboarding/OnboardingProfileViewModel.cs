@@ -343,7 +343,6 @@ namespace eu.foodmission.platform
                         dailyTimeCommitmentMinutes = dailyTimeMinutes > 0 ? dailyTimeMinutes : state.userDailyTimeCommitmentMinutes,
                         segment = segmentCode ?? state.userSegment,
                         onboardingProfileCompleted = true,
-                        onboardingSurvey = state.userOnboardingSurvey,
                         autoAddToPantry = state.userAutoAddToPantry
                     }
                 };

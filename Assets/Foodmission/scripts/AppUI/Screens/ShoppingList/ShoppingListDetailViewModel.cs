@@ -304,7 +304,7 @@ namespace eu.foodmission.platform
                     {
                         shoppingResponsibility = state.userShoppingResponsibility,
                         dietaryPreference = state.userDietaryPreference,
-                        onboardingSurvey = state.userOnboardingSurvey,
+                        onboardingSurvey = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers() ? state.userOnboardingSurvey : null,
                         lastShoppingListId = listId,
                         autoAddToPantry = state.userAutoAddToPantry
                     }
@@ -805,7 +805,7 @@ namespace eu.foodmission.platform
                 {
                     shoppingResponsibility = state.userShoppingResponsibility,
                     dietaryPreference = state.userDietaryPreference,
-                    onboardingSurvey = state.userOnboardingSurvey,
+                    onboardingSurvey = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers() ? state.userOnboardingSurvey : null,
                     lastShoppingListId = state.userLastShoppingListId,
                     autoAddToPantry = value
                 }

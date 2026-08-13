@@ -67,6 +67,11 @@ namespace eu.foodmission.platform.Tests
                 tokenType = "Bearer",
                 tokenExpiresAt = 1234567890,
                 refreshToken = "refresh-token",
+                hasCompletedOnboarding = true,
+                hasCompletedExtendedProfile = true,
+                userOnboardingSurvey = new OnboardingSurveyData { weeklyMeatConsumption = "FIVE_TO_NINE" },
+                userMotivation = "PLANETARY_IMPACT",
+                userSegment = "BEGINNER",
                 theme = "dark",
                 scale = "large",
                 font = "open-sans"
@@ -76,7 +81,7 @@ namespace eu.foodmission.platform.Tests
             // Act
             var newState = AppReducers.LogoutReducer(stateWithSession, action);
 
-            // Assert — session data cleared
+            // Assert — session & profile data cleared
             Assert.IsEmpty(newState.userId);
             Assert.IsEmpty(newState.userName);
             Assert.IsEmpty(newState.userEmail);
@@ -84,6 +89,12 @@ namespace eu.foodmission.platform.Tests
             Assert.IsEmpty(newState.tokenType);
             Assert.AreEqual(0, newState.tokenExpiresAt);
             Assert.IsEmpty(newState.refreshToken);
+            Assert.IsFalse(newState.hasCompletedOnboarding);
+            Assert.IsFalse(newState.hasCompletedExtendedProfile);
+            Assert.IsFalse(newState.hasSkippedExtendedProfile);
+            Assert.IsFalse(newState.userOnboardingSurvey.HasAnswers());
+            Assert.IsEmpty(newState.userMotivation);
+            Assert.IsEmpty(newState.userSegment);
             // Preferences reset to defaults
             Assert.AreEqual("system", newState.theme);
             Assert.AreEqual("medium", newState.scale);

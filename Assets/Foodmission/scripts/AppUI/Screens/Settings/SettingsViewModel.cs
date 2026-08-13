@@ -153,8 +153,8 @@ namespace eu.foodmission.platform
 
         public void Logout()
         {
-            _store.Dispatch(AppActions.logout.Invoke());
-            RaiseNavigationRequested("go_to_auth");
+            _authService?.Logout();
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_auth);
         }
 
         private void ScheduleSettingsSync()

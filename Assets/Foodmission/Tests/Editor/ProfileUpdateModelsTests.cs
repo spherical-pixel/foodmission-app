@@ -135,5 +135,15 @@ namespace eu.foodmission.platform.Tests
             StringAssert.DoesNotContain("meatMeals", json);
             StringAssert.DoesNotContain("foodWasteFrequency", json);
         }
+
+        [Test]
+        public void OnboardingSurveyData_HasAnswers_ReturnsFalseWhenEmptyAndTrueWhenPopulated()
+        {
+            var emptySurvey = new OnboardingSurveyData();
+            Assert.IsFalse(emptySurvey.HasAnswers());
+
+            var populatedSurvey = new OnboardingSurveyData { weeklyMeatConsumption = "ZERO_TO_FOUR" };
+            Assert.IsTrue(populatedSurvey.HasAnswers());
+        }
     }
 }

@@ -565,11 +565,14 @@ namespace eu.foodmission.platform
             _refreshTimerCts?.Dispose();
             _refreshTimerCts = null;
 
+            var localStorage = App.current?.services?.GetService<ILocalStorageService>();
+            localStorage?.DeleteValue("shoppinglists_cache");
+
             var avatarService = App.current?.services?.GetService<IAvatarService>();
             avatarService?.ClearFaceTexture();
 
             _storeService.store.Dispatch(AppActions.logout.Invoke());
-            Debug.Log($"[{GetType().Name}] User logged out and avatar render files cleared");
+            Debug.Log($"[{GetType().Name}] User logged out and session state fully cleaned");
         }
 
         private async Task RevokeTokenAsync(string token)

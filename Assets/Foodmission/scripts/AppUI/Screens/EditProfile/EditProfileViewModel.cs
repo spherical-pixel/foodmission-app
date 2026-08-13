@@ -406,12 +406,7 @@ namespace eu.foodmission.platform
                 bool hasShopping = shoppingResponsibilityCode != null || !string.IsNullOrEmpty(state.userShoppingResponsibility);
                 bool hasDietary = (dietaryCodes != null && dietaryCodes.Length > 0)
                     || (state.userDietaryPreference != null && state.userDietaryPreference.Length > 0);
-                bool hasSurvey = state.userOnboardingSurvey != null
-                    && (state.userOnboardingSurvey.meatMeals != null
-                        || state.userOnboardingSurvey.beefFrequency != null
-                        || state.userOnboardingSurvey.foodWasteFrequency != null
-                        || state.userOnboardingSurvey.ultraProcessedFrequency != null
-                        || state.userOnboardingSurvey.reusableContainersFrequency != null);
+                bool hasSurvey = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
 
                 var request = new ProfileUpdateRequest
                 {
@@ -426,7 +421,7 @@ namespace eu.foodmission.platform
                         {
                             shoppingResponsibility = shoppingResponsibilityCode ?? state.userShoppingResponsibility,
                             dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
-                            onboardingSurvey = state.userOnboardingSurvey,
+                            onboardingSurvey = hasSurvey ? state.userOnboardingSurvey : null,
                             autoAddToPantry = state.userAutoAddToPantry
                         }
                         : null

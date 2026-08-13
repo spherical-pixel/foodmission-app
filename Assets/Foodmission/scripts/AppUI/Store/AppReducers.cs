@@ -1,5 +1,6 @@
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
+using UnityEngine;
 
 namespace eu.foodmission.platform
 {
@@ -274,6 +275,15 @@ namespace eu.foodmission.platform
             newState.tokenType = "";
             newState.tokenExpiresAt = 0;
             newState.refreshToken = "";
+            newState.refreshTokenExpiresAt = 0;
+            newState.lastSessionTimestamp = 0;
+
+            // Clear onboarding flags & survey answers
+            newState.hasCompletedOnboarding = false;
+            newState.hasCompletedExtendedProfile = false;
+            newState.hasSkippedExtendedProfile = false;
+            newState.userOnboardingSurvey = new OnboardingSurveyData();
+
             // Clear profile data
             newState.userYearOfBirth = 0;
             newState.userCountry = "";
@@ -285,14 +295,33 @@ namespace eu.foodmission.platform
             newState.userActivityLevel = "";
             newState.userDietaryPreference = new string[0];
             newState.userShoppingResponsibility = "";
+            newState.userMotivation = "";
+            newState.userDailyTimeCommitmentMinutes = 0;
+            newState.userSegment = "";
+            newState.userLastShoppingListId = "";
+            newState.userAutoAddToPantry = false;
             newState.userAvatarConfig = null;
             newState.userHasAvatar = false;
+
+            // Clear temporal data
+            newState.isAuthenticating = false;
+            newState.authError = "";
+            newState.foodInfoAddRequest = null;
+
             // Reset preferences to defaults
             newState.theme = "system";
             newState.scale = "medium";
             newState.font = "roboto";
+            newState.soundVolume = 100;
+            newState.musicVolume = 100;
+            newState.pushNotificationsEnabled = false;
+            newState.backgroundPattern = true;
 
-            // Clear saved local avatar render files
+            // Clear saved local avatar render files & PlayerPrefs keys
+            PlayerPrefs.DeleteKey("avatar_config");
+            PlayerPrefs.DeleteKey("has_avatar");
+            PlayerPrefs.Save();
+
             var avatarService = App.current?.services?.GetService<IAvatarService>();
             avatarService?.ClearFaceTexture();
 
