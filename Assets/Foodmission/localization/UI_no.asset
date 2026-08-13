@@ -91,10 +91,6 @@ MonoBehaviour:
     m_Localized: Velg din region
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: Postnummer
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: "Jeg godtar <b>vilk\xE5rene for bruk</b> og <b>personvernreglene</b>."
     m_Metadata:
@@ -670,28 +666,8 @@ MonoBehaviour:
     m_Localized: Slett
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: "Aktivitetsniv\xE5"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: Velg...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: Kostholdspreferanser
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Ansvarlig shopping
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: "Utdanningsniv\xE5"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: "\xC5rlig inntekt"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2199,11 +2175,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Inntektsspenn
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Velg inntektsintervall
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872

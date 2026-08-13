@@ -95,10 +95,6 @@ MonoBehaviour:
     m_Localized: "Seleccione su regi\xF3n"
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: "C\xF3digo postal"
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: "Acepto los <b>T\xE9rminos de Servicio</b> y la <b>Pol\xEDtica de
       Privacidad</b>."
@@ -672,28 +668,8 @@ MonoBehaviour:
     m_Localized: Eliminar
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: Nivel de actividad
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: Seleccione...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: Preferencias alimentarias
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Consumo responsable
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: Nivel de estudios
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: Ingreso anual
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2203,11 +2179,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Rango de Ingresos
+    m_Localized: Rango de Ingresos Anuales
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Selecciona rango de ingresos
+    m_Localized: Selecciona rango de ingresos anual
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872

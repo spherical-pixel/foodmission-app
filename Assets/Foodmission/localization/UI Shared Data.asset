@@ -383,10 +383,6 @@ MonoBehaviour:
     m_Key: REGION_PLACEHOLDER
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Key: PO_CODE
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Key: AGREE_TERMS
     m_Metadata:
@@ -951,28 +947,8 @@ MonoBehaviour:
     m_Key: DELETE
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Key: ACTIVITY_LEVEL
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Key: SELECT_DEFAULT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Key: DIETARY_PREFERENCES
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Key: SHOPPING_RESPONSIBILITY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Key: EDUCATION_LEVEL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Key: ANNUAL_INCOME
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047

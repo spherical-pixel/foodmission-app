@@ -92,10 +92,6 @@ MonoBehaviour:
     m_Localized: "Wybierz sw\xF3j region"
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: Kod pocztowy
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: "Wyra\u017Cam zgod\u0119 na <b>Warunki korzystania z serwisu</b>
       oraz <b>Polityk\u0119 prywatno\u015Bci</b>."
@@ -675,28 +671,8 @@ MonoBehaviour:
     m_Localized: "Usu\u0144"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: "Poziom aktywno\u015Bci"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: Wybierz...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: "Preferencje \u017Cywieniowe"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Odpowiedzialne zakupy
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: "Poziom wykszta\u0142cenia"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: "Roczny doch\xF3d"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2227,11 +2203,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: "Przedzia\u0142 dochod\xF3w"
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: "Wybierz przedzia\u0142 dochod\xF3w"
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872

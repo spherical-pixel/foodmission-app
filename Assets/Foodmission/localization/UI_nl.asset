@@ -91,10 +91,6 @@ MonoBehaviour:
     m_Localized: Kies uw regio
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: Postcode
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: Ik ga akkoord met de <b>Gebruiksvoorwaarden</b> en het <b>Privacybeleid</b>.
     m_Metadata:
@@ -674,28 +670,8 @@ MonoBehaviour:
     m_Localized: Verwijderen
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: Activiteitsniveau
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: Selecteer...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: Eetvoorkeuren
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Verantwoord winkelen
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: Opleidingsniveau
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: Jaarinkomen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2207,11 +2183,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Inkomensklasse
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Selecteer inkomensklasse
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872

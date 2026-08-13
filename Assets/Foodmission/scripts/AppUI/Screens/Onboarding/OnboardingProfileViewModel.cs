@@ -187,10 +187,10 @@ namespace eu.foodmission.platform
 
                 DailyTimeCommitmentOptions = new List<string>
                 {
+                    "5 min",
+                    "10 min",
                     "15 min",
-                    "30 min",
-                    "45 min",
-                    "60+ min"
+                    "20+ min"
                 };
 
                 Debug.Log($"[OnboardingProfileViewModel] Catalog loaded: {GenderOptions.Count} genders, {MotivationOptions.Count} motivations");
@@ -227,6 +227,12 @@ namespace eu.foodmission.platform
             {
                 SelectedSegmentIndex = FindCatalogIndex(_catalogData.onboarding.userSegments, state.userSegment);
             }
+
+            if (state.userDailyTimeCommitmentMinutes <= 0) SelectedDailyTimeCommitmentIndex = -1;
+            else if (state.userDailyTimeCommitmentMinutes <= 5) SelectedDailyTimeCommitmentIndex = 0;
+            else if (state.userDailyTimeCommitmentMinutes <= 10) SelectedDailyTimeCommitmentIndex = 1;
+            else if (state.userDailyTimeCommitmentMinutes <= 15) SelectedDailyTimeCommitmentIndex = 2;
+            else SelectedDailyTimeCommitmentIndex = 3;
 
             var dietaryIndices = new List<int>();
             if (state.userDietaryPreference != null)
@@ -306,10 +312,10 @@ namespace eu.foodmission.platform
                     : null;
 
                 int dailyTimeMinutes = 0;
-                if (_selectedDailyTimeCommitmentIndex == 0) dailyTimeMinutes = 15;
-                else if (_selectedDailyTimeCommitmentIndex == 1) dailyTimeMinutes = 30;
-                else if (_selectedDailyTimeCommitmentIndex == 2) dailyTimeMinutes = 45;
-                else if (_selectedDailyTimeCommitmentIndex == 3) dailyTimeMinutes = 60;
+                if (_selectedDailyTimeCommitmentIndex == 0) dailyTimeMinutes = 5;
+                else if (_selectedDailyTimeCommitmentIndex == 1) dailyTimeMinutes = 10;
+                else if (_selectedDailyTimeCommitmentIndex == 2) dailyTimeMinutes = 15;
+                else if (_selectedDailyTimeCommitmentIndex == 3) dailyTimeMinutes = 20;
 
                 string[] dietaryCodes = null;
                 if (_selectedDietaryPreferenceIndices != null && _selectedDietaryPreferenceIndices.Length > 0

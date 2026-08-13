@@ -95,10 +95,6 @@ MonoBehaviour:
     m_Localized: Select your region
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: Postal code
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: I agree to the <b>Terms of Service</b> and <b>Privacy Policy</b>.
     m_Metadata:
@@ -669,28 +665,8 @@ MonoBehaviour:
     m_Localized: Delete
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: Activity level
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: Select...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: Dietary preferences
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Shopping responsibility
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: Education level
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: Annual income
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2194,11 +2170,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Income Range
+    m_Localized: Annual Income Range
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Select income range
+    m_Localized: Select annual income range
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872

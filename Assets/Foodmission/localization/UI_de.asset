@@ -92,10 +92,6 @@ MonoBehaviour:
     m_Localized: "W\xE4hlen Sie Ihre Region aus"
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: Postleitzahl
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: "Ich stimme den <b>Nutzungsbedingungen</b> und der <b>Datenschutzerkl\xE4rung</b>
       zu."
@@ -674,28 +670,8 @@ MonoBehaviour:
     m_Localized: "L\xF6schen"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: "Aktivit\xE4tsniveau"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: "Ausw\xE4hlen..."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: "Ern\xE4hrungsgewohnheiten"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Verantwortungsbewusstes Einkaufen
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: Bildungsniveau
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: Jahreseinkommen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2211,11 +2187,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Einkommensspanne
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: "Einkommensklasse ausw\xE4hlen"
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872

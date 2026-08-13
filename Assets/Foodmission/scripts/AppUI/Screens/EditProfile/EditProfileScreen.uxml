@@ -4,8 +4,8 @@
         <ui:VisualElement name="form-container" class="box-background" style="flex-shrink: 0;">
             <fm:FormFieldItemDropDownField name="yearofbirth-dropdown" dropdown-defaultmessage="Selecciona">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22815397693612032)"/>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986022)"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(33345134950080512)"/>
                     <ui:DataBinding property="HelpTextText" data-source-path="YearOfBirthHelpTextValue" binding-mode="TwoWay"/>
                     <ui:DataBinding property="HelpTextVariant" data-source-path="YearOfBirthHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
@@ -28,46 +28,65 @@
             </eu.foodmission.platform.Components.FormFieldItemDropDownField>
             <eu.foodmission.platform.Components.FormFieldItemTextField name="postalcode">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22820717341958144)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(31126680599781376)"/>
                     <ui:DataBinding property="TextFieldValue" data-source-path="PostalCode" binding-mode="TwoWay"/>
                     <ui:DataBinding property="HelpTextText" data-source-path="PostalCodeHelpTextValue" binding-mode="TwoWay"/>
                     <ui:DataBinding property="HelpTextVariant" data-source-path="PostalCodeHelpTextVariant" binding-mode="TwoWay"/>
+                    <UnityEngine.Localization.LocalizedString property="TextFieldPlaceholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(31126932849418240)"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemTextField>
             <fm:FormFieldItemDropDownField name="gender-dropdown" dropdown-defaultmessage="Selecciona">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(40270284408741888)"/>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34038583797997568)"/>
+                </Bindings>
+            </fm:FormFieldItemDropDownField>
+            <fm:FormFieldItemDropDownField name="motivation-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Motivación">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34037939833921536)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34037819398676480)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
             <fm:FormFieldItemDropDownField name="activity-level-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Nivel de actividad">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000041)"/>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34039990223626240)"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34040218603479040)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
             <fm:FormFieldItemDropDownField name="dietary-preferences-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Preferencias dieteticas" dropdown-selectiontype="Multiple" dropdown-closeonselect="false">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000043)"/>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34039177296207872)"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34039865006874624)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
             <fm:FormFieldItemDropDownField name="shopping-responsibility-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Responsabilidades compra">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000044)"/>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34040348811452416)"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34040572049088512)"/>
+                </Bindings>
+            </fm:FormFieldItemDropDownField>
+            <fm:FormFieldItemDropDownField name="daily-time-commitment-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Tiempo diario dedicado">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34040837200404480)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34040672355868672)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
             <fm:FormFieldItemDropDownField name="education-level-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Nivel de educacion">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000045)"/>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34038675313516544)"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34038791491543040)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
             <fm:FormFieldItemDropDownField name="annual-income-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Ingresos anuales">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000046)"/>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34038925629579264)"/>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34039030617202688)"/>
+                </Bindings>
+            </fm:FormFieldItemDropDownField>
+            <fm:FormFieldItemDropDownField name="segment-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Tipo de perfil">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34041135683854336)"/>
+                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34040936672518144)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
             <appui:Spacer spacing="XL"/>

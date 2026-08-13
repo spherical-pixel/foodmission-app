@@ -55,6 +55,9 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(-1, _vm.SelectedEducationLevelIndex);
             Assert.AreEqual(-1, _vm.SelectedAnnualIncomeIndex);
             Assert.AreEqual(-1, _vm.SelectedShoppingResponsibilityIndex);
+            Assert.AreEqual(-1, _vm.SelectedMotivationIndex);
+            Assert.AreEqual(-1, _vm.SelectedDailyTimeCommitmentIndex);
+            Assert.AreEqual(-1, _vm.SelectedSegmentIndex);
             Assert.AreEqual(0, _vm.SelectedDietaryPreferenceIndices.Length);
             Assert.AreEqual(-1, _vm.SelectedCountryIndex);
             Assert.AreEqual(-1, _vm.SelectedRegionIndex);
@@ -66,6 +69,9 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("", _vm.ErrorMessage);
             Assert.IsNotNull(_vm.GenderOptions);
             Assert.IsNotNull(_vm.ActivityLevelOptions);
+            Assert.IsNotNull(_vm.MotivationOptions);
+            Assert.IsNotNull(_vm.DailyTimeCommitmentOptions);
+            Assert.IsNotNull(_vm.SegmentOptions);
             Assert.IsNotNull(_vm.CountryOptions);
             Assert.IsNotNull(_vm.RegionOptions);
         }
@@ -86,7 +92,12 @@ namespace eu.foodmission.platform.Tests
                 educationLevels = new[] { new CatalogItem { code = "bachelor", label = "Bachelor" } },
                 annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" } },
                 shoppingResponsibilities = new[] { new CatalogItem { code = "primary", label = "Primary" } },
-                dietaryPreferences = new[] { new CatalogItem { code = "vegetarian", label = "Vegetarian" } }
+                dietaryPreferences = new[] { new CatalogItem { code = "vegetarian", label = "Vegetarian" } },
+                onboarding = new CatalogOnboardingStartupData
+                {
+                    motivations = new[] { new CatalogItem { code = "HEALTH", label = "Health" } },
+                    userSegments = new[] { new CatalogItem { code = "FAMILY", label = "Family" } }
+                }
             };
 
             _mockCatalogService
@@ -102,6 +113,9 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, _vm.AnnualIncomeOptions.Count);
             Assert.AreEqual(1, _vm.ShoppingResponsibilityOptions.Count);
             Assert.AreEqual(1, _vm.DietaryPreferenceOptions.Count);
+            Assert.AreEqual(1, _vm.MotivationOptions.Count);
+            Assert.AreEqual(1, _vm.SegmentOptions.Count);
+            Assert.AreEqual(4, _vm.DailyTimeCommitmentOptions.Count);
             Assert.IsFalse(_vm.IsLoading);
         }
 
@@ -580,6 +594,78 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNotNull(capturedRequest);
             Assert.IsNull(capturedRequest.preferences);
+        }
+
+        [Test]
+        public async Task PrePopulateFromState_PopulatesMotivationDailyTimeAndSegmentIndices()
+        {
+            var catalogData = new CatalogData
+            {
+                onboarding = new CatalogOnboardingStartupData
+                {
+                    motivations = new[] { new CatalogItem { code = "HEALTH", label = "Health" } },
+                    userSegments = new[] { new CatalogItem { code = "FAMILY", label = "Family" } }
+                }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _storeService.SetAppState(new AppState
+            {
+                userMotivation = "HEALTH",
+                userDailyTimeCommitmentMinutes = 10,
+                userSegment = "FAMILY"
+            });
+
+            await _vm.PrePopulateFromState();
+
+            Assert.AreEqual(0, _vm.SelectedMotivationIndex);
+            Assert.AreEqual(1, _vm.SelectedDailyTimeCommitmentIndex); // 10 min -> index 1
+            Assert.AreEqual(0, _vm.SelectedSegmentIndex);
+        }
+
+        [Test]
+        public async Task SubmitAsync_IncludesMotivationDailyTimeAndSegmentInRequest()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                onboarding = new CatalogOnboardingStartupData
+                {
+                    motivations = new[] { new CatalogItem { code = "HEALTH", label = "Health" } },
+                    userSegments = new[] { new CatalogItem { code = "FAMILY", label = "Family" } }
+                }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            await _vm.LoadCatalogDataAsync();
+
+            _vm.SelectedGenderIndex = 0;
+            _vm.SelectedMotivationIndex = 0;
+            _vm.SelectedDailyTimeCommitmentIndex = 2; // 45 min
+            _vm.SelectedSegmentIndex = 0;
+
+            ProfileUpdateRequest capturedRequest = null;
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
+                .ReturnsAsync((true, null));
+
+            await _vm.SubmitAsync();
+
+            Assert.IsNotNull(capturedRequest);
+            Assert.AreEqual("FAMILY", capturedRequest.segment);
+            Assert.IsNotNull(capturedRequest.preferences);
+            Assert.AreEqual("HEALTH", capturedRequest.preferences.motivation);
+            Assert.AreEqual(45, capturedRequest.preferences.dailyTimeCommitmentMinutes);
+            Assert.AreEqual("FAMILY", capturedRequest.preferences.segment);
         }
     }
 }

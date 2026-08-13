@@ -91,10 +91,6 @@ MonoBehaviour:
     m_Localized: Seleziona la tua regione
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: Codice postale
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: Accetto i <b>Termini di servizio</b> e l'<b>Informativa sulla privacy</b>.
     m_Metadata:
@@ -672,28 +668,8 @@ MonoBehaviour:
     m_Localized: Elimina
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: "Livello di attivit\xE0"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: Seleziona...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: Preferenze alimentari
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Acquisti responsabili
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: Livello di istruzione
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: Reddito annuo
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2207,11 +2183,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Fascia di reddito
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Seleziona la fascia di reddito
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872

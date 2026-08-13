@@ -91,10 +91,6 @@ MonoBehaviour:
     m_Localized: Izberite svojo regijo
     m_Metadata:
       m_Items: []
-  - m_Id: 22820717341958144
-    m_Localized: "Po\u0161tna \u0161tevilka"
-    m_Metadata:
-      m_Items: []
   - m_Id: 25345767223844864
     m_Localized: Strinjam se s <b>Pogoji uporabe</b> in <b>Politiko zasebnosti</b>.
     m_Metadata:
@@ -668,28 +664,8 @@ MonoBehaviour:
     m_Localized: "Izbri\u0161i"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000041
-    m_Localized: Stopnja aktivnosti
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000042
     m_Localized: Izberi...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000043
-    m_Localized: Prehranske navade
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000044
-    m_Localized: Odgovorno nakupovanje
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000045
-    m_Localized: Izobrazbena raven
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000046
-    m_Localized: Letni dohodek
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000047
@@ -2200,11 +2176,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Razpon dohodkov
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Izberite razpon dohodkov
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
