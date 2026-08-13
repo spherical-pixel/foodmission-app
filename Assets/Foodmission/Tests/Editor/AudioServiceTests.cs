@@ -127,6 +127,20 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void PlaySfx_WithSfxTypeEnum_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() => _audioService.PlaySfx(SfxType.PositiveButton));
+            Assert.DoesNotThrow(() => _audioService.PlaySfx(SfxType.None));
+        }
+
+        [Test]
+        public void PlayNutriSfx_WithNutriSfxTypeEnum_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() => _audioService.PlayNutriSfx(NutriSfxType.Celebration));
+            Assert.DoesNotThrow(() => _audioService.PlayNutriSfx(NutriSfxType.None));
+        }
+
+        [Test]
         public void Dispose_DoesNotThrowOnMultipleCalls()
         {
             _audioService.Dispose();

@@ -28,15 +28,16 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _caloriesLeft = 350;
 
-        
 
 
 
-        public HomeScreenViewModel(IStoreService storeService) : base(storeService)
+
+        public HomeScreenViewModel(IStoreService storeService, IAudioService audioService) : base(storeService)
         {
             // Get initial state
             AppState state = _storeService.GetAppState();
 
+            //audioService.PlayNutriSfx(NutriSfxType.Celebration);
 
 
             // Subscribe to user state changes
@@ -54,10 +55,10 @@ namespace eu.foodmission.platform
         private void OnUserStateChanged((string userId, string lang) userState)
         {
             AppState state = _storeService.GetAppState();
-            
+
         }
 
-        
+
 
         public void SetTimePeriod(TimePeriod period)
         {

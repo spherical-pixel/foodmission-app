@@ -11,12 +11,23 @@ namespace eu.foodmission.platform
     public interface IAudioService : IDisposable
     {
         /// <summary>
-        /// Initializes the AudioService with the AudioMixer asset and optional AudioSources.
+        /// Initializes the AudioService with the AudioMixer asset, optional catalog, and optional AudioSources.
         /// </summary>
         /// <param name="mixer">The Unity AudioMixer asset containing FXVOL and MUSVOL parameters</param>
+        /// <param name="catalog">Optional AudioCatalogSO ScriptableObject with pre-loaded clips</param>
         /// <param name="sfxSource">Optional AudioSource component for sound effects</param>
         /// <param name="musicSource">Optional AudioSource component for background music</param>
-        void Initialize(AudioMixer mixer, AudioSource sfxSource = null, AudioSource musicSource = null);
+        void Initialize(AudioMixer mixer, AudioCatalogSO catalog = null, AudioSource sfxSource = null, AudioSource musicSource = null);
+
+        /// <summary>
+        /// Plays a sound effect by strongly-typed SfxType enum.
+        /// </summary>
+        void PlaySfx(SfxType sfxType, float volumeScale = 1.0f);
+
+        /// <summary>
+        /// Plays a Nutri mascot sound effect by strongly-typed NutriSfxType enum.
+        /// </summary>
+        void PlayNutriSfx(NutriSfxType sfxType, float volumeScale = 1.0f);
 
         /// <summary>
         /// Plays a one-shot sound effect.

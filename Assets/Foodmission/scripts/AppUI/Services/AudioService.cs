@@ -17,6 +17,7 @@ namespace eu.foodmission.platform
 
         private readonly IStoreService _storeService;
         private AudioMixer _mixer;
+        private AudioCatalogSO _catalog;
         private AudioSource _sfxSource;
         private AudioSource _musicSource;
         private GameObject _audioHostGameObject;
@@ -46,13 +47,20 @@ namespace eu.foodmission.platform
             );
         }
 
-        public void Initialize(AudioMixer mixer, AudioSource sfxSource = null, AudioSource musicSource = null)
+        public void Initialize(AudioMixer mixer, AudioCatalogSO catalog = null, AudioSource sfxSource = null, AudioSource musicSource = null)
         {
             _mixer = mixer;
             if (_mixer == null)
             {
                 _mixer = Resources.Load<AudioMixer>("AudioMixer");
             }
+
+            _catalog = catalog;
+            if (_catalog == null)
+            {
+                _catalog = Resources.Load<AudioCatalogSO>("AudioCatalog");
+            }
+            _catalog?.Initialize();
 
             _sfxSource = sfxSource;
             _musicSource = musicSource;
@@ -77,6 +85,36 @@ namespace eu.foodmission.platform
             {
                 var hostScript = _audioHostGameObject.GetComponent<AudioServiceHostMono>() ?? _audioHostGameObject.AddComponent<AudioServiceHostMono>();
                 hostScript.StartCoroutine(ApplyVolumesDelayedRoutine());
+            }
+        }
+
+        public void PlaySfx(SfxType sfxType, float volumeScale = 1.0f)
+        {
+            if (sfxType == SfxType.None) return;
+
+            AudioClip clip = _catalog != null ? _catalog.GetSfx(sfxType) : null;
+            if (clip != null)
+            {
+                PlaySfx(clip, volumeScale);
+            }
+            else
+            {
+                PlaySfx(sfxType.ToString(), volumeScale);
+            }
+        }
+
+        public void PlayNutriSfx(NutriSfxType sfxType, float volumeScale = 1.0f)
+        {
+            if (sfxType == NutriSfxType.None) return;
+
+            AudioClip clip = _catalog != null ? _catalog.GetNutriSfx(sfxType) : null;
+            if (clip != null)
+            {
+                PlaySfx(clip, volumeScale);
+            }
+            else
+            {
+                PlaySfx(sfxType.ToString(), volumeScale);
             }
         }
 
@@ -197,8 +235,6 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            if (_sfxSource != null && _musicSource != null) return;
-
             if (_audioHostGameObject == null)
             {
                 _audioHostGameObject = new GameObject("[AudioServiceHost]");
@@ -215,6 +251,13 @@ namespace eu.foodmission.platform
             {
                 _musicSource = _audioHostGameObject.AddComponent<AudioSource>();
                 _musicSource.playOnAwake = false;
+            }
+
+            // Ensure there is always an active AudioListener in the scene
+            if (UnityEngine.Object.FindObjectOfType<AudioListener>() == null)
+            {
+                _audioHostGameObject.AddComponent<AudioListener>();
+                Debug.Log($"[{GetType().Name}] Added AudioListener to [AudioServiceHost]");
             }
         }
 

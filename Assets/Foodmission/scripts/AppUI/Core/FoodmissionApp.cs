@@ -58,12 +58,14 @@ namespace eu.foodmission.platform
                 var mixer = FoodmissionAppBuilder.instance != null ? FoodmissionAppBuilder.instance.audioMixer : null;
                 if (mixer == null)
                 {
-                    Debug.LogWarning($"[{GetType().Name}] AudioMixer not found in FoodmissionAppBuilder, audio will not be initialized");
+                    mixer = Resources.Load<UnityEngine.Audio.AudioMixer>("AudioMixer");
                 }
-                else
+                var catalog = FoodmissionAppBuilder.instance != null ? FoodmissionAppBuilder.instance.audioCatalog : null;
+                if (catalog == null)
                 {
-                    _audioService.Initialize(mixer);
+                    catalog = Resources.Load<AudioCatalogSO>("AudioCatalog");
                 }
+                _audioService.Initialize(mixer, catalog);
             }
 
             // Create and add the NavHost for navigation

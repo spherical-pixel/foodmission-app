@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457a412850974b88b209d023b1234567, type: 3}
+  m_Name: AudioCatalog
+  m_EditorClassIdentifier: Foodmission::eu.foodmission.platform.AudioCatalogSO
+  sfxClips:
+  - type: 1
+    clip: {fileID: 8300000, guid: 0654bd87cc613c9499839963cb70af30, type: 3}
+  - type: 2
+    clip: {fileID: 8300000, guid: ac6df2a51787b014cb95923c7389b1e5, type: 3}
+  - type: 3
+    clip: {fileID: 8300000, guid: 8c617cf730ede4b42bc1d39555490a45, type: 3}
+  - type: 4
+    clip: {fileID: 8300000, guid: bf1b2053aa140cf4db368695e73efbc5, type: 3}
+  - type: 5
+    clip: {fileID: 8300000, guid: c48c868f00093d24da14e96eaa6a4e5e, type: 3}
+  - type: 6
+    clip: {fileID: 8300000, guid: 843ef934f6a664347997253cf8f5d10e, type: 3}
+  - type: 7
+    clip: {fileID: 8300000, guid: 1efa59b46dfc13a44aa3e9d772698bad, type: 3}
+  - type: 8
+    clip: {fileID: 8300000, guid: e992eba75bf58a14a94900f49f872cd2, type: 3}
+  - type: 9
+    clip: {fileID: 8300000, guid: a795d3cc5aaf0b34583a701d6b689968, type: 3}
+  - type: 10
+    clip: {fileID: 8300000, guid: b7d14854d26f7fc4fa6ee0f92976b0b1, type: 3}
+  - type: 11
+    clip: {fileID: 8300000, guid: 73260242168689c4cbc8d3c12dbfaef5, type: 3}
+  - type: 12
+    clip: {fileID: 8300000, guid: 79a5d72cb4988a442a7832293760e012, type: 3}
+  - type: 13
+    clip: {fileID: 8300000, guid: ade00e79234010a4abe7e09262ec58af, type: 3}
+  nutriSfxClips:
+  - type: 1
+    clip: {fileID: 8300000, guid: 9489d5bb1ba75f944b67b732960d5e6d, type: 3}
+  - type: 2
+    clip: {fileID: 8300000, guid: 04c85701f17771a4b9c2031d62dae0b3, type: 3}
+  - type: 3
+    clip: {fileID: 8300000, guid: 130301ad96737c2459fe6cc5003d581e, type: 3}
+  - type: 4
+    clip: {fileID: 8300000, guid: 5856c547cf11a914eac3ba3fdda36127, type: 3}
+  - type: 5
+    clip: {fileID: 8300000, guid: 142605ea6d522184383f7d8086a71d43, type: 3}
+  - type: 6
+    clip: {fileID: 8300000, guid: 49a7593ef4127cf4192d4ae30f910ae0, type: 3}
+  - type: 7
+    clip: {fileID: 8300000, guid: 0ae5513b7dcb83c4c8749f7971ea5a2b, type: 3}
+  - type: 8
+    clip: {fileID: 8300000, guid: 289fdbe1ed7313d41bc5dbcd29dc064a, type: 3}
+  - type: 9
+    clip: {fileID: 8300000, guid: 293a32d6220c9c04899abebee5620148, type: 3}

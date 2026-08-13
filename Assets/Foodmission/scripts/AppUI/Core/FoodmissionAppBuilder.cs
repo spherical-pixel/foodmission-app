@@ -17,6 +17,7 @@ namespace eu.foodmission.platform
 
         public NavGraphViewAsset GraphAsset;
         public AudioMixer audioMixer;
+        public AudioCatalogSO audioCatalog;
 
         protected override void OnConfiguringApp(AppBuilder builder)
         {
