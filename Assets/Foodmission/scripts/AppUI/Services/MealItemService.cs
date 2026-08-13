@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
@@ -30,11 +31,13 @@ namespace eu.foodmission.platform
             if (string.IsNullOrEmpty(mealId))
                 return (null, null);
 
+            string lang = _storeService.GetAppState().lang ?? "en";
             string url = $"{ApiConfig.BaseUrl}/api/v1/meals/{mealId}/meal-items";
 
             using UnityWebRequest req = UnityWebRequest.Get(url);
             req.SetRequestHeader("Authorization", AuthHeader);
             req.SetRequestHeader("Accept", "application/json");
+            req.SetRequestHeader("Accept-Language", lang);
 
             UnityWebRequestAsyncOperation op = req.SendWebRequest();
             while (!op.isDone) await Task.Yield();

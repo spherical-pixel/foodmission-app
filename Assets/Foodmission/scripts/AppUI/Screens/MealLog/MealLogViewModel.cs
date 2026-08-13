@@ -33,6 +33,7 @@ namespace eu.foodmission.platform
         private readonly ILocalStorageService _localStorage;
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
         private readonly IPantryService _pantryService;
+        private IDisposable _langSubscription;
 
         [ObservableProperty] private List<MealLog> m_LastTenLogs = new();
 
@@ -105,6 +106,38 @@ namespace eu.foodmission.platform
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
             _pantryService = pantryService;
+
+            _langSubscription = _store.Subscribe(
+                state => state.lang,
+                OnLanguageChanged
+            );
+
+            UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocaleChanged -= OnSelectedLocaleChanged;
+            UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocaleChanged += OnSelectedLocaleChanged;
+        }
+
+        private void OnSelectedLocaleChanged(UnityEngine.Localization.Locale locale)
+        {
+            string code = locale?.Identifier.Code;
+            if (!string.IsNullOrEmpty(code))
+            {
+                OnLanguageChanged(code);
+            }
+        }
+
+        private async void OnLanguageChanged(string newLang)
+        {
+            if (string.IsNullOrEmpty(newLang)) return;
+            await InitializeAsync();
+            await LoadTodayAsync();
+        }
+
+        protected override void OnDispose()
+        {
+            UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocaleChanged -= OnSelectedLocaleChanged;
+            _langSubscription?.Dispose();
+            _langSubscription = null;
+            base.OnDispose();
         }
 
 
@@ -953,26 +986,159 @@ namespace eu.foodmission.platform
 
         // ========= Load / Delete =========
 
+        private string _currentCacheLang;
+
         public async Task LoadTodayAsync()
         {
+            string currentLang = _storeService.GetAppState().lang ?? "en";
+            string cacheKey = $"meal_logs_cache_{currentLang}";
+
+            bool isLanguageChange = _currentCacheLang != currentLang;
+            _currentCacheLang = currentLang;
+
+            if (isLanguageChange)
+            {
+                LastTenLogs = new List<MealLog>();
+                _allLogs = new List<MealLog>();
+            }
+
+            if (_localStorage != null && _localStorage.HasValue(cacheKey))
+            {
+                try
+                {
+                    var cachedLogs = _localStorage.GetValue<List<MealLog>>(cacheKey);
+                    if (cachedLogs != null && cachedLogs.Count > 0)
+                    {
+                        _allLogs = new List<MealLog>(cachedLogs);
+                        LastTenLogs = _allLogs
+                            .OrderByDescending(l => DateTime.TryParse(l.timestamp, out var t) ? t : DateTime.MinValue)
+                            .Take(10)
+                            .ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Failed to read meal logs cache for lang {currentLang}: {ex.Message}");
+                }
+            }
+
+            var existingItemsByMealId = new Dictionary<string, MealItemDetail[]>();
+            if (!isLanguageChange && LastTenLogs != null)
+            {
+                foreach (var l in LastTenLogs)
+                {
+                    if (l.meal != null && !string.IsNullOrEmpty(l.meal.id) && l.meal.items != null && l.meal.items.Length > 0)
+                    {
+                        existingItemsByMealId[l.meal.id] = l.meal.items;
+                    }
+                }
+            }
+
             var (response, error) = await _mealLogService.GetLogsAsync(
                 page: 1,
                 limit: 50);
 
             if (error != null)
             {
-                ErrorDetail = error;
+                if (LastTenLogs == null || LastTenLogs.Count == 0)
+                {
+                    ErrorDetail = error;
+                }
                 return;
             }
 
             ErrorDetail = null;
             _allLogs = response?.data != null ? new List<MealLog>(response.data) : new List<MealLog>();
 
-            LastTenLogs = _allLogs
+            var logs = _allLogs
                 .OrderByDescending(l => DateTime.TryParse(l.timestamp, out var t) ? t : DateTime.MinValue)
                 .Take(10)
                 .ToList();
 
+            foreach (var log in logs)
+            {
+                if (log.meal != null && (log.meal.items == null || log.meal.items.Length == 0))
+                {
+                    if (existingItemsByMealId.TryGetValue(log.meal.id, out var cachedItems))
+                    {
+                        log.meal.items = cachedItems;
+                    }
+                }
+            }
+
+            LastTenLogs = logs;
+
+            if (_mealItemService != null)
+            {
+                var missingItemMeals = logs
+                    .Where(log => log.meal != null && (log.meal.items == null || log.meal.items.Length == 0))
+                    .ToList();
+
+                if (missingItemMeals.Count > 0)
+                {
+                    var fetchTasks = missingItemMeals.Select(async log =>
+                    {
+                        var (details, _) = await _mealItemService.GetByMealIdAsync(log.meal.id);
+                        if (details != null && details.Length > 0)
+                        {
+                            log.meal.items = details;
+                        }
+                    });
+
+                    await Task.WhenAll(fetchTasks);
+                }
+            }
+
+            if (_genericFoodService != null && logs != null)
+            {
+                var translationTasks = new List<Task>();
+                foreach (var log in logs)
+                {
+                    if (log.meal?.items != null)
+                    {
+                        foreach (var item in log.meal.items)
+                        {
+                            if (!string.IsNullOrEmpty(item.genericFoodId))
+                            {
+                                translationTasks.Add(TranslateMealItemAsync(item));
+                            }
+                        }
+                    }
+                }
+
+                if (translationTasks.Count > 0)
+                {
+                    await Task.WhenAll(translationTasks);
+                }
+            }
+
+            LastTenLogs = new List<MealLog>(logs);
+
+            if (_localStorage != null)
+            {
+                try
+                {
+                    _localStorage.SetValue(cacheKey, LastTenLogs);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Failed to save meal logs cache for lang {currentLang}: {ex.Message}");
+                }
+            }
+        }
+
+        private async Task TranslateMealItemAsync(MealItemDetail item)
+        {
+            if (item == null || string.IsNullOrEmpty(item.genericFoodId) || _genericFoodService == null)
+                return;
+
+            var (gf, _) = await _genericFoodService.GetGenericFoodByIdAsync(item.genericFoodId);
+            if (gf != null && !string.IsNullOrEmpty(gf.foodName))
+            {
+                if (item.genericFood == null)
+                    item.genericFood = new MealItemGenericFood { id = gf.id };
+                item.genericFood.foodName = gf.foodName;
+            }
         }
 
         public void ResetToStep1()

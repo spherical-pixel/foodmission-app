@@ -1471,10 +1471,6 @@ MonoBehaviour:
     m_Localized: "Produkte suchen oder Kategorie ausw\xE4hlen..."
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: Heute eingenommene Mahlzeiten
-    m_Metadata:
-      m_Items: []
   - m_Id: 26318181705441280
     m_Localized: "Bitte f\xFCgen Sie mindestens ein Lebensmittel hinzu"
     m_Metadata:
@@ -2246,6 +2242,10 @@ MonoBehaviour:
       entwickelt sich st\xE4ndig weiter. Dank des Feedbacks von Nutzern wie dir verbessern
       wir die App und f\xFCgen neue Funktionen hinzu. Vielen Dank, dass du uns dabei
       hilfst, weiter zu wachsen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34310338294833152
+    m_Localized: Letzte Mahlzeiten
     m_Metadata:
       m_Items: []
   references:

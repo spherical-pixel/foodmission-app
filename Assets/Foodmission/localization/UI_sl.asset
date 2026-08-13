@@ -1460,10 +1460,6 @@ MonoBehaviour:
     m_Localized: "Poi\u0161\u010Dite izdelke ali izberite kategorijo..."
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: "Danes zau\u017Eiti obroki"
-    m_Metadata:
-      m_Items: []
   - m_Id: 26318181705441280
     m_Localized: "Prosimo, dodajte vsaj eno \u017Eivilo"
     m_Metadata:
@@ -2233,6 +2229,10 @@ MonoBehaviour:
       da ga boste lahko kmalu uporabljali.\n\nFOODMISSION se nenehno razvija. Aplikacijo
       izbolj\u0161ujemo in dodajamo nove funkcije na podlagi povratnih informacij
       od uporabnikov, kot ste vi. Hvala, da nam pomagate rasti!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34310338294833152
+    m_Localized: Zadnji obroki
     m_Metadata:
       m_Items: []
   references:

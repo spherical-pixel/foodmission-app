@@ -70,7 +70,7 @@
         <appui:ExVisualElement name="logged-meals-zone" class="fm-ml-logged-zone">
             <appui:Heading name="heading-today" text="Meals eaten today" size="M" primary="false">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(26309328330809344)"/>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34310338294833152)"/>
                 </Bindings>
             </appui:Heading>
             <appui:ExVisualElement name="list-meals-today" class="fm-ml-meals-list"/>

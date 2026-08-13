@@ -1460,8 +1460,8 @@ MonoBehaviour:
     m_Localized: Search products or select category...
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: Meals eaten today
+  - m_Id: 34310338294833152
+    m_Localized: Last meals
     m_Metadata:
       m_Items: []
   - m_Id: 26318181705441280

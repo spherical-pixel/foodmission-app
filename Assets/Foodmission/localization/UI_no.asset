@@ -1461,10 +1461,6 @@ MonoBehaviour:
     m_Localized: "S\xF8k etter produkter eller velg kategori..."
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: "M\xE5ltider jeg har spist i dag"
-    m_Metadata:
-      m_Items: []
   - m_Id: 26318181705441280
     m_Localized: "Vennligst legg til minst \xE9n matvare"
     m_Metadata:
@@ -2233,6 +2229,10 @@ MonoBehaviour:
       er i stadig utvikling. Vi forbedrer appen og legger til nye funksjoner takket
       v\xE6re tilbakemeldinger fra brukere som deg. Takk for at du hjelper oss med
       \xE5 fortsette \xE5 vokse!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34310338294833152
+    m_Localized: "Siste m\xE5ltider"
     m_Metadata:
       m_Items: []
   references:

@@ -1731,10 +1731,6 @@ MonoBehaviour:
     m_Key: SEARCH_PRODUCTS_OR_SELECT_CATEGORY
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Key: MEALS_EATEN_TODAY
-    m_Metadata:
-      m_Items: []
   - m_Id: 26318181705441280
     m_Key: ERROR_NO_ITEMS_SELECTED
     m_Metadata:
@@ -2181,6 +2177,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Key: NUTRI_MSG_NOT_AVAILABLE_YET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34310338294833152
+    m_Key: MEAL_LOG_LAST_MEALS
     m_Metadata:
       m_Items: []
   m_Metadata:

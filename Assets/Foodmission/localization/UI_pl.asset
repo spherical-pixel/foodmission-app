@@ -1482,10 +1482,6 @@ MonoBehaviour:
     m_Localized: "Wyszukaj produkty lub wybierz kategori\u0119..."
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: "Dzisiejsze posi\u0142ki"
-    m_Metadata:
-      m_Items: []
   - m_Id: 26318181705441280
     m_Localized: "Prosz\u0119 doda\u0107 co najmniej jeden produkt spo\u017Cywczy"
     m_Metadata:
@@ -2263,6 +2259,10 @@ MonoBehaviour:
       z niej korzysta\u0107.\n\nFOODMISSION nieustannie si\u0119 rozwija. Ulepszamy
       aplikacj\u0119 i dodajemy nowe funkcje dzi\u0119ki opiniom od u\u017Cytkownik\xF3w
       takich jak Ty. Dzi\u0119kujemy za pomoc w naszym dalszym rozwoju!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34310338294833152
+    m_Localized: "Ostatnie posi\u0142ki"
     m_Metadata:
       m_Items: []
   references:

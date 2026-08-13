@@ -522,6 +522,41 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task LoadTodayAsync_LoadsFromLocalCacheFirst()
+        {
+            var cached = new System.Collections.Generic.List<MealLog>
+            {
+                new MealLog { id = "cache-1", typeOfMeal = "BREAKFAST", timestamp = "2026-08-13T08:00:00Z", meal = new Meal { name = "Cached Coffee" } }
+            };
+
+            _mockLocalStorage
+                .Setup(x => x.HasValue(It.Is<string>(s => s.StartsWith("meal_logs_cache"))))
+                .Returns(true);
+            _mockLocalStorage
+                .Setup(x => x.GetValue<System.Collections.Generic.List<MealLog>>(It.Is<string>(s => s.StartsWith("meal_logs_cache")), It.IsAny<System.Collections.Generic.List<MealLog>>()))
+                .Returns(cached);
+
+            var apiResponse = new PaginatedMealLogResponse
+            {
+                data = new[]
+                {
+                    new MealLog { id = "api-1", typeOfMeal = "LUNCH", timestamp = "2026-08-13T13:00:00Z", meal = new Meal { name = "Fresh Salad" } }
+                },
+                total = 1, page = 1, limit = 20, totalPages = 1
+            };
+
+            _mockMealLogService
+                .Setup(x => x.GetLogsAsync(1, 50, null, It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((apiResponse, null));
+
+            await _vm.LoadTodayAsync();
+
+            Assert.AreEqual(1, _vm.LastTenLogs.Count);
+            Assert.AreEqual("Fresh Salad", _vm.LastTenLogs[0].meal.name);
+            _mockLocalStorage.Verify(x => x.SetValue(It.Is<string>(s => s.StartsWith("meal_logs_cache")), It.IsAny<System.Collections.Generic.List<MealLog>>()), Times.Once);
+        }
+
+        [Test]
         public async Task DeleteLogAsync_Success_RemovesFromLogs()
         {
             var response = new PaginatedMealLogResponse

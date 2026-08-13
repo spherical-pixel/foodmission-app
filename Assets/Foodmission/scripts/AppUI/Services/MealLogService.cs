@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -52,7 +52,7 @@ namespace eu.foodmission.platform
 
             string raw = req.downloadHandler.text;
             Debug.Log($"[{GetType().Name}] CreateAsync response: {raw}");
-            return (JsonUtility.FromJson<MealLog>(raw), null);
+            return (JsonConvert.DeserializeObject<MealLog>(raw), null);
         }
 
         public async Task<(PaginatedMealLogResponse Result, ApiErrorResponse Error)> GetLogsAsync(
@@ -62,6 +62,7 @@ namespace eu.foodmission.platform
             string dateFrom = null,
             string dateTo = null)
         {
+            string lang = _storeService.GetAppState().lang ?? "en";
             var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/meal-logs?page={page}&limit={limit}");
 
             if (!string.IsNullOrEmpty(typeOfMeal))
@@ -77,6 +78,7 @@ namespace eu.foodmission.platform
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Accept-Language", lang);
 
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
             while (!op.isDone) await Task.Yield();
@@ -88,7 +90,7 @@ namespace eu.foodmission.platform
 
             string raw = request.downloadHandler.text;
             Debug.Log($"[{GetType().Name}] GetLogsAsync response ({raw.Length} chars): {raw}");
-            return (JsonUtility.FromJson<PaginatedMealLogResponse>(raw), null);
+            return (JsonConvert.DeserializeObject<PaginatedMealLogResponse>(raw), null);
         }
 
         public async Task<(MealLog Result, ApiErrorResponse Error)> GetLogAsync(string id)
@@ -109,7 +111,7 @@ namespace eu.foodmission.platform
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetLogAsync {id}"));
             }
 
-            return (JsonUtility.FromJson<MealLog>(request.downloadHandler.text), null);
+            return (JsonConvert.DeserializeObject<MealLog>(request.downloadHandler.text), null);
         }
 
         public async Task<(bool Success, ApiErrorResponse Error)> DeleteLogAsync(string id)

@@ -21,11 +21,11 @@ namespace eu.foodmission.platform
         public string name;
         public string recipeId;
         public bool isRecipe;
-        public float calories;
-        public float proteins;
+        public float? calories;
+        public float? proteins;
         public MealNutritionalInfo nutritionalInfo;
-        public float sustainabilityScore;
-        public float price;
+        public float? sustainabilityScore;
+        public float? price;
         public string barcode;
         public string[] mealCategories;
         public string mealCourse;
@@ -33,6 +33,7 @@ namespace eu.foodmission.platform
         public string userId;
         public string createdAt;
         public string updatedAt;
+        public MealItemDetail[] items;
     }
 
     [Serializable]

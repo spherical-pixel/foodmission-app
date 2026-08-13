@@ -1465,10 +1465,6 @@ MonoBehaviour:
     m_Localized: Zoek producten of kies een categorie...
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: Maaltijden die ik vandaag heb gegeten
-    m_Metadata:
-      m_Items: []
   - m_Id: 26318181705441280
     m_Localized: "Voeg alstublieft ten minste \xE9\xE9n voedingsmiddel toe"
     m_Metadata:
@@ -2244,6 +2240,10 @@ MonoBehaviour:
       blijft zich voortdurend ontwikkelen. Dankzij de feedback van mensen zoals jij
       verbeteren we de app en voegen we nieuwe functies toe. Bedankt dat je ons helpt
       om te blijven groeien!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34310338294833152
+    m_Localized: Laatste maaltijden
     m_Metadata:
       m_Items: []
   references:

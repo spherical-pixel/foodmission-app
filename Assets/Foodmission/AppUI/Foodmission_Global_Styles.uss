@@ -1174,11 +1174,60 @@
 
 .fm-meal-card-heading {
     color: var(--appui-foregrounds-50);
-    padding-bottom: 8px;
+    padding-bottom: 4px;
 }
 
 .fm-meal-card-text {
     color: var(--appui-foregrounds-50);
+}
+
+.fm-meal-card-title {
+    font-size: var(--appui-font-sizes-body-lg);
+    -unity-font-style: bold;
+    margin-bottom: 6px;
+}
+
+.fm-meal-card-items {
+    flex-direction: column;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-top-width: 1px;
+    border-top-color: var(--appui-foregrounds-10);
+}
+
+.fm-meal-card-item-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.fm-meal-card-item-name {
+    color: var(--appui-foregrounds-100);
+    font-size: var(--appui-font-sizes-body-md);
+    flex-shrink: 1;
+}
+
+.fm-meal-card-item-qty {
+    color: var(--appui-foregrounds-200);
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    background-color: var(--appui-backgrounds-100);
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+.fm-meal-card-item-empty {
+    color: var(--appui-foregrounds-300);
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: italic;
 }
 
 .fm-food-info-overlay {

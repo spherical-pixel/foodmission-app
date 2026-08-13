@@ -567,6 +567,7 @@ namespace eu.foodmission.platform
 
             var localStorage = App.current?.services?.GetService<ILocalStorageService>();
             localStorage?.DeleteValue("shoppinglists_cache");
+            localStorage?.DeleteValue("meal_logs_cache");
 
             var avatarService = App.current?.services?.GetService<IAvatarService>();
             avatarService?.ClearFaceTexture();

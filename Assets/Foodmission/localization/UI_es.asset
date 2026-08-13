@@ -1468,8 +1468,8 @@ MonoBehaviour:
     m_Localized: "Busca productos o selecciona una categor\xEDa..."
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: Comidas que he tomado hoy
+  - m_Id: 34310338294833152
+    m_Localized: "\xDAltimas comidas"
     m_Metadata:
       m_Items: []
   - m_Id: 26318181705441280

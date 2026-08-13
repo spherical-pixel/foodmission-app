@@ -338,6 +338,7 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(_viewModel.TypeOfMealOptions):
                     RebuildTypeButtons();
+                    RebuildMealCards();
                     break;
                 case nameof(_viewModel.PresetResults):
                     RebuildPresetResults();

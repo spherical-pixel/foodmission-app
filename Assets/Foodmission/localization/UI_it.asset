@@ -1469,10 +1469,6 @@ MonoBehaviour:
     m_Localized: Cerca i prodotti o seleziona una categoria...
     m_Metadata:
       m_Items: []
-  - m_Id: 26309328330809344
-    m_Localized: Pasti consumati oggi
-    m_Metadata:
-      m_Items: []
   - m_Id: 26318181705441280
     m_Localized: Si prega di aggiungere almeno un prodotto alimentare
     m_Metadata:
@@ -2241,6 +2237,10 @@ MonoBehaviour:
       ci stiamo lavorando e potrai usarla molto presto.\n\nFOODMISSION \xE8 in continua
       evoluzione. Stiamo migliorando l'app e aggiungendo nuove funzionalit\xE0 grazie
       ai feedback di utenti come te. Grazie per aiutarci a crescere sempre di pi\xF9!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34310338294833152
+    m_Localized: Gli ultimi pasti
     m_Metadata:
       m_Items: []
   references:

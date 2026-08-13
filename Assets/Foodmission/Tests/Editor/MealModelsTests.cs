@@ -95,5 +95,22 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, result.total);
             Assert.AreEqual(1, result.totalPages);
         }
+
+        [Test]
+        public void Meal_Deserializes_Null_Numeric_Fields_Via_NewtonsoftJson()
+        {
+            string json = "{\"id\":\"m2\",\"name\":\"Null Meal\"," +
+                "\"calories\":null,\"proteins\":null,\"sustainabilityScore\":null,\"price\":null," +
+                "\"userId\":\"u1\",\"createdAt\":\"2026-04-27T00:00:00Z\",\"updatedAt\":\"2026-04-27T00:00:00Z\"}";
+
+            Meal result = Newtonsoft.Json.JsonConvert.DeserializeObject<Meal>(json);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("m2", result.id);
+            Assert.IsNull(result.calories);
+            Assert.IsNull(result.proteins);
+            Assert.IsNull(result.sustainabilityScore);
+            Assert.IsNull(result.price);
+        }
     }
 }
