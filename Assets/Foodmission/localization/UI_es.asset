@@ -2235,7 +2235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34040672355868672
-    m_Localized: Tiempo Diario Dedicado
+    m_Localized: "\xBFQue tiempo puedes dedicar al uso de esta app cada d\xEDa?"
     m_Metadata:
       m_Items: []
   - m_Id: 34040837200404480
@@ -2248,10 +2248,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041135683854336
     m_Localized: Selecciona tu tipo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041704037212160
-    m_Localized: "\xA1Personaliza tu Perfil!"
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

@@ -2148,6 +2148,110 @@ MonoBehaviour:
       za raziskavo v okviru pilotnega projekta."
     m_Metadata:
       m_Items: []
+  - m_Id: 34022749457342464
+    m_Localized: "Pozdravljeni! Da bi vam lahko prilagodili izku\u0161njo na Foodmissionu
+      in vam pomagali dose\u010Di va\u0161e cilje, bi vas radi malo bolje spoznali.
+      Ste za to?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34022967284326400
+    m_Localized: "Kaj vas najbolj motivira, da bi se pridru\u017Eili podjetju Foodmission?
+      Povejte nam, kak\u0161en je va\u0161 glavni cilj."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023051975712768
+    m_Localized: Nekaj podatkov o tebi nam pomaga prilagoditi aplikacijo ljudem iz
+      tvojega kroga in tvoje starostne skupine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023332885028864
+    m_Localized: "Ali upo\u0161tevate kak\u0161ne posebne prehranske zahteve? To
+      nam bo pomagalo, da vam bomo lahko priporo\u010Dili ustrezne recepte in izdelke."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34027969428054016
+    m_Localized: "Spoznavanje va\u0161ih dnevnih navad nam omogo\u010Da, da vam ponudimo
+      nasvete, ki se prilegajo va\u0161emu vsakdanjemu \u017Eivljenju."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34032508952633344
+    m_Localized: "Izberite mo\u017Enost, ki najbolje opisuje va\u0161e trajnostne
+      in zdrave prehranjevalne navade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037819398676480
+    m_Localized: Glavni motiv
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037939833921536
+    m_Localized: Izberite svoj glavni cilj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038583797997568
+    m_Localized: "Izberite \u017Eanr"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038675313516544
+    m_Localized: Raven izobrazbe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038791491543040
+    m_Localized: Izberite svojo stopnjo izobrazbe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038925629579264
+    m_Localized: Razpon dohodkov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039030617202688
+    m_Localized: Izberite razpon dohodkov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039177296207872
+    m_Localized: Prehranske navade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039865006874624
+    m_Localized: Izberite nastavitve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039990223626240
+    m_Localized: Stopnja telesne aktivnosti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040218603479040
+    m_Localized: Izberite stopnjo aktivnosti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040348811452416
+    m_Localized: Odgovorno nakupovanje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040572049088512
+    m_Localized: Izberite stopnjo odgovornosti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040672355868672
+    m_Localized: "Koliko \u010Dasa lahko vsak dan pre\u017Eivite z uporabo te aplikacije?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040837200404480
+    m_Localized: "Izberite predviden \u010Das"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040936672518144
+    m_Localized: Profil trajnostnih navad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041135683854336
+    m_Localized: Izberite vrsto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041809595260928
+    m_Localized: "Prosimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
+      lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

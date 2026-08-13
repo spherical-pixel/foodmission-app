@@ -2226,7 +2226,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34040672355868672
-    m_Localized: Daily Time Spent
+    m_Localized: How much time can you spend using this app each day?
     m_Metadata:
       m_Items: []
   - m_Id: 34040837200404480
@@ -2239,10 +2239,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041135683854336
     m_Localized: Select your type
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041704037212160
-    m_Localized: Customise your profile!
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

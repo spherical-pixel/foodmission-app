@@ -2159,6 +2159,111 @@ MonoBehaviour:
       Pilotstudie herangezogen."
     m_Metadata:
       m_Items: []
+  - m_Id: 34022749457342464
+    m_Localized: "Hallo! Um dein Erlebnis auf Foodmission individuell anzupassen
+      und dir dabei zu helfen, deine Ziele zu erreichen, m\xF6chten wir dich gerne
+      etwas besser kennenlernen. Hast du Lust dazu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34022967284326400
+    m_Localized: Was motiviert Sie am meisten, bei Foodmission einzusteigen? Verraten
+      Sie uns, was Ihr Hauptziel ist.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023051975712768
+    m_Localized: Ein paar Angaben zu deiner Person helfen uns dabei, die App auf
+      die Menschen in deinem Umfeld und deiner Altersgruppe zuzuschneiden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023332885028864
+    m_Localized: "Befolgen Sie bestimmte Ern\xE4hrungsvorschriften? Das hilft uns
+      dabei, Ihnen passende Rezepte und Produkte zu empfehlen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34027969428054016
+    m_Localized: "Wenn wir Ihre t\xE4glichen Abl\xE4ufe kennen, k\xF6nnen wir Ihnen
+      Ratschl\xE4ge geben, die zu Ihrem Alltag passen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34032508952633344
+    m_Localized: "W\xE4hlen Sie die Option aus, die Ihre nachhaltigen und gesunden
+      Ern\xE4hrungsgewohnheiten am besten beschreibt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037819398676480
+    m_Localized: Hauptmotivation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037939833921536
+    m_Localized: "W\xE4hlen Sie Ihr Hauptziel aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038583797997568
+    m_Localized: "W\xE4hlen Sie Ihr Genre aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038675313516544
+    m_Localized: Bildungsniveau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038791491543040
+    m_Localized: "W\xE4hlen Sie Ihren Bildungsabschluss aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038925629579264
+    m_Localized: Einkommensspanne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039030617202688
+    m_Localized: "Einkommensklasse ausw\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039177296207872
+    m_Localized: Essgewohnheiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039865006874624
+    m_Localized: "Einstellungen ausw\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039990223626240
+    m_Localized: "Grad der k\xF6rperlichen Aktivit\xE4t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040218603479040
+    m_Localized: "Aktivit\xE4tsstufe ausw\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040348811452416
+    m_Localized: Verantwortungsbewusstes Einkaufen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040572049088512
+    m_Localized: "W\xE4hlen Sie Ihren Verantwortungsbereich aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040672355868672
+    m_Localized: "Wie viel Zeit kannst du t\xE4glich mit dieser App verbringen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040837200404480
+    m_Localized: "Gesch\xE4tzte Zeit ausw\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040936672518144
+    m_Localized: Profil zu nachhaltigen Gewohnheiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041135683854336
+    m_Localized: "W\xE4hlen Sie Ihren Typ aus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041809595260928
+    m_Localized: "Bitte beantworte ein paar optionale Fragen, damit wir unsere Tipps,
+      Rezeptvorschl\xE4ge und t\xE4glichen Herausforderungen individuell auf dich
+      zuschneiden k\xF6nnen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

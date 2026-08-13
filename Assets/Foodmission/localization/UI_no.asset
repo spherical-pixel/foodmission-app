@@ -2147,6 +2147,110 @@ MonoBehaviour:
       utforske og bruke plattformen, men dataene dine vil ikke bli brukt i pilotunders\xF8kelsen."
     m_Metadata:
       m_Items: []
+  - m_Id: 34022749457342464
+    m_Localized: "Hei! For \xE5 tilpasse opplevelsen din p\xE5 Foodmission og hjelpe
+      deg med \xE5 n\xE5 m\xE5lene dine, vil vi gjerne bli litt bedre kjent med deg.
+      Er du med p\xE5 det?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34022967284326400
+    m_Localized: "Hva er det som motiverer deg mest til \xE5 bli med i Foodmission?
+      Fortell oss hva ditt viktigste m\xE5l er."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023051975712768
+    m_Localized: "Noen f\xE5 opplysninger om deg hjelper oss med \xE5 tilpasse appen
+      til folk i din omgangskrets og aldersgruppe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023332885028864
+    m_Localized: "F\xF8lger du noen spesielle kostholdsregler? Dette vil hjelpe oss
+      med \xE5 anbefale passende oppskrifter og produkter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34027969428054016
+    m_Localized: "Ved \xE5 forst\xE5 dine daglige rutiner kan vi gi deg r\xE5d som
+      passer inn i hverdagen din."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34032508952633344
+    m_Localized: "Velg det alternativet som best beskriver dine b\xE6rekraftige og
+      sunne spisevaner."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037819398676480
+    m_Localized: Hovedmotivasjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037939833921536
+    m_Localized: "Velg hovedm\xE5let ditt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038583797997568
+    m_Localized: Velg sjanger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038675313516544
+    m_Localized: "Utdanningsniv\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038791491543040
+    m_Localized: "Velg utdanningsniv\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038925629579264
+    m_Localized: Inntektsspenn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039030617202688
+    m_Localized: Velg inntektsintervall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039177296207872
+    m_Localized: Matpreferanser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039865006874624
+    m_Localized: Velg innstillinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039990223626240
+    m_Localized: "Fysisk aktivitetsniv\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040218603479040
+    m_Localized: "Velg aktivitetsniv\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040348811452416
+    m_Localized: Ansvarlig shopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040572049088512
+    m_Localized: "Velg ansvarsniv\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040672355868672
+    m_Localized: "Hvor mye tid kan du bruke p\xE5 denne appen hver dag?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040837200404480
+    m_Localized: Velg forventet tid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040936672518144
+    m_Localized: "Profil for b\xE6rekraftige vaner"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041135683854336
+    m_Localized: Velg type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041809595260928
+    m_Localized: "Vennligst svar p\xE5 noen valgfrie sp\xF8rsm\xE5l, slik at vi kan
+      tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene dine."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

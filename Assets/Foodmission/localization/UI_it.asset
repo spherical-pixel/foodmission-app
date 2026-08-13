@@ -2155,6 +2155,111 @@ MonoBehaviour:
       della ricerca del progetto pilota."
     m_Metadata:
       m_Items: []
+  - m_Id: 34022749457342464
+    m_Localized: "Ciao! Per personalizzare la tua esperienza su Foodmission e aiutarti
+      a raggiungere i tuoi obiettivi, vorremmo conoscerti un po\u2019 meglio. Ti
+      va?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34022967284326400
+    m_Localized: "Cosa ti spinge maggiormente a entrare a far parte di Foodmission?
+      Raccontaci qual \xE8 il tuo obiettivo principale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023051975712768
+    m_Localized: "Alcune informazioni su di te ci aiutano a personalizzare l'app
+      in base alle persone della tua cerchia e alla tua fascia d'et\xE0."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023332885028864
+    m_Localized: "Segui qualche regime alimentare particolare? Questo ci aiuter\xE0
+      a consigliarti ricette e prodotti adatti alle tue esigenze."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34027969428054016
+    m_Localized: Comprendere le tue abitudini quotidiane ci permette di darti consigli
+      che si adattino alla tua vita di tutti i giorni.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34032508952633344
+    m_Localized: Scegli l'opzione che meglio descrive le tue abitudini alimentari
+      sostenibili e salutari.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037819398676480
+    m_Localized: Motivazione principale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037939833921536
+    m_Localized: Seleziona il tuo obiettivo principale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038583797997568
+    m_Localized: Scegli il genere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038675313516544
+    m_Localized: Livello di istruzione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038791491543040
+    m_Localized: Seleziona il tuo livello di istruzione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038925629579264
+    m_Localized: Fascia di reddito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039030617202688
+    m_Localized: Seleziona la fascia di reddito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039177296207872
+    m_Localized: Preferenze alimentari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039865006874624
+    m_Localized: Seleziona le preferenze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039990223626240
+    m_Localized: "Livello di attivit\xE0 fisica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040218603479040
+    m_Localized: "Seleziona il livello di attivit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040348811452416
+    m_Localized: Acquisti responsabili
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040572049088512
+    m_Localized: "Seleziona il tuo livello di responsabilit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040672355868672
+    m_Localized: Quanto tempo riesci a dedicare a questa app ogni giorno?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040837200404480
+    m_Localized: Seleziona la durata stimata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040936672518144
+    m_Localized: Profilo delle abitudini sostenibili
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041135683854336
+    m_Localized: Seleziona il tipo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041809595260928
+    m_Localized: Ti preghiamo di rispondere ad alcune domande facoltative, in modo
+      da poterti offrire consigli personalizzati, suggerimenti sulle ricette e sfide
+      quotidiane.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

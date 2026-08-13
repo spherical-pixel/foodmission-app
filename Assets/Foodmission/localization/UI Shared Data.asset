@@ -2199,10 +2199,6 @@ MonoBehaviour:
     m_Key: ONBOARDING_PROFILE.PLACEHOLDER_SEGMENT
     m_Metadata:
       m_Items: []
-  - m_Id: 34041704037212160
-    m_Key: ONBOARDING_PROFILE.WELCOME_HEADER
-    m_Metadata:
-      m_Items: []
   - m_Id: 34041809595260928
     m_Key: ONBOARDING_PROFILE.WELCOME_DESC
     m_Metadata:

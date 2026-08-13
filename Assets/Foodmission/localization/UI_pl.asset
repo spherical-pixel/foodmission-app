@@ -2174,6 +2174,113 @@ MonoBehaviour:
       dane nie zostan\u0105 wykorzystane w badaniach w ramach programu pilota\u017Cowego."
     m_Metadata:
       m_Items: []
+  - m_Id: 34022749457342464
+    m_Localized: "Cze\u015B\u0107! Aby dostosowa\u0107 serwis Foodmission do Twoich
+      potrzeb i pom\xF3c Ci osi\u0105gn\u0105\u0107 Twoje cele, chcieliby\u015Bmy
+      Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34022967284326400
+    m_Localized: "Co najbardziej motywuje Ci\u0119 do do\u0142\u0105czenia do Foodmission?
+      Opowiedz nam, jaki jest Tw\xF3j g\u0142\xF3wny cel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023051975712768
+    m_Localized: "Kilka informacji o Tobie pomo\u017Ce nam dostosowa\u0107 aplikacj\u0119
+      do os\xF3b z Twojego otoczenia i z Twojej grupy wiekowej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34023332885028864
+    m_Localized: "Czy przestrzegasz jakich\u015B szczeg\xF3lnych zalece\u0144 \u017Cywieniowych?
+      Dzi\u0119ki temu b\u0119dziemy mogli zaproponowa\u0107 Ci odpowiednie przepisy
+      i produkty."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34027969428054016
+    m_Localized: "Zrozumienie Twoich codziennych nawyk\xF3w pozwala nam udziela\u0107
+      Ci porad, kt\xF3re idealnie wpisuj\u0105 si\u0119 w Twoje codzienne \u017Cycie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34032508952633344
+    m_Localized: "Wybierz opcj\u0119, kt\xF3ra najlepiej opisuje Twoje nawyki \u017Cywieniowe
+      zgodne z zasadami zr\xF3wnowa\u017Conego rozwoju i zdrowego od\u017Cywiania."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037819398676480
+    m_Localized: "G\u0142\xF3wna motywacja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34037939833921536
+    m_Localized: "Wybierz sw\xF3j g\u0142\xF3wny cel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038583797997568
+    m_Localized: Wybierz gatunek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038675313516544
+    m_Localized: "Poziom wykszta\u0142cenia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038791491543040
+    m_Localized: "Wybierz poziom wykszta\u0142cenia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34038925629579264
+    m_Localized: "Przedzia\u0142 dochod\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039030617202688
+    m_Localized: "Wybierz przedzia\u0142 dochod\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039177296207872
+    m_Localized: "Preferencje \u017Cywieniowe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039865006874624
+    m_Localized: Wybierz ustawienia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34039990223626240
+    m_Localized: "Poziom aktywno\u015Bci fizycznej"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040218603479040
+    m_Localized: "Wybierz poziom aktywno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040348811452416
+    m_Localized: "Odpowiedzialno\u015B\u0107 za zakupy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040572049088512
+    m_Localized: "Wybierz poziom odpowiedzialno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040672355868672
+    m_Localized: "Ile czasu dziennie mo\u017Cesz po\u015Bwi\u0119ci\u0107 na korzystanie
+      z tej aplikacji?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040837200404480
+    m_Localized: Wybierz szacowany czas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34040936672518144
+    m_Localized: "Profil nawyk\xF3w sprzyjaj\u0105cych zr\xF3wnowa\u017Conemu rozwojowi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041135683854336
+    m_Localized: Wybierz typ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34041809595260928
+    m_Localized: "Prosimy o udzielenie odpowiedzi na kilka opcjonalnych pyta\u0144,
+      aby\u015Bmy mogli dostosowa\u0107 do Ciebie porady, propozycje przepis\xF3w
+      i codzienne wyzwania."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
