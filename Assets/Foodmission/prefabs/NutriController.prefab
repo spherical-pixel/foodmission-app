@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7214090621983965346}
+  - component: {fileID: 6714956327708110595}
   m_Layer: 0
   m_Name: NutriController
   m_TagString: Untagged
@@ -36,6 +37,20 @@ Transform:
   - {fileID: 7644615464255425854}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6714956327708110595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4831336168800760897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ff1fcac515c438cadaf17739fd354a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _nutriAnimationController: {fileID: 9113390489111210475}
+  _nutriCamera: {fileID: 301748129570009104}
 --- !u!1 &4858978274051871015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,3 +1049,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8607834153410970178, guid: 6f0c448bfb9597841ae79f3efe95d932, type: 3}
   m_PrefabInstance: {fileID: 5967827882842974637}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9113390489111210475 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3218032534782951494, guid: 6f0c448bfb9597841ae79f3efe95d932, type: 3}
+  m_PrefabInstance: {fileID: 5967827882842974637}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c092677b67aa84a14ab157a493675955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

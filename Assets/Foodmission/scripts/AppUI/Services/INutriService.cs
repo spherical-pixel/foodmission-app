@@ -5,16 +5,21 @@ namespace eu.foodmission.platform
 {
     public enum NutriMood
     {
-        Neutral,
-        Happy,
-        VeryHappy,
-        Bored,
-        Sick,
-        Dirty,
+        Neutral = 0,
+        Happy = 1,
+        VeryHappy = 2,
+        Bored = -1,
+        Sick = -2,
+        Dirty = -3
+    }
+
+    public enum NutriAction
+    {
+        Idle,
         Talking,
-        Celebration,
         Greeting,
-        LookingDown
+        LookingDown,
+        Celebration
     }
 
     public interface INutriService
@@ -23,6 +28,7 @@ namespace eu.foodmission.platform
         void SetActive(bool active);
         void SetCameraActive(bool active);
         void SetMood(NutriMood mood);
+        void SetAction(NutriAction nutriAction);
         NutriMood CurrentMood { get; }
         bool IsInitialized { get; }
 

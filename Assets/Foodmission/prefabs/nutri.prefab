@@ -8131,6 +8131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: leaf1
       objectReference: {fileID: 0}
+    - target: {fileID: 245511961622353754, guid: 9d3123287764444438b5f006bbcf101f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 453345025803940136, guid: 9d3123287764444438b5f006bbcf101f, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -8177,6 +8181,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d3123287764444438b5f006bbcf101f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7273878341924337553}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d3123287764444438b5f006bbcf101f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3218032534782951494}
   m_SourcePrefab: {fileID: 100100000, guid: 9d3123287764444438b5f006bbcf101f, type: 3}
 --- !u!4 &2895935075431220320 stripped
 Transform:
@@ -8210,3 +8217,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3218032534782951494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8952869236954962168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c092677b67aa84a14ab157a493675955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
