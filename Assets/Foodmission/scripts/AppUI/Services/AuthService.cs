@@ -501,10 +501,21 @@ namespace eu.foodmission.platform
                 }
             };
 
-            var (success, _) = await UpdateProfileAsync(request);
-            if (!success)
+            try
             {
-                Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
+                string json = request.ToJson();
+                string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+
+                var (success, _) = await SendPatchRequest(url, bodyRaw, state.tokenType, state.accessToken);
+                if (!success)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SyncSettingsAsync exception: {ex.Message}");
             }
         }
 

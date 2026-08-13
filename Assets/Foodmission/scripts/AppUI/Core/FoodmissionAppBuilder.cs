@@ -2,6 +2,7 @@ using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
@@ -15,6 +16,7 @@ namespace eu.foodmission.platform
 
 
         public NavGraphViewAsset GraphAsset;
+        public AudioMixer audioMixer;
 
         protected override void OnConfiguringApp(AppBuilder builder)
         {
@@ -26,6 +28,7 @@ namespace eu.foodmission.platform
             // Services - important: check order according to dependencies
             builder.services.AddSingleton<ILocalStorageService, LocalStorageService>();
             builder.services.AddSingleton<IStoreService, StoreService>();
+            builder.services.AddSingleton<IAudioService, AudioService>();
             builder.services.AddSingleton<IAuthService, AuthService>();
             builder.services.AddSingleton<IThemeService, ThemeService>();
             builder.services.AddSingleton<IKeyboardService, KeyboardService>();

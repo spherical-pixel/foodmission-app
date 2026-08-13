@@ -12,8 +12,9 @@ namespace eu.foodmission.platform
     {
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
+        private readonly IAudioService _audioService;
         private CancellationTokenSource _syncCts;
-        private const int SyncDelayMs = 1500;
+        private const int SyncDelayMs = 600;
 
         [ObservableProperty]
         private string m_Theme = "system";
@@ -42,10 +43,11 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_UserName = "User";
 
-        public SettingsViewModel(IStoreService storeService, IAuthService authService, ICatalogService catalogService) : base(storeService)
+        public SettingsViewModel(IStoreService storeService, IAuthService authService, ICatalogService catalogService, IAudioService audioService = null) : base(storeService)
         {
             _authService = authService;
             _catalogService = catalogService;
+            _audioService = audioService;
             SynchronizeState(_storeService.GetAppState());
             _storeSubscription = _store.Subscribe(SelectSettingsState, OnSettingsStateChanged);
         }
@@ -112,25 +114,15 @@ namespace eu.foodmission.platform
         public void SetSound(int volume)
         {
             _store.Dispatch(AppActions.setSound.Invoke(volume));
-            ApplyMixerVolume(volume);
+            _audioService?.SetSoundVolume(volume);
             ScheduleSettingsSync();
-        }
-
-        private static void ApplyMixerVolume(int volume)
-        {
-            // TODO: mixer call here
         }
 
         public void SetMusic(int volume)
         {
             _store.Dispatch(AppActions.setMusic.Invoke(volume));
-            ApplyMixerMusicVolume(volume);
+            _audioService?.SetMusicVolume(volume);
             ScheduleSettingsSync();
-        }
-
-        private static void ApplyMixerMusicVolume(int volume)
-        {
-            // TODO: mixer call here
         }
 
         public void SetPushNotifications(bool enabled)

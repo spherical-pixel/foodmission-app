@@ -469,15 +469,15 @@ namespace eu.foodmission.platform
                 newState.lang = action.payload.language;
             }
 
-            // Only apply server settings if the server has stored them (theme is our sentinel)
+            // Only apply server settings if the server has stored them
             var s = action.payload.settings;
-            if (s != null && !string.IsNullOrEmpty(s.theme))
+            if (s != null)
             {
-                newState.theme = s.theme;
-                newState.scale = s.scale ?? newState.scale;
-                newState.font = s.font ?? newState.font;
-                newState.soundVolume = s.soundVolume > 0 ? s.soundVolume : newState.soundVolume;
-                newState.musicVolume = s.musicVolume > 0 ? s.musicVolume : newState.musicVolume;
+                if (!string.IsNullOrEmpty(s.theme)) newState.theme = s.theme;
+                if (!string.IsNullOrEmpty(s.scale)) newState.scale = s.scale;
+                if (!string.IsNullOrEmpty(s.font)) newState.font = s.font;
+                if (s.soundVolume >= 0) newState.soundVolume = s.soundVolume;
+                if (s.musicVolume >= 0) newState.musicVolume = s.musicVolume;
                 newState.pushNotificationsEnabled = s.pushNotificationsEnabled;
                 newState.backgroundPattern = s.backgroundPattern;
             }

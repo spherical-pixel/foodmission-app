@@ -191,6 +191,7 @@ MonoBehaviour:
   SplashTemplate: {fileID: 9197481963319205126, guid: 19d179cef1b0e4ef39a9a50f465a618c, type: 3}
   NotificationCardTemplate: {fileID: 9197481963319205126, guid: 74ab5c0e34b824368a8995c11c2e260a, type: 3}
   GraphAsset: {fileID: 11400000, guid: af062f8dbc7304d13ac9d886d982c734, type: 2}
+  audioMixer: {fileID: 24100000, guid: 3980431a5c6714a4f8660caadf36d155, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

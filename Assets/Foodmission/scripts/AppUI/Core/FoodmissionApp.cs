@@ -17,10 +17,11 @@ namespace eu.foodmission.platform
     public class FoodmissionApp : App
     {
         public new static FoodmissionApp current => (FoodmissionApp)App.current;
-        
+
         private IThemeService _themeService;
         private IStoreService _storeService;
         private IAccessibilityService _accessibilityService;
+        private IAudioService _audioService;
         private FoodmissionVisualController _visualController;
         private IDisposableSubscription _scaleSubscription;
         private IDisposableSubscription _langSubscription;
@@ -50,13 +51,27 @@ namespace eu.foodmission.platform
 
             _themeService = services.GetService<IThemeService>();
             _storeService = services.GetService<IStoreService>();
+            _audioService = services.GetService<IAudioService>();
+
+            if (_audioService != null)
+            {
+                var mixer = FoodmissionAppBuilder.instance != null ? FoodmissionAppBuilder.instance.audioMixer : null;
+                if (mixer == null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] AudioMixer not found in FoodmissionAppBuilder, audio will not be initialized");
+                }
+                else
+                {
+                    _audioService.Initialize(mixer);
+                }
+            }
 
             // Create and add the NavHost for navigation
             var navHost = new NavHost();
             navHost.navController.SetGraph(FoodmissionAppBuilder.instance.GraphAsset);
             _visualController = new FoodmissionVisualController();
             navHost.visualController = _visualController;
-            
+
 
             rootVisualElement.Add(navHost);
             navHost.StretchToParentSize();
@@ -167,6 +182,9 @@ namespace eu.foodmission.platform
             _themeService?.Dispose();
             _themeService = null;
 
+            _audioService?.Dispose();
+            _audioService = null;
+
             _storeService = null;
             _visualController = null;
             _panel = null;
@@ -229,7 +247,7 @@ namespace eu.foodmission.platform
 
             string currentLang = _storeService.GetAppState().lang;
 
-            if( currentLang == "none")
+            if (currentLang == "none")
             {
                 currentLang = CheckLangCode(currentLang);
                 Debug.Log($"[{GetType().Name}] - ApplyLocaleFromState - Applying locale from system: {currentLang}");
@@ -238,7 +256,7 @@ namespace eu.foodmission.platform
             else
             {
                 Debug.Log($"[{GetType().Name}] - ApplyLocaleFromState - Applying locale from state: {currentLang}");
-                
+
             }
 
 
@@ -249,8 +267,8 @@ namespace eu.foodmission.platform
         private string CheckLangCode(string lang)
         {
             string currentLang = lang;
-            
-            if( currentLang != "none" && currentLang != string.Empty && currentLang != null)
+
+            if (currentLang != "none" && currentLang != string.Empty && currentLang != null)
             {
                 foreach (var locale in LocalizationSettings.AvailableLocales.Locales)
                 {
@@ -261,7 +279,7 @@ namespace eu.foodmission.platform
                 }
             }
 
-            
+
             switch (Application.systemLanguage)
             {
                 case SystemLanguage.English:
@@ -295,17 +313,17 @@ namespace eu.foodmission.platform
                     currentLang = "en";
                     break;
             }
-                
-            
+
+
             return currentLang;
         }
 
         private void OnLangChanged(string lang)
         {
-            if( lang == "none")
+            if (lang == "none")
             {
                 lang = CheckLangCode(lang);
-                if( _storeService.GetAppState().lang != lang)
+                if (_storeService.GetAppState().lang != lang)
                 {
                     _storeService.store.Dispatch(AppActions.setLanguage.Invoke(lang));
                 }

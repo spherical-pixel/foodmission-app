@@ -13,6 +13,7 @@ namespace eu.foodmission.platform.Tests
     {
         private Mock<IAuthService> _mockAuthService;
         private Mock<ICatalogService> _mockCatalogService;
+        private Mock<IAudioService> _mockAudioService;
         private TestStoreService _storeService;
         private SettingsViewModel _vm;
 
@@ -21,8 +22,9 @@ namespace eu.foodmission.platform.Tests
         {
             _mockAuthService = new Mock<IAuthService>();
             _mockCatalogService = new Mock<ICatalogService>();
+            _mockAudioService = new Mock<IAudioService>();
             _storeService = new TestStoreService();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object);
         }
 
         [TearDown]
@@ -64,7 +66,7 @@ namespace eu.foodmission.platform.Tests
             _storeService.SetAppState(state);
 
             _vm?.Dispose();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object);
 
             Assert.AreEqual("dark", _vm.Theme);
             Assert.AreEqual("en", _vm.Lang);
@@ -110,19 +112,21 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void SetSound_DispatchesSetSoundAction()
+        public void SetSound_DispatchesSetSoundActionAndCallsAudioService()
         {
             _vm.SetSound(50);
 
             Assert.Contains("app/setSound", _storeService.DispatchedActionTypes);
+            _mockAudioService.Verify(x => x.SetSoundVolume(50), Times.Once);
         }
 
         [Test]
-        public void SetMusic_DispatchesSetMusicAction()
+        public void SetMusic_DispatchesSetMusicActionAndCallsAudioService()
         {
             _vm.SetMusic(25);
 
             Assert.Contains("app/setMusic", _storeService.DispatchedActionTypes);
+            _mockAudioService.Verify(x => x.SetMusicVolume(25), Times.Once);
         }
 
         [Test]
@@ -199,7 +203,7 @@ namespace eu.foodmission.platform.Tests
 
             _vm.SetTheme("dark");
 
-            await Task.Delay(1600);
+            await Task.Delay(700);
 
             _mockAuthService.Verify(x => x.SyncSettingsAsync(), Times.AtLeastOnce);
         }
