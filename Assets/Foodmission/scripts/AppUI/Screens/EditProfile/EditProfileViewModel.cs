@@ -496,7 +496,6 @@ namespace eu.foodmission.platform
                             dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
                             motivation = motivationCode ?? state.userMotivation,
                             dailyTimeCommitmentMinutes = dailyTimeMinutes > 0 ? dailyTimeMinutes : state.userDailyTimeCommitmentMinutes,
-                            segment = segmentCode ?? state.userSegment,
                             onboardingSurvey = hasSurvey ? state.userOnboardingSurvey : null,
                             autoAddToPantry = state.userAutoAddToPantry
                         }

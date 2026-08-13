@@ -340,6 +340,7 @@ namespace eu.foodmission.platform
                     activityLevel = _selectedActivityLevelIndex >= 0 && _catalogData?.activityLevels != null ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 && _catalogData?.educationLevels != null ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
                     annualIncome = _selectedAnnualIncomeIndex >= 0 && _catalogData?.annualIncomeLevels != null ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
+                    segment = segmentCode ?? state.userSegment,
 
                     preferences = new ProfileUpdatePreferences
                     {
@@ -347,7 +348,6 @@ namespace eu.foodmission.platform
                         dietaryPreference = dietaryCodes ?? state.userDietaryPreference,
                         motivation = motivationCode ?? state.userMotivation,
                         dailyTimeCommitmentMinutes = dailyTimeMinutes > 0 ? dailyTimeMinutes : state.userDailyTimeCommitmentMinutes,
-                        segment = segmentCode ?? state.userSegment,
                         onboardingProfileCompleted = true,
                         autoAddToPantry = state.userAutoAddToPantry
                     }

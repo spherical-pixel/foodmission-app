@@ -665,7 +665,6 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(capturedRequest.preferences);
             Assert.AreEqual("HEALTH", capturedRequest.preferences.motivation);
             Assert.AreEqual(45, capturedRequest.preferences.dailyTimeCommitmentMinutes);
-            Assert.AreEqual("FAMILY", capturedRequest.preferences.segment);
         }
     }
 }

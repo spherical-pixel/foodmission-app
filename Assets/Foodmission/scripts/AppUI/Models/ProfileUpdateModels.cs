@@ -131,9 +131,6 @@ namespace eu.foodmission.platform
 
         [JsonProperty("onboardingProfileSkippedAt", NullValueHandling = NullValueHandling.Ignore)]
         public string onboardingProfileSkippedAt;
-
-        [JsonProperty("segment", NullValueHandling = NullValueHandling.Ignore)]
-        public string segment;
     }
 
     /// <summary>

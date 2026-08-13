@@ -473,7 +473,7 @@ namespace eu.foodmission.platform
                 hasAvatar: profile.preferences?.hasAvatar ?? false,
                 motivation: profile.preferences?.motivation ?? "",
                 dailyTimeCommitmentMinutes: profile.preferences?.dailyTimeCommitmentMinutes ?? 0,
-                segment: profile.preferences?.segment ?? "",
+                segment: !string.IsNullOrEmpty(profile.segment) ? profile.segment : (profile.preferences?.segment ?? ""),
                 onboardingProfileCompleted: profile.preferences?.onboardingProfileCompleted ?? false,
                 onboardingProfileSkippedAt: profile.preferences?.onboardingProfileSkippedAt
             );
