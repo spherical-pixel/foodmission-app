@@ -1,3 +1,4 @@
+using System;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,9 +12,20 @@ namespace eu.foodmission.platform.Components
     {
         private Image _nutriImage;
         private INutriService _nutriService;
+        private IAudioService _audioService;
 
         // Static count to manage overlapping/simultaneous views (e.g., during screen transitions)
         private static int s_ActiveViewsCount = 0;
+
+        /// <summary>
+        /// Callback executed when Nutri is clicked.
+        /// </summary>
+        public Action OnClick { get; set; }
+
+        /// <summary>
+        /// Indicates whether a click action callback has been assigned.
+        /// </summary>
+        public bool HasClickAction => OnClick != null;
 
         public FMNutriView()
         {
@@ -27,11 +39,32 @@ namespace eu.foodmission.platform.Components
 
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
+            RegisterCallback<ClickEvent>(OnNutriClicked);
+        }
+
+        private void OnNutriClicked(ClickEvent evt)
+        {
+            if (OnClick == null)
+            {
+                // Default action: play Greeting animation, then return to Idle after 1 second
+                _nutriService?.SetAction(NutriAction.Greeting);
+                _audioService?.PlayNutriSfx(NutriSfxType.Touch);
+
+                schedule.Execute(() =>
+                {
+                    _nutriService?.SetAction(NutriAction.Idle);
+                }).ExecuteLater(1500);
+            }
+            else
+            {
+                OnClick.Invoke();
+            }
         }
 
         private void OnAttachToPanel(AttachToPanelEvent evt)
         {
             _nutriService = App.current?.services?.GetService<INutriService>();
+            _audioService = App.current?.services?.GetService<IAudioService>();
             if (_nutriService != null)
             {
                 if (s_ActiveViewsCount == 0)

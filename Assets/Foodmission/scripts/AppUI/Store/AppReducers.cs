@@ -476,10 +476,10 @@ namespace eu.foodmission.platform
                 if (!string.IsNullOrEmpty(s.theme)) newState.theme = s.theme;
                 if (!string.IsNullOrEmpty(s.scale)) newState.scale = s.scale;
                 if (!string.IsNullOrEmpty(s.font)) newState.font = s.font;
-                if (s.soundVolume >= 0) newState.soundVolume = s.soundVolume;
-                if (s.musicVolume >= 0) newState.musicVolume = s.musicVolume;
-                newState.pushNotificationsEnabled = s.pushNotificationsEnabled;
-                newState.backgroundPattern = s.backgroundPattern;
+                if (s.soundVolume.HasValue && s.soundVolume.Value >= 0) newState.soundVolume = s.soundVolume.Value;
+                if (s.musicVolume.HasValue && s.musicVolume.Value >= 0) newState.musicVolume = s.musicVolume.Value;
+                if (s.pushNotificationsEnabled.HasValue) newState.pushNotificationsEnabled = s.pushNotificationsEnabled.Value;
+                if (s.backgroundPattern.HasValue) newState.backgroundPattern = s.backgroundPattern.Value;
             }
 
             return newState;

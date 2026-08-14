@@ -108,8 +108,75 @@ namespace eu.foodmission.platform
             UpdateNavigationControls();
         }
 
+        private INutriService _nutriService;
+        private IAudioService _audioService;
+        private IVisualElementScheduledItem _nutriSpeechSchedule;
+        private static NutriSfxType s_LastTalkSfx = NutriSfxType.None;
+
+        /// <summary>
+        /// Triggers Nutri talking animation and plays a Nutri talking sound effect for the given duration,
+        /// then automatically switches Nutri back to Idle.
+        /// </summary>
+        /// <param name="durationSeconds">Duration in seconds (default 1.5s)</param>
+        /// <param name="sfxType">Nutri SFX to play (default NutriSfxType.Talk1)</param>
+        protected void TriggerNutriSpeech(float durationSeconds = 1.5f, NutriSfxType sfxType = NutriSfxType.Talk1)
+        {
+            ResetNutriToIdle();
+
+            _nutriService ??= App.current?.services?.GetService<INutriService>();
+            _audioService ??= App.current?.services?.GetService<IAudioService>();
+
+            if (_nutriService == null) return;
+
+            if (sfxType == NutriSfxType.Talk1)
+            {
+                NutriSfxType[] candidates = s_LastTalkSfx switch
+                {
+                    NutriSfxType.Talk1 => new[] { NutriSfxType.Talk2, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk2 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk3 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2 },
+                    _ => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2, NutriSfxType.Talk3 }
+                };
+
+                sfxType = candidates[UnityEngine.Random.Range(0, candidates.Length)];
+                s_LastTalkSfx = sfxType;
+            }
+
+            _nutriService.SetAction(NutriAction.Talking);
+            _audioService?.PlayNutriSfx(sfxType, 0.5f);
+
+            _nutriSpeechSchedule = schedule.Execute(() =>
+            {
+                _nutriService?.SetAction(NutriAction.Idle);
+                _nutriSpeechSchedule = null;
+            }).StartingIn((long)(durationSeconds * 1000));
+        }
+
+        /// <summary>
+        /// Cancels any scheduled return to Idle and immediately forces Nutri back to Idle.
+        /// </summary>
+        protected void ResetNutriToIdle()
+        {
+            if (_nutriSpeechSchedule != null)
+            {
+                _nutriSpeechSchedule.Pause();
+                _nutriSpeechSchedule = null;
+            }
+
+            _nutriService ??= App.current?.services?.GetService<INutriService>();
+            _nutriService?.SetAction(NutriAction.Idle);
+        }
+
+        public override void OnExit(NavController controller, NavDestination destination, Argument[] args)
+        {
+            ResetNutriToIdle();
+            base.OnExit(controller, destination, args);
+        }
+
         protected override void OnViewModelUnbinding()
         {
+            ResetNutriToIdle();
+
             if (_swipeView != null)
             {
                 _swipeView.UnregisterValueChangedCallback(OnSwipeViewValueChanged);
@@ -238,6 +305,7 @@ namespace eu.foodmission.platform
         {
             if (_viewModel.CurrentStepIndex != evt.newValue)
             {
+                ResetNutriToIdle();
                 ExecuteGoToStep(evt.newValue);
             }
         }
@@ -258,6 +326,7 @@ namespace eu.foodmission.platform
 
         private async void OnNextClicked()
         {
+            ResetNutriToIdle();
             try
             {
                 await _viewModel.GoNextAsync();
@@ -270,6 +339,7 @@ namespace eu.foodmission.platform
 
         private async void OnPreviousClicked()
         {
+            ResetNutriToIdle();
             try
             {
                 await _viewModel.GoPreviousAsync();

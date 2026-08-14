@@ -83,6 +83,7 @@ namespace eu.foodmission.platform
                 _messageCard.AddToClassList("fm-step-flow__guide-card--exit");
                 _messageCard.style.display = DisplayStyle.None;
                 _messageText.text = string.Empty;
+                ResetNutriToIdle();
                 return;
             }
 
@@ -101,6 +102,7 @@ namespace eu.foodmission.platform
                 _messageText.text = newMessage;
                 _messageCard.RemoveFromClassList("fm-step-flow__guide-card--exit");
                 _messageCard.AddToClassList("fm-step-flow__guide-card--visible");
+                TriggerNutriSpeech();
             }).StartingIn(150);
         }
 

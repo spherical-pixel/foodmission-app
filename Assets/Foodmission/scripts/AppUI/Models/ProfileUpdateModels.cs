@@ -14,10 +14,10 @@ namespace eu.foodmission.platform
         public string theme;
         public string scale;
         public string font;
-        public int soundVolume;
-        public int musicVolume;
-        public bool pushNotificationsEnabled;
-        public bool backgroundPattern;
+        public int? soundVolume;
+        public int? musicVolume;
+        public bool? pushNotificationsEnabled;
+        public bool? backgroundPattern;
         public string notificationPreferredTime;
     }
 

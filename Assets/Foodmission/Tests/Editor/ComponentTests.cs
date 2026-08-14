@@ -73,4 +73,42 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("🥛", FMSearchOrCategoryField.GetCategoryEmoji("Milk and milk products"));
         }
     }
+
+    [TestFixture]
+    public class FMNutriViewTests
+    {
+        [Test]
+        public void FMNutriView_Instantiation_Succeeds()
+        {
+            var view = new FMNutriView();
+            Assert.IsNotNull(view);
+            Assert.IsTrue(view.ClassListContains("fm-nutri-view"));
+        }
+
+        [Test]
+        public void FMNutriView_OnClick_TriggersCallback()
+        {
+            var view = new FMNutriView();
+            bool clicked = false;
+            view.OnClick = () => clicked = true;
+
+            // Invoke private OnNutriClicked handler via reflection to test callback dispatch
+            var method = typeof(FMNutriView).GetMethod("OnNutriClicked",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(method, "OnNutriClicked method should exist");
+
+            method.Invoke(view, new object[] { null });
+            Assert.IsTrue(clicked, "OnClick callback should be invoked on Nutri click");
+        }
+
+        [Test]
+        public void FMNutriView_HasClickAction_ReflectsAssignment()
+        {
+            var view = new FMNutriView();
+            Assert.IsFalse(view.HasClickAction);
+
+            view.OnClick = () => { };
+            Assert.IsTrue(view.HasClickAction);
+        }
+    }
 }

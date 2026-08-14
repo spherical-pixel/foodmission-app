@@ -13,6 +13,8 @@ namespace eu.foodmission.platform.Components
     {
         private static VisualTreeAsset _template;
         private static bool _templateLoading;
+        private static NutriSfxType s_LastTalkSfx = NutriSfxType.None;
+        private static IVisualElementScheduledItem s_SpeechSchedule;
 
         private const string _addressablePath = "Foodmission/AppUI/Templates/NutriMessageWithButtons.uxml";
 
@@ -84,6 +86,8 @@ namespace eu.foodmission.platform.Components
             FMDialogAction[] actions)
         {
             var nutriService = App.current?.services?.GetService<INutriService>();
+            var audioService = App.current?.services?.GetService<IAudioService>();
+
             if (nutriService != null)
             {
                 nutriService.SetActive(true);
@@ -93,6 +97,32 @@ namespace eu.foodmission.platform.Components
             var root = _template.Instantiate();
             root.style.flexGrow = 1;
             root.AddToClassList("fm-nutri-dialog");
+
+            if (nutriService != null)
+            {
+                s_SpeechSchedule?.Pause();
+                s_SpeechSchedule = null;
+
+                NutriSfxType[] candidates = s_LastTalkSfx switch
+                {
+                    NutriSfxType.Talk1 => new[] { NutriSfxType.Talk2, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk2 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk3 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2 },
+                    _ => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2, NutriSfxType.Talk3 }
+                };
+
+                NutriSfxType sfxType = candidates[UnityEngine.Random.Range(0, candidates.Length)];
+                s_LastTalkSfx = sfxType;
+
+                nutriService.SetAction(NutriAction.Talking);
+                audioService?.PlayNutriSfx(sfxType, 0.5f);
+
+                s_SpeechSchedule = root.schedule.Execute(() =>
+                {
+                    nutriService?.SetAction(NutriAction.Idle);
+                    s_SpeechSchedule = null;
+                }).StartingIn(1500);
+            }
 
             var contentContainer = root.Q<VisualElement>("content-container");
             var messageContainer = root.Q<ExVisualElement>("message-container");
@@ -154,8 +184,15 @@ namespace eu.foodmission.platform.Components
                 var capturedAction = action;
                 button.clicked += () =>
                 {
+                    if (s_SpeechSchedule != null)
+                    {
+                        s_SpeechSchedule.Pause();
+                        s_SpeechSchedule = null;
+                    }
+
                     if (nutriService != null)
                     {
+                        nutriService.SetAction(NutriAction.Idle);
                         nutriService.SetCameraActive(false);
                     }
 
