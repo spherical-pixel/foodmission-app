@@ -147,7 +147,7 @@
     --appui-alias-actions-accent-foreground-color-hover: var(--appui-primary-100);
     --appui-alias-actions-accent-foreground-color-default: var(--appui-primary-100);
 
-    --appui-alias-control-background-color-disabled: var(--appui-primary-300);
+    --appui-alias-control-background-color-disabled: var(--appui-primary-1000);
     --appui-alias-control-background-color-focus: var(--appui-primary-300);
     --appui-alias-control-background-color-active: var(--appui-primary-300);
     --appui-alias-control-background-color-hover: var(--appui-primary-300);

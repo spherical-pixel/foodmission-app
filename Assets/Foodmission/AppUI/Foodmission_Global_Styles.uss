@@ -53,6 +53,20 @@
     min-height: var(--appui-sizing-900);
 }
 
+.appui-button:disabled {
+    opacity: 0.65;
+}
+
+.appui--light .appui-button:disabled {
+    background-color: var(--appui-primary-1000);
+    color: var(--appui-primary-300);
+}
+
+.appui--dark .appui-button:disabled {
+    background-color: var(--appui-primary-300);
+    color: var(--appui-primary-1000);
+}
+
 .fm-button-align-left .appui-button__titlecontainer {
     align-items: flex-start;
 }

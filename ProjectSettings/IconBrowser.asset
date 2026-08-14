@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68cbf97d59bbc416dbe0ca731dc5468c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.AppUI.Editor::Unity.AppUI.Editor.IconBrowserSettings
-  lastUsedStyleSheet: {fileID: 7433441132597879392, guid: f7ec1fc49fc5e477793636b709231cc2, type: 3}
+  lastUsedStyleSheet: {fileID: 7433441132597879392, guid: 9585bf6d840e249c5bba216287aa68b0, type: 3}
