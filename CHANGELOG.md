@@ -1,3 +1,31 @@
+v0.0.7 - Changelog
+✨ New Features & Modules
+- Módulo de Recetas: Catálogo de recetas (`RecipeBookScreen`), vista detallada (`RecipeDetailScreen`) y editor progresivo paso a paso (`RecipeEditorScreen`). Integración para enviar ingredientes a la lista de la compra o registrar la receta en las comidas.
+- Búsqueda Rápida (`QuickSearchScreen`): Pantalla unificada de búsqueda global de alimentos (productos, genéricos y escáner de código de barras).
+- Visor Nutricional (`FoodInfoOverlay`): Vista completa de información nutricional para productos y alimentos genéricos (NutriScore, NOVA, EcoScore, alérgenos, ingredientes y semáforos de macros).
+- Gestión de Grupos (`GroupDetailScreen`): Vista detallada de miembros de grupo (`FMItemMember`), asignación de roles `ADMIN`/`VIRTUAL`, edición de grupo y gestión de integrantes.
+- Extensión del Perfil y Onboarding: Refactorización de `OnboardingProfileScreen` a 7 pasos con asistente Nutri, cuestionario 100% dinámico basado en catálogo del backend y edición completa de segmento de usuario/motivaciones en `EditProfileScreen`.
+- Captura de Avatar: Generación automática de foto de perfil 2D desde el avatar 3D (`AvatarService`) para los encabezados de la app.
+- Registro de Eventos (`EventService`): Telemetría de sesiones de usuario (`APP_SESSION_OPENED`, `APP_SESSION_ENDED`, duración en primer plano).
+
+🔊 Audio & Haptics
+- Sistema de Sonido (`AudioService`): Control de volumen para efectos (SFX) y música (BGM) integrado con el AudioMixer de Unity.
+- Feedback Háptico y Clics Globale: Sonidos automáticos al pulsar botones (`FMButton`, `Button`, etc.) y respuesta háptica (vibración).
+- Voces de Nutri: Clips de audio dinámicos para la mascota Nutri durante los diálogos y paso de pantallas.
+
+🎨 UI / UX & Enhancements
+- Despensa e Historial de Comidas: Deducción automática de la despensa por fecha de caducidad al registrar comidas y visualización de fechas en presets de comidas con nombres similares.
+- Escáner de Código de Barras Optimizado: Soporte para linterna/torch en iOS (`IOSTorchPlugin`) y Android (`AndroidTorchPlugin`), ROI restringido al 70%x45% y filtro de fotogramas duplicados para eliminar falsos positivos.
+- Diálogos Markdown: Integración del paquete `BrewedInk.MarkdownSupport` para formateo rico en diálogos legales e informativos.
+- Indicadores de Menús No Disponibles: Avisos informativos en secciones aún en desarrollo.
+- Cierre de Sesión Completo: Limpieza total de estado Redux, caché local, credenciales y archivos temporales de avatar al cerrar sesión.
+
+🐛 Bug Fixes & Refactor
+- Formulario de Registro: Carga dinámica de formularios de consentimiento de piloto según el país.
+- Cierre de Sesión & Token Refresh: Redirección limpia tras expiración de sesión y refresco automático de tokens en errores 401.
+- Corrección de selects USS (`:first-child`/`:last-child`) mediante clases C# explícitas en `FoodInfo`.
+- Normalización de DTOs del Perfil: Segmento de usuario movido a la raíz de la petición (`ProfileUpdateRequest`) para coincidir con la base de datos.
+
 v0.0.6 - Changelog
 ✨ New Features
 - Meal Log redesigned: 3-step progressive flow (type → source → compose) with separate meal name field and dedicated "Load preset" popover
