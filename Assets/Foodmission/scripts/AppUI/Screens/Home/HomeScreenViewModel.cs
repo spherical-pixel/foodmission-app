@@ -37,7 +37,9 @@ namespace eu.foodmission.platform
             // Get initial state
             AppState state = _storeService.GetAppState();
 
-            //audioService.PlayNutriSfx(NutriSfxType.Celebration);
+
+
+
 
 
             // Subscribe to user state changes

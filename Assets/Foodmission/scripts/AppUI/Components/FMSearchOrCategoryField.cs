@@ -636,6 +636,7 @@ namespace eu.foodmission.platform.Components
             // Back button row
             var backRow = new VisualElement();
             backRow.AddToClassList("fm-scf-back-row");
+            backRow.AddToClassList("fm-click-sound");
             string backEmoji = GetCategoryEmoji(_currentFoodGroupSlug ?? _currentFoodGroup);
             string backLocalized = _currentFoodGroup;
             var backLabel = new Unity.AppUI.UI.Heading { text = $"{backEmoji} {backLocalized}" };

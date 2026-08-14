@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+using System.Linq;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Redux;
@@ -95,6 +97,9 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[{GetType().Name}] rootVisualElement is null!");
             }
 
+            _panel.RegisterCallback<ClickEvent>(OnGlobalClick, TrickleDown.TrickleDown);
+
+
             // Register for cleaning when shutting down the app
             App.shuttingDown += OnShuttingDown;
         }
@@ -186,6 +191,8 @@ namespace eu.foodmission.platform
 
             _audioService?.Dispose();
             _audioService = null;
+
+            _panel?.UnregisterCallback<ClickEvent>(OnGlobalClick, TrickleDown.TrickleDown);
 
             _storeService = null;
             _visualController = null;
@@ -409,6 +416,120 @@ namespace eu.foodmission.platform
                 return;
 
             _panel.scale = scale;
+        }
+
+
+
+        /// <summary>
+        /// Global click event listener for ALL buttons in the application (FMButton, AppUI Button, BottomNavBar, Overlays, Modals, etc.).
+        /// Uses ClickEvent during TrickleDown phase on containers so audio triggers for all UI components.
+        /// </summary>
+        private void OnGlobalClick(ClickEvent evt)
+        {
+            if (_audioService == null) return;
+
+
+            var targetElement = evt.target as VisualElement;
+            if (targetElement == null)
+            {
+                return;
+            }
+
+            VisualElement button = targetElement;
+
+            // // Search up the visual tree for a Button or clickable component
+            // while (button != null && !IsButtonElement(button))
+            // {
+            //     button = button.parent;
+            // }
+
+
+
+
+            // Skip if no button container was clicked or if the button is disabled
+            if (button == null)
+            {
+                return;
+            }
+
+
+            if (!IsButtonElement(button))
+            {
+                return;
+            }
+
+            // Debug.LogWarning($"[FoodmissionApp] OnGlobalClick [ ISBUTTON ] - target: '{targetElement.name}' ({targetElement.GetType().Name})");
+
+            // if (button.ClassListContains("unity-disabled"))
+            // {
+            //     Debug.LogWarning($"[FoodmissionApp] OnGlobalClick [ unity-disabled ] - target: '{targetElement.name}' ({targetElement.GetType().Name}");
+            //     List<string> classes = button.GetClasses().ToList<string>();
+            //     classes.ForEach(c => Debug.LogWarning($"[FoodmissionApp] OnGlobalClick [ unity-disabled ] - class: '{c}'"));
+            //     return;
+            // }
+
+            // Debug.LogWarning($"[FoodmissionApp] OnGlobalClick [ !unity-disabled ] - target: '{targetElement.name}' ({targetElement.GetType().Name}");
+
+
+
+
+            // Allow elements to opt out of button click SFX using class "no-sfx"
+            if (button.ClassListContains("no-sfx"))
+            {
+                return;
+            }
+
+
+            // Determine if button is destructive
+            bool isDestructive = false;
+            if (button is Unity.AppUI.UI.Button appUiBtn)
+            {
+                isDestructive = appUiBtn.variant == ButtonVariant.Destructive;
+            }
+            else if (button.ClassListContains("fm-button-destructive") ||
+                     button.ClassListContains("btn-destructive") ||
+                     (!string.IsNullOrEmpty(button.name) && button.name.IndexOf("delete", System.StringComparison.OrdinalIgnoreCase) >= 0))
+            {
+                isDestructive = true;
+            }
+
+            SfxType sfx = isDestructive ? SfxType.NegativeButton : SfxType.PositiveButton;
+            _audioService.PlaySfx(sfx, 0.25f);
+
+            TriggerHapticFeedback(isDestructive ? Unity.AppUI.Core.HapticFeedbackType.HEAVY : Unity.AppUI.Core.HapticFeedbackType.LIGHT);
+        }
+
+        private static void TriggerHapticFeedback(Unity.AppUI.Core.HapticFeedbackType type)
+        {
+            if (Unity.AppUI.Core.Platform.isHapticFeedbackSupported)
+            {
+                Unity.AppUI.Core.Platform.RunHapticFeedback(type);
+            }
+        }
+
+
+        private static bool IsButtonElement(VisualElement ve)
+        {
+            if (ve == null) return false;
+
+            if (ve is Unity.AppUI.UI.Button ||
+                ve is UnityEngine.UIElements.Button ||
+                ve is Unity.AppUI.UI.BottomNavBarItem ||
+                ve is Unity.AppUI.UI.ActionButton ||
+                ve is Components.FMButton)
+            {
+                return true;
+            }
+
+            if (ve.ClassListContains("appui-button") ||
+                ve.ClassListContains("fm-button") ||
+                ve.ClassListContains("appui-bottom-nav-bar__item") ||
+                ve.ClassListContains("fm-click-sound"))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
