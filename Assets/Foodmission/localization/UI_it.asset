@@ -660,10 +660,6 @@ MonoBehaviour:
     m_Localized: Data di scadenza
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000039
-    m_Localized: AAAA-MM-GG
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000040
     m_Localized: Elimina
     m_Metadata:

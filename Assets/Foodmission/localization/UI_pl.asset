@@ -663,10 +663,6 @@ MonoBehaviour:
     m_Localized: "Data wa\u017Cno\u015Bci"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000039
-    m_Localized: RRRR-MM-DD
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000040
     m_Localized: "Usu\u0144"
     m_Metadata:

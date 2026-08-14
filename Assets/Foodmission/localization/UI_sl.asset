@@ -656,10 +656,6 @@ MonoBehaviour:
     m_Localized: Rok uporabnosti
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000039
-    m_Localized: LLLL-MM-DD
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000040
     m_Localized: "Izbri\u0161i"
     m_Metadata:

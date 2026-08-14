@@ -657,10 +657,6 @@ MonoBehaviour:
     m_Localized: Expiry date
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000039
-    m_Localized: YYYY-MM-DD
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000040
     m_Localized: Delete
     m_Metadata:

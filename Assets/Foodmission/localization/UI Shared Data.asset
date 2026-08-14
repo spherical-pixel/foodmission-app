@@ -939,10 +939,6 @@ MonoBehaviour:
     m_Key: EXPIRY_DATE
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000039
-    m_Key: DATE_FORMAT
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000040
     m_Key: DELETE
     m_Metadata:
