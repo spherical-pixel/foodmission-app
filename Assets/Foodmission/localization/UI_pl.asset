@@ -2143,9 +2143,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34022749457342464
-    m_Localized: "Cze\u015B\u0107! Aby dostosowa\u0107 serwis Foodmission do Twoich
-      potrzeb i pom\xF3c Ci osi\u0105gn\u0105\u0107 Twoje cele, chcieliby\u015Bmy
-      Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?"
+    m_Localized: "Witaj! Aby dostosowa\u0107 Twoje do\u015Bwiadczenia na Foodmission
+      do Twoich potrzeb i pom\xF3c Ci osi\u0105gn\u0105\u0107 Twoje cele, chcieliby\u015Bmy
+      Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?\n\nOdpowiedz prosz\u0119
+      na kilka opcjonalnych pyta\u0144, aby\u015Bmy mogli dostosowa\u0107 do Ciebie
+      porady, propozycje przepis\xF3w i codzienne wyzwania."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2207,7 +2209,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Wybierz ustawienia
+    m_Localized: "Nie wybrano \u017Cadnej opcji"
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240

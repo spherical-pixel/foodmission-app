@@ -2118,7 +2118,9 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Hei! For \xE5 tilpasse opplevelsen din p\xE5 Foodmission og hjelpe
       deg med \xE5 n\xE5 m\xE5lene dine, vil vi gjerne bli litt bedre kjent med deg.
-      Er du med p\xE5 det?"
+      Er du med p\xE5 det?\n\nSvar gjerne p\xE5 noen valgfrie sp\xF8rsm\xE5l, slik
+      at vi kan tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene
+      dine."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2179,7 +2181,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Velg innstillinger
+    m_Localized: Ingen valgt
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240

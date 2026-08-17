@@ -18,51 +18,54 @@ namespace eu.foodmission.platform.Components
         [UxmlAttribute("Heading-Text")]
         [CreateProperty]
 
-		public string HeadingText
+        public string HeadingText
         {
             get => _heading?.text ?? "";
             set
             {
-                if( _heading != null)
+                if (_heading != null)
                 {
                     _heading.text = value;
                 }
             }
         }
 
-        [UxmlAttribute("iconButton-Visible")][CreateProperty]
+        [UxmlAttribute("iconButton-Visible")]
+        [CreateProperty]
         public bool IconButtonVisible
         {
             get => _iconButton?.visible ?? false;
             set
             {
-                if( _iconButton != null)
+                if (_iconButton != null)
                 {
                     _iconButton.visible = value;
                 }
             }
         }
 
-        [UxmlAttribute("iconButton-icon")][CreateProperty]
+        [UxmlAttribute("iconButton-icon")]
+        [CreateProperty]
         public string IconButtonIcon
         {
             get => _iconButton?.icon ?? "";
             set
             {
-                if( _iconButton != null)
+                if (_iconButton != null)
                 {
                     _iconButton.icon = value;
                 }
             }
         }
 
-        [UxmlAttribute("iconButton-quiet")][CreateProperty]
+        [UxmlAttribute("iconButton-quiet")]
+        [CreateProperty]
         public bool IconButtonQuiet
         {
             get => _iconButton?.quiet ?? false;
             set
             {
-                if( _iconButton != null)
+                if (_iconButton != null)
                 {
                     _iconButton.quiet = value;
                 }
@@ -70,35 +73,39 @@ namespace eu.foodmission.platform.Components
         }
 
 
-        [UxmlAttribute("helpText-Text")][CreateProperty]
+        [UxmlAttribute("helpText-Text")]
+        [CreateProperty]
         public string HelpTextText
         {
             get => _helpText?.text ?? "";
             set
             {
-                if( _helpText != null)
+                if (_helpText != null)
                 {
                     _helpText.text = value;
 
-                    if( value != string.Empty)
+                    if (value != string.Empty)
                     {
-                        _helpText.visible = true;
+                        _helpText.style.visibility = Visibility.Visible;
+                        _helpSpacer.style.visibility = Visibility.Visible;
                     }
                     else
                     {
-                        _helpText.visible = false;
+                        _helpText.style.visibility = Visibility.Hidden;
+                        _helpSpacer.style.visibility = Visibility.Hidden;
                     }
                 }
             }
         }
 
-        [UxmlAttribute("helpText-Variant")][CreateProperty]
+        [UxmlAttribute("helpText-Variant")]
+        [CreateProperty]
         public HelpTextVariant HelpTextVariant
         {
             get => _helpText?.variant ?? HelpTextVariant.Default;
             set
             {
-                if( _helpText != null)
+                if (_helpText != null)
                 {
                     _helpText.variant = value;
                 }
@@ -112,6 +119,7 @@ namespace eu.foodmission.platform.Components
         protected Unity.AppUI.UI.IconButton _iconButton;
         protected VisualElement _fieldContainer;
         protected Unity.AppUI.UI.HelpText _helpText;
+        protected Spacer _helpSpacer;
 
         protected AccessibilityNode _accessibilityNode;
 
@@ -150,11 +158,12 @@ namespace eu.foodmission.platform.Components
             this.Add(_headingContainer);
 
             _heading = new Unity.AppUI.UI.Heading();
-            _heading.AddToClassList("heading-wrap");
+            //_heading.AddToClassList("heading-wrap");
+            _heading.style.whiteSpace = WhiteSpace.Normal;
             _heading.AddToClassList("heading_field");
             _heading.size = HeadingSize.S;
             _heading.primary = true;
-            
+
             _headingContainer.Add(_heading);
 
             _iconButton = new Unity.AppUI.UI.IconButton();
@@ -163,20 +172,20 @@ namespace eu.foodmission.platform.Components
             _fieldContainer = new VisualElement();
             this.Add(_fieldContainer);
 
-            Spacer spacer = new Spacer();
-            spacer.spacing = SpacerSpacing.S;
-            this.Add(spacer);
+            _helpSpacer = new Spacer();
+            _helpSpacer.spacing = SpacerSpacing.S;
+            this.Add(_helpSpacer);
+            _helpSpacer.style.visibility = Visibility.Hidden;
 
             _helpText = new Unity.AppUI.UI.HelpText();
+            _helpText.style.visibility = Visibility.Hidden;
             this.Add(_helpText);
 
             IconButtonVisible = false;
 
-            
-            
         }
 
-        
-        
+
+
     }
 }

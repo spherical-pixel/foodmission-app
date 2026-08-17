@@ -64,7 +64,6 @@
 
 .fm-pid-expiry-quick {
     flex-direction: row;
-    gap: 8px;
     margin-top: 4px;
 }
 
@@ -77,7 +76,6 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 16px;
-    gap: 12px;
 }
 
 .fm-pid-btn-save {

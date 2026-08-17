@@ -110,13 +110,13 @@
 }
 
 .appui-button--accent.appui-button--quiet.fm-button-list {
-    color: var(--appui-primary-100);
+    color: var(--appui-foregrounds-100);
 }
 
 .appui-button--accent.appui-button--quiet.fm-button-list .appui-icon,
 .appui-button--primary.appui-button--quiet.fm-button-list .appui-icon,
 .appui-button--destructive.appui-button--quiet.fm-button-list .appui-icon {
-    --unity-image-tint-color: var(--appui-primary-100);
+    --unity-image-tint-color: var(--appui-foregrounds-100);
 }
 
 .appui-button--size-s.fm-button-list {
@@ -397,10 +397,10 @@
     -unity-text-align: upper-left;
 }
 
-.appui-dialog {
+/* .appui-dialog {
     padding: var(--appui-spacing-100);
     max-width: 100%;
-}
+} */
 
 .appui-modal__content {
     background-color: var(--appui-backgrounds-100);
@@ -842,10 +842,11 @@
 }
 
 .fm-back-screen-transparent {
-    background-image: url("project://database/Assets/Foodmission/graphics/gradients/white-transparent.png?fileID=2800000&guid=c5207a51b69ad4ac68eb3245c0924044&type=3#white-transparent");
-    -unity-background-scale-mode: scale-to-fit;
+    /* background-image: url("project://database/Assets/Foodmission/graphics/gradients/white-transparent.png?fileID=2800000&guid=c5207a51b69ad4ac68eb3245c0924044&type=3#white-transparent");
+    -unity-background-scale-mode: scale-to-fit; 
     background-repeat: repeat no-repeat;
-    -unity-background-image-tint-color: var(--fm-bg-screen-trans);
+    -unity-background-image-tint-color: var(--fm-bg-screen-trans); */
+    /*background-color: var(--fm-main-bg-transparent-70);*/
     position: absolute;
     top: 0;
     left: 0;
@@ -861,6 +862,15 @@
 
 .box-background .appui-text {
     color: var(--appui-primary-1000);
+}
+
+.fm-nutri-card .unity-text-element {
+    color: var(--appui-foregrounds-50);
+}
+
+.box-background .unity-text-element{
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
 .margin-300 {
@@ -984,9 +994,15 @@
     align-items: center;
 }
 
+.appui-checkbox__box {
+    border-color: var(--appui-primary-1300);
+}
+
 .fm-shopping-list-detail-item .appui-checkbox__box {
     border-color: var(--appui-foregrounds-50);
 }
+
+
 
 .fm-shopping-list-item-list .appui-text,
 .fm-shopping-list-detail-item .appui-text {
@@ -1122,7 +1138,7 @@
     --unity-image-tint-color: var(--appui-foregrounds-50);
     height: var(--appui-sizing-700);
     min-height: var(--appui-sizing-700);
-    background-color: var(--fm-surface-bg-transparent);
+    background-color: var(--fm-surface-bg);
     margin-bottom: 5px;
 }
 
@@ -1131,15 +1147,30 @@
     --unity-image-tint-color: var(--appui-foregrounds-50);
 }
 
+.fm-ml-preset-results-list{
+    margin-top: 25px;
+}
+
 .fm-scf-result-row {
     flex-direction: row;
     align-items: center;
     color: var(--appui-foregrounds-50);
-    --unity-image-tint-color: var(--appui-foregrounds-50);
     height: var(--appui-sizing-700);
     min-height: var(--appui-sizing-700);
-    background-color: var(--fm-surface-bg-transparent);
-    margin-bottom: 5px;
+    background-color: var(--fm-surface-bg);
+    padding: 16px 24px;
+    border-radius: var(--appui-alias-control-border-radius);
+    cursor: pointer;
+    -unity-font-style: bold;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.15);
+    margin-bottom: 8px;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.fm-scf-result-row .unity-text-element{
+    color: var(--appui-foregrounds-50);
 }
 
 .fm-scf-result-row:hover {
@@ -1220,7 +1251,7 @@
 }
 
 .fm-meal-card-item-name {
-    color: var(--appui-foregrounds-100);
+    color: var(--appui-foregrounds-50);
     font-size: var(--appui-font-sizes-body-md);
     flex-shrink: 1;
 }
@@ -1488,6 +1519,33 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
+}
+
+.fm-nutri-card {
+    background-color: var(--fm-surface-bg);
+    padding: 40px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.fm-edito-avatar-box {
+    background-color: var(--fm-surface-bg-transparent-70);
+}
+
+.appui-dialog__buttongroup{
+    justify-content: space-between;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+.appui-dialog__buttongroup .appui-button{
+    width: 50%;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.fm-heading-white {
+    color: var(--appui-foregrounds-100);
 }
 
 /* .appui-swipeview-item{

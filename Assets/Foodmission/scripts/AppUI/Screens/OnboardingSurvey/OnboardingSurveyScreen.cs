@@ -73,8 +73,8 @@ namespace eu.foodmission.platform
         private ExVisualElement CreateQuestionStepContainer()
         {
             var container = new ExVisualElement();
-            container.AddToClassList("box-background");
-            container.AddToClassList("fm-shadow-wrapper");
+            // container.AddToClassList("box-background");
+            // container.AddToClassList("fm-shadow-wrapper");
             container.style.flexDirection = FlexDirection.Column;
             container.style.width = new StyleLength(Length.Percent(100));
             container.style.paddingTop = 16;

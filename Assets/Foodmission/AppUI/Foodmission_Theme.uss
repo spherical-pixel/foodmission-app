@@ -96,7 +96,7 @@
     --appui-warning-25: var(--appui-color-orange-600);
     --appui-destructive-300: var(--appui-color-red-1000);
     --appui-destructive-200: var(--appui-color-red-900);
-    --appui-destructive-100: var(--appui-color-red-800);
+    --appui-destructive-100: #EF8787;/*var(--appui-color-red-800);*/
     --appui-destructive-50: var(--appui-color-red-700);
     --appui-destructive-25: var(--appui-color-red-600);
 
@@ -156,6 +156,7 @@
     /* Surface colors for panels, menus, and cards */
     --fm-surface-bg: rgba(255, 255, 255, 0.90);
     --fm-surface-bg-transparent: rgba(255, 255, 255, 0.20);
+    --fm-surface-bg-transparent-70: rgba(255, 255, 255, 0.50);
     --fm-surface-bg-alt: #F5F5F5;
     --fm-card-bg: rgba(255, 255, 255, 0.90);
     --fm-icon-tint: var(--appui-primary-100);
@@ -208,7 +209,7 @@
 
     --appui-destructive-300: var(--appui-color-red-1000);
     --appui-destructive-200: var(--appui-color-red-900);
-    --appui-destructive-100: var(--appui-color-red-800);
+    --appui-destructive-100: #EF8787;/*var(--appui-color-red-800);*/
     --appui-destructive-50: var(--appui-color-red-700);
     --appui-destructive-25: var(--appui-color-red-600);
 
@@ -285,6 +286,7 @@
 
     --fm-surface-bg: rgba(10, 20, 18, 0.95);
     --fm-surface-bg-transparent: rgba(10, 20, 18, 0.65);
+    --fm-surface-bg-transparent-70: rgba(10, 20, 18, 0.65);
     --fm-surface-bg-alt: #0f1f1c;
     --fm-card-bg: rgba(15, 30, 26, 0.95);
 
@@ -337,9 +339,9 @@
 }
 
 .appui--medium {
-    --appui-font-sizes-body-sm: 28px;
-    --appui-font-sizes-body-md: 32px;
-    --appui-font-sizes-body-lg: 40px;
+    --appui-font-sizes-body-sm: 32px;
+    --appui-font-sizes-body-md: 36px;
+    --appui-font-sizes-body-lg: 42px;
 
     --appui-font-sizes-25: 16px;
     --appui-font-sizes-50: 20px;

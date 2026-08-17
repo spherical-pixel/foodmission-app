@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.AvatarEditorViewModel, Foodmission" class="fm-root" style="flex-grow: 1; background-color: rgba(2, 70, 57, 0); height: 100%; width: 100%;">
         <ui:VisualElement name="back" style="flex-grow: 1;">
-            <appui:ExVisualElement name="frame" class="box-background fm-shadow-wrapper" style="flex-grow: 1; justify-content: space-between;">
+            <appui:ExVisualElement name="frame" class="box-background fm-shadow-wrapper fm-edito-avatar-box" style="flex-grow: 1; justify-content: space-between;">
                 <ui:VisualElement name="Top">
                     <ui:Image name="Image" source="project://database/Assets/Foodmission/RenderTextures/AvatarRenderTexture.renderTexture?fileID=8400000&amp;guid=7cb162da67c7940e5a2872749817e46b&amp;type=2#AvatarRenderTexture" style="width: 920px; height: 1183px; align-self: center;">
                         <Bindings>

@@ -48,7 +48,7 @@
 }
 
 .fm-grp-row:active {
-    background-color: rgb(var(--fm-color-surface-pressed));
+    background-color: var(--fm-color-surface-pressed);
 }
 
 .fm-grp-row-info {

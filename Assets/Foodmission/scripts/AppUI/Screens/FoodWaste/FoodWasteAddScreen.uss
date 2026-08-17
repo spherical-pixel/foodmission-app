@@ -13,7 +13,7 @@
     display: flex;
 }
 .fm-fwa-error {
-    color: rgb(var(--fm-color-error));
+    color: var(--fm-color-error);
     display: none;
     margin-bottom: 8px;
 }
@@ -32,12 +32,12 @@
 .fm-fwa-food-name {
     font-size: 14px;
     margin-top: 4px;
-    color: rgb(var(--fm-color-text-secondary));
+    color: var(--fm-color-text-secondary);
 }
 .fm-fwa-max-qty {
     font-size: 12px;
     margin-top: 2px;
-    color: rgb(var(--fm-color-text-secondary));
+    color: var(--fm-color-text-secondary);
 }
 .fm-fwa-save-btn {
     margin-top: 16px;

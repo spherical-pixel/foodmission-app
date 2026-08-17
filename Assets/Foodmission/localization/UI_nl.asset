@@ -2124,9 +2124,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34022749457342464
-    m_Localized: Hallo! Om je ervaring op Foodmission op maat te maken en je te helpen
-      je doelen te bereiken, willen we je graag wat beter leren kennen. Zie je dat
-      zitten?
+    m_Localized: 'Hallo! Om je ervaring op Foodmission op maat te maken en je te
+      helpen je doelen te bereiken, willen we je graag wat beter leren kennen. Heb
+      je daar zin in?
+
+
+      Beantwoord dan een paar optionele vragen, zodat we
+      je tips, receptsuggesties en dagelijkse uitdagingen op maat kunnen maken.'
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2187,7 +2191,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Voorkeuren selecteren
+    m_Localized: Niets geselecteerd
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240

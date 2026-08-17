@@ -77,7 +77,7 @@
 }
 
 .fm-step-flow__guide-nutri {
-    margin-top: -120px;
+    margin-top: -200px;
     margin-bottom: 25px;
     height: 800px;
 }

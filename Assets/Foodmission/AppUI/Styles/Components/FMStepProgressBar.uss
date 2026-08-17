@@ -22,7 +22,7 @@
 
 .fm-step-progress-bar--compact .fm-step-progress__track {
     height: 6px;
-    background-color: var(--appui-backgrounds-200);
+    background-color: var(--appui-backgrounds-300);
     border-radius: 3px;
     overflow: hidden;
     width: 100%;
@@ -30,7 +30,7 @@
 
 .fm-step-progress-bar--compact .fm-step-progress__fill {
     height: 100%;
-    background-color: var(--appui-primary-100);
+    background-color: var(--appui-primary-1000);
     border-radius: 3px;
     transition-property: width;
     transition-duration: 0.3s;

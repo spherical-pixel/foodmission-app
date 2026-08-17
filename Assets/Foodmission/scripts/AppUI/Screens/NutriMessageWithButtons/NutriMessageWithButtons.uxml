@@ -3,8 +3,8 @@
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="root" class="fm-background-tile" style="flex-grow: 1;">
         <ui:VisualElement name="content-container" class="fm-root" style="flex-grow: 1; flex-direction: column; justify-content: space-between; align-content: stretch;">
-            <appui:ExVisualElement name="message-container" class="box-background" style="min-height: 660px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;"/>
             <ui:Image name="nutri-image" class="fm-home-nutri-image"/>
+            <appui:ExVisualElement name="message-container" class="box-background fm-shadow-wrapper fm-nutri-card" style="min-height: 660px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;"/>
             <appui:ExVisualElement name="buttons-container" style="min-height: 660px; justify-content: flex-end;"/>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -549,6 +549,7 @@ namespace eu.foodmission.platform
             var root = new ExVisualElement();
             root.AddToClassList("box-background");
             root.AddToClassList("fm-shadow-wrapper");
+            root.AddToClassList("fm-nutri-card");
             root.style.flexDirection = FlexDirection.Column;
             root.style.alignItems = Align.Center;
             root.style.paddingTop = 40;
@@ -588,8 +589,8 @@ namespace eu.foodmission.platform
             root.style.width = new StyleLength(Length.Percent(100));
 
             var box = new ExVisualElement();
-            box.AddToClassList("box-background");
-            box.AddToClassList("fm-shadow-wrapper");
+            // box.AddToClassList("box-background");
+            // box.AddToClassList("fm-shadow-wrapper");
             box.style.flexDirection = FlexDirection.Column;
             box.style.paddingTop = 30;
             box.style.paddingBottom = 30;
@@ -617,8 +618,8 @@ namespace eu.foodmission.platform
             root.style.width = new StyleLength(Length.Percent(100));
 
             var box = new ExVisualElement();
-            box.AddToClassList("box-background");
-            box.AddToClassList("fm-shadow-wrapper");
+            // box.AddToClassList("box-background");
+            // box.AddToClassList("fm-shadow-wrapper");
             box.style.flexDirection = FlexDirection.Column;
             box.style.paddingTop = 30;
             box.style.paddingBottom = 30;
@@ -660,8 +661,8 @@ namespace eu.foodmission.platform
         private VisualElement BuildConsentStep()
         {
             var root = new ExVisualElement();
-            root.AddToClassList("box-background");
-            root.AddToClassList("fm-shadow-wrapper");
+            // root.AddToClassList("box-background");
+            // root.AddToClassList("fm-shadow-wrapper");
             root.style.flexDirection = FlexDirection.Column;
             root.style.paddingTop = 16;
             root.style.paddingBottom = 16;
@@ -737,8 +738,8 @@ namespace eu.foodmission.platform
         private VisualElement BuildLegalStep(FormFieldItemCheckbox checkbox, string buttonTitleKey, Action onReadClicked)
         {
             var root = new ExVisualElement();
-            root.AddToClassList("box-background");
-            root.AddToClassList("fm-shadow-wrapper");
+            // root.AddToClassList("box-background");
+            // root.AddToClassList("fm-shadow-wrapper");
             root.style.flexDirection = FlexDirection.Column;
             root.style.paddingTop = 16;
             root.style.paddingBottom = 16;

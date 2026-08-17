@@ -2135,8 +2135,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34022749457342464
     m_Localized: "\xA1Hola! Para personalizar tu experiencia en Foodmission y ayudarte
-      a conseguir tus objetivos, nos gustar\xEDa conocerte un poco mejor. \xBFTe
-      apuntas?"
+      a alcanzar tus objetivos, nos gustar\xEDa conocerte un poco mejor. \xBFTe apetece?\n\nResponde
+      a unas cuantas preguntas opcionales para que podamos personalizar tus consejos,
+      sugerencias de recetas y retos diarios."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2187,7 +2188,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Selecciona preferencias
+    m_Localized: "No se ha seleccionado ninguna opci\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240

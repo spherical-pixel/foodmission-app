@@ -612,25 +612,32 @@ namespace eu.foodmission.platform
 
                 var nameLabel = new Text { text = preset.name };
                 nameLabel.style.flexGrow = 1;
+                nameLabel.style.flexShrink = 1;
+                nameLabel.style.overflow = Overflow.Hidden;
+                nameLabel.style.textOverflow = UnityEngine.UIElements.TextOverflow.Ellipsis;
+                nameLabel.style.whiteSpace = WhiteSpace.NoWrap;
+                nameLabel.style.marginRight = 8;
                 nameLabel.pickingMode = PickingMode.Ignore;
-                nameLabel.style.width = Length.Percent(70);
                 row.Add(nameLabel);
-
-
 
                 if (isRecipe)
                 {
                     var badge = new Text { text = "@UI:RECIPE" };
+                    badge.AddToClassList("fm-ml-preset-badge");
                     badge.pickingMode = PickingMode.Ignore;
+                    badge.style.flexShrink = 0;
+                    badge.style.flexGrow = 0;
+                    badge.style.whiteSpace = WhiteSpace.NoWrap;
                     row.Add(badge);
                 }
                 else
                 {
-                    // string formattedDate = DateTime.TryParse(preset.createdAt, out var dt) ? dt.ToString("yyyy-MM-dd") : (preset.createdAt ?? "");
-                    string formattedDate = DateTime.Parse(preset.createdAt).ToLocalTime().ToString("yyyy-MM-dd");
+                    string formattedDate = DateTime.TryParse(preset.createdAt, out var dt) ? dt.ToLocalTime().ToString("yyyy-MM-dd") : (preset.createdAt ?? "");
                     var dateLabel = new Text { text = formattedDate };
-                    dateLabel.style.flexGrow = 1;
                     dateLabel.pickingMode = PickingMode.Ignore;
+                    dateLabel.style.flexShrink = 0;
+                    dateLabel.style.flexGrow = 0;
+                    dateLabel.style.whiteSpace = WhiteSpace.NoWrap;
                     row.Add(dateLabel);
                 }
 

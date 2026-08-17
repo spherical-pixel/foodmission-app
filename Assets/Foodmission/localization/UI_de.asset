@@ -2130,7 +2130,9 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Hallo! Um dein Erlebnis auf Foodmission individuell anzupassen
       und dir dabei zu helfen, deine Ziele zu erreichen, m\xF6chten wir dich gerne
-      etwas besser kennenlernen. Hast du Lust dazu?"
+      etwas besser kennenlernen. Hast du Lust dazu?\n\nBitte beantworte ein paar
+      freiwillige Fragen, damit wir unsere Tipps, Rezeptvorschl\xE4ge und t\xE4glichen
+      Herausforderungen individuell auf dich abstimmen k\xF6nnen."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2191,7 +2193,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: "Einstellungen ausw\xE4hlen"
+    m_Localized: Keine Auswahl
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240

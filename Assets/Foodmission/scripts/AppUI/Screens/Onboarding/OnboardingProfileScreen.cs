@@ -142,8 +142,8 @@ namespace eu.foodmission.platform
         private ExVisualElement CreateStepContainer(params VisualElement[] children)
         {
             var container = new ExVisualElement();
-            container.AddToClassList("box-background");
-            container.AddToClassList("fm-shadow-wrapper");
+            // container.AddToClassList("box-background");
+            // container.AddToClassList("fm-shadow-wrapper");
             container.style.flexDirection = FlexDirection.Column;
             container.style.width = new StyleLength(Length.Percent(100));
             container.style.paddingTop = 16;
@@ -187,28 +187,28 @@ namespace eu.foodmission.platform
             root.style.width = new StyleLength(Length.Percent(100));
             root.style.alignItems = Align.Center;
 
-            var welcomeBox = new ExVisualElement();
-            welcomeBox.AddToClassList("box-background");
-            welcomeBox.AddToClassList("fm-shadow-wrapper");
-            welcomeBox.style.width = new StyleLength(Length.Percent(100));
-            welcomeBox.style.paddingTop = 24;
-            welcomeBox.style.paddingBottom = 24;
-            welcomeBox.style.paddingLeft = 20;
-            welcomeBox.style.paddingRight = 20;
-            welcomeBox.style.alignItems = Align.Center;
+            // var welcomeBox = new ExVisualElement();
+            // welcomeBox.AddToClassList("box-background");
+            // welcomeBox.AddToClassList("fm-shadow-wrapper");
+            // welcomeBox.style.width = new StyleLength(Length.Percent(100));
+            // welcomeBox.style.paddingTop = 24;
+            // welcomeBox.style.paddingBottom = 24;
+            // welcomeBox.style.paddingLeft = 20;
+            // welcomeBox.style.paddingRight = 20;
+            // welcomeBox.style.alignItems = Align.Center;
 
 
-            var desc = new Unity.AppUI.UI.Text
-            {
-                text = "@UI:ONBOARDING_PROFILE.WELCOME_DESC"
-            };
-            desc.style.marginTop = 12;
-            desc.style.whiteSpace = WhiteSpace.Normal;
-            desc.primary = false;
-            desc.AddToClassList("centered-text");
-            welcomeBox.Add(desc);
+            // var desc = new Unity.AppUI.UI.Text
+            // {
+            //     text = "@UI:ONBOARDING_PROFILE.WELCOME_DESC"
+            // };
+            // desc.style.marginTop = 12;
+            // desc.style.whiteSpace = WhiteSpace.Normal;
+            // desc.primary = false;
+            // desc.AddToClassList("centered-text");
+            // welcomeBox.Add(desc);
 
-            root.Add(welcomeBox);
+            // root.Add(welcomeBox);
             return root;
         }
 

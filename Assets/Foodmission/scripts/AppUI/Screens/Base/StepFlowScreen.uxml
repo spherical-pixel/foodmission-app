@@ -9,8 +9,8 @@
             <appui:SwipeView name="step-swipeview" direction="Horizontal" class="fm-step-flow__swipeview"/>
         </ui:ScrollView>
         <ui:VisualElement class="fm-step-flow__buttons">
-            <fm:FMButton name="btn-previous" title="Back" variant="Accent" size="L" class="fm-step-flow__btn-back fm-button fm-button-shadow"/>
-            <fm:FMButton name="btn-next" title="Next" variant="Accent" size="L" class="fm-step-flow__btn-next fm-button fm-button-shadow"/>
+            <fm:FMButton name="btn-previous" title="Back" variant="Accent" size="L" class="fm-step-flow__btn-back fm-button fm-button-shadow" style="width: 50%;"/>
+            <fm:FMButton name="btn-next" title="Next" variant="Accent" size="L" class="fm-step-flow__btn-next fm-button fm-button-shadow" style="width: 50%;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

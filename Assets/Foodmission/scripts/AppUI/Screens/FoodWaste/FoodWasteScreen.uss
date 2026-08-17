@@ -13,7 +13,7 @@
     display: flex;
 }
 .fm-fw-error {
-    color: rgb(var(--fm-color-error));
+    color: var(--fm-color-error);
     display: none;
     margin-bottom: 8px;
 }
@@ -21,7 +21,7 @@
     display: flex;
 }
 .fm-fw-empty {
-    color: rgb(var(--fm-color-text-secondary));
+    color: var(--fm-color-text-secondary);
     display: none;
     margin-top: 24px;
     text-align: center;
@@ -46,7 +46,7 @@
 .fm-fw-section-header {
     font-size: 14px;
     font-weight: bold;
-    color: rgb(var(--fm-color-text-secondary));
+    color: var(--fm-color-text-secondary);
     margin-top: 16px;
     margin-bottom: 4px;
     text-transform: uppercase;
@@ -55,10 +55,10 @@
     flex-direction: row;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid rgb(var(--fm-color-border));
+    border-bottom: 1px solid var(--fm-color-border);
 }
 .fm-fw-row:active {
-    background-color: rgb(var(--fm-color-surface-pressed));
+    background-color: var(--fm-color-surface-pressed);
 }
 .fm-fw-row-info {
     flex-grow: 1;
@@ -68,7 +68,7 @@
 }
 .fm-fw-row-detail {
     font-size: 12px;
-    color: rgb(var(--fm-color-text-secondary));
+    color: var(--fm-color-text-secondary);
 }
 .fm-fw-row-badge {
     font-size: 12px;
@@ -77,10 +77,10 @@
     margin-left: 8px;
 }
 .fm-fw-row-badge--carbon {
-    background-color: rgb(var(--fm-color-success));
+    background-color: var(--fm-color-success);
     color: white;
 }
 .fm-fw-row-badge--cost {
-    background-color: rgb(var(--fm-color-warning));
+    background-color: var(--fm-color-warning);
     color: white;
 }

@@ -2127,7 +2127,8 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Hello! To personalise your experience on Foodmission and help you
       achieve your goals, we\u2019d like to get to know you a bit better. Are you
-      up for it?"
+      up for it?\n\nPlease answer a few optional questions so that we can personalise
+      your tips, recipe suggestions and daily challenges."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2178,7 +2179,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Select preferences
+    m_Localized: None selected
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240

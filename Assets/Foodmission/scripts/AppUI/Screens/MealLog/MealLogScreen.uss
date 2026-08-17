@@ -22,7 +22,7 @@
 .fm-ml-back-inline {
     display: none;
     /*font-size: var(--appui-font-sizes-body-md);*/
-    color: var(--appui-primary-100);
+    color: var(--appui-foregrounds-100);
     margin-bottom: 8px;
     padding: 0;
     min-height: auto;
@@ -31,7 +31,7 @@
 }
 
 .fm-ml-back-inline .appui-icon {
-    --unity-image-tint-color: var(--appui-primary-100);
+    --unity-image-tint-color: var(--appui-foregrounds-100);
 }
 
 .fm-ml-back-inline.visible {
@@ -69,7 +69,6 @@
     flex-direction: column;
     justify-content: flex-start;
     margin: 8px 0;
-    gap: 4px;
     min-height: 700px;
 }
 
@@ -124,5 +123,20 @@
     background-color: var(--appui-warning-25);
     color: var(--appui-warning-300);
 }
+
+/* Preset recipe badge */
+.fm-ml-preset-badge {
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    color: var(--appui-accent-800);
+    background-color: var(--appui-accent-100);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-self: center;
+}
+
 
 

@@ -2126,7 +2126,8 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Ciao! Per personalizzare la tua esperienza su Foodmission e aiutarti
       a raggiungere i tuoi obiettivi, vorremmo conoscerti un po\u2019 meglio. Ti
-      va?"
+      va?\n\nRispondi a qualche domanda facoltativa, cos\xEC potremo personalizzare
+      i tuoi consigli, i suggerimenti sulle ricette e le sfide quotidiane."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2187,7 +2188,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Seleziona le preferenze
+    m_Localized: Nessuno selezionato
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240

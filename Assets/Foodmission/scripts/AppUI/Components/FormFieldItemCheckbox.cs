@@ -14,26 +14,28 @@ namespace eu.foodmission.platform.Components
 
         /* ========= UXML ATTRIBUTES ========= */
 
-        [UxmlAttribute("checkbox-value")][CreateProperty]
+        [UxmlAttribute("checkbox-value")]
+        [CreateProperty]
         public CheckboxState CheckboxValue
         {
             get => _checkBox?.value ?? CheckboxState.Unchecked;
             set
             {
-                if( _checkBox != null)
+                if (_checkBox != null)
                 {
                     _checkBox.value = value;
                 }
             }
         }
 
-        [UxmlAttribute("text")][CreateProperty]
+        [UxmlAttribute("text")]
+        [CreateProperty]
         public string Text
         {
             get => _button?.title ?? "";
             set
             {
-                if( _button != null)
+                if (_button != null)
                 {
                     _button.title = value;
                 }
@@ -43,7 +45,7 @@ namespace eu.foodmission.platform.Components
 
         /* ========= INTERNAL ELEMENTS ========= */
         protected Unity.AppUI.UI.Checkbox _checkBox;
-        
+
         protected Unity.AppUI.UI.Button _button;
 
         public Unity.AppUI.UI.Button Button
@@ -74,6 +76,8 @@ namespace eu.foodmission.platform.Components
                 quiet = true
             };
             _button.clicked += OnButtonClicked;
+
+            _button.style.minHeight = new StyleLength(62);
 
             ve.Add(_button);
 
@@ -153,6 +157,6 @@ namespace eu.foodmission.platform.Components
             this.NotifyPropertyChanged(nameof(CheckboxValue));
             UpdateAccessibilityNode();
         }
-        
+
     }
 }

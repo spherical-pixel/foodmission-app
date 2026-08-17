@@ -2119,7 +2119,8 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Pozdravljeni! Da bi vam lahko prilagodili izku\u0161njo na Foodmissionu
       in vam pomagali dose\u010Di va\u0161e cilje, bi vas radi malo bolje spoznali.
-      Ste za to?"
+      Ste za to?\n\nProsimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
+      lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2180,7 +2181,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Izberite nastavitve
+    m_Localized: Ni izbranih
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
