@@ -93,9 +93,9 @@ namespace eu.foodmission.platform
         private string _loadingText = "";
 
         /// <summary>
-        /// Always valid since all extended profile steps are optional.
+        /// Segment selection is required for form validity.
         /// </summary>
-        public bool IsFormValid => true;
+        public bool IsFormValid => _selectedSegmentIndex >= 0;
 
         /// <summary>
         /// Event to show an error toast.
@@ -110,15 +110,33 @@ namespace eu.foodmission.platform
         {
             _catalogService = catalogService;
             _authService = authService;
+
+            PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(SelectedSegmentIndex))
+                {
+                    InvalidateValidation();
+                }
+            };
         }
 
         // ── StepFlow Implementation ───────────────────────────
 
         protected override int GetStepCount() => 6;
 
-        protected override bool ValidateStep(int stepIndex) => true;
+        protected override bool ValidateStep(int stepIndex)
+        {
+            return ValidateStep(stepIndex, false);
+        }
 
-        protected override bool ValidateStep(int stepIndex, bool showError) => true;
+        protected override bool ValidateStep(int stepIndex, bool showError)
+        {
+            return stepIndex switch
+            {
+                5 => _selectedSegmentIndex >= 0,
+                _ => true
+            };
+        }
 
         protected override string GetStepTitle(int stepIndex)
         {

@@ -398,6 +398,7 @@ namespace eu.foodmission.platform
             {
                 var val = evt.newValue?.ToArray();
                 _viewModel.SelectedSegmentIndex = val != null && val.Length > 0 ? val[0] : -1;
+                _viewModel.InvalidateValidation();
             });
         }
 

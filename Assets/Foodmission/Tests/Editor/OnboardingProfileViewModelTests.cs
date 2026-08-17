@@ -57,20 +57,53 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void StepFlow_Initialization_SetsStepCountSevenAndNutriMessages()
+        public void StepFlow_Initialization_SetsStepCountSix()
         {
             _vm.Initialize();
-            Assert.AreEqual(7, _vm.StepCount);
+            Assert.AreEqual(6, _vm.StepCount);
             Assert.AreEqual(0, _vm.CurrentStepIndex);
             Assert.IsTrue(_vm.IsFirstStep);
             Assert.IsFalse(_vm.IsLastStep);
-
+            Assert.IsTrue(_vm.CanGoNext);
         }
 
         [Test]
-        public void IsFormValid_WithNoSelection_ReturnsTrue()
+        public void IsFormValid_RequiresSelectedSegment()
         {
+            Assert.AreEqual(-1, _vm.SelectedSegmentIndex);
+            Assert.IsFalse(_vm.IsFormValid);
+
+            _vm.SelectedSegmentIndex = 0;
             Assert.IsTrue(_vm.IsFormValid);
+
+            _vm.SelectedSegmentIndex = -1;
+            Assert.IsFalse(_vm.IsFormValid);
+        }
+
+        [Test]
+        public async Task StepValidation_Step5RequiresSelectedSegment()
+        {
+            _vm.Initialize();
+
+            // Steps 0-4 are valid even without selections
+            for (int i = 0; i < 5; i++)
+            {
+                await _vm.GoToStepAsync(i);
+                Assert.IsTrue(_vm.CanGoNext, $"Step {i} should allow continuing");
+            }
+
+            // Step 5 (Segment) requires SelectedSegmentIndex >= 0
+            await _vm.GoToStepAsync(5);
+            Assert.AreEqual(5, _vm.CurrentStepIndex);
+            Assert.IsFalse(_vm.CanGoNext, "Step 5 should not allow continuing without selecting a segment");
+
+            // Selecting a segment enables next/save button
+            _vm.SelectedSegmentIndex = 1;
+            Assert.IsTrue(_vm.CanGoNext, "Step 5 should allow continuing after selecting a segment");
+
+            // Deselecting disables it again
+            _vm.SelectedSegmentIndex = -1;
+            Assert.IsFalse(_vm.CanGoNext, "Step 5 should disable continuing if segment is deselected");
         }
 
         [Test]
