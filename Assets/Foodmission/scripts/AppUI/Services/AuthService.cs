@@ -70,8 +70,10 @@ namespace eu.foodmission.platform
                         ? (int)(state.refreshTokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds())
                         : 0;
                     ScheduleProactiveRefresh(remaining, refreshRemaining);
+#if UNITY_EDITOR
                     // TODO: Remove this log or change to Debug after testing
                     Debug.Log($"[DEV] Bearer token (expires in {remaining}s):\n{state.accessToken}");
+#endif
 
                     ProfileResponse profile = await FetchProfileAsync(state.accessToken);
                     if (profile != null)
