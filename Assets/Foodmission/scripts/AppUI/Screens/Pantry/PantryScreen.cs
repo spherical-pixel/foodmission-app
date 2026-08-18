@@ -37,6 +37,12 @@ namespace eu.foodmission.platform
 
         private AccessibilityNode _moveToWasteNode;
 
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
+
+
         public PantryScreen()
         {
             InitializeComponent(App.current.services

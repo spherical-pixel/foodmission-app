@@ -289,7 +289,7 @@
 }
 
 .fm-fi-section-body {
-    color: var(--appui-foregrounds-70, #c0c0c0);
+    color: var(--appui-foregrounds-200, #c0c0c0);
     font-size: var(--appui-font-sizes-body-md);
     white-space: normal;
     line-height: 1.4;
@@ -333,7 +333,7 @@
 }
 
 .fm-fi-nutrition-row__label {
-    color: var(--appui-foregrounds-70, #b0b0b0);
+    color: var(--appui-foregrounds-200, #b0b0b0);
     font-size: var(--appui-font-sizes-body-md);
     flex-grow: 1;
     flex-shrink: 1;
@@ -388,7 +388,7 @@
 }
 
 .fm-fi-meta-row__label {
-    color: var(--appui-foregrounds-70, #b0b0b0);
+    color: var(--appui-foregrounds-200, #b0b0b0);
     font-size: var(--appui-font-sizes-body-md);
     flex-shrink: 0;
     white-space: nowrap;

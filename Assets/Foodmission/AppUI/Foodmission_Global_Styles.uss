@@ -989,8 +989,7 @@
     flex-grow: 1;
     margin-bottom: 10px;
     flex-direction: row;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 30px;
     align-items: center;
 }
 
@@ -1383,8 +1382,28 @@
     min-width: 800px;
 }
 
+.appui-text--primary.appui-date-picker-pane__day-button{
+    color: var(--appui-foregrounds-50);
+    --unity-image-tint-color: var(--appui-foregrounds-50);
+}
+
 .appui-text.appui-date-picker-pane__day-button {
     min-height: 15px;
+}
+
+.appui-text.appui-date-picker-pane__day-of-week-label{
+    color: var(--appui-foregrounds-50);
+    --unity-image-tint-color: var(--appui-foregrounds-50);
+
+}
+
+.appui-date-picker-pane .appui-button--icon-only{
+    width: 100px;
+}
+.appui-date-picker-pane .appui-button,
+.appui-date-picker-pane .appui-button .appui-icon {
+    color: var(--appui-foregrounds-50);
+    --unity-image-tint-color: var(--appui-foregrounds-50);
 }
 
 .appui-icon--size-s {
@@ -1547,6 +1566,7 @@
 .fm-heading-white {
     color: var(--appui-foregrounds-100);
 }
+
 
 /* .appui-swipeview-item{
     align-items: flex-start;
