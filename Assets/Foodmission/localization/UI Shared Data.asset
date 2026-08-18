@@ -2179,6 +2179,10 @@ MonoBehaviour:
     m_Key: MEAL_LOG_LAST_MEALS
     m_Metadata:
       m_Items: []
+  - m_Id: 36108391091789824
+    m_Key: txtNO_ITEMS_SPECIFIED
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -146,11 +146,11 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Logout_DispatchesLogoutAction()
+        public void Logout_CallsAuthServiceLogout()
         {
             _vm.Logout();
 
-            Assert.Contains("app/logout", _storeService.DispatchedActionTypes);
+            _mockAuthService.Verify(a => a.Logout(), Times.Once());
         }
 
         [Test]

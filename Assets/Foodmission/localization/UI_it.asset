@@ -2240,6 +2240,10 @@ MonoBehaviour:
     m_Localized: Gli ultimi pasti
     m_Metadata:
       m_Items: []
+  - m_Id: 36108391091789824
+    m_Localized: Nessun articolo specificato
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

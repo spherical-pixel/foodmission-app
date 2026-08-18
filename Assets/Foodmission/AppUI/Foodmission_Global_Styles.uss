@@ -1245,8 +1245,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: var(--appui-backgrounds-50);
+    margin-bottom: 2px;
+    border-radius: 35px;
 }
 
 .fm-meal-card-item-name {
@@ -1256,16 +1261,8 @@
 }
 
 .fm-meal-card-item-qty {
-    color: var(--appui-foregrounds-200);
-    font-size: var(--appui-font-sizes-body-sm);
-    -unity-font-style: bold;
-    background-color: var(--appui-backgrounds-100);
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    border-radius: 4px;
-    margin-left: 8px;
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-md);
 }
 
 .fm-meal-card-item-empty {

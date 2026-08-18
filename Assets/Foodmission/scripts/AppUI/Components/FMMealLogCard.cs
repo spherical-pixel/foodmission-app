@@ -112,15 +112,14 @@ namespace eu.foodmission.platform.Components
                         nameLabel.text = $"• {itemName}";
                         row.Add(nameLabel);
 
-                        // By now we're not showing quuantities
-                        // if (item.quantity.HasValue && item.quantity.Value > 0)
-                        // {
-                        //     string unitStr = !string.IsNullOrEmpty(item.unit) ? $" {item.unit}" : "";
-                        //     Unity.AppUI.UI.Text qtyLabel = new Unity.AppUI.UI.Text();
-                        //     qtyLabel.AddToClassList("fm-meal-card-item-qty");
-                        //     qtyLabel.text = $"{item.quantity.Value}{unitStr}";
-                        //     row.Add(qtyLabel);
-                        // }
+                        if (item.quantity.HasValue && item.quantity.Value > 0)
+                        {
+                            string unitStr = !string.IsNullOrEmpty(item.unit) ? $" {item.unit}" : "";
+                            Unity.AppUI.UI.Text qtyLabel = new Unity.AppUI.UI.Text();
+                            qtyLabel.AddToClassList("fm-meal-card-item-qty");
+                            qtyLabel.text = $"{item.quantity.Value}{unitStr}";
+                            row.Add(qtyLabel);
+                        }
 
                         _itemsContainer.Add(row);
                     }
@@ -128,10 +127,10 @@ namespace eu.foodmission.platform.Components
                 }
                 else
                 {
-                    // Unity.AppUI.UI.Text emptyLabel = new Unity.AppUI.UI.Text();
-                    // emptyLabel.AddToClassList("fm-meal-card-item-empty");
-                    // emptyLabel.text = "@UI:txtNO_ITEMS_SPECIFIED";
-                    // _itemsContainer.Add(emptyLabel);
+                    Unity.AppUI.UI.Text emptyLabel = new Unity.AppUI.UI.Text();
+                    emptyLabel.AddToClassList("fm-meal-card-item-empty");
+                    emptyLabel.text = "@UI:txtNO_ITEMS_SPECIFIED";
+                    _itemsContainer.Add(emptyLabel);
                     _itemsContainer.style.display = DisplayStyle.Flex;
                 }
 

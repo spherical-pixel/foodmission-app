@@ -52,6 +52,8 @@ namespace eu.foodmission.platform
                 platformInfo = response.ios;
 #elif UNITY_ANDROID
                 platformInfo = response.android;
+#else
+                platformInfo = response.android ?? response.ios;
 #endif
                 if (platformInfo == null)
                     return (false, null);

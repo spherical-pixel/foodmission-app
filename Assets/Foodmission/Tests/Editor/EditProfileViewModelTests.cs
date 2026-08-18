@@ -649,7 +649,7 @@ namespace eu.foodmission.platform.Tests
 
             _vm.SelectedGenderIndex = 0;
             _vm.SelectedMotivationIndex = 0;
-            _vm.SelectedDailyTimeCommitmentIndex = 2; // 45 min
+            _vm.SelectedDailyTimeCommitmentIndex = 2; // 15 min
             _vm.SelectedSegmentIndex = 0;
 
             ProfileUpdateRequest capturedRequest = null;
@@ -664,7 +664,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("FAMILY", capturedRequest.segment);
             Assert.IsNotNull(capturedRequest.preferences);
             Assert.AreEqual("HEALTH", capturedRequest.preferences.motivation);
-            Assert.AreEqual(45, capturedRequest.preferences.dailyTimeCommitmentMinutes);
+            Assert.AreEqual(15, capturedRequest.preferences.dailyTimeCommitmentMinutes);
         }
     }
 }

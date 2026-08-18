@@ -7,7 +7,7 @@ namespace eu.foodmission.platform.Tests
     public class MealModelsTests
     {
         [Test]
-        public void Meal_Roundtrips_Via_JsonUtility()
+        public void Meal_Roundtrips_Via_JsonConvert()
         {
             var meal = new Meal
             {
@@ -21,8 +21,8 @@ namespace eu.foodmission.platform.Tests
                 updatedAt = "2026-04-27T10:00:00Z"
             };
 
-            string json = JsonUtility.ToJson(meal);
-            Meal result = JsonUtility.FromJson<Meal>(json);
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(meal);
+            Meal result = Newtonsoft.Json.JsonConvert.DeserializeObject<Meal>(json);
 
             Assert.AreEqual("meal-1", result.id);
             Assert.AreEqual("Grilled chicken salad", result.name);

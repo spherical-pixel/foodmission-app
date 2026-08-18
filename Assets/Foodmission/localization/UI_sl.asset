@@ -2232,6 +2232,10 @@ MonoBehaviour:
     m_Localized: Zadnji obroki
     m_Metadata:
       m_Items: []
+  - m_Id: 36108391091789824
+    m_Localized: Ni navedenih elementov
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -2263,6 +2263,10 @@ MonoBehaviour:
     m_Localized: "Ostatnie posi\u0142ki"
     m_Metadata:
       m_Items: []
+  - m_Id: 36108391091789824
+    m_Localized: "Nie podano \u017Cadnych pozycji"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

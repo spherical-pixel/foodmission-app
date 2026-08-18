@@ -2233,6 +2233,10 @@ MonoBehaviour:
     m_Localized: "Siste m\xE5ltider"
     m_Metadata:
       m_Items: []
+  - m_Id: 36108391091789824
+    m_Localized: Ingen varer angitt
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

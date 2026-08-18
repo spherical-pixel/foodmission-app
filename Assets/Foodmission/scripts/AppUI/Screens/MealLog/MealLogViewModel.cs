@@ -1057,7 +1057,7 @@ namespace eu.foodmission.platform
 
             foreach (var log in logs)
             {
-                if (log.meal != null && (log.meal.items == null || log.meal.items.Length == 0))
+                if (log.meal != null && !string.IsNullOrEmpty(log.meal.id) && (log.meal.items == null || log.meal.items.Length == 0))
                 {
                     if (existingItemsByMealId.TryGetValue(log.meal.id, out var cachedItems))
                     {
@@ -1071,7 +1071,7 @@ namespace eu.foodmission.platform
             if (_mealItemService != null)
             {
                 var missingItemMeals = logs
-                    .Where(log => log.meal != null && (log.meal.items == null || log.meal.items.Length == 0))
+                    .Where(log => log.meal != null && !string.IsNullOrEmpty(log.meal.id) && (log.meal.items == null || log.meal.items.Length == 0))
                     .ToList();
 
                 if (missingItemMeals.Count > 0)

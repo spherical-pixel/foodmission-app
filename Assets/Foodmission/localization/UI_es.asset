@@ -2236,6 +2236,10 @@ MonoBehaviour:
       ayudarnos a seguir creciendo!"
     m_Metadata:
       m_Items: []
+  - m_Id: 36108391091789824
+    m_Localized: "No se han especificado art\xEDculos"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
