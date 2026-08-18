@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
+using Unity.AppUI.UI;
 using ZXing;
+using Unity.AppUI.MVVM;
+using Unity.AppUI.Core;
 
 namespace eu.foodmission.platform.Components
 {
@@ -12,6 +15,7 @@ namespace eu.foodmission.platform.Components
     {
         private static BarcodeScanOverlayController _controller;
         private static VisualElement _overlay;
+        private static Modal _modal;
         private static Action _pendingCancelled;
 
         public static void Show(
@@ -21,105 +25,259 @@ namespace eu.foodmission.platform.Components
         {
             Dismiss();
 
-            var root = anchor.panel?.visualTree;
-            if (root == null)
+            if (anchor == null)
             {
                 onCancelled?.Invoke();
                 return;
             }
 
-            _overlay = new VisualElement();
-            _overlay.style.position = Position.Absolute;
-            _overlay.style.left = 0;
-            _overlay.style.right = 0;
-            _overlay.style.top = 0;
-            _overlay.style.bottom = 0;
-            _overlay.style.backgroundColor = new Color(0, 0, 0, 1);
-            _overlay.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Cover));
-            _overlay.pickingMode = PickingMode.Position;
+            var panelRoot = anchor.panel?.visualTree;
+            if (panelRoot == null)
+            {
+                onCancelled?.Invoke();
+                return;
+            }
 
             _pendingCancelled = onCancelled;
 
-            Unity.AppUI.UI.Button torchBtn = null;
-            torchBtn = new Unity.AppUI.UI.Button(() =>
+            // ── Root container for the full-screen modal ──────────────────────
+            _overlay = new VisualElement
+            {
+                name = "barcode-scan-overlay"
+            };
+            _overlay.style.flexGrow = 1;
+            _overlay.style.width = Length.Percent(100);
+            _overlay.style.height = Length.Percent(100);
+            _overlay.style.backgroundColor = Color.black;
+            _overlay.style.overflow = Overflow.Hidden;
+            _overlay.pickingMode = PickingMode.Position;
+            _overlay.AddToClassList("appui--light");
+
+            // ── Camera preview layer ──────────────────────────────────────────
+            var cameraViewport = new VisualElement
+            {
+                name = "camera-viewport"
+            };
+            cameraViewport.style.position = Position.Absolute;
+            cameraViewport.style.left = 0;
+            cameraViewport.style.right = 0;
+            cameraViewport.style.top = 0;
+            cameraViewport.style.bottom = 0;
+            cameraViewport.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Cover));
+            cameraViewport.pickingMode = PickingMode.Ignore;
+            _overlay.Add(cameraViewport);
+
+            // ── Viewfinder target frame (Center) ──────────────────────────────
+            var maskOverlay = new VisualElement
+            {
+                name = "viewfinder-container"
+            };
+            maskOverlay.style.position = Position.Absolute;
+            maskOverlay.style.left = 0;
+            maskOverlay.style.right = 0;
+            maskOverlay.style.top = 0;
+            maskOverlay.style.bottom = 0;
+            maskOverlay.style.justifyContent = Justify.Center;
+            maskOverlay.style.alignItems = Align.Center;
+            maskOverlay.pickingMode = PickingMode.Ignore;
+
+            var scanFrame = new VisualElement
+            {
+                name = "scan-frame"
+            };
+            scanFrame.style.width = Length.Percent(78);
+            // scanFrame.style.maxWidth = 360;
+            scanFrame.style.height = 520;
+            scanFrame.style.borderLeftColor = scanFrame.style.borderRightColor = scanFrame.style.borderTopColor = scanFrame.style.borderBottomColor = new Color(1f, 1f, 1f, 0.9f);
+            scanFrame.style.borderLeftWidth = scanFrame.style.borderRightWidth = scanFrame.style.borderTopWidth = scanFrame.style.borderBottomWidth = 2.5f;
+            scanFrame.style.borderTopLeftRadius = scanFrame.style.borderTopRightRadius = scanFrame.style.borderBottomLeftRadius = scanFrame.style.borderBottomRightRadius = 16;
+            scanFrame.style.backgroundColor = new Color(0, 0, 0, 0.15f);
+            scanFrame.style.justifyContent = Justify.Center;
+            scanFrame.style.alignItems = Align.Center;
+            scanFrame.pickingMode = PickingMode.Ignore;
+
+            // Loading label shown while camera is warming up
+            var loadingLabel = new Text
+            {
+                text = "...",
+                name = "camera-loading-label"
+            };
+            loadingLabel.style.color = new Color(1f, 1f, 1f, 0.6f);
+            loadingLabel.style.fontSize = 14;
+            loadingLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+            scanFrame.Add(loadingLabel);
+
+            // Subtle scan laser guideline
+            var laserLine = new VisualElement();
+            laserLine.style.position = Position.Absolute;
+            laserLine.style.left = 12;
+            laserLine.style.right = 12;
+            laserLine.style.top = Length.Percent(50);
+            laserLine.style.height = 4;
+            laserLine.style.backgroundColor = new Color(0.2f, 0.85f, 0.45f, 0.8f);
+            laserLine.pickingMode = PickingMode.Ignore;
+            scanFrame.Add(laserLine);
+
+            maskOverlay.Add(scanFrame);
+
+            _overlay.Add(maskOverlay);
+
+            // ── Top App Bar (Safe Area Top) ───────────────────────────────────
+            var themeService = App.current?.services?.GetService<IThemeService>();
+
+            var header = new VisualElement
+            {
+                name = "scan-header"
+            };
+            header.style.position = Position.Absolute;
+            header.style.top = 0;
+            header.style.left = 0;
+            header.style.right = 0;
+            header.style.flexDirection = FlexDirection.Row;
+            header.style.justifyContent = Justify.SpaceBetween;
+            header.style.alignItems = Align.Center;
+            header.style.paddingLeft = 35;
+            header.style.paddingRight = 35;
+            header.style.paddingTop = 35;
+            header.style.paddingBottom = 35;
+
+            themeService?.ApplySafeAreaPadding(header, true, false, false, false);
+
+            var closeBtn = new IconButton
+            {
+                icon = "fm-arrow-left",
+                size = Size.L,
+                quiet = false
+            };
+            // closeBtn.variant = IconVariant.Light;
+            closeBtn.AddToClassList("fm-button");
+            closeBtn.style.backgroundColor = new Color(0, 0, 0, 0.55f);
+            closeBtn.style.color = Color.white;
+            //closeBtn.style.borderTopLeftRadius = closeBtn.style.borderTopRightRadius = closeBtn.style.borderBottomLeftRadius = closeBtn.style.borderBottomRightRadius = 24;
+            closeBtn.clicked += () =>
+            {
+                Dismiss();
+                _pendingCancelled?.Invoke();
+                _pendingCancelled = null;
+            };
+            header.Add(closeBtn);
+
+            var torchBtn = new IconButton
+            {
+                icon = "flashlight",
+                size = Size.L,
+                quiet = false
+            };
+
+            // torchBtn.variant = IconVariant.Regular;
+
+            torchBtn.AddToClassList("fm-button");
+            torchBtn.style.backgroundColor = new Color(0, 0, 0, 0.55f);
+            torchBtn.style.color = Color.white;
+
+            //torchBtn.style.borderTopLeftRadius = torchBtn.style.borderTopRightRadius = torchBtn.style.borderBottomLeftRadius = torchBtn.style.borderBottomRightRadius = 24;
+            torchBtn.clicked += () =>
             {
                 if (_controller != null)
                 {
                     bool isOn = _controller.ToggleTorch();
                     if (isOn)
                     {
-                        torchBtn.style.backgroundColor = new Color(1.0f, 0.8f, 0.2f, 1.0f);
+                        torchBtn.style.backgroundColor = new Color(1.0f, 0.85f, 0.2f, 0.95f);
                         torchBtn.style.color = Color.black;
                     }
                     else
                     {
-                        torchBtn.style.backgroundColor = new Color(0, 0, 0, 1.0f);
+                        torchBtn.style.backgroundColor = new Color(0, 0, 0, 0.55f);
                         torchBtn.style.color = Color.white;
                     }
                 }
-            });
-            torchBtn.title = "🔦";
-            torchBtn.style.position = Position.Absolute;
-            torchBtn.style.top = 160;
-            torchBtn.style.left = 80;
-            torchBtn.style.width = 160;
-            torchBtn.style.height = 160;
-            torchBtn.style.fontSize = 44;
-            torchBtn.style.backgroundColor = new Color(0, 0, 0, 1.0f);
-            torchBtn.style.color = Color.white;
-            torchBtn.style.borderLeftColor = torchBtn.style.borderRightColor = torchBtn.style.borderTopColor = torchBtn.style.borderBottomColor = new Color(1, 1, 1, 0.5f);
-            torchBtn.style.borderLeftWidth = torchBtn.style.borderRightWidth = torchBtn.style.borderTopWidth = torchBtn.style.borderBottomWidth = 1;
-            torchBtn.style.borderTopLeftRadius = torchBtn.style.borderTopRightRadius = torchBtn.style.borderBottomLeftRadius = torchBtn.style.borderBottomRightRadius = 22;
-            _overlay.Add(torchBtn);
+            };
+            header.Add(torchBtn);
 
-            var closeBtn = new Unity.AppUI.UI.Button(() =>
+            _overlay.Add(header);
+
+            // ── Bottom Help Banner (Safe Area Bottom) ─────────────────────────
+            var footer = new VisualElement
             {
-                Dismiss();
-                _pendingCancelled?.Invoke();
-                _pendingCancelled = null;
-            });
-            closeBtn.title = "X";
-            closeBtn.style.position = Position.Absolute;
-            closeBtn.style.top = 160;
-            closeBtn.style.right = 80;
-            closeBtn.style.width = 160;
-            closeBtn.style.height = 160;
-            closeBtn.style.fontSize = 44;
-            closeBtn.style.backgroundColor = new Color(0, 0, 0, 1.0f);
-            closeBtn.style.color = Color.white;
-            closeBtn.style.borderLeftColor = closeBtn.style.borderRightColor = closeBtn.style.borderTopColor = closeBtn.style.borderBottomColor = new Color(1, 1, 1, 0.5f);
-            closeBtn.style.borderLeftWidth = closeBtn.style.borderRightWidth = closeBtn.style.borderTopWidth = closeBtn.style.borderBottomWidth = 1;
-            closeBtn.style.borderTopLeftRadius = closeBtn.style.borderTopRightRadius = closeBtn.style.borderBottomLeftRadius = closeBtn.style.borderBottomRightRadius = 22;
-            _overlay.Add(closeBtn);
+                name = "scan-footer"
+            };
+            footer.style.position = Position.Absolute;
+            footer.style.bottom = 0;
+            footer.style.left = 0;
+            footer.style.right = 0;
+            footer.style.alignItems = Align.Center;
+            footer.style.paddingLeft = 24;
+            footer.style.paddingRight = 24;
+            footer.style.paddingBottom = 32;
+            footer.style.paddingTop = 16;
+            footer.pickingMode = PickingMode.Ignore;
 
-            var scanFrame = new VisualElement();
-            scanFrame.style.position = Position.Absolute;
-            scanFrame.style.left = Length.Percent(10);
-            scanFrame.style.right = Length.Percent(10);
-            scanFrame.style.top = Length.Percent(25);
-            scanFrame.style.bottom = Length.Percent(35);
-            scanFrame.style.borderLeftColor = scanFrame.style.borderRightColor = scanFrame.style.borderTopColor = scanFrame.style.borderBottomColor = new Color(1, 1, 1, 0.5f);
-            scanFrame.style.borderLeftWidth = scanFrame.style.borderRightWidth = scanFrame.style.borderTopWidth = scanFrame.style.borderBottomWidth = 2;
-            scanFrame.style.borderTopLeftRadius = scanFrame.style.borderTopRightRadius = scanFrame.style.borderBottomLeftRadius = scanFrame.style.borderBottomRightRadius = 8;
-            _overlay.Add(scanFrame);
+            themeService?.ApplySafeAreaPadding(footer, false, true, false, false);
 
-            var guide = new Unity.AppUI.UI.LocalizedTextElement();
-            guide.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SCAN_HELP");
-            guide.style.position = Position.Absolute;
-            guide.style.bottom = 100;
-            guide.style.left = 0;
-            guide.style.right = 0;
+            var helpPill = new VisualElement();
+            helpPill.style.backgroundColor = new Color(0, 0, 0, 0.65f);
+            helpPill.style.paddingLeft = 30;
+            helpPill.style.paddingRight = 30;
+            helpPill.style.paddingTop = 20;
+            helpPill.style.paddingBottom = 20;
+            helpPill.style.borderTopLeftRadius = helpPill.style.borderTopRightRadius = helpPill.style.borderBottomLeftRadius = helpPill.style.borderBottomRightRadius = 20;
+            helpPill.pickingMode = PickingMode.Ignore;
+
+            var guide = new LocalizedTextElement();
+            guide.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SCAN_HELP") ?? "Coloca el código de barras en el marco";
+            //guide.style.color = Color.white;
+            //guide.style.fontSize = 15;
             guide.style.unityTextAlign = TextAnchor.MiddleCenter;
-            guide.style.color = Color.white;
-            guide.style.fontSize = 48;
             guide.style.whiteSpace = WhiteSpace.Normal;
-            _overlay.Add(guide);
+            helpPill.Add(guide);
 
-            root.Add(_overlay);
+            footer.Add(helpPill);
+            _overlay.Add(footer);
 
+            // ── Build and show Modal ──────────────────────────────────────────
+            _modal = Modal.Build(anchor, _overlay);
+            _modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
+
+            if (themeService != null)
+            {
+                void ApplySafeArea()
+                {
+                    themeService.ApplySafeAreaPadding(header, true, false, false, false);
+                    themeService.ApplySafeAreaPadding(footer, false, true, false, false);
+                }
+                themeService.SafeAreaChanged += ApplySafeArea;
+                _modal.dismissed += (_, _) =>
+                {
+                    themeService.SafeAreaChanged -= ApplySafeArea;
+                };
+            }
+
+            _modal.dismissed += (_, dismissType) =>
+            {
+                if (_controller != null)
+                {
+                    _controller.Stop();
+                    UnityEngine.Object.Destroy(_controller.gameObject);
+                    _controller = null;
+                }
+
+                if (dismissType == DismissType.Manual)
+                {
+                    _pendingCancelled?.Invoke();
+                }
+
+                _overlay = null;
+                _modal = null;
+                _pendingCancelled = null;
+            };
+
+            _modal.Show();
+
+            // ── Camera Controller ─────────────────────────────────────────────
             var go = new GameObject("BarcodeScanner");
             _controller = go.AddComponent<BarcodeScanOverlayController>();
-            _controller.Initialize(_overlay, () =>
+            _controller.Initialize(cameraViewport, loadingLabel, () =>
             {
                 Dismiss();
                 onCancelled?.Invoke();
@@ -139,10 +297,13 @@ namespace eu.foodmission.platform.Components
                 _controller = null;
             }
 
-            if (_overlay != null && _overlay.parent != null)
+            if (_modal != null)
             {
-                _overlay.RemoveFromHierarchy();
+                var m = _modal;
+                _modal = null;
+                m.Dismiss(DismissType.Action);
             }
+
             _overlay = null;
             _pendingCancelled = null;
         }
@@ -151,6 +312,7 @@ namespace eu.foodmission.platform.Components
     internal class BarcodeScanOverlayController : MonoBehaviour
     {
         private VisualElement _overlay;
+        private VisualElement _loadingLabel;
         private WebCamTexture _webCamTexture;
         private Texture2D _previewTexture;
         private BarcodeReader<PlanarYUVLuminanceSource> _reader;
@@ -172,10 +334,12 @@ namespace eu.foodmission.platform.Components
 
         public void Initialize(
             VisualElement overlay,
+            VisualElement loadingLabel,
             Action onCancelled,
             Action<string> onDetected)
         {
             _overlay = overlay;
+            _loadingLabel = loadingLabel;
             _onCancelled = onCancelled;
             _onDetected = onDetected;
             _isRunning = true;
@@ -188,17 +352,34 @@ namespace eu.foodmission.platform.Components
             yield return RequestCameraPermission();
             if (!_isRunning) yield break;
 
+            if (WebCamTexture.devices == null || WebCamTexture.devices.Length == 0)
+            {
+                Debug.LogWarning("[BarcodeScanner] No camera devices found on this system.");
+                _isRunning = false;
+                _onCancelled?.Invoke();
+                yield break;
+            }
+
             _webCamTexture = new WebCamTexture(1280, 720, 30);
             _webCamTexture.Play();
 
-            for (int i = 0; i < 30; i++)
+            // Wait up to 10 seconds for camera to negotiate stream and deliver valid dimensions
+            float timeout = 10.0f;
+            float elapsed = 0f;
+            while (elapsed < timeout)
             {
-                if (_webCamTexture.width > 100) break;
+                if (!_isRunning) yield break;
+                if (_webCamTexture != null && _webCamTexture.isPlaying && _webCamTexture.width > 100)
+                {
+                    break;
+                }
+                elapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
 
-            if (!_webCamTexture.isPlaying || _webCamTexture.width < 100)
+            if (_webCamTexture == null || !_webCamTexture.isPlaying || _webCamTexture.width < 100)
             {
+                Debug.LogWarning("[BarcodeScanner] Camera initialization timed out.");
                 _isRunning = false;
                 _onCancelled?.Invoke();
                 yield break;
@@ -319,6 +500,11 @@ namespace eu.foodmission.platform.Components
                 _previewTexture = new Texture2D(texW, texH, TextureFormat.RGBA32, false);
                 _previewTexture.hideFlags = HideFlags.HideAndDontSave;
                 _overlay.style.backgroundImage = new StyleBackground(_previewTexture);
+
+                if (_loadingLabel != null)
+                {
+                    _loadingLabel.style.display = DisplayStyle.None;
+                }
             }
 
             if (needsRotation)
@@ -432,6 +618,7 @@ namespace eu.foodmission.platform.Components
                     for (int y = 0; y < srcH; y++)
                     {
                         int yOffset = y * srcW;
+                        int dstYRow = (srcH - 1 - y) * srcW;
                         for (int x = 0; x < srcW; x++)
                         {
                             dst[(srcW - 1 - x) * srcH + y] = src[yOffset + x];
