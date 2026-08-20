@@ -1,6 +1,7 @@
 using System;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
@@ -66,14 +67,23 @@ namespace eu.foodmission.platform
         /// Call this from the constructor of the derived class
         /// </summary>
         /// 
-
+        /// 
+        /// 
+        private VisualElement _fixedContentContainer = null;
         public override VisualElement contentContainer
         {
             get
             {
                 if (IsFixedContent)
                 {
-                    return scrollView.parent;
+                    if (_fixedContentContainer == null)
+                    {
+                        Debug.Log("[NavigationScreenBase] - creation of _fixedContentContainer");
+                        _fixedContentContainer = new VisualElement();
+                        _fixedContentContainer.AddToClassList("appui-navigation-screen__container");
+                        scrollView.parent.hierarchy.Insert(0, _fixedContentContainer);
+                    }
+                    return _fixedContentContainer;
                 }
                 else
                 {
@@ -100,45 +110,6 @@ namespace eu.foodmission.platform
                 if (scrollView != null)
                 {
                     scrollView.style.display = DisplayStyle.None;
-                    // scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
-                    // scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
-
-
-                    // scrollView.touchScrollBehavior = ScrollView.TouchScrollBehavior.Clamped;
-                    // scrollView.pickingMode = PickingMode.Ignore;
-                    // scrollView.scrollDecelerationRate = 0f;
-                    // scrollView.elasticity = 0f;
-                    // contentContainer.style.overflow = Overflow.Hidden;
-                    // contentContainer.pickingMode = PickingMode.Ignore;
-
-                    // // Evita que los toques iniciales lleguen al controlador de scroll del NavHost
-                    // scrollView.RegisterCallback<PointerDownEvent>(evt => evt.StopPropagation(), TrickleDown.TrickleDown);
-
-
-                    // // Bloquea el arrastre/drag que dispara el scroll del contenedor
-                    // scrollView.RegisterCallback<PointerMoveEvent>(evt => evt.StopPropagation());
-
-                    // // Evita el scroll con la rueda del ratón hacia el contenedor superior
-                    // scrollView.RegisterCallback<WheelEvent>(evt => evt.StopPropagation());
-                    // //scrollView.SetEnabled(false);
-
-                    // // scrollView.scrollOffset = Vector2.zero;
-                    // // scrollView.contentContainer.style.position = Position.Absolute;
-                    // // scrollView.contentContainer.style.top = 0;
-                    // // scrollView.contentContainer.style.left = 0;
-                    // // scrollView.contentContainer.style.right = 0;
-                    // // scrollView.contentContainer.style.bottom = 0;
-                    // // scrollView.contentContainer.style.width = Length.Percent(100);
-                    // // scrollView.contentContainer.style.height = Length.Percent(100);
-
-
-
-
-                    // scrollView.style.flexGrow = 1;
-                    // scrollView.style.height = Length.Percent(100);
-
-                    // contentContainer.style.flexGrow = 1;
-                    // contentContainer.style.height = Length.Percent(100);
                 }
             }
 
@@ -342,6 +313,40 @@ namespace eu.foodmission.platform
             else
             {
                 Debug.LogError($"[{GetType().Name}] - OnNavigationRequested - Cannot navigate - NavController is null");
+            }
+        }
+
+
+
+        protected override void SetupAppBar(AppBar appBar, NavController controller)
+        {
+            if (appBar.stretch)
+            {
+                scrollView.verticalScroller.valueChanged += delegate (float f)
+                {
+                    appBar.scrollOffset = f;
+                };
+                appBar.RegisterCallback(delegate (GeometryChangedEvent evt)
+                {
+                    float height = evt.newRect.height;
+                    if (IsFixedContent && contentContainer != null && _fixedContentContainer != null)
+                    {
+                        _fixedContentContainer.style.marginTop = height;
+                    }
+                    else
+                    {
+                        scrollView.style.marginTop = height;
+                    }
+                });
+            }
+
+            appBar.scrollOffset = scrollView.verticalScroller.value;
+            AddToClassList("appui-navigation-screen--with-appbar");
+            EnableInClassList("appui-navigation-screen--with-appbar--compact", appBar.compact);
+
+            if (IsFixedContent && contentContainer != null && _fixedContentContainer != null)
+            {
+                _fixedContentContainer.style.marginTop = appBar.expandedHeight;
             }
         }
     }
