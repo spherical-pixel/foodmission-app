@@ -180,6 +180,22 @@ namespace eu.foodmission.platform
             }
         }
 
+        public void PlayMusic(MusicType musicType, bool loop = true, float volumeScale = 1.0f)
+        {
+            if (musicType == MusicType.None) return;
+            AudioClip clip = _catalog != null ? _catalog.GetMusic(musicType) : null;
+
+            if (clip == null) return;
+            EnsureAudioSources();
+            if (_musicSource != null)
+            {
+                _musicSource.clip = clip;
+                _musicSource.loop = loop;
+                _musicSource.volume = Mathf.Clamp01(volumeScale);
+                _musicSource.Play();
+            }
+        }
+
         public void PlayMusic(string musicName, bool loop = true, float volumeScale = 1.0f)
         {
             if (string.IsNullOrEmpty(musicName)) return;

@@ -52,6 +52,14 @@ namespace eu.foodmission.platform
         void PlayMusic(AudioClip clip, bool loop = true, float volumeScale = 1.0f);
 
         /// <summary>
+        /// Plays background music.
+        /// </summary>
+        /// <param name="musicType">The MusicType to play as background music</param>
+        /// <param name="loop">Whether the music track should loop</param>
+        /// <param name="volumeScale">Volume multiplier (0.0 to 1.0)</param>
+        void PlayMusic(MusicType musicType, bool loop = true, float volumeScale = 1.0f);
+
+        /// <summary>
         /// Plays background music by path or asset name.
         /// </summary>
         /// <param name="musicName">Name or resource path of music track</param>

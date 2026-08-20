@@ -18,6 +18,13 @@ namespace eu.foodmission.platform
         public AudioClip clip;
     }
 
+    [Serializable]
+    public struct MusicEntry
+    {
+        public MusicType type;
+        public AudioClip clip;
+    }
+
     /// <summary>
     /// ScriptableObject catalog holding all strongly-typed audio clips for UI and Nutri mascot.
     /// </summary>
@@ -30,11 +37,17 @@ namespace eu.foodmission.platform
         [Header("Nutri Mascot Sounds")]
         public List<NutriSfxEntry> nutriSfxClips = new List<NutriSfxEntry>();
 
+        [Header("Music")]
+        public List<MusicEntry> musicClips = new List<MusicEntry>();
+
         [NonSerialized]
         private Dictionary<SfxType, AudioClip> _sfxDict;
 
         [NonSerialized]
         private Dictionary<NutriSfxType, AudioClip> _nutriDict;
+
+        [NonSerialized]
+        private Dictionary<MusicType, AudioClip> _musicDict;
 
         /// <summary>
         /// Initializes internal dictionaries for fast O(1) runtime lookup.
@@ -64,6 +77,18 @@ namespace eu.foodmission.platform
                     }
                 }
             }
+
+            _musicDict = new Dictionary<MusicType, AudioClip>();
+            if (musicClips != null)
+            {
+                foreach (var entry in musicClips)
+                {
+                    if (entry.type != MusicType.None && entry.clip != null)
+                    {
+                        _musicDict[entry.type] = entry.clip;
+                    }
+                }
+            }
         }
 
         public AudioClip GetSfx(SfxType type)
@@ -77,6 +102,13 @@ namespace eu.foodmission.platform
         {
             if (_nutriDict == null) Initialize();
             _nutriDict.TryGetValue(type, out var clip);
+            return clip;
+        }
+
+        public AudioClip GetMusic(MusicType type)
+        {
+            if (_musicDict == null) Initialize();
+            _musicDict.TryGetValue(type, out var clip);
             return clip;
         }
     }

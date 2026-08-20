@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Destination: {fileID: 4583499250303890363}
   m_Options:
     m_PopUpToStrategy: 2
-    m_PopUpToRoute: {fileID: -1477136575185016345}
+    m_PopUpToRoute: {fileID: 2695106299898621552}
     m_PopUpToInclusive: 1
     m_EnterAnim: 3
     m_ExitAnim: 4

@@ -79,11 +79,15 @@ namespace eu.foodmission.platform
             }
 
             _viewModel.PropertyChanged += OnPropertyChanged;
+            _audioService.PlayMusic(MusicType.Quiz);
         }
 
         public override void OnExit(NavController controller, NavDestination destination, Argument[] args)
         {
             _viewModel.PropertyChanged -= OnPropertyChanged;
+
+            _avatarService.AvatarController.AvatarAnimationController.CurrentMood = AvatarMood.Neutral;
+            _audioService.StopMusic();
 
             base.OnExit(controller, destination, args);
         }

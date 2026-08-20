@@ -37,4 +37,14 @@ namespace eu.foodmission.platform
         Talk3,
         Touch
     }
+
+    /// <summary>
+    /// Strongly-typed identifiers for music.
+    /// </summary>
+    public enum MusicType
+    {
+        None = 0,
+        Quiz = 1
+    }
+
 }

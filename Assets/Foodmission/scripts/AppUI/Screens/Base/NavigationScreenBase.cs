@@ -78,7 +78,6 @@ namespace eu.foodmission.platform
                 {
                     if (_fixedContentContainer == null)
                     {
-                        Debug.Log("[NavigationScreenBase] - creation of _fixedContentContainer");
                         _fixedContentContainer = new VisualElement();
                         _fixedContentContainer.AddToClassList("appui-navigation-screen__container");
                         scrollView.parent.hierarchy.Insert(0, _fixedContentContainer);
