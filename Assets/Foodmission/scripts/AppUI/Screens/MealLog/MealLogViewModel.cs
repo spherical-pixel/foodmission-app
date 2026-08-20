@@ -33,6 +33,7 @@ namespace eu.foodmission.platform
         private readonly ILocalStorageService _localStorage;
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
         private readonly IPantryService _pantryService;
+        private readonly INotificationService _notificationService;
         private IDisposable _langSubscription;
 
         [ObservableProperty] private List<MealLog> m_LastTenLogs = new();
@@ -93,7 +94,8 @@ namespace eu.foodmission.platform
             ICatalogService catalogService,
             ILocalStorageService localStorage,
             IOpenFoodFactsClientService openFoodFactsClientService,
-            IPantryService pantryService = null)
+            IPantryService pantryService = null,
+            INotificationService notificationService = null)
             : base(storeService)
         {
             _mealLogService = mealLogService;
@@ -106,6 +108,7 @@ namespace eu.foodmission.platform
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
             _pantryService = pantryService;
+            _notificationService = notificationService;
 
             _langSubscription = _store.Subscribe(
                 state => state.lang,
@@ -964,12 +967,14 @@ namespace eu.foodmission.platform
                             {
                                 needed -= match.quantity;
                                 await _pantryService.DeleteItemAsync(match.id);
+                                _notificationService?.CancelPantryReminder(match.id);
                             }
                         }
                     }
                     else
                     {
                         await _pantryService.DeleteItemAsync(matches[0].id);
+                        _notificationService?.CancelPantryReminder(matches[0].id);
                     }
                 }
             }

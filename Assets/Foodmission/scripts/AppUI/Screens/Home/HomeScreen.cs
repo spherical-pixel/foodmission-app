@@ -78,7 +78,31 @@ namespace eu.foodmission.platform
             SetupSteppers();
 
             CheckWhatsNewAsync();
-            CheckPendingProfileReminder();
+            //CheckPendingProfileReminder();
+            //CheckPendingNotificationPrompt();
+        }
+
+        private void CheckPendingNotificationPrompt()
+        {
+            if (_viewModel == null || !_viewModel.ShouldPromptForNotifications())
+            {
+                return;
+            }
+
+            NutriMessageDialog.Show(
+                message: "¡Mantente al día con Foodmission! 🔔\n\n¿Quieres activar las notificaciones para recibir recordatorios de tus comidas y avisos cuando los alimentos de tu despensa estén a punto de caducar?",
+                actions: new[]
+                {
+                    new FMDialogAction("Activar", async () =>
+                    {
+                        await _viewModel.AcceptNotificationsAsync();
+                    }, isPrimary: true),
+                    new FMDialogAction("Ahora no", () =>
+                    {
+                        _viewModel.DeclineNotifications();
+                    }, isPrimary: false)
+                }
+            );
         }
 
         private void CheckPendingProfileReminder()

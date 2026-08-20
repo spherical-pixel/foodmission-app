@@ -32,15 +32,14 @@ namespace eu.foodmission.platform
 
 
 
-        public HomeScreenViewModel(IStoreService storeService, IAudioService audioService) : base(storeService)
+        private readonly INotificationService _notificationService;
+
+        public HomeScreenViewModel(IStoreService storeService, IAudioService audioService, INotificationService notificationService = null) : base(storeService)
         {
+            _notificationService = notificationService;
+
             // Get initial state
             AppState state = _storeService.GetAppState();
-
-
-
-
-
 
             // Subscribe to user state changes
             _storeSubscription = _store.Subscribe(
@@ -72,6 +71,25 @@ namespace eu.foodmission.platform
         {
             SelectedUserScope = scope;
             // TODO: Update progress and stats based on selected scope
+        }
+
+        public bool ShouldPromptForNotifications()
+        {
+            return _notificationService?.ShouldPromptForNotifications() ?? false;
+        }
+
+        public async System.Threading.Tasks.Task<bool> AcceptNotificationsAsync()
+        {
+            if (_notificationService != null)
+            {
+                return await _notificationService.AcceptNotificationsAsync();
+            }
+            return false;
+        }
+
+        public void DeclineNotifications()
+        {
+            _notificationService?.DeclineNotifications();
         }
 
         public void NavigateToOnboardingProfile()

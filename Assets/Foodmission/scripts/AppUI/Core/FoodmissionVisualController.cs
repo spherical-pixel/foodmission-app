@@ -559,7 +559,15 @@ namespace eu.foodmission.platform
             UpdateMarkAllReadButton();
         }
 
-        private void ToggleNotificationsPanel()
+        public void AddNotification(NotificationModel model)
+        {
+            if (model == null) return;
+            _notifications.Insert(0, model);
+            RefreshNotificationsList();
+            UpdateMarkAllReadButton();
+        }
+
+        public void ToggleNotificationsPanel()
         {
             if (_notificationsOpen)
             {
@@ -571,7 +579,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void OpenNotificationsPanel()
+        public void OpenNotificationsPanel()
         {
             _notificationsOpen = true;
             _notificationsBackdrop.style.display = DisplayStyle.Flex;
@@ -581,7 +589,7 @@ namespace eu.foodmission.platform
                 .StartingIn(16);
         }
 
-        private void CloseNotificationsPanel()
+        public void CloseNotificationsPanel()
         {
             _notificationsOpen = false;
             _notificationsPanel.RemoveFromClassList("fm-notifications-panel--visible");

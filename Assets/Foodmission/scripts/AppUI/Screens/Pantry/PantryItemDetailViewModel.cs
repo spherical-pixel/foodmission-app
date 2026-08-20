@@ -14,6 +14,7 @@ namespace eu.foodmission.platform
         private readonly IPantryService _pantryService;
         private readonly IFoodProductService _foodProductService;
         private readonly IGenericFoodService _genericFoodService;
+        private readonly INotificationService _notificationService;
 
         private string _itemId;
 
@@ -51,12 +52,14 @@ namespace eu.foodmission.platform
             IStoreService storeService,
             IPantryService pantryService,
             IFoodProductService foodProductService,
-            IGenericFoodService genericFoodService)
+            IGenericFoodService genericFoodService,
+            INotificationService notificationService = null)
             : base(storeService)
         {
             _pantryService = pantryService;
             _foodProductService = foodProductService;
             _genericFoodService = genericFoodService;
+            _notificationService = notificationService;
         }
 
         public async Task LoadAsync(string itemId)
@@ -138,6 +141,17 @@ namespace eu.foodmission.platform
             {
                 ErrorMessage = "";
                 ErrorDetail = null;
+
+                // Sync local notification schedule if expiry date changed
+                if (_notificationService != null && _notificationService.AreNotificationsEnabled())
+                {
+                    _notificationService.CancelPantryReminder(_itemId);
+                    if (!string.IsNullOrEmpty(ExpiryDate) && System.DateTime.TryParse(ExpiryDate, out System.DateTime newExpDate))
+                    {
+                        _notificationService.SchedulePantryExpiryReminder(_itemId, ItemView?.DisplayName ?? "Item", newExpDate);
+                    }
+                }
+
                 await LoadAsync(_itemId);
             }
         }
@@ -152,6 +166,7 @@ namespace eu.foodmission.platform
             }
             else
             {
+                _notificationService?.CancelPantryReminder(_itemId);
                 ErrorDetail = null;
             }
         }

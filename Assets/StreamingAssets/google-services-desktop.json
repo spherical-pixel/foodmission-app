@@ -1,0 +1,31 @@
+{
+  "project_info": {
+    "project_number": "1038216618105",
+    "project_id": "foodmission-notifications",
+    "storage_bucket": "foodmission-notifications.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038216618105:ios:d3da23190a932127f074a8",
+        "android_client_info": {
+          "package_name": "eu.foodmission.platform"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyAATg9owst9IBXBsy9im4_KypARAiGSTvc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

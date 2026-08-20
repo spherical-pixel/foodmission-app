@@ -22,6 +22,7 @@ namespace eu.foodmission.platform
         private readonly IGenericFoodService _genericFoodService;
         private readonly ILocalStorageService _localStorage;
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
+        private readonly INotificationService _notificationService;
 
         private const string CacheKey = "pantry_cache";
         private const string FoodSearchCachePrefix = "food_search_";
@@ -59,7 +60,8 @@ namespace eu.foodmission.platform
             IFoodProductService foodProductService,
             IGenericFoodService genericFoodService,
             ILocalStorageService localStorage,
-            IOpenFoodFactsClientService openFoodFactsClientService)
+            IOpenFoodFactsClientService openFoodFactsClientService,
+            INotificationService notificationService = null)
             : base(storeService)
         {
             _pantryService = pantryService;
@@ -67,6 +69,7 @@ namespace eu.foodmission.platform
             _genericFoodService = genericFoodService;
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
+            _notificationService = notificationService;
         }
 
 
@@ -143,6 +146,19 @@ namespace eu.foodmission.platform
 
             PantryItemView[] enrichedItems = await EnrichItemsAsync(rawItems);
             _allItems = new List<PantryItemView>(enrichedItems);
+
+            // Schedule local expiry reminders for items with expiry dates
+            if (_notificationService != null && _notificationService.AreNotificationsEnabled())
+            {
+                foreach (var itemView in enrichedItems)
+                {
+                    if (itemView?.Item != null && !string.IsNullOrEmpty(itemView.Item.expiryDate) && DateTime.TryParse(itemView.Item.expiryDate, out DateTime expDate))
+                    {
+                        _notificationService.SchedulePantryExpiryReminder(itemView.Item.id, itemView.DisplayName, expDate);
+                    }
+                }
+            }
+
             ErrorDetail = null;
             IsLoading = false;
             ApplyFilter();
@@ -505,6 +521,8 @@ namespace eu.foodmission.platform
                 ExpiredItems = ExpiredItems.Where(e => e.pantryItemId != itemId).ToArray();
                 ExpiredItemCount = ExpiredItems.Length;
 
+                _notificationService?.CancelPantryReminder(itemId);
+
                 ErrorDetail = null;
             }
         }
@@ -512,6 +530,14 @@ namespace eu.foodmission.platform
         public async Task<int> BatchWasteExpiredAsync()
         {
             if (ExpiredItems == null || ExpiredItems.Length == 0) return 0;
+
+            if (_notificationService != null)
+            {
+                foreach (var exp in ExpiredItems)
+                {
+                    _notificationService.CancelPantryReminder(exp.pantryItemId);
+                }
+            }
 
             var batchRequest = new BatchWasteRequest
             {

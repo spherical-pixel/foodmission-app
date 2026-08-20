@@ -84,6 +84,29 @@ namespace eu.foodmission.platform
             _visualController.CreateMenuDrawer(rootVisualElement);
             _visualController.CreateNotificationsPanel(rootVisualElement, FoodmissionAppBuilder.instance.NotificationCardTemplate);
 
+            // Setup notification routing and in-app message listener
+            var routingService = services.GetService<NotificationRoutingService>();
+            if (routingService != null)
+            {
+                routingService.SetNavigationHandler((action, args) =>
+                {
+                    navHost.navController.Navigate(action, args);
+                });
+                routingService.SetNotificationsDrawerHandler(() =>
+                {
+                    _visualController?.OpenNotificationsPanel();
+                });
+            }
+
+            var notificationService = services.GetService<INotificationService>();
+            if (notificationService != null)
+            {
+                notificationService.OnNotificationReceived += model =>
+                {
+                    _visualController?.AddNotification(model);
+                };
+            }
+
             // rootVisualElement in AppUI is a Panel
             _panel = rootVisualElement as Panel;
 

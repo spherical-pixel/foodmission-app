@@ -47,6 +47,11 @@ namespace eu.foodmission.platform
         public bool pushNotificationsEnabled = false;
 
         /// <summary>
+        /// Local device push registration info (FCM token, platform, etc.)
+        /// </summary>
+        public DevicePushRegistration devicePushRegistration = new DevicePushRegistration();
+
+        /// <summary>
         /// Whether the tile background pattern is shown (false = plain color)
         /// </summary>
         public bool backgroundPattern = true;
@@ -165,6 +170,7 @@ namespace eu.foodmission.platform
                 soundVolume = this.soundVolume,
                 musicVolume = this.musicVolume,
                 pushNotificationsEnabled = this.pushNotificationsEnabled,
+                devicePushRegistration = this.devicePushRegistration?.Copy() ?? new DevicePushRegistration(),
                 backgroundPattern = this.backgroundPattern,
                 hasCompletedOnboarding = this.hasCompletedOnboarding,
                 hasCompletedExtendedProfile = this.hasCompletedExtendedProfile,

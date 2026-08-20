@@ -13,6 +13,7 @@ namespace eu.foodmission.platform
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
         private readonly IAudioService _audioService;
+        private readonly INotificationService _notificationService;
         private CancellationTokenSource _syncCts;
         private const int SyncDelayMs = 600;
 
@@ -43,11 +44,12 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string m_UserName = "User";
 
-        public SettingsViewModel(IStoreService storeService, IAuthService authService, ICatalogService catalogService, IAudioService audioService = null) : base(storeService)
+        public SettingsViewModel(IStoreService storeService, IAuthService authService, ICatalogService catalogService, IAudioService audioService = null, INotificationService notificationService = null) : base(storeService)
         {
             _authService = authService;
             _catalogService = catalogService;
             _audioService = audioService;
+            _notificationService = notificationService;
             SynchronizeState(_storeService.GetAppState());
             _storeSubscription = _store.Subscribe(SelectSettingsState, OnSettingsStateChanged);
         }
@@ -125,16 +127,27 @@ namespace eu.foodmission.platform
             ScheduleSettingsSync();
         }
 
-        public void SetPushNotifications(bool enabled)
+        public async void SetPushNotifications(bool enabled)
         {
+            if (enabled && _notificationService != null)
+            {
+                bool granted = await _notificationService.RequestPermissionsAsync();
+                if (!granted)
+                {
+                    PushNotifications = false;
+                    _store.Dispatch(AppActions.setPushNotifications.Invoke(false));
+                    return;
+                }
+            }
+
+            _notificationService?.SetNotificationsEnabled(enabled);
             _store.Dispatch(AppActions.setPushNotifications.Invoke(enabled));
-            ApplyPushNotifications(enabled);
             ScheduleSettingsSync();
         }
 
-        private static void ApplyPushNotifications(bool enabled)
+        public string GetPushToken()
         {
-            // TODO: platform-specific calls here
+            return _notificationService?.GetDevicePushRegistration()?.token ?? "";
         }
 
         public void SetBackgroundPattern(bool pattern)

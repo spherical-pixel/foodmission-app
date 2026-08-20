@@ -56,6 +56,8 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IEventService, EventService>();
             builder.services.AddSingleton<IQuizService, QuizService>();
             builder.services.AddSingleton<IDimensionService, DimensionService>();
+            builder.services.AddSingleton<INotificationService, NotificationService>();
+            builder.services.AddSingleton<NotificationRoutingService>();
 
             // ViewModels (Transient - new instance each time)
             builder.services.AddTransient<SplashScreenViewModel>();
@@ -99,6 +101,9 @@ namespace eu.foodmission.platform
 
             // Initialize keyboard service and panel adjuster
             InitializeKeyboardSystem();
+
+            // Initialize notification system
+            InitializeNotificationSystem();
 
             // Subscribe to session expiration
             var authService = App.current?.services?.GetService<IAuthService>();
@@ -241,6 +246,22 @@ namespace eu.foodmission.platform
             avatarService.InitializeAsync();
 
             Debug.Log($"[{GetType().Name}] AvatarService initialized");
+        }
+
+        /// <summary>
+        /// Initializes the Notification service asynchronously.
+        /// </summary>
+        private async void InitializeNotificationSystem()
+        {
+            var notificationService = App.current?.services?.GetService<INotificationService>();
+            if (notificationService == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] NotificationService not found in DI container");
+                return;
+            }
+
+            await notificationService.InitializeAsync();
+            Debug.Log($"[{GetType().Name}] NotificationService initialized");
         }
     }
 }

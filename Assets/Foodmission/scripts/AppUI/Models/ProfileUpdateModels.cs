@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
         public bool? pushNotificationsEnabled;
         public bool? backgroundPattern;
         public string notificationPreferredTime;
+        public DevicePushRegistration devicePushRegistration;
     }
 
     /// <summary>

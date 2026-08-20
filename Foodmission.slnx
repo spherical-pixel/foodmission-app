@@ -1,5 +1,6 @@
 ﻿<Solution>
   <Project Path="Foodmission.csproj" />
+  <Project Path="Firebase.App.Internal.csproj" />
   <Project Path="Foodmission.Tests.Editor.csproj" />
   <Project Path="Unity.AppUI.Samples.MVVMRedux.csproj" />
   <Project Path="BrewedInk.MarkdownSupport.Samples.EditorCommon.csproj" />
@@ -9,6 +10,7 @@
   <Project Path="Unity.AppUI.Samples.Navigation.csproj" />
   <Project Path="Unity.AppUI.Samples.Redux.csproj" />
   <Project Path="BrewedInk.MarkdownSupport.Editor.csproj" />
+  <Project Path="FirebaseMessagingActivityGenerator.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="BrewedInk.MarkdownSupport.Samples.Editor.csproj" />
   <Project Path="BrewedInk.MarkdownSupport.Samples.Runtime.csproj" />
