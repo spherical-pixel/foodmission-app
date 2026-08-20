@@ -34,7 +34,7 @@ namespace eu.foodmission.platform.Components
             // Internal image that renders the mascot texture
             _nutriImage = new Image();
             _nutriImage.AddToClassList("fm-nutri-view__image");
-            _nutriImage.scaleMode = ScaleMode.ScaleAndCrop;
+            _nutriImage.scaleMode = ScaleMode.ScaleToFit;
             Add(_nutriImage);
 
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);

@@ -95,10 +95,14 @@ namespace eu.foodmission.platform
             string lang = null)
         {
             if (string.IsNullOrEmpty(codeOrId))
+            {
                 return (null, null);
+            }
 
             string effectiveLang = ResolveLang(lang);
             string url = $"{ApiConfig.BaseUrl}/api/v1/quizzes/{Uri.EscapeDataString(codeOrId)}?lang={Uri.EscapeDataString(effectiveLang)}";
+
+            Debug.Log("GetQuizAsync -> " + url);
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);

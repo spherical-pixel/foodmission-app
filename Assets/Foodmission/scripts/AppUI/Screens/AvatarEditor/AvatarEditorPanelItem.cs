@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 namespace eu.foodmission.platform
 {
     [UxmlElement]
-    partial class AvatarEditorPanelItem : VisualElement, IDisposable
+    public partial class AvatarEditorPanelItem : VisualElement, IDisposable
     {
         private Unity.AppUI.UI.Button _btLeftParts;
         private Unity.AppUI.UI.Button _btRightParts;
@@ -36,13 +36,22 @@ namespace eu.foodmission.platform
 
         public AvatarEditorPanelItem()
         {
-            VisualTreeAsset template = App.current.services
-                .GetRequiredService<ITemplateService>()
-                .Get(TemplateAddresses.AvatarEditorPanelItem);
-            Add(template.Instantiate());
+            var templateService = App.current?.services?.GetService<ITemplateService>();
+            VisualTreeAsset template = templateService?.Get(TemplateAddresses.AvatarEditorPanelItem);
 
-            CacheUIElements();
-            RegisterManualEvents();
+#if UNITY_EDITOR
+            if (template == null)
+            {
+                template = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Foodmission/AppUI/Templates/AvatarEditorPanelItem.uxml");
+            }
+#endif
+
+            if (template != null)
+            {
+                Add(template.Instantiate());
+                CacheUIElements();
+                RegisterManualEvents();
+            }
         }
 
         public void Init(UnityAction onClose, AvatarEditorItemEnum itemEnum, IAvatarService avatarService)

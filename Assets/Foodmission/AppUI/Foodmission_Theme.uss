@@ -77,6 +77,9 @@
 
     
     -unity-text-generator: advanced; /* ZWJ support for ligatures in icons */
+
+    --fm-color-positive: #47df29;
+    --fm-color-negative: #c81d1d;
 }
 
 
@@ -156,7 +159,8 @@
     /* Surface colors for panels, menus, and cards */
     --fm-surface-bg: rgba(255, 255, 255, 0.90);
     --fm-surface-bg-transparent: rgba(255, 255, 255, 0.20);
-    --fm-surface-bg-transparent-70: rgba(255, 255, 255, 0.50);
+    --fm-surface-bg-transparent-50: rgba(255, 255, 255, 0.50);
+    --fm-surface-bg-transparent-80: rgba(255, 255, 255, 0.80);
     --fm-surface-bg-alt: #F5F5F5;
     --fm-card-bg: rgba(255, 255, 255, 0.90);
     --fm-icon-tint: var(--appui-primary-100);
@@ -286,7 +290,8 @@
 
     --fm-surface-bg: rgba(10, 20, 18, 0.95);
     --fm-surface-bg-transparent: rgba(10, 20, 18, 0.65);
-    --fm-surface-bg-transparent-70: rgba(10, 20, 18, 0.65);
+    --fm-surface-bg-transparent-50: rgba(10, 20, 18, 0.65);
+    --fm-surface-bg-transparent-80: rgba(10, 20, 18, 0.80);
     --fm-surface-bg-alt: #0f1f1c;
     --fm-card-bg: rgba(15, 30, 26, 0.95);
 

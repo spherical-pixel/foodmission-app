@@ -55,6 +55,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IAccessibilityService, AccessibilityService>();
             builder.services.AddSingleton<IEventService, EventService>();
             builder.services.AddSingleton<IQuizService, QuizService>();
+            builder.services.AddSingleton<IDimensionService, DimensionService>();
 
             // ViewModels (Transient - new instance each time)
             builder.services.AddTransient<SplashScreenViewModel>();
@@ -88,6 +89,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<RecipeBookViewModel>();
             builder.services.AddTransient<RecipeDetailViewModel>();
             builder.services.AddTransient<RecipeEditorViewModel>();
+            builder.services.AddTransient<QuizScreenViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

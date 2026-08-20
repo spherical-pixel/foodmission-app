@@ -1,0 +1,34 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" xmlns:eu="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.QuizScreenViewModel, Foodmission" class="fm-root" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="avatar-container" picking-mode="Ignore" class="fm-quiz-avatar-panel" style="position: absolute; overflow: visible; flex-direction: column-reverse; justify-content: flex-start; align-self: flex-start; align-items: center; bottom: 0; left: 0; right: 0; height: auto; top: 0;">
+            <ui:Image source="project://database/Assets/Foodmission/graphics/png/foco_avatar.png?fileID=21300000&amp;guid=33a076f03b160455bb093266580546ad&amp;type=3#foco_avatar" scale-mode="StretchToFill" style="bottom: 0; position: absolute; top: 0;"/>
+            <fm:FMAvatarView mode="FullBody"/>
+            <ui:Image source="project://database/Assets/Foodmission/graphics/png/stand.png?fileID=21300000&amp;guid=d6326be7e0d9e43c9b5349cde580f2ba&amp;type=3#stand" scale-mode="ScaleAndCrop" style="bottom: 0; position: absolute; aspect-ratio: 1;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="back" style="flex-grow: 1;">
+            <appui:ExVisualElement name="main-question-card" class="box-background fm-shadow-wrapper fm-quiz-main-card">
+                <ui:VisualElement name="NutriViewContainer" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0;">
+                    <fm:FMNutriView style="top: 0; left: 0; right: 0; scale: 0.5 0.5 0.5; margin-top: -570px; height: 900px;"/>
+                </ui:VisualElement>
+                <appui:Text name="text-question" class="fm-quiz-question"/>
+                <ui:VisualElement name="Responses" style="flex-grow: 1;">
+                    <fm:FMResponseQuiz name="response-1"/>
+                    <fm:FMResponseQuiz name="response-2"/>
+                    <fm:FMResponseQuiz name="response-3"/>
+                    <fm:FMResponseQuiz name="response-4"/>
+                </ui:VisualElement>
+            </appui:ExVisualElement>
+            <appui:ExVisualElement name="explanation-card" class="box-background fm-shadow-wrapper fm-quiz-explanation-card">
+                <ui:Image name="image-topic"/>
+                <appui:Text name="text-explanation"/>
+                <fm:FMSourceItemView name="source-item-view"/>
+                <fm:FMButton name="bt-continue" title="Continuar_" trailing-icon="fm-arrow-right" variant="Accent" class="fm-button fm-button-align-left" style="margin-top: 40px;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395779614007296)"/>
+                    </Bindings>
+                </fm:FMButton>
+            </appui:ExVisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

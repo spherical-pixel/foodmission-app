@@ -48,5 +48,25 @@ namespace eu.foodmission.platform
                 shoes = shoes?.Copy()
             };
         }
+
+        /// <summary>
+        /// Creates a standard, deterministic default avatar configuration for users who have not customized an avatar.
+        /// </summary>
+        public static AvatarConfig CreateDefault()
+        {
+            return new AvatarConfig
+            {
+                hair = new AvatarPartConfig { idPart = 5, idColor = 5 },
+                eyebrows = new AvatarPartConfig { idPart = 7, idColor = 1 },
+                eyes = new AvatarPartConfig { idPart = 1, idColor = 1 },
+                nose = new AvatarPartConfig { idPart = 1, idColor = 1 },
+                mouth = new AvatarPartConfig { idPart = 1, idColor = 1 },
+                facialHair = new AvatarPartConfig { idPart = 0, idColor = 1 },
+                skin = new AvatarPartConfig { idPart = 1, idColor = 1 },
+                tshirt = new AvatarPartConfig { idPart = 1, idColor = 5 },
+                trousers = new AvatarPartConfig { idPart = 1, idColor = 3 },
+                shoes = new AvatarPartConfig { idPart = 1, idColor = 8 }
+            };
+        }
     }
 }

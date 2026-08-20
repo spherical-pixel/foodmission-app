@@ -20,6 +20,7 @@ namespace eu.foodmission.platform
         private readonly IRemoteLocalizationService _remoteLocalizationService;
         private readonly ICatalogService _catalogService;
         private readonly IGenericFoodService _genericFoodService;
+        private readonly IDimensionService _dimensionService;
 
         [ObservableProperty]
         private string _loadingText = "Loading...";
@@ -34,7 +35,8 @@ namespace eu.foodmission.platform
             IAppUpdateService appUpdateService,
             IRemoteLocalizationService remoteLocalizationService,
             ICatalogService catalogService,
-            IGenericFoodService genericFoodService = null) : base(storeService)
+            IGenericFoodService genericFoodService = null,
+            IDimensionService dimensionService = null) : base(storeService)
         {
             _authService = authService;
             _templateService = templateService;
@@ -42,6 +44,7 @@ namespace eu.foodmission.platform
             _remoteLocalizationService = remoteLocalizationService;
             _catalogService = catalogService;
             _genericFoodService = genericFoodService;
+            _dimensionService = dimensionService;
         }
 
         public async Task<string> InitializeAppAsync()
@@ -95,6 +98,12 @@ namespace eu.foodmission.platform
                 if (_genericFoodService != null)
                 {
                     _ = _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+                }
+
+                // Preload dimensions and topics taxonomy
+                if (_dimensionService != null)
+                {
+                    _ = _dimensionService.PreloadAsync(lang);
                 }
             }
 

@@ -6,29 +6,29 @@ namespace eu.foodmission.platform
 {
     public enum AvatarMood
     {
-        Neutral,
-        Happy,
-        VeryHappy,
-        Bored,
-        Speaking,
-        Idle
+        Happy = 1,
+        Neutral = 0,
+        Sad = -1
     }
 
     public interface IAvatarService
     {
         Task InitializeAsync();
-        
+
         bool IsInitialized { get; }
-        
+
         RenderTexture AvatarCameraRenderTexture { get; }
         RenderTexture FullBodyAvatarRenderTexture { get; }
+
+        AvatarController AvatarController { get; }
 
         void SetAvatarCameraActive(bool active);
         void SetFullBodyCameraActive(bool active);
 
         void SetRandomConfig();
         void SetAvatarConfig(AvatarConfig config);
-        AvatarConfig GetCurrentAvatarConfig{get;}
+        AvatarConfig GetCurrentAvatarConfig { get; }
+        AvatarConfig GetDefaultConfig();
 
         List<Color> GetColorPalette(AvatarEditorItemEnum itemType);
         int GetMaxPartCount(AvatarEditorItemEnum itemType);

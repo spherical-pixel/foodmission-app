@@ -153,6 +153,33 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &-7463324954664816163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: open_quiz
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 1087, y: 1453}
+  m_Guid: 8269a2c6-fc85-4196-afb5-922c54f2007c
+  m_Destination: {fileID: -3703614342509384839}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &-7349625825304333666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +328,39 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &-3703614342509384839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Quiz
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1555, y: 1453}
+  m_Guid: 9ec4934b6c9b94de5882198485a270c2
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: Quiz
+  m_TemplateSettings:
+    rid: 2157972303910797649
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 2157972303910797649
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.QuizScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 0
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &-3281430989788778340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,6 +1130,8 @@ MonoBehaviour:
   - {fileID: -2411287861360381585}
   - {fileID: 4900769893359248207}
   - {fileID: -3281430989788778340}
+  - {fileID: -3703614342509384839}
+  - {fileID: -7463324954664816163}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1887,6 +1949,7 @@ MonoBehaviour:
   - {fileID: 6475924670633165201}
   - {fileID: -1716996974998973278}
   - {fileID: 6946922476416249955}
+  - {fileID: -7463324954664816163}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955

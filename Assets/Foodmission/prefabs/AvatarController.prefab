@@ -437,7 +437,7 @@ MonoBehaviour:
       idColor: 8
   avatarCamera: {fileID: 5517373339878088037}
   fullBodyCamera: {fileID: 639804451253478473}
-  animator: {fileID: 6872765086812143685}
+  _avatarAnimationController: {fileID: 4144986414068702717}
 --- !u!1 &3218958789568180735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1254,17 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3228572669187849923, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
   m_PrefabInstance: {fileID: 1484054029054958256}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4144986414068702717 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3250922080424445773, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
+  m_PrefabInstance: {fileID: 1484054029054958256}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23585cbe17f184a63ab8867a1e63919e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &4529161095805382009 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3045202198397024201, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
@@ -1322,11 +1333,6 @@ SkinnedMeshRenderer:
 --- !u!1 &6759857945744984754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5284901295536574466, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
-  m_PrefabInstance: {fileID: 1484054029054958256}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &6872765086812143685 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5474297043040852725, guid: 662d959df6b012c469dcbe6bc534b28a, type: 3}
   m_PrefabInstance: {fileID: 1484054029054958256}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6911980124482947260 stripped

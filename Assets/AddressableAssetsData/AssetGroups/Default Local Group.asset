@@ -75,6 +75,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d4a73a26fa8a42bda6560ad6312ec0b
+    m_Address: Foodmission/AppUI/Templates/QuizScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 750618c0bd0d34c5593c3d6e471ba605
     m_Address: Foodmission/AppUI/Templates/OnboardingGroupsScreen.uxml
     m_ReadOnly: 0

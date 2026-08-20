@@ -3,6 +3,7 @@ using eu.foodmission.platform.Components;
 using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
@@ -39,6 +40,8 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaTop => false;
         protected override bool IsFixedContent => false;
 
+        private FMButton _btOpenQuizz;
+
         public HomeScreen()
         {
             InitializeComponent(App.current.services
@@ -54,12 +57,14 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
-            _healthProgress         = contentContainer.Q<LinearProgress>("health-progress");
+            _healthProgress = contentContainer.Q<LinearProgress>("health-progress");
             _sustainabilityProgress = contentContainer.Q<LinearProgress>("sustainability-progress");
-            _knowledgeProgress      = contentContainer.Q<LinearProgress>("knowledge-progress");
-            _caloriesCircular       = contentContainer.Q<CircularProgress>("calories-circular");
-            _caloriesConsumedLabel  = contentContainer.Q<Label>("calories-consumed");
-            _caloriesLeftLabel      = contentContainer.Q<Label>("calories-left");
+            _knowledgeProgress = contentContainer.Q<LinearProgress>("knowledge-progress");
+            _caloriesCircular = contentContainer.Q<CircularProgress>("calories-circular");
+            _caloriesConsumedLabel = contentContainer.Q<Label>("calories-consumed");
+            _caloriesLeftLabel = contentContainer.Q<Label>("calories-left");
+
+            _btOpenQuizz = contentContainer.Q<FMButton>("open-quiz");
 
             _periodStepper = contentContainer.Q<FMArrowStepper>("period-stepper");
             _scopeStepper = contentContainer.Q<FMArrowStepper>("scope-stepper");
@@ -100,11 +105,21 @@ namespace eu.foodmission.platform
 
         private void RegisterEvents()
         {
+            _btOpenQuizz.clicked += OnOpenQuizOpen;
         }
-
         private void UnregisterEvents()
         {
+            _btOpenQuizz.clicked -= OnOpenQuizOpen;
         }
+
+        private void OnOpenQuizOpen()
+        {
+            Debug.Log("OnOpenQuizOpen");
+            // Q1.1.1
+            // df27b23d-ea27-4c7e-93f5-26e3307fefdf
+            _navController.Navigate(Actions.open_quiz, new[] { new Argument("code", "Q1.1.1"), new Argument("id", "df27b23d-ea27-4c7e-93f5-26e3307fefdf") });
+        }
+
 
         private void SetupSteppers()
         {
@@ -161,9 +176,9 @@ namespace eu.foodmission.platform
         {
             if (_viewModel == null) return;
 
-            if (_healthProgress != null)         _healthProgress.value         = _viewModel.HealthProgress;
-            if (_sustainabilityProgress != null)  _sustainabilityProgress.value = _viewModel.SustainabilityProgress;
-            if (_knowledgeProgress != null)       _knowledgeProgress.value      = _viewModel.KnowledgeProgress;
+            if (_healthProgress != null) _healthProgress.value = _viewModel.HealthProgress;
+            if (_sustainabilityProgress != null) _sustainabilityProgress.value = _viewModel.SustainabilityProgress;
+            if (_knowledgeProgress != null) _knowledgeProgress.value = _viewModel.KnowledgeProgress;
 
             int total = _viewModel.CaloriesConsumed + _viewModel.CaloriesLeft;
             if (_caloriesCircular != null)
@@ -172,7 +187,7 @@ namespace eu.foodmission.platform
             }
 
             if (_caloriesConsumedLabel != null) _caloriesConsumedLabel.text = _viewModel.CaloriesConsumed.ToString();
-            if (_caloriesLeftLabel != null)     _caloriesLeftLabel.text     = _viewModel.CaloriesLeft.ToString();
+            if (_caloriesLeftLabel != null) _caloriesLeftLabel.text = _viewModel.CaloriesLeft.ToString();
         }
 
         private async void CheckWhatsNewAsync()
@@ -221,14 +236,16 @@ namespace eu.foodmission.platform
         {
             UnregisterEvents();
 
-            _healthProgress         = null;
+            _healthProgress = null;
             _sustainabilityProgress = null;
-            _knowledgeProgress      = null;
-            _caloriesCircular       = null;
-            _caloriesConsumedLabel  = null;
-            _caloriesLeftLabel      = null;
+            _knowledgeProgress = null;
+            _caloriesCircular = null;
+            _caloriesConsumedLabel = null;
+            _caloriesLeftLabel = null;
             _periodStepper = null;
             _scopeStepper = null;
+
+            _btOpenQuizz = null;
 
             base.OnViewModelUnbinding();
         }

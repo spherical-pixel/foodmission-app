@@ -57,7 +57,14 @@ namespace eu.foodmission.platform
         public Camera fullBodyCamera;
 
         [Header("Animator")]
-        public Animator animator;
+        [SerializeField] private AvatarAnimationController _avatarAnimationController;
+        public AvatarAnimationController AvatarAnimationController
+        {
+            get
+            {
+                return _avatarAnimationController;
+            }
+        }
         private bool _colorsInitialized = false;
         private MaterialPropertyBlock _propertyBlock;
 

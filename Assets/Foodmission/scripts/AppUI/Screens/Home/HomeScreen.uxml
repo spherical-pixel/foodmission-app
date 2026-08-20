@@ -33,6 +33,7 @@
             <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="" stepper-selected-index="0" name="period-stepper"/>
             <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="" stepper-selected-index="0" name="scope-stepper"/>
         </ui:VisualElement>
+        <eu.foodmission.platform.Components.FMButton name="open-quiz" title="OPEN QUIZ" class="fm-button"/>
         <ui:VisualElement class="fm-calories-card">
             <ui:VisualElement name="Calories" class="fm-calories-circle-wrapper">
                 <appui:CircularProgress name="calories-circular" color-override="rgb(53, 229, 255)" variant="Determinate" value="0.37" size="L" rounded-progress-corners="false" class="fm-calories-circular"/>

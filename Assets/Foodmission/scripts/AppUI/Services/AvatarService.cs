@@ -64,6 +64,8 @@ namespace eu.foodmission.platform
         public RenderTexture FullBodyAvatarRenderTexture => _avatarController?.fullBodyCamera != null ? _avatarController.fullBodyCamera.targetTexture : null;
         public AvatarConfig GetCurrentAvatarConfig => _currentConfig;
 
+        public AvatarController AvatarController => _avatarController;
+
         public bool IsInitialized => _isInitialized;
         public bool HasSavedConfig => HasAvatar && (_currentConfig != null || PlayerPrefs.HasKey(PLAYER_PREFS_KEY));
 
@@ -180,9 +182,9 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                if (_avatarController.animator != null)
+                if (_avatarController.AvatarAnimationController != null)
                 {
-                    _avatarController.animator.Update(0f);
+                    _avatarController.AvatarAnimationController.UpdateAnimationController();
                 }
 
                 Camera cam = _avatarController.avatarCamera;
@@ -333,6 +335,7 @@ namespace eu.foodmission.platform
                 }
 
                 _isInitialized = true;
+                LoadSavedConfig();
                 Debug.Log($"[{GetType().Name}] Avatar initialized successfully");
             }
             catch (System.Exception ex)
@@ -428,9 +431,17 @@ namespace eu.foodmission.platform
 
         public void SetAvatarCameraActive(bool active)
         {
+            if (_avatarControllerObject != null && active && !_avatarControllerObject.activeSelf)
+            {
+                _avatarControllerObject.SetActive(true);
+            }
+
             if (_avatarController?.avatarCamera == null)
             {
-                Debug.LogWarning($"[{GetType().Name}] AvatarCamera not available");
+                if (active)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] AvatarCamera not available");
+                }
                 return;
             }
 
@@ -439,9 +450,17 @@ namespace eu.foodmission.platform
 
         public void SetFullBodyCameraActive(bool active)
         {
+            if (_avatarControllerObject != null && active && !_avatarControllerObject.activeSelf)
+            {
+                _avatarControllerObject.SetActive(true);
+            }
+
             if (_avatarController?.fullBodyCamera == null)
             {
-                Debug.LogWarning($"[{GetType().Name}] FullBodyCamera not available");
+                if (active)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] FullBodyCamera not available");
+                }
                 return;
             }
 
@@ -528,6 +547,11 @@ namespace eu.foodmission.platform
             await SaveCurrentConfigAsync(hasAvatar);
         }
 
+        public AvatarConfig GetDefaultConfig()
+        {
+            return AvatarConfig.CreateDefault();
+        }
+
         public void LoadSavedConfig()
         {
             var store = _storeService ?? App.current?.services?.GetService<IStoreService>();
@@ -539,19 +563,21 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            if (!PlayerPrefs.HasKey(PLAYER_PREFS_KEY))
+            if (HasAvatar && PlayerPrefs.HasKey(PLAYER_PREFS_KEY))
             {
-                Debug.Log($"[{GetType().Name}] No saved config found");
-                return;
+                string json = PlayerPrefs.GetString(PLAYER_PREFS_KEY);
+                AvatarConfig savedConfig = JsonUtility.FromJson<AvatarConfig>(json);
+                if (savedConfig != null)
+                {
+                    SetAvatarConfig(savedConfig);
+                    Debug.Log($"[{GetType().Name}] Avatar config loaded from PlayerPrefs");
+                    return;
+                }
             }
 
-            string json = PlayerPrefs.GetString(PLAYER_PREFS_KEY);
-            AvatarConfig savedConfig = JsonUtility.FromJson<AvatarConfig>(json);
-            if (savedConfig != null)
-            {
-                SetAvatarConfig(savedConfig);
-                Debug.Log($"[{GetType().Name}] Avatar config loaded from PlayerPrefs");
-            }
+            // Fallback: apply deterministic standard default avatar
+            SetAvatarConfig(GetDefaultConfig());
+            Debug.Log($"[{GetType().Name}] Applied standard default avatar config");
         }
     }
 }

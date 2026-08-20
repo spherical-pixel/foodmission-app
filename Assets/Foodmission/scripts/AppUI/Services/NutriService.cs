@@ -84,7 +84,7 @@ namespace eu.foodmission.platform
 
         public void SetCameraActive(bool active)
         {
-            if (_nutriController.NutriCamera == null)
+            if (_nutriController != null || _nutriController.NutriCamera == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] NutriCamera not available");
                 return;

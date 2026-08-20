@@ -65,6 +65,22 @@ namespace eu.foodmission.platform
         /// Llama a esto desde el constructor de la clase derivada
         /// Call this from the constructor of the derived class
         /// </summary>
+        /// 
+
+        public override VisualElement contentContainer
+        {
+            get
+            {
+                if (IsFixedContent)
+                {
+                    return scrollView.parent;
+                }
+                else
+                {
+                    return scrollView.contentContainer;
+                }
+            }
+        }
         protected void InitializeComponent(VisualTreeAsset template)
         {
             ConfigureScrollView();
@@ -79,7 +95,53 @@ namespace eu.foodmission.platform
             if (IsFixedContent)
             {
                 AddToClassList("fm-screen-fixed");
+
+
+                if (scrollView != null)
+                {
+                    scrollView.style.display = DisplayStyle.None;
+                    // scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
+                    // scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+
+
+                    // scrollView.touchScrollBehavior = ScrollView.TouchScrollBehavior.Clamped;
+                    // scrollView.pickingMode = PickingMode.Ignore;
+                    // scrollView.scrollDecelerationRate = 0f;
+                    // scrollView.elasticity = 0f;
+                    // contentContainer.style.overflow = Overflow.Hidden;
+                    // contentContainer.pickingMode = PickingMode.Ignore;
+
+                    // // Evita que los toques iniciales lleguen al controlador de scroll del NavHost
+                    // scrollView.RegisterCallback<PointerDownEvent>(evt => evt.StopPropagation(), TrickleDown.TrickleDown);
+
+
+                    // // Bloquea el arrastre/drag que dispara el scroll del contenedor
+                    // scrollView.RegisterCallback<PointerMoveEvent>(evt => evt.StopPropagation());
+
+                    // // Evita el scroll con la rueda del ratón hacia el contenedor superior
+                    // scrollView.RegisterCallback<WheelEvent>(evt => evt.StopPropagation());
+                    // //scrollView.SetEnabled(false);
+
+                    // // scrollView.scrollOffset = Vector2.zero;
+                    // // scrollView.contentContainer.style.position = Position.Absolute;
+                    // // scrollView.contentContainer.style.top = 0;
+                    // // scrollView.contentContainer.style.left = 0;
+                    // // scrollView.contentContainer.style.right = 0;
+                    // // scrollView.contentContainer.style.bottom = 0;
+                    // // scrollView.contentContainer.style.width = Length.Percent(100);
+                    // // scrollView.contentContainer.style.height = Length.Percent(100);
+
+
+
+
+                    // scrollView.style.flexGrow = 1;
+                    // scrollView.style.height = Length.Percent(100);
+
+                    // contentContainer.style.flexGrow = 1;
+                    // contentContainer.style.height = Length.Percent(100);
+                }
             }
+
 
             // By now scrollbars are going to be hidden always
             scrollView.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
@@ -106,7 +168,7 @@ namespace eu.foodmission.platform
         // --------------------------------------------------------------------
         // Lifecycle - Screen Entry
         // --------------------------------------------------------------------
-        
+
         /// <summary>
         /// Called when the screen is entered. This method is called before the screen is displayed.
         /// </summary>
@@ -145,7 +207,7 @@ namespace eu.foodmission.platform
         private void BindViewModel()
         {
             contentContainer.dataSource = _viewModel;
-            _themeService?.ApplySafeAreaPadding(contentContainer,ApplySafeAreaTop,ApplySafeAreaBottom,ApplySafeAreaLeft,ApplySafeAreaRight);
+            _themeService?.ApplySafeAreaPadding(contentContainer, ApplySafeAreaTop, ApplySafeAreaBottom, ApplySafeAreaLeft, ApplySafeAreaRight);
         }
 
         /// <summary>        
