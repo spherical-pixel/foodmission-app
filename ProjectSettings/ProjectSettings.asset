@@ -822,7 +822,7 @@ PlayerSettings:
     PS5: 
     QNX: 
     ReservedCFE: 
-    Standalone: 
+    Standalone: SENTIS_ANALYTICS_ENABLED
     VisionOS: 
     WebGL: 
     Windows Store Apps: 
