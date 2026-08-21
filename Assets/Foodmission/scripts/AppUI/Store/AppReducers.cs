@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<int> setSound = "app/setSound";
         public static readonly ActionCreator<int> setMusic = "app/setMusic";
         public static readonly ActionCreator<bool> setPushNotifications = "app/setPushNotifications";
+        public static readonly ActionCreator<string> setNotificationPreferredTime = "app/setNotificationPreferredTime";
         public static readonly ActionCreator<DevicePushRegistration> setDevicePushRegistration = "app/setDevicePushRegistration";
         public static readonly ActionCreator<bool> setBackgroundPattern = "app/setBackgroundPattern";
         public static readonly ActionCreator completeOnboarding = "app/completeOnboarding";
@@ -240,6 +241,13 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.pushNotificationsEnabled = action.payload;
+            return newState;
+        }
+
+        public static AppState SetNotificationPreferredTimeReducer(AppState state, IAction<string> action)
+        {
+            var newState = state.Copy();
+            newState.notificationPreferredTime = action.payload ?? "10:00";
             return newState;
         }
 
@@ -487,6 +495,7 @@ namespace eu.foodmission.platform
                 if (s.soundVolume.HasValue && s.soundVolume.Value >= 0) newState.soundVolume = s.soundVolume.Value;
                 if (s.musicVolume.HasValue && s.musicVolume.Value >= 0) newState.musicVolume = s.musicVolume.Value;
                 if (s.pushNotificationsEnabled.HasValue) newState.pushNotificationsEnabled = s.pushNotificationsEnabled.Value;
+                if (!string.IsNullOrEmpty(s.notificationPreferredTime)) newState.notificationPreferredTime = s.notificationPreferredTime;
                 if (s.backgroundPattern.HasValue) newState.backgroundPattern = s.backgroundPattern.Value;
                 if (s.devicePushRegistration != null && !string.IsNullOrEmpty(s.devicePushRegistration.token))
                 {

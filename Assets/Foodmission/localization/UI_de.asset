@@ -2295,6 +2295,43 @@ MonoBehaviour:
     m_Localized: Status
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: "Bleib am Ball! Aktiviere Push-Benachrichtigungen, damit du keine
+      t\xE4glichen Herausforderungen, Ern\xE4hrungsprotokolle und Hinweise auf ablaufende
+      Vorr\xE4te verpasst. Wir werden dich nicht st\xF6ren, sondern dir nur n\xFCtzliche
+      Erinnerungen schicken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: "Zu welcher Uhrzeit m\xF6chten Sie am liebsten Ihre t\xE4glichen
+      Erinnerungen erhalten, um Ihre Mahlzeiten einzutragen oder Ihren Vorratsschrank
+      zu \xFCberpr\xFCfen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Push-Benachrichtigungen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: "W\xE4hlen Sie aus, ob Sie Benachrichtigungen aktivieren m\xF6chten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: Im Moment nicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: Erinnerungszeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: "W\xE4hlen Sie einen Wunschtermin aus"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

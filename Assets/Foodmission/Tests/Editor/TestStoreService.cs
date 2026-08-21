@@ -53,6 +53,7 @@ namespace eu.foodmission.platform.Tests
                 .AddCase(AppActions.setSound, AppReducers.SetSoundReducer)
                 .AddCase(AppActions.setMusic, AppReducers.SetMusicReducer)
                 .AddCase(AppActions.setPushNotifications, AppReducers.SetPushNotificationsReducer)
+                .AddCase(AppActions.setNotificationPreferredTime, AppReducers.SetNotificationPreferredTimeReducer)
                 .AddCase(AppActions.setDevicePushRegistration, AppReducers.SetDevicePushRegistrationReducer)
                 .AddCase(AppActions.setBackgroundPattern, AppReducers.SetBackgroundPatternReducer)
                 .AddCase(AppActions.completeOnboarding, AppReducers.CompleteOnboardingReducer)

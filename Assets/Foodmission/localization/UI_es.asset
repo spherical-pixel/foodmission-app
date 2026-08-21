@@ -2285,6 +2285,42 @@ MonoBehaviour:
     m_Localized: Estado
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: "\xA1No pierdas el rumbo! Activa las notificaciones push para no
+      perderte los retos diarios, los registros de comidas y las alertas sobre la
+      fecha de caducidad de los productos de la despensa. No te molestaremos, solo
+      te enviaremos recordatorios \xFAtiles."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: "\xBFA qu\xE9 hora preferir\xEDas recibir tus recordatorios diarios
+      para registrar las comidas o revisar la despensa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Notificaciones push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: Elige si quieres activar las notificaciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: "S\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: Ahora mismo no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: Hora del recordatorio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: Elige la hora que prefieras
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

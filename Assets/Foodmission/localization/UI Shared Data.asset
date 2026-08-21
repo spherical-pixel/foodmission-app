@@ -2171,6 +2171,38 @@ MonoBehaviour:
     m_Key: ONBOARDING_PROFILE.WELCOME_DESC
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Key: ONBOARDING_PROFILE.LABEL_NOTIFICATIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_NOTIFICATIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Key: ONBOARDING_PROFILE.NOTIFICATIONS_OPT_YES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Key: ONBOARDING_PROFILE.NOTIFICATIONS_OPT_NO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Key: ONBOARDING_PROFILE.LABEL_REMINDER_TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_REMINDER_TIME
+    m_Metadata:
+      m_Items: []
   - m_Id: 34305618675228672
     m_Key: NUTRI_MSG_NOT_AVAILABLE_YET
     m_Metadata:

@@ -36,6 +36,11 @@ namespace eu.foodmission.platform
         protected abstract Task OnFlowCompletedAsync();
         protected virtual Task OnFlowCancelledAsync() => Task.CompletedTask;
 
+        // ── Step Navigation Customization (optional override) ─
+        protected virtual int GetNextStepIndex(int currentIndex) => currentIndex + 1;
+        protected virtual int GetPreviousStepIndex(int currentIndex) => currentIndex - 1;
+        protected virtual bool CheckIsLastStep(int currentIndex) => GetNextStepIndex(currentIndex) >= StepCount;
+
         // ── Initialization ────────────────────────────────────
         public virtual void Initialize()
         {
@@ -62,7 +67,7 @@ namespace eu.foodmission.platform
         public void RefreshStepState()
         {
             IsFirstStep = CurrentStepIndex == 0;
-            IsLastStep = CurrentStepIndex == StepCount - 1;
+            IsLastStep = CheckIsLastStep(CurrentStepIndex);
             CanGoPrevious = !IsFirstStep;
             CanGoNext = ValidateStep(CurrentStepIndex, false);
             StepTitle = GetStepTitle(CurrentStepIndex);
@@ -88,13 +93,14 @@ namespace eu.foodmission.platform
 
             await OnStepExitingAsync(CurrentStepIndex);
 
-            if (IsLastStep)
+            int nextIndex = GetNextStepIndex(CurrentStepIndex);
+            if (nextIndex >= StepCount)
             {
                 await OnFlowCompletedAsync();
             }
             else
             {
-                CurrentStepIndex++;
+                CurrentStepIndex = nextIndex;
                 RefreshStepState();
                 await OnStepEnteredAsync(CurrentStepIndex);
             }
@@ -109,7 +115,10 @@ namespace eu.foodmission.platform
 
             await OnStepExitingAsync(CurrentStepIndex);
 
-            CurrentStepIndex--;
+            int prevIndex = GetPreviousStepIndex(CurrentStepIndex);
+            if (prevIndex < 0) prevIndex = 0;
+
+            CurrentStepIndex = prevIndex;
             RefreshStepState();
             await OnStepEnteredAsync(CurrentStepIndex);
         }

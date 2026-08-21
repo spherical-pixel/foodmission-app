@@ -2294,6 +2294,42 @@ MonoBehaviour:
     m_Localized: Status
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: Blijf op koers! Schakel pushmeldingen in, zodat je dagelijkse uitdagingen,
+      maaltijdverslagen en waarschuwingen over de houdbaarheidsdatum van producten
+      in je voorraadkast niet mist. We zullen je niet lastigvallen, alleen nuttige
+      herinneringen sturen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: Op welk tijdstip zou je het liefst je dagelijkse herinneringen ontvangen
+      om je maaltijden bij te houden of je voorraadkast te controleren?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Pushmeldingen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: Kies of je meldingen wilt inschakelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: Nu even niet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: Herinneringstijd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: Kies een gewenst tijdstip
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

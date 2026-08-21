@@ -57,10 +57,10 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void StepFlow_Initialization_SetsStepCountSix()
+        public void StepFlow_Initialization_SetsStepCountEight()
         {
             _vm.Initialize();
-            Assert.AreEqual(6, _vm.StepCount);
+            Assert.AreEqual(8, _vm.StepCount);
             Assert.AreEqual(0, _vm.CurrentStepIndex);
             Assert.IsTrue(_vm.IsFirstStep);
             Assert.IsFalse(_vm.IsLastStep);
@@ -104,6 +104,49 @@ namespace eu.foodmission.platform.Tests
             // Deselecting disables it again
             _vm.SelectedSegmentIndex = -1;
             Assert.IsFalse(_vm.CanGoNext, "Step 5 should disable continuing if segment is deselected");
+        }
+
+        [Test]
+        public async Task StepNavigation_WhenNotificationsEnabled_GoesToStep7()
+        {
+            _vm.Initialize();
+            _vm.SelectedSegmentIndex = 0;
+
+            await _vm.GoToStepAsync(6);
+            Assert.AreEqual(6, _vm.CurrentStepIndex);
+
+            // User selects Yes (index 0)
+            _vm.SelectedPushNotificationsIndex = 0;
+            Assert.IsFalse(_vm.IsLastStep, "Step 6 is not last step when notifications are enabled");
+
+            await _vm.GoNextAsync();
+            Assert.AreEqual(7, _vm.CurrentStepIndex, "Should navigate to Step 7 (reminder time)");
+            Assert.IsTrue(_vm.IsLastStep, "Step 7 is the last step");
+        }
+
+        [Test]
+        public async Task StepNavigation_WhenNotificationsDisabled_SkipsStep7AndCompletesFlow()
+        {
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+
+            _vm.Initialize();
+            _vm.SelectedSegmentIndex = 0;
+
+            await _vm.GoToStepAsync(6);
+            Assert.AreEqual(6, _vm.CurrentStepIndex);
+
+            // User selects No (index 1)
+            _vm.SelectedPushNotificationsIndex = 1;
+            Assert.IsTrue(_vm.IsLastStep, "Step 6 becomes the last step when notifications are disabled");
+
+            _storeService.DispatchedActionTypes.Clear();
+            await _vm.GoNextAsync();
+
+            // Should have completed the flow by calling submit directly
+            Assert.Contains("app/setExtendedProfile", _storeService.DispatchedActionTypes);
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req => req.settings != null && req.settings.pushNotificationsEnabled == false)), Times.Once);
         }
 
         [Test]
@@ -249,7 +292,15 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsFalse(_vm.IsSubmitting);
             Assert.Contains("app/setExtendedProfile", _storeService.DispatchedActionTypes);
-            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req => req.segment != null && req.preferences != null && req.preferences.onboardingSurvey == null)), Times.Once);
+            Assert.Contains("app/setPushNotifications", _storeService.DispatchedActionTypes);
+            Assert.Contains("app/setNotificationPreferredTime", _storeService.DispatchedActionTypes);
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req =>
+                req.segment != null
+                && req.preferences != null
+                && req.preferences.onboardingSurvey == null
+                && req.settings != null
+                && req.settings.pushNotificationsEnabled == true
+                && req.settings.notificationPreferredTime == "10:00")), Times.Once);
         }
 
         [Test]

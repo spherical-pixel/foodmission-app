@@ -47,6 +47,11 @@ namespace eu.foodmission.platform
         public bool pushNotificationsEnabled = false;
 
         /// <summary>
+        /// Preferred local notification time (HH:mm 24h format, e.g. "10:00")
+        /// </summary>
+        public string notificationPreferredTime = "10:00";
+
+        /// <summary>
         /// Local device push registration info (FCM token, platform, etc.)
         /// </summary>
         public DevicePushRegistration devicePushRegistration = new DevicePushRegistration();
@@ -170,6 +175,7 @@ namespace eu.foodmission.platform
                 soundVolume = this.soundVolume,
                 musicVolume = this.musicVolume,
                 pushNotificationsEnabled = this.pushNotificationsEnabled,
+                notificationPreferredTime = this.notificationPreferredTime,
                 devicePushRegistration = this.devicePushRegistration?.Copy() ?? new DevicePushRegistration(),
                 backgroundPattern = this.backgroundPattern,
                 hasCompletedOnboarding = this.hasCompletedOnboarding,

@@ -142,6 +142,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void SetNotificationPreferredTimeReducer_UpdatesTime()
+        {
+            var action = AppActions.setNotificationPreferredTime.Invoke("14:30");
+
+            var newState = AppReducers.SetNotificationPreferredTimeReducer(m_InitialState, action);
+
+            Assert.AreEqual("14:30", newState.notificationPreferredTime);
+        }
+
+        [Test]
         public void SetBackgroundPatternReducer_UpdatesFlag()
         {
             var state = new AppState { backgroundPattern = true };

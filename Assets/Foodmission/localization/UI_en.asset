@@ -2274,6 +2274,41 @@ MonoBehaviour:
     m_Localized: Status
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: Stay on track! Enable push notifications so you don't miss daily
+      challenges, meal logs, and pantry expiry alerts. We will not bother you, just
+      useful reminders.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: What time would you prefer to receive your daily reminders to log
+      meals or check your pantry?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Push Notifications
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: Choose whether to enable notifications
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: Not right now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: Reminder Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: Select a preferred time
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

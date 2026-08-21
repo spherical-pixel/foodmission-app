@@ -2280,6 +2280,41 @@ MonoBehaviour:
     m_Localized: Stanje
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: "Ostani na pravi poti! Vklopi obvestila, da ne bo\u0161 zamudil
+      dnevnih izzivov, bele\u017Eenja obrokov in opozoril o izteku roka uporabe \u017Eivil
+      v shrambi. Ne bomo te motili, po\u0161iljali ti bomo le koristna opozorila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: "Ob kateri uri bi \u017Eeleli prejemati dnevna opozorila za vnos
+      obrokov ali pregled shrambe?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Obvestila s potrditvijo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: "Izberite, ali \u017Eelite omogo\u010Diti obvestila"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: Da
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: Ne zdaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: "\u010Cas za opomin"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: "Izberite \u017Eeleni \u010Das"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

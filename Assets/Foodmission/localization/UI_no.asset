@@ -2282,6 +2282,41 @@ MonoBehaviour:
     m_Localized: Status
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: "Hold deg p\xE5 rett spor! Sl\xE5 p\xE5 push-varsler, s\xE5 du ikke
+      g\xE5r glipp av daglige utfordringer, m\xE5ltidslogger og varsler om utl\xF8psdatoer
+      i spiskammeret. Vi skal ikke forstyrre deg \u2013 bare gi deg nyttige p\xE5minnelser."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: "Hvilket tidspunkt foretrekker du \xE5 motta de daglige p\xE5minnelsene
+      om \xE5 registrere m\xE5ltider eller sjekke matforr\xE5det?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Push-varsler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: Velg om du vil aktivere varsler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: "Ikke akkurat n\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: "P\xE5minnelsestidspunkt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: "Velg et \xF8nsket tidspunkt"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

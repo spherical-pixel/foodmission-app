@@ -50,6 +50,20 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private IList<string> _segmentOptions = new List<string>();
 
+        [ObservableProperty]
+        private IList<string> _pushNotificationsOptions = new List<string>
+        {
+            "@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_YES",
+            "@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_NO"
+        };
+
+        [ObservableProperty]
+        private IList<string> _reminderTimeOptions = new List<string>
+        {
+            "07:00", "08:00", "09:00", "10:00", "11:00", "12:00",
+            "13:00", "14:00", "15:00", "16:00", "17:00", "18:00",
+            "19:00", "20:00", "21:00", "22:00"
+        };
 
         // Selected indices for dropdowns (-1 = no selection)
         [ObservableProperty]
@@ -79,6 +93,12 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _selectedSegmentIndex = -1;
 
+        [ObservableProperty]
+        private int _selectedPushNotificationsIndex = 0;
+
+        [ObservableProperty]
+        private int _selectedReminderTimeIndex = 3;
+
         // UI state
         [ObservableProperty]
         private bool _isLoading = false;
@@ -91,6 +111,8 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private string _loadingText = "";
+
+        private readonly INotificationService _notificationService;
 
         /// <summary>
         /// Segment selection is required for form validity.
@@ -105,15 +127,19 @@ namespace eu.foodmission.platform
         public OnboardingProfileViewModel(
             IStoreService storeService,
             ICatalogService catalogService,
-            IAuthService authService)
+            IAuthService authService,
+            INotificationService notificationService = null)
             : base(storeService)
         {
             _catalogService = catalogService;
             _authService = authService;
+            _notificationService = notificationService;
 
             PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(SelectedSegmentIndex))
+                if (args.PropertyName == nameof(SelectedSegmentIndex) ||
+                    args.PropertyName == nameof(SelectedPushNotificationsIndex) ||
+                    args.PropertyName == nameof(SelectedReminderTimeIndex))
                 {
                     InvalidateValidation();
                 }
@@ -122,7 +148,7 @@ namespace eu.foodmission.platform
 
         // ── StepFlow Implementation ───────────────────────────
 
-        protected override int GetStepCount() => 6;
+        protected override int GetStepCount() => 8;
 
         protected override bool ValidateStep(int stepIndex)
         {
@@ -134,8 +160,34 @@ namespace eu.foodmission.platform
             return stepIndex switch
             {
                 5 => _selectedSegmentIndex >= 0,
+                6 => _selectedPushNotificationsIndex >= 0,
+                7 => _selectedReminderTimeIndex >= 0,
                 _ => true
             };
+        }
+
+        protected override int GetNextStepIndex(int currentIndex)
+        {
+            if (currentIndex == 6 && _selectedPushNotificationsIndex != 0)
+            {
+                // Skip Step 7 (reminder time) if Push Notifications is No
+                return 8;
+            }
+            return currentIndex + 1;
+        }
+
+        protected override int GetPreviousStepIndex(int currentIndex)
+        {
+            return currentIndex - 1;
+        }
+
+        protected override bool CheckIsLastStep(int currentIndex)
+        {
+            if (currentIndex == 6 && _selectedPushNotificationsIndex != 0)
+            {
+                return true;
+            }
+            return currentIndex >= GetStepCount() - 1;
         }
 
         protected override string GetStepTitle(int stepIndex)
@@ -262,6 +314,17 @@ namespace eu.foodmission.platform
                 }
             }
             SelectedDietaryPreferenceIndices = dietaryIndices.ToArray();
+
+            SelectedPushNotificationsIndex = state.pushNotificationsEnabled ? 0 : 1;
+            if (!string.IsNullOrEmpty(state.notificationPreferredTime))
+            {
+                int timeIdx = ReminderTimeOptions.IndexOf(state.notificationPreferredTime);
+                SelectedReminderTimeIndex = timeIdx >= 0 ? timeIdx : 3;
+            }
+            else
+            {
+                SelectedReminderTimeIndex = 3;
+            }
         }
 
         private static int FindCatalogIndex(CatalogItem[] items, string code)
@@ -350,6 +413,11 @@ namespace eu.foodmission.platform
                     if (codes.Count > 0) dietaryCodes = codes.ToArray();
                 }
 
+                bool pushEnabled = _selectedPushNotificationsIndex == 0;
+                string preferredTime = _selectedReminderTimeIndex >= 0 && _selectedReminderTimeIndex < _reminderTimeOptions.Count
+                    ? _reminderTimeOptions[_selectedReminderTimeIndex]
+                    : "10:00";
+
                 AppState state = _storeService.GetAppState();
 
                 var request = new ProfileUpdateRequest
@@ -368,6 +436,12 @@ namespace eu.foodmission.platform
                         dailyTimeCommitmentMinutes = dailyTimeMinutes > 0 ? dailyTimeMinutes : state.userDailyTimeCommitmentMinutes,
                         onboardingProfileCompleted = true,
                         autoAddToPantry = state.userAutoAddToPantry
+                    },
+
+                    settings = new UserSettingsDto
+                    {
+                        pushNotificationsEnabled = pushEnabled,
+                        notificationPreferredTime = pushEnabled ? preferredTime : "10:00"
                     }
                 };
 
@@ -378,6 +452,23 @@ namespace eu.foodmission.platform
                 if (success)
                 {
                     _storeService.store.Dispatch(AppActions.setExtendedProfile.Invoke());
+                    _storeService.store.Dispatch(AppActions.setPushNotifications.Invoke(pushEnabled));
+                    _storeService.store.Dispatch(AppActions.setNotificationPreferredTime.Invoke(preferredTime));
+
+                    if (pushEnabled)
+                    {
+                        _notificationService?.SetNotificationsEnabled(true);
+                        if (TimeSpan.TryParse(preferredTime, out var ts))
+                        {
+                            _notificationService?.ScheduleDailyMealReminder(ts);
+                        }
+                        _ = _notificationService?.RequestPermissionsAsync();
+                    }
+                    else
+                    {
+                        _notificationService?.SetNotificationsEnabled(false);
+                    }
+
                     ErrorDetail = null;
                     NavigateNextScreen();
                 }

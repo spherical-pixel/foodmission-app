@@ -2288,6 +2288,41 @@ MonoBehaviour:
     m_Localized: Stato
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: 'Rimani in carreggiata! Attiva le notifiche push per non perdere
+      le sfide quotidiane, i registri dei pasti e gli avvisi sulle scadenze dei prodotti
+      in dispensa. Non ti disturberemo: ti invieremo solo promemoria utili.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: A che ora preferiresti ricevere i promemoria quotidiani per registrare
+      i pasti o controllare la dispensa?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Notifiche push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: Scegli se abilitare le notifiche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: "S\xEC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: Non adesso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: "\xC8 ora di un promemoria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: Scegli l'orario che preferisci
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

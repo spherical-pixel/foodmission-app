@@ -2311,6 +2311,44 @@ MonoBehaviour:
     m_Localized: Status
     m_Metadata:
       m_Items: []
+  - m_Id: 37253702120103936
+    m_Localized: "Nie tra\u0107 z oczu swoich cel\xF3w! W\u0142\u0105cz powiadomienia
+      push, aby nie przegapi\u0107 codziennych wyzwa\u0144, wpis\xF3w dotycz\u0105cych
+      posi\u0142k\xF3w oraz alert\xF3w o terminach wa\u017Cno\u015Bci produkt\xF3w
+      w spi\u017Carni. Nie b\u0119dziemy Ci przeszkadza\u0107 \u2013 to tylko przydatne
+      przypomnienia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103937
+    m_Localized: "O kt\xF3rej godzinie wola\u0142by\u015B otrzymywa\u0107 codzienne
+      przypomnienia o rejestrowaniu posi\u0142k\xF3w lub sprawdzaniu zawarto\u015Bci
+      spi\u017Carni?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103938
+    m_Localized: Powiadomienia push
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103939
+    m_Localized: "Zdecyduj, czy chcesz w\u0142\u0105czy\u0107 powiadomienia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103940
+    m_Localized: Tak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103941
+    m_Localized: Nie w tej chwili
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103942
+    m_Localized: Czas na przypomnienie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37253702120103943
+    m_Localized: Wybierz dogodny termin
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
