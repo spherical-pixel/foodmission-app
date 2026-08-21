@@ -661,3 +661,14 @@ FOODMISSION se nenehno razvija. Aplikacijo izboljšujemo in dodajamo nove funkci
 FOODMISSION sigue en constante evolución. Vamos mejorando la app y añadiendo nuevas funcionalidades gracias al feedback de personas como tú. ¡Gracias por ayudarnos a seguir creciendo!"
 MEAL_LOG_LAST_MEALS,34310338294833152,Last meals,Laatste maaltijden,Letzte Mahlzeiten,Τελευταία γεύματα,Gli ultimi pasti,Siste måltider,Ostatnie posiłki,Zadnji obroki,Últimas comidas
 txtNO_ITEMS_SPECIFIED,36108391091789824,No items specified,Er zijn geen items opgegeven,Es wurden keine Elemente angegeben,Δεν έχουν καθοριστεί στοιχεία,Nessun articolo specificato,Ingen varer angitt,Nie podano żadnych pozycji,Ni navedenih elementov,No se han especificado artículos
+NAV_QUIZZES,37187273882591232,Quizzes,Quizzen,Quizze,Κουίζ,Quiz,Quizer,Quizy,Kviz,Quizzes
+QUIZ_FILTER_ALL,37187301837627392,All,Alles,Alle,Όλα,Tutto,Alle,Wszystkie,Vse,Todos
+QUIZ_LEVEL_BEGINNER,37187373195321344,Beginner,Beginner,Anfänger,Αρχάριος,Principiante,Nybegynner,Początkujący,Začetnik,Principiante
+QUIZ_LEVEL_INTERMEDIATE,37187414811205632,Intermediate,Gemiddeld,Mittelstufe,Ενδιάμεσο επίπεδο,Livello intermedio,Mellomnivå,Poziom średniozaawansowany,Srednja stopnja,Nivel intermedio
+QUIZ_LEVEL_ADVANCED,37187437674356736,Advanced,Gevorderd,Fortgeschritten,Για προχωρημένους,Avanzato,Avansert,Zaawansowane,Napredno,Avanzado
+QUIZ_STATUS_ALL,37187477251809280,All Status,Alle statussen,Alle Status,Όλες οι καταστάσεις,Tutti gli stati,Alle statuser,Wszystkie statusy,Vsi statusi,Todos los estados
+QUIZ_STATUS_PENDING,37187522730647552,Pending,In afwachting van,Ausstehend,Σε εκκρεμότητα,In sospeso,Under behandling,W toku,V obravnavi,Pendiente
+QUIZ_STATUS_COMPLETED,37187606511869952,Completed,Voltooid,Abgeschlossen,Ολοκληρώθηκε,Completato,Fullført,Zakończono,Zaključeno,Finalizado
+QUIZZES_EMPTY_STATE,37187629354049536,No quizzes found matching the selected filters.,Er zijn geen quizzen gevonden die aan de geselecteerde filters voldoen.,"Es wurden keine Quizze gefunden, die den ausgewählten Filtern entsprechen.",Δεν βρέθηκαν κουίζ που να ανταποκρίνονται στα επιλεγμένα κριτήρια.,Non sono stati trovati quiz corrispondenti ai filtri selezionati.,Det ble ikke funnet noen spørrekonkurranser som samsvarer med de valgte filtrene.,Nie znaleziono quizów odpowiadających wybranym filtrom.,"Ni bilo najdenih kvizov, ki bi ustrezali izbranim filtrom.",No se han encontrado cuestionarios que se ajusten a los filtros seleccionados.
+QUIZZES_LEVEL_TITLE,37196650563756032,Level,Niveau,Stufe,Επίπεδο,Livello,Nivå,Poziom,Raven,Nivel
+QUIZZES_STATUS_TITLE,37196726493241344,Status,Status,Status,Κατάσταση,Stato,Status,Status,Stanje,Estado

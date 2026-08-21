@@ -1,5 +1,21 @@
 {
   "dependencies": {
+    "com.annulusgames.alchemy": {
+      "version": "https://github.com/annulusgames/Alchemy.git?path=/Alchemy/Assets/Alchemy",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "0fd900299de83d09d795ca81e804fae328bd0229"
+    },
+    "com.mainragames.uitoolkit-particlesystem": {
+      "version": "https://github.com/MainraStudio/UI-Toolkit-Particle-System.git?path=Packages/UIToolkitParticleSystem",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.annulusgames.alchemy": "2.1.0"
+      },
+      "hash": "1e08ffa6957fecc9ee12adedf5255493e0d50ed7"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.4",
       "depth": 0,

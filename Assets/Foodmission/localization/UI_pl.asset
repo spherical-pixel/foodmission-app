@@ -2267,6 +2267,50 @@ MonoBehaviour:
     m_Localized: "Nie podano \u017Cadnych pozycji"
     m_Metadata:
       m_Items: []
+  - m_Id: 37187273882591232
+    m_Localized: Quizy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187301837627392
+    m_Localized: Wszystkie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187373195321344
+    m_Localized: "Pocz\u0105tkuj\u0105cy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187414811205632
+    m_Localized: "Poziom \u015Bredniozaawansowany"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187437674356736
+    m_Localized: Zaawansowane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187477251809280
+    m_Localized: Wszystkie statusy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187522730647552
+    m_Localized: W toku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187606511869952
+    m_Localized: "Zako\u0144czono"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187629354049536
+    m_Localized: "Nie znaleziono quiz\xF3w odpowiadaj\u0105cych wybranym filtrom."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37196650563756032
+    m_Localized: Poziom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37196726493241344
+    m_Localized: Status
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

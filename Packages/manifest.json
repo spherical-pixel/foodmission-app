@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.annulusgames.alchemy": "https://github.com/annulusgames/Alchemy.git?path=/Alchemy/Assets/Alchemy",
+    "com.mainragames.uitoolkit-particlesystem": "https://github.com/MainraStudio/UI-Toolkit-Particle-System.git?path=Packages/UIToolkitParticleSystem",
     "com.unity.2d.animation": "13.0.4",
     "com.unity.2d.aseprite": "3.0.1",
     "com.unity.2d.psdimporter": "12.0.1",

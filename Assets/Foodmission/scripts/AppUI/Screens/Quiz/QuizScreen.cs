@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
+using MainraGames;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
@@ -41,6 +42,12 @@ namespace eu.foodmission.platform
         private Text _explanationText;
         private FMSourceItemView _sourceItemView;
         private Image _imageTopic;
+
+        private VisualElement _icnOk;
+        private VisualElement _icnKo;
+        private UIParticle _particles;
+
+
         private IAudioService _audioService;
         private IAvatarService _avatarService;
         private IDimensionService _dimensionService;
@@ -79,6 +86,12 @@ namespace eu.foodmission.platform
             }
 
             _viewModel.PropertyChanged += OnPropertyChanged;
+            HideFeedbackIcons();
+            if (_particles != null)
+            {
+                _particles.style.display = DisplayStyle.None;
+                _particles.Clear();
+            }
             _audioService.PlayMusic(MusicType.Quiz);
         }
 
@@ -86,6 +99,12 @@ namespace eu.foodmission.platform
         {
             _viewModel.PropertyChanged -= OnPropertyChanged;
 
+            HideFeedbackIcons();
+            if (_particles != null)
+            {
+                _particles.style.display = DisplayStyle.None;
+                _particles.Clear();
+            }
             _avatarService.AvatarController.AvatarAnimationController.CurrentMood = AvatarMood.Neutral;
             _audioService.StopMusic();
 
@@ -241,9 +260,22 @@ namespace eu.foodmission.platform
             _response4.style.display = DisplayStyle.None;
 
             _imageTopic = contentContainer.Q<Image>("image-topic");
+
             _explanationText = contentContainer.Q<Text>("text-explanation");
             _sourceItemView = contentContainer.Q<FMSourceItemView>("source-item-view");
             _sourceItemView.ShowPrefix = false;
+
+
+            _icnOk = contentContainer.Q<VisualElement>("icn-ok");
+            _icnKo = contentContainer.Q<VisualElement>("icn-ko");
+
+            _particles = contentContainer.Q<UIParticle>("particles");
+            if (_particles != null)
+            {
+                _particles.style.display = DisplayStyle.None;
+            }
+
+
         }
 
         private void RegisterManualEvents()
@@ -279,7 +311,14 @@ namespace eu.foodmission.platform
         {
             HideExplanationCard(() =>
             {
-                OnNavigationRequested(Actions.go_to_home, null);
+                if (_navController != null)
+                {
+                    _navController.PopBackStack();
+                }
+                else
+                {
+                    OnNavigationRequested(Actions.go_to_home, null);
+                }
             });
         }
 
@@ -322,6 +361,13 @@ namespace eu.foodmission.platform
             _currentResponse.SetState(QuizResponseState.Correct);
             _audioService.PlaySfx(SfxType.QuizPositive);
             _avatarService.AvatarController.AvatarAnimationController.CurrentMood = AvatarMood.Happy;
+            _icnOk?.RemoveFromClassList("fm-quiz-feedback-icon--hidden");
+            _icnKo?.AddToClassList("fm-quiz-feedback-icon--hidden");
+            if (_particles != null)
+            {
+                _particles.style.display = DisplayStyle.Flex;
+            }
+
             schedule.Execute(() =>
             {
                 HideCard(() =>
@@ -330,8 +376,6 @@ namespace eu.foodmission.platform
                     ShowExplanationCard(1500);
                 });
             }).StartingIn(1000);
-
-
         }
 
         private void SetIncorrect()
@@ -339,6 +383,8 @@ namespace eu.foodmission.platform
             _currentResponse.SetState(QuizResponseState.Incorrect);
             _audioService.PlaySfx(SfxType.QuizNegative);
             _avatarService.AvatarController.AvatarAnimationController.CurrentMood = AvatarMood.Sad;
+            _icnKo?.RemoveFromClassList("fm-quiz-feedback-icon--hidden");
+            _icnOk?.AddToClassList("fm-quiz-feedback-icon--hidden");
             schedule.Execute(() =>
             {
                 HideCard(() =>
@@ -346,6 +392,12 @@ namespace eu.foodmission.platform
                     ShowExplanationCard(1500);
                 });
             }).StartingIn(1000);
+        }
+
+        private void HideFeedbackIcons()
+        {
+            _icnOk?.AddToClassList("fm-quiz-feedback-icon--hidden");
+            _icnKo?.AddToClassList("fm-quiz-feedback-icon--hidden");
         }
 
         private void RebuildExplanationCard()
@@ -371,6 +423,13 @@ namespace eu.foodmission.platform
                 if (topicSprite != null)
                 {
                     _imageTopic.sprite = topicSprite;
+                    _imageTopic.scaleMode = ScaleMode.ScaleToFit;
+                    _imageTopic.style.width = Length.Percent(100);
+                    _imageTopic.style.height = StyleKeyword.Auto;
+                    if (topicSprite.rect.height > 0)
+                    {
+                        _imageTopic.style.aspectRatio = topicSprite.rect.width / topicSprite.rect.height;
+                    }
                     _imageTopic.style.display = DisplayStyle.Flex;
                 }
                 else
@@ -483,7 +542,14 @@ namespace eu.foodmission.platform
             {
                 FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail, onOk: () =>
                 {
-                    OnNavigationRequested(Actions.go_to_home, null);
+                    if (_navController != null)
+                    {
+                        _navController.PopBackStack();
+                    }
+                    else
+                    {
+                        OnNavigationRequested(Actions.go_to_home, null);
+                    }
                 });
                 _viewModel.ErrorDetail = null;
             }

@@ -65,6 +65,7 @@ namespace eu.foodmission.platform
             _caloriesLeftLabel = contentContainer.Q<Label>("calories-left");
 
             _btOpenQuizz = contentContainer.Q<FMButton>("open-quiz");
+            _btOpenQuizz.style.display = DisplayStyle.None;
 
             _periodStepper = contentContainer.Q<FMArrowStepper>("period-stepper");
             _scopeStepper = contentContainer.Q<FMArrowStepper>("scope-stepper");
@@ -138,10 +139,8 @@ namespace eu.foodmission.platform
 
         private void OnOpenQuizOpen()
         {
-            Debug.Log("OnOpenQuizOpen");
-            // Q1.1.1
-            // df27b23d-ea27-4c7e-93f5-26e3307fefdf
-            _navController.Navigate(Actions.open_quiz, new[] { new Argument("code", "Q1.1.1"), new Argument("id", "df27b23d-ea27-4c7e-93f5-26e3307fefdf") });
+            Debug.Log("OnOpenQuizOpen -> Navigating to QuizzesScreen");
+            _navController.Navigate(Actions.go_to_quizzes);
         }
 
 

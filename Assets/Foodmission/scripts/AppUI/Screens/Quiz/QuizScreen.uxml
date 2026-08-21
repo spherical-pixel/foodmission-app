@@ -2,9 +2,12 @@
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.QuizScreenViewModel, Foodmission" class="fm-root" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
         <ui:VisualElement name="avatar-container" picking-mode="Ignore" class="fm-quiz-avatar-panel" style="position: absolute; overflow: visible; flex-direction: column-reverse; justify-content: flex-start; align-self: flex-start; align-items: center; bottom: -50px; left: 0; right: 0; height: auto; top: 0;">
-            <ui:Image source="project://database/Assets/Foodmission/graphics/png/foco_avatar.png?fileID=21300000&amp;guid=33a076f03b160455bb093266580546ad&amp;type=3#foco_avatar" scale-mode="StretchToFill" style="bottom: 0; position: absolute; top: -300px; width: 1000px;"/>
+            <MainraGames.UIParticle profile="project://database/Assets/Foodmission/particles/UIParticleProfile.asset?fileID=11400000&amp;guid=d08450cb557f941c1a22c345adb233f0&amp;type=2#UIParticleProfile" name="particles" style="top: 0; left: 0; right: 0; bottom: 0; position: absolute; display: none;"/>
+            <ui:Image source="project://database/Assets/Foodmission/graphics/png/foco_avatar.png?fileID=21300000&amp;guid=33a076f03b160455bb093266580546ad&amp;type=3#foco_avatar" scale-mode="StretchToFill" style="bottom: 0; position: absolute; top: -300px; width: 1000px; flex-direction: column-reverse;"/>
             <fm:FMAvatarView mode="FullBody"/>
             <ui:Image source="project://database/Assets/Foodmission/graphics/png/stand.png?fileID=21300000&amp;guid=d6326be7e0d9e43c9b5349cde580f2ba&amp;type=3#stand" scale-mode="ScaleAndCrop" style="bottom: 0; position: absolute; aspect-ratio: 1;"/>
+            <ui:Image source="project://database/Assets/Foodmission/art/ui_sprites/icons-quiz/quiz_win.png?fileID=21300000&amp;guid=6fa957a6c34dda646b9cf5bec9a3c408&amp;type=3#quiz_win" name="icn-ok" picking-mode="Ignore" class="fm-quiz-feedback-icon fm-quiz-feedback-icon--hidden"/>
+            <ui:Image source="project://database/Assets/Foodmission/art/ui_sprites/icons-quiz/quiz_lose.png?fileID=21300000&amp;guid=9ef570a545059af4b9a7b257d78839d7&amp;type=3#quiz_lose" name="icn-ko" picking-mode="Ignore" class="fm-quiz-feedback-icon fm-quiz-feedback-icon--hidden"/>
         </ui:VisualElement>
         <ui:VisualElement name="back" style="flex-grow: 1;">
             <appui:ExVisualElement name="main-question-card" class="box-background fm-shadow-wrapper fm-quiz-main-card">
@@ -20,7 +23,7 @@
                 </ui:VisualElement>
             </appui:ExVisualElement>
             <appui:ExVisualElement name="explanation-card" class="box-background fm-shadow-wrapper fm-quiz-explanation-card">
-                <ui:Image name="image-topic"/>
+                <ui:Image name="image-topic" class="fm-quiz-topic-image"/>
                 <appui:Text name="text-explanation"/>
                 <fm:FMSourceItemView name="source-item-view"/>
                 <fm:FMButton name="bt-continue" title="Continuar_" trailing-icon="fm-arrow-right" variant="Accent" class="fm-button fm-button-align-left" style="margin-top: 40px;">

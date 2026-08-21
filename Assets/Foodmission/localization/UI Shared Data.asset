@@ -2183,6 +2183,50 @@ MonoBehaviour:
     m_Key: txtNO_ITEMS_SPECIFIED
     m_Metadata:
       m_Items: []
+  - m_Id: 37187273882591232
+    m_Key: NAV_QUIZZES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187301837627392
+    m_Key: QUIZ_FILTER_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187373195321344
+    m_Key: QUIZ_LEVEL_BEGINNER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187414811205632
+    m_Key: QUIZ_LEVEL_INTERMEDIATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187437674356736
+    m_Key: QUIZ_LEVEL_ADVANCED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187477251809280
+    m_Key: QUIZ_STATUS_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187522730647552
+    m_Key: QUIZ_STATUS_PENDING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187606511869952
+    m_Key: QUIZ_STATUS_COMPLETED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187629354049536
+    m_Key: QUIZZES_EMPTY_STATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37196650563756032
+    m_Key: QUIZZES_LEVEL_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37196726493241344
+    m_Key: QUIZZES_STATUS_TITLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

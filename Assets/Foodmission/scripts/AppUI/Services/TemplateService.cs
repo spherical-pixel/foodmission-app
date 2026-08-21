@@ -44,7 +44,8 @@ namespace eu.foodmission.platform
             TemplateAddresses.RecipeBook,
             TemplateAddresses.RecipeDetail,
             TemplateAddresses.RecipeEditor,
-            TemplateAddresses.QuizScreen
+            TemplateAddresses.QuizScreen,
+            TemplateAddresses.QuizzesScreen
 
         };
 

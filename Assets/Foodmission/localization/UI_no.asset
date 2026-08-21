@@ -2237,6 +2237,51 @@ MonoBehaviour:
     m_Localized: Ingen varer angitt
     m_Metadata:
       m_Items: []
+  - m_Id: 37187273882591232
+    m_Localized: Quizer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187301837627392
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187373195321344
+    m_Localized: Nybegynner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187414811205632
+    m_Localized: "Mellomniv\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187437674356736
+    m_Localized: Avansert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187477251809280
+    m_Localized: Alle statuser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187522730647552
+    m_Localized: Under behandling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187606511869952
+    m_Localized: "Fullf\xF8rt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37187629354049536
+    m_Localized: "Det ble ikke funnet noen sp\xF8rrekonkurranser som samsvarer med
+      de valgte filtrene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37196650563756032
+    m_Localized: "Niv\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37196726493241344
+    m_Localized: Status
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

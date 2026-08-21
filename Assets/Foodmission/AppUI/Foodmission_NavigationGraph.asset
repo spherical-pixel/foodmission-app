@@ -207,6 +207,39 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &-7257701155362442244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Quizzes
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 357.75, y: 1995.3501}
+  m_Guid: b46aac8d1dd1b4ccfa6a761bdd5d72d4
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: '@UI:NAV_QUIZZES'
+  m_TemplateSettings:
+    rid: 2157972371349438694
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 2157972371349438694
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.QuizzesScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
 --- !u!114 &-6196883293665439386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,6 +1165,8 @@ MonoBehaviour:
   - {fileID: -3281430989788778340}
   - {fileID: -3703614342509384839}
   - {fileID: -7463324954664816163}
+  - {fileID: -7257701155362442244}
+  - {fileID: 8647505148312902360}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1950,6 +1985,7 @@ MonoBehaviour:
   - {fileID: -1716996974998973278}
   - {fileID: 6946922476416249955}
   - {fileID: -7463324954664816163}
+  - {fileID: 8647505148312902360}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955
@@ -2100,3 +2136,30 @@ MonoBehaviour:
         m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
+--- !u!114 &8647505148312902360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_quizzes
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: -42, y: 2189}
+  m_Guid: 72f09ca8-4008-4aab-aecb-9866e32baf8f
+  m_Destination: {fileID: -7257701155362442244}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
