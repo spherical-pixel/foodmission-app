@@ -2323,6 +2323,50 @@ MonoBehaviour:
     m_Localized: Scegli l'orario che preferisci
     m_Metadata:
       m_Items: []
+  - m_Id: 38390811899977728
+    m_Localized: "Cosa \xE8 successo a questo prodotto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172032
+    m_Localized: "Cosa \xE8 successo a {0}?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172033
+    m_Localized: Registra come consumato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172034
+    m_Localized: Registra come spreco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172035
+    m_Localized: Rimuovi dalla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172036
+    m_Localized: Pasto registrato con successo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172037
+    m_Localized: Spreco alimentare registrato con successo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172038
+    m_Localized: Articolo rimosso dalla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403531093303296
+    m_Localized: "Quantit\xE0 sprecata"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403887139381248
+    m_Localized: "Costo stimato (\u20AC, facoltativo)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38404185903849472
+    m_Localized: Note aggiuntive (facoltative)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

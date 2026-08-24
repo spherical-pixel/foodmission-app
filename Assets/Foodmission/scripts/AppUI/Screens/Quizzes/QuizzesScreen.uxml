@@ -11,7 +11,7 @@
                             <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37196650563756032)"/>
                         </Bindings>
                     </appui:Text>
-                    <appui:ActionGroup name="group-level-filters" selection-type="Single" allow-no-selection="false" compact="true" size="S" direction="Horizontal" justified="true" class="fm-quizzes-action-group">
+                    <appui:ActionGroup name="group-level-filters" selection-type="Single" allow-no-selection="false" compact="true" size="S" direction="Horizontal" justified="true" quiet="true" class="fm-quizzes-action-group">
                         <appui:ActionButton name="btn-level-all" label="All" selected="true" size="S">
                             <Bindings>
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187301837627392)"/>

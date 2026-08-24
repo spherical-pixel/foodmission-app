@@ -16,6 +16,11 @@ namespace eu.foodmission.platform.Tests
         private Mock<IGenericFoodService> _mockGenericFoodService;
         private Mock<ILocalStorageService> _mockLocalStorage;
         private Mock<IOpenFoodFactsClientService> _mockOpenFoodFactsClient;
+        private Mock<INotificationService> _mockNotificationService;
+        private Mock<IFoodWasteService> _mockFoodWasteService;
+        private Mock<IMealService> _mockMealService;
+        private Mock<IMealLogService> _mockMealLogService;
+        private Mock<IMealItemService> _mockMealItemService;
         private TestStoreService _storeService;
         private PantryViewModel _vm;
         private System.Func<bool> _originalOverride;
@@ -30,6 +35,11 @@ namespace eu.foodmission.platform.Tests
             _mockGenericFoodService = new Mock<IGenericFoodService>();
             _mockLocalStorage = new Mock<ILocalStorageService>();
             _mockOpenFoodFactsClient = new Mock<IOpenFoodFactsClientService>();
+            _mockNotificationService = new Mock<INotificationService>();
+            _mockFoodWasteService = new Mock<IFoodWasteService>();
+            _mockMealService = new Mock<IMealService>();
+            _mockMealLogService = new Mock<IMealLogService>();
+            _mockMealItemService = new Mock<IMealItemService>();
             _storeService = new TestStoreService();
             _vm = new PantryViewModel(
                 _storeService,
@@ -37,7 +47,12 @@ namespace eu.foodmission.platform.Tests
                 _mockFoodProductService.Object,
                 _mockGenericFoodService.Object,
                 _mockLocalStorage.Object,
-                _mockOpenFoodFactsClient.Object);
+                _mockOpenFoodFactsClient.Object,
+                _mockNotificationService.Object,
+                _mockFoodWasteService.Object,
+                _mockMealService.Object,
+                _mockMealLogService.Object,
+                _mockMealItemService.Object);
         }
 
         [TearDown]
@@ -171,7 +186,8 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.GetExpiredItemsAsync())
                 .Returns(Task.FromResult<(ExpiredPantryItem[] Result, ApiErrorResponse Error)>((new ExpiredPantryItem[]
                 {
-                    new ExpiredPantryItem { pantryItemId = "e1", quantity = 1, unit = "kg" }
+                    new ExpiredPantryItem { pantryItemId = "e1", quantity = 1, unit = "kg", expiryDate = DateTime.UtcNow.AddDays(-2).ToString("yyyy-MM-dd") },
+                    new ExpiredPantryItem { pantryItemId = "e2", quantity = 1, unit = "kg", expiryDate = DateTime.UtcNow.ToString("yyyy-MM-dd") } // Today: not yet expired
                 }, null)));
 
             await _vm.LoadAsync();
@@ -389,5 +405,154 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(fallback.id, result.id);
         }
+
+        [Test]
+        public async Task ConsumeItemAsync_Success_CreatesMealMealItemMealLogAndDeletesPantryItem()
+        {
+            var item = new PantryItem
+            {
+                id = "pantry-123",
+                foodProductId = "food-prod-1",
+                quantity = 2,
+                unit = "PIECES"
+            };
+            var view = new PantryItemView
+            {
+                Item = item,
+                DisplayName = "Organic Apple"
+            };
+
+            _mockMealService
+                .Setup(x => x.CreateMealAsync(It.Is<CreateMealRequest>(r => r.name == "Organic Apple")))
+                .ReturnsAsync((new Meal { id = "meal-99", name = "Organic Apple" }, (ApiErrorResponse)null));
+
+            _mockMealItemService
+                .Setup(x => x.CreateAsync("meal-99", It.Is<CreateMealItemRequest>(r => r.foodProductId == "food-prod-1" && r.quantity == 2 && r.unit == "PIECES")))
+                .ReturnsAsync((new MealItem { id = "mi-1" }, (ApiErrorResponse)null));
+
+            _mockMealLogService
+                .Setup(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.mealId == "meal-99" && r.mealFromPantry == true && r.eatenOut == false)))
+                .ReturnsAsync((new MealLog { id = "ml-1" }, (ApiErrorResponse)null));
+
+            _mockPantryService
+                .Setup(x => x.DeleteItemAsync("pantry-123"))
+                .ReturnsAsync((true, (ApiErrorResponse)null));
+
+            bool success = await _vm.ConsumeItemAsync(view);
+
+            Assert.IsTrue(success);
+            _mockMealService.Verify(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()), Times.Once);
+            _mockMealItemService.Verify(x => x.CreateAsync("meal-99", It.IsAny<CreateMealItemRequest>()), Times.Once);
+            _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Once);
+            _mockPantryService.Verify(x => x.DeleteItemAsync("pantry-123"), Times.Once);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("pantry-123"), Times.Once);
+        }
+
+        [Test]
+        public async Task ConsumeItemAsync_WhenMealCreationFails_ReturnsFalseAndSetsErrorDetail()
+        {
+            var item = new PantryItem { id = "pantry-123", foodProductId = "food-prod-1" };
+            var view = new PantryItemView { Item = item, DisplayName = "Apple" };
+
+            _mockMealService
+                .Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
+                .ReturnsAsync(((Meal)null, new ApiErrorResponse { statusCode = 500, message = "Server error" }));
+
+            bool success = await _vm.ConsumeItemAsync(view);
+
+            Assert.IsFalse(success);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            _mockPantryService.Verify(x => x.DeleteItemAsync(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task WasteItemAsync_Success_CreatesFoodWasteAndCancelsReminder()
+        {
+            var item = new PantryItem
+            {
+                id = "pantry-456",
+                foodProductId = "food-prod-2",
+                quantity = 1.5f,
+                unit = "KG"
+            };
+            var view = new PantryItemView
+            {
+                Item = item,
+                DisplayName = "Tomatoes"
+            };
+
+            _mockFoodWasteService
+                .Setup(x => x.CreateAsync(It.Is<CreateFoodWasteRequest>(r =>
+                    r.pantryItemId == "pantry-456" &&
+                    r.quantity == 1.5f &&
+                    r.unit == "KG" &&
+                    r.wasteReason == WasteReason.Expired &&
+                    r.detectionMethod == DetectionMethod.Manual)))
+                .ReturnsAsync((new FoodWaste { id = "fw-1" }, (ApiErrorResponse)null));
+
+            bool success = await _vm.WasteItemAsync(view);
+
+            Assert.IsTrue(success);
+            _mockFoodWasteService.Verify(x => x.CreateAsync(It.IsAny<CreateFoodWasteRequest>()), Times.Once);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("pantry-456"), Times.Once);
+        }
+
+        [Test]
+        public async Task WasteItemAsync_WithCustomParameters_SendsAllFields()
+        {
+            var item = new PantryItem
+            {
+                id = "pantry-456",
+                quantity = 5f,
+                unit = "PIECES"
+            };
+            var view = new PantryItemView { Item = item, DisplayName = "Oranges" };
+
+            _mockFoodWasteService
+                .Setup(x => x.CreateAsync(It.Is<CreateFoodWasteRequest>(r =>
+                    r.pantryItemId == "pantry-456" &&
+                    r.quantity == 2f &&
+                    r.unit == "PIECES" &&
+                    r.wasteReason == WasteReason.Spoiled &&
+                    r.costEstimate == 3.50f &&
+                    r.notes == "Mold on skin")))
+                .ReturnsAsync((new FoodWaste { id = "fw-2" }, (ApiErrorResponse)null));
+
+            bool success = await _vm.WasteItemAsync(view, reason: WasteReason.Spoiled, costEstimate: 3.50f, notes: "Mold on skin", quantity: 2f);
+
+            Assert.IsTrue(success);
+            _mockFoodWasteService.Verify(x => x.CreateAsync(It.IsAny<CreateFoodWasteRequest>()), Times.Once);
+        }
+
+        [Test]
+        public async Task WasteItemAsync_WhenServiceFails_ReturnsFalseAndSetsErrorDetail()
+        {
+            var item = new PantryItem { id = "pantry-456", quantity = 1, unit = "KG" };
+            var view = new PantryItemView { Item = item, DisplayName = "Tomatoes" };
+
+            _mockFoodWasteService
+                .Setup(x => x.CreateAsync(It.IsAny<CreateFoodWasteRequest>()))
+                .ReturnsAsync(((FoodWaste)null, new ApiErrorResponse { statusCode = 400, message = "Bad request" }));
+
+            bool success = await _vm.WasteItemAsync(view);
+
+            Assert.IsFalse(success);
+            Assert.IsNotNull(_vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task DeleteItemAsync_Success_DeletesPantryItemAndCancelsReminder()
+        {
+            _mockPantryService
+                .Setup(x => x.DeleteItemAsync("pantry-789"))
+                .ReturnsAsync((true, (ApiErrorResponse)null));
+
+            await _vm.DeleteItemAsync("pantry-789");
+
+            _mockPantryService.Verify(x => x.DeleteItemAsync("pantry-789"), Times.Once);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("pantry-789"), Times.Once);
+            Assert.IsNull(_vm.ErrorDetail);
+        }
     }
 }
+

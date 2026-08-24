@@ -2349,6 +2349,50 @@ MonoBehaviour:
     m_Localized: Wybierz dogodny termin
     m_Metadata:
       m_Items: []
+  - m_Id: 38390811899977728
+    m_Localized: "Co si\u0119 sta\u0142o z tym produktem?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172032
+    m_Localized: "Co si\u0119 sta\u0142o z {0}?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172033
+    m_Localized: Zarejestruj jako zjedzone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172034
+    m_Localized: Zarejestruj jako odpadki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172035
+    m_Localized: "Usu\u0144 ze spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172036
+    m_Localized: "Posi\u0142ek zarejestrowany pomy\u015Blnie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172037
+    m_Localized: "Odpady \u017Cywno\u015Bciowe zarejestrowane pomy\u015Blnie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172038
+    m_Localized: "Produkt usuni\u0119ty ze spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403531093303296
+    m_Localized: "Ilo\u015B\u0107 zmarnowana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403887139381248
+    m_Localized: Szacowany koszt (w euro, opcjonalnie)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38404185903849472
+    m_Localized: Dodatkowe uwagi (opcjonalne)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

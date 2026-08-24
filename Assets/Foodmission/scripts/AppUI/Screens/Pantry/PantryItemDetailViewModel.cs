@@ -15,6 +15,10 @@ namespace eu.foodmission.platform
         private readonly IFoodProductService _foodProductService;
         private readonly IGenericFoodService _genericFoodService;
         private readonly INotificationService _notificationService;
+        private readonly IFoodWasteService _foodWasteService;
+        private readonly IMealService _mealService;
+        private readonly IMealLogService _mealLogService;
+        private readonly IMealItemService _mealItemService;
 
         private string _itemId;
 
@@ -53,13 +57,21 @@ namespace eu.foodmission.platform
             IPantryService pantryService,
             IFoodProductService foodProductService,
             IGenericFoodService genericFoodService,
-            INotificationService notificationService = null)
+            INotificationService notificationService = null,
+            IFoodWasteService foodWasteService = null,
+            IMealService mealService = null,
+            IMealLogService mealLogService = null,
+            IMealItemService mealItemService = null)
             : base(storeService)
         {
             _pantryService = pantryService;
             _foodProductService = foodProductService;
             _genericFoodService = genericFoodService;
             _notificationService = notificationService;
+            _foodWasteService = foodWasteService;
+            _mealService = mealService;
+            _mealLogService = mealLogService;
+            _mealItemService = mealItemService;
         }
 
         public async Task LoadAsync(string itemId)
@@ -153,6 +165,149 @@ namespace eu.foodmission.platform
                 }
 
                 await LoadAsync(_itemId);
+            }
+        }
+
+        public async Task<bool> ConsumeAsync()
+        {
+            if (string.IsNullOrEmpty(_itemId) || ItemView?.Item == null) return false;
+            ErrorMessage = "";
+            string displayName = !string.IsNullOrEmpty(ItemView.DisplayName)
+                ? ItemView.DisplayName
+                : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+
+            try
+            {
+                string mealId = null;
+                if (_mealService != null)
+                {
+                    var (createdMeal, mealErr) = await _mealService.CreateMealAsync(new CreateMealRequest
+                    {
+                        name = displayName
+                    });
+                    if (mealErr != null)
+                    {
+                        ErrorDetail = mealErr;
+                        return false;
+                    }
+                    mealId = createdMeal?.id;
+                }
+
+                if (!string.IsNullOrEmpty(mealId) && _mealItemService != null)
+                {
+                    var itemReq = new CreateMealItemRequest
+                    {
+                        foodProductId = !string.IsNullOrEmpty(ItemView.Item.foodProductId) ? ItemView.Item.foodProductId : null,
+                        genericFoodId = !string.IsNullOrEmpty(ItemView.Item.genericFoodId) ? ItemView.Item.genericFoodId : null,
+                        quantity = (int)Mathf.Max(1, Mathf.Round(Quantity > 0 ? Quantity : 1)),
+                        unit = !string.IsNullOrEmpty(Unit) ? Unit : "PIECES"
+                    };
+                    var (_, itemErr) = await _mealItemService.CreateAsync(mealId, itemReq);
+                    if (itemErr != null)
+                    {
+                        ErrorDetail = itemErr;
+                        return false;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(mealId) && _mealLogService != null)
+                {
+                    int hour = System.DateTime.Now.Hour;
+                    string typeOfMeal = hour switch
+                    {
+                        >= 6 and < 12 => "BREAKFAST",
+                        >= 12 and < 17 => "LUNCH",
+                        _ => "DINNER"
+                    };
+
+                    var logReq = new CreateMealLogRequest
+                    {
+                        mealId = mealId,
+                        typeOfMeal = typeOfMeal,
+                        timestamp = System.DateTime.UtcNow.ToString("o"),
+                        mealFromPantry = true,
+                        eatenOut = false
+                    };
+                    var (_, logErr) = await _mealLogService.CreateAsync(logReq);
+                    if (logErr != null)
+                    {
+                        ErrorDetail = logErr;
+                        return false;
+                    }
+                }
+
+                var (deleted, delErr) = await _pantryService.DeleteItemAsync(_itemId);
+                if (delErr != null)
+                {
+                    ErrorDetail = delErr;
+                    return false;
+                }
+
+                _notificationService?.CancelPantryReminder(_itemId);
+                ErrorDetail = null;
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] ConsumeAsync failed: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> WasteAsync(
+            string reason = WasteReason.Expired,
+            float? costEstimate = null,
+            string notes = null,
+            float? quantity = null)
+        {
+            if (string.IsNullOrEmpty(_itemId) || ItemView?.Item == null) return false;
+            ErrorMessage = "";
+
+            try
+            {
+                float wastedQty = quantity.HasValue && quantity.Value > 0
+                    ? quantity.Value
+                    : (Quantity > 0 ? Quantity : ItemView.Item.quantity);
+
+                if (_foodWasteService != null)
+                {
+                    var req = new CreateFoodWasteRequest
+                    {
+                        pantryItemId = _itemId,
+                        quantity = wastedQty,
+                        unit = !string.IsNullOrEmpty(Unit) ? Unit : ItemView.Item.unit,
+                        wasteReason = string.IsNullOrEmpty(reason) ? WasteReason.Expired : reason,
+                        detectionMethod = DetectionMethod.Manual,
+                        costEstimate = costEstimate.HasValue && costEstimate.Value > 0 ? costEstimate.Value : null,
+                        notes = string.IsNullOrWhiteSpace(notes) ? null : notes,
+                        wastedAt = System.DateTime.UtcNow.ToString("o")
+                    };
+
+                    var (created, wasteErr) = await _foodWasteService.CreateAsync(req);
+                    if (wasteErr != null)
+                    {
+                        ErrorDetail = wasteErr;
+                        return false;
+                    }
+                }
+                else
+                {
+                    var (deleted, delErr) = await _pantryService.DeleteItemAsync(_itemId);
+                    if (delErr != null)
+                    {
+                        ErrorDetail = delErr;
+                        return false;
+                    }
+                }
+
+                _notificationService?.CancelPantryReminder(_itemId);
+                ErrorDetail = null;
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] WasteAsync failed: {ex.Message}");
+                return false;
             }
         }
 

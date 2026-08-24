@@ -2332,6 +2332,50 @@ MonoBehaviour:
     m_Localized: "W\xE4hlen Sie einen Wunschtermin aus"
     m_Metadata:
       m_Items: []
+  - m_Id: 38390811899977728
+    m_Localized: Was ist mit diesem Produkt passiert?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172032
+    m_Localized: Was ist mit {0} passiert?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172033
+    m_Localized: Als gegessen erfassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172034
+    m_Localized: Als Lebensmittelabfall erfassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172035
+    m_Localized: "Aus Vorratskammer l\xF6schen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172036
+    m_Localized: Mahlzeit erfolgreich erfasst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172037
+    m_Localized: Lebensmittelabfall erfolgreich erfasst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172038
+    m_Localized: Artikel aus Vorratskammer entfernt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403531093303296
+    m_Localized: Verschwendete Menge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403887139381248
+    m_Localized: "Gesch\xE4tzte Kosten (\u20AC, optional)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38404185903849472
+    m_Localized: "Zus\xE4tzliche Anmerkungen (optional)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

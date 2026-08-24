@@ -347,21 +347,64 @@ namespace eu.foodmission.platform
             if (_viewModel == null) return;
 
             string displayName = _viewModel.ItemView?.DisplayName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "THIS_ITEM");
+            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_DELETE_OPTIONS_MSG", new object[] { displayName });
+            if (string.IsNullOrEmpty(message))
+            {
+                message = $"¿Qué ocurrió con {displayName}?";
+            }
 
-            VisualElement anchorElement = _overlay;
+            string eatenLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_EATEN") ?? "Registrar como comido";
+            string wasteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_WASTE") ?? "Registrar como desperdicio";
+            string deleteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_DELETE") ?? "Solo eliminar de la despensa";
+            string cancelLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CANCEL") ?? "Cancelar";
 
-            FMDialog.ShowConfirm(
-                anchorElement,
-                "@UI:DELETE_ITEM",
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { displayName }),
-                onConfirm: async () =>
+            NutriMessageDialog.Show(
+                message,
+                new FMDialogAction(eatenLabel, async () =>
                 {
-                    await _viewModel.DeleteAsync();
-                    Action cb = _onDeletedCallback;
-                    Dismiss();
-                    cb?.Invoke();
-                },
-                semantic: AlertSemantic.Destructive);
+                    if (_viewModel == null) return;
+                    bool ok = await _viewModel.ConsumeAsync();
+                    if (ok)
+                    {
+                        Action cb = _onDeletedCallback;
+                        Dismiss();
+                        cb?.Invoke();
+                    }
+                }, isPrimary: true),
+                new FMDialogAction(wasteLabel, () =>
+                {
+                    if (_viewModel?.ItemView == null) return;
+                    VisualElement anchor = _overlay;
+                    PantryItemView view = _viewModel.ItemView;
+                    FoodWasteRecordOverlay.Show(
+                        anchor,
+                        view,
+                        onSaved: () =>
+                        {
+                            Action cb = _onDeletedCallback;
+                            Dismiss();
+                            cb?.Invoke();
+                        });
+                }),
+                new FMDialogAction(deleteLabel, () =>
+                {
+                    if (_viewModel == null || _overlay == null) return;
+                    VisualElement anchorElement = _overlay;
+                    FMDialog.ShowConfirm(
+                        anchorElement,
+                        "@UI:DELETE_ITEM",
+                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { displayName }),
+                        onConfirm: async () =>
+                        {
+                            if (_viewModel == null) return;
+                            await _viewModel.DeleteAsync();
+                            Action cb = _onDeletedCallback;
+                            Dismiss();
+                            cb?.Invoke();
+                        },
+                        semantic: AlertSemantic.Destructive);
+                }),
+                new FMDialogAction(cancelLabel, () => { }));
         }
 
         private static void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

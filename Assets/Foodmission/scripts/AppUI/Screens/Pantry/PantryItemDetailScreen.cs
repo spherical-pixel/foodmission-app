@@ -4,6 +4,7 @@ using System.ComponentModel;
 
 using eu.foodmission.platform.Components;
 
+using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
@@ -368,13 +369,61 @@ namespace eu.foodmission.platform
         private void OnDeleteClicked()
         {
             string displayName = _viewModel.ItemView?.DisplayName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "THIS_ITEM");
+            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_DELETE_OPTIONS_MSG", new object[] { displayName });
+            if (string.IsNullOrEmpty(message))
+            {
+                message = $"¿Qué ocurrió con {displayName}?";
+            }
 
-            FMDialog.ShowConfirm(
-                this,
-                "@UI:DELETE_ITEM",
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { displayName }),
-                onConfirm: async () => await _viewModel.DeleteAsync(),
-                semantic: AlertSemantic.Destructive);
+            string eatenLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_EATEN") ?? "Registrar como comido";
+            string wasteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_WASTE") ?? "Registrar como desperdicio";
+            string deleteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_DELETE") ?? "Solo eliminar de la despensa";
+            string cancelLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CANCEL") ?? "Cancelar";
+
+            NutriMessageDialog.Show(
+                message,
+                new FMDialogAction(eatenLabel, async () =>
+                {
+                    bool ok = await _viewModel.ConsumeAsync();
+                    if (ok)
+                    {
+                        string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_EATEN_SUCCESS") ?? "Comida registrada con éxito";
+                        Toast.Build(this, toastMsg, NotificationDuration.Short)
+                            .SetStyle(NotificationStyle.Positive)
+                            .SetPosition(PopupNotificationPlacement.Bottom)
+                            .Show();
+                    }
+                }, isPrimary: true),
+                new FMDialogAction(wasteLabel, () =>
+                {
+                    if (_viewModel?.ItemView == null) return;
+                    FoodWasteRecordOverlay.Show(
+                        this,
+                        _viewModel.ItemView,
+                        onSaved: () =>
+                        {
+                            // Pop navigation or go back since item is wasted
+                            _navController?.PopBackStack();
+                        });
+                }),
+                new FMDialogAction(deleteLabel, () =>
+                {
+                    FMDialog.ShowConfirm(
+                        this,
+                        "@UI:DELETE_ITEM",
+                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { displayName }),
+                        onConfirm: async () =>
+                        {
+                            await _viewModel.DeleteAsync();
+                            string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_DELETED_SUCCESS") ?? "Producto eliminado de la despensa";
+                            Toast.Build(this, toastMsg, NotificationDuration.Short)
+                                .SetStyle(NotificationStyle.Positive)
+                                .SetPosition(PopupNotificationPlacement.Bottom)
+                                .Show();
+                        },
+                        semantic: AlertSemantic.Destructive);
+                }),
+                new FMDialogAction(cancelLabel, () => { }));
         }
     }
 }

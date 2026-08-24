@@ -2321,6 +2321,50 @@ MonoBehaviour:
     m_Localized: Elige la hora que prefieras
     m_Metadata:
       m_Items: []
+  - m_Id: 38390811899977728
+    m_Localized: "\xBFQu\xE9 ha pasado con este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172032
+    m_Localized: "\xBFQu\xE9 ocurri\xF3 con {0}?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172033
+    m_Localized: Registrar como comido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172034
+    m_Localized: Registrar como desperdicio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172035
+    m_Localized: Solo eliminar de la despensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172036
+    m_Localized: "Comida registrada con \xE9xito"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172037
+    m_Localized: "Desperdicio registrado con \xE9xito"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172038
+    m_Localized: Producto eliminado de la despensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403531093303296
+    m_Localized: Cantidad desperdiciada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403887139381248
+    m_Localized: "Coste estimado (\u20AC, opcional)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38404185903849472
+    m_Localized: Notas adicionales (opcional)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

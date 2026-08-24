@@ -2259,6 +2259,50 @@ MonoBehaviour:
     m_Key: QUIZZES_STATUS_TITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 38390811899977728
+    m_Key: PANTRY_DELETE_OPTIONS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172032
+    m_Key: PANTRY_DELETE_OPTIONS_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172033
+    m_Key: PANTRY_ACTION_EATEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172034
+    m_Key: PANTRY_ACTION_WASTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172035
+    m_Key: PANTRY_ACTION_DELETE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172036
+    m_Key: PANTRY_ITEM_EATEN_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172037
+    m_Key: PANTRY_ITEM_WASTE_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172038
+    m_Key: PANTRY_ITEM_DELETED_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403531093303296
+    m_Key: FOOD_WASTE_QUANTITY_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403887139381248
+    m_Key: FOOD_WASTE_COST_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38404185903849472
+    m_Key: FOOD_WASTE_NOTES_LABEL
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

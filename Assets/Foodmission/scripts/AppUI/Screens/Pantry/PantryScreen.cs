@@ -37,10 +37,12 @@ namespace eu.foodmission.platform
 
         private AccessibilityNode _moveToWasteNode;
 
+        override protected bool IsFixedContent => false;
         protected override bool ApplySafeAreaTop => false;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
         protected override bool ApplySafeAreaRight => false;
+
 
 
         public PantryScreen()
@@ -400,16 +402,70 @@ namespace eu.foodmission.platform
 
                 itemCard.RemoveButton.clicked += () =>
                 {
-                    FMDialog.ShowConfirm(
-                        this,
-                        "@UI:DELETE_ITEM",
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { captured.DisplayName }),
-                        onConfirm: async () => await _viewModel.DeleteItemAsync(captured.Item.id),
-                        semantic: AlertSemantic.Destructive);
+                    ShowItemDeleteOptions(captured);
                 };
 
                 _itemsContainer.Add(itemCard);
             }
+        }
+
+        private void ShowItemDeleteOptions(PantryItemView view)
+        {
+            if (view?.Item == null) return;
+
+            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_DELETE_OPTIONS_MSG", new object[] { view.DisplayName });
+            if (string.IsNullOrEmpty(message))
+            {
+                message = $"¿Qué ocurrió con {view.DisplayName}?";
+            }
+
+            string eatenLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_EATEN") ?? "Registrar como comido";
+            string wasteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_WASTE") ?? "Registrar como desperdicio";
+            string deleteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_DELETE") ?? "Solo eliminar de la despensa";
+            string cancelLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CANCEL") ?? "Cancelar";
+
+            NutriMessageDialog.Show(
+                message,
+                new FMDialogAction(eatenLabel, async () =>
+                {
+                    bool ok = await _viewModel.ConsumeItemAsync(view);
+                    if (ok)
+                    {
+                        string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_EATEN_SUCCESS") ?? "Comida registrada con éxito";
+                        Toast.Build(this, toastMsg, NotificationDuration.Short)
+                            .SetStyle(NotificationStyle.Positive)
+                            .SetPosition(PopupNotificationPlacement.Bottom)
+                            .Show();
+                    }
+                }, isPrimary: true),
+                new FMDialogAction(wasteLabel, () =>
+                {
+                    FoodWasteRecordOverlay.Show(
+                        this,
+                        view,
+                        onSaved: async () =>
+                        {
+                            await _viewModel.LoadAsync();
+                        });
+                }, isPrimary: true),
+                new FMDialogAction(deleteLabel, () =>
+                {
+                    FMDialog.ShowConfirm(
+                        this,
+                        "@UI:DELETE_ITEM",
+                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { view.DisplayName }),
+                        onConfirm: async () =>
+                        {
+                            await _viewModel.DeleteItemAsync(view.Item.id);
+                            string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_DELETED_SUCCESS") ?? "Producto eliminado de la despensa";
+                            Toast.Build(this, toastMsg, NotificationDuration.Short)
+                                .SetStyle(NotificationStyle.Positive)
+                                .SetPosition(PopupNotificationPlacement.Bottom)
+                                .Show();
+                        },
+                        semantic: AlertSemantic.Destructive);
+                }, isPrimary: true),
+                new FMDialogAction(cancelLabel, () => { }, isPrimary: true));
         }
 
         private void UpdateLoadingState()

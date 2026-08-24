@@ -2309,6 +2309,50 @@ MonoBehaviour:
     m_Localized: Select a preferred time
     m_Metadata:
       m_Items: []
+  - m_Id: 38390811899977728
+    m_Localized: What happened to this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172032
+    m_Localized: What happened to {0}?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172033
+    m_Localized: Mark as eaten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172034
+    m_Localized: Log as food waste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172035
+    m_Localized: Remove from pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172036
+    m_Localized: Meal logged successfully
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172037
+    m_Localized: Food waste logged successfully
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172038
+    m_Localized: Item removed from pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403531093303296
+    m_Localized: Quantitty wasted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403887139381248
+    m_Localized: "Estimated cost (\u20AC, optional)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38404185903849472
+    m_Localized: Additional notes (optional)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

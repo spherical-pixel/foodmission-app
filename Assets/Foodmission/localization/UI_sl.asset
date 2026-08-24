@@ -2315,6 +2315,50 @@ MonoBehaviour:
     m_Localized: "Izberite \u017Eeleni \u010Das"
     m_Metadata:
       m_Items: []
+  - m_Id: 38390811899977728
+    m_Localized: Kaj se je zgodilo s tem izdelkom?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172032
+    m_Localized: Kaj se je zgodilo z {0}?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172033
+    m_Localized: "Ozna\u010Di kot zau\u017Eito"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172034
+    m_Localized: "Zabele\u017Ei kot odpadek hrane"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172035
+    m_Localized: Odstrani iz shrambe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172036
+    m_Localized: "Obrok uspe\u0161no zabele\u017Een"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172037
+    m_Localized: "Odpadek hrane uspe\u0161no zabele\u017Een"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38390811904172038
+    m_Localized: Izdelek odstranjen iz shrambe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403531093303296
+    m_Localized: "Koli\u010Dina izgube"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38403887139381248
+    m_Localized: "Predvideni stro\u0161ki (\u20AC, neobvezno)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38404185903849472
+    m_Localized: Dodatne opombe (neobvezno)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

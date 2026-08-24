@@ -23,6 +23,10 @@ namespace eu.foodmission.platform
         private readonly ILocalStorageService _localStorage;
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
         private readonly INotificationService _notificationService;
+        private readonly IFoodWasteService _foodWasteService;
+        private readonly IMealService _mealService;
+        private readonly IMealLogService _mealLogService;
+        private readonly IMealItemService _mealItemService;
 
         private const string CacheKey = "pantry_cache";
         private const string FoodSearchCachePrefix = "food_search_";
@@ -61,7 +65,11 @@ namespace eu.foodmission.platform
             IGenericFoodService genericFoodService,
             ILocalStorageService localStorage,
             IOpenFoodFactsClientService openFoodFactsClientService,
-            INotificationService notificationService = null)
+            INotificationService notificationService = null,
+            IFoodWasteService foodWasteService = null,
+            IMealService mealService = null,
+            IMealLogService mealLogService = null,
+            IMealItemService mealItemService = null)
             : base(storeService)
         {
             _pantryService = pantryService;
@@ -70,6 +78,10 @@ namespace eu.foodmission.platform
             _localStorage = localStorage;
             _openFoodFactsClientService = openFoodFactsClientService;
             _notificationService = notificationService;
+            _foodWasteService = foodWasteService;
+            _mealService = mealService;
+            _mealLogService = mealLogService;
+            _mealItemService = mealItemService;
         }
 
 
@@ -114,7 +126,14 @@ namespace eu.foodmission.platform
             await Task.WhenAll(pantryTask, expiredTask);
 
             var (expiredItems, _) = expiredTask.Result;
-            ExpiredItems = expiredItems ?? Array.Empty<ExpiredPantryItem>();
+            DateTime today = DateTime.UtcNow.Date;
+            ExpiredItems = (expiredItems ?? Array.Empty<ExpiredPantryItem>())
+                .Where(e =>
+                {
+                    if (string.IsNullOrEmpty(e?.expiryDate)) return false;
+                    return DateTime.TryParse(e.expiryDate, out DateTime exp) && exp.Date < today;
+                })
+                .ToArray();
             ExpiredItemCount = ExpiredItems.Length;
 
             var (pantry, pantryError) = pantryTask.Result;
@@ -500,6 +519,161 @@ namespace eu.foodmission.platform
             FilterText = "";
             ApplyFilter();
             SaveCacheFromAllItems();
+        }
+
+        public async Task<bool> ConsumeItemAsync(PantryItemView view)
+        {
+            if (view?.Item == null) return false;
+            ErrorMessage = "";
+            string displayName = !string.IsNullOrEmpty(view.DisplayName)
+                ? view.DisplayName
+                : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+
+            try
+            {
+                string mealId = null;
+                if (_mealService != null)
+                {
+                    var (createdMeal, mealErr) = await _mealService.CreateMealAsync(new CreateMealRequest
+                    {
+                        name = displayName
+                    });
+                    if (mealErr != null)
+                    {
+                        ErrorDetail = mealErr;
+                        return false;
+                    }
+                    mealId = createdMeal?.id;
+                }
+
+                if (!string.IsNullOrEmpty(mealId) && _mealItemService != null)
+                {
+                    var itemReq = new CreateMealItemRequest
+                    {
+                        foodProductId = !string.IsNullOrEmpty(view.Item.foodProductId) ? view.Item.foodProductId : null,
+                        genericFoodId = !string.IsNullOrEmpty(view.Item.genericFoodId) ? view.Item.genericFoodId : null,
+                        quantity = (int)Math.Max(1, Math.Round(view.Item.quantity > 0 ? view.Item.quantity : 1)),
+                        unit = !string.IsNullOrEmpty(view.Item.unit) ? view.Item.unit : "PIECES"
+                    };
+                    var (_, itemErr) = await _mealItemService.CreateAsync(mealId, itemReq);
+                    if (itemErr != null)
+                    {
+                        ErrorDetail = itemErr;
+                        return false;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(mealId) && _mealLogService != null)
+                {
+                    int hour = DateTime.Now.Hour;
+                    string typeOfMeal = hour switch
+                    {
+                        >= 6 and < 12 => "BREAKFAST",
+                        >= 12 and < 17 => "LUNCH",
+                        _ => "DINNER"
+                    };
+
+                    var logReq = new CreateMealLogRequest
+                    {
+                        mealId = mealId,
+                        typeOfMeal = typeOfMeal,
+                        timestamp = DateTime.UtcNow.ToString("o"),
+                        mealFromPantry = true,
+                        eatenOut = false
+                    };
+                    var (_, logErr) = await _mealLogService.CreateAsync(logReq);
+                    if (logErr != null)
+                    {
+                        ErrorDetail = logErr;
+                        return false;
+                    }
+                }
+
+                var (deleted, delErr) = await _pantryService.DeleteItemAsync(view.Item.id);
+                if (delErr != null)
+                {
+                    ErrorDetail = delErr;
+                    return false;
+                }
+
+                _allItems = new List<PantryItemView>(_allItems.FindAll(v => v.Item.id != view.Item.id));
+                ApplyFilter();
+                SaveCacheFromAllItems();
+
+                ExpiredItems = ExpiredItems.Where(e => e.pantryItemId != view.Item.id).ToArray();
+                ExpiredItemCount = ExpiredItems.Length;
+
+                _notificationService?.CancelPantryReminder(view.Item.id);
+                ErrorDetail = null;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] ConsumeItemAsync failed: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> WasteItemAsync(
+            PantryItemView view,
+            string reason = WasteReason.Expired,
+            float? costEstimate = null,
+            string notes = null,
+            float? quantity = null)
+        {
+            if (view?.Item == null) return false;
+            ErrorMessage = "";
+
+            try
+            {
+                float wastedQty = quantity.HasValue && quantity.Value > 0 ? quantity.Value : view.Item.quantity;
+                if (_foodWasteService != null)
+                {
+                    var req = new CreateFoodWasteRequest
+                    {
+                        pantryItemId = view.Item.id,
+                        quantity = wastedQty,
+                        unit = view.Item.unit,
+                        wasteReason = string.IsNullOrEmpty(reason) ? WasteReason.Expired : reason,
+                        detectionMethod = DetectionMethod.Manual,
+                        costEstimate = costEstimate.HasValue && costEstimate.Value > 0 ? costEstimate.Value : null,
+                        notes = string.IsNullOrWhiteSpace(notes) ? null : notes,
+                        wastedAt = DateTime.UtcNow.ToString("o")
+                    };
+
+                    var (created, wasteErr) = await _foodWasteService.CreateAsync(req);
+                    if (wasteErr != null)
+                    {
+                        ErrorDetail = wasteErr;
+                        return false;
+                    }
+                }
+                else
+                {
+                    var (deleted, delErr) = await _pantryService.DeleteItemAsync(view.Item.id);
+                    if (delErr != null)
+                    {
+                        ErrorDetail = delErr;
+                        return false;
+                    }
+                }
+
+                _allItems = new List<PantryItemView>(_allItems.FindAll(v => v.Item.id != view.Item.id));
+                ApplyFilter();
+                SaveCacheFromAllItems();
+
+                ExpiredItems = ExpiredItems.Where(e => e.pantryItemId != view.Item.id).ToArray();
+                ExpiredItemCount = ExpiredItems.Length;
+
+                _notificationService?.CancelPantryReminder(view.Item.id);
+                ErrorDetail = null;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] WasteItemAsync failed: {ex.Message}");
+                return false;
+            }
         }
 
         public async Task DeleteItemAsync(string itemId)

@@ -35,7 +35,7 @@ namespace eu.foodmission.platform
         /// Flag to indicate if the content is fixed (no scrollable)
         /// Override in the derived class to change the behavior
         /// </summary>
-        protected virtual bool IsFixedContent => true;
+        protected virtual bool IsFixedContent => false;
 
         /// <summary>
         /// Flag to indicate if the safe area padding top should be applied
