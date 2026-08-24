@@ -14,6 +14,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IAuthService> _mockAuthService;
         private Mock<ICatalogService> _mockCatalogService;
         private Mock<IAudioService> _mockAudioService;
+        private Mock<INotificationService> _mockNotificationService;
         private TestStoreService _storeService;
         private SettingsViewModel _vm;
 
@@ -23,8 +24,10 @@ namespace eu.foodmission.platform.Tests
             _mockAuthService = new Mock<IAuthService>();
             _mockCatalogService = new Mock<ICatalogService>();
             _mockAudioService = new Mock<IAudioService>();
+            _mockNotificationService = new Mock<INotificationService>();
+            _mockNotificationService.Setup(n => n.RequestPermissionsAsync()).ReturnsAsync(true);
             _storeService = new TestStoreService();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object, _mockNotificationService.Object);
         }
 
         [TearDown]
@@ -44,6 +47,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(100, _vm.Sound);
             Assert.AreEqual(100, _vm.Music);
             Assert.IsFalse(_vm.PushNotifications);
+            Assert.AreEqual("10:00", _vm.NotificationPreferredTime);
             Assert.IsTrue(_vm.BackgroundPattern);
             Assert.AreEqual("", _vm.UserName);
         }
@@ -61,12 +65,13 @@ namespace eu.foodmission.platform.Tests
             state.soundVolume = 50;
             state.musicVolume = 75;
             state.pushNotificationsEnabled = true;
+            state.notificationPreferredTime = "09:00";
             state.backgroundPattern = false;
             state.userName = "TestUser";
             _storeService.SetAppState(state);
 
             _vm?.Dispose();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object, _mockNotificationService.Object);
 
             Assert.AreEqual("dark", _vm.Theme);
             Assert.AreEqual("en", _vm.Lang);
@@ -75,6 +80,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(50, _vm.Sound);
             Assert.AreEqual(75, _vm.Music);
             Assert.IsTrue(_vm.PushNotifications);
+            Assert.AreEqual("09:00", _vm.NotificationPreferredTime);
             Assert.IsFalse(_vm.BackgroundPattern);
             Assert.AreEqual("TestUser", _vm.UserName);
         }
@@ -130,11 +136,34 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void SetPushNotifications_DispatchesSetPushNotificationsAction()
+        public void SetPushNotifications_DispatchesSetPushNotificationsActionAndReschedules()
         {
+            _vm.SetNotificationPreferredTime("11:00");
             _vm.SetPushNotifications(true);
 
             Assert.Contains("app/setPushNotifications", _storeService.DispatchedActionTypes);
+            _mockNotificationService.Verify(n => n.SetNotificationsEnabled(true), Times.Once);
+            _mockNotificationService.Verify(n => n.RescheduleAllNotifications(TimeSpan.FromHours(11)), Times.Once);
+        }
+
+        [Test]
+        public void SetNotificationPreferredTime_DispatchesActionAndReschedulesIfNotificationsEnabled()
+        {
+            _vm.SetPushNotifications(true);
+            _vm.SetNotificationPreferredTime("14:00");
+
+            Assert.Contains("app/setNotificationPreferredTime", _storeService.DispatchedActionTypes);
+            Assert.AreEqual("14:00", _vm.NotificationPreferredTime);
+            _mockNotificationService.Verify(n => n.RescheduleAllNotifications(TimeSpan.FromHours(14)), Times.Once);
+        }
+
+        [Test]
+        public void SetNotificationPreferredTime_NullOrEmpty_DefaultsTo10Am()
+        {
+            _vm.SetNotificationPreferredTime(null);
+
+            Assert.AreEqual("10:00", _vm.NotificationPreferredTime);
+            Assert.Contains("app/setNotificationPreferredTime", _storeService.DispatchedActionTypes);
         }
 
         [Test]

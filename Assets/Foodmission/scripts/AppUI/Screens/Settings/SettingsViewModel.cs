@@ -4,6 +4,7 @@ using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
 {
@@ -39,10 +40,14 @@ namespace eu.foodmission.platform
         private bool m_PushNotifications = false;
 
         [ObservableProperty]
+        private string m_NotificationPreferredTime = "10:00";
+
+        [ObservableProperty]
         private bool m_BackgroundPattern = true;
 
         [ObservableProperty]
         private string m_UserName = "User";
+
 
         public SettingsViewModel(IStoreService storeService, IAuthService authService, ICatalogService catalogService, IAudioService audioService = null, INotificationService notificationService = null) : base(storeService)
         {
@@ -54,10 +59,10 @@ namespace eu.foodmission.platform
             _storeSubscription = _store.Subscribe(SelectSettingsState, OnSettingsStateChanged);
         }
 
-        private (string theme, string lang, string scale, string font, int soundVolume, int musicVolume, bool pushNotifications, bool backgroundPattern, string userName) SelectSettingsState(AppState state)
-            => (state.theme, state.lang, state.scale, state.font, state.soundVolume, state.musicVolume, state.pushNotificationsEnabled, state.backgroundPattern, state.userName);
+        private (string theme, string lang, string scale, string font, int soundVolume, int musicVolume, bool pushNotifications, string notificationPreferredTime, bool backgroundPattern, string userName) SelectSettingsState(AppState state)
+            => (state.theme, state.lang, state.scale, state.font, state.soundVolume, state.musicVolume, state.pushNotificationsEnabled, state.notificationPreferredTime, state.backgroundPattern, state.userName);
 
-        private void OnSettingsStateChanged((string theme, string lang, string scale, string font, int soundVolume, int musicVolume, bool pushNotifications, bool backgroundPattern, string userName) s)
+        private void OnSettingsStateChanged((string theme, string lang, string scale, string font, int soundVolume, int musicVolume, bool pushNotifications, string notificationPreferredTime, bool backgroundPattern, string userName) s)
         {
             Theme = s.theme;
             Lang = s.lang;
@@ -66,6 +71,7 @@ namespace eu.foodmission.platform
             Sound = s.soundVolume;
             Music = s.musicVolume;
             PushNotifications = s.pushNotifications;
+            NotificationPreferredTime = !string.IsNullOrEmpty(s.notificationPreferredTime) ? s.notificationPreferredTime : "10:00";
             BackgroundPattern = s.backgroundPattern;
             UserName = s.userName ?? "User";
         }
@@ -79,6 +85,7 @@ namespace eu.foodmission.platform
             Sound = state.soundVolume;
             Music = state.musicVolume;
             PushNotifications = state.pushNotificationsEnabled;
+            NotificationPreferredTime = !string.IsNullOrEmpty(state.notificationPreferredTime) ? state.notificationPreferredTime : "10:00";
             BackgroundPattern = state.backgroundPattern;
             UserName = state.userName ?? "User";
         }
@@ -142,6 +149,26 @@ namespace eu.foodmission.platform
 
             _notificationService?.SetNotificationsEnabled(enabled);
             _store.Dispatch(AppActions.setPushNotifications.Invoke(enabled));
+            if (enabled)
+            {
+                string preferredTime = !string.IsNullOrEmpty(NotificationPreferredTime) ? NotificationPreferredTime : "10:00";
+                if (System.TimeSpan.TryParse(preferredTime, out var ts))
+                {
+                    _notificationService?.RescheduleAllNotifications(ts);
+                }
+            }
+            ScheduleSettingsSync();
+        }
+
+        public void SetNotificationPreferredTime(string time)
+        {
+            string formattedTime = !string.IsNullOrEmpty(time) ? time : "10:00";
+            NotificationPreferredTime = formattedTime;
+            _store.Dispatch(AppActions.setNotificationPreferredTime.Invoke(formattedTime));
+            if (PushNotifications && System.TimeSpan.TryParse(formattedTime, out var ts))
+            {
+                _notificationService?.RescheduleAllNotifications(ts);
+            }
             ScheduleSettingsSync();
         }
 

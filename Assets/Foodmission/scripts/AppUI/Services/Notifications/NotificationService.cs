@@ -182,17 +182,24 @@ namespace eu.foodmission.platform
 
         public void SchedulePantryExpiryReminder(string itemId, string itemName, DateTime expiryDate)
         {
-            if (!AreNotificationsEnabled())
+            if (!AreNotificationsEnabled() || string.IsNullOrEmpty(itemId))
             {
                 return;
             }
 
-            DateTime now = DateTime.UtcNow;
-            DateTime reminderTime = expiryDate.AddDays(-2); // 48h before
+            TimeSpan preferredTime = TimeSpan.FromHours(10);
+            string timeStr = _storeService.store?.GetState()?.notificationPreferredTime;
+            if (!string.IsNullOrEmpty(timeStr) && TimeSpan.TryParse(timeStr, out var ts))
+            {
+                preferredTime = ts;
+            }
+
+            DateTime now = DateTime.Now;
+            DateTime reminderTime = expiryDate.Date.Add(preferredTime).AddDays(-2); // 48h before at preferred hour
 
             if (reminderTime <= now)
             {
-                reminderTime = expiryDate.AddDays(-1); // 24h before
+                reminderTime = expiryDate.Date.Add(preferredTime).AddDays(-1); // 24h before at preferred hour
             }
 
             if (reminderTime <= now)
@@ -204,6 +211,7 @@ namespace eu.foodmission.platform
             string title = "Aviso de despensa";
             string body = $"Tu producto '{itemName}' caduca pronto. ¡Aprovecha para consumirlo!";
 
+            CancelNotification(notifId);
             ScheduleNativeNotification(notifId, NotificationChannels.PantryExpiryId, title, body, reminderTime, "go_to_pantry", itemId);
         }
 
@@ -248,7 +256,34 @@ namespace eu.foodmission.platform
             string title = "¿Qué has comido hoy?";
             string body = "No olvides registrar tus comidas en Foodmission para mantener tus hábitos al día.";
 
+            CancelNotification(notifId);
             ScheduleNativeNotification(notifId, NotificationChannels.DailyRemindersId, title, body, target, "go_to_meal_log", "");
+        }
+
+        public void RescheduleAllNotifications(TimeSpan preferredTime)
+        {
+            if (!AreNotificationsEnabled())
+            {
+                return;
+            }
+
+            // 1. Reschedule daily meal reminder
+            ScheduleDailyMealReminder(preferredTime);
+
+            // 2. Reschedule any cached pantry expiry items
+            var cachedPantry = _localStorageService.GetValue<PantryItemArrayWrapper>("pantry_cache");
+            if (cachedPantry?.items != null)
+            {
+                foreach (var item in cachedPantry.items)
+                {
+                    if (item != null && !string.IsNullOrEmpty(item.expiryDate) && DateTime.TryParse(item.expiryDate, out DateTime expDate))
+                    {
+                        CancelPantryReminder(item.id);
+                        string itemName = item.foodProduct?.name ?? item.genericFood?.foodName ?? "Producto";
+                        SchedulePantryExpiryReminder(item.id, itemName, expDate);
+                    }
+                }
+            }
         }
 
         public void CancelNotification(string notificationId)
@@ -363,7 +398,7 @@ namespace eu.foodmission.platform
             int androidId = Math.Abs(id.GetHashCode());
             AndroidNotificationCenter.SendNotificationWithExplicitID(notification, channelId, androidId);
 #elif UNITY_IOS && !UNITY_EDITOR
-            var timeSpan = deliveryTime - DateTime.UtcNow;
+            var timeSpan = deliveryTime.ToUniversalTime() - DateTime.UtcNow;
             if (timeSpan.TotalSeconds <= 0) timeSpan = TimeSpan.FromSeconds(1);
 
             var trigger = new iOSNotificationTimeIntervalTrigger

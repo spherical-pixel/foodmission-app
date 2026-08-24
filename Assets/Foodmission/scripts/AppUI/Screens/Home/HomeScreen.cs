@@ -85,10 +85,10 @@ namespace eu.foodmission.platform
 
         private void CheckPendingNotificationPrompt()
         {
-            // if (_viewModel == null || !_viewModel.ShouldPromptForNotifications())
-            // {
-            //     return;
-            // }
+            if (_viewModel == null || !_viewModel.ShouldPromptForNotifications())
+            {
+                return;
+            }
 
             NutriMessageDialog.Show(
                 message: "@UI:ONBOARDING_PROFILE.NUTRI_STEP_6",

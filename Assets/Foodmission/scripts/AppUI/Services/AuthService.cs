@@ -499,6 +499,7 @@ namespace eu.foodmission.platform
                     soundVolume = state.soundVolume,
                     musicVolume = state.musicVolume,
                     pushNotificationsEnabled = state.pushNotificationsEnabled,
+                    notificationPreferredTime = state.notificationPreferredTime,
                     backgroundPattern = state.backgroundPattern,
                     devicePushRegistration = state.devicePushRegistration
                 }

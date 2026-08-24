@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
         private FormFieldItemArrowStepperSettings _soundStepper;
         private FormFieldItemArrowStepperSettings _musicStepper;
         private FormFieldItemArrowStepperSettings _notificationsStepper;
+        private FormFieldItemArrowStepperSettings _notificationTimeStepper;
         private FormFieldItemArrowStepperSettings _backgroundStepper;
         private FormFieldItemArrowStepperSettings _environmentStepper;
         private FormFieldItemTextField _localUrlFieldComponent;
@@ -27,16 +28,8 @@ namespace eu.foodmission.platform
         private bool _isSettingEnvironment;
         private FMButton _testSurveyButton;
 
-        private static Func<Rect> MakeElementFrameGetter(VisualElement element)
-        {
-            return () =>
-            {
-                if (element == null || element.panel == null) return Rect.zero;
-                var rect = element.worldBound;
-                var scale = element.panel.scaledPixelsPerPoint;
-                return new Rect(rect.position * scale, rect.size * scale);
-            };
-        }
+        private VisualElement _developerOptions;
+
 
         private static readonly string[] k_ThemeChoices = { "@UI:LIGHT", "@UI:DARK", "@UI:SYSTEM" };
         private static readonly string[] k_LangChoices = {
@@ -51,10 +44,11 @@ namespace eu.foodmission.platform
             "@UI:LANG_ES"  // es
         };
         private static readonly string[] k_ScaleChoices = { "@UI:SCALE_SM", "@UI:SCALE_MD", "@UI:SCALE_LG" };
-        private static readonly string[] k_FontChoices  = { "Roboto", "Open Sans", "OpenDyslexic" };
-        private static readonly string[] k_SoundChoices         = Enumerable.Range(0, 21).Select(i => (i * 5).ToString()).ToArray();
+        private static readonly string[] k_FontChoices = { "Roboto", "Open Sans", "OpenDyslexic" };
+        private static readonly string[] k_SoundChoices = Enumerable.Range(0, 21).Select(i => (i * 5).ToString()).ToArray();
         private static readonly string[] k_NotificationsChoices = { "@UI:OFF", "@UI:ON" };
-        private static readonly string[] k_BackgroundChoices    = { "@UI:PLAIN", "@UI:PATTERN" };
+        private static readonly string[] k_NotificationTimeChoices = Enumerable.Range(0, 24).Select(i => $"{i:D2}:00").ToArray();
+        private static readonly string[] k_BackgroundChoices = { "@UI:PLAIN", "@UI:PATTERN" };
 
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
@@ -73,17 +67,26 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _themeStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-theme");
-            _langStepper  = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-lang");
+            _langStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-lang");
             _scaleStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-scale");
-            _fontStepper  = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-font");
+            _fontStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-font");
             _soundStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-sound");
-            _musicStepper         = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-music");
+            _musicStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-music");
             _notificationsStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-notifications");
-            _backgroundStepper    = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-background");
-            _environmentStepper   = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-environment");
+            _notificationTimeStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-notification-time");
+            _backgroundStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-background");
+            _environmentStepper = contentContainer.Q<FormFieldItemArrowStepperSettings>("stepper-environment");
             _localUrlFieldComponent = contentContainer.Q<FormFieldItemTextField>("local-url-field");
-            _versionValue         = contentContainer.Q<Unity.AppUI.UI.Text>("version-value");
-            _testSurveyButton     = contentContainer.Q<FMButton>("btn-test-survey");
+            _versionValue = contentContainer.Q<Unity.AppUI.UI.Text>("version-value");
+            _testSurveyButton = contentContainer.Q<FMButton>("btn-test-survey");
+
+            _developerOptions = contentContainer.Q<VisualElement>("developer-options");
+
+#if UNITY_EDITOR || DEVELOPER_MODE
+            _developerOptions.style.display = DisplayStyle.Flex;
+#else
+            _developerOptions.style.display = DisplayStyle.None;
+#endif
         }
 
         protected override void OnViewModelBound()
@@ -91,9 +94,33 @@ namespace eu.foodmission.platform
             base.OnViewModelBound();
             SetupSteppers();
 
+            if (_viewModel != null)
+            {
+                _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            }
+
             if (_testSurveyButton != null)
             {
                 _testSurveyButton.clicked += OnTestSurveyClicked;
+            }
+        }
+
+        private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsViewModel.PushNotifications))
+            {
+                if (_notificationsStepper != null)
+                {
+                    _notificationsStepper.SelectedIndex = _viewModel.PushNotifications ? 1 : 0;
+                }
+                UpdateNotificationTimeVisibility(_viewModel.PushNotifications);
+            }
+            else if (e.PropertyName == nameof(SettingsViewModel.NotificationPreferredTime))
+            {
+                if (_notificationTimeStepper != null)
+                {
+                    _notificationTimeStepper.SelectedIndex = NotificationTimeToIndex(_viewModel.NotificationPreferredTime);
+                }
             }
         }
 
@@ -120,6 +147,7 @@ namespace eu.foodmission.platform
             _soundStepper?.CreateAccessibilityNode(h, "Sound volume");
             _musicStepper?.CreateAccessibilityNode(h, "Music volume");
             _notificationsStepper?.CreateAccessibilityNode(h, "Notifications");
+            _notificationTimeStepper?.CreateAccessibilityNode(h, "Reminder time");
             _backgroundStepper?.CreateAccessibilityNode(h, "Background");
             _environmentStepper?.CreateAccessibilityNode(h, "Environment");
         }
@@ -133,6 +161,7 @@ namespace eu.foodmission.platform
             _soundStepper?.DestroyAccessibilityNode();
             _musicStepper?.DestroyAccessibilityNode();
             _notificationsStepper?.DestroyAccessibilityNode();
+            _notificationTimeStepper?.DestroyAccessibilityNode();
             _backgroundStepper?.DestroyAccessibilityNode();
             _environmentStepper?.DestroyAccessibilityNode();
 
@@ -190,6 +219,15 @@ namespace eu.foodmission.platform
                 _notificationsStepper.RegisterValueChangedCallback(OnNotificationsChanged);
             }
 
+            if (_notificationTimeStepper != null)
+            {
+                _notificationTimeStepper.Choices = k_NotificationTimeChoices;
+                _notificationTimeStepper.SelectedIndex = NotificationTimeToIndex(_viewModel.NotificationPreferredTime);
+                _notificationTimeStepper.RegisterValueChangedCallback(OnNotificationTimeChanged);
+            }
+
+            UpdateNotificationTimeVisibility(_viewModel.PushNotifications);
+
             if (_backgroundStepper != null)
             {
                 _backgroundStepper.Choices = k_BackgroundChoices;
@@ -222,6 +260,11 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
+            if (_viewModel != null)
+            {
+                _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            }
+
             if (_testSurveyButton != null)
             {
                 _testSurveyButton.clicked -= OnTestSurveyClicked;
@@ -262,6 +305,11 @@ namespace eu.foodmission.platform
                 _notificationsStepper.UnregisterValueChangedCallback(OnNotificationsChanged);
             }
 
+            if (_notificationTimeStepper != null)
+            {
+                _notificationTimeStepper.UnregisterValueChangedCallback(OnNotificationTimeChanged);
+            }
+
             if (_backgroundStepper != null)
             {
                 _backgroundStepper.UnregisterValueChangedCallback(OnBackgroundChanged);
@@ -273,17 +321,18 @@ namespace eu.foodmission.platform
                 _localUrlInnerField.UnregisterValueChangedCallback(OnLocalUrlChanged);
 
             _themeStepper = null;
-            _langStepper  = null;
+            _langStepper = null;
             _scaleStepper = null;
-            _fontStepper  = null;
-            _soundStepper         = null;
-            _musicStepper         = null;
+            _fontStepper = null;
+            _soundStepper = null;
+            _musicStepper = null;
             _notificationsStepper = null;
-            _backgroundStepper    = null;
-            _environmentStepper   = null;
+            _notificationTimeStepper = null;
+            _backgroundStepper = null;
+            _environmentStepper = null;
             _localUrlFieldComponent = null;
-            _localUrlInnerField   = null;
-            _versionValue         = null;
+            _localUrlInnerField = null;
+            _versionValue = null;
 
             base.OnViewModelUnbinding();
         }
@@ -306,8 +355,39 @@ namespace eu.foodmission.platform
         private void OnMusicChanged(object sender, ChangeEvent<int> evt) =>
             _viewModel?.SetMusic(IndexToSoundValue(evt.newValue));
 
-        private void OnNotificationsChanged(object sender, ChangeEvent<int> evt) =>
-            _viewModel?.SetPushNotifications(evt.newValue == 1);
+        private void OnNotificationsChanged(object sender, ChangeEvent<int> evt)
+        {
+            bool enabled = evt.newValue == 1;
+            _viewModel?.SetPushNotifications(enabled);
+            UpdateNotificationTimeVisibility(enabled);
+        }
+
+        private void OnNotificationTimeChanged(object sender, ChangeEvent<int> evt) =>
+            _viewModel?.SetNotificationPreferredTime(IndexToNotificationTime(evt.newValue));
+
+        private void UpdateNotificationTimeVisibility(bool visible)
+        {
+            if (_notificationTimeStepper != null)
+            {
+                _notificationTimeStepper.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+        }
+
+        private static int NotificationTimeToIndex(string time)
+        {
+            if (string.IsNullOrEmpty(time)) return 10; // Default 10:00 AM local
+            int idx = Array.IndexOf(k_NotificationTimeChoices, time);
+            return idx >= 0 ? idx : 10;
+        }
+
+        private static string IndexToNotificationTime(int index)
+        {
+            if (index >= 0 && index < k_NotificationTimeChoices.Length)
+            {
+                return k_NotificationTimeChoices[index];
+            }
+            return "10:00";
+        }
 
         private void OnBackgroundChanged(object sender, ChangeEvent<int> evt) =>
             _viewModel?.SetBackgroundPattern(evt.newValue == 1);
@@ -315,8 +395,8 @@ namespace eu.foodmission.platform
         private static int ThemeLabelToIndex(string theme) => theme switch
         {
             "light" => 0,
-            "dark"  => 1,
-            _       => 2  // system
+            "dark" => 1,
+            _ => 2  // system
         };
 
         private static int LangLabelToIndex(string lang) => lang switch
@@ -330,21 +410,21 @@ namespace eu.foodmission.platform
             "pl" => 6,
             "sl" => 7,
             "es" => 8,
-            _    => 1  // en as default
+            _ => 1  // en as default
         };
 
         private static int ScaleLabelToIndex(string scale) => scale switch
         {
             "small" => 0,
             "large" => 2,
-            _       => 1  // medium
+            _ => 1  // medium
         };
 
         private static int FontLabelToIndex(string font) => font switch
         {
-            "open-sans"     => 1,
+            "open-sans" => 1,
             "open-dyslexic" => 2,
-            _               => 0  // roboto
+            _ => 0  // roboto
         };
 
         private static string IndexToTheme(int index) => index switch

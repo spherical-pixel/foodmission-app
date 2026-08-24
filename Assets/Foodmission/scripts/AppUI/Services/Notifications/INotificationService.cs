@@ -69,6 +69,11 @@ namespace eu.foodmission.platform
         void ScheduleDailyMealReminder(TimeSpan preferredTime);
 
         /// <summary>
+        /// Reschedules daily meal reminders and active pantry expiry notifications according to the preferred time.
+        /// </summary>
+        void RescheduleAllNotifications(TimeSpan preferredTime);
+
+        /// <summary>
         /// Cancels a specific scheduled local notification by ID.
         /// </summary>
         void CancelNotification(string notificationId);

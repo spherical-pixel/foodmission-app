@@ -226,5 +226,30 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_service.ShouldPromptForNotifications());
             Assert.IsTrue(_service.AreNotificationsEnabled());
         }
+
+        [Test]
+        public void NotificationService_RescheduleAllNotifications_DoesNotThrowAndReschedules()
+        {
+            _service.SetNotificationsEnabled(true);
+
+            var pantryWrapper = new PantryItemArrayWrapper
+            {
+                items = new PantryItem[]
+                {
+                    new PantryItem
+                    {
+                        id = "pantry_item_1",
+                        expiryDate = DateTime.Now.AddDays(5).ToString("o"),
+                        foodProduct = new FoodProduct { id = "food_1", name = "Yogurt" }
+                    }
+                }
+            };
+            _localStorageService.SetValue("pantry_cache", pantryWrapper);
+
+            Assert.DoesNotThrow(() =>
+            {
+                _service.RescheduleAllNotifications(TimeSpan.FromHours(10));
+            });
+        }
     }
 }
