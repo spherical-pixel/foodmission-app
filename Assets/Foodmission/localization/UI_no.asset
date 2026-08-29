@@ -2349,16 +2349,16 @@ MonoBehaviour:
     m_Localized: Vare fjernet fra spiskammeret
     m_Metadata:
       m_Items: []
-  - m_Id: 38403531093303296
-    m_Localized: "Mengde som er g\xE5tt til spille"
-    m_Metadata:
-      m_Items: []
   - m_Id: 38403887139381248
     m_Localized: "Ansl\xE5tt kostnad (\u20AC, valgfritt)"
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
     m_Localized: Ytterligere merknader (valgfritt)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38406003664871424
+    m_Localized: Mengden kan ikke overskride tilgjengelig mengde ({0} {1}).
     m_Metadata:
       m_Items: []
   references:

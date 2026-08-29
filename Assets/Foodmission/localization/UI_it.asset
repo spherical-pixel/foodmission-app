@@ -2355,16 +2355,16 @@ MonoBehaviour:
     m_Localized: Articolo rimosso dalla dispensa
     m_Metadata:
       m_Items: []
-  - m_Id: 38403531093303296
-    m_Localized: "Quantit\xE0 sprecata"
-    m_Metadata:
-      m_Items: []
   - m_Id: 38403887139381248
     m_Localized: "Costo stimato (\u20AC, facoltativo)"
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
     m_Localized: Note aggiuntive (facoltative)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38406003664871424
+    m_Localized: "La quantit\xE0 non pu\xF2 superare l'importo disponibile ({0} {1})."
     m_Metadata:
       m_Items: []
   references:

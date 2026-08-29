@@ -2353,16 +2353,16 @@ MonoBehaviour:
     m_Localized: Producto eliminado de la despensa
     m_Metadata:
       m_Items: []
-  - m_Id: 38403531093303296
-    m_Localized: Cantidad desperdiciada
-    m_Metadata:
-      m_Items: []
   - m_Id: 38403887139381248
     m_Localized: "Coste estimado (\u20AC, opcional)"
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
     m_Localized: Notas adicionales (opcional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38406003664871424
+    m_Localized: La cantidad no puede superar el disponible ({0} {1}).
     m_Metadata:
       m_Items: []
   references:

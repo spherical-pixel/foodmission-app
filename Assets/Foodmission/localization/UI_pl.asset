@@ -2381,16 +2381,17 @@ MonoBehaviour:
     m_Localized: "Produkt usuni\u0119ty ze spi\u017Carni"
     m_Metadata:
       m_Items: []
-  - m_Id: 38403531093303296
-    m_Localized: "Ilo\u015B\u0107 zmarnowana"
-    m_Metadata:
-      m_Items: []
   - m_Id: 38403887139381248
     m_Localized: Szacowany koszt (w euro, opcjonalnie)
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
     m_Localized: Dodatkowe uwagi (opcjonalne)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38406003664871424
+    m_Localized: "Ilo\u015B\u0107 nie mo\u017Ce przekracza\u0107 dost\u0119pnej ilo\u015Bci
+      ({0} {1})."
     m_Metadata:
       m_Items: []
   references:

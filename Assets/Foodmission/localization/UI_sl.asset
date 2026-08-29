@@ -2347,16 +2347,17 @@ MonoBehaviour:
     m_Localized: Izdelek odstranjen iz shrambe
     m_Metadata:
       m_Items: []
-  - m_Id: 38403531093303296
-    m_Localized: "Koli\u010Dina izgube"
-    m_Metadata:
-      m_Items: []
   - m_Id: 38403887139381248
     m_Localized: "Predvideni stro\u0161ki (\u20AC, neobvezno)"
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
     m_Localized: Dodatne opombe (neobvezno)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38406003664871424
+    m_Localized: "Koli\u010Dina ne sme presegati razpolo\u017Eljive koli\u010Dine
+      ({0} {1})."
     m_Metadata:
       m_Items: []
   references:

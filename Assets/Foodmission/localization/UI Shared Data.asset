@@ -2291,16 +2291,16 @@ MonoBehaviour:
     m_Key: PANTRY_ITEM_DELETED_SUCCESS
     m_Metadata:
       m_Items: []
-  - m_Id: 38403531093303296
-    m_Key: FOOD_WASTE_QUANTITY_LABEL
-    m_Metadata:
-      m_Items: []
   - m_Id: 38403887139381248
     m_Key: FOOD_WASTE_COST_LABEL
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
     m_Key: FOOD_WASTE_NOTES_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38406003664871424
+    m_Key: QTY_EXCEEDS_MAX
     m_Metadata:
       m_Items: []
   m_Metadata:

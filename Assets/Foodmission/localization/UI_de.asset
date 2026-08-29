@@ -2364,16 +2364,16 @@ MonoBehaviour:
     m_Localized: Artikel aus Vorratskammer entfernt
     m_Metadata:
       m_Items: []
-  - m_Id: 38403531093303296
-    m_Localized: Verschwendete Menge
-    m_Metadata:
-      m_Items: []
   - m_Id: 38403887139381248
     m_Localized: "Gesch\xE4tzte Kosten (\u20AC, optional)"
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
     m_Localized: "Zus\xE4tzliche Anmerkungen (optional)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38406003664871424
+    m_Localized: "Die Menge darf den verf\xFCgbaren Bestand ({0} {1}) nicht \xFCberschreiten."
     m_Metadata:
       m_Items: []
   references:
