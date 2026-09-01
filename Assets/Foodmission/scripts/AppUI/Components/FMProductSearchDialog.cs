@@ -168,7 +168,7 @@ namespace eu.foodmission.platform.Components
             searchRow.style.alignItems = Align.Center;
             container.Add(searchRow);
 
-            
+
 
             var searchField = new Unity.AppUI.UI.TextField { placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEARCH_PLACEHOLDER") };
             searchField.style.flexGrow = 1;
@@ -214,7 +214,7 @@ namespace eu.foodmission.platform.Components
             resultsScroll.style.paddingRight = 40;
             resultsScroll.style.paddingLeft = 40;
             resultsScroll.style.borderBottomColor = new StyleColor(Color.grey);
-            resultsScroll.style.backgroundColor = new StyleColor(new Color(0.7f,0.7f,0.7f,0.25f));
+            resultsScroll.style.backgroundColor = new StyleColor(new Color(0.7f, 0.7f, 0.7f, 0.25f));
 
             var resultsContainer = new VisualElement();
 
@@ -446,7 +446,7 @@ namespace eu.foodmission.platform.Components
                     {
                         FMDialog.ShowAlert(anchor, title, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CANNOT_ADD_PRODUCT", new object[] { ex.Message }), AlertSemantic.Error);
                     }
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
         private static string FormatFoodName(OpenFoodFactsProduct product)

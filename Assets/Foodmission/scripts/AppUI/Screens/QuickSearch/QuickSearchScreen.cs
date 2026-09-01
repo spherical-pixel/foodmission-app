@@ -227,7 +227,7 @@ namespace eu.foodmission.platform
                 this,
                 "@UI:ADD_TO_MEAL_LOG",
                 content,
-                new FMDialogAction("@UI:TXT_CANCEL", null, false),
+                new FMDialogAction("@UI:TXT_CANCEL", null, ButtonVariant.Default),
                 new FMDialogAction("@UI:TXT_CONTINUE", () =>
                 {
                     bool eatenOut = !isFromPantry;
@@ -244,7 +244,7 @@ namespace eu.foodmission.platform
                     {
                         _navController.Navigate(Destinations.meallog, args);
                     }
-                }, true)
+                }, ButtonVariant.Accent)
             );
         }
     }

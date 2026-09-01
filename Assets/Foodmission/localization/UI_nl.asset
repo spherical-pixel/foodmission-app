@@ -2374,6 +2374,30 @@ MonoBehaviour:
     m_Localized: De hoeveelheid mag het beschikbare aantal ({0} {1}) niet overschrijden.
     m_Metadata:
       m_Items: []
+  - m_Id: 40878604073033728
+    m_Localized: We hebben het document {0} bijgewerkt. Bekijk het aandachtig en
+      accepteer het, als u ermee akkoord gaat, zodat u FOODMISSION kunt blijven gebruiken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40937444932050944
+    m_Localized: Waarschuwing!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40938002757705728
+    m_Localized: 'Om het platform te kunnen blijven gebruiken, moet u het nieuwe
+      document van {0} accepteren. Als u hiermee niet akkoord gaat, kunt u uitloggen
+      of uw account verwijderen.
+
+
+      Neem alstublieft even de tijd om het nieuwe
+      document van {0} nogmaals door te nemen, en neem gerust contact met ons op
+      als u denkt dat er iets niet klopt.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41170053394063360
+    m_Localized: Document beoordelen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

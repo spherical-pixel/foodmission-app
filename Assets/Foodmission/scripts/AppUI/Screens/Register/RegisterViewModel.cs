@@ -17,10 +17,26 @@ namespace eu.foodmission.platform
     {
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
+        private readonly ILegalService _legalService;
 
         // Country/region data loaded from backend catalog (with JSON fallback)
         private List<CatalogItem> _countries = new();
         private List<CatalogItem> _regions = new();
+
+        [ObservableProperty]
+        private string _termsDocumentText = "";
+
+        [ObservableProperty]
+        private string _termsDocumentKey = "";
+
+        [ObservableProperty]
+        private string _privacyDocumentText = "";
+
+        [ObservableProperty]
+        private string _privacyDocumentKey = "";
+
+        [ObservableProperty]
+        private bool _isLoadingLegalDocs = false;
 
         [ObservableProperty]
         private string _username = "";
@@ -138,10 +154,11 @@ namespace eu.foodmission.platform
 
         private bool _registrationCompleted = false;
 
-        public RegisterViewModel(IAuthService authService, ICatalogService catalogService, IStoreService storeService) : base(storeService)
+        public RegisterViewModel(IAuthService authService, ICatalogService catalogService, IStoreService storeService, ILegalService legalService = null) : base(storeService)
         {
             _authService = authService;
             _catalogService = catalogService;
+            _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
 
             PropertyChanged += (sender, args) =>
             {
@@ -362,31 +379,42 @@ namespace eu.foodmission.platform
                     // Registration and auto-login successful - navigation handled by auth state change
                     Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
 
+                    // Record acceptance of required legal documents on the backend
+                    if (_legalService != null)
+                    {
+                        string locale = _storeService.GetAppState().lang ?? "en";
+
+                        if (string.IsNullOrEmpty(TermsDocumentKey) || string.IsNullOrEmpty(PrivacyDocumentKey))
+                        {
+                            var (docs, _) = await _legalService.GetRequiredDocumentsAsync(locale);
+                            if (docs != null)
+                            {
+                                foreach (var doc in docs)
+                                {
+                                    if (!string.IsNullOrEmpty(doc.key))
+                                    {
+                                        await _legalService.AcceptConsentAsync(doc.key);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(TermsDocumentKey))
+                            {
+                                await _legalService.AcceptConsentAsync(TermsDocumentKey);
+                            }
+                            if (!string.IsNullOrEmpty(PrivacyDocumentKey))
+                            {
+                                await _legalService.AcceptConsentAsync(PrivacyDocumentKey);
+                            }
+                        }
+                    }
+
                     string lang = _storeService.GetAppState().lang ?? "en";
                     _ = Components.FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
 
-                    // NutriMessageDialog.Show(
-                    //     message: "@UI:COMPLETE_WELCOME_MESSAGE",
-                    //     actions: new[]
-                    //     {
-                    //         new FMDialogAction("@UI:BTN_CREATE_AVATAR", () =>
-                    //         {
-                    //             RaiseNavigationRequested(Actions.go_to_avatar_editor, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
-                    //         }, isPrimary: true),
-                    //         new FMDialogAction("@UI:BTN_COMPLETE_PROFILE", () =>
-                    //         {
-                    //             RaiseNavigationRequested(Actions.register_to_onboarding);
-                    //         }, isPrimary: true),
-                    //         new FMDialogAction("@UI:BTN_ENTER_APP", () =>
-                    //         {
-                    //             RaiseNavigationRequested(Actions.loading_to_home);
-                    //         }, isPrimary: true)
-                    //     }
-                    // );
-
                     RaiseNavigationRequested(Actions.register_to_onboarding);
-
-
                 }
                 else
                 {
@@ -732,6 +760,39 @@ namespace eu.foodmission.platform
             return true;
         }
 
+        /// <summary>
+        /// Loads the required legal documents (Terms of Service and Privacy Policy) from ILegalService.
+        /// </summary>
+        public async Task LoadLegalDocumentsAsync()
+        {
+            if (_legalService == null) return;
+            if (!string.IsNullOrEmpty(TermsDocumentText) && !string.IsNullOrEmpty(PrivacyDocumentText)) return;
+
+            IsLoadingLegalDocs = true;
+            string lang = _storeService.GetAppState().lang ?? "en";
+
+            var (docs, error) = await _legalService.GetRequiredDocumentsAsync(lang);
+            if (docs != null && docs.Length > 0)
+            {
+                foreach (var doc in docs)
+                {
+                    if (doc.docType == LegalDocType.TermsOfService)
+                    {
+                        TermsDocumentText = doc.content;
+                        TermsDocumentKey = doc.key;
+                    }
+                    else if (doc.docType == LegalDocType.PrivacyPolicy)
+                    {
+                        PrivacyDocumentText = doc.content;
+                        PrivacyDocumentKey = doc.key;
+                    }
+                }
+            }
+
+            IsLoadingLegalDocs = false;
+            InvalidateValidation();
+        }
+
         // ── StepFlow Implementation ─────────────────────────────────
         protected override int GetStepCount() => 9;
 
@@ -764,7 +825,11 @@ namespace eu.foodmission.platform
 
         protected override async Task OnStepEnteredAsync(int stepIndex)
         {
-            if (stepIndex == 8)
+            if (stepIndex == 6 || stepIndex == 7)
+            {
+                await LoadLegalDocumentsAsync();
+            }
+            else if (stepIndex == 8)
             {
                 await CheckAndLoadPilotConsentAsync();
             }

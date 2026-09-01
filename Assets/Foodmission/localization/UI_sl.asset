@@ -2360,6 +2360,28 @@ MonoBehaviour:
       ({0} {1})."
     m_Metadata:
       m_Items: []
+  - m_Id: 40878604073033728
+    m_Localized: "Posodobili smo dokument {0}. Prosimo, da ga natan\u010Dno pregledate
+      in, \u010De se z njim strinjate, ga sprejmete, da boste lahko \u0161e naprej
+      uporabljali FOODMISSION."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40937444932050944
+    m_Localized: Opozorilo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40938002757705728
+    m_Localized: "\u010Ce \u017Eelite \u0161e naprej uporabljati platformo, morate
+      sprejeti nov dokument {0}. \u010Ce se s tem ne strinjate, se lahko odjavite
+      ali izbri\u0161ete svoj ra\u010Dun.\n\nVzemite si trenutek \u010Dasa in \u0161e
+      enkrat preglejte nov dokument {0} ter nas brez zadr\u017Ekov obvestite, \u010De
+      menite, da je v njem kaj narobe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41170053394063360
+    m_Localized: Pregled dokumenta
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

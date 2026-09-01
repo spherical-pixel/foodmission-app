@@ -170,16 +170,13 @@ namespace eu.foodmission.platform.Components
                 var button = new Unity.AppUI.UI.Button
                 {
                     title = action.Label,
-                    variant = action.IsPrimary ? ButtonVariant.Accent : ButtonVariant.Default,
+                    variant = action.ButtonVariant,
                     size = Size.L
                 };
 
-                if (action.IsPrimary)
-                {
-                    button.AddToClassList("fm-button");
-                    button.AddToClassList("fm-button-align-left");
-                    button.trailingIcon = "fm-arrow-right";
-                }
+                button.AddToClassList("fm-button");
+                button.AddToClassList("fm-button-align-left");
+                button.trailingIcon = "fm-arrow-right";
 
                 var capturedAction = action;
                 button.clicked += () =>
@@ -229,7 +226,7 @@ namespace eu.foodmission.platform.Components
                 message: "@UI:NUTRI_MSG_NOT_AVAILABLE_YET",
                 actions: new[]
                 {
-                    new FMDialogAction("@UI:TXT_ACCEPT", onAccept, isPrimary: true)
+                    new FMDialogAction("@UI:TXT_ACCEPT", onAccept, ButtonVariant.Accent)
                 }
             );
 

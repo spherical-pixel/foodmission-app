@@ -566,7 +566,7 @@ namespace eu.foodmission.platform
                 textContainer,
                 new FMDialogAction("@UI:TXT_CANCEL", () => _viewModel.CancelUpdate()),
                 new FMDialogAction("@UI:SAVE_AS_NEW", () => PromptNewMealPresetNameAndSave()),
-                new FMDialogAction("@UI:UPDATE", async () => await _viewModel.ConfirmUpdateAndSaveAsync(), isPrimary: true));
+                new FMDialogAction("@UI:UPDATE", async () => await _viewModel.ConfirmUpdateAndSaveAsync(), ButtonVariant.Accent));
         }
 
         private void PromptNewMealPresetNameAndSave()
@@ -592,7 +592,7 @@ namespace eu.foodmission.platform
                     }
                     _viewModel.MealContainerName = newName;
                     await PerformSaveAsync();
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
 
@@ -712,7 +712,7 @@ namespace eu.foodmission.platform
                     item.quantity = panel.Quantity;
                     item.unit = panel.Unit;
                     _viewModel.SelectedItems = new List<MealLogItem>(_viewModel.SelectedItems);
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
 
@@ -741,7 +741,7 @@ namespace eu.foodmission.platform
                         }
                         _viewModel.MealContainerName = presetName;
                         await PerformSaveAsync();
-                    }, isPrimary: true));
+                    }, ButtonVariant.Accent));
             }
             else
             {

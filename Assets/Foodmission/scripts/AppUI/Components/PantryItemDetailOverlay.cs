@@ -370,7 +370,7 @@ namespace eu.foodmission.platform
                         Dismiss();
                         cb?.Invoke();
                     }
-                }, isPrimary: true),
+                }, ButtonVariant.Accent),
                 new FMDialogAction(wasteLabel, () =>
                 {
                     if (_viewModel?.ItemView == null) return;

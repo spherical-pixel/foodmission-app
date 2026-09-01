@@ -33,10 +33,16 @@ namespace eu.foodmission.platform
 
 
         private readonly INotificationService _notificationService;
+        private readonly ILegalService _legalService;
 
-        public HomeScreenViewModel(IStoreService storeService, IAudioService audioService, INotificationService notificationService = null) : base(storeService)
+        public HomeScreenViewModel(
+            IStoreService storeService,
+            IAudioService audioService,
+            INotificationService notificationService = null,
+            ILegalService legalService = null) : base(storeService)
         {
             _notificationService = notificationService;
+            _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
 
             // Get initial state
             AppState state = _storeService.GetAppState();
@@ -58,8 +64,6 @@ namespace eu.foodmission.platform
             AppState state = _storeService.GetAppState();
 
         }
-
-
 
         public void SetTimePeriod(TimePeriod period)
         {
@@ -90,6 +94,27 @@ namespace eu.foodmission.platform
         public void DeclineNotifications()
         {
             _notificationService?.DeclineNotifications();
+        }
+
+        public async System.Threading.Tasks.Task<LegalConsentStatus> CheckPendingLegalConsentAsync()
+        {
+            if (_legalService == null) return null;
+            var (status, error) = await _legalService.GetConsentStatusAsync();
+            return status;
+        }
+
+        public async System.Threading.Tasks.Task<LegalDocument> GetLegalDocumentAsync(string docType)
+        {
+            if (_legalService == null) return null;
+            var (doc, error) = await _legalService.GetLatestDocumentAsync(docType);
+            return doc;
+        }
+
+        public async System.Threading.Tasks.Task<bool> AcceptLegalConsentAsync(string documentKey)
+        {
+            if (_legalService == null) return false;
+            var (res, error) = await _legalService.AcceptConsentAsync(documentKey);
+            return res != null && res.accepted;
         }
 
         public void NavigateToOnboardingProfile()

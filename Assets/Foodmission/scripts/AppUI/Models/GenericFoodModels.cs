@@ -18,6 +18,10 @@ namespace eu.foodmission.platform
         public string foodName;
         public string foodGroup;
         public string foodGroupSlug;
+        public bool vegan;
+        public bool vegetarian;
+        public bool meatOrFish;
+        public bool legume;
     }
 
     [Serializable]
@@ -41,6 +45,11 @@ namespace eu.foodmission.platform
         public string quantity;
         public string containsTracesOf;
         public string isFortifiedWith;
+
+        public bool vegan;
+        public bool vegetarian;
+        public bool meatOrFish;
+        public bool legume;
 
         public float? energyKj;
         public float? energyKcal;

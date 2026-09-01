@@ -423,7 +423,7 @@
 }
 
 .fm-info-dialog__actions {
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .fm-nutri-dialog {
@@ -857,6 +857,11 @@
 .fm-button {
     background-color: var(--appui-accent-100);
 }
+
+.appui-button--destructive.fm-button {
+    background-color: var(--appui-alias-actions-destructive-default);
+}
+
 
 .fm-button-shadow {
     --box-shadow-offset-y: 5;

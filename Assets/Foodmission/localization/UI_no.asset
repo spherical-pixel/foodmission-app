@@ -2361,6 +2361,27 @@ MonoBehaviour:
     m_Localized: Mengden kan ikke overskride tilgjengelig mengde ({0} {1}).
     m_Metadata:
       m_Items: []
+  - m_Id: 40878604073033728
+    m_Localized: "Vi har oppdatert {0}-dokumentet. Vennligst les det n\xF8ye gjennom,
+      og godta det hvis du er enig, slik at du kan fortsette \xE5 bruke FOODMISSION."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40937444932050944
+    m_Localized: Advarsel!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40938002757705728
+    m_Localized: "For \xE5 fortsette \xE5 bruke plattformen m\xE5 du godta det nye
+      dokumentet om {0}. Hvis du ikke samtykker, kan du logge ut eller slette kontoen
+      din.\n\nTa deg gjerne et \xF8yeblikk til \xE5 g\xE5 gjennom det nye dokumentet
+      om {0} p\xE5 nytt, og ta gjerne kontakt med oss hvis du mener at det er noe
+      feil i det."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41170053394063360
+    m_Localized: Gjennomgangsdokument
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -823,13 +823,13 @@ namespace eu.foodmission.platform
                 this,
                 "@UI:ADD_TO_MEAL_LOG",
                 content,
-                new FMDialogAction("@UI:TXT_CANCEL", null, false),
+                new FMDialogAction("@UI:TXT_CANCEL", null, ButtonVariant.Default),
                 new FMDialogAction("@UI:TXT_CONTINUE", () =>
                 {
                     bool eatenOut = !isFromPantry;
                     int selectedMealType = (mealTypeDropdown.value != null && mealTypeDropdown.value.Any()) ? mealTypeDropdown.value.First() : 0;
                     _viewModel?.LogRecipe(selectedMealType, eatenOut);
-                }, true)
+                }, ButtonVariant.Accent)
             );
         }
         private void OnEditClicked() => _viewModel.Edit();

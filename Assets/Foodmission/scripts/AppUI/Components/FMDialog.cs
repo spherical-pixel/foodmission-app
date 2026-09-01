@@ -307,10 +307,7 @@ namespace eu.foodmission.platform.Components
                     title = captured.Label
                 };
 
-                if (captured.IsPrimary)
-                {
-                    button.variant = ButtonVariant.Accent;
-                }
+                button.variant = captured.ButtonVariant;
 
                 button.clicked += () =>
                 {
@@ -335,15 +332,12 @@ namespace eu.foodmission.platform.Components
         /// <param name="title">Heading text.</param>
         /// <param name="body">Body text rendered inside a ScrollView. Null is coerced to empty.</param>
         /// <param name="actions">Buttons. Must contain at least one action.</param>
-        /// <param name="widthPercent">Modal card width as % of screen (default 80).</param>
-        /// <param name="heightPercent">Modal card height as % of screen (default 60).</param>
+
         public static void ShowInfo(
             VisualElement anchor,
             string title,
             string body,
-            FMDialogAction[] actions,
-            float widthPercent = 80f,
-            float heightPercent = 60f)
+            FMDialogAction[] actions)
         {
             if (actions == null || actions.Length == 0)
             {
@@ -382,9 +376,11 @@ namespace eu.foodmission.platform.Components
                 var button = new Unity.AppUI.UI.Button
                 {
                     title = action.Label,
-                    variant = action.IsPrimary ? ButtonVariant.Accent : ButtonVariant.Default
+                    variant = action.ButtonVariant
                 };
                 button.AddToClassList("fm-button");
+                button.AddToClassList("fm-button-align-left");
+                button.trailingIcon = "fm-arrow-right";
                 button.style.flexGrow = 1;
 
                 var captured = action;
@@ -400,11 +396,11 @@ namespace eu.foodmission.platform.Components
             root.Add(actionsRow);
 
             modal = Modal.Build(anchor, root);
-            modal.SetFullScreenMode(ModalFullScreenMode.None);
+            modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
 
-            var modalContent = modal.view.contentContainer;
-            modalContent.style.width = Length.Percent(widthPercent);
-            modalContent.style.height = Length.Percent(heightPercent);
+            // var modalContent = modal.view.contentContainer;
+            // modalContent.style.width = Length.Percent(widthPercent);
+            // modalContent.style.height = Length.Percent(heightPercent);
 
             NotifyScreenReaderOfDialog(modal, title, body ?? "");
             modal.Show();

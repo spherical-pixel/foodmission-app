@@ -487,7 +487,7 @@ namespace eu.foodmission.platform
                 new FMDialogAction("@UI:SAVE", () =>
                 {
                     _ = SafeRenameListAsync(nameField.value);
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
         private void ShowEditItemDialog(ShoppingListItemView captured)
@@ -505,7 +505,7 @@ namespace eu.foodmission.platform
                 new FMDialogAction("@UI:SAVE", () =>
                 {
                     _ = SafeUpdateItemAsync(editItemId, panel.Quantity, panel.Unit);
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
         private void UpdateApiErrorState()

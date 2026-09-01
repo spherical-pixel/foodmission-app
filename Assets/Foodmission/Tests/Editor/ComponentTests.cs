@@ -5,6 +5,7 @@ using System.Reflection;
 using NUnit.Framework;
 
 using eu.foodmission.platform.Components;
+using Unity.AppUI.UI;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -14,11 +15,11 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void Constructor_SetsLabel()
         {
-            var action = new FMDialogAction("OK", null, true);
+            var action = new FMDialogAction("OK", null, ButtonVariant.Accent);
 
             Assert.AreEqual("OK", action.Label);
             Assert.IsNull(action.Callback);
-            Assert.IsTrue(action.IsPrimary);
+            Assert.AreEqual(action.ButtonVariant, ButtonVariant.Accent);
         }
 
         [Test]
@@ -28,7 +29,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual("Cancel", action.Label);
             Assert.IsNull(action.Callback);
-            Assert.IsFalse(action.IsPrimary);
+            Assert.AreNotEqual(action.ButtonVariant, ButtonVariant.Accent);
         }
     }
 

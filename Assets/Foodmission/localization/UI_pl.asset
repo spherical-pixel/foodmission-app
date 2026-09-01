@@ -2394,6 +2394,28 @@ MonoBehaviour:
       ({0} {1})."
     m_Metadata:
       m_Items: []
+  - m_Id: 40878604073033728
+    m_Localized: "Zaktualizowali\u015Bmy dokument {0}. Prosimy o jego dok\u0142adne
+      zapoznanie si\u0119 z nim i, je\u015Bli wyra\u017Caj\u0105 Pa\u0144stwo zgod\u0119,
+      o jego akceptacj\u0119, aby mogli Pa\u0144stwo nadal korzysta\u0107 z FOODMISSION."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40937444932050944
+    m_Localized: Uwaga!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40938002757705728
+    m_Localized: "Aby nadal korzysta\u0107 z platformy, musisz zaakceptowa\u0107
+      nowy dokument {0}. Je\u015Bli nie wyra\u017Casz zgody, mo\u017Cesz si\u0119
+      wylogowa\u0107 lub usun\u0105\u0107 swoje konto.\n\nPo\u015Bwi\u0119\u0107
+      chwil\u0119 na ponowne zapoznanie si\u0119 z nowym dokumentem {0} i skontaktuj
+      si\u0119 z nami, je\u015Bli uwa\u017Casz, \u017Ce zawiera on jakie\u015B nie\u015Bcis\u0142o\u015Bci."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41170053394063360
+    m_Localized: "Dokument do przegl\u0105du"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

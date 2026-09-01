@@ -570,6 +570,12 @@ namespace eu.foodmission.platform
 
         public void Logout()
         {
+            var eventService = App.current?.services?.GetService<IEventService>();
+            if (eventService != null)
+            {
+                _ = eventService.TrackSessionEndAsync();
+            }
+
             string refreshToken = _storeService.GetAppState().refreshToken;
             if (!string.IsNullOrEmpty(refreshToken))
             {

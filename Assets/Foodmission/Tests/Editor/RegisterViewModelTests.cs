@@ -360,5 +360,77 @@ namespace eu.foodmission.platform.Tests
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
                 Times.Once);
         }
+
+        [Test]
+        public async Task LoadLegalDocumentsAsync_PopulatesTermsAndPrivacy()
+        {
+            var mockLegalService = new Mock<ILegalService>();
+            mockLegalService.Setup(s => s.GetRequiredDocumentsAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[]
+                {
+                    new LegalDocument
+                    {
+                        docType = LegalDocType.TermsOfService,
+                        key = "TERMS_OF_SERVICE:1.0:es",
+                        content = "# Terms Content"
+                    },
+                    new LegalDocument
+                    {
+                        docType = LegalDocType.PrivacyPolicy,
+                        key = "PRIVACY_POLICY:1.0:es",
+                        content = "# Privacy Content"
+                    }
+                }, (ApiErrorResponse)null));
+
+            var vm = new RegisterViewModel(_mockAuthService.Object, _mockCatalogService.Object, _storeService, mockLegalService.Object);
+            vm.Initialize();
+
+            await vm.LoadLegalDocumentsAsync();
+
+            Assert.AreEqual("# Terms Content", vm.TermsDocumentText);
+            Assert.AreEqual("TERMS_OF_SERVICE:1.0:es", vm.TermsDocumentKey);
+            Assert.AreEqual("# Privacy Content", vm.PrivacyDocumentText);
+            Assert.AreEqual("PRIVACY_POLICY:1.0:es", vm.PrivacyDocumentKey);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Register_WhenSuccess_AcceptsLegalConsents()
+        {
+            var mockLegalService = new Mock<ILegalService>();
+            mockLegalService.Setup(s => s.AcceptConsentAsync(It.IsAny<string>()))
+                .ReturnsAsync((new AcceptLegalConsentResponse { accepted = true }, (ApiErrorResponse)null));
+
+            _mockAuthService
+                .Setup(x => x.RegisterAsync(
+                    "newuser", "new@example.com", "password123", 1995,
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((true, "user-123", null));
+
+            var vm = new RegisterViewModel(_mockAuthService.Object, _mockCatalogService.Object, _storeService, mockLegalService.Object);
+            vm.Initialize();
+
+            vm.Username = "newuser";
+            vm.Email = "new@example.com";
+            vm.Password = "password123";
+            int idx1995 = vm.YearOfBirthOptions.IndexOf("1995");
+            vm.SelectedYearOfBirthIndex = idx1995 >= 0 ? idx1995 : 0;
+            vm.SelectedCountryIndex = 0;
+            vm.SelectedRegionIndex = 0;
+            vm.PostalCode = "08001";
+            vm.HasAcceptedTerms = CheckboxState.Checked;
+            vm.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+            vm.HasAcceptedPilotConsent = CheckboxState.Checked;
+            vm.TermsDocumentKey = "TERMS_OF_SERVICE:1.0:es";
+            vm.PrivacyDocumentKey = "PRIVACY_POLICY:1.0:es";
+
+            vm.Register();
+
+            await Task.Delay(200);
+
+            mockLegalService.Verify(x => x.AcceptConsentAsync("TERMS_OF_SERVICE:1.0:es"), Times.Once);
+            mockLegalService.Verify(x => x.AcceptConsentAsync("PRIVACY_POLICY:1.0:es"), Times.Once);
+            vm.Dispose();
+        }
     }
 }

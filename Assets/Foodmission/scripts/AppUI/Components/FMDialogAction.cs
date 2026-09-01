@@ -1,4 +1,5 @@
 using System;
+using Unity.AppUI.UI;
 
 namespace eu.foodmission.platform.Components
 {
@@ -6,13 +7,13 @@ namespace eu.foodmission.platform.Components
     {
         public string Label;
         public Action Callback;
-        public bool IsPrimary;
+        public ButtonVariant ButtonVariant;
 
-        public FMDialogAction(string label, Action callback, bool isPrimary = false)
+        public FMDialogAction(string label, Action callback, ButtonVariant buttonVariant = ButtonVariant.Default)
         {
             Label = label;
             Callback = callback;
-            IsPrimary = isPrimary;
+            ButtonVariant = buttonVariant;
         }
     }
 }

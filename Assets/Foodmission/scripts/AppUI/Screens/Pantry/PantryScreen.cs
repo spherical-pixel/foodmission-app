@@ -437,7 +437,7 @@ namespace eu.foodmission.platform
                             .SetPosition(PopupNotificationPlacement.Bottom)
                             .Show();
                     }
-                }, isPrimary: true),
+                }, ButtonVariant.Accent),
                 new FMDialogAction(wasteLabel, () =>
                 {
                     FoodWasteRecordOverlay.Show(
@@ -447,7 +447,7 @@ namespace eu.foodmission.platform
                         {
                             await _viewModel.LoadAsync();
                         });
-                }, isPrimary: true),
+                }, ButtonVariant.Accent),
                 new FMDialogAction(deleteLabel, () =>
                 {
                     FMDialog.ShowConfirm(
@@ -464,8 +464,8 @@ namespace eu.foodmission.platform
                                 .Show();
                         },
                         semantic: AlertSemantic.Destructive);
-                }, isPrimary: true),
-                new FMDialogAction(cancelLabel, () => { }, isPrimary: true));
+                }, ButtonVariant.Accent),
+                new FMDialogAction(cancelLabel, () => { }, ButtonVariant.Accent));
         }
 
         private void UpdateLoadingState()

@@ -249,7 +249,7 @@ namespace eu.foodmission.platform
                 null,
                 new FMDialogAction("@UI:TXT_CANCEL", null),
                 new FMDialogAction(createLabel, () => _navController?.Navigate(Actions.go_to_groups_create)),
-                new FMDialogAction(joinLabel, () => _navController?.Navigate(Actions.go_to_groups_join), isPrimary: true));
+                new FMDialogAction(joinLabel, () => _navController?.Navigate(Actions.go_to_groups_join), ButtonVariant.Accent));
         }
     }
 }

@@ -769,11 +769,14 @@ namespace eu.foodmission.platform
         // ── Legal Dialog Helpers ─────────────────────────────────────
         private void ShowTermsDialog()
         {
+            string termsMD = _viewModel != null && !string.IsNullOrEmpty(_viewModel.TermsDocumentText)
+                ? _viewModel.TermsDocumentText
+                : "Missing Terms and Conditions text.";
+
             FMDialog.ShowScrollableMD(
                 this,
                 "@UI:T&C_TITLE",
-                // TODO: Right now we don't have text for T&C it should come from backend at some point
-                "Missing Terms and Conditions text.",
+                termsMD,
                 onAccept: () =>
                 {
                     if (_viewModel != null)
@@ -788,11 +791,14 @@ namespace eu.foodmission.platform
 
         private void ShowPrivacyPolicyDialog()
         {
-            FMDialog.ShowScrollable(
+            string privacyMD = _viewModel != null && !string.IsNullOrEmpty(_viewModel.PrivacyDocumentText)
+                ? _viewModel.PrivacyDocumentText
+                : "Missing Privacy Policy text.";
+
+            FMDialog.ShowScrollableMD(
                 this,
                 "@UI:PRIVACY_POLICY_TITLE",
-                // TODO: Right now we don't have text for Privacy Policy it should come from backend at some point
-                "Missing Privacy Policy text.",
+                privacyMD,
                 onAccept: () =>
                 {
                     if (_viewModel != null)

@@ -194,6 +194,12 @@ namespace eu.foodmission.platform
         {
             App.shuttingDown -= OnShuttingDown;
 
+            var eventService = services?.GetService<IEventService>();
+            if (eventService != null)
+            {
+                _ = eventService.TrackSessionEndAsync();
+            }
+
             // Dispose services and subscriptions
             _scaleSubscription?.Dispose();
             _scaleSubscription = null;

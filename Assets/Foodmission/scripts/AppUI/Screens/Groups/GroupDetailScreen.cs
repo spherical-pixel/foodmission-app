@@ -403,7 +403,7 @@ namespace eu.foodmission.platform
                     {
                         _ = SafeUpdateGroupAsync(name, desc);
                     }
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
         private void OnEditVirtualMemberClicked(GroupMember member)
@@ -429,7 +429,7 @@ namespace eu.foodmission.platform
                     {
                         _ = SafeUpdateVirtualMemberAsync(member.id, name);
                     }
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
         private void OnMakeAdminClicked(GroupMember member)
@@ -531,7 +531,7 @@ namespace eu.foodmission.platform
                     {
                         _ = SafeAddMemberAsync(name);
                     }
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
 
         private async Task SafeUpdateGroupAsync(string name, string description)

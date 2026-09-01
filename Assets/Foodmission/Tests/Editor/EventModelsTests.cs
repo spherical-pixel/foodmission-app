@@ -11,8 +11,13 @@ namespace eu.foodmission.platform.Tests
         {
             Assert.AreEqual("APP_SESSION_OPENED", ClientEventTypes.AppSessionOpened);
             Assert.AreEqual("APP_SESSION_ENDED", ClientEventTypes.AppSessionEnded);
+            Assert.AreEqual("MEAL_MEAT_FREE", ClientEventTypes.MealMeatFree);
+            Assert.AreEqual("FOOD_WASTE_LOGGED", ClientEventTypes.FoodWasteLogged);
+            Assert.AreEqual("SHOPPING_ORIGIN_CHECKED", ClientEventTypes.ShoppingOriginChecked);
             Assert.Contains(ClientEventTypes.AppSessionOpened, ClientEventTypes.All);
             Assert.Contains(ClientEventTypes.AppSessionEnded, ClientEventTypes.All);
+            Assert.Contains(ClientEventTypes.MealMeatFree, ClientEventTypes.All);
+            Assert.Contains(ClientEventTypes.FoodWasteLogged, ClientEventTypes.All);
         }
 
         [Test]

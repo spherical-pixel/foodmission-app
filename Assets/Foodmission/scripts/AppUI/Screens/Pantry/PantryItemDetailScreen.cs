@@ -393,7 +393,7 @@ namespace eu.foodmission.platform
                             .SetPosition(PopupNotificationPlacement.Bottom)
                             .Show();
                     }
-                }, isPrimary: true),
+                }, ButtonVariant.Accent),
                 new FMDialogAction(wasteLabel, () =>
                 {
                     if (_viewModel?.ItemView == null) return;

@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
@@ -81,6 +83,129 @@ namespace eu.foodmission.platform
             CheckWhatsNewAsync();
             //CheckPendingProfileReminder();
             CheckPendingNotificationPrompt();
+            CheckPendingLegalConsentAsync();
+        }
+
+        private async void CheckPendingLegalConsentAsync()
+        {
+            if (_viewModel == null) return;
+            var status = await _viewModel.CheckPendingLegalConsentAsync();
+            if (status != null && status.mustAccept && status.documents != null)
+            {
+                foreach (var doc in status.documents)
+                {
+                    if (!doc.accepted)
+                    {
+                        bool accepted = await ShowPendingLegalConsent(doc);
+
+                        if (!accepted)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private async Task<bool> ShowPendingLegalConsent(PendingLegalConsent pendingLegalConsent)
+        {
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+
+            LegalDocument legalDocument = await _viewModel.GetLegalDocumentAsync(pendingLegalConsent.docType);
+
+            string title = !string.IsNullOrEmpty(legalDocument?.title) ? legalDocument.title : (legalDocument.docType == LegalDocType.TermsOfService ? "@UI:T&C_TITLE" : "@UI:PRIVACY_POLICY_TITLE");
+            string content = legalDocument?.content ?? "";
+
+
+            NutriMessageDialog.Show(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NEW_LEGAL_DOC", new object[] { title }),
+                new FMDialogAction("@UI:MENU_VIEW", () =>
+                {
+                    FMDialog.ShowScrollableMD(
+                        this,
+                        title,
+                        content,
+                        onAccept: async () =>
+                        {
+                            await AcceptPendingLegalConsent(pendingLegalConsent);
+                            taskCompletionSource.TrySetResult(true);
+                        }, onCancel: () =>
+                        {
+                            FMDialog.ShowInfo(this, "@UI:MESSAGE_TITLE_WARNING", LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOT_ACCP_LEGAL_WARNING", new object[] { title }), new FMDialogAction[]
+                                {
+                                    new FMDialogAction("@UI:TXT_REVIEW_DOCUMENT", async () =>
+                                    {
+                                        bool result = await ShowPendingLegalConsent(pendingLegalConsent);
+                                        taskCompletionSource.TrySetResult(result);
+                                    },ButtonVariant.Accent),
+                                    new FMDialogAction("@UI:LOG_OUT", () =>
+                                    {
+                                        Unity.AppUI.MVVM.App.current?.services?.GetService<IStoreService>().store.Dispatch(AppActions.logout.Invoke());
+                                        _navController.Navigate(Actions.go_to_auth);
+                                        taskCompletionSource.TrySetResult(false);
+                                    },ButtonVariant.Accent),
+                                    new FMDialogAction("@UI:DELETE_ACCOUNT", () =>
+                                    {
+                                        DeleteAccount(() =>
+                                        {
+                                            taskCompletionSource.TrySetResult(false);
+                                        }, async () =>
+                                        {
+                                            bool result = await ShowPendingLegalConsent(pendingLegalConsent);
+                                            taskCompletionSource.TrySetResult(result);
+
+                                        });
+
+                                    },ButtonVariant.Destructive)
+                                }
+                            );
+                        }
+                    );
+
+                }, ButtonVariant.Accent)
+            );
+
+            return await taskCompletionSource.Task;
+        }
+
+        private async Task AcceptPendingLegalConsent(PendingLegalConsent pendingLegalConsent)
+        {
+            await _viewModel.AcceptLegalConsentAsync(pendingLegalConsent.documentKey);
+        }
+
+        private void DeleteAccount(Action onDeleted, Action onCanceled)
+        {
+            FMDialog.ShowAlert(
+                    App.current?.rootVisualElement,
+                    "@UI:DELETE_ACCOUNT_TITLE",
+                    "@UI:DELETE_ACCOUNT_MESSAGE",
+                    AlertSemantic.Destructive,
+                    "@UI:TXT_ACCEPT", onOk: async () =>
+                    {
+                        var authService = App.current?.services?.GetService<IAuthService>();
+                        if (authService == null)
+                        {
+                            return;
+                        }
+
+                        var (success, error) = await authService.DeleteAccountAsync();
+                        if (success)
+                        {
+                            onDeleted.Invoke();
+                            var storeService = App.current?.services?.GetService<IStoreService>();
+                            storeService?.store.Dispatch(AppActions.logout.Invoke());
+                            _navController.Navigate(Actions.go_to_auth);
+                        }
+                        else
+                        {
+                            Debug.LogError($"[FoodmissionVisualController] Delete account failed: {error}");
+                            onCanceled.Invoke();
+                        }
+                    },
+                    "@UI:TXT_CANCEL", onKo: () =>
+                    {
+                        onCanceled.Invoke();
+                    }
+                );
         }
 
         private void CheckPendingNotificationPrompt()
@@ -97,11 +222,11 @@ namespace eu.foodmission.platform
                     new FMDialogAction("@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_YES", async () =>
                     {
                         await _viewModel.AcceptNotificationsAsync();
-                    }, isPrimary: true),
+                    }, ButtonVariant.Accent),
                     new FMDialogAction("@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_NO", () =>
                     {
                         _viewModel.DeclineNotifications();
-                    }, isPrimary: false)
+                    }, ButtonVariant.Default)
                 }
             );
         }
@@ -121,8 +246,8 @@ namespace eu.foodmission.platform
                         new FMDialogAction("Completar Perfil", () =>
                         {
                             _viewModel?.NavigateToOnboardingProfile();
-                        }, isPrimary: true),
-                        new FMDialogAction("Más Tarde", () => { }, isPrimary: false)
+                        }, ButtonVariant.Accent),
+                        new FMDialogAction("Más Tarde", () => { }, ButtonVariant.Default)
                     }
                 );
             }
@@ -238,7 +363,7 @@ namespace eu.foodmission.platform
                 contentContainer,
                 LocalizationSettings.StringDatabase.GetLocalizedString("UI", "txtWhatsNew", new object[] { Application.version }),
                 releaseNotes ?? "No release notes available.",
-                new[] { new FMDialogAction("@UI:txtGotIt", MarkWhatsNewSeen, isPrimary: true) });
+                new[] { new FMDialogAction("@UI:txtGotIt", MarkWhatsNewSeen, ButtonVariant.Accent) });
         }
 
         private async void MarkWhatsNewSeen()

@@ -251,7 +251,7 @@ namespace eu.foodmission.platform
 
         private void OnNewListClicked()
         {
-            var nameField = new Unity.AppUI.UI.TextField { placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LIST_NAME_PLACEHOLDER"),value = _searchOrCreateField.TextFieldValue };
+            var nameField = new Unity.AppUI.UI.TextField { placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LIST_NAME_PLACEHOLDER"), value = _searchOrCreateField.TextFieldValue };
 
             FMDialog.ShowCustom(
                 this,
@@ -265,7 +265,7 @@ namespace eu.foodmission.platform
                     {
                         _ = SafeCreateListAsync(name);
                     }
-                }, isPrimary: true));
+                }, ButtonVariant.Accent));
         }
         private async Task SafeDeleteListAsync(string id)
         {
