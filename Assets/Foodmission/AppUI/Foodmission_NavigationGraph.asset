@@ -1167,6 +1167,8 @@ MonoBehaviour:
   - {fileID: -7463324954664816163}
   - {fileID: -7257701155362442244}
   - {fileID: 8647505148312902360}
+  - {fileID: 930171435224601299}
+  - {fileID: 6946922476416249999}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1335,6 +1337,39 @@ MonoBehaviour:
       type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
       data:
         m_ScreenType: eu.foodmission.platform.TestSurveyScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 0
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
+--- !u!114 &930171435224601299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: PilotSurvey
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1302, y: 1922}
+  m_Guid: 9a7e1082643a411ba75150e791244fa7
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: PilotSurvey
+  m_TemplateSettings:
+    rid: 4448174737455317399
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4448174737455317399
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.PilotSurveyScreen, Foodmission, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 0
         m_ShowAppBar: 0
@@ -1986,6 +2021,7 @@ MonoBehaviour:
   - {fileID: 6946922476416249955}
   - {fileID: -7463324954664816163}
   - {fileID: 8647505148312902360}
+  - {fileID: 6946922476416249999}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955
@@ -2003,6 +2039,33 @@ MonoBehaviour:
   m_Position: {x: -153, y: 1367}
   m_Guid: 50350828-79c3-4fb0-8fb4-6d908faf3c56
   m_Destination: {fileID: 930171435224601288}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &6946922476416249999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: open_pilot_survey
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 867, y: 1922}
+  m_Guid: e7b6d194-28a5-47c1-8411-d10294719cba
+  m_Destination: {fileID: 930171435224601299}
   m_Options:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}

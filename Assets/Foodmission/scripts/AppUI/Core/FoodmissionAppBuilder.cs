@@ -58,6 +58,8 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IQuestService, QuestService>();
             builder.services.AddSingleton<IDimensionService, DimensionService>();
             builder.services.AddSingleton<ILegalService, LegalService>();
+            builder.services.AddSingleton<ISurveyService, SurveyService>();
+            builder.services.AddSingleton<IPilotSurveyService, PilotSurveyService>();
             builder.services.AddSingleton<INotificationService, NotificationService>();
             builder.services.AddSingleton<NotificationRoutingService>();
 
@@ -90,6 +92,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<QuickSearchViewModel>();
             builder.services.AddTransient<TestSurveyViewModel>();
             builder.services.AddTransient<OnboardingSurveyViewModel>();
+            builder.services.AddTransient<PilotSurveyViewModel>();
             builder.services.AddTransient<RecipeBookViewModel>();
             builder.services.AddTransient<RecipeDetailViewModel>();
             builder.services.AddTransient<RecipeEditorViewModel>();

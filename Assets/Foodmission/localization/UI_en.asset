@@ -2376,6 +2376,24 @@ MonoBehaviour:
     m_Localized: Review document
     m_Metadata:
       m_Items: []
+  - m_Id: 41275909230026752
+    m_Localized: "Hello!\n\nAs a participant in the pilot, we have a short survey
+      for you. Your answers will help us improve the FOODMISSION platform. \n\nWould
+      you like to complete it now?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Localized: Answer now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276749693050880
+    m_Localized: Later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Localized: I don't want
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

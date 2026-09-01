@@ -2386,6 +2386,24 @@ MonoBehaviour:
     m_Localized: Revisar el documento
     m_Metadata:
       m_Items: []
+  - m_Id: 41276749693050880
+    m_Localized: "M\xE1s tarde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Localized: Responder ahora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Localized: No quiero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41275909230026752
+    m_Localized: "\xA1Hola!\n\nComo participante en el programa piloto, tenemos una
+      breve encuesta para ti. Tus respuestas nos ayudar\xE1n a mejorar la plataforma
+      FOODMISSION. \n\n\xBFTe gustar\xEDa completarla ahora?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

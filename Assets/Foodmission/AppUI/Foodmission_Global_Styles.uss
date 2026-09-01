@@ -856,6 +856,11 @@
 
 .fm-button {
     background-color: var(--appui-accent-100);
+    color: var(--appui-alias-actions-accent-foreground-color-default);
+}
+
+.fm-button .appui-icon  {
+    --unity-image-tint-color: var(--appui-alias-actions-accent-foreground-color-default);
 }
 
 .appui-button--destructive.fm-button {

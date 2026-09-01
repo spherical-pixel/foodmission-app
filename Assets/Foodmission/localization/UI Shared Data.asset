@@ -2319,6 +2319,22 @@ MonoBehaviour:
     m_Key: TXT_REVIEW_DOCUMENT
     m_Metadata:
       m_Items: []
+  - m_Id: 41275909230026752
+    m_Key: NEW_SURVEY_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Key: NEW_SURVEY_ANSWER_NOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276749693050880
+    m_Key: NEW_SURVEY_LATER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Key: NEW_SURVEY_DECLINE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

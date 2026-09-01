@@ -63,6 +63,8 @@ namespace eu.foodmission.platform
                 .AddCase(AppActions.setSkippedExtendedProfile, AppReducers.SetSkippedExtendedProfileReducer)
                 .AddCase(AppActions.setOnboardingSurvey, AppReducers.SetOnboardingSurveyReducer)
                 .AddCase(AppActions.setAvatar, AppReducers.SetAvatarReducer)
+                .AddCase(AppActions.setPilotCycleState, AppReducers.SetPilotCycleStateReducer)
+                .AddCase(AppActions.setPilotConsent, AppReducers.SetPilotConsentReducer)
                 // Profile sync
                 .AddCase(AppActions.profileSynced, AppReducers.ProfileSyncedReducer)
                 // Food Info

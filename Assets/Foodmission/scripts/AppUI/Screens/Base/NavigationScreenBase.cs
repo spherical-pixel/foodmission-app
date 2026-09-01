@@ -307,7 +307,14 @@ namespace eu.foodmission.platform
         {
             if (_navController != null)
             {
-                _navController.Navigate(navigationAction, args ?? System.Array.Empty<Argument>());
+                if (navigationAction == "popBackStack" || navigationAction == "pop" || navigationAction == "back")
+                {
+                    _navController.PopBackStack();
+                }
+                else
+                {
+                    _navController.Navigate(navigationAction, args ?? System.Array.Empty<Argument>());
+                }
             }
             else
             {

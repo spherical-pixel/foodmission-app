@@ -477,7 +477,9 @@ namespace eu.foodmission.platform
                 dailyTimeCommitmentMinutes: profile.preferences?.dailyTimeCommitmentMinutes ?? 0,
                 segment: !string.IsNullOrEmpty(profile.segment) ? profile.segment : (profile.preferences?.segment ?? ""),
                 onboardingProfileCompleted: profile.preferences?.onboardingProfileCompleted ?? false,
-                onboardingProfileSkippedAt: profile.preferences?.onboardingProfileSkippedAt
+                onboardingProfileSkippedAt: profile.preferences?.onboardingProfileSkippedAt,
+                pilotSurveyCycleState: profile.preferences?.pilotSurveyCycleState,
+                pilotConsentAccepted: profile.preferences?.pilotConsentAccepted ?? false
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
         }

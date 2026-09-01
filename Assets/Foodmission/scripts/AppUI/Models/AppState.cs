@@ -141,6 +141,8 @@ namespace eu.foodmission.platform
         public string userMotivation = "";
         public int userDailyTimeCommitmentMinutes = 0;
         public string userSegment = "";
+        public PilotSurveyCycleState pilotSurveyCycleState;
+        public bool pilotConsentAccepted = false;
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -208,6 +210,8 @@ namespace eu.foodmission.platform
                 userMotivation = this.userMotivation,
                 userDailyTimeCommitmentMinutes = this.userDailyTimeCommitmentMinutes,
                 userSegment = this.userSegment,
+                pilotSurveyCycleState = this.pilotSurveyCycleState?.Copy(),
+                pilotConsentAccepted = this.pilotConsentAccepted,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
                 foodInfoAddRequest = this.foodInfoAddRequest

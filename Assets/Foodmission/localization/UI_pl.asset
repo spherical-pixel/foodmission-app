@@ -2416,6 +2416,24 @@ MonoBehaviour:
     m_Localized: "Dokument do przegl\u0105du"
     m_Metadata:
       m_Items: []
+  - m_Id: 41275909230026752
+    m_Localized: "Witaj!\n\nJako uczestnik programu pilota\u017Cowego mamy dla Ciebie
+      kr\xF3tk\u0105 ankiet\u0119. Twoje odpowiedzi pomog\u0105 nam ulepszy\u0107
+      platform\u0119 FOODMISSION. \n\nCzy chcesz j\u0105 wype\u0142ni\u0107 teraz?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Localized: Odpowiedz teraz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276749693050880
+    m_Localized: "P\xF3\u017Aniej"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Localized: "Nie chc\u0119"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

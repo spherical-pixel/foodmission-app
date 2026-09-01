@@ -713,3 +713,43 @@ Vzemite si trenutek časa in še enkrat preglejte nov dokument {0} ter nas brez 
 
 Por favor, dedica un momento a revisar de nuevo el nuevo documento de {0} y no dudes en ponerte en contacto con nosotros si crees que hay algún error en él."
 TXT_REVIEW_DOCUMENT,41170053394063360,Review document,Document beoordelen,Dokument prüfen,Έγγραφο αναθεώρησης,Documento di revisione,Gjennomgangsdokument,Dokument do przeglądu,Pregled dokumenta,Revisar el documento
+NEW_SURVEY_MESSAGE,41275909230026752,"Hello!
+
+As a participant in the pilot, we have a short survey for you. Your answers will help us improve the FOODMISSION platform. 
+
+Would you like to complete it now?","Hallo!
+
+Als deelnemer aan het proefproject hebben we een korte enquête voor je. Je antwoorden helpen ons het FOODMISSION-platform te verbeteren. 
+
+Wil je de enquête nu invullen?","Hallo!
+
+Als Teilnehmer am Pilotprojekt haben wir eine kurze Umfrage für dich. Deine Antworten helfen uns dabei, die FOODMISSION-Plattform zu verbessern. 
+
+Möchtest du die Umfrage jetzt ausfüllen?","Γεια σας!
+
+Ως συμμετέχων στο πιλοτικό πρόγραμμα, έχουμε μια σύντομη έρευνα για εσάς. Οι απαντήσεις σας θα μας βοηθήσουν να βελτιώσουμε την πλατφόρμα FOODMISSION. 
+
+Θα θέλατε να τη συμπληρώσετε τώρα;","Ciao!
+
+In qualità di partecipante al progetto pilota, vorremmo sottoporti un breve sondaggio. Le tue risposte ci aiuteranno a migliorare la piattaforma FOODMISSION. 
+
+Ti va di compilarlo adesso?","Hei!
+
+Som deltaker i pilotprosjektet har vi en kort spørreundersøkelse til deg. Svarene dine vil hjelpe oss med å forbedre FOODMISSION-plattformen. 
+
+Vil du svare på den nå?","Witaj!
+
+Jako uczestnik programu pilotażowego mamy dla Ciebie krótką ankietę. Twoje odpowiedzi pomogą nam ulepszyć platformę FOODMISSION. 
+
+Czy chcesz ją wypełnić teraz?","Pozdravljeni!
+
+Kot udeleženec pilotnega projekta smo za vas pripravili kratek vprašalnik. Vaši odgovori nam bodo pomagali izboljšati platformo FOODMISSION. 
+
+Ali bi ga želeli izpolniti zdaj?","¡Hola!
+
+Como participante en el programa piloto, tenemos una breve encuesta para ti. Tus respuestas nos ayudarán a mejorar la plataforma FOODMISSION. 
+
+¿Te gustaría completarla ahora?"
+NEW_SURVEY_ANSWER_NOW,41276238197678080,Answer now,Beantwoord nu,Jetzt antworten,Απαντήστε τώρα,Rispondi subito,Svar nå,Odpowiedz teraz,Odgovori zdaj,Responder ahora
+NEW_SURVEY_LATER,41276749693050880,Later,Later,Später,Αργότερα,Più tardi,Senere,Później,Kasneje,Más tarde
+NEW_SURVEY_DECLINE,41277120381444096,I don't want,Ik wil niet,Ich will nicht,Δεν θέλω,Non voglio,Jeg vil ikke,Nie chcę,Ne želim,No quiero

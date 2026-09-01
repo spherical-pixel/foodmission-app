@@ -2391,6 +2391,24 @@ MonoBehaviour:
     m_Localized: Documento di revisione
     m_Metadata:
       m_Items: []
+  - m_Id: 41275909230026752
+    m_Localized: "Ciao!\n\nIn qualit\xE0 di partecipante al progetto pilota, vorremmo
+      sottoporti un breve sondaggio. Le tue risposte ci aiuteranno a migliorare la
+      piattaforma FOODMISSION. \n\nTi va di compilarlo adesso?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Localized: Rispondi subito
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276749693050880
+    m_Localized: "Pi\xF9 tardi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Localized: Non voglio
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

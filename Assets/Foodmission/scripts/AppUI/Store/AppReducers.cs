@@ -96,6 +96,8 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator setSkippedExtendedProfile = "app/setSkippedExtendedProfile";
         public static readonly ActionCreator<OnboardingSurveyData> setOnboardingSurvey = "app/setOnboardingSurvey";
         public static readonly ActionCreator<AvatarPayload> setAvatar = "app/setAvatar";
+        public static readonly ActionCreator<PilotSurveyCycleState> setPilotCycleState = "app/setPilotCycleState";
+        public static readonly ActionCreator<bool> setPilotConsent = "app/setPilotConsent";
 
         // Profile sync
         public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
@@ -140,6 +142,8 @@ namespace eu.foodmission.platform
             public readonly string segment;
             public readonly bool onboardingProfileCompleted;
             public readonly string onboardingProfileSkippedAt;
+            public readonly PilotSurveyCycleState pilotSurveyCycleState;
+            public readonly bool pilotConsentAccepted;
 
             public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
@@ -157,7 +161,9 @@ namespace eu.foodmission.platform
                 int dailyTimeCommitmentMinutes = 0,
                 string segment = "",
                 bool onboardingProfileCompleted = false,
-                string onboardingProfileSkippedAt = null)
+                string onboardingProfileSkippedAt = null,
+                PilotSurveyCycleState pilotSurveyCycleState = null,
+                bool pilotConsentAccepted = false)
             {
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
@@ -181,6 +187,8 @@ namespace eu.foodmission.platform
                 this.segment = segment;
                 this.onboardingProfileCompleted = onboardingProfileCompleted;
                 this.onboardingProfileSkippedAt = onboardingProfileSkippedAt;
+                this.pilotSurveyCycleState = pilotSurveyCycleState;
+                this.pilotConsentAccepted = pilotConsentAccepted;
             }
         }
     }
@@ -503,6 +511,16 @@ namespace eu.foodmission.platform
                 }
             }
 
+            if (action.payload.pilotSurveyCycleState != null)
+            {
+                newState.pilotSurveyCycleState = action.payload.pilotSurveyCycleState.Copy();
+            }
+
+            if (action.payload.pilotConsentAccepted)
+            {
+                newState.pilotConsentAccepted = true;
+            }
+
             return newState;
         }
 
@@ -511,6 +529,20 @@ namespace eu.foodmission.platform
             var newState = state.Copy();
             newState.userAvatarConfig = action.payload.avatarConfig?.Copy();
             newState.userHasAvatar = action.payload.hasAvatar;
+            return newState;
+        }
+
+        public static AppState SetPilotCycleStateReducer(AppState state, IAction<PilotSurveyCycleState> action)
+        {
+            var newState = state.Copy();
+            newState.pilotSurveyCycleState = action.payload?.Copy();
+            return newState;
+        }
+
+        public static AppState SetPilotConsentReducer(AppState state, IAction<bool> action)
+        {
+            var newState = state.Copy();
+            newState.pilotConsentAccepted = action.payload;
             return newState;
         }
 

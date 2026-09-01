@@ -2382,6 +2382,25 @@ MonoBehaviour:
     m_Localized: Pregled dokumenta
     m_Metadata:
       m_Items: []
+  - m_Id: 41275909230026752
+    m_Localized: "Pozdravljeni!\n\nKot udele\u017Eenec pilotnega projekta smo za
+      vas pripravili kratek vpra\u0161alnik. Va\u0161i odgovori nam bodo pomagali
+      izbolj\u0161ati platformo FOODMISSION. \n\nAli bi ga \u017Eeleli izpolniti
+      zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Localized: Odgovori zdaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276749693050880
+    m_Localized: Kasneje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Localized: "Ne \u017Eelim"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

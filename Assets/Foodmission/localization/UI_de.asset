@@ -2398,6 +2398,24 @@ MonoBehaviour:
     m_Localized: "Dokument pr\xFCfen"
     m_Metadata:
       m_Items: []
+  - m_Id: 41275909230026752
+    m_Localized: "Hallo!\n\nAls Teilnehmer am Pilotprojekt haben wir eine kurze Umfrage
+      f\xFCr dich. Deine Antworten helfen uns dabei, die FOODMISSION-Plattform zu
+      verbessern. \n\nM\xF6chtest du die Umfrage jetzt ausf\xFCllen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Localized: Jetzt antworten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276749693050880
+    m_Localized: "Sp\xE4ter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Localized: Ich will nicht
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

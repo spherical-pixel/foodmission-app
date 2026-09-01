@@ -1,5 +1,5 @@
 // This file is auto-generated. Do not edit it directly.
-// Date: 2026-08-21 09:35:33
+// Date: 2026-09-01 11:01:16
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,6 +42,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string recipe_detail_to_editor = "recipe_detail_to_editor";
         public const string open_quiz = "open_quiz";
         public const string go_to_quizzes = "go_to_quizzes";
+        public const string open_pilot_survey = "open_pilot_survey";
     }
     public static partial class Destinations
     {
@@ -77,6 +78,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string recipeseditor = "RecipesEditor";
         public const string quiz = "Quiz";
         public const string quizzes = "Quizzes";
+        public const string pilotsurvey = "PilotSurvey";
     }
     public static partial class Graphs
     {

@@ -234,5 +234,7 @@ namespace eu.foodmission.platform
         public bool onboardingProfileCompleted;
         public string onboardingProfileSkippedAt;
         public string segment;
+        public PilotSurveyCycleState pilotSurveyCycleState;
+        public bool pilotConsentAccepted;
     }
 }

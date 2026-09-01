@@ -74,5 +74,30 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(success);
         }
+
+        [Test]
+        public async Task GetPilotConsentFormAsync_LoadsFromCatalogService()
+        {
+            var mockCatalog = new Mock<ICatalogService>();
+            var mockPilot = new Mock<IPilotSurveyService>();
+
+            mockCatalog.Setup(c => c.GetConsentFormAsync("de", It.IsAny<string>()))
+                .ReturnsAsync((new ConsentFormData { countryCode = "de", content = "# Pilot Consent MD" }, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userCountry = "de", lang = "de" });
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                _mockNotificationService.Object,
+                _mockLegalService.Object,
+                mockPilot.Object,
+                mockCatalog.Object
+            );
+
+            var (content, error) = await vm.GetPilotConsentFormAsync();
+            Assert.IsNull(error);
+            Assert.AreEqual("# Pilot Consent MD", content);
+        }
     }
 }

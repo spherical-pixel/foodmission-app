@@ -81,9 +81,12 @@ namespace eu.foodmission.platform
             SetupSteppers();
 
             CheckWhatsNewAsync();
-            //CheckPendingProfileReminder();
+            CheckPendingProfileReminder();
             CheckPendingNotificationPrompt();
             CheckPendingLegalConsentAsync();
+            CheckPendingPilotConsentAsync();
+            CheckPendingPilotSurveyAsync();
+            //SetupPilotDebugPanel();
         }
 
         private async void CheckPendingLegalConsentAsync()
@@ -229,6 +232,268 @@ namespace eu.foodmission.platform
                     }, ButtonVariant.Default)
                 }
             );
+        }
+
+        private async void CheckPendingPilotConsentAsync()
+        {
+            if (_viewModel == null) return;
+            if (!_viewModel.IsUserInPilotCountry()) return;
+
+            bool hasConsent = await _viewModel.HasAcceptedPilotConsentAsync();
+            if (hasConsent) return;
+
+            var (content, error) = await _viewModel.GetPilotConsentFormAsync();
+            if (string.IsNullOrEmpty(content)) return;
+
+
+
+            FMDialog.ShowScrollableMD(
+                this,
+                "@UI:PILOT_CONSENT_TITLE",
+                content,
+                onAccept: async () =>
+                {
+                    await _viewModel.AcceptPilotConsentAsync();
+                    CheckPendingPilotSurveyAsync();
+                },
+                onCancel: () =>
+                {
+                    FMDialog.ShowInfo(
+                        this,
+                        "@UI:MESSAGE_TITLE_WARNING",
+                        "@UI:NOT_ACCP_LEGAL_WARNING",
+                        new FMDialogAction[]
+                        {
+                            new FMDialogAction("@UI:TXT_REVIEW_DOCUMENT", () =>
+                            {
+                                CheckPendingPilotConsentAsync();
+                            }, ButtonVariant.Accent),
+                            new FMDialogAction("@UI:TXT_CANCEL", () => { }, ButtonVariant.Default)
+                        }
+                    );
+                }
+            );
+
+
+        }
+
+        private async void CheckPendingPilotSurveyAsync()
+        {
+            if (_viewModel == null) return;
+
+            var survey = await _viewModel.CheckPendingPilotSurveyAsync();
+            if (survey != null)
+            {
+
+
+                NutriMessageDialog.Show(
+                    message: "@UI:NEW_SURVEY_MESSAGE",
+                    actions: new[]
+                    {
+                        new FMDialogAction("@UI:NEW_SURVEY_ANSWER_NOW", () =>
+                        {
+                            _viewModel.NavigateToPilotSurvey(survey.slug ?? survey.id);
+                        }, ButtonVariant.Accent),
+                        new FMDialogAction("@UI:NEW_SURVEY_LATER", () =>
+                        {
+                            _viewModel.PostponePilotSurvey(survey.slug);
+                        }, ButtonVariant.Default),
+                        new FMDialogAction("@UI:NEW_SURVEY_DECLINE", () =>
+                        {
+                            _viewModel.SkipPilotSurvey(survey.slug);
+                        }, ButtonVariant.Default)
+                    }
+                );
+            }
+
+        }
+
+        private async void SetupPilotDebugPanel()
+        {
+            var root = contentContainer.Q<VisualElement>("root") ?? contentContainer;
+            if (root == null || _viewModel == null) return;
+
+            // Remove existing debug card if re-entering
+            var existing = root.Q<VisualElement>("pilot-debug-panel");
+            if (existing != null)
+            {
+                root.Remove(existing);
+            }
+
+            var debugCard = new ExVisualElement();
+            debugCard.name = "pilot-debug-panel";
+            debugCard.AddToClassList("box-background");
+            debugCard.AddToClassList("fm-shadow-wrapper");
+            debugCard.style.marginTop = 20;
+            debugCard.style.marginBottom = 30;
+            debugCard.style.marginLeft = 16;
+            debugCard.style.marginRight = 16;
+            debugCard.style.paddingTop = 16;
+            debugCard.style.paddingBottom = 16;
+            debugCard.style.paddingLeft = 16;
+            debugCard.style.paddingRight = 16;
+            debugCard.style.flexDirection = FlexDirection.Column;
+            debugCard.style.borderTopWidth = 2;
+            debugCard.style.borderBottomWidth = 2;
+            debugCard.style.borderLeftWidth = 2;
+            debugCard.style.borderRightWidth = 2;
+            debugCard.style.borderTopColor = new StyleColor(new Color(0.15f, 0.65f, 0.85f, 0.9f));
+            debugCard.style.borderBottomColor = new StyleColor(new Color(0.15f, 0.65f, 0.85f, 0.9f));
+            debugCard.style.borderLeftColor = new StyleColor(new Color(0.15f, 0.65f, 0.85f, 0.9f));
+            debugCard.style.borderRightColor = new StyleColor(new Color(0.15f, 0.65f, 0.85f, 0.9f));
+            debugCard.style.borderTopLeftRadius = 12;
+            debugCard.style.borderTopRightRadius = 12;
+            debugCard.style.borderBottomLeftRadius = 12;
+            debugCard.style.borderBottomRightRadius = 12;
+
+            var title = new Unity.AppUI.UI.Text
+            {
+                text = "🧪 Panel de Pruebas: Encuestas del Piloto",
+                size = TextSize.M
+            };
+            title.style.unityFontStyleAndWeight = FontStyle.Bold;
+            title.style.marginBottom = 6;
+            debugCard.Add(title);
+
+            var state = _viewModel.GetPilotCycleState();
+            int currentDays = _viewModel.GetPilotActiveDays();
+            int currentDaysSinceStart = _viewModel.GetPilotDaysSinceStart();
+            int currentCycle = state?.currentCycle ?? 1;
+            string country = _viewModel.GetCurrentUserCountry();
+            bool isPilot = _viewModel.IsUserInPilotCountry();
+            bool hasConsent = await _viewModel.HasAcceptedPilotConsentAsync();
+
+            var statusLabel = new Unity.AppUI.UI.Text();
+            statusLabel.size = TextSize.S;
+            statusLabel.style.whiteSpace = WhiteSpace.Normal;
+            statusLabel.style.marginBottom = 10;
+
+            Action refreshStatus = () =>
+            {
+                var s = _viewModel.GetPilotCycleState();
+                string c = _viewModel.GetCurrentUserCountry();
+                bool ip = _viewModel.IsUserInPilotCountry();
+                bool bypass = _viewModel.DebugBypassEligibility;
+                statusLabel.text = $"Ciclo: {s?.currentCycle ?? 1} | Días activos: {s?.activeDatesInCycle.Count ?? 0} | Días transcurridos: {_viewModel.GetPilotDaysSinceStart()}\n" +
+                                   $"País: '{c}' (Piloto: {ip}) | Bypass Elegibilidad: {(bypass ? "SÍ" : "NO")}\n" +
+                                   $"Completadas: [{(s?.completedSlugsInCycle != null && s.completedSlugsInCycle.Count > 0 ? string.Join(", ", s.completedSlugsInCycle) : "Ninguna")}]";
+            };
+
+            refreshStatus();
+            debugCard.Add(statusLabel);
+
+            // Row 1: Helpers for Country and Consent
+            var helpersRow = new VisualElement();
+            helpersRow.style.flexDirection = FlexDirection.Row;
+            helpersRow.style.justifyContent = Justify.SpaceBetween;
+            helpersRow.style.marginBottom = 10;
+
+            var btnBypass = new FMButton
+            {
+                title = _viewModel.DebugBypassEligibility ? "Bypass: ACTIVO" : "Activar Bypass",
+                size = Size.S,
+                variant = _viewModel.DebugBypassEligibility ? ButtonVariant.Accent : ButtonVariant.Default
+            };
+            btnBypass.clicked += () =>
+            {
+                _viewModel.DebugBypassEligibility = !_viewModel.DebugBypassEligibility;
+                btnBypass.title = _viewModel.DebugBypassEligibility ? "Bypass: ACTIVO" : "Activar Bypass";
+                btnBypass.variant = _viewModel.DebugBypassEligibility ? ButtonVariant.Accent : ButtonVariant.Default;
+                refreshStatus();
+            };
+            helpersRow.Add(btnBypass);
+
+            var btnSimulateDE = new FMButton
+            {
+                title = "Fijar País 'DE' + Consent.",
+                size = Size.S,
+                variant = ButtonVariant.Default
+            };
+            btnSimulateDE.clicked += async () =>
+            {
+                _viewModel.SetDebugUserCountry("de");
+                await _viewModel.AcceptPilotConsentAsync();
+                refreshStatus();
+            };
+            helpersRow.Add(btnSimulateDE);
+            debugCard.Add(helpersRow);
+
+            // Row 2 for changing days
+            var stepperRow = new VisualElement();
+            stepperRow.style.flexDirection = FlexDirection.Row;
+            stepperRow.style.alignItems = Align.Center;
+            stepperRow.style.marginBottom = 12;
+
+            var stepperLabel = new Unity.AppUI.UI.Text { text = "Simular Día: ", size = TextSize.S };
+            stepperLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+            stepperRow.Add(stepperLabel);
+
+            var choices = new string[]
+            {
+                "Día 1 (sin encuesta)",
+                "Día 2 (second-use)",
+                "Día 3 (third-use)",
+                "Día 4 (fourth-use)",
+                "Día 5 (fifth-use)",
+                "Día 6 (sixth-use)",
+                "Día 7 (seventh)",
+                "Día 8 + 30d (after-1-mt...)",
+                "Día 9 + 30d (after-1-m...)",
+                "Día 10 + 30d (after-1-m...)",
+                "Día 11 + 30d (end)"
+            };
+
+            int selectedIndex = Math.Clamp(currentDays - 1, 0, choices.Length - 1);
+
+            var dayStepper = new FMArrowStepper
+            {
+                Choices = choices,
+                SelectedIndex = selectedIndex
+            };
+            dayStepper.style.flexGrow = 1;
+            dayStepper.valueChanged += (sender, evt) =>
+            {
+                int dayIndex = evt.newValue;
+                int activeDays = dayIndex + 1;
+                int daysSinceStart = (dayIndex >= 7) ? 35 : activeDays;
+                _viewModel.SetPilotDebugDays(activeDays, daysSinceStart);
+                refreshStatus();
+            };
+            stepperRow.Add(dayStepper);
+            debugCard.Add(stepperRow);
+
+            // Row 3: Action Buttons
+            var btnRow = new VisualElement();
+            btnRow.style.flexDirection = FlexDirection.Row;
+            btnRow.style.justifyContent = Justify.SpaceBetween;
+
+            var btnCheck = new FMButton
+            {
+                title = "Evaluar Encuesta",
+                size = Size.S,
+                variant = ButtonVariant.Accent
+            };
+            btnCheck.clicked += () =>
+            {
+                CheckPendingPilotSurveyAsync();
+            };
+            btnRow.Add(btnCheck);
+
+            var btnResetSurveys = new FMButton
+            {
+                title = "Reset Encuestas Ciclo",
+                size = Size.S,
+                variant = ButtonVariant.Default
+            };
+            btnResetSurveys.clicked += () =>
+            {
+                _viewModel.ResetPilotCycleSurveys();
+                refreshStatus();
+            };
+            btnRow.Add(btnResetSurveys);
+
+            debugCard.Add(btnRow);
+            root.Add(debugCard);
         }
 
         private void CheckPendingProfileReminder()

@@ -153,12 +153,19 @@ namespace eu.foodmission.platform
         public event System.Action<string> ShowErrorRequest;
 
         private bool _registrationCompleted = false;
+        private readonly IPilotSurveyService _pilotSurveyService;
 
-        public RegisterViewModel(IAuthService authService, ICatalogService catalogService, IStoreService storeService, ILegalService legalService = null) : base(storeService)
+        public RegisterViewModel(
+            IAuthService authService,
+            ICatalogService catalogService,
+            IStoreService storeService,
+            ILegalService legalService = null,
+            IPilotSurveyService pilotSurveyService = null) : base(storeService)
         {
             _authService = authService;
             _catalogService = catalogService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
+            _pilotSurveyService = pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
 
             PropertyChanged += (sender, args) =>
             {
@@ -408,6 +415,16 @@ namespace eu.foodmission.platform
                             {
                                 await _legalService.AcceptConsentAsync(PrivacyDocumentKey);
                             }
+                        }
+                    }
+
+                    // Record acceptance of pilot consent if applicable
+                    if (IsPilotCountry && HasAcceptedPilotConsent == CheckboxState.Checked)
+                    {
+                        var pilotService = _pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
+                        if (pilotService != null)
+                        {
+                            await pilotService.AcceptPilotConsentAsync();
                         }
                     }
 

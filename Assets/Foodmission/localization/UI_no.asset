@@ -2382,6 +2382,24 @@ MonoBehaviour:
     m_Localized: Gjennomgangsdokument
     m_Metadata:
       m_Items: []
+  - m_Id: 41275909230026752
+    m_Localized: "Hei!\n\nSom deltaker i pilotprosjektet har vi en kort sp\xF8rreunders\xF8kelse
+      til deg. Svarene dine vil hjelpe oss med \xE5 forbedre FOODMISSION-plattformen.
+      \n\nVil du svare p\xE5 den n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276238197678080
+    m_Localized: "Svar n\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41276749693050880
+    m_Localized: Senere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41277120381444096
+    m_Localized: Jeg vil ikke
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

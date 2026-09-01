@@ -104,5 +104,32 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("08001", copy.userZip);
             Assert.AreEqual("MEDIUM", copy.userAnnualIncome);
         }
+
+        [Test]
+        public void Copy_PreservesPilotSurveyCycleStateAndConsent()
+        {
+            var state = new AppState
+            {
+                pilotConsentAccepted = true,
+                pilotSurveyCycleState = new PilotSurveyCycleState
+                {
+                    currentCycle = 2,
+                    cycleStartDate = "2026-08-01",
+                    activeDatesInCycle = new System.Collections.Generic.List<string> { "2026-08-01", "2026-08-02" },
+                    completedSlugsInCycle = new System.Collections.Generic.List<string> { "second-use" }
+                }
+            };
+
+            var copy = state.Copy();
+            Assert.IsTrue(copy.pilotConsentAccepted);
+            Assert.IsNotNull(copy.pilotSurveyCycleState);
+            Assert.AreEqual(2, copy.pilotSurveyCycleState.currentCycle);
+            Assert.AreEqual(2, copy.pilotSurveyCycleState.activeDatesInCycle.Count);
+            Assert.AreEqual("second-use", copy.pilotSurveyCycleState.completedSlugsInCycle[0]);
+
+            // Independent instance
+            copy.pilotSurveyCycleState.currentCycle = 3;
+            Assert.AreEqual(2, state.pilotSurveyCycleState.currentCycle);
+        }
     }
 }
