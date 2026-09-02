@@ -46,6 +46,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string open_food_fact = "open_food_fact";
         public const string go_to_food_facts = "go_to_food_facts";
         public const string go_to_knowledge = "go_to_knowledge";
+        public const string go_to_challenges = "go_to_challenges";
     }
     public static partial class Destinations
     {
@@ -85,6 +86,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string foodfacts = "FoodFacts";
         public const string foodfact = "FoodFact";
         public const string knowledge = "Knowledge";
+        public const string challenges = "Challenges";
     }
     public static partial class Graphs
     {

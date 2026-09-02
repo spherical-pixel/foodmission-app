@@ -2443,6 +2443,10 @@ MonoBehaviour:
     m_Localized: "Czy wiesz, \u017Ce...?"
     m_Metadata:
       m_Items: []
+  - m_Id: 41655488905994240
+    m_Localized: "Nie znaleziono wyzwa\u0144 spe\u0142niaj\u0105cych wybrane kryteria."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

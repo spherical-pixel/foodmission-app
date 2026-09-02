@@ -2413,6 +2413,10 @@ MonoBehaviour:
     m_Localized: "\xBFSab\xEDas que...?"
     m_Metadata:
       m_Items: []
+  - m_Id: 41655488905994240
+    m_Localized: No se han encontrado retos que coincidan con los filtros seleccionados.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

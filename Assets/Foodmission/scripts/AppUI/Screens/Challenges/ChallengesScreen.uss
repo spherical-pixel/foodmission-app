@@ -1,0 +1,111 @@
+.fm-challenges-root {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-challenges-header-section {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.fm-challenges-filters-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.fm-challenges-action-group {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.fm-challenges-empty {
+    margin-top: 32px;
+    -unity-text-align: middle-center;
+    color: var(--appui-foreground-muted, rgb(107, 114, 128));
+    display: none;
+}
+
+.fm-challenges-scroll {
+    flex-grow: 1;
+}
+
+.fm-challenges-groups-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 24px;
+}
+
+/* =========================================================================
+   CHALLENGE ITEM LAYOUT & DISTRIBUTION
+   ========================================================================= */
+
+.fm-challenge-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 12px;
+}
+
+.fm-challenge-item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 100%;
+}
+
+.fm-challenge-item-title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: normal;
+    margin-right: 14px;
+}
+
+.fm-challenge-item-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.fm-challenge-item-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fm-challenge-item-badges .fm-quiz-level-badge {
+    margin-right: 0;
+    margin-bottom: 4px;
+    align-self: flex-end;
+}
+
+.fm-challenge-item-badges .fm-quiz-status-badge {
+    margin-right: 0;
+    align-self: flex-end;
+}
+
+.fm-challenge-item-badges .fm-quiz-level-badge-text,
+.fm-challenge-item-badges .fm-quiz-status-badge-text {
+    white-space: nowrap;
+}
+
+.fm-challenge-item-arrow {
+    flex-shrink: 0;
+    align-self: center;
+    margin-left: 12px;
+}

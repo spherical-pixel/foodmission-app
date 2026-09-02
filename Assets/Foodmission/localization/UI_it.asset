@@ -2418,6 +2418,10 @@ MonoBehaviour:
     m_Localized: Lo sapevi che...?
     m_Metadata:
       m_Items: []
+  - m_Id: 41655488905994240
+    m_Localized: Non sono state trovate sfide che corrispondano ai filtri selezionati.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -2410,6 +2410,10 @@ MonoBehaviour:
     m_Localized: Ali ste vedeli...?
     m_Metadata:
       m_Items: []
+  - m_Id: 41655488905994240
+    m_Localized: Ni bilo najdenih izzivov, ki bi ustrezali izbranim filtrom.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

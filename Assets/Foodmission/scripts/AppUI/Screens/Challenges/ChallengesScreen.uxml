@@ -1,0 +1,75 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:eu="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Quizzes/QuizzesScreen.uss?fileID=7433441132597879392&amp;guid=109516a41d4334001b40e7c8a262dbc4&amp;type=3#QuizzesScreen"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Challenges/ChallengesScreen.uss?fileID=7433441132597879392&amp;guid=b3089f85b305c48f7808326bcbe7f956&amp;type=3#ChallengesScreen"/>
+    <ui:VisualElement name="root" class="fm-root fm-challenges-root">
+        <ui:VisualElement name="header-section" class="fm-challenges-header-section">
+            <ui:VisualElement name="filters-container" class="fm-challenges-filters-container">
+                <ui:VisualElement name="row-levels" style="flex-grow: 1; flex-direction: row;">
+                    <appui:Text text="Nivel_" size="XXXL" style="margin-right: 20px;">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37196650563756032)"/>
+                        </Bindings>
+                    </appui:Text>
+                    <appui:ActionGroup name="group-level-filters" selection-type="Single" allow-no-selection="false" compact="true" size="S" direction="Horizontal" justified="true" quiet="true" class="fm-challenges-action-group">
+                        <appui:ActionButton name="btn-level-all" label="All" selected="true" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187301837627392)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                        <appui:ActionButton name="btn-level-beginner" label="Beginner" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187373195321344)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                        <appui:ActionButton name="btn-level-intermediate" label="Intermediate" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187414811205632)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                        <appui:ActionButton name="btn-level-advanced" label="Advanced" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187437674356736)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                    </appui:ActionGroup>
+                </ui:VisualElement>
+                <ui:VisualElement name="row-status" style="flex-grow: 1; flex-direction: row;">
+                    <appui:Text text="Status_" size="XXXL" name="Text" style="margin-right: 20px;">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37196726493241344)"/>
+                        </Bindings>
+                    </appui:Text>
+                    <appui:ActionGroup name="group-status-filters" selection-type="Single" allow-no-selection="false" compact="true" size="S" direction="Horizontal" justified="true" class="fm-challenges-action-group">
+                        <appui:ActionButton name="btn-status-all" label="All Status" selected="true" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187477251809280)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                        <appui:ActionButton name="btn-status-pending" label="Pending" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187522730647552)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                        <appui:ActionButton name="btn-status-completed" label="Completed" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187606511869952)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                    </appui:ActionGroup>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;">
+            <appui:Text name="empty-state" text="No challenges found matching the selected filters." class="fm-challenges-empty" style="display: none;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41655488905994240)"/>
+                </Bindings>
+            </appui:Text>
+            <ui:ScrollView name="scroll-view" mode="Vertical" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fm-challenges-scroll">
+                <ui:VisualElement name="groups-container" class="fm-challenges-groups-container"/>
+            </ui:ScrollView>
+            <ui:VisualElement class="fm-bottom-nav-padding"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

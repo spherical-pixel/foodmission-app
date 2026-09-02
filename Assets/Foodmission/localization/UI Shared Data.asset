@@ -2343,6 +2343,10 @@ MonoBehaviour:
     m_Key: NAV_FOOD_FACTS
     m_Metadata:
       m_Items: []
+  - m_Id: 41655488905994240
+    m_Key: CHALLENGES_EMPTY_STATE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
