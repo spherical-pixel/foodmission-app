@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +12,9 @@ using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -51,6 +52,7 @@ namespace eu.foodmission.platform
         private IAudioService _audioService;
         private IAvatarService _avatarService;
         private IDimensionService _dimensionService;
+        private IBannerService _bannerService;
 
         public QuizScreen()
         {
@@ -60,6 +62,7 @@ namespace eu.foodmission.platform
             _audioService = App.current?.services?.GetService<IAudioService>();
             _avatarService = App.current?.services?.GetService<IAvatarService>();
             _dimensionService = App.current?.services?.GetService<IDimensionService>();
+            _bannerService = App.current?.services?.GetService<IBannerService>();
             _avatarService.AvatarController.AvatarAnimationController.CurrentMood = AvatarMood.Neutral;
             CacheUIElements();
             RegisterManualEvents();
@@ -419,24 +422,9 @@ namespace eu.foodmission.platform
 
             if (_imageTopic != null)
             {
-                Sprite topicSprite = _dimensionService?.GetTopicSprite(_viewModel.QuizData.topicId);
-                if (topicSprite != null)
-                {
-                    _imageTopic.sprite = topicSprite;
-                    _imageTopic.scaleMode = ScaleMode.ScaleToFit;
-                    _imageTopic.style.width = Length.Percent(100);
-                    _imageTopic.style.height = StyleKeyword.Auto;
-                    if (topicSprite.rect.height > 0)
-                    {
-                        _imageTopic.style.aspectRatio = topicSprite.rect.width / topicSprite.rect.height;
-                    }
-                    _imageTopic.style.display = DisplayStyle.Flex;
-                }
-                else
-                {
-                    _imageTopic.sprite = null;
-                    _imageTopic.style.display = DisplayStyle.None;
-                }
+                _imageTopic.style.width = Length.Percent(100);
+                _imageTopic.style.height = StyleKeyword.Auto;
+                _ = _bannerService?.BindTopicBanner(_imageTopic, _viewModel.QuizData.topicId);
             }
         }
 
@@ -531,7 +519,6 @@ namespace eu.foodmission.platform
 
         protected override async void OnViewModelUnbinding()
         {
-
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
         }

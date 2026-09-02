@@ -21,14 +21,15 @@ namespace eu.foodmission.platform
         protected override bool IsFixedContent => false;
 
         private VisualElement _cardsContainer;
-        private readonly System.Collections.Generic.List<UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle> _bannerHandles =
-            new System.Collections.Generic.List<UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle>();
+        private IBannerService _bannerService;
 
         public KnowledgeScreen()
         {
             InitializeComponent(App.current.services
                 .GetRequiredService<ITemplateService>()
                 .Get(TemplateAddresses.KnowledgeScreen));
+
+            _bannerService = App.current?.services?.GetService<IBannerService>();
 
             CacheUIElements();
         }
@@ -50,7 +51,6 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
-            ReleaseBannerHandles();
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
@@ -66,21 +66,8 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void ReleaseBannerHandles()
-        {
-            foreach (var handle in _bannerHandles)
-            {
-                if (handle.IsValid())
-                {
-                    UnityEngine.AddressableAssets.Addressables.Release(handle);
-                }
-            }
-            _bannerHandles.Clear();
-        }
-
         private void RebuildCards()
         {
-            ReleaseBannerHandles();
             if (_cardsContainer == null) return;
             _cardsContainer.Clear();
 
@@ -100,20 +87,7 @@ namespace eu.foodmission.platform
 
                 if (!string.IsNullOrEmpty(section.BannerAddress))
                 {
-                    var handle = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<Sprite>(section.BannerAddress);
-                    _bannerHandles.Add(handle);
-                    handle.Completed += op =>
-                    {
-                        if (op.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded && op.Result != null)
-                        {
-                            img.sprite = op.Result;
-                            img.scaleMode = ScaleMode.ScaleToFit;
-                            if (op.Result.rect.height > 0)
-                            {
-                                img.style.aspectRatio = op.Result.rect.width / op.Result.rect.height;
-                            }
-                        }
-                    };
+                    _ = _bannerService?.BindBanner(img, section.BannerAddress);
                 }
                 card.Add(img);
 

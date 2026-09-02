@@ -15,13 +15,183 @@ MonoBehaviour:
   m_GroupName: Banners
   m_GUID: 3c3aa15792d3647f9b7dbbc0b43aafe8
   m_SerializeEntries:
+  - m_GUID: 0347d213f06c24be0ab195fa73909edd
+    m_Address: dimensions/diet_changes
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06fc5cd88eac14644b720ba925d4b82e
+    m_Address: topics/overconsumption
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b21cabddeaa24920bf895fe2f026e7f
+    m_Address: topics/fiber
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a91080a1d5be42dea0ea7d954c49b87
+    m_Address: topics/vitamins
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ca41f5cd1e7d452fba790365a5b1142
+    m_Address: topics/plate_waste
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f644a09087eb4c18b765e1227fae1ee
+    m_Address: topics/carbon_footprint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c4a72d92573047adbe32060b4e44f03
+    m_Address: topics/protein
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2fb0f005740984fec8150cb413f8eaf7
+    m_Address: dimensions/nutrition_values
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3528a8b767ff04a5ca81897de74a4eec
+    m_Address: topics/salt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c93de9d324334522aa646e575952dce
+    m_Address: dimensions/food_waste
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3eb219b7aa4254537ad720d968ba2596
+    m_Address: topics/breeding_methods
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ec8464f864e94d2fa5c1feca6ca456a
+    m_Address: topics/sustainability_of_packaging_materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53672f3fea7924175a5875fb836a0461
+    m_Address: topics/expired_food
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 609ef2d8169394386b541f6fe70de418
     m_Address: knowledge/quiz
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d2ff1361d2c649aabdc29dcb2b57a80
+    m_Address: topics/travel_distances
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7aa15b9dfbc8a4bc3bfbbf2f59f2cee2
+    m_Address: topics/default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84e03f546fcc448308e715d42ab9603d
+    m_Address: topics/energy_value_calories
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 864f6f4a12eda4ef181f04831da747b8
+    m_Address: topics/country_of_origin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b9488b74fc0a46f1b845ab16f047e44
+    m_Address: topics/sugar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 908aed9fc36944eec95797142723a93b
+    m_Address: dimensions/product_choices
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9423e693fd91e473783679b3720ddf4e
+    m_Address: topics/level_of_processing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae23cbbaac58f40a7af28efff11b163a
+    m_Address: topics/water_use
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af8a05fd95b644b58a0d8a29ddb2b5b4
     m_Address: knowledge/foodfacts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8483c60b9d31450a9afe85e02537561
+    m_Address: topics/increasing_other_protein_sources
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b957aedc0477b4c6081c52bccbbc8810
+    m_Address: dimensions/packaging
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb266bdab13634798bd1cfcab117d813
+    m_Address: topics/land_use
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc29d4ee8fd5b49f39b110a78da851fb
+    m_Address: topics/alternative_staple_foods
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1d7dda9b99424fe68aa973fbafd680d
+    m_Address: topics/leftovers_waste
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8903a32aa73745c88bc91464fa19a8b
+    m_Address: topics/fat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d16d9bfd2fce9468e97ab22866dd3b90
+    m_Address: topics/capacity_to_reuse_packaging
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da90662ab431a4f2ab72f68e377a15d9
+    m_Address: topics/energy_consumption
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e79c68a23c5964d1788ec3af52f6aa0d
+    m_Address: topics/farming_production_methods
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eeb371bdf00e84e9fafe92ae2f057179
+    m_Address: topics/reducing_meat_consumption
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: efa98834daee54a1fb743561891d35d2
+    m_Address: topics/fair_trade_labour
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f82f7e84c4fa64edda9fc94101a99bb1
+    m_Address: dimensions/production_methods
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fead22063941843bfaea2417f47b7fac
+    m_Address: dimensions/default
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

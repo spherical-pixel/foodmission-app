@@ -137,7 +137,6 @@ namespace eu.foodmission.platform.Tests
         public void GetTopicSprite_OnEmptyOrNull_ReturnsDefaultOrNull()
         {
             var sprite = _service.GetTopicSprite(null);
-            // In unit tests Resources.Load returns null without error
             Assert.IsNull(sprite);
 
             var spriteEmpty = _service.GetTopicSprite("");
@@ -152,6 +151,21 @@ namespace eu.foodmission.platform.Tests
 
             var spriteEmpty = _service.GetDimensionSprite("");
             Assert.IsNull(spriteEmpty);
+        }
+
+        [Test]
+        public void GetSpriteAddresses_ResolvesCorrectAddressablesKeys()
+        {
+            Assert.AreEqual("dimensions/default", _service.GetDefaultSpriteAddress());
+            Assert.AreEqual("dimensions/default", _service.GetDimensionSpriteAddress(null));
+            Assert.AreEqual("dimensions/default", _service.GetDimensionSpriteAddress(""));
+            Assert.AreEqual("dimensions/diet_changes", _service.GetDimensionSpriteAddress("DIET_CHANGES"));
+            Assert.AreEqual("dimensions/food_waste", _service.GetDimensionSpriteAddress("food_waste"));
+
+            Assert.AreEqual("dimensions/default", _service.GetTopicSpriteAddress(null));
+            Assert.AreEqual("dimensions/default", _service.GetTopicSpriteAddress(""));
+            Assert.AreEqual("topics/reducing_meat_consumption", _service.GetTopicSpriteAddress("REDUCING_MEAT_CONSUMPTION"));
+            Assert.AreEqual("topics/plate_waste", _service.GetTopicSpriteAddress("plate_waste"));
         }
 
         [Test]

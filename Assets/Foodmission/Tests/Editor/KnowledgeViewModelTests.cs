@@ -49,14 +49,14 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Actions.go_to_quizzes, quizzesSection.NavigationAction);
             Assert.IsTrue(quizzesSection.IsEnabled);
             Assert.AreEqual("NAV_QUIZZES", quizzesSection.TitleKey);
-            Assert.AreEqual("quiz", quizzesSection.BannerAddress);
+            Assert.AreEqual("knowledge/quiz", quizzesSection.BannerAddress);
 
             var foodFactsSection = _vm.Sections.FirstOrDefault(s => s.Id == "food_facts");
             Assert.IsNotNull(foodFactsSection);
             Assert.AreEqual(Actions.go_to_food_facts, foodFactsSection.NavigationAction);
             Assert.IsTrue(foodFactsSection.IsEnabled);
             Assert.AreEqual("NAV_FOOD_FACTS", foodFactsSection.TitleKey);
-            Assert.AreEqual("foodfacts", foodFactsSection.BannerAddress);
+            Assert.AreEqual("knowledge/foodfacts", foodFactsSection.BannerAddress);
         }
 
         [Test]

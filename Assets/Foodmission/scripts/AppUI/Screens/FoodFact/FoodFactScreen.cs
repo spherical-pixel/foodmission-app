@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
@@ -8,7 +9,9 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -31,6 +34,7 @@ namespace eu.foodmission.platform
 
         private IAudioService _audioService;
         private IDimensionService _dimensionService;
+        private IBannerService _bannerService;
 
         public FoodFactScreen()
         {
@@ -40,7 +44,7 @@ namespace eu.foodmission.platform
 
             _audioService = App.current?.services?.GetService<IAudioService>();
             _dimensionService = App.current?.services?.GetService<IDimensionService>();
-
+            _bannerService = App.current?.services?.GetService<IBannerService>();
 
             CacheUIElements();
             RegisterManualEvents();
@@ -206,24 +210,9 @@ namespace eu.foodmission.platform
 
             if (_imageTopic != null)
             {
-                Sprite topicSprite = _dimensionService?.GetTopicSprite(fact.topicId);
-                if (topicSprite != null)
-                {
-                    _imageTopic.sprite = topicSprite;
-                    _imageTopic.scaleMode = ScaleMode.ScaleToFit;
-                    _imageTopic.style.width = Length.Percent(100);
-                    _imageTopic.style.height = StyleKeyword.Auto;
-                    if (topicSprite.rect.height > 0)
-                    {
-                        _imageTopic.style.aspectRatio = topicSprite.rect.width / topicSprite.rect.height;
-                    }
-                    _imageTopic.style.display = DisplayStyle.Flex;
-                }
-                else
-                {
-                    _imageTopic.sprite = null;
-                    _imageTopic.style.display = DisplayStyle.None;
-                }
+                _imageTopic.style.width = Length.Percent(100);
+                _imageTopic.style.height = StyleKeyword.Auto;
+                _ = _bannerService?.BindTopicBanner(_imageTopic, fact.topicId);
             }
         }
 

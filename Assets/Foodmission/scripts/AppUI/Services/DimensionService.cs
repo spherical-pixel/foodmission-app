@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Unity.AppUI.Redux;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace eu.foodmission.platform
 {
@@ -22,6 +24,7 @@ namespace eu.foodmission.platform
         private readonly Dictionary<string, Dimension> _topicToDimension = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<Topic>> _topicsByDimension = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, Sprite> _spriteCache = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, AsyncOperationHandle<Sprite>> _handleCache = new(StringComparer.OrdinalIgnoreCase);
 
         public bool IsLoaded => _dimensions.Count > 0;
         public string LoadedLanguage { get; private set; }
@@ -320,120 +323,142 @@ namespace eu.foodmission.platform
             return topic;
         }
 
-        // ── Visual Resources (Sprites & Memory Management) ──────────────────
+        // ── Visual Resources (Addressables Banners & Memory Management) ─────
 
-        public Sprite GetTopicSprite(string topicCodeOrId)
+        public string GetTopicSpriteAddress(string topicCodeOrId)
         {
             if (string.IsNullOrEmpty(topicCodeOrId))
-                return GetDefaultSprite();
+                return GetDefaultSpriteAddress();
 
             Topic topic = GetTopic(topicCodeOrId);
             string topicCode = topic?.code ?? topicCodeOrId;
 
-            if (_spriteCache.TryGetValue(topicCode, out Sprite cached) && cached != null)
-            {
-                return cached;
-            }
+            if (string.IsNullOrEmpty(topicCode))
+                return GetDefaultSpriteAddress();
 
-            // 1. Try topic specific path
-            Sprite sprite = LoadSpriteFromResourcePaths(
-                $"topics/{topicCode.ToLowerInvariant()}",
-                $"topics/{topicCode}");
-
-            // 2. Fallback to parent dimension
-            if (sprite == null)
-            {
-                Dimension dim = GetDimensionForTopic(topicCode) ?? (topic != null ? GetDimension(topic.dimensionId) : null);
-                if (dim != null && !string.IsNullOrEmpty(dim.code))
-                {
-                    sprite = GetDimensionSprite(dim.code);
-                }
-            }
-
-            // 3. Fallback to default
-            if (sprite == null)
-            {
-                sprite = GetDefaultSprite();
-            }
-
-            if (sprite != null)
-            {
-                _spriteCache[topicCode] = sprite;
-            }
-
-            return sprite;
+            return $"topics/{topicCode.ToLowerInvariant()}";
         }
 
-        public Sprite GetDimensionSprite(string dimensionCodeOrId)
+        public string GetDimensionSpriteAddress(string dimensionCodeOrId)
         {
             if (string.IsNullOrEmpty(dimensionCodeOrId))
-                return GetDefaultSprite();
+                return GetDefaultSpriteAddress();
 
             Dimension dim = GetDimension(dimensionCodeOrId);
             string dimCode = dim?.code ?? dimensionCodeOrId;
 
-            string cacheKey = "dim_" + dimCode;
-            if (_spriteCache.TryGetValue(cacheKey, out Sprite cached) && cached != null)
+            if (string.IsNullOrEmpty(dimCode))
+                return GetDefaultSpriteAddress();
+
+            return $"dimensions/{dimCode.ToLowerInvariant()}";
+        }
+
+        public string GetDefaultSpriteAddress() => "dimensions/default";
+
+        public async Task<Sprite> GetTopicSpriteAsync(string topicCodeOrId)
+        {
+            string address = GetTopicSpriteAddress(topicCodeOrId);
+            return await LoadSpriteFromAddressAsync(address);
+        }
+
+        public async Task<Sprite> GetDimensionSpriteAsync(string dimensionCodeOrId)
+        {
+            string address = GetDimensionSpriteAddress(dimensionCodeOrId);
+            return await LoadSpriteFromAddressAsync(address);
+        }
+
+        public async Task<Sprite> GetDefaultSpriteAsync()
+        {
+            return await LoadSpriteFromAddressAsync(GetDefaultSpriteAddress());
+        }
+
+        public Sprite GetTopicSprite(string topicCodeOrId)
+        {
+            string address = GetTopicSpriteAddress(topicCodeOrId);
+            if (_spriteCache.TryGetValue(address, out Sprite cached) && cached != null)
             {
                 return cached;
             }
+            return null;
+        }
 
-            // Try dimensions/ or topics/ paths
-            Sprite sprite = LoadSpriteFromResourcePaths(
-                $"dimensions/{dimCode.ToLowerInvariant()}",
-                $"dimensions/{dimCode}",
-                $"topics/{dimCode.ToLowerInvariant()}",
-                $"topics/{dimCode}");
-
-            if (sprite == null)
+        public Sprite GetDimensionSprite(string dimensionCodeOrId)
+        {
+            string address = GetDimensionSpriteAddress(dimensionCodeOrId);
+            if (_spriteCache.TryGetValue(address, out Sprite cached) && cached != null)
             {
-                sprite = GetDefaultSprite();
+                return cached;
             }
-
-            if (sprite != null)
-            {
-                _spriteCache[cacheKey] = sprite;
-            }
-
-            return sprite;
+            return null;
         }
 
         public Sprite GetDefaultSprite()
         {
-            const string defaultKey = "__default__";
-            if (_spriteCache.TryGetValue(defaultKey, out Sprite cached) && cached != null)
+            string address = GetDefaultSpriteAddress();
+            if (_spriteCache.TryGetValue(address, out Sprite cached) && cached != null)
             {
                 return cached;
             }
-
-            Sprite sprite = LoadSpriteFromResourcePaths(
-                "topics/default",
-                "dimensions/default",
-                "topics/default_topic",
-                "dimensions/default_dimension");
-
-            if (sprite != null)
-            {
-                _spriteCache[defaultKey] = sprite;
-            }
-
-            return sprite;
+            return null;
         }
 
         public void ClearSpriteCache()
         {
+            foreach (var kvp in _handleCache)
+            {
+                if (kvp.Value.IsValid())
+                {
+                    Addressables.Release(kvp.Value);
+                }
+            }
+            _handleCache.Clear();
             _spriteCache.Clear();
         }
 
-        private Sprite LoadSpriteFromResourcePaths(params string[] paths)
+        private async Task<Sprite> LoadSpriteFromAddressAsync(string address)
         {
-            foreach (var path in paths)
+            if (string.IsNullOrEmpty(address)) return null;
+
+            if (_spriteCache.TryGetValue(address, out Sprite cached) && cached != null)
             {
-                if (string.IsNullOrEmpty(path)) continue;
-                Sprite sprite = Resources.Load<Sprite>(path);
-                if (sprite != null)
-                    return sprite;
+                return cached;
             }
+
+            if (_handleCache.TryGetValue(address, out var existingHandle) && existingHandle.IsValid())
+            {
+                if (existingHandle.IsDone)
+                {
+                    return existingHandle.Result;
+                }
+                await existingHandle.Task;
+                return existingHandle.Result;
+            }
+
+            try
+            {
+                AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(address);
+                _handleCache[address] = handle;
+                await handle.Task;
+
+                if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
+                {
+                    _spriteCache[address] = handle.Result;
+                    return handle.Result;
+                }
+                else
+                {
+                    string defaultAddress = GetDefaultSpriteAddress();
+                    if (address != defaultAddress)
+                    {
+                        return await LoadSpriteFromAddressAsync(defaultAddress);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Failed to load Addressable sprite '{address}': {ex.Message}");
+            }
+
             return null;
         }
 

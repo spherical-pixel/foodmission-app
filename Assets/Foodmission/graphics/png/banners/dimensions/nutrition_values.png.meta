@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0347d213f06c24be0ab195fa73909edd
+guid: 2fb0f005740984fec8150cb413f8eaf7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5587334410740269730
-    second: 1.0.Diet_changes_toward_a_more_sustainable_system_0
+      213: -8842335765881847001
+    second: nutrition_values_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -53,7 +53,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1.0.Diet_changes_toward_a_more_sustainable_system_0
+      name: nutrition_values_0
       rect:
         serializedVersion: 2
         x: 0
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e5d7286d4fcc572b0800000000000000
-      internalID: -5587334410740269730
+      spriteID: 72381e93876b94580800000000000000
+      internalID: -8842335765881847001
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      1.0.Diet_changes_toward_a_more_sustainable_system_0: -5587334410740269730
+      nutrition_values_0: -8842335765881847001
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

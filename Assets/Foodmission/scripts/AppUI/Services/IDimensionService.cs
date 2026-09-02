@@ -82,32 +82,55 @@ namespace eu.foodmission.platform
         /// </summary>
         Topic GetTopic(string topicCodeOrId);
 
-        // ── Visual Resources (Sprites & Memory Management) ──────────────────
+        // ── Visual Resources (Addressables Banners & Memory Management) ─────
 
         /// <summary>
-        /// Gets the Sprite for a given topic by its code or UUID.
-        /// Hierarchy of resolution:
-        /// 1. Resources/topics/{topic_code.ToLower()}
-        /// 2. Resources/dimensions/{dimension_code.ToLower()} or Resources/topics/{dimension_code.ToLower()}
-        /// 3. Resources/topics/default or Resources/dimensions/default
+        /// Returns the Addressables address for a given topic banner (e.g. "topics/reducing_meat_consumption").
+        /// </summary>
+        string GetTopicSpriteAddress(string topicCodeOrId);
+
+        /// <summary>
+        /// Returns the Addressables address for a given dimension banner (e.g. "dimensions/diet_changes").
+        /// </summary>
+        string GetDimensionSpriteAddress(string dimensionCodeOrId);
+
+        /// <summary>
+        /// Returns the default Addressables banner address ("dimensions/default").
+        /// </summary>
+        string GetDefaultSpriteAddress();
+
+        /// <summary>
+        /// Asynchronously loads and returns the Sprite for a given topic from Addressables.
+        /// </summary>
+        Task<Sprite> GetTopicSpriteAsync(string topicCodeOrId);
+
+        /// <summary>
+        /// Asynchronously loads and returns the Sprite for a given dimension from Addressables.
+        /// </summary>
+        Task<Sprite> GetDimensionSpriteAsync(string dimensionCodeOrId);
+
+        /// <summary>
+        /// Asynchronously loads and returns the default fallback Sprite from Addressables.
+        /// </summary>
+        Task<Sprite> GetDefaultSpriteAsync();
+
+        /// <summary>
+        /// Gets the cached Sprite for a topic if already loaded, otherwise null.
         /// </summary>
         Sprite GetTopicSprite(string topicCodeOrId);
 
         /// <summary>
-        /// Gets the Sprite for a given dimension by its code or UUID.
-        /// Hierarchy of resolution:
-        /// 1. Resources/dimensions/{dimension_code.ToLower()} or Resources/topics/{dimension_code.ToLower()}
-        /// 2. Resources/dimensions/default or Resources/topics/default
+        /// Gets the cached Sprite for a dimension if already loaded, otherwise null.
         /// </summary>
         Sprite GetDimensionSprite(string dimensionCodeOrId);
 
         /// <summary>
-        /// Gets the default fallback topic/dimension sprite.
+        /// Gets the cached default Sprite if already loaded, otherwise null.
         /// </summary>
         Sprite GetDefaultSprite();
 
         /// <summary>
-        /// Clears cached sprite references in memory to allow garbage collection.
+        /// Releases all loaded Addressables sprite handles and clears the memory cache.
         /// </summary>
         void ClearSpriteCache();
     }

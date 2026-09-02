@@ -4,8 +4,11 @@ using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -21,6 +24,7 @@ namespace eu.foodmission.platform
         protected override bool IsFixedContent => false;
 
         private IDimensionService _dimensionService;
+        private IBannerService _bannerService;
 
         private FMButton _btnRandomFact;
         private ActionGroup _groupLevelFilters;
@@ -40,6 +44,7 @@ namespace eu.foodmission.platform
                 .Get(TemplateAddresses.FoodFactsScreen));
 
             _dimensionService = App.current?.services?.GetService<IDimensionService>();
+            _bannerService = App.current?.services?.GetService<IBannerService>();
 
             CacheUIElements();
             RegisterManualEvents();
@@ -64,9 +69,9 @@ namespace eu.foodmission.platform
             if (_btnRandomFact != null) _btnRandomFact.clicked += () => _viewModel?.OpenRandomFact();
 
             if (_btnLevelAll != null) _btnLevelAll.clicked += () => _viewModel?.SetLevelFilter(FoodFactFilterLevel.All);
-            if (_btnLevelBeginner != null) _btnLevelBeginner.clicked += () => _viewModel?.SetLevelFilter(FoodFactLevel.Beginner);
-            if (_btnLevelIntermediate != null) _btnLevelIntermediate.clicked += () => _viewModel?.SetLevelFilter(FoodFactLevel.Intermediate);
-            if (_btnLevelAdvanced != null) _btnLevelAdvanced.clicked += () => _viewModel?.SetLevelFilter(FoodFactLevel.Advanced);
+            if (_btnLevelBeginner != null) _btnLevelBeginner.clicked += () => _viewModel?.SetLevelFilter(FoodFactFilterLevel.Beginner);
+            if (_btnLevelIntermediate != null) _btnLevelIntermediate.clicked += () => _viewModel?.SetLevelFilter(FoodFactFilterLevel.Intermediate);
+            if (_btnLevelAdvanced != null) _btnLevelAdvanced.clicked += () => _viewModel?.SetLevelFilter(FoodFactFilterLevel.Advanced);
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -130,7 +135,6 @@ namespace eu.foodmission.platform
         private void RebuildHierarchy()
         {
             if (_groupsContainer == null) return;
-
             _groupsContainer.Clear();
 
             var groups = _viewModel?.DisplayGroups;
@@ -158,16 +162,7 @@ namespace eu.foodmission.platform
 
                 var dimIcon = new Image();
                 dimIcon.AddToClassList("fm-quizzes-dim-icon");
-                Sprite dimSprite = _dimensionService?.GetDimensionSprite(group.Dimension?.code);
-                if (dimSprite != null)
-                {
-                    dimIcon.sprite = dimSprite;
-                    dimIcon.scaleMode = ScaleMode.ScaleToFit;
-                    if (dimSprite.rect.height > 0)
-                    {
-                        dimIcon.style.aspectRatio = dimSprite.rect.width / dimSprite.rect.height;
-                    }
-                }
+                _ = _bannerService?.BindDimensionBanner(dimIcon, group.Dimension?.code);
                 dimHeader.Add(dimIcon);
 
                 var row = new VisualElement();
