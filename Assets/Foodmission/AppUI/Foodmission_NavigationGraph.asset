@@ -1227,6 +1227,8 @@ MonoBehaviour:
   - {fileID: 2360998960018886008}
   - {fileID: -1732855794612910557}
   - {fileID: -4347370231613209298}
+  - {fileID: 4291847192847192001}
+  - {fileID: 4291847192847192002}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2148,6 +2150,7 @@ MonoBehaviour:
   - {fileID: 6946922476416249999}
   - {fileID: -1732855794612910557}
   - {fileID: -4347370231613209298}
+  - {fileID: 4291847192847192002}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955
@@ -2340,6 +2343,66 @@ MonoBehaviour:
   m_Position: {x: -102, y: 2179}
   m_Guid: 72f09ca8-4008-4aab-aecb-9866e32baf8f
   m_Destination: {fileID: -7257701155362442244}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &4291847192847192001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Knowledge
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 150, y: 3100}
+  m_Guid: c0a19458-9ebf-4095-9008-459dee19e999
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: '@UI:KNOWLEDGE'
+  m_TemplateSettings:
+    rid: 210559812525359999
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 210559812525359999
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.KnowledgeScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
+--- !u!114 &4291847192847192002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_knowledge
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: -277, y: 3100}
+  m_Guid: 6ae16413-a14b-40c9-bfb2-2e5d3b1a4999
+  m_Destination: {fileID: 4291847192847192001}
   m_Options:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}

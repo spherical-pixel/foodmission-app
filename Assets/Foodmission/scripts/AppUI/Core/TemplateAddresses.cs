@@ -35,5 +35,6 @@ namespace eu.foodmission.platform
         public const string QuizzesScreen = "Foodmission/AppUI/Templates/QuizzesScreen.uxml";
         public const string FoodFactsScreen = "Foodmission/AppUI/Templates/FoodFactsScreen.uxml";
         public const string FoodFactScreen = "Foodmission/AppUI/Templates/FoodFactScreen.uxml";
+        public const string KnowledgeScreen = "Foodmission/AppUI/Templates/KnowledgeScreen.uxml";
     }
 }

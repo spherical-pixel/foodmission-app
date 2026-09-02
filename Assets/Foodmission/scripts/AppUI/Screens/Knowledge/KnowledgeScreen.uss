@@ -1,0 +1,75 @@
+.fm-knowledge-root {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.fm-knowledge-cards-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8px;
+    padding-bottom: 24px;
+}
+
+.fm-knowledge-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    cursor: link;
+    transition-property: scale, opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+}
+
+.fm-knowledge-card .fm-full-button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: transparent;
+    border-width: 0;
+}
+
+.fm-knowledge-card:active {
+    scale: 0.98;
+    opacity: 0.9;
+}
+
+.fm-knowledge-card__image {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.fm-knowledge-card__footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 20px;
+}
+
+.fm-knowledge-card__title {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+}
+
+.fm-knowledge-card__arrow {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    --unity-image-tint-color: var(--appui-primary-100);
+}

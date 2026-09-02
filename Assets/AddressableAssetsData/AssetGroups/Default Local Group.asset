@@ -80,6 +80,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b22eb68e75494300937ac240a4f4b22
+    m_Address: Foodmission/AppUI/Templates/KnowledgeScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 61e6e124fb6e849c4ac488d29545f911
     m_Address: Foodmission/AppUI/Templates/RegisterScreen.uxml
     m_ReadOnly: 0
