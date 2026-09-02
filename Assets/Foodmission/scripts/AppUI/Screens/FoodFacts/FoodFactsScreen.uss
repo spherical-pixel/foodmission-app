@@ -1,0 +1,43 @@
+.fm-foodfacts-root {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-foodfacts-header-section {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.fm-foodfacts-random-btn {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.fm-foodfacts-filters-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.fm-foodfacts-action-group {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.fm-foodfacts-empty {
+    margin-top: 32px;
+    -unity-text-align: middle-center;
+    color: var(--appui-foreground-muted, rgb(107, 114, 128));
+    display: none;
+}
+
+.fm-foodfacts-scroll {
+    flex-grow: 1;
+}
+
+.fm-foodfacts-groups-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 24px;
+}

@@ -1,0 +1,20 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" xmlns:eu="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Quizzes/QuizzesScreen.uss?fileID=7433441132597879392&amp;guid=109516a41d4334001b40e7c8a262dbc4&amp;type=3#QuizzesScreen"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/FoodFact/FoodFactScreen.uss?fileID=7433441132597879392&amp;guid=fe794ae0bc394463182b8a699e3f6079&amp;type=3#FoodFactScreen"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.FoodFactScreenViewModel, Foodmission" class="fm-root" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="back" style="flex-grow: 1; justify-content: center;">
+            <fm:FMNutriView class="fm-home-nutri-image" style="margin-top: -200px;"/>
+            <appui:ExVisualElement name="fact-card" class="box-background fm-shadow-wrapper fm-foodfact-card">
+                <ui:Image name="image-topic" class="fm-quiz-topic-image"/>
+                <appui:Text name="text-body" size="L" class="fm-foodfact-body"/>
+                <fm:FMSourceItemView name="source-item-view"/>
+                <fm:FMButton name="bt-continue" title="Continuar_" trailing-icon="fm-arrow-right" variant="Accent" class="fm-button fm-button-align-left" style="margin-top: 40px;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395779614007296)"/>
+                    </Bindings>
+                </fm:FMButton>
+            </appui:ExVisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

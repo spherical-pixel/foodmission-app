@@ -2434,6 +2434,15 @@ MonoBehaviour:
     m_Localized: "Nie chc\u0119"
     m_Metadata:
       m_Items: []
+  - m_Id: 41564040676237312
+    m_Localized: "Nie znaleziono informacji o produktach spo\u017Cywczych odpowiadaj\u0105cych
+      wybranym filtrom."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41575049637912576
+    m_Localized: "Czy wiesz, \u017Ce...?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

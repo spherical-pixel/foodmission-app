@@ -2394,6 +2394,14 @@ MonoBehaviour:
     m_Localized: I don't want
     m_Metadata:
       m_Items: []
+  - m_Id: 41564040676237312
+    m_Localized: No food facts found matching the selected filters.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41575049637912576
+    m_Localized: Did you know...?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

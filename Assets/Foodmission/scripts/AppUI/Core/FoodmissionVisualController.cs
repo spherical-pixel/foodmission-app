@@ -422,8 +422,10 @@ namespace eu.foodmission.platform
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_quizzes);
+                //_cachedNavController?.Navigate(Actions.go_to_food_facts);
                 //NutriMessageDialog.ShowNotAvailable();
             });
+
             AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSIONS"), () =>
             {
                 CloseMenuDrawer();

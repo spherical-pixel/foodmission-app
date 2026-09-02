@@ -2409,6 +2409,15 @@ MonoBehaviour:
     m_Localized: Non voglio
     m_Metadata:
       m_Items: []
+  - m_Id: 41564040676237312
+    m_Localized: Non sono stati trovati dati nutrizionali corrispondenti ai filtri
+      selezionati.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41575049637912576
+    m_Localized: Lo sapevi che...?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

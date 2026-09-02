@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 114c085c84e4340928e4dbeb7fab3f5c
+    m_Address: Foodmission/AppUI/Templates/FoodFactsScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1308b5ea68d634733973423c4f1076e4
     m_Address: Foodmission/AppUI/Templates/MealLogScreen.uxml
     m_ReadOnly: 0
@@ -177,6 +182,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e669379b59334a82a9c9476c988bdacd
     m_Address: Foodmission/AppUI/Templates/PantryItemDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ebac471f1dd824238b155070d79439fa
+    m_Address: Foodmission/AppUI/Templates/FoodFactScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -2401,6 +2401,15 @@ MonoBehaviour:
     m_Localized: "Ne \u017Eelim"
     m_Metadata:
       m_Items: []
+  - m_Id: 41564040676237312
+    m_Localized: "Ni bilo najdenih podatkov o \u017Eivilih, ki bi ustrezali izbranim
+      filtrom."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41575049637912576
+    m_Localized: Ali ste vedeli...?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

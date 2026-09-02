@@ -1,0 +1,19 @@
+.fm-foodfact-header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.fm-foodfact-code {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+}
+
+.fm-foodfact-body {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    color: var(--appui-foregrounds-50);
+    white-space: normal;
+}

@@ -2400,6 +2400,15 @@ MonoBehaviour:
     m_Localized: Jeg vil ikke
     m_Metadata:
       m_Items: []
+  - m_Id: 41564040676237312
+    m_Localized: "Det ble ikke funnet noen n\xE6ringsopplysninger som samsvarer med
+      de valgte filtrene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41575049637912576
+    m_Localized: Visste du at...?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

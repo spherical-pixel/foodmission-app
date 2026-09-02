@@ -2335,6 +2335,14 @@ MonoBehaviour:
     m_Key: NEW_SURVEY_DECLINE
     m_Metadata:
       m_Items: []
+  - m_Id: 41564040676237312
+    m_Key: FOODFACTS_EMPTY_STATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41575049637912576
+    m_Key: NAV_FOOD_FACTS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

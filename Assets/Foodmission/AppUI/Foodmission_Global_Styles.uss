@@ -1855,3 +1855,31 @@
 .is-selected.appui-actionbutton{
     background-color: var(--appui-primary-900);
 }
+
+
+.fm-foodfact-card {
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    right: 0; */
+    background-color: var(--fm-surface-bg-transparent-80);
+    padding: 40px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    min-height: 990px;
+    translate: 0 0%;
+    opacity: 1;
+    transition-property: translate, opacity;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.fm-foodfact-card .unity-text-element {
+    color: var(--appui-foregrounds-50);
+}
+
+.fm-foodfact-card--hidden {
+    translate: 0 -120%;
+    opacity: 0;
+    transition-timing-function: ease-in-cubic;
+}
