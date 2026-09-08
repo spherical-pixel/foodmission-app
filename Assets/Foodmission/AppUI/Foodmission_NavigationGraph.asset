@@ -1231,6 +1231,8 @@ MonoBehaviour:
   - {fileID: 4291847192847192002}
   - {fileID: 4291847192847192003}
   - {fileID: 4291847192847192004}
+  - {fileID: 4291847192847192005}
+  - {fileID: 4291847192847192006}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2154,6 +2156,7 @@ MonoBehaviour:
   - {fileID: -4347370231613209298}
   - {fileID: 4291847192847192002}
   - {fileID: 4291847192847192004}
+  - {fileID: 4291847192847192006}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955
@@ -2478,3 +2481,64 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &4291847192847192005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Missions
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 150, y: 3550}
+  m_Guid: 0af04cb8-717c-4d75-bc10-c66d0ab4363c
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: '@UI:MISSIONS'
+  m_TemplateSettings:
+    rid: 685283817655151544
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 685283817655151544
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.MissionsScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
+--- !u!114 &4291847192847192006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_missions
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: -277, y: 3550}
+  m_Guid: 87283392-8f02-4e39-b8de-6a58ca277578
+  m_Destination: {fileID: 4291847192847192005}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+

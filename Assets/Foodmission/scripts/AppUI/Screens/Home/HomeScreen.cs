@@ -86,7 +86,9 @@ namespace eu.foodmission.platform
             CheckPendingLegalConsentAsync();
             CheckPendingPilotConsentAsync();
             CheckPendingPilotSurveyAsync();
-            //SetupPilotDebugPanel();
+#if DEVELOPER_MODE
+                SetupPilotDebugPanel();
+#endif
         }
 
         private async void CheckPendingLegalConsentAsync()
@@ -348,7 +350,7 @@ namespace eu.foodmission.platform
 
             var title = new Unity.AppUI.UI.Text
             {
-                text = "🧪 Panel de Pruebas: Encuestas del Piloto",
+                text = "🧪 Dev Test Panel: Pilot Surveys",
                 size = TextSize.M
             };
             title.style.unityFontStyleAndWeight = FontStyle.Bold;
@@ -374,9 +376,9 @@ namespace eu.foodmission.platform
                 string c = _viewModel.GetCurrentUserCountry();
                 bool ip = _viewModel.IsUserInPilotCountry();
                 bool bypass = _viewModel.DebugBypassEligibility;
-                statusLabel.text = $"Ciclo: {s?.currentCycle ?? 1} | Días activos: {s?.activeDatesInCycle.Count ?? 0} | Días transcurridos: {_viewModel.GetPilotDaysSinceStart()}\n" +
-                                   $"País: '{c}' (Piloto: {ip}) | Bypass Elegibilidad: {(bypass ? "SÍ" : "NO")}\n" +
-                                   $"Completadas: [{(s?.completedSlugsInCycle != null && s.completedSlugsInCycle.Count > 0 ? string.Join(", ", s.completedSlugsInCycle) : "Ninguna")}]";
+                statusLabel.text = $"Cycle: {s?.currentCycle ?? 1} | Active days: {s?.activeDatesInCycle.Count ?? 0} | Days elapsed: {_viewModel.GetPilotDaysSinceStart()}\n" +
+                                   $"Country: '{c}' (Pilot: {ip}) | Bypass Eligibility: {(bypass ? "YES" : "NO")}\n" +
+                                   $"Completed: [{(s?.completedSlugsInCycle != null && s.completedSlugsInCycle.Count > 0 ? string.Join(", ", s.completedSlugsInCycle) : "None")}]";
             };
 
             refreshStatus();
@@ -390,14 +392,14 @@ namespace eu.foodmission.platform
 
             var btnBypass = new FMButton
             {
-                title = _viewModel.DebugBypassEligibility ? "Bypass: ACTIVO" : "Activar Bypass",
+                title = _viewModel.DebugBypassEligibility ? "Bypass: ACTIVE" : "Activate Bypass",
                 size = Size.S,
                 variant = _viewModel.DebugBypassEligibility ? ButtonVariant.Accent : ButtonVariant.Default
             };
             btnBypass.clicked += () =>
             {
                 _viewModel.DebugBypassEligibility = !_viewModel.DebugBypassEligibility;
-                btnBypass.title = _viewModel.DebugBypassEligibility ? "Bypass: ACTIVO" : "Activar Bypass";
+                btnBypass.title = _viewModel.DebugBypassEligibility ? "Bypass: ACTIVE" : "Activate Bypass";
                 btnBypass.variant = _viewModel.DebugBypassEligibility ? ButtonVariant.Accent : ButtonVariant.Default;
                 refreshStatus();
             };
@@ -405,7 +407,7 @@ namespace eu.foodmission.platform
 
             var btnSimulateDE = new FMButton
             {
-                title = "Fijar País 'DE' + Consent.",
+                title = "Set Country 'DE' + Consent.",
                 size = Size.S,
                 variant = ButtonVariant.Default
             };
@@ -424,23 +426,23 @@ namespace eu.foodmission.platform
             stepperRow.style.alignItems = Align.Center;
             stepperRow.style.marginBottom = 12;
 
-            var stepperLabel = new Unity.AppUI.UI.Text { text = "Simular Día: ", size = TextSize.S };
+            var stepperLabel = new Unity.AppUI.UI.Text { text = "Simulate Day: ", size = TextSize.S };
             stepperLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
             stepperRow.Add(stepperLabel);
 
             var choices = new string[]
             {
-                "Día 1 (sin encuesta)",
-                "Día 2 (second-use)",
-                "Día 3 (third-use)",
-                "Día 4 (fourth-use)",
-                "Día 5 (fifth-use)",
-                "Día 6 (sixth-use)",
-                "Día 7 (seventh)",
-                "Día 8 + 30d (after-1-mt...)",
-                "Día 9 + 30d (after-1-m...)",
-                "Día 10 + 30d (after-1-m...)",
-                "Día 11 + 30d (end)"
+                "Day 1 (no survey)",
+                "Day 2 (second-use)",
+                "Day 3 (third-use)",
+                "Day 4 (fourth-use)",
+                "Day 5 (fifth-use)",
+                "Day 6 (sixth-use)",
+                "Day 7 (seventh)",
+                "Day 8 + 30d (after-1-mt...)",
+                "Day 9 + 30d (after-1-m...)",
+                "Day 10 + 30d (after-1-m...)",
+                "Day 11 + 30d (end)"
             };
 
             int selectedIndex = Math.Clamp(currentDays - 1, 0, choices.Length - 1);
@@ -469,7 +471,7 @@ namespace eu.foodmission.platform
 
             var btnCheck = new FMButton
             {
-                title = "Evaluar Encuesta",
+                title = "Evaluate Survey",
                 size = Size.S,
                 variant = ButtonVariant.Accent
             };
@@ -481,7 +483,7 @@ namespace eu.foodmission.platform
 
             var btnResetSurveys = new FMButton
             {
-                title = "Reset Encuestas Ciclo",
+                title = "Reset Surveys Cycle",
                 size = Size.S,
                 variant = ButtonVariant.Default
             };

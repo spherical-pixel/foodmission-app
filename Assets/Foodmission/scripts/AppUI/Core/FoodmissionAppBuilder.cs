@@ -57,6 +57,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IQuizService, QuizService>();
             builder.services.AddSingleton<IFoodFactService, FoodFactService>();
             builder.services.AddSingleton<IChallengeService, ChallengeService>();
+            builder.services.AddSingleton<IMissionService, MissionService>();
             builder.services.AddSingleton<IQuestService, QuestService>();
             builder.services.AddSingleton<IDimensionService, DimensionService>();
             builder.services.AddSingleton<IBannerService, BannerService>();
@@ -105,6 +106,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<FoodFactScreenViewModel>();
             builder.services.AddTransient<KnowledgeViewModel>();
             builder.services.AddTransient<ChallengesViewModel>();
+            builder.services.AddTransient<MissionsViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

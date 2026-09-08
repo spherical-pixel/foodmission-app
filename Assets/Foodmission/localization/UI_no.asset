@@ -307,7 +307,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39894833018429440
-    m_Localized: nederlandsk
+    m_Localized: Nederlandsk
     m_Metadata:
       m_Items: []
   - m_Id: 39895260770328576
@@ -331,11 +331,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895644041633792
-    m_Localized: polsk
+    m_Localized: Polsk
     m_Metadata:
       m_Items: []
   - m_Id: 39895706960388096
-    m_Localized: slovensk
+    m_Localized: Slovensk
     m_Metadata:
       m_Items: []
   - m_Id: 39895724194783232

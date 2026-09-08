@@ -427,7 +427,7 @@ namespace eu.foodmission.platform
             AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSIONS"), () =>
             {
                 CloseMenuDrawer();
-                NutriMessageDialog.ShowNotAvailable();
+                _cachedNavController?.Navigate(Actions.go_to_missions);
             });
             AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DAILY_CHALLENGE"), () =>
             {

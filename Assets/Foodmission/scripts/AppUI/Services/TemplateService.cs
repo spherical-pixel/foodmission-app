@@ -49,7 +49,8 @@ namespace eu.foodmission.platform
             TemplateAddresses.FoodFactsScreen,
             TemplateAddresses.FoodFactScreen,
             TemplateAddresses.KnowledgeScreen,
-            TemplateAddresses.ChallengesScreen
+            TemplateAddresses.ChallengesScreen,
+            TemplateAddresses.MissionsScreen
         };
 
         public async Task PreloadAllAsync()

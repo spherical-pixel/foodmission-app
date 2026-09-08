@@ -313,35 +313,35 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895260770328576
-    m_Localized: angielski
+    m_Localized: Angielski
     m_Metadata:
       m_Items: []
   - m_Id: 39895302340075520
-    m_Localized: niemiecki
+    m_Localized: Niemiecki
     m_Metadata:
       m_Items: []
   - m_Id: 39895357172211712
-    m_Localized: grecki
+    m_Localized: Grecki
     m_Metadata:
       m_Items: []
   - m_Id: 39895410716696576
-    m_Localized: "w\u0142oski"
+    m_Localized: "W\u0142oski"
     m_Metadata:
       m_Items: []
   - m_Id: 39895456581410816
-    m_Localized: norweski
+    m_Localized: Norweski
     m_Metadata:
       m_Items: []
   - m_Id: 39895644041633792
-    m_Localized: polski
+    m_Localized: Polski
     m_Metadata:
       m_Items: []
   - m_Id: 39895706960388096
-    m_Localized: "s\u0142owe\u0144ski"
+    m_Localized: "S\u0142owe\u0144ski"
     m_Metadata:
       m_Items: []
   - m_Id: 39895724194783232
-    m_Localized: "hiszpa\u0144ski"
+    m_Localized: "Hiszpa\u0144ski"
     m_Metadata:
       m_Items: []
   - m_Id: 39897152762142720
