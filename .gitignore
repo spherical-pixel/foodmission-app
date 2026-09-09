@@ -46,3 +46,7 @@ fmod_editor.log
 ProjectSettings/Packages/com.unity.probuilder/Settings.json
 .utmp/
 .worktrees/
+
+# Google EDM4U / Firebase Android Resolver
+Assets/GeneratedLocalRepo/
+Assets/GeneratedLocalRepo.meta
