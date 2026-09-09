@@ -8,6 +8,6 @@ namespace eu.foodmission.platform
         Task<(Quest Result, ApiErrorResponse Error)> GetQuestAsync(string codeOrId, string lang = null);
         Task<(QuestProgress[] Result, ApiErrorResponse Error)> GetUserProgressListAsync(string lang = null);
         Task<(QuestProgress Result, ApiErrorResponse Error)> GetQuestProgressAsync(string codeOrId, string lang = null);
-        Task<(QuestProgress Result, ApiErrorResponse Error)> UpdateQuestProgressAsync(string codeOrId, bool? completed, float? progressPercent, string lang = null);
+        Task<(QuestProgress Result, ApiErrorResponse Error)> UpdateQuestProgressAsync(string codeOrId, bool? completed, float? progress, string lang = null);
     }
 }

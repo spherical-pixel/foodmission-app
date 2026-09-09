@@ -107,6 +107,8 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<KnowledgeViewModel>();
             builder.services.AddTransient<ChallengesViewModel>();
             builder.services.AddTransient<MissionsViewModel>();
+            builder.services.AddTransient<QuestsViewModel>();
+            builder.services.AddTransient<QuestDetailViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

@@ -8,6 +8,15 @@ namespace eu.foodmission.platform.Tests
     public class QuestModelsTests
     {
         [Test]
+        public void QuestLevel_Constants_ShouldMatchExpected()
+        {
+            Assert.AreEqual("BEGINNER", QuestLevel.Beginner);
+            Assert.AreEqual("INTERMEDIATE", QuestLevel.Intermediate);
+            Assert.AreEqual("ADVANCED", QuestLevel.Advanced);
+            CollectionAssert.AreEquivalent(new[] { "BEGINNER", "INTERMEDIATE", "ADVANCED" }, QuestLevel.All);
+        }
+
+        [Test]
         public void QuestContentType_Constants_ShouldMatchExpected()
         {
             Assert.AreEqual("MISSION", QuestContentType.Mission);
@@ -67,7 +76,33 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void QuestProgress_Deserialization_PopulatesFields()
+        public void QuestProgress_Deserialization_PopulatesFields_FromBackendSchema()
+        {
+            string json = @"{
+                ""userId"": ""user-uuid-1"",
+                ""questId"": ""quest-uuid-1"",
+                ""questCode"": ""QUEST.DIET_CHANGES.BEGINNER.1"",
+                ""questTitle"": ""Diet changes — Beginner"",
+                ""unlockedAt"": ""2026-08-26T12:00:00.000Z"",
+                ""completed"": true,
+                ""progress"": 100.0
+            }";
+
+            var progress = JsonConvert.DeserializeObject<QuestProgress>(json);
+
+            Assert.IsNotNull(progress);
+            Assert.AreEqual("user-uuid-1", progress.userId);
+            Assert.AreEqual("quest-uuid-1", progress.questId);
+            Assert.AreEqual("QUEST.DIET_CHANGES.BEGINNER.1", progress.questCode);
+            Assert.AreEqual("Diet changes — Beginner", progress.questTitle);
+            Assert.AreEqual("2026-08-26T12:00:00.000Z", progress.unlockedAt);
+            Assert.IsTrue(progress.completed);
+            Assert.AreEqual(100.0f, progress.progress);
+            Assert.AreEqual(100.0f, progress.progressPercent);
+        }
+
+        [Test]
+        public void QuestProgress_Deserialization_PopulatesLegacyFields()
         {
             string json = @"{
                 ""id"": ""prog-uuid-1"",
@@ -76,7 +111,7 @@ namespace eu.foodmission.platform.Tests
                 ""questCode"": ""QUEST.DIET_CHANGES.BEGINNER.1"",
                 ""completed"": true,
                 ""completedAt"": ""2026-08-26T12:00:00.000Z"",
-                ""progressPercent"": 100.0
+                ""progressPercent"": 75.0
             }";
 
             var progress = JsonConvert.DeserializeObject<QuestProgress>(json);
@@ -88,7 +123,8 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("QUEST.DIET_CHANGES.BEGINNER.1", progress.questCode);
             Assert.IsTrue(progress.completed);
             Assert.AreEqual("2026-08-26T12:00:00.000Z", progress.completedAt);
-            Assert.AreEqual(100.0f, progress.progressPercent);
+            Assert.AreEqual(75.0f, progress.progress);
+            Assert.AreEqual(75.0f, progress.progressPercent);
         }
 
         [Test]
@@ -97,14 +133,15 @@ namespace eu.foodmission.platform.Tests
             var req = new UpdateQuestProgressRequest
             {
                 completed = true,
-                progressPercent = 50f
+                progress = 50f
             };
 
             byte[] bytes = req.ToJsonBody();
             string json = Encoding.UTF8.GetString(bytes);
 
             Assert.IsTrue(json.Contains("\"completed\":true"));
-            Assert.IsTrue(json.Contains("\"progressPercent\":50.0"));
+            Assert.IsTrue(json.Contains("\"progress\":50.0"));
         }
     }
 }
+

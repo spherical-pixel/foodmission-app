@@ -191,15 +191,15 @@ MUSIC,39879174494609408,Music,Muziek,Musik,Μουσική,Musica,Musikk,Muzyka,G
 LIGHT,39892766241579008,Light,Licht,Licht,Φως,Luce,Lys,Światło,Svetloba,Claro
 DARK,39892875138293760,Dark,Donker,Dunkel,Σκοτεινό,Buio,Mørkt,Ciemny,Temno,Oscuro
 SYSTEM,39892914422145024,System,Systeem,System,Σύστημα,Sistema,System,System,Sistem,Sistema
-LANG_NL,39894833018429440,Dutch,Nederlands,Niederländisch,Ολλανδικά,Olandese,nederlandsk,Holenderski,nizozemščina,Holandés
-LANG_EN,39895260770328576,English,Engels,Englisch,Αγγλικά,Inglese,Engelsk,angielski,angleščina,Inglés
-LANG_DE,39895302340075520,German,Duits,Deutsch,Γερμανικά,Tedesco,Tysk,niemiecki,nemščina,Alemán
-LANG_EL,39895357172211712,Greek,Grieks,Griechisch,Ελληνικά,Greco,Gresk,grecki,grški,Griego
-LANG_IT,39895410716696576,Italian,Italiaans,Italienisch,Ιταλικά,italiano,Italiensk,włoski,italijanski,Italiano
-LANG_NO,39895456581410816,Norwegian,Noors,Norwegisch,Νορβηγικά,norvegese,Norsk,norweski,norveški,Noruego
-LANG_PL,39895644041633792,Polish,Pools,Polnisch,Πολωνικά,polacco,polsk,polski,poljščina,Polaco
-LANG_SL,39895706960388096,Slovenian,Sloveens,Slowenisch,Σλοβενικά,sloveno,slovensk,słoweński,slovenski,Esloveno
-LANG_ES,39895724194783232,Spanish,Spaans,Spanisch,Ισπανικά,Spagnolo,Spansk,hiszpański,španščina,Español
+LANG_NL,39894833018429440,Dutch,Nederlands,Niederländisch,Ολλανδικά,Olandese,Nederlandsk,Holenderski,Nizozemščina,Holandés
+LANG_EN,39895260770328576,English,Engels,Englisch,Αγγλικά,Inglese,Engelsk,Angielski,Angleščina,Inglés
+LANG_DE,39895302340075520,German,Duits,Deutsch,Γερμανικά,Tedesco,Tysk,Niemiecki,Nemščina,Alemán
+LANG_EL,39895357172211712,Greek,Grieks,Griechisch,Ελληνικά,Greco,Gresk,Grecki,Grški,Griego
+LANG_IT,39895410716696576,Italian,Italiaans,Italienisch,Ιταλικά,Italiano,Italiensk,Włoski,Italijanski,Italiano
+LANG_NO,39895456581410816,Norwegian,Noors,Norwegisch,Νορβηγικά,Norvegese,Norsk,Norweski,Norveški,Noruego
+LANG_PL,39895644041633792,Polish,Pools,Polnisch,Πολωνικά,Polacco,Polsk,Polski,Poljščina,Polaco
+LANG_SL,39895706960388096,Slovenian,Sloveens,Slowenisch,Σλοβενικά,Sloveno,Slovensk,Słoweński,Slovenski,Esloveno
+LANG_ES,39895724194783232,Spanish,Spaans,Spanisch,Ισπανικά,Spagnolo,Spansk,Hiszpański,španščina,Español
 SCALE_SM,39897152762142720,Small,Klein,Klein,Μικρό,Piccolo,Liten,Mały,Majhen,Pequeño
 SCALE_MD,39897194361249792,Medium,Medium,Mittel,Μεσαίο,Medio,Middels,Średni,Srednje,Mediano
 SCALE_LG,39897246425145344,Large,Groot,Groß,Μεγάλο,Grande,Stor,Duży,Veliko,Grande
@@ -756,3 +756,11 @@ NEW_SURVEY_DECLINE,41277120381444096,I don't want,Ik wil niet,Ich will nicht,Δ�
 FOODFACTS_EMPTY_STATE,41564040676237312,No food facts found matching the selected filters.,Er zijn geen voedingsfeiten gevonden die aan de geselecteerde filters voldoen.,"Es wurden keine Lebensmittelangaben gefunden, die den ausgewählten Filtern entsprechen.",Δεν βρέθηκαν στοιχεία για τρόφιμα που να ανταποκρίνονται στα επιλεγμένα κριτήρια.,Non sono stati trovati dati nutrizionali corrispondenti ai filtri selezionati.,Det ble ikke funnet noen næringsopplysninger som samsvarer med de valgte filtrene.,Nie znaleziono informacji o produktach spożywczych odpowiadających wybranym filtrom.,"Ni bilo najdenih podatkov o živilih, ki bi ustrezali izbranim filtrom.",No se han encontrado datos nutricionales que se ajusten a los filtros seleccionados.
 NAV_FOOD_FACTS,41575049637912576,Did you know...?,Wist je dat...?,Wusstest du schon...?,Το ξέρατε ότι…;,Lo sapevi che...?,Visste du at...?,"Czy wiesz, że...?",Ali ste vedeli...?,¿Sabías que...?
 CHALLENGES_EMPTY_STATE,41655488905994240,No challenges found matching the selected filters.,Er zijn geen uitdagingen gevonden die aan de geselecteerde filters voldoen.,"Es wurden keine Herausforderungen gefunden, die den ausgewählten Filtern entsprechen.",Δεν βρέθηκαν προκλήσεις που να αντιστοιχούν στα επιλεγμένα φίλτρα.,Non sono state trovate sfide che corrispondano ai filtri selezionati.,Det ble ikke funnet noen utfordringer som samsvarer med de valgte filtrene.,Nie znaleziono wyzwań spełniających wybrane kryteria.,"Ni bilo najdenih izzivov, ki bi ustrezali izbranim filtrom.",No se han encontrado retos que coincidan con los filtros seleccionados.
+ACTIVITY_QUIZ,44130274445877248,QUIZ,QUIZ,QUIZ,ΚΟΥΙΖ,QUIZ,QUIZ,QUIZ,KVIZ,CUESTIONARIO
+ACTIVITY_MISSION,44130372064108544,MISSION,MISSIE,MISSION,ΑΠΟΣΤΟΛΗ,MISSIONE,MISSJON,MISJA,POSLANSTVO,MISIÓN
+ACTIVITY_CHALLENGE,44130442662633472,CHALLENGE,UITDAGING,HERAUSFORDERUNG,ΠΡΟΚΛΗΣΗ,SFIDA,UTFORDRING,WYZWANIE,IZZIV,DESAFÍO
+ACTIVITY_FOOD_FACT,44130493631815680,DID YOU KNOW...?,WIST JE DAT...?,WUSSTEST DU SCHON...?,ΓΝΩΡΙΖΑΤΕ ΟΤΙ…;,LO SAPEVATE CHE...?,VISSTE DU AT...?,"CZY WIESZ, ŻE...?",ALI STE VEDELI...?,¿SABÍAS QUE...?
+ACTIVITY_MICRO_LEARNING,44130682094477312,MICRO LEARNING,MICRO-LEREN,MIKRO-LERNEN,ΜΙΚΡΟΜΑΘΗΣΗ,MICRO-APPRENDIMENTO,MIKROOPPLÆRING,MIKRONAUKA,MIKROUČENJE,MICROAPRENDIZAJE
+QUEST_DETAIL,44134788494254080,Quest,Quest,Quest,Αναζήτηση,Missione,Oppdrag,Quest,Quest,Misión
+QUESTS,44134886318006272,Quests,Opdrachten,Quests,Αποστολές,Missioni,Oppdrag,Zadania,Naloge,Misiones
+QUESTS_EMPTY_STATE,44135210076332032,No quests found matching the selected filters.,Er zijn geen opdrachten gevonden die aan de geselecteerde filters voldoen.,"Es wurden keine Quests gefunden, die den ausgewählten Filtern entsprechen.",Δεν βρέθηκαν αποστολές που να ανταποκρίνονται στα επιλεγμένα κριτήρια.,Non sono state trovate missioni corrispondenti ai filtri selezionati.,Det ble ikke funnet noen oppdrag som samsvarer med de valgte filtrene.,Nie znaleziono zadań spełniających wybrane kryteria.,"Ni bilo najdenih nalog, ki bi ustrezale izbranim filtrom.",No se han encontrado misiones que coincidan con los filtros seleccionados.

@@ -2417,6 +2417,38 @@ MonoBehaviour:
     m_Localized: No se han encontrado retos que coincidan con los filtros seleccionados.
     m_Metadata:
       m_Items: []
+  - m_Id: 44130274445877248
+    m_Localized: CUESTIONARIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130372064108544
+    m_Localized: "MISI\xD3N"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130442662633472
+    m_Localized: "DESAF\xCDO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130493631815680
+    m_Localized: "\xBFSAB\xCDAS QUE...?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130682094477312
+    m_Localized: MICROAPRENDIZAJE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134788494254080
+    m_Localized: "Misi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134886318006272
+    m_Localized: Misiones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44135210076332032
+    m_Localized: No se han encontrado misiones que coincidan con los filtros seleccionados.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

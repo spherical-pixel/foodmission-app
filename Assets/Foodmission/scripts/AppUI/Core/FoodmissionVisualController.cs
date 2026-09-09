@@ -417,11 +417,10 @@ namespace eu.foodmission.platform
 
         private void BuildMenuContent(VisualElement container)
         {
-            // Phase 2 — disabled
-            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "KNOWLEDGE"), () =>
+            AddMenuItem(container, "🗺️ " + (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUESTS")), () =>
             {
                 CloseMenuDrawer();
-                _cachedNavController?.Navigate(Actions.go_to_knowledge);
+                _cachedNavController?.Navigate(Actions.go_to_quests);
             });
 
             AddMenuItem(container, "🎯 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSIONS"), () =>
@@ -429,25 +428,19 @@ namespace eu.foodmission.platform
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_missions);
             });
+
             AddMenuItem(container, "🏆 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DAILY_CHALLENGE"), () =>
             {
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_challenges);
             });
 
+            AddMenuItem(container, "💡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "KNOWLEDGE"), () =>
+            {
+                CloseMenuDrawer();
+                _cachedNavController?.Navigate(Actions.go_to_knowledge);
+            });
 
-            // AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
-            // {
-            //     CloseMenuDrawer();
-            //     _cachedNavController?.Navigate(Actions.go_to_shopping_list, new[] { new Argument("fromMenu", "true") });
-            // });
-            // AddMenuItem(container, "🧺 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY"), () =>
-            // {
-            //     CloseMenuDrawer();
-            //     _cachedNavController?.Navigate(Actions.go_to_pantry);
-            // });
-
-            // Phase 3 — disabled
             AddMenuItem(container, "🍳 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_BOOK"), () =>
             {
                 CloseMenuDrawer();

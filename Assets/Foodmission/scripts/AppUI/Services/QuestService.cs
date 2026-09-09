@@ -195,7 +195,7 @@ namespace eu.foodmission.platform
         public async Task<(QuestProgress Result, ApiErrorResponse Error)> UpdateQuestProgressAsync(
             string codeOrId,
             bool? completed,
-            float? progressPercent,
+            float? progress,
             string lang = null)
         {
             if (string.IsNullOrEmpty(codeOrId))
@@ -211,7 +211,7 @@ namespace eu.foodmission.platform
             var reqBody = new UpdateQuestProgressRequest
             {
                 completed = completed,
-                progressPercent = progressPercent
+                progress = progress
             };
             byte[] bodyRaw = reqBody.ToJsonBody();
 
@@ -234,8 +234,8 @@ namespace eu.foodmission.platform
             try
             {
                 string raw = request.downloadHandler.text;
-                var progress = JsonConvert.DeserializeObject<QuestProgress>(raw);
-                return (progress, null);
+                var questProgress = JsonConvert.DeserializeObject<QuestProgress>(raw);
+                return (questProgress, null);
             }
             catch (Exception ex)
             {

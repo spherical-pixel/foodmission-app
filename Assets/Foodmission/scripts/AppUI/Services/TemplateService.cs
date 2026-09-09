@@ -50,7 +50,9 @@ namespace eu.foodmission.platform
             TemplateAddresses.FoodFactScreen,
             TemplateAddresses.KnowledgeScreen,
             TemplateAddresses.ChallengesScreen,
-            TemplateAddresses.MissionsScreen
+            TemplateAddresses.MissionsScreen,
+            TemplateAddresses.QuestsScreen,
+            TemplateAddresses.QuestDetailScreen
         };
 
         public async Task PreloadAllAsync()

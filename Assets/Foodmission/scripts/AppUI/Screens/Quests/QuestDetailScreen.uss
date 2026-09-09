@@ -1,0 +1,169 @@
+.fm-quest-detail-root {
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================================================
+   MAIN CARD
+   ========================================================================= */
+
+.fm-quest-detail-card {
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 24px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================================
+   HEADER: TITLE, BANNER & DESCRIPTION
+   ========================================================================= */
+
+.fm-quest-detail-title {
+    -unity-font-style: bold;
+    
+    line-height: 120%;
+    margin-bottom: 16px;
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+}
+
+
+
+.fm-quest-detail-banner-container {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--appui-backgrounds-200);
+    flex-shrink: 0;
+}
+
+.fm-quest-detail-banner-image {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.fm-quest-detail-desc {
+    margin-bottom: 48px;
+    color: var(--appui-foregrounds-50);
+}
+
+
+/* =========================================================================
+   ACTIVITIES TIMELINE / ROADMAP
+   ========================================================================= */
+
+.fm-quest-detail-timeline-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 4px;
+    height: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.fm-quest-timeline-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 96px;
+    height: auto;
+    position: relative;
+    border-radius: 12px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.fm-quest-timeline-track {
+    width: 64px;
+    min-width: 64px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.fm-quest-timeline-line-top {
+    position: absolute;
+    width: 24px;
+    left: 50%;
+    margin-left: -12px;
+    top: 0;
+    bottom: 50%;
+    background-color: var(--appui-primary-100);
+}
+
+.fm-quest-timeline-line-bottom {
+    position: absolute;
+    width: 24px;
+    left: 50%;
+    margin-left: -12px;
+    top: 50%;
+    bottom: -1px;
+    background-color: var(--appui-primary-100);
+}
+
+.fm-quest-timeline-node {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    border-radius: 64px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Completed node (Sage green fill with dark border as in mockup) */
+.fm-quest-timeline-node--completed {
+    width: 40px;
+    height: 40px;
+    background-color: #649E82;
+    border-width: 12px;
+    border-color: var(--appui-primary-100);
+}
+
+/* Pending node (Solid dark green fill as in mockup) */
+.fm-quest-timeline-node--pending {
+    background-color: var(--appui-primary-100);
+    border-width: 0px;
+}
+
+
+
+.fm-quest-timeline-label {
+    -unity-font-style: bold;
+    white-space: normal;
+    padding-left: 25px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    height: auto;
+    color: var(--appui-foregrounds-50);
+}
+

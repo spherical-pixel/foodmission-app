@@ -2447,6 +2447,38 @@ MonoBehaviour:
     m_Localized: "Nie znaleziono wyzwa\u0144 spe\u0142niaj\u0105cych wybrane kryteria."
     m_Metadata:
       m_Items: []
+  - m_Id: 44130274445877248
+    m_Localized: QUIZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130372064108544
+    m_Localized: MISJA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130442662633472
+    m_Localized: WYZWANIE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130493631815680
+    m_Localized: "CZY WIESZ, \u017BE...?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130682094477312
+    m_Localized: MIKRONAUKA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134788494254080
+    m_Localized: Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134886318006272
+    m_Localized: Zadania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44135210076332032
+    m_Localized: "Nie znaleziono zada\u0144 spe\u0142niaj\u0105cych wybrane kryteria."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -2422,6 +2422,38 @@ MonoBehaviour:
     m_Localized: Non sono state trovate sfide che corrispondano ai filtri selezionati.
     m_Metadata:
       m_Items: []
+  - m_Id: 44130274445877248
+    m_Localized: QUIZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130372064108544
+    m_Localized: MISSIONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130442662633472
+    m_Localized: SFIDA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130493631815680
+    m_Localized: LO SAPEVATE CHE...?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130682094477312
+    m_Localized: MICRO-APPRENDIMENTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134788494254080
+    m_Localized: Missione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134886318006272
+    m_Localized: Missioni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44135210076332032
+    m_Localized: Non sono state trovate missioni corrispondenti ai filtri selezionati.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

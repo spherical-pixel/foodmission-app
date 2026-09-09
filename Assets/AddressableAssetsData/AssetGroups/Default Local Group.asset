@@ -215,6 +215,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f35175e2b454e2e85a0625dc03772ee
+    m_Address: Foodmission/AppUI/Templates/QuestsScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f35175e2b454e2e85a0625dc03773ff
+    m_Address: Foodmission/AppUI/Templates/QuestDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: a73f1e0560284464cbcdeefa5fb0f8a7, type: 2}
   m_SchemaSet:

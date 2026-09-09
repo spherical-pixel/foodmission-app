@@ -74,5 +74,10 @@ namespace eu.foodmission.platform
         {
             RaiseNavigationRequested(Actions.go_to_food_facts);
         }
+
+        public void OpenQuests()
+        {
+            RaiseNavigationRequested(Actions.go_to_quests);
+        }
     }
 }

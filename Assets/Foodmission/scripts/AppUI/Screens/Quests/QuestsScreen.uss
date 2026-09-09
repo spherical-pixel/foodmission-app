@@ -1,0 +1,120 @@
+.fm-quests-root {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-quests-header-section {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.fm-quests-filters-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.fm-quests-action-group {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.fm-quests-empty {
+    margin-top: 32px;
+    -unity-text-align: middle-center;
+    color: var(--appui-foreground-muted, rgb(107, 114, 128));
+    display: none;
+}
+
+.fm-quests-scroll {
+    flex-grow: 1;
+}
+
+.fm-quests-groups-container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 24px;
+}
+
+/* =========================================================================
+   QUEST ITEM LAYOUT & DISTRIBUTION
+   ========================================================================= */
+
+.fm-quest-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 12px;
+}
+
+.fm-quest-item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+    flex-shrink: 1;
+    width: 100%;
+}
+
+.fm-quest-titles-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-right: 14px;
+}
+
+.fm-quest-item-title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    white-space: normal;
+}
+
+.fm-quest-item-subtitle {
+    color: var(--appui-foreground-muted, rgb(107, 114, 128));
+}
+
+.fm-quest-item-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.fm-quest-item-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fm-quest-item-badges .fm-quiz-level-badge {
+    margin-right: 0;
+    margin-bottom: 4px;
+    align-self: flex-end;
+}
+
+.fm-quest-item-badges .fm-quiz-status-badge {
+    margin-right: 0;
+    align-self: flex-end;
+}
+
+.fm-quest-item-badges .fm-quiz-level-badge-text,
+.fm-quest-item-badges .fm-quiz-status-badge-text {
+    white-space: nowrap;
+}
+
+.fm-quest-item-arrow {
+    flex-shrink: 0;
+    align-self: center;
+    margin-left: 12px;
+}

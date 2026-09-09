@@ -2414,6 +2414,38 @@ MonoBehaviour:
       filtrene.
     m_Metadata:
       m_Items: []
+  - m_Id: 44130274445877248
+    m_Localized: QUIZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130372064108544
+    m_Localized: MISSJON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130442662633472
+    m_Localized: UTFORDRING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130493631815680
+    m_Localized: VISSTE DU AT...?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44130682094477312
+    m_Localized: "MIKROOPPL\xC6RING"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134788494254080
+    m_Localized: Oppdrag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44134886318006272
+    m_Localized: Oppdrag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44135210076332032
+    m_Localized: Det ble ikke funnet noen oppdrag som samsvarer med de valgte filtrene.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
