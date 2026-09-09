@@ -476,6 +476,7 @@ namespace eu.foodmission.platform
                 motivation: profile.preferences?.motivation ?? "",
                 dailyTimeCommitmentMinutes: profile.preferences?.dailyTimeCommitmentMinutes ?? 0,
                 segment: !string.IsNullOrEmpty(profile.segment) ? profile.segment : (profile.preferences?.segment ?? ""),
+                currentQuestId: profile.currentQuestId ?? "",
                 onboardingProfileCompleted: profile.preferences?.onboardingProfileCompleted ?? false,
                 onboardingProfileSkippedAt: profile.preferences?.onboardingProfileSkippedAt,
                 pilotSurveyCycleState: profile.preferences?.pilotSurveyCycleState,

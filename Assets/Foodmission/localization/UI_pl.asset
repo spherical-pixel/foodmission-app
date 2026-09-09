@@ -469,11 +469,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: "Zr\xF3wnowa\u017Cony rozw\xF3j"
+    m_Localized: "\u017Bywno\u015B\u0107 i odpady"
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
-    m_Localized: Wiedza
+    m_Localized: "Wyb\xF3r produkt\xF3w spo\u017Cywczych"
     m_Metadata:
       m_Items: []
   - m_Id: 39916671006138368
@@ -2477,6 +2477,40 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44135210076332032
     m_Localized: "Nie znaleziono zada\u0144 spe\u0142niaj\u0105cych wybrane kryteria."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44177849203023872
+    m_Localized: 'Aktywna misja:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181617910996992
+    m_Localized: Rozpocznij zadanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181804343615488
+    m_Localized: Quest Active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44193049838870528
+    m_Localized: "Masz ju\u017C aktywne zadanie w toku. Czy na pewno chcesz wprowadzi\u0107
+      t\u0119 zmian\u0119?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44196897802412032
+    m_Localized: Zmiana zadania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44197097057017856
+    m_Localized: "Zachowaj obecn\u0105 wersj\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: "Wybierz zadanie, aby rozpocz\u0105\u0107 nauk\u0119 i robi\u0107
+      post\u0119py."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: Odkryj zadania
     m_Metadata:
       m_Items: []
   references:

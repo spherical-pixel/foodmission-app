@@ -473,11 +473,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: Duurzaamheid
+    m_Localized: Voeding & Afval
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
-    m_Localized: Kennis
+    m_Localized: Voedingskeuzes
     m_Metadata:
       m_Items: []
   - m_Id: 39916671006138368
@@ -2461,6 +2461,39 @@ MonoBehaviour:
   - m_Id: 44135210076332032
     m_Localized: Er zijn geen opdrachten gevonden die aan de geselecteerde filters
       voldoen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44177849203023872
+    m_Localized: 'Actieve zoektocht:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181617910996992
+    m_Localized: Begin de missie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181804343615488
+    m_Localized: Quest Active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44193049838870528
+    m_Localized: Je hebt al een actieve missie lopen. Weet je zeker dat je deze wijziging
+      wilt doorvoeren?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44196897802412032
+    m_Localized: Quest wijzigen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44197097057017856
+    m_Localized: Behoud de huidige versie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: Kies een opdracht om te beginnen met leren en vooruitgang te boeken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: Ontdek missies
     m_Metadata:
       m_Items: []
   references:

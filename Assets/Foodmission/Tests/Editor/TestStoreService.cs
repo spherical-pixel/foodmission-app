@@ -76,6 +76,7 @@ namespace eu.foodmission.platform.Tests
                 .AddCase(AppActions.setAvatar, AppReducers.SetAvatarReducer)
                 .AddCase(AppActions.setPilotCycleState, AppReducers.SetPilotCycleStateReducer)
                 .AddCase(AppActions.setPilotConsent, AppReducers.SetPilotConsentReducer)
+                .AddCase(AppActions.setCurrentQuest, AppReducers.SetCurrentQuestReducer)
                 // Profile sync
                 .AddCase(AppActions.profileSynced, AppReducers.ProfileSyncedReducer)
                 // Food Info

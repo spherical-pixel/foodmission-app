@@ -139,8 +139,12 @@
 
 /* Completed node (Sage green fill with dark border as in mockup) */
 .fm-quest-timeline-node--completed {
-    width: 40px;
-    height: 40px;
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 64px;
+    max-height: 64px;
     background-color: #649E82;
     border-width: 12px;
     border-color: var(--appui-primary-100);

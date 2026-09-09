@@ -42,7 +42,10 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaTop => false;
         protected override bool IsFixedContent => false;
 
-        private FMButton _btOpenQuizz;
+
+        private FMActiveQuestCard _activeQuestCard;
+        private VisualElement _noActiveQuestBanner;
+        private FMButton _btnChooseQuest;
 
         public HomeScreen()
         {
@@ -55,6 +58,8 @@ namespace eu.foodmission.platform
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
+            _ = _viewModel?.LoadActiveQuestAsync();
+            RefreshActiveQuestWidget();
         }
 
         private void CacheUIElements()
@@ -66,8 +71,11 @@ namespace eu.foodmission.platform
             _caloriesConsumedLabel = contentContainer.Q<Label>("calories-consumed");
             _caloriesLeftLabel = contentContainer.Q<Label>("calories-left");
 
-            _btOpenQuizz = contentContainer.Q<FMButton>("open-quiz");
-            _btOpenQuizz.style.display = DisplayStyle.None;
+
+
+            _activeQuestCard = contentContainer.Q<FMActiveQuestCard>("active-quest-card");
+            _noActiveQuestBanner = contentContainer.Q<VisualElement>("no-active-quest-banner");
+            _btnChooseQuest = contentContainer.Q<FMButton>("btn-choose-quest");
 
             _periodStepper = contentContainer.Q<FMArrowStepper>("period-stepper");
             _scopeStepper = contentContainer.Q<FMArrowStepper>("scope-stepper");
@@ -79,6 +87,8 @@ namespace eu.foodmission.platform
             RegisterEvents();
             RefreshStats();
             SetupSteppers();
+            RefreshActiveQuestWidget();
+            _ = _viewModel?.LoadActiveQuestAsync();
 
             CheckWhatsNewAsync();
             CheckPendingProfileReminder();
@@ -86,9 +96,9 @@ namespace eu.foodmission.platform
             CheckPendingLegalConsentAsync();
             CheckPendingPilotConsentAsync();
             CheckPendingPilotSurveyAsync();
-#if DEVELOPER_MODE
-                SetupPilotDebugPanel();
-#endif
+            // #if DEVELOPER_MODE
+            //             SetupPilotDebugPanel();
+            // #endif
         }
 
         private async void CheckPendingLegalConsentAsync()
@@ -522,11 +532,67 @@ namespace eu.foodmission.platform
 
         private void RegisterEvents()
         {
-            _btOpenQuizz.clicked += OnOpenQuizOpen;
+
+            if (_activeQuestCard != null) _activeQuestCard.Clicked += OnActiveQuestClicked;
+            if (_btnChooseQuest != null) _btnChooseQuest.clicked += OnChooseQuestClicked;
+            if (_viewModel != null) _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
+
         private void UnregisterEvents()
         {
-            _btOpenQuizz.clicked -= OnOpenQuizOpen;
+
+            if (_activeQuestCard != null) _activeQuestCard.Clicked -= OnActiveQuestClicked;
+            if (_btnChooseQuest != null) _btnChooseQuest.clicked -= OnChooseQuestClicked;
+            if (_viewModel != null) _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+        }
+
+        private void OnActiveQuestClicked()
+        {
+            _viewModel?.OpenCurrentQuest();
+        }
+
+        private void OnChooseQuestClicked()
+        {
+            _viewModel?.NavigateToQuests();
+        }
+
+        private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_viewModel.HasActiveQuest) ||
+                e.PropertyName == nameof(_viewModel.CurrentQuestTitle) ||
+                e.PropertyName == nameof(_viewModel.CurrentQuestActivityStates))
+            {
+                RefreshActiveQuestWidget();
+            }
+        }
+
+        private void RefreshActiveQuestWidget()
+        {
+            if (_viewModel == null) return;
+
+            if (_viewModel.HasActiveQuest)
+            {
+                if (_activeQuestCard != null)
+                {
+                    _activeQuestCard.style.display = DisplayStyle.Flex;
+                    _activeQuestCard.Setup(_viewModel.CurrentQuestTitle, _viewModel.CurrentQuestActivityStates);
+                }
+                if (_noActiveQuestBanner != null)
+                {
+                    _noActiveQuestBanner.style.display = DisplayStyle.None;
+                }
+            }
+            else
+            {
+                if (_activeQuestCard != null)
+                {
+                    _activeQuestCard.style.display = DisplayStyle.None;
+                }
+                if (_noActiveQuestBanner != null)
+                {
+                    _noActiveQuestBanner.style.display = DisplayStyle.Flex;
+                }
+            }
         }
 
         private void OnOpenQuizOpen()
@@ -660,7 +726,10 @@ namespace eu.foodmission.platform
             _periodStepper = null;
             _scopeStepper = null;
 
-            _btOpenQuizz = null;
+
+            _activeQuestCard = null;
+            _noActiveQuestBanner = null;
+            _btnChooseQuest = null;
 
             base.OnViewModelUnbinding();
         }

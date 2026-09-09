@@ -38,6 +38,7 @@ namespace eu.foodmission.platform
 
         private Unity.AppUI.UI.Text _emptyStateText;
         private VisualElement _groupsContainer;
+        private FMActiveQuestCard _activeQuestBanner;
 
         public QuestsScreen()
         {
@@ -54,6 +55,12 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
+            _activeQuestBanner = contentContainer.Q<FMActiveQuestCard>("active-quest-banner");
+            if (_activeQuestBanner != null)
+            {
+                _activeQuestBanner.Clicked += () => _viewModel?.OpenActiveQuest();
+            }
+
             _groupLevelFilters = contentContainer.Q<ActionGroup>("group-level-filters");
             _groupStatusFilters = contentContainer.Q<ActionGroup>("group-status-filters");
 
@@ -99,6 +106,7 @@ namespace eu.foodmission.platform
             }
             UpdateFilterStates();
             RebuildHierarchy();
+            UpdateActiveQuestBanner();
         }
 
         protected override void OnViewModelUnbinding()
@@ -107,6 +115,7 @@ namespace eu.foodmission.platform
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             }
+            _activeQuestBanner = null;
             base.OnViewModelUnbinding();
         }
 
@@ -119,6 +128,12 @@ namespace eu.foodmission.platform
             else if (e.PropertyName == nameof(_viewModel.SelectedLevel) || e.PropertyName == nameof(_viewModel.SelectedStatus))
             {
                 UpdateFilterStates();
+            }
+            else if (e.PropertyName == nameof(_viewModel.HasActiveQuest) ||
+                     e.PropertyName == nameof(_viewModel.ActiveQuestTitle) ||
+                     e.PropertyName == nameof(_viewModel.ActiveQuestActivityStates))
+            {
+                UpdateActiveQuestBanner();
             }
             else if (e.PropertyName == nameof(_viewModel.ErrorDetail))
             {
@@ -286,6 +301,21 @@ namespace eu.foodmission.platform
                     onOk: () => { }
                 );
                 _viewModel.ErrorDetail = null;
+            }
+        }
+
+        private void UpdateActiveQuestBanner()
+        {
+            if (_activeQuestBanner == null || _viewModel == null) return;
+
+            if (_viewModel.HasActiveQuest)
+            {
+                _activeQuestBanner.style.display = DisplayStyle.Flex;
+                _activeQuestBanner.Setup(_viewModel.ActiveQuestTitle, _viewModel.ActiveQuestActivityStates);
+            }
+            else
+            {
+                _activeQuestBanner.style.display = DisplayStyle.None;
             }
         }
     }

@@ -98,6 +98,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<AvatarPayload> setAvatar = "app/setAvatar";
         public static readonly ActionCreator<PilotSurveyCycleState> setPilotCycleState = "app/setPilotCycleState";
         public static readonly ActionCreator<bool> setPilotConsent = "app/setPilotConsent";
+        public static readonly ActionCreator<string> setCurrentQuest = "app/setCurrentQuest";
 
         // Profile sync
         public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
@@ -140,6 +141,7 @@ namespace eu.foodmission.platform
             public readonly string motivation;
             public readonly int dailyTimeCommitmentMinutes;
             public readonly string segment;
+            public readonly string currentQuestId;
             public readonly bool onboardingProfileCompleted;
             public readonly string onboardingProfileSkippedAt;
             public readonly PilotSurveyCycleState pilotSurveyCycleState;
@@ -160,6 +162,7 @@ namespace eu.foodmission.platform
                 string motivation = "",
                 int dailyTimeCommitmentMinutes = 0,
                 string segment = "",
+                string currentQuestId = "",
                 bool onboardingProfileCompleted = false,
                 string onboardingProfileSkippedAt = null,
                 PilotSurveyCycleState pilotSurveyCycleState = null,
@@ -185,6 +188,7 @@ namespace eu.foodmission.platform
                 this.motivation = motivation;
                 this.dailyTimeCommitmentMinutes = dailyTimeCommitmentMinutes;
                 this.segment = segment;
+                this.currentQuestId = currentQuestId;
                 this.onboardingProfileCompleted = onboardingProfileCompleted;
                 this.onboardingProfileSkippedAt = onboardingProfileSkippedAt;
                 this.pilotSurveyCycleState = pilotSurveyCycleState;
@@ -322,6 +326,7 @@ namespace eu.foodmission.platform
             newState.userMotivation = "";
             newState.userDailyTimeCommitmentMinutes = 0;
             newState.userSegment = "";
+            newState.userCurrentQuestId = "";
             newState.userLastShoppingListId = "";
             newState.userAutoAddToPantry = false;
             newState.userAvatarConfig = null;
@@ -480,6 +485,7 @@ namespace eu.foodmission.platform
             newState.userMotivation = action.payload.motivation ?? "";
             newState.userDailyTimeCommitmentMinutes = action.payload.dailyTimeCommitmentMinutes;
             newState.userSegment = action.payload.segment ?? "";
+            newState.userCurrentQuestId = action.payload.currentQuestId ?? "";
             newState.hasCompletedExtendedProfile = action.payload.onboardingProfileCompleted;
             newState.hasSkippedExtendedProfile = !action.payload.onboardingProfileCompleted && !string.IsNullOrEmpty(action.payload.onboardingProfileSkippedAt);
 
@@ -564,6 +570,13 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userOnboardingSurvey = action.payload;
+            return newState;
+        }
+
+        public static AppState SetCurrentQuestReducer(AppState state, IAction<string> action)
+        {
+            var newState = state.Copy();
+            newState.userCurrentQuestId = action.payload ?? "";
             return newState;
         }
     }

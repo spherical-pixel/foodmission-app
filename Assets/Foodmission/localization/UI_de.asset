@@ -468,11 +468,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: Nachhaltigkeit
+    m_Localized: Lebensmittel & Abfall
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
-    m_Localized: Wissen
+    m_Localized: "Ern\xE4hrungsentscheidungen"
     m_Metadata:
       m_Items: []
   - m_Id: 39916671006138368
@@ -2461,6 +2461,40 @@ MonoBehaviour:
   - m_Id: 44135210076332032
     m_Localized: "Es wurden keine Quests gefunden, die den ausgew\xE4hlten Filtern
       entsprechen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44177849203023872
+    m_Localized: 'Aktive Quest:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181617910996992
+    m_Localized: Quest starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181804343615488
+    m_Localized: Quest Active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44193049838870528
+    m_Localized: "Du hast bereits eine aktive Quest in Bearbeitung. M\xF6chtest du
+      die \xC4nderung wirklich vornehmen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44196897802412032
+    m_Localized: "Quest \xE4ndern"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44197097057017856
+    m_Localized: Behalte die aktuelle Version bei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: "W\xE4hle eine Quest aus, um mit dem Lernen zu beginnen und Fortschritte
+      zu machen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: Quests entdecken
     m_Metadata:
       m_Items: []
   references:

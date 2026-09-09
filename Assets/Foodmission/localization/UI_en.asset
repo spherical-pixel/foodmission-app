@@ -470,11 +470,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: Sustainability
+    m_Localized: Food & Waste
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
-    m_Localized: Knowledge
+    m_Localized: Food choices
     m_Metadata:
       m_Items: []
   - m_Id: 39916671006138368
@@ -2436,6 +2436,39 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44135210076332032
     m_Localized: No quests found matching the selected filters.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44177849203023872
+    m_Localized: 'Active Quest:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181617910996992
+    m_Localized: Start Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181804343615488
+    m_Localized: Quest Active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44193049838870528
+    m_Localized: You already have an active quest in progress. Are you sure you want
+      to make the change?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44196897802412032
+    m_Localized: Change Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44197097057017856
+    m_Localized: Keep the current one
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: Choose a quest to start learning and making progress.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: Explore Quests
     m_Metadata:
       m_Items: []
   references:

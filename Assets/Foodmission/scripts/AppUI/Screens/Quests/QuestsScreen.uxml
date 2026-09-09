@@ -5,6 +5,7 @@
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Missions/MissionsScreen.uss?fileID=7433441132597879392&amp;guid=fce3cfa16efa485490e873916425bfdb&amp;type=3#MissionsScreen"/>
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Quests/QuestsScreen.uss?fileID=7433441132597879392&amp;guid=2821b2fde381647d297af73b5ef1cbf6&amp;type=3#QuestsScreen"/>
     <ui:VisualElement name="root" class="fm-root fm-missions-root fm-quests-root">
+        <eu:FMActiveQuestCard name="active-quest-banner" style="display: none; margin-bottom: 24px;"/>
         <ui:VisualElement name="header-section" class="fm-missions-header-section fm-quests-header-section">
             <ui:VisualElement name="filters-container" class="fm-missions-filters-container fm-quests-filters-container">
                 <ui:VisualElement name="row-levels" style="flex-grow: 1; flex-direction: row;">

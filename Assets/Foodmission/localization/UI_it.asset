@@ -471,11 +471,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: "Sostenibilit\xE0"
+    m_Localized: Alimentazione e rifiuti
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
-    m_Localized: Conoscenza
+    m_Localized: Scelte alimentari
     m_Metadata:
       m_Items: []
   - m_Id: 39916671006138368
@@ -2452,6 +2452,39 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44135210076332032
     m_Localized: Non sono state trovate missioni corrispondenti ai filtri selezionati.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44177849203023872
+    m_Localized: 'Missione attiva:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181617910996992
+    m_Localized: Inizia la missione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181804343615488
+    m_Localized: Quest Active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44193049838870528
+    m_Localized: "Hai gi\xE0 una missione attiva in corso. Sei sicuro di voler apportare
+      questa modifica?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44196897802412032
+    m_Localized: Modifica missione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44197097057017856
+    m_Localized: Mantieni quello attuale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: Scegli una missione per iniziare a imparare e a fare progressi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: Esplora le missioni
     m_Metadata:
       m_Items: []
   references:

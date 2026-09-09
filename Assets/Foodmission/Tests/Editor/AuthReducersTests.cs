@@ -516,5 +516,43 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.AreEqual(new[] { "VEGETARIAN" }, copy.userDietaryPreference);
             Assert.AreEqual("PRIMARY", copy.userShoppingResponsibility);
         }
+
+        [Test]
+        public void ProfileSyncedReducer_AppliesCurrentQuestId()
+        {
+            var state = new AppState();
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 1995, country: "ES", region: "CT", zip: "08001",
+                gender: "FEMALE", annualIncome: "", educationLevel: "", activityLevel: "",
+                currentQuestId: "quest-healthy-breakfast"
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            Assert.AreEqual("quest-healthy-breakfast", newState.userCurrentQuestId);
+        }
+
+        [Test]
+        public void SetCurrentQuestReducer_UpdatesUserCurrentQuestId()
+        {
+            var state = new AppState { userCurrentQuestId = "quest-1" };
+            var action = AppActions.setCurrentQuest.Invoke("quest-2");
+
+            var newState = AppReducers.SetCurrentQuestReducer(state, action);
+
+            Assert.AreEqual("quest-2", newState.userCurrentQuestId);
+        }
+
+        [Test]
+        public void LogoutReducer_ClearsUserCurrentQuestId()
+        {
+            var state = new AppState { userCurrentQuestId = "quest-active" };
+            var action = AppActions.logout.Invoke();
+
+            var newState = AppReducers.LogoutReducer(state, action);
+
+            Assert.IsEmpty(newState.userCurrentQuestId);
+        }
     }
 }

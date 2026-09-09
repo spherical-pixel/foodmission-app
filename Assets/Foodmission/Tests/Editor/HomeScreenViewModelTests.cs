@@ -99,5 +99,93 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(error);
             Assert.AreEqual("# Pilot Consent MD", content);
         }
+
+        [Test]
+        public async Task LoadActiveQuestAsync_WithoutQuestId_SetsHasActiveQuestFalse()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+
+            await _vm.LoadActiveQuestAsync();
+
+            Assert.IsFalse(_vm.HasActiveQuest);
+            Assert.IsEmpty(_vm.CurrentQuestTitle);
+            Assert.IsEmpty(_vm.CurrentQuestActivityStates);
+        }
+
+        [Test]
+        public async Task LoadActiveQuestAsync_WithValidQuest_LoadsTitleAndActivityStates()
+        {
+            var mockQuestService = new Mock<IQuestService>();
+            var quest = new Quest
+            {
+                id = "quest-1",
+                code = "HEALTHY_BREAKFAST",
+                title = "Healthy Breakfast",
+                items = new[]
+                {
+                    new QuestItem { id = "item-1", contentType = QuestContentType.Quiz },
+                    new QuestItem { id = "item-2", contentType = QuestContentType.FoodFact },
+                    new QuestItem { id = "item-3", contentType = QuestContentType.Mission },
+                    new QuestItem { id = "item-4", contentType = QuestContentType.Challenge }
+                }
+            };
+            var progress = new QuestProgress
+            {
+                questId = "quest-1",
+                progress = 50f,
+                completed = false
+            };
+
+            mockQuestService.Setup(q => q.GetQuestAsync("quest-1", It.IsAny<string>()))
+                .ReturnsAsync((quest, (ApiErrorResponse)null));
+            mockQuestService.Setup(q => q.GetQuestProgressAsync("quest-1", It.IsAny<string>()))
+                .ReturnsAsync((progress, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "quest-1" });
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                _mockNotificationService.Object,
+                _mockLegalService.Object,
+                questService: mockQuestService.Object
+            );
+
+            await vm.LoadActiveQuestAsync();
+
+            Assert.IsTrue(vm.HasActiveQuest);
+            Assert.AreEqual("Healthy Breakfast", vm.CurrentQuestTitle);
+            Assert.AreEqual("HEALTHY_BREAKFAST", vm.CurrentQuestCode);
+            Assert.AreEqual("quest-1", vm.CurrentQuestId);
+            Assert.AreEqual(4, vm.CurrentQuestActivityStates.Length);
+            // 50% of 4 items = 2 items completed
+            Assert.IsTrue(vm.CurrentQuestActivityStates[0]);
+            Assert.IsTrue(vm.CurrentQuestActivityStates[1]);
+            Assert.IsFalse(vm.CurrentQuestActivityStates[2]);
+            Assert.IsFalse(vm.CurrentQuestActivityStates[3]);
+        }
+
+        [Test]
+        public void OpenCurrentQuest_RequestsNavigationToQuestDetail()
+        {
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.SetCurrentQuestForTesting("Healthy Breakfast", "HEALTHY_BREAKFAST", "quest-1", new[] { true, false });
+            _vm.OpenCurrentQuest();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_quest, requestedAction);
+        }
+
+        [Test]
+        public void NavigateToQuests_RequestsNavigationToQuests()
+        {
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.NavigateToQuests();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_quests, requestedAction);
+        }
     }
 }

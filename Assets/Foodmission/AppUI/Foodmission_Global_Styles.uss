@@ -1883,3 +1883,124 @@
     opacity: 0;
     transition-timing-function: ease-in-cubic;
 }
+
+/* =========================================================================
+   ACTIVE QUEST CARD & TIMELINE COMPONENT
+   ========================================================================= */
+
+.fm-active-quest-wrapper {
+    margin-top: 50px;
+    margin-bottom: 24px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.fm-active-quest-heading {
+    color: var(--appui-foregrounds-200);
+    -unity-font-style: bold;
+    /* font-size: 24px; */
+    margin-bottom: 25px;
+}
+
+.fm-active-quest-card {
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 20px;
+    padding: 24px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.fm-active-quest-title {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    /* font-size: 20px; */
+    white-space: normal;
+    margin-bottom: 16px;
+    -unity-text-align: middle-center;
+}
+
+.fm-active-quest-timeline {
+    width: 100%;
+    height: auto;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.fm-active-quest-timeline .unity-scroll-view__content-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+    height: auto;
+}
+
+.fm-active-quest-timeline .unity-scroller--horizontal,
+.fm-active-quest-timeline .unity-scroller--vertical {
+    display: none;
+}
+
+.fm-active-quest-node {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    border-radius: 64px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fm-active-quest-node--completed {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    background-color: #649E82;
+    border-width: 12px;
+    border-color: var(--appui-primary-100);
+}
+
+.fm-active-quest-node--pending {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 64px;
+    max-height: 64px;
+    background-color: var(--appui-primary-100);
+    border-width: 0px;
+}
+
+.fm-active-quest-line {
+    height: 24px;
+    width: 32px;
+    margin-left: -6px;
+    margin-right: -6px;
+    background-color: var(--appui-primary-100);
+    flex-shrink: 0;
+}
+
+/* No active quest prompt in HomeScreen */
+.fm-home-no-quest-banner {
+    background-color: var(--fm-surface-bg-transparent);
+    border-radius: 20px;
+    padding: 45px;
+    margin-top: 45px;
+    margin-bottom: 24px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fm-home-no-quest-text {
+    color: var(--appui-foregrounds-200);
+    /* font-size: 16px; */
+    white-space: normal;
+    -unity-text-align: middle-center;
+    margin-bottom: 36px;
+}

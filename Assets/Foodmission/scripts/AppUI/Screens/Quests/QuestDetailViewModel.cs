@@ -102,6 +102,12 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string _errorMessage;
 
+        [ObservableProperty]
+        private bool _isCurrentQuest;
+
+        [ObservableProperty]
+        private bool _isStartingQuest;
+
         private Quest _quest;
         private QuestProgress _questProgress;
         private string _lastLoadedCodeOrId;
@@ -112,6 +118,7 @@ namespace eu.foodmission.platform
         private readonly IQuizService _quizService;
         private readonly IMissionService _missionService;
         private readonly IChallengeService _challengeService;
+        private readonly IAuthService _authService;
 
         public Quest Quest => _quest;
         public QuestProgress QuestProgress => _questProgress;
@@ -122,20 +129,26 @@ namespace eu.foodmission.platform
             IDimensionService dimensionService,
             IQuizService quizService = null,
             IMissionService missionService = null,
-            IChallengeService challengeService = null) : base(storeService)
+            IChallengeService challengeService = null,
+            IAuthService authService = null) : base(storeService)
         {
             _questService = questService;
             _dimensionService = dimensionService;
             _quizService = quizService;
             _missionService = missionService;
             _challengeService = challengeService;
+            _authService = authService ?? App.current?.services?.GetService<IAuthService>();
 
             if (_store != null)
             {
                 _lastLoadedLang = _storeService?.GetAppState()?.lang;
                 _storeSubscription = _store.Subscribe(
-                    state => state.lang,
-                    OnLanguageChanged
+                    state => (state.lang, state.userCurrentQuestId),
+                    tuple =>
+                    {
+                        OnLanguageChanged(tuple.lang);
+                        UpdateCurrentQuestStatus(tuple.userCurrentQuestId);
+                    }
                 );
             }
         }
@@ -270,6 +283,8 @@ namespace eu.foodmission.platform
             QuestTitle = !string.IsNullOrEmpty(quest.title) ? quest.title : (!string.IsNullOrEmpty(quest.name) ? quest.name : quest.code);
             QuestDescription = quest.description ?? string.Empty;
             QuestLevel = quest.level ?? eu.foodmission.platform.QuestLevel.Beginner;
+
+            UpdateCurrentQuestStatus(_storeService?.GetAppState()?.userCurrentQuestId);
 
             // Resolve dimension
             var dim = _dimensionService?.GetDimension(quest.dimensionId);
@@ -439,17 +454,70 @@ namespace eu.foodmission.platform
             }
         }
 
-        // public void ContinueNextActivity()
-        // {
-        //     var next = _activities?.FirstOrDefault(a => !a.IsCompleted);
-        //     if (next != null)
-        //     {
-        //         OpenActivity(next);
-        //     }
-        //     else if (_activities != null && _activities.Count > 0)
-        //     {
-        //         OpenActivity(_activities[0]);
-        //     }
-        // }
+        private void UpdateCurrentQuestStatus(string currentQuestId)
+        {
+            if (_quest == null || string.IsNullOrEmpty(currentQuestId))
+            {
+                IsCurrentQuest = false;
+                return;
+            }
+
+            IsCurrentQuest = string.Equals(currentQuestId, _quest.id, StringComparison.OrdinalIgnoreCase) ||
+                             string.Equals(currentQuestId, _quest.code, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public bool HasOtherActiveQuest
+        {
+            get
+            {
+                var currentQuestId = _storeService?.GetAppState()?.userCurrentQuestId;
+                if (string.IsNullOrEmpty(currentQuestId) || _quest == null) return false;
+
+                bool isSameQuest = string.Equals(currentQuestId, _quest.id, StringComparison.OrdinalIgnoreCase) ||
+                                  (!string.IsNullOrEmpty(_quest.code) && string.Equals(currentQuestId, _quest.code, StringComparison.OrdinalIgnoreCase));
+
+                return !isSameQuest;
+            }
+        }
+
+        public string CurrentActiveQuestId => _storeService?.GetAppState()?.userCurrentQuestId;
+
+        public async Task<bool> StartQuestAsync()
+        {
+            if (_quest == null) return false;
+            string targetId = !string.IsNullOrEmpty(_quest.id) ? _quest.id : _quest.code;
+            if (string.IsNullOrEmpty(targetId)) return false;
+            if (_isStartingQuest) return false;
+
+            IsStartingQuest = true;
+            try
+            {
+                if (_authService != null)
+                {
+                    var req = new ProfileUpdateRequest
+                    {
+                        currentQuestId = targetId
+                    };
+                    var (success, error) = await _authService.UpdateProfileAsync(req);
+                    if (!success)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] StartQuestAsync failed to update profile: {error?.message}");
+                    }
+                }
+
+                _storeService?.store?.Dispatch(AppActions.setCurrentQuest.Invoke(targetId));
+                IsCurrentQuest = true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] StartQuestAsync exception: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                IsStartingQuest = false;
+            }
+        }
     }
 }

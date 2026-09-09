@@ -469,11 +469,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: Sostenibilidad
+    m_Localized: "Alimentaci\xF3n y residuos"
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
-    m_Localized: Conocimiento
+    m_Localized: Opciones alimentarias
     m_Metadata:
       m_Items: []
   - m_Id: 39916671006138368
@@ -2438,15 +2438,48 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44134788494254080
-    m_Localized: "Misi\xF3n"
+    m_Localized: Quest
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
-    m_Localized: Misiones
+    m_Localized: Quests
     m_Metadata:
       m_Items: []
   - m_Id: 44135210076332032
-    m_Localized: No se han encontrado misiones que coincidan con los filtros seleccionados.
+    m_Localized: No se han encontrado quests que coincidan con los filtros seleccionados.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44177849203023872
+    m_Localized: 'Quest Activo:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181617910996992
+    m_Localized: Empezar Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181804343615488
+    m_Localized: Quest Activo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44193049838870528
+    m_Localized: "Ya tienes un quest activo en curso. \xBFEstas seguro de que quieres
+      hacer el cambio?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44196897802412032
+    m_Localized: Cambiar Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44197097057017856
+    m_Localized: Continuar con el actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: Elige un quest para empezar a aprender y progresar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: Explorar Quests
     m_Metadata:
       m_Items: []
   references:

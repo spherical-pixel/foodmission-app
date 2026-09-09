@@ -464,11 +464,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915847026728960
-    m_Localized: Trajnost
+    m_Localized: Hrana in odpadki
     m_Metadata:
       m_Items: []
   - m_Id: 39915896439824384
-    m_Localized: Znanje
+    m_Localized: Izbira hrane
     m_Metadata:
       m_Items: []
   - m_Id: 39916671006138368
@@ -2444,6 +2444,39 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44135210076332032
     m_Localized: Ni bilo najdenih nalog, ki bi ustrezale izbranim filtrom.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44177849203023872
+    m_Localized: 'Aktivna naloga:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181617910996992
+    m_Localized: "Za\u010Dni nalogo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181804343615488
+    m_Localized: Quest Active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44193049838870528
+    m_Localized: "Trenutno \u017Ee opravlja\u0161 aktivno nalogo. Si prepri\u010Dan,
+      da \u017Eeli\u0161 izvesti spremembo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44196897802412032
+    m_Localized: "Naloga \xBBSprememba\xAB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44197097057017856
+    m_Localized: "Ohranite trenutno razli\u010Dico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: "Izberi nalogo, da se za\u010Dne\u0161 u\u010Diti in napredovati."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: "Razi\u0161\u010Di naloge"
     m_Metadata:
       m_Items: []
   references:

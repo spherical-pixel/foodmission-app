@@ -12,6 +12,7 @@
             <appui:Text name="quest-description" text="" size="M" class="fm-quest-detail-desc"/>
             <ui:VisualElement name="activities-container" class="fm-quest-detail-timeline-container"/>
         </ui:VisualElement>
+        <eu:FMButton name="btn-start-quest" title="Empezar quest" variant="Accent" size="L" class="fm-quest-start-btn" style="margin-top: 24px; margin-bottom: 12px;"/>
         <ui:VisualElement class="fm-bottom-nav-padding"/>
     </ui:VisualElement>
 </ui:UXML>

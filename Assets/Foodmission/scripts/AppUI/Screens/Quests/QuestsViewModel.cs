@@ -71,12 +71,33 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _completedQuestsCount;
 
+        [ObservableProperty]
+        private bool _hasActiveQuest;
+
+        [ObservableProperty]
+        private string _activeQuestTitle = "";
+
+        [ObservableProperty]
+        private string _activeQuestCode = "";
+
+        [ObservableProperty]
+        private string _activeQuestId = "";
+
+        [ObservableProperty]
+        private bool[] _activeQuestActivityStates = Array.Empty<bool>();
+
         private readonly IQuestService _questService;
         private readonly IDimensionService _dimensionService;
+        private readonly IQuizService _quizService;
+        private readonly IMissionService _missionService;
+        private readonly IChallengeService _challengeService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         private Quest[] _rawQuests = Array.Empty<Quest>();
         private QuestProgress[] _rawProgress = Array.Empty<QuestProgress>();
+        private QuizProgress[] _rawQuizProgress = Array.Empty<QuizProgress>();
+        private MissionProgress[] _rawMissionProgress = Array.Empty<MissionProgress>();
+        private ChallengeProgress[] _rawChallengeProgress = Array.Empty<ChallengeProgress>();
         private string _lastLoadedLang;
 
         public event Action<Quest> OnQuestSelected;
@@ -84,17 +105,27 @@ namespace eu.foodmission.platform
         public QuestsViewModel(
             IStoreService storeService,
             IQuestService questService,
-            IDimensionService dimensionService) : base(storeService)
+            IDimensionService dimensionService,
+            IQuizService quizService = null,
+            IMissionService missionService = null,
+            IChallengeService challengeService = null) : base(storeService)
         {
             _questService = questService;
             _dimensionService = dimensionService;
+            _quizService = quizService ?? App.current?.services?.GetService<IQuizService>();
+            _missionService = missionService ?? App.current?.services?.GetService<IMissionService>();
+            _challengeService = challengeService ?? App.current?.services?.GetService<IChallengeService>();
 
             if (_store != null)
             {
                 _lastLoadedLang = _storeService?.GetAppState()?.lang;
                 _storeSubscription = _store.Subscribe(
-                    state => state.lang,
-                    OnLanguageChanged
+                    state => (state.lang, state.userCurrentQuestId),
+                    tuple =>
+                    {
+                        OnLanguageChanged(tuple.lang);
+                        UpdateActiveQuest(tuple.userCurrentQuestId);
+                    }
                 );
             }
         }
@@ -134,10 +165,28 @@ namespace eu.foodmission.platform
                         ? _questService.GetUserProgressListAsync()
                         : Task.FromResult<(QuestProgress[], ApiErrorResponse)>((null, null));
 
-                await Task.WhenAll(questsTask, progressTask);
+                Task<(QuizProgress[] Result, ApiErrorResponse Error)> quizProgressTask =
+                    _quizService != null
+                        ? _quizService.GetUserProgressListAsync()
+                        : Task.FromResult<(QuizProgress[], ApiErrorResponse)>((null, null));
+
+                Task<(MissionProgress[] Result, ApiErrorResponse Error)> missionProgressTask =
+                    _missionService != null
+                        ? _missionService.GetUserProgressListAsync()
+                        : Task.FromResult<(MissionProgress[], ApiErrorResponse)>((null, null));
+
+                Task<(ChallengeProgress[] Result, ApiErrorResponse Error)> challengeProgressTask =
+                    _challengeService != null
+                        ? _challengeService.GetUserProgressListAsync()
+                        : Task.FromResult<(ChallengeProgress[], ApiErrorResponse)>((null, null));
+
+                await Task.WhenAll(questsTask, progressTask, quizProgressTask, missionProgressTask, challengeProgressTask);
 
                 var questsResponse = await questsTask;
                 var progressResponse = await progressTask;
+                var quizResponse = await quizProgressTask;
+                var missionResponse = await missionProgressTask;
+                var challengeResponse = await challengeProgressTask;
 
                 if (questsResponse.Error != null)
                 {
@@ -149,7 +198,11 @@ namespace eu.foodmission.platform
 
                 _rawQuests = questsResponse.Result ?? Array.Empty<Quest>();
                 _rawProgress = progressResponse.Result ?? Array.Empty<QuestProgress>();
+                _rawQuizProgress = quizResponse.Result ?? Array.Empty<QuizProgress>();
+                _rawMissionProgress = missionResponse.Result ?? Array.Empty<MissionProgress>();
+                _rawChallengeProgress = challengeResponse.Result ?? Array.Empty<ChallengeProgress>();
 
+                UpdateActiveQuest();
                 RebuildDisplayGroups();
             }
             catch (Exception ex)
@@ -230,10 +283,19 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Actions.open_quest, args.ToArray());
         }
 
-        public void SetRawDataForTesting(Quest[] quests, QuestProgress[] progress)
+        public void SetRawDataForTesting(
+            Quest[] quests,
+            QuestProgress[] progress,
+            QuizProgress[] quizProgress = null,
+            MissionProgress[] missionProgress = null,
+            ChallengeProgress[] challengeProgress = null)
         {
             _rawQuests = quests ?? Array.Empty<Quest>();
             _rawProgress = progress ?? Array.Empty<QuestProgress>();
+            _rawQuizProgress = quizProgress ?? Array.Empty<QuizProgress>();
+            _rawMissionProgress = missionProgress ?? Array.Empty<MissionProgress>();
+            _rawChallengeProgress = challengeProgress ?? Array.Empty<ChallengeProgress>();
+            UpdateActiveQuest();
             RebuildDisplayGroups();
         }
 
@@ -422,6 +484,154 @@ namespace eu.foodmission.platform
                 return levelA.CompareTo(levelB);
 
             return string.Compare(a.Quest?.code, b.Quest?.code, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public void UpdateActiveQuest(string activeQuestId = null)
+        {
+            activeQuestId ??= _storeService?.GetAppState()?.userCurrentQuestId;
+            if (string.IsNullOrEmpty(activeQuestId) || _rawQuests == null || _rawQuests.Length == 0)
+            {
+                HasActiveQuest = false;
+                ActiveQuestTitle = "";
+                ActiveQuestCode = "";
+                ActiveQuestId = "";
+                ActiveQuestActivityStates = Array.Empty<bool>();
+                return;
+            }
+
+            var activeQuest = _rawQuests.FirstOrDefault(q =>
+                string.Equals(q.id, activeQuestId, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(q.code, activeQuestId, StringComparison.OrdinalIgnoreCase));
+
+            if (activeQuest == null)
+            {
+                HasActiveQuest = false;
+                return;
+            }
+
+            ActiveQuestTitle = !string.IsNullOrEmpty(activeQuest.title) ? activeQuest.title : (!string.IsNullOrEmpty(activeQuest.name) ? activeQuest.name : activeQuest.code);
+            ActiveQuestCode = activeQuest.code ?? "";
+            ActiveQuestId = activeQuest.id ?? activeQuestId;
+
+            int totalItems = activeQuest.items != null ? activeQuest.items.Length : 0;
+            if (totalItems > 0)
+            {
+                var progress = _rawProgress?.FirstOrDefault(p =>
+                    string.Equals(p.questId, activeQuest.id, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(p.questCode, activeQuest.code, StringComparison.OrdinalIgnoreCase));
+
+                float progressPct = progress != null ? progress.progress : 0f;
+                bool isCompleted = progress != null && (progress.completed || progressPct >= 100f);
+
+                var items = activeQuest.items.OrderBy(it => it.sortOrder).ToArray();
+
+                var completedQuizCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (_rawQuizProgress != null)
+                {
+                    foreach (var qp in _rawQuizProgress)
+                    {
+                        if (qp == null) continue;
+                        if (qp.completed && (qp.isCorrect == null || qp.isCorrect == true))
+                        {
+                            if (!string.IsNullOrEmpty(qp.quizId)) completedQuizCodes.Add(qp.quizId);
+                            if (!string.IsNullOrEmpty(qp.quizCode)) completedQuizCodes.Add(qp.quizCode);
+                        }
+                    }
+                }
+
+                var completedMissionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (_rawMissionProgress != null)
+                {
+                    foreach (var mp in _rawMissionProgress)
+                    {
+                        if (mp == null) continue;
+                        if (mp.completed || mp.progress >= 100f)
+                        {
+                            if (!string.IsNullOrEmpty(mp.missionId)) completedMissionCodes.Add(mp.missionId);
+                        }
+                    }
+                }
+
+                var completedChallengeCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (_rawChallengeProgress != null)
+                {
+                    foreach (var cp in _rawChallengeProgress)
+                    {
+                        if (cp == null) continue;
+                        if (cp.completed || cp.progress >= 100f)
+                        {
+                            if (!string.IsNullOrEmpty(cp.challengeId)) completedChallengeCodes.Add(cp.challengeId);
+                        }
+                    }
+                }
+
+                bool hasAnySubProgress = completedQuizCodes.Count > 0 || completedMissionCodes.Count > 0 || completedChallengeCodes.Count > 0;
+                var states = new bool[totalItems];
+
+                if (isCompleted)
+                {
+                    for (int i = 0; i < totalItems; i++) states[i] = true;
+                }
+                else if (hasAnySubProgress)
+                {
+                    for (int i = 0; i < totalItems; i++)
+                    {
+                        var it = items[i];
+                        if (it == null) continue;
+
+                        bool isItemCompleted = false;
+                        string cType = it.contentType ?? string.Empty;
+                        string code = it.contentCode ?? string.Empty;
+
+                        if (string.Equals(cType, QuestContentType.Quiz, StringComparison.OrdinalIgnoreCase))
+                        {
+                            isItemCompleted = completedQuizCodes.Contains(code);
+                        }
+                        else if (string.Equals(cType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
+                        {
+                            isItemCompleted = completedMissionCodes.Contains(code);
+                        }
+                        else if (string.Equals(cType, "CHALLENGE", StringComparison.OrdinalIgnoreCase))
+                        {
+                            isItemCompleted = completedChallengeCodes.Contains(code);
+                        }
+
+                        states[i] = isItemCompleted;
+                    }
+                }
+                else
+                {
+                    int completedCount = Mathf.Clamp(Mathf.RoundToInt((progressPct / 100f) * totalItems), 0, totalItems);
+                    for (int i = 0; i < completedCount; i++) states[i] = true;
+                }
+                ActiveQuestActivityStates = states;
+            }
+            else
+            {
+                ActiveQuestActivityStates = Array.Empty<bool>();
+            }
+
+            HasActiveQuest = true;
+        }
+
+        public void OpenActiveQuest()
+        {
+            if (!HasActiveQuest) return;
+            var quest = _rawQuests?.FirstOrDefault(q =>
+                string.Equals(q.id, ActiveQuestId, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(q.code, ActiveQuestCode, StringComparison.OrdinalIgnoreCase));
+
+            if (quest != null)
+            {
+                OpenQuest(quest);
+            }
+            else
+            {
+                var args = new List<Argument>();
+                if (!string.IsNullOrEmpty(ActiveQuestCode)) args.Add(new Argument("code", ActiveQuestCode));
+                if (!string.IsNullOrEmpty(ActiveQuestId)) args.Add(new Argument("id", ActiveQuestId));
+                RaiseNavigationRequested(Actions.open_quest, args.ToArray());
+            }
         }
     }
 }

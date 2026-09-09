@@ -350,5 +350,70 @@ namespace eu.foodmission.platform.Tests
             };
             Assert.AreEqual("Food Facts", item4.TimelineDisplayLabel);
         }
+
+        [Test]
+        public void IsCurrentQuest_MatchesUserCurrentQuestId()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q-100" });
+
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress);
+
+            Assert.IsTrue(_vm.IsCurrentQuest);
+
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "different-quest" });
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress);
+            Assert.IsFalse(_vm.IsCurrentQuest);
+        }
+
+        [Test]
+        public void HasOtherActiveQuest_WhenDifferentQuestActive_ReturnsTrue()
+        {
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress);
+
+            // 1. When no quest is active
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            Assert.IsFalse(_vm.HasOtherActiveQuest);
+
+            // 2. When same quest is active (by ID)
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q-100" });
+            Assert.IsFalse(_vm.HasOtherActiveQuest);
+
+            // 3. When same quest is active (by code)
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "QUEST.DIET.1" });
+            Assert.IsFalse(_vm.HasOtherActiveQuest);
+
+            // 4. When a different quest is active
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "other-quest-id" });
+            Assert.IsTrue(_vm.HasOtherActiveQuest);
+        }
+
+        [Test]
+        public async Task StartQuestAsync_UpdatesProfileAndDispatchesAction()
+        {
+            var mockAuthService = new Mock<IAuthService>();
+            mockAuthService.Setup(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.currentQuestId == "q-100")))
+                .ReturnsAsync((true, (ApiErrorResponse)null));
+
+            var vm = new QuestDetailViewModel(
+                _storeService,
+                _mockQuestService.Object,
+                _mockDimensionService.Object,
+                _mockQuizService.Object,
+                _mockMissionService.Object,
+                _mockChallengeService.Object,
+                authService: mockAuthService.Object
+            );
+
+            vm.SetQuestForTesting(_mockQuest, _mockProgress);
+            Assert.IsFalse(vm.IsCurrentQuest);
+
+            bool success = await vm.StartQuestAsync();
+
+            Assert.IsTrue(success);
+            Assert.IsTrue(vm.IsCurrentQuest);
+            mockAuthService.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.currentQuestId == "q-100")), Times.Once);
+            Assert.Contains(AppActions.setCurrentQuest, _storeService.DispatchedActionTypes);
+            Assert.AreEqual("q-100", _storeService.GetAppState().userCurrentQuestId);
+        }
     }
 }

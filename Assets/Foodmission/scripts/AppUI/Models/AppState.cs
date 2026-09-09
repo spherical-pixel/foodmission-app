@@ -141,6 +141,7 @@ namespace eu.foodmission.platform
         public string userMotivation = "";
         public int userDailyTimeCommitmentMinutes = 0;
         public string userSegment = "";
+        public string userCurrentQuestId = "";
         public PilotSurveyCycleState pilotSurveyCycleState;
         public bool pilotConsentAccepted = false;
 
@@ -210,6 +211,7 @@ namespace eu.foodmission.platform
                 userMotivation = this.userMotivation,
                 userDailyTimeCommitmentMinutes = this.userDailyTimeCommitmentMinutes,
                 userSegment = this.userSegment,
+                userCurrentQuestId = this.userCurrentQuestId,
                 pilotSurveyCycleState = this.pilotSurveyCycleState?.Copy(),
                 pilotConsentAccepted = this.pilotConsentAccepted,
                 isAuthenticating = this.isAuthenticating,

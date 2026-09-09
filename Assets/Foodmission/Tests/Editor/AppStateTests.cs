@@ -131,5 +131,20 @@ namespace eu.foodmission.platform.Tests
             copy.pilotSurveyCycleState.currentCycle = 3;
             Assert.AreEqual(2, state.pilotSurveyCycleState.currentCycle);
         }
+
+        [Test]
+        public void Copy_PreservesUserCurrentQuestId()
+        {
+            var state = new AppState
+            {
+                userCurrentQuestId = "quest-healthy-breakfast"
+            };
+
+            var copy = state.Copy();
+            Assert.AreEqual("quest-healthy-breakfast", copy.userCurrentQuestId);
+
+            copy.userCurrentQuestId = "other-quest";
+            Assert.AreEqual("quest-healthy-breakfast", state.userCurrentQuestId);
+        }
     }
 }

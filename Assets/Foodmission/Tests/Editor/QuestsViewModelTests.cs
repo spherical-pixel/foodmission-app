@@ -287,5 +287,57 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("ALL_QUESTS", _vm.DisplayGroups[0].Dimension.code);
             Assert.AreEqual(4, _vm.DisplayGroups[0].TotalCount);
         }
+
+        [Test]
+        public void UpdateActiveQuest_WhenCurrentQuestMatches_PopulatesActiveQuestProperties()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q-1" });
+
+            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+
+            Assert.IsTrue(_vm.HasActiveQuest);
+            Assert.AreEqual("q-1", _vm.ActiveQuestId);
+            Assert.AreEqual("QUEST.DIET.BEGINNER.1", _vm.ActiveQuestCode);
+            Assert.AreEqual("Learn to Log Your Food", _vm.ActiveQuestTitle);
+        }
+
+        [Test]
+        public void UpdateActiveQuest_WithSubProgress_AccuratelySetsActivityStates()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q-1" });
+
+            var mockQuizProg = new[]
+            {
+                new QuizProgress { quizId = "Q.1", quizCode = "Q.1", completed = true, isCorrect = true }
+            };
+            var mockMissionProg = new[]
+            {
+                new MissionProgress { missionId = "M.1", completed = false, progress = 0f }
+            };
+
+            // Quest q-1 has items: item-1 (Mission M.1, sortOrder 0), item-2 (Quiz Q.1, sortOrder 0)
+            _vm.SetRawDataForTesting(_mockQuests, null, mockQuizProg, mockMissionProg, null);
+
+            Assert.IsTrue(_vm.HasActiveQuest);
+            Assert.IsNotNull(_vm.ActiveQuestActivityStates);
+            Assert.AreEqual(2, _vm.ActiveQuestActivityStates.Length);
+            // item-1 (M.1) is false, item-2 (Q.1) is true
+            Assert.IsFalse(_vm.ActiveQuestActivityStates[0]);
+            Assert.IsTrue(_vm.ActiveQuestActivityStates[1]);
+        }
+
+        [Test]
+        public void OpenActiveQuest_WhenActiveQuestPresent_RequestsNavigation()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q-1" });
+            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.OpenActiveQuest();
+
+            Assert.AreEqual(Actions.open_quest, requestedAction);
+        }
     }
 }
