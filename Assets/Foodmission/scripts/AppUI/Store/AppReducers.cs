@@ -28,6 +28,24 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<int> updateSessionTimestamp = "app/updateSessionTimestamp";
         public static readonly ActionCreator<AppState> restoreState = "app/restoreState";
 
+        // Gamification / Wallet
+        public static readonly ActionCreator<WalletPayload> setWalletBalance = "app/setWalletBalance";
+        public static readonly ActionCreator<WalletPayload> addWalletReward = "app/addWalletReward";
+        public static readonly ActionCreator<ProgressIndicator[]> setProgressIndicators = "app/setProgressIndicators";
+        public static readonly ActionCreator<string[]> setBadges = "app/setBadges";
+
+        public readonly struct WalletPayload
+        {
+            public readonly int xp;
+            public readonly int points;
+
+            public WalletPayload(int xp, int points)
+            {
+                this.xp = xp;
+                this.points = points;
+            }
+        }
+
 
         // Auth
         public static readonly ActionCreator<string> loginRequest = "app/loginRequest";
@@ -331,6 +349,10 @@ namespace eu.foodmission.platform
             newState.userAutoAddToPantry = false;
             newState.userAvatarConfig = null;
             newState.userHasAvatar = false;
+            newState.userXp = 0;
+            newState.userPoints = 0;
+            newState.userProgressIndicators = new ProgressIndicator[0];
+            newState.userBadges = new string[0];
 
             // Clear temporal data
             newState.isAuthenticating = false;
@@ -577,6 +599,37 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userCurrentQuestId = action.payload ?? "";
+            return newState;
+        }
+
+        // Gamification / Wallet
+        public static AppState SetWalletBalanceReducer(AppState state, IAction<AppActions.WalletPayload> action)
+        {
+            var newState = state.Copy();
+            newState.userXp = action.payload.xp;
+            newState.userPoints = action.payload.points;
+            return newState;
+        }
+
+        public static AppState AddWalletRewardReducer(AppState state, IAction<AppActions.WalletPayload> action)
+        {
+            var newState = state.Copy();
+            newState.userXp += action.payload.xp;
+            newState.userPoints += action.payload.points;
+            return newState;
+        }
+
+        public static AppState SetProgressIndicatorsReducer(AppState state, IAction<ProgressIndicator[]> action)
+        {
+            var newState = state.Copy();
+            newState.userProgressIndicators = action.payload != null ? (ProgressIndicator[])action.payload.Clone() : new ProgressIndicator[0];
+            return newState;
+        }
+
+        public static AppState SetBadgesReducer(AppState state, IAction<string[]> action)
+        {
+            var newState = state.Copy();
+            newState.userBadges = action.payload != null ? (string[])action.payload.Clone() : new string[0];
             return newState;
         }
     }
