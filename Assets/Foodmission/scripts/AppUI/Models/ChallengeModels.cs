@@ -40,6 +40,7 @@ namespace eu.foodmission.platform
         public float progress;
         public bool completed;
         public string challengeTitle;
+        public ContentReward reward;
     }
 
     public class ChallengeFilterParams

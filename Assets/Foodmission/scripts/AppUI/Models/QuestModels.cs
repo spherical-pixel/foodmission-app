@@ -79,6 +79,8 @@ namespace eu.foodmission.platform
             get => progress;
             set => progress = value;
         }
+
+        public ContentReward reward;
     }
 
     public class QuestFilterParams
