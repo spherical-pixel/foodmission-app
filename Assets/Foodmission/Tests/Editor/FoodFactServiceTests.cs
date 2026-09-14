@@ -95,5 +95,29 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+
+        [Test]
+        public async Task MarkAsReadAsync_OnEmptyCodeOrId_ReturnsNull()
+        {
+            var (result, error) = await _service.MarkAsReadAsync("");
+            Assert.IsNull(result);
+            Assert.IsNull(error);
+
+            var (resultNull, errorNull) = await _service.MarkAsReadAsync(null);
+            Assert.IsNull(resultNull);
+            Assert.IsNull(errorNull);
+        }
+
+        [Test]
+        public async Task MarkAsReadAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.Expect(LogType.Error, new Regex(".*MarkAsReadAsync.*"));
+            LogAssert.Expect(LogType.Error, new Regex(".*MarkAsReadAsync.*"));
+
+            var (result, error) = await _service.MarkAsReadAsync("FF1.1.1");
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
     }
 }

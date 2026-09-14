@@ -176,5 +176,43 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
         }
+
+        public async Task<(FoodFactProgressResponse Result, ApiErrorResponse Error)> MarkAsReadAsync(string codeOrId)
+        {
+            if (string.IsNullOrEmpty(codeOrId))
+            {
+                return (null, null);
+            }
+
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-facts/{Uri.EscapeDataString(codeOrId)}/read";
+
+            using UnityWebRequest request = UnityWebRequest.Post(url, "", "application/json");
+            if (!string.IsNullOrEmpty(AuthHeader))
+            {
+                request.SetRequestHeader("Authorization", AuthHeader);
+            }
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+                await Task.Yield();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] MarkAsReadAsync {codeOrId}"));
+            }
+
+            try
+            {
+                string raw = request.downloadHandler.text;
+                var progress = JsonConvert.DeserializeObject<FoodFactProgressResponse>(raw);
+                return (progress, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize FoodFactProgressResponse {codeOrId}: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
     }
 }
