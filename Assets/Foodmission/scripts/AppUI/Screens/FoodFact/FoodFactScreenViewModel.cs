@@ -16,6 +16,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool _isLoading;
 
+        [ObservableProperty]
+        private ContentReward _earnedReward;
+
         private readonly IFoodFactService _foodFactService;
 
         public FoodFactScreenViewModel(
@@ -50,6 +53,35 @@ namespace eu.foodmission.platform
 
                 Debug.Log($"[{GetType().Name}] LoadFoodFactDataByCodeOrId -> {result?.code}");
             }
+        }
+
+        public async Task<ContentReward> MarkAsReadAsync()
+        {
+            if (FoodFactData == null || string.IsNullOrEmpty(FoodFactData.code))
+                return null;
+
+            if (_foodFactService == null)
+                return null;
+
+            try
+            {
+                var (progress, error) = await _foodFactService.MarkAsReadAsync(FoodFactData.code);
+                if (progress?.reward != null &&
+                    ((progress.reward.xp.HasValue && progress.reward.xp.Value > 0) ||
+                     (progress.reward.points.HasValue && progress.reward.points.Value > 0) ||
+                     !string.IsNullOrEmpty(progress.reward.badgeId)))
+                {
+                    EarnedReward = progress.reward;
+                    _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(EarnedReward.xp ?? 0, EarnedReward.points ?? 0)));
+                    return EarnedReward;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] MarkAsReadAsync failed: {ex.Message}");
+            }
+
+            return null;
         }
     }
 }

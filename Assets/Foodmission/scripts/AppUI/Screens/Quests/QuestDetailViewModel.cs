@@ -108,6 +108,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool _isStartingQuest;
 
+        [ObservableProperty]
+        private ContentReward _earnedReward;
+
         private Quest _quest;
         private QuestProgress _questProgress;
         private string _lastLoadedCodeOrId;
@@ -294,6 +297,19 @@ namespace eu.foodmission.platform
             // Overall Quest progress
             bool questIsCompleted = progress != null && (progress.completed || progress.progress >= 100f);
             float overallProgress = progress != null ? progress.progress : 0f;
+
+            if (progress?.reward != null &&
+                ((progress.reward.xp.HasValue && progress.reward.xp.Value > 0) ||
+                 (progress.reward.points.HasValue && progress.reward.points.Value > 0) ||
+                 !string.IsNullOrEmpty(progress.reward.badgeId)))
+            {
+                EarnedReward = progress.reward;
+                _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(progress.reward.xp ?? 0, progress.reward.points ?? 0)));
+            }
+            else
+            {
+                EarnedReward = null;
+            }
 
             // Map sub-activity progress
             var completedQuizCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);

@@ -415,5 +415,43 @@ namespace eu.foodmission.platform.Tests
             Assert.Contains(AppActions.setCurrentQuest, _storeService.DispatchedActionTypes);
             Assert.AreEqual("q-100", _storeService.GetAppState().userCurrentQuestId);
         }
+
+        [Test]
+        public void PopulateFromQuest_WhenProgressHasReward_DispatchesWalletRewardAndSetsEarnedReward()
+        {
+            var expectedReward = new ContentReward { xp = 150, points = 50, badgeId = "MASTER_CHEF" };
+            var progress = new QuestProgress
+            {
+                questId = "q-100",
+                completed = true,
+                progress = 100f,
+                reward = expectedReward
+            };
+
+            _vm.SetQuestForTesting(_mockQuest, progress);
+
+            Assert.IsNotNull(_vm.EarnedReward);
+            Assert.AreSame(expectedReward, _vm.EarnedReward);
+            Assert.Contains("app/addWalletReward", _storeService.DispatchedActionTypes);
+            Assert.AreEqual(150, _storeService.GetAppState().userXp);
+            Assert.AreEqual(50, _storeService.GetAppState().userPoints);
+        }
+
+        [Test]
+        public void PopulateFromQuest_WhenProgressHasNoReward_DoesNotDispatchWalletReward()
+        {
+            var progress = new QuestProgress
+            {
+                questId = "q-100",
+                completed = true,
+                progress = 100f,
+                reward = null
+            };
+
+            _vm.SetQuestForTesting(_mockQuest, progress);
+
+            Assert.IsNull(_vm.EarnedReward);
+            Assert.IsFalse(_storeService.DispatchedActionTypes.Contains("app/addWalletReward"));
+        }
     }
 }

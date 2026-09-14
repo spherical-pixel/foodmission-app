@@ -140,6 +140,13 @@ namespace eu.foodmission.platform
             {
                 UpdateStartQuestButton();
             }
+            else if (e.PropertyName == nameof(_viewModel.EarnedReward))
+            {
+                if (_viewModel.EarnedReward != null)
+                {
+                    RewardCelebrationDialog.Show(_viewModel.EarnedReward, "@UI:QUEST_REWARD_TITLE");
+                }
+            }
         }
 
         private void UpdateView()
