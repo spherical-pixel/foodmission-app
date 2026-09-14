@@ -45,8 +45,10 @@ namespace eu.foodmission.platform.Components
         private readonly VisualElement _cardContainer;
         private readonly Unity.AppUI.UI.Text _questTitleText;
         private readonly ScrollView _timelineContainer;
+        private readonly FMButton _btnQuickMeal;
 
         public event Action Clicked;
+        public event Action QuickMealClicked;
 
         public FMActiveQuestCard()
         {
@@ -77,6 +79,21 @@ namespace eu.foodmission.platform.Components
             };
             _timelineContainer.AddToClassList("fm-active-quest-timeline");
             _cardContainer.Add(_timelineContainer);
+
+            // Quick Meal Check CTA Button
+            _btnQuickMeal = new FMButton
+            {
+                title = "⚡ Registro Rápido",
+                size = Size.S,
+                variant = ButtonVariant.Accent
+            };
+            _btnQuickMeal.style.marginTop = 16;
+            _btnQuickMeal.style.alignSelf = Align.FlexEnd;
+            _btnQuickMeal.clicked += () =>
+            {
+                QuickMealClicked?.Invoke();
+            };
+            _cardContainer.Add(_btnQuickMeal);
 
             // Click interaction on card and timeline
             _cardContainer.RegisterCallback<ClickEvent>(evt =>

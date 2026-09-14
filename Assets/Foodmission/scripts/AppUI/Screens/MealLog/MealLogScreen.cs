@@ -49,6 +49,7 @@ namespace eu.foodmission.platform
         private VisualElement _selectionAndButton;
         private VisualElement _selectedChips;
         private FMButton _btnLogSelected;
+        private FMButton _btnGoQuickMeal;
         private VisualElement _loggedMealsZone;
         private VisualElement _mealList;
         private AccessibilityNode _logButtonNode;
@@ -80,8 +81,17 @@ namespace eu.foodmission.platform
             _selectionAndButton = contentContainer.Q<VisualElement>("selection-and-button");
             _selectedChips = contentContainer.Q<VisualElement>("selected-chips");
             _btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
+            _btnGoQuickMeal = contentContainer.Q<FMButton>("btn-go-quick-meal");
             _loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
+
+            if (_btnGoQuickMeal != null)
+            {
+                _btnGoQuickMeal.clicked += () =>
+                {
+                    _viewModel?.NavigateToQuickMealLog();
+                };
+            }
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)

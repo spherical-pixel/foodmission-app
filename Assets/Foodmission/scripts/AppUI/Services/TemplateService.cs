@@ -52,7 +52,10 @@ namespace eu.foodmission.platform
             TemplateAddresses.ChallengesScreen,
             TemplateAddresses.MissionsScreen,
             TemplateAddresses.QuestsScreen,
-            TemplateAddresses.QuestDetailScreen
+            TemplateAddresses.QuestDetailScreen,
+            TemplateAddresses.MissionDetailScreen,
+            TemplateAddresses.ChallengeDetailScreen,
+            TemplateAddresses.QuickMealLogScreen
         };
 
         public async Task PreloadAllAsync()

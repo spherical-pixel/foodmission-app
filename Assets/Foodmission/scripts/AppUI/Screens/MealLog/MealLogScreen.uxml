@@ -4,6 +4,10 @@
     <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.ShoppingListViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
     <ui:VisualElement name="root" class="fm-root">
         <appui:ExVisualElement name="log-meal-zone">
+            <ui:VisualElement name="quick-meal-banner" class="fm-quick-meal-banner">
+                <appui:Text text="⚡ ¿Prisa? Responde a las preguntas de tu misión activa" size="M" class="fm-quick-meal-banner-text"/>
+                <fm:FMButton name="btn-go-quick-meal" title="Registro Rápido" variant="Accent" size="S" class="fm-quick-meal-banner-btn"/>
+            </ui:VisualElement>
             <appui:ExVisualElement name="step-1" class="fm-ml-step">
                 <appui:Heading name="step-1-heading" text="What type of meal do you want to log?" size="M" primary="false" class="fm-ml-step-heading fm-heading-white">
                     <Bindings>

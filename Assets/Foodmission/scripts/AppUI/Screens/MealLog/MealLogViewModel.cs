@@ -1258,6 +1258,10 @@ namespace eu.foodmission.platform
                 _ => "PIECES",
             };
         }
-    }
 
+        public void NavigateToQuickMealLog()
+        {
+            RaiseNavigationRequested(Actions.open_quick_meal_log);
+        }
+    }
 }

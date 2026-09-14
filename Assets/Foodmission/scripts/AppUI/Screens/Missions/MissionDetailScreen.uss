@@ -1,0 +1,276 @@
+.fm-activity-detail-root {
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-activity-detail-card {
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 24px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.fm-activity-header-badges {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.fm-activity-badge {
+    align-self: flex-start;
+    margin-right: 8px;
+}
+
+.fm-activity-title {
+    -unity-font-style: bold;
+    margin-bottom: 16px;
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+}
+
+.fm-activity-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.fm-activity-section-title {
+    -unity-font-style: bold;
+    margin-bottom: 8px;
+    color: var(--appui-foregrounds-100);
+}
+
+.fm-activity-why-text {
+    color: var(--appui-foregrounds-200);
+    white-space: normal;
+}
+
+/* =========================================================================
+   PROGRESS CARD
+   ========================================================================= */
+
+.fm-activity-progress-card {
+    background-color: var(--appui-backgrounds-100);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.fm-activity-progress-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 12px;
+    min-height: 28px;
+}
+
+.fm-activity-progress-title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-100);
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.fm-activity-progress-pct {
+    -unity-font-style: bold;
+    color: var(--appui-primary-800);
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-left: 16px;
+    -unity-text-align: middle-right;
+    overflow: visible;
+}
+
+.fm-activity-progress-track {
+    width: 100%;
+    height: 12px;
+    background-color: var(--appui-backgrounds-300);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.fm-activity-progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--appui-primary-800);
+    border-radius: 6px;
+}
+
+/* =========================================================================
+   TWO-TAB SELECTOR
+   ========================================================================= */
+
+.fm-activity-tabs-header {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--appui-backgrounds-100);
+    border-radius: 16px;
+    padding: 4px;
+    margin-bottom: 20px;
+}
+
+.fm-activity-tab-btn {
+    flex-grow: 1;
+    height: 44px;
+    border-radius: 12px;
+    border-width: 0;
+    background-color: transparent;
+    color: var(--appui-foregrounds-200);
+    -unity-font-style: bold;
+    font-size: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.fm-activity-tab-btn--active {
+    background-color: var(--appui-backgrounds-200);
+    color: var(--appui-primary-800);
+}
+
+.fm-activity-tab-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--appui-backgrounds-100);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.fm-activity-tab-desc {
+    color: var(--appui-foregrounds-100);
+    margin-bottom: 20px;
+    white-space: normal;
+}
+
+.fm-activity-action-btn {
+    width: 100%;
+}
+
+/* =========================================================================
+   STEPPER CONTROLS
+   ========================================================================= */
+
+.fm-activity-stepper-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.fm-activity-stepper-title {
+    margin-bottom: 12px;
+    color: var(--appui-foregrounds-200);
+}
+
+.fm-activity-stepper-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.fm-activity-stepper-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    border-width: 0;
+    background-color: var(--appui-primary-800);
+    color: var(--appui-backgrounds-50);
+    font-size: 24px;
+    -unity-font-style: bold;
+    align-items: center;
+    justify-content: center;
+}
+
+.fm-activity-stepper-value {
+    -unity-font-style: bold;
+    min-width: 40px;
+    -unity-text-align: middle-center;
+    color: var(--appui-foregrounds-50);
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.fm-activity-feedback-text {
+    color: #649E82;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 16px;
+}
+
+/* =========================================================================
+   SWAP OPTIONS SELECTOR
+   ========================================================================= */
+
+.fm-activity-swap-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.fm-activity-swap-title {
+    margin-bottom: 8px;
+    color: var(--appui-foregrounds-200);
+    -unity-font-style: bold;
+}
+
+.fm-activity-swap-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-activity-swap-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-width: 2px;
+    border-color: transparent;
+}
+
+.fm-activity-swap-item--active {
+    border-color: var(--appui-primary-800);
+    background-color: var(--appui-primary-100);
+}
+
+.fm-activity-swap-item-radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    border-width: 2px;
+    border-color: var(--appui-foregrounds-200);
+    background-color: transparent;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.fm-activity-swap-item-radio--active {
+    border-color: var(--appui-primary-800);
+    background-color: var(--appui-primary-800);
+}
+
+.fm-activity-swap-item-text {
+    flex-grow: 1;
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    white-space: normal;
+}

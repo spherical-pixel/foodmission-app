@@ -138,5 +138,31 @@
     align-self: center;
 }
 
+/* Quick meal banner */
+.fm-quick-meal-banner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.fm-quick-meal-banner-text {
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    margin-right: 12px;
+}
+
+.fm-quick-meal-banner-btn {
+    flex-shrink: 0;
+}
+
+
 
 

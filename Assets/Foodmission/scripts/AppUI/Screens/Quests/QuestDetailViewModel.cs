@@ -446,11 +446,19 @@ namespace eu.foodmission.platform
                     RaiseNavigationRequested(Actions.open_food_fact, new Argument("code", code));
                 }
             }
-            else if (string.Equals(contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) ||
-                     string.Equals(contentType, "CHALLENGE", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
             {
-                // Future extension point: when Mission or Challenge detail screen is created, navigate here.
-                Debug.Log($"[{GetType().Name}] OpenActivity for {contentType} ({code}): action deferred for future implementation.");
+                if (!string.IsNullOrEmpty(code))
+                {
+                    RaiseNavigationRequested(Actions.open_mission, new Argument("code", code));
+                }
+            }
+            else if (string.Equals(contentType, "CHALLENGE", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!string.IsNullOrEmpty(code))
+                {
+                    RaiseNavigationRequested(Actions.open_challenge, new Argument("code", code));
+                }
             }
         }
 

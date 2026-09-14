@@ -169,7 +169,9 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = "Authentication required" });
 
             string effectiveLang = ResolveLang(lang);
-            string url = $"{ApiConfig.BaseUrl}/api/v1/missions/{Uri.EscapeDataString(codeOrId)}/progress?lang={Uri.EscapeDataString(effectiveLang)}";
+            bool isUuid = Guid.TryParse(codeOrId, out _);
+            string pathSegment = isUuid ? Uri.EscapeDataString(codeOrId) : $"by-code/{Uri.EscapeDataString(codeOrId)}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/missions/{pathSegment}/progress?lang={Uri.EscapeDataString(effectiveLang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", auth);
@@ -210,7 +212,9 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = "Authentication required" });
 
             string effectiveLang = ResolveLang(lang);
-            string url = $"{ApiConfig.BaseUrl}/api/v1/missions/{Uri.EscapeDataString(codeOrId)}/progress?lang={Uri.EscapeDataString(effectiveLang)}";
+            bool isUuid = Guid.TryParse(codeOrId, out _);
+            string pathSegment = isUuid ? Uri.EscapeDataString(codeOrId) : $"by-code/{Uri.EscapeDataString(codeOrId)}";
+            string url = $"{ApiConfig.BaseUrl}/api/v1/missions/{pathSegment}/progress?lang={Uri.EscapeDataString(effectiveLang)}";
 
             var reqBody = new UpdateMissionProgressRequest
             {

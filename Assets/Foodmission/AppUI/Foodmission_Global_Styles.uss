@@ -1841,7 +1841,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
     margin-top: 4px;
 }
 
@@ -1850,6 +1849,8 @@
     padding: 6px 12px;
     align-items: flex-start;
     flex-grow: 1;
+    margin-right: 8px;
+    margin-bottom: 8px;
 }
 
 .is-selected.appui-actionbutton{

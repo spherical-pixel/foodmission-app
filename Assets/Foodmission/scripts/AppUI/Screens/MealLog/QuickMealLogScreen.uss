@@ -1,0 +1,230 @@
+.fm-quick-meal-root {
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-quick-meal-card {
+    background-color: var(--appui-backgrounds-200);
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.fm-quick-meal-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.fm-quick-meal-badge {
+    align-self: flex-start;
+    margin-bottom: 12px;
+}
+
+.fm-quick-meal-title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    margin-bottom: 8px;
+    white-space: normal;
+}
+
+.fm-quick-meal-subtitle {
+    color: var(--appui-foregrounds-200);
+    white-space: normal;
+}
+
+.fm-quick-meal-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.fm-quick-meal-section-title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-100);
+    margin-bottom: 12px;
+}
+
+/* =========================================================================
+   MEAL TYPE SELECTION
+   ========================================================================= */
+
+.fm-quick-meal-types-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.fm-quick-meal-type-btn {
+    width: 48%;
+    height: 44px;
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: var(--appui-backgrounds-300);
+    background-color: var(--appui-backgrounds-100);
+    color: var(--appui-foregrounds-200);
+    -unity-font-style: bold;
+    font-size: 13px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.fm-quick-meal-type-btn--active {
+    background-color: var(--appui-primary-800);
+    color: var(--appui-backgrounds-50);
+    border-color: var(--appui-primary-800);
+}
+
+/* =========================================================================
+   QUESTIONS CHECKLIST & SWAP SELECTOR
+   ========================================================================= */
+
+.fm-quick-meal-questions-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-quick-meal-question-card {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--appui-backgrounds-100);
+    border-width: 2px;
+    border-color: transparent;
+    margin-bottom: 12px;
+}
+
+.fm-quick-meal-question-card--checked {
+    border-color: #649E82;
+    background-color: var(--appui-backgrounds-200);
+}
+
+.fm-quick-meal-question-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.fm-quick-meal-checkbox {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: var(--appui-foregrounds-200);
+    margin-right: 14px;
+    align-items: center;
+    justify-content: center;
+}
+
+.fm-quick-meal-checkbox--checked {
+    background-color: #649E82;
+    border-color: #649E82;
+}
+
+.fm-quick-meal-checkbox-mark {
+    color: white;
+    -unity-font-style: bold;
+    font-size: 16px;
+}
+
+.fm-quick-meal-question-text {
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+}
+
+/* Swaps inline container in quick meal log */
+.fm-quick-meal-swaps-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top-width: 1px;
+    border-top-color: var(--appui-backgrounds-300);
+}
+
+.fm-quick-meal-swaps-title {
+    color: var(--appui-foregrounds-200);
+    -unity-font-style: bold;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.fm-quick-meal-swaps-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-quick-meal-swap-chip {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--appui-backgrounds-100);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    border-width: 1.5px;
+    border-color: transparent;
+}
+
+.fm-quick-meal-swap-chip--active {
+    border-color: var(--appui-primary-800);
+    background-color: var(--appui-primary-100);
+}
+
+.fm-quick-meal-swap-chip-radio {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: var(--appui-foregrounds-200);
+    background-color: transparent;
+    margin-right: 10px;
+}
+
+.fm-quick-meal-swap-chip-radio--active {
+    border-color: var(--appui-primary-800);
+    background-color: var(--appui-primary-800);
+}
+
+.fm-quick-meal-swap-chip-text {
+    flex-grow: 1;
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    font-size: 13px;
+    white-space: normal;
+}
+
+/* =========================================================================
+   INPUTS & BUTTONS
+   ========================================================================= */
+
+.fm-quick-meal-input {
+    width: 100%;
+}
+
+.fm-quick-meal-feedback {
+    color: #649E82;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 16px;
+}
+
+.fm-quick-meal-submit-btn {
+    width: 100%;
+    margin-top: 8px;
+}

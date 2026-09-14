@@ -924,5 +924,16 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(_vm.SelectedMealPreset.isRecipe);
             Assert.AreEqual("r1", _vm.SelectedMealPreset.recipeId);
         }
+
+        [Test]
+        public void NavigateToQuickMealLog_RaisesNavigationRequested()
+        {
+            string requestedRoute = null;
+            _vm.NavigationRequested += (route, args) => requestedRoute = route;
+
+            _vm.NavigateToQuickMealLog();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_quick_meal_log, requestedRoute);
+        }
     }
 }

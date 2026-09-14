@@ -285,13 +285,15 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void OpenActivity_WhenMissionOrChallenge_DoesNotNavigate()
+        public void OpenActivity_WhenMission_RequestsOpenMissionNavigation()
         {
             string requestedRoute = null;
+            Argument[] capturedArgs = null;
 
             _vm.NavigationRequested += (route, args) =>
             {
                 requestedRoute = route;
+                capturedArgs = args;
             };
 
             var missionActivity = new QuestActivityDisplayItem
@@ -300,7 +302,24 @@ namespace eu.foodmission.platform.Tests
             };
 
             _vm.OpenActivity(missionActivity);
-            Assert.IsNull(requestedRoute);
+
+            Assert.AreEqual(Actions.open_mission, requestedRoute);
+            Assert.IsNotNull(capturedArgs);
+            Assert.AreEqual("code", capturedArgs[0].name);
+            Assert.AreEqual("MISSION_1", capturedArgs[0].value);
+        }
+
+        [Test]
+        public void OpenActivity_WhenChallenge_RequestsOpenChallengeNavigation()
+        {
+            string requestedRoute = null;
+            Argument[] capturedArgs = null;
+
+            _vm.NavigationRequested += (route, args) =>
+            {
+                requestedRoute = route;
+                capturedArgs = args;
+            };
 
             var challengeActivity = new QuestActivityDisplayItem
             {
@@ -308,7 +327,11 @@ namespace eu.foodmission.platform.Tests
             };
 
             _vm.OpenActivity(challengeActivity);
-            Assert.IsNull(requestedRoute);
+
+            Assert.AreEqual(Actions.open_challenge, requestedRoute);
+            Assert.IsNotNull(capturedArgs);
+            Assert.AreEqual("code", capturedArgs[0].name);
+            Assert.AreEqual("CHALLENGE_1", capturedArgs[0].value);
         }
 
         [Test]

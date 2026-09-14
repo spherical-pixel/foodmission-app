@@ -532,16 +532,22 @@ namespace eu.foodmission.platform
 
         private void RegisterEvents()
         {
-
-            if (_activeQuestCard != null) _activeQuestCard.Clicked += OnActiveQuestClicked;
+            if (_activeQuestCard != null)
+            {
+                _activeQuestCard.Clicked += OnActiveQuestClicked;
+                _activeQuestCard.QuickMealClicked += OnActiveQuestQuickMealClicked;
+            }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked += OnChooseQuestClicked;
             if (_viewModel != null) _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
         private void UnregisterEvents()
         {
-
-            if (_activeQuestCard != null) _activeQuestCard.Clicked -= OnActiveQuestClicked;
+            if (_activeQuestCard != null)
+            {
+                _activeQuestCard.Clicked -= OnActiveQuestClicked;
+                _activeQuestCard.QuickMealClicked -= OnActiveQuestQuickMealClicked;
+            }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked -= OnChooseQuestClicked;
             if (_viewModel != null) _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
         }
@@ -549,6 +555,11 @@ namespace eu.foodmission.platform
         private void OnActiveQuestClicked()
         {
             _viewModel?.OpenCurrentQuest();
+        }
+
+        private void OnActiveQuestQuickMealClicked()
+        {
+            _viewModel?.NavigateToQuickMealLog();
         }
 
         private void OnChooseQuestClicked()

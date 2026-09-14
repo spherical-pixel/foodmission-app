@@ -419,6 +419,11 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_quests);
         }
 
+        public void NavigateToQuickMealLog()
+        {
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.open_quick_meal_log);
+        }
+
         public void SetCurrentQuestForTesting(string title, string code, string id, bool[] states)
         {
             CurrentQuestTitle = title;
