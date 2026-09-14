@@ -31,6 +31,9 @@ namespace eu.foodmission.platform
         private VisualElement _drawerAvatarElement;
         private ActionButton _lastAppBarDrawerButton;
         private bool _avatarSubscribed;
+        private LinearProgress _xpBar;
+        private Label _xpLabel;
+        private bool _storeSubscribed;
 
         private void SubscribeAvatarEvents()
         {
@@ -91,6 +94,27 @@ namespace eu.foodmission.platform
                 {
                     avatarImg.style.display = DisplayStyle.None;
                 }
+            }
+        }
+
+        public void UpdateGamificationVisuals()
+        {
+            var storeService = App.current?.services?.GetService<IStoreService>();
+            var state = storeService?.GetAppState();
+            if (state == null) return;
+
+            int xp = state.userXp;
+            int level = (xp / 100) + 1;
+            float progress = UnityEngine.Mathf.Clamp01((xp % 100) / 100f);
+
+            if (_xpLabel != null)
+            {
+                _xpLabel.text = level.ToString();
+            }
+
+            if (_xpBar != null)
+            {
+                _xpBar.value = progress;
             }
         }
 
@@ -164,22 +188,32 @@ namespace eu.foodmission.platform
             xpRow.style.alignItems = Align.Center;
 
             var xpBar = new LinearProgress();
-            xpBar.value = 0.3f;
+            xpBar.value = 0f;
             xpBar.AddToClassList("fm-xp-progress");
             xpBar.AddToClassList("appui-progress--rounded-corners");
             xpBar.style.flexGrow = 1;
-            //xpBar.style.marginRight = -20;
             xpBar.variant = Progress.Variant.Determinate;
+            _xpBar = xpBar;
 
             var xpBadge = new VisualElement();
             xpBadge.AddToClassList("fm-profile-xp-badge");
 
-            var xpLabel = new Label("20");
+            var xpLabel = new Label("1");
             xpLabel.AddToClassList("fm-profile-xp-label");
             xpBadge.Add(xpLabel);
+            _xpLabel = xpLabel;
 
             xpRow.Add(xpBar);
             xpRow.Add(xpBadge);
+
+            UpdateGamificationVisuals();
+
+            var storeService = App.current?.services?.GetService<IStoreService>();
+            if (storeService?.store != null && !_storeSubscribed)
+            {
+                storeService.store.Subscribe(state => state.userXp, _ => UpdateGamificationVisuals());
+                _storeSubscribed = true;
+            }
 
             rightColumn.Add(nameHeading);
             rightColumn.Add(xpRow);
@@ -216,10 +250,50 @@ namespace eu.foodmission.platform
                 _cachedNavController?.Navigate(Actions.go_to_groups);
             });
 
-            AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES"), () =>
+            AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES"), async () =>
             {
                 _profileDrawer.Close();
-                NutriMessageDialog.ShowNotAvailable();
+                var gamificationService = App.current?.services?.GetService<IGamificationService>();
+                var storeService = App.current?.services?.GetService<IStoreService>();
+                var state = storeService?.GetAppState();
+
+                var badges = state?.userBadges;
+                if (badges == null || badges.Length == 0)
+                {
+                    if (gamificationService != null)
+                    {
+                        var (rewardsResp, _) = await gamificationService.GetEarnedRewardsAsync();
+                        if (rewardsResp?.earnedRewards != null)
+                        {
+                            var badgeList = new List<string>();
+                            foreach (var r in rewardsResp.earnedRewards)
+                            {
+                                if (r.reward != null && !string.IsNullOrEmpty(r.reward.badgeId))
+                                {
+                                    badgeList.Add(r.reward.badgeId);
+                                }
+                            }
+                            badges = badgeList.ToArray();
+                            storeService?.store.Dispatch(AppActions.setBadges.Invoke(badges));
+                        }
+                    }
+                }
+
+                if (badges != null && badges.Length > 0)
+                {
+                    string badgeNames = string.Join("\n• ", badges);
+                    NutriMessageDialog.Show(
+                        message: $"🏅 {LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES")}\n\n• {badgeNames}",
+                        actions: new[] { new FMDialogAction("@UI:TXT_ACCEPT", null, ButtonVariant.Accent) }
+                    );
+                }
+                else
+                {
+                    NutriMessageDialog.Show(
+                        message: "Aún no has desbloqueado ninguna medalla. ¡Completa misiones, retos y quizzes para conseguir tus primeras insignias!",
+                        actions: new[] { new FMDialogAction("@UI:TXT_ACCEPT", null, ButtonVariant.Accent) }
+                    );
+                }
             });
 
 
@@ -343,6 +417,7 @@ namespace eu.foodmission.platform
                 _userNameLabel.text = storeService.GetAppState().userName;
             }
             UpdateAvatarVisuals();
+            UpdateGamificationVisuals();
         }
 
         // --------------------------------------------------------------------

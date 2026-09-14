@@ -64,13 +64,13 @@ namespace eu.foodmission.platform
         private bool _isLoading;
 
         [ObservableProperty]
-        private string _questCode;
+        private string _questCode = string.Empty;
 
         [ObservableProperty]
-        private string _questTitle;
+        private string _questTitle = string.Empty;
 
         [ObservableProperty]
-        private string _questDescription;
+        private string _questDescription = string.Empty;
 
         [ObservableProperty]
         private string _questLevel = eu.foodmission.platform.QuestLevel.Beginner;
