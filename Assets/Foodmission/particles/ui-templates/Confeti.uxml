@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Confeti" style="flex-grow: 1;">
+        <MainraGames.UIParticle profile="project://database/Assets/Foodmission/particles/UIParticles-Confetti_1.asset?fileID=11400000&amp;guid=c79a6cc8f94424b51a69cced644ff1f7&amp;type=2#UIParticles-Confetti_1" name="Confeti_1" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; flex-grow: 1; width: 100%; height: 100%;"/>
+        <MainraGames.UIParticle profile="project://database/Assets/Foodmission/particles/UIParticles-Confetti_2.asset?fileID=11400000&amp;guid=399b2180bb3f4458d957bce67d0af9dc&amp;type=2#UIParticles-Confetti_2" name="Confeti_2" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; flex-grow: 1; width: 100%; height: 100%;"/>
+        <MainraGames.UIParticle profile="project://database/Assets/Foodmission/particles/UIParticles-Confetti_3.asset?fileID=11400000&amp;guid=6dd52aa97292745029aecaaa240f563a&amp;type=2#UIParticles-Confetti_3" name="Confeti_3" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; flex-grow: 1; width: 100%; height: 100%;"/>
+        <MainraGames.UIParticle profile="project://database/Assets/Foodmission/particles/UIParticles-Confetti_4.asset?fileID=11400000&amp;guid=7fe51fa1f28b84a5d9b83b186439aff2&amp;type=2#UIParticles-Confetti_4" name="Confeti_4" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; flex-grow: 1; width: 100%; height: 100%;"/>
+    </ui:VisualElement>
+</ui:UXML>

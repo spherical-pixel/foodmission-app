@@ -6,6 +6,7 @@ using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Components
@@ -27,6 +28,7 @@ namespace eu.foodmission.platform.Components
         public string Subtitle { get; set; }
         public string IconEmoji { get; set; }
         public int Value { get; set; }
+        public string RawId { get; set; }
     }
 
     /// <summary>
@@ -36,9 +38,31 @@ namespace eu.foodmission.platform.Components
     /// </summary>
     public static class RewardCelebrationDialog
     {
-        private static IVisualElementScheduledItem s_AutoAdvanceSchedule;
         private static bool s_IsAdvancing;
         private static Modal s_CurrentModal;
+        private static VisualTreeAsset s_CachedConfetiParticlesTemplate;
+
+        private static void LoadParticlesTemplateAsync(Action onComplete)
+        {
+            if (s_CachedConfetiParticlesTemplate != null)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            Addressables.LoadAssetAsync<VisualTreeAsset>("ui-template/particles/confeti").Completed += handle =>
+            {
+                if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                {
+                    s_CachedConfetiParticlesTemplate = handle.Result;
+                }
+                else
+                {
+                    Debug.LogWarning($"[RewardCelebrationDialog] Failed to load Addressable ui-template/particles/confeti: {handle.OperationException}");
+                }
+                onComplete?.Invoke();
+            };
+        }
 
         /// <summary>
         /// Builds the presentation queue of individual reward items from a ContentReward payload.
@@ -83,7 +107,8 @@ namespace eu.foodmission.platform.Components
                     Title = "@UI:REWARD_BADGE_UNLOCKED",
                     Subtitle = reward.badgeId,
                     IconEmoji = "🏅",
-                    Value = 1
+                    Value = 1,
+                    RawId = reward.badgeId
                 });
             }
 
@@ -95,7 +120,8 @@ namespace eu.foodmission.platform.Components
                     Title = "@UI:REWARD_AVATAR_ITEM",
                     Subtitle = reward.avatarItem,
                     IconEmoji = "🎁",
-                    Value = 1
+                    Value = 1,
+                    RawId = reward.avatarItem
                 });
             }
 
@@ -107,7 +133,8 @@ namespace eu.foodmission.platform.Components
                     Title = "@UI:REWARD_PET_ITEM",
                     Subtitle = reward.petItem,
                     IconEmoji = "🐾",
-                    Value = 1
+                    Value = 1,
+                    RawId = reward.petItem
                 });
             }
 
@@ -119,7 +146,8 @@ namespace eu.foodmission.platform.Components
                     Title = "@UI:REWARD_COLLECTIBLE",
                     Subtitle = reward.collectible,
                     IconEmoji = "🏆",
-                    Value = 1
+                    Value = 1,
+                    RawId = reward.collectible
                 });
             }
 
@@ -152,8 +180,14 @@ namespace eu.foodmission.platform.Components
                 return;
             }
 
-            ShowModal(rootElement, queue, contextTitle, onDismiss);
+
+            LoadParticlesTemplateAsync(() =>
+            {
+                ShowModal(rootElement, queue, contextTitle, onDismiss);
+            });
+
         }
+
 
         private static void ShowModal(
             VisualElement panelRoot,
@@ -164,8 +198,6 @@ namespace eu.foodmission.platform.Components
             // Close any existing celebration modal first
             if (s_CurrentModal != null)
             {
-                s_AutoAdvanceSchedule?.Pause();
-                s_AutoAdvanceSchedule = null;
                 s_CurrentModal.Dismiss(DismissType.Action);
                 s_CurrentModal = null;
             }
@@ -176,46 +208,32 @@ namespace eu.foodmission.platform.Components
             var root = new VisualElement();
             root.AddToClassList("fm-reward-modal-root");
 
+            var rootContainer = new VisualElement();
+            rootContainer.AddToClassList("fm-reward-modal-root-container");
+
             // Avatar & Stage Background Area
             var avatarStage = new VisualElement();
             avatarStage.AddToClassList("fm-reward-avatar-stage");
             avatarStage.pickingMode = PickingMode.Ignore;
 
-            // Particles
-            UIParticle particles = null;
-            try
+
+            if (s_CachedConfetiParticlesTemplate != null)
             {
-                particles = new UIParticle { name = "particles" };
-                particles.style.position = Position.Absolute;
-                particles.style.top = 0;
-                particles.style.left = 0;
-                particles.style.right = 0;
-                particles.style.bottom = 0;
-#if UNITY_EDITOR
-                var profile = UnityEditor.AssetDatabase.LoadAssetAtPath<UIParticleProfile>("Assets/Foodmission/particles/UIParticles-QuizWin.asset");
-                if (profile != null)
-                {
-                    particles.Profile = profile;
-                }
-#endif
-                avatarStage.Add(particles);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"[RewardCelebrationDialog] Could not initialize UIParticle: {ex.Message}");
+                VisualElement particlesConfeti = new VisualElement();
+                s_CachedConfetiParticlesTemplate.CloneTree(particlesConfeti);
+                particlesConfeti.style.position = Position.Absolute;
+                particlesConfeti.style.top = Length.Percent(0);
+                particlesConfeti.style.left = Length.Percent(0);
+                particlesConfeti.style.right = Length.Percent(0);
+                particlesConfeti.style.bottom = Length.Percent(0);
+
+                avatarStage.Add(particlesConfeti);
             }
 
+
             // Spotlight Image
-            var spotlight = new Image { scaleMode = ScaleMode.StretchToFill };
-            spotlight.style.position = Position.Absolute;
-            spotlight.style.bottom = 0;
-            spotlight.style.top = -200;
-            spotlight.style.width = 800;
-            spotlight.style.opacity = 0.8f;
-#if UNITY_EDITOR
-            var focoSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Foodmission/graphics/png/foco_avatar.png");
-            if (focoSprite != null) spotlight.sprite = focoSprite;
-#endif
+            var spotlight = new VisualElement();
+            spotlight.AddToClassList("fm-reward-spotlight");
             avatarStage.Add(spotlight);
 
             // FullBody Avatar
@@ -224,73 +242,33 @@ namespace eu.foodmission.platform.Components
             avatarView.style.alignSelf = Align.Center;
             avatarView.style.width = Length.Percent(100);
             avatarView.style.height = Length.Percent(100);
+            avatarView.style.marginBottom = Length.Pixels(100);
             avatarStage.Add(avatarView);
 
-            // Stand Image
-            var stand = new Image { scaleMode = ScaleMode.ScaleAndCrop };
-            stand.style.position = Position.Absolute;
-            stand.style.bottom = 0;
-            stand.style.width = 320;
-            stand.style.height = 100;
-#if UNITY_EDITOR
-            var standSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Foodmission/graphics/png/stand.png");
-            if (standSprite != null) stand.sprite = standSprite;
-#endif
-            avatarStage.Add(stand);
 
             root.Add(avatarStage);
+            root.Add(rootContainer);
 
             // Header Container & Title
             var headerContainer = new VisualElement();
             headerContainer.AddToClassList("fm-reward-header-container");
             var headerTitle = new Text();
+            headerTitle.size = TextSize.XXXL;
             headerTitle.AddToClassList("fm-reward-celebration-title");
             headerTitle.text = !string.IsNullOrEmpty(contextTitle) ? contextTitle : "@UI:REWARD_CELEBRATION_TITLE";
             headerContainer.Add(headerTitle);
-            root.Add(headerContainer);
+            rootContainer.Add(headerContainer);
 
             // Center Reward Card Container
             var cardContainer = new VisualElement();
             cardContainer.AddToClassList("fm-reward-card-container");
 
             var rewardCard = new ExVisualElement();
-            rewardCard.AddToClassList("box-background");
-            rewardCard.AddToClassList("fm-shadow-wrapper");
+
             rewardCard.AddToClassList("fm-reward-card");
 
-            var iconCircle = new VisualElement();
-            iconCircle.AddToClassList("fm-reward-icon-circle");
-            var iconEmojiText = new Text();
-            iconEmojiText.AddToClassList("fm-reward-icon-emoji");
-            iconCircle.Add(iconEmojiText);
-            rewardCard.Add(iconCircle);
-
-            var rewardTitleText = new Text();
-            rewardTitleText.AddToClassList("fm-reward-title");
-            rewardCard.Add(rewardTitleText);
-
-            var rewardSubtitleText = new Text();
-            rewardSubtitleText.AddToClassList("fm-reward-subtitle");
-            rewardCard.Add(rewardSubtitleText);
-
-            // Dots indicators if more than 1 item
-            var dotsContainer = new VisualElement();
-            dotsContainer.AddToClassList("fm-reward-dots");
-            var dotElements = new List<VisualElement>();
-            if (queue.Count > 1)
-            {
-                for (int i = 0; i < queue.Count; i++)
-                {
-                    var dot = new VisualElement();
-                    dot.AddToClassList("fm-reward-dot");
-                    dotsContainer.Add(dot);
-                    dotElements.Add(dot);
-                }
-                rewardCard.Add(dotsContainer);
-            }
-
             cardContainer.Add(rewardCard);
-            root.Add(cardContainer);
+            rootContainer.Add(cardContainer);
 
             // Bottom Continue Button
             var bottomContainer = new VisualElement();
@@ -307,14 +285,16 @@ namespace eu.foodmission.platform.Components
             btnContinue.AddToClassList("fm-button-align-left");
             btnContinue.style.width = Length.Percent(100);
             bottomContainer.Add(btnContinue);
-            root.Add(bottomContainer);
+            rootContainer.Add(bottomContainer);
 
             // Apply Safe Area
-            App.current?.services?.GetService<IThemeService>()?.ApplySafeAreaPadding(root, true, true, false, false);
+            App.current?.services?.GetService<IThemeService>()?.ApplySafeAreaPadding(rootContainer, true, true, false, false);
+
+
 
             // Audio & Mascot Feedback
             var audioService = App.current?.services?.GetService<IAudioService>();
-            var sfx = queue.Any(q => q.Type == RewardType.Badge) ? SfxType.WinBadge : SfxType.QuizPositive;
+            var sfx = queue.Any(q => q.Type == RewardType.Badge) ? SfxType.WinBadge : SfxType.MissionCompleted;
             audioService?.PlaySfx(sfx);
 
             var avatarService = App.current?.services?.GetService<IAvatarService>();
@@ -324,10 +304,6 @@ namespace eu.foodmission.platform.Components
                 avatarService.AvatarController.AvatarAnimationController.TriggerCelebration();
             }
 
-            if (particles != null)
-            {
-                particles.style.display = DisplayStyle.Flex;
-            }
 
             // Build Modal
             var modal = Modal.Build(panelRoot, root);
@@ -341,9 +317,6 @@ namespace eu.foodmission.platform.Components
             {
                 if (isDismissed) return;
                 isDismissed = true;
-
-                s_AutoAdvanceSchedule?.Pause();
-                s_AutoAdvanceSchedule = null;
                 s_IsAdvancing = false;
 
                 if (modal != null)
@@ -364,49 +337,59 @@ namespace eu.foodmission.platform.Components
                 }
 
                 var item = queue[index];
-                iconEmojiText.text = item.IconEmoji ?? "⭐";
-                rewardTitleText.text = item.Title ?? "";
-                rewardSubtitleText.text = item.Subtitle ?? "";
 
-                // Update Dots
-                for (int k = 0; k < dotElements.Count; k++)
+                // Dynamically generate visual content using the dedicated builder for this reward type
+                rewardCard.Clear();
+                var visualContent = CreateRewardVisual(item);
+                if (visualContent != null)
                 {
-                    if (k == index)
-                    {
-                        dotElements[k].AddToClassList("fm-reward-dot--active");
-                    }
-                    else
-                    {
-                        dotElements[k].RemoveFromClassList("fm-reward-dot--active");
-                    }
+                    rewardCard.Add(visualContent);
                 }
 
-                // Update Button Text on last item
+
+
+                // Update Button Text & Icon on last item
                 if (index == queue.Count - 1)
                 {
-                    btnContinue.title = "@UI:TXT_FINISH";
+                    btnContinue.title = "@UI:TXT_DONE";
+                    btnContinue.trailingIcon = "fm-check";
                 }
                 else
                 {
                     btnContinue.title = "@UI:TXT_CONTINUE";
+                    btnContinue.trailingIcon = "fm-arrow-right";
+                }
+
+                // Audio feedback for subsequent steps
+                if (index > 0)
+                {
+                    var stepSfx = item.Type == RewardType.Badge ? SfxType.WinBadge : SfxType.MissionCompleted;
+                    audioService?.PlaySfx(stepSfx);
+                }
+
+                var avatarService = App.current?.services?.GetService<IAvatarService>();
+                if (avatarService?.AvatarController?.AvatarAnimationController != null)
+                {
+                    avatarService.AvatarController.AvatarAnimationController.TriggerCelebration();
                 }
 
                 // Slide In
                 rewardCard.RemoveFromClassList("fm-reward-card--exit");
                 rewardCard.AddToClassList("fm-reward-card--visible");
-
-                // Auto-advance after 1.8 seconds
-                s_AutoAdvanceSchedule?.Pause();
-                s_AutoAdvanceSchedule = root.schedule.Execute(Advance).StartingIn(1800);
             }
 
             void Advance()
             {
                 if (isDismissed || s_IsAdvancing) return;
                 s_IsAdvancing = true;
+                btnContinue.SetEnabled(false);
 
-                s_AutoAdvanceSchedule?.Pause();
-                s_AutoAdvanceSchedule = null;
+                // If on last item, dismiss immediately
+                if (currentIndex >= queue.Count - 1)
+                {
+                    DismissAndCleanup();
+                    return;
+                }
 
                 // Animate Slide Out
                 rewardCard.RemoveFromClassList("fm-reward-card--visible");
@@ -415,25 +398,14 @@ namespace eu.foodmission.platform.Components
                 root.schedule.Execute(() =>
                 {
                     currentIndex++;
-                    if (currentIndex < queue.Count)
-                    {
-                        s_IsAdvancing = false;
-                        DisplayItem(currentIndex);
-                    }
-                    else
-                    {
-                        DismissAndCleanup();
-                    }
-                }).StartingIn(250);
+                    s_IsAdvancing = false;
+                    btnContinue.SetEnabled(true);
+                    DisplayItem(currentIndex);
+                }).StartingIn(220);
             }
 
-            // Click Handlers
+            // Click Handler: Step-by-step navigation strictly driven by button
             btnContinue.clicked += () => Advance();
-            rewardCard.RegisterCallback<ClickEvent>(evt =>
-            {
-                evt.StopPropagation();
-                Advance();
-            });
 
             modal.dismissed += (_, _) =>
             {
@@ -447,6 +419,247 @@ namespace eu.foodmission.platform.Components
 
             // Initial presentation
             root.schedule.Execute(() => DisplayItem(0)).StartingIn(50);
+        }
+
+        // ── Reward Visual Builders ──────────────────────────────────────────
+
+        /// <summary>
+        /// Main factory that routes to the specific visual builder based on the reward type.
+        /// </summary>
+        public static VisualElement CreateRewardVisual(RewardPresentationItem item)
+        {
+            if (item == null) return new VisualElement();
+
+            return item.Type switch
+            {
+                RewardType.Xp => BuildXpContent(item),
+                RewardType.Points => BuildPointsContent(item),
+                RewardType.Badge => BuildBadgeContent(item),
+                RewardType.AvatarItem => BuildAvatarItemContent(item),
+                RewardType.PetItem => BuildPetItemContent(item),
+                RewardType.Collectible => BuildCollectibleContent(item),
+                _ => BuildDefaultContent(item)
+            };
+        }
+
+        /// <summary>
+        /// Visual content builder for XP rewards.
+        /// Customize this function to alter how XP rewards are displayed.
+        /// </summary>
+        public static VisualElement BuildXpContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--xp");
+
+            // Image image = new Image();
+            // App.current?.services?.GetService<ISpriteService>()?.BindSprite(image, "sprites/star-big");
+            // container.Add(image);
+
+            // XP row: bar + star badge
+            var xpRow = new VisualElement();
+            xpRow.style.flexDirection = FlexDirection.Row;
+            xpRow.style.alignItems = Align.Center;
+            xpRow.style.width = Length.Percent(100);
+
+            var xpBar = new LinearProgress();
+            xpBar.value = 50f;
+            xpBar.AddToClassList("fm-xp-progress");
+            xpBar.AddToClassList("appui-progress--rounded-corners");
+            xpBar.style.flexGrow = 1;
+            xpBar.variant = Progress.Variant.Determinate;
+
+
+            var xpBadge = new VisualElement();
+            xpBadge.AddToClassList("fm-profile-xp-badge");
+
+            var xpLabel = new Label("1");
+            xpLabel.AddToClassList("fm-profile-xp-label");
+            xpBadge.Add(xpLabel);
+
+
+            xpRow.Add(xpBar);
+            xpRow.Add(xpBadge);
+
+            container.Add(xpRow);
+
+
+            var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Visual content builder for Points / Currency rewards.
+        /// Customize this function to alter how Points rewards are displayed.
+        /// </summary>
+        public static VisualElement BuildPointsContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--points");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "🌱" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Visual content builder for Badge rewards.
+        /// Customize this function to alter how Badge rewards are displayed.
+        /// </summary>
+        public static VisualElement BuildBadgeContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--badge");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "🏅" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Visual content builder for Avatar Item (cosmetics/accessories) rewards.
+        /// Customize this function to alter how Avatar Item rewards are displayed.
+        /// </summary>
+        public static VisualElement BuildAvatarItemContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--avatar-item");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "🎁" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Visual content builder for Pet Item rewards.
+        /// Customize this function to alter how Pet Item rewards are displayed.
+        /// </summary>
+        public static VisualElement BuildPetItemContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--pet-item");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "🐾" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Visual content builder for Collectible rewards.
+        /// Customize this function to alter how Collectible rewards are displayed.
+        /// </summary>
+        public static VisualElement BuildCollectibleContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--collectible");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "🏆" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Fallback visual content builder for default/unknown reward types.
+        /// </summary>
+        public static VisualElement BuildDefaultContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--default");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "⭐" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        private static VisualElement CreateContentContainer(string specificClass = null)
+        {
+            var container = new VisualElement();
+            container.AddToClassList("fm-reward-content");
+            if (!string.IsNullOrEmpty(specificClass))
+            {
+                container.AddToClassList(specificClass);
+            }
+            container.style.width = Length.Percent(100);
+            container.style.alignItems = Align.Center;
+            container.style.justifyContent = Justify.Center;
+            return container;
         }
     }
 }

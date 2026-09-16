@@ -5,7 +5,11 @@ using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform
 {
-    public interface IBannerService : IDisposable
+    /// <summary>
+    /// Domain-specific banner service extending ISpriteService for dimensions, topics, and knowledge sections.
+    /// Provides address resolution and convenient binding helpers for banners across the application.
+    /// </summary>
+    public interface IBannerService : ISpriteService
     {
         /// <summary>
         /// Resolves the Addressables address for a given dimension banner (e.g. "dimensions/diet_changes").
@@ -43,11 +47,6 @@ namespace eu.foodmission.platform
         Task<Sprite> LoadTopicBannerAsync(string topicCodeOrId);
 
         /// <summary>
-        /// Returns the cached Sprite if already loaded into memory, otherwise null.
-        /// </summary>
-        Sprite GetCachedSprite(string address);
-
-        /// <summary>
         /// Checks if a banner is currently cached in memory.
         /// </summary>
         bool IsBannerLoaded(string address);
@@ -68,10 +67,5 @@ namespace eu.foodmission.platform
         /// Binds a topic banner Sprite to a UI Toolkit Image element.
         /// </summary>
         Task<bool> BindTopicBanner(Image targetImage, string topicCodeOrId, bool autoAspectRatio = true, Action<Sprite> onLoaded = null);
-
-        /// <summary>
-        /// Releases all loaded Addressables sprite handles and clears the in-memory cache.
-        /// </summary>
-        void ClearCache();
     }
 }

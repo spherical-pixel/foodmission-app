@@ -166,5 +166,118 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(dismissed);
         }
+
+        [Test]
+        public void CreateRewardVisual_WhenItemNull_ReturnsEmptyElement()
+        {
+            var visual = RewardCelebrationDialog.CreateRewardVisual(null);
+            Assert.IsNotNull(visual);
+            Assert.AreEqual(0, visual.childCount);
+        }
+
+        [Test]
+        public void CreateRewardVisual_WhenXp_ReturnsXpContentWithCorrectClass()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.Xp,
+                Title = "+50 XP",
+                Subtitle = "@UI:REWARD_XP_EARNED",
+                IconEmoji = "⭐",
+                Value = 50
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+            Assert.IsNotNull(visual);
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content--xp"));
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content"));
+        }
+
+        [Test]
+        public void CreateRewardVisual_WhenPoints_ReturnsPointsContentWithCorrectClass()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.Points,
+                Title = "+10 Pts",
+                Subtitle = "@UI:REWARD_POINTS_EARNED",
+                IconEmoji = "🌱",
+                Value = 10
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+            Assert.IsNotNull(visual);
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content--points"));
+        }
+
+        [Test]
+        public void CreateRewardVisual_WhenBadge_ReturnsBadgeContentWithCorrectClass()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.Badge,
+                Title = "@UI:REWARD_BADGE_UNLOCKED",
+                Subtitle = "ECO_HERO",
+                IconEmoji = "🏅",
+                Value = 1,
+                RawId = "ECO_HERO"
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+            Assert.IsNotNull(visual);
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content--badge"));
+        }
+
+        [Test]
+        public void CreateRewardVisual_WhenAvatarItem_ReturnsAvatarItemContentWithCorrectClass()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.AvatarItem,
+                Title = "@UI:REWARD_AVATAR_ITEM",
+                Subtitle = "GREEN_HAT",
+                IconEmoji = "🎁",
+                Value = 1,
+                RawId = "GREEN_HAT"
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+            Assert.IsNotNull(visual);
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content--avatar-item"));
+        }
+
+        [Test]
+        public void CreateRewardVisual_WhenPetItem_ReturnsPetItemContentWithCorrectClass()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.PetItem,
+                Title = "@UI:REWARD_PET_ITEM",
+                Subtitle = "COLLAR",
+                IconEmoji = "🐾",
+                Value = 1
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+            Assert.IsNotNull(visual);
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content--pet-item"));
+        }
+
+        [Test]
+        public void CreateRewardVisual_WhenCollectible_ReturnsCollectibleContentWithCorrectClass()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.Collectible,
+                Title = "@UI:REWARD_COLLECTIBLE",
+                Subtitle = "CUP",
+                IconEmoji = "🏆",
+                Value = 1
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+            Assert.IsNotNull(visual);
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content--collectible"));
+        }
     }
 }
