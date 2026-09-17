@@ -52,6 +52,7 @@ namespace eu.foodmission.platform
         private readonly IQuizService _quizService;
         private readonly IMissionService _missionService;
         private readonly IChallengeService _challengeService;
+        private readonly IFoodFactService _foodFactService;
 
         public HomeScreenViewModel(
             IStoreService storeService,
@@ -63,7 +64,8 @@ namespace eu.foodmission.platform
             IQuestService questService = null,
             IQuizService quizService = null,
             IMissionService missionService = null,
-            IChallengeService challengeService = null) : base(storeService)
+            IChallengeService challengeService = null,
+            IFoodFactService foodFactService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -73,6 +75,7 @@ namespace eu.foodmission.platform
             _quizService = quizService ?? App.current?.services?.GetService<IQuizService>();
             _missionService = missionService ?? App.current?.services?.GetService<IMissionService>();
             _challengeService = challengeService ?? App.current?.services?.GetService<IChallengeService>();
+            _foodFactService = foodFactService ?? App.current?.services?.GetService<IFoodFactService>();
 
             // Get initial state
             AppState state = _storeService?.GetAppState();
@@ -294,13 +297,15 @@ namespace eu.foodmission.platform
                     var quizProgressTask = _quizService != null ? _quizService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(QuizProgress[], ApiErrorResponse)>((null, null));
                     var missionProgressTask = _missionService != null ? _missionService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(MissionProgress[], ApiErrorResponse)>((null, null));
                     var challengeProgressTask = _challengeService != null ? _challengeService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(ChallengeProgress[], ApiErrorResponse)>((null, null));
+                    var foodFactProgressTask = _foodFactService != null ? _foodFactService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(FoodFactProgressResponse[], ApiErrorResponse)>((null, null));
 
-                    await System.Threading.Tasks.Task.WhenAll(progressTask, quizProgressTask, missionProgressTask, challengeProgressTask);
+                    await System.Threading.Tasks.Task.WhenAll(progressTask, quizProgressTask, missionProgressTask, challengeProgressTask, foodFactProgressTask);
 
                     var (progress, _) = await progressTask;
                     var (quizProgress, _) = await quizProgressTask;
                     var (missionProgress, _) = await missionProgressTask;
                     var (challengeProgress, _) = await challengeProgressTask;
+                    var (foodFactProgress, _) = await foodFactProgressTask;
 
                     float progressPct = progress != null ? progress.progress : 0f;
                     bool isQuestCompleted = progress != null && (progress.completed || progressPct >= 100f);
@@ -345,7 +350,21 @@ namespace eu.foodmission.platform
                         }
                     }
 
-                    bool hasAnySubProgress = completedQuizCodes.Count > 0 || completedMissionCodes.Count > 0 || completedChallengeCodes.Count > 0;
+                    var completedFoodFactCodes = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+                    if (foodFactProgress != null)
+                    {
+                        foreach (var fp in foodFactProgress)
+                        {
+                            if (fp == null) continue;
+                            if (!string.IsNullOrEmpty(fp.foodFactId)) completedFoodFactCodes.Add(fp.foodFactId);
+                            if (!string.IsNullOrEmpty(fp.foodFactCode)) completedFoodFactCodes.Add(fp.foodFactCode);
+                        }
+                    }
+
+                    bool hasAnySubProgress = completedQuizCodes.Count > 0 ||
+                                             completedMissionCodes.Count > 0 ||
+                                             completedChallengeCodes.Count > 0 ||
+                                             completedFoodFactCodes.Count > 0;
                     var states = new bool[totalItems];
 
                     if (isQuestCompleted)
@@ -366,6 +385,10 @@ namespace eu.foodmission.platform
                             if (string.Equals(cType, QuestContentType.Quiz, System.StringComparison.OrdinalIgnoreCase))
                             {
                                 isItemCompleted = completedQuizCodes.Contains(code);
+                            }
+                            else if (string.Equals(cType, QuestContentType.FoodFact, System.StringComparison.OrdinalIgnoreCase))
+                            {
+                                isItemCompleted = completedFoodFactCodes.Contains(code);
                             }
                             else if (string.Equals(cType, QuestContentType.Mission, System.StringComparison.OrdinalIgnoreCase))
                             {

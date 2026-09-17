@@ -10,19 +10,21 @@ namespace eu.foodmission.platform.Tests
     public class FoodFactServiceTests
     {
         private TestStoreService _storeService;
+        private TestLocalStorageService _localStorageService;
         private FoodFactService _service;
 
         [SetUp]
         public void SetUp()
         {
             _storeService = new TestStoreService();
+            _localStorageService = new TestLocalStorageService();
             _storeService.SetAppState(new AppState
             {
                 accessToken = "test-jwt-token",
                 tokenType = "Bearer",
                 lang = "es"
             });
-            _service = new FoodFactService(_storeService);
+            _service = new FoodFactService(_storeService, _localStorageService);
             FoodProductFlow.UseDirectClientOverride = () => false;
         }
 
@@ -94,6 +96,57 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNull(result);
             Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public async Task MarkAsReadAsync_OnEmptyCodeOrId_ReturnsNull()
+        {
+            var (result, error) = await _service.MarkAsReadAsync("");
+            Assert.IsNull(result);
+            Assert.IsNull(error);
+
+            var (resultNull, errorNull) = await _service.MarkAsReadAsync(null);
+            Assert.IsNull(resultNull);
+            Assert.IsNull(errorNull);
+        }
+
+        [Test]
+        public async Task MarkAsReadAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.Expect(LogType.Error, new Regex(".*MarkAsReadAsync.*"));
+            LogAssert.Expect(LogType.Error, new Regex(".*MarkAsReadAsync.*"));
+
+            var (result, error) = await _service.MarkAsReadAsync("FF1.1.1");
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public async Task GetUserProgressListAsync_WhenUnauthenticated_ReturnsFallbackFromLocalStorage()
+        {
+            _storeService.SetAppState(new AppState { accessToken = null });
+            _localStorageService.SetValue("fm_read_food_facts", new System.Collections.Generic.List<string> { "FF1.1.1", "FF1.1.2" });
+
+            var (result, error) = await _service.GetUserProgressListAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Length);
+            Assert.IsTrue(System.Array.Exists(result, p => p.foodFactCode == "FF1.1.1"));
+            Assert.IsTrue(System.Array.Exists(result, p => p.foodFactCode == "FF1.1.2"));
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public async Task GetUserProgressListAsync_OnNetworkFailure_FallsBackToLocalStorage()
+        {
+            _localStorageService.SetValue("fm_read_food_facts", new System.Collections.Generic.List<string> { "FACT_CACHED_1" });
+
+            var (result, error) = await _service.GetUserProgressListAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual("FACT_CACHED_1", result[0].foodFactCode);
         }
     }
 }

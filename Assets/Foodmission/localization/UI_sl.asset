@@ -2479,6 +2479,32 @@ MonoBehaviour:
     m_Localized: "Razi\u0161\u010Di naloge"
     m_Metadata:
       m_Items: []
+  - m_Id: 46966269096747008
+    m_Localized: "{0:plural:Prislu\u017Een FoodyCoin!|Prislu\u017Eena FoodyCoina!|Prislu\u017Eeni
+      FoodyCoini!|Prislu\u017Eenih FoodyCoinov!}"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 46966074812391424
+    m_Localized: Nagrada je tvoja!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966143921938432
+    m_Localized: Pridobljenih XP!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966724417806336
+    m_Localized: Pridobljen nov znak!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966954571849728
+    m_Localized: "Nov izdelek za hi\u0161ne ljubljen\u010Dke!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Localized: Nova zbirateljska izdaja!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -2493,3 +2519,4 @@ MonoBehaviour:
         - id: 28899582313226240
         - id: 28906308236206080
         - id: 28898960193085440
+        - id: 46966269096747008

@@ -125,8 +125,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c14bf8e9d72f4df1b5c0042b95fa89b
+    m_Address: Foodmission/AppUI/Templates/ChallengesScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8d68a50099003416fa97fc177dce52c3
     m_Address: Foodmission/AppUI/Templates/GroupDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f35175e2b454e2e85a0625dc03772ee
+    m_Address: Foodmission/AppUI/Templates/QuestsScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f35175e2b454e2e85a0625dc03773ff
+    m_Address: Foodmission/AppUI/Templates/QuestDetailScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -180,8 +195,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d08450cb557f941c1a22c345adb233f0
+    m_Address: Particles-QuizWin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6a86b0239f54418486501c88ddd29c5
     m_Address: Foodmission/AppUI/Templates/QuickSearchScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5114aa5c2ff54fd394625beeb60bad2
+    m_Address: ui-template/particles/confeti
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -205,23 +230,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8c14bf8e9d72f4df1b5c0042b95fa89b
-    m_Address: Foodmission/AppUI/Templates/ChallengesScreen.uxml
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ff35175e2b454e2e85a0625dc03771ea
     m_Address: Foodmission/AppUI/Templates/MissionsScreen.uxml
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9f35175e2b454e2e85a0625dc03772ee
-    m_Address: Foodmission/AppUI/Templates/QuestsScreen.uxml
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9f35175e2b454e2e85a0625dc03773ff
-    m_Address: Foodmission/AppUI/Templates/QuestDetailScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

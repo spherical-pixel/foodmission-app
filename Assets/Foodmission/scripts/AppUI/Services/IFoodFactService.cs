@@ -17,5 +17,8 @@ namespace eu.foodmission.platform
         Task<(FoodFact Result, ApiErrorResponse Error)> GetFoodFactByCodeAsync(
             string code,
             string lang = null);
+
+        Task<(FoodFactProgressResponse Result, ApiErrorResponse Error)> MarkAsReadAsync(string codeOrId);
+        Task<(FoodFactProgressResponse[] Result, ApiErrorResponse Error)> GetUserProgressListAsync();
     }
 }

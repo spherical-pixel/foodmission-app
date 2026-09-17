@@ -107,6 +107,9 @@ namespace eu.foodmission.platform.Tests
             _mockDimensionService.Setup(d => d.GetTopicsForDimension("DIET_CHANGES")).Returns(_mockDimensions[0].topics);
             _mockDimensionService.Setup(d => d.GetTopicsForDimension("FOOD_WASTE")).Returns(_mockDimensions[1].topics);
 
+            _mockFoodFactService.Setup(s => s.GetUserProgressListAsync())
+                .ReturnsAsync((Array.Empty<FoodFactProgressResponse>(), null));
+
             _vm = new FoodFactsViewModel(
                 _storeService,
                 _mockFoodFactService.Object,
@@ -256,6 +259,77 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Actions.open_food_fact, requestedAction);
             Assert.IsNotNull(requestedArgs);
             Assert.AreEqual("FF1.1.1", requestedArgs[0].value);
+        }
+
+        [Test]
+        public async Task LoadDataAsync_WithUserProgress_SetsCompletionStatusAndCompletedCount()
+        {
+            _mockFoodFactService.Setup(s => s.GetFoodFactsAsync(null, 1, 200, null))
+                .ReturnsAsync((new PaginatedFoodFactResponse
+                {
+                    data = _mockFacts,
+                    meta = new PaginationMeta { total = 4 }
+                }, null));
+
+            var userProgress = new[]
+            {
+                new FoodFactProgressResponse
+                {
+                    foodFactCode = "FF1.1.1",
+                    readAt = "2026-09-17T10:00:00Z"
+                },
+                new FoodFactProgressResponse
+                {
+                    foodFactCode = "FF5.1.1",
+                    readAt = "2026-09-17T10:00:00Z"
+                }
+            };
+
+            _mockFoodFactService.Setup(s => s.GetUserProgressListAsync())
+                .ReturnsAsync((userProgress, null));
+
+            await _vm.LoadDataAsync();
+
+            Assert.AreEqual(4, _vm.TotalFactsCount);
+            Assert.AreEqual(2, _vm.CompletedFactsCount);
+
+            var dim1Group = _vm.DisplayGroups.FirstOrDefault(g => g.Dimension.code == "DIET_CHANGES");
+            Assert.IsNotNull(dim1Group);
+            Assert.AreEqual(1, dim1Group.CompletedCount);
+            Assert.AreEqual(3, dim1Group.TotalCount);
+
+            var top1 = dim1Group.Topics.FirstOrDefault(t => t.Topic.code == "REDUCING_MEAT_CONSUMPTION");
+            Assert.IsNotNull(top1);
+            Assert.IsTrue(top1.Facts.First(f => f.FoodFact.code == "FF1.1.1").IsCompleted);
+            Assert.IsFalse(top1.Facts.First(f => f.FoodFact.code == "FF1.1.2").IsCompleted);
+        }
+
+        [Test]
+        public void OpenRandomFact_WhenSomeFactsCompleted_PrioritizesPendingFacts()
+        {
+            string requestedCode = null;
+            _vm.NavigationRequested += (action, args) =>
+            {
+                if (action == Actions.open_food_fact)
+                {
+                    requestedCode = args.FirstOrDefault(a => a.name == "code")?.value;
+                }
+            };
+
+            // Two beginner facts: FF1.1.2 and FF5.1.1
+            // Mark FF1.1.2 as read
+            var progress = new[]
+            {
+                new FoodFactProgressResponse { foodFactCode = "FF1.1.2" }
+            };
+
+            _vm.SetRawDataForTesting(_mockFacts, progress);
+            _vm.SetLevelFilter(FoodFactLevel.Beginner);
+
+            _vm.OpenRandomFact();
+
+            // Should select unread beginner fact (FF5.1.1)
+            Assert.AreEqual("FF5.1.1", requestedCode);
         }
     }
 }

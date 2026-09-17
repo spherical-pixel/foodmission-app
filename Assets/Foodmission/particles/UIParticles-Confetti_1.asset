@@ -1,0 +1,363 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63984a59c5e406d4a9e91497f5558288, type: 3}
+  m_Name: UIParticles-Confetti_1
+  m_EditorClassIdentifier: UIParticle::MainraGames.UIParticleProfile
+  Duration: 5
+  Looping: 1
+  Prewarm: 0
+  PlayOnAttach: 1
+  StartDelay: 0
+  StartLifetime: 1.5
+  StartLifetimeRandom: 0.25
+  StartSpeed: 300
+  StartSpeedRandom: 50
+  UseStartSize2D: 1
+  StartSize: 5
+  StartSizeRandom: 0
+  StartSizeX: 4
+  StartSizeY: 2
+  StartSizeRandomX: 0
+  StartSizeRandomY: 0
+  StartRotation: 0
+  StartRotationRandom: 90
+  StartColor: {r: 1, g: 1, b: 1, a: 1}
+  GravityModifier: 200
+  MaxParticles: 500
+  PlaybackSpeed: 1
+  AutoRandomSeed: 1
+  RandomSeed: 0
+  SimulateInEditor: 1
+  RateOverTime: 50
+  RateOverDistance: 10
+  BurstCount: 0
+  BurstTime: 0
+  BurstCycles: 1
+  BurstInterval: 0.5
+  ShapeType: 5
+  SphereRadius: 32
+  ConeAngle: 19.6
+  ConeRadius: 8
+  BoxSize: {x: 64, y: 64, z: 0}
+  CircleRadius: 32
+  CircleArcDegrees: 360
+  EdgeLength: 1500
+  UseVelocityOverLifetimeCurves: 0
+  VelocityOverLifetime: {x: 0, y: 0, z: 0}
+  velocityX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  velocityY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  velocityZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  InheritVelocityEnabled: 0
+  InheritMode: 0
+  InheritVelocityMultiplier: 0
+  UseLimitVelocityCurve: 0
+  LimitVelocity: 0
+  limitVelocityOverLifetime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  LimitVelocityDampen: 0
+  UseForceOverLifetimeCurves: 0
+  ForceOverLifetime: {x: 0, y: 0}
+  forceX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  forceY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  UseColorOverLifetimeCurve: 0
+  colorOverLifetime:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 0}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  ColorOverLifetimeStart: {r: 1, g: 1, b: 1, a: 1}
+  ColorOverLifetimeEnd: {r: 1, g: 1, b: 1, a: 0.53333336}
+  UseSizeOverLifetimeCurve: 0
+  sizeOverLifetime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: -2.2782931
+      outSlope: -2.2782931
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.32083333
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  SizeOverLifetimeStart: 10
+  SizeOverLifetimeEnd: 8
+  UseAngularVelocityCurve: 0
+  angularVelocity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  RotationOverLifetime: 360
+  RotationRandom: 720
+  SizeBySpeedEnabled: 0
+  SizeBySpeedRangeMin: 0
+  SizeBySpeedRangeMax: 100
+  SizeBySpeedMultiplierMin: 1
+  SizeBySpeedMultiplierMax: 1
+  ColorBySpeedEnabled: 0
+  ColorBySpeedRangeMin: 0
+  ColorBySpeedRangeMax: 6000
+  ColorBySpeedStart: {r: 1, g: 1, b: 0, a: 1}
+  ColorBySpeedEnd: {r: 0, g: 1, b: 0.15117788, a: 0}
+  RotationBySpeedEnabled: 0
+  RotationBySpeedRangeMin: 0
+  RotationBySpeedRangeMax: 100
+  RotationBySpeedFactor: 0
+  NoiseEnabled: 1
+  NoiseStrength: 0
+  NoiseFrequency: 0.1
+  NoiseOctaves: 1
+  NoiseScrollSpeed: 0
+  NoiseDamping: 0
+  RenderMode: 0
+  Sorting: 0
+  YAxis: 0
+  AlignToVelocity: 0
+  StretchLength: 0.5
+  StretchSpeedScale: 0.02
+  MultiplyByElementOpacity: 1
+  UVMode: 1
+  Texture: {fileID: 2800000, guid: 4d4f22eca5d2d4e0bbc7657444805031, type: 3}
+  Sprite: {fileID: 21300000, guid: 62092e846f2ef43cea1ce6ec7a2a79fa, type: 3}
+  FlipU: 0
+  FlipV: 0
+  TextureSheetEnabled: 1
+  SheetMode: 0
+  SheetTilesX: 1
+  SheetTilesY: 1
+  SheetCycles: 1
+  SheetRandomRow: 1
+  SheetRandomStartFrame: 1
+  Anchor: 1
+  ParticlesFollowEmitter: 1
+  EmitterOffset: {x: 600, y: 0}
+  PauseWhenInvisible: 1
+  KillWhenOutside: 0
+  CullPadding: 32
+  emissionRateMultiplier:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

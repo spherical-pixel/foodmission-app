@@ -137,21 +137,43 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void OnContinueClicked()
+        private async void OnContinueClicked()
         {
             _audioService?.PlaySfx(SfxType.PositiveButton);
+            _btContinue?.SetEnabled(false);
 
-            HideCard(() =>
+            ContentReward reward = null;
+            if (_viewModel != null)
             {
-                if (_navController != null)
+                reward = await _viewModel.MarkAsReadAsync();
+            }
+
+            void NavigateOut()
+            {
+                HideCard(() =>
                 {
-                    _navController.PopBackStack();
-                }
-                else
-                {
-                    OnNavigationRequested(Actions.go_to_home, null);
-                }
-            });
+                    if (_navController != null)
+                    {
+                        _navController.PopBackStack();
+                    }
+                    else
+                    {
+                        OnNavigationRequested(Actions.go_to_home, null);
+                    }
+                });
+            }
+
+            if (reward != null)
+            {
+                RewardCelebrationDialog.Show(
+                    reward,
+                    contextTitle: "@UI:FOOD_FACT_REWARD_TITLE",
+                    onDismiss: NavigateOut);
+            }
+            else
+            {
+                NavigateOut();
+            }
         }
 
         private void ShowCard(long delay, Action onComplete = null)

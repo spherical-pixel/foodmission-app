@@ -144,6 +144,10 @@ namespace eu.foodmission.platform
         public string userCurrentQuestId = "";
         public PilotSurveyCycleState pilotSurveyCycleState;
         public bool pilotConsentAccepted = false;
+        public int userXp = 0;
+        public int userPoints = 0;
+        public ProgressIndicator[] userProgressIndicators = new ProgressIndicator[0];
+        public string[] userBadges = new string[0];
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -214,6 +218,10 @@ namespace eu.foodmission.platform
                 userCurrentQuestId = this.userCurrentQuestId,
                 pilotSurveyCycleState = this.pilotSurveyCycleState?.Copy(),
                 pilotConsentAccepted = this.pilotConsentAccepted,
+                userXp = this.userXp,
+                userPoints = this.userPoints,
+                userProgressIndicators = this.userProgressIndicators != null ? (ProgressIndicator[])this.userProgressIndicators.Clone() : new ProgressIndicator[0],
+                userBadges = this.userBadges != null ? (string[])this.userBadges.Clone() : new string[0],
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
                 foodInfoAddRequest = this.foodInfoAddRequest

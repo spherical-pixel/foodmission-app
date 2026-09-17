@@ -101,5 +101,29 @@ namespace eu.foodmission.platform.Tests
         {
             Assert.DoesNotThrow(() => _bannerService.ClearCache());
         }
+
+        [Test]
+        public void BannerService_ImplementsISpriteService()
+        {
+            Assert.IsInstanceOf<ISpriteService>(_bannerService);
+        }
+
+        [Test]
+        public void BannerService_WithCustomSpriteService_DelegatesCorrectly()
+        {
+            var customSpriteService = new SpriteService();
+            using var bannerService = new BannerService(customSpriteService);
+
+            Assert.IsFalse(bannerService.IsSpriteLoaded("dimensions/diet_changes"));
+            Assert.IsNull(bannerService.GetCachedSprite("dimensions/diet_changes"));
+            Assert.DoesNotThrow(() => bannerService.ReleaseSprite("dimensions/diet_changes"));
+        }
+
+        [Test]
+        public async Task BindBackgroundSprite_WithNullTargetElement_ReturnsFalse()
+        {
+            bool result = await _bannerService.BindBackgroundSprite(null, "dimensions/diet_changes");
+            Assert.IsFalse(result);
+        }
     }
 }
