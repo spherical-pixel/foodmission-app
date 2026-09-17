@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using eu.foodmission.platform.Utils;
 using MainraGames;
 using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Components
@@ -81,8 +83,7 @@ namespace eu.foodmission.platform.Components
                 {
                     Type = RewardType.Xp,
                     Title = $"+{reward.xp.Value} XP",
-                    Subtitle = "@UI:REWARD_XP_EARNED",
-                    IconEmoji = "⭐",
+                    Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_XP_EARNED", new object[] { reward.xp.Value }),
                     Value = reward.xp.Value
                 });
             }
@@ -92,9 +93,8 @@ namespace eu.foodmission.platform.Components
                 list.Add(new RewardPresentationItem
                 {
                     Type = RewardType.Points,
-                    Title = $"+{reward.points.Value} Pts",
-                    Subtitle = "@UI:REWARD_POINTS_EARNED",
-                    IconEmoji = "🌱",
+                    Title = $"+{reward.points.Value}",
+                    Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_POINTS_EARNED", new object[] { reward.points.Value }),
                     Value = reward.points.Value
                 });
             }
@@ -449,48 +449,235 @@ namespace eu.foodmission.platform.Components
         public static VisualElement BuildXpContent(RewardPresentationItem item)
         {
             var container = CreateContentContainer("fm-reward-content--xp");
+            IStoreService storeService = App.current?.services?.GetService<IStoreService>();
 
-            // Image image = new Image();
-            // App.current?.services?.GetService<ISpriteService>()?.BindSprite(image, "sprites/star-big");
-            // container.Add(image);
+            int userXp = 0;
 
-            // XP row: bar + star badge
+            if (storeService != null)
+            {
+                //userXp = storeService.GetAppState().userXp;
+                // Let's fake for testing 
+                userXp = 10 + item.Value;
+            }
+
+            int prevXp = userXp - item.Value;
+            var startInfo = LevelFormula.GetProgressInfo(prevXp);
+
             var xpRow = new VisualElement();
             xpRow.style.flexDirection = FlexDirection.Row;
             xpRow.style.alignItems = Align.Center;
-            xpRow.style.width = Length.Percent(100);
+            xpRow.style.width = Length.Percent(80);
 
             var xpBar = new LinearProgress();
-            xpBar.value = 50f;
+            xpBar.value = startInfo.NormalizedProgress;
             xpBar.AddToClassList("fm-xp-progress");
             xpBar.AddToClassList("appui-progress--rounded-corners");
             xpBar.style.flexGrow = 1;
             xpBar.variant = Progress.Variant.Determinate;
 
-
             var xpBadge = new VisualElement();
             xpBadge.AddToClassList("fm-profile-xp-badge");
 
-            var xpLabel = new Label("1");
+            var xpLabel = new Label();
+            xpLabel.text = startInfo.Level.ToString();
             xpLabel.AddToClassList("fm-profile-xp-label");
             xpBadge.Add(xpLabel);
-
 
             xpRow.Add(xpBar);
             xpRow.Add(xpBadge);
 
             container.Add(xpRow);
 
-
             var title = new Text { text = item?.Title ?? "" };
+            title.size = TextSize.XXXL;
             title.AddToClassList("fm-reward-title");
             container.Add(title);
 
             var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.size = TextSize.XXXL;
             subtitle.AddToClassList("fm-reward-subtitle");
             container.Add(subtitle);
 
+            // Animate XP bar progression sequentially across levels
+            bool animationStarted = false;
+            void StartAnimation()
+            {
+                if (animationStarted) return;
+                animationStarted = true;
+                AnimateXpProgression(container, xpBar, xpLabel, xpBadge, prevXp, userXp);
+            }
+
+            if (container.panel != null)
+            {
+                StartAnimation();
+            }
+            else
+            {
+                container.RegisterCallback<AttachToPanelEvent>(_ => StartAnimation());
+            }
+
             return container;
+        }
+
+        /// <summary>
+        /// Animates the LinearProgress XP bar and level badge sequentially through all stages
+        /// (including intermediate level ups and final fractional progress) using UI Toolkit's scheduler.
+        /// </summary>
+        public static IVisualElementScheduledItem AnimateXpProgression(
+            VisualElement host,
+            LinearProgress xpBar,
+            Label xpLabel,
+            VisualElement xpBadge,
+            int startXp,
+            int endXp,
+            Action onComplete = null)
+        {
+            if (host == null || xpBar == null)
+            {
+                onComplete?.Invoke();
+                return null;
+            }
+
+            var steps = LevelFormula.CalculateAnimationSteps(startXp, endXp);
+            if (steps == null || steps.Count == 0)
+            {
+                onComplete?.Invoke();
+                return null;
+            }
+
+            // Set initial state
+            xpBar.value = steps[0].StartProgress;
+            if (xpLabel != null)
+            {
+                xpLabel.text = steps[0].Level.ToString();
+            }
+
+            int currentStepIndex = 0;
+            float stateTime = 0f;
+            bool isPausingOnLevelUp = false;
+            float initialDelay = 0.25f; // Wait 250ms for the modal card slide-in transition to settle
+            bool isDelaying = true;
+
+            IVisualElementScheduledItem scheduledItem = null;
+
+            scheduledItem = host.schedule.Execute(timerState =>
+            {
+                // Guard: if host is detached or modal is dismissed, halt execution
+                if (host.panel == null)
+                {
+                    scheduledItem?.Pause();
+                    return;
+                }
+
+                float dt = timerState.deltaTime / 1000f;
+                if (dt > 0.1f) dt = 0.1f;
+
+                if (isDelaying)
+                {
+                    stateTime += dt;
+                    if (stateTime >= initialDelay)
+                    {
+                        isDelaying = false;
+                        stateTime = 0f;
+                    }
+                    return;
+                }
+
+                if (isPausingOnLevelUp)
+                {
+                    stateTime += dt;
+                    if (stateTime >= 0.25f) // 250ms pause after level up
+                    {
+                        isPausingOnLevelUp = false;
+                        stateTime = 0f;
+
+                        currentStepIndex++;
+                        if (currentStepIndex < steps.Count)
+                        {
+                            xpBar.value = steps[currentStepIndex].StartProgress;
+                        }
+                        else
+                        {
+                            xpBar.value = 0f;
+                            scheduledItem?.Pause();
+                            onComplete?.Invoke();
+                        }
+                    }
+                    return;
+                }
+
+                if (currentStepIndex >= steps.Count)
+                {
+                    scheduledItem?.Pause();
+                    onComplete?.Invoke();
+                    return;
+                }
+
+                var currentStep = steps[currentStepIndex];
+                float progressDistance = Mathf.Abs(currentStep.EndProgress - currentStep.StartProgress);
+                // Proportional duration: between 350ms and 600ms depending on distance filled
+                float stepDuration = Mathf.Clamp(progressDistance * 0.7f, 0.35f, 0.6f);
+
+                stateTime += dt;
+                float t = Mathf.Clamp01(stateTime / stepDuration);
+
+                // Easing:
+                // If this step hits 100% (level up), use EaseInQuad for momentum towards 100%
+                // If it's the final stop, use EaseOutQuad for a smooth deceleration
+                float easedT = currentStep.IsLevelUp ? (t * t) : (t * (2f - t));
+                xpBar.value = Mathf.Lerp(currentStep.StartProgress, currentStep.EndProgress, easedT);
+
+                if (t >= 1f)
+                {
+                    xpBar.value = currentStep.EndProgress;
+
+                    if (currentStep.IsLevelUp)
+                    {
+                        // Level up!
+                        int nextLevel = currentStep.Level + 1;
+                        if (xpLabel != null)
+                        {
+                            xpLabel.text = nextLevel.ToString();
+                        }
+
+                        // Punch scale animation on badge
+                        if (xpBadge != null)
+                        {
+                            xpBadge.style.scale = new StyleScale(new Scale(new Vector3(1.25f, 1.25f, 1f)));
+                            xpBadge.schedule.Execute(() =>
+                            {
+                                if (xpBadge.panel != null)
+                                {
+                                    xpBadge.style.scale = new StyleScale(new Scale(Vector3.one));
+                                }
+                            }).StartingIn(180);
+                        }
+
+                        // Audio & mascot celebration
+                        var audioService = App.current?.services?.GetService<IAudioService>();
+                        audioService?.PlaySfx(SfxType.WinBadge);
+
+                        var avatarService = App.current?.services?.GetService<IAvatarService>();
+                        if (avatarService?.AvatarController?.AvatarAnimationController != null)
+                        {
+                            avatarService.AvatarController.AvatarAnimationController.CurrentMood = AvatarMood.Happy;
+                            avatarService.AvatarController.AvatarAnimationController.TriggerCelebration();
+                        }
+
+                        // Start level up pause
+                        isPausingOnLevelUp = true;
+                        stateTime = 0f;
+                    }
+                    else
+                    {
+                        // Final step reached
+                        scheduledItem?.Pause();
+                        onComplete?.Invoke();
+                    }
+                }
+            }).Every(16);
+
+            return scheduledItem;
         }
 
         /// <summary>
@@ -501,16 +688,18 @@ namespace eu.foodmission.platform.Components
         {
             var container = CreateContentContainer("fm-reward-content--points");
 
-            var iconCircle = new VisualElement();
-            iconCircle.AddToClassList("fm-reward-icon-circle");
-            var iconText = new Text { text = item?.IconEmoji ?? "🌱" };
-            iconText.AddToClassList("fm-reward-icon-emoji");
-            iconCircle.Add(iconText);
-            container.Add(iconCircle);
+            Image imageCoin = new Image();
+
+            App.current?.services?.GetService<ISpriteService>()?.BindSprite(imageCoin, "sprites/coin-big");
+            imageCoin.style.width = Length.Pixels(456); //456
+            imageCoin.style.height = Length.Pixels(456);
+            imageCoin.style.alignContent = Align.Center;
+            imageCoin.style.justifyContent = Justify.Center;
+            container.Add(imageCoin);
 
             var title = new Text { text = item?.Title ?? "" };
             title.AddToClassList("fm-reward-title");
-            container.Add(title);
+            imageCoin.Add(title);
 
             var subtitle = new Text { text = item?.Subtitle ?? "" };
             subtitle.AddToClassList("fm-reward-subtitle");

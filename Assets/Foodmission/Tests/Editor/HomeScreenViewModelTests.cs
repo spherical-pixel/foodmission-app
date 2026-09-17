@@ -166,6 +166,67 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task LoadActiveQuestAsync_WithReadFoodFact_MarksFoodFactActivityStateCompleted()
+        {
+            var mockQuestService = new Mock<IQuestService>();
+            var mockFoodFactService = new Mock<IFoodFactService>();
+
+            var quest = new Quest
+            {
+                id = "quest-1",
+                code = "HEALTHY_BREAKFAST",
+                title = "Healthy Breakfast",
+                items = new[]
+                {
+                    new QuestItem { id = "item-1", contentType = QuestContentType.Quiz, contentCode = "Q1" },
+                    new QuestItem { id = "item-2", contentType = QuestContentType.FoodFact, contentCode = "FF1.1.1" },
+                    new QuestItem { id = "item-3", contentType = QuestContentType.Mission, contentCode = "M1" }
+                }
+            };
+            var progress = new QuestProgress
+            {
+                questId = "quest-1",
+                progress = 0f,
+                completed = false
+            };
+
+            mockQuestService.Setup(q => q.GetQuestAsync("quest-1", It.IsAny<string>()))
+                .ReturnsAsync((quest, (ApiErrorResponse)null));
+            mockQuestService.Setup(q => q.GetQuestProgressAsync("quest-1", It.IsAny<string>()))
+                .ReturnsAsync((progress, (ApiErrorResponse)null));
+
+            var foodFactProgress = new[]
+            {
+                new FoodFactProgressResponse
+                {
+                    foodFactCode = "FF1.1.1",
+                    readAt = "2026-09-17T10:00:00Z"
+                }
+            };
+            mockFoodFactService.Setup(s => s.GetUserProgressListAsync())
+                .ReturnsAsync((foodFactProgress, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "quest-1" });
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                _mockNotificationService.Object,
+                _mockLegalService.Object,
+                questService: mockQuestService.Object,
+                foodFactService: mockFoodFactService.Object
+            );
+
+            await vm.LoadActiveQuestAsync();
+
+            Assert.IsTrue(vm.HasActiveQuest);
+            Assert.AreEqual(3, vm.CurrentQuestActivityStates.Length);
+            Assert.IsFalse(vm.CurrentQuestActivityStates[0]); // Quiz pending
+            Assert.IsTrue(vm.CurrentQuestActivityStates[1]);  // Food fact read -> true!
+            Assert.IsFalse(vm.CurrentQuestActivityStates[2]); // Mission pending
+        }
+
+        [Test]
         public void OpenCurrentQuest_RequestsNavigationToQuestDetail()
         {
             string requestedAction = null;

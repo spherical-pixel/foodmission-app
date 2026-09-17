@@ -60,7 +60,7 @@ namespace eu.foodmission.platform
             base.OnEnter(controller, destination, args);
             _ = _viewModel?.LoadActiveQuestAsync();
             RefreshActiveQuestWidget();
-            SetupRewardDebugButton();
+            //SetupRewardDebugButton();
         }
 
         private void CacheUIElements()
@@ -97,7 +97,7 @@ namespace eu.foodmission.platform
             CheckPendingLegalConsentAsync();
             CheckPendingPilotConsentAsync();
             CheckPendingPilotSurveyAsync();
-            SetupRewardDebugButton();
+            //SetupRewardDebugButton();
             // #if DEVELOPER_MODE
             //             SetupPilotDebugPanel();
             // #endif
@@ -353,11 +353,13 @@ namespace eu.foodmission.platform
                 var simulatedReward = new ContentReward
                 {
                     xp = 120,
-                    points = 45,
+                    points = 51,
+
+                    /*,
                     badgeId = "Maestro Sostenible",
                     avatarItem = "Gorro de Chef Verde",
                     petItem = "Collar Ecológico",
-                    collectible = "Trofeo Huella Cero"
+                    collectible = "Trofeo Huella Cero"*/
                 };
 
                 RewardCelebrationDialog.Show(

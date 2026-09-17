@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Unity.AppUI.MVVM;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,11 +12,15 @@ namespace eu.foodmission.platform
 {
     public class FoodFactService : IFoodFactService
     {
-        private readonly IStoreService _storeService;
+        private const string LocalReadFactsKey = "fm_read_food_facts";
 
-        public FoodFactService(IStoreService storeService)
+        private readonly IStoreService _storeService;
+        private readonly ILocalStorageService _localStorageService;
+
+        public FoodFactService(IStoreService storeService, ILocalStorageService localStorageService = null)
         {
             _storeService = storeService;
+            _localStorageService = localStorageService ?? App.current?.services?.GetService<ILocalStorageService>();
         }
 
         private string AuthHeader
@@ -205,7 +212,12 @@ namespace eu.foodmission.platform
             try
             {
                 string raw = request.downloadHandler.text;
+                Debug.Log($"[{GetType().Name}] MarkAsReadAsync {codeOrId} response: {raw}");
                 var progress = JsonConvert.DeserializeObject<FoodFactProgressResponse>(raw);
+                if (progress != null)
+                {
+                    SaveLocalReadFact(codeOrId, progress.foodFactCode, progress.foodFactId);
+                }
                 return (progress, null);
             }
             catch (Exception ex)
@@ -213,6 +225,92 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[{GetType().Name}] Failed to deserialize FoodFactProgressResponse {codeOrId}: {ex.Message}");
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
+        }
+
+        public async Task<(FoodFactProgressResponse[] Result, ApiErrorResponse Error)> GetUserProgressListAsync()
+        {
+            string auth = AuthHeader;
+            if (string.IsNullOrEmpty(auth))
+            {
+                return (GetLocalProgressFallback(), new ApiErrorResponse { message = "Authentication required" });
+            }
+
+            string url = $"{ApiConfig.BaseUrl}/api/v1/food-facts/progress";
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+            request.SetRequestHeader("Authorization", auth);
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+                await Task.Yield();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                try
+                {
+                    string raw = request.downloadHandler.text;
+                    var list = JsonConvert.DeserializeObject<FoodFactProgressResponse[]>(raw);
+                    if (list != null)
+                    {
+                        foreach (var item in list)
+                        {
+                            SaveLocalReadFact(item.foodFactCode, item.foodFactCode, item.foodFactId);
+                        }
+                        return (list, null);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Failed to parse FoodFactProgress list: {ex.Message}");
+                }
+            }
+
+            // Fallback to local storage (e.g. while endpoint is being added by backend partners)
+            return (GetLocalProgressFallback(), null);
+        }
+
+        private HashSet<string> GetLocalReadFactCodes()
+        {
+            try
+            {
+                var list = _localStorageService?.GetValue<List<string>>(LocalReadFactsKey);
+                if (list != null)
+                {
+                    return new HashSet<string>(list, StringComparer.OrdinalIgnoreCase);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Failed to read local read facts: {ex.Message}");
+            }
+            return new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        private void SaveLocalReadFact(string codeOrId, string code, string id)
+        {
+            try
+            {
+                var set = GetLocalReadFactCodes();
+                if (!string.IsNullOrEmpty(codeOrId)) set.Add(codeOrId);
+                if (!string.IsNullOrEmpty(code)) set.Add(code);
+                if (!string.IsNullOrEmpty(id)) set.Add(id);
+                _localStorageService?.SetValue(LocalReadFactsKey, set.ToList());
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Failed to save local read fact: {ex.Message}");
+            }
+        }
+
+        private FoodFactProgressResponse[] GetLocalProgressFallback()
+        {
+            var codes = GetLocalReadFactCodes();
+            return codes.Select(c => new FoodFactProgressResponse
+            {
+                foodFactCode = c,
+                foodFactId = c,
+                readAt = DateTime.UtcNow.ToString("o")
+            }).ToArray();
         }
     }
 }

@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using eu.foodmission.platform;
 using eu.foodmission.platform.Components;
 using NUnit.Framework;
+using Unity.AppUI.UI;
+using UnityEngine.UIElements;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -278,6 +280,53 @@ namespace eu.foodmission.platform.Tests
             var visual = RewardCelebrationDialog.CreateRewardVisual(item);
             Assert.IsNotNull(visual);
             Assert.IsTrue(visual.ClassListContains("fm-reward-content--collectible"));
+        }
+
+        [Test]
+        public void BuildXpContent_ContainsProgressBarAndLevelBadge()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.Xp,
+                Title = "+50 XP",
+                Subtitle = "@UI:REWARD_XP_EARNED",
+                IconEmoji = "⭐",
+                Value = 50
+            };
+
+            var visual = RewardCelebrationDialog.BuildXpContent(item);
+            Assert.IsNotNull(visual);
+
+            var bar = visual.Q<LinearProgress>();
+            Assert.IsNotNull(bar);
+            Assert.IsTrue(bar.ClassListContains("fm-xp-progress"));
+
+            var label = visual.Q<Label>();
+            Assert.IsNotNull(label);
+            Assert.IsTrue(label.ClassListContains("fm-profile-xp-label"));
+        }
+
+        [Test]
+        public void AnimateXpProgression_WhenHostOrBarNull_InvokesOnCompleteImmediately()
+        {
+            bool completed = false;
+            var item = RewardCelebrationDialog.AnimateXpProgression(null, null, null, null, 0, 50, () => completed = true);
+            Assert.IsNull(item);
+            Assert.IsTrue(completed);
+        }
+
+        [Test]
+        public void AnimateXpProgression_WhenNoXpDelta_InvokesOnCompleteImmediately()
+        {
+            bool completed = false;
+            var host = new VisualElement();
+            var bar = new LinearProgress();
+            var label = new Label();
+            var badge = new VisualElement();
+
+            var item = RewardCelebrationDialog.AnimateXpProgression(host, bar, label, badge, 50, 50, () => completed = true);
+            Assert.IsNull(item);
+            Assert.IsTrue(completed);
         }
     }
 }

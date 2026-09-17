@@ -84,6 +84,7 @@ namespace eu.foodmission.platform
         public const string LearningFootprintCompared = "LEARNING_FOOTPRINT_COMPARED";
         public const string LearningRecipeExplored = "LEARNING_RECIPE_EXPLORED";
         public const string LearningRecipeShared = "LEARNING_RECIPE_SHARED";
+        public const string LearningFactRead = "LEARNING_FACT_READ";
 
         public static readonly string[] All = {
             AppSessionOpened, AppSessionEnded,
@@ -94,7 +95,7 @@ namespace eu.foodmission.platform
             PackagingMaterialObserved, PackagingRecyclingLabelRead, PackagingReusableSpotChosen, PackagingRecyclabilityEvaluated, PackagingComparisonMade, PackagingSmartObserved,
             FoodWasteHalfPlateSaved, FoodWasteFullPlateSaved, FoodWasteExpiredConsumed, FoodWasteStorageInstructionsRead, FoodWasteMealPlanned, FoodWasteFridgePantryChecked, FoodWasteFifoOrganized, FoodWasteLogged,
             NutritionProteinIncluded, NutritionFruitVegServingAdded, NutritionWholegrainChosen, NutritionHighFibreMeal, NutritionSaltFreeTable, NutritionHealthyFatChosen, NutritionProteinVarietyLogged, NutritionRainbowColoursLogged, NutritionAddedSugarAvoided, NutritionPlantDiversityCount,
-            LearningFootprintCompared, LearningRecipeExplored, LearningRecipeShared
+            LearningFootprintCompared, LearningRecipeExplored, LearningRecipeShared, LearningFactRead
         };
     }
 

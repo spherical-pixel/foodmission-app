@@ -179,7 +179,7 @@ namespace eu.foodmission.platform
                 progressBadge.AddToClassList("fm-quizzes-dim-progress-badge");
                 var progressText = new Unity.AppUI.UI.Text();
                 progressText.AddToClassList("fm-quizzes-dim-progress-text");
-                progressText.text = $"{group.TotalCount}";
+                progressText.text = $"{group.CompletedCount}/{group.TotalCount}";
                 progressBadge.Add(progressText);
                 row.Add(progressBadge);
 
@@ -249,6 +249,7 @@ namespace eu.foodmission.platform
                         var factCard = new FMItemFoodFact();
                         factCard.Text = fItem.FoodFact.code ?? "";
                         factCard.SetLevel(fItem.FoodFact.level);
+                        factCard.SetCompleted(fItem.IsCompleted);
 
                         var factRef = fItem.FoodFact;
                         factCard.OnFoodFactClicked += () => _viewModel?.OpenFoodFact(factRef);

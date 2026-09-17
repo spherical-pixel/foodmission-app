@@ -19,5 +19,6 @@ namespace eu.foodmission.platform
             string lang = null);
 
         Task<(FoodFactProgressResponse Result, ApiErrorResponse Error)> MarkAsReadAsync(string codeOrId);
+        Task<(FoodFactProgressResponse[] Result, ApiErrorResponse Error)> GetUserProgressListAsync();
     }
 }

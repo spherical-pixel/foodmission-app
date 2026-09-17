@@ -38,13 +38,18 @@ namespace eu.foodmission.platform.Components
         private readonly VisualElement _badgesContainer;
         private readonly VisualElement _levelBadge;
         private readonly Unity.AppUI.UI.Text _levelText;
+        private readonly VisualElement _statusBadge;
+        private readonly Icon _statusIcon;
+        private readonly Unity.AppUI.UI.Text _statusText;
         private readonly Icon _arrowIcon;
         private readonly Unity.AppUI.UI.Button _openButton;
 
         private string _level = FoodFactLevel.Beginner;
+        private bool _isCompleted;
 
         public event Action OnFoodFactClicked;
         public Unity.AppUI.UI.Button OpenButton => _openButton;
+        public bool IsCompleted => _isCompleted;
 
         public FMItemFoodFact()
         {
@@ -73,6 +78,20 @@ namespace eu.foodmission.platform.Components
             _levelBadge.Add(_levelText);
             _badgesContainer.Add(_levelBadge);
 
+            // Status Badge
+            _statusBadge = new VisualElement();
+            _statusBadge.AddToClassList("fm-quiz-status-badge");
+
+            _statusIcon = new Icon();
+            _statusIcon.AddToClassList("fm-quiz-status-badge-icon");
+            _statusIcon.iconName = "check";
+            _statusBadge.Add(_statusIcon);
+
+            _statusText = new Unity.AppUI.UI.Text();
+            _statusText.AddToClassList("fm-quiz-status-badge-text");
+            _statusBadge.Add(_statusText);
+            _badgesContainer.Add(_statusBadge);
+
             _arrowIcon = new Icon();
             _arrowIcon.AddToClassList("fm-quiz-item-arrow");
             _arrowIcon.iconName = "fm-arrow-right";
@@ -86,6 +105,7 @@ namespace eu.foodmission.platform.Components
             contentContainer.Add(_openButton);
 
             SetLevel(FoodFactLevel.Beginner);
+            SetCompleted(false);
         }
 
         public void SetLevel(string level)
@@ -115,6 +135,27 @@ namespace eu.foodmission.platform.Components
             }
 
             _levelText.text = localizedLevel;
+        }
+
+        public void SetCompleted(bool isCompleted)
+        {
+            _isCompleted = isCompleted;
+
+            _statusBadge.RemoveFromClassList("fm-quiz-status-badge--completed");
+            _statusBadge.RemoveFromClassList("fm-quiz-status-badge--pending");
+
+            if (_isCompleted)
+            {
+                _statusBadge.AddToClassList("fm-quiz-status-badge--completed");
+                _statusIcon.style.display = DisplayStyle.Flex;
+                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED") ?? "Leído";
+            }
+            else
+            {
+                _statusBadge.AddToClassList("fm-quiz-status-badge--pending");
+                _statusIcon.style.display = DisplayStyle.None;
+                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING") ?? "Pendiente";
+            }
         }
     }
 }

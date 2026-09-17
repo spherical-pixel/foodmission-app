@@ -2411,6 +2411,30 @@ MonoBehaviour:
     m_Key: HOME_NO_ACTIVE_QUEST_BUTTON
     m_Metadata:
       m_Items: []
+  - m_Id: 46966074812391424
+    m_Key: REWARD_CELEBRATION_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966143921938432
+    m_Key: REWARD_XP_EARNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966269096747008
+    m_Key: REWARD_POINTS_EARNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966724417806336
+    m_Key: REWARD_BADGE_UNLOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966954571849728
+    m_Key: REWARD_PET_ITEM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Key: REWARD_COLLECTIBLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

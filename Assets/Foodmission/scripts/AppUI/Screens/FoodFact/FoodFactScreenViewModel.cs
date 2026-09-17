@@ -66,6 +66,7 @@ namespace eu.foodmission.platform
             try
             {
                 var (progress, error) = await _foodFactService.MarkAsReadAsync(FoodFactData.code);
+                Debug.Log($"[{GetType().Name}] MarkAsReadAsync result -> reward: {(progress?.reward != null ? $"xp={progress.reward.xp}, points={progress.reward.points}" : "null")}, error: {error?.message}");
                 if (progress?.reward != null &&
                     ((progress.reward.xp.HasValue && progress.reward.xp.Value > 0) ||
                      (progress.reward.points.HasValue && progress.reward.points.Value > 0) ||

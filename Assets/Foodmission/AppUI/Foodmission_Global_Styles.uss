@@ -682,7 +682,7 @@
     --progress-color: rgb(41, 209, 227);
     --appui-linear-progress-height: 28px;
     --appui-linear-progress-border-radius: 12px;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.6);
     margin-right: -60px;
     margin-bottom: 45px;
 }
@@ -699,9 +699,27 @@
     margin-bottom: 45px;
 }
 
+.fm-profile-points-badge {
+    width: 115px;
+    height: 115px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/Foodmission/graphics/png/icons/fm-icon-coin.png");
+    -unity-background-image-size: contain;
+    margin-bottom: 45px;
+}
+
 .fm-profile-xp-label {
     color: white;
     font-size: var(--appui-font-sizes-body-md);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.fm-profile-points-label{
+    color: var(--appui-primary-15);
+    font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: bold;
     -unity-text-align: middle-center;
 }
@@ -2115,17 +2133,6 @@
     justify-content: center;
 }
 
-/* .fm-reward-icon-circle {
-    width: 76px;
-    height: 76px;
-    border-radius: 38px;
-    background-color: var(--appui-primary-800);
-    border-width: 3px;
-    border-color: var(--appui-primary-200);
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 14px;
-} */
 
 .fm-reward-icon-emoji {
     -unity-text-align: middle-center;
@@ -2133,16 +2140,29 @@
 }
 
 .fm-reward-title {
-    -unity-font-style: bold;
+    
     text-align: center;
     -unity-text-align: middle-center;
-    margin-bottom: 6px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    width: 100%;
+
+    -unity-font-style: bold;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: var(--fm-color-positive);
+    text-shadow: 2px 2px 4px var(--fm-color-positive);
+    scale: 2;
+    
+    
 }
 
 .fm-reward-subtitle {
+    -unity-font-style: bold;
     text-align: center;
     -unity-text-align: middle-center;
-    margin-bottom: 12px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    width: 100%;
 }
 
 
@@ -2151,4 +2171,5 @@
     align-self: center;
     align-items: center;
     justify-content: center;
+    margin-bottom: 45px;
 }
