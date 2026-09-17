@@ -25,5 +25,9 @@ namespace eu.foodmission.platform
             string codeOrId,
             string selectedLabel,
             string lang = null);
+
+        Task<(Quiz Result, ApiErrorResponse Error)> GetRandomQuizAsync(
+            QuizFilterParams filters = null,
+            string lang = null);
     }
 }

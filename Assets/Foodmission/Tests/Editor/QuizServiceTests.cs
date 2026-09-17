@@ -111,5 +111,32 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+
+        [Test]
+        public async Task GetRandomQuizAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.Expect(LogType.Error, new Regex(".*GetRandomQuizAsync.*"));
+            LogAssert.Expect(LogType.Error, new Regex(".*GetRandomQuizAsync.*"));
+
+            var (result, error) = await _service.GetRandomQuizAsync(new QuizFilterParams
+            {
+                level = QuizLevel.Beginner
+            });
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public async Task GetRandomQuizAsync_WithNoFilters_OnNetworkFailure_ReturnsError()
+        {
+            LogAssert.Expect(LogType.Error, new Regex(".*GetRandomQuizAsync.*"));
+            LogAssert.Expect(LogType.Error, new Regex(".*GetRandomQuizAsync.*"));
+
+            var (result, error) = await _service.GetRandomQuizAsync();
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
     }
 }

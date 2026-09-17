@@ -76,7 +76,7 @@ namespace eu.foodmission.platform
 
         private void RegisterManualEvents()
         {
-            if (_btnRandomQuiz != null) _btnRandomQuiz.clicked += () => _viewModel?.OpenRandomQuiz();
+            if (_btnRandomQuiz != null) _btnRandomQuiz.clicked += () => _ = _viewModel?.OpenRandomQuizAsync();
 
             if (_btnLevelAll != null) _btnLevelAll.clicked += () => _viewModel?.SetLevelFilter(QuizFilterLevel.All);
             if (_btnLevelBeginner != null) _btnLevelBeginner.clicked += () => _viewModel?.SetLevelFilter(QuizLevel.Beginner);
