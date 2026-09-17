@@ -2435,6 +2435,26 @@ MonoBehaviour:
     m_Key: REWARD_COLLECTIBLE
     m_Metadata:
       m_Items: []
+  - m_Id: 47093633499783168
+    m_Key: FOODFACT_STATUS_READ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Key: FOODFACT_STATUS_UNREAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Key: QUEST_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Key: QUIZ_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Key: FOOD_FACT_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

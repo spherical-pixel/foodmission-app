@@ -148,13 +148,13 @@ namespace eu.foodmission.platform.Components
             {
                 _statusBadge.AddToClassList("fm-quiz-status-badge--completed");
                 _statusIcon.style.display = DisplayStyle.Flex;
-                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED") ?? "Leído";
+                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "FOODFACT_STATUS_READ") ?? "Leído";
             }
             else
             {
                 _statusBadge.AddToClassList("fm-quiz-status-badge--pending");
                 _statusIcon.style.display = DisplayStyle.None;
-                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING") ?? "Pendiente";
+                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "FOODFACT_STATUS_UNREAD") ?? "No leído";
             }
         }
     }

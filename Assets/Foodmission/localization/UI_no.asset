@@ -198,8 +198,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Sammen skal vi knytte kj\xF8kkenet ditt til omsorgen for planeten.\n\nLag
-      mat, l\xE6r, del og utvikle deg hver dag.\n\nEr du klar til \xE5 komme i gang?"
+    m_Localized: "Sammen skal vi knytte kj\xF8kkenet ditt til omsorgen for planeten.\r\n\r\nLag
+      mat, l\xE6r, del og utvikle deg hver dag.\r\n\r\nEr du klar til \xE5 komme
+      i gang?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -258,6 +259,7 @@ MonoBehaviour:
     m_Localized: 'Denne handlingen vil slette alle opplysningene dine permanent fra
       plattformen.
 
+      
 
       Er du sikker?'
     m_Metadata:
@@ -1346,7 +1348,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Velkommen til Foodmission!\nDenne korte unders\xF8kelsen hjelper
+    m_Localized: "Velkommen til Foodmission!\r\nDenne korte unders\xF8kelsen hjelper
       oss \xE5 forst\xE5 dine spisevaner, din bevissthet rundt matsvinn og dine b\xE6rekraftige
       valg, slik at Nutri kan skreddersy anbefalinger til deg."
     m_Metadata:
@@ -2014,9 +2016,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Velkommen til FOODMISSION! \nEn plattform for borgerforskning som
-      skal hjelpe deg med \xE5 forbedre dine vaner n\xE5r det gjelder b\xE6rekraft
-      og ern\xE6ring. \nLa oss opprette kontoen din i noen f\xE5 enkle trinn."
+    m_Localized: "Velkommen til FOODMISSION! \r\nEn plattform for borgerforskning
+      som skal hjelpe deg med \xE5 forbedre dine vaner n\xE5r det gjelder b\xE6rekraft
+      og ern\xE6ring. \r\nLa oss opprette kontoen din i noen f\xE5 enkle trinn."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2111,15 +2113,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "Det p\xE5g\xE5r ingen pilotunders\xF8kelse i ditt land.\nDu kan
+    m_Localized: "Det p\xE5g\xE5r ingen pilotunders\xF8kelse i ditt land.\r\nDu kan
       utforske og bruke plattformen, men dataene dine vil ikke bli brukt i pilotunders\xF8kelsen."
     m_Metadata:
       m_Items: []
   - m_Id: 34022749457342464
     m_Localized: "Hei! For \xE5 tilpasse opplevelsen din p\xE5 Foodmission og hjelpe
       deg med \xE5 n\xE5 m\xE5lene dine, vil vi gjerne bli litt bedre kjent med deg.
-      Er du med p\xE5 det?\n\nSvar gjerne p\xE5 noen valgfrie sp\xF8rsm\xE5l, slik
-      at vi kan tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene
+      Er du med p\xE5 det?\r\n\r\nSvar gjerne p\xE5 noen valgfrie sp\xF8rsm\xE5l,
+      slik at vi kan tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene
       dine."
     m_Metadata:
       m_Items: []
@@ -2223,7 +2225,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Ups! Denne delen er ikke tilgjengelig enn\xE5, men ikke fortvil:
-      vi jobber med saken, s\xE5 du vil kunne nyte godt av den veldig snart.\n\nFOODMISSION
+      vi jobber med saken, s\xE5 du vil kunne nyte godt av den veldig snart.\r\n\r\nFOODMISSION
       er i stadig utvikling. Vi forbedrer appen og legger til nye funksjoner takket
       v\xE6re tilbakemeldinger fra brukere som deg. Takk for at du hjelper oss med
       \xE5 fortsette \xE5 vokse!"
@@ -2373,7 +2375,7 @@ MonoBehaviour:
   - m_Id: 40938002757705728
     m_Localized: "For \xE5 fortsette \xE5 bruke plattformen m\xE5 du godta det nye
       dokumentet om {0}. Hvis du ikke samtykker, kan du logge ut eller slette kontoen
-      din.\n\nTa deg gjerne et \xF8yeblikk til \xE5 g\xE5 gjennom det nye dokumentet
+      din.\r\n\r\nTa deg gjerne et \xF8yeblikk til \xE5 g\xE5 gjennom det nye dokumentet
       om {0} p\xE5 nytt, og ta gjerne kontakt med oss hvis du mener at det er noe
       feil i det."
     m_Metadata:
@@ -2383,9 +2385,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Hei!\n\nSom deltaker i pilotprosjektet har vi en kort sp\xF8rreunders\xF8kelse
+    m_Localized: "Hei!\r\n\r\nSom deltaker i pilotprosjektet har vi en kort sp\xF8rreunders\xF8kelse
       til deg. Svarene dine vil hjelpe oss med \xE5 forbedre FOODMISSION-plattformen.
-      \n\nVil du svare p\xE5 den n\xE5?"
+      \r\n\r\nVil du svare p\xE5 den n\xE5?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -2502,6 +2504,26 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 46976427931721728
     m_Localized: Nytt samleobjekt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633499783168
+    m_Localized: Lest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Localized: Ulest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Localized: "Oppdrag fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Localized: "Quiz fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Localized: "Ny fakta l\xE6rt!"
     m_Metadata:
       m_Items: []
   references:

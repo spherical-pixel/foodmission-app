@@ -19,6 +19,15 @@ namespace eu.foodmission.platform
         public static readonly string[] Options = { All, Beginner, Intermediate, Advanced };
     }
 
+    public static class FoodFactFilterStatus
+    {
+        public const string All = "ALL";
+        public const string Pending = "PENDING";
+        public const string Completed = "COMPLETED";
+
+        public static readonly string[] Options = { All, Pending, Completed };
+    }
+
     public class FoodFactDisplayItem
     {
         public FoodFact FoodFact { get; set; }
@@ -48,6 +57,9 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private string _selectedLevel = FoodFactFilterLevel.All;
+
+        [ObservableProperty]
+        private string _selectedStatus = FoodFactFilterStatus.All;
 
         [ObservableProperty]
         private ApiErrorResponse _errorDetail;
@@ -165,6 +177,18 @@ namespace eu.foodmission.platform
             }
         }
 
+        public void SetStatusFilter(string status)
+        {
+            if (string.IsNullOrEmpty(status))
+                status = FoodFactFilterStatus.All;
+
+            if (_selectedStatus != status)
+            {
+                SelectedStatus = status;
+                RebuildDisplayGroups();
+            }
+        }
+
         public void ToggleDimensionExpanded(string dimensionCodeOrId)
         {
             if (string.IsNullOrEmpty(dimensionCodeOrId)) return;
@@ -239,10 +263,19 @@ namespace eu.foodmission.platform
                         continue;
                 }
 
-                matchingLevelFacts.Add(f);
-
                 bool isCompleted = (!string.IsNullOrEmpty(f.id) && completedSet.Contains(f.id)) ||
                                    (!string.IsNullOrEmpty(f.code) && completedSet.Contains(f.code));
+
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Completed, StringComparison.OrdinalIgnoreCase) && !isCompleted)
+                {
+                    continue;
+                }
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Pending, StringComparison.OrdinalIgnoreCase) && isCompleted)
+                {
+                    continue;
+                }
+
+                matchingLevelFacts.Add(f);
 
                 if (!isCompleted)
                 {
@@ -309,6 +342,16 @@ namespace eu.foodmission.platform
                 if (isCompleted)
                 {
                     totalCompletedMatchingLevel++;
+                }
+
+                // Status Filter
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Completed, StringComparison.OrdinalIgnoreCase) && !isCompleted)
+                {
+                    continue;
+                }
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Pending, StringComparison.OrdinalIgnoreCase) && isCompleted)
+                {
+                    continue;
                 }
 
                 displayItems.Add(new FoodFactDisplayItem
