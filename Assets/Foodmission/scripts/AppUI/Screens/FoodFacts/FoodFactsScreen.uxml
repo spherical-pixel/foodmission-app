@@ -49,12 +49,12 @@
                         </appui:ActionButton>
                         <appui:ActionButton name="btn-status-pending" label="Unread" size="S">
                             <Bindings>
-                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(46976427931721730)"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47093633503977472)"/>
                             </Bindings>
                         </appui:ActionButton>
                         <appui:ActionButton name="btn-status-completed" label="Read" size="S">
                             <Bindings>
-                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(46976427931721729)"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47093633499783168)"/>
                             </Bindings>
                         </appui:ActionButton>
                     </appui:ActionGroup>

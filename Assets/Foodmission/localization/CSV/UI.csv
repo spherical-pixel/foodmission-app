@@ -123,7 +123,9 @@ Cook, learn, share, and grow every day.
 
 Ready to get started?","Samen brengen we je keuken in verband met zorg voor de planeet.
 
+
 Kook, leer, deel en groei elke dag.
+
 
 Klaar om te beginnen?","Gemeinsam verbinden wir Ihre Küche mit dem Schutz unseres Planeten.
 
@@ -135,7 +137,9 @@ Sind Sie bereit, loszulegen?","Μαζί, θα συνδέσουμε την κου
 
 Είστε έτοιμοι να ξεκινήσετε;","Insieme, uniremo la tua cucina alla tutela del pianeta.
 
+
 Cucina, impara, condividi e cresci ogni giorno.
+
 
 Pronto a iniziare?","Sammen skal vi knytte kjøkkenet ditt til omsorgen for planeten.
 
@@ -165,7 +169,9 @@ Ste pripravljeni začeti?","Juntos, conectaremos tu cocina con el cuidado del pl
 "DELETE_ACCOUNT_TITLE",38465117124288512,"Attention!","Let op!","Achtung!","Προσοχή!","Attenzione!","Oppmerksomhet!","Uwaga!","Pozor!","¡Atención!"
 "DELETE_ACCOUNT_MESSAGE",38465306467753984,"This action will permanently delete all your data from the platform.
 
+
 Are you sure?","Hierdoor worden al je gegevens definitief van het platform verwijderd.
+
 
 Weet je het zeker?","Durch diesen Vorgang werden alle Ihre Daten dauerhaft von der Plattform gelöscht.
 
@@ -174,6 +180,7 @@ Sind Sie sicher?","Αυτή η ενέργεια θα διαγράψει ορισ
 Είστε σίγουροι;","Questa operazione cancellerà definitivamente tutti i tuoi dati dalla piattaforma.
 
 Sei sicuro?","Denne handlingen vil slette alle opplysningene dine permanent fra plattformen.
+
 
 Er du sikker?","Ta czynność spowoduje trwałe usunięcie wszystkich Twoich danych z platformy.
 
@@ -602,6 +609,7 @@ Puedes explorar y utilizar la plataforma, pero tus datos no se utilizarán para 
 
 Please answer a few optional questions so that we can personalise your tips, recipe suggestions and daily challenges.","Hallo! Om je ervaring op Foodmission op maat te maken en je te helpen je doelen te bereiken, willen we je graag wat beter leren kennen. Heb je daar zin in?
 
+
 Beantwoord dan een paar optionele vragen, zodat we je tips, receptsuggesties en dagelijkse uitdagingen op maat kunnen maken.","Hallo! Um dein Erlebnis auf Foodmission individuell anzupassen und dir dabei zu helfen, deine Ziele zu erreichen, möchten wir dich gerne etwas besser kennenlernen. Hast du Lust dazu?
 
 Bitte beantworte ein paar freiwillige Fragen, damit wir unsere Tipps, Rezeptvorschläge und täglichen Herausforderungen individuell auf dich abstimmen können.","Γεια σου! Για να εξατομικεύσουμε την εμπειρία σου στο Foodmission και να σε βοηθήσουμε να πετύχεις τους στόχους σου, θα θέλαμε να σε γνωρίσουμε λίγο καλύτερα. Είσαι έτοιμος;
@@ -652,6 +660,7 @@ Responde a unas cuantas preguntas opcionales para que podamos personalizar tus c
 
 FOODMISSION is constantly evolving. We’re improving the app and adding new features thanks to feedback from people like you. Thank you for helping us to keep growing!","Oeps! Dit gedeelte is nog niet beschikbaar, maar maak je geen zorgen: we zijn ermee bezig, dus je kunt er binnenkort van genieten.
 
+
 FOODMISSION blijft zich voortdurend ontwikkelen. Dankzij de feedback van mensen zoals jij verbeteren we de app en voegen we nieuwe functies toe. Bedankt dat je ons helpt om te blijven groeien!","Hoppla! Dieser Bereich ist noch nicht verfügbar, aber keine Sorge: Wir arbeiten daran, damit du ihn schon bald nutzen kannst.
 
 FOODMISSION entwickelt sich ständig weiter. Dank des Feedbacks von Nutzern wie dir verbessern wir die App und fügen neue Funktionen hinzu. Vielen Dank, dass du uns dabei hilfst, weiter zu wachsen!","Ουπς! Αυτή η ενότητα δεν είναι ακόμα διαθέσιμη, αλλά μην ανησυχείτε: την επεξεργαζόμαστε, ώστε να μπορείτε να την απολαύσετε πολύ σύντομα.
@@ -695,13 +704,16 @@ FOODMISSION sigue en constante evolución. Vamos mejorando la app y añadiendo n
 "MESSAGE_TITLE_WARNING",40937444932050944,"Warning!","Waarschuwing!","Achtung!","Προσοχή!","Attenzione!","Advarsel!","Uwaga!","Opozorilo!","¡Atención!"
 "NOT_ACCP_LEGAL_WARNING",40938002757705728,"To continue using the platform, you must accept the new document of {0}. If you don't agree, you can logout or delete your account.
 
+
 Please take a moment to review again the new document of {0}, and feel free to contact us if you think something is wrong in it.","Om het platform te kunnen blijven gebruiken, moet u het nieuwe document van {0} accepteren. Als u hiermee niet akkoord gaat, kunt u uitloggen of uw account verwijderen.
+
 
 Neem alstublieft even de tijd om het nieuwe document van {0} nogmaals door te nemen, en neem gerust contact met ons op als u denkt dat er iets niet klopt.","Um die Plattform weiterhin nutzen zu können, müssen Sie das neue Dokument zu {0} akzeptieren. Wenn Sie damit nicht einverstanden sind, können Sie sich abmelden oder Ihr Konto löschen.
 
 Bitte nehmen Sie sich einen Moment Zeit, um das neue Dokument zu {0} noch einmal durchzulesen, und wenden Sie sich gerne an uns, falls Sie der Meinung sind, dass darin etwas nicht stimmt.","Για να συνεχίσετε να χρησιμοποιείτε την πλατφόρμα, πρέπει να αποδεχτείτε το νέο έγγραφο {0}. Εάν δεν συμφωνείτε, μπορείτε να αποσυνδεθείτε ή να διαγράψετε τον λογαριασμό σας.
 
 Αφιερώστε λίγο χρόνο για να ξαναδιαβάσετε το νέο έγγραφο {0} και μη διστάσετε να επικοινωνήσετε μαζί μας αν θεωρείτε ότι υπάρχει κάποιο λάθος σε αυτό.","Per continuare a utilizzare la piattaforma, devi accettare il nuovo documento relativo a {0}. Se non sei d'accordo, puoi disconnetterti o cancellare il tuo account.
+
 
 Ti invitiamo a dedicare qualche minuto a rileggere il nuovo documento relativo a {0} e a contattarci se ritieni che contenga errori.","For å fortsette å bruke plattformen må du godta det nye dokumentet om {0}. Hvis du ikke samtykker, kan du logge ut eller slette kontoen din.
 
