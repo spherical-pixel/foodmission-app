@@ -2653,6 +2653,222 @@ MonoBehaviour:
     m_Localized: "Wykorzystaj w pe\u0142ni to, co masz w domu"
     m_Metadata:
       m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: "Edytor przepis\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: "B\u0142\u0105d podczas zapisywania przepisu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: "Tytu\u0142 przepisu jest wymagany"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: "Wo\u0142owina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: Kurczak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Deser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: "Jagni\u0119cina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: "R\xF3\u017Cne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Makaron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: Wieprzowina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: Ryby i owoce morza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: Dodatki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Przystawki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: "Wega\u0144skie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: "Wegetaria\u0144skie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: "\u015Aniadanie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: Kozina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: Wszystkie kuchnie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: Algierska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: "Ameryka\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: "Argenty\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Australijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: Brytyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Kanadyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: "Chi\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: Chorwacka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Holenderska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: Egipska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: "Filipi\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: Francuska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: Grecka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Irlandzka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: "W\u0142oska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: Jamajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: "Japo\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: "Kenia\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Malezyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: "Meksyka\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: "Maroka\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: Norweska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Polska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portugalska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Saudyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: "S\u0142owacka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: "Hiszpa\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Syryjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Tajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunezyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: Turecka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: "Ukrai\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Urugwajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Wenezuelska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Wietnamska
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

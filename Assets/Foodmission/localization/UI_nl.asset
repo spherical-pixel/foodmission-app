@@ -200,12 +200,16 @@ MonoBehaviour:
   - m_Id: 35547983100502016
     m_Localized: 'Samen brengen we je keuken in verband met zorg voor de planeet.
 
+      
 
+      
 
       Kook,
       leer, deel en groei elke dag.
 
+      
 
+      
 
       Klaar om te beginnen?'
     m_Metadata:
@@ -265,7 +269,9 @@ MonoBehaviour:
   - m_Id: 38465306467753984
     m_Localized: 'Hierdoor worden al je gegevens definitief van het platform verwijderd.
 
+      
 
+      
 
       Weet
       je het zeker?'
@@ -2131,10 +2137,13 @@ MonoBehaviour:
       helpen je doelen te bereiken, willen we je graag wat beter leren kennen. Heb
       je daar zin in?
 
+      
 
+      
 
-      Beantwoord dan een paar optionele vragen, zodat we
-      je tips, receptsuggesties en dagelijkse uitdagingen op maat kunnen maken.'
+      Beantwoord dan een paar optionele
+      vragen, zodat we je tips, receptsuggesties en dagelijkse uitdagingen op maat
+      kunnen maken.'
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2239,7 +2248,9 @@ MonoBehaviour:
     m_Localized: 'Oeps! Dit gedeelte is nog niet beschikbaar, maar maak je geen zorgen:
       we zijn ermee bezig, dus je kunt er binnenkort van genieten.
 
+      
 
+      
 
       FOODMISSION
       blijft zich voortdurend ontwikkelen. Dankzij de feedback van mensen zoals jij
@@ -2393,11 +2404,13 @@ MonoBehaviour:
       document van {0} accepteren. Als u hiermee niet akkoord gaat, kunt u uitloggen
       of uw account verwijderen.
 
+      
 
+      
 
-      Neem alstublieft even de tijd om het nieuwe
-      document van {0} nogmaals door te nemen, en neem gerust contact met ons op
-      als u denkt dat er iets niet klopt.'
+      Neem alstublieft even
+      de tijd om het nieuwe document van {0} nogmaals door te nemen, en neem gerust
+      contact met ons op als u denkt dat er iets niet klopt.'
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -2638,6 +2651,222 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48511689140723712
     m_Localized: Haal het beste uit wat je thuis hebt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: Receptbewerker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: Fout bij opslaan recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: Recepttitel is verplicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: Rundvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: Kip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Dessert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: Lamsvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: Diversen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Pasta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: Varkensvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: Vis & zeevruchten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: Bijgerechten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Voorgerechten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: Veganistisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: Vegetarisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: Ontbijt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: Geitenvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: Alle keukens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: Algerijns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: Amerikaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: Argentijns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Australisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: Brits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Canadees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: Chinees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: Kroatisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Nederlands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: Egyptisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: Filipijns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: Frans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: Grieks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indiaas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Iers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: Italiaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: Jamaicaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: Japans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: Keniaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Maleisisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: Mexicaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: Marokkaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: Noors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Pools
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portugees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Saoedi-Arabisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: Slowaaks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: Spaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Syrisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Thais
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunesisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: Turks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: "Oekra\xEFens"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Uruguayaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Venezolaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Vietnamees
     m_Metadata:
       m_Items: []
   references:

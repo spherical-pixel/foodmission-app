@@ -2618,6 +2618,222 @@ MonoBehaviour:
     m_Localized: Izkoristite kar imate doma
     m_Metadata:
       m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: Urejevalnik receptov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: Napaka pri shranjevanju recepta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: Naslov recepta je obvezen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: Govedina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: "Pi\u0161\u010Danec"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Sladica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: Jagnjetina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: Razno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Testenine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: Svinjina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: "Ribe in morski sade\u017Ei"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: Priloge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Predjedi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: Vegansko
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: Vegetarijansko
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: Zajtrk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: "Kozli\u010Dek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: Vse kuhinje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: "Al\u017Eirska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: "Ameri\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: Argentinska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Avstralska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: Britanska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Kanadska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: Kitajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: "Hrva\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Nizozemska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: "Egip\u010Danska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: Filipinska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: Francoska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: "Gr\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Irska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: Italijanska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: "Jamaj\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: Japonska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: Kenijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Malezijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: "Mehi\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: "Maro\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: "Norve\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Poljska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portugalska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Savdska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: "Slova\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: "\u0160panska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Sirska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Tajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunizijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: "Tur\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: Ukrajinska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Urugvajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Venezuelska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Vietnamska
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

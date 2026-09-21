@@ -2547,6 +2547,222 @@ MonoBehaviour:
     m_Key: RECIPES_USE_PANTRY_SUBTITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 48534335152709632
+    m_Key: RECIPES_EDITOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Key: RECIPE_ERROR_SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Key: RECIPE_E_ERROR_TITLE_REQUIRED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Key: RECIPES_CAT_BEEF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Key: RECIPES_CAT_CHICKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Key: RECIPES_CAT_DESSERT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Key: RECIPES_CAT_LAMB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Key: RECIPES_CAT_MISC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Key: RECIPES_CAT_PASTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Key: RECIPES_CAT_PORK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Key: RECIPES_CAT_SEAFOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Key: RECIPES_CAT_SIDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Key: RECIPES_CAT_STARTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Key: RECIPES_CAT_VEGAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Key: RECIPES_CAT_VEGETARIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Key: RECIPES_CAT_BREAKFAST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Key: RECIPES_CAT_GOAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Key: RECIPES_CUISINE_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Key: RECIPES_CUISINE_ALGERIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Key: RECIPES_CUISINE_AMERICAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Key: RECIPES_CUISINE_ARGENTINIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Key: RECIPES_CUISINE_AUSTRALIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Key: RECIPES_CUISINE_BRITISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Key: RECIPES_CUISINE_CANADIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Key: RECIPES_CUISINE_CHINESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Key: RECIPES_CUISINE_CROATIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Key: RECIPES_CUISINE_DUTCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Key: RECIPES_CUISINE_EGYPTIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Key: RECIPES_CUISINE_FILIPINO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Key: RECIPES_CUISINE_FRENCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Key: RECIPES_CUISINE_GREEK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Key: RECIPES_CUISINE_INDIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Key: RECIPES_CUISINE_IRISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Key: RECIPES_CUISINE_ITALIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Key: RECIPES_CUISINE_JAMAICAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Key: RECIPES_CUISINE_JAPANESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Key: RECIPES_CUISINE_KENYAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Key: RECIPES_CUISINE_MALAYSIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Key: RECIPES_CUISINE_MEXICAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Key: RECIPES_CUISINE_MOROCCAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Key: RECIPES_CUISINE_NORWEGIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Key: RECIPES_CUISINE_POLISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Key: RECIPES_CUISINE_PORTUGUESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Key: RECIPES_CUISINE_SAUDI_ARABIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Key: RECIPES_CUISINE_SLOVAKIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Key: RECIPES_CUISINE_SPANISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Key: RECIPES_CUISINE_SYRIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Key: RECIPES_CUISINE_THAI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Key: RECIPES_CUISINE_TUNISIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Key: RECIPES_CUISINE_TURKISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Key: RECIPES_CUISINE_UKRAINIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Key: RECIPES_CUISINE_URUGUAYAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Key: RECIPES_CUISINE_VENEZUELAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Key: RECIPES_CUISINE_VIETNAMESE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

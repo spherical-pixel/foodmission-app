@@ -374,12 +374,12 @@ namespace eu.foodmission.platform
 
             if (!string.IsNullOrEmpty(r.category))
             {
-                AddBadgeToContainer(_badgesStrip, $"🥗 {r.category}", "fm-r-badge--metric");
+                AddBadgeToContainer(_badgesStrip, $"{RecipeCatalogs.GetCategoryEmoji(r.category)} {RecipeCatalogs.GetLocalizedCategoryName(r.category)}", "fm-r-badge--metric");
             }
 
             if (!string.IsNullOrEmpty(r.cuisineType))
             {
-                AddBadgeToContainer(_badgesStrip, $"🍝 {r.cuisineType}", "fm-r-badge--metric");
+                AddBadgeToContainer(_badgesStrip, $"{RecipeCatalogs.GetCuisineEmoji(r.cuisineType)} {RecipeCatalogs.GetLocalizedCuisineName(r.cuisineType)}", "fm-r-badge--metric");
             }
         }
 
@@ -595,7 +595,7 @@ namespace eu.foodmission.platform
             {
                 AddDetailRow(_metaCard,
                     LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CUISINE"), // 
-                    r.cuisineType,
+                    $"{RecipeCatalogs.GetCuisineEmoji(r.cuisineType)} {RecipeCatalogs.GetLocalizedCuisineName(r.cuisineType)}",
                     ref rowIndex);
             }
 
@@ -603,17 +603,18 @@ namespace eu.foodmission.platform
             {
                 AddDetailRow(_metaCard,
                     LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CATEGORY"),
-                    r.category,
+                    $"{RecipeCatalogs.GetCategoryEmoji(r.category)} {RecipeCatalogs.GetLocalizedCategoryName(r.category)}",
                     ref rowIndex);
             }
 
-            if (r?.sustainabilityScore.HasValue == true)
-            {
-                AddDetailRow(_metaCard,
-                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ECO_SCORE"),
-                    $"{Mathf.RoundToInt(r.sustainabilityScore.Value * 100)}%",
-                    ref rowIndex);
-            }
+            // TODO: By now we are not showing the sustainability score because it's not reliable enough. We may re-enable it in the future if we improve the scoring system.
+            // if (r?.sustainabilityScore.HasValue == true)
+            // {
+            //     AddDetailRow(_metaCard,
+            //         LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ECO_SCORE"),
+            //         $"{Mathf.RoundToInt(r.sustainabilityScore.Value * 100)}%",
+            //         ref rowIndex);
+            // }
 
             if (r?.price.HasValue == true && r.price.Value > 0)
             {

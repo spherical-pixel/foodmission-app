@@ -156,20 +156,13 @@ namespace eu.foodmission.platform
     public class RecipeCatalogItem
     {
         public string Code { get; set; }
+        public string CountryCode { get; set; }
         public string Emoji { get; set; }
-        public string NameEn { get; set; }
-        public string NameEs { get; set; }
+        public string LocalizationKey { get; set; }
 
-        public string GetLocalizedName(string lang = null)
+        public string GetLocalizedName()
         {
-            if (string.IsNullOrEmpty(lang))
-            {
-                lang = UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocale?.Identifier.Code ?? "en";
-            }
-
-            if (lang.StartsWith("es", System.StringComparison.OrdinalIgnoreCase))
-                return NameEs;
-            return NameEn;
+            return UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("UI", LocalizationKey);
         }
     }
 
@@ -177,37 +170,95 @@ namespace eu.foodmission.platform
     {
         public static readonly System.Collections.Generic.List<RecipeCatalogItem> Categories = new()
         {
-            new RecipeCatalogItem { Code = "Pasta", Emoji = "🍝", NameEn = "Pasta", NameEs = "Pasta" },
-            new RecipeCatalogItem { Code = "Rice", Emoji = "🍚", NameEn = "Rice & Grains", NameEs = "Arroces y Cereales" },
-            new RecipeCatalogItem { Code = "Salad", Emoji = "🥗", NameEn = "Salads", NameEs = "Ensaladas" },
-            new RecipeCatalogItem { Code = "Soup", Emoji = "🍲", NameEn = "Soups & Stews", NameEs = "Sopas y Guisos" },
-            new RecipeCatalogItem { Code = "Vegetarian", Emoji = "🥦", NameEn = "Vegetables", NameEs = "Verduras" },
-            new RecipeCatalogItem { Code = "Legumes", Emoji = "🧆", NameEn = "Legumes", NameEs = "Legumbres" },
-            new RecipeCatalogItem { Code = "Chicken", Emoji = "🍗", NameEn = "Poultry", NameEs = "Aves y Pollo" },
-            new RecipeCatalogItem { Code = "Seafood", Emoji = "🐟", NameEn = "Fish & Seafood", NameEs = "Pescados y Mariscos" },
-            new RecipeCatalogItem { Code = "Meat", Emoji = "🥩", NameEn = "Meat", NameEs = "Carnes" },
-            new RecipeCatalogItem { Code = "Dessert", Emoji = "🍰", NameEn = "Desserts", NameEs = "Postres" },
-            new RecipeCatalogItem { Code = "Breakfast", Emoji = "🍳", NameEn = "Breakfast", NameEs = "Desayunos" }
+            new RecipeCatalogItem { Code = "Beef", Emoji = "🥩", LocalizationKey = "RECIPES_CAT_BEEF"},
+            new RecipeCatalogItem { Code = "Chicken", Emoji = "🍗", LocalizationKey = "RECIPES_CAT_CHICKEN"},
+            new RecipeCatalogItem { Code = "Dessert", Emoji = "🍰", LocalizationKey = "RECIPES_CAT_DESSERT"},
+            new RecipeCatalogItem { Code = "Lamb", Emoji = "🍖", LocalizationKey = "RECIPES_CAT_LAMB"},
+            new RecipeCatalogItem { Code = "Miscellaneous", Emoji = "🍱", LocalizationKey = "RECIPES_CAT_MISC"},
+            new RecipeCatalogItem { Code = "Pasta", Emoji = "🍝", LocalizationKey = "RECIPES_CAT_PASTA"},
+            new RecipeCatalogItem { Code = "Pork", Emoji = "🥓", LocalizationKey = "RECIPES_CAT_PORK"},
+            new RecipeCatalogItem { Code = "Seafood", Emoji = "🐟", LocalizationKey = "RECIPES_CAT_SEAFOOD"},
+            new RecipeCatalogItem { Code = "Side", Emoji = "🍟", LocalizationKey = "RECIPES_CAT_SIDE"},
+            new RecipeCatalogItem { Code = "Starter", Emoji = "🥗", LocalizationKey = "RECIPES_CAT_STARTER"},
+            new RecipeCatalogItem { Code = "Vegan", Emoji = "🌱", LocalizationKey = "RECIPES_CAT_VEGAN"},
+            new RecipeCatalogItem { Code = "Vegetarian", Emoji = "🥦", LocalizationKey = "RECIPES_CAT_VEGETARIAN"},
+            new RecipeCatalogItem { Code = "Breakfast", Emoji = "🍳", LocalizationKey = "RECIPES_CAT_BREAKFAST"},
+            new RecipeCatalogItem { Code = "Goat", Emoji = "🐐", LocalizationKey = "RECIPES_CAT_GOAT"}
         };
 
         public static readonly System.Collections.Generic.List<RecipeCatalogItem> Cuisines = new()
         {
-            new RecipeCatalogItem { Code = "Mediterranean", Emoji = "🫒", NameEn = "Mediterranean", NameEs = "Mediterránea" },
-            new RecipeCatalogItem { Code = "Spanish", Emoji = "🥘", NameEn = "Spanish", NameEs = "Española" },
-            new RecipeCatalogItem { Code = "Italian", Emoji = "🍕", NameEn = "Italian", NameEs = "Italiana" },
-            new RecipeCatalogItem { Code = "Mexican", Emoji = "🌮", NameEn = "Mexican", NameEs = "Mexicana" },
-            new RecipeCatalogItem { Code = "Asian", Emoji = "🥢", NameEn = "Asian", NameEs = "Asiática" },
-            new RecipeCatalogItem { Code = "Middle Eastern", Emoji = "🧆", NameEn = "Middle Eastern", NameEs = "Oriente Medio" },
-            new RecipeCatalogItem { Code = "American", Emoji = "🍔", NameEn = "American", NameEs = "Americana" },
-            new RecipeCatalogItem { Code = "Nordic", Emoji = "🫐", NameEn = "Nordic", NameEs = "Nórdica" }
+            new RecipeCatalogItem { Code = "Algerian", CountryCode = "DZ", Emoji = "🇩🇿", LocalizationKey = "RECIPES_CUISINE_ALGERIAN"},
+            new RecipeCatalogItem { Code = "American", CountryCode = "US", Emoji = "🇺🇸", LocalizationKey = "RECIPES_CUISINE_AMERICAN"},
+            new RecipeCatalogItem { Code = "Argentinian", CountryCode = "AR", Emoji = "🇦🇷", LocalizationKey = "RECIPES_CUISINE_ARGENTINIAN"},
+            new RecipeCatalogItem { Code = "Australian", CountryCode = "AU", Emoji = "🇦🇺", LocalizationKey = "RECIPES_CUISINE_AUSTRALIAN"},
+            new RecipeCatalogItem { Code = "British", CountryCode = "GB", Emoji = "🇬🇧", LocalizationKey = "RECIPES_CUISINE_BRITISH"},
+            new RecipeCatalogItem { Code = "Canadian", CountryCode = "CA", Emoji = "🇨🇦", LocalizationKey = "RECIPES_CUISINE_CANADIAN"},
+            new RecipeCatalogItem { Code = "Chinese", CountryCode = "CN", Emoji = "🇨🇳", LocalizationKey = "RECIPES_CUISINE_CHINESE"},
+            new RecipeCatalogItem { Code = "Croatian", CountryCode = "HR", Emoji = "🇭🇷", LocalizationKey = "RECIPES_CUISINE_CROATIAN"},
+            new RecipeCatalogItem { Code = "Dutch", CountryCode = "NL", Emoji = "🇳🇱", LocalizationKey = "RECIPES_CUISINE_DUTCH"},
+            new RecipeCatalogItem { Code = "Egyptian", CountryCode = "EG", Emoji = "🇪🇬", LocalizationKey = "RECIPES_CUISINE_EGYPTIAN"},
+            new RecipeCatalogItem { Code = "Filipino", CountryCode = "PH", Emoji = "🇵🇭", LocalizationKey = "RECIPES_CUISINE_FILIPINO"},
+            new RecipeCatalogItem { Code = "French", CountryCode = "FR", Emoji = "🇫🇷", LocalizationKey = "RECIPES_CUISINE_FRENCH"},
+            new RecipeCatalogItem { Code = "Greek", CountryCode = "GR", Emoji = "🇬🇷", LocalizationKey = "RECIPES_CUISINE_GREEK"},
+            new RecipeCatalogItem { Code = "Indian", CountryCode = "IN", Emoji = "🇮🇳", LocalizationKey = "RECIPES_CUISINE_INDIAN"},
+            new RecipeCatalogItem { Code = "Irish", CountryCode = "IE", Emoji = "🇮🇪", LocalizationKey = "RECIPES_CUISINE_IRISH"},
+            new RecipeCatalogItem { Code = "Italian", CountryCode = "IT", Emoji = "🇮🇹", LocalizationKey = "RECIPES_CUISINE_ITALIAN"},
+            new RecipeCatalogItem { Code = "Jamaican", CountryCode = "JM", Emoji = "🇯🇲", LocalizationKey = "RECIPES_CUISINE_JAMAICAN"},
+            new RecipeCatalogItem { Code = "Kenyan", CountryCode = "KE", Emoji = "🇰🇪", LocalizationKey = "RECIPES_CUISINE_KENYAN"},
+            new RecipeCatalogItem { Code = "Malaysian", CountryCode = "MY", Emoji = "🇲🇾", LocalizationKey = "RECIPES_CUISINE_MALAYSIAN"},
+            new RecipeCatalogItem { Code = "Mexican", CountryCode = "MX", Emoji = "🇲🇽", LocalizationKey = "RECIPES_CUISINE_MEXICAN"},
+            new RecipeCatalogItem { Code = "Moroccan", CountryCode = "MA", Emoji = "🇲🇦", LocalizationKey = "RECIPES_CUISINE_MOROCCAN"},
+            new RecipeCatalogItem { Code = "Norwegian", CountryCode = "NO", Emoji = "🇳🇴", LocalizationKey = "RECIPES_CUISINE_NORWEGIAN"},
+            new RecipeCatalogItem { Code = "Polish", CountryCode = "PL", Emoji = "🇵🇱", LocalizationKey = "RECIPES_CUISINE_POLISH"},
+            new RecipeCatalogItem { Code = "Portuguese", CountryCode = "PT", Emoji = "🇵🇹", LocalizationKey = "RECIPES_CUISINE_PORTUGUESE"},
+            new RecipeCatalogItem { Code = "Saudi Arabian", CountryCode = "SA", Emoji = "🇸🇦", LocalizationKey = "RECIPES_CUISINE_SAUDI_ARABIAN"},
+            new RecipeCatalogItem { Code = "Slovakian", CountryCode = "SK", Emoji = "🇸🇰", LocalizationKey = "RECIPES_CUISINE_SLOVAKIAN"},
+            new RecipeCatalogItem { Code = "Spanish", CountryCode = "ES", Emoji = "🇪🇸", LocalizationKey = "RECIPES_CUISINE_SPANISH"},
+            new RecipeCatalogItem { Code = "Syrian", CountryCode = "SY", Emoji = "🇸🇾", LocalizationKey = "RECIPES_CUISINE_SYRIAN"},
+            new RecipeCatalogItem { Code = "Thai", CountryCode = "TH", Emoji = "🇹🇭", LocalizationKey = "RECIPES_CUISINE_THAI"},
+            new RecipeCatalogItem { Code = "Tunisian", CountryCode = "TN", Emoji = "🇹🇳", LocalizationKey = "RECIPES_CUISINE_TUNISIAN"},
+            new RecipeCatalogItem { Code = "Turkish", CountryCode = "TR", Emoji = "🇹🇷", LocalizationKey = "RECIPES_CUISINE_TURKISH"},
+            new RecipeCatalogItem { Code = "Ukrainian", CountryCode = "UA", Emoji = "🇺🇦", LocalizationKey = "RECIPES_CUISINE_UKRAINIAN"},
+            new RecipeCatalogItem { Code = "Uruguayan", CountryCode = "UY", Emoji = "🇺🇾", LocalizationKey = "RECIPES_CUISINE_URUGUAYAN"},
+            new RecipeCatalogItem { Code = "Venezulan", CountryCode = "VE", Emoji = "🇻🇪", LocalizationKey = "RECIPES_CUISINE_VENEZUELAN"},
+            new RecipeCatalogItem { Code = "Vietnamese", CountryCode = "VN", Emoji = "🇻🇳", LocalizationKey = "RECIPES_CUISINE_VIETNAMESE"}
         };
 
         public static string GetCategoryEmoji(string category)
         {
             if (string.IsNullOrEmpty(category)) return "🍲";
-            var item = Categories.Find(c => c.Code.Equals(category, System.StringComparison.OrdinalIgnoreCase)
-                                         || c.NameEn.Equals(category, System.StringComparison.OrdinalIgnoreCase));
+            var item = Categories.Find(c => c.Code.Equals(category, System.StringComparison.OrdinalIgnoreCase));
             return item?.Emoji ?? "🍲";
+        }
+
+        public static string GetLocalizedCategoryName(string category)
+        {
+            if (string.IsNullOrEmpty(category)) return "";
+            var item = Categories.Find(c => c.Code.Equals(category, System.StringComparison.OrdinalIgnoreCase));
+            return item?.GetLocalizedName() ?? category;
+        }
+
+        public static string GetCuisineEmoji(string cuisine)
+        {
+            if (string.IsNullOrEmpty(cuisine)) return "🌍";
+            var item = Cuisines.Find(c => c.Code.Equals(cuisine, System.StringComparison.OrdinalIgnoreCase));
+            return item?.Emoji ?? "🌍";
+        }
+
+        public static string GetLocalizedCuisineName(string cuisine)
+        {
+            if (string.IsNullOrEmpty(cuisine)) return "";
+            var item = Cuisines.Find(c => c.Code.Equals(cuisine, System.StringComparison.OrdinalIgnoreCase));
+            return item?.GetLocalizedName() ?? cuisine;
+        }
+
+        public static RecipeCatalogItem GetCuisineByCountryCode(string countryCode)
+        {
+            if (string.IsNullOrEmpty(countryCode)) return null;
+            var code = countryCode.Trim();
+            if (code.Equals("UK", System.StringComparison.OrdinalIgnoreCase)) code = "GB";
+            return Cuisines.Find(c => !string.IsNullOrEmpty(c.CountryCode) && c.CountryCode.Equals(code, System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }

@@ -32,13 +32,16 @@ namespace eu.foodmission.platform
         // Filters
         private VisualElement _filterSection;
         private SearchBar _searchBar;
+        private Dropdown _cuisineDropdown;
+        private readonly List<string> _cuisineOptions = new();
+        private readonly List<string> _cuisineCodes = new();
         private ActionGroup _groupDifficultyFilters;
         private ActionButton _btnDiffAll;
         private ActionButton _btnDiffEasy;
         private ActionButton _btnDiffMedium;
         private ActionButton _btnDiffHard;
-        private VisualElement _categoriesChipsContainer;
-        private readonly List<VisualElement> _categoryChips = new();
+        private VisualElement _categoriesGrid;
+        private readonly List<(string Code, Text Chip)> _categoryChips = new();
 
         // Scroll and Views
         private ScrollView _scrollView;
@@ -75,6 +78,7 @@ namespace eu.foodmission.platform
                 .Get(TemplateAddresses.RecipeBook));
             CacheUIElements();
             BuildCategoryChips();
+            BuildCuisineDropdown();
         }
 
         private void CacheUIElements()
@@ -87,12 +91,13 @@ namespace eu.foodmission.platform
 
             _filterSection = contentContainer.Q<VisualElement>("filter-section");
             _searchBar = contentContainer.Q<SearchBar>("search-bar");
+            _cuisineDropdown = contentContainer.Q<Dropdown>("cuisine-dropdown");
             _groupDifficultyFilters = contentContainer.Q<ActionGroup>("group-difficulty-filters");
             _btnDiffAll = contentContainer.Q<ActionButton>("btn-diff-all");
             _btnDiffEasy = contentContainer.Q<ActionButton>("btn-diff-easy");
             _btnDiffMedium = contentContainer.Q<ActionButton>("btn-diff-medium");
             _btnDiffHard = contentContainer.Q<ActionButton>("btn-diff-hard");
-            _categoriesChipsContainer = contentContainer.Q<VisualElement>("categories-chips-container");
+            _categoriesGrid = contentContainer.Q<VisualElement>("categories-grid");
 
             _scrollView = contentContainer.Q<ScrollView>("scroll-view");
             _viewForYou = contentContainer.Q<VisualElement>("view-for-you");
@@ -116,37 +121,103 @@ namespace eu.foodmission.platform
 
         private void BuildCategoryChips()
         {
-            if (_categoriesChipsContainer == null) return;
-            _categoriesChipsContainer.Clear();
+            if (_categoriesGrid == null) return;
+            _categoriesGrid.Clear();
             _categoryChips.Clear();
 
             // "Todas" chip
-            var allChip = new Text { text = "🍽️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_FILTER_ALL") };
-            allChip.AddToClassList("fm-r-cat-chip");
-            allChip.AddToClassList("fm-r-cat-chip--active");
-            allChip.RegisterCallback<ClickEvent>(_ => SelectCategory("all", allChip));
-            _categoriesChipsContainer.Add(allChip);
-            
-            _categoryChips.Add(allChip);
+            var allText = "🍽️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_FILTER_ALL");
+            CreateChip("all", allText, true);
 
             foreach (var cat in RecipeCatalogs.Categories)
             {
-                var captured = cat;
-                var chip = new Text { text = $"{captured.Emoji} {captured.GetLocalizedName()}" };
-                chip.AddToClassList("fm-r-cat-chip");
-                chip.RegisterCallback<ClickEvent>(_ => SelectCategory(captured.Code, chip));
-                _categoriesChipsContainer.Add(chip);
-                _categoryChips.Add(chip);
+                CreateChip(cat.Code, $"{cat.Emoji} {cat.GetLocalizedName()}", false);
             }
         }
 
-        private void SelectCategory(string code, VisualElement selectedChip)
+        private void CreateChip(string code, string text, bool isActive)
         {
-            foreach (var c in _categoryChips)
+            var chip = new Text { text = text };
+            chip.AddToClassList("fm-r-cat-chip");
+            if (isActive)
             {
-                c.EnableInClassList("fm-r-cat-chip--active", c == selectedChip);
+                chip.AddToClassList("fm-r-cat-chip--active");
             }
-            _ = _viewModel.SetCategoryAsync(code);
+            chip.RegisterCallback<ClickEvent>(_ => SelectCategory(code));
+            _categoriesGrid.Add(chip);
+            _categoryChips.Add((code, chip));
+        }
+
+        private void SelectCategory(string code)
+        {
+            UpdateCategorySelectionVisuals(code);
+            _ = _viewModel?.SetCategoryAsync(code);
+        }
+
+        private void UpdateCategorySelectionVisuals(string selectedCode)
+        {
+            string target = string.IsNullOrEmpty(selectedCode) ? "all" : selectedCode;
+            foreach (var (code, chip) in _categoryChips)
+            {
+                chip.EnableInClassList("fm-r-cat-chip--active", code.Equals(target, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        private void BuildCuisineDropdown()
+        {
+            if (_cuisineDropdown == null) return;
+            _cuisineOptions.Clear();
+            _cuisineCodes.Clear();
+
+            string allLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_CUISINE_ALL");
+            if (string.IsNullOrEmpty(allLabel) || allLabel.StartsWith("No translation"))
+            {
+                allLabel = "🍽️ Todas las cocinas";
+            }
+            _cuisineOptions.Add(allLabel);
+            _cuisineCodes.Add("all");
+
+            var sortedCuisines = RecipeCatalogs.Cuisines
+                .OrderBy(c => c.GetLocalizedName())
+                .ToList();
+
+            foreach (var cuisine in sortedCuisines)
+            {
+                _cuisineOptions.Add($"{cuisine.Emoji} {cuisine.GetLocalizedName()}");
+                _cuisineCodes.Add(cuisine.Code);
+            }
+
+            _cuisineDropdown.sourceItems = _cuisineOptions;
+            _cuisineDropdown.bindItem = (item, index) =>
+            {
+                if (index >= 0 && index < _cuisineOptions.Count)
+                {
+                    item.label = _cuisineOptions[index];
+                    item.icon = null;
+                }
+            };
+        }
+
+        private void OnCuisineDropdownChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            var value = evt.newValue?.ToArray();
+            if (value != null && value.Length > 0 && value[0] >= 0 && value[0] < _cuisineCodes.Count)
+            {
+                string code = _cuisineCodes[value[0]];
+                if (_viewModel != null && !_viewModel.SelectedCuisine.Equals(code, StringComparison.OrdinalIgnoreCase))
+                {
+                    _ = _viewModel.SetCuisineAsync(code);
+                }
+            }
+        }
+
+        private void UpdateCuisineSelectionVisuals(string selectedCuisine)
+        {
+            if (_cuisineDropdown == null || _cuisineCodes.Count == 0) return;
+            string target = string.IsNullOrEmpty(selectedCuisine) ? "all" : selectedCuisine;
+            int idx = _cuisineCodes.FindIndex(c => c.Equals(target, StringComparison.OrdinalIgnoreCase));
+            if (idx < 0) idx = 0;
+            _cuisineDropdown.SetValueWithoutNotify(new[] { idx });
         }
 
         protected override void OnViewModelBound()
@@ -161,6 +232,11 @@ namespace eu.foodmission.platform
             if (_searchBar != null)
             {
                 _searchBar.RegisterValueChangingCallback(OnSearchChanging);
+            }
+
+            if (_cuisineDropdown != null)
+            {
+                _cuisineDropdown.RegisterValueChangedCallback(OnCuisineDropdownChanged);
             }
 
             // Temporarily disabled: recipe creation & My Recipes tab
@@ -184,6 +260,8 @@ namespace eu.foodmission.platform
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             UpdateTabViews();
+            UpdateCategorySelectionVisuals(_viewModel?.SelectedCategory);
+            UpdateCuisineSelectionVisuals(_viewModel?.SelectedCuisine);
             RebuildCurrentTabView();
             UpdateLoadingState();
             UpdateErrorState();
@@ -208,6 +286,11 @@ namespace eu.foodmission.platform
                 _searchBar.UnregisterValueChangingCallback(OnSearchChanging);
             }
 
+            if (_cuisineDropdown != null)
+            {
+                _cuisineDropdown.UnregisterValueChangedCallback(OnCuisineDropdownChanged);
+            }
+
             _searchCts?.Cancel();
             _searchCts?.Dispose();
             _searchCts = null;
@@ -222,6 +305,12 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.CurrentTab):
                 case nameof(_viewModel.SelectedDifficulty):
                     UpdateTabViews();
+                    break;
+                case nameof(_viewModel.SelectedCategory):
+                    UpdateCategorySelectionVisuals(_viewModel.SelectedCategory);
+                    break;
+                case nameof(_viewModel.SelectedCuisine):
+                    UpdateCuisineSelectionVisuals(_viewModel.SelectedCuisine);
                     break;
                 case nameof(_viewModel.Recommendations):
                     RebuildRecommendations();
@@ -409,7 +498,7 @@ namespace eu.foodmission.platform
             }
 
             string categoryStr = !string.IsNullOrEmpty(r?.category)
-                ? $"{RecipeCatalogs.GetCategoryEmoji(r.category)} {r.category}"
+                ? $"{RecipeCatalogs.GetCategoryEmoji(r.category)} {RecipeCatalogs.GetLocalizedCategoryName(r.category)}"
                 : null;
 
             string pantryBadge = null;

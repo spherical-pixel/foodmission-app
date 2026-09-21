@@ -50,6 +50,35 @@ namespace eu.foodmission.platform
             _recipeService = recipeService;
             _catalogService = catalogService;
             _localStorage = localStorage;
+
+            InitDefaultCuisine();
+        }
+
+        private void InitDefaultCuisine()
+        {
+            string country = _storeService?.GetAppState()?.userCountry;
+            var defaultCuisine = RecipeCatalogs.GetCuisineByCountryCode(country);
+            if (defaultCuisine != null)
+            {
+                m_SelectedCuisine = defaultCuisine.Code;
+            }
+            else
+            {
+                m_SelectedCuisine = "all";
+            }
+        }
+
+        public void ApplyUserCountryCuisineDefaultIfUnset()
+        {
+            if (SelectedCuisine == "all")
+            {
+                string country = _storeService?.GetAppState()?.userCountry;
+                var defaultCuisine = RecipeCatalogs.GetCuisineByCountryCode(country);
+                if (defaultCuisine != null)
+                {
+                    SelectedCuisine = defaultCuisine.Code;
+                }
+            }
         }
 
         public async Task SetTabAsync(RecipeBookTab tab)
@@ -68,6 +97,12 @@ namespace eu.foodmission.platform
         public async Task SetCategoryAsync(string category)
         {
             SelectedCategory = string.IsNullOrEmpty(category) ? "all" : category;
+            await LoadAsync();
+        }
+
+        public async Task SetCuisineAsync(string cuisine)
+        {
+            SelectedCuisine = string.IsNullOrEmpty(cuisine) ? "all" : cuisine;
             await LoadAsync();
         }
 
@@ -180,11 +215,13 @@ namespace eu.foodmission.platform
             _allRecipes.Clear();
             var search = string.IsNullOrEmpty(SearchText) ? null : SearchText;
             var category = SelectedCategory == "all" ? null : SelectedCategory;
+            var cuisine = SelectedCuisine == "all" ? null : SelectedCuisine;
             var difficulty = SelectedDifficulty == "all" ? null : SelectedDifficulty;
 
             var (page, pageErr) = await _recipeService.GetRecipesAsync(
                 search: search,
                 category: category,
+                cuisineType: cuisine,
                 difficulty: difficulty,
                 page: 1,
                 limit: 20);
@@ -216,11 +253,13 @@ namespace eu.foodmission.platform
         {
             var search = string.IsNullOrEmpty(SearchText) ? null : SearchText;
             var category = SelectedCategory == "all" ? null : SelectedCategory;
+            var cuisine = SelectedCuisine == "all" ? null : SelectedCuisine;
             var difficulty = SelectedDifficulty == "all" ? null : SelectedDifficulty;
 
             var (page, err) = await _recipeService.GetMyRecipesAsync(
                 search: search,
                 category: category,
+                cuisineType: cuisine,
                 difficulty: difficulty,
                 page: 1,
                 limit: 20);
@@ -253,6 +292,7 @@ namespace eu.foodmission.platform
                 CurrentPage++;
                 var search = string.IsNullOrEmpty(SearchText) ? null : SearchText;
                 var category = SelectedCategory == "all" ? null : SelectedCategory;
+                var cuisine = SelectedCuisine == "all" ? null : SelectedCuisine;
                 var difficulty = SelectedDifficulty == "all" ? null : SelectedDifficulty;
 
                 if (CurrentTab == RecipeBookTab.MyRecipes)
@@ -260,6 +300,7 @@ namespace eu.foodmission.platform
                     var (page, err) = await _recipeService.GetMyRecipesAsync(
                         search: search,
                         category: category,
+                        cuisineType: cuisine,
                         difficulty: difficulty,
                         page: CurrentPage,
                         limit: 20);
@@ -288,6 +329,7 @@ namespace eu.foodmission.platform
                     var (page, err) = await _recipeService.GetRecipesAsync(
                         search: search,
                         category: category,
+                        cuisineType: cuisine,
                         difficulty: difficulty,
                         page: CurrentPage,
                         limit: 20);

@@ -24,7 +24,10 @@
                     <UnityEngine.Localization.LocalizedString property="placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(28540443628134400)"/>
                 </Bindings>
             </appui:SearchBar>
-            <ui:VisualElement name="difficulty-filter-row" class="fm-r-filter-row">
+            <ui:VisualElement name="cuisine-filter-row" class="fm-r-cuisine-row">
+                <appui:Dropdown name="cuisine-dropdown" size="M" class="fm-r-cuisine-dropdown"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="difficulty-filter-row" class="fm-r-filter-row" style="display: none;">
                 <appui:ActionGroup name="group-difficulty-filters" selection-type="Single" allow-no-selection="false" compact="true" size="S" direction="Horizontal" class="fm-r-difficulty-group">
                     <appui:ActionButton name="btn-diff-all" label="Todas" selected="true" size="S">
                         <Bindings>
@@ -48,9 +51,7 @@
                     </appui:ActionButton>
                 </appui:ActionGroup>
             </ui:VisualElement>
-            <ui:ScrollView name="categories-scroll" mode="Horizontal" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fm-r-categories-scroll">
-                <ui:VisualElement name="categories-chips-container" class="fm-r-categories-container"/>
-            </ui:ScrollView>
+            <ui:VisualElement name="categories-grid" class="fm-r-categories-grid"/>
         </ui:VisualElement>
         <ui:ScrollView name="scroll-view" mode="Vertical" horizontal-scroller-visibility="Hidden" class="fm-r-scroll">
             <ui:VisualElement name="view-for-you" class="fm-r-view">

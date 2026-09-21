@@ -223,5 +223,57 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Actions.recipes_to_detail, lastAction);
             Assert.AreEqual("r-123", lastArg);
         }
+
+        [Test]
+        public async Task SetCuisineAsync_UpdatesSelectedCuisineAndFetches()
+        {
+            await _viewModel.SetTabAsync(RecipeBookTab.Explore);
+
+            string requestedCuisine = null;
+            _mockRecipeService.Setup(s => s.GetRecipesAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
+                It.IsAny<int>(), It.IsAny<int>()))
+                .Callback<string, string, string, string, string[], string[], int, int>(
+                    (s, cat, cui, diff, dl, t, p, l) => requestedCuisine = cui)
+                .ReturnsAsync((new PaginatedRecipeResponse { data = new Recipe[0], total = 0 }, null));
+
+            await _viewModel.SetCuisineAsync("Italian");
+
+            Assert.AreEqual("Italian", _viewModel.SelectedCuisine);
+            Assert.AreEqual("Italian", requestedCuisine);
+        }
+
+        [Test]
+        public void InitDefaultCuisine_WhenUserCountryMatches_SetsDefaultCuisine()
+        {
+            var storeWithSpain = new TestStoreService();
+            storeWithSpain.GetAppState().userCountry = "ES";
+
+            var vm = new RecipeBookViewModel(storeWithSpain, _mockRecipeService.Object, _mockCatalogService.Object, _localStorage);
+
+            Assert.AreEqual("Spanish", vm.SelectedCuisine);
+        }
+
+        [Test]
+        public void InitDefaultCuisine_WhenUserCountryNotMatched_DefaultsToAll()
+        {
+            var storeWithGermany = new TestStoreService();
+            storeWithGermany.GetAppState().userCountry = "DE";
+
+            var vm = new RecipeBookViewModel(storeWithGermany, _mockRecipeService.Object, _mockCatalogService.Object, _localStorage);
+
+            Assert.AreEqual("all", vm.SelectedCuisine);
+        }
+
+        [Test]
+        public async Task ClearFiltersAsync_ResetsCuisineToAll()
+        {
+            await _viewModel.SetCuisineAsync("Mexican");
+            Assert.AreEqual("Mexican", _viewModel.SelectedCuisine);
+
+            await _viewModel.ClearFiltersAsync();
+            Assert.AreEqual("all", _viewModel.SelectedCuisine);
+        }
     }
 }
