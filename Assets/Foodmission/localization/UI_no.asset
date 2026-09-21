@@ -259,7 +259,7 @@ MonoBehaviour:
     m_Localized: 'Denne handlingen vil slette alle opplysningene dine permanent fra
       plattformen.
 
-      
+
 
       Er du sikker?'
     m_Metadata:
@@ -2524,6 +2524,99 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 47094236242239489
     m_Localized: "Ny fakta l\xE6rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: For deg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Utforsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Mine oppskrifter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Ny oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: Spiskammeret ditt er tomt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "Legg til varer i spiskammeret for \xE5 f\xE5 smarte oppskriftsforslag
+      og redusere matsvinn!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: "G\xE5 til spiskammeret"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: "Ingen oppskrifter opprettet enn\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: "Lag og del dine b\xE6rekraftige favorittoppskrifter med fellesskapet!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Enkel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Middels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Vanskelig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: "{0} utl\xF8per snart"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} i spiskammeret'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: Generelt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Ingredienser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Instruksjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395986
+    m_Localized: Lag oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Rediger oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Lagre oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: "F\xE5 mest mulig ut av det du har hjemme"
     m_Metadata:
       m_Items: []
   references:

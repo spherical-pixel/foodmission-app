@@ -2527,6 +2527,99 @@ MonoBehaviour:
     m_Localized: "\xA1Nuevo dato aprendido!"
     m_Metadata:
       m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: Para ti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Explorar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Mis recetas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Nueva receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: "Tu despensa est\xE1 vac\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "\xA1A\xF1ade alimentos a tu despensa para recibir sugerencias de
+      recetas y evitar el desperdicio!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: Ir a la Despensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: "A\xFAn no has creado recetas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: "\xA1Crea y comparte tus recetas sostenibles favoritas con la comunidad!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Todas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: "F\xE1cil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Media
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: "Dif\xEDcil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Todos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: '{0} por caducar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} en despensa'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: General
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: "Elaboraci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395986
+    m_Localized: Crear receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Editar receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Guardar receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: Aprovecha lo que tienes en casa
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

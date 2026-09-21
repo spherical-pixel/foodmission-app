@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -19,13 +20,53 @@ namespace eu.foodmission.platform
     [Preserve]
     public class RecipeBookScreen : NavigationScreenBase<RecipeBookViewModel>
     {
-        private VisualElement _itemsContainer;
+        // Top Action Header
+        private FMButton _btnCreateRecipe;
+
+        // Tabs
+        private ActionGroup _recipesTabs;
+        private ActionButton _btnTabForYou;
+        private ActionButton _btnTabExplore;
+        private ActionButton _btnTabMyRecipes;
+
+        // Filters
+        private VisualElement _filterSection;
         private SearchBar _searchBar;
+        private ActionGroup _groupDifficultyFilters;
+        private ActionButton _btnDiffAll;
+        private ActionButton _btnDiffEasy;
+        private ActionButton _btnDiffMedium;
+        private ActionButton _btnDiffHard;
+        private VisualElement _categoriesChipsContainer;
+        private readonly List<VisualElement> _categoryChips = new();
+
+        // Scroll and Views
         private ScrollView _scrollView;
-        private VisualElement _scrollSentinel;
-        private Text _emptyState;
+        private VisualElement _viewForYou;
+        private VisualElement _foryouEmptyPantry;
+        private FMNutriView _nutriAvatar;
+        private FMButton _btnGoToPantry;
+        private VisualElement _foryouContent;
+        private VisualElement _recommendationsContainer;
+
+        private VisualElement _viewExplore;
         private Text _counterText;
+        private Text _emptyState;
+        private VisualElement _itemsContainer;
+        private VisualElement _scrollSentinel;
+
+        private VisualElement _viewMyRecipes;
+        private VisualElement _myRecipesEmpty;
+        private FMButton _btnCreateFirstRecipe;
+        private VisualElement _myRecipesContainer;
+
         private CancellationTokenSource _searchCts;
+
+        override protected bool IsFixedContent => false;
+        override protected bool ApplySafeAreaTop => false;
+        override protected bool ApplySafeAreaBottom => false;
+        override protected bool ApplySafeAreaLeft => false;
+        override protected bool ApplySafeAreaRight => false;
 
         public RecipeBookScreen()
         {
@@ -33,16 +74,79 @@ namespace eu.foodmission.platform
                 .GetRequiredService<ITemplateService>()
                 .Get(TemplateAddresses.RecipeBook));
             CacheUIElements();
+            BuildCategoryChips();
         }
 
         private void CacheUIElements()
         {
-            _itemsContainer = contentContainer.Q<VisualElement>("items-container");
-            _scrollView = contentContainer.Q<ScrollView>("scroll-view");
-            _scrollSentinel = contentContainer.Q<VisualElement>("scroll-sentinel");
-            _emptyState = contentContainer.Q<Text>("empty-state");
-            _counterText = contentContainer.Q<Text>("counter-text");
+            _btnCreateRecipe = contentContainer.Q<FMButton>("btn-create-recipe");
+            _recipesTabs = contentContainer.Q<ActionGroup>("recipes-tabs");
+            _btnTabForYou = contentContainer.Q<ActionButton>("btn-tab-for-you");
+            _btnTabExplore = contentContainer.Q<ActionButton>("btn-tab-explore");
+            _btnTabMyRecipes = contentContainer.Q<ActionButton>("btn-tab-my-recipes");
+
+            _filterSection = contentContainer.Q<VisualElement>("filter-section");
             _searchBar = contentContainer.Q<SearchBar>("search-bar");
+            _groupDifficultyFilters = contentContainer.Q<ActionGroup>("group-difficulty-filters");
+            _btnDiffAll = contentContainer.Q<ActionButton>("btn-diff-all");
+            _btnDiffEasy = contentContainer.Q<ActionButton>("btn-diff-easy");
+            _btnDiffMedium = contentContainer.Q<ActionButton>("btn-diff-medium");
+            _btnDiffHard = contentContainer.Q<ActionButton>("btn-diff-hard");
+            _categoriesChipsContainer = contentContainer.Q<VisualElement>("categories-chips-container");
+
+            _scrollView = contentContainer.Q<ScrollView>("scroll-view");
+            _viewForYou = contentContainer.Q<VisualElement>("view-for-you");
+            _foryouEmptyPantry = contentContainer.Q<VisualElement>("foryou-empty-pantry");
+            _nutriAvatar = contentContainer.Q<FMNutriView>("nutri-avatar");
+            _btnGoToPantry = contentContainer.Q<FMButton>("btn-go-to-pantry");
+            _foryouContent = contentContainer.Q<VisualElement>("foryou-content");
+            _recommendationsContainer = contentContainer.Q<VisualElement>("recommendations-container");
+
+            _viewExplore = contentContainer.Q<VisualElement>("view-explore");
+            _counterText = contentContainer.Q<Text>("counter-text");
+            _emptyState = contentContainer.Q<Text>("empty-state");
+            _itemsContainer = contentContainer.Q<VisualElement>("items-container");
+            _scrollSentinel = contentContainer.Q<VisualElement>("scroll-sentinel");
+
+            _viewMyRecipes = contentContainer.Q<VisualElement>("view-my-recipes");
+            _myRecipesEmpty = contentContainer.Q<VisualElement>("my-recipes-empty");
+            _btnCreateFirstRecipe = contentContainer.Q<FMButton>("btn-create-first-recipe");
+            _myRecipesContainer = contentContainer.Q<VisualElement>("my-recipes-container");
+        }
+
+        private void BuildCategoryChips()
+        {
+            if (_categoriesChipsContainer == null) return;
+            _categoriesChipsContainer.Clear();
+            _categoryChips.Clear();
+
+            // "Todas" chip
+            var allChip = new Text { text = "🍽️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_FILTER_ALL") };
+            allChip.AddToClassList("fm-r-cat-chip");
+            allChip.AddToClassList("fm-r-cat-chip--active");
+            allChip.RegisterCallback<ClickEvent>(_ => SelectCategory("all", allChip));
+            _categoriesChipsContainer.Add(allChip);
+            
+            _categoryChips.Add(allChip);
+
+            foreach (var cat in RecipeCatalogs.Categories)
+            {
+                var captured = cat;
+                var chip = new Text { text = $"{captured.Emoji} {captured.GetLocalizedName()}" };
+                chip.AddToClassList("fm-r-cat-chip");
+                chip.RegisterCallback<ClickEvent>(_ => SelectCategory(captured.Code, chip));
+                _categoriesChipsContainer.Add(chip);
+                _categoryChips.Add(chip);
+            }
+        }
+
+        private void SelectCategory(string code, VisualElement selectedChip)
+        {
+            foreach (var c in _categoryChips)
+            {
+                c.EnableInClassList("fm-r-cat-chip--active", c == selectedChip);
+            }
+            _ = _viewModel.SetCategoryAsync(code);
         }
 
         protected override void OnViewModelBound()
@@ -59,9 +163,28 @@ namespace eu.foodmission.platform
                 _searchBar.RegisterValueChangingCallback(OnSearchChanging);
             }
 
+            // Temporarily disabled: recipe creation & My Recipes tab
+            // if (_btnCreateRecipe != null)
+            //     _btnCreateRecipe.clicked += () => _viewModel?.OpenCreateRecipe();
+            // if (_btnCreateFirstRecipe != null)
+            //     _btnCreateFirstRecipe.clicked += () => _viewModel?.OpenCreateRecipe();
+
+            if (_btnGoToPantry != null)
+                _btnGoToPantry.clicked += () => _viewModel?.GoToPantry();
+
+            if (_btnTabForYou != null) _btnTabForYou.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.ForYou);
+            if (_btnTabExplore != null) _btnTabExplore.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.Explore);
+            // if (_btnTabMyRecipes != null) _btnTabMyRecipes.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.MyRecipes);
+
+            if (_btnDiffAll != null) _btnDiffAll.clicked += () => _ = _viewModel?.SetDifficultyAsync("all");
+            if (_btnDiffEasy != null) _btnDiffEasy.clicked += () => _ = _viewModel?.SetDifficultyAsync("easy");
+            if (_btnDiffMedium != null) _btnDiffMedium.clicked += () => _ = _viewModel?.SetDifficultyAsync("medium");
+            if (_btnDiffHard != null) _btnDiffHard.clicked += () => _ = _viewModel?.SetDifficultyAsync("hard");
+
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
-            RebuildRecipes();
+            UpdateTabViews();
+            RebuildCurrentTabView();
             UpdateLoadingState();
             UpdateErrorState();
 
@@ -96,8 +219,21 @@ namespace eu.foodmission.platform
         {
             switch (e.PropertyName)
             {
+                case nameof(_viewModel.CurrentTab):
+                case nameof(_viewModel.SelectedDifficulty):
+                    UpdateTabViews();
+                    break;
+                case nameof(_viewModel.Recommendations):
+                    RebuildRecommendations();
+                    break;
                 case nameof(_viewModel.Recipes):
-                    RebuildRecipes();
+                    RebuildExploreRecipes();
+                    break;
+                case nameof(_viewModel.MyRecipes):
+                    RebuildMyRecipes();
+                    break;
+                case nameof(_viewModel.IsPantryEmpty):
+                    UpdatePantryEmptyState();
                     break;
                 case nameof(_viewModel.IsLoading):
                     UpdateLoadingState();
@@ -105,16 +241,102 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.ErrorDetail):
                     UpdateErrorState();
                     break;
-                case nameof(_viewModel.IsLoadingMore):
-                    UpdateLoadingMoreState();
+            }
+        }
+
+        private void UpdateTabViews()
+        {
+            if (_viewModel == null) return;
+
+            int tabIdx = _viewModel.CurrentTab switch
+            {
+                RecipeBookTab.Explore => 1,
+                _ => 0
+            };
+            _recipesTabs?.SetSelectionWithoutNotify(new[] { tabIdx });
+
+            int diffIndex = _viewModel.SelectedDifficulty switch
+            {
+                "easy" => 1,
+                "medium" => 2,
+                "hard" => 3,
+                _ => 0
+            };
+            _groupDifficultyFilters?.SetSelectionWithoutNotify(new[] { diffIndex });
+
+            if (_viewForYou != null)
+                _viewForYou.style.display = _viewModel.CurrentTab == RecipeBookTab.ForYou ? DisplayStyle.Flex : DisplayStyle.None;
+
+            if (_viewExplore != null)
+                _viewExplore.style.display = _viewModel.CurrentTab == RecipeBookTab.Explore ? DisplayStyle.Flex : DisplayStyle.None;
+
+            if (_viewMyRecipes != null)
+                _viewMyRecipes.style.display = DisplayStyle.None;
+
+            // Search and filter row are visible on Explore (hidden on For You)
+            if (_filterSection != null)
+                _filterSection.style.display = _viewModel.CurrentTab == RecipeBookTab.ForYou ? DisplayStyle.None : DisplayStyle.Flex;
+
+            RebuildCurrentTabView();
+        }
+
+        private void RebuildCurrentTabView()
+        {
+            if (_viewModel == null) return;
+            switch (_viewModel.CurrentTab)
+            {
+                case RecipeBookTab.ForYou:
+                    RebuildRecommendations();
+                    UpdatePantryEmptyState();
+                    break;
+                case RecipeBookTab.MyRecipes:
+                    RebuildMyRecipes();
+                    break;
+                case RecipeBookTab.Explore:
+                default:
+                    RebuildExploreRecipes();
                     break;
             }
         }
 
-        private void RebuildRecipes()
+        private void UpdatePantryEmptyState()
+        {
+            bool empty = _viewModel.IsPantryEmpty || (_viewModel.Recommendations == null || _viewModel.Recommendations.Count == 0);
+            if (_foryouEmptyPantry != null)
+            {
+                _foryouEmptyPantry.style.display = empty ? DisplayStyle.Flex : DisplayStyle.None;
+                if (empty)
+                {
+                    App.current?.services?.GetService<INutriService>()?.SetAction(NutriAction.Talking);
+                }
+            }
+            if (_foryouContent != null)
+            {
+                _foryouContent.style.display = empty ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+        }
+
+        private void RebuildRecommendations()
+        {
+            if (_recommendationsContainer == null) return;
+            _recommendationsContainer.Clear();
+
+            UpdatePantryEmptyState();
+            if (_viewModel.Recommendations == null || _viewModel.Recommendations.Count == 0)
+                return;
+
+            foreach (var rec in _viewModel.Recommendations)
+            {
+                var card = CreateRecipeCard(rec);
+                _recommendationsContainer.Add(card);
+            }
+        }
+
+        private void RebuildExploreRecipes()
         {
             if (_itemsContainer == null) return;
             _itemsContainer.Clear();
+
             var count = _viewModel.Recipes?.Count ?? 0;
             if (_counterText != null)
             {
@@ -130,41 +352,100 @@ namespace eu.foodmission.platform
 
             foreach (var recipeView in _viewModel.Recipes)
             {
-                var captured = recipeView;
-                var r = captured.Item;
-                var authorStr = !string.IsNullOrEmpty(r?.userId) ? $"by User_{r.userId.Substring(0, Math.Min(6, r.userId.Length))}" : "";
-                var ratingCount = r?.ratingCount ?? 0;
-                var ratingVal = r?.rating ?? 0f;
-                var ratingStr = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RATING") + ":";
-                if (ratingCount > 0)
-                {
-                    ratingStr += $" {ratingVal:F1}/5 ({ratingCount})";
-                }
-                else
-                {
-                    ratingStr += LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_REVIEWS");
-                }
-
-                var card = new FMItemRecipe
-                {
-                    Text = captured.DisplayTitle,
-                    Author = authorStr,
-                    RatingText = ratingStr,
-                    ImageUrl = r?.imageUrl
-                };
-                card.RegisterCallback<ClickEvent>(evt =>
-                {
-                    _navController.Navigate(Actions.recipes_to_detail, new[] { new Argument("recipeId", captured.Item.id) });
-                });
-
+                var card = CreateRecipeCard(recipeView);
                 _itemsContainer.Add(card);
             }
         }
 
-        private static System.Collections.Generic.IEnumerable<string> BuildBadgeStrings(Recipe r)
+        private void RebuildMyRecipes()
         {
-            if (r?.dietaryLabels == null) yield break;
-            foreach (var label in r.dietaryLabels) yield return label;
+            if (_myRecipesContainer == null) return;
+            _myRecipesContainer.Clear();
+
+            bool empty = _viewModel.MyRecipes == null || _viewModel.MyRecipes.Count == 0;
+            if (_myRecipesEmpty != null)
+                _myRecipesEmpty.style.display = empty ? DisplayStyle.Flex : DisplayStyle.None;
+
+            if (empty) return;
+
+            foreach (var recipeView in _viewModel.MyRecipes)
+            {
+                var card = CreateRecipeCard(recipeView);
+                _myRecipesContainer.Add(card);
+            }
+        }
+
+        private FMItemRecipe CreateRecipeCard(RecipeView recipeView)
+        {
+            var captured = recipeView;
+            var r = captured.Item;
+            var authorStr = !string.IsNullOrEmpty(r?.userId) ? $"by User_{r.userId.Substring(0, Math.Min(6, r.userId.Length))}" : "";
+
+            var ratingCount = r?.ratingCount ?? 0;
+            var ratingVal = r?.rating ?? 0f;
+            var ratingStr = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RATING") + ":";
+            if (ratingCount > 0)
+            {
+                ratingStr += $" {ratingVal:F1}/5 ({ratingCount})";
+            }
+            else
+            {
+                ratingStr = null;
+            }
+
+            int totalMinutes = (r?.prepTime ?? 0) + (r?.cookTime ?? 0);
+            string timeStr = totalMinutes > 0 ? $"⏱️ {totalMinutes} min" : null;
+
+            string difficultyStr = null;
+            if (!string.IsNullOrEmpty(r?.difficulty))
+            {
+                difficultyStr = r.difficulty.ToLowerInvariant() switch
+                {
+                    "easy" => "🟢 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_DIFFICULTY_EASY"),
+                    "medium" => "🟡 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_DIFFICULTY_MEDIUM"),
+                    "hard" => "🔴 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_DIFFICULTY_HARD"),
+                    _ => r.difficulty
+                };
+            }
+
+            string categoryStr = !string.IsNullOrEmpty(r?.category)
+                ? $"{RecipeCatalogs.GetCategoryEmoji(r.category)} {r.category}"
+                : null;
+
+            string pantryBadge = null;
+            if (captured.IsRecommendation)
+            {
+                if (captured.ExpiringMatchCount > 0)
+                {
+                    string template = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_EXPIRING_MATCH");
+                    pantryBadge = string.Format(template, captured.ExpiringMatchCount);
+                }
+                else if (captured.MatchCount > 0)
+                {
+                    string template = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_PANTRY_MATCH");
+                    pantryBadge = string.Format(template, captured.MatchCount, captured.TotalIngredients);
+                }
+            }
+
+            var card = new FMItemRecipe
+            {
+                Text = captured.DisplayTitle,
+                Author = authorStr,
+                RatingText = ratingStr,
+                ImageUrl = r?.imageUrl,
+                Emoji = captured.PlaceholderEmoji ?? "🍲",
+                TimeText = timeStr,
+                DifficultyText = difficultyStr,
+                CategoryText = categoryStr,
+                PantryBadgeText = pantryBadge
+            };
+
+            card.RegisterCallback<ClickEvent>(_ =>
+            {
+                _viewModel.OpenRecipe(captured.Item.id);
+            });
+
+            return card;
         }
 
         private void OnScrollValueChanged(float value)
@@ -196,17 +477,12 @@ namespace eu.foodmission.platform
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-
         private void UpdateLoadingState()
         {
             if (_viewModel.IsLoading)
                 FMLoadingOverlay.Show();
             else
                 FMLoadingOverlay.Hide();
-        }
-
-        private void UpdateLoadingMoreState()
-        {
         }
 
         private void UpdateErrorState()
@@ -217,7 +493,6 @@ namespace eu.foodmission.platform
                 _viewModel.ErrorDetail = null;
             }
         }
-
 
         private async Task SafeLoadNextPageAsync()
         {
@@ -230,9 +505,5 @@ namespace eu.foodmission.platform
             try { await _viewModel.LoadAsync(); }
             catch (Exception ex) { Debug.LogError($"[RecipeBookScreen] SafeReloadAsync: {ex}"); }
         }
-
-
-
-
     }
 }

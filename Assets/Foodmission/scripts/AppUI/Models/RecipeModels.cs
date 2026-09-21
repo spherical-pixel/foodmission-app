@@ -132,6 +132,13 @@ namespace eu.foodmission.platform
         public int? totalPages;
     }
 
+    public enum RecipeBookTab
+    {
+        ForYou = 0,
+        Explore = 1,
+        MyRecipes = 2
+    }
+
     // UI-only DTO (not serialized) — like PantryItemView / ShoppingListItemView
     public class RecipeView
     {
@@ -139,5 +146,68 @@ namespace eu.foodmission.platform
         public string DisplayTitle;
         public string PlaceholderEmoji;     // "📚" fallback
         public bool HasImage => !string.IsNullOrEmpty(Item?.imageUrl);
+        public int MatchCount;
+        public int TotalIngredients;
+        public int ExpiringMatchCount;
+        public bool IsRecommendation;
+        public string[] ExpiringIngredientNames;
+    }
+
+    public class RecipeCatalogItem
+    {
+        public string Code { get; set; }
+        public string Emoji { get; set; }
+        public string NameEn { get; set; }
+        public string NameEs { get; set; }
+
+        public string GetLocalizedName(string lang = null)
+        {
+            if (string.IsNullOrEmpty(lang))
+            {
+                lang = UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocale?.Identifier.Code ?? "en";
+            }
+
+            if (lang.StartsWith("es", System.StringComparison.OrdinalIgnoreCase))
+                return NameEs;
+            return NameEn;
+        }
+    }
+
+    public static class RecipeCatalogs
+    {
+        public static readonly System.Collections.Generic.List<RecipeCatalogItem> Categories = new()
+        {
+            new RecipeCatalogItem { Code = "Pasta", Emoji = "🍝", NameEn = "Pasta", NameEs = "Pasta" },
+            new RecipeCatalogItem { Code = "Rice", Emoji = "🍚", NameEn = "Rice & Grains", NameEs = "Arroces y Cereales" },
+            new RecipeCatalogItem { Code = "Salad", Emoji = "🥗", NameEn = "Salads", NameEs = "Ensaladas" },
+            new RecipeCatalogItem { Code = "Soup", Emoji = "🍲", NameEn = "Soups & Stews", NameEs = "Sopas y Guisos" },
+            new RecipeCatalogItem { Code = "Vegetarian", Emoji = "🥦", NameEn = "Vegetables", NameEs = "Verduras" },
+            new RecipeCatalogItem { Code = "Legumes", Emoji = "🧆", NameEn = "Legumes", NameEs = "Legumbres" },
+            new RecipeCatalogItem { Code = "Chicken", Emoji = "🍗", NameEn = "Poultry", NameEs = "Aves y Pollo" },
+            new RecipeCatalogItem { Code = "Seafood", Emoji = "🐟", NameEn = "Fish & Seafood", NameEs = "Pescados y Mariscos" },
+            new RecipeCatalogItem { Code = "Meat", Emoji = "🥩", NameEn = "Meat", NameEs = "Carnes" },
+            new RecipeCatalogItem { Code = "Dessert", Emoji = "🍰", NameEn = "Desserts", NameEs = "Postres" },
+            new RecipeCatalogItem { Code = "Breakfast", Emoji = "🍳", NameEn = "Breakfast", NameEs = "Desayunos" }
+        };
+
+        public static readonly System.Collections.Generic.List<RecipeCatalogItem> Cuisines = new()
+        {
+            new RecipeCatalogItem { Code = "Mediterranean", Emoji = "🫒", NameEn = "Mediterranean", NameEs = "Mediterránea" },
+            new RecipeCatalogItem { Code = "Spanish", Emoji = "🥘", NameEn = "Spanish", NameEs = "Española" },
+            new RecipeCatalogItem { Code = "Italian", Emoji = "🍕", NameEn = "Italian", NameEs = "Italiana" },
+            new RecipeCatalogItem { Code = "Mexican", Emoji = "🌮", NameEn = "Mexican", NameEs = "Mexicana" },
+            new RecipeCatalogItem { Code = "Asian", Emoji = "🥢", NameEn = "Asian", NameEs = "Asiática" },
+            new RecipeCatalogItem { Code = "Middle Eastern", Emoji = "🧆", NameEn = "Middle Eastern", NameEs = "Oriente Medio" },
+            new RecipeCatalogItem { Code = "American", Emoji = "🍔", NameEn = "American", NameEs = "Americana" },
+            new RecipeCatalogItem { Code = "Nordic", Emoji = "🫐", NameEn = "Nordic", NameEs = "Nórdica" }
+        };
+
+        public static string GetCategoryEmoji(string category)
+        {
+            if (string.IsNullOrEmpty(category)) return "🍲";
+            var item = Categories.Find(c => c.Code.Equals(category, System.StringComparison.OrdinalIgnoreCase)
+                                         || c.NameEn.Equals(category, System.StringComparison.OrdinalIgnoreCase));
+            return item?.Emoji ?? "🍲";
+        }
     }
 }

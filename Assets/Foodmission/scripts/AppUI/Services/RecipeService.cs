@@ -30,6 +30,8 @@ namespace eu.foodmission.platform
             string category = null,
             string cuisineType = null,
             string difficulty = null,
+            string[] dietaryLabels = null,
+            string[] tags = null,
             int page = 1,
             int limit = 20)
         {
@@ -37,12 +39,28 @@ namespace eu.foodmission.platform
 
             if (!string.IsNullOrEmpty(search))
                 sb.Append($"&search={Uri.EscapeDataString(search)}");
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category) && !category.Equals("all", StringComparison.OrdinalIgnoreCase))
                 sb.Append($"&category={Uri.EscapeDataString(category)}");
-            if (!string.IsNullOrEmpty(cuisineType))
+            if (!string.IsNullOrEmpty(cuisineType) && !cuisineType.Equals("all", StringComparison.OrdinalIgnoreCase))
                 sb.Append($"&cuisineType={Uri.EscapeDataString(cuisineType)}");
-            if (!string.IsNullOrEmpty(difficulty))
+            if (!string.IsNullOrEmpty(difficulty) && !difficulty.Equals("all", StringComparison.OrdinalIgnoreCase))
                 sb.Append($"&difficulty={Uri.EscapeDataString(difficulty)}");
+            if (dietaryLabels != null && dietaryLabels.Length > 0)
+            {
+                foreach (var label in dietaryLabels)
+                {
+                    if (!string.IsNullOrEmpty(label))
+                        sb.Append($"&dietaryLabels={Uri.EscapeDataString(label)}");
+                }
+            }
+            if (tags != null && tags.Length > 0)
+            {
+                foreach (var tag in tags)
+                {
+                    if (!string.IsNullOrEmpty(tag))
+                        sb.Append($"&tags={Uri.EscapeDataString(tag)}");
+                }
+            }
 
             string url = sb.ToString();
 
@@ -88,6 +106,9 @@ namespace eu.foodmission.platform
 
         public async Task<(PaginatedRecipeResponse Result, ApiErrorResponse Error)> GetMyRecipesAsync(
             string search = null,
+            string category = null,
+            string cuisineType = null,
+            string difficulty = null,
             int page = 1,
             int limit = 20)
         {
@@ -95,6 +116,12 @@ namespace eu.foodmission.platform
 
             if (!string.IsNullOrEmpty(search))
                 sb.Append($"&search={Uri.EscapeDataString(search)}");
+            if (!string.IsNullOrEmpty(category) && !category.Equals("all", StringComparison.OrdinalIgnoreCase))
+                sb.Append($"&category={Uri.EscapeDataString(category)}");
+            if (!string.IsNullOrEmpty(cuisineType) && !cuisineType.Equals("all", StringComparison.OrdinalIgnoreCase))
+                sb.Append($"&cuisineType={Uri.EscapeDataString(cuisineType)}");
+            if (!string.IsNullOrEmpty(difficulty) && !difficulty.Equals("all", StringComparison.OrdinalIgnoreCase))
+                sb.Append($"&difficulty={Uri.EscapeDataString(difficulty)}");
 
             string url = sb.ToString();
 

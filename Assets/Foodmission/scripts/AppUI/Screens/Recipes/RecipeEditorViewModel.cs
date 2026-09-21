@@ -18,13 +18,23 @@ namespace eu.foodmission.platform
         public bool IsFreeText => string.IsNullOrEmpty(FoodProductId) && string.IsNullOrEmpty(GenericFoodId);
     }
 
-    [ObservableObject]
     public partial class RecipeEditorViewModel : StepFlowViewModelBase
     {
         private readonly IRecipeService _recipeService;
 
         // Step 1 — Meta
-        [ObservableProperty] private string m_Title = "";
+        private string m_Title = "";
+        public string Title
+        {
+            get => m_Title;
+            set
+            {
+                if (SetProperty(ref m_Title, value))
+                {
+                    InvalidateValidation();
+                }
+            }
+        }
         [ObservableProperty] private string m_Description = "";
         [ObservableProperty] private string m_Instructions = "";
         [ObservableProperty] private string m_Difficulty;
@@ -44,47 +54,86 @@ namespace eu.foodmission.platform
 
         // Step 3 — Common
         [ObservableProperty] private bool m_IsSaving;
-        [ObservableProperty] private ApiErrorResponse m_ErrorDetail;
         [ObservableProperty] private string m_EditingRecipeId; // null = create mode
 
         public RecipeEditorViewModel(IStoreService storeService, IRecipeService recipeService)
             : base(storeService)
         {
             _recipeService = recipeService;
+            StepCount = GetStepCount();
         }
 
         public bool IsEditMode => !string.IsNullOrEmpty(EditingRecipeId);
 
-        public bool TestValidateStep(int stepIndex) => ValidateStep(stepIndex);
+        public bool TestValidateStep(int stepIndex, bool showError = true) => ValidateStep(stepIndex, showError);
 
         protected override int GetStepCount() => 3;
 
         protected override string GetStepTitle(int stepIndex) => stepIndex switch
         {
-            0 => "General Info",
-            1 => "Ingredients",
-            2 => "Review",
+            0 => UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_STEP_GENERAL", null, UnityEngine.Localization.Settings.FallbackBehavior.UseProjectSettings, "General"),
+            1 => UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_STEP_INGREDIENTS", null, UnityEngine.Localization.Settings.FallbackBehavior.UseProjectSettings, "Ingredients"),
+            2 => UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_STEP_INSTRUCTIONS", null, UnityEngine.Localization.Settings.FallbackBehavior.UseProjectSettings, "Instructions"),
             _ => ""
         };
+
+        public void Reset()
+        {
+            StepCount = GetStepCount();
+            EditingRecipeId = null;
+            Title = "";
+            Description = "";
+            Instructions = "";
+            Difficulty = null;
+            Category = null;
+            CuisineType = null;
+            ImageUrl = null;
+            PrepTime = null;
+            CookTime = null;
+            Servings = null;
+            Tags = Array.Empty<string>();
+            DietaryLabels = Array.Empty<string>();
+            IsPublic = false;
+            Ingredients = new();
+            HasNoIngredientsWarning = false;
+            ErrorDetail = null;
+            IsSaving = false;
+            CurrentStepIndex = 0;
+            RefreshStepState();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            if (!IsEditMode)
+            {
+                Reset();
+            }
+        }
 
         protected override Task OnStepEnteredAsync(int stepIndex) => Task.CompletedTask;
         protected override Task OnStepExitingAsync(int stepIndex) => Task.CompletedTask;
         protected override async Task OnFlowCompletedAsync() => await SaveAsync();
 
-        protected override bool ValidateStep(int stepIndex)
+        protected override bool ValidateStep(int stepIndex) => ValidateStep(stepIndex, true);
+
+        protected override bool ValidateStep(int stepIndex, bool showError)
         {
             switch (stepIndex)
             {
                 case 0: // Meta
                     if (string.IsNullOrWhiteSpace(Title))
                     {
-                        ErrorDetail = new ApiErrorResponse { message = "RECIPE_E_ERROR_TITLE_REQUIRED" };
+                        if (showError)
+                        {
+                            ErrorDetail = new ApiErrorResponse { message = "RECIPE_E_ERROR_TITLE_REQUIRED" };
+                        }
                         return false;
                     }
-                    ErrorDetail = null;
+                    if (showError) ErrorDetail = null;
                     return true;
                 case 1: // Ingredients
-                    HasNoIngredientsWarning = Ingredients.Count == 0;
+                    HasNoIngredientsWarning = Ingredients == null || Ingredients.Count == 0;
                     return true;
                 case 2: // Review
                     return true;
@@ -137,6 +186,7 @@ namespace eu.foodmission.platform
 
         public async Task LoadForEditAsync(string recipeId)
         {
+            Reset();
             if (string.IsNullOrEmpty(recipeId)) return;
             EditingRecipeId = recipeId;
             try

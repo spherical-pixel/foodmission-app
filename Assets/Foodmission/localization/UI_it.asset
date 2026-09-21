@@ -201,12 +201,12 @@ MonoBehaviour:
   - m_Id: 35547983100502016
     m_Localized: 'Insieme, uniremo la tua cucina alla tutela del pianeta.
 
-      
+
 
       Cucina,
       impara, condividi e cresci ogni giorno.
 
-      
+
 
       Pronto a iniziare?'
     m_Metadata:
@@ -2385,7 +2385,7 @@ MonoBehaviour:
       documento relativo a {0}. Se non sei d''accordo, puoi disconnetterti o cancellare
       il tuo account.
 
-      
+
 
       Ti invitiamo a dedicare qualche minuto a rileggere
       il nuovo documento relativo a {0} e a contattarci se ritieni che contenga errori.'
@@ -2534,6 +2534,99 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 47094236242239489
     m_Localized: "Nuova curiosit\xE0 appresa!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: Per te
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Esplora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Le mie ricette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Nuova ricetta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: "La tua dispensa \xE8 vuota"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: Aggiungi prodotti alla dispensa per ricevere suggerimenti di ricette
+      anti-spreco!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: Vai alla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: Nessuna ricetta creata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: Crea e condividi le tue ricette sostenibili preferite con la community!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Tutte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Facile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Medio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Difficile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Tutti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: '{0} in scadenza'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} in dispensa'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: Generale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Ingredienti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Istruzioni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395986
+    m_Localized: Crea ricetta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Modifica ricetta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Salva ricetta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: "Sfrutta al meglio ci\xF2 che hai in casa"
     m_Metadata:
       m_Items: []
   references:

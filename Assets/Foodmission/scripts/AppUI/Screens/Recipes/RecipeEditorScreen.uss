@@ -3,64 +3,121 @@
     flex-direction: column;
     padding: 16px;
 }
-.fm-re-swipe {
+
+.fm-re-title {
+    font-size: var(--appui-font-sizes-title-lg);
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    margin-bottom: 12px;
+}
+
+.fm-re-progress {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.fm-re-step-container {
     flex-grow: 1;
 }
+
 .fm-re-step {
-    padding: 16px 8px;
+    padding: 8px 4px;
     flex-direction: column;
+    flex-grow: 1;
 }
-.fm-re-step > * {
-    margin-bottom: 16px;
+
+.fm-re-step-scroll {
+    flex-grow: 1;
 }
+
+.fm-re-step-scroll > * {
+    margin-bottom: 14px;
+}
+
+.fm-re-row-2col {
+    flex-direction: row;
+    column-gap: 8px;
+    margin-bottom: 14px;
+}
+
+.fm-re-col {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
 .fm-re-free-text-row {
     flex-direction: row;
-    margin-bottom: 16px;
-    align-items: center;
+    margin-bottom: 14px;
+    align-items: flex-end;
 }
-.fm-re-free-text-row > * {
+
+.fm-re-free-name {
+    flex-grow: 2;
     margin-right: 8px;
+}
+
+.fm-re-free-measure {
     flex-grow: 1;
+    margin-right: 8px;
 }
-.fm-re-free-text-row > .appui-button {
-    min-height: 44px;
-    min-width: 80px;
-    flex-grow: 0;
+
+.fm-re-add-btn {
+    border-radius: 12px;
+    min-height: 40px;
 }
+
 .fm-re-warning {
-    color: #92400e;
+    color: #f59e0b;
     font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: bold;
     margin-bottom: 12px;
 }
+
 .fm-re-ingredients-scroll {
     flex-grow: 1;
     margin-top: 8px;
 }
+
 .fm-re-ingredients-container {
     flex-direction: column;
 }
+
 .fm-re-ingredient-row {
     flex-direction: row;
     min-height: 48px;
     padding: 10px 14px;
-    border-radius: 12px;
+    border-radius: 14px;
     background-color: var(--appui-backgrounds-200);
     margin-bottom: 8px;
     align-items: center;
 }
+
 .fm-re-ingredient-name {
     flex-grow: 1;
     font-size: var(--appui-font-sizes-body-md);
     color: var(--appui-foregrounds-100);
 }
+
 .fm-re-ingredient-remove {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 40px;
+    min-width: 40px;
 }
-.appui--dark .fm-re-warning {
-    color: #fcd34d;
+
+/* Nav Controls */
+.fm-re-nav-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    column-gap: 8px;
+    flex-shrink: 0;
 }
-.appui--dark .fm-re-ingredient-row {
-    background-color: var(--appui-backgrounds-300);
+
+.fm-re-nav-btn {
+    flex-grow: 1;
+    border-radius: 16px;
+}
+
+.fm-re-root .fm-bottom-nav-padding {
+    height: 110px;
 }

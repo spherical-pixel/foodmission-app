@@ -2543,6 +2543,99 @@ MonoBehaviour:
     m_Localized: Neuer Fakt gelernt!
     m_Metadata:
       m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: "F\xFCr dich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Entdecken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Meine Rezepte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Neues Rezept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: Deine Speisekammer ist leer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "F\xFCge Artikel zu deiner Speisekammer hinzu, um Rezeptvorschl\xE4ge
+      zu erhalten und Lebensmittelverschwendung zu vermeiden!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: Zur Speisekammer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: Noch keine Rezepte erstellt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: Erstelle und teile deine nachhaltigen Lieblingsrezepte mit der Community!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Einfach
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Mittel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Schwer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: "{0} l\xE4uft bald ab"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} in Speisekammer'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: Allgemein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Zutaten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Zubereitung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395986
+    m_Localized: Rezept erstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Rezept bearbeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Rezept speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: Machen Sie das Beste aus dem, was Sie zu Hause haben
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

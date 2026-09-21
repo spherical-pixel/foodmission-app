@@ -2559,6 +2559,100 @@ MonoBehaviour:
     m_Localized: "Poznano now\u0105 ciekawostk\u0119!"
     m_Metadata:
       m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: Dla Ciebie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Odkrywaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Moje przepisy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Nowy przepis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: "Twoja spi\u017Carnia jest pusta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "Dodaj produkty do spi\u017Carni, aby otrzymywa\u0107 propozycje
+      przepis\xF3w ograniczaj\u0105cych marnowanie \u017Cywno\u015Bci!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: "Przejd\u017A do spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: "Nie utworzono jeszcze \u017Cadnych przepis\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: "Tw\xF3rz i udost\u0119pniaj swoje ulubione zr\xF3wnowa\u017Cone
+      przepisy spo\u0142eczno\u015Bci!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Wszystkie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: "\u0141atwy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: "\u015Aredni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Trudny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Wszystkie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: "{0} wkr\xF3tce traci wa\u017Cno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: "{0}/{1} w spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: "Og\xF3lne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: "Sk\u0142adniki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Instrukcje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395986
+    m_Localized: "Utw\xF3rz przepis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Edytuj przepis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Zapisz przepis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: "Wykorzystaj w pe\u0142ni to, co masz w domu"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

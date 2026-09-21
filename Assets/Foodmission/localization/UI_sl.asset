@@ -2525,6 +2525,99 @@ MonoBehaviour:
     m_Localized: Novo dejstvo usvojeno!
     m_Metadata:
       m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: Zate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: "Razi\u0161\u010Di"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Moji recepti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Nov recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: Tvoja shramba je prazna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "Dodaj \u017Eivila v svojo shrambo za pametne predloge receptov
+      in manj zavr\u017Eene hrane!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: Pojdi v shrambo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: "\u0160e niste ustvarili receptov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: "Ustvari in deli svoje najljub\u0161e trajnostne recepte s skupnostjo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Vse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Enostavno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Srednje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: "Te\u017Eko"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Vse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: "{0} kmalu pote\u010De"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} v shrambi'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: "Splo\u0161no"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Sestavine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Navodila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395986
+    m_Localized: Ustvari recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Uredi recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Shrani recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: Izkoristite kar imate doma
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

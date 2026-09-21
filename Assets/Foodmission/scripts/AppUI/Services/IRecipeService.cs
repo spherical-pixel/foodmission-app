@@ -9,6 +9,8 @@ namespace eu.foodmission.platform
             string category = null,
             string cuisineType = null,
             string difficulty = null,
+            string[] dietaryLabels = null,
+            string[] tags = null,
             int page = 1,
             int limit = 20);
 
@@ -16,6 +18,9 @@ namespace eu.foodmission.platform
 
         Task<(PaginatedRecipeResponse Result, ApiErrorResponse Error)> GetMyRecipesAsync(
             string search = null,
+            string category = null,
+            string cuisineType = null,
+            string difficulty = null,
             int page = 1,
             int limit = 20);
 

@@ -217,9 +217,19 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
-                    ratingStr += LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_REVIEWS");
+                    //ratingStr += LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_REVIEWS");
+                    ratingStr = null; // Hide rating text if no reviews
                 }
                 _ratingText.text = ratingStr;
+
+                if (_ratingText.text == null || string.IsNullOrWhiteSpace(_ratingText.text))
+                {
+                    _ratingText.style.display = DisplayStyle.None;
+                }
+                else
+                {
+                    _ratingText.style.display = DisplayStyle.Flex;
+                }
             }
 
             if (_description != null)
@@ -329,14 +339,6 @@ namespace eu.foodmission.platform
             if (_badgesStrip == null) return;
             _badgesStrip.Clear();
 
-            r.prepTime = 60;
-            r.cookTime = 100;
-            r.difficulty = "hard";
-            // r.sustainabilityScore = 5;
-            r.servings = 1;
-            // r.category = "Pasta";
-            // r.cuisineType = "Italian";
-
             var totalTime = (r.prepTime ?? 0) + (r.cookTime ?? 0);
             if (totalTime > 0)
             {
@@ -363,11 +365,12 @@ namespace eu.foodmission.platform
 
 
 
-            if (r.sustainabilityScore.HasValue)
-            {
-                int ecoPct = Mathf.RoundToInt(r.sustainabilityScore.Value * 100);
-                AddBadgeToContainer(_badgesStrip, $"🌱 Eco {ecoPct}%", "fm-r-badge--easy");
-            }
+            // TODO: Right now hidden because it's not reliable
+            // if (r.sustainabilityScore.HasValue)
+            // {
+            //     int ecoPct = Mathf.RoundToInt(r.sustainabilityScore.Value * 100);
+            //     AddBadgeToContainer(_badgesStrip, $"🌱 Eco {ecoPct}%", "fm-r-badge--easy");
+            // }
 
             if (!string.IsNullOrEmpty(r.category))
             {
@@ -718,8 +721,11 @@ namespace eu.foodmission.platform
 
         private void UpdateActionButtonsVisibility()
         {
-            _btnEdit?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
-            _btnDelete?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
+            // Temporarily disabled: recipe editing & deleting
+            // _btnEdit?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
+            // _btnDelete?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
+            _btnEdit?.AddToClassList("fm-rd-action--hidden");
+            _btnDelete?.AddToClassList("fm-rd-action--hidden");
         }
 
         private void UpdateAddToShoppingListState()

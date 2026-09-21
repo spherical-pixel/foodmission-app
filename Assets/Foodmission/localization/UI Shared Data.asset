@@ -2455,6 +2455,98 @@ MonoBehaviour:
     m_Key: FOOD_FACT_REWARD_TITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 47367747305201664
+    m_Key: RECIPES_TAB_FOR_YOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Key: RECIPES_TAB_EXPLORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Key: RECIPES_TAB_MY_RECIPES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Key: RECIPES_CREATE_BTN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Key: RECIPES_EMPTY_PANTRY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Key: RECIPES_EMPTY_PANTRY_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Key: RECIPES_EMPTY_PANTRY_BTN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Key: RECIPES_EMPTY_MY_RECIPES_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Key: RECIPES_EMPTY_MY_RECIPES_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Key: RECIPES_DIFFICULTY_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Key: RECIPES_DIFFICULTY_EASY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Key: RECIPES_DIFFICULTY_MEDIUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Key: RECIPES_DIFFICULTY_HARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Key: RECIPES_FILTER_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Key: RECIPES_EXPIRING_MATCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Key: RECIPES_PANTRY_MATCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Key: RECIPES_STEP_GENERAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Key: RECIPES_STEP_INGREDIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Key: RECIPES_STEP_INSTRUCTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395986
+    m_Key: RECIPES_CREATE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Key: RECIPES_EDIT_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Key: RECIPES_SAVE_BTN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Key: RECIPES_USE_PANTRY_SUBTITLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
