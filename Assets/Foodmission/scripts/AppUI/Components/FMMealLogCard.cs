@@ -40,21 +40,39 @@ namespace eu.foodmission.platform.Components
         /* ========= INTERNAL ELEMENTS ========= */
         private MealLog _mealLogData;
         private string _typeLabel;
+        private VisualElement _headerRow;
         private Heading _heading;
+        private Unity.AppUI.UI.Button _removeButton;
         private Unity.AppUI.UI.Text _mealName;
         private VisualElement _itemsContainer;
         private Unity.AppUI.UI.Text _badge;
+
+        public Unity.AppUI.UI.Button RemoveButton => _removeButton;
 
         public FMMealLogCard()
         {
             this.AddToClassList("fm-meal-card");
 
+            _headerRow = new VisualElement();
+            _headerRow.AddToClassList("fm-meal-card-header-row");
+
             _heading = new Heading();
             _heading.size = HeadingSize.M;
             _heading.AddToClassList("bold-text");
             _heading.AddToClassList("fm-meal-card-heading");
-            _heading.style.paddingBottom = 8;
-            this.Add(_heading);
+            _heading.style.flexGrow = 1;
+            _heading.style.flexShrink = 1;
+            _headerRow.Add(_heading);
+
+            _removeButton = new Unity.AppUI.UI.Button();
+            _removeButton.quiet = true;
+            _removeButton.leadingIcon = "fm-trash";
+            _removeButton.size = Size.S;
+            _removeButton.AddToClassList("fm-icon-button-item-list");
+            _removeButton.AddToClassList("fm-meal-card-remove-btn");
+            _headerRow.Add(_removeButton);
+
+            this.Add(_headerRow);
 
             _mealName = new Unity.AppUI.UI.Text();
             _mealName.AddToClassList("fm-meal-card-text");

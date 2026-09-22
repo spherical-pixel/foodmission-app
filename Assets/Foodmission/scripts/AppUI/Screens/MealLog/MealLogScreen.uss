@@ -58,6 +58,15 @@
     margin-top: 12px;
 }
 
+.fm-ml-day-stepper {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    align-self: center;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+
 /* Preset results */
 .fm-ml-preset-results {
     flex-direction: column;

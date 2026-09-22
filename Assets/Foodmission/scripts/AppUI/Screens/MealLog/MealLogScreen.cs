@@ -51,6 +51,8 @@ namespace eu.foodmission.platform
         private FMButton _btnLogSelected;
         private VisualElement _loggedMealsZone;
         private VisualElement _mealList;
+        private FMArrowStepper _dayStepper;
+        private readonly List<DateTime> _stepperDates = new();
         private AccessibilityNode _logButtonNode;
 
         public MealLogScreen()
@@ -82,6 +84,7 @@ namespace eu.foodmission.platform
             _btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
             _loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
+            _dayStepper = contentContainer.Q<FMArrowStepper>("day-stepper");
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -233,6 +236,9 @@ namespace eu.foodmission.platform
                 }
             });
 
+            SetupDayStepper();
+            RebuildMealCards();
+
             _viewModel.LoadTodayAsync().ContinueWith(t =>
             {
                 if (t.IsFaulted)
@@ -244,6 +250,7 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
+            _dayStepper?.UnregisterValueChangedCallback(OnDayChanged);
             _viewModel.DisposeSearchCts();
             _btnLogSelected.clicked -= OnLogSelectedClicked;
             _btnBackStep2?.UnregisterCallback<ClickEvent>(OnBackClicked);
@@ -329,66 +336,72 @@ namespace eu.foodmission.platform
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
+            ExecuteOnMainThread(() =>
             {
-                case nameof(_viewModel.CurrentStep):
-                    UpdateStepVisibility();
-                    if (_viewModel.CurrentStep == MealLogStep.SelectingSource)
-                        RebuildSourceButtons();
-                    break;
-                case nameof(_viewModel.TypeOfMealOptions):
-                    RebuildTypeButtons();
-                    RebuildMealCards();
-                    break;
-                case nameof(_viewModel.PresetResults):
-                    RebuildPresetResults();
-                    break;
-                case nameof(_viewModel.IsSearchingPresets):
-                    if (_viewModel.IsSearchingPresets)
-                        FMLoadingOverlay.Show(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEARCHING_PRESETS"));
-                    else
-                        FMLoadingOverlay.Hide();
-                    break;
-                case nameof(_viewModel.SaveAsPreset):
-                    if (_chkSavePreset != null)
-                        _chkSavePreset.value = _viewModel.SaveAsPreset ? CheckboxState.Checked : CheckboxState.Unchecked;
-                    break;
-                case nameof(_viewModel.SelectedMealPreset):
-                    UpdateSavePresetCheckboxVisibility();
-                    RebuildSelectedChips();
-                    UpdateLogButtonState();
-                    ClosePresetPanel();
-                    break;
+                switch (e.PropertyName)
+                {
+                    case nameof(_viewModel.CurrentStep):
+                        UpdateStepVisibility();
+                        if (_viewModel.CurrentStep == MealLogStep.SelectingSource)
+                            RebuildSourceButtons();
+                        break;
+                    case nameof(_viewModel.TypeOfMealOptions):
+                        RebuildTypeButtons();
+                        RebuildMealCards();
+                        break;
+                    case nameof(_viewModel.PresetResults):
+                        RebuildPresetResults();
+                        break;
+                    case nameof(_viewModel.IsSearchingPresets):
+                        if (_viewModel.IsSearchingPresets)
+                            FMLoadingOverlay.Show(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEARCHING_PRESETS"));
+                        else
+                            FMLoadingOverlay.Hide();
+                        break;
+                    case nameof(_viewModel.SaveAsPreset):
+                        if (_chkSavePreset != null)
+                            _chkSavePreset.value = _viewModel.SaveAsPreset ? CheckboxState.Checked : CheckboxState.Unchecked;
+                        break;
+                    case nameof(_viewModel.SelectedMealPreset):
+                        UpdateSavePresetCheckboxVisibility();
+                        RebuildSelectedChips();
+                        UpdateLogButtonState();
+                        ClosePresetPanel();
+                        break;
 
 
-                case nameof(_viewModel.SelectedItems):
-                    RebuildSelectedChips();
-                    UpdateLogButtonState();
-                    break;
-                case nameof(_viewModel.IsSaving):
-                    if (_viewModel.IsSaving)
-                        FMLoadingOverlay.Show();
-                    else
-                        FMLoadingOverlay.Hide();
-                    break;
-                case nameof(_viewModel.LastTenLogs):
-                    RebuildMealCards();
-                    break;
-                case nameof(_viewModel.ErrorMessage):
-                    if (!string.IsNullOrEmpty(_viewModel.ErrorMessage))
-                    {
-                        Toast.Build(this, _viewModel.ErrorMessage, NotificationDuration.Short).Show();
-                        _viewModel.ErrorMessage = "";
-                    }
-                    break;
-                case nameof(_viewModel.ErrorDetail):
-                    if (_viewModel.ErrorDetail != null)
-                    {
-                        FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail);
-                        _viewModel.ErrorDetail = null;
-                    }
-                    break;
-            }
+                    case nameof(_viewModel.SelectedItems):
+                        RebuildSelectedChips();
+                        UpdateLogButtonState();
+                        break;
+                    case nameof(_viewModel.IsSaving):
+                        if (_viewModel.IsSaving)
+                            FMLoadingOverlay.Show();
+                        else
+                            FMLoadingOverlay.Hide();
+                        break;
+                    case nameof(_viewModel.LastTenLogs):
+                        RebuildMealCards();
+                        break;
+                    case nameof(_viewModel.SelectedDate):
+                        UpdateDayStepperSelection();
+                        break;
+                    case nameof(_viewModel.ErrorMessage):
+                        if (!string.IsNullOrEmpty(_viewModel.ErrorMessage))
+                        {
+                            Toast.Build(this, _viewModel.ErrorMessage, NotificationDuration.Short).Show();
+                            _viewModel.ErrorMessage = "";
+                        }
+                        break;
+                    case nameof(_viewModel.ErrorDetail):
+                        if (_viewModel.ErrorDetail != null)
+                        {
+                            FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail);
+                            _viewModel.ErrorDetail = null;
+                        }
+                        break;
+                }
+            });
         }
 
         private void UpdateStepVisibility()
@@ -486,17 +499,102 @@ namespace eu.foodmission.platform
 
             foreach (MealLog log in _viewModel.LastTenLogs)
             {
+                MealLog captured = log;
                 string typeLabel = typeOptions != null
                     ? Array.Find(typeOptions, o => o.code == log.typeOfMeal)?.label ?? log.typeOfMeal
                     : log.typeOfMeal;
 
                 FMMealLogCard card = new FMMealLogCard
                 {
-                    MealLogData = log,
+                    MealLogData = captured,
                     TypeLabel = typeLabel
                 };
 
+                card.RemoveButton.clicked += () => ConfirmDeleteMealLog(captured);
+
                 _mealList.Add(card);
+            }
+        }
+
+        private void ConfirmDeleteMealLog(MealLog log)
+        {
+            if (log == null || string.IsNullOrEmpty(log.id)) return;
+
+            string confirmTitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DELETE_LOG") ?? "Eliminar registro";
+            string confirmMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MEAL_LOG") ?? "¿Seguro que quieres eliminar este registro de comida?";
+
+            FMDialog.ShowConfirm(
+                this,
+                confirmTitle,
+                confirmMsg,
+                onConfirm: async () =>
+                {
+                    await _viewModel.DeleteLogAsync(log.id);
+                    RebuildMealCards();
+
+                    string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_DELETED_SUCCESS") ?? "Comida eliminada del registro";
+                    Toast.Build(this, toastMsg, NotificationDuration.Short)
+                        .SetStyle(NotificationStyle.Positive)
+                        .SetPosition(PopupNotificationPlacement.Bottom)
+                        .Show();
+                },
+                semantic: AlertSemantic.Destructive);
+        }
+
+        private void SetupDayStepper()
+        {
+            if (_dayStepper == null) return;
+
+            _dayStepper.UnregisterValueChangedCallback(OnDayChanged);
+            _stepperDates.Clear();
+            var choices = new List<string>();
+            DateTime today = DateTime.Today;
+
+            string todayLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TODAY") ?? "Hoy";
+            string yesterdayLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "YESTERDAY") ?? "Ayer";
+
+            // 30 days rolling range: from today - 29 to today
+            for (int i = 29; i >= 0; i--)
+            {
+                DateTime d = today.AddDays(-i);
+                _stepperDates.Add(d);
+
+                if (i == 0)
+                {
+                    choices.Add($"{todayLabel} ({d:dd/MM})");
+                }
+                else if (i == 1)
+                {
+                    choices.Add($"{yesterdayLabel} ({d:dd/MM})");
+                }
+                else
+                {
+                    choices.Add(d.ToString("dd/MM"));
+                }
+            }
+
+            _dayStepper.Cyclic = false;
+            _dayStepper.Choices = choices.ToArray();
+            _dayStepper.SelectedIndex = choices.Count - 1;
+            _dayStepper.RegisterValueChangedCallback(OnDayChanged);
+        }
+
+        private void OnDayChanged(object sender, ChangeEvent<int> evt)
+        {
+            if (evt.newValue >= 0 && evt.newValue < _stepperDates.Count)
+            {
+                DateTime selected = _stepperDates[evt.newValue];
+                _ = _viewModel.SetSelectedDateAsync(selected);
+            }
+        }
+
+        private void UpdateDayStepperSelection()
+        {
+            if (_dayStepper == null || _stepperDates == null || _stepperDates.Count == 0) return;
+            int index = _stepperDates.FindIndex(d => d.Date == _viewModel.SelectedDate.Date);
+            if (index >= 0 && _dayStepper.SelectedIndex != index)
+            {
+                _dayStepper.SelectedIndex = index;
             }
         }
 

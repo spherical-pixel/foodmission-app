@@ -2922,6 +2922,26 @@ MonoBehaviour:
     m_Localized: https://...
     m_Metadata:
       m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: "Izbri\u0161em recept?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite izbrisati ta recept?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: "V\u010Deraj"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite izbrisati ta vnos obroka?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: "Vnos obroka uspe\u0161no izbrisan"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

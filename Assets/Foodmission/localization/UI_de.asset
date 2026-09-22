@@ -2940,6 +2940,26 @@ MonoBehaviour:
     m_Localized: https://...
     m_Metadata:
       m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: "Rezept l\xF6schen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: "M\xF6chten Sie dieses Rezept wirklich l\xF6schen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: Gestern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: "M\xF6chtest du diesen Mahlzeiteneintrag wirklich l\xF6schen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: "Mahlzeiteneintrag erfolgreich gel\xF6scht"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

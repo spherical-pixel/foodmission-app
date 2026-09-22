@@ -2851,6 +2851,26 @@ MonoBehaviour:
     m_Key: RECIPES_CREATE_TITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 48825971850076160
+    m_Key: RECIPES_A_DELETE_CONFIRM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Key: RECIPES_A_DELETE_CONFIRM_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Key: YESTERDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Key: CONFIRM_DELETE_MEAL_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Key: MEAL_LOG_DELETED_SUCCESS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

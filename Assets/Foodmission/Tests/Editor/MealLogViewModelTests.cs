@@ -348,7 +348,7 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectTypeOfMeal(0);
             _vm.SetSource(false, true);
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
             _vm.MealContainerName = "Mi cena modificada";
 
             var prodItem = new MealLogItem
@@ -439,7 +439,7 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectTypeOfMeal(0);
             _vm.SetSource(true, false);
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Dinner" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Dinner" });
             _vm.MealContainerName = "New dinner";
 
             var item = new MealLogItem
@@ -495,13 +495,14 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task LoadTodayAsync_ParsesAndReturnsLastTen()
         {
+            DateTime today = DateTime.Today;
             var response = new PaginatedMealLogResponse
             {
                 data = new[]
                 {
-                    new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T09:00:00Z", meal = new Meal { name = "Toast" } },
-                    new MealLog { id = "2", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T08:00:00Z", meal = new Meal { name = "Juice" } },
-                    new MealLog { id = "3", typeOfMeal = "LUNCH", timestamp = "2026-06-04T13:00:00Z", meal = new Meal { name = "Salad" } }
+                    new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = today.AddHours(9).ToString("o"), meal = new Meal { name = "Toast" } },
+                    new MealLog { id = "2", typeOfMeal = "BREAKFAST", timestamp = today.AddHours(8).ToString("o"), meal = new Meal { name = "Juice" } },
+                    new MealLog { id = "3", typeOfMeal = "LUNCH", timestamp = today.AddHours(13).ToString("o"), meal = new Meal { name = "Salad" } }
                 },
                 total = 3,
                 page = 1,
@@ -524,9 +525,10 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task LoadTodayAsync_LoadsFromLocalCacheFirst()
         {
+            DateTime today = DateTime.Today;
             var cached = new System.Collections.Generic.List<MealLog>
             {
-                new MealLog { id = "cache-1", typeOfMeal = "BREAKFAST", timestamp = "2026-08-13T08:00:00Z", meal = new Meal { name = "Cached Coffee" } }
+                new MealLog { id = "cache-1", typeOfMeal = "BREAKFAST", timestamp = today.AddHours(8).ToString("o"), meal = new Meal { name = "Cached Coffee" } }
             };
 
             _mockLocalStorage
@@ -540,7 +542,7 @@ namespace eu.foodmission.platform.Tests
             {
                 data = new[]
                 {
-                    new MealLog { id = "api-1", typeOfMeal = "LUNCH", timestamp = "2026-08-13T13:00:00Z", meal = new Meal { name = "Fresh Salad" } }
+                    new MealLog { id = "api-1", typeOfMeal = "LUNCH", timestamp = today.AddHours(13).ToString("o"), meal = new Meal { name = "Fresh Salad" } }
                 },
                 total = 1, page = 1, limit = 20, totalPages = 1
             };
@@ -559,9 +561,10 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task DeleteLogAsync_Success_RemovesFromLogs()
         {
+            DateTime today = DateTime.Today;
             var response = new PaginatedMealLogResponse
             {
-                data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T09:00:00Z", meal = new Meal { name = "Toast" } } },
+                data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = today.AddHours(9).ToString("o"), meal = new Meal { name = "Toast" } } },
                 total = 1,
                 page = 1,
                 limit = 20,
@@ -587,9 +590,10 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task DeleteLogAsync_WithApiError_SetsErrorDetail()
         {
+            DateTime today = DateTime.Today;
             _mockMealLogService
                 .Setup(x => x.GetLogsAsync(1, 50, null, It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync((new PaginatedMealLogResponse { data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = "2026-06-04T09:00:00Z" } }, total = 1, page = 1, limit = 20, totalPages = 1 }, null));
+                .ReturnsAsync((new PaginatedMealLogResponse { data = new[] { new MealLog { id = "1", typeOfMeal = "BREAKFAST", timestamp = today.AddHours(9).ToString("o") } }, total = 1, page = 1, limit = 20, totalPages = 1 }, null));
 
             await _vm.LoadTodayAsync();
 
@@ -601,6 +605,46 @@ namespace eu.foodmission.platform.Tests
             await _vm.DeleteLogAsync("1");
 
             Assert.IsNotNull(_vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task SetSelectedDateAsync_FiltersLogsForSpecificDay()
+        {
+            DateTime today = DateTime.Today;
+            DateTime yesterday = today.AddDays(-1);
+
+            var initialResponse = new PaginatedMealLogResponse
+            {
+                data = new[]
+                {
+                    new MealLog { id = "today-1", typeOfMeal = "LUNCH", timestamp = today.AddHours(13).ToString("o"), meal = new Meal { name = "Today Lunch" } },
+                    new MealLog { id = "yest-1", typeOfMeal = "DINNER", timestamp = yesterday.AddHours(20).ToString("o"), meal = new Meal { name = "Yesterday Dinner" } }
+                },
+                total = 2,
+                page = 1,
+                limit = 50,
+                totalPages = 1
+            };
+
+            _mockMealLogService
+                .Setup(x => x.GetLogsAsync(1, 50, null, It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((initialResponse, null));
+
+            await _vm.LoadTodayAsync();
+
+            Assert.AreEqual(1, _vm.LastTenLogs.Count, "Initially only today's log should be displayed");
+            Assert.AreEqual("Today Lunch", _vm.LastTenLogs[0].meal.name);
+
+            // Now navigate to yesterday
+            _mockMealLogService
+                .Setup(x => x.GetLogsAsync(1, 50, null, It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((new PaginatedMealLogResponse { data = Array.Empty<MealLog>() }, null));
+
+            await _vm.SetSelectedDateAsync(yesterday);
+
+            Assert.AreEqual(yesterday.Date, _vm.SelectedDate.Date);
+            Assert.AreEqual(1, _vm.LastTenLogs.Count, "After selecting yesterday, only yesterday's log should be displayed");
+            Assert.AreEqual("Yesterday Dinner", _vm.LastTenLogs[0].meal.name);
         }
 
         // ========= HasModifications tests =========
@@ -621,7 +665,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.GetByMealIdAsync("existing-meal"))
                 .ReturnsAsync((new[] { detail }, null));
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
 
             Assert.IsFalse(_vm.HasModifications());
         }
@@ -642,7 +686,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.GetByMealIdAsync("existing-meal"))
                 .ReturnsAsync((new[] { detail }, null));
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
             _vm.SelectedItems[0].quantity = 5f;
 
             Assert.IsTrue(_vm.HasModifications());
@@ -664,7 +708,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.GetByMealIdAsync("existing-meal"))
                 .ReturnsAsync((new[] { detail }, null));
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
             _vm.SelectedItems = new System.Collections.Generic.List<MealLogItem>();
 
             Assert.IsTrue(_vm.HasModifications());
@@ -692,7 +736,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.GetByMealIdAsync("existing-meal"))
                 .ReturnsAsync((new[] { detail }, null));
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
 
             _mockMealLogService
                 .Setup(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.mealId == "existing-meal")))
@@ -713,7 +757,7 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectTypeOfMeal(0);
             _vm.SetSource(false, true);
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
 
             var prodItem = new MealLogItem
             {
@@ -796,7 +840,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.GetByMealIdAsync("existing-meal"))
                 .ReturnsAsync((new[] { detail }, null));
 
-            _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Mi cena" });
 
             MealLogItem prodItem = _vm.SelectedItems[0];
             prodItem.quantity = 3f;

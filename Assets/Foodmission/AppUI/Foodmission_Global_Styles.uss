@@ -1216,9 +1216,16 @@
     margin-bottom: 15px;
 }
 
+.fm-meal-card-header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 4px;
+}
+
 .fm-meal-card-heading {
     color: var(--appui-foregrounds-50);
-    padding-bottom: 4px;
+    padding-bottom: 0;
 }
 
 .fm-meal-card-text {

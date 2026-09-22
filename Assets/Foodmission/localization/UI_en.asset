@@ -2919,6 +2919,26 @@ MonoBehaviour:
     m_Localized: https://...
     m_Metadata:
       m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: Delete Recipe?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: Are you sure you want to delete this recipe?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: Yesterday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: Are you sure you want to delete this meal log?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: Meal log deleted successfully
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

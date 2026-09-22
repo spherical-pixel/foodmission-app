@@ -68,11 +68,14 @@
             </appui:ExVisualElement>
         </appui:ExVisualElement>
         <appui:ExVisualElement name="logged-meals-zone" class="fm-ml-logged-zone">
-            <appui:Heading name="heading-today" text="Meals eaten today" size="M" primary="false" class="fm-heading-white">
-                <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34310338294833152)"/>
-                </Bindings>
-            </appui:Heading>
+            <ui:VisualElement name="heading-meals-row" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+                <appui:Heading name="heading-today" text="Meals eaten today" size="M" primary="false" class="fm-heading-white">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34310338294833152)"/>
+                    </Bindings>
+                </appui:Heading>
+                <fm:FMArrowStepper name="day-stepper" cyclic="false" class="fm-ml-day-stepper"/>
+            </ui:VisualElement>
             <appui:ExVisualElement name="list-meals-today" class="fm-ml-meals-list"/>
         </appui:ExVisualElement>
         <ui:VisualElement class="fm-bottom-nav-padding"/>

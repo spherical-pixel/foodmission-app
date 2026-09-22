@@ -37,6 +37,7 @@ namespace eu.foodmission.platform
         private IDisposable _langSubscription;
 
         [ObservableProperty] private List<MealLog> m_LastTenLogs = new();
+        [ObservableProperty] private DateTime m_SelectedDate = DateTime.Today;
 
         private List<MealLog> _allLogs = new();
 
@@ -993,8 +994,79 @@ namespace eu.foodmission.platform
 
         private string _currentCacheLang;
 
+        public void FilterLogsForSelectedDate()
+        {
+            if (_allLogs == null || _allLogs.Count == 0)
+            {
+                LastTenLogs = new List<MealLog>();
+                return;
+            }
+
+            var logsForDay = _allLogs
+                .Where(l => DateTime.TryParse(l.timestamp, out var t) && t.ToLocalTime().Date == SelectedDate.Date)
+                .OrderByDescending(l => DateTime.TryParse(l.timestamp, out var t) ? t : DateTime.MinValue)
+                .ToList();
+
+            LastTenLogs = logsForDay;
+        }
+
+        public async Task SetSelectedDateAsync(DateTime date)
+        {
+            SelectedDate = date.Date;
+            FilterLogsForSelectedDate();
+
+            DateTime startUtc = SelectedDate.Date.ToUniversalTime();
+            DateTime endUtc = SelectedDate.Date.AddDays(1).AddSeconds(-1).ToUniversalTime();
+
+            var (response, error) = await _mealLogService.GetLogsAsync(
+                page: 1,
+                limit: 50,
+                dateFrom: startUtc.ToString("o"),
+                dateTo: endUtc.ToString("o"));
+
+            if (error == null && response?.data != null)
+            {
+                MergeLogs(response.data);
+                await FetchMissingDetailsAndTranslateAsync(response.data);
+                FilterLogsForSelectedDate();
+                SaveToCache();
+            }
+        }
+
+        private void MergeLogs(IEnumerable<MealLog> newLogs)
+        {
+            if (newLogs == null) return;
+            var existingIds = new HashSet<string>(_allLogs.Select(l => l.id));
+            foreach (var log in newLogs)
+            {
+                if (!string.IsNullOrEmpty(log.id) && !existingIds.Contains(log.id))
+                {
+                    _allLogs.Add(log);
+                    existingIds.Add(log.id);
+                }
+            }
+        }
+
+        private void SaveToCache()
+        {
+            if (_localStorage != null)
+            {
+                try
+                {
+                    string currentLang = _storeService.GetAppState().lang ?? "en";
+                    string cacheKey = $"meal_logs_cache_{currentLang}";
+                    _localStorage.SetValue(cacheKey, _allLogs);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Failed to save meal logs cache: {ex.Message}");
+                }
+            }
+        }
+
         public async Task LoadTodayAsync()
         {
+            SelectedDate = DateTime.Today;
             string currentLang = _storeService.GetAppState().lang ?? "en";
             string cacheKey = $"meal_logs_cache_{currentLang}";
 
@@ -1015,10 +1087,7 @@ namespace eu.foodmission.platform
                     if (cachedLogs != null && cachedLogs.Count > 0)
                     {
                         _allLogs = new List<MealLog>(cachedLogs);
-                        LastTenLogs = _allLogs
-                            .OrderByDescending(l => DateTime.TryParse(l.timestamp, out var t) ? t : DateTime.MinValue)
-                            .Take(10)
-                            .ToList();
+                        FilterLogsForSelectedDate();
                     }
                 }
                 catch (Exception ex)
@@ -1027,21 +1096,14 @@ namespace eu.foodmission.platform
                 }
             }
 
-            var existingItemsByMealId = new Dictionary<string, MealItemDetail[]>();
-            if (!isLanguageChange && LastTenLogs != null)
-            {
-                foreach (var l in LastTenLogs)
-                {
-                    if (l.meal != null && !string.IsNullOrEmpty(l.meal.id) && l.meal.items != null && l.meal.items.Length > 0)
-                    {
-                        existingItemsByMealId[l.meal.id] = l.meal.items;
-                    }
-                }
-            }
+            DateTime startUtc = SelectedDate.Date.ToUniversalTime();
+            DateTime endUtc = SelectedDate.Date.AddDays(1).AddSeconds(-1).ToUniversalTime();
 
             var (response, error) = await _mealLogService.GetLogsAsync(
                 page: 1,
-                limit: 50);
+                limit: 50,
+                dateFrom: startUtc.ToString("o"),
+                dateTo: endUtc.ToString("o"));
 
             if (error != null)
             {
@@ -1054,24 +1116,38 @@ namespace eu.foodmission.platform
 
             ErrorDetail = null;
             _allLogs = response?.data != null ? new List<MealLog>(response.data) : new List<MealLog>();
+            await FetchMissingDetailsAndTranslateAsync(_allLogs);
+            FilterLogsForSelectedDate();
+            SaveToCache();
+        }
 
-            var logs = _allLogs
-                .OrderByDescending(l => DateTime.TryParse(l.timestamp, out var t) ? t : DateTime.MinValue)
-                .Take(10)
-                .ToList();
+        private async Task FetchMissingDetailsAndTranslateAsync(IEnumerable<MealLog> logs)
+        {
+            if (logs == null) return;
 
-            foreach (var log in logs)
+            // Reuse cached items from existing _allLogs if available to minimize network calls
+            if (_allLogs != null)
             {
-                if (log.meal != null && !string.IsNullOrEmpty(log.meal.id) && (log.meal.items == null || log.meal.items.Length == 0))
+                var existingItemsByMealId = new Dictionary<string, MealItemDetail[]>();
+                foreach (var l in _allLogs)
                 {
-                    if (existingItemsByMealId.TryGetValue(log.meal.id, out var cachedItems))
+                    if (l.meal != null && !string.IsNullOrEmpty(l.meal.id) && l.meal.items != null && l.meal.items.Length > 0)
                     {
-                        log.meal.items = cachedItems;
+                        existingItemsByMealId[l.meal.id] = l.meal.items;
+                    }
+                }
+
+                foreach (var log in logs)
+                {
+                    if (log.meal != null && !string.IsNullOrEmpty(log.meal.id) && (log.meal.items == null || log.meal.items.Length == 0))
+                    {
+                        if (existingItemsByMealId.TryGetValue(log.meal.id, out var cachedItems))
+                        {
+                            log.meal.items = cachedItems;
+                        }
                     }
                 }
             }
-
-            LastTenLogs = logs;
 
             if (_mealItemService != null)
             {
@@ -1094,7 +1170,7 @@ namespace eu.foodmission.platform
                 }
             }
 
-            if (_genericFoodService != null && logs != null)
+            if (_genericFoodService != null)
             {
                 var translationTasks = new List<Task>();
                 foreach (var log in logs)
@@ -1114,20 +1190,6 @@ namespace eu.foodmission.platform
                 if (translationTasks.Count > 0)
                 {
                     await Task.WhenAll(translationTasks);
-                }
-            }
-
-            LastTenLogs = new List<MealLog>(logs);
-
-            if (_localStorage != null)
-            {
-                try
-                {
-                    _localStorage.SetValue(cacheKey, LastTenLogs);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogWarning($"[{GetType().Name}] Failed to save meal logs cache for lang {currentLang}: {ex.Message}");
                 }
             }
         }
@@ -1210,12 +1272,9 @@ namespace eu.foodmission.platform
             else
             {
                 ErrorDetail = null;
-                _allLogs = _allLogs.FindAll(l => l.id != logId);
-                LastTenLogs = _allLogs
-                    .OrderByDescending(l => DateTime.Parse(l.timestamp))
-                    .Take(10)
-                    .ToList();
-
+                _allLogs.RemoveAll(l => l.id == logId);
+                FilterLogsForSelectedDate();
+                SaveToCache();
             }
         }
 

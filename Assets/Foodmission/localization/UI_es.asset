@@ -2924,6 +2924,26 @@ MonoBehaviour:
     m_Localized: https://...
     m_Metadata:
       m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: "\xBFEliminar receta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: "\xBFSeguro que quieres eliminar esta receta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: Ayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: "\xBFSeguro que quieres eliminar este registro de comida?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: Comida eliminada del registro
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

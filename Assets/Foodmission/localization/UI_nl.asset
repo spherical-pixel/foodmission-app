@@ -2957,6 +2957,26 @@ MonoBehaviour:
     m_Localized: https://...
     m_Metadata:
       m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: Recept verwijderen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: Weet u zeker dat u dit recept wilt verwijderen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: Gisteren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: Weet je zeker dat je dit maaltijdlogboek wilt verwijderen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: Maaltijdlogboek succesvol verwijderd
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
