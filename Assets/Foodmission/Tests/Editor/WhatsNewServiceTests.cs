@@ -7,6 +7,8 @@ namespace eu.foodmission.platform.Tests
     [TestFixture]
     public class WhatsNewServiceTests
     {
+        private const string NotesJson = "{\"releaseNotes\":\"English notes\",\"releaseNotes_es\":\"Spanish notes\"}";
+
         private TestLocalStorageService _localStorage;
         private IWhatsNewService _service;
 
@@ -35,16 +37,39 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task CheckShouldShowAsync_ReturnsTrueAndReleaseNotes_WhenVersionNotSeen()
+        public async Task CheckShouldShowAsync_ReturnsTrueWithNotes_WhenVersionNotSeenAndNotesExist()
         {
             _localStorage.DeleteValue("whats_new_last_seen_version");
+            _service = new WhatsNewService(_localStorage, _ => Task.FromResult(NotesJson));
 
             var (shouldShow, notes) = await _service.CheckShouldShowAsync();
 
-            // Editor has network access: downloads real JSON, returns true with release notes.
-            // On devices without network, returns (false, null) and retries next launch.
             Assert.IsTrue(shouldShow);
-            Assert.IsNotNull(notes);
+            Assert.AreEqual("English notes", notes);
+        }
+
+        [Test]
+        public async Task CheckShouldShowAsync_ReturnsFalse_WhenDownloadFails()
+        {
+            _localStorage.DeleteValue("whats_new_last_seen_version");
+            _service = new WhatsNewService(_localStorage, _ => Task.FromResult<string>(null));
+
+            var (shouldShow, notes) = await _service.CheckShouldShowAsync();
+
+            Assert.IsFalse(shouldShow);
+            Assert.IsNull(notes);
+        }
+
+        [Test]
+        public async Task CheckShouldShowAsync_ReturnsFalse_WhenNotesAreEmpty()
+        {
+            _localStorage.DeleteValue("whats_new_last_seen_version");
+            _service = new WhatsNewService(_localStorage, _ => Task.FromResult("{\"releaseNotes\":\"\"}"));
+
+            var (shouldShow, notes) = await _service.CheckShouldShowAsync();
+
+            Assert.IsFalse(shouldShow);
+            Assert.IsNull(notes);
         }
 
         [Test]
