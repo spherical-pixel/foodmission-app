@@ -722,11 +722,8 @@ namespace eu.foodmission.platform
 
         private void UpdateActionButtonsVisibility()
         {
-            // Temporarily disabled: recipe editing & deleting
-            // _btnEdit?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
-            // _btnDelete?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
-            _btnEdit?.AddToClassList("fm-rd-action--hidden");
-            _btnDelete?.AddToClassList("fm-rd-action--hidden");
+            _btnEdit?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
+            _btnDelete?.EnableInClassList("fm-rd-action--hidden", !_viewModel.IsOwner);
         }
 
         private void UpdateAddToShoppingListState()
@@ -843,7 +840,7 @@ namespace eu.foodmission.platform
         private void OnAddToShoppingListClicked() => _ = SafeAddToShoppingListAsync();
         private void OnDeleteClicked()
         {
-            FMDialog.ShowConfirm(this, "RECIPE_A_DELETE_CONFIRM_TITLE", "RECIPE_A_DELETE_CONFIRM_MSG",
+            FMDialog.ShowConfirm(this, "@UI:RECIPES_A_DELETE_CONFIRM_TITLE", "@UI:RECIPES_A_DELETE_CONFIRM_MSG",
                 () => _ = SafeDeleteAsync(), null, AlertSemantic.Destructive);
         }
 

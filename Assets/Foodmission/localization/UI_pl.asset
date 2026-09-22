@@ -2637,7 +2637,7 @@ MonoBehaviour:
     m_Localized: Instrukcje
     m_Metadata:
       m_Items: []
-  - m_Id: 47367747309395986
+  - m_Id: 48786163203301379
     m_Localized: "Utw\xF3rz przepis"
     m_Metadata:
       m_Items: []
@@ -2867,6 +2867,94 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48534335165292558
     m_Localized: Wietnamska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: "Tytu\u0142 przepisu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Np. Makaron z warzywami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Opis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: "Kr\xF3tkie wprowadzenie do przepisu..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Czas przygotowania (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Czas gotowania (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porcje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: "Trudno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: "Wybierz trudno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Kategoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: "Wybierz kategori\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Kuchnia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: "Wybierz kuchni\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: "Udost\u0119pnij przepis spo\u0142eczno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: "Nazwa sk\u0142adnika"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: "Ilo\u015B\u0107 / Miara"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Dodaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Nie dodano jeszcze \u017Cadnych sk\u0142adnik\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Instrukcje przygotowania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: "Szczeg\xF3\u0142owe kroki przygotowania dania..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: URL obrazu (opcjonalnie)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
     m_Metadata:
       m_Items: []
   references:

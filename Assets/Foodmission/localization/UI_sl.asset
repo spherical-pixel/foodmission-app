@@ -2602,7 +2602,7 @@ MonoBehaviour:
     m_Localized: Navodila
     m_Metadata:
       m_Items: []
-  - m_Id: 47367747309395986
+  - m_Id: 48786163203301379
     m_Localized: Ustvari recept
     m_Metadata:
       m_Items: []
@@ -2832,6 +2832,94 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48534335165292558
     m_Localized: Vietnamska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Naslov recepta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Npr. Testenine z zelenjavo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Opis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: Kratek uvod v recept...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: "\u010Cas priprave (min)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: "\u010Cas kuhanja (min)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porcije
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Zahtevnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: Izberite zahtevnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Kategorija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: Izberite kategorijo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Kuhinja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: Izberite kuhinjo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: Naredi recept javen za skupnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: Ime sestavine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: "Koli\u010Dina / Mera"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Dodaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Niste \u0161e dodali sestavin."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Navodila za pripravo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Podrobni koraki za pripravo jedi...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: URL slike (neobvezno)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
     m_Metadata:
       m_Items: []
   references:

@@ -15,12 +15,17 @@ namespace eu.foodmission.platform
         public string Measure;
         public string FoodProductId;
         public string GenericFoodId;
+        public float? Quantity;
+        public string Unit;
         public bool IsFreeText => string.IsNullOrEmpty(FoodProductId) && string.IsNullOrEmpty(GenericFoodId);
     }
 
     public partial class RecipeEditorViewModel : StepFlowViewModelBase
     {
         private readonly IRecipeService _recipeService;
+        private readonly IFoodProductService _foodProductService;
+        private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
+        private readonly IGenericFoodService _genericFoodService;
 
         // Step 1 — Meta
         private string m_Title = "";
@@ -56,10 +61,18 @@ namespace eu.foodmission.platform
         [ObservableProperty] private bool m_IsSaving;
         [ObservableProperty] private string m_EditingRecipeId; // null = create mode
 
-        public RecipeEditorViewModel(IStoreService storeService, IRecipeService recipeService)
+        public RecipeEditorViewModel(
+            IStoreService storeService,
+            IRecipeService recipeService,
+            IFoodProductService foodProductService,
+            IOpenFoodFactsClientService openFoodFactsClientService,
+            IGenericFoodService genericFoodService)
             : base(storeService)
         {
             _recipeService = recipeService;
+            _foodProductService = foodProductService;
+            _openFoodFactsClientService = openFoodFactsClientService;
+            _genericFoodService = genericFoodService;
             StepCount = GetStepCount();
         }
 
@@ -133,7 +146,10 @@ namespace eu.foodmission.platform
                     if (showError) ErrorDetail = null;
                     return true;
                 case 1: // Ingredients
-                    HasNoIngredientsWarning = Ingredients == null || Ingredients.Count == 0;
+                    if (showError)
+                    {
+                        HasNoIngredientsWarning = Ingredients == null || Ingredients.Count == 0;
+                    }
                     return true;
                 case 2: // Review
                     return true;
@@ -142,18 +158,21 @@ namespace eu.foodmission.platform
             }
         }
 
-        public void AddIngredientFromProduct(string foodProductId, string name, string measure = null)
+        public void AddIngredientFromProduct(string foodProductId, string name, string measure = null, float? quantity = null, string unit = null)
         {
             Ingredients.Add(new RecipeIngredientInput
             {
                 Name = name,
                 Measure = measure,
-                FoodProductId = foodProductId
+                FoodProductId = foodProductId,
+                Quantity = quantity,
+                Unit = unit
             });
+            HasNoIngredientsWarning = false;
             OnPropertyChanged(nameof(Ingredients));
         }
 
-        public void AddIngredientFromGenericFood(string genericFoodId, string name, string measure = null)
+        public void AddIngredientFromGenericFood(string genericFoodId, string name, string measure = null, float? quantity = null, string unit = null)
         {
             if (!Guid.TryParse(genericFoodId, out _))
             {
@@ -164,9 +183,22 @@ namespace eu.foodmission.platform
             {
                 Name = name,
                 Measure = measure,
-                GenericFoodId = genericFoodId
+                GenericFoodId = genericFoodId,
+                Quantity = quantity,
+                Unit = unit
             });
+            HasNoIngredientsWarning = false;
             ErrorDetail = null;
+            OnPropertyChanged(nameof(Ingredients));
+        }
+
+        public void UpdateIngredient(int index, float quantity, string unit, string measure)
+        {
+            if (index < 0 || index >= Ingredients.Count) return;
+            var item = Ingredients[index];
+            item.Quantity = quantity;
+            item.Unit = unit;
+            item.Measure = measure;
             OnPropertyChanged(nameof(Ingredients));
         }
 
@@ -182,6 +214,57 @@ namespace eu.foodmission.platform
             if (index < 0 || index >= Ingredients.Count) return;
             Ingredients.RemoveAt(index);
             OnPropertyChanged(nameof(Ingredients));
+        }
+
+        // ========= FMSearchOrCategoryField delegates =========
+
+        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
+        {
+            var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<OpenFoodFactsProduct>();
+            }
+            return products ?? new List<OpenFoodFactsProduct>();
+        }
+
+        public async Task<List<GenericFood>> GetGenericFoodsAsync()
+        {
+            var (response, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<GenericFood>();
+            }
+            return response?.items != null ? new List<GenericFood>(response.items) : new List<GenericFood>();
+        }
+
+        public async Task<List<GenericFood>> SearchGenericFoodsAsync(string query)
+        {
+            var (response, error) = await _genericFoodService.SearchGenericFoodsAsync(query, pageSize: 20);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return new List<GenericFood>();
+            }
+            return response?.items != null ? new List<GenericFood>(response.items) : new List<GenericFood>();
+        }
+
+        public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)
+        {
+            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(foodGroup: foodGroup, page: page, pageSize: pageSize);
+            if (error != null)
+            {
+                ErrorDetail = error;
+                return null;
+            }
+            return result;
+        }
+
+        public Task<(FoodProduct Result, ApiErrorResponse Error)> ImportByBarcodeAsync(string barcode)
+        {
+            return FoodProductFlow.ImportByBarcodeAsync(_foodProductService, _openFoodFactsClientService, barcode);
         }
 
         public async Task LoadForEditAsync(string recipeId)
@@ -206,7 +289,7 @@ namespace eu.foodmission.platform
                 Servings = recipe.servings > 0 ? recipe.servings : (int?)null;
                 Tags = recipe.tags ?? Array.Empty<string>();
                 DietaryLabels = recipe.dietaryLabels ?? Array.Empty<string>();
-                IsPublic = false;
+                IsPublic = recipe.isPublic ?? false;
 
                 Ingredients = recipe.ingredients?.Select(i => new RecipeIngredientInput
                 {
@@ -225,20 +308,26 @@ namespace eu.foodmission.platform
 
         public async Task SaveAsync()
         {
-            if (!ValidateStep(0)) return;
+            Debug.Log($"[RecipeEditorViewModel] SaveAsync started. Title='{Title}', EditMode={IsEditMode}, Ingredients={Ingredients.Count}");
+            if (!ValidateStep(0, true))
+            {
+                Debug.LogWarning("[RecipeEditorViewModel] SaveAsync failed Step 0 validation (Title required)");
+                return;
+            }
+
             IsSaving = true;
             ErrorDetail = null;
             try
             {
                 var req = new CreateRecipeRequest
                 {
-                    title = Title,
-                    description = string.IsNullOrEmpty(Description) ? null : Description,
-                    instructions = string.IsNullOrEmpty(Instructions) ? null : Instructions,
-                    difficulty = string.IsNullOrEmpty(Difficulty) ? null : Difficulty,
-                    category = string.IsNullOrEmpty(Category) ? null : Category,
-                    cuisineType = string.IsNullOrEmpty(CuisineType) ? null : CuisineType,
-                    imageUrl = string.IsNullOrEmpty(ImageUrl) ? null : ImageUrl,
+                    title = Title?.Trim(),
+                    description = string.IsNullOrWhiteSpace(Description) ? null : Description.Trim(),
+                    instructions = string.IsNullOrWhiteSpace(Instructions) ? null : Instructions.Trim(),
+                    difficulty = string.IsNullOrWhiteSpace(Difficulty) ? null : Difficulty.Trim(),
+                    category = string.IsNullOrWhiteSpace(Category) ? null : Category.Trim(),
+                    cuisineType = string.IsNullOrWhiteSpace(CuisineType) ? null : CuisineType.Trim(),
+                    imageUrl = string.IsNullOrWhiteSpace(ImageUrl) ? null : ImageUrl.Trim(),
                     prepTime = PrepTime,
                     cookTime = CookTime,
                     servings = Servings,
@@ -249,9 +338,9 @@ namespace eu.foodmission.platform
                         ? Ingredients.Select(i => new CreateRecipeIngredientRequest
                         {
                             name = i.Name,
-                            measure = string.IsNullOrEmpty(i.Measure) ? null : i.Measure,
-                            foodProductId = string.IsNullOrEmpty(i.FoodProductId) ? null : i.FoodProductId,
-                            genericFoodId = string.IsNullOrEmpty(i.GenericFoodId) ? null : i.GenericFoodId
+                            measure = string.IsNullOrWhiteSpace(i.Measure) ? null : i.Measure.Trim(),
+                            foodProductId = (!string.IsNullOrEmpty(i.FoodProductId) && Guid.TryParse(i.FoodProductId, out _)) ? i.FoodProductId : null,
+                            genericFoodId = (!string.IsNullOrEmpty(i.GenericFoodId) && Guid.TryParse(i.GenericFoodId, out _)) ? i.GenericFoodId : null
                         }).ToArray()
                         : null
                 };
@@ -259,16 +348,36 @@ namespace eu.foodmission.platform
                 if (IsEditMode)
                 {
                     var (updated, updateErr) = await _recipeService.UpdateRecipeAsync(EditingRecipeId, req);
-                    if (updateErr != null) { ErrorDetail = updateErr; return; }
+                    if (updateErr != null)
+                    {
+                        Debug.LogError($"[RecipeEditorViewModel] UpdateRecipeAsync error: {updateErr.message}");
+                        ErrorDetail = updateErr;
+                        return;
+                    }
+                    Debug.Log($"[RecipeEditorViewModel] Recipe updated successfully: {EditingRecipeId}");
                     RaiseNavigationRequested(Actions.recipes_to_detail,
                         new Argument("recipeId", EditingRecipeId));
                 }
                 else
                 {
                     var (created, createErr) = await _recipeService.CreateRecipeAsync(req);
-                    if (createErr != null) { ErrorDetail = createErr; return; }
-                    RaiseNavigationRequested(Actions.recipes_to_detail,
-                        new Argument("recipeId", created?.id));
+                    if (createErr != null)
+                    {
+                        Debug.LogError($"[RecipeEditorViewModel] CreateRecipeAsync error: {createErr.message}");
+                        ErrorDetail = createErr;
+                        return;
+                    }
+                    string targetId = created?.id;
+                    Debug.Log($"[RecipeEditorViewModel] Recipe created successfully: {targetId}");
+                    if (!string.IsNullOrEmpty(targetId))
+                    {
+                        RaiseNavigationRequested(Actions.recipes_to_detail,
+                            new Argument("recipeId", targetId));
+                    }
+                    else
+                    {
+                        RaiseNavigationRequested(Actions.go_to_recipes, Array.Empty<Argument>());
+                    }
                 }
             }
             catch (Exception ex)
@@ -276,7 +385,10 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[RecipeEditorViewModel] SaveAsync: {ex}");
                 ErrorDetail = new ApiErrorResponse { message = ex.Message };
             }
-            finally { IsSaving = false; }
+            finally
+            {
+                IsSaving = false;
+            }
         }
     }
 }

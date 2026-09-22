@@ -2621,7 +2621,7 @@ MonoBehaviour:
     m_Localized: Istruzioni
     m_Metadata:
       m_Items: []
-  - m_Id: 47367747309395986
+  - m_Id: 48786163203301379
     m_Localized: Crea ricetta
     m_Metadata:
       m_Items: []
@@ -2851,6 +2851,94 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48534335165292558
     m_Localized: Vietnamita
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Titolo della ricetta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Es. Pasta con verdure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Descrizione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: Breve introduzione alla ricetta...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Tempo prep. (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Tempo cottura (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porzioni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: "Difficolt\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: "Seleziona difficolt\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Categoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: Seleziona categoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Cucina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: Seleziona cucina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: Rendi la ricetta pubblica per la community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: Nome ingrediente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: "Quantit\xE0 / Misura"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Aggiungi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: Non hai ancora aggiunto ingredienti.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Istruzioni di preparazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Passaggi dettagliati per cucinare il piatto...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: URL immagine (opzionale)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
     m_Metadata:
       m_Items: []
   references:

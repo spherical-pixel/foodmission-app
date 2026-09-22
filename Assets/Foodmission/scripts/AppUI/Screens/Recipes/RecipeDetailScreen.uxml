@@ -72,12 +72,18 @@
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(21294142473625601)"/>
                 </Bindings>
             </appui:Button>
-            <!-- Temporarily disabled: recipe edit and delete
             <appui:Spacer/>
-            <appui:Button name="btn-edit" label="Edit" title="EDIT"/>
+            <appui:Button name="btn-edit" label="Edit" title="EDIT">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47367747309395987)"/>
+                </Bindings>
+            </appui:Button>
             <appui:Spacer/>
-            <appui:Button name="btn-delete" variant="Destructive" label="Delete" title="DELETE"/>
-            -->
+            <appui:Button name="btn-delete" variant="Destructive" label="Delete" title="DELETE">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000040)"/>
+                </Bindings>
+            </appui:Button>
             <appui:Spacer spacing="XL"/>
         </ui:VisualElement>
         <ui:VisualElement class="fm-bottom-nav-padding"/>

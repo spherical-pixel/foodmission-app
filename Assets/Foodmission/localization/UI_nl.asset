@@ -2637,7 +2637,7 @@ MonoBehaviour:
     m_Localized: Bereiding
     m_Metadata:
       m_Items: []
-  - m_Id: 47367747309395986
+  - m_Id: 48786163203301379
     m_Localized: Recept maken
     m_Metadata:
       m_Items: []
@@ -2867,6 +2867,94 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48534335165292558
     m_Localized: Vietnamees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Recepttitel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Bijv. Pasta met groenten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Beschrijving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: Korte inleiding tot het recept...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Bereidingstijd (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Kooktijd (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porties
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Moeilijkheidsgraad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: Selecteer moeilijkheidsgraad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Categorie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: Selecteer categorie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Keuken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: Selecteer keuken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: Maak recept openbaar voor de community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: "Ingredi\xEBntnaam"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: Hoeveelheid / Maat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Je hebt nog geen ingredi\xEBnten toegevoegd."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Bereidingsinstructies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Gedetailleerde stappen om het gerecht te bereiden...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: Afbeeldings-URL (optioneel)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
     m_Metadata:
       m_Items: []
   references:

@@ -2604,7 +2604,7 @@ MonoBehaviour:
     m_Localized: "Elaboraci\xF3n"
     m_Metadata:
       m_Items: []
-  - m_Id: 47367747309395986
+  - m_Id: 48786163203301379
     m_Localized: Crear receta
     m_Metadata:
       m_Items: []
@@ -2834,6 +2834,94 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48534335165292558
     m_Localized: Vietnamita
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: "T\xEDtulo de la receta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Ej. Pasta con verduras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: "Descripci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: "Breve introducci\xF3n de la receta..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Tiempo prep. (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: "Tiempo cocci\xF3n (min)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Raciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Dificultad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: Seleccionar dificultad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: "Categor\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: "Seleccionar categor\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Tipo de cocina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: Seleccionar cocina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: "Hacer receta p\xFAblica para la comunidad"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: Nombre del ingrediente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: Cantidad / Medida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: "A\xF1adir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "A\xFAn no has a\xF1adido ingredientes a la receta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: "Instrucciones de preparaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Pasos detallados para cocinar el plato...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: URL de imagen (opcional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
     m_Metadata:
       m_Items: []
   references:

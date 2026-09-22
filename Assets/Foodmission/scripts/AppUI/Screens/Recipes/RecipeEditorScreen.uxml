@@ -1,66 +1,77 @@
-<UXML xmlns="UnityEngine.UIElements"
-      xmlns:ui="UnityEngine.UIElements"
-      xmlns:appui="Unity.AppUI.UI"
-      xmlns:fm="eu.foodmission.platform.Components"
-      xmlns:eu="eu.foodmission.platform">
-    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss"/>
-    <Style src="project://database/Assets/Foodmission/AppUI/Styles/Components/FMStepProgressBar.uss"/>
-    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Recipes/RecipeEditorScreen.uss"/>
+<ui:UXML xmlns="UnityEngine.UIElements" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" xmlns:eu="eu.foodmission.platform" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/Styles/Components/FMStepProgressBar.uss?fileID=7433441132597879392&amp;guid=1518189b3ba134e20b5784e1b54b3039&amp;type=3#FMStepProgressBar"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Recipes/RecipeEditorScreen.uss?fileID=7433441132597879392&amp;guid=f911300dd92b14f089addbf06beda853&amp;type=3#RecipeEditorScreen"/>
     <ui:VisualElement name="back" class="fm-back-screen-transparent"/>
     <ui:VisualElement name="root" class="fm-root fm-re-root">
-        <appui:Heading name="screen-title" size="L" text="Crear Receta" class="fm-re-title"/>
         <fm:FMStepProgressBar name="step-progress-bar" step-count="3" current-step="0" class="fm-re-progress"/>
         <ui:VisualElement name="step-container" class="fm-re-step-container">
-            <!-- Step 1: Meta -->
             <ui:VisualElement name="step-1" class="fm-re-step">
                 <ui:ScrollView mode="Vertical" horizontal-scroller-visibility="Hidden" class="fm-re-step-scroll">
-                    <appui:TextField name="title-field" label="Título de la receta *" placeholder="Ej. Pasta con verduras"/>
-                    <appui:TextArea name="description-field" label="Descripción" placeholder="Breve introducción de la receta..."/>
-                    <ui:VisualElement class="fm-re-row-2col">
-                        <appui:TextField name="prep-time-field" label="Prep (min)" placeholder="15" class="fm-re-col"/>
-                        <appui:TextField name="cook-time-field" label="Cocción (min)" placeholder="20" class="fm-re-col"/>
+                    <ui:VisualElement class="fm-re-field-group">
+                        <appui:Text text="@UI:RECIPES_FIELD_TITLE" class="fm-re-field-label"/>
+                        <appui:TextField name="title-field" placeholder="@UI:RECIPES_FIELD_PLACEHOLDER" class="fm-re-input"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fm-re-field-group">
+                        <appui:Text text="@UI:RECIPES_FIELD_DESCRIPTION" class="fm-re-field-label"/>
+                        <appui:TextArea name="description-field" placeholder="@UI:RECIPES_FIELD_DESCRIPTION_HINT" class="fm-re-input" style="min-height: 200px;"/>
                     </ui:VisualElement>
                     <ui:VisualElement class="fm-re-row-2col">
-                        <appui:TextField name="servings-field" label="Raciones" placeholder="4" class="fm-re-col"/>
-                        <appui:TextField name="difficulty-field" label="Dificultad" placeholder="Fácil / Media / Difícil" class="fm-re-col"/>
+                        <ui:VisualElement class="fm-re-col fm-re-col--left">
+                            <appui:Text text="@UI:RECIPES_FIELD_PREP" class="fm-re-field-label"/>
+                            <appui:TextField name="prep-time-field" placeholder="15" class="fm-re-input"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="fm-re-col fm-re-col--right">
+                            <appui:Text text="@UI:RECIPES_FIELD_COOK" class="fm-re-field-label"/>
+                            <appui:TextField name="cook-time-field" placeholder="20" class="fm-re-input"/>
+                        </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement class="fm-re-row-2col">
-                        <appui:TextField name="category-field" label="Categoría" placeholder="Pasta, Ensalada, etc." class="fm-re-col"/>
-                        <appui:TextField name="cuisine-field" label="Tipo de cocina" placeholder="Mediterránea, Italiana..." class="fm-re-col"/>
+                        <ui:VisualElement class="fm-re-col fm-re-col--left">
+                            <appui:Text text="@UI:RECIPES_FIELD_SERVINGS" class="fm-re-field-label"/>
+                            <appui:TextField name="servings-field" placeholder="4" class="fm-re-input"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="fm-re-col fm-re-col--right">
+                            <appui:Text text="@UI:RECIPES_FIELD_DIFFICULTY" class="fm-re-field-label"/>
+                            <appui:Dropdown name="difficulty-dropdown" size="M" class="fm-re-dropdown"/>
+                        </ui:VisualElement>
                     </ui:VisualElement>
-                    <appui:Checkbox name="is-public-checkbox" label="Hacer receta pública para la comunidad"/>
+                    <ui:VisualElement class="fm-re-row-2col">
+                        <ui:VisualElement class="fm-re-col fm-re-col--left">
+                            <appui:Text text="@UI:RECIPES_FIELD_CATEGORY" class="fm-re-field-label"/>
+                            <appui:Dropdown name="category-dropdown" size="M" class="fm-re-dropdown"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="fm-re-col fm-re-col--right">
+                            <appui:Text text="@UI:RECIPES_FIELD_CUISINE" class="fm-re-field-label"/>
+                            <appui:Dropdown name="cuisine-dropdown" size="M" class="fm-re-dropdown"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <appui:Checkbox name="is-public-checkbox" label="@UI:RECIPES_FIELD_PUBLIC"/>
                 </ui:ScrollView>
             </ui:VisualElement>
-
-            <!-- Step 2: Ingredients -->
             <ui:VisualElement name="step-2" class="fm-re-step">
                 <fm:FMSearchOrCategoryField name="search-ingredients-field" skip-quantity-confirmation="true"/>
-                <ui:VisualElement name="free-text-row" class="fm-re-free-text-row">
-                    <appui:TextField name="free-text-name" placeholder="Nombre del ingrediente" class="fm-re-free-name"/>
-                    <appui:TextField name="free-text-measure" placeholder="Cantidad / Medida" class="fm-re-free-measure"/>
-                    <fm:FMButton name="btn-add-free-text" title="Añadir" variant="Accent" size="M" class="fm-re-add-btn"/>
-                </ui:VisualElement>
-                <appui:Text name="no-ingredients-warning" class="fm-re-warning" text="No has añadido ingredientes todavía."/>
-                <ui:ScrollView name="ingredients-scroll" class="fm-re-ingredients-scroll" mode="Vertical" horizontal-scroller-visibility="Hidden">
+                <appui:Text name="no-ingredients-warning" text="@UI:RECIPES_FIELD_NO_ING" class="fm-re-warning"/>
+                <ui:ScrollView name="ingredients-scroll" mode="Vertical" horizontal-scroller-visibility="Hidden" class="fm-re-ingredients-scroll">
                     <ui:VisualElement name="ingredients-container" class="fm-re-ingredients-container"/>
                 </ui:ScrollView>
             </ui:VisualElement>
-
-            <!-- Step 3: Review -->
             <ui:VisualElement name="step-3" class="fm-re-step">
                 <ui:ScrollView mode="Vertical" horizontal-scroller-visibility="Hidden" class="fm-re-step-scroll">
-                    <appui:TextArea name="instructions-field" label="Instrucciones de preparación" placeholder="Pasos detallados para cocinar el plato..."/>
-                    <appui:TextField name="image-url-field" label="URL de imagen (opcional)" placeholder="https://..."/>
+                    <ui:VisualElement class="fm-re-field-group">
+                        <appui:Text text="@UI:RECIPES_FIELD_INSTRUCTIONS" class="fm-re-field-label"/>
+                        <appui:TextArea name="instructions-field" placeholder="@UI:RECIPES_FIELD_INSTRUCTIONS_HINT" class="fm-re-input" style="min-height: 800px;"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fm-re-field-group">
+                        <appui:Text text="@UI:RECIPES_FIELD_IMAGE_URL" class="fm-re-field-label"/>
+                        <appui:TextField name="image-url-field" placeholder="@UI:RECIPES_FIELD_IMAGE_URL_HINT" class="fm-re-input"/>
+                    </ui:VisualElement>
                 </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>
-
-        <!-- Step Navigation Controls -->
         <ui:VisualElement name="step-nav-bar" class="fm-re-nav-bar">
-            <fm:FMButton name="btn-step-prev" title="Anterior" variant="Default" size="M" class="fm-re-nav-btn"/>
-            <fm:FMButton name="btn-step-next" title="Siguiente" variant="Accent" size="M" class="fm-re-nav-btn"/>
+            <fm:FMButton name="btn-step-prev" title="@UI:TXT_BACK" variant="Default" size="M" class="fm-re-nav-btn"/>
+            <fm:FMButton name="btn-step-next" title="@UI:TXT_NEXT" variant="Accent" size="M" class="fm-re-nav-btn"/>
         </ui:VisualElement>
-
-        <ui:VisualElement class="fm-bottom-nav-padding"/>
     </ui:VisualElement>
-</UXML>
+</ui:UXML>

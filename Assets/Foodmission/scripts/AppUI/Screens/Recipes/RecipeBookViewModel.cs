@@ -251,16 +251,11 @@ namespace eu.foodmission.platform
 
         private async Task LoadMyRecipesAsync()
         {
-            var search = string.IsNullOrEmpty(SearchText) ? null : SearchText;
-            var category = SelectedCategory == "all" ? null : SelectedCategory;
-            var cuisine = SelectedCuisine == "all" ? null : SelectedCuisine;
-            var difficulty = SelectedDifficulty == "all" ? null : SelectedDifficulty;
-
             var (page, err) = await _recipeService.GetMyRecipesAsync(
-                search: search,
-                category: category,
-                cuisineType: cuisine,
-                difficulty: difficulty,
+                search: null,
+                category: null,
+                cuisineType: null,
+                difficulty: null,
                 page: 1,
                 limit: 20);
 
@@ -298,10 +293,10 @@ namespace eu.foodmission.platform
                 if (CurrentTab == RecipeBookTab.MyRecipes)
                 {
                     var (page, err) = await _recipeService.GetMyRecipesAsync(
-                        search: search,
-                        category: category,
-                        cuisineType: cuisine,
-                        difficulty: difficulty,
+                        search: null,
+                        category: null,
+                        cuisineType: null,
+                        difficulty: null,
                         page: CurrentPage,
                         limit: 20);
 

@@ -21,6 +21,7 @@ namespace eu.foodmission.platform
         public string imageUrl;
         public string cuisineType;
         public string category;
+        public bool? isPublic;
         public string[] dietaryLabels;
         public string userId;
         public string createdAt;

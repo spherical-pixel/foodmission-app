@@ -2620,7 +2620,7 @@ MonoBehaviour:
     m_Localized: Zubereitung
     m_Metadata:
       m_Items: []
-  - m_Id: 47367747309395986
+  - m_Id: 48786163203301379
     m_Localized: Rezept erstellen
     m_Metadata:
       m_Items: []
@@ -2850,6 +2850,94 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48534335165292558
     m_Localized: Vietnamesisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Rezepttitel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: "Z. B. Gem\xFCse-Pasta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Beschreibung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: "Kurze Einf\xFChrung in das Rezept..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Vorbereitungszeit (Min.)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Kochzeit (Min.)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Portionen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Schwierigkeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: "Schwierigkeit w\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Kategorie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: "Kategorie w\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: "K\xFCche"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: "K\xFCche w\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: "Rezept f\xFCr die Community \xF6ffentlich machen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: Name der Zutat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: "Menge / Ma\xDF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: "Hinzuf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Du hast noch keine Zutaten hinzugef\xFCgt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Zubereitungsanweisungen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Detaillierte Schritte zur Zubereitung des Gerichts...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: Bild-URL (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
     m_Metadata:
       m_Items: []
   references:

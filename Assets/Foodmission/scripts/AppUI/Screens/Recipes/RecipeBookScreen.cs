@@ -47,7 +47,6 @@ namespace eu.foodmission.platform
         private ScrollView _scrollView;
         private VisualElement _viewForYou;
         private VisualElement _foryouEmptyPantry;
-        private FMNutriView _nutriAvatar;
         private FMButton _btnGoToPantry;
         private VisualElement _foryouContent;
         private VisualElement _recommendationsContainer;
@@ -102,7 +101,6 @@ namespace eu.foodmission.platform
             _scrollView = contentContainer.Q<ScrollView>("scroll-view");
             _viewForYou = contentContainer.Q<VisualElement>("view-for-you");
             _foryouEmptyPantry = contentContainer.Q<VisualElement>("foryou-empty-pantry");
-            _nutriAvatar = contentContainer.Q<FMNutriView>("nutri-avatar");
             _btnGoToPantry = contentContainer.Q<FMButton>("btn-go-to-pantry");
             _foryouContent = contentContainer.Q<VisualElement>("foryou-content");
             _recommendationsContainer = contentContainer.Q<VisualElement>("recommendations-container");
@@ -198,6 +196,35 @@ namespace eu.foodmission.platform
             };
         }
 
+        private void ApplyLocalizedLabels()
+        {
+            string createLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_CREATE_BTN");
+            if (_btnCreateRecipe != null && !string.IsNullOrEmpty(createLabel))
+                _btnCreateRecipe.title = createLabel;
+            if (_btnCreateFirstRecipe != null && !string.IsNullOrEmpty(createLabel))
+                _btnCreateFirstRecipe.title = createLabel;
+
+            if (_btnTabMyRecipes != null)
+            {
+                string tabLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_TAB_MY_RECIPES");
+                if (!string.IsNullOrEmpty(tabLabel)) _btnTabMyRecipes.label = tabLabel;
+            }
+
+            var emptyTitle = contentContainer.Q<Unity.AppUI.UI.Heading>("my-recipes-empty-title");
+            if (emptyTitle != null)
+            {
+                string t = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_EMPTY_MY_RECIPES_TITLE");
+                if (!string.IsNullOrEmpty(t)) emptyTitle.text = t;
+            }
+
+            var emptyDesc = contentContainer.Q<Text>("my-recipes-empty-desc");
+            if (emptyDesc != null)
+            {
+                string d = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPES_EMPTY_MY_RECIPES_DESC");
+                if (!string.IsNullOrEmpty(d)) emptyDesc.text = d;
+            }
+        }
+
         private void OnCuisineDropdownChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             var value = evt.newValue?.ToArray();
@@ -224,6 +251,8 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
 
+            ApplyLocalizedLabels();
+
             if (_scrollView != null && _scrollView.verticalScroller != null)
             {
                 _scrollView.verticalScroller.valueChanged += OnScrollValueChanged;
@@ -239,18 +268,17 @@ namespace eu.foodmission.platform
                 _cuisineDropdown.RegisterValueChangedCallback(OnCuisineDropdownChanged);
             }
 
-            // Temporarily disabled: recipe creation & My Recipes tab
-            // if (_btnCreateRecipe != null)
-            //     _btnCreateRecipe.clicked += () => _viewModel?.OpenCreateRecipe();
-            // if (_btnCreateFirstRecipe != null)
-            //     _btnCreateFirstRecipe.clicked += () => _viewModel?.OpenCreateRecipe();
+            if (_btnCreateRecipe != null)
+                _btnCreateRecipe.clicked += () => _viewModel?.OpenCreateRecipe();
+            if (_btnCreateFirstRecipe != null)
+                _btnCreateFirstRecipe.clicked += () => _viewModel?.OpenCreateRecipe();
 
             if (_btnGoToPantry != null)
                 _btnGoToPantry.clicked += () => _viewModel?.GoToPantry();
 
             if (_btnTabForYou != null) _btnTabForYou.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.ForYou);
             if (_btnTabExplore != null) _btnTabExplore.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.Explore);
-            // if (_btnTabMyRecipes != null) _btnTabMyRecipes.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.MyRecipes);
+            if (_btnTabMyRecipes != null) _btnTabMyRecipes.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.MyRecipes);
 
             if (_btnDiffAll != null) _btnDiffAll.clicked += () => _ = _viewModel?.SetDifficultyAsync("all");
             if (_btnDiffEasy != null) _btnDiffEasy.clicked += () => _ = _viewModel?.SetDifficultyAsync("easy");
@@ -340,6 +368,7 @@ namespace eu.foodmission.platform
             int tabIdx = _viewModel.CurrentTab switch
             {
                 RecipeBookTab.Explore => 1,
+                RecipeBookTab.MyRecipes => 2,
                 _ => 0
             };
             _recipesTabs?.SetSelectionWithoutNotify(new[] { tabIdx });
@@ -360,11 +389,11 @@ namespace eu.foodmission.platform
                 _viewExplore.style.display = _viewModel.CurrentTab == RecipeBookTab.Explore ? DisplayStyle.Flex : DisplayStyle.None;
 
             if (_viewMyRecipes != null)
-                _viewMyRecipes.style.display = DisplayStyle.None;
+                _viewMyRecipes.style.display = _viewModel.CurrentTab == RecipeBookTab.MyRecipes ? DisplayStyle.Flex : DisplayStyle.None;
 
-            // Search and filter row are visible on Explore (hidden on For You)
+            // Search and filter row are visible on Explore only
             if (_filterSection != null)
-                _filterSection.style.display = _viewModel.CurrentTab == RecipeBookTab.ForYou ? DisplayStyle.None : DisplayStyle.Flex;
+                _filterSection.style.display = _viewModel.CurrentTab == RecipeBookTab.Explore ? DisplayStyle.Flex : DisplayStyle.None;
 
             RebuildCurrentTabView();
         }
@@ -468,7 +497,7 @@ namespace eu.foodmission.platform
         {
             var captured = recipeView;
             var r = captured.Item;
-            var authorStr = !string.IsNullOrEmpty(r?.userId) ? $"by User_{r.userId.Substring(0, Math.Min(6, r.userId.Length))}" : "";
+            //var authorStr = !string.IsNullOrEmpty(r?.userId) ? $"by User_{r.userId.Substring(0, Math.Min(6, r.userId.Length))}" : "";
 
             var ratingCount = r?.ratingCount ?? 0;
             var ratingVal = r?.rating ?? 0f;
@@ -519,7 +548,7 @@ namespace eu.foodmission.platform
             var card = new FMItemRecipe
             {
                 Text = captured.DisplayTitle,
-                Author = authorStr,
+                //Author = authorStr,
                 RatingText = ratingStr,
                 ImageUrl = r?.imageUrl,
                 Emoji = captured.PlaceholderEmoji ?? "🍲",

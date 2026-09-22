@@ -187,6 +187,28 @@ namespace eu.foodmission.platform.Components
                     var labelText = i < Labels.Length ? Labels[i] : "";
                     var label = new Unity.AppUI.UI.Text { text = labelText };
                     label.AddToClassList("fm-step-progress__label");
+
+                    if (_stepCount <= 1)
+                    {
+                        label.AddToClassList("fm-step-progress__label--middle");
+                        label.style.unityTextAlign = TextAnchor.UpperCenter;
+                    }
+                    else if (i == 0)
+                    {
+                        label.AddToClassList("fm-step-progress__label--first");
+                        label.style.unityTextAlign = TextAnchor.UpperLeft;
+                    }
+                    else if (i == _stepCount - 1)
+                    {
+                        label.AddToClassList("fm-step-progress__label--last");
+                        label.style.unityTextAlign = TextAnchor.UpperRight;
+                    }
+                    else
+                    {
+                        label.AddToClassList("fm-step-progress__label--middle");
+                        label.style.unityTextAlign = TextAnchor.UpperCenter;
+                    }
+
                     labelsRow.Add(label);
                 }
                 _container.Add(labelsRow);

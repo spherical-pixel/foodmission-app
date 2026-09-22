@@ -12,6 +12,9 @@ namespace eu.foodmission.platform.Tests
     {
         private TestStoreService _storeService;
         private Mock<IRecipeService> _mockRecipeService;
+        private Mock<IFoodProductService> _mockFoodProductService;
+        private Mock<IOpenFoodFactsClientService> _mockOffClientService;
+        private Mock<IGenericFoodService> _mockGenericFoodService;
         private RecipeEditorViewModel _viewModel;
 
         [SetUp]
@@ -19,7 +22,15 @@ namespace eu.foodmission.platform.Tests
         {
             _storeService = new TestStoreService();
             _mockRecipeService = new Mock<IRecipeService>();
-            _viewModel = new RecipeEditorViewModel(_storeService, _mockRecipeService.Object);
+            _mockFoodProductService = new Mock<IFoodProductService>();
+            _mockOffClientService = new Mock<IOpenFoodFactsClientService>();
+            _mockGenericFoodService = new Mock<IGenericFoodService>();
+            _viewModel = new RecipeEditorViewModel(
+                _storeService,
+                _mockRecipeService.Object,
+                _mockFoodProductService.Object,
+                _mockOffClientService.Object,
+                _mockGenericFoodService.Object);
             FoodProductFlow.UseDirectClientOverride = () => false;
         }
 
@@ -75,6 +86,25 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ValidateStep_Step1_EmptyIngredients_AndShowErrorFalse_DoesNotSetWarning()
+        {
+            _viewModel.Ingredients.Clear();
+            Assert.IsTrue(_viewModel.TestValidateStep(1, showError: false));
+            Assert.IsFalse(_viewModel.HasNoIngredientsWarning);
+        }
+
+        [Test]
+        public void AddFreeTextIngredient_ClearsHasNoIngredientsWarning()
+        {
+            _viewModel.Ingredients.Clear();
+            _viewModel.TestValidateStep(1, showError: true);
+            Assert.IsTrue(_viewModel.HasNoIngredientsWarning);
+
+            _viewModel.AddFreeTextIngredient("Olive Oil", "1 tbsp");
+            Assert.IsFalse(_viewModel.HasNoIngredientsWarning);
+        }
+
+        [Test]
         public void AddFreeTextIngredient_AddsToIngredientsList()
         {
             _viewModel.AddFreeTextIngredient("Salt", "1 tsp");
@@ -97,6 +127,48 @@ namespace eu.foodmission.platform.Tests
         {
             _viewModel.AddIngredientFromGenericFood("550e8400-e29b-41d4-a716-446655440000", "Salt", "1 tsp");
             Assert.AreEqual(1, _viewModel.Ingredients.Count);
+        }
+
+        [Test]
+        public void AddIngredientFromProduct_WithQuantityAndUnit_StoresValues()
+        {
+            _viewModel.AddIngredientFromProduct("prod-1", "Tomato", "2 PIECES", 2f, "PIECES");
+            Assert.AreEqual(1, _viewModel.Ingredients.Count);
+            Assert.AreEqual("Tomato", _viewModel.Ingredients[0].Name);
+            Assert.AreEqual("2 PIECES", _viewModel.Ingredients[0].Measure);
+            Assert.AreEqual(2f, _viewModel.Ingredients[0].Quantity);
+            Assert.AreEqual("PIECES", _viewModel.Ingredients[0].Unit);
+            Assert.AreEqual("prod-1", _viewModel.Ingredients[0].FoodProductId);
+        }
+
+        [Test]
+        public void UpdateIngredient_ModifiesExistingIngredient()
+        {
+            _viewModel.AddIngredientFromGenericFood("550e8400-e29b-41d4-a716-446655440000", "Olive Oil", "10 ml", 10f, "ML");
+            _viewModel.UpdateIngredient(0, 20f, "ML", "20 ml");
+
+            Assert.AreEqual(1, _viewModel.Ingredients.Count);
+            Assert.AreEqual(20f, _viewModel.Ingredients[0].Quantity);
+            Assert.AreEqual("ML", _viewModel.Ingredients[0].Unit);
+            Assert.AreEqual("20 ml", _viewModel.Ingredients[0].Measure);
+        }
+
+        [Test]
+        public async Task SearchByFoodGroupAsync_CallsGenericFoodService()
+        {
+            var expectedResponse = new PaginatedGenericFoodResponse
+            {
+                items = new[] { new GenericFood { id = "1", foodName = "Apple" } }
+            };
+            _mockGenericFoodService
+                .Setup(s => s.SearchGenericFoodsAsync(null, "fruits", 1, 20))
+                .ReturnsAsync((expectedResponse, null));
+
+            var result = await _viewModel.SearchByFoodGroupAsync("fruits", 1, 20);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.items.Length);
+            Assert.AreEqual("Apple", result.items[0].foodName);
         }
 
         [Test]

@@ -1,7 +1,7 @@
 .fm-re-root {
     flex-grow: 1;
     flex-direction: column;
-    padding: 16px;
+    
 }
 
 .fm-re-title {
@@ -18,12 +18,14 @@
 
 .fm-re-step-container {
     flex-grow: 1;
+    flex-shrink: 1;
+    height: 100%;
 }
 
 .fm-re-step {
-    padding: 8px 4px;
     flex-direction: column;
     flex-grow: 1;
+    height: 100%;
 }
 
 .fm-re-step-scroll {
@@ -36,38 +38,47 @@
 
 .fm-re-row-2col {
     flex-direction: row;
-    column-gap: 8px;
     margin-bottom: 14px;
+    width: 100%;
+}
+
+.fm-re-field-group {
+    flex-direction: column;
+    width: 100%;
+}
+
+.fm-re-field-label {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-100);
+    -unity-font-style: bold;
+    margin-bottom: 6px;
+}
+
+.fm-re-input {
+    width: 100%;
+}
+
+.fm-re-dropdown {
+    width: 100%;
+    min-height: 40px;
 }
 
 .fm-re-col {
     flex-grow: 1;
     flex-basis: 0;
+    flex-direction: column;
 }
 
-.fm-re-free-text-row {
-    flex-direction: row;
-    margin-bottom: 14px;
-    align-items: flex-end;
+.fm-re-col--left {
+    margin-right: 6px;
 }
 
-.fm-re-free-name {
-    flex-grow: 2;
-    margin-right: 8px;
-}
-
-.fm-re-free-measure {
-    flex-grow: 1;
-    margin-right: 8px;
-}
-
-.fm-re-add-btn {
-    border-radius: 12px;
-    min-height: 40px;
+.fm-re-col--right {
+    margin-left: 6px;
 }
 
 .fm-re-warning {
-    color: #f59e0b;
+    color: var(--appui-warning-100, #f59e0b);
     font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: bold;
     margin-bottom: 12px;
@@ -80,27 +91,7 @@
 
 .fm-re-ingredients-container {
     flex-direction: column;
-}
-
-.fm-re-ingredient-row {
-    flex-direction: row;
-    min-height: 48px;
-    padding: 10px 14px;
-    border-radius: 14px;
-    background-color: var(--appui-backgrounds-200);
-    margin-bottom: 8px;
-    align-items: center;
-}
-
-.fm-re-ingredient-name {
-    flex-grow: 1;
-    font-size: var(--appui-font-sizes-body-md);
-    color: var(--appui-foregrounds-100);
-}
-
-.fm-re-ingredient-remove {
-    min-height: 40px;
-    min-width: 40px;
+    width: 100%;
 }
 
 /* Nav Controls */
@@ -109,8 +100,8 @@
     justify-content: space-between;
     margin-top: 12px;
     margin-bottom: 8px;
-    column-gap: 8px;
     flex-shrink: 0;
+    width: 100%;
 }
 
 .fm-re-nav-btn {
@@ -118,6 +109,10 @@
     border-radius: 16px;
 }
 
-.fm-re-root .fm-bottom-nav-padding {
-    height: 110px;
+.fm-re-nav-btn--prev {
+    margin-right: 6px;
+}
+
+.fm-re-nav-btn--next {
+    margin-left: 6px;
 }

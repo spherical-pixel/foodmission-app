@@ -2531,10 +2531,6 @@ MonoBehaviour:
     m_Key: RECIPES_STEP_INSTRUCTIONS
     m_Metadata:
       m_Items: []
-  - m_Id: 47367747309395986
-    m_Key: RECIPES_CREATE_TITLE
-    m_Metadata:
-      m_Items: []
   - m_Id: 47367747309395987
     m_Key: RECIPES_EDIT_TITLE
     m_Metadata:
@@ -2761,6 +2757,98 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48534335165292558
     m_Key: RECIPES_CUISINE_VIETNAMESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Key: RECIPES_FIELD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Key: RECIPES_FIELD_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Key: RECIPES_FIELD_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Key: RECIPES_FIELD_DESCRIPTION_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Key: RECIPES_FIELD_PREP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Key: RECIPES_FIELD_COOK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Key: RECIPES_FIELD_SERVINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Key: RECIPES_FIELD_DIFFICULTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Key: RECIPES_FIELD_DIFFICULTY_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Key: RECIPES_FIELD_CATEGORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Key: RECIPES_FIELD_CATEGORY_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Key: RECIPES_FIELD_CUISINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Key: RECIPES_FIELD_CUISINE_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Key: RECIPES_FIELD_PUBLIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Key: RECIPES_FIELD_ING_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Key: RECIPES_FIELD_ING_MEASURE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Key: RECIPES_FIELD_ADD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Key: RECIPES_FIELD_NO_ING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Key: RECIPES_FIELD_INSTRUCTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Key: RECIPES_FIELD_INSTRUCTIONS_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Key: RECIPES_FIELD_IMAGE_URL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Key: RECIPES_FIELD_IMAGE_URL_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301379
+    m_Key: RECIPES_CREATE_TITLE
     m_Metadata:
       m_Items: []
   m_Metadata:
