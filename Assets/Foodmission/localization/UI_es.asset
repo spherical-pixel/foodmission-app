@@ -2944,6 +2944,26 @@ MonoBehaviour:
     m_Localized: Comida eliminada del registro
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Editando comida: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Editando comida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Guardar cambios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: "Cancelar edici\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: Comida actualizada correctamente
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

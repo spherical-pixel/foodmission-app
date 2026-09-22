@@ -2942,6 +2942,26 @@ MonoBehaviour:
     m_Localized: "Vnos obroka uspe\u0161no izbrisan"
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Urejanje obroka: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Urejanje obroka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Shrani spremembe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: "Prekli\u010Di urejanje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: "Obrok uspe\u0161no posodobljen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

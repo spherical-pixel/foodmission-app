@@ -114,6 +114,35 @@ namespace eu.foodmission.platform
             return (JsonConvert.DeserializeObject<MealLog>(request.downloadHandler.text), null);
         }
 
+        public async Task<(MealLog Result, ApiErrorResponse Error)> UpdateLogAsync(string id, UpdateMealLogRequest request)
+        {
+            if (string.IsNullOrEmpty(id) || request == null) return (null, null);
+
+            byte[] body = request.ToJsonBody();
+            string url = $"{ApiConfig.BaseUrl}/api/v1/meal-logs/{Uri.EscapeDataString(id)}";
+            Debug.Log($"[{GetType().Name}] UpdateLogAsync calling: {url} body={Encoding.UTF8.GetString(body)}");
+
+            using UnityWebRequest req = new UnityWebRequest(url, "PATCH")
+            {
+                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                downloadHandler = new DownloadHandlerBuffer()
+            };
+            req.SetRequestHeader("Authorization", AuthHeader);
+            req.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = req.SendWebRequest();
+            while (!op.isDone) await Task.Yield();
+
+            if (req.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] UpdateLogAsync {id}"));
+            }
+
+            string raw = req.downloadHandler.text;
+            Debug.Log($"[{GetType().Name}] UpdateLogAsync response: {raw}");
+            return (JsonConvert.DeserializeObject<MealLog>(raw), null);
+        }
+
         public async Task<(bool Success, ApiErrorResponse Error)> DeleteLogAsync(string id)
         {
             if (string.IsNullOrEmpty(id)) return (false, null);

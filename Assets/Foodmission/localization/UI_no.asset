@@ -2945,6 +2945,26 @@ MonoBehaviour:
     m_Localized: "M\xE5ltidslogg ble slettet"
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: "Redigerer m\xE5ltid: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: "Redigerer m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Lagre endringer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Avbryt redigering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: "M\xE5ltid ble oppdatert"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

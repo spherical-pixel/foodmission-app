@@ -2939,6 +2939,26 @@ MonoBehaviour:
     m_Localized: Meal log deleted successfully
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Editing meal: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Editing meal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Save changes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Cancel edit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: Meal updated successfully
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

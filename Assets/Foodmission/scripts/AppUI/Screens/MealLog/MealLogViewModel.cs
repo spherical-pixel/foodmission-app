@@ -84,6 +84,10 @@ namespace eu.foodmission.platform
 
         [ObservableProperty] private bool m_IsSearchingPresets;
 
+        [ObservableProperty] private bool m_IsEditing;
+
+        [ObservableProperty] private MealLog m_EditingMealLog;
+
         public MealLogViewModel(
             IStoreService storeService,
             IMealLogService mealLogService,
@@ -434,44 +438,56 @@ namespace eu.foodmission.platform
 
             IsSearchingPresets = true;
 
-            string trimmed = query?.Trim() ?? "";
-            Task<(PaginatedMealResponse, ApiErrorResponse)> mealsTask = _mealService.GetMealsAsync(search: trimmed, limit: 10);
-            Task<(PaginatedRecipeResponse, ApiErrorResponse)> recipesTask = _recipeService.GetRecipesAsync(search: trimmed, limit: 10);
-
-            await recipesTask;
-            await mealsTask;
-
-            if (ct.IsCancellationRequested) return;
-
-            var (recipesResp, recipesErr) = recipesTask.Result;
-            var (mealsResp, mealsErr) = mealsTask.Result;
-
-            var results = new List<Meal>();
-
-
-
-            if (mealsErr == null && mealsResp?.data != null)
+            try
             {
-                foreach (Meal m in mealsResp.data)
-                    results.Add(m);
-            }
+                string trimmed = query?.Trim() ?? "";
+                Task<(PaginatedMealResponse, ApiErrorResponse)> mealsTask = _mealService.GetMealsAsync(search: trimmed, limit: 50);
+                Task<(PaginatedRecipeResponse, ApiErrorResponse)> recipesTask = _recipeService.GetRecipesAsync(search: trimmed, limit: 50);
 
-            if (recipesErr == null && recipesResp?.data != null)
-            {
-                foreach (Recipe r in recipesResp.data)
+                await recipesTask;
+                await mealsTask;
+
+                if (ct.IsCancellationRequested) return;
+
+                var (recipesResp, recipesErr) = recipesTask.Result;
+                var (mealsResp, mealsErr) = mealsTask.Result;
+
+                var results = new List<Meal>();
+
+                if (mealsErr == null && mealsResp?.data != null)
                 {
-                    results.Add(new Meal
+                    foreach (Meal m in mealsResp.data)
                     {
-                        id = r.id,
-                        name = r.title,
-                        recipeId = r.id,
-                        isRecipe = true,
-                    });
+                        if (!string.IsNullOrWhiteSpace(m.name))
+                        {
+                            results.Add(m);
+                        }
+                    }
                 }
-            }
 
-            PresetResults = results;
-            IsSearchingPresets = false;
+                if (recipesErr == null && recipesResp?.data != null)
+                {
+                    foreach (Recipe r in recipesResp.data)
+                    {
+                        if (!string.IsNullOrWhiteSpace(r.title))
+                        {
+                            results.Add(new Meal
+                            {
+                                id = r.id,
+                                name = r.title,
+                                recipeId = r.id,
+                                isRecipe = true,
+                            });
+                        }
+                    }
+                }
+
+                PresetResults = results;
+            }
+            finally
+            {
+                IsSearchingPresets = false;
+            }
         }
 
         // ========= FMSearchOrCategoryField delegates =========
@@ -617,6 +633,11 @@ namespace eu.foodmission.platform
 
         public async Task<bool> SaveAsync()
         {
+            if (IsEditing)
+            {
+                return await SaveEditAsync();
+            }
+
             if (TypeOfMealOptions == null || TypeOfMealOptions.Length == 0)
             {
                 string lang = _storeService.GetAppState()?.lang ?? "en";
@@ -791,95 +812,194 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<bool> ConfirmUpdateAndSaveAsync()
+        private async Task<bool> DiffAndUpdateMealItemsAsync(string mealId)
         {
-            if (SelectedMealPreset == null)
-                return false;
+            var itemsToDelete = _originalItemsSnapshot
+                .Where(snap => !SelectedItems.Any(current =>
+                    (current.isProduct && current.foodProductId == snap.foodProductId) ||
+                    (current.isGenericFood && current.genericFoodId == snap.genericFoodId)))
+                .ToList();
 
-            IsSaving = true;
-            ErrorMessage = "";
-            string timestamp = DateTime.UtcNow.ToString("o");
-
-            try
+            foreach (MealLogItem item in itemsToDelete)
             {
-                string mealId = SelectedMealPreset.id;
-
-                var itemsToDelete = _originalItemsSnapshot
-                    .Where(snap => !SelectedItems.Any(current =>
-                        (current.isProduct && current.foodProductId == snap.foodProductId) ||
-                        (current.isGenericFood && current.genericFoodId == snap.genericFoodId)))
-                    .ToList();
-
-                foreach (MealLogItem item in itemsToDelete)
+                if (string.IsNullOrEmpty(item.id)) continue;
+                var (_, delErr) = await _mealItemService.DeleteAsync(mealId, item.id);
+                if (delErr != null)
                 {
-                    if (string.IsNullOrEmpty(item.id)) continue;
-                    var (_, delErr) = await _mealItemService.DeleteAsync(mealId, item.id);
-                    if (delErr != null)
+                    ErrorDetail = delErr;
+                    return false;
+                }
+            }
+
+            foreach (MealLogItem current in SelectedItems)
+            {
+                MealLogItem snap = _originalItemsSnapshot.FirstOrDefault(s =>
+                    (s.isProduct && s.foodProductId == current.foodProductId) ||
+                    (s.isGenericFood && s.genericFoodId == current.genericFoodId));
+
+                var req = new CreateMealItemRequest
+                {
+                    quantity = current.quantity.HasValue ? (int?)Math.Max(1, (int)current.quantity.Value) : null,
+                    unit = !string.IsNullOrEmpty(current.unit) ? current.unit : null,
+                };
+                if (current.isProduct && !string.IsNullOrEmpty(current.foodProductId))
+                    req.foodProductId = current.foodProductId;
+                else if (current.isGenericFood && !string.IsNullOrEmpty(current.genericFoodId))
+                    req.genericFoodId = current.genericFoodId;
+                else
+                    continue;
+
+                if (snap == null)
+                {
+                    var (_, createErr) = await _mealItemService.CreateAsync(mealId, req);
+                    if (createErr != null)
                     {
-                        ErrorDetail = delErr;
-                        IsSaving = false;
+                        ErrorDetail = createErr;
                         return false;
                     }
                 }
-
-                foreach (MealLogItem current in SelectedItems)
+                else
                 {
-                    MealLogItem snap = _originalItemsSnapshot.FirstOrDefault(s =>
-                        (s.isProduct && s.foodProductId == current.foodProductId) ||
-                        (s.isGenericFood && s.genericFoodId == current.genericFoodId));
-
-                    var req = new CreateMealItemRequest
+                    bool qtyChanged = (!current.quantity.HasValue && snap.quantity.HasValue) ||
+                                      (current.quantity.HasValue && !snap.quantity.HasValue) ||
+                                      (current.quantity.HasValue && snap.quantity.HasValue && Math.Abs(current.quantity.Value - snap.quantity.Value) > 0.001f);
+                    if (qtyChanged || current.unit != snap.unit)
                     {
-                        quantity = current.quantity.HasValue ? (int?)Math.Max(1, (int)current.quantity.Value) : null,
-                        unit = !string.IsNullOrEmpty(current.unit) ? current.unit : null,
-                    };
-                    if (current.isProduct && !string.IsNullOrEmpty(current.foodProductId))
-                        req.foodProductId = current.foodProductId;
-                    else if (current.isGenericFood && !string.IsNullOrEmpty(current.genericFoodId))
-                        req.genericFoodId = current.genericFoodId;
-                    else
-                        continue;
-
-                    if (snap == null)
-                    {
-                        var (_, createErr) = await _mealItemService.CreateAsync(mealId, req);
-                        if (createErr != null)
+                        if (string.IsNullOrEmpty(snap.id)) continue;
+                        var (_, updateErr) = await _mealItemService.UpdateAsync(mealId, snap.id, req);
+                        if (updateErr != null)
                         {
-                            ErrorDetail = createErr;
+                            ErrorDetail = updateErr;
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private async Task<bool> SaveEditAsync()
+        {
+            if (EditingMealLog == null) return false;
+
+            if (TypeOfMealOptions == null || TypeOfMealOptions.Length == 0)
+            {
+                string lang = _storeService.GetAppState()?.lang ?? "en";
+                var (types, typeErr) = await _catalogService.GetTypeOfMealsAsync(lang);
+                if (typeErr == null && types != null)
+                {
+                    TypeOfMealOptions = types;
+                }
+            }
+
+            if (SelectedTypeOfMealIndex >= 0 && TypeOfMealOptions != null && TypeOfMealOptions.Length > 0)
+            {
+                if (SelectedTypeOfMealIndex >= TypeOfMealOptions.Length)
+                {
+                    SelectedTypeOfMealIndex = 0;
+                }
+            }
+
+            if (SelectedTypeOfMealIndex < 0 || SelectedTypeOfMeal == null)
+            {
+                ErrorMessage = "@UI:SELECT_MEAL_TYPE";
+                return false;
+            }
+
+            if (SelectedItems == null || SelectedItems.Count == 0)
+            {
+                ErrorMessage = "@UI:ERROR_NO_ITEMS_SELECTED";
+                return false;
+            }
+
+            IsSaving = true;
+            ErrorMessage = "";
+
+            try
+            {
+                string mealId = EditingMealLog.meal?.id ?? EditingMealLog.mealId;
+                bool hasPreset = SelectedMealPreset != null;
+                bool hasModifications = HasModifications();
+                string trimmedName = MealContainerName?.Trim() ?? "";
+
+                // Preset protection: if it was a recipe or preset with a name, and ingredients were modified, and the user hasn't given it a new name:
+                if (hasPreset && hasModifications && (SelectedMealPreset.isRecipe || !string.IsNullOrWhiteSpace(SelectedMealPreset.name)) && trimmedName == SelectedMealPreset.name)
+                {
+                    _pendingPresetName = SelectedMealPreset.name;
+                    IsSaving = false;
+                    OnConfirmUpdateRequired?.Invoke(SelectedMealPreset.name);
+                    return false;
+                }
+
+                // If user renamed it (save as a separate meal template for this log)
+                if (hasPreset && hasModifications && trimmedName != SelectedMealPreset.name)
+                {
+                    var (created, err) = await _mealService.CreateMealAsync(new CreateMealRequest
+                    {
+                        name = trimmedName
+                    });
+                    if (err != null)
+                    {
+                        ErrorDetail = err;
+                        IsSaving = false;
+                        return false;
+                    }
+
+                    mealId = created.id;
+                    foreach (MealLogItem entry in SelectedItems)
+                    {
+                        var req = new CreateMealItemRequest
+                        {
+                            quantity = entry.quantity.HasValue ? (int?)Math.Max(1, (int)entry.quantity.Value) : null,
+                            unit = !string.IsNullOrEmpty(entry.unit) ? entry.unit : null,
+                        };
+                        if (entry.isProduct && !string.IsNullOrEmpty(entry.foodProductId))
+                            req.foodProductId = entry.foodProductId;
+                        else if (entry.isGenericFood && !string.IsNullOrEmpty(entry.genericFoodId))
+                            req.genericFoodId = entry.genericFoodId;
+                        else
+                            continue;
+
+                        var (_, itemErr) = await _mealItemService.CreateAsync(mealId, req);
+                        if (itemErr != null)
+                        {
+                            ErrorDetail = itemErr;
                             IsSaving = false;
                             return false;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    // Update existing meal items in place via diffing
+                    if (!string.IsNullOrEmpty(mealId))
                     {
-                        bool qtyChanged = (!current.quantity.HasValue && snap.quantity.HasValue) ||
-                                          (current.quantity.HasValue && !snap.quantity.HasValue) ||
-                                          (current.quantity.HasValue && snap.quantity.HasValue && Math.Abs(current.quantity.Value - snap.quantity.Value) > 0.001f);
-                        if (qtyChanged || current.unit != snap.unit)
+                        bool diffOk = await DiffAndUpdateMealItemsAsync(mealId);
+                        if (!diffOk)
                         {
-                            if (string.IsNullOrEmpty(snap.id)) continue;
-                            var (_, updateErr) = await _mealItemService.UpdateAsync(mealId, snap.id, req);
-                            if (updateErr != null)
-                            {
-                                ErrorDetail = updateErr;
-                                IsSaving = false;
-                                return false;
-                            }
+                            IsSaving = false;
+                            return false;
+                        }
+
+                        // Also update meal name if changed
+                        if (EditingMealLog.meal != null && trimmedName != (EditingMealLog.meal.name ?? ""))
+                        {
+                            await _mealService.UpdateMealAsync(mealId, new UpdateMealRequest { name = trimmedName });
                         }
                     }
-
                 }
 
-                var logRequest = new CreateMealLogRequest
+                // Update the meal log entry itself
+                var updateLogRequest = new UpdateMealLogRequest
                 {
                     mealId = mealId,
                     typeOfMeal = SelectedTypeOfMeal.code,
-                    timestamp = timestamp,
                     mealFromPantry = MealFromPantry,
                     eatenOut = EatenOut
                 };
 
-                var (_, logErr) = await _mealLogService.CreateAsync(logRequest);
+                var (updatedLog, logErr) = await _mealLogService.UpdateLogAsync(EditingMealLog.id, updateLogRequest);
                 if (logErr != null)
                 {
                     ErrorDetail = logErr;
@@ -895,6 +1015,98 @@ namespace eu.foodmission.platform
 
                 _pendingPresetName = null;
                 ErrorDetail = null;
+                IsEditing = false;
+                EditingMealLog = null;
+                SelectedItems = new List<MealLogItem>();
+                _originalItemsSnapshot = new List<MealLogItem>();
+                ResetToStep1();
+                await LoadTodayAsync();
+                IsSaving = false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SaveEditAsync failed: {ex.Message}");
+                ErrorMessage = "Unexpected error updating meal log";
+                IsSaving = false;
+                return false;
+            }
+        }
+
+        public async Task<bool> ConfirmUpdateAndSaveAsync()
+        {
+            if (SelectedMealPreset == null)
+                return false;
+
+            IsSaving = true;
+            ErrorMessage = "";
+            string timestamp = DateTime.UtcNow.ToString("o");
+
+            try
+            {
+                string mealId = SelectedMealPreset.id;
+
+                bool diffOk = await DiffAndUpdateMealItemsAsync(mealId);
+                if (!diffOk)
+                {
+                    IsSaving = false;
+                    return false;
+                }
+
+                if (IsEditing && EditingMealLog != null)
+                {
+                    string trimmedName = MealContainerName?.Trim() ?? "";
+                    if (EditingMealLog.meal != null && trimmedName != (EditingMealLog.meal.name ?? ""))
+                    {
+                        await _mealService.UpdateMealAsync(mealId, new UpdateMealRequest { name = trimmedName });
+                    }
+
+                    var updateLogRequest = new UpdateMealLogRequest
+                    {
+                        mealId = mealId,
+                        typeOfMeal = SelectedTypeOfMeal.code,
+                        mealFromPantry = MealFromPantry,
+                        eatenOut = EatenOut
+                    };
+
+                    var (_, updateLogErr) = await _mealLogService.UpdateLogAsync(EditingMealLog.id, updateLogRequest);
+                    if (updateLogErr != null)
+                    {
+                        ErrorDetail = updateLogErr;
+                        IsSaving = false;
+                        return false;
+                    }
+                }
+                else
+                {
+                    var logRequest = new CreateMealLogRequest
+                    {
+                        mealId = mealId,
+                        typeOfMeal = SelectedTypeOfMeal.code,
+                        timestamp = timestamp,
+                        mealFromPantry = MealFromPantry,
+                        eatenOut = EatenOut
+                    };
+
+                    var (_, logErr) = await _mealLogService.CreateAsync(logRequest);
+                    if (logErr != null)
+                    {
+                        ErrorDetail = logErr;
+                        IsSaving = false;
+                        return false;
+                    }
+                }
+
+                if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
+                {
+                    var snapshotToDeduct = SelectedItems.ToList();
+                    await DeductPantryItemsAsync(snapshotToDeduct);
+                }
+
+                _pendingPresetName = null;
+                ErrorDetail = null;
+                IsEditing = false;
+                EditingMealLog = null;
                 SelectedItems = new List<MealLogItem>();
                 _originalItemsSnapshot = new List<MealLogItem>();
                 ResetToStep1();
@@ -1221,7 +1433,97 @@ namespace eu.foodmission.platform
             _originalItemsSnapshot = new List<MealLogItem>();
             _pendingPresetName = null;
             ErrorMessage = "";
+            IsEditing = false;
+            EditingMealLog = null;
             CurrentStep = MealLogStep.SelectingTypeOfMeal;
+        }
+
+        public void LoadForEdit(MealLog log)
+        {
+            if (log == null) return;
+
+            EditingMealLog = log;
+            IsEditing = true;
+
+            if (TypeOfMealOptions != null && TypeOfMealOptions.Length > 0 && !string.IsNullOrEmpty(log.typeOfMeal))
+            {
+                int idx = Array.FindIndex(TypeOfMealOptions, o => o.code == log.typeOfMeal);
+                SelectedTypeOfMealIndex = idx >= 0 ? idx : 0;
+            }
+            else
+            {
+                SelectedTypeOfMealIndex = 0;
+            }
+
+            MealFromPantry = log.mealFromPantry;
+            EatenOut = log.eatenOut;
+
+            MealContainerName = log.meal?.name ?? "";
+            SelectedMealPreset = log.meal;
+            SaveAsPreset = false;
+
+            var items = new List<MealLogItem>();
+            if (log.meal?.items != null)
+            {
+                foreach (MealItemDetail d in log.meal.items)
+                {
+                    string name = d.foodProduct?.name ?? d.genericFood?.foodName ?? d.notes;
+                    if (string.IsNullOrEmpty(name)) name = "@UI:UNKNOWN";
+
+                    items.Add(new MealLogItem
+                    {
+                        id = d.id,
+                        foodProductId = d.foodProductId,
+                        genericFoodId = d.genericFoodId,
+                        name = name,
+                        quantity = d.quantity,
+                        unit = d.unit,
+                        isProduct = d.itemType == "food_product" || !string.IsNullOrEmpty(d.foodProductId),
+                        isGenericFood = d.itemType == "generic_food" || !string.IsNullOrEmpty(d.genericFoodId)
+                    });
+                }
+            }
+
+            SelectedItems = items;
+            _originalItemsSnapshot = DeepCopyItems(items);
+
+            CurrentStep = MealLogStep.SelectingDishes;
+        }
+
+        public async Task LoadForEditAsync(MealLog log)
+        {
+            LoadForEdit(log);
+            if (log?.meal != null && !string.IsNullOrEmpty(log.meal.id) && (log.meal.items == null || log.meal.items.Length == 0))
+            {
+                var (details, err) = await _mealItemService.GetByMealIdAsync(log.meal.id);
+                if (err == null && details != null)
+                {
+                    log.meal.items = details;
+                    var items = new List<MealLogItem>();
+                    foreach (MealItemDetail d in details)
+                    {
+                        string name = d.foodProduct?.name ?? d.genericFood?.foodName ?? d.notes ?? "@UI:UNKNOWN";
+                        items.Add(new MealLogItem
+                        {
+                            id = d.id,
+                            foodProductId = d.foodProductId,
+                            genericFoodId = d.genericFoodId,
+                            name = name,
+                            quantity = d.quantity,
+                            unit = d.unit,
+                            isProduct = d.itemType == "food_product" || !string.IsNullOrEmpty(d.foodProductId),
+                            isGenericFood = d.itemType == "generic_food" || !string.IsNullOrEmpty(d.genericFoodId)
+                        });
+                    }
+                    SelectedItems = items;
+                    _originalItemsSnapshot = DeepCopyItems(items);
+                }
+            }
+        }
+
+        public void CancelEdit()
+        {
+            ResetToStep1();
         }
 
         public void InitializeForQuickAdd(int mealTypeIndex, bool eatenOut, FoodInfoType foodType, string foodId, string foodName)

@@ -198,5 +198,29 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(clicked, "RemoveButton clicked event should be triggered");
         }
+
+        [Test]
+        public void FMMealLogCard_RendersEditButton()
+        {
+            var card = new FMMealLogCard();
+            Assert.IsNotNull(card.EditButton, "EditButton should not be null");
+            Assert.AreEqual("fm-edit", card.EditButton.leadingIcon);
+
+            var buttonInHierarchy = card.Q<Unity.AppUI.UI.Button>(className: "fm-meal-card-edit-btn");
+            Assert.IsNotNull(buttonInHierarchy, "EditButton should be present in the card hierarchy");
+            Assert.AreSame(card.EditButton, buttonInHierarchy);
+        }
+
+        [Test]
+        public void FMMealLogCard_ClickEditButton_TriggersClickedEvent()
+        {
+            var card = new FMMealLogCard();
+            bool clicked = false;
+            card.EditButton.clicked += () => clicked = true;
+
+            card.EditButton.clickable.InvokePressed(null);
+
+            Assert.IsTrue(clicked, "EditButton clicked event should be triggered");
+        }
     }
 }

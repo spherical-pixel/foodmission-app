@@ -2960,6 +2960,26 @@ MonoBehaviour:
     m_Localized: "Mahlzeiteneintrag erfolgreich gel\xF6scht"
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Mahlzeit bearbeiten: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Mahlzeit bearbeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: "\xC4nderungen speichern"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Bearbeiten abbrechen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: Mahlzeit erfolgreich aktualisiert
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

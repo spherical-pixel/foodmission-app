@@ -60,6 +60,33 @@ namespace eu.foodmission.platform
         }
     }
 
+    public class UpdateMealLogRequest
+    {
+        [JsonProperty("mealId", NullValueHandling = NullValueHandling.Ignore)]
+        public string mealId;
+
+        [JsonProperty("typeOfMeal", NullValueHandling = NullValueHandling.Ignore)]
+        public string typeOfMeal;
+
+        [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
+        public string timestamp;
+
+        [JsonProperty("mealFromPantry", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? mealFromPantry;
+
+        [JsonProperty("eatenOut", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? eatenOut;
+
+        public byte[] ToJsonBody()
+        {
+            string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            return Encoding.UTF8.GetBytes(json);
+        }
+    }
+
     public class MealLogItem
     {
         public string id;

@@ -2977,6 +2977,26 @@ MonoBehaviour:
     m_Localized: "Wpis o posi\u0142ku zosta\u0142 pomy\u015Blnie usuni\u0119ty"
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: "Edycja posi\u0142ku: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: "Edycja posi\u0142ku"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Zapisz zmiany
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: "Anuluj edycj\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: "Posi\u0142ek zosta\u0142 pomy\u015Blnie zaktualizowany"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

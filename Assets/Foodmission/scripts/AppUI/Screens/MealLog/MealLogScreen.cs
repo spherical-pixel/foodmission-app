@@ -54,6 +54,9 @@ namespace eu.foodmission.platform
         private FMArrowStepper _dayStepper;
         private readonly List<DateTime> _stepperDates = new();
         private AccessibilityNode _logButtonNode;
+        private VisualElement _editModeBanner;
+        private Unity.AppUI.UI.Text _editModeTitle;
+        private FMButton _btnCancelEdit;
 
         public MealLogScreen()
         {
@@ -85,6 +88,9 @@ namespace eu.foodmission.platform
             _loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
             _dayStepper = contentContainer.Q<FMArrowStepper>("day-stepper");
+            _editModeBanner = contentContainer.Q<VisualElement>("edit-mode-banner");
+            _editModeTitle = contentContainer.Q<Unity.AppUI.UI.Text>("edit-mode-title");
+            _btnCancelEdit = contentContainer.Q<FMButton>("btn-cancel-edit");
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -167,8 +173,12 @@ namespace eu.foodmission.platform
 
             _viewModel.OnConfirmUpdateRequired += OnConfirmUpdateRequired;
 
+            if (_btnCancelEdit != null)
+                _btnCancelEdit.clicked += OnCancelEditClicked;
+
             UpdateStepVisibility();
             UpdateSavePresetCheckboxVisibility();
+            UpdateEditModeUI();
 
             if (_chkSavePreset != null)
             {
@@ -258,6 +268,9 @@ namespace eu.foodmission.platform
 
             _viewModel.OnConfirmUpdateRequired -= OnConfirmUpdateRequired;
 
+            if (_btnCancelEdit != null)
+                _btnCancelEdit.clicked -= OnCancelEditClicked;
+
             if (_searchCategoryField != null)
                 _searchCategoryField.OnPopoverVisibilityChanged -= OnPopoverVisibilityChanged;
 
@@ -284,9 +297,61 @@ namespace eu.foodmission.platform
             _viewModel.SaveAsPreset = evt.newValue == CheckboxState.Checked;
         }
 
+        private void OnCancelEditClicked()
+        {
+            _viewModel?.CancelEdit();
+            UpdateEditModeUI();
+            UpdateStepVisibility();
+        }
+
+        private void UpdateEditModeUI()
+        {
+            if (_viewModel == null) return;
+            bool isEditing = _viewModel.IsEditing;
+            _editModeBanner?.EnableInClassList("visible", isEditing);
+
+            if (isEditing && _editModeTitle != null)
+            {
+                string mealName = _viewModel.EditingMealLog?.meal?.name;
+                if (!string.IsNullOrEmpty(mealName))
+                {
+                    _editModeTitle.text = new LocalizedOption("UI", "EDITING_MEAL", mealName).GetText();
+                }
+                else
+                {
+                    _editModeTitle.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EDITING_MEAL_TITLE") ?? "Editando comida";
+                }
+            }
+
+            if (_btnLogSelected != null)
+            {
+                if (isEditing)
+                {
+                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SAVE_CHANGES") ?? "Guardar cambios";
+                }
+                else
+                {
+                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOG_DISHES") ?? "Log Selected";
+                }
+            }
+
+            if (_btnLoadPreset != null)
+            {
+                _btnLoadPreset.style.display = isEditing ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+
+            UpdateSavePresetCheckboxVisibility();
+        }
+
         private void UpdateSavePresetCheckboxVisibility()
         {
-            if (_chkSavePreset == null) return;
+            if (_chkSavePreset == null || _viewModel == null) return;
+            if (_viewModel.IsEditing)
+            {
+                _chkSavePreset.style.display = DisplayStyle.None;
+                _viewModel.SaveAsPreset = false;
+                return;
+            }
             bool hasPreset = _viewModel.SelectedMealPreset != null;
             _chkSavePreset.style.display = hasPreset ? DisplayStyle.None : DisplayStyle.Flex;
             if (hasPreset)
@@ -383,6 +448,11 @@ namespace eu.foodmission.platform
                     case nameof(_viewModel.LastTenLogs):
                         RebuildMealCards();
                         break;
+                    case nameof(_viewModel.IsEditing):
+                    case nameof(_viewModel.EditingMealLog):
+                        UpdateEditModeUI();
+                        UpdateStepVisibility();
+                        break;
                     case nameof(_viewModel.SelectedDate):
                         UpdateDayStepperSelection();
                         break;
@@ -417,7 +487,7 @@ namespace eu.foodmission.platform
             _btnBackStep2?.EnableInClassList("visible", step2);
             _btnBackStep3?.EnableInClassList("visible", step3);
 
-            _loggedMealsZone?.EnableInClassList("visible", step1);
+            _loggedMealsZone?.EnableInClassList("visible", step1 && !_viewModel.IsEditing);
 
             if (step3)
             {
@@ -510,6 +580,13 @@ namespace eu.foodmission.platform
                     TypeLabel = typeLabel
                 };
 
+                card.EditButton.clicked += async () =>
+                {
+                    await _viewModel.LoadForEditAsync(captured);
+                    UpdateEditModeUI();
+                    UpdateStepVisibility();
+                };
+
                 card.RemoveButton.clicked += () => ConfirmDeleteMealLog(captured);
 
                 _mealList.Add(card);
@@ -529,6 +606,13 @@ namespace eu.foodmission.platform
                 confirmMsg,
                 onConfirm: async () =>
                 {
+                    if (_viewModel.IsEditing && _viewModel.EditingMealLog?.id == log.id)
+                    {
+                        _viewModel.CancelEdit();
+                        UpdateEditModeUI();
+                        UpdateStepVisibility();
+                    }
+
                     await _viewModel.DeleteLogAsync(log.id);
                     RebuildMealCards();
 
@@ -606,7 +690,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void OnLoadPresetClicked()
+        private async void OnLoadPresetClicked()
         {
             if (_presetResults == null) return;
             bool isOpen = _presetResults.style.display == DisplayStyle.Flex;
@@ -614,8 +698,19 @@ namespace eu.foodmission.platform
             if (_step3Content != null)
                 _step3Content.style.display = isOpen ? DisplayStyle.Flex : DisplayStyle.None;
             _btnLoadPreset.title = isOpen ? "@UI:LOAD_PRESET_OR_RECIPE" : "@UI:CANCEL_SEARCH";
-            if (!isOpen && _presetSearchField != null)
-                _presetSearchField.SetValueWithoutNotify("");
+            if (!isOpen)
+            {
+                if (_presetSearchField != null)
+                    _presetSearchField.SetValueWithoutNotify("");
+                try
+                {
+                    await _viewModel.SearchPresetsAsync("");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] OnLoadPresetClicked SearchPresetsAsync failed: {ex.Message}");
+                }
+            }
         }
 
         private void ClosePresetPanel()
@@ -854,11 +949,21 @@ namespace eu.foodmission.platform
         {
             try
             {
+                bool wasEditing = _viewModel.IsEditing;
                 bool success = await _viewModel.SaveAsync();
                 if (success)
                 {
+                    if (wasEditing)
+                    {
+                        string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_UPDATED_SUCCESS") ?? "Comida actualizada correctamente";
+                        Toast.Build(this, toastMsg, NotificationDuration.Short)
+                            .SetStyle(NotificationStyle.Positive)
+                            .SetPosition(PopupNotificationPlacement.Bottom)
+                            .Show();
+                    }
                     RebuildMealCards();
                     UpdateStepVisibility();
+                    UpdateEditModeUI();
                 }
             }
             catch (Exception ex)

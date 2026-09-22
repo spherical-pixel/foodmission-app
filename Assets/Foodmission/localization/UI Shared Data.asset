@@ -2871,6 +2871,26 @@ MonoBehaviour:
     m_Key: MEAL_LOG_DELETED_SUCCESS
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Key: EDITING_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Key: EDITING_MEAL_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Key: SAVE_CHANGES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Key: CANCEL_EDIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Key: MEAL_UPDATED_SUCCESS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -296,13 +296,18 @@ namespace eu.foodmission.platform.Components
             // We add Button instances directly to the public actionContainer instead.
             var dialog = new Dialog { title = title };
             dialog.contentContainer.Add(content);
+            dialog.contentContainer.style.flexGrow = 1;
 
             Modal modal = null;
+
+            dialog.actionContainer.style.flexDirection = FlexDirection.Column;
+            dialog.actionContainer.style.flexGrow = 0;
+
 
             foreach (var action in actions)
             {
                 var captured = action;
-                var button = new Unity.AppUI.UI.Button
+                var button = new FMButton
                 {
                     title = captured.Label
                 };
@@ -315,10 +320,14 @@ namespace eu.foodmission.platform.Components
                     modal?.Dismiss(DismissType.Action);
                 };
 
+                button.style.width = Length.Percent(100);
+
                 dialog.actionContainer.Add(button);
+                dialog.actionContainer.Add(new Spacer { spacing = SpacerSpacing.M });
             }
 
             modal = Modal.Build(anchor, dialog);
+            modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
             NotifyScreenReaderOfDialog(modal, title, "");
             modal.Show();
         }

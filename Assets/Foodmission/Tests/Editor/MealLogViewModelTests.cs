@@ -39,6 +39,18 @@ namespace eu.foodmission.platform.Tests
             _mockLocalStorage = new Mock<ILocalStorageService>();
             _mockOpenFoodFactsClient = new Mock<IOpenFoodFactsClientService>();
             _mockPantryService = new Mock<IPantryService>();
+            _mockMealLogService.Setup(x => x.GetLogsAsync(
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+                .ReturnsAsync((new PaginatedMealLogResponse { data = new MealLog[0] }, (ApiErrorResponse)null));
+            _mockPantryService.Setup(x => x.GetItemsAsync())
+                .ReturnsAsync((new PantryItem[0], (ApiErrorResponse)null));
+            _mockMealItemService.Setup(x => x.GetByMealIdAsync(It.IsAny<string>()))
+                .ReturnsAsync((new MealItemDetail[0], (ApiErrorResponse)null));
+
             _storeService = new TestStoreService();
             _vm = new MealLogViewModel(
                 _storeService,
@@ -967,6 +979,263 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("Pasta", _vm.SelectedMealPreset.name);
             Assert.IsTrue(_vm.SelectedMealPreset.isRecipe);
             Assert.AreEqual("r1", _vm.SelectedMealPreset.recipeId);
+        }
+
+        [Test]
+        public void LoadForEdit_PopulatesPropertiesAndTransitionsToStep3()
+        {
+            _vm.TypeOfMealOptions = new[]
+            {
+                new CatalogItem { code = "BREAKFAST", label = "Breakfast" },
+                new CatalogItem { code = "LUNCH", label = "Lunch" }
+            };
+
+            var log = new MealLog
+            {
+                id = "log-1",
+                mealId = "meal-1",
+                typeOfMeal = "LUNCH",
+                mealFromPantry = true,
+                eatenOut = false,
+                meal = new Meal
+                {
+                    id = "meal-1",
+                    name = "Ensalada César",
+                    items = new[]
+                    {
+                        new MealItemDetail
+                        {
+                            id = "item-1",
+                            quantity = 150,
+                            unit = "g",
+                            foodProductId = "p1",
+                            foodProduct = new MealItemFoodProduct { id = "p1", name = "Pollo" }
+                        }
+                    }
+                }
+            };
+
+            _vm.LoadForEdit(log);
+
+            Assert.IsTrue(_vm.IsEditing);
+            Assert.AreSame(log, _vm.EditingMealLog);
+            Assert.AreEqual(1, _vm.SelectedTypeOfMealIndex);
+            Assert.IsTrue(_vm.MealFromPantry);
+            Assert.IsFalse(_vm.EatenOut);
+            Assert.AreEqual("Ensalada César", _vm.MealContainerName);
+            Assert.AreEqual(MealLogStep.SelectingDishes, _vm.CurrentStep);
+            Assert.AreEqual(1, _vm.SelectedItems.Count);
+            Assert.AreEqual("Pollo", _vm.SelectedItems[0].name);
+            Assert.AreEqual(150, _vm.SelectedItems[0].quantity);
+            Assert.AreEqual("g", _vm.SelectedItems[0].unit);
+        }
+
+        [Test]
+        public void CancelEdit_ResetsToStep1AndClearsEditingState()
+        {
+            var log = new MealLog
+            {
+                id = "log-1",
+                mealId = "meal-1",
+                typeOfMeal = "LUNCH",
+                meal = new Meal { id = "meal-1", name = "Test" }
+            };
+
+            _vm.LoadForEdit(log);
+            Assert.IsTrue(_vm.IsEditing);
+
+            _vm.CancelEdit();
+
+            Assert.IsFalse(_vm.IsEditing);
+            Assert.IsNull(_vm.EditingMealLog);
+            Assert.AreEqual(MealLogStep.SelectingTypeOfMeal, _vm.CurrentStep);
+            Assert.IsEmpty(_vm.MealContainerName);
+        }
+
+        [Test]
+        public async Task SaveAsync_WhenEditing_CallsUpdateLogAsyncAndDiffsItems()
+        {
+            _vm.TypeOfMealOptions = new[]
+            {
+                new CatalogItem { code = "DINNER", label = "Dinner" }
+            };
+
+            var log = new MealLog
+            {
+                id = "log-edit-1",
+                mealId = "meal-edit-1",
+                typeOfMeal = "DINNER",
+                mealFromPantry = false,
+                eatenOut = true,
+                meal = new Meal
+                {
+                    id = "meal-edit-1",
+                    name = "",
+                    items = new[]
+                    {
+                        new MealItemDetail
+                        {
+                            id = "item-old",
+                            quantity = 1,
+                            unit = "ud",
+                            foodProductId = "p-old",
+                            foodProduct = new MealItemFoodProduct { id = "p-old", name = "Old" }
+                        }
+                    }
+                }
+            };
+
+            _vm.LoadForEdit(log);
+
+            _vm.SelectedItems.Clear();
+            _vm.SelectedItems.Add(new MealLogItem
+            {
+                foodProductId = "p-new",
+                isProduct = true,
+                name = "New",
+                quantity = 2,
+                unit = "ud"
+            });
+
+            _mockMealItemService.Setup(x => x.DeleteAsync("meal-edit-1", "item-old"))
+                .ReturnsAsync((true, null));
+            _mockMealItemService.Setup(x => x.CreateAsync("meal-edit-1", It.IsAny<CreateMealItemRequest>()))
+                .ReturnsAsync((new MealItem { id = "item-new" }, null));
+            _mockMealLogService.Setup(x => x.UpdateLogAsync("log-edit-1", It.IsAny<UpdateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "log-edit-1" }, null));
+            _mockMealLogService.Setup(x => x.GetLogsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((new PaginatedMealLogResponse { data = new MealLog[0] }, null));
+
+            bool success = await _vm.SaveAsync();
+
+            Assert.IsTrue(success);
+            _mockMealItemService.Verify(x => x.DeleteAsync("meal-edit-1", "item-old"), Times.Once);
+            _mockMealItemService.Verify(x => x.CreateAsync("meal-edit-1", It.Is<CreateMealItemRequest>(r => r.foodProductId == "p-new")), Times.Once);
+            _mockMealLogService.Verify(x => x.UpdateLogAsync("log-edit-1", It.Is<UpdateMealLogRequest>(r => r.eatenOut == true && r.typeOfMeal == "DINNER")), Times.Once);
+            Assert.IsFalse(_vm.IsEditing);
+            Assert.IsNull(_vm.EditingMealLog);
+            Assert.AreEqual(MealLogStep.SelectingTypeOfMeal, _vm.CurrentStep);
+        }
+
+        [Test]
+        public async Task SaveAsync_WhenEditingPresetWithModifications_TriggersOnConfirmUpdateRequired()
+        {
+            _vm.TypeOfMealOptions = new[]
+            {
+                new CatalogItem { code = "LUNCH", label = "Lunch" }
+            };
+
+            var log = new MealLog
+            {
+                id = "log-p-1",
+                mealId = "meal-p-1",
+                typeOfMeal = "LUNCH",
+                meal = new Meal
+                {
+                    id = "meal-p-1",
+                    name = "Preset Salad",
+                    items = new[]
+                    {
+                        new MealItemDetail
+                        {
+                            id = "item-1",
+                            quantity = 1,
+                            unit = "ud",
+                            foodProductId = "p1",
+                            foodProduct = new MealItemFoodProduct { id = "p1", name = "Item 1" }
+                        }
+                    }
+                }
+            };
+
+            _vm.LoadForEdit(log);
+
+            _vm.SelectedItems[0].quantity = 5;
+
+            string confirmedPresetName = null;
+            _vm.OnConfirmUpdateRequired += name => confirmedPresetName = name;
+
+            bool result = await _vm.SaveAsync();
+
+            Assert.IsFalse(result);
+            Assert.AreEqual("Preset Salad", confirmedPresetName);
+            Assert.IsTrue(_vm.IsEditing);
+        }
+
+        [Test]
+        public async Task ConfirmUpdateAndSaveAsync_WhenEditing_CallsUpdateLogAsync()
+        {
+            _vm.TypeOfMealOptions = new[]
+            {
+                new CatalogItem { code = "LUNCH", label = "Lunch" }
+            };
+
+            var log = new MealLog
+            {
+                id = "log-p-1",
+                mealId = "meal-p-1",
+                typeOfMeal = "LUNCH",
+                mealFromPantry = true,
+                meal = new Meal
+                {
+                    id = "meal-p-1",
+                    name = "Preset Salad",
+                    items = new[]
+                    {
+                        new MealItemDetail
+                        {
+                            id = "item-1",
+                            quantity = 1,
+                            unit = "ud",
+                            foodProductId = "p1",
+                            foodProduct = new MealItemFoodProduct { id = "p1", name = "Item 1" }
+                        }
+                    }
+                }
+            };
+
+            _vm.LoadForEdit(log);
+            _vm.SelectedItems[0].quantity = 5;
+
+            _mockMealItemService.Setup(x => x.UpdateAsync("meal-p-1", "item-1", It.IsAny<CreateMealItemRequest>()))
+                .ReturnsAsync((new MealItem { id = "item-1" }, null));
+            _mockMealLogService.Setup(x => x.UpdateLogAsync("log-p-1", It.IsAny<UpdateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "log-p-1" }, null));
+            _mockMealLogService.Setup(x => x.GetLogsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((new PaginatedMealLogResponse { data = new MealLog[0] }, null));
+
+            bool success = await _vm.ConfirmUpdateAndSaveAsync();
+
+            Assert.IsTrue(success);
+            _mockMealItemService.Verify(x => x.UpdateAsync("meal-p-1", "item-1", It.Is<CreateMealItemRequest>(r => r.quantity == 5)), Times.Once);
+            _mockMealLogService.Verify(x => x.UpdateLogAsync("log-p-1", It.Is<UpdateMealLogRequest>(r => r.mealFromPantry == true)), Times.Once);
+            Assert.IsFalse(_vm.IsEditing);
+        }
+
+        [Test]
+        public async Task SearchPresetsAsync_FiltersOutMealsWithoutName()
+        {
+            var namedMeal = new Meal { id = "m-1", name = "Ensalada Mediterránea" };
+            var unnamedMeal1 = new Meal { id = "m-2", name = null };
+            var unnamedMeal2 = new Meal { id = "m-3", name = "   " };
+            var unnamedMeal3 = new Meal { id = "m-4", name = "" };
+
+            var recipe = new Recipe { id = "r-1", title = "Gazpacho" };
+            var untitledRecipe = new Recipe { id = "r-2", title = "" };
+
+            _mockMealService.Setup(x => x.GetMealsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new PaginatedMealResponse { data = new[] { namedMeal, unnamedMeal1, unnamedMeal2, unnamedMeal3 } }, null));
+
+            _mockRecipeService.Setup(x => x.GetRecipesAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(), It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new PaginatedRecipeResponse { data = new[] { recipe, untitledRecipe } }, null));
+
+            await _vm.SearchPresetsAsync("");
+
+            Assert.AreEqual(2, _vm.PresetResults.Count);
+            Assert.AreEqual("Ensalada Mediterránea", _vm.PresetResults[0].name);
+            Assert.IsFalse(_vm.PresetResults[0].isRecipe);
+            Assert.AreEqual("Gazpacho", _vm.PresetResults[1].name);
+            Assert.IsTrue(_vm.PresetResults[1].isRecipe);
         }
     }
 }

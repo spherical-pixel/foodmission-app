@@ -2977,6 +2977,26 @@ MonoBehaviour:
     m_Localized: Maaltijdlogboek succesvol verwijderd
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Maaltijd bewerken: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Maaltijd bewerken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Wijzigingen opslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Bewerken annuleren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: Maaltijd succesvol bijgewerkt
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

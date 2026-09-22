@@ -4,6 +4,10 @@
     <ui:VisualElement name="back" data-source-type="eu.foodmission.platform.ShoppingListViewModel, Foodmission" class="fm-back-screen-transparent" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"/>
     <ui:VisualElement name="root" class="fm-root">
         <appui:ExVisualElement name="log-meal-zone">
+            <ui:VisualElement name="edit-mode-banner" class="fm-ml-edit-banner">
+                <appui:Text name="edit-mode-title" class="fm-ml-edit-banner-title" text="Editando comida" />
+                <fm:FMButton name="btn-cancel-edit" title="Cancelar" quiet="true" size="S" class="fm-ml-cancel-edit-btn" />
+            </ui:VisualElement>
             <appui:ExVisualElement name="step-1" class="fm-ml-step">
                 <appui:Heading name="step-1-heading" text="What type of meal do you want to log?" size="M" primary="false" class="fm-ml-step-heading fm-heading-white">
                     <Bindings>

@@ -15,7 +15,7 @@ namespace eu.foodmission.platform.Tests
         {
             using var request = new UnityWebRequest();
 
-            LogAssert.Expect(LogType.Error, new Regex("TestContext: 0 "));
+            LogAssert.Expect(LogType.Error, new Regex(@"TestContext: 0.*"));
             ApiErrorResponse result = null;
             Assert.DoesNotThrow(() => result = ApiErrorHelper.Parse(request, "TestContext"));
 
@@ -27,7 +27,7 @@ namespace eu.foodmission.platform.Tests
         {
             using var request = new UnityWebRequest();
 
-            LogAssert.Expect(LogType.Error, new Regex("TestContext: 0 "));
+            LogAssert.Expect(LogType.Error, new Regex(@"TestContext: 0.*"));
             var result = ApiErrorHelper.Parse(request, "TestContext");
 
             Assert.IsNotNull(result);

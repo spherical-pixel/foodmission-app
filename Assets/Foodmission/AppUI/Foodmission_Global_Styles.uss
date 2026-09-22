@@ -1223,6 +1223,10 @@
     padding-bottom: 4px;
 }
 
+.fm-meal-card-remove-btn {
+    margin-left: 4px;
+}
+
 .fm-meal-card-heading {
     color: var(--appui-foregrounds-50);
     padding-bottom: 0;
@@ -1535,6 +1539,11 @@
 
 .appui-date-picker-pane .appui-button--icon-only {
     width: 100px;
+}
+
+
+.appui-button--icon-only .appui-button__leadingicon {
+    --unity-image-tint-color: var(--appui-foregrounds-50);
 }
 
 .appui-date-picker-pane .appui-button,
@@ -2179,4 +2188,8 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 45px;
+}
+
+.appui-dialog__header.appui-heading{
+    white-space: normal;
 }

@@ -2961,6 +2961,26 @@ MonoBehaviour:
     m_Localized: Registrazione del pasto eliminata con successo
     m_Metadata:
       m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Modifica pasto: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Modifica pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Salva modifiche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Annulla modifica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: Pasto aggiornato con successo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
