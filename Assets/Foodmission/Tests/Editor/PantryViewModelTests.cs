@@ -103,6 +103,7 @@ namespace eu.foodmission.platform.Tests
             await _vm.LoadAsync();
 
             Assert.AreEqual(2, _vm.Items.Count);
+            _mockNotificationService.Verify(x => x.SyncPantryReminders(It.IsAny<IEnumerable<PantryItemView>>()), Times.Once);
         }
 
         [Test]

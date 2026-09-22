@@ -251,5 +251,151 @@ namespace eu.foodmission.platform.Tests
                 _service.RescheduleAllNotifications(TimeSpan.FromHours(10));
             });
         }
+
+        [Test]
+        public void NotificationService_SyncPantryReminders_WhenNotificationsDisabled_ClearsRegistry()
+        {
+            _service.SetNotificationsEnabled(false);
+
+            var items = new List<PantryItemView>
+            {
+                new PantryItemView
+                {
+                    Item = new PantryItem { id = "item_1", expiryDate = DateTime.Now.AddDays(5).ToString("yyyy-MM-dd") },
+                    DisplayName = "Leche"
+                }
+            };
+
+            _service.SyncPantryReminders(items);
+
+            var registry = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.IsTrue(registry == null || registry.records.Count == 0);
+        }
+
+        [Test]
+        public void NotificationService_SyncPantryReminders_SchedulesNewItem_AndAvoidsReschedulingWhenUnchanged()
+        {
+            _service.SetNotificationsEnabled(true);
+
+            var futureDate = DateTime.Now.AddDays(5).ToString("yyyy-MM-dd");
+            var items = new List<PantryItemView>
+            {
+                new PantryItemView
+                {
+                    Item = new PantryItem { id = "item_1", expiryDate = futureDate },
+                    DisplayName = "Yogurt"
+                }
+            };
+
+            // First sync: schedules the item
+            _service.SyncPantryReminders(items);
+
+            var registry = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.IsNotNull(registry);
+            Assert.AreEqual(1, registry.records.Count);
+            Assert.AreEqual("item_1", registry.records[0].itemId);
+            Assert.AreEqual("Yogurt", registry.records[0].itemName);
+
+            // Second sync with exact same item: should not duplicate or change count
+            _service.SyncPantryReminders(items);
+
+            var registryAfter = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.AreEqual(1, registryAfter.records.Count);
+        }
+
+        [Test]
+        public void NotificationService_SyncPantryReminders_CancelsRemovedItem()
+        {
+            _service.SetNotificationsEnabled(true);
+
+            var futureDate = DateTime.Now.AddDays(5).ToString("yyyy-MM-dd");
+            var initialItems = new List<PantryItemView>
+            {
+                new PantryItemView
+                {
+                    Item = new PantryItem { id = "item_1", expiryDate = futureDate },
+                    DisplayName = "Manzanas"
+                },
+                new PantryItemView
+                {
+                    Item = new PantryItem { id = "item_2", expiryDate = futureDate },
+                    DisplayName = "Plátanos"
+                }
+            };
+
+            _service.SyncPantryReminders(initialItems);
+
+            var registry = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.AreEqual(2, registry.records.Count);
+
+            // Now item_2 is removed (consumed or deleted)
+            var updatedItems = new List<PantryItemView>
+            {
+                initialItems[0] // Only item_1 remains
+            };
+
+            _service.SyncPantryReminders(updatedItems);
+
+            var registryAfter = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.AreEqual(1, registryAfter.records.Count);
+            Assert.AreEqual("item_1", registryAfter.records[0].itemId);
+        }
+
+        [Test]
+        public void NotificationService_SyncPantryReminders_ReschedulesWhenExpiryDateModified()
+        {
+            _service.SetNotificationsEnabled(true);
+
+            var initialDate = DateTime.Now.AddDays(5).ToString("yyyy-MM-dd");
+            var item = new PantryItemView
+            {
+                Item = new PantryItem { id = "item_mod", expiryDate = initialDate },
+                DisplayName = "Queso"
+            };
+
+            _service.SyncPantryReminders(new[] { item });
+
+            var registry = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.AreEqual(1, registry.records.Count);
+            Assert.AreEqual(initialDate, registry.records[0].expiryDate);
+
+            // Modify expiry date
+            var newDate = DateTime.Now.AddDays(10).ToString("yyyy-MM-dd");
+            item.Item.expiryDate = newDate;
+
+            _service.SyncPantryReminders(new[] { item });
+
+            var registryAfter = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.AreEqual(1, registryAfter.records.Count);
+            Assert.AreEqual(newDate, registryAfter.records[0].expiryDate);
+        }
+
+        [Test]
+        public void NotificationService_CancelPantryReminder_RemovesFromRegistry()
+        {
+            _service.SetNotificationsEnabled(true);
+
+            var futureDate = DateTime.Now.AddDays(4);
+            _service.SchedulePantryExpiryReminder("item_cancel", "Pan", futureDate);
+
+            var registry = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.IsNotNull(registry);
+            Assert.AreEqual(1, registry.records.Count);
+
+            _service.CancelPantryReminder("item_cancel");
+
+            var registryAfter = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>("scheduled_pantry_reminders");
+            Assert.AreEqual(0, registryAfter.records.Count);
+        }
+
+        [Test]
+        public void NotificationService_SetNotificationsEnabled_SetsPromptedFlag()
+        {
+            _service.SetNotificationsEnabled(true);
+            Assert.IsTrue(_localStorageService.GetValue<bool>("notification_permission_prompted", false));
+
+            _service.SetNotificationsEnabled(false);
+            Assert.IsTrue(_localStorageService.GetValue<bool>("notification_permission_prompted", false));
+        }
     }
 }

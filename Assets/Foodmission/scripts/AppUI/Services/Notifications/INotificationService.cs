@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eu.foodmission.platform
@@ -52,6 +53,17 @@ namespace eu.foodmission.platform
         /// Cancels scheduled local notification reminder for a specific pantry item (e.g. when deleted or consumed).
         /// </summary>
         void CancelPantryReminder(string itemId);
+
+        /// <summary>
+        /// Synchronizes local expiry reminders against the active pantry items.
+        /// Only schedules new or modified items, avoids re-scheduling unchanged items, and cancels deleted or expired reminders.
+        /// </summary>
+        void SyncPantryReminders(IEnumerable<PantryItemView> items);
+
+        /// <summary>
+        /// Synchronizes local expiry reminders against raw pantry items.
+        /// </summary>
+        void SyncPantryReminders(IEnumerable<PantryItem> items);
 
         /// <summary>
         /// Schedules a custom local notification for a specific DateTime.
