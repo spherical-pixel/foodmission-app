@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Banners
+  m_Name: Sprites
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
-  m_GroupName: Banners
+  m_GroupName: Sprites
   m_GUID: 3c3aa15792d3647f9b7dbbc0b43aafe8
   m_SerializeEntries:
   - m_GUID: 0347d213f06c24be0ab195fa73909edd
@@ -42,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1f644a09087eb4c18b765e1227fae1ee
     m_Address: topics/carbon_footprint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25d9c9f283a164362a2a0088253945e9
+    m_Address: sprites/coin-big
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -87,6 +92,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d2ff1361d2c649aabdc29dcb2b57a80
     m_Address: topics/travel_distances
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70ecb894aa8654e90ac636d124e293ec
+    m_Address: sprites/star-big
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

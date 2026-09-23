@@ -260,6 +260,11 @@
     flex-shrink: 0;
 }
 
+.fm-rd-video-button .appui-button__leadingicon{
+    width: var(--appui-sizing-1000);
+    height: var(--appui-sizing-1000);
+}
+
 .fm-rd-actions {
     padding: 16px;
     border-top-width: 1px;

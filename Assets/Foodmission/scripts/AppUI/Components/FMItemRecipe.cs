@@ -17,7 +17,11 @@ namespace eu.foodmission.platform
         private readonly Text _heroEmoji;
         private readonly VisualElement _heroImageContainer;
         private readonly Text _ratingText;
-        private readonly VisualElement _footerContainer;
+        private readonly VisualElement _metaPillsRow;
+        private readonly Text _timeBadge;
+        private readonly Text _difficultyBadge;
+        private readonly Text _categoryBadge;
+        private readonly Text _pantryBadge;
 
         public FMItemRecipe()
         {
@@ -42,6 +46,33 @@ namespace eu.foodmission.platform
             _heroEmoji = new Text { text = "🍝" };
             _heroEmoji.AddToClassList("fm-r-card-hero-emoji");
             _heroImageContainer.Add(_heroEmoji);
+
+            _pantryBadge = new Text();
+            _pantryBadge.AddToClassList("fm-r-pantry-badge");
+            _pantryBadge.style.display = DisplayStyle.None;
+            _heroImageContainer.Add(_pantryBadge);
+
+            _metaPillsRow = new VisualElement();
+            _metaPillsRow.AddToClassList("fm-r-card-pills");
+            Add(_metaPillsRow);
+
+            _timeBadge = new Text();
+            _timeBadge.AddToClassList("fm-r-pill");
+            _timeBadge.AddToClassList("fm-r-pill--time");
+            _timeBadge.style.display = DisplayStyle.Flex;
+            _metaPillsRow.Add(_timeBadge);
+
+            _difficultyBadge = new Text();
+            _difficultyBadge.AddToClassList("fm-r-pill");
+            _difficultyBadge.AddToClassList("fm-r-pill--difficulty");
+            _difficultyBadge.style.display = DisplayStyle.None;
+            _metaPillsRow.Add(_difficultyBadge);
+
+            _categoryBadge = new Text();
+            _categoryBadge.AddToClassList("fm-r-pill");
+            _categoryBadge.AddToClassList("fm-r-pill--category");
+            _categoryBadge.style.display = DisplayStyle.None;
+            _metaPillsRow.Add(_categoryBadge);
 
             var metaContainer = new VisualElement();
             metaContainer.AddToClassList("fm-r-card-meta-container");
@@ -81,6 +112,54 @@ namespace eu.foodmission.platform
             {
                 _ratingText.text = value;
                 _ratingText.style.display = string.IsNullOrEmpty(value) ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+        }
+
+        [UxmlAttribute("time-text")]
+        [CreateProperty]
+        public string TimeText
+        {
+            get => _timeBadge.text;
+            set
+            {
+                _timeBadge.text = value;
+                _timeBadge.style.display = string.IsNullOrEmpty(value) ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+        }
+
+        [UxmlAttribute("difficulty-text")]
+        [CreateProperty]
+        public string DifficultyText
+        {
+            get => _difficultyBadge.text;
+            set
+            {
+                _difficultyBadge.text = value;
+                _difficultyBadge.style.display = string.IsNullOrEmpty(value) ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+        }
+
+        [UxmlAttribute("category-text")]
+        [CreateProperty]
+        public string CategoryText
+        {
+            get => _categoryBadge.text;
+            set
+            {
+                _categoryBadge.text = value;
+                _categoryBadge.style.display = string.IsNullOrEmpty(value) ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+        }
+
+        [UxmlAttribute("pantry-badge-text")]
+        [CreateProperty]
+        public string PantryBadgeText
+        {
+            get => _pantryBadge.text;
+            set
+            {
+                _pantryBadge.text = value;
+                _pantryBadge.style.display = string.IsNullOrEmpty(value) ? DisplayStyle.None : DisplayStyle.Flex;
             }
         }
 

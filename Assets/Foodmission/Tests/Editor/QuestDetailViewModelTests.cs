@@ -17,6 +17,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IQuizService> _mockQuizService;
         private Mock<IMissionService> _mockMissionService;
         private Mock<IChallengeService> _mockChallengeService;
+        private Mock<IFoodFactService> _mockFoodFactService;
         private TestStoreService _storeService;
         private QuestDetailViewModel _vm;
         private Func<bool> _originalOverride;
@@ -36,6 +37,7 @@ namespace eu.foodmission.platform.Tests
             _mockQuizService = new Mock<IQuizService>();
             _mockMissionService = new Mock<IMissionService>();
             _mockChallengeService = new Mock<IChallengeService>();
+            _mockFoodFactService = new Mock<IFoodFactService>();
 
             _storeService = new TestStoreService();
             _storeService.SetAppState(new AppState
@@ -101,7 +103,6 @@ namespace eu.foodmission.platform.Tests
             _mockProgress = new QuestProgress
             {
                 questId = "q-100",
-                questCode = "QUEST.DIET.1",
                 userId = "user-1",
                 completed = false,
                 progress = 25f
@@ -109,6 +110,8 @@ namespace eu.foodmission.platform.Tests
 
             _mockDimensionService.Setup(d => d.IsLoaded).Returns(true);
             _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimension);
+            _mockFoodFactService.Setup(s => s.GetUserProgressListAsync())
+                .ReturnsAsync((Array.Empty<FoodFactProgressResponse>(), null));
 
             _vm = new QuestDetailViewModel(
                 _storeService,
@@ -116,7 +119,8 @@ namespace eu.foodmission.platform.Tests
                 _mockDimensionService.Object,
                 _mockQuizService.Object,
                 _mockMissionService.Object,
-                _mockChallengeService.Object);
+                _mockChallengeService.Object,
+                foodFactService: _mockFoodFactService.Object);
         }
 
         [TearDown]
@@ -435,98 +439,66 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(success);
             Assert.IsTrue(vm.IsCurrentQuest);
             mockAuthService.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.currentQuestId == "q-100")), Times.Once);
-            Assert.Contains(AppActions.setCurrentQuest, _storeService.DispatchedActionTypes);
+            Assert.Contains("app/setCurrentQuest", _storeService.DispatchedActionTypes);
             Assert.AreEqual("q-100", _storeService.GetAppState().userCurrentQuestId);
         }
 
         [Test]
-        public async Task LoadQuestAsync_WithMissionAndChallengeUuidAndCachedCode_ResolvesCompletion()
+        public void PopulateFromQuest_WhenProgressHasReward_DispatchesWalletRewardAndSetsEarnedReward()
         {
-            _mockQuestService.Setup(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()))
-                .ReturnsAsync((_mockQuest, null));
-            _mockQuestService.Setup(s => s.GetQuestProgressAsync("QUEST.DIET.1", It.IsAny<string>()))
-                .ReturnsAsync((_mockProgress, null));
-
-            _mockQuizService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
-                .ReturnsAsync((Array.Empty<QuizProgress>(), null));
-
-            var missionProgress = new[]
+            var expectedReward = new ContentReward { xp = 150, points = 50, badgeId = "MASTER_CHEF" };
+            var progress = new QuestProgress
             {
-                new MissionProgress
-                {
-                    missionId = "uuid-mission-1",
-                    completed = true,
-                    progress = 100f
-                }
+                questId = "q-100",
+                completed = true,
+                progress = 100f,
+                reward = expectedReward
             };
-            _mockMissionService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
-                .ReturnsAsync((missionProgress, null));
-            _mockMissionService.Setup(s => s.GetCachedCode("uuid-mission-1"))
-                .Returns("MISSION_MEAL_1");
 
-            var challengeProgress = new[]
-            {
-                new ChallengeProgress
-                {
-                    challengeId = "uuid-challenge-1",
-                    completed = true,
-                    progress = 100f
-                }
-            };
-            _mockChallengeService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
-                .ReturnsAsync((challengeProgress, null));
-            _mockChallengeService.Setup(s => s.GetCachedCode("uuid-challenge-1"))
-                .Returns("CHALLENGE_DAY_1");
+            _vm.SetQuestForTesting(_mockQuest, progress);
 
-            await _vm.LoadQuestAsync("QUEST.DIET.1");
-
-            Assert.AreEqual(2, _vm.CompletedActivitiesCount);
-            Assert.IsFalse(_vm.Activities[0].IsCompleted); // Quiz
-            Assert.IsFalse(_vm.Activities[1].IsCompleted); // FoodFact
-            Assert.IsTrue(_vm.Activities[2].IsCompleted); // Mission resolved via GetCachedCode
-            Assert.IsTrue(_vm.Activities[3].IsCompleted); // Challenge resolved via GetCachedCode
+            Assert.IsNotNull(_vm.EarnedReward);
+            Assert.AreSame(expectedReward, _vm.EarnedReward);
+            Assert.Contains("app/addWalletReward", _storeService.DispatchedActionTypes);
+            Assert.AreEqual(150, _storeService.GetAppState().userXp);
+            Assert.AreEqual(50, _storeService.GetAppState().userPoints);
         }
 
         [Test]
-        public async Task LoadQuestAsync_WithMissionAndChallengeDirectCode_ResolvesCompletion()
+        public void PopulateFromQuest_WhenProgressHasNoReward_DoesNotDispatchWalletReward()
         {
-            _mockQuestService.Setup(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()))
-                .ReturnsAsync((_mockQuest, null));
-            _mockQuestService.Setup(s => s.GetQuestProgressAsync("QUEST.DIET.1", It.IsAny<string>()))
-                .ReturnsAsync((_mockProgress, null));
-
-            _mockQuizService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
-                .ReturnsAsync((Array.Empty<QuizProgress>(), null));
-
-            var missionProgress = new[]
+            var progress = new QuestProgress
             {
-                new MissionProgress
+                questId = "q-100",
+                completed = true,
+                progress = 100f,
+                reward = null
+            };
+
+            _vm.SetQuestForTesting(_mockQuest, progress);
+
+            Assert.IsNull(_vm.EarnedReward);
+            Assert.IsFalse(_storeService.DispatchedActionTypes.Contains("app/addWalletReward"));
+        }
+
+        [Test]
+        public void PopulateFromQuest_WithCompletedFoodFact_MarksItemCompleted()
+        {
+            var foodFactProgress = new[]
+            {
+                new FoodFactProgressResponse
                 {
-                    missionId = "uuid-other",
-                    missionCode = "MISSION_MEAL_1",
-                    completed = true
+                    foodFactCode = "FACT_VEG_1",
+                    readAt = "2026-09-17T10:00:00Z"
                 }
             };
-            _mockMissionService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
-                .ReturnsAsync((missionProgress, null));
 
-            var challengeProgress = new[]
-            {
-                new ChallengeProgress
-                {
-                    challengeId = "uuid-other-ch",
-                    challengeCode = "CHALLENGE_DAY_1",
-                    completed = true
-                }
-            };
-            _mockChallengeService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
-                .ReturnsAsync((challengeProgress, null));
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress, foodFactProgress: foodFactProgress);
 
-            await _vm.LoadQuestAsync("QUEST.DIET.1");
-
-            Assert.AreEqual(2, _vm.CompletedActivitiesCount);
-            Assert.IsTrue(_vm.Activities[2].IsCompleted); // Mission resolved via missionCode
-            Assert.IsTrue(_vm.Activities[3].IsCompleted); // Challenge resolved via challengeCode
+            var factActivity = _vm.Activities.FirstOrDefault(a => a.Item.contentCode == "FACT_VEG_1");
+            Assert.IsNotNull(factActivity);
+            Assert.IsTrue(factActivity.IsCompleted);
+            Assert.AreEqual(100f, factActivity.Progress);
         }
     }
 }

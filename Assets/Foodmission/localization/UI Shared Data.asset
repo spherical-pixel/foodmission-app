@@ -2411,20 +2411,484 @@ MonoBehaviour:
     m_Key: HOME_NO_ACTIVE_QUEST_BUTTON
     m_Metadata:
       m_Items: []
-  - m_Id: 49206146878136320
-    m_Key: QUICK_MEAL_LOG_TITLE
+  - m_Id: 46966074812391424
+    m_Key: REWARD_CELEBRATION_TITLE
     m_Metadata:
       m_Items: []
-  - m_Id: 49207590964420608
-    m_Key: QUICK_MEAL_LOG_FEATURES_TITLE
+  - m_Id: 46966143921938432
+    m_Key: REWARD_XP_EARNED
     m_Metadata:
       m_Items: []
-  - m_Id: 49207906585796608
-    m_Key: QUICK_MEAL_LOG_OPTIONAL_NAME_TITLE
+  - m_Id: 46966269096747008
+    m_Key: REWARD_POINTS_EARNED
     m_Metadata:
       m_Items: []
-  - m_Id: 49210861586210816
-    m_Key: QUICK_MEAL_LOG_OPTIONAL_NAME_PLACEHOLDER
+  - m_Id: 46966724417806336
+    m_Key: REWARD_BADGE_UNLOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46966954571849728
+    m_Key: REWARD_PET_ITEM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Key: REWARD_COLLECTIBLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633499783168
+    m_Key: FOODFACT_STATUS_READ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Key: FOODFACT_STATUS_UNREAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Key: QUEST_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Key: QUIZ_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Key: FOOD_FACT_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Key: RECIPES_TAB_FOR_YOU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Key: RECIPES_TAB_EXPLORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Key: RECIPES_TAB_MY_RECIPES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Key: RECIPES_CREATE_BTN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Key: RECIPES_EMPTY_PANTRY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Key: RECIPES_EMPTY_PANTRY_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Key: RECIPES_EMPTY_PANTRY_BTN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Key: RECIPES_EMPTY_MY_RECIPES_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Key: RECIPES_EMPTY_MY_RECIPES_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Key: RECIPES_DIFFICULTY_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Key: RECIPES_DIFFICULTY_EASY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Key: RECIPES_DIFFICULTY_MEDIUM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Key: RECIPES_DIFFICULTY_HARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Key: RECIPES_FILTER_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Key: RECIPES_EXPIRING_MATCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Key: RECIPES_PANTRY_MATCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Key: RECIPES_STEP_GENERAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Key: RECIPES_STEP_INGREDIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Key: RECIPES_STEP_INSTRUCTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Key: RECIPES_EDIT_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Key: RECIPES_SAVE_BTN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Key: RECIPES_USE_PANTRY_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335152709632
+    m_Key: RECIPES_EDITOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Key: RECIPE_ERROR_SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Key: RECIPE_E_ERROR_TITLE_REQUIRED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Key: RECIPES_CAT_BEEF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Key: RECIPES_CAT_CHICKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Key: RECIPES_CAT_DESSERT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Key: RECIPES_CAT_LAMB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Key: RECIPES_CAT_MISC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Key: RECIPES_CAT_PASTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Key: RECIPES_CAT_PORK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Key: RECIPES_CAT_SEAFOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Key: RECIPES_CAT_SIDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Key: RECIPES_CAT_STARTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Key: RECIPES_CAT_VEGAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Key: RECIPES_CAT_VEGETARIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Key: RECIPES_CAT_BREAKFAST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Key: RECIPES_CAT_GOAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Key: RECIPES_CUISINE_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Key: RECIPES_CUISINE_ALGERIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Key: RECIPES_CUISINE_AMERICAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Key: RECIPES_CUISINE_ARGENTINIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Key: RECIPES_CUISINE_AUSTRALIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Key: RECIPES_CUISINE_BRITISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Key: RECIPES_CUISINE_CANADIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Key: RECIPES_CUISINE_CHINESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Key: RECIPES_CUISINE_CROATIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Key: RECIPES_CUISINE_DUTCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Key: RECIPES_CUISINE_EGYPTIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Key: RECIPES_CUISINE_FILIPINO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Key: RECIPES_CUISINE_FRENCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Key: RECIPES_CUISINE_GREEK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Key: RECIPES_CUISINE_INDIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Key: RECIPES_CUISINE_IRISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Key: RECIPES_CUISINE_ITALIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Key: RECIPES_CUISINE_JAMAICAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Key: RECIPES_CUISINE_JAPANESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Key: RECIPES_CUISINE_KENYAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Key: RECIPES_CUISINE_MALAYSIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Key: RECIPES_CUISINE_MEXICAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Key: RECIPES_CUISINE_MOROCCAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Key: RECIPES_CUISINE_NORWEGIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Key: RECIPES_CUISINE_POLISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Key: RECIPES_CUISINE_PORTUGUESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Key: RECIPES_CUISINE_SAUDI_ARABIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Key: RECIPES_CUISINE_SLOVAKIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Key: RECIPES_CUISINE_SPANISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Key: RECIPES_CUISINE_SYRIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Key: RECIPES_CUISINE_THAI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Key: RECIPES_CUISINE_TUNISIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Key: RECIPES_CUISINE_TURKISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Key: RECIPES_CUISINE_UKRAINIAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Key: RECIPES_CUISINE_URUGUAYAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Key: RECIPES_CUISINE_VENEZUELAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Key: RECIPES_CUISINE_VIETNAMESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Key: RECIPES_FIELD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Key: RECIPES_FIELD_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Key: RECIPES_FIELD_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Key: RECIPES_FIELD_DESCRIPTION_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Key: RECIPES_FIELD_PREP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Key: RECIPES_FIELD_COOK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Key: RECIPES_FIELD_SERVINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Key: RECIPES_FIELD_DIFFICULTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Key: RECIPES_FIELD_DIFFICULTY_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Key: RECIPES_FIELD_CATEGORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Key: RECIPES_FIELD_CATEGORY_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Key: RECIPES_FIELD_CUISINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Key: RECIPES_FIELD_CUISINE_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Key: RECIPES_FIELD_PUBLIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Key: RECIPES_FIELD_ING_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Key: RECIPES_FIELD_ING_MEASURE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Key: RECIPES_FIELD_ADD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Key: RECIPES_FIELD_NO_ING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Key: RECIPES_FIELD_INSTRUCTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Key: RECIPES_FIELD_INSTRUCTIONS_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Key: RECIPES_FIELD_IMAGE_URL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Key: RECIPES_FIELD_IMAGE_URL_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301379
+    m_Key: RECIPES_CREATE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48825971850076160
+    m_Key: RECIPES_A_DELETE_CONFIRM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Key: RECIPES_A_DELETE_CONFIRM_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Key: YESTERDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Key: CONFIRM_DELETE_MEAL_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Key: MEAL_LOG_DELETED_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672707
+    m_Key: EDITING_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Key: EDITING_MEAL_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Key: SAVE_CHANGES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Key: CANCEL_EDIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Key: MEAL_UPDATED_SUCCESS
     m_Metadata:
       m_Items: []
   m_Metadata:

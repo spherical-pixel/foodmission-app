@@ -321,7 +321,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task OpenRandomQuiz_SelectsPendingQuiz_WhenAvailable()
+        public async Task OpenRandomQuizFallback_SelectsPendingQuiz_WhenAvailable()
         {
             await _vm.LoadDataAsync();
 
@@ -335,7 +335,7 @@ namespace eu.foodmission.platform.Tests
 
             // Selected level Beginner: pending are Q1.1.2 and Q5.1.1
             _vm.SetLevelFilter(QuizLevel.Beginner);
-            _vm.OpenRandomQuiz();
+            _vm.OpenRandomQuizFallback();
 
             Assert.AreEqual(Actions.open_quiz, requestedAction);
             Assert.IsNotNull(requestedArgs);
@@ -344,7 +344,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task OpenRandomQuiz_SelectsAnyQuiz_WhenAllMatchingCompleted()
+        public async Task OpenRandomQuizFallback_SelectsAnyQuiz_WhenAllMatchingCompleted()
         {
             // All beginner quizzes completed
             var progressAllBeginner = new[]
@@ -367,7 +367,7 @@ namespace eu.foodmission.platform.Tests
             };
 
             _vm.SetLevelFilter(QuizLevel.Beginner);
-            _vm.OpenRandomQuiz();
+            _vm.OpenRandomQuizFallback();
 
             Assert.AreEqual(Actions.open_quiz, requestedAction);
             Assert.IsNotNull(requestedArgs);
@@ -376,14 +376,132 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void OpenRandomQuiz_DoesNothing_WhenNoQuizzesLoaded()
+        public void OpenRandomQuizFallback_DoesNothing_WhenNoQuizzesLoaded()
         {
             string requestedAction = null;
             _vm.NavigationRequested += (action, args) => requestedAction = action;
 
-            _vm.OpenRandomQuiz();
+            _vm.OpenRandomQuizFallback();
 
             Assert.IsNull(requestedAction);
+        }
+
+        // --- OpenRandomQuizAsync tests ---
+
+        [Test]
+        public async Task OpenRandomQuizAsync_WhenBackendReturnsQuiz_NavigatesToIt()
+        {
+            var randomQuiz = new Quiz { id = "q-rand", code = "Q9.9.9", level = QuizLevel.Beginner };
+            _mockQuizService.Setup(q => q.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>()))
+                .ReturnsAsync((randomQuiz, (ApiErrorResponse)null));
+
+            string requestedAction = null;
+            Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) =>
+            {
+                requestedAction = action;
+                requestedArgs = args;
+            };
+
+            await _vm.OpenRandomQuizAsync();
+
+            Assert.AreEqual(Actions.open_quiz, requestedAction);
+            Assert.IsNotNull(requestedArgs);
+            Assert.AreEqual("Q9.9.9", requestedArgs.First(a => a.name == "code").value);
+            Assert.AreEqual("q-rand", requestedArgs.First(a => a.name == "id").value);
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
+        [Test]
+        public async Task OpenRandomQuizAsync_When404_FallsBackToClientSide()
+        {
+            // Backend returns (null, null) -> 404 no unseen quiz
+            _mockQuizService.Setup(q => q.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>()))
+                .ReturnsAsync(((Quiz)null, (ApiErrorResponse)null));
+
+            await _vm.LoadDataAsync();
+
+            string requestedAction = null;
+            Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) =>
+            {
+                requestedAction = action;
+                requestedArgs = args;
+            };
+
+            await _vm.OpenRandomQuizAsync();
+
+            // Should fallback to client-side and still navigate
+            Assert.AreEqual(Actions.open_quiz, requestedAction);
+            Assert.IsNotNull(requestedArgs);
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
+        [Test]
+        public async Task OpenRandomQuizAsync_WhenError_FallsBackToClientSide()
+        {
+            // Backend returns an error
+            _mockQuizService.Setup(q => q.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>()))
+                .ReturnsAsync(((Quiz)null, new ApiErrorResponse { message = "Server error" }));
+
+            await _vm.LoadDataAsync();
+
+            await _vm.OpenRandomQuizAsync();
+
+            Assert.IsNotNull(_vm.ErrorDetail);
+            Assert.AreEqual("Server error", _vm.ErrorMessage);
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
+        [Test]
+        public async Task OpenRandomQuizAsync_PassesLevelFilter()
+        {
+            var randomQuiz = new Quiz { id = "q-beg", code = "Q1.1.2", level = QuizLevel.Beginner };
+            QuizFilterParams capturedFilters = null;
+
+            _mockQuizService.Setup(q => q.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>()))
+                .Callback<QuizFilterParams, string>((f, l) => capturedFilters = f)
+                .ReturnsAsync((randomQuiz, (ApiErrorResponse)null));
+
+            _vm.SetLevelFilter(QuizLevel.Beginner);
+            await _vm.OpenRandomQuizAsync();
+
+            Assert.IsNotNull(capturedFilters);
+            Assert.AreEqual(QuizLevel.Beginner, capturedFilters.level);
+        }
+
+        [Test]
+        public async Task OpenRandomQuizAsync_PassesNoFilter_WhenLevelIsAll()
+        {
+            var randomQuiz = new Quiz { id = "q-any", code = "Q2.1.1", level = QuizLevel.Intermediate };
+            QuizFilterParams capturedFilters = null;
+
+            _mockQuizService.Setup(q => q.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>()))
+                .Callback<QuizFilterParams, string>((f, l) => capturedFilters = f)
+                .ReturnsAsync((randomQuiz, (ApiErrorResponse)null));
+
+            _vm.SetLevelFilter(QuizFilterLevel.All);
+            await _vm.OpenRandomQuizAsync();
+
+            Assert.IsNull(capturedFilters);
+        }
+
+        [Test]
+        public async Task OpenRandomQuizAsync_WhenException_FallsBackToClientSide()
+        {
+            _mockQuizService.Setup(q => q.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>()))
+                .ThrowsAsync(new Exception("Network timeout"));
+
+            await _vm.LoadDataAsync();
+
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            await _vm.OpenRandomQuizAsync();
+
+            // Should fallback to client-side and still navigate
+            Assert.AreEqual(Actions.open_quiz, requestedAction);
+            Assert.IsFalse(_vm.IsLoading);
         }
     }
 }

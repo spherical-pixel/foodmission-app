@@ -44,4 +44,16 @@ namespace eu.foodmission.platform
         public bool? foodWaste;
         public string search;
     }
+
+    [Serializable]
+    public class FoodFactProgressResponse
+    {
+        public string id;
+        public string userId;
+        public string foodFactId;
+        public string foodFactCode;
+        public string readAt;
+        public ContentReward reward;
+    }
 }
+

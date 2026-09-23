@@ -12,6 +12,9 @@ namespace eu.foodmission.platform.Tests
     {
         private TestStoreService _storeService;
         private Mock<IRecipeService> _mockRecipeService;
+        private Mock<IFoodProductService> _mockFoodProductService;
+        private Mock<IOpenFoodFactsClientService> _mockOffClientService;
+        private Mock<IGenericFoodService> _mockGenericFoodService;
         private RecipeEditorViewModel _viewModel;
 
         [SetUp]
@@ -19,7 +22,15 @@ namespace eu.foodmission.platform.Tests
         {
             _storeService = new TestStoreService();
             _mockRecipeService = new Mock<IRecipeService>();
-            _viewModel = new RecipeEditorViewModel(_storeService, _mockRecipeService.Object);
+            _mockFoodProductService = new Mock<IFoodProductService>();
+            _mockOffClientService = new Mock<IOpenFoodFactsClientService>();
+            _mockGenericFoodService = new Mock<IGenericFoodService>();
+            _viewModel = new RecipeEditorViewModel(
+                _storeService,
+                _mockRecipeService.Object,
+                _mockFoodProductService.Object,
+                _mockOffClientService.Object,
+                _mockGenericFoodService.Object);
             FoodProductFlow.UseDirectClientOverride = () => false;
         }
 
@@ -38,6 +49,27 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ValidateStep_Step0_WithEmptyTitle_AndShowErrorFalse_DoesNotSetErrorDetail()
+        {
+            _viewModel.Title = "";
+            Assert.IsFalse(_viewModel.TestValidateStep(0, showError: false));
+            Assert.IsNull(_viewModel.ErrorDetail);
+        }
+
+        [Test]
+        public void TitleChange_UpdatesCanGoNext()
+        {
+            _viewModel.Reset();
+            Assert.IsFalse(_viewModel.CanGoNext);
+
+            _viewModel.Title = "Pasta";
+            Assert.IsTrue(_viewModel.CanGoNext);
+
+            _viewModel.Title = "";
+            Assert.IsFalse(_viewModel.CanGoNext);
+        }
+
+        [Test]
         public void ValidateStep_Step0_WithTitle_ReturnsTrue()
         {
             _viewModel.Title = "Pasta";
@@ -51,6 +83,25 @@ namespace eu.foodmission.platform.Tests
             _viewModel.Ingredients.Clear();
             Assert.IsTrue(_viewModel.TestValidateStep(1));
             Assert.IsTrue(_viewModel.HasNoIngredientsWarning);
+        }
+
+        [Test]
+        public void ValidateStep_Step1_EmptyIngredients_AndShowErrorFalse_DoesNotSetWarning()
+        {
+            _viewModel.Ingredients.Clear();
+            Assert.IsTrue(_viewModel.TestValidateStep(1, showError: false));
+            Assert.IsFalse(_viewModel.HasNoIngredientsWarning);
+        }
+
+        [Test]
+        public void AddFreeTextIngredient_ClearsHasNoIngredientsWarning()
+        {
+            _viewModel.Ingredients.Clear();
+            _viewModel.TestValidateStep(1, showError: true);
+            Assert.IsTrue(_viewModel.HasNoIngredientsWarning);
+
+            _viewModel.AddFreeTextIngredient("Olive Oil", "1 tbsp");
+            Assert.IsFalse(_viewModel.HasNoIngredientsWarning);
         }
 
         [Test]
@@ -76,6 +127,48 @@ namespace eu.foodmission.platform.Tests
         {
             _viewModel.AddIngredientFromGenericFood("550e8400-e29b-41d4-a716-446655440000", "Salt", "1 tsp");
             Assert.AreEqual(1, _viewModel.Ingredients.Count);
+        }
+
+        [Test]
+        public void AddIngredientFromProduct_WithQuantityAndUnit_StoresValues()
+        {
+            _viewModel.AddIngredientFromProduct("prod-1", "Tomato", "2 PIECES", 2f, "PIECES");
+            Assert.AreEqual(1, _viewModel.Ingredients.Count);
+            Assert.AreEqual("Tomato", _viewModel.Ingredients[0].Name);
+            Assert.AreEqual("2 PIECES", _viewModel.Ingredients[0].Measure);
+            Assert.AreEqual(2f, _viewModel.Ingredients[0].Quantity);
+            Assert.AreEqual("PIECES", _viewModel.Ingredients[0].Unit);
+            Assert.AreEqual("prod-1", _viewModel.Ingredients[0].FoodProductId);
+        }
+
+        [Test]
+        public void UpdateIngredient_ModifiesExistingIngredient()
+        {
+            _viewModel.AddIngredientFromGenericFood("550e8400-e29b-41d4-a716-446655440000", "Olive Oil", "10 ml", 10f, "ML");
+            _viewModel.UpdateIngredient(0, 20f, "ML", "20 ml");
+
+            Assert.AreEqual(1, _viewModel.Ingredients.Count);
+            Assert.AreEqual(20f, _viewModel.Ingredients[0].Quantity);
+            Assert.AreEqual("ML", _viewModel.Ingredients[0].Unit);
+            Assert.AreEqual("20 ml", _viewModel.Ingredients[0].Measure);
+        }
+
+        [Test]
+        public async Task SearchByFoodGroupAsync_CallsGenericFoodService()
+        {
+            var expectedResponse = new PaginatedGenericFoodResponse
+            {
+                items = new[] { new GenericFood { id = "1", foodName = "Apple" } }
+            };
+            _mockGenericFoodService
+                .Setup(s => s.SearchGenericFoodsAsync(null, "fruits", 1, 20))
+                .ReturnsAsync((expectedResponse, null));
+
+            var result = await _viewModel.SearchByFoodGroupAsync("fruits", 1, 20);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.items.Length);
+            Assert.AreEqual("Apple", result.items[0].foodName);
         }
 
         [Test]
@@ -132,6 +225,106 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNotNull(_viewModel.ErrorDetail);
             CollectionAssert.DoesNotContain(_storeService.DispatchedActionTypes, "recipes_to_detail");
+        }
+
+        [Test]
+        public void Reset_ClearsFieldsAndResetsStep()
+        {
+            _viewModel.Title = "Something";
+            _viewModel.Description = "Desc";
+            _viewModel.Difficulty = "easy";
+            _viewModel.AddFreeTextIngredient("Salt", "1 tsp");
+            _viewModel.EditingRecipeId = "r-1";
+
+            _viewModel.Reset();
+
+            Assert.IsEmpty(_viewModel.Title);
+            Assert.IsEmpty(_viewModel.Description);
+            Assert.IsNull(_viewModel.Difficulty);
+            Assert.AreEqual(0, _viewModel.Ingredients.Count);
+            Assert.IsNull(_viewModel.EditingRecipeId);
+            Assert.AreEqual(0, _viewModel.CurrentStepIndex);
+            Assert.IsFalse(_viewModel.IsEditMode);
+            Assert.IsNull(_viewModel.ErrorDetail);
+            Assert.AreEqual(3, _viewModel.StepCount);
+            Assert.IsFalse(_viewModel.IsLastStep);
+            Assert.IsTrue(_viewModel.IsFirstStep);
+            Assert.IsFalse(_viewModel.CanGoNext);
+        }
+
+        [Test]
+        public async Task LoadForEditAsync_PopulatesProperties()
+        {
+            _mockRecipeService.Setup(s => s.GetRecipeAsync("rec-99"))
+                .ReturnsAsync((new Recipe
+                {
+                    id = "rec-99",
+                    title = "Lentil Soup",
+                    description = "Hearty soup",
+                    instructions = "Boil and serve",
+                    difficulty = "medium",
+                    category = "soups",
+                    cuisineType = "mediterranean",
+                    prepTime = 10,
+                    cookTime = 30,
+                    servings = 4,
+                    ingredients = new[]
+                    {
+                        new RecipeIngredient { name = "Lentils", measure = "200g" }
+                    }
+                }, null));
+
+            await _viewModel.LoadForEditAsync("rec-99");
+
+            Assert.IsTrue(_viewModel.IsEditMode);
+            Assert.AreEqual("rec-99", _viewModel.EditingRecipeId);
+            Assert.AreEqual("Lentil Soup", _viewModel.Title);
+            Assert.AreEqual("Hearty soup", _viewModel.Description);
+            Assert.AreEqual("Boil and serve", _viewModel.Instructions);
+            Assert.AreEqual("medium", _viewModel.Difficulty);
+            Assert.AreEqual("soups", _viewModel.Category);
+            Assert.AreEqual("mediterranean", _viewModel.CuisineType);
+            Assert.AreEqual(10, _viewModel.PrepTime);
+            Assert.AreEqual(30, _viewModel.CookTime);
+            Assert.AreEqual(4, _viewModel.Servings);
+            Assert.AreEqual(1, _viewModel.Ingredients.Count);
+            Assert.AreEqual("Lentils", _viewModel.Ingredients[0].Name);
+        }
+
+        [Test]
+        public async Task GoNextAsync_WithValidTitle_AdvancesToStep1()
+        {
+            _viewModel.Reset();
+            _viewModel.Title = "Test Recipe";
+            Assert.IsTrue(_viewModel.CanGoNext);
+            Assert.AreEqual(0, _viewModel.CurrentStepIndex);
+
+            await _viewModel.GoNextAsync();
+
+            Assert.AreEqual(1, _viewModel.CurrentStepIndex);
+            Assert.IsFalse(_viewModel.IsFirstStep);
+            Assert.IsFalse(_viewModel.IsLastStep);
+            Assert.IsTrue(_viewModel.CanGoNext);
+            Assert.IsTrue(_viewModel.CanGoPrevious);
+        }
+
+        [Test]
+        public async Task GoNextAsync_FromStep1_AdvancesToStep2_AndMarksIsLastStep()
+        {
+            _viewModel.Reset();
+            _viewModel.Title = "Test Recipe";
+
+            await _viewModel.GoNextAsync();
+            Assert.AreEqual(1, _viewModel.CurrentStepIndex);
+
+            await _viewModel.GoNextAsync();
+            Assert.AreEqual(2, _viewModel.CurrentStepIndex);
+            Assert.IsTrue(_viewModel.IsLastStep);
+            Assert.IsFalse(_viewModel.IsFirstStep);
+
+            await _viewModel.GoPreviousAsync();
+            Assert.AreEqual(1, _viewModel.CurrentStepIndex);
+            Assert.IsFalse(_viewModel.IsLastStep);
         }
     }
 }

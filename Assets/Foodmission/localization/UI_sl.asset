@@ -198,8 +198,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Skupaj bomo va\u0161o kuhinjo povezali s skrbjo za planet.\n\nVsak
-      dan kuhajte, se u\u010Dite, delite in rastite.\n\nSte pripravljeni za\u010Deti?"
+    m_Localized: "Skupaj bomo va\u0161o kuhinjo povezali s skrbjo za planet.\r\n\r\nVsak
+      dan kuhajte, se u\u010Dite, delite in rastite.\r\n\r\nSte pripravljeni za\u010Deti?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: "Ta dejanja bodo trajno izbrisala vse va\u0161e podatke s platforme.\n\nSte
+    m_Localized: "Ta dejanja bodo trajno izbrisala vse va\u0161e podatke s platforme.\r\n\r\nSte
       prepri\u010Dani?"
     m_Metadata:
       m_Items: []
@@ -1344,7 +1344,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Dobrodo\u0161li v Foodmission!\nTa kratka anketa nam pomaga razumeti
+    m_Localized: "Dobrodo\u0161li v Foodmission!\r\nTa kratka anketa nam pomaga razumeti
       va\u0161e prehranjevalne navade, ozave\u0161\u010Denost o izgubi hrane in trajnostne
       odlo\u010Ditve, da vam bo Nutri lahko pripravil priporo\u010Dila po meri."
     m_Metadata:
@@ -2013,9 +2013,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Dobrodo\u0161li na FOODMISSION! \nPlatforma za dr\u017Eavljansko
+    m_Localized: "Dobrodo\u0161li na FOODMISSION! \r\nPlatforma za dr\u017Eavljansko
       znanost, ki vam pomaga izbolj\u0161ati trajnostne navade in prehranske navade.
-      \nV nekaj preprostih korakih si ustvarimo ra\u010Dun."
+      \r\nV nekaj preprostih korakih si ustvarimo ra\u010Dun."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2111,7 +2111,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "V va\u0161i dr\u017Eavi se pilotni projekt ne izvaja.\nPlatformo
+    m_Localized: "V va\u0161i dr\u017Eavi se pilotni projekt ne izvaja.\r\nPlatformo
       lahko raziskujete in uporabljate, vendar va\u0161i podatki ne bodo uporabljeni
       za raziskavo v okviru pilotnega projekta."
     m_Metadata:
@@ -2119,8 +2119,8 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Pozdravljeni! Da bi vam lahko prilagodili izku\u0161njo na Foodmissionu
       in vam pomagali dose\u010Di va\u0161e cilje, bi vas radi malo bolje spoznali.
-      Ste za to?\n\nProsimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
-      lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
+      Ste za to?\r\n\r\nProsimo, odgovorite na nekaj neobveznih vpra\u0161anj, da
+      bomo lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2223,9 +2223,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Ups! Ta razdelek \u0161e ni na voljo, a ne skrbite: delamo na tem,
-      da ga boste lahko kmalu uporabljali.\n\nFOODMISSION se nenehno razvija. Aplikacijo
-      izbolj\u0161ujemo in dodajamo nove funkcije na podlagi povratnih informacij
-      od uporabnikov, kot ste vi. Hvala, da nam pomagate rasti!"
+      da ga boste lahko kmalu uporabljali.\r\n\r\nFOODMISSION se nenehno razvija.
+      Aplikacijo izbolj\u0161ujemo in dodajamo nove funkcije na podlagi povratnih
+      informacij od uporabnikov, kot ste vi. Hvala, da nam pomagate rasti!"
     m_Metadata:
       m_Items: []
   - m_Id: 34310338294833152
@@ -2373,9 +2373,9 @@ MonoBehaviour:
   - m_Id: 40938002757705728
     m_Localized: "\u010Ce \u017Eelite \u0161e naprej uporabljati platformo, morate
       sprejeti nov dokument {0}. \u010Ce se s tem ne strinjate, se lahko odjavite
-      ali izbri\u0161ete svoj ra\u010Dun.\n\nVzemite si trenutek \u010Dasa in \u0161e
-      enkrat preglejte nov dokument {0} ter nas brez zadr\u017Ekov obvestite, \u010De
-      menite, da je v njem kaj narobe."
+      ali izbri\u0161ete svoj ra\u010Dun.\r\n\r\nVzemite si trenutek \u010Dasa in
+      \u0161e enkrat preglejte nov dokument {0} ter nas brez zadr\u017Ekov obvestite,
+      \u010De menite, da je v njem kaj narobe."
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -2383,9 +2383,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Pozdravljeni!\n\nKot udele\u017Eenec pilotnega projekta smo za
-      vas pripravili kratek vpra\u0161alnik. Va\u0161i odgovori nam bodo pomagali
-      izbolj\u0161ati platformo FOODMISSION. \n\nAli bi ga \u017Eeleli izpolniti
+    m_Localized: "Pozdravljeni!\r\n\r\nKot udele\u017Eenec pilotnega projekta smo
+      za vas pripravili kratek vpra\u0161alnik. Va\u0161i odgovori nam bodo pomagali
+      izbolj\u0161ati platformo FOODMISSION. \r\n\r\nAli bi ga \u017Eeleli izpolniti
       zdaj?"
     m_Metadata:
       m_Items: []
@@ -2479,20 +2479,487 @@ MonoBehaviour:
     m_Localized: "Razi\u0161\u010Di naloge"
     m_Metadata:
       m_Items: []
-  - m_Id: 49206146878136320
-    m_Localized: Poenostavljen dnevnik obrokov
+  - m_Id: 46966269096747008
+    m_Localized: "{0:plural:Prislu\u017Een FoodyCoin!|Prislu\u017Eena FoodyCoina!|Prislu\u017Eeni
+      FoodyCoini!|Prislu\u017Eenih FoodyCoinov!}"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 46966074812391424
+    m_Localized: Nagrada je tvoja!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207590964420608
-    m_Localized: "Katere so bile glavne zna\u010Dilnosti va\u0161e jedi?"
+  - m_Id: 46966143921938432
+    m_Localized: Pridobljenih XP!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207906585796608
-    m_Localized: Ime ali opis (neobvezno)
+  - m_Id: 46966724417806336
+    m_Localized: Pridobljen nov znak!
     m_Metadata:
       m_Items: []
-  - m_Id: 49210861586210816
-    m_Localized: "Npr.: Solata iz le\u010De in zelenjave"
+  - m_Id: 46966954571849728
+    m_Localized: "Nov izdelek za hi\u0161ne ljubljen\u010Dke!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Localized: Nova zbirateljska izdaja!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633499783168
+    m_Localized: Prebrano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Localized: Neprebrano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Localized: "Naloga zaklju\u010Dena!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Localized: "Kviz zaklju\u010Den!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Localized: Novo dejstvo usvojeno!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: Zate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: "Razi\u0161\u010Di"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Moji recepti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Nov recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: Tvoja shramba je prazna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "Dodaj \u017Eivila v svojo shrambo za pametne predloge receptov
+      in manj zavr\u017Eene hrane!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: Pojdi v shrambo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: "\u0160e niste ustvarili receptov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: "Ustvari in deli svoje najljub\u0161e trajnostne recepte s skupnostjo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Vse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Enostavno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Srednje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: "Te\u017Eko"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Vse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: "{0} kmalu pote\u010De"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} v shrambi'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: "Splo\u0161no"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Sestavine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Navodila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301379
+    m_Localized: Ustvari recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Uredi recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Shrani recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: Izkoristite kar imate doma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: Urejevalnik receptov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: Napaka pri shranjevanju recepta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: Naslov recepta je obvezen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: Govedina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: "Pi\u0161\u010Danec"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Sladica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: Jagnjetina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: Razno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Testenine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: Svinjina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: "Ribe in morski sade\u017Ei"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: Priloge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Predjedi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: Vegansko
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: Vegetarijansko
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: Zajtrk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: "Kozli\u010Dek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: Vse kuhinje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: "Al\u017Eirska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: "Ameri\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: Argentinska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Avstralska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: Britanska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Kanadska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: Kitajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: "Hrva\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Nizozemska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: "Egip\u010Danska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: Filipinska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: Francoska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: "Gr\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Irska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: Italijanska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: "Jamaj\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: Japonska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: Kenijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Malezijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: "Mehi\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: "Maro\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: "Norve\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Poljska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portugalska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Savdska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: "Slova\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: "\u0160panska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Sirska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Tajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunizijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: "Tur\u0161ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: Ukrajinska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Urugvajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Venezuelska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Vietnamska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Naslov recepta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Npr. Testenine z zelenjavo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Opis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: Kratek uvod v recept...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: "\u010Cas priprave (min)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: "\u010Cas kuhanja (min)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porcije
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Zahtevnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: Izberite zahtevnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Kategorija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: Izberite kategorijo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Kuhinja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: Izberite kuhinjo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: Naredi recept javen za skupnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: Ime sestavine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: "Koli\u010Dina / Mera"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Dodaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Niste \u0161e dodali sestavin."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Navodila za pripravo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Podrobni koraki za pripravo jedi...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: URL slike (neobvezno)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: "Izbri\u0161em recept?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite izbrisati ta recept?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: "V\u010Deraj"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite izbrisati ta vnos obroka?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: "Vnos obroka uspe\u0161no izbrisan"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Urejanje obroka: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Urejanje obroka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Shrani spremembe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: "Prekli\u010Di urejanje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: "Obrok uspe\u0161no posodobljen"
     m_Metadata:
       m_Items: []
   references:
@@ -2509,3 +2976,4 @@ MonoBehaviour:
         - id: 28899582313226240
         - id: 28906308236206080
         - id: 28898960193085440
+        - id: 46966269096747008

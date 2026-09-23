@@ -200,10 +200,16 @@ MonoBehaviour:
   - m_Id: 35547983100502016
     m_Localized: 'Samen brengen we je keuken in verband met zorg voor de planeet.
 
+      
+
+      
 
       Kook,
       leer, deel en groei elke dag.
 
+      
+
+      
 
       Klaar om te beginnen?'
     m_Metadata:
@@ -263,6 +269,9 @@ MonoBehaviour:
   - m_Id: 38465306467753984
     m_Localized: 'Hierdoor worden al je gegevens definitief van het platform verwijderd.
 
+      
+
+      
 
       Weet
       je het zeker?'
@@ -1349,7 +1358,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Welkom bij Foodmission!\nDeze korte enqu\xEAte helpt ons inzicht
+    m_Localized: "Welkom bij Foodmission!\r\nDeze korte enqu\xEAte helpt ons inzicht
       te krijgen in je eetgewoonten, je bewustzijn rond voedselverspilling en je
       duurzame keuzes, zodat Nutri aanbevelingen op maat voor je kan doen."
     m_Metadata:
@@ -2018,8 +2027,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Welkom bij FOODMISSION! \nEen burgerwetenschappelijk platform om
-      je gedrag op het gebied van duurzaamheid en voeding te verbeteren. \nLaten
+    m_Localized: "Welkom bij FOODMISSION! \r\nEen burgerwetenschappelijk platform
+      om je gedrag op het gebied van duurzaamheid en voeding te verbeteren. \r\nLaten
       we in een paar eenvoudige stappen je account aanmaken."
     m_Metadata:
       m_Items: []
@@ -2128,9 +2137,13 @@ MonoBehaviour:
       helpen je doelen te bereiken, willen we je graag wat beter leren kennen. Heb
       je daar zin in?
 
+      
 
-      Beantwoord dan een paar optionele vragen, zodat we
-      je tips, receptsuggesties en dagelijkse uitdagingen op maat kunnen maken.'
+      
+
+      Beantwoord dan een paar optionele
+      vragen, zodat we je tips, receptsuggesties en dagelijkse uitdagingen op maat
+      kunnen maken.'
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2235,6 +2248,9 @@ MonoBehaviour:
     m_Localized: 'Oeps! Dit gedeelte is nog niet beschikbaar, maar maak je geen zorgen:
       we zijn ermee bezig, dus je kunt er binnenkort van genieten.
 
+      
+
+      
 
       FOODMISSION
       blijft zich voortdurend ontwikkelen. Dankzij de feedback van mensen zoals jij
@@ -2388,10 +2404,13 @@ MonoBehaviour:
       document van {0} accepteren. Als u hiermee niet akkoord gaat, kunt u uitloggen
       of uw account verwijderen.
 
+      
 
-      Neem alstublieft even de tijd om het nieuwe
-      document van {0} nogmaals door te nemen, en neem gerust contact met ons op
-      als u denkt dat er iets niet klopt.'
+      
+
+      Neem alstublieft even
+      de tijd om het nieuwe document van {0} nogmaals door te nemen, en neem gerust
+      contact met ons op als u denkt dat er iets niet klopt.'
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -2399,9 +2418,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Hallo!\n\nAls deelnemer aan het proefproject hebben we een korte
-      enqu\xEAte voor je. Je antwoorden helpen ons het FOODMISSION-platform te verbeteren.
-      \n\nWil je de enqu\xEAte nu invullen?"
+    m_Localized: "Hallo!\r\n\r\nAls deelnemer aan het proefproject hebben we een
+      korte enqu\xEAte voor je. Je antwoorden helpen ons het FOODMISSION-platform
+      te verbeteren. \r\n\r\nWil je de enqu\xEAte nu invullen?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -2496,20 +2515,486 @@ MonoBehaviour:
     m_Localized: Ontdek missies
     m_Metadata:
       m_Items: []
-  - m_Id: 49206146878136320
-    m_Localized: Vereenvoudigd maaltijdlogboek
+  - m_Id: 46966269096747008
+    m_Localized: '{0:plural:FoodyCoin verdiend!|FoodyCoins verdiend!}'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 46966074812391424
+    m_Localized: Beloning verdiend!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207590964420608
-    m_Localized: Wat waren de belangrijkste kenmerken van je gerecht?
+  - m_Id: 46966143921938432
+    m_Localized: XP verdiend!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207906585796608
-    m_Localized: Naam of beschrijving (optioneel)
+  - m_Id: 46966724417806336
+    m_Localized: Nieuwe badge verzameld!
     m_Metadata:
       m_Items: []
-  - m_Id: 49210861586210816
-    m_Localized: 'Bijvoorbeeld: Salade met linzen en groenten'
+  - m_Id: 46966954571849728
+    m_Localized: Nieuw product voor huisdieren!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Localized: Nieuw verzamelobject!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633499783168
+    m_Localized: Gelezen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Localized: Ongelezen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Localized: Opdracht voltooid!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Localized: Quiz voltooid!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Localized: Nieuw weetje geleerd!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: Voor jou
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Ontdekken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Mijn recepten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Nieuw recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: Je voorraadkast is leeg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: Voeg producten toe aan je voorraadkast voor slimme receptsuggesties
+      en minder voedselverspilling!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: Ga naar voorraadkast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: Nog geen recepten gemaakt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: Maak en deel je favoriete duurzame recepten met de community!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Makkelijk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Gemiddeld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Moeilijk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: '{0} verloopt binnenkort'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} in voorraadkast'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: Algemeen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: "Ingredi\xEBnten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Bereiding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301379
+    m_Localized: Recept maken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Recept bewerken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Recept opslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: Haal het beste uit wat je thuis hebt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: Receptbewerker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: Fout bij opslaan recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: Recepttitel is verplicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: Rundvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: Kip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Dessert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: Lamsvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: Diversen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Pasta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: Varkensvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: Vis & zeevruchten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: Bijgerechten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Voorgerechten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: Veganistisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: Vegetarisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: Ontbijt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: Geitenvlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: Alle keukens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: Algerijns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: Amerikaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: Argentijns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Australisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: Brits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Canadees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: Chinees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: Kroatisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Nederlands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: Egyptisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: Filipijns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: Frans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: Grieks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indiaas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Iers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: Italiaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: Jamaicaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: Japans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: Keniaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Maleisisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: Mexicaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: Marokkaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: Noors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Pools
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portugees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Saoedi-Arabisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: Slowaaks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: Spaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Syrisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Thais
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunesisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: Turks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: "Oekra\xEFens"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Uruguayaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Venezolaans
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Vietnamees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Recepttitel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Bijv. Pasta met groenten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Beschrijving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: Korte inleiding tot het recept...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Bereidingstijd (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Kooktijd (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porties
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Moeilijkheidsgraad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: Selecteer moeilijkheidsgraad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Categorie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: Selecteer categorie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Keuken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: Selecteer keuken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: Maak recept openbaar voor de community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: "Ingredi\xEBntnaam"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: Hoeveelheid / Maat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Je hebt nog geen ingredi\xEBnten toegevoegd."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Bereidingsinstructies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Gedetailleerde stappen om het gerecht te bereiden...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: Afbeeldings-URL (optioneel)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: Recept verwijderen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: Weet u zeker dat u dit recept wilt verwijderen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: Gisteren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: Weet je zeker dat je dit maaltijdlogboek wilt verwijderen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: Maaltijdlogboek succesvol verwijderd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Maaltijd bewerken: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Maaltijd bewerken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Wijzigingen opslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Bewerken annuleren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: Maaltijd succesvol bijgewerkt
     m_Metadata:
       m_Items: []
   references:
@@ -2526,3 +3011,4 @@ MonoBehaviour:
         - id: 28899582313226240
         - id: 28906308236206080
         - id: 28898960193085440
+        - id: 46966269096747008

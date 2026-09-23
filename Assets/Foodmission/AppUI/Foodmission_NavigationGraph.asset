@@ -670,7 +670,9 @@ MonoBehaviour:
   m_Position: {x: 4545, y: 1276}
   m_Guid: e90bf21523603446cae20f16e2dfb21c
   m_Parent: {fileID: 4583499250303890363}
-  m_Actions: []
+  m_Actions:
+  - {fileID: 493088208824764709}
+  - {fileID: -7349625825304333666}
   m_Label: '@UI:RECIPES_EDITOR'
   m_TemplateSettings:
     rid: 4448174966193258788
@@ -683,7 +685,7 @@ MonoBehaviour:
       data:
         m_ScreenType: eu.foodmission.platform.RecipeEditorScreen, Foodmission, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-        m_ShowBottomNavBar: 1
+        m_ShowBottomNavBar: 0
         m_ShowAppBar: 1
         m_ShowBackButton: 1
         m_ShowDrawer: 1

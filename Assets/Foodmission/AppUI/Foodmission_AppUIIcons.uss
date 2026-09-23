@@ -124,6 +124,7 @@
     --appui-icon-fm-pantry-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-pantry.png");
     --appui-icon-fm-shopping-list-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-shopping-list.png");
     --appui-icon-fm-search-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-search.png");
+    --appui-icon-fm-icon-coin-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-icon-coin.png");
 }
 
 .appui-icon--arrow-up--regular {
@@ -604,5 +605,9 @@
 
 .appui-icon--fm-search--regular {
     --unity-image: var(--appui-icon-fm-search-regular);
+}
+
+.appui-icon--fm-icon-coin--regular {
+    --unity-image: var(--appui-icon-fm-icon-coin-regular);
 }
 

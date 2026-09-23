@@ -61,6 +61,7 @@ namespace eu.foodmission.platform
             base.OnEnter(controller, destination, args);
             _ = _viewModel?.LoadActiveQuestAsync();
             RefreshActiveQuestWidget();
+            //SetupRewardDebugButton();
         }
 
         private void CacheUIElements()
@@ -98,6 +99,7 @@ namespace eu.foodmission.platform
             CheckPendingLegalConsentAsync();
             CheckPendingPilotConsentAsync();
             CheckPendingPilotSurveyAsync();
+            //SetupRewardDebugButton();
             // #if DEVELOPER_MODE
             //             SetupPilotDebugPanel();
             // #endif
@@ -320,6 +322,64 @@ namespace eu.foodmission.platform
                 );
             }
 
+        }
+
+        private void SetupRewardDebugButton()
+        {
+            var root = contentContainer.Q<VisualElement>("root") ?? contentContainer;
+            if (root == null) return;
+
+            var existing = root.Q<VisualElement>("reward-debug-container");
+            if (existing != null)
+            {
+                existing.parent?.Remove(existing);
+            }
+
+            var debugContainer = new VisualElement();
+            debugContainer.name = "reward-debug-container";
+            debugContainer.style.marginTop = 16;
+            debugContainer.style.marginBottom = 16;
+            debugContainer.style.marginLeft = 20;
+            debugContainer.style.marginRight = 20;
+            debugContainer.style.alignItems = Align.Center;
+
+            var btn = new FMButton
+            {
+                title = "🎁 Probar Recompensas (Debug)",
+                variant = ButtonVariant.Accent,
+                size = Size.L
+            };
+            btn.style.width = Length.Percent(100);
+            btn.clicked += () =>
+            {
+                var simulatedReward = new ContentReward
+                {
+                    xp = 120,
+                    points = 51,
+
+                    /*,
+                    badgeId = "Maestro Sostenible",
+                    avatarItem = "Gorro de Chef Verde",
+                    petItem = "Collar Ecológico",
+                    collectible = "Trofeo Huella Cero"*/
+                };
+
+                RewardCelebrationDialog.Show(
+                    simulatedReward
+                );
+            };
+
+            debugContainer.Add(btn);
+
+            if (_activeQuestCard != null && _activeQuestCard.parent != null)
+            {
+                int index = _activeQuestCard.parent.IndexOf(_activeQuestCard);
+                _activeQuestCard.parent.Insert(index, debugContainer);
+            }
+            else
+            {
+                root.Add(debugContainer);
+            }
         }
 
         private async void SetupPilotDebugPanel()

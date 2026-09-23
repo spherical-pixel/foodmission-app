@@ -78,12 +78,12 @@ namespace eu.foodmission.platform.Components
 
             _headingText = new Unity.AppUI.UI.Heading();
             _headingText.AddToClassList("centered-text");
-            _headingText.size = HeadingSize.M;
+            _headingText.size = HeadingSize.S;
             _headingText.primary = true;
             _headingText.style.paddingTop = 0;
             _headingText.style.paddingBottom = 16;
-            //_headingText.style.minHeight = 68;
-            _headingText.style.whiteSpace = WhiteSpace.NoWrap;
+            _headingText.style.minHeight = 120;
+            _headingText.style.whiteSpace = WhiteSpace.Normal;
             Add(_headingText);
 
             _linearProgress = new Unity.AppUI.UI.LinearProgress();

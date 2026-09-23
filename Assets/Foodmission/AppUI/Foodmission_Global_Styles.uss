@@ -682,7 +682,7 @@
     --progress-color: rgb(41, 209, 227);
     --appui-linear-progress-height: 28px;
     --appui-linear-progress-border-radius: 12px;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.6);
     margin-right: -60px;
     margin-bottom: 45px;
 }
@@ -699,9 +699,27 @@
     margin-bottom: 45px;
 }
 
+.fm-profile-points-badge {
+    width: 115px;
+    height: 115px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/Foodmission/graphics/png/icons/fm-icon-coin.png");
+    -unity-background-image-size: contain;
+    margin-bottom: 45px;
+}
+
 .fm-profile-xp-label {
     color: white;
     font-size: var(--appui-font-sizes-body-md);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.fm-profile-points-label{
+    color: var(--appui-primary-15);
+    font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: bold;
     -unity-text-align: middle-center;
 }
@@ -1198,9 +1216,20 @@
     margin-bottom: 15px;
 }
 
+.fm-meal-card-header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 4px;
+}
+
+.fm-meal-card-remove-btn {
+    margin-left: 4px;
+}
+
 .fm-meal-card-heading {
     color: var(--appui-foregrounds-50);
-    padding-bottom: 4px;
+    padding-bottom: 0;
 }
 
 .fm-meal-card-text {
@@ -1510,6 +1539,11 @@
 
 .appui-date-picker-pane .appui-button--icon-only {
     width: 100px;
+}
+
+
+.appui-button--icon-only .appui-button__leadingicon {
+    --unity-image-tint-color: var(--appui-foregrounds-50);
 }
 
 .appui-date-picker-pane .appui-button,
@@ -2004,4 +2038,159 @@
     white-space: normal;
     -unity-text-align: middle-center;
     margin-bottom: 36px;
+}
+
+/* ========================================================================= */
+/* REWARD CELEBRATION MODAL                                                  */
+/* ========================================================================= */
+
+.fm-reward-modal-root {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--fm-main-bg);
+}
+
+.fm-reward-modal-root-container{
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px;
+}
+
+.fm-reward-avatar-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.fm-reward-spotlight {
+    position: absolute;
+    bottom: 0;
+    top: -200px;
+    width: 800px;
+    opacity: 0.8;
+    background-image: url("project://database/Assets/Foodmission/graphics/png/foco_avatar.png?fileID=21300000&guid=33a076f03b160455bb093266580546ad&type=3#foco_avatar");
+    -unity-background-scale-mode: stretch-to-fill;
+}
+
+.fm-reward-header-container {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+    z-index: 10;
+}
+
+.fm-reward-celebration-title {
+    width: 100%;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.fm-reward-card-container {
+    width: 100%;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.fm-reward-card {
+    width: 100%;
+    border-radius: 20px;
+    padding: 24px 20px;
+    align-items: center;
+    justify-content: center;
+    transition-property: opacity, translate, scale;
+    transition-duration: 280ms, 280ms, 280ms;
+    transition-timing-function: ease-out, ease-out, ease-out;
+    opacity: 0;
+    translate: 0 800px;
+    scale: 0.9 0.9;
+}
+
+.fm-reward-card.fm-reward-card--visible {
+    opacity: 1;
+    translate: 0 -300px;
+    scale: 1 1;
+}
+
+.fm-reward-card.fm-reward-card--exit {
+    opacity: 0;
+    translate: 0 800px;
+    scale: 0.92 0.92;
+    transition-duration: 220ms, 220ms, 220ms;
+    transition-timing-function: ease-in, ease-in, ease-in;
+}
+
+.fm-reward-content {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.fm-reward-icon-emoji {
+    -unity-text-align: middle-center;
+    text-align: center;
+}
+
+.fm-reward-title {
+    
+    text-align: center;
+    -unity-text-align: middle-center;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    width: 100%;
+
+    -unity-font-style: bold;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: var(--fm-color-positive);
+    text-shadow: 2px 2px 4px var(--fm-color-positive);
+    scale: 2;
+    
+    
+}
+
+.fm-reward-subtitle {
+    -unity-font-style: bold;
+    text-align: center;
+    -unity-text-align: middle-center;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    width: 100%;
+}
+
+
+.fm-reward-bottom-container {
+    width: 100%;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 45px;
+}
+
+.appui-dialog__header.appui-heading{
+    white-space: normal;
 }

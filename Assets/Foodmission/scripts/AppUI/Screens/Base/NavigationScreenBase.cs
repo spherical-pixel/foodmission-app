@@ -313,7 +313,12 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
-                    _navController.Navigate(navigationAction, args ?? System.Array.Empty<Argument>());
+                    bool navigated = _navController.Navigate(navigationAction, args ?? System.Array.Empty<Argument>());
+                    if (!navigated)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] Navigate returned false for action '{navigationAction}', falling back to PopBackStack");
+                        _navController.PopBackStack();
+                    }
                 }
             }
             else

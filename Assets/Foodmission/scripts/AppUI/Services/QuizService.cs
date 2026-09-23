@@ -247,5 +247,62 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
         }
+
+        public async Task<(Quiz Result, ApiErrorResponse Error)> GetRandomQuizAsync(
+            QuizFilterParams filters = null,
+            string lang = null)
+        {
+            string effectiveLang = ResolveLang(lang);
+            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/quizzes/random?lang={Uri.EscapeDataString(effectiveLang)}");
+
+            if (filters != null)
+            {
+                if (!string.IsNullOrEmpty(filters.dimensionCode))
+                    sb.Append($"&dimensionCode={Uri.EscapeDataString(filters.dimensionCode)}");
+                if (!string.IsNullOrEmpty(filters.topicCode))
+                    sb.Append($"&topicCode={Uri.EscapeDataString(filters.topicCode)}");
+                if (!string.IsNullOrEmpty(filters.level))
+                    sb.Append($"&level={Uri.EscapeDataString(filters.level)}");
+                if (filters.health.HasValue)
+                    sb.Append($"&health={filters.health.Value.ToString().ToLowerInvariant()}");
+                if (filters.foodChoice.HasValue)
+                    sb.Append($"&foodChoice={filters.foodChoice.Value.ToString().ToLowerInvariant()}");
+                if (filters.foodWaste.HasValue)
+                    sb.Append($"&foodWaste={filters.foodWaste.Value.ToString().ToLowerInvariant()}");
+                if (!string.IsNullOrEmpty(filters.search))
+                    sb.Append($"&search={Uri.EscapeDataString(filters.search)}");
+            }
+
+            using UnityWebRequest request = UnityWebRequest.Get(sb.ToString());
+            request.SetRequestHeader("Authorization", AuthHeader);
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+                await Task.Yield();
+
+            // 404 means no unseen quiz found (all completed)
+            if (request.responseCode == 404)
+            {
+                return (null, null);
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetRandomQuizAsync"));
+            }
+
+            try
+            {
+                string raw = request.downloadHandler.text;
+                var quiz = JsonConvert.DeserializeObject<Quiz>(raw);
+                return (quiz, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize random Quiz: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
     }
 }

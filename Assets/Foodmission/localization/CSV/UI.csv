@@ -123,7 +123,9 @@ Cook, learn, share, and grow every day.
 
 Ready to get started?","Samen brengen we je keuken in verband met zorg voor de planeet.
 
+
 Kook, leer, deel en groei elke dag.
+
 
 Klaar om te beginnen?","Gemeinsam verbinden wir Ihre Küche mit dem Schutz unseres Planeten.
 
@@ -135,7 +137,9 @@ Sind Sie bereit, loszulegen?","Μαζί, θα συνδέσουμε την κου
 
 Είστε έτοιμοι να ξεκινήσετε;","Insieme, uniremo la tua cucina alla tutela del pianeta.
 
+
 Cucina, impara, condividi e cresci ogni giorno.
+
 
 Pronto a iniziare?","Sammen skal vi knytte kjøkkenet ditt til omsorgen for planeten.
 
@@ -165,7 +169,9 @@ Ste pripravljeni začeti?","Juntos, conectaremos tu cocina con el cuidado del pl
 "DELETE_ACCOUNT_TITLE",38465117124288512,"Attention!","Let op!","Achtung!","Προσοχή!","Attenzione!","Oppmerksomhet!","Uwaga!","Pozor!","¡Atención!"
 "DELETE_ACCOUNT_MESSAGE",38465306467753984,"This action will permanently delete all your data from the platform.
 
+
 Are you sure?","Hierdoor worden al je gegevens definitief van het platform verwijderd.
+
 
 Weet je het zeker?","Durch diesen Vorgang werden alle Ihre Daten dauerhaft von der Plattform gelöscht.
 
@@ -174,6 +180,7 @@ Sind Sie sicher?","Αυτή η ενέργεια θα διαγράψει ορισ
 Είστε σίγουροι;","Questa operazione cancellerà definitivamente tutti i tuoi dati dalla piattaforma.
 
 Sei sicuro?","Denne handlingen vil slette alle opplysningene dine permanent fra plattformen.
+
 
 Er du sikker?","Ta czynność spowoduje trwałe usunięcie wszystkich Twoich danych z platformy.
 
@@ -602,6 +609,7 @@ Puedes explorar y utilizar la plataforma, pero tus datos no se utilizarán para 
 
 Please answer a few optional questions so that we can personalise your tips, recipe suggestions and daily challenges.","Hallo! Om je ervaring op Foodmission op maat te maken en je te helpen je doelen te bereiken, willen we je graag wat beter leren kennen. Heb je daar zin in?
 
+
 Beantwoord dan een paar optionele vragen, zodat we je tips, receptsuggesties en dagelijkse uitdagingen op maat kunnen maken.","Hallo! Um dein Erlebnis auf Foodmission individuell anzupassen und dir dabei zu helfen, deine Ziele zu erreichen, möchten wir dich gerne etwas besser kennenlernen. Hast du Lust dazu?
 
 Bitte beantworte ein paar freiwillige Fragen, damit wir unsere Tipps, Rezeptvorschläge und täglichen Herausforderungen individuell auf dich abstimmen können.","Γεια σου! Για να εξατομικεύσουμε την εμπειρία σου στο Foodmission και να σε βοηθήσουμε να πετύχεις τους στόχους σου, θα θέλαμε να σε γνωρίσουμε λίγο καλύτερα. Είσαι έτοιμος;
@@ -652,6 +660,7 @@ Responde a unas cuantas preguntas opcionales para que podamos personalizar tus c
 
 FOODMISSION is constantly evolving. We’re improving the app and adding new features thanks to feedback from people like you. Thank you for helping us to keep growing!","Oeps! Dit gedeelte is nog niet beschikbaar, maar maak je geen zorgen: we zijn ermee bezig, dus je kunt er binnenkort van genieten.
 
+
 FOODMISSION blijft zich voortdurend ontwikkelen. Dankzij de feedback van mensen zoals jij verbeteren we de app en voegen we nieuwe functies toe. Bedankt dat je ons helpt om te blijven groeien!","Hoppla! Dieser Bereich ist noch nicht verfügbar, aber keine Sorge: Wir arbeiten daran, damit du ihn schon bald nutzen kannst.
 
 FOODMISSION entwickelt sich ständig weiter. Dank des Feedbacks von Nutzern wie dir verbessern wir die App und fügen neue Funktionen hinzu. Vielen Dank, dass du uns dabei hilfst, weiter zu wachsen!","Ουπς! Αυτή η ενότητα δεν είναι ακόμα διαθέσιμη, αλλά μην ανησυχείτε: την επεξεργαζόμαστε, ώστε να μπορείτε να την απολαύσετε πολύ σύντομα.
@@ -695,13 +704,16 @@ FOODMISSION sigue en constante evolución. Vamos mejorando la app y añadiendo n
 "MESSAGE_TITLE_WARNING",40937444932050944,"Warning!","Waarschuwing!","Achtung!","Προσοχή!","Attenzione!","Advarsel!","Uwaga!","Opozorilo!","¡Atención!"
 "NOT_ACCP_LEGAL_WARNING",40938002757705728,"To continue using the platform, you must accept the new document of {0}. If you don't agree, you can logout or delete your account.
 
+
 Please take a moment to review again the new document of {0}, and feel free to contact us if you think something is wrong in it.","Om het platform te kunnen blijven gebruiken, moet u het nieuwe document van {0} accepteren. Als u hiermee niet akkoord gaat, kunt u uitloggen of uw account verwijderen.
+
 
 Neem alstublieft even de tijd om het nieuwe document van {0} nogmaals door te nemen, en neem gerust contact met ons op als u denkt dat er iets niet klopt.","Um die Plattform weiterhin nutzen zu können, müssen Sie das neue Dokument zu {0} akzeptieren. Wenn Sie damit nicht einverstanden sind, können Sie sich abmelden oder Ihr Konto löschen.
 
 Bitte nehmen Sie sich einen Moment Zeit, um das neue Dokument zu {0} noch einmal durchzulesen, und wenden Sie sich gerne an uns, falls Sie der Meinung sind, dass darin etwas nicht stimmt.","Για να συνεχίσετε να χρησιμοποιείτε την πλατφόρμα, πρέπει να αποδεχτείτε το νέο έγγραφο {0}. Εάν δεν συμφωνείτε, μπορείτε να αποσυνδεθείτε ή να διαγράψετε τον λογαριασμό σας.
 
 Αφιερώστε λίγο χρόνο για να ξαναδιαβάσετε το νέο έγγραφο {0} και μη διστάσετε να επικοινωνήσετε μαζί μας αν θεωρείτε ότι υπάρχει κάποιο λάθος σε αυτό.","Per continuare a utilizzare la piattaforma, devi accettare il nuovo documento relativo a {0}. Se non sei d'accordo, puoi disconnetterti o cancellare il tuo account.
+
 
 Ti invitiamo a dedicare qualche minuto a rileggere il nuovo documento relativo a {0} e a contattarci se ritieni che contenga errori.","For å fortsette å bruke plattformen må du godta det nye dokumentet om {0}. Hvis du ikke samtykker, kan du logge ut eller slette kontoen din.
 
@@ -756,7 +768,7 @@ Como participante en el programa piloto, tenemos una breve encuesta para ti. Tus
 "FOODFACTS_EMPTY_STATE",41564040676237312,"No food facts found matching the selected filters.","Er zijn geen voedingsfeiten gevonden die aan de geselecteerde filters voldoen.","Es wurden keine Lebensmittelangaben gefunden, die den ausgewählten Filtern entsprechen.","Δεν βρέθηκαν στοιχεία για τρόφιμα που να ανταποκρίνονται στα επιλεγμένα κριτήρια.","Non sono stati trovati dati nutrizionali corrispondenti ai filtri selezionati.","Det ble ikke funnet noen næringsopplysninger som samsvarer med de valgte filtrene.","Nie znaleziono informacji o produktach spożywczych odpowiadających wybranym filtrom.","Ni bilo najdenih podatkov o živilih, ki bi ustrezali izbranim filtrom.","No se han encontrado datos nutricionales que se ajusten a los filtros seleccionados."
 "NAV_FOOD_FACTS",41575049637912576,"Did you know...?","Wist je dat...?","Wusstest du schon...?","Το ξέρατε ότι…;","Lo sapevi che...?","Visste du at...?","Czy wiesz, że...?","Ali ste vedeli...?","¿Sabías que...?"
 "CHALLENGES_EMPTY_STATE",41655488905994240,"No challenges found matching the selected filters.","Er zijn geen uitdagingen gevonden die aan de geselecteerde filters voldoen.","Es wurden keine Herausforderungen gefunden, die den ausgewählten Filtern entsprechen.","Δεν βρέθηκαν προκλήσεις που να αντιστοιχούν στα επιλεγμένα φίλτρα.","Non sono state trovate sfide che corrispondano ai filtri selezionati.","Det ble ikke funnet noen utfordringer som samsvarer med de valgte filtrene.","Nie znaleziono wyzwań spełniających wybrane kryteria.","Ni bilo najdenih izzivov, ki bi ustrezali izbranim filtrom.","No se han encontrado retos que coincidan con los filtros seleccionados."
-"ACTIVITY_QUIZ",44130274445877248,"QUIZ","QUIZ","QUIZ","ΚΟΥΙΖ","QUIZ","QUIZ","QUIZ","KVIZ","CUESTIONARIO"
+"ACTIVITY_QUIZ",44130274445877248,"QUIZ","QUIZ","QUIZ","ΚΟΥΙΖ","QUIZ","QUIZ","QUIZ","KVIZ","QUIZ"
 "ACTIVITY_MISSION",44130372064108544,"MISSION","MISSIE","MISSION","ΑΠΟΣΤΟΛΗ","MISSIONE","MISSJON","MISJA","POSLANSTVO","MISIÓN"
 "ACTIVITY_CHALLENGE",44130442662633472,"CHALLENGE","UITDAGING","HERAUSFORDERUNG","ΠΡΟΚΛΗΣΗ","SFIDA","UTFORDRING","WYZWANIE","IZZIV","DESAFÍO"
 "ACTIVITY_FOOD_FACT",44130493631815680,"DID YOU KNOW...?","WIST JE DAT...?","WUSSTEST DU SCHON...?","ΓΝΩΡΙΖΑΤΕ ΟΤΙ…;","LO SAPEVATE CHE...?","VISSTE DU AT...?","CZY WIESZ, ŻE...?","ALI STE VEDELI...?","¿SABÍAS QUE...?"
@@ -770,9 +782,125 @@ Como participante en el programa piloto, tenemos una breve encuesta para ti. Tus
 "QUEST_CHANGE_CONFIRM_MSG",44193049838870528,"You already have an active quest in progress. Are you sure you want to make the change?","Je hebt al een actieve missie lopen. Weet je zeker dat je deze wijziging wilt doorvoeren?","Du hast bereits eine aktive Quest in Bearbeitung. Möchtest du die Änderung wirklich vornehmen?","Έχετε ήδη μια ενεργή αποστολή σε εξέλιξη. Είστε σίγουροι ότι θέλετε να κάνετε την αλλαγή;","Hai già una missione attiva in corso. Sei sicuro di voler apportare questa modifica?","Du har allerede et aktivt oppdrag på gang. Er du sikker på at du vil foreta endringen?","Masz już aktywne zadanie w toku. Czy na pewno chcesz wprowadzić tę zmianę?","Trenutno že opravljaš aktivno nalogo. Si prepričan, da želiš izvesti spremembo?","Ya tienes un quest activo en curso. ¿Estas seguro de que quieres hacer el cambio?"
 "QUEST_CHANGE_CONFIRM_BTN",44196897802412032,"Change Quest","Quest wijzigen","Quest ändern","Αλλαγή αποστολής","Modifica missione","Endre oppdrag","Zmiana zadania","Naloga »Sprememba«","Cambiar Quest"
 "QUEST_CHANGE_CANCEL_BTN",44197097057017856,"Keep the current one","Behoud de huidige versie","Behalte die aktuelle Version bei","Κρατήστε το τρέχον","Mantieni quello attuale","Behold den nåværende","Zachowaj obecną wersję","Ohranite trenutno različico","Continuar con el actual"
-"HOME_NO_ACTIVE_QUEST_TITLE",44199025098874880,"Choose a quest to start learning and making progress.","Kies een opdracht om te beginnen met leren en vooruitgang te boeken.","Wähle eine Quest aus, um mit dem Lernen zu beginnen und Fortschritte zu machen.","Επιλέξτε μια αποστολή για να αρχίσετε να μαθαίνετε και να προοδεύετε.","Scegli una missione per iniziare a imparare e a fare progressi.","Velg et oppdrag for å begynne å lære og gjøre fremskritt.","Wybierz zadanie, aby rozpocząć naukę i robić postępy.","Izberi nalogo, da se začneš učiti in napredovati.","Elige un quest para empezar a aprender y progresar."
-"HOME_NO_ACTIVE_QUEST_BUTTON",44199294499020800,"Explore Quests","Ontdek missies","Quests entdecken","Εξερευνήστε τις αποστολές","Esplora le missioni","Utforsk oppdrag","Odkryj zadania","Razišči naloge","Explorar Quests"
-"QUICK_MEAL_LOG_TITLE",49206146878136320,"Simplified meal log","Vereenvoudigd maaltijdlogboek","Vereinfachtes Ernährungsprotokoll","Απλοποιημένο ημερολόγιο γευμάτων","Registro dei pasti semplificato","Forenklet måltidslogg","Uproszczony dziennik posiłków","Poenostavljen dnevnik obrokov","Registro simplificado de comidas"
-"QUICK_MEAL_LOG_FEATURES_TITLE",49207590964420608,"What were the key features of your dish?","Wat waren de belangrijkste kenmerken van je gerecht?","Was waren die wichtigsten Merkmale Ihres Gerichts?","Ποια ήταν τα βασικά χαρακτηριστικά του πιάτου σας;","Quali erano le caratteristiche principali del tuo piatto?","Hva var de viktigste kjennetegnene ved retten din?","Jakie były główne cechy Twojej potrawy?","Katere so bile glavne značilnosti vaše jedi?","¿Cuáles fueron las características principales de tu plato?"
-"QUICK_MEAL_LOG_OPTIONAL_NAME_TITLE",49207906585796608,"Name or description (optional)","Naam of beschrijving (optioneel)","Name oder Beschreibung (optional)","Όνομα ή περιγραφή (προαιρετικό)","Nome o descrizione (facoltativo)","Navn eller beskrivelse (valgfritt)","Nazwa lub opis (opcjonalnie)","Ime ali opis (neobvezno)","Nombre o descripción (opcional)"
-"QUICK_MEAL_LOG_OPTIONAL_NAME_PLACEHOLDER",49210861586210816,"E.g.: Lentil and vegetable salad","Bijvoorbeeld: Salade met linzen en groenten","Beispiel: Linsen-Gemüse-Salat","Π.χ.: Σαλάτα με φακές και λαχανικά","Es.: Insalata di lenticchie e verdure","F.eks.: Lins- og grønnsakssalat","Np.: Sałatka z soczewicy i warzyw","Npr.: Solata iz leče in zelenjave","Ej: Ensalada de lentejas y verduras"
+"HOME_NO_ACTIVE_QUEST_TITLE",44199025098874880,"Choose a quest to start learning and making progress.","Kies een opdracht om te beginnen met leren en vooruitgang te boeken.","Wähle eine Quest aus, um mit dem Lernen zu beginnen und Fortschritte zu machen.","Επιλέξτε μια αποστολή για να αρχίσετε να μαθαίνετε και να προοδεύετε.","Scegli un percorso per iniziare a imparare e a fare progressi.","Velg et oppdrag for å begynne å lære og gjøre fremskritt.","Wybierz zadanie, aby rozpocząć naukę i robić postępy.","Izberi nalogo, da se začneš učiti in napredovati.","Elige un quest para empezar a aprender y progresar."
+"HOME_NO_ACTIVE_QUEST_BUTTON",44199294499020800,"Explore Quests","Ontdek missies","Quests entdecken","Εξερευνήστε τις αποστολές","Esplora i percorsi","Utforsk oppdrag","Odkryj zadania","Razišči naloge","Explorar Quests"
+"REWARD_CELEBRATION_TITLE",46966074812391424,"Reward earned!","Beloning verdiend!","Belohnung verdient!","Κέρδισες ανταμοιβή!","Ricompensa ottenuta!","Belønning opptjent!","Zdobyto nagrodę!","Nagrada je tvoja!","¡Recompensa conseguida!"
+"REWARD_XP_EARNED",46966143921938432,"XP earned!","XP verdiend!","XP verdient!","Κέρδισες XP!","XP guadagnati!","XP opptjent!","Zdobyto XP!","Pridobljenih XP!","¡Experiencia conseguida!"
+"REWARD_POINTS_EARNED",46966269096747008,"{0:plural:FoodyCoin earned!|FoodyCoins earned!}","{0:plural:FoodyCoin verdiend!|FoodyCoins verdiend!}","{0:plural:FoodyCoin verdient!|FoodyCoins verdient!}","{0:plural:Κερδήθηκε FoodyCoin!|Κερδήθηκαν FoodyCoins!}","{0:plural:FoodyCoin guadagnata!|FoodyCoins guadagnate!}","{0:plural:FoodyCoin tjent!|FoodyCoins tjent!}","{0:plural:Zdobyto FoodyCoin!|Zdobyto FoodyCoiny!|Zdobyto FoodyCoinów!|Zdobyto FoodyCoiny!}","{0:plural:Prislužen FoodyCoin!|Prislužena FoodyCoina!|Prisluženi FoodyCoini!|Prisluženih FoodyCoinov!}","{0:plural:¡FoodyCoin conseguida!|¡FoodyCoins conseguidas!}"
+"REWARD_BADGE_UNLOCKED",46966724417806336,"New badge collected!","Nieuwe badge verzameld!","Ein neues Abzeichen gesammelt!","Συλλέχθηκε ένα νέο έμβλημα!","Nuovo distintivo ottenuto!","Nytt merke samlet inn!","Zdobyto nową odznakę!","Pridobljen nov znak!","¡Nueva medalla conseguida!"
+"REWARD_PET_ITEM",46966954571849728,"New pet item!","Nieuw product voor huisdieren!","Neues Haustier-Produkt!","Νέο προϊόν για κατοικίδια!","Nuovo articolo per animali domestici!","Nytt produkt til kjæledyret!","Nowy przedmiot dla zwierzaków!","Nov izdelek za hišne ljubljenčke!","¡Nuevo objeto para tu mascota!"
+"REWARD_COLLECTIBLE",46976427931721728,"New collectible!","Nieuw verzamelobject!","Neues Sammlerstück!","Νέο συλλεκτικό αντικείμενο!","Nuovo oggetto da collezione!","Nytt samleobjekt!","Nowa pozycja kolekcjonerska!","Nova zbirateljska izdaja!","¡Nuevo coleccionable!"
+"FOODFACT_STATUS_READ",47093633499783168,"Read","Gelezen","Gelesen","Διαβάστηκε","Letto","Lest","Przeczytane","Prebrano","Leído"
+"FOODFACT_STATUS_UNREAD",47093633503977472,"Unread","Ongelezen","Ungelesen","Μη αναγνωσμένο","Non letto","Ulest","Nieprzeczytane","Neprebrano","No leído"
+"QUEST_REWARD_TITLE",47094236238045184,"Quest completed!","Opdracht voltooid!","Quest abgeschlossen!","Η αποστολή ολοκληρώθηκε!","Percorso completato!","Oppdrag fullført!","Zadanie zakończone!","Naloga zaključena!","¡Quest completada!"
+"QUIZ_REWARD_TITLE",47094236242239488,"Quiz completed!","Quiz voltooid!","Quiz abgeschlossen!","Το κουίζ ολοκληρώθηκε!","Quiz completato!","Quiz fullført!","Quiz zakończony!","Kviz zaključen!","¡Quiz completado!"
+"FOOD_FACT_REWARD_TITLE",47094236242239489,"New fact learned!","Nieuw weetje geleerd!","Neuer Fakt gelernt!","Νέα γνώση αποκτήθηκε!","Nuova curiosità appresa!","Ny fakta lært!","Poznano nową ciekawostkę!","Novo dejstvo usvojeno!","¡Nuevo dato aprendido!"
+"RECIPES_TAB_FOR_YOU",47367747305201664,"For you","Voor jou","Für dich","Για εσάς","Per te","For deg","Dla Ciebie","Zate","Para ti"
+"RECIPES_TAB_EXPLORE",47367747309395968,"Explore","Ontdekken","Entdecken","Εξερεύνηση","Esplora","Utforsk","Odkrywaj","Razišči","Explorar"
+"RECIPES_TAB_MY_RECIPES",47367747309395969,"My recipes","Mijn recepten","Meine Rezepte","Οι συνταγές μου","Le mie ricette","Mine oppskrifter","Moje przepisy","Moji recepti","Mis recetas"
+"RECIPES_CREATE_BTN",47367747309395970,"New recipe","Nieuw recept","Neues Rezept","Νέα συνταγή","Nuova ricetta","Ny oppskrift","Nowy przepis","Nov recept","Nueva receta"
+"RECIPES_EMPTY_PANTRY_TITLE",47367747309395971,"Your pantry is empty","Je voorraadkast is leeg","Deine Speisekammer ist leer","Το ντουλάπι σας είναι άδειο","La tua dispensa è vuota","Spiskammeret ditt er tomt","Twoja spiżarnia jest pusta","Tvoja shramba je prazna","Tu despensa está vacía"
+"RECIPES_EMPTY_PANTRY_DESC",47367747309395972,"Add items to your pantry to get smart recipe suggestions that reduce food waste!","Voeg producten toe aan je voorraadkast voor slimme receptsuggesties en minder voedselverspilling!","Füge Artikel zu deiner Speisekammer hinzu, um Rezeptvorschläge zu erhalten und Lebensmittelverschwendung zu vermeiden!","Προσθέστε είδη στο ντουλάπι σας για να λαμβάνετε έξυπνες προτάσεις συνταγών!","Aggiungi prodotti alla dispensa per ricevere suggerimenti di ricette anti-spreco!","Legg til varer i spiskammeret for å få smarte oppskriftsforslag og redusere matsvinn!","Dodaj produkty do spiżarni, aby otrzymywać propozycje przepisów ograniczających marnowanie żywności!","Dodaj živila v svojo shrambo za pametne predloge receptov in manj zavržene hrane!","¡Añade alimentos a tu despensa para recibir sugerencias de recetas y evitar el desperdicio!"
+"RECIPES_EMPTY_PANTRY_BTN",47367747309395973,"Go to Pantry","Ga naar voorraadkast","Zur Speisekammer","Μετάβαση στο ντουλάπι","Vai alla dispensa","Gå til spiskammeret","Przejdź do spiżarni","Pojdi v shrambo","Ir a la Despensa"
+"RECIPES_EMPTY_MY_RECIPES_TITLE",47367747309395974,"No recipes created yet","Nog geen recepten gemaakt","Noch keine Rezepte erstellt","Δεν έχουν δημιουργηθεί συνταγές ακόμα","Nessuna ricetta creata","Ingen oppskrifter opprettet ennå","Nie utworzono jeszcze żadnych przepisów","Še niste ustvarili receptov","Aún no has creado recetas"
+"RECIPES_EMPTY_MY_RECIPES_DESC",47367747309395975,"Create and share your favorite sustainable recipes with the community!","Maak en deel je favoriete duurzame recepten met de community!","Erstelle und teile deine nachhaltigen Lieblingsrezepte mit der Community!","Δημιουργήστε και μοιραστείτε τις αγαπημένες σας συνταγές!","Crea e condividi le tue ricette sostenibili preferite con la community!","Lag og del dine bærekraftige favorittoppskrifter med fellesskapet!","Twórz i udostępniaj swoje ulubione zrównoważone przepisy społeczności!","Ustvari in deli svoje najljubše trajnostne recepte s skupnostjo!","¡Crea y comparte tus recetas sostenibles favoritas con la comunidad!"
+"RECIPES_DIFFICULTY_ALL",47367747309395976,"All","Alle","Alle","Όλα","Tutte","Alle","Wszystkie","Vse","Todas"
+"RECIPES_DIFFICULTY_EASY",47367747309395977,"Easy","Makkelijk","Einfach","Εύκολο","Facile","Enkel","Łatwy","Enostavno","Fácil"
+"RECIPES_DIFFICULTY_MEDIUM",47367747309395978,"Medium","Gemiddeld","Mittel","Μέτριο","Medio","Middels","Średni","Srednje","Media"
+"RECIPES_DIFFICULTY_HARD",47367747309395979,"Hard","Moeilijk","Schwer","Δύσκολο","Difficile","Vanskelig","Trudny","Težko","Difícil"
+"RECIPES_FILTER_ALL",47367747309395980,"All","Alle","Alle","Όλα","Tutti","Alle","Wszystkie","Vse","Todos"
+"RECIPES_EXPIRING_MATCH",47367747309395981,"{0} expiring soon","{0} verloopt binnenkort","{0} läuft bald ab","{0} λήγει σύντομα","{0} in scadenza","{0} utløper snart","{0} wkrótce traci ważność","{0} kmalu poteče","{0} por caducar"
+"RECIPES_PANTRY_MATCH",47367747309395982,"{0}/{1} in pantry","{0}/{1} in voorraadkast","{0}/{1} in Speisekammer","{0}/{1} στο ντουλάπι","{0}/{1} in dispensa","{0}/{1} i spiskammeret","{0}/{1} w spiżarni","{0}/{1} v shrambi","{0}/{1} en despensa"
+"RECIPES_STEP_GENERAL",47367747309395983,"General","Algemeen","Allgemein","Γενικά","Generale","Generelt","Ogólne","Splošno","General"
+"RECIPES_STEP_INGREDIENTS",47367747309395984,"Ingredients","Ingrediënten","Zutaten","Συστατικά","Ingredienti","Ingredienser","Składniki","Sestavine","Ingredientes"
+"RECIPES_STEP_INSTRUCTIONS",47367747309395985,"Instructions","Bereiding","Zubereitung","Οδηγίες","Istruzioni","Instruksjoner","Instrukcje","Navodila","Elaboración"
+"RECIPES_EDIT_TITLE",47367747309395987,"Edit recipe","Recept bewerken","Rezept bearbeiten","Επεξεργασία συνταγής","Modifica ricetta","Rediger oppskrift","Edytuj przepis","Uredi recept","Editar receta"
+"RECIPES_SAVE_BTN",47367747309395988,"Save recipe","Recept opslaan","Rezept speichern","Αποθήκευση συνταγής","Salva ricetta","Lagre oppskrift","Zapisz przepis","Shrani recept","Guardar receta"
+"RECIPES_USE_PANTRY_SUBTITLE",48511689140723712,"Make the most of what you have at home","Haal het beste uit wat je thuis hebt","Machen Sie das Beste aus dem, was Sie zu Hause haben","Αξιοποιήστε στο έπακρο ό,τι έχετε στο σπίτι","Sfrutta al meglio ciò che hai in casa","Få mest mulig ut av det du har hjemme","Wykorzystaj w pełni to, co masz w domu","Izkoristite kar imate doma","Aprovecha lo que tienes en casa"
+"RECIPES_EDITOR",48534335152709632,"Recipe Editor","Receptbewerker","Rezept-Editor","Επεξεργαστής συνταγών","Editor ricette","Oppskriftsredigering","Edytor przepisów","Urejevalnik receptov","Editor de recetas"
+"RECIPE_ERROR_SAVE",48534335156903936,"Error saving recipe","Fout bij opslaan recept","Fehler beim Speichern des Rezepts","Σφάλμα αποθήκευσης συνταγής","Errore durante il salvataggio della ricetta","Feil under lagring av oppskrift","Błąd podczas zapisywania przepisu","Napaka pri shranjevanju recepta","Error al guardar receta"
+"RECIPE_E_ERROR_TITLE_REQUIRED",48534335161098240,"Recipe title is required","Recepttitel is verplicht","Rezepttitel ist erforderlich","Ο τίτλος της συνταγής είναι υποχρεωτικός","Il titolo della ricetta è obbligatorio","Oppskriftstittel er påkrevd","Tytuł przepisu jest wymagany","Naslov recepta je obvezen","Debes introducir un título para la receta"
+"RECIPES_CAT_BEEF",48534335161098241,"Beef","Rundvlees","Rindfleisch","Μοσχάρι","Manzo","Storfekjøtt","Wołowina","Govedina","Ternera"
+"RECIPES_CAT_CHICKEN",48534335161098242,"Chicken","Kip","Hühnchen","Κοτόπουλο","Pollo","Kylling","Kurczak","Piščanec","Pollo"
+"RECIPES_CAT_DESSERT",48534335161098243,"Dessert","Dessert","Dessert","Επιδόρπιο","Dolci","Dessert","Deser","Sladica","Postres"
+"RECIPES_CAT_LAMB",48534335161098244,"Lamb","Lamsvlees","Lamm","Αρνί","Agnello","Lam","Jagnięcina","Jagnjetina","Cordero"
+"RECIPES_CAT_MISC",48534335161098245,"Miscellaneous","Diversen","Verschiedenes","Διάφορα","Varie","Diverse","Różne","Razno","Variados"
+"RECIPES_CAT_PASTA",48534335161098246,"Pasta","Pasta","Pasta","Ζυμαρικά","Pasta","Pasta","Makaron","Testenine","Pasta"
+"RECIPES_CAT_PORK",48534335161098247,"Pork","Varkensvlees","Schweinefleisch","Χοιρινό","Maiale","Svinekjøtt","Wieprzowina","Svinjina","Cerdo"
+"RECIPES_CAT_SEAFOOD",48534335161098248,"Fish & Seafood","Vis & zeevruchten","Fisch & Meeresfrüchte","Ψάρια & θαλασσινά","Pesce e frutti di mare","Fisk og sjømat","Ryby i owoce morza","Ribe in morski sadeži","Pescados y Mariscos"
+"RECIPES_CAT_SIDE",48534335161098249,"Side Dishes","Bijgerechten","Beilagen","Συνοδευτικά","Contorni","Tilbehør","Dodatki","Priloge","Guarniciones"
+"RECIPES_CAT_STARTER",48534335161098250,"Starters","Voorgerechten","Vorspeisen","Ορεκτικά","Antipasti","Forretter","Przystawki","Predjedi","Entrantes"
+"RECIPES_CAT_VEGAN",48534335161098251,"Vegan","Veganistisch","Vegan","Vegan","Vegano","Vegansk","Wegańskie","Vegansko","Vegano"
+"RECIPES_CAT_VEGETARIAN",48534335161098252,"Vegetarian","Vegetarisch","Vegetarisch","Χορτοφαγικό","Vegetariano","Vegetarisk","Wegetariańskie","Vegetarijansko","Vegetariano"
+"RECIPES_CAT_BREAKFAST",48534335161098253,"Breakfast","Ontbijt","Frühstück","Πρωινό","Colazione","Frokost","Śniadanie","Zajtrk","Desayunos"
+"RECIPES_CAT_GOAT",48534335161098254,"Goat","Geitenvlees","Ziegenfleisch","Κατσίκι","Capra","Geitekjøtt","Kozina","Kozliček","Cabrito"
+"RECIPES_CUISINE_ALL",48534335161098255,"All cuisines","Alle keukens","Alle Küchen","Όλες οι κουζίνες","Tutte le cucine","Alle kjøkken","Wszystkie kuchnie","Vse kuhinje","Todas las cocinas"
+"RECIPES_CUISINE_ALGERIAN",48534335161098256,"Algerian","Algerijns","Algerisch","Αλγερινή","Algerina","Algerisk","Algierska","Alžirska","Argelina"
+"RECIPES_CUISINE_AMERICAN",48534335161098257,"American","Amerikaans","Amerikanisch","Αμερικανική","Americana","Amerikansk","Amerykańska","Ameriška","Americana"
+"RECIPES_CUISINE_ARGENTINIAN",48534335161098258,"Argentinian","Argentijns","Argentinisch","Αργεντίνικη","Argentina","Argentinsk","Argentyńska","Argentinska","Argentina"
+"RECIPES_CUISINE_AUSTRALIAN",48534335161098259,"Australian","Australisch","Australisch","Αυστραλιανή","Australiana","Australsk","Australijska","Avstralska","Australiana"
+"RECIPES_CUISINE_BRITISH",48534335161098260,"British","Brits","Britisch","Βρετανική","Britannica","Britisk","Brytyjska","Britanska","Británica"
+"RECIPES_CUISINE_CANADIAN",48534335161098261,"Canadian","Canadees","Kanadisch","Καναδική","Canadese","Kanadisk","Kanadyjska","Kanadska","Canadiense"
+"RECIPES_CUISINE_CHINESE",48534335161098262,"Chinese","Chinees","Chinesisch","Κινεζική","Cinese","Kinesisk","Chińska","Kitajska","China"
+"RECIPES_CUISINE_CROATIAN",48534335161098263,"Croatian","Kroatisch","Kroatisch","Κροατική","Croata","Kroatisk","Chorwacka","Hrvaška","Croata"
+"RECIPES_CUISINE_DUTCH",48534335161098264,"Dutch","Nederlands","Niederländisch","Ολλανδική","Olandese","Nederlandsk","Holenderska","Nizozemska","Holandesa"
+"RECIPES_CUISINE_EGYPTIAN",48534335161098265,"Egyptian","Egyptisch","Ägyptisch","Αιγυπτιακή","Egiziana","Egyptisk","Egipska","Egipčanska","Egipcia"
+"RECIPES_CUISINE_FILIPINO",48534335161098266,"Filipino","Filipijns","Philippinisch","Φιλιππινέζικη","Filippina","Filippinsk","Filipińska","Filipinska","Filipina"
+"RECIPES_CUISINE_FRENCH",48534335161098267,"French","Frans","Französisch","Γαλλική","Francese","Fransk","Francuska","Francoska","Francesa"
+"RECIPES_CUISINE_GREEK",48534335161098268,"Greek","Grieks","Griechisch","Ελληνική","Greca","Gresk","Grecka","Grška","Griega"
+"RECIPES_CUISINE_INDIAN",48534335161098269,"Indian","Indiaas","Indisch","Ινδική","Indiana","Indisk","Indyjska","Indijska","India"
+"RECIPES_CUISINE_IRISH",48534335161098270,"Irish","Iers","Irisch","Ιρλανδική","Irlandese","Irsk","Irlandzka","Irska","Irlandesa"
+"RECIPES_CUISINE_ITALIAN",48534335161098271,"Italian","Italiaans","Italienisch","Ιταλική","Italiana","Italiensk","Włoska","Italijanska","Italiana"
+"RECIPES_CUISINE_JAMAICAN",48534335161098272,"Jamaican","Jamaicaans","Jamaikanisch","Τζαμαϊκανή","Giamaicana","Jamaikansk","Jamajska","Jamajška","Jamaiquina"
+"RECIPES_CUISINE_JAPANESE",48534335161098273,"Japanese","Japans","Japanisch","Ιαπωνική","Giapponese","Japansk","Japońska","Japonska","Japonesa"
+"RECIPES_CUISINE_KENYAN",48534335161098274,"Kenyan","Keniaans","Kenianisch","Κενυατική","Keniota","Kenyansk","Keniańska","Kenijska","Keniata"
+"RECIPES_CUISINE_MALAYSIAN",48534335161098275,"Malaysian","Maleisisch","Malaysisch","Μαλαισιανή","Malese","Malaysisk","Malezyjska","Malezijska","Malasia"
+"RECIPES_CUISINE_MEXICAN",48534335161098276,"Mexican","Mexicaans","Mexikanisch","Μεξικάνικη","Messicana","Meksikansk","Meksykańska","Mehiška","Mexicana"
+"RECIPES_CUISINE_MOROCCAN",48534335165292544,"Moroccan","Marokkaans","Marokkanisch","Μαροκινή","Marocchina","Marokkansk","Marokańska","Maroška","Marroquí"
+"RECIPES_CUISINE_NORWEGIAN",48534335165292545,"Norwegian","Noors","Norwegisch","Νορβηγική","Norvegese","Norsk","Norweska","Norveška","Noruega"
+"RECIPES_CUISINE_POLISH",48534335165292546,"Polish","Pools","Polnisch","Πολωνική","Polacca","Polsk","Polska","Poljska","Polaca"
+"RECIPES_CUISINE_PORTUGUESE",48534335165292547,"Portuguese","Portugees","Portugiesisch","Πορτογαλική","Portoghese","Portugisisk","Portugalska","Portugalska","Portuguesa"
+"RECIPES_CUISINE_SAUDI_ARABIAN",48534335165292548,"Saudi Arabian","Saoedi-Arabisch","Saudi-Arabisch","Σαουδαραβική","Saudita","Saudiarabisk","Saudyjska","Savdska","Saudí"
+"RECIPES_CUISINE_SLOVAKIAN",48534335165292549,"Slovakian","Slowaaks","Slowakisch","Σλοβακική","Slovacca","Slovakisk","Słowacka","Slovaška","Eslovaca"
+"RECIPES_CUISINE_SPANISH",48534335165292550,"Spanish","Spaans","Spanisch","Ισπανική","Spagnola","Spansk","Hiszpańska","Španska","Española"
+"RECIPES_CUISINE_SYRIAN",48534335165292551,"Syrian","Syrisch","Syrisch","Συριακή","Siriana","Syrisk","Syryjska","Sirska","Siria"
+"RECIPES_CUISINE_THAI",48534335165292552,"Thai","Thais","Thailändisch","Ταϊλανδέζικη","Thailandese","Thailandsk","Tajska","Tajska","Tailandesa"
+"RECIPES_CUISINE_TUNISIAN",48534335165292553,"Tunisian","Tunesisch","Tunesisch","Τυνησιακή","Tunisina","Tunisisk","Tunezyjska","Tunizijska","Tunecina"
+"RECIPES_CUISINE_TURKISH",48534335165292554,"Turkish","Turks","Türkisch","Τουρκική","Turca","Tyrkisk","Turecka","Turška","Turca"
+"RECIPES_CUISINE_UKRAINIAN",48534335165292555,"Ukrainian","Oekraïens","Ukrainisch","Ουκρανική","Ucraina","Ukrainsk","Ukraińska","Ukrajinska","Ucraniana"
+"RECIPES_CUISINE_URUGUAYAN",48534335165292556,"Uruguayan","Uruguayaans","Uruguayisch","Ουρουγουανή","Uruguaiana","Uruguayansk","Urugwajska","Urugvajska","Uruguaya"
+"RECIPES_CUISINE_VENEZUELAN",48534335165292557,"Venezuelan","Venezolaans","Venezolanisch","Βενεζουελάνικη","Venezuelana","Venezuelansk","Wenezuelska","Venezuelska","Venezolana"
+"RECIPES_CUISINE_VIETNAMESE",48534335165292558,"Vietnamese","Vietnamees","Vietnamesisch","Βιετναμέζικη","Vietnamita","Vietnamesisk","Wietnamska","Vietnamska","Vietnamita"
+"RECIPES_FIELD_TITLE",48786163199107072,"Recipe title","Recepttitel","Rezepttitel","Τίτλος συνταγής","Titolo della ricetta","Oppskriftstittel","Tytuł przepisu","Naslov recepta","Título de la receta"
+"RECIPES_FIELD_PLACEHOLDER",48786163199107073,"E.g. Vegetable pasta","Bijv. Pasta met groenten","Z. B. Gemüse-Pasta","Π.χ. Ζυμαρικά με λαχανικά","Es. Pasta con verdure","F.eks. Grønnsakspasta","Np. Makaron z warzywami","Npr. Testenine z zelenjavo","Ej. Pasta con verduras"
+"RECIPES_FIELD_DESCRIPTION",48786163199107074,"Description","Beschrijving","Beschreibung","Περιγραφή","Descrizione","Beskrivelse","Opis","Opis","Descripción"
+"RECIPES_FIELD_DESCRIPTION_HINT",48786163199107075,"Brief introduction to the recipe...","Korte inleiding tot het recept...","Kurze Einführung in das Rezept...","Σύντομη εισαγωγή στη συνταγή...","Breve introduzione alla ricetta...","Kort introduksjon til oppskriften...","Krótkie wprowadzenie do przepisu...","Kratek uvod v recept...","Breve introducción de la receta..."
+"RECIPES_FIELD_PREP",48786163199107076,"Prep time (min)","Bereidingstijd (min)","Vorbereitungszeit (Min.)","Χρόνος προετοιμασίας (λεπτά)","Tempo prep. (min)","Forberedelsestid (min)","Czas przygotowania (min)","Čas priprave (min)","Tiempo prep. (min)"
+"RECIPES_FIELD_COOK",48786163199107077,"Cook time (min)","Kooktijd (min)","Kochzeit (Min.)","Χρόνος μαγειρέματος (λεπτά)","Tempo cottura (min)","Koketid (min)","Czas gotowania (min)","Čas kuhanja (min)","Tiempo cocción (min)"
+"RECIPES_FIELD_SERVINGS",48786163199107078,"Servings","Porties","Portionen","Μερίδες","Porzioni","Porsjoner","Porcje","Porcije","Raciones"
+"RECIPES_FIELD_DIFFICULTY",48786163199107079,"Difficulty","Moeilijkheidsgraad","Schwierigkeit","Δυσκολία","Difficoltà","Vanskelighetsgrad","Trudność","Zahtevnost","Dificultad"
+"RECIPES_FIELD_DIFFICULTY_HINT",48786163199107080,"Select difficulty","Selecteer moeilijkheidsgraad","Schwierigkeit wählen","Επιλέξτε δυσκολία","Seleziona difficoltà","Velg vanskelighetsgrad","Wybierz trudność","Izberite zahtevnost","Seleccionar dificultad"
+"RECIPES_FIELD_CATEGORY",48786163199107081,"Category","Categorie","Kategorie","Κατηγορία","Categoria","Kategori","Kategoria","Kategorija","Categoría"
+"RECIPES_FIELD_CATEGORY_HINT",48786163199107082,"Select category","Selecteer categorie","Kategorie wählen","Επιλέξτε κατηγορία","Seleziona categoria","Velg kategori","Wybierz kategorię","Izberite kategorijo","Seleccionar categoría"
+"RECIPES_FIELD_CUISINE",48786163199107083,"Cuisine","Keuken","Küche","Κουζίνα","Cucina","Kjøkken","Kuchnia","Kuhinja","Tipo de cocina"
+"RECIPES_FIELD_CUISINE_HINT",48786163199107084,"Select cuisine","Selecteer keuken","Küche wählen","Επιλέξτε κουζίνα","Seleziona cucina","Velg kjøkken","Wybierz kuchnię","Izberite kuhinjo","Seleccionar cocina"
+"RECIPES_FIELD_PUBLIC",48786163199107085,"Make recipe public to the community","Maak recept openbaar voor de community","Rezept für die Community öffentlich machen","Κάντε τη συνταγή δημόσια για την κοινότητα","Rendi la ricetta pubblica per la community","Gjør oppskriften offentlig for fellesskapet","Udostępnij przepis społeczności","Naredi recept javen za skupnost","Hacer receta pública para la comunidad"
+"RECIPES_FIELD_ING_NAME",48786163199107086,"Ingredient name","Ingrediëntnaam","Name der Zutat","Όνομα συστατικού","Nome ingrediente","Ingrediensnavn","Nazwa składnika","Ime sestavine","Nombre del ingrediente"
+"RECIPES_FIELD_ING_MEASURE",48786163199107087,"Quantity / Measure","Hoeveelheid / Maat","Menge / Maß","Ποσότητα / Μέτρο","Quantità / Misura","Mengde / Mål","Ilość / Miara","Količina / Mera","Cantidad / Medida"
+"RECIPES_FIELD_ADD",48786163199107088,"Add","Toevoegen","Hinzufügen","Προσθήκη","Aggiungi","Legg til","Dodaj","Dodaj","Añadir"
+"RECIPES_FIELD_NO_ING",48786163199107089,"You haven't added any ingredients yet.","Je hebt nog geen ingrediënten toegevoegd.","Du hast noch keine Zutaten hinzugefügt.","Δεν έχετε προσθέσει συστατικά ακόμα.","Non hai ancora aggiunto ingredienti.","Du har ikke lagt til noen ingredienser ennå.","Nie dodano jeszcze żadnych składników.","Niste še dodali sestavin.","Aún no has añadido ingredientes a la receta."
+"RECIPES_FIELD_INSTRUCTIONS",48786163199107090,"Preparation instructions","Bereidingsinstructies","Zubereitungsanweisungen","Οδηγίες παρασκευής","Istruzioni di preparazione","Tilberedningsinstruksjoner","Instrukcje przygotowania","Navodila za pripravo","Instrucciones de preparación"
+"RECIPES_FIELD_INSTRUCTIONS_HINT",48786163203301376,"Detailed steps to cook the dish...","Gedetailleerde stappen om het gerecht te bereiden...","Detaillierte Schritte zur Zubereitung des Gerichts...","Αναλυτικά βήματα μαγειρέματος...","Passaggi dettagliati per cucinare il piatto...","Detaljerte trinn for å tilberede retten...","Szczegółowe kroki przygotowania dania...","Podrobni koraki za pripravo jedi...","Pasos detallados para cocinar el plato..."
+"RECIPES_FIELD_IMAGE_URL",48786163203301377,"Image URL (optional)","Afbeeldings-URL (optioneel)","Bild-URL (optional)","URL εικόνας (προαιρετικό)","URL immagine (opzionale)","Bilde-URL (valgfritt)","URL obrazu (opcjonalnie)","URL slike (neobvezno)","URL de imagen (opcional)"
+"RECIPES_FIELD_IMAGE_URL_HINT",48786163203301378,"https://...","https://...","https://...","https://...","https://...","https://...","https://...","https://...","https://..."
+"RECIPES_CREATE_TITLE",48786163203301379,"Create recipe","Recept maken","Rezept erstellen","Δημιουργία συνταγής","Crea ricetta","Lag oppskrift","Utwórz przepis","Ustvari recept","Crear receta"
+"RECIPES_A_DELETE_CONFIRM_TITLE",48825971850076160,"Delete Recipe?","Recept verwijderen?","Rezept löschen?","Διαγραφή συνταγής;","Eliminare la ricetta?","Slette oppskrift?","Usuń przepis?","Izbrišem recept?","¿Eliminar receta?"
+"RECIPES_A_DELETE_CONFIRM_MSG",48826426596515840,"Are you sure you want to delete this recipe?","Weet u zeker dat u dit recept wilt verwijderen?","Möchten Sie dieses Rezept wirklich löschen?","Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη συνταγή;","Sei sicuro di voler eliminare questa ricetta?","Er du sikker på at du vil slette denne oppskriften?","Czy na pewno chcesz usunąć ten przepis?","Ali ste prepričani, da želite izbrisati ta recept?","¿Seguro que quieres eliminar esta receta?"
+"YESTERDAY",48876441641672704,"Yesterday","Gisteren","Gestern","Χθες","Ieri","I går","Wczoraj","Včeraj","Ayer"
+"CONFIRM_DELETE_MEAL_LOG",48876441641672705,"Are you sure you want to delete this meal log?","Weet je zeker dat je dit maaltijdlogboek wilt verwijderen?","Möchtest du diesen Mahlzeiteneintrag wirklich löschen?","Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή την καταγραφή γεύματος;","Sei sicuro di voler eliminare questa registrazione del pasto?","Er du sikker på at du vil slette denne måltidsloggen?","Czy na pewno chcesz usunąć ten wpis o posiłku?","Ali ste prepričani, da želite izbrisati ta vnos obroka?","¿Seguro que quieres eliminar este registro de comida?"
+"MEAL_LOG_DELETED_SUCCESS",48876441641672706,"Meal log deleted successfully","Maaltijdlogboek succesvol verwijderd","Mahlzeiteneintrag erfolgreich gelöscht","Η καταγραφή γεύματος διαγράφηκε με επιτυχία","Registrazione del pasto eliminata con successo","Måltidslogg ble slettet","Wpis o posiłku został pomyślnie usunięty","Vnos obroka uspešno izbrisan","Comida eliminada del registro"
+"EDITING_MEAL",48876441641672707,"Editing meal: {0}","Maaltijd bewerken: {0}","Mahlzeit bearbeiten: {0}","Επεξεργασία γεύματος: {0}","Modifica pasto: {0}","Redigerer måltid: {0}","Edycja posiłku: {0}","Urejanje obroka: {0}","Editando comida: {0}"
+"EDITING_MEAL_TITLE",48876441641672708,"Editing meal","Maaltijd bewerken","Mahlzeit bearbeiten","Επεξεργασία γεύματος","Modifica pasto","Redigerer måltid","Edycja posiłku","Urejanje obroka","Editando comida"
+"SAVE_CHANGES",48876441641672709,"Save changes","Wijzigingen opslaan","Änderungen speichern","Αποθήκευση αλλαγών","Salva modifiche","Lagre endringer","Zapisz zmiany","Shrani spremembe","Guardar cambios"
+"CANCEL_EDIT",48876441641672710,"Cancel edit","Bewerken annuleren","Bearbeiten abbrechen","Ακύρωση επεξεργασίας","Annulla modifica","Avbryt redigering","Anuluj edycję","Prekliči urejanje","Cancelar edición"
+"MEAL_UPDATED_SUCCESS",48876441641672711,"Meal updated successfully","Maaltijd succesvol bijgewerkt","Mahlzeit erfolgreich aktualisiert","Το γεύμα ενημερώθηκε με επιτυχία","Pasto aggiornato con successo","Måltid ble oppdatert","Posiłek został pomyślnie zaktualizowany","Obrok uspešno posodobljen","Comida actualizada correctamente"

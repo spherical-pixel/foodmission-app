@@ -52,16 +52,17 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IImageService, ImageService>();
             builder.services.AddSingleton<IAppUpdateService, AppUpdateService>();
             builder.services.AddSingleton<IWhatsNewService, WhatsNewService>();
-            builder.services.AddSingleton<IRemoteLocalizationService, RemoteLocalizationService>();
             builder.services.AddSingleton<IAccessibilityService, AccessibilityService>();
             builder.services.AddSingleton<IEventService, EventService>();
             builder.services.AddSingleton<IQuizService, QuizService>();
             builder.services.AddSingleton<IFoodFactService, FoodFactService>();
+            builder.services.AddSingleton<IGamificationService, GamificationService>();
             builder.services.AddSingleton<IChallengeService, ChallengeService>();
             builder.services.AddSingleton<IMissionService, MissionService>();
             builder.services.AddSingleton<IActivityEventMapper, ActivityEventMapper>();
             builder.services.AddSingleton<IQuestService, QuestService>();
             builder.services.AddSingleton<IDimensionService, DimensionService>();
+            builder.services.AddSingleton<ISpriteService, SpriteService>();
             builder.services.AddSingleton<IBannerService, BannerService>();
             builder.services.AddSingleton<ILegalService, LegalService>();
             builder.services.AddSingleton<ISurveyService, SurveyService>();

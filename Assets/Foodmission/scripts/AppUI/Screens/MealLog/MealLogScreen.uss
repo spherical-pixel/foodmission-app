@@ -1,3 +1,34 @@
+/* Edit mode banner */
+.fm-ml-edit-banner {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--appui-primary-25);
+    border-color: var(--appui-primary-100);
+    border-width: 1px;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+}
+
+.fm-ml-edit-banner.visible {
+    display: flex;
+}
+
+.fm-ml-edit-banner-title {
+    color: var(--appui-primary-800);
+    font-size: var(--appui-font-sizes-body-md);
+    -unity-font-style: bold;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.fm-ml-cancel-edit-btn {
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
 /* Step visibility */
 .fm-ml-step {
     display: none;
@@ -57,6 +88,15 @@
     flex-direction: column;
     margin-top: 12px;
 }
+
+.fm-ml-day-stepper {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    align-self: center;
+    width: 100%;
+    justify-content: flex-end;
+}
+
 
 /* Preset results */
 .fm-ml-preset-results {

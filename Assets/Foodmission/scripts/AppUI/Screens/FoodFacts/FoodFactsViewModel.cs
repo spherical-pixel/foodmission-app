@@ -19,9 +19,19 @@ namespace eu.foodmission.platform
         public static readonly string[] Options = { All, Beginner, Intermediate, Advanced };
     }
 
+    public static class FoodFactFilterStatus
+    {
+        public const string All = "ALL";
+        public const string Pending = "PENDING";
+        public const string Completed = "COMPLETED";
+
+        public static readonly string[] Options = { All, Pending, Completed };
+    }
+
     public class FoodFactDisplayItem
     {
         public FoodFact FoodFact { get; set; }
+        public bool IsCompleted { get; set; }
     }
 
     public class FoodFactTopicGroup
@@ -34,6 +44,7 @@ namespace eu.foodmission.platform
     {
         public Dimension Dimension { get; set; }
         public int TotalCount { get; set; }
+        public int CompletedCount { get; set; }
         public bool IsExpanded { get; set; } = false;
         public List<FoodFactTopicGroup> Topics { get; set; } = new List<FoodFactTopicGroup>();
     }
@@ -48,6 +59,9 @@ namespace eu.foodmission.platform
         private string _selectedLevel = FoodFactFilterLevel.All;
 
         [ObservableProperty]
+        private string _selectedStatus = FoodFactFilterStatus.All;
+
+        [ObservableProperty]
         private ApiErrorResponse _errorDetail;
 
         [ObservableProperty]
@@ -59,11 +73,15 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _totalFactsCount;
 
+        [ObservableProperty]
+        private int _completedFactsCount;
+
         private readonly IFoodFactService _foodFactService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         private FoodFact[] _rawFacts = Array.Empty<FoodFact>();
+        private FoodFactProgressResponse[] _rawProgress = Array.Empty<FoodFactProgressResponse>();
         private string _lastLoadedLang;
 
         public FoodFactsViewModel(
@@ -108,23 +126,31 @@ namespace eu.foodmission.platform
                     await _dimensionService.PreloadAsync(force: forceRefresh);
                 }
 
-                if (_foodFactService != null)
-                {
-                    var response = await _foodFactService.GetFoodFactsAsync(limit: 200);
-                    if (response.Error != null)
-                    {
-                        ErrorDetail = response.Error;
-                        ErrorMessage = response.Error.message;
-                        IsLoading = false;
-                        return;
-                    }
+                Task<(PaginatedFoodFactResponse Result, ApiErrorResponse Error)> factsTask =
+                    _foodFactService != null
+                        ? _foodFactService.GetFoodFactsAsync(limit: 200)
+                        : Task.FromResult<(PaginatedFoodFactResponse, ApiErrorResponse)>((null, null));
 
-                    _rawFacts = response.Result?.data ?? Array.Empty<FoodFact>();
-                }
-                else
+                Task<(FoodFactProgressResponse[] Result, ApiErrorResponse Error)> progressTask =
+                    _foodFactService != null
+                        ? _foodFactService.GetUserProgressListAsync()
+                        : Task.FromResult<(FoodFactProgressResponse[], ApiErrorResponse)>((null, null));
+
+                await Task.WhenAll(factsTask, progressTask);
+
+                var response = await factsTask;
+                var progressResponse = await progressTask;
+
+                if (response.Error != null)
                 {
-                    _rawFacts = Array.Empty<FoodFact>();
+                    ErrorDetail = response.Error;
+                    ErrorMessage = response.Error.message;
+                    IsLoading = false;
+                    return;
                 }
+
+                _rawFacts = response.Result?.data ?? Array.Empty<FoodFact>();
+                _rawProgress = progressResponse.Result ?? Array.Empty<FoodFactProgressResponse>();
 
                 RebuildDisplayGroups();
             }
@@ -147,6 +173,18 @@ namespace eu.foodmission.platform
             if (_selectedLevel != level)
             {
                 SelectedLevel = level;
+                RebuildDisplayGroups();
+            }
+        }
+
+        public void SetStatusFilter(string status)
+        {
+            if (string.IsNullOrEmpty(status))
+                status = FoodFactFilterStatus.All;
+
+            if (_selectedStatus != status)
+            {
+                SelectedStatus = status;
                 RebuildDisplayGroups();
             }
         }
@@ -201,7 +239,20 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            var completedSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (_rawProgress != null)
+            {
+                foreach (var p in _rawProgress)
+                {
+                    if (p == null) continue;
+                    if (!string.IsNullOrEmpty(p.foodFactId)) completedSet.Add(p.foodFactId);
+                    if (!string.IsNullOrEmpty(p.foodFactCode)) completedSet.Add(p.foodFactCode);
+                }
+            }
+
             var matchingLevelFacts = new List<FoodFact>();
+            var pendingFacts = new List<FoodFact>();
+
             foreach (var f in _rawFacts)
             {
                 if (f == null) continue;
@@ -212,21 +263,39 @@ namespace eu.foodmission.platform
                         continue;
                 }
 
+                bool isCompleted = (!string.IsNullOrEmpty(f.id) && completedSet.Contains(f.id)) ||
+                                   (!string.IsNullOrEmpty(f.code) && completedSet.Contains(f.code));
+
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Completed, StringComparison.OrdinalIgnoreCase) && !isCompleted)
+                {
+                    continue;
+                }
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Pending, StringComparison.OrdinalIgnoreCase) && isCompleted)
+                {
+                    continue;
+                }
+
                 matchingLevelFacts.Add(f);
+
+                if (!isCompleted)
+                {
+                    pendingFacts.Add(f);
+                }
             }
 
-            var candidatePool = matchingLevelFacts.Count > 0 ? matchingLevelFacts : _rawFacts.ToList();
-            if (candidatePool.Count == 0) return;
+            if (matchingLevelFacts.Count == 0) return;
 
+            var candidatePool = pendingFacts.Count > 0 ? pendingFacts : matchingLevelFacts;
             int randomIndex = UnityEngine.Random.Range(0, candidatePool.Count);
             FoodFact selectedFact = candidatePool[randomIndex];
 
             OpenFoodFact(selectedFact);
         }
 
-        public void SetRawDataForTesting(FoodFact[] facts)
+        public void SetRawDataForTesting(FoodFact[] facts, FoodFactProgressResponse[] progress = null)
         {
             _rawFacts = facts ?? Array.Empty<FoodFact>();
+            _rawProgress = progress ?? Array.Empty<FoodFactProgressResponse>();
             RebuildDisplayGroups();
         }
 
@@ -236,11 +305,24 @@ namespace eu.foodmission.platform
             {
                 DisplayGroups = new List<FoodFactDisplayGroup>();
                 TotalFactsCount = 0;
+                CompletedFactsCount = 0;
                 return;
+            }
+
+            var completedSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (_rawProgress != null)
+            {
+                foreach (var p in _rawProgress)
+                {
+                    if (p == null) continue;
+                    if (!string.IsNullOrEmpty(p.foodFactId)) completedSet.Add(p.foodFactId);
+                    if (!string.IsNullOrEmpty(p.foodFactCode)) completedSet.Add(p.foodFactCode);
+                }
             }
 
             var displayItems = new List<FoodFactDisplayItem>();
             int totalMatchingLevel = 0;
+            int totalCompletedMatchingLevel = 0;
 
             foreach (var f in _rawFacts)
             {
@@ -253,13 +335,34 @@ namespace eu.foodmission.platform
                 }
 
                 totalMatchingLevel++;
+
+                bool isCompleted = (!string.IsNullOrEmpty(f.id) && completedSet.Contains(f.id)) ||
+                                   (!string.IsNullOrEmpty(f.code) && completedSet.Contains(f.code));
+
+                if (isCompleted)
+                {
+                    totalCompletedMatchingLevel++;
+                }
+
+                // Status Filter
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Completed, StringComparison.OrdinalIgnoreCase) && !isCompleted)
+                {
+                    continue;
+                }
+                if (string.Equals(_selectedStatus, FoodFactFilterStatus.Pending, StringComparison.OrdinalIgnoreCase) && isCompleted)
+                {
+                    continue;
+                }
+
                 displayItems.Add(new FoodFactDisplayItem
                 {
-                    FoodFact = f
+                    FoodFact = f,
+                    IsCompleted = isCompleted
                 });
             }
 
             TotalFactsCount = totalMatchingLevel;
+            CompletedFactsCount = totalCompletedMatchingLevel;
 
             // Group by Topic
             var itemsByTopicId = new Dictionary<string, List<FoodFactDisplayItem>>(StringComparer.OrdinalIgnoreCase);
@@ -292,6 +395,7 @@ namespace eu.foodmission.platform
 
                     var topicGroups = new List<FoodFactTopicGroup>();
                     int dimTotal = 0;
+                    int dimCompleted = 0;
 
                     var dimTopics = _dimensionService.GetTopicsForDimension(dim.code) ?? dim.topics;
                     if (dimTopics != null)
@@ -318,7 +422,12 @@ namespace eu.foodmission.platform
                                     Facts = topicFacts
                                 });
 
-                                dimTotal += topicFacts.Count;
+                                foreach (var factItem in topicFacts)
+                                {
+                                    dimTotal++;
+                                    if (factItem.IsCompleted)
+                                        dimCompleted++;
+                                }
                             }
                         }
                     }
@@ -332,6 +441,7 @@ namespace eu.foodmission.platform
                         {
                             Dimension = dim,
                             TotalCount = dimTotal,
+                            CompletedCount = dimCompleted,
                             IsExpanded = isExpanded,
                             Topics = topicGroups
                         });
@@ -356,6 +466,7 @@ namespace eu.foodmission.platform
                     {
                         Dimension = new Dimension { id = "DEFAULT", code = "ALL_FOOD_FACTS", name = "Food Facts" },
                         TotalCount = displayItems.Count,
+                        CompletedCount = totalCompletedMatchingLevel,
                         IsExpanded = false,
                         Topics = fallbackTopics
                     });

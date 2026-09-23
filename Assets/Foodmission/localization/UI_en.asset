@@ -201,8 +201,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Together, we\u2019ll connect your kitchen with caring for the planet.\n\nCook,
-      learn, share, and grow every day.\n\nReady to get started?"
+    m_Localized: "Together, we\u2019ll connect your kitchen with caring for the planet.\r\n\r\nCook,
+      learn, share, and grow every day.\r\n\r\nReady to get started?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -260,6 +260,9 @@ MonoBehaviour:
   - m_Id: 38465306467753984
     m_Localized: 'This action will permanently delete all your data from the platform.
 
+      
+
+      
 
       Are
       you sure?'
@@ -2016,9 +2019,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Welcome to FOODMISSION! \nA citizen science platform to improve
-      your sustainable and nutritional behaviours. \nLet's set up your account in
-      a few simple steps."
+    m_Localized: "Welcome to FOODMISSION! \r\nA citizen science platform to improve
+      your sustainable and nutritional behaviours. \r\nLet's set up your account
+      in a few simple steps."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2127,7 +2130,7 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Hello! To personalise your experience on Foodmission and help you
       achieve your goals, we\u2019d like to get to know you a bit better. Are you
-      up for it?\n\nPlease answer a few optional questions so that we can personalise
+      up for it?\r\n\r\nPlease answer a few optional questions so that we can personalise
       your tips, recipe suggestions and daily challenges."
     m_Metadata:
       m_Items: []
@@ -2221,7 +2224,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Oops! This section isn\u2019t available yet, but don\u2019t worry:
-      we\u2019re working on it so you\u2019ll be able to enjoy it very soon.\n\nFOODMISSION
+      we\u2019re working on it so you\u2019ll be able to enjoy it very soon.\r\n\r\nFOODMISSION
       is constantly evolving. We\u2019re improving the app and adding new features
       thanks to feedback from people like you. Thank you for helping us to keep growing!"
     m_Metadata:
@@ -2366,6 +2369,9 @@ MonoBehaviour:
     m_Localized: 'To continue using the platform, you must accept the new document
       of {0}. If you don''t agree, you can logout or delete your account.
 
+      
+
+      
 
       Please
       take a moment to review again the new document of {0}, and feel free to contact
@@ -2377,8 +2383,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Hello!\n\nAs a participant in the pilot, we have a short survey
-      for you. Your answers will help us improve the FOODMISSION platform. \n\nWould
+    m_Localized: "Hello!\r\n\r\nAs a participant in the pilot, we have a short survey
+      for you. Your answers will help us improve the FOODMISSION platform. \r\n\r\nWould
       you like to complete it now?"
     m_Metadata:
       m_Items: []
@@ -2471,20 +2477,486 @@ MonoBehaviour:
     m_Localized: Explore Quests
     m_Metadata:
       m_Items: []
-  - m_Id: 49206146878136320
-    m_Localized: Simplified meal log
+  - m_Id: 46966074812391424
+    m_Localized: Reward earned!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207590964420608
-    m_Localized: What were the key features of your dish?
+  - m_Id: 46966143921938432
+    m_Localized: XP earned!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207906585796608
-    m_Localized: Name or description (optional)
+  - m_Id: 46966269096747008
+    m_Localized: '{0:plural:FoodyCoin earned!|FoodyCoins earned!}'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 46966724417806336
+    m_Localized: New badge collected!
     m_Metadata:
       m_Items: []
-  - m_Id: 49210861586210816
-    m_Localized: 'E.g.: Lentil and vegetable salad'
+  - m_Id: 46966954571849728
+    m_Localized: New pet item!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Localized: New collectible!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633499783168
+    m_Localized: Read
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Localized: Unread
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Localized: Quest completed!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Localized: Quiz completed!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Localized: New fact learned!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: For you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Explore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: My recipes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: New recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: Your pantry is empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: Add items to your pantry to get smart recipe suggestions that reduce
+      food waste!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: Go to Pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: No recipes created yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: Create and share your favorite sustainable recipes with the community!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: All
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Easy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: All
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: '{0} expiring soon'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} in pantry'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: General
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Ingredients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Instructions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301379
+    m_Localized: Create recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Edit recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Save recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: Make the most of what you have at home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: Recipe Editor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: Error saving recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: Recipe title is required
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: Beef
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: Chicken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Dessert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: Lamb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: Miscellaneous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Pasta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: Pork
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: Fish & Seafood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: Side Dishes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Starters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: Vegan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: Vegetarian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: Breakfast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: Goat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: All cuisines
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: Algerian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: American
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: Argentinian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Australian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: British
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Canadian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: Chinese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: Croatian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Dutch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: Egyptian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: Filipino
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: French
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: Greek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Irish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: Italian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: Jamaican
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: Japanese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: Kenyan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Malaysian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: Mexican
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: Moroccan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: Norwegian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Polish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portuguese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Saudi Arabian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: Slovakian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: Spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Syrian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Thai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunisian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: Turkish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: Ukrainian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Uruguayan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Venezuelan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Vietnamese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Recipe title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: E.g. Vegetable pasta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: Brief introduction to the recipe...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Prep time (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Cook time (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Servings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: Select difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Category
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: Select category
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Cuisine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: Select cuisine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: Make recipe public to the community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: Ingredient name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: Quantity / Measure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Add
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: You haven't added any ingredients yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Preparation instructions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: Detailed steps to cook the dish...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: Image URL (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: Delete Recipe?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: Are you sure you want to delete this recipe?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: Yesterday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: Are you sure you want to delete this meal log?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: Meal log deleted successfully
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: 'Editing meal: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: Editing meal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Save changes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Cancel edit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: Meal updated successfully
     m_Metadata:
       m_Items: []
   references:
@@ -2501,3 +2973,4 @@ MonoBehaviour:
         - id: 28899582313226240
         - id: 28906308236206080
         - id: 28898960193085440
+        - id: 46966269096747008

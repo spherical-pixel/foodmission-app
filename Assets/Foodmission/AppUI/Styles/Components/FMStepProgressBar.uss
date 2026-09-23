@@ -50,12 +50,12 @@
 
 /* Step Circle */
 .fm-step-progress-bar--detailed .fm-step-progress__circle {
-    width: 32px;
-    height: 32px;
-    border-radius: 16px;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
     justify-content: center;
     align-items: center;
-    border-width: 2px;
+    border-width: 4px;
     border-style: solid;
     transition-property: background-color, border-color;
     transition-duration: 0.3s;
@@ -72,7 +72,7 @@
 /* Connector Line */
 .fm-step-progress-bar--detailed .fm-step-progress__line {
     flex-grow: 1;
-    height: 2px;
+    height: 6px;
     margin-left: 4px;
     margin-right: 4px;
     transition-property: background-color;
@@ -91,10 +91,22 @@
     flex-grow: 1;
     flex-basis: 0;
     font-size: var(--appui-font-sizes-body-xs);
-    -unity-text-align: top-center;
+    -unity-text-align: upper-center;
     white-space: normal;
     transition-property: color;
     transition-duration: 0.3s;
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__label--first {
+    -unity-text-align: upper-left;
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__label--middle {
+    -unity-text-align: upper-center;
+}
+
+.fm-step-progress-bar--detailed .fm-step-progress__label--last {
+    -unity-text-align: upper-right;
 }
 
 /* ───────────────────────────────────────────────────────────────────────
@@ -102,35 +114,35 @@
    ─────────────────────────────────────────────────────────────────────── */
 /* Completed Steps */
 .fm-step-progress-bar--detailed .fm-step-progress__circle.completed {
-    background-color: var(--appui-primary-100);
-    border-color: var(--appui-primary-100);
+    background-color: var(--appui-primary-50);
+    border-color: var(--appui-primary-50);
 }
 
 .fm-step-progress-bar--detailed .fm-step-progress__circle.completed .fm-step-progress__circle-text {
-    color: var(--appui-backgrounds-100);
+    color: var(--appui-backgrounds-50);
 }
 
 .fm-step-progress-bar--detailed .fm-step-progress__line.active {
-    background-color: var(--appui-primary-100);
+    background-color: var(--appui-primary-50);
 }
 
 .fm-step-progress-bar--detailed .fm-step-progress__label.completed {
-    color: var(--appui-primary-100);
+    color: var(--appui-foregrounds-100);
     -unity-font-style: normal;
 }
 
 /* Active Step */
 .fm-step-progress-bar--detailed .fm-step-progress__circle.active {
-    background-color: var(--appui-backgrounds-100);
+    background-color: var(--appui-backgrounds-200);
     border-color: var(--appui-primary-100);
 }
 
 .fm-step-progress-bar--detailed .fm-step-progress__circle.active .fm-step-progress__circle-text {
-    color: var(--appui-primary-100);
+    color: var(--appui-foregrounds-50);
 }
 
 .fm-step-progress-bar--detailed .fm-step-progress__label.active {
-    color: var(--appui-primary-100);
+    color: var(--appui-foregrounds-100);
     -unity-font-style: bold;
 }
 
@@ -149,5 +161,5 @@
 }
 
 .fm-step-progress-bar--detailed .fm-step-progress__label.pending {
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-foregrounds-100);
 }

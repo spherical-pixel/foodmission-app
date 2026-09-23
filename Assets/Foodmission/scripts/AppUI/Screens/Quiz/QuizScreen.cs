@@ -312,17 +312,41 @@ namespace eu.foodmission.platform
 
         private void OnContinueClicked()
         {
-            HideExplanationCard(() =>
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            _btContinue?.SetEnabled(false);
+
+            var reward = _viewModel?.QuizProgress?.reward;
+            bool hasReward = reward != null &&
+                ((reward.xp.HasValue && reward.xp.Value > 0) ||
+                 (reward.points.HasValue && reward.points.Value > 0) ||
+                 !string.IsNullOrEmpty(reward.badgeId));
+
+            void NavigateOut()
             {
-                if (_navController != null)
+                HideExplanationCard(() =>
                 {
-                    _navController.PopBackStack();
-                }
-                else
-                {
-                    OnNavigationRequested(Actions.go_to_home, null);
-                }
-            });
+                    if (_navController != null)
+                    {
+                        _navController.PopBackStack();
+                    }
+                    else
+                    {
+                        OnNavigationRequested(Actions.go_to_home, null);
+                    }
+                });
+            }
+
+            if (hasReward)
+            {
+                RewardCelebrationDialog.Show(
+                    reward,
+                    contextTitle: "@UI:QUIZ_REWARD_TITLE",
+                    onDismiss: NavigateOut);
+            }
+            else
+            {
+                NavigateOut();
+            }
         }
 
         private void OnOptionSelected(FMResponseQuiz response)

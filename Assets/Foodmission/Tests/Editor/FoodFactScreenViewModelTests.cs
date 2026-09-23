@@ -105,5 +105,62 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_vm.IsLoading);
             Assert.IsNull(_vm.FoodFactData);
         }
+
+        [Test]
+        public async Task MarkAsReadAsync_WhenFoodFactDataNull_ReturnsNull()
+        {
+            var result = await _vm.MarkAsReadAsync();
+            Assert.IsNull(result);
+            Assert.IsNull(_vm.EarnedReward);
+        }
+
+        [Test]
+        public async Task MarkAsReadAsync_WhenServiceReturnsReward_DispatchesWalletRewardAndSetsEarnedReward()
+        {
+            var fact = new FoodFact { id = "fact-1", code = "FF.B1.1" };
+            _vm.FoodFactData = fact;
+
+            var expectedReward = new ContentReward { xp = 20, points = 5 };
+            var progressResponse = new FoodFactProgressResponse
+            {
+                foodFactCode = "FF.B1.1",
+                reward = expectedReward
+            };
+
+            _mockFoodFactService.Setup(s => s.MarkAsReadAsync("FF.B1.1"))
+                .ReturnsAsync((progressResponse, null));
+
+            var result = await _vm.MarkAsReadAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(20, result.xp);
+            Assert.AreEqual(5, result.points);
+            Assert.AreSame(expectedReward, _vm.EarnedReward);
+            Assert.Contains("app/addWalletReward", _storeService.DispatchedActionTypes);
+            Assert.AreEqual(20, _storeService.GetAppState().userXp);
+            Assert.AreEqual(5, _storeService.GetAppState().userPoints);
+        }
+
+        [Test]
+        public async Task MarkAsReadAsync_WhenServiceReturnsNoReward_DoesNotDispatch()
+        {
+            var fact = new FoodFact { id = "fact-1", code = "FF.B1.1" };
+            _vm.FoodFactData = fact;
+
+            var progressResponse = new FoodFactProgressResponse
+            {
+                foodFactCode = "FF.B1.1",
+                reward = null
+            };
+
+            _mockFoodFactService.Setup(s => s.MarkAsReadAsync("FF.B1.1"))
+                .ReturnsAsync((progressResponse, null));
+
+            var result = await _vm.MarkAsReadAsync();
+
+            Assert.IsNull(result);
+            Assert.IsNull(_vm.EarnedReward);
+            Assert.IsFalse(_storeService.DispatchedActionTypes.Contains("app/addWalletReward"));
+        }
     }
 }

@@ -174,5 +174,53 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("• Leche entera", updatedName.text);
             Assert.AreEqual("150 ml", updatedQty.text);
         }
+
+        [Test]
+        public void FMMealLogCard_RendersRemoveButton()
+        {
+            var card = new FMMealLogCard();
+            Assert.IsNotNull(card.RemoveButton, "RemoveButton should not be null");
+            Assert.AreEqual("fm-trash", card.RemoveButton.leadingIcon);
+
+            var buttonInHierarchy = card.Q<Unity.AppUI.UI.Button>(className: "fm-meal-card-remove-btn");
+            Assert.IsNotNull(buttonInHierarchy, "RemoveButton should be present in the card hierarchy");
+            Assert.AreSame(card.RemoveButton, buttonInHierarchy);
+        }
+
+        [Test]
+        public void FMMealLogCard_ClickRemoveButton_TriggersClickedEvent()
+        {
+            var card = new FMMealLogCard();
+            bool clicked = false;
+            card.RemoveButton.clicked += () => clicked = true;
+
+            card.RemoveButton.clickable.InvokePressed(null);
+
+            Assert.IsTrue(clicked, "RemoveButton clicked event should be triggered");
+        }
+
+        [Test]
+        public void FMMealLogCard_RendersEditButton()
+        {
+            var card = new FMMealLogCard();
+            Assert.IsNotNull(card.EditButton, "EditButton should not be null");
+            Assert.AreEqual("fm-edit", card.EditButton.leadingIcon);
+
+            var buttonInHierarchy = card.Q<Unity.AppUI.UI.Button>(className: "fm-meal-card-edit-btn");
+            Assert.IsNotNull(buttonInHierarchy, "EditButton should be present in the card hierarchy");
+            Assert.AreSame(card.EditButton, buttonInHierarchy);
+        }
+
+        [Test]
+        public void FMMealLogCard_ClickEditButton_TriggersClickedEvent()
+        {
+            var card = new FMMealLogCard();
+            bool clicked = false;
+            card.EditButton.clicked += () => clicked = true;
+
+            card.EditButton.clickable.InvokePressed(null);
+
+            Assert.IsTrue(clicked, "EditButton clicked event should be triggered");
+        }
     }
 }

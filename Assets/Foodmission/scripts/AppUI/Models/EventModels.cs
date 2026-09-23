@@ -98,7 +98,7 @@ namespace eu.foodmission.platform
             PackagingMaterialObserved, PackagingRecyclingLabelRead, PackagingReusableSpotChosen, PackagingRecyclabilityEvaluated, PackagingComparisonMade, PackagingSmartObserved,
             FoodWasteHalfPlateSaved, FoodWasteFullPlateSaved, FoodWasteExpiredConsumed, FoodWasteStorageInstructionsRead, FoodWasteMealPlanned, FoodWasteFridgePantryChecked, FoodWasteFifoOrganized, FoodWasteLogged,
             NutritionProteinIncluded, NutritionFruitVegServingAdded, NutritionWholegrainChosen, NutritionHighFibreMeal, NutritionSaltFreeTable, NutritionHealthyFatChosen, NutritionProteinVarietyLogged, NutritionRainbowColoursLogged, NutritionAddedSugarAvoided, NutritionPlantDiversityCount,
-            LearningFootprintCompared, LearningRecipeExplored, LearningRecipeShared
+            LearningFootprintCompared, LearningRecipeExplored, LearningRecipeShared, LearningFactRead
         };
     }
 

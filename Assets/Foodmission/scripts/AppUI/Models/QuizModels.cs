@@ -61,6 +61,7 @@ namespace eu.foodmission.platform
         public bool? isCorrect;
         public bool completed;
         public string answeredAt;
+        public ContentReward reward;
     }
 
     [Serializable]

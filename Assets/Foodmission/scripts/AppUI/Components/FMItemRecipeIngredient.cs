@@ -15,6 +15,7 @@ namespace eu.foodmission.platform.Components
         private readonly Text _measureText;
         private readonly VisualElement _textContainer;
         private readonly VisualElement _buttonsContainer;
+        private readonly Unity.AppUI.UI.Button _editButton;
         private readonly Unity.AppUI.UI.Button _removeButton;
 
         public FMItemRecipeIngredient()
@@ -36,6 +37,13 @@ namespace eu.foodmission.platform.Components
             _buttonsContainer = new VisualElement();
             _buttonsContainer.AddToClassList("fm-re-ingredient-buttons-container");
             Add(_buttonsContainer);
+
+            _editButton = new Unity.AppUI.UI.Button();
+            _editButton.quiet = true;
+            _editButton.leadingIcon = "edit";
+            _editButton.size = Size.S;
+            _editButton.AddToClassList("fm-re-ingredient-edit");
+            _buttonsContainer.Add(_editButton);
 
             _removeButton = new Unity.AppUI.UI.Button();
             _removeButton.quiet = true;
@@ -65,6 +73,7 @@ namespace eu.foodmission.platform.Components
             }
         }
 
+        public Unity.AppUI.UI.Button EditButton => _editButton;
         public Unity.AppUI.UI.Button RemoveButton => _removeButton;
     }
 }

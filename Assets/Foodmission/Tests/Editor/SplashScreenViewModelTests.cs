@@ -16,7 +16,6 @@ namespace eu.foodmission.platform.Tests
         private Mock<IAuthService> _mockAuthService;
         private Mock<ITemplateService> _mockTemplateService;
         private Mock<IAppUpdateService> _mockAppUpdateService;
-        private Mock<IRemoteLocalizationService> _mockRemoteLocalizationService;
         private Mock<ICatalogService> _mockCatalogService;
         private Mock<IGenericFoodService> _mockGenericFoodService;
         private TestStoreService _storeService;
@@ -28,7 +27,6 @@ namespace eu.foodmission.platform.Tests
             _mockAuthService = new Mock<IAuthService>();
             _mockTemplateService = new Mock<ITemplateService>();
             _mockAppUpdateService = new Mock<IAppUpdateService>();
-            _mockRemoteLocalizationService = new Mock<IRemoteLocalizationService>();
             _mockCatalogService = new Mock<ICatalogService>();
             _mockGenericFoodService = new Mock<IGenericFoodService>();
             _storeService = new TestStoreService();
@@ -37,7 +35,6 @@ namespace eu.foodmission.platform.Tests
                 _mockAuthService.Object,
                 _mockTemplateService.Object,
                 _mockAppUpdateService.Object,
-                _mockRemoteLocalizationService.Object,
                 _mockCatalogService.Object,
                 _mockGenericFoodService.Object);
         }

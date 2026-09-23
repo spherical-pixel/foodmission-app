@@ -35,6 +35,30 @@
                         </appui:ActionButton>
                     </appui:ActionGroup>
                 </ui:VisualElement>
+                <ui:VisualElement name="row-status" style="flex-grow: 1; flex-direction: row;">
+                    <appui:Text text="Status_" size="XXXL" name="Text" style="margin-right: 20px;">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37196726493241344)"/>
+                        </Bindings>
+                    </appui:Text>
+                    <appui:ActionGroup name="group-status-filters" selection-type="Single" allow-no-selection="false" compact="true" size="S" direction="Horizontal" justified="true" class="fm-foodfacts-action-group">
+                        <appui:ActionButton name="btn-status-all" label="All Status" selected="true" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(37187477251809280)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                        <appui:ActionButton name="btn-status-pending" label="Unread" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47093633503977472)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                        <appui:ActionButton name="btn-status-completed" label="Read" size="S">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47093633499783168)"/>
+                            </Bindings>
+                        </appui:ActionButton>
+                    </appui:ActionGroup>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1;">

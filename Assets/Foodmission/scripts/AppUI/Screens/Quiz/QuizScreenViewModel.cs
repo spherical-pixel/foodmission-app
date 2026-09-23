@@ -73,6 +73,14 @@ namespace eu.foodmission.platform
 
             QuizProgress = progress;
 
+            if (progress?.reward != null &&
+                ((progress.reward.xp.HasValue && progress.reward.xp.Value > 0) ||
+                 (progress.reward.points.HasValue && progress.reward.points.Value > 0) ||
+                 !string.IsNullOrEmpty(progress.reward.badgeId)))
+            {
+                _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(progress.reward.xp ?? 0, progress.reward.points ?? 0)));
+            }
+
             Debug.Log("SubmitResponse -> " + JsonUtility.ToJson(progress));
         }
 

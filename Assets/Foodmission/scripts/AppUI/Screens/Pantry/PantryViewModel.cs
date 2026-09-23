@@ -166,16 +166,10 @@ namespace eu.foodmission.platform
             PantryItemView[] enrichedItems = await EnrichItemsAsync(rawItems);
             _allItems = new List<PantryItemView>(enrichedItems);
 
-            // Schedule local expiry reminders for items with expiry dates
-            if (_notificationService != null && _notificationService.AreNotificationsEnabled())
+            // Sync local expiry reminders (only schedules new or modified items, avoids repeating unchanged ones, cancels removed ones)
+            if (_notificationService != null)
             {
-                foreach (var itemView in enrichedItems)
-                {
-                    if (itemView?.Item != null && !string.IsNullOrEmpty(itemView.Item.expiryDate) && DateTime.TryParse(itemView.Item.expiryDate, out DateTime expDate))
-                    {
-                        _notificationService.SchedulePantryExpiryReminder(itemView.Item.id, itemView.DisplayName, expDate);
-                    }
-                }
+                _notificationService.SyncPantryReminders(enrichedItems);
             }
 
             ErrorDetail = null;

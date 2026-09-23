@@ -203,8 +203,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35547983100502016
     m_Localized: "Razem po\u0142\u0105czymy Twoj\u0105 kuchni\u0119 z trosk\u0105
-      o nasz\u0105 planet\u0119.\n\nGotuj, ucz si\u0119, dziel si\u0119 i rozwijaj
-      si\u0119 ka\u017Cdego dnia.\n\nGotowy, by zacz\u0105\u0107?"
+      o nasz\u0105 planet\u0119.\r\n\r\nGotuj, ucz si\u0119, dziel si\u0119 i rozwijaj
+      si\u0119 ka\u017Cdego dnia.\r\n\r\nGotowy, by zacz\u0105\u0107?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -261,7 +261,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38465306467753984
     m_Localized: "Ta czynno\u015B\u0107 spowoduje trwa\u0142e usuni\u0119cie wszystkich
-      Twoich danych z platformy.\n\nCzy na pewno chcesz to zrobi\u0107?"
+      Twoich danych z platformy.\r\n\r\nCzy na pewno chcesz to zrobi\u0107?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -1361,7 +1361,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Witamy w Foodmission!\nTa kr\xF3tka ankieta pomo\u017Ce nam pozna\u0107
+    m_Localized: "Witamy w Foodmission!\r\nTa kr\xF3tka ankieta pomo\u017Ce nam pozna\u0107
       Twoje nawyki \u017Cywieniowe, \u015Bwiadomo\u015B\u0107 w zakresie marnotrawstwa
       \u017Cywno\u015Bci oraz wybory zgodne z zasadami zr\xF3wnowa\u017Conego rozwoju,
       dzi\u0119ki czemu Nutri b\u0119dzie mog\u0142o dostosowa\u0107 rekomendacje
@@ -2035,9 +2035,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Witamy w FOODMISSION! \nTo platforma naukowa oparta na udziale
+    m_Localized: "Witamy w FOODMISSION! \r\nTo platforma naukowa oparta na udziale
       obywateli, kt\xF3rej celem jest poprawa Twoich nawyk\xF3w zwi\u0105zanych ze
-      zr\xF3wnowa\u017Conym od\u017Cywianiem. \nZa\u0142\xF3\u017C konto w kilku
+      zr\xF3wnowa\u017Conym od\u017Cywianiem. \r\nZa\u0142\xF3\u017C konto w kilku
       prostych krokach."
     m_Metadata:
       m_Items: []
@@ -2137,7 +2137,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "W Twoim kraju nie jest prowadzony \u017Caden program pilota\u017Cowy.\nMo\u017Cesz
+    m_Localized: "W Twoim kraju nie jest prowadzony \u017Caden program pilota\u017Cowy.\r\nMo\u017Cesz
       zapozna\u0107 si\u0119 z platform\u0105 i z niej korzysta\u0107, ale Twoje
       dane nie zostan\u0105 wykorzystane w badaniach w ramach programu pilota\u017Cowego."
     m_Metadata:
@@ -2145,9 +2145,9 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Witaj! Aby dostosowa\u0107 Twoje do\u015Bwiadczenia na Foodmission
       do Twoich potrzeb i pom\xF3c Ci osi\u0105gn\u0105\u0107 Twoje cele, chcieliby\u015Bmy
-      Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?\n\nOdpowiedz prosz\u0119
-      na kilka opcjonalnych pyta\u0144, aby\u015Bmy mogli dostosowa\u0107 do Ciebie
-      porady, propozycje przepis\xF3w i codzienne wyzwania."
+      Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?\r\n\r\nOdpowiedz
+      prosz\u0119 na kilka opcjonalnych pyta\u0144, aby\u015Bmy mogli dostosowa\u0107
+      do Ciebie porady, propozycje przepis\xF3w i codzienne wyzwania."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2254,7 +2254,7 @@ MonoBehaviour:
   - m_Id: 34305618675228672
     m_Localized: "Ups! Ta sekcja nie jest jeszcze dost\u0119pna, ale nie martw si\u0119:
       pracujemy nad ni\u0105, wi\u0119c ju\u017C wkr\xF3tce b\u0119dziesz m\xF3g\u0142
-      z niej korzysta\u0107.\n\nFOODMISSION nieustannie si\u0119 rozwija. Ulepszamy
+      z niej korzysta\u0107.\r\n\r\nFOODMISSION nieustannie si\u0119 rozwija. Ulepszamy
       aplikacj\u0119 i dodajemy nowe funkcje dzi\u0119ki opiniom od u\u017Cytkownik\xF3w
       takich jak Ty. Dzi\u0119kujemy za pomoc w naszym dalszym rozwoju!"
     m_Metadata:
@@ -2407,7 +2407,7 @@ MonoBehaviour:
   - m_Id: 40938002757705728
     m_Localized: "Aby nadal korzysta\u0107 z platformy, musisz zaakceptowa\u0107
       nowy dokument {0}. Je\u015Bli nie wyra\u017Casz zgody, mo\u017Cesz si\u0119
-      wylogowa\u0107 lub usun\u0105\u0107 swoje konto.\n\nPo\u015Bwi\u0119\u0107
+      wylogowa\u0107 lub usun\u0105\u0107 swoje konto.\r\n\r\nPo\u015Bwi\u0119\u0107
       chwil\u0119 na ponowne zapoznanie si\u0119 z nowym dokumentem {0} i skontaktuj
       si\u0119 z nami, je\u015Bli uwa\u017Casz, \u017Ce zawiera on jakie\u015B nie\u015Bcis\u0142o\u015Bci."
     m_Metadata:
@@ -2417,9 +2417,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Witaj!\n\nJako uczestnik programu pilota\u017Cowego mamy dla Ciebie
-      kr\xF3tk\u0105 ankiet\u0119. Twoje odpowiedzi pomog\u0105 nam ulepszy\u0107
-      platform\u0119 FOODMISSION. \n\nCzy chcesz j\u0105 wype\u0142ni\u0107 teraz?"
+    m_Localized: "Witaj!\r\n\r\nJako uczestnik programu pilota\u017Cowego mamy dla
+      Ciebie kr\xF3tk\u0105 ankiet\u0119. Twoje odpowiedzi pomog\u0105 nam ulepszy\u0107
+      platform\u0119 FOODMISSION. \r\n\r\nCzy chcesz j\u0105 wype\u0142ni\u0107 teraz?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -2513,20 +2513,488 @@ MonoBehaviour:
     m_Localized: Odkryj zadania
     m_Metadata:
       m_Items: []
-  - m_Id: 49206146878136320
-    m_Localized: "Uproszczony dziennik posi\u0142k\xF3w"
+  - m_Id: 46966269096747008
+    m_Localized: "{0:plural:Zdobyto FoodyCoin!|Zdobyto FoodyCoiny!|Zdobyto FoodyCoin\xF3w!|Zdobyto
+      FoodyCoiny!}"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
+  - m_Id: 46966074812391424
+    m_Localized: "Zdobyto nagrod\u0119!"
     m_Metadata:
       m_Items: []
-  - m_Id: 49207590964420608
-    m_Localized: "Jakie by\u0142y g\u0142\xF3wne cechy Twojej potrawy?"
+  - m_Id: 46966143921938432
+    m_Localized: Zdobyto XP!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207906585796608
-    m_Localized: Nazwa lub opis (opcjonalnie)
+  - m_Id: 46966724417806336
+    m_Localized: "Zdobyto now\u0105 odznak\u0119!"
     m_Metadata:
       m_Items: []
-  - m_Id: 49210861586210816
-    m_Localized: "Np.: Sa\u0142atka z soczewicy i warzyw"
+  - m_Id: 46966954571849728
+    m_Localized: "Nowy przedmiot dla zwierzak\xF3w!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Localized: Nowa pozycja kolekcjonerska!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633499783168
+    m_Localized: Przeczytane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Localized: Nieprzeczytane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Localized: "Zadanie zako\u0144czone!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Localized: "Quiz zako\u0144czony!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Localized: "Poznano now\u0105 ciekawostk\u0119!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: Dla Ciebie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Odkrywaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Moje przepisy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Nowy przepis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: "Twoja spi\u017Carnia jest pusta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "Dodaj produkty do spi\u017Carni, aby otrzymywa\u0107 propozycje
+      przepis\xF3w ograniczaj\u0105cych marnowanie \u017Cywno\u015Bci!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: "Przejd\u017A do spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: "Nie utworzono jeszcze \u017Cadnych przepis\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: "Tw\xF3rz i udost\u0119pniaj swoje ulubione zr\xF3wnowa\u017Cone
+      przepisy spo\u0142eczno\u015Bci!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Wszystkie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: "\u0141atwy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: "\u015Aredni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Trudny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Wszystkie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: "{0} wkr\xF3tce traci wa\u017Cno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: "{0}/{1} w spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: "Og\xF3lne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: "Sk\u0142adniki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Instrukcje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301379
+    m_Localized: "Utw\xF3rz przepis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Edytuj przepis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Zapisz przepis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: "Wykorzystaj w pe\u0142ni to, co masz w domu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: "Edytor przepis\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: "B\u0142\u0105d podczas zapisywania przepisu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: "Tytu\u0142 przepisu jest wymagany"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: "Wo\u0142owina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: Kurczak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Deser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: "Jagni\u0119cina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: "R\xF3\u017Cne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Makaron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: Wieprzowina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: Ryby i owoce morza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: Dodatki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Przystawki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: "Wega\u0144skie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: "Wegetaria\u0144skie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: "\u015Aniadanie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: Kozina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: Wszystkie kuchnie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: Algierska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: "Ameryka\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: "Argenty\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Australijska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: Brytyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Kanadyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: "Chi\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: Chorwacka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Holenderska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: Egipska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: "Filipi\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: Francuska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: Grecka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Irlandzka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: "W\u0142oska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: Jamajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: "Japo\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: "Kenia\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Malezyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: "Meksyka\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: "Maroka\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: Norweska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Polska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portugalska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Saudyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: "S\u0142owacka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: "Hiszpa\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Syryjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Tajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunezyjska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: Turecka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: "Ukrai\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Urugwajska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Wenezuelska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Wietnamska
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: "Tytu\u0142 przepisu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: Np. Makaron z warzywami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Opis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: "Kr\xF3tkie wprowadzenie do przepisu..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Czas przygotowania (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Czas gotowania (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porcje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: "Trudno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: "Wybierz trudno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Kategoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: "Wybierz kategori\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: Kuchnia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: "Wybierz kuchni\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: "Udost\u0119pnij przepis spo\u0142eczno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: "Nazwa sk\u0142adnika"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: "Ilo\u015B\u0107 / Miara"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Dodaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Nie dodano jeszcze \u017Cadnych sk\u0142adnik\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Instrukcje przygotowania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: "Szczeg\xF3\u0142owe kroki przygotowania dania..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: URL obrazu (opcjonalnie)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: "Usu\u0144 przepis?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: "Czy na pewno chcesz usun\u0105\u0107 ten przepis?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: Wczoraj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: "Czy na pewno chcesz usun\u0105\u0107 ten wpis o posi\u0142ku?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: "Wpis o posi\u0142ku zosta\u0142 pomy\u015Blnie usuni\u0119ty"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: "Edycja posi\u0142ku: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: "Edycja posi\u0142ku"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Zapisz zmiany
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: "Anuluj edycj\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: "Posi\u0142ek zosta\u0142 pomy\u015Blnie zaktualizowany"
     m_Metadata:
       m_Items: []
   references:
@@ -2543,3 +3011,4 @@ MonoBehaviour:
         - id: 28899582313226240
         - id: 28906308236206080
         - id: 28898960193085440
+        - id: 46966269096747008

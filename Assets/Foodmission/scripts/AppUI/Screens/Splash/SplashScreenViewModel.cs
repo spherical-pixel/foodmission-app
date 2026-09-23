@@ -17,7 +17,6 @@ namespace eu.foodmission.platform
         private readonly IAuthService _authService;
         private readonly ITemplateService _templateService;
         private readonly IAppUpdateService _appUpdateService;
-        private readonly IRemoteLocalizationService _remoteLocalizationService;
         private readonly ICatalogService _catalogService;
         private readonly IGenericFoodService _genericFoodService;
         private readonly IDimensionService _dimensionService;
@@ -33,7 +32,6 @@ namespace eu.foodmission.platform
             IAuthService authService,
             ITemplateService templateService,
             IAppUpdateService appUpdateService,
-            IRemoteLocalizationService remoteLocalizationService,
             ICatalogService catalogService,
             IGenericFoodService genericFoodService = null,
             IDimensionService dimensionService = null) : base(storeService)
@@ -41,7 +39,6 @@ namespace eu.foodmission.platform
             _authService = authService;
             _templateService = templateService;
             _appUpdateService = appUpdateService;
-            _remoteLocalizationService = remoteLocalizationService;
             _catalogService = catalogService;
             _genericFoodService = genericFoodService;
             _dimensionService = dimensionService;
@@ -57,7 +54,6 @@ namespace eu.foodmission.platform
                 await LocalizationSettings.InitializationOperation.Task;
             }
 
-            await _remoteLocalizationService.InitializeAsync();
 
             // await Task.Delay(100);
 

@@ -205,8 +205,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d08450cb557f941c1a22c345adb233f0
+    m_Address: Particles-QuizWin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6a86b0239f54418486501c88ddd29c5
     m_Address: Foodmission/AppUI/Templates/QuickSearchScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5114aa5c2ff54fd394625beeb60bad2
+    m_Address: ui-template/particles/confeti
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

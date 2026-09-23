@@ -81,6 +81,11 @@ namespace eu.foodmission.platform.Tests
                 .AddCase(AppActions.setWalletBalance, AppReducers.SetWalletBalanceReducer)
                 // Profile sync
                 .AddCase(AppActions.profileSynced, AppReducers.ProfileSyncedReducer)
+                // Gamification / Wallet
+                .AddCase(AppActions.setWalletBalance, AppReducers.SetWalletBalanceReducer)
+                .AddCase(AppActions.addWalletReward, AppReducers.AddWalletRewardReducer)
+                .AddCase(AppActions.setProgressIndicators, AppReducers.SetProgressIndicatorsReducer)
+                .AddCase(AppActions.setBadges, AppReducers.SetBadgesReducer)
                 // Food Info
                 .AddCase(AppActions.foodInfoAddRequested, AppReducers.FoodInfoAddRequestedReducer)
                 .AddCase(AppActions.foodInfoAddRequestConsumed, AppReducers.FoodInfoAddRequestConsumedReducer);

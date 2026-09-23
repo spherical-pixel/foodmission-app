@@ -40,21 +40,58 @@ namespace eu.foodmission.platform.Components
         /* ========= INTERNAL ELEMENTS ========= */
         private MealLog _mealLogData;
         private string _typeLabel;
+        private VisualElement _headerRow;
         private Heading _heading;
+        private Unity.AppUI.UI.Button _editButton;
+        private Unity.AppUI.UI.Button _removeButton;
         private Unity.AppUI.UI.Text _mealName;
         private VisualElement _itemsContainer;
         private Unity.AppUI.UI.Text _badge;
+
+        public Unity.AppUI.UI.Button EditButton => _editButton;
+        public Unity.AppUI.UI.Button RemoveButton => _removeButton;
 
         public FMMealLogCard()
         {
             this.AddToClassList("fm-meal-card");
 
+            _headerRow = new VisualElement();
+            _headerRow.AddToClassList("fm-meal-card-header-row");
+
             _heading = new Heading();
-            _heading.size = HeadingSize.M;
+            _heading.size = HeadingSize.S;
             _heading.AddToClassList("bold-text");
             _heading.AddToClassList("fm-meal-card-heading");
-            _heading.style.paddingBottom = 8;
-            this.Add(_heading);
+            _heading.style.flexGrow = 1;
+            _heading.style.flexShrink = 1;
+            _headerRow.Add(_heading);
+
+            var actionsContainer = new VisualElement();
+            actionsContainer.style.width = Length.Percent(100);
+            actionsContainer.style.flexDirection = FlexDirection.Row;
+            actionsContainer.style.alignItems = Align.FlexEnd;
+            actionsContainer.style.justifyContent = Justify.FlexEnd;
+
+            _editButton = new Unity.AppUI.UI.Button();
+            _editButton.quiet = true;
+            _editButton.leadingIcon = "fm-edit";
+            _editButton.size = Size.S;
+            _editButton.AddToClassList("fm-icon-button-item-list");
+            _editButton.AddToClassList("fm-meal-card-edit-btn");
+            actionsContainer.Add(_editButton);
+
+            _removeButton = new Unity.AppUI.UI.Button();
+            _removeButton.quiet = true;
+            _removeButton.leadingIcon = "fm-trash";
+            _removeButton.size = Size.S;
+            _removeButton.AddToClassList("fm-icon-button-item-list");
+            _removeButton.AddToClassList("fm-meal-card-remove-btn");
+            actionsContainer.Add(_removeButton);
+
+            //_headerRow.Add(actionsContainer);
+
+
+            this.Add(_headerRow);
 
             _mealName = new Unity.AppUI.UI.Text();
             _mealName.AddToClassList("fm-meal-card-text");
@@ -68,6 +105,8 @@ namespace eu.foodmission.platform.Components
             _badge = new Unity.AppUI.UI.Text();
             _badge.AddToClassList("fm-ml-card-badge");
             this.Add(_badge);
+
+            this.Add(actionsContainer);
 
             UpdateMealLogData();
         }

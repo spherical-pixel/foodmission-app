@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.AppUI.MVVM;
@@ -24,12 +26,14 @@ namespace eu.foodmission.platform
         private const string STORAGE_KEY_PUSH_REG = "device_push_registration";
         private const string STORAGE_KEY_PROMPTED = "notification_permission_prompted";
         private const string STORAGE_KEY_LAST_TOKEN = "last_fcm_token";
+        private const string STORAGE_KEY_SCHEDULED_PANTRY = "scheduled_pantry_reminders";
 
         private readonly IStoreService _storeService;
         private readonly ILocalStorageService _localStorageService;
         private readonly IAuthService _authService;
 
         private DevicePushRegistration _currentPushRegistration;
+        private Dictionary<string, ScheduledPantryReminderRecord> _scheduledPantryRegistry;
         private bool _isInitialized = false;
 
         public event Action<NotificationPayload> OnNotificationOpened;
@@ -144,11 +148,30 @@ namespace eu.foodmission.platform
 
         public bool AreNotificationsEnabled()
         {
-            return _storeService.store?.GetState()?.pushNotificationsEnabled ?? false;
+            bool userOptIn = _storeService.store?.GetState()?.pushNotificationsEnabled ?? false;
+            if (!userOptIn)
+            {
+                return false;
+            }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
+            {
+                return false;
+            }
+#elif UNITY_IOS && !UNITY_EDITOR
+            var settings = iOSNotificationCenter.GetNotificationSettings();
+            if (settings.AuthorizationStatus == AuthorizationStatus.Denied)
+            {
+                return false;
+            }
+#endif
+            return true;
         }
 
         public void SetNotificationsEnabled(bool enabled)
         {
+            _localStorageService.SetValue(STORAGE_KEY_PROMPTED, true);
             _storeService.store?.Dispatch(AppActions.setPushNotifications.Invoke(enabled));
 
             var reg = EnsurePushRegistrationLoaded();
@@ -180,6 +203,50 @@ namespace eu.foodmission.platform
             _storeService.store?.Dispatch(AppActions.setDevicePushRegistration.Invoke(reg));
         }
 
+        private Dictionary<string, ScheduledPantryReminderRecord> EnsureScheduledPantryRegistryLoaded()
+        {
+            if (_scheduledPantryRegistry == null)
+            {
+                _scheduledPantryRegistry = new Dictionary<string, ScheduledPantryReminderRecord>();
+                var wrapper = _localStorageService.GetValue<ScheduledPantryRemindersRegistry>(STORAGE_KEY_SCHEDULED_PANTRY);
+                if (wrapper?.records != null)
+                {
+                    foreach (var record in wrapper.records)
+                    {
+                        if (record != null && !string.IsNullOrEmpty(record.itemId))
+                        {
+                            _scheduledPantryRegistry[record.itemId] = record;
+                        }
+                    }
+                }
+            }
+            return _scheduledPantryRegistry;
+        }
+
+        private void SaveScheduledPantryRegistry()
+        {
+            if (_scheduledPantryRegistry == null) return;
+            var wrapper = new ScheduledPantryRemindersRegistry
+            {
+                records = new List<ScheduledPantryReminderRecord>(_scheduledPantryRegistry.Values)
+            };
+            _localStorageService.SetValue(STORAGE_KEY_SCHEDULED_PANTRY, wrapper);
+        }
+
+        private void ClearAllPantryReminders()
+        {
+            var registry = EnsureScheduledPantryRegistryLoaded();
+            foreach (var kvp in registry)
+            {
+                CancelNotification($"pantry_{kvp.Key}");
+            }
+            if (registry.Count > 0)
+            {
+                registry.Clear();
+                SaveScheduledPantryRegistry();
+            }
+        }
+
         public void SchedulePantryExpiryReminder(string itemId, string itemName, DateTime expiryDate)
         {
             if (!AreNotificationsEnabled() || string.IsNullOrEmpty(itemId))
@@ -202,23 +269,152 @@ namespace eu.foodmission.platform
                 reminderTime = expiryDate.Date.Add(preferredTime).AddDays(-1); // 24h before at preferred hour
             }
 
+            string notifId = $"pantry_{itemId}";
+            var registry = EnsureScheduledPantryRegistryLoaded();
+
             if (reminderTime <= now)
             {
-                return; // Already in the past
+                // Already in past: if previously scheduled, clean it up
+                if (registry.ContainsKey(itemId))
+                {
+                    CancelNotification(notifId);
+                    registry.Remove(itemId);
+                    SaveScheduledPantryRegistry();
+                }
+                return;
             }
 
-            string notifId = $"pantry_{itemId}";
+            string expDateStr = expiryDate.ToString("yyyy-MM-dd");
+            string deliveryTimeStr = reminderTime.ToString("o");
+
+            // Check if already scheduled with identical parameters to avoid duplicate OS calls and log spam
+            if (registry.TryGetValue(itemId, out var existing))
+            {
+                if (existing.expiryDate == expDateStr &&
+                    existing.reminderDeliveryTime == deliveryTimeStr &&
+                    existing.itemName == itemName)
+                {
+                    return;
+                }
+
+                // If date, time or name changed, cancel previous before scheduling new
+                CancelNotification(notifId);
+            }
+
             string title = "Aviso de despensa";
             string body = $"Tu producto '{itemName}' caduca pronto. ¡Aprovecha para consumirlo!";
 
-            CancelNotification(notifId);
             ScheduleNativeNotification(notifId, NotificationChannels.PantryExpiryId, title, body, reminderTime, "go_to_pantry", itemId);
+
+            registry[itemId] = new ScheduledPantryReminderRecord
+            {
+                itemId = itemId,
+                itemName = itemName,
+                expiryDate = expDateStr,
+                reminderDeliveryTime = deliveryTimeStr
+            };
+            SaveScheduledPantryRegistry();
         }
 
         public void CancelPantryReminder(string itemId)
         {
             if (string.IsNullOrEmpty(itemId)) return;
             CancelNotification($"pantry_{itemId}");
+
+            var registry = EnsureScheduledPantryRegistryLoaded();
+            if (registry.Remove(itemId))
+            {
+                SaveScheduledPantryRegistry();
+            }
+        }
+
+        public void SyncPantryReminders(IEnumerable<PantryItemView> items)
+        {
+            if (!AreNotificationsEnabled())
+            {
+                ClearAllPantryReminders();
+                return;
+            }
+
+            var registry = EnsureScheduledPantryRegistryLoaded();
+            var activeItems = items != null
+                ? items.Where(i => i?.Item != null && !string.IsNullOrEmpty(i.Item.id)).ToList()
+                : new List<PantryItemView>();
+            var activeIds = new HashSet<string>(activeItems.Select(i => i.Item.id));
+
+            // 1. Cancel orphan notifications for items no longer in pantry
+            var orphanIds = registry.Keys.Where(id => !activeIds.Contains(id)).ToList();
+            foreach (var orphanId in orphanIds)
+            {
+                CancelNotification($"pantry_{orphanId}");
+                registry.Remove(orphanId);
+            }
+
+            // 2. Schedule or update valid items
+            foreach (var view in activeItems)
+            {
+                if (!string.IsNullOrEmpty(view.Item.expiryDate) && DateTime.TryParse(view.Item.expiryDate, out DateTime expDate))
+                {
+                    string displayName = !string.IsNullOrEmpty(view.DisplayName)
+                        ? view.DisplayName
+                        : (view.Item.foodProduct?.name ?? view.Item.genericFood?.foodName ?? "Producto");
+                    SchedulePantryExpiryReminder(view.Item.id, displayName, expDate);
+                }
+                else
+                {
+                    // Item has no expiry date; if previously scheduled, clean it up
+                    if (registry.ContainsKey(view.Item.id))
+                    {
+                        CancelNotification($"pantry_{view.Item.id}");
+                        registry.Remove(view.Item.id);
+                    }
+                }
+            }
+
+            SaveScheduledPantryRegistry();
+        }
+
+        public void SyncPantryReminders(IEnumerable<PantryItem> items)
+        {
+            if (!AreNotificationsEnabled())
+            {
+                ClearAllPantryReminders();
+                return;
+            }
+
+            var registry = EnsureScheduledPantryRegistryLoaded();
+            var activeItems = items != null
+                ? items.Where(i => i != null && !string.IsNullOrEmpty(i.id)).ToList()
+                : new List<PantryItem>();
+            var activeIds = new HashSet<string>(activeItems.Select(i => i.id));
+
+            // 1. Cancel orphan notifications for items no longer in pantry
+            var orphanIds = registry.Keys.Where(id => !activeIds.Contains(id)).ToList();
+            foreach (var orphanId in orphanIds)
+            {
+                CancelNotification($"pantry_{orphanId}");
+                registry.Remove(orphanId);
+            }
+
+            // 2. Schedule or update valid items
+            foreach (var item in activeItems)
+            {
+                if (!string.IsNullOrEmpty(item.expiryDate) && DateTime.TryParse(item.expiryDate, out DateTime expDate))
+                {
+                    string displayName = item.foodProduct?.name ?? item.genericFood?.foodName ?? "Producto";
+                    SchedulePantryExpiryReminder(item.id, displayName, expDate);
+                }
+                else
+                {
+                    if (registry.ContainsKey(item.id))
+                    {
+                        CancelNotification($"pantry_{item.id}");
+                        registry.Remove(item.id);
+                    }
+                }
+            }
+
+            SaveScheduledPantryRegistry();
         }
 
         public void ScheduleLocalNotification(string id, string title, string body, DateTime deliveryTime, string channelId = null, string action = null, string targetId = null)
@@ -264,25 +460,19 @@ namespace eu.foodmission.platform
         {
             if (!AreNotificationsEnabled())
             {
+                ClearAllPantryReminders();
                 return;
             }
 
             // 1. Reschedule daily meal reminder
             ScheduleDailyMealReminder(preferredTime);
 
-            // 2. Reschedule any cached pantry expiry items
+            // 2. Reschedule any cached pantry expiry items with recalculated delivery times
             var cachedPantry = _localStorageService.GetValue<PantryItemArrayWrapper>("pantry_cache");
             if (cachedPantry?.items != null)
             {
-                foreach (var item in cachedPantry.items)
-                {
-                    if (item != null && !string.IsNullOrEmpty(item.expiryDate) && DateTime.TryParse(item.expiryDate, out DateTime expDate))
-                    {
-                        CancelPantryReminder(item.id);
-                        string itemName = item.foodProduct?.name ?? item.genericFood?.foodName ?? "Producto";
-                        SchedulePantryExpiryReminder(item.id, itemName, expDate);
-                    }
-                }
+                ClearAllPantryReminders();
+                SyncPantryReminders(cachedPantry.items);
             }
         }
 
@@ -291,22 +481,56 @@ namespace eu.foodmission.platform
             if (string.IsNullOrEmpty(notificationId)) return;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-            int androidId = Math.Abs(notificationId.GetHashCode());
-            AndroidNotificationCenter.CancelNotification(androidId);
+            try
+            {
+                int androidId = notificationId.GetHashCode() & 0x7fffffff;
+                AndroidNotificationCenter.CancelNotification(androidId);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[NotificationService] Failed to cancel Android notification '{notificationId}': {ex.Message}");
+            }
 #elif UNITY_IOS && !UNITY_EDITOR
-            iOSNotificationCenter.RemoveScheduledNotification(notificationId);
-            iOSNotificationCenter.RemoveDeliveredNotification(notificationId);
+            try
+            {
+                iOSNotificationCenter.RemoveScheduledNotification(notificationId);
+                iOSNotificationCenter.RemoveDeliveredNotification(notificationId);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[NotificationService] Failed to cancel iOS notification '{notificationId}': {ex.Message}");
+            }
 #endif
         }
 
         public void CancelAllNotifications()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-            AndroidNotificationCenter.CancelAllNotifications();
+            try
+            {
+                AndroidNotificationCenter.CancelAllNotifications();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[NotificationService] Failed to cancel all Android notifications: {ex.Message}");
+            }
 #elif UNITY_IOS && !UNITY_EDITOR
-            iOSNotificationCenter.RemoveAllScheduledNotifications();
-            iOSNotificationCenter.RemoveAllDeliveredNotifications();
+            try
+            {
+                iOSNotificationCenter.RemoveAllScheduledNotifications();
+                iOSNotificationCenter.RemoveAllDeliveredNotifications();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[NotificationService] Failed to cancel all iOS notifications: {ex.Message}");
+            }
 #endif
+            var registry = EnsureScheduledPantryRegistryLoaded();
+            if (registry.Count > 0)
+            {
+                registry.Clear();
+                SaveScheduledPantryRegistry();
+            }
         }
 
         public DevicePushRegistration GetDevicePushRegistration()
@@ -346,79 +570,100 @@ namespace eu.foodmission.platform
         private void SetupNativeChannels()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-            var pantryChannel = new AndroidNotificationChannel
+            try
             {
-                Id = NotificationChannels.PantryExpiryId,
-                Name = NotificationChannels.PantryExpiryName,
-                Description = NotificationChannels.PantryExpiryDescription,
-                Importance = Importance.High,
-                CanBypassDnd = false,
-                CanShowBadge = true,
-                EnableLights = true,
-                EnableVibration = true
-            };
-            AndroidNotificationCenter.RegisterNotificationChannel(pantryChannel);
+                var pantryChannel = new AndroidNotificationChannel
+                {
+                    Id = NotificationChannels.PantryExpiryId,
+                    Name = NotificationChannels.PantryExpiryName,
+                    Description = NotificationChannels.PantryExpiryDescription,
+                    Importance = Importance.High,
+                    CanBypassDnd = false,
+                    CanShowBadge = true,
+                    EnableLights = true,
+                    EnableVibration = true
+                };
+                AndroidNotificationCenter.RegisterNotificationChannel(pantryChannel);
 
-            var remindersChannel = new AndroidNotificationChannel
-            {
-                Id = NotificationChannels.DailyRemindersId,
-                Name = NotificationChannels.DailyRemindersName,
-                Description = NotificationChannels.DailyRemindersDescription,
-                Importance = Importance.Default,
-                CanShowBadge = true,
-                EnableLights = true,
-                EnableVibration = true
-            };
-            AndroidNotificationCenter.RegisterNotificationChannel(remindersChannel);
+                var remindersChannel = new AndroidNotificationChannel
+                {
+                    Id = NotificationChannels.DailyRemindersId,
+                    Name = NotificationChannels.DailyRemindersName,
+                    Description = NotificationChannels.DailyRemindersDescription,
+                    Importance = Importance.Default,
+                    CanShowBadge = true,
+                    EnableLights = true,
+                    EnableVibration = true
+                };
+                AndroidNotificationCenter.RegisterNotificationChannel(remindersChannel);
 
-            var gamificationChannel = new AndroidNotificationChannel
+                var gamificationChannel = new AndroidNotificationChannel
+                {
+                    Id = NotificationChannels.GamificationId,
+                    Name = NotificationChannels.GamificationName,
+                    Description = NotificationChannels.GamificationDescription,
+                    Importance = Importance.Default,
+                    CanShowBadge = true
+                };
+                AndroidNotificationCenter.RegisterNotificationChannel(gamificationChannel);
+            }
+            catch (Exception ex)
             {
-                Id = NotificationChannels.GamificationId,
-                Name = NotificationChannels.GamificationName,
-                Description = NotificationChannels.GamificationDescription,
-                Importance = Importance.Default,
-                CanShowBadge = true
-            };
-            AndroidNotificationCenter.RegisterNotificationChannel(gamificationChannel);
+                Debug.LogError($"[NotificationService] Failed to setup Android notification channels: {ex.Message}");
+            }
 #endif
         }
 
         private void ScheduleNativeNotification(string id, string channelId, string title, string body, DateTime deliveryTime, string action, string targetId)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-            var notification = new AndroidNotification
+            try
             {
-                Title = title,
-                Text = body,
-                FireTime = deliveryTime,
-                SmallIcon = "icon_small",
-                LargeIcon = "icon_large",
-                IntentData = $"{{\"action\":\"{action}\",\"targetId\":\"{targetId}\",\"id\":\"{id}\"}}"
-            };
-            int androidId = Math.Abs(id.GetHashCode());
-            AndroidNotificationCenter.SendNotificationWithExplicitID(notification, channelId, androidId);
+                var notification = new AndroidNotification
+                {
+                    Title = title,
+                    Text = body,
+                    FireTime = deliveryTime,
+                    SmallIcon = "icon_small",
+                    LargeIcon = "icon_large",
+                    IntentData = $"{{\"action\":\"{action}\",\"targetId\":\"{targetId}\",\"id\":\"{id}\"}}"
+                };
+                int androidId = id.GetHashCode() & 0x7fffffff;
+                AndroidNotificationCenter.SendNotificationWithExplicitID(notification, channelId, androidId);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[NotificationService] Failed to schedule Android notification '{id}': {ex.Message}");
+            }
 #elif UNITY_IOS && !UNITY_EDITOR
-            var timeSpan = deliveryTime.ToUniversalTime() - DateTime.UtcNow;
-            if (timeSpan.TotalSeconds <= 0) timeSpan = TimeSpan.FromSeconds(1);
-
-            var trigger = new iOSNotificationTimeIntervalTrigger
+            try
             {
-                TimeInterval = timeSpan,
-                Repeats = false
-            };
+                var timeSpan = deliveryTime.ToUniversalTime() - DateTime.UtcNow;
+                if (timeSpan.TotalSeconds <= 0) timeSpan = TimeSpan.FromSeconds(1);
 
-            var notification = new iOSNotification
+                var trigger = new iOSNotificationTimeIntervalTrigger
+                {
+                    TimeInterval = timeSpan,
+                    Repeats = false
+                };
+
+                var notification = new iOSNotification
+                {
+                    Identifier = id,
+                    Title = title,
+                    Body = body,
+                    ShowInForeground = true,
+                    ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound | PresentationOption.Badge),
+                    CategoryIdentifier = channelId,
+                    Trigger = trigger,
+                    Data = $"{{\"action\":\"{action}\",\"targetId\":\"{targetId}\",\"id\":\"{id}\"}}"
+                };
+                iOSNotificationCenter.ScheduleNotification(notification);
+            }
+            catch (Exception ex)
             {
-                Identifier = id,
-                Title = title,
-                Body = body,
-                ShowInForeground = true,
-                ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound | PresentationOption.Badge),
-                CategoryIdentifier = channelId,
-                Trigger = trigger,
-                Data = $"{{\"action\":\"{action}\",\"targetId\":\"{targetId}\",\"id\":\"{id}\"}}"
-            };
-            iOSNotificationCenter.ScheduleNotification(notification);
+                Debug.LogError($"[NotificationService] Failed to schedule iOS notification '{id}': {ex.Message}");
+            }
 #else
             Debug.Log($"[NotificationService] Scheduled mock notification '{id}' for {deliveryTime:s}: {title} - {body}");
 #endif
@@ -584,5 +829,20 @@ namespace eu.foodmission.platform
             catch { }
 #endif
         }
+    }
+
+    [Serializable]
+    public class ScheduledPantryReminderRecord
+    {
+        public string itemId;
+        public string itemName;
+        public string expiryDate;
+        public string reminderDeliveryTime;
+    }
+
+    [Serializable]
+    public class ScheduledPantryRemindersRegistry
+    {
+        public List<ScheduledPantryReminderRecord> records = new List<ScheduledPantryReminderRecord>();
     }
 }

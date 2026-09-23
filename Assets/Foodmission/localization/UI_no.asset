@@ -198,8 +198,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Sammen skal vi knytte kj\xF8kkenet ditt til omsorgen for planeten.\n\nLag
-      mat, l\xE6r, del og utvikle deg hver dag.\n\nEr du klar til \xE5 komme i gang?"
+    m_Localized: "Sammen skal vi knytte kj\xF8kkenet ditt til omsorgen for planeten.\r\n\r\nLag
+      mat, l\xE6r, del og utvikle deg hver dag.\r\n\r\nEr du klar til \xE5 komme
+      i gang?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -258,6 +259,9 @@ MonoBehaviour:
     m_Localized: 'Denne handlingen vil slette alle opplysningene dine permanent fra
       plattformen.
 
+      
+
+      
 
       Er du sikker?'
     m_Metadata:
@@ -1346,7 +1350,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Velkommen til Foodmission!\nDenne korte unders\xF8kelsen hjelper
+    m_Localized: "Velkommen til Foodmission!\r\nDenne korte unders\xF8kelsen hjelper
       oss \xE5 forst\xE5 dine spisevaner, din bevissthet rundt matsvinn og dine b\xE6rekraftige
       valg, slik at Nutri kan skreddersy anbefalinger til deg."
     m_Metadata:
@@ -2014,9 +2018,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Velkommen til FOODMISSION! \nEn plattform for borgerforskning som
-      skal hjelpe deg med \xE5 forbedre dine vaner n\xE5r det gjelder b\xE6rekraft
-      og ern\xE6ring. \nLa oss opprette kontoen din i noen f\xE5 enkle trinn."
+    m_Localized: "Velkommen til FOODMISSION! \r\nEn plattform for borgerforskning
+      som skal hjelpe deg med \xE5 forbedre dine vaner n\xE5r det gjelder b\xE6rekraft
+      og ern\xE6ring. \r\nLa oss opprette kontoen din i noen f\xE5 enkle trinn."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2111,15 +2115,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "Det p\xE5g\xE5r ingen pilotunders\xF8kelse i ditt land.\nDu kan
+    m_Localized: "Det p\xE5g\xE5r ingen pilotunders\xF8kelse i ditt land.\r\nDu kan
       utforske og bruke plattformen, men dataene dine vil ikke bli brukt i pilotunders\xF8kelsen."
     m_Metadata:
       m_Items: []
   - m_Id: 34022749457342464
     m_Localized: "Hei! For \xE5 tilpasse opplevelsen din p\xE5 Foodmission og hjelpe
       deg med \xE5 n\xE5 m\xE5lene dine, vil vi gjerne bli litt bedre kjent med deg.
-      Er du med p\xE5 det?\n\nSvar gjerne p\xE5 noen valgfrie sp\xF8rsm\xE5l, slik
-      at vi kan tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene
+      Er du med p\xE5 det?\r\n\r\nSvar gjerne p\xE5 noen valgfrie sp\xF8rsm\xE5l,
+      slik at vi kan tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene
       dine."
     m_Metadata:
       m_Items: []
@@ -2223,7 +2227,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Ups! Denne delen er ikke tilgjengelig enn\xE5, men ikke fortvil:
-      vi jobber med saken, s\xE5 du vil kunne nyte godt av den veldig snart.\n\nFOODMISSION
+      vi jobber med saken, s\xE5 du vil kunne nyte godt av den veldig snart.\r\n\r\nFOODMISSION
       er i stadig utvikling. Vi forbedrer appen og legger til nye funksjoner takket
       v\xE6re tilbakemeldinger fra brukere som deg. Takk for at du hjelper oss med
       \xE5 fortsette \xE5 vokse!"
@@ -2373,7 +2377,7 @@ MonoBehaviour:
   - m_Id: 40938002757705728
     m_Localized: "For \xE5 fortsette \xE5 bruke plattformen m\xE5 du godta det nye
       dokumentet om {0}. Hvis du ikke samtykker, kan du logge ut eller slette kontoen
-      din.\n\nTa deg gjerne et \xF8yeblikk til \xE5 g\xE5 gjennom det nye dokumentet
+      din.\r\n\r\nTa deg gjerne et \xF8yeblikk til \xE5 g\xE5 gjennom det nye dokumentet
       om {0} p\xE5 nytt, og ta gjerne kontakt med oss hvis du mener at det er noe
       feil i det."
     m_Metadata:
@@ -2383,9 +2387,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Hei!\n\nSom deltaker i pilotprosjektet har vi en kort sp\xF8rreunders\xF8kelse
+    m_Localized: "Hei!\r\n\r\nSom deltaker i pilotprosjektet har vi en kort sp\xF8rreunders\xF8kelse
       til deg. Svarene dine vil hjelpe oss med \xE5 forbedre FOODMISSION-plattformen.
-      \n\nVil du svare p\xE5 den n\xE5?"
+      \r\n\r\nVil du svare p\xE5 den n\xE5?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -2479,20 +2483,486 @@ MonoBehaviour:
     m_Localized: Utforsk oppdrag
     m_Metadata:
       m_Items: []
-  - m_Id: 49206146878136320
-    m_Localized: "Forenklet m\xE5ltidslogg"
+  - m_Id: 46966269096747008
+    m_Localized: '{0:plural:FoodyCoin tjent!|FoodyCoins tjent!}'
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 46966074812391424
+    m_Localized: "Bel\xF8nning opptjent!"
     m_Metadata:
       m_Items: []
-  - m_Id: 49207590964420608
-    m_Localized: Hva var de viktigste kjennetegnene ved retten din?
+  - m_Id: 46966143921938432
+    m_Localized: XP opptjent!
     m_Metadata:
       m_Items: []
-  - m_Id: 49207906585796608
-    m_Localized: Navn eller beskrivelse (valgfritt)
+  - m_Id: 46966724417806336
+    m_Localized: Nytt merke samlet inn!
     m_Metadata:
       m_Items: []
-  - m_Id: 49210861586210816
-    m_Localized: "F.eks.: Lins- og gr\xF8nnsakssalat"
+  - m_Id: 46966954571849728
+    m_Localized: "Nytt produkt til kj\xE6ledyret!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46976427931721728
+    m_Localized: Nytt samleobjekt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633499783168
+    m_Localized: Lest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47093633503977472
+    m_Localized: Ulest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236238045184
+    m_Localized: "Oppdrag fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239488
+    m_Localized: "Quiz fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47094236242239489
+    m_Localized: "Ny fakta l\xE6rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747305201664
+    m_Localized: For deg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395968
+    m_Localized: Utforsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395969
+    m_Localized: Mine oppskrifter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395970
+    m_Localized: Ny oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395971
+    m_Localized: Spiskammeret ditt er tomt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395972
+    m_Localized: "Legg til varer i spiskammeret for \xE5 f\xE5 smarte oppskriftsforslag
+      og redusere matsvinn!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395973
+    m_Localized: "G\xE5 til spiskammeret"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395974
+    m_Localized: "Ingen oppskrifter opprettet enn\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395975
+    m_Localized: "Lag og del dine b\xE6rekraftige favorittoppskrifter med fellesskapet!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395976
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395977
+    m_Localized: Enkel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395978
+    m_Localized: Middels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395979
+    m_Localized: Vanskelig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395980
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395981
+    m_Localized: "{0} utl\xF8per snart"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395982
+    m_Localized: '{0}/{1} i spiskammeret'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395983
+    m_Localized: Generelt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395984
+    m_Localized: Ingredienser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395985
+    m_Localized: Instruksjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301379
+    m_Localized: Lag oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395987
+    m_Localized: Rediger oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47367747309395988
+    m_Localized: Lagre oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48511689140723712
+    m_Localized: "F\xE5 mest mulig ut av det du har hjemme"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335152709632
+    m_Localized: Oppskriftsredigering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335156903936
+    m_Localized: Feil under lagring av oppskrift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098240
+    m_Localized: "Oppskriftstittel er p\xE5krevd"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098241
+    m_Localized: "Storfekj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098242
+    m_Localized: Kylling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098243
+    m_Localized: Dessert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098244
+    m_Localized: Lam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098245
+    m_Localized: Diverse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098246
+    m_Localized: Pasta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098247
+    m_Localized: "Svinekj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098248
+    m_Localized: "Fisk og sj\xF8mat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098249
+    m_Localized: "Tilbeh\xF8r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098250
+    m_Localized: Forretter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098251
+    m_Localized: Vegansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098252
+    m_Localized: Vegetarisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098253
+    m_Localized: Frokost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098254
+    m_Localized: "Geitekj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098255
+    m_Localized: "Alle kj\xF8kken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098256
+    m_Localized: Algerisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098257
+    m_Localized: Amerikansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098258
+    m_Localized: Argentinsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098259
+    m_Localized: Australsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098260
+    m_Localized: Britisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098261
+    m_Localized: Kanadisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098262
+    m_Localized: Kinesisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098263
+    m_Localized: Kroatisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098264
+    m_Localized: Nederlandsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098265
+    m_Localized: Egyptisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098266
+    m_Localized: Filippinsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098267
+    m_Localized: Fransk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098268
+    m_Localized: Gresk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098269
+    m_Localized: Indisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098270
+    m_Localized: Irsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098271
+    m_Localized: Italiensk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098272
+    m_Localized: Jamaikansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098273
+    m_Localized: Japansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098274
+    m_Localized: Kenyansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098275
+    m_Localized: Malaysisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335161098276
+    m_Localized: Meksikansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292544
+    m_Localized: Marokkansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292545
+    m_Localized: Norsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292546
+    m_Localized: Polsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292547
+    m_Localized: Portugisisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292548
+    m_Localized: Saudiarabisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292549
+    m_Localized: Slovakisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292550
+    m_Localized: Spansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292551
+    m_Localized: Syrisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292552
+    m_Localized: Thailandsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292553
+    m_Localized: Tunisisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292554
+    m_Localized: Tyrkisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292555
+    m_Localized: Ukrainsk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292556
+    m_Localized: Uruguayansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292557
+    m_Localized: Venezuelansk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48534335165292558
+    m_Localized: Vietnamesisk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107072
+    m_Localized: Oppskriftstittel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107073
+    m_Localized: "F.eks. Gr\xF8nnsakspasta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107074
+    m_Localized: Beskrivelse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107075
+    m_Localized: Kort introduksjon til oppskriften...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107076
+    m_Localized: Forberedelsestid (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107077
+    m_Localized: Koketid (min)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107078
+    m_Localized: Porsjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107079
+    m_Localized: Vanskelighetsgrad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107080
+    m_Localized: Velg vanskelighetsgrad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107081
+    m_Localized: Kategori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107082
+    m_Localized: Velg kategori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107083
+    m_Localized: "Kj\xF8kken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107084
+    m_Localized: "Velg kj\xF8kken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107085
+    m_Localized: "Gj\xF8r oppskriften offentlig for fellesskapet"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107086
+    m_Localized: Ingrediensnavn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107087
+    m_Localized: "Mengde / M\xE5l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107088
+    m_Localized: Legg til
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107089
+    m_Localized: "Du har ikke lagt til noen ingredienser enn\xE5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163199107090
+    m_Localized: Tilberedningsinstruksjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301376
+    m_Localized: "Detaljerte trinn for \xE5 tilberede retten..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301377
+    m_Localized: Bilde-URL (valgfritt)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48786163203301378
+    m_Localized: https://...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48825971850076160
+    m_Localized: Slette oppskrift?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48826426596515840
+    m_Localized: "Er du sikker p\xE5 at du vil slette denne oppskriften?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672704
+    m_Localized: "I g\xE5r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672705
+    m_Localized: "Er du sikker p\xE5 at du vil slette denne m\xE5ltidsloggen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672706
+    m_Localized: "M\xE5ltidslogg ble slettet"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672707
+    m_Localized: "Redigerer m\xE5ltid: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672708
+    m_Localized: "Redigerer m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672709
+    m_Localized: Lagre endringer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672710
+    m_Localized: Avbryt redigering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48876441641672711
+    m_Localized: "M\xE5ltid ble oppdatert"
     m_Metadata:
       m_Items: []
   references:
@@ -2509,3 +2979,4 @@ MonoBehaviour:
         - id: 28899582313226240
         - id: 28906308236206080
         - id: 28898960193085440
+        - id: 46966269096747008

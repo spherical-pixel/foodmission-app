@@ -234,7 +234,51 @@ namespace eu.foodmission.platform
             });
         }
 
-        public void OpenRandomQuiz()
+        public async Task OpenRandomQuizAsync()
+        {
+            if (_isLoading) return;
+
+            IsLoading = true;
+            try
+            {
+                QuizFilterParams filters = null;
+                if (!string.Equals(_selectedLevel, QuizFilterLevel.All, StringComparison.OrdinalIgnoreCase))
+                {
+                    filters = new QuizFilterParams { level = _selectedLevel };
+                }
+
+                var (quiz, error) = await _quizService.GetRandomQuizAsync(filters);
+
+                if (error != null)
+                {
+                    ErrorDetail = error;
+                    ErrorMessage = error.message;
+                    return;
+                }
+
+                if (quiz != null)
+                {
+                    OpenQuiz(quiz);
+                    return;
+                }
+
+                // 404 — all quizzes completed, fallback to client-side random
+                Debug.LogWarning($"[{GetType().Name}] OpenRandomQuizAsync: No random quiz returned from server, falling back to client-side random.");
+                OpenRandomQuizFallback();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] OpenRandomQuizAsync failed: {ex.Message}");
+                // Network or unexpected error, fallback to client-side random
+                OpenRandomQuizFallback();
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        public void OpenRandomQuizFallback()
         {
             if (_rawQuizzes == null || _rawQuizzes.Length == 0)
             {

@@ -484,6 +484,7 @@ namespace eu.foodmission.platform
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
             _ = App.current?.services?.GetService<INutriService>()?.SyncLoadoutAsync();
+            _ = SyncGamificationAsync();
         }
 
         public async Task SyncSettingsAsync()
@@ -869,6 +870,43 @@ namespace eu.foodmission.platform
             {
                 Debug.LogError($"[{GetType().Name}] GetGamificationProfileAsync exception: {ex.Message}");
                 return (false, null, new ApiErrorResponse { statusCode = 500, error = "UNEXPECTED_ERROR", message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Synchronizes gamification profile (wallet XP/points, progress indicators, badges) with Redux store.
+        /// </summary>
+        public async Task SyncGamificationAsync()
+        {
+            var (success, json, error) = await GetGamificationProfileAsync();
+            if (success && !string.IsNullOrEmpty(json))
+            {
+                try
+                {
+                    var profile = JsonConvert.DeserializeObject<GamificationProfileResponse>(json);
+                    if (profile != null)
+                    {
+                        if (profile.wallet != null)
+                        {
+                            _storeService.store.Dispatch(AppActions.setWalletBalance.Invoke(
+                                new AppActions.WalletPayload(profile.wallet.xp, profile.wallet.points)));
+                        }
+
+                        if (profile.progressIndicators != null)
+                        {
+                            _storeService.store.Dispatch(AppActions.setProgressIndicators.Invoke(profile.progressIndicators));
+                        }
+
+                        if (profile.badges != null)
+                        {
+                            _storeService.store.Dispatch(AppActions.setBadges.Invoke(profile.badges));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] SyncGamificationAsync parse error: {ex.Message}");
+                }
             }
         }
 

@@ -28,11 +28,16 @@ namespace eu.foodmission.platform
 
         private FMButton _btnRandomFact;
         private ActionGroup _groupLevelFilters;
+        private ActionGroup _groupStatusFilters;
 
         private ActionButton _btnLevelAll;
         private ActionButton _btnLevelBeginner;
         private ActionButton _btnLevelIntermediate;
         private ActionButton _btnLevelAdvanced;
+
+        private ActionButton _btnStatusAll;
+        private ActionButton _btnStatusPending;
+        private ActionButton _btnStatusCompleted;
 
         private Unity.AppUI.UI.Text _emptyStateText;
         private VisualElement _groupsContainer;
@@ -54,11 +59,16 @@ namespace eu.foodmission.platform
         {
             _btnRandomFact = contentContainer.Q<FMButton>("btn-random-fact");
             _groupLevelFilters = contentContainer.Q<ActionGroup>("group-level-filters");
+            _groupStatusFilters = contentContainer.Q<ActionGroup>("group-status-filters");
 
             _btnLevelAll = contentContainer.Q<ActionButton>("btn-level-all");
             _btnLevelBeginner = contentContainer.Q<ActionButton>("btn-level-beginner");
             _btnLevelIntermediate = contentContainer.Q<ActionButton>("btn-level-intermediate");
             _btnLevelAdvanced = contentContainer.Q<ActionButton>("btn-level-advanced");
+
+            _btnStatusAll = contentContainer.Q<ActionButton>("btn-status-all");
+            _btnStatusPending = contentContainer.Q<ActionButton>("btn-status-pending");
+            _btnStatusCompleted = contentContainer.Q<ActionButton>("btn-status-completed");
 
             _emptyStateText = contentContainer.Q<Unity.AppUI.UI.Text>("empty-state");
             _groupsContainer = contentContainer.Q<VisualElement>("groups-container");
@@ -72,6 +82,10 @@ namespace eu.foodmission.platform
             if (_btnLevelBeginner != null) _btnLevelBeginner.clicked += () => _viewModel?.SetLevelFilter(FoodFactFilterLevel.Beginner);
             if (_btnLevelIntermediate != null) _btnLevelIntermediate.clicked += () => _viewModel?.SetLevelFilter(FoodFactFilterLevel.Intermediate);
             if (_btnLevelAdvanced != null) _btnLevelAdvanced.clicked += () => _viewModel?.SetLevelFilter(FoodFactFilterLevel.Advanced);
+
+            if (_btnStatusAll != null) _btnStatusAll.clicked += () => _viewModel?.SetStatusFilter(FoodFactFilterStatus.All);
+            if (_btnStatusPending != null) _btnStatusPending.clicked += () => _viewModel?.SetStatusFilter(FoodFactFilterStatus.Pending);
+            if (_btnStatusCompleted != null) _btnStatusCompleted.clicked += () => _viewModel?.SetStatusFilter(FoodFactFilterStatus.Completed);
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -108,7 +122,7 @@ namespace eu.foodmission.platform
             {
                 RebuildHierarchy();
             }
-            else if (e.PropertyName == nameof(_viewModel.SelectedLevel))
+            else if (e.PropertyName == nameof(_viewModel.SelectedLevel) || e.PropertyName == nameof(_viewModel.SelectedStatus))
             {
                 UpdateFilterStates();
             }
@@ -130,6 +144,14 @@ namespace eu.foodmission.platform
                 _ => 0
             };
             _groupLevelFilters?.SetSelectionWithoutNotify(new[] { levelIndex });
+
+            int statusIndex = _viewModel.SelectedStatus switch
+            {
+                FoodFactFilterStatus.Pending => 1,
+                FoodFactFilterStatus.Completed => 2,
+                _ => 0
+            };
+            _groupStatusFilters?.SetSelectionWithoutNotify(new[] { statusIndex });
         }
 
         private void RebuildHierarchy()
@@ -179,7 +201,7 @@ namespace eu.foodmission.platform
                 progressBadge.AddToClassList("fm-quizzes-dim-progress-badge");
                 var progressText = new Unity.AppUI.UI.Text();
                 progressText.AddToClassList("fm-quizzes-dim-progress-text");
-                progressText.text = $"{group.TotalCount}";
+                progressText.text = $"{group.CompletedCount}/{group.TotalCount}";
                 progressBadge.Add(progressText);
                 row.Add(progressBadge);
 
@@ -249,6 +271,7 @@ namespace eu.foodmission.platform
                         var factCard = new FMItemFoodFact();
                         factCard.Text = fItem.FoodFact.code ?? "";
                         factCard.SetLevel(fItem.FoodFact.level);
+                        factCard.SetCompleted(fItem.IsCompleted);
 
                         var factRef = fItem.FoodFact;
                         factCard.OnFoodFactClicked += () => _viewModel?.OpenFoodFact(factRef);
