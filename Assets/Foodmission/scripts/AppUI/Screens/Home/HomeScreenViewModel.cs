@@ -53,6 +53,8 @@ namespace eu.foodmission.platform
         private readonly IMissionService _missionService;
         private readonly IChallengeService _challengeService;
         private readonly IFoodFactService _foodFactService;
+        private readonly IGamificationService _gamificationService;
+        private bool _isCheckingRewards;
 
         public HomeScreenViewModel(
             IStoreService storeService,
@@ -65,7 +67,8 @@ namespace eu.foodmission.platform
             IQuizService quizService = null,
             IMissionService missionService = null,
             IChallengeService challengeService = null,
-            IFoodFactService foodFactService = null) : base(storeService)
+            IFoodFactService foodFactService = null,
+            IGamificationService gamificationService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -76,6 +79,7 @@ namespace eu.foodmission.platform
             _missionService = missionService ?? App.current?.services?.GetService<IMissionService>();
             _challengeService = challengeService ?? App.current?.services?.GetService<IChallengeService>();
             _foodFactService = foodFactService ?? App.current?.services?.GetService<IFoodFactService>();
+            _gamificationService = gamificationService ?? App.current?.services?.GetService<IGamificationService>();
 
             // Get initial state
             AppState state = _storeService?.GetAppState();
@@ -472,5 +476,249 @@ namespace eu.foodmission.platform
             CurrentQuestActivityStates = states ?? System.Array.Empty<bool>();
             HasActiveQuest = !string.IsNullOrEmpty(title);
         }
+
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<PendingRewardCelebration>> CheckPendingGamificationRewardsAsync()
+        {
+            if (_isCheckingRewards) return null;
+            if (_gamificationService == null) return null;
+
+            _isCheckingRewards = true;
+            try
+            {
+                AppState state = _storeService?.GetAppState();
+                if (state == null || string.IsNullOrEmpty(state.userId) || string.IsNullOrEmpty(state.accessToken))
+                    return null;
+
+                string userId = state.userId;
+                string cursorKey = $"last_seen_gamif_ts_{userId}";
+                string celebratedKey = $"celebrated_gamif_ids_{userId}";
+
+                string lastSeenTs = PlayerPrefs.GetString(cursorKey, "");
+                string celebratedIdsRaw = PlayerPrefs.GetString(celebratedKey, "");
+                var celebratedIds = new System.Collections.Generic.HashSet<string>(
+                    celebratedIdsRaw.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries)
+                );
+
+                var (profile, err) = await _gamificationService.GetGamificationProfileAsync(30, 30);
+                if (profile == null || err != null)
+                    return null;
+
+                // Sync wallet balance to Redux store
+                if (profile.wallet != null)
+                {
+                    _storeService?.store?.Dispatch(AppActions.setWalletBalance.Invoke(
+                        new AppActions.WalletPayload(profile.wallet.xp, profile.wallet.points)));
+                }
+
+                // If first time checking for this user, establish cursor with current newest event timestamp
+                // so historical past events are not celebrated on cold start.
+                if (string.IsNullOrEmpty(lastSeenTs))
+                {
+                    string newest = profile.recentEvents?
+                        .Where(e => !string.IsNullOrEmpty(e.timestamp))
+                        .OrderByDescending(e => e.timestamp)
+                        .FirstOrDefault()?.timestamp ?? System.DateTime.UtcNow.ToString("o");
+
+                    PlayerPrefs.SetString(cursorKey, newest);
+                    PlayerPrefs.Save();
+                    return null;
+                }
+
+                System.DateTime lastSeenDate;
+                bool hasValidDate = System.DateTime.TryParse(lastSeenTs, out lastSeenDate);
+
+                // Filter events strictly to MISSION_COMPLETED, CHALLENGE_COMPLETED, and QUEST_COMPLETED
+                var candidateEvents = profile.recentEvents?
+                    .Where(e => !string.IsNullOrEmpty(e.id) && !celebratedIds.Contains(e.id))
+                    .Where(e => e.eventType == "MISSION_COMPLETED" || e.eventType == "CHALLENGE_COMPLETED" || e.eventType == "QUEST_COMPLETED")
+                    .Where(e =>
+                    {
+                        if (string.IsNullOrEmpty(e.timestamp)) return false;
+                        if (hasValidDate && System.DateTime.TryParse(e.timestamp, out var eDate))
+                        {
+                            return eDate > lastSeenDate;
+                        }
+                        return string.Compare(e.timestamp, lastSeenTs, System.StringComparison.Ordinal) > 0;
+                    })
+                    .OrderBy(e => e.timestamp)
+                    .ToList();
+
+                // Advance cursor to the newest event timestamp among ALL returned events
+                string maxEventTs = profile.recentEvents?
+                    .Where(e => !string.IsNullOrEmpty(e.timestamp))
+                    .OrderByDescending(e => e.timestamp)
+                    .FirstOrDefault()?.timestamp;
+
+                if (!string.IsNullOrEmpty(maxEventTs))
+                {
+                    bool shouldUpdateCursor = false;
+                    if (hasValidDate && System.DateTime.TryParse(maxEventTs, out var maxDate))
+                    {
+                        shouldUpdateCursor = maxDate > lastSeenDate;
+                    }
+                    else
+                    {
+                        shouldUpdateCursor = string.Compare(maxEventTs, lastSeenTs, System.StringComparison.Ordinal) > 0;
+                    }
+
+                    if (shouldUpdateCursor)
+                    {
+                        PlayerPrefs.SetString(cursorKey, maxEventTs);
+                    }
+                }
+
+                if (candidateEvents == null || candidateEvents.Count == 0)
+                {
+                    PlayerPrefs.Save();
+                    return null;
+                }
+
+                var results = new System.Collections.Generic.List<PendingRewardCelebration>();
+
+                foreach (var evt in candidateEvents)
+                {
+                    bool isMission = evt.eventType == "MISSION_COMPLETED";
+                    bool isChallenge = evt.eventType == "CHALLENGE_COMPLETED";
+                    bool isQuest = evt.eventType == "QUEST_COMPLETED";
+
+                    string code = null;
+                    if (evt.metadata != null)
+                    {
+                        if (isMission) code = evt.metadata["missionCode"]?.ToString();
+                        else if (isChallenge) code = evt.metadata["challengeCode"]?.ToString();
+                        else if (isQuest) code = evt.metadata["questCode"]?.ToString();
+                    }
+
+                    // Correlate with wallet entries
+                    int xpEarned = 0;
+                    int pointsEarned = 0;
+
+                    if (profile.recentWalletEntries != null && profile.recentWalletEntries.Length > 0)
+                    {
+                        foreach (var w in profile.recentWalletEntries)
+                        {
+                            if (string.IsNullOrEmpty(w.currency) || w.amount <= 0) continue;
+
+                            bool matches = false;
+                            if (!string.IsNullOrEmpty(w.eventId) && w.eventId == evt.id)
+                            {
+                                matches = true;
+                            }
+                            else if (!string.IsNullOrEmpty(w.reason))
+                            {
+                                if (!string.IsNullOrEmpty(code) && w.reason.Contains(code))
+                                {
+                                    matches = true;
+                                }
+                                else if (isMission && w.reason.StartsWith("Mission ", System.StringComparison.OrdinalIgnoreCase))
+                                {
+                                    matches = true;
+                                }
+                                else if (isChallenge && w.reason.StartsWith("Challenge ", System.StringComparison.OrdinalIgnoreCase))
+                                {
+                                    matches = true;
+                                }
+                                else if (isQuest && w.reason.StartsWith("Quest ", System.StringComparison.OrdinalIgnoreCase))
+                                {
+                                    matches = true;
+                                }
+                            }
+
+                            if (matches)
+                            {
+                                if (w.currency.Equals("XP", System.StringComparison.OrdinalIgnoreCase))
+                                    xpEarned += w.amount;
+                                else if (w.currency.Equals("POINTS", System.StringComparison.OrdinalIgnoreCase))
+                                    pointsEarned += w.amount;
+                            }
+                        }
+                    }
+
+                    // Fallback to service progress if wallet entry was not matched
+                    if (xpEarned == 0 && pointsEarned == 0 && !string.IsNullOrEmpty(code))
+                    {
+                        if (isMission && _missionService != null)
+                        {
+                            var (mProg, _) = await _missionService.GetMissionProgressAsync(code);
+                            if (mProg?.reward != null)
+                            {
+                                xpEarned = mProg.reward.xp ?? 0;
+                                pointsEarned = mProg.reward.points ?? 0;
+                            }
+                        }
+                        else if (isChallenge && _challengeService != null)
+                        {
+                            var (cProg, _) = await _challengeService.GetChallengeProgressAsync(code);
+                            if (cProg?.reward != null)
+                            {
+                                xpEarned = cProg.reward.xp ?? 0;
+                                pointsEarned = cProg.reward.points ?? 0;
+                            }
+                        }
+                        else if (isQuest && _questService != null)
+                        {
+                            var (qProg, _) = await _questService.GetQuestProgressAsync(code);
+                            if (qProg?.reward != null)
+                            {
+                                xpEarned = qProg.reward.xp ?? 0;
+                                pointsEarned = qProg.reward.points ?? 0;
+                            }
+                        }
+                    }
+
+                    celebratedIds.Add(evt.id);
+
+                    var reward = new ContentReward
+                    {
+                        xp = xpEarned > 0 ? (int?)xpEarned : null,
+                        points = pointsEarned > 0 ? (int?)pointsEarned : null
+                    };
+
+                    if (!reward.xp.HasValue && !reward.points.HasValue)
+                    {
+                        reward.xp = isQuest ? 100 : (isMission ? 50 : 25);
+                    }
+
+                    string contextTitle = isQuest
+                        ? "@UI:QUEST_REWARD_TITLE"
+                        : (isMission ? "@UI:MISSION_REWARD_TITLE" : "@UI:CHALLENGE_REWARD_TITLE");
+
+                    results.Add(new PendingRewardCelebration
+                    {
+                        Reward = reward,
+                        ContextTitle = contextTitle,
+                        EventId = evt.id,
+                        Code = code,
+                        IsQuest = isQuest
+                    });
+                }
+
+                // Persist celebrated IDs (limit to last 50)
+                var trimmedCelebrated = celebratedIds.TakeLast(50);
+                PlayerPrefs.SetString(celebratedKey, string.Join(",", trimmedCelebrated));
+                PlayerPrefs.Save();
+
+                // Order so individual activities are presented first, and quest completion last
+                return results.OrderBy(r => r.IsQuest ? 1 : 0).ToList();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] CheckPendingGamificationRewardsAsync error: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                _isCheckingRewards = false;
+            }
+        }
+    }
+
+    public class PendingRewardCelebration
+    {
+        public ContentReward Reward { get; set; }
+        public string ContextTitle { get; set; }
+        public string EventId { get; set; }
+        public string Code { get; set; }
+        public bool IsQuest { get; set; }
     }
 }

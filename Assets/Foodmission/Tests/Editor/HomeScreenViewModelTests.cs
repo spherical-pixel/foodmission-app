@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Moq;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -34,6 +36,8 @@ namespace eu.foodmission.platform.Tests
         {
             _vm?.Dispose();
             _storeService?.Dispose();
+            PlayerPrefs.DeleteKey("last_seen_gamif_ts_test-user");
+            PlayerPrefs.DeleteKey("celebrated_gamif_ids_test-user");
         }
 
         [Test]
@@ -247,6 +251,264 @@ namespace eu.foodmission.platform.Tests
             _vm.NavigateToQuests();
 
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_quests, requestedAction);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenNoUserOrToken_ReturnsNull()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: mockGamification.Object
+            );
+
+            _storeService.SetAppState(new AppState { userId = null, accessToken = null });
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+            Assert.IsNull(result);
+            mockGamification.Verify(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_FirstRun_EstablishesCursorAndReturnsNull()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var profile = new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent { id = "ev-1", eventType = "MISSION_COMPLETED", timestamp = "2026-09-23T10:00:00Z" }
+                }
+            };
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.DeleteKey("last_seen_gamif_ts_test-user");
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: mockGamification.Object
+            );
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNull(result);
+            string savedCursor = PlayerPrefs.GetString("last_seen_gamif_ts_test-user", "");
+            Assert.AreEqual("2026-09-23T10:00:00Z", savedCursor);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenMissionCompleted_ReturnsCelebration()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var profile = new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-mission-1",
+                        eventType = "MISSION_COMPLETED",
+                        timestamp = "2026-09-23T10:05:00Z",
+                        metadata = JObject.FromObject(new { missionCode = "M.B1.1" })
+                    }
+                },
+                recentWalletEntries = new[]
+                {
+                    new WalletEntry
+                    {
+                        id = "w-1",
+                        currency = "XP",
+                        amount = 50,
+                        reason = "Mission M.B1.1 completed"
+                    },
+                    new WalletEntry
+                    {
+                        id = "w-2",
+                        currency = "POINTS",
+                        amount = 10,
+                        reason = "Mission M.B1.1 completed"
+                    }
+                }
+            };
+
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: mockGamification.Object
+            );
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("@UI:MISSION_REWARD_TITLE", result[0].ContextTitle);
+            Assert.AreEqual(50, result[0].Reward.xp);
+            Assert.AreEqual(10, result[0].Reward.points);
+            Assert.AreEqual("M.B1.1", result[0].Code);
+            Assert.IsFalse(result[0].IsQuest);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenQuizOrFoodFactEvent_IgnoresAndReturnsNull()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var profile = new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-quiz-1",
+                        eventType = "QUIZ_ANSWERED",
+                        timestamp = "2026-09-23T10:05:00Z",
+                        metadata = JObject.FromObject(new { quizCode = "Q.1" })
+                    },
+                    new UserEvent
+                    {
+                        id = "ev-fact-1",
+                        eventType = "LEARNING_FACT_READ",
+                        timestamp = "2026-09-23T10:06:00Z",
+                        metadata = JObject.FromObject(new { factCode = "FF.1" })
+                    }
+                },
+                recentWalletEntries = new[]
+                {
+                    new WalletEntry
+                    {
+                        id = "w-quiz",
+                        currency = "XP",
+                        amount = 20,
+                        reason = "Quiz Q.1 completed"
+                    }
+                }
+            };
+
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: mockGamification.Object
+            );
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNull(result, "Quiz and food fact events must be ignored with zero collision!");
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenChainedEvents_OrdersActivitiesBeforeQuest()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var profile = new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-quest",
+                        eventType = "QUEST_COMPLETED",
+                        timestamp = "2026-09-23T10:05:02Z",
+                        metadata = JObject.FromObject(new { questCode = "QUEST.1" })
+                    },
+                    new UserEvent
+                    {
+                        id = "ev-mission",
+                        eventType = "MISSION_COMPLETED",
+                        timestamp = "2026-09-23T10:05:00Z",
+                        metadata = JObject.FromObject(new { missionCode = "M.1" })
+                    },
+                    new UserEvent
+                    {
+                        id = "ev-challenge",
+                        eventType = "CHALLENGE_COMPLETED",
+                        timestamp = "2026-09-23T10:05:01Z",
+                        metadata = JObject.FromObject(new { challengeCode = "CH.1" })
+                    }
+                }
+            };
+
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: mockGamification.Object
+            );
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count);
+            // First 2 must be activities (Mission and Challenge)
+            Assert.IsFalse(result[0].IsQuest);
+            Assert.IsFalse(result[1].IsQuest);
+            // Last must be Quest
+            Assert.IsTrue(result[2].IsQuest);
+            Assert.AreEqual("@UI:QUEST_REWARD_TITLE", result[2].ContextTitle);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenAlreadyCelebrated_PreventsDuplicate()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var profile = new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-mission-dup",
+                        eventType = "MISSION_COMPLETED",
+                        timestamp = "2026-09-23T10:05:00Z",
+                        metadata = JObject.FromObject(new { missionCode = "M.1" })
+                    }
+                }
+            };
+
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: mockGamification.Object
+            );
+
+            // First call -> celebrates
+            var firstResult = await vm.CheckPendingGamificationRewardsAsync();
+            Assert.IsNotNull(firstResult);
+            Assert.AreEqual(1, firstResult.Count);
+
+            // Second call -> ID is in celebratedIds, must return null (no duplicate!)
+            var secondResult = await vm.CheckPendingGamificationRewardsAsync();
+            Assert.IsNull(secondResult);
         }
     }
 }

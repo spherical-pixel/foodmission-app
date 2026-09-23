@@ -30,6 +30,8 @@ namespace eu.foodmission.platform
         public int balanceAfter;
         public string reason;
         public string eventId;
+        public string sourceType;
+        public string sourceId;
         public string createdAt;
     }
 
@@ -87,6 +89,7 @@ namespace eu.foodmission.platform
         public WalletBalance wallet;
         public ProgressIndicator[] progressIndicators;
         public string[] badges;
+        public UserEvent[] recentEvents;
         public WalletEntry[] recentWalletEntries;
     }
 }

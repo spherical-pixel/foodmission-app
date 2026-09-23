@@ -3013,6 +3013,14 @@ MonoBehaviour:
     m_Localized: 'Es.: Insalata di lenticchie e verdure'
     m_Metadata:
       m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: Missione completata!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: Sfida completata!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

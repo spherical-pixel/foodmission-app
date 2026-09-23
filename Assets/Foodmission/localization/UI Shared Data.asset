@@ -2455,6 +2455,14 @@ MonoBehaviour:
     m_Key: FOOD_FACT_REWARD_TITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 49260137687277568
+    m_Key: MISSION_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Key: CHALLENGE_REWARD_TITLE
+    m_Metadata:
+      m_Items: []
   - m_Id: 47367747305201664
     m_Key: RECIPES_TAB_FOR_YOU
     m_Metadata:

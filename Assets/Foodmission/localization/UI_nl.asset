@@ -3013,6 +3013,14 @@ MonoBehaviour:
     m_Localized: 'Bijvoorbeeld: Salade met linzen en groenten'
     m_Metadata:
       m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: Missie voltooid!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: Uitdaging voltooid!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

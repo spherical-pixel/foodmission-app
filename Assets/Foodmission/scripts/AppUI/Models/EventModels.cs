@@ -139,5 +139,7 @@ namespace eu.foodmission.platform
         public string source;
         public string timestamp;
         public string groupId;
+        [JsonProperty("metadata")]
+        public Newtonsoft.Json.Linq.JObject metadata;
     }
 }

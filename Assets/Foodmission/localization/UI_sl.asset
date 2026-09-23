@@ -2978,6 +2978,14 @@ MonoBehaviour:
     m_Localized: "Npr.: Solata iz le\u010De in zelenjave"
     m_Metadata:
       m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: "Misija zaklju\u010Dena!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: "Izziv zaklju\u010Den!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

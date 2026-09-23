@@ -2980,6 +2980,14 @@ MonoBehaviour:
     m_Localized: 'Ej: Ensalada de lentejas y verduras'
     m_Metadata:
       m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: "\xA1Misi\xF3n completada!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: "\xA1Reto completado!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

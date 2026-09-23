@@ -1543,7 +1543,7 @@
 
 
 .appui-button--icon-only .appui-button__leadingicon {
-    --unity-image-tint-color: var(--appui-foregrounds-50);
+    --unity-image-tint-color: var(--appui-foregrounds-100);
 }
 
 .appui-date-picker-pane .appui-button,

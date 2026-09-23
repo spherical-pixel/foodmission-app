@@ -47,6 +47,7 @@ namespace eu.foodmission.platform
         private VisualElement _noActiveQuestBanner;
         private FMButton _btnChooseQuest;
         private FMNutriView _nutriView;
+        private bool _isDisplayingCelebrationQueue;
 
         public HomeScreen()
         {
@@ -61,6 +62,7 @@ namespace eu.foodmission.platform
             base.OnEnter(controller, destination, args);
             _ = _viewModel?.LoadActiveQuestAsync();
             RefreshActiveQuestWidget();
+            CheckPendingGamificationRewardsAsync();
             //SetupRewardDebugButton();
         }
 
@@ -99,6 +101,7 @@ namespace eu.foodmission.platform
             CheckPendingLegalConsentAsync();
             CheckPendingPilotConsentAsync();
             CheckPendingPilotSurveyAsync();
+            CheckPendingGamificationRewardsAsync();
             //SetupRewardDebugButton();
             // #if DEVELOPER_MODE
             //             SetupPilotDebugPanel();
@@ -322,6 +325,49 @@ namespace eu.foodmission.platform
                 );
             }
 
+        }
+
+        private async void CheckPendingGamificationRewardsAsync()
+        {
+            if (_viewModel == null || _isDisplayingCelebrationQueue) return;
+
+            var rewards = await _viewModel.CheckPendingGamificationRewardsAsync();
+            if (rewards != null && rewards.Count > 0)
+            {
+                ShowCelebrationQueue(new System.Collections.Generic.Queue<PendingRewardCelebration>(rewards));
+            }
+        }
+
+        private void ShowCelebrationQueue(System.Collections.Generic.Queue<PendingRewardCelebration> queue)
+        {
+            if (queue == null || queue.Count == 0)
+            {
+                _isDisplayingCelebrationQueue = false;
+                _ = _viewModel?.LoadActiveQuestAsync();
+                RefreshActiveQuestWidget();
+                return;
+            }
+
+            _isDisplayingCelebrationQueue = true;
+            var item = queue.Dequeue();
+
+            RewardCelebrationDialog.Show(
+                item.Reward,
+                contextTitle: item.ContextTitle,
+                onDismiss: () =>
+                {
+                    if (queue.Count > 0)
+                    {
+                        schedule.Execute(() => ShowCelebrationQueue(queue)).StartingIn(250);
+                    }
+                    else
+                    {
+                        _isDisplayingCelebrationQueue = false;
+                        _ = _viewModel?.LoadActiveQuestAsync();
+                        RefreshActiveQuestWidget();
+                    }
+                }
+            );
         }
 
         private void SetupRewardDebugButton()

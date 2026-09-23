@@ -2981,6 +2981,14 @@ MonoBehaviour:
     m_Localized: "F.eks.: Lins- og gr\xF8nnsakssalat"
     m_Metadata:
       m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: "Oppdrag fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: "Utfordring fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

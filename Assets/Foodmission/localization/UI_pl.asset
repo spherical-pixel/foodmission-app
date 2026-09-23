@@ -3013,6 +3013,14 @@ MonoBehaviour:
     m_Localized: "Np.: Sa\u0142atka z soczewicy i warzyw"
     m_Metadata:
       m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: "Misja zako\u0144czona!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: "Wyzwanie zako\u0144czone!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
