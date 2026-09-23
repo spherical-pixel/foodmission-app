@@ -2959,6 +2959,22 @@ MonoBehaviour:
     m_Localized: Meal updated successfully
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Simplified meal log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: What were the key features of your dish?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Name or description (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: 'E.g.: Lentil and vegetable salad'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

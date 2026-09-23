@@ -2965,6 +2965,22 @@ MonoBehaviour:
     m_Localized: "M\xE5ltid ble oppdatert"
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: "Forenklet m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Hva var de viktigste kjennetegnene ved retten din?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Navn eller beskrivelse (valgfritt)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: "F.eks.: Lins- og gr\xF8nnsakssalat"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

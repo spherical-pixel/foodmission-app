@@ -2997,6 +2997,22 @@ MonoBehaviour:
     m_Localized: Maaltijd succesvol bijgewerkt
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Vereenvoudigd maaltijdlogboek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Wat waren de belangrijkste kenmerken van je gerecht?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Naam of beschrijving (optioneel)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: 'Bijvoorbeeld: Salade met linzen en groenten'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

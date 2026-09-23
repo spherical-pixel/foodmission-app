@@ -2980,6 +2980,22 @@ MonoBehaviour:
     m_Localized: Mahlzeit erfolgreich aktualisiert
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: "Vereinfachtes Ern\xE4hrungsprotokoll"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Was waren die wichtigsten Merkmale Ihres Gerichts?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Name oder Beschreibung (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: "Beispiel: Linsen-Gem\xFCse-Salat"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

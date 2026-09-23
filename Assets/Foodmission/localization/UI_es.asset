@@ -2964,6 +2964,22 @@ MonoBehaviour:
     m_Localized: Comida actualizada correctamente
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Registro simplificado de comidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: "\xBFCu\xE1les fueron las caracter\xEDsticas principales de tu plato?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: "Nombre o descripci\xF3n (opcional)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: 'Ej: Ensalada de lentejas y verduras'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

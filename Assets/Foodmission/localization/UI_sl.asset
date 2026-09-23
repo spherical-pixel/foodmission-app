@@ -2962,6 +2962,22 @@ MonoBehaviour:
     m_Localized: "Obrok uspe\u0161no posodobljen"
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Poenostavljen dnevnik obrokov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: "Katere so bile glavne zna\u010Dilnosti va\u0161e jedi?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Ime ali opis (neobvezno)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: "Npr.: Solata iz le\u010De in zelenjave"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

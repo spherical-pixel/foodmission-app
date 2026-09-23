@@ -2492,11 +2492,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44199025098874880
-    m_Localized: Scegli un percorso per iniziare a imparare e a fare progressi.
+    m_Localized: Scegli una missione per iniziare a imparare e a fare progressi.
     m_Metadata:
       m_Items: []
   - m_Id: 44199294499020800
-    m_Localized: Esplora i percorsi
+    m_Localized: Esplora le missioni
     m_Metadata:
       m_Items: []
   - m_Id: 46966269096747008
@@ -2994,6 +2994,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49210861586210816
+    m_Localized: 'Es.: Insalata di lenticchie e verdure'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Registro dei pasti semplificato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Quali erano le caratteristiche principali del tuo piatto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Nome o descrizione (facoltativo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
     m_Localized: 'Es.: Insalata di lenticchie e verdure'
     m_Metadata:
       m_Items: []

@@ -6,7 +6,7 @@
             <ui:VisualElement class="fm-quick-meal-header">
                 <appui:Text text="Registro simplificadode comida" size="XXL" class="fm-quick-meal-title">
                     <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49206146878136320)"/>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49247263887712256)"/>
                     </Bindings>
                 </appui:Text>
             </ui:VisualElement>
@@ -21,7 +21,7 @@
             <ui:VisualElement class="fm-quick-meal-section">
                 <appui:Text text="¿Qué características tuvo tu plato?" size="M" class="fm-quick-meal-section-title">
                     <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49207590964420608)"/>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49247263887712257)"/>
                     </Bindings>
                 </appui:Text>
                 <ui:VisualElement name="questions-container" class="fm-quick-meal-questions-list"/>
@@ -29,12 +29,12 @@
             <ui:VisualElement class="fm-quick-meal-section">
                 <appui:Text text="Nombre o descripción (opcional)" size="M" class="fm-quick-meal-section-title">
                     <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49207906585796608)"/>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49247263887712258)"/>
                     </Bindings>
                 </appui:Text>
                 <appui:TextField name="input-meal-name" placeholder="Ej: Ensalada de lentejas y verduras" class="fm-quick-meal-input">
                     <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49210861586210816)"/>
+                        <UnityEngine.Localization.LocalizedString property="placeholder" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(49247263887712259)"/>
                     </Bindings>
                 </appui:TextField>
             </ui:VisualElement>

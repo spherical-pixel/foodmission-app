@@ -2891,6 +2891,30 @@ MonoBehaviour:
     m_Key: MEAL_UPDATED_SUCCESS
     m_Metadata:
       m_Items: []
+  - m_Id: 44199025098874880
+    m_Key: HOME_NO_ACTIVE_QUEST_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Key: HOME_NO_ACTIVE_QUEST_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712256
+    m_Key: QUICK_MEAL_LOG_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Key: QUICK_MEAL_LOG_FEATURES_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Key: QUICK_MEAL_LOG_OPTIONAL_NAME_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Key: QUICK_MEAL_LOG_OPTIONAL_NAME_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
