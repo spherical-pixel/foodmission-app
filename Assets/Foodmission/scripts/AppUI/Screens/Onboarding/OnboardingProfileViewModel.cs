@@ -223,7 +223,7 @@ namespace eu.foodmission.platform
                 AppState state = _storeService.GetAppState();
                 string lang = state.lang ?? "en";
 
-                var (data, _) = await _catalogService.LoadStartupAsync(lang);
+                var (data, _) = await _catalogService.LoadStartupAsync(lang, state?.userCountry);
 
                 if (data == null)
                 {

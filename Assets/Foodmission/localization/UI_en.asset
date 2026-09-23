@@ -2471,6 +2471,22 @@ MonoBehaviour:
     m_Localized: Explore Quests
     m_Metadata:
       m_Items: []
+  - m_Id: 49206146878136320
+    m_Localized: Simplified meal log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207590964420608
+    m_Localized: What were the key features of your dish?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207906585796608
+    m_Localized: Name or description (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49210861586210816
+    m_Localized: 'E.g.: Lentil and vegetable salad'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -100,6 +100,21 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<bool> setPilotConsent = "app/setPilotConsent";
         public static readonly ActionCreator<string> setCurrentQuest = "app/setCurrentQuest";
 
+        // Wallet & Gamification
+        public static readonly ActionCreator<WalletPayload> setWalletBalance = "app/setWalletBalance";
+
+        public readonly struct WalletPayload
+        {
+            public readonly int xp;
+            public readonly int points;
+
+            public WalletPayload(int xp, int points)
+            {
+                this.xp = xp;
+                this.points = points;
+            }
+        }
+
         // Profile sync
         public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
 
@@ -331,6 +346,8 @@ namespace eu.foodmission.platform
             newState.userAutoAddToPantry = false;
             newState.userAvatarConfig = null;
             newState.userHasAvatar = false;
+            newState.userXp = 0;
+            newState.userPoints = 0;
 
             // Clear temporal data
             newState.isAuthenticating = false;
@@ -577,6 +594,14 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userCurrentQuestId = action.payload ?? "";
+            return newState;
+        }
+
+        public static AppState SetWalletBalanceReducer(AppState state, IAction<AppActions.WalletPayload> action)
+        {
+            var newState = state.Copy();
+            newState.userXp = action.payload.xp;
+            newState.userPoints = action.payload.points;
             return newState;
         }
     }

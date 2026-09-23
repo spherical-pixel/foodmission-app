@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.AppUI.MVVM;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -12,13 +13,15 @@ namespace eu.foodmission.platform
 
         private NutriController _nutriController;
 
-        public RenderTexture NutriCameraRenderTexture => _nutriController.NutriCamera != null ? _nutriController.NutriCamera.targetTexture : null;
+        public RenderTexture NutriCameraRenderTexture => _nutriController?.NutriCamera != null ? _nutriController.NutriCamera.targetTexture : null;
 
-        public NutriMood CurrentMood => _nutriController.NutriAnimationController.CurrentMood;
+        public NutriMood CurrentMood => _nutriController?.NutriAnimationController != null ? _nutriController.NutriAnimationController.CurrentMood : NutriMood.Neutral;
 
         private bool _isInitialized;
         public bool IsInitialized => _isInitialized;
 
+        private FoodyLoadout _currentLoadout;
+        public FoodyLoadout CurrentLoadout => _currentLoadout;
 
         public async Task InitializeAsync()
         {
@@ -34,6 +37,10 @@ namespace eu.foodmission.platform
             {
                 _nutriController = existing;
                 _isInitialized = true;
+                if (_currentLoadout != null)
+                {
+                    _nutriController.ApplyLoadout(_currentLoadout);
+                }
                 Debug.Log($"[{GetType().Name}] Reused existing NutriController after hot-reload");
                 return;
             }
@@ -61,6 +68,10 @@ namespace eu.foodmission.platform
                 _nutriController = nutriGo.GetComponent<NutriController>();
                 _nutriController.name = "NutriController";
 
+                if (_currentLoadout != null)
+                {
+                    _nutriController.ApplyLoadout(_currentLoadout);
+                }
 
                 _isInitialized = true;
                 Debug.Log($"[{GetType().Name}] Nutri initialized successfully");
@@ -84,7 +95,7 @@ namespace eu.foodmission.platform
 
         public void SetCameraActive(bool active)
         {
-            if (_nutriController != null || _nutriController.NutriCamera == null)
+            if (_nutriController == null || _nutriController.NutriCamera == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] NutriCamera not available");
                 return;
@@ -95,32 +106,65 @@ namespace eu.foodmission.platform
 
         public void SetMood(NutriMood mood)
         {
-            if (_nutriController.NutriAnimationController == null)
+            if (_nutriController?.NutriAnimationController == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] NutriAnimationController not available");
                 return;
             }
 
-
             _nutriController.NutriAnimationController.CurrentMood = mood;
-
-
             Debug.Log($"[{GetType().Name}] Set mood to {mood}");
         }
 
         public void SetAction(NutriAction nutriAction)
         {
-            if (_nutriController.NutriAnimationController == null)
+            if (_nutriController?.NutriAnimationController == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] NutriAnimationController not available");
                 return;
             }
 
-
             _nutriController.NutriAnimationController.CurrentAction = nutriAction;
-
-
             Debug.Log($"[{GetType().Name}] Set action to {nutriAction}");
+        }
+
+        public void EquipItem(string type, int slot)
+        {
+            if (_currentLoadout == null) _currentLoadout = new FoodyLoadout();
+            var item = new FoodyItem
+            {
+                type = FoodyItemType.Normalize(type),
+                slot = slot,
+                code = $"{FoodyItemType.Normalize(type)}_{slot}",
+                equipped = true,
+                owned = true
+            };
+            _currentLoadout.SetItemByType(type, item);
+            _nutriController?.EquipItem(type, slot);
+        }
+
+        public void UnequipItem(string type)
+        {
+            _currentLoadout?.SetItemByType(type, null);
+            _nutriController?.UnequipItem(type);
+        }
+
+        public void ApplyLoadout(FoodyLoadout loadout)
+        {
+            _currentLoadout = loadout;
+            _nutriController?.ApplyLoadout(loadout);
+        }
+
+        public async Task SyncLoadoutAsync()
+        {
+            var foodyService = App.current?.services?.GetService<IFoodyService>();
+            if (foodyService == null) return;
+
+            var (loadout, error) = await foodyService.GetLoadoutAsync();
+            if (error == null && loadout != null)
+            {
+                ApplyLoadout(loadout);
+            }
         }
     }
 }

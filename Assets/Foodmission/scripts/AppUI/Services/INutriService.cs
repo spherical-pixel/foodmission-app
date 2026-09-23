@@ -33,5 +33,11 @@ namespace eu.foodmission.platform
         bool IsInitialized { get; }
 
         RenderTexture NutriCameraRenderTexture { get; }
+
+        FoodyLoadout CurrentLoadout { get; }
+        void EquipItem(string type, int slot);
+        void UnequipItem(string type);
+        void ApplyLoadout(FoodyLoadout loadout);
+        Task SyncLoadoutAsync();
     }
 }

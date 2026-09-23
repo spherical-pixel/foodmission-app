@@ -66,6 +66,8 @@ namespace eu.foodmission.platform
                 .AddCase(AppActions.setPilotCycleState, AppReducers.SetPilotCycleStateReducer)
                 .AddCase(AppActions.setPilotConsent, AppReducers.SetPilotConsentReducer)
                 .AddCase(AppActions.setCurrentQuest, AppReducers.SetCurrentQuestReducer)
+                // Wallet & Gamification
+                .AddCase(AppActions.setWalletBalance, AppReducers.SetWalletBalanceReducer)
                 // Profile sync
                 .AddCase(AppActions.profileSynced, AppReducers.ProfileSyncedReducer)
                 // Food Info

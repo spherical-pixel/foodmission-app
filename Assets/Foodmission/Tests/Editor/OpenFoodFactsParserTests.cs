@@ -152,5 +152,37 @@ namespace eu.foodmission.platform.Tests
             var pCa = OpenFoodFactsParser.ParseProduct(json, "ca");
             Assert.AreEqual("Suc de taronja", pCa.name);
         }
+
+        [Test]
+        public void ParseDietFlags_FromIngredientsAnalysisTags_SetsFlagsCorrectly()
+        {
+            var (isVegan, isVeg, isPalmFree) = OpenFoodFactsParser.ParseDietFlags(
+                new[] { "en:vegan", "en:palm-oil-free" },
+                null);
+
+            Assert.IsTrue(isVegan);
+            Assert.IsTrue(isVeg);
+            Assert.IsTrue(isPalmFree);
+
+            var (nonVegan, veg, palmOil) = OpenFoodFactsParser.ParseDietFlags(
+                new[] { "en:non-vegan", "en:vegetarian", "en:palm-oil" },
+                null);
+
+            Assert.IsFalse(nonVegan);
+            Assert.IsTrue(veg);
+            Assert.IsFalse(palmOil);
+        }
+
+        [Test]
+        public void ParseDietFlags_FromLabelsFallback_SetsFlagsCorrectly()
+        {
+            var (isVegan, isVeg, isPalmFree) = OpenFoodFactsParser.ParseDietFlags(
+                null,
+                new[] { "en:vegan", "en:palm-oil-free" });
+
+            Assert.IsTrue(isVegan);
+            Assert.IsTrue(isVeg);
+            Assert.IsTrue(isPalmFree);
+        }
     }
 }

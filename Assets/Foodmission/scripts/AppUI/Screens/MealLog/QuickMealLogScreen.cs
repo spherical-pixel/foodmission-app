@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using eu.foodmission.platform.Components;
 using MainraGames;
@@ -22,10 +23,8 @@ namespace eu.foodmission.platform
         protected override bool IsFixedContent => false;
 
         private Unity.AppUI.UI.Text _activeQuestHint;
-        private UnityEngine.UIElements.Button _btnTypeBreakfast;
-        private UnityEngine.UIElements.Button _btnTypeLunch;
-        private UnityEngine.UIElements.Button _btnTypeDinner;
-        private UnityEngine.UIElements.Button _btnTypeSnack;
+        private VisualElement _typesContainer;
+        private readonly List<(string Code, FMButton Button)> _typeButtons = new();
 
         private VisualElement _questionsContainer;
         private Unity.AppUI.UI.TextField _inputMealName;
@@ -48,51 +47,12 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _activeQuestHint = contentContainer.Q<Unity.AppUI.UI.Text>("active-quest-hint");
-            _btnTypeBreakfast = contentContainer.Q<UnityEngine.UIElements.Button>("btn-type-breakfast");
-            _btnTypeLunch = contentContainer.Q<UnityEngine.UIElements.Button>("btn-type-lunch");
-            _btnTypeDinner = contentContainer.Q<UnityEngine.UIElements.Button>("btn-type-dinner");
-            _btnTypeSnack = contentContainer.Q<UnityEngine.UIElements.Button>("btn-type-snack");
+            _typesContainer = contentContainer.Q<VisualElement>("types-row") ?? contentContainer.Q<VisualElement>(className: "fm-quick-meal-types-row");
 
             _questionsContainer = contentContainer.Q<VisualElement>("questions-container");
             _inputMealName = contentContainer.Q<Unity.AppUI.UI.TextField>("input-meal-name");
             _feedbackLabel = contentContainer.Q<Unity.AppUI.UI.Text>("feedback-label");
             _btnSubmitQuickMeal = contentContainer.Q<FMButton>("btn-submit-quick-meal");
-
-            if (_btnTypeBreakfast != null)
-            {
-                _btnTypeBreakfast.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.SetMealType("BREAKFAST");
-                };
-            }
-
-            if (_btnTypeLunch != null)
-            {
-                _btnTypeLunch.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.SetMealType("LUNCH");
-                };
-            }
-
-            if (_btnTypeDinner != null)
-            {
-                _btnTypeDinner.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.SetMealType("DINNER");
-                };
-            }
-
-            if (_btnTypeSnack != null)
-            {
-                _btnTypeSnack.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.SetMealType("SNACK");
-                };
-            }
 
             if (_inputMealName != null)
             {
@@ -149,13 +109,15 @@ namespace eu.foodmission.platform
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_viewModel.Questions) ||
+                e.PropertyName == nameof(_viewModel.Sections) ||
                 e.PropertyName == nameof(_viewModel.ActiveQuestTitle))
             {
                 UpdateView();
             }
-            else if (e.PropertyName == nameof(_viewModel.MealTypeLabels))
+            else if (e.PropertyName == nameof(_viewModel.TypeOfMealOptions) ||
+                     e.PropertyName == nameof(_viewModel.MealTypeLabels))
             {
-                UpdateMealTypeLabels();
+                RebuildTypeButtons();
             }
             else if (e.PropertyName == nameof(_viewModel.SelectedMealType))
             {
@@ -185,32 +147,78 @@ namespace eu.foodmission.platform
                 }
             }
 
-            UpdateMealTypeLabels();
-            UpdateMealTypeSelection();
+            RebuildTypeButtons();
             RebuildQuestions();
             UpdateSubmitState();
         }
 
-        private void UpdateMealTypeLabels()
+        private void RebuildTypeButtons()
         {
-            if (_viewModel?.MealTypeLabels == null || _viewModel.MealTypeLabels.Count == 0) return;
+            if (_typesContainer == null) return;
+            _typesContainer.Clear();
+            _typeButtons.Clear();
 
-            if (_btnTypeBreakfast != null && _viewModel.MealTypeLabels.TryGetValue("BREAKFAST", out var breakfastLabel))
+            if (_viewModel?.TypeOfMealOptions != null && _viewModel.TypeOfMealOptions.Length > 0)
             {
-                _btnTypeBreakfast.text = breakfastLabel;
+                foreach (var item in _viewModel.TypeOfMealOptions)
+                {
+                    if (item == null || string.IsNullOrEmpty(item.code)) continue;
+
+                    string emoji = MealLogHelpers.GetEmojiForTypeOfMeal(item.code);
+                    string label = string.IsNullOrEmpty(item.label) ? item.code : item.label;
+                    string code = item.code;
+
+                    var btn = new FMButton();
+                    btn.AddToClassList("fm-quick-meal-type-btn");
+                    btn.title = $"{emoji} {label}";
+                    btn.size = Size.L;
+                    btn.variant = ButtonVariant.Default;
+                    btn.clicked += () =>
+                    {
+                        _audioService?.PlaySfx(SfxType.PositiveButton);
+                        _viewModel?.SetMealType(code);
+                    };
+
+                    _typesContainer.Add(btn);
+                    _typeButtons.Add((code, btn));
+                }
             }
-            if (_btnTypeLunch != null && _viewModel.MealTypeLabels.TryGetValue("LUNCH", out var lunchLabel))
+            else
             {
-                _btnTypeLunch.text = lunchLabel;
+                var defaults = new[]
+                {
+                    ("BREAKFAST", "🌅 Desayuno"),
+                    ("LUNCH", "☀️ Almuerzo"),
+                    ("DINNER", "🌙 Cena"),
+                    ("SNACK", "🍿 Snack")
+                };
+
+                foreach (var (code, defaultLabel) in defaults)
+                {
+                    string label = defaultLabel;
+                    if (_viewModel?.MealTypeLabels != null && _viewModel.MealTypeLabels.TryGetValue(code, out var customLabel))
+                    {
+                        label = customLabel;
+                    }
+
+                    var btn = new FMButton();
+                    btn.AddToClassList("fm-quick-meal-type-btn");
+                    btn.title = label;
+                    btn.size = Size.L;
+                    btn.variant = ButtonVariant.Default;
+                    string capturedCode = code;
+                    btn.clicked += () =>
+                    {
+                        _audioService?.PlaySfx(SfxType.PositiveButton);
+                        _viewModel?.SetMealType(capturedCode);
+                    };
+
+                    _typesContainer.Add(btn);
+                    _typeButtons.Add((capturedCode, btn));
+                }
             }
-            if (_btnTypeDinner != null && _viewModel.MealTypeLabels.TryGetValue("DINNER", out var dinnerLabel))
-            {
-                _btnTypeDinner.text = dinnerLabel;
-            }
-            if (_btnTypeSnack != null && _viewModel.MealTypeLabels.TryGetValue("SNACK", out var snackLabel))
-            {
-                _btnTypeSnack.text = snackLabel;
-            }
+
+            UpdateMealTypeSelection();
         }
 
         private void UpdateMealTypeSelection()
@@ -218,115 +226,219 @@ namespace eu.foodmission.platform
             if (_viewModel == null) return;
             string selected = _viewModel.SelectedMealType ?? "LUNCH";
 
-            SetBtnActive(_btnTypeBreakfast, selected == "BREAKFAST");
-            SetBtnActive(_btnTypeLunch, selected == "LUNCH");
-            SetBtnActive(_btnTypeDinner, selected == "DINNER");
-            SetBtnActive(_btnTypeSnack, selected == "SNACK");
+            foreach (var (code, btn) in _typeButtons)
+            {
+                SetBtnActive(btn, string.Equals(code, selected, StringComparison.OrdinalIgnoreCase));
+            }
         }
 
-        private void SetBtnActive(UnityEngine.UIElements.Button btn, bool active)
+        private void SetBtnActive(FMButton btn, bool active)
         {
             if (btn == null) return;
-            if (active) btn.AddToClassList("fm-quick-meal-type-btn--active");
-            else btn.RemoveFromClassList("fm-quick-meal-type-btn--active");
+            btn.variant = active ? ButtonVariant.Accent : ButtonVariant.Default;
+            btn.EnableInClassList("fm-quick-meal-type-btn--active", active);
         }
 
         private void RebuildQuestions()
         {
-            if (_questionsContainer == null || _viewModel?.Questions == null) return;
+            if (_questionsContainer == null || _viewModel == null) return;
             _questionsContainer.Clear();
 
-            foreach (var q in _viewModel.Questions)
+            if (_viewModel.Sections != null && _viewModel.Sections.Count > 0)
             {
-                if (q == null) continue;
-
-                var card = new VisualElement();
-                card.AddToClassList("fm-quick-meal-question-card");
-                if (q.IsChecked) card.AddToClassList("fm-quick-meal-question-card--checked");
-
-                bool isSwapSelector = q.QuestionType == DirectQuestionType.SwapSelector;
-                string capturedId = q.Id;
-
-                var header = new VisualElement();
-                header.AddToClassList("fm-quick-meal-question-header");
-
-                if (!isSwapSelector)
+                foreach (var sec in _viewModel.Sections)
                 {
-                    var checkbox = new VisualElement();
-                    checkbox.AddToClassList("fm-quick-meal-checkbox");
-                    if (q.IsChecked)
-                    {
-                        checkbox.AddToClassList("fm-quick-meal-checkbox--checked");
-                        var checkmark = new Label("✓");
-                        checkmark.AddToClassList("fm-quick-meal-checkbox-mark");
-                        checkbox.Add(checkmark);
-                    }
-                    header.Add(checkbox);
+                    if (sec == null) continue;
 
-                    header.RegisterCallback<ClickEvent>(_ =>
+                    var sectionBox = new VisualElement();
+                    sectionBox.AddToClassList("fm-quick-meal-accordion-section");
+
+                    var accordionHeader = new VisualElement();
+                    accordionHeader.AddToClassList("fm-quick-meal-accordion-header");
+                    if (sec.IsExpanded)
+                    {
+                        accordionHeader.AddToClassList("fm-quick-meal-accordion-header--expanded");
+                    }
+
+                    var headerLeft = new VisualElement();
+                    headerLeft.AddToClassList("fm-quick-meal-accordion-header-left");
+
+                    if (!string.IsNullOrEmpty(sec.Icon))
+                    {
+                        var iconText = new Unity.AppUI.UI.Text();
+                        iconText.text = sec.Icon;
+                        iconText.AddToClassList("fm-quick-meal-accordion-icon");
+                        headerLeft.Add(iconText);
+                    }
+
+                    var titleText = new Unity.AppUI.UI.Text();
+                    titleText.AddToClassList("fm-quick-meal-accordion-title");
+                    titleText.text = sec.Title ?? "";
+                    titleText.size = TextSize.M;
+                    headerLeft.Add(titleText);
+                    accordionHeader.Add(headerLeft);
+
+                    var headerRight = new VisualElement();
+                    headerRight.AddToClassList("fm-quick-meal-accordion-header-right");
+
+                    int selectedCount = sec.SelectedCount;
+                    if (selectedCount > 0)
+                    {
+                        var badge = new Unity.AppUI.UI.Badge
+                        {
+                            content = selectedCount
+                        };
+                        badge.AddToClassList("fm-quick-meal-accordion-badge");
+                        headerRight.Add(badge);
+                    }
+
+                    var chevron = new Icon();
+                    chevron.AddToClassList("fm-quick-meal-accordion-chevron");
+                    chevron.iconName = "caret-down";
+                    if (!sec.IsExpanded)
+                    {
+                        chevron.AddToClassList("fm-quick-meal-accordion-chevron--collapsed");
+                    }
+                    headerRight.Add(chevron);
+                    accordionHeader.Add(headerRight);
+
+                    string capturedSecId = sec.Id;
+                    accordionHeader.RegisterCallback<ClickEvent>(_ =>
                     {
                         _audioService?.PlaySfx(SfxType.PositiveButton);
-                        _viewModel?.ToggleQuestion(capturedId);
+                        _viewModel?.ToggleSection(capturedSecId);
                     });
-                }
 
-                var promptLabel = new Unity.AppUI.UI.Text();
-                promptLabel.text = q.Prompt ?? "";
-                promptLabel.AddToClassList("fm-quick-meal-question-text");
-                header.Add(promptLabel);
+                    sectionBox.Add(accordionHeader);
 
-                card.Add(header);
-
-                // Render inline swap options directly if question is a SwapSelector
-                if (isSwapSelector && q.SwapOptions != null && q.SwapOptions.Length > 0)
-                {
-                    var swapsContainer = new VisualElement();
-                    swapsContainer.AddToClassList("fm-quick-meal-swaps-container");
-
-                    var swapsTitle = new Unity.AppUI.UI.Text();
-                    swapsTitle.text = "Selecciona la sustitución realizada:";
-                    swapsTitle.AddToClassList("fm-quick-meal-swaps-title");
-                    swapsContainer.Add(swapsTitle);
-
-                    var swapsList = new VisualElement();
-                    swapsList.AddToClassList("fm-quick-meal-swaps-list");
-
-                    foreach (var swap in q.SwapOptions)
+                    var contentBox = new VisualElement();
+                    contentBox.AddToClassList("fm-quick-meal-accordion-content");
+                    if (!sec.IsExpanded)
                     {
-                        if (string.IsNullOrEmpty(swap)) continue;
-
-                        var chip = new VisualElement();
-                        chip.AddToClassList("fm-quick-meal-swap-chip");
-                        bool isSelected = q.IsChecked && swap == q.SelectedSwapOption;
-                        if (isSelected) chip.AddToClassList("fm-quick-meal-swap-chip--active");
-
-                        var radio = new VisualElement();
-                        radio.AddToClassList("fm-quick-meal-swap-chip-radio");
-                        if (isSelected) radio.AddToClassList("fm-quick-meal-swap-chip-radio--active");
-                        chip.Add(radio);
-
-                        var chipLabel = new Unity.AppUI.UI.Text();
-                        chipLabel.AddToClassList("fm-quick-meal-swap-chip-text");
-                        chipLabel.text = ActivityEventMapper.GetSwapDisplayName(swap);
-                        chip.Add(chipLabel);
-
-                        string capturedSwap = swap;
-                        chip.RegisterCallback<ClickEvent>(evt =>
-                        {
-                            evt.StopPropagation();
-                            _audioService?.PlaySfx(SfxType.PositiveButton);
-                            _viewModel?.SelectSwapForQuestion(capturedId, capturedSwap);
-                        });
-
-                        swapsList.Add(chip);
+                        contentBox.AddToClassList("fm-quick-meal-accordion-content--hidden");
                     }
 
-                    swapsContainer.Add(swapsList);
-                    card.Add(swapsContainer);
+                    if (sec.Items != null)
+                    {
+                        foreach (var q in sec.Items)
+                        {
+                            contentBox.Add(BuildQuestionCard(q));
+                        }
+                    }
+
+                    sectionBox.Add(contentBox);
+                    _questionsContainer.Add(sectionBox);
+                }
+            }
+            else if (_viewModel.Questions != null)
+            {
+                foreach (var q in _viewModel.Questions)
+                {
+                    _questionsContainer.Add(BuildQuestionCard(q));
+                }
+            }
+        }
+
+        private VisualElement BuildQuestionCard(QuickMealCheckItem q)
+        {
+            if (q == null) return new VisualElement();
+
+            var card = new VisualElement();
+            card.AddToClassList("fm-quick-meal-question-card");
+            if (q.IsChecked) card.AddToClassList("fm-quick-meal-question-card--checked");
+
+            bool isSwapSelector = q.QuestionType == DirectQuestionType.SwapSelector;
+            string capturedId = q.Id;
+
+            var header = new VisualElement();
+            header.AddToClassList("fm-quick-meal-question-header");
+
+            if (!isSwapSelector)
+            {
+                var checkbox = new Unity.AppUI.UI.Checkbox
+                {
+                    value = q.IsChecked ? CheckboxState.Checked : CheckboxState.Unchecked
+                };
+                checkbox.AddToClassList("fm-quick-meal-checkbox");
+                checkbox.RegisterValueChangedCallback(_ =>
+                {
+                    _audioService?.PlaySfx(SfxType.PositiveButton);
+                    _viewModel?.ToggleQuestion(capturedId);
+                });
+                header.Add(checkbox);
+
+                header.RegisterCallback<ClickEvent>(evt =>
+                {
+                    if (evt.target is Unity.AppUI.UI.Checkbox ||
+                        (evt.target is VisualElement ve && ve.GetFirstAncestorOfType<Unity.AppUI.UI.Checkbox>() != null))
+                    {
+                        return;
+                    }
+
+                    _audioService?.PlaySfx(SfxType.PositiveButton);
+                    _viewModel?.ToggleQuestion(capturedId);
+                });
+            }
+
+            var promptLabel = new Unity.AppUI.UI.Text();
+            promptLabel.text = q.Prompt ?? "";
+            promptLabel.AddToClassList("fm-quick-meal-question-text");
+            header.Add(promptLabel);
+
+            card.Add(header);
+
+            // Render inline swap options directly if question is a SwapSelector
+            if (isSwapSelector && q.SwapOptions != null && q.SwapOptions.Length > 0)
+            {
+                var swapsContainer = new VisualElement();
+                swapsContainer.AddToClassList("fm-quick-meal-swaps-container");
+
+                var swapsTitle = new Unity.AppUI.UI.Text();
+                swapsTitle.text = "Selecciona la sustitución realizada:";
+                swapsTitle.AddToClassList("fm-quick-meal-swaps-title");
+                swapsContainer.Add(swapsTitle);
+
+                var swapsList = new VisualElement();
+                swapsList.AddToClassList("fm-quick-meal-swaps-list");
+
+                foreach (var swap in q.SwapOptions)
+                {
+                    if (string.IsNullOrEmpty(swap)) continue;
+
+                    var chip = new VisualElement();
+                    chip.AddToClassList("fm-quick-meal-swap-chip");
+                    bool isSelected = q.IsChecked && swap == q.SelectedSwapOption;
+                    if (isSelected) chip.AddToClassList("fm-quick-meal-swap-chip--active");
+
+                    var radio = new Unity.AppUI.UI.Radio
+                    {
+                        value = isSelected,
+                        size = Size.M
+                    };
+                    radio.AddToClassList("fm-quick-meal-swap-radio");
+                    chip.Add(radio);
+
+                    var chipLabel = new Unity.AppUI.UI.Text();
+                    chipLabel.AddToClassList("fm-quick-meal-swap-chip-text");
+                    chipLabel.text = ActivityEventMapper.GetSwapDisplayName(swap);
+                    chip.Add(chipLabel);
+
+                    string capturedSwap = swap;
+                    chip.RegisterCallback<ClickEvent>(evt =>
+                    {
+                        evt.StopPropagation();
+                        _audioService?.PlaySfx(SfxType.PositiveButton);
+                        _viewModel?.SelectSwapForQuestion(capturedId, capturedSwap);
+                    });
+
+                    swapsList.Add(chip);
                 }
 
-                _questionsContainer.Add(card);
+                swapsContainer.Add(swapsList);
+                card.Add(swapsContainer);
             }
+
+            return card;
         }
 
         private void UpdateSubmitState()

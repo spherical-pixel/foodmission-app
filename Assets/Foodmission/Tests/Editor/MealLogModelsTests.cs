@@ -133,5 +133,49 @@ namespace eu.foodmission.platform.Tests
 
             StringAssert.Contains("\"meal-\\\"with-quotes\\\"\"", json);
         }
+
+        [Test]
+        public void CreateMealLogRequest_QuickLog_WithFlagsAndSwaps_OmitsMealId()
+        {
+            var request = new CreateMealLogRequest
+            {
+                typeOfMeal = "DINNER",
+                flags = new[] { "MEAL_MEAT_FREE", "MEAL_LEGUME_CONSUMED" },
+                swaps = new[] { "SWAP_BEEF_TO_LEGUMES" },
+                timestamp = "2026-09-26T10:50:28.037Z"
+            };
+
+            byte[] body = request.ToJsonBody();
+            string json = System.Text.Encoding.UTF8.GetString(body);
+
+            StringAssert.DoesNotContain("\"mealId\"", json);
+            StringAssert.Contains("\"typeOfMeal\":\"DINNER\"", json);
+            StringAssert.Contains("\"MEAL_MEAT_FREE\"", json);
+            StringAssert.Contains("\"MEAL_LEGUME_CONSUMED\"", json);
+            StringAssert.Contains("\"SWAP_BEEF_TO_LEGUMES\"", json);
+            StringAssert.Contains("\"timestamp\":\"2026-09-26T10:50:28.037Z\"", json);
+        }
+
+        [Test]
+        public void MealLog_QuickLog_WithoutMeal_Deserializes()
+        {
+            string json = "{\"id\":\"quick-1\",\"userId\":\"u1\",\"mealId\":null,\"typeOfMeal\":\"LUNCH\"," +
+                          "\"timestamp\":\"2026-09-26T10:50:28.037Z\",\"mealFromPantry\":false,\"eatenOut\":false," +
+                          "\"flags\":[\"MEAL_VEGAN\"],\"swaps\":[\"SWAP_BEEF_TO_LEGUMES\"]}";
+
+            var log = Newtonsoft.Json.JsonConvert.DeserializeObject<MealLog>(json);
+
+            Assert.IsNotNull(log);
+            Assert.AreEqual("quick-1", log.id);
+            Assert.IsNull(log.mealId);
+            Assert.IsNull(log.meal);
+            Assert.AreEqual("LUNCH", log.typeOfMeal);
+            Assert.IsNotNull(log.flags);
+            Assert.AreEqual(1, log.flags.Length);
+            Assert.AreEqual("MEAL_VEGAN", log.flags[0]);
+            Assert.IsNotNull(log.swaps);
+            Assert.AreEqual(1, log.swaps.Length);
+            Assert.AreEqual("SWAP_BEEF_TO_LEGUMES", log.swaps[0]);
+        }
     }
 }

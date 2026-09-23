@@ -19,6 +19,16 @@ namespace eu.foodmission.platform
         public string SelectedSwapOption { get; set; } = "";
     }
 
+    public class QuickMealSection
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Icon { get; set; }
+        public bool IsExpanded { get; set; }
+        public List<QuickMealCheckItem> Items { get; set; } = new();
+        public int SelectedCount => Items?.Count(i => i.IsChecked) ?? 0;
+    }
+
     [ObservableObject]
     public partial class QuickMealLogViewModel : ViewModelBase
     {
@@ -30,12 +40,16 @@ namespace eu.foodmission.platform
         private readonly IChallengeService _challengeService;
         private readonly IActivityEventMapper _activityEventMapper;
         private readonly ICatalogService _catalogService;
+        private readonly IAuthService _authService;
 
         [ObservableProperty]
         private bool _isLoading;
 
         [ObservableProperty]
         private string _selectedMealType = "LUNCH";
+
+        [ObservableProperty]
+        private CatalogItem[] _typeOfMealOptions = Array.Empty<CatalogItem>();
 
         [ObservableProperty]
         private Dictionary<string, string> _mealTypeLabels = new();
@@ -51,6 +65,9 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private List<QuickMealCheckItem> _questions = new();
+
+        [ObservableProperty]
+        private List<QuickMealSection> _sections = new();
 
         [ObservableProperty]
         private bool _isSubmitting;
@@ -73,7 +90,8 @@ namespace eu.foodmission.platform
             IMealLogService mealLogService = null,
             IMealService mealService = null,
             IMissionService missionService = null,
-            IChallengeService challengeService = null) : base(storeService)
+            IChallengeService challengeService = null,
+            IAuthService authService = null) : base(storeService)
         {
             _questService = questService;
             _eventService = eventService;
@@ -83,6 +101,7 @@ namespace eu.foodmission.platform
             _mealService = mealService;
             _missionService = missionService;
             _challengeService = challengeService;
+            _authService = authService;
 
             InitializeDefaultMealType();
         }
@@ -117,6 +136,7 @@ namespace eu.foodmission.platform
                 var (types, err) = await _catalogService.GetTypeOfMealsAsync(lang);
                 if (err == null && types != null && types.Length > 0)
                 {
+                    TypeOfMealOptions = types;
                     var dict = new Dictionary<string, string>();
                     foreach (var t in types)
                     {
@@ -127,6 +147,11 @@ namespace eu.foodmission.platform
                         }
                     }
                     MealTypeLabels = dict;
+
+                    if (!types.Any(t => t != null && string.Equals(t.code, SelectedMealType, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        SelectedMealType = types[0].code;
+                    }
                 }
             }
             catch (Exception ex)
@@ -149,8 +174,6 @@ namespace eu.foodmission.platform
                 var appState = _storeService?.GetAppState();
                 string currentQuestId = appState?.userCurrentQuestId;
 
-                var defaultQuestions = GetDefaultQuestions();
-
                 if (!string.IsNullOrEmpty(currentQuestId) && _questService != null)
                 {
                     var (quest, _) = await _questService.GetQuestAsync(currentQuestId);
@@ -158,27 +181,166 @@ namespace eu.foodmission.platform
                     {
                         ActiveQuestTitle = !string.IsNullOrEmpty(quest.title) ? quest.title : quest.name;
                         ActiveQuestCode = quest.code ?? "";
-
-                        var dynamicQuestions = await BuildQuestionsFromQuestAsync(quest);
-                        if (dynamicQuestions != null && dynamicQuestions.Count > 0)
-                        {
-                            Questions = dynamicQuestions;
-                            return;
-                        }
                     }
                 }
 
-                Questions = defaultQuestions;
+                Questions = GetDefaultQuestions();
+                Sections = BuildStandardSections();
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] LoadActiveQuestQuestionsAsync error: {ex.Message}");
                 Questions = GetDefaultQuestions();
+                Sections = BuildStandardSections();
             }
             finally
             {
                 IsLoading = false;
             }
+        }
+
+        private List<QuickMealSection> BuildStandardSections()
+        {
+            var sections = new List<QuickMealSection>();
+
+            // 1. Hábitos y Plato Sostenible (expandido por defecto)
+            var dietItems = new List<QuickMealCheckItem>
+            {
+                new QuickMealCheckItem
+                {
+                    Id = "q_meat_free",
+                    Prompt = "🥗 Comida sin carne / vegetariana",
+                    EventType = ClientEventTypes.MealMeatFree
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_legumes",
+                    Prompt = "🫘 Ración de legumbres consumida",
+                    EventType = ClientEventTypes.MealLegumeConsumed
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_vegan",
+                    Prompt = "🌿 Comida 100% vegetal / vegana",
+                    EventType = ClientEventTypes.MealVegan
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_sustainable_plate",
+                    Prompt = "🍽️ Plato equilibrado (½ verdura, ¼ proteína, ¼ carbohidratos)",
+                    EventType = ClientEventTypes.MealSustainablePlate
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_ancient_grain",
+                    Prompt = "🌾 Cereales tradicionales o integrales",
+                    EventType = ClientEventTypes.MealAncientGrain
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_alternative_staple",
+                    Prompt = "🥔 Tubérculo o alimento básico alternativo",
+                    EventType = ClientEventTypes.MealAlternativeStaple
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_meat_consumed",
+                    Prompt = "🥩 Ración de carne contabilizada",
+                    EventType = ClientEventTypes.MealMeatConsumed
+                }
+            };
+            sections.Add(new QuickMealSection
+            {
+                Id = "sec_diet",
+                Title = "Hábitos y Plato Sostenible",
+                Icon = "🌱",
+                IsExpanded = true,
+                Items = dietItems
+            });
+
+            // 2. Sustituciones (Swaps)
+            var swapOptions = new[]
+            {
+                ClientEventTypes.SwapBeefToLegumes,
+                ClientEventTypes.SwapBeefToChicken,
+                ClientEventTypes.SwapBeefToPork,
+                ClientEventTypes.SwapPorkToLegumes,
+                ClientEventTypes.SwapPorkToChicken,
+                ClientEventTypes.SwapChickenToLegumes,
+                ClientEventTypes.SwapProcessedMeatToLegumes,
+                ClientEventTypes.SwapReadyMealToHomecooked,
+                ClientEventTypes.SwapSugaryDrinkToWater,
+                ClientEventTypes.SwapSnackToFruitNuts,
+                ClientEventTypes.SwapSugaryCerealToOats
+            };
+
+            var swapItems = swapOptions.Select(swap => new QuickMealCheckItem
+            {
+                Id = $"q_{swap.ToLowerInvariant()}",
+                Prompt = ActivityEventMapper.GetSwapDisplayName(swap),
+                EventType = swap,
+                IsChecked = false
+            }).ToList();
+
+            sections.Add(new QuickMealSection
+            {
+                Id = "sec_swaps",
+                Title = "Sustituciones de Alimentos (Swaps)",
+                Icon = "🔄",
+                IsExpanded = false,
+                Items = swapItems
+            });
+
+            // 4. Nutrición y Salud
+            var nutritionItems = new List<QuickMealCheckItem>
+            {
+                new QuickMealCheckItem
+                {
+                    Id = "q_fruit_veg",
+                    Prompt = "🥦 Ración de verdura fresca o ensalada",
+                    EventType = ClientEventTypes.NutritionFruitVegServingAdded
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_wholegrain",
+                    Prompt = "🍞 Pan o cereales 100% integrales",
+                    EventType = ClientEventTypes.NutritionWholegrainChosen
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_high_fibre",
+                    Prompt = "🌾 Comida rica en fibra vegetal",
+                    EventType = ClientEventTypes.NutritionHighFibreMeal
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_salt_free",
+                    Prompt = "🧂 Sin sal añadida en la mesa",
+                    EventType = ClientEventTypes.NutritionSaltFreeTable
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_healthy_fat",
+                    Prompt = "🥑 Grasa saludable (aceite de oliva, frutos secos)",
+                    EventType = ClientEventTypes.NutritionHealthyFatChosen
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_added_sugar_avoided",
+                    Prompt = "🍬 Sin azúcares añadidos ni dulces industriales",
+                    EventType = ClientEventTypes.NutritionAddedSugarAvoided
+                }
+            };
+            sections.Add(new QuickMealSection
+            {
+                Id = "sec_nutrition",
+                Title = "Nutrición y Salud",
+                Icon = "🥗",
+                IsExpanded = false,
+                Items = nutritionItems
+            });
+
+            return sections;
         }
 
         private List<QuickMealCheckItem> GetDefaultQuestions()
@@ -188,29 +350,22 @@ namespace eu.foodmission.platform
                 new QuickMealCheckItem
                 {
                     Id = "q_plant_based",
-                    Prompt = "🌱 ¿Comida 100% vegetal o con menos carne?",
-                    EventType = ClientEventTypes.MealLogged,
+                    Prompt = "🌱 ¿Comida 100% vegetal o sin carne?",
+                    EventType = ClientEventTypes.MealMeatFree,
                     IsChecked = false
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_veg_legumes",
                     Prompt = "🥗 ¿Incluyó verduras frescas o legumbres?",
-                    EventType = ClientEventTypes.MealLogged,
+                    EventType = ClientEventTypes.MealLegumeConsumed,
                     IsChecked = false
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_local_season",
-                    Prompt = "🏡 ¿Ingredientes locales o de temporada?",
-                    EventType = ClientEventTypes.MealLogged,
-                    IsChecked = false
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_no_waste",
-                    Prompt = "✨ ¿Aprovechaste sobras o no hubo desperdicio?",
-                    EventType = ClientEventTypes.FoodWasteReported,
+                    Prompt = "🌾 ¿Plato sostenible o cereal alternativo?",
+                    EventType = ClientEventTypes.MealSustainablePlate,
                     IsChecked = false
                 }
             };
@@ -295,47 +450,127 @@ namespace eu.foodmission.platform
             return list;
         }
 
+        public void ToggleSection(string sectionId)
+        {
+            if (Sections == null) return;
+            var sec = Sections.FirstOrDefault(s => s.Id == sectionId);
+            if (sec != null)
+            {
+                sec.IsExpanded = !sec.IsExpanded;
+                NotifySectionsChanged();
+            }
+        }
+
         public void ToggleQuestion(string id)
         {
-            if (Questions == null) return;
-            var item = Questions.FirstOrDefault(q => q.Id == id);
-            if (item != null)
+            QuickMealCheckItem target = null;
+            if (Sections != null)
             {
-                item.IsChecked = !item.IsChecked;
-                if (item.IsChecked && item.QuestionType == DirectQuestionType.SwapSelector &&
-                    item.SwapOptions != null && item.SwapOptions.Length > 0 && string.IsNullOrEmpty(item.SelectedSwapOption))
+                foreach (var sec in Sections)
                 {
-                    item.SelectedSwapOption = item.SwapOptions[0];
-                    item.EventType = item.SwapOptions[0];
+                    var found = sec.Items?.FirstOrDefault(q => q.Id == id);
+                    if (found != null) { target = found; break; }
                 }
-                else if (!item.IsChecked && item.QuestionType == DirectQuestionType.SwapSelector)
-                {
-                    item.SelectedSwapOption = null;
-                    item.EventType = null;
-                }
-                // Re-assign to trigger binding / notify
-                Questions = new List<QuickMealCheckItem>(Questions);
             }
+            if (target == null && Questions != null)
+            {
+                target = Questions.FirstOrDefault(q => q.Id == id);
+            }
+            if (target == null) return;
+
+            target.IsChecked = !target.IsChecked;
+            if (target.IsChecked && target.QuestionType == DirectQuestionType.SwapSelector &&
+                target.SwapOptions != null && target.SwapOptions.Length > 0 && string.IsNullOrEmpty(target.SelectedSwapOption))
+            {
+                target.SelectedSwapOption = target.SwapOptions[0];
+                target.EventType = target.SwapOptions[0];
+            }
+            else if (!target.IsChecked && target.QuestionType == DirectQuestionType.SwapSelector)
+            {
+                target.SelectedSwapOption = null;
+                target.EventType = null;
+            }
+
+            if (!string.IsNullOrEmpty(target.EventType))
+            {
+                SyncItemsByEventType(target.EventType, target.IsChecked, target.Id);
+            }
+
+            NotifySectionsChanged();
         }
 
         public void SelectSwapForQuestion(string id, string swapOption)
         {
-            if (Questions == null || string.IsNullOrEmpty(swapOption)) return;
-            var item = Questions.FirstOrDefault(q => q.Id == id);
-            if (item != null)
+            QuickMealCheckItem target = null;
+            if (Sections != null)
             {
-                if (item.SelectedSwapOption == swapOption && item.IsChecked)
+                foreach (var sec in Sections)
                 {
-                    item.SelectedSwapOption = null;
-                    item.EventType = null;
-                    item.IsChecked = false;
+                    var found = sec.Items?.FirstOrDefault(q => q.Id == id);
+                    if (found != null) { target = found; break; }
                 }
-                else
+            }
+            if (target == null && Questions != null)
+            {
+                target = Questions.FirstOrDefault(q => q.Id == id);
+            }
+            if (target == null || string.IsNullOrEmpty(swapOption)) return;
+
+            if (target.SelectedSwapOption == swapOption && target.IsChecked)
+            {
+                target.SelectedSwapOption = null;
+                target.EventType = null;
+                target.IsChecked = false;
+            }
+            else
+            {
+                target.SelectedSwapOption = swapOption;
+                target.EventType = swapOption;
+                target.IsChecked = true;
+            }
+
+            NotifySectionsChanged();
+        }
+
+        private void SyncItemsByEventType(string eventType, bool isChecked, string sourceId)
+        {
+            if (string.IsNullOrEmpty(eventType)) return;
+
+            if (Sections != null)
+            {
+                foreach (var sec in Sections)
                 {
-                    item.SelectedSwapOption = swapOption;
-                    item.EventType = swapOption;
-                    item.IsChecked = true;
+                    if (sec.Items == null) continue;
+                    foreach (var it in sec.Items)
+                    {
+                        if (it.Id != sourceId && it.EventType == eventType)
+                        {
+                            it.IsChecked = isChecked;
+                        }
+                    }
                 }
+            }
+
+            if (Questions != null)
+            {
+                foreach (var it in Questions)
+                {
+                    if (it.Id != sourceId && it.EventType == eventType)
+                    {
+                        it.IsChecked = isChecked;
+                    }
+                }
+            }
+        }
+
+        private void NotifySectionsChanged()
+        {
+            if (Sections != null)
+            {
+                Sections = new List<QuickMealSection>(Sections);
+            }
+            if (Questions != null)
+            {
                 Questions = new List<QuickMealCheckItem>(Questions);
             }
         }
@@ -354,70 +589,93 @@ namespace eu.foodmission.platform
 
             try
             {
-                string mealName = !string.IsNullOrEmpty(MealName) ? MealName : $"Comida ({SelectedMealType})";
-
-                // 1. If meal service is available, create meal & meal log
-                if (_mealService != null && _mealLogService != null)
+                // 1. Separate checked items into flags and swaps across all sections
+                var allChecked = new List<QuickMealCheckItem>();
+                if (Sections != null && Sections.Count > 0)
                 {
-                    string course = (SelectedMealType == "SNACK") ? "SIDE_SNACK" : "MAIN_DISH";
-                    var mealReq = new CreateMealRequest
+                    foreach (var sec in Sections)
                     {
-                        name = mealName,
-                        mealCourse = course
-                    };
-                    var (createdMeal, mealErr) = await _mealService.CreateMealAsync(mealReq);
-                    if (createdMeal != null)
-                    {
-                        var logReq = new CreateMealLogRequest
+                        if (sec.Items != null)
                         {
-                            mealId = createdMeal.id,
-                            typeOfMeal = SelectedMealType,
-                            timestamp = DateTime.UtcNow.ToString("o")
-                        };
-                        await _mealLogService.CreateAsync(logReq);
+                            allChecked.AddRange(sec.Items.Where(i => i.IsChecked));
+                        }
+                    }
+                }
+                else if (Questions != null)
+                {
+                    allChecked.AddRange(Questions.Where(q => q.IsChecked));
+                }
+
+                var flags = new List<string>();
+                var swaps = new List<string>();
+
+                foreach (var q in allChecked)
+                {
+                    string ev = q.EventType;
+                    if (!string.IsNullOrEmpty(q.SelectedSwapOption))
+                    {
+                        ev = q.SelectedSwapOption;
+                    }
+
+                    if (string.IsNullOrEmpty(ev)) continue;
+
+                    if (ev.StartsWith("SWAP_"))
+                    {
+                        if (!swaps.Contains(ev)) swaps.Add(ev);
+                    }
+                    else if ((ev.StartsWith("MEAL_") || ev.StartsWith("NUTRITION_")) && ev != ClientEventTypes.MealLogged)
+                    {
+                        if (!flags.Contains(ev)) flags.Add(ev);
                     }
                 }
 
-                // 2. Emit client event for each checked affirmative answer
-                if (_eventService != null && Questions != null)
+                // Exclusion rule: MEAL_MEAT_CONSUMED cannot be combined with MEAL_MEAT_FREE or MEAL_VEGAN
+                if (flags.Contains(ClientEventTypes.MealVegan) || flags.Contains(ClientEventTypes.MealMeatFree))
                 {
-                    int emittedEventsCount = 0;
-                    foreach (var q in Questions)
-                    {
-                        if (q.IsChecked)
-                        {
-                            var req = new CreateClientEventRequest
-                            {
-                                eventType = q.EventType ?? ClientEventTypes.MealLogged,
-                                metadata = new
-                                {
-                                    questionId = q.Id,
-                                    activityCode = q.ActivityCode,
-                                    questCode = ActiveQuestCode,
-                                    mealType = SelectedMealType,
-                                    sessionId = _eventService.CurrentSessionId,
-                                    reportedVia = "quick_meal_log"
-                                }
-                            };
-                            await _eventService.RecordClientEventAsync(req);
-                            emittedEventsCount++;
-                        }
-                    }
+                    flags.Remove(ClientEventTypes.MealMeatConsumed);
+                }
 
-                    // Always record at least standard MealLogged if no specific questions were checked
-                    if (emittedEventsCount == 0)
+                // Backend requires flags when mealId is omitted
+                if (flags.Count == 0)
+                {
+                    if (swaps.Any(s => s.Contains("TO_LEGUMES") || s.Contains("TO_CHICKEN") || s.Contains("TO_PORK")))
                     {
-                        var standardReq = new CreateClientEventRequest
-                        {
-                            eventType = ClientEventTypes.MealLogged,
-                            metadata = new
-                            {
-                                mealType = SelectedMealType,
-                                sessionId = _eventService.CurrentSessionId,
-                                reportedVia = "quick_meal_log"
-                            }
-                        };
-                        await _eventService.RecordClientEventAsync(standardReq);
+                        flags.Add(ClientEventTypes.MealMeatFree);
+                    }
+                    else
+                    {
+                        flags.Add(ClientEventTypes.MealSustainablePlate);
+                    }
+                }
+
+                // 2. Submit meal log directly with flags and swaps
+                if (_mealLogService != null)
+                {
+                    var logReq = new CreateMealLogRequest
+                    {
+                        typeOfMeal = SelectedMealType,
+                        flags = flags.ToArray(),
+                        swaps = swaps.Count > 0 ? swaps.ToArray() : null,
+                        timestamp = DateTime.UtcNow.ToString("o")
+                    };
+                    var (createdLog, logErr) = await _mealLogService.CreateAsync(logReq);
+                    if (logErr != null)
+                    {
+                        ErrorDetail = logErr;
+                        return false;
+                    }
+                }
+
+                // 3. Sync gamification/wallet so any awarded points/XP from rules are updated in state
+                if (_authService != null)
+                {
+                    try
+                    {
+                        await _authService.GetGamificationProfileAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogWarning($"[{GetType().Name}] Failed to sync gamification after quick meal log: {ex.Message}");
                     }
                 }
 

@@ -9,11 +9,49 @@ namespace eu.foodmission.platform
 {
     public class ChallengeService : IChallengeService
     {
+        private static readonly System.Collections.Generic.Dictionary<string, string> s_ChallengeIdToCodeMap = new System.Collections.Generic.Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private static readonly object s_ChallengeCacheLock = new object();
+
         private readonly IStoreService _storeService;
 
         public ChallengeService(IStoreService storeService)
         {
             _storeService = storeService;
+        }
+
+        public string GetCachedCode(string challengeId)
+        {
+            if (string.IsNullOrEmpty(challengeId)) return null;
+            lock (s_ChallengeCacheLock)
+            {
+                if (s_ChallengeIdToCodeMap.TryGetValue(challengeId, out var code))
+                    return code;
+            }
+            return null;
+        }
+
+        private static void CacheChallenge(Challenge challenge)
+        {
+            if (challenge == null || string.IsNullOrEmpty(challenge.id) || string.IsNullOrEmpty(challenge.code)) return;
+            lock (s_ChallengeCacheLock)
+            {
+                s_ChallengeIdToCodeMap[challenge.id] = challenge.code;
+            }
+        }
+
+        private static void CacheChallenges(Challenge[] challenges)
+        {
+            if (challenges == null) return;
+            lock (s_ChallengeCacheLock)
+            {
+                foreach (var c in challenges)
+                {
+                    if (c != null && !string.IsNullOrEmpty(c.id) && !string.IsNullOrEmpty(c.code))
+                    {
+                        s_ChallengeIdToCodeMap[c.id] = c.code;
+                    }
+                }
+            }
         }
 
         private string AuthHeader
@@ -75,6 +113,7 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var challenges = JsonConvert.DeserializeObject<Challenge[]>(raw);
+                CacheChallenges(challenges);
                 return (challenges, null);
             }
             catch (Exception ex)
@@ -114,6 +153,7 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var challenge = JsonConvert.DeserializeObject<Challenge>(raw);
+                CacheChallenge(challenge);
                 return (challenge, null);
             }
             catch (Exception ex)
@@ -148,6 +188,18 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var progressList = JsonConvert.DeserializeObject<ChallengeProgress[]>(raw);
+                if (progressList != null && progressList.Length > 0)
+                {
+                    bool needsCache = false;
+                    lock (s_ChallengeCacheLock)
+                    {
+                        needsCache = s_ChallengeIdToCodeMap.Count == 0;
+                    }
+                    if (needsCache)
+                    {
+                        _ = GetChallengesAsync();
+                    }
+                }
                 return (progressList, null);
             }
             catch (Exception ex)

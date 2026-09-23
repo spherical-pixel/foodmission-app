@@ -2513,6 +2513,22 @@ MonoBehaviour:
     m_Localized: Odkryj zadania
     m_Metadata:
       m_Items: []
+  - m_Id: 49206146878136320
+    m_Localized: "Uproszczony dziennik posi\u0142k\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207590964420608
+    m_Localized: "Jakie by\u0142y g\u0142\xF3wne cechy Twojej potrawy?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207906585796608
+    m_Localized: Nazwa lub opis (opcjonalnie)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49210861586210816
+    m_Localized: "Np.: Sa\u0142atka z soczewicy i warzyw"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

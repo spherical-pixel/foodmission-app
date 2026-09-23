@@ -23,5 +23,7 @@ namespace eu.foodmission.platform
             bool? completed,
             float? progress,
             string lang = null);
+
+        string GetCachedCode(string challengeId);
     }
 }

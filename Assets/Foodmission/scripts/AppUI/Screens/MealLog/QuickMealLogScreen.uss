@@ -7,7 +7,7 @@
 }
 
 .fm-quick-meal-card {
-    background-color: var(--appui-backgrounds-200);
+    background-color: var(--fm-bg-screen-trans);
     border-radius: 24px;
     padding: 32px;
     display: flex;
@@ -23,22 +23,16 @@
     margin-bottom: 24px;
 }
 
-.fm-quick-meal-badge {
-    align-self: flex-start;
-    margin-bottom: 12px;
-}
+
 
 .fm-quick-meal-title {
     -unity-font-style: bold;
-    color: var(--appui-foregrounds-50);
+    /* color: var(--appui-foregrounds-50); */
     margin-bottom: 8px;
     white-space: normal;
 }
 
-.fm-quick-meal-subtitle {
-    color: var(--appui-foregrounds-200);
-    white-space: normal;
-}
+
 
 .fm-quick-meal-section {
     display: flex;
@@ -65,25 +59,25 @@
 
 .fm-quick-meal-type-btn {
     width: 48%;
-    height: 44px;
-    border-radius: 12px;
-    border-width: 1px;
-    border-color: var(--appui-backgrounds-300);
-    background-color: var(--appui-backgrounds-100);
-    color: var(--appui-foregrounds-200);
-    -unity-font-style: bold;
-    font-size: 13px;
-    align-items: center;
-    justify-content: center;
     margin-bottom: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
+    overflow: hidden;
 }
 
-.fm-quick-meal-type-btn--active {
-    background-color: var(--appui-primary-800);
-    color: var(--appui-backgrounds-50);
-    border-color: var(--appui-primary-800);
+.fm-quick-meal-type-btn .appui-button__titlecontainer {
+    overflow: hidden;
+    min-width: 0;
+    flex-shrink: 1;
+    width: 100%;
+}
+
+.fm-quick-meal-type-btn .appui-button__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -unity-text-overflow-position: end;
+    width: 100%;
+    max-width: 100%;
+    -unity-text-align: middle-center;
 }
 
 /* =========================================================================
@@ -118,25 +112,16 @@
 }
 
 .fm-quick-meal-checkbox {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    border-width: 2px;
-    border-color: var(--appui-foregrounds-200);
     margin-right: 14px;
-    align-items: center;
-    justify-content: center;
+    color: var(--appui-foregrounds-50);
 }
 
-.fm-quick-meal-checkbox--checked {
-    background-color: #649E82;
-    border-color: #649E82;
+.fm-quick-meal-checkbox .appui-checkbox__box {
+    border-color: var(--appui-foregrounds-50);
 }
 
-.fm-quick-meal-checkbox-mark {
-    color: white;
-    -unity-font-style: bold;
-    font-size: 16px;
+.fm-quick-meal-checkbox .appui-checkbox__box > .appui-icon {
+	--unity-image-tint-color: var(--appui-foregrounds-50)	
 }
 
 .fm-quick-meal-question-text {
@@ -160,7 +145,7 @@
 .fm-quick-meal-swaps-title {
     color: var(--appui-foregrounds-200);
     -unity-font-style: bold;
-    font-size: 12px;
+    
     margin-bottom: 8px;
 }
 
@@ -186,26 +171,14 @@
     background-color: var(--appui-primary-100);
 }
 
-.fm-quick-meal-swap-chip-radio {
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
-    border-width: 2px;
-    border-color: var(--appui-foregrounds-200);
-    background-color: transparent;
+.fm-quick-meal-swap-radio {
     margin-right: 10px;
-}
-
-.fm-quick-meal-swap-chip-radio--active {
-    border-color: var(--appui-primary-800);
-    background-color: var(--appui-primary-800);
 }
 
 .fm-quick-meal-swap-chip-text {
     flex-grow: 1;
     color: var(--appui-foregrounds-50);
     -unity-font-style: bold;
-    font-size: 13px;
     white-space: normal;
 }
 
@@ -228,3 +201,97 @@
     width: 100%;
     margin-top: 8px;
 }
+
+/* =========================================================================
+   ACCORDION SECTIONS
+   ========================================================================= */
+
+.fm-quick-meal-accordion-section {
+    background-color: var(--appui-backgrounds-100);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border-width: 1px;
+    border-color: var(--appui-backgrounds-300);
+}
+
+.fm-quick-meal-accordion-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background-color: var(--appui-backgrounds-100);
+    border-radius: 16px;
+}
+
+.fm-quick-meal-accordion-header--expanded {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--appui-backgrounds-300);
+}
+
+.fm-quick-meal-accordion-header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.fm-quick-meal-accordion-icon {
+    font-size: 48px;
+    margin-right: 10px;
+}
+
+.fm-quick-meal-accordion-title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-100);
+    white-space: normal;
+    flex-grow: 1;
+}
+
+.fm-quick-meal-accordion-header-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.fm-quick-meal-accordion-badge {
+    margin-right: 8px;
+}
+
+.fm-quick-meal-accordion-chevron {
+    color: var(--appui-foregrounds-200);
+    --unity-image-tint-color: var(--appui-foregrounds-200);
+    transition-property: rotate;
+    transition-duration: 0.2s;
+}
+
+.fm-quick-meal-accordion-chevron--collapsed {
+    rotate: -90deg;
+}
+
+.fm-quick-meal-accordion-content {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-quick-meal-accordion-content--hidden {
+    display: none;
+}
+
+.fm-quick-meal-accordion-content .fm-quick-meal-question-card {
+    background-color: var(--appui-backgrounds-200);
+    margin-bottom: 8px;
+}
+
+.fm-quick-meal-accordion-content .fm-quick-meal-question-card--checked {
+    background-color: var(--appui-primary-700);
+    border-color: #649E82;
+}
+

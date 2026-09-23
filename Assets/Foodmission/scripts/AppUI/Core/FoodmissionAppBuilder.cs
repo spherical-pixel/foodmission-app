@@ -34,6 +34,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IThemeService, ThemeService>();
             builder.services.AddSingleton<IKeyboardService, KeyboardService>();
             builder.services.AddSingleton<INutriService, NutriService>();
+            builder.services.AddSingleton<IFoodyService, FoodyService>();
             builder.services.AddSingleton<IAvatarService, AvatarService>();
             builder.services.AddSingleton<ICatalogService, CatalogService>();
             builder.services.AddSingleton<IFoodProductService, FoodProductService>();

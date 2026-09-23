@@ -2496,6 +2496,22 @@ MonoBehaviour:
     m_Localized: Ontdek missies
     m_Metadata:
       m_Items: []
+  - m_Id: 49206146878136320
+    m_Localized: Vereenvoudigd maaltijdlogboek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207590964420608
+    m_Localized: Wat waren de belangrijkste kenmerken van je gerecht?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207906585796608
+    m_Localized: Naam of beschrijving (optioneel)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49210861586210816
+    m_Localized: 'Bijvoorbeeld: Salade met linzen en groenten'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

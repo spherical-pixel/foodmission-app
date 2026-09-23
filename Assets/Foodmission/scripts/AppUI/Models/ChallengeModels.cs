@@ -36,6 +36,7 @@ namespace eu.foodmission.platform
     public class ChallengeProgress
     {
         public string challengeId;
+        public string challengeCode;
         public string userId;
         public float progress;
         public bool completed;

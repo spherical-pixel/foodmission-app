@@ -46,6 +46,7 @@ namespace eu.foodmission.platform
         private FMActiveQuestCard _activeQuestCard;
         private VisualElement _noActiveQuestBanner;
         private FMButton _btnChooseQuest;
+        private FMNutriView _nutriView;
 
         public HomeScreen()
         {
@@ -79,6 +80,7 @@ namespace eu.foodmission.platform
 
             _periodStepper = contentContainer.Q<FMArrowStepper>("period-stepper");
             _scopeStepper = contentContainer.Q<FMArrowStepper>("scope-stepper");
+            _nutriView = contentContainer.Q<FMNutriView>("nutri-render");
         }
 
         protected override void OnViewModelBound()

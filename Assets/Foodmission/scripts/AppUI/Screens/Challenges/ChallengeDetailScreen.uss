@@ -118,13 +118,13 @@
     flex-direction: row;
     background-color: var(--appui-backgrounds-100);
     border-radius: 16px;
-    padding: 4px;
+    padding: 15px;
     margin-bottom: 20px;
 }
 
 .fm-activity-tab-btn {
     flex-grow: 1;
-    height: 88px;
+    height: 140px;
     border-radius: 12px;
     border-width: 0;
     background-color: transparent;

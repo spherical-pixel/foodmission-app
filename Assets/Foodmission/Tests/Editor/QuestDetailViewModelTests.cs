@@ -438,5 +438,95 @@ namespace eu.foodmission.platform.Tests
             Assert.Contains(AppActions.setCurrentQuest, _storeService.DispatchedActionTypes);
             Assert.AreEqual("q-100", _storeService.GetAppState().userCurrentQuestId);
         }
+
+        [Test]
+        public async Task LoadQuestAsync_WithMissionAndChallengeUuidAndCachedCode_ResolvesCompletion()
+        {
+            _mockQuestService.Setup(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()))
+                .ReturnsAsync((_mockQuest, null));
+            _mockQuestService.Setup(s => s.GetQuestProgressAsync("QUEST.DIET.1", It.IsAny<string>()))
+                .ReturnsAsync((_mockProgress, null));
+
+            _mockQuizService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
+                .ReturnsAsync((Array.Empty<QuizProgress>(), null));
+
+            var missionProgress = new[]
+            {
+                new MissionProgress
+                {
+                    missionId = "uuid-mission-1",
+                    completed = true,
+                    progress = 100f
+                }
+            };
+            _mockMissionService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
+                .ReturnsAsync((missionProgress, null));
+            _mockMissionService.Setup(s => s.GetCachedCode("uuid-mission-1"))
+                .Returns("MISSION_MEAL_1");
+
+            var challengeProgress = new[]
+            {
+                new ChallengeProgress
+                {
+                    challengeId = "uuid-challenge-1",
+                    completed = true,
+                    progress = 100f
+                }
+            };
+            _mockChallengeService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
+                .ReturnsAsync((challengeProgress, null));
+            _mockChallengeService.Setup(s => s.GetCachedCode("uuid-challenge-1"))
+                .Returns("CHALLENGE_DAY_1");
+
+            await _vm.LoadQuestAsync("QUEST.DIET.1");
+
+            Assert.AreEqual(2, _vm.CompletedActivitiesCount);
+            Assert.IsFalse(_vm.Activities[0].IsCompleted); // Quiz
+            Assert.IsFalse(_vm.Activities[1].IsCompleted); // FoodFact
+            Assert.IsTrue(_vm.Activities[2].IsCompleted); // Mission resolved via GetCachedCode
+            Assert.IsTrue(_vm.Activities[3].IsCompleted); // Challenge resolved via GetCachedCode
+        }
+
+        [Test]
+        public async Task LoadQuestAsync_WithMissionAndChallengeDirectCode_ResolvesCompletion()
+        {
+            _mockQuestService.Setup(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()))
+                .ReturnsAsync((_mockQuest, null));
+            _mockQuestService.Setup(s => s.GetQuestProgressAsync("QUEST.DIET.1", It.IsAny<string>()))
+                .ReturnsAsync((_mockProgress, null));
+
+            _mockQuizService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
+                .ReturnsAsync((Array.Empty<QuizProgress>(), null));
+
+            var missionProgress = new[]
+            {
+                new MissionProgress
+                {
+                    missionId = "uuid-other",
+                    missionCode = "MISSION_MEAL_1",
+                    completed = true
+                }
+            };
+            _mockMissionService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
+                .ReturnsAsync((missionProgress, null));
+
+            var challengeProgress = new[]
+            {
+                new ChallengeProgress
+                {
+                    challengeId = "uuid-other-ch",
+                    challengeCode = "CHALLENGE_DAY_1",
+                    completed = true
+                }
+            };
+            _mockChallengeService.Setup(s => s.GetUserProgressListAsync(It.IsAny<string>()))
+                .ReturnsAsync((challengeProgress, null));
+
+            await _vm.LoadQuestAsync("QUEST.DIET.1");
+
+            Assert.AreEqual(2, _vm.CompletedActivitiesCount);
+            Assert.IsTrue(_vm.Activities[2].IsCompleted); // Mission resolved via missionCode
+            Assert.IsTrue(_vm.Activities[3].IsCompleted); // Challenge resolved via challengeCode
+        }
     }
 }

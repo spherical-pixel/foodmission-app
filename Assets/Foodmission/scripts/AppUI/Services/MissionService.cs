@@ -9,11 +9,49 @@ namespace eu.foodmission.platform
 {
     public class MissionService : IMissionService
     {
+        private static readonly System.Collections.Generic.Dictionary<string, string> s_MissionIdToCodeMap = new System.Collections.Generic.Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private static readonly object s_MissionCacheLock = new object();
+
         private readonly IStoreService _storeService;
 
         public MissionService(IStoreService storeService)
         {
             _storeService = storeService;
+        }
+
+        public string GetCachedCode(string missionId)
+        {
+            if (string.IsNullOrEmpty(missionId)) return null;
+            lock (s_MissionCacheLock)
+            {
+                if (s_MissionIdToCodeMap.TryGetValue(missionId, out var code))
+                    return code;
+            }
+            return null;
+        }
+
+        private static void CacheMission(Mission mission)
+        {
+            if (mission == null || string.IsNullOrEmpty(mission.id) || string.IsNullOrEmpty(mission.code)) return;
+            lock (s_MissionCacheLock)
+            {
+                s_MissionIdToCodeMap[mission.id] = mission.code;
+            }
+        }
+
+        private static void CacheMissions(Mission[] missions)
+        {
+            if (missions == null) return;
+            lock (s_MissionCacheLock)
+            {
+                foreach (var m in missions)
+                {
+                    if (m != null && !string.IsNullOrEmpty(m.id) && !string.IsNullOrEmpty(m.code))
+                    {
+                        s_MissionIdToCodeMap[m.id] = m.code;
+                    }
+                }
+            }
         }
 
         private string AuthHeader
@@ -75,6 +113,7 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var missions = JsonConvert.DeserializeObject<Mission[]>(raw);
+                CacheMissions(missions);
                 return (missions, null);
             }
             catch (Exception ex)
@@ -114,6 +153,7 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var mission = JsonConvert.DeserializeObject<Mission>(raw);
+                CacheMission(mission);
                 return (mission, null);
             }
             catch (Exception ex)
@@ -148,6 +188,18 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var progressList = JsonConvert.DeserializeObject<MissionProgress[]>(raw);
+                if (progressList != null && progressList.Length > 0)
+                {
+                    bool needsCache = false;
+                    lock (s_MissionCacheLock)
+                    {
+                        needsCache = s_MissionIdToCodeMap.Count == 0;
+                    }
+                    if (needsCache)
+                    {
+                        _ = GetMissionsAsync();
+                    }
+                }
                 return (progressList, null);
             }
             catch (Exception ex)
