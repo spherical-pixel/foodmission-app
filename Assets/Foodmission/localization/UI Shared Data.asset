@@ -2923,6 +2923,94 @@ MonoBehaviour:
     m_Key: QUICK_MEAL_LOG_OPTIONAL_NAME_PLACEHOLDER
     m_Metadata:
       m_Items: []
+  - m_Id: 49265187998392320
+    m_Key: EVENTS_SECTIONS_DIET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Key: EVENTS_MEAT_FREE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Key: EVENTS_SECTIONS_SWAPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Key: EVENTS_SECTIONS_NUTRITION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Key: EVENTS_LEGUMES_CONSUMED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Key: EVENTS_VEGAN_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Key: EVENTS_SUSTAINABLE_PLATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Key: EVENTS_ANCIENT_GRAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Key: EVENTS_ALTERNATIVE_STAPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Key: EVENTS_MEAT_CONSUMED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Key: EVENTS_FRUIT_VEG_SERVING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Key: EVENTS_WHOLEGRAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Key: EVENTS_HIGH_FIBRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Key: EVENTS_SALT_FREE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Key: EVENTS_HEALTHY_FAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Key: EVENTS_ADDED_SUGAR_AVOIDED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Key: EVENTS_Q_PLANT_BASED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Key: EVENTS_Q_VEG_LEGUMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Key: EVENTS_Q_LOCAL_SEASON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Key: QUICK_MEAL_SWAPS_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Key: QUICK_MEAL_LOG_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Key: QUICK_MEAL_LOG_EMPTY_SELECTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

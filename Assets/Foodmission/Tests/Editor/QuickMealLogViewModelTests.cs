@@ -136,6 +136,200 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ToggleQuestion_WhenMeatFreeSelected_UnchecksMeatConsumed()
+        {
+            var meatConsumedItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_consumed",
+                EventType = ClientEventTypes.MealMeatConsumed,
+                IsChecked = true
+            };
+            var meatFreeItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_free",
+                EventType = ClientEventTypes.MealMeatFree,
+                IsChecked = false
+            };
+
+            _vm.Sections = new System.Collections.Generic.List<QuickMealSection>
+            {
+                new QuickMealSection
+                {
+                    Id = "sec_diet",
+                    Items = new System.Collections.Generic.List<QuickMealCheckItem> { meatConsumedItem, meatFreeItem }
+                }
+            };
+
+            _vm.ToggleQuestion("q_meat_free");
+
+            Assert.IsTrue(meatFreeItem.IsChecked);
+            Assert.IsFalse(meatConsumedItem.IsChecked);
+        }
+
+        [Test]
+        public void ToggleQuestion_WhenMeatConsumedSelected_UnchecksMeatFree()
+        {
+            var meatConsumedItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_consumed",
+                EventType = ClientEventTypes.MealMeatConsumed,
+                IsChecked = false
+            };
+            var meatFreeItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_free",
+                EventType = ClientEventTypes.MealMeatFree,
+                IsChecked = true
+            };
+
+            _vm.Sections = new System.Collections.Generic.List<QuickMealSection>
+            {
+                new QuickMealSection
+                {
+                    Id = "sec_diet",
+                    Items = new System.Collections.Generic.List<QuickMealCheckItem> { meatConsumedItem, meatFreeItem }
+                }
+            };
+
+            _vm.ToggleQuestion("q_meat_consumed");
+
+            Assert.IsTrue(meatConsumedItem.IsChecked);
+            Assert.IsFalse(meatFreeItem.IsChecked);
+        }
+
+        [Test]
+        public void ToggleQuestion_WhenMeatConsumedSelected_UnchecksVegan()
+        {
+            var meatConsumedItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_consumed",
+                EventType = ClientEventTypes.MealMeatConsumed,
+                IsChecked = false
+            };
+            var veganItem = new QuickMealCheckItem
+            {
+                Id = "q_vegan",
+                EventType = ClientEventTypes.MealVegan,
+                IsChecked = true
+            };
+
+            _vm.Sections = new System.Collections.Generic.List<QuickMealSection>
+            {
+                new QuickMealSection
+                {
+                    Id = "sec_diet",
+                    Items = new System.Collections.Generic.List<QuickMealCheckItem> { meatConsumedItem, veganItem }
+                }
+            };
+
+            _vm.ToggleQuestion("q_meat_consumed");
+
+            Assert.IsTrue(meatConsumedItem.IsChecked);
+            Assert.IsFalse(veganItem.IsChecked);
+        }
+
+        [Test]
+        public void ToggleQuestion_WhenVeganSelected_UnchecksMeatConsumed()
+        {
+            var meatConsumedItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_consumed",
+                EventType = ClientEventTypes.MealMeatConsumed,
+                IsChecked = true
+            };
+            var veganItem = new QuickMealCheckItem
+            {
+                Id = "q_vegan",
+                EventType = ClientEventTypes.MealVegan,
+                IsChecked = false
+            };
+
+            _vm.Sections = new System.Collections.Generic.List<QuickMealSection>
+            {
+                new QuickMealSection
+                {
+                    Id = "sec_diet",
+                    Items = new System.Collections.Generic.List<QuickMealCheckItem> { meatConsumedItem, veganItem }
+                }
+            };
+
+            _vm.ToggleQuestion("q_vegan");
+
+            Assert.IsTrue(veganItem.IsChecked);
+            Assert.IsFalse(meatConsumedItem.IsChecked);
+        }
+
+        [Test]
+        public void ToggleQuestion_WhenPlantBasedInQuestionsSelected_UnchecksMeatConsumedInSections()
+        {
+            var plantBasedQuestion = new QuickMealCheckItem
+            {
+                Id = "q_plant_based",
+                EventType = ClientEventTypes.MealMeatFree,
+                IsChecked = false
+            };
+            var meatFreeSectionItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_free",
+                EventType = ClientEventTypes.MealMeatFree,
+                IsChecked = false
+            };
+            var meatConsumedSectionItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_consumed",
+                EventType = ClientEventTypes.MealMeatConsumed,
+                IsChecked = true
+            };
+
+            _vm.Questions = new System.Collections.Generic.List<QuickMealCheckItem> { plantBasedQuestion };
+            _vm.Sections = new System.Collections.Generic.List<QuickMealSection>
+            {
+                new QuickMealSection
+                {
+                    Id = "sec_diet",
+                    Items = new System.Collections.Generic.List<QuickMealCheckItem> { meatFreeSectionItem, meatConsumedSectionItem }
+                }
+            };
+
+            _vm.ToggleQuestion("q_plant_based");
+
+            Assert.IsTrue(plantBasedQuestion.IsChecked);
+            Assert.IsTrue(meatFreeSectionItem.IsChecked);
+            Assert.IsFalse(meatConsumedSectionItem.IsChecked);
+        }
+
+        [Test]
+        public void ToggleQuestion_WhenUncheckingMeatFree_DoesNotRecheckMeatConsumed()
+        {
+            var meatConsumedItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_consumed",
+                EventType = ClientEventTypes.MealMeatConsumed,
+                IsChecked = false
+            };
+            var meatFreeItem = new QuickMealCheckItem
+            {
+                Id = "q_meat_free",
+                EventType = ClientEventTypes.MealMeatFree,
+                IsChecked = true
+            };
+
+            _vm.Sections = new System.Collections.Generic.List<QuickMealSection>
+            {
+                new QuickMealSection
+                {
+                    Id = "sec_diet",
+                    Items = new System.Collections.Generic.List<QuickMealCheckItem> { meatConsumedItem, meatFreeItem }
+                }
+            };
+
+            _vm.ToggleQuestion("q_meat_free");
+
+            Assert.IsFalse(meatFreeItem.IsChecked);
+            Assert.IsFalse(meatConsumedItem.IsChecked);
+        }
+
+        [Test]
         public async Task SubmitQuickMealLogAsync_SendsFlagsAndSwapsWithoutEmittingSeparateEvents()
         {
             _vm.SelectedMealType = "LUNCH";
@@ -156,7 +350,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(success);
             Assert.IsTrue(_vm.SubmitSuccess);
-            Assert.AreEqual("¡Comida y progresos registrados con éxito!", _vm.SuccessMessage);
+            Assert.AreEqual("@UI:QUICK_MEAL_LOG_SUCCESS", _vm.SuccessMessage);
 
             _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
                 r.typeOfMeal == "LUNCH" &&
@@ -246,7 +440,40 @@ namespace eu.foodmission.platform.Tests
                 r.swaps != null &&
                 r.swaps.Contains("SWAP_BEEF_TO_CHICKEN") &&
                 r.flags != null &&
-                r.flags.Contains(ClientEventTypes.MealMeatFree))), Times.Once);
+                r.flags.Length == 0 &&
+                !r.flags.Contains(ClientEventTypes.MealMeatFree))), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WhenNothingChecked_DoesNotSendRequestAndSetsErrorMessage()
+        {
+            _vm.SelectedMealType = "SNACK";
+            _vm.Questions = new System.Collections.Generic.List<QuickMealCheckItem>
+            {
+                new QuickMealCheckItem
+                {
+                    Id = "q1",
+                    EventType = ClientEventTypes.MealMeatFree,
+                    IsChecked = false
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q2",
+                    EventType = ClientEventTypes.MealSustainablePlate,
+                    IsChecked = false
+                }
+            };
+
+            string toastRequested = null;
+            _vm.ShowToastRequest += msg => toastRequested = msg;
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsFalse(success);
+            Assert.IsFalse(_vm.SubmitSuccess);
+            Assert.AreEqual("@UI:QUICK_MEAL_LOG_EMPTY_SELECTION", _vm.ErrorMessage);
+            Assert.AreEqual("@UI:QUICK_MEAL_LOG_EMPTY_SELECTION", toastRequested);
+            _mockMealLogService.Verify(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
         }
 
         [Test]
@@ -286,6 +513,65 @@ namespace eu.foodmission.platform.Tests
                 r.flags.Contains(ClientEventTypes.MealMeatFree) &&
                 r.flags.Contains(ClientEventTypes.MealLegumeConsumed) &&
                 !r.flags.Contains(ClientEventTypes.MealMeatConsumed))), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WhenBackendReturnsError_SetsErrorDetailAndReturnsFalse()
+        {
+            _vm.SelectedMealType = "LUNCH";
+            _vm.Questions = new System.Collections.Generic.List<QuickMealCheckItem>
+            {
+                new QuickMealCheckItem
+                {
+                    Id = "q1",
+                    EventType = ClientEventTypes.MealMeatFree,
+                    IsChecked = true
+                }
+            };
+
+            var expectedError = new ApiErrorResponse
+            {
+                statusCode = 400,
+                message = "Invalid meal log data",
+                traceId = "trace-400"
+            };
+
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync(((MealLog)null, expectedError));
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsFalse(success);
+            Assert.IsFalse(_vm.SubmitSuccess);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            Assert.AreEqual(400, _vm.ErrorDetail.statusCode);
+            Assert.AreEqual("Invalid meal log data", _vm.ErrorDetail.message);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WhenBackendThrowsException_SetsErrorDetailAndReturnsFalse()
+        {
+            _vm.SelectedMealType = "LUNCH";
+            _vm.Questions = new System.Collections.Generic.List<QuickMealCheckItem>
+            {
+                new QuickMealCheckItem
+                {
+                    Id = "q1",
+                    EventType = ClientEventTypes.MealMeatFree,
+                    IsChecked = true
+                }
+            };
+
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ThrowsAsync(new System.Exception("Connection refused"));
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsFalse(success);
+            Assert.IsFalse(_vm.SubmitSuccess);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            Assert.AreEqual(500, _vm.ErrorDetail.statusCode);
+            Assert.AreEqual("Connection refused", _vm.ErrorDetail.message);
         }
 
         [Test]
@@ -389,6 +675,11 @@ namespace eu.foodmission.platform.Tests
             _vm.ToggleQuestion(swap2Id);
             Assert.AreEqual(2, swapSec.SelectedCount);
 
+            // Also check a meal flag since backend requires at least one flag
+            var dietSec = _vm.Sections.First(s => s.Id == "sec_diet");
+            _vm.ToggleQuestion("q_sustainable_plate");
+            Assert.AreEqual(1, dietSec.SelectedCount);
+
             _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
                 .ReturnsAsync((new MealLog { id = "ml-swap-1" }, null));
 
@@ -396,10 +687,46 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(success);
             _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.flags != null &&
+                r.flags.Contains(ClientEventTypes.MealSustainablePlate) &&
                 r.swaps != null &&
                 r.swaps.Length == 2 &&
                 r.swaps.Contains(ClientEventTypes.SwapBeefToLegumes) &&
                 r.swaps.Contains(ClientEventTypes.SwapSugaryDrinkToWater))), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WithOnlySwapsAndNoFlags_DoesNotSendRequestAndSetsErrorMessage()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+
+            var swapSec = _vm.Sections.First(s => s.Id == "sec_swaps");
+            string swap1Id = $"q_{ClientEventTypes.SwapBeefToLegumes.ToLowerInvariant()}";
+            _vm.ToggleQuestion(swap1Id);
+            Assert.AreEqual(1, swapSec.SelectedCount);
+
+            string toastRequested = null;
+            _vm.ShowToastRequest += msg => toastRequested = msg;
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsFalse(success);
+            Assert.IsFalse(_vm.SubmitSuccess);
+            Assert.AreEqual("@UI:QUICK_MEAL_LOG_EMPTY_SELECTION", _vm.ErrorMessage);
+            Assert.AreEqual("@UI:QUICK_MEAL_LOG_EMPTY_SELECTION", toastRequested);
+            _mockMealLogService.Verify(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
+        }
+
+        [Test]
+        public void NavigateToHome_RaisesNavigationRequestedWithGoToHome()
+        {
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.NavigateToHome();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
         }
     }
 }

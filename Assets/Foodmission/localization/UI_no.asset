@@ -259,9 +259,9 @@ MonoBehaviour:
     m_Localized: 'Denne handlingen vil slette alle opplysningene dine permanent fra
       plattformen.
 
-      
 
-      
+
+
 
       Er du sikker?'
     m_Metadata:
@@ -2987,6 +2987,95 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49260137691471872
     m_Localized: "Utfordring fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: "Vaner og b\xE6rekraftig mat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: "Kj\xF8ttfri / vegetarisk mat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Erstatninger for matvarer (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: "Ern\xE6ring og helse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: Andel av inntatte belgfrukter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: "100 % plantebasert / vegansk m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Et balansert m\xE5ltid (\xBD gr\xF8nnsaker, \xBC proteiner, \xBC
+      karbohydrater)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Tradisjonelle korn eller fullkorn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: "Knoll eller alternativt hovedn\xE6ringsmiddel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "Antall kj\xF8ttstykker som er telt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: "En porsjon ferske gr\xF8nnsaker eller salat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: "100 % fullkornsbr\xF8d eller fullkornsprodukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: "Et m\xE5ltid med h\xF8yt innhold av kostfiber"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: Ingen tilsatt salt ved bordet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: "Sunn fett (olivenolje, n\xF8tter)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Ingen tilsatt sukker eller industrielt fremstilt s\xF8tsaker"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: "100 % plantebasert eller kj\xF8ttfritt m\xE5ltid?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: "Inneholdt den ferske gr\xF8nnsaker eller belgfrukter?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: "B\xE6rekraftig tallerken eller alternativt korn?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: 'Velg hvilken erstatning som er gjort:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: "M\xE5ltid og fremgang er registrert!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Vennligst velg minst ett m\xE5ltidsalternativ."
     m_Metadata:
       m_Items: []
   references:

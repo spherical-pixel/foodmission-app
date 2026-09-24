@@ -3004,6 +3004,94 @@ MonoBehaviour:
     m_Localized: Herausforderung abgeschlossen!
     m_Metadata:
       m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: "Gewohnheiten und nachhaltige Ern\xE4hrung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Fleischlose / vegetarische Gerichte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Lebensmittelersatz (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: "Ern\xE4hrung und Gesundheit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: "Verzehrte Menge an H\xFClsenfr\xFCchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: 100 % pflanzliche / vegane Mahlzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Ausgewogene Mahlzeit (\xBD Gem\xFCse, \xBC Eiwei\xDF, \xBC Kohlenhydrate)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Traditionelle Getreidesorten oder Vollkornprodukte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: Knolle oder alternatives Grundnahrungsmittel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "Zugez\xE4hlte Fleischmenge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: "Eine Portion frisches Gem\xFCse oder Salat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: Brot oder Getreideprodukte aus 100 % Vollkorn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Eine ballaststoffreiche Mahlzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: "Kein zus\xE4tzliches Salz am Tisch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: "Gesunde Fette (Oliven\xF6l, N\xFCsse)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Ohne Zuckerzusatz oder industrielle S\xFC\xDFstoffe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: Eine zu 100 % pflanzliche oder fleischfreie Mahlzeit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: "War frisches Gem\xFCse oder H\xFClsenfr\xFCchte dabei?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: Nachhaltiges Gericht oder alternatives Getreide?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: "W\xE4hlen Sie die vorgenommene Ersetzung aus:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: Mahlzeit und Fortschritt erfolgreich erfasst!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Bitte w\xE4hlen Sie mindestens eine Mahlzeit aus."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

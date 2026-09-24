@@ -200,16 +200,16 @@ MonoBehaviour:
   - m_Id: 35547983100502016
     m_Localized: 'Samen brengen we je keuken in verband met zorg voor de planeet.
 
-      
 
-      
+
+
 
       Kook,
       leer, deel en groei elke dag.
 
-      
 
-      
+
+
 
       Klaar om te beginnen?'
     m_Metadata:
@@ -269,9 +269,9 @@ MonoBehaviour:
   - m_Id: 38465306467753984
     m_Localized: 'Hierdoor worden al je gegevens definitief van het platform verwijderd.
 
-      
 
-      
+
+
 
       Weet
       je het zeker?'
@@ -2137,13 +2137,12 @@ MonoBehaviour:
       helpen je doelen te bereiken, willen we je graag wat beter leren kennen. Heb
       je daar zin in?
 
-      
 
-      
 
-      Beantwoord dan een paar optionele
-      vragen, zodat we je tips, receptsuggesties en dagelijkse uitdagingen op maat
-      kunnen maken.'
+
+
+      Beantwoord dan een paar optionele vragen, zodat
+      we je tips, receptsuggesties en dagelijkse uitdagingen op maat kunnen maken.'
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2248,9 +2247,9 @@ MonoBehaviour:
     m_Localized: 'Oeps! Dit gedeelte is nog niet beschikbaar, maar maak je geen zorgen:
       we zijn ermee bezig, dus je kunt er binnenkort van genieten.
 
-      
 
-      
+
+
 
       FOODMISSION
       blijft zich voortdurend ontwikkelen. Dankzij de feedback van mensen zoals jij
@@ -2404,13 +2403,13 @@ MonoBehaviour:
       document van {0} accepteren. Als u hiermee niet akkoord gaat, kunt u uitloggen
       of uw account verwijderen.
 
-      
 
-      
 
-      Neem alstublieft even
-      de tijd om het nieuwe document van {0} nogmaals door te nemen, en neem gerust
-      contact met ons op als u denkt dat er iets niet klopt.'
+
+
+      Neem alstublieft even de tijd om het
+      nieuwe document van {0} nogmaals door te nemen, en neem gerust contact met
+      ons op als u denkt dat er iets niet klopt.'
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -3019,6 +3018,94 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49260137691471872
     m_Localized: Uitdaging voltooid!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: Gewoontes en duurzame voeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Vleesloze / vegetarische gerechten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Vervangingen in voedingsmiddelen (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: Voeding en gezondheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: Geconsumeerde hoeveelheid peulvruchten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: 100% plantaardige / veganistische maaltijd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Evenwichtig bord (\xBD groenten, \xBC eiwitten, \xBC koolhydraten)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Traditionele granen of volkoren granen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: Knol of alternatief basisvoedsel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: Aantal stukken vlees geteld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: Portie verse groenten of salade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: 100% volkorenbrood of ontbijtgranen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Maaltijd rijk aan voedingsvezels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: Geen extra zout aan tafel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: Gezonde vetten (olijfolie, noten)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Geen toegevoegde suikers of industri\xEBle zoetstoffen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: Een 100% plantaardige of vleesloze maaltijd?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: Zat er verse groente of peulvruchten bij?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: "Duurzame ma\xEFs of een alternatief graan?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: 'Selecteer de aangebrachte wijziging:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: Maaltijd en voortgang succesvol geregistreerd!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Kies alstublieft ten minste \xE9\xE9n maaltijdoptie."
     m_Metadata:
       m_Items: []
   references:

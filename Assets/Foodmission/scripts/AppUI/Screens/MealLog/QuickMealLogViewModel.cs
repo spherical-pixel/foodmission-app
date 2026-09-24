@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation.Generated;
 using UnityEngine;
 
 namespace eu.foodmission.platform
@@ -10,6 +11,7 @@ namespace eu.foodmission.platform
     public class QuickMealCheckItem
     {
         public string Id { get; set; }
+        public string Icon { get; set; }
         public string Prompt { get; set; }
         public string EventType { get; set; }
         public bool IsChecked { get; set; }
@@ -80,6 +82,11 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private ApiErrorResponse _errorDetail;
+
+        [ObservableProperty]
+        private string _errorMessage = "";
+
+        public event Action<string> ShowToastRequest;
 
         public QuickMealLogViewModel(
             IStoreService storeService,
@@ -209,52 +216,59 @@ namespace eu.foodmission.platform
                 new QuickMealCheckItem
                 {
                     Id = "q_meat_free",
-                    Prompt = "🥗 Comida sin carne / vegetariana",
+                    Icon = "🥗",
+                    Prompt = "@UI:EVENTS_MEAT_FREE",
                     EventType = ClientEventTypes.MealMeatFree
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_legumes",
-                    Prompt = "🫘 Ración de legumbres consumida",
+                    Icon = "🫘",
+                    Prompt = "@UI:EVENTS_LEGUMES_CONSUMED",
                     EventType = ClientEventTypes.MealLegumeConsumed
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_vegan",
-                    Prompt = "🌿 Comida 100% vegetal / vegana",
+                    Icon = "🌿",
+                    Prompt = "@UI:EVENTS_VEGAN_MEAL",
                     EventType = ClientEventTypes.MealVegan
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_sustainable_plate",
-                    Prompt = "🍽️ Plato equilibrado (½ verdura, ¼ proteína, ¼ carbohidratos)",
+                    Icon = "🍽️",
+                    Prompt = "@UI:EVENTS_SUSTAINABLE_PLATE",
                     EventType = ClientEventTypes.MealSustainablePlate
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_ancient_grain",
-                    Prompt = "🌾 Cereales tradicionales o integrales",
+                    Icon = "🌾",
+                    Prompt = "@UI:EVENTS_ANCIENT_GRAIN",
                     EventType = ClientEventTypes.MealAncientGrain
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_alternative_staple",
-                    Prompt = "🥔 Tubérculo o alimento básico alternativo",
+                    Icon = "🥔",
+                    Prompt = "@UI:EVENTS_ALTERNATIVE_STAPLE",
                     EventType = ClientEventTypes.MealAlternativeStaple
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_meat_consumed",
-                    Prompt = "🥩 Ración de carne contabilizada",
+                    Icon = "🥩",
+                    Prompt = "@UI:EVENTS_MEAT_CONSUMED",
                     EventType = ClientEventTypes.MealMeatConsumed
                 }
             };
             sections.Add(new QuickMealSection
             {
                 Id = "sec_diet",
-                Title = "Hábitos y Plato Sostenible",
+                Title = "@UI:EVENTS_SECTIONS_DIET",
                 Icon = "🌱",
-                IsExpanded = true,
+                IsExpanded = false,
                 Items = dietItems
             });
 
@@ -277,6 +291,7 @@ namespace eu.foodmission.platform
             var swapItems = swapOptions.Select(swap => new QuickMealCheckItem
             {
                 Id = $"q_{swap.ToLowerInvariant()}",
+                Icon = "🔄",
                 Prompt = ActivityEventMapper.GetSwapDisplayName(swap),
                 EventType = swap,
                 IsChecked = false
@@ -285,7 +300,7 @@ namespace eu.foodmission.platform
             sections.Add(new QuickMealSection
             {
                 Id = "sec_swaps",
-                Title = "Sustituciones de Alimentos (Swaps)",
+                Title = "@UI:EVENTS_SECTIONS_SWAPS",
                 Icon = "🔄",
                 IsExpanded = false,
                 Items = swapItems
@@ -297,44 +312,50 @@ namespace eu.foodmission.platform
                 new QuickMealCheckItem
                 {
                     Id = "q_fruit_veg",
-                    Prompt = "🥦 Ración de verdura fresca o ensalada",
+                    Icon = "🥦",
+                    Prompt = "@UI:EVENTS_FRUIT_VEG_SERVING",
                     EventType = ClientEventTypes.NutritionFruitVegServingAdded
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_wholegrain",
-                    Prompt = "🍞 Pan o cereales 100% integrales",
+                    Icon = "🍞",
+                    Prompt = "@UI:EVENTS_WHOLEGRAIN",
                     EventType = ClientEventTypes.NutritionWholegrainChosen
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_high_fibre",
-                    Prompt = "🌾 Comida rica en fibra vegetal",
+                    Icon = "🌾",
+                    Prompt = "@UI:EVENTS_HIGH_FIBRE",
                     EventType = ClientEventTypes.NutritionHighFibreMeal
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_salt_free",
-                    Prompt = "🧂 Sin sal añadida en la mesa",
+                    Icon = "🧂",
+                    Prompt = "@UI:EVENTS_SALT_FREE",
                     EventType = ClientEventTypes.NutritionSaltFreeTable
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_healthy_fat",
-                    Prompt = "🥑 Grasa saludable (aceite de oliva, frutos secos)",
+                    Icon = "🥑",
+                    Prompt = "@UI:EVENTS_HEALTHY_FAT",
                     EventType = ClientEventTypes.NutritionHealthyFatChosen
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_added_sugar_avoided",
-                    Prompt = "🍬 Sin azúcares añadidos ni dulces industriales",
+                    Icon = "🍬",
+                    Prompt = "@UI:EVENTS_ADDED_SUGAR_AVOIDED",
                     EventType = ClientEventTypes.NutritionAddedSugarAvoided
                 }
             };
             sections.Add(new QuickMealSection
             {
                 Id = "sec_nutrition",
-                Title = "Nutrición y Salud",
+                Title = "@UI:EVENTS_SECTIONS_NUTRITION",
                 Icon = "🥗",
                 IsExpanded = false,
                 Items = nutritionItems
@@ -350,21 +371,24 @@ namespace eu.foodmission.platform
                 new QuickMealCheckItem
                 {
                     Id = "q_plant_based",
-                    Prompt = "🌱 ¿Comida 100% vegetal o sin carne?",
+                    Icon = "🌱",
+                    Prompt = "@UI:EVENTS_Q_PLANT_BASED",
                     EventType = ClientEventTypes.MealMeatFree,
                     IsChecked = false
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_veg_legumes",
-                    Prompt = "🥗 ¿Incluyó verduras frescas o legumbres?",
+                    Icon = "🥗",
+                    Prompt = "@UI:EVENTS_Q_VEG_LEGUMES",
                     EventType = ClientEventTypes.MealLegumeConsumed,
                     IsChecked = false
                 },
                 new QuickMealCheckItem
                 {
                     Id = "q_local_season",
-                    Prompt = "🌾 ¿Plato sostenible o cereal alternativo?",
+                    Icon = "🌾",
+                    Prompt = "@UI:EVENTS_Q_LOCAL_SEASON",
                     EventType = ClientEventTypes.MealSustainablePlate,
                     IsChecked = false
                 }
@@ -389,6 +413,7 @@ namespace eu.foodmission.platform
                         ? _activityEventMapper?.GetMissionMapping(it.contentCode)
                         : _activityEventMapper?.GetChallengeMapping(it.contentCode);
 
+                    string icon = isMission ? "🎯" : "🏆";
                     string prompt = mapping?.DirectQuestionPrompt;
 
                     if (string.IsNullOrEmpty(prompt) && !string.IsNullOrEmpty(it.label))
@@ -403,7 +428,7 @@ namespace eu.foodmission.platform
                             var (m, _) = await _missionService.GetMissionAsync(it.contentCode);
                             if (m != null)
                             {
-                                prompt = !string.IsNullOrEmpty(m.title) ? $"🎯 ¿{m.title}?" : m.goal;
+                                prompt = !string.IsNullOrEmpty(m.title) ? $"¿{m.title}?" : m.goal;
                             }
                         }
                         else if (isChallenge && _challengeService != null)
@@ -411,14 +436,15 @@ namespace eu.foodmission.platform
                             var (ch, _) = await _challengeService.GetChallengeAsync(it.contentCode);
                             if (ch != null)
                             {
-                                prompt = !string.IsNullOrEmpty(ch.title) ? $"🏆 ¿{ch.title}?" : ch.task;
+                                prompt = !string.IsNullOrEmpty(ch.title) ? $"¿{ch.title}?" : ch.task;
                             }
                         }
                     }
 
                     if (string.IsNullOrEmpty(prompt))
                     {
-                        prompt = !string.IsNullOrEmpty(it.contentCode) ? $"✓ ¿Completado ({it.contentCode})?" : "✓ ¿Completado?";
+                        prompt = !string.IsNullOrEmpty(it.contentCode) ? $"¿Completado ({it.contentCode})?" : "¿Completado?";
+                        icon = "✓";
                     }
 
                     string[] swapOpts = mapping?.SwapOptions ?? Array.Empty<string>();
@@ -431,6 +457,7 @@ namespace eu.foodmission.platform
                     list.Add(new QuickMealCheckItem
                     {
                         Id = it.id ?? it.contentCode,
+                        Icon = icon,
                         Prompt = prompt,
                         EventType = eventType,
                         ActivityCode = it.contentCode,
@@ -496,7 +523,78 @@ namespace eu.foodmission.platform
                 SyncItemsByEventType(target.EventType, target.IsChecked, target.Id);
             }
 
+            if (target.IsChecked)
+            {
+                ApplyMeatExclusionRules(target);
+            }
+
             NotifySectionsChanged();
+        }
+
+        private void ApplyMeatExclusionRules(QuickMealCheckItem target)
+        {
+            if (target == null) return;
+
+            if (IsMeatFreeItem(target))
+            {
+                foreach (var item in GetAllItems())
+                {
+                    if (IsMeatConsumedItem(item))
+                    {
+                        item.IsChecked = false;
+                    }
+                }
+            }
+            else if (IsMeatConsumedItem(target))
+            {
+                foreach (var item in GetAllItems())
+                {
+                    if (IsMeatFreeItem(item))
+                    {
+                        item.IsChecked = false;
+                    }
+                }
+            }
+        }
+
+        private IEnumerable<QuickMealCheckItem> GetAllItems()
+        {
+            if (Sections != null)
+            {
+                foreach (var sec in Sections)
+                {
+                    if (sec.Items == null) continue;
+                    foreach (var item in sec.Items)
+                    {
+                        yield return item;
+                    }
+                }
+            }
+
+            if (Questions != null)
+            {
+                foreach (var item in Questions)
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        private static bool IsMeatFreeItem(QuickMealCheckItem item)
+        {
+            if (item == null) return false;
+            return item.EventType == ClientEventTypes.MealMeatFree ||
+                   item.EventType == ClientEventTypes.MealVegan ||
+                   item.Id == "q_meat_free" ||
+                   item.Id == "q_plant_based" ||
+                   item.Id == "q_vegan";
+        }
+
+        private static bool IsMeatConsumedItem(QuickMealCheckItem item)
+        {
+            if (item == null) return false;
+            return item.EventType == ClientEventTypes.MealMeatConsumed ||
+                   item.Id == "q_meat_consumed";
         }
 
         public void SelectSwapForQuestion(string id, string swapOption)
@@ -585,6 +683,7 @@ namespace eu.foodmission.platform
             if (_isSubmitting) return false;
             IsSubmitting = true;
             SubmitSuccess = false;
+            ErrorMessage = "";
             ErrorDetail = null;
 
             try
@@ -635,17 +734,12 @@ namespace eu.foodmission.platform
                     flags.Remove(ClientEventTypes.MealMeatConsumed);
                 }
 
-                // Backend requires flags when mealId is omitted
+                // Backend requires at least one flag when mealId is omitted
                 if (flags.Count == 0)
                 {
-                    if (swaps.Any(s => s.Contains("TO_LEGUMES") || s.Contains("TO_CHICKEN") || s.Contains("TO_PORK")))
-                    {
-                        flags.Add(ClientEventTypes.MealMeatFree);
-                    }
-                    else
-                    {
-                        flags.Add(ClientEventTypes.MealSustainablePlate);
-                    }
+                    ErrorMessage = "@UI:QUICK_MEAL_LOG_EMPTY_SELECTION";
+                    ShowToastRequest?.Invoke(ErrorMessage);
+                    return false;
                 }
 
                 // 2. Submit meal log directly with flags and swaps
@@ -680,18 +774,28 @@ namespace eu.foodmission.platform
                 }
 
                 SubmitSuccess = true;
-                SuccessMessage = "¡Comida y progresos registrados con éxito!";
+                SuccessMessage = "@UI:QUICK_MEAL_LOG_SUCCESS";
                 return true;
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] SubmitQuickMealLogAsync error: {ex.Message}");
+                ErrorDetail = new ApiErrorResponse
+                {
+                    message = ex.Message,
+                    statusCode = 500
+                };
                 return false;
             }
             finally
             {
                 IsSubmitting = false;
             }
+        }
+
+        public void NavigateToHome()
+        {
+            RaiseNavigationRequested(Actions.go_to_home);
         }
     }
 }

@@ -3021,6 +3021,96 @@ MonoBehaviour:
     m_Localized: "Wyzwanie zako\u0144czone!"
     m_Metadata:
       m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: "Nawyki a zr\xF3wnowa\u017Cona \u017Cywno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: "Potrawy bezmi\u0119sne / wegetaria\u0144skie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: "Zamienniki produkt\xF3w spo\u017Cywczych (Swaps)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: "Od\u017Cywianie i zdrowie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: "Ilo\u015B\u0107 spo\u017Cywanych ro\u015Blin str\u0105czkowych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: "Posi\u0142ek w 100% pochodzenia ro\u015Blinnego / wega\u0144ski"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Zbilansowany posi\u0142ek (\xBD warzyw, \xBC bia\u0142ka, \xBC
+      w\u0119glowodan\xF3w)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: "Zbo\u017Ca tradycyjne lub pe\u0142noziarniste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: "Bulwa lub alternatywny produkt spo\u017Cywczy stanowi\u0105cy podstaw\u0119
+      diety"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "Zliczona porcja mi\u0119sa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: "Porcja \u015Bwie\u017Cych warzyw lub sa\u0142atki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: "Chleb lub p\u0142atki zbo\u017Cowe w 100% pe\u0142noziarniste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: "Posi\u0142ek bogaty w b\u0142onnik pokarmowy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: Bez dodatku soli przy stole
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: "Zdrowe t\u0142uszcze (oliwa z oliwek, orzechy)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Bez dodatku cukr\xF3w i przemys\u0142owych substancji s\u0142odz\u0105cych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: "Posi\u0142ek w 100% ro\u015Blinny czy bezmi\u0119sny?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: "Czy zawiera\u0142o \u015Bwie\u017Ce warzywa lub ro\u015Bliny str\u0105czkowe?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: "Ekologiczny talerz czy alternatywne zbo\u017Ca?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: "Wybierz dokonane zast\u0105pienie:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: "Posi\u0142ek i post\u0119py zosta\u0142y pomy\u015Blnie zarejestrowane!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Prosz\u0119 wybra\u0107 co najmniej jedn\u0105 opcj\u0119 posi\u0142ku."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

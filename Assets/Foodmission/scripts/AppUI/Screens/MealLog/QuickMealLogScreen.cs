@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using eu.foodmission.platform.Components;
 using MainraGames;
+using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -32,6 +34,7 @@ namespace eu.foodmission.platform
         private FMButton _btnSubmitQuickMeal;
 
         private IAudioService _audioService;
+        private IVisualElementScheduledItem _navigationScheduleItem;
 
         public QuickMealLogScreen()
         {
@@ -75,9 +78,27 @@ namespace eu.foodmission.platform
                     if (success)
                     {
                         _audioService?.PlaySfx(SfxType.ProgressPath);
+                        ScheduleNavigateToHome(1000);
                     }
                 };
             }
+        }
+
+        private void ScheduleNavigateToHome(long delayMs = 1500)
+        {
+            _navigationScheduleItem?.Pause();
+            _navigationScheduleItem = schedule.Execute(() =>
+            {
+                if (panel == null) return;
+                if (_viewModel != null)
+                {
+                    _viewModel.NavigateToHome();
+                }
+                else
+                {
+                    OnNavigationRequested(Actions.go_to_home, null);
+                }
+            }).StartingIn(delayMs);
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -99,6 +120,9 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
+            _navigationScheduleItem?.Pause();
+            _navigationScheduleItem = null;
+
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
@@ -129,6 +153,42 @@ namespace eu.foodmission.platform
             {
                 UpdateSubmitState();
             }
+            else if (e.PropertyName == nameof(_viewModel.ErrorMessage))
+            {
+                if (!string.IsNullOrEmpty(_viewModel.ErrorMessage))
+                {
+                    ShowErrorToast(_viewModel.ErrorMessage);
+                    _viewModel.ErrorMessage = "";
+                }
+            }
+            else if (e.PropertyName == nameof(_viewModel.ErrorDetail))
+            {
+                if (_viewModel.ErrorDetail != null)
+                {
+                    _audioService?.PlaySfx(SfxType.NegativeButton);
+                    string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE") ?? "Error";
+                    FMDialog.ShowApiError(this, title, _viewModel.ErrorDetail);
+                    _viewModel.ErrorDetail = null;
+                }
+            }
+        }
+
+        private void ShowErrorToast(string message)
+        {
+            if (string.IsNullOrEmpty(message)) return;
+
+            string localized = message;
+            if (message.StartsWith("@UI:"))
+            {
+                string key = message.Substring(4);
+                localized = LocalizationSettings.StringDatabase.GetLocalizedString("UI", key) ?? message;
+            }
+
+            _audioService?.PlaySfx(SfxType.NegativeButton);
+            Toast.Build(this, localized, NotificationDuration.Short)
+                .SetStyle(NotificationStyle.Negative)
+                .SetPosition(PopupNotificationPlacement.Bottom)
+                .Show();
         }
 
         private void UpdateView()
@@ -284,11 +344,9 @@ namespace eu.foodmission.platform
                     int selectedCount = sec.SelectedCount;
                     if (selectedCount > 0)
                     {
-                        var badge = new Unity.AppUI.UI.Badge
-                        {
-                            content = selectedCount
-                        };
+                        var badge = new Unity.AppUI.UI.Text();
                         badge.AddToClassList("fm-quick-meal-accordion-badge");
+                        badge.text = $"{selectedCount}";
                         headerRight.Add(badge);
                     }
 
@@ -380,6 +438,14 @@ namespace eu.foodmission.platform
                 });
             }
 
+            if (!string.IsNullOrEmpty(q.Icon))
+            {
+                var iconLabel = new Unity.AppUI.UI.Text();
+                iconLabel.text = q.Icon;
+                iconLabel.AddToClassList("fm-quick-meal-question-icon");
+                header.Add(iconLabel);
+            }
+
             var promptLabel = new Unity.AppUI.UI.Text();
             promptLabel.text = q.Prompt ?? "";
             promptLabel.AddToClassList("fm-quick-meal-question-text");
@@ -394,7 +460,7 @@ namespace eu.foodmission.platform
                 swapsContainer.AddToClassList("fm-quick-meal-swaps-container");
 
                 var swapsTitle = new Unity.AppUI.UI.Text();
-                swapsTitle.text = "Selecciona la sustitución realizada:";
+                swapsTitle.text = "@UI:QUICK_MEAL_SWAPS_SUBTITLE";
                 swapsTitle.AddToClassList("fm-quick-meal-swaps-title");
                 swapsContainer.Add(swapsTitle);
 
@@ -450,7 +516,7 @@ namespace eu.foodmission.platform
                 if (_viewModel.SubmitSuccess)
                 {
                     _feedbackLabel.style.display = DisplayStyle.Flex;
-                    _feedbackLabel.text = _viewModel.SuccessMessage ?? "¡Registrado con éxito!";
+                    _feedbackLabel.text = _viewModel.SuccessMessage;
                 }
                 else
                 {

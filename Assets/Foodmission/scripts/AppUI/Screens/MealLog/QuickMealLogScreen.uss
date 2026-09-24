@@ -124,6 +124,12 @@
 	--unity-image-tint-color: var(--appui-foregrounds-50)	
 }
 
+.fm-quick-meal-question-icon {
+    font-size: 48px;
+    margin-right: 8px;
+    align-self: center;
+}
+
 .fm-quick-meal-question-text {
     flex-grow: 1;
     flex-shrink: 1;
@@ -261,7 +267,16 @@
 }
 
 .fm-quick-meal-accordion-badge {
-    margin-right: 8px;
+    background-color: var(--appui-primary-800);
+    color: var(--appui-primary-100);
+    -unity-font-style: bold;
+    /*font-size: 13px;*/
+    -unity-text-align: middle-center;
+    padding: 10px;
+    border-radius: 20px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .fm-quick-meal-accordion-chevron {
