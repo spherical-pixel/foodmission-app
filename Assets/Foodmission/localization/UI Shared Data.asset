@@ -3011,6 +3011,66 @@ MonoBehaviour:
     m_Key: QUICK_MEAL_LOG_EMPTY_SELECTION
     m_Metadata:
       m_Items: []
+  - m_Id: 49555340042166272
+    m_Key: QUICK_MEAL_LOG_EDIT_BANNER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Key: QUICK_MEAL_LOG_UPDATE_SUBMIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Key: QUICK_MEAL_LOG_UPDATE_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Key: SWAP_BEEF_TO_LEGUMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Key: SWAP_BEEF_TO_CHICKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Key: SWAP_BEEF_TO_PORK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Key: SWAP_PORK_TO_LEGUMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Key: SWAP_PORK_TO_CHICKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Key: SWAP_CHICKEN_TO_LEGUMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Key: SWAP_SUGARY_DRINK_TO_WATER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Key: SWAP_SNACK_TO_FRUIT_NUTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Key: SWAP_SUGARY_CEREAL_TO_OATS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Key: SWAP_READY_MEAL_TO_HOMECOOKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Key: SWAP_PROCESSED_MEAT_TO_LEGUMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Key: QUICK_MEAL_LOG_GOTO_BUTTON
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

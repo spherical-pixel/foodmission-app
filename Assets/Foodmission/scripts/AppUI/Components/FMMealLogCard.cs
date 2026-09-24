@@ -96,6 +96,7 @@ namespace eu.foodmission.platform.Components
             _mealName = new Unity.AppUI.UI.Text();
             _mealName.AddToClassList("fm-meal-card-text");
             _mealName.AddToClassList("fm-meal-card-title");
+            _mealName.style.display = DisplayStyle.None;
             this.Add(_mealName);
 
             _itemsContainer = new VisualElement();

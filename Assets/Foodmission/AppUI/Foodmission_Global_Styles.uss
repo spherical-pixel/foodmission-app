@@ -1073,7 +1073,8 @@
 .fm-pantry-item .fm-full-button,
 .fm-groups-item .fm-full-button,
 .fm-group-member-item .fm-full-button,
-.fm-quiz-item-content .fm-full-button{
+.fm-quiz-item-content .fm-full-button,
+.fm-active-quest-card .fm-full-button {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -1081,6 +1082,8 @@
     top: 0;
     left: 0;
     bottom: 0;
+    background-color: transparent;
+    border-width: 0;
 }
 
 .fm-shopping-list-item-list .appui-icon,

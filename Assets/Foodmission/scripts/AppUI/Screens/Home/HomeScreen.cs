@@ -89,6 +89,7 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            CacheUIElements();
             RegisterEvents();
             RefreshStats();
             SetupSteppers();

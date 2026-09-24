@@ -650,5 +650,10 @@ namespace eu.foodmission.platform
                 RaiseNavigationRequested(Actions.open_quest, args.ToArray());
             }
         }
+
+        public void NavigateToQuickMealLog()
+        {
+            RaiseNavigationRequested(Actions.open_quick_meal_log);
+        }
     }
 }

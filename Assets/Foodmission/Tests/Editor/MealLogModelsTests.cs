@@ -177,5 +177,23 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, log.swaps.Length);
             Assert.AreEqual("SWAP_BEEF_TO_LEGUMES", log.swaps[0]);
         }
+
+        [Test]
+        public void UpdateMealLogRequest_WithFlagsAndSwaps_SerializesCorrectly()
+        {
+            var request = new UpdateMealLogRequest
+            {
+                typeOfMeal = "DINNER",
+                flags = new[] { "MEAL_MEAT_FREE", "MEAL_LEGUME_CONSUMED" },
+                swaps = new[] { "SWAP_BEEF_TO_LEGUMES" }
+            };
+
+            byte[] body = request.ToJsonBody();
+            string json = System.Text.Encoding.UTF8.GetString(body);
+
+            StringAssert.Contains("\"typeOfMeal\":\"DINNER\"", json);
+            StringAssert.Contains("\"flags\":[\"MEAL_MEAT_FREE\",\"MEAL_LEGUME_CONSUMED\"]", json);
+            StringAssert.Contains("\"swaps\":[\"SWAP_BEEF_TO_LEGUMES\"]", json);
+        }
     }
 }

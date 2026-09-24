@@ -510,5 +510,28 @@ namespace eu.foodmission.platform.Tests
             var secondResult = await vm.CheckPendingGamificationRewardsAsync();
             Assert.IsNull(secondResult);
         }
+
+        [Test]
+        public void NavigateToQuickMealLog_RequestsQuickMealLogNavigation()
+        {
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.NavigateToQuickMealLog();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_quick_meal_log, requestedAction);
+        }
+
+        [Test]
+        public void OpenCurrentQuest_WhenActiveQuestPresent_RequestsOpenQuestNavigation()
+        {
+            _vm.SetCurrentQuestForTesting("Title", "Q.1", "q-1", new[] { true, false });
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.OpenCurrentQuest();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_quest, requestedAction);
+        }
     }
 }

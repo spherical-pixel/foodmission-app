@@ -100,7 +100,58 @@ namespace eu.foodmission.platform.Tests
         {
             string label = ActivityEventMapper.GetSwapDisplayName(ClientEventTypes.SwapBeefToLegumes);
             Assert.IsNotEmpty(label);
-            Assert.IsTrue(label.Contains("legumbres"));
+            Assert.IsTrue(label.Contains("legumbres") || label.Contains("legumes", System.StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Test]
+        public void GetSwapLocalizationKey_ReturnsExpectedKeys()
+        {
+            Assert.AreEqual("SWAP_BEEF_TO_LEGUMES", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapBeefToLegumes));
+            Assert.AreEqual("SWAP_BEEF_TO_CHICKEN", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapBeefToChicken));
+            Assert.AreEqual("SWAP_BEEF_TO_PORK", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapBeefToPork));
+            Assert.AreEqual("SWAP_PORK_TO_LEGUMES", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapPorkToLegumes));
+            Assert.AreEqual("SWAP_PORK_TO_CHICKEN", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapPorkToChicken));
+            Assert.AreEqual("SWAP_CHICKEN_TO_LEGUMES", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapChickenToLegumes));
+            Assert.AreEqual("SWAP_SUGARY_DRINK_TO_WATER", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapSugaryDrinkToWater));
+            Assert.AreEqual("SWAP_SNACK_TO_FRUIT_NUTS", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapSnackToFruitNuts));
+            Assert.AreEqual("SWAP_SUGARY_CEREAL_TO_OATS", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapSugaryCerealToOats));
+            Assert.AreEqual("SWAP_READY_MEAL_TO_HOMECOOKED", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapReadyMealToHomecooked));
+            Assert.AreEqual("SWAP_PROCESSED_MEAT_TO_LEGUMES", ActivityEventMapper.GetSwapLocalizationKey(ClientEventTypes.SwapProcessedMeatToLegumes));
+            Assert.IsNull(ActivityEventMapper.GetSwapLocalizationKey("UNKNOWN_EVENT"));
+        }
+
+        [Test]
+        public void GetSwapLocalizationTag_ReturnsExpectedTags()
+        {
+            Assert.AreEqual("@UI:SWAP_BEEF_TO_LEGUMES", ActivityEventMapper.GetSwapLocalizationTag(ClientEventTypes.SwapBeefToLegumes));
+            Assert.AreEqual("@UI:SWAP_PROCESSED_MEAT_TO_LEGUMES", ActivityEventMapper.GetSwapLocalizationTag(ClientEventTypes.SwapProcessedMeatToLegumes));
+            Assert.IsNull(ActivityEventMapper.GetSwapLocalizationTag("UNKNOWN_EVENT"));
+        }
+
+        [Test]
+        public void GetSwapDisplayName_AllSwapsReturnNonEmptyText()
+        {
+            var allSwaps = new[]
+            {
+                ClientEventTypes.SwapBeefToLegumes,
+                ClientEventTypes.SwapBeefToChicken,
+                ClientEventTypes.SwapBeefToPork,
+                ClientEventTypes.SwapPorkToLegumes,
+                ClientEventTypes.SwapPorkToChicken,
+                ClientEventTypes.SwapChickenToLegumes,
+                ClientEventTypes.SwapSugaryDrinkToWater,
+                ClientEventTypes.SwapSnackToFruitNuts,
+                ClientEventTypes.SwapSugaryCerealToOats,
+                ClientEventTypes.SwapReadyMealToHomecooked,
+                ClientEventTypes.SwapProcessedMeatToLegumes
+            };
+
+            foreach (var swap in allSwaps)
+            {
+                string text = ActivityEventMapper.GetSwapDisplayName(swap);
+                Assert.IsNotEmpty(text);
+                Assert.AreNotEqual(swap, text);
+            }
         }
     }
 }

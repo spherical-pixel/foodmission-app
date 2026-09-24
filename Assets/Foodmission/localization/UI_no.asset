@@ -3078,6 +3078,66 @@ MonoBehaviour:
     m_Localized: "Vennligst velg minst ett m\xE5ltidsalternativ."
     m_Metadata:
       m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: "Redigering av forenklet m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Lagre endringer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: "M\xE5ltid oppdatert!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Storfekj\xF8tt med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Storfekj\xF8tt med kylling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Storfekj\xF8tt med svinekj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Svinekj\xF8tt med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Svinekj\xF8tt med kylling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Kylling med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Sukkerholdig drikke med vann"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack med frukt / n\xF8tter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Sukkerholdige frokostblandinger med havre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Ultraprosessert med hjemmelaget"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Bearbeidet kj\xF8tt med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 \xC5pne forenklet m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

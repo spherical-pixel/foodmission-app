@@ -84,6 +84,15 @@ namespace eu.foodmission.platform
         private ApiErrorResponse _errorDetail;
 
         [ObservableProperty]
+        private bool _isEditing;
+
+        [ObservableProperty]
+        private string _editingMealLogId;
+
+        [ObservableProperty]
+        private MealLog _editingMealLog;
+
+        [ObservableProperty]
         private string _errorMessage = "";
 
         public event Action<string> ShowToastRequest;
@@ -292,7 +301,7 @@ namespace eu.foodmission.platform
             {
                 Id = $"q_{swap.ToLowerInvariant()}",
                 Icon = "🔄",
-                Prompt = ActivityEventMapper.GetSwapDisplayName(swap),
+                Prompt = ActivityEventMapper.GetSwapLocalizationTag(swap) ?? ActivityEventMapper.GetSwapDisplayName(swap),
                 EventType = swap,
                 IsChecked = false
             }).ToList();
@@ -673,6 +682,121 @@ namespace eu.foodmission.platform
             }
         }
 
+        public async Task LoadForEditAsync(MealLog log)
+        {
+            if (log == null) return;
+
+            IsEditing = true;
+            EditingMealLogId = log.id;
+            EditingMealLog = log;
+
+            if (!string.IsNullOrEmpty(log.typeOfMeal))
+            {
+                SelectedMealType = log.typeOfMeal;
+            }
+
+            MealName = log.meal?.name ?? "";
+
+            // Ensure questions and sections are loaded
+            await LoadActiveQuestQuestionsAsync();
+
+            // Hydrate questions and sections with existing flags and swaps
+            ApplySelectionsFromLog(log);
+        }
+
+        public async Task LoadForEditByIdAsync(string mealLogId)
+        {
+            if (string.IsNullOrEmpty(mealLogId)) return;
+            if (_mealLogService == null) return;
+
+            var (log, err) = await _mealLogService.GetLogAsync(mealLogId);
+            if (err == null && log != null)
+            {
+                await LoadForEditAsync(log);
+            }
+        }
+
+        private void ApplySelectionsFromLog(MealLog log)
+        {
+            var flagsSet = new HashSet<string>(log.flags ?? Array.Empty<string>());
+            var swapsSet = new HashSet<string>(log.swaps ?? Array.Empty<string>());
+
+            var allItems = new List<QuickMealCheckItem>();
+            if (Sections != null && Sections.Count > 0)
+            {
+                foreach (var sec in Sections)
+                {
+                    if (sec.Items != null) allItems.AddRange(sec.Items);
+                }
+            }
+            else if (Questions != null)
+            {
+                allItems.AddRange(Questions);
+            }
+
+            foreach (var item in allItems)
+            {
+                if (item == null) continue;
+
+                // Check flags
+                if (!string.IsNullOrEmpty(item.EventType) && flagsSet.Contains(item.EventType))
+                {
+                    item.IsChecked = true;
+                }
+
+                // Check swaps
+                if (swapsSet.Count > 0)
+                {
+                    if (!string.IsNullOrEmpty(item.EventType) && swapsSet.Contains(item.EventType))
+                    {
+                        item.IsChecked = true;
+                        item.SelectedSwapOption = item.EventType;
+                    }
+                    else if (item.SwapOptions != null && item.SwapOptions.Length > 0)
+                    {
+                        foreach (var opt in item.SwapOptions)
+                        {
+                            if (swapsSet.Contains(opt))
+                            {
+                                item.IsChecked = true;
+                                item.SelectedSwapOption = opt;
+                                item.EventType = opt;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Mutual exclusion sanity check
+            if (flagsSet.Contains(ClientEventTypes.MealVegan) || flagsSet.Contains(ClientEventTypes.MealMeatFree))
+            {
+                var meatConsumed = allItems.FirstOrDefault(i => i.EventType == ClientEventTypes.MealMeatConsumed);
+                if (meatConsumed != null) meatConsumed.IsChecked = false;
+            }
+
+            if (Sections != null && Sections.Count > 0)
+            {
+                Sections = new List<QuickMealSection>(Sections);
+            }
+            else if (Questions != null)
+            {
+                Questions = new List<QuickMealCheckItem>(Questions);
+            }
+        }
+
+        public void ResetEditState()
+        {
+            IsEditing = false;
+            EditingMealLogId = null;
+            EditingMealLog = null;
+            MealName = "";
+            InitializeDefaultMealType();
+            SubmitSuccess = false;
+            ErrorMessage = "";
+            ErrorDetail = null;
+        }
+
         public void SetMealType(string mealType)
         {
             SelectedMealType = mealType;
@@ -770,7 +894,32 @@ namespace eu.foodmission.platform
                     return false;
                 }
 
-                // 2. Submit meal log directly with flags and swaps when meal flags are present
+                // 2. Submit meal log: if in Edit Mode, update the existing log via PATCH
+                if (IsEditing && !string.IsNullOrEmpty(EditingMealLogId))
+                {
+                    if (_mealLogService != null)
+                    {
+                        var updateReq = new UpdateMealLogRequest
+                        {
+                            typeOfMeal = SelectedMealType,
+                            flags = flags.Count > 0 ? flags.ToArray() : null,
+                            swaps = swaps.Count > 0 ? swaps.ToArray() : null
+                        };
+
+                        var (updatedLog, updateErr) = await _mealLogService.UpdateLogAsync(EditingMealLogId, updateReq);
+                        if (updateErr != null)
+                        {
+                            ErrorDetail = updateErr;
+                            return false;
+                        }
+                    }
+
+                    SubmitSuccess = true;
+                    SuccessMessage = "@UI:QUICK_MEAL_LOG_UPDATE_SUCCESS";
+                    return true;
+                }
+
+                // 2b. Creation mode: submit meal log directly with flags and swaps when meal flags are present
                 if (_mealLogService != null && flags.Count > 0)
                 {
                     var logReq = new CreateMealLogRequest

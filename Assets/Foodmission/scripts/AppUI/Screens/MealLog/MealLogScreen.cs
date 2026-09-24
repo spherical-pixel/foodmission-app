@@ -151,6 +151,9 @@ namespace eu.foodmission.platform
                 UpdateStepVisibility();
                 RebuildSelectedChips();
             }
+
+            // Refresh logs on screen entry so edits made in QuickMealLog are immediately visible
+            _ = _viewModel?.LoadTodayAsync();
         }
 
         private async Task SafeLoadRecipePresetAsync(string recipeId, int? mealTypeIndex = null, bool eatenOut = false)
@@ -592,9 +595,16 @@ namespace eu.foodmission.platform
 
                 card.EditButton.clicked += async () =>
                 {
-                    await _viewModel.LoadForEditAsync(captured);
-                    UpdateEditModeUI();
-                    UpdateStepVisibility();
+                    if (MealLogHelpers.IsQuickMeal(captured))
+                    {
+                        _viewModel.NavigateToQuickMealLogEdit(captured);
+                    }
+                    else
+                    {
+                        await _viewModel.LoadForEditAsync(captured);
+                        UpdateEditModeUI();
+                        UpdateStepVisibility();
+                    }
                 };
 
                 card.RemoveButton.clicked += () => ConfirmDeleteMealLog(captured);

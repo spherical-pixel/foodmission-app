@@ -3075,6 +3075,66 @@ MonoBehaviour:
     m_Localized: "Izberite vsaj eno mo\u017Enost obroka."
     m_Metadata:
       m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: Urejanje poenostavljenega dnevnika obrokov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Shrani spremembe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: "Obrok uspe\u0161no posodobljen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Govedina s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Govedina s pi\u0161\u010Dancem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Govedina s svinjino"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Svinjina s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Svinjina s pi\u0161\u010Dancem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Pi\u0161\u010Danec s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Sladka pija\u010Da z vodo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Prigrizek s sadjem / ore\u0161\u010Dki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Sladkani kosmi\u010Di z ovsom"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Predelana hrana z doma\u010Do"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Predelano meso s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Odpri poenostavljen dnevnik obrokov"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

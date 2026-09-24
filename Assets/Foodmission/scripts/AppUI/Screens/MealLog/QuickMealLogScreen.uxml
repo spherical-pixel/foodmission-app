@@ -10,6 +10,10 @@
                     </Bindings>
                 </appui:Text>
             </ui:VisualElement>
+            <ui:VisualElement name="edit-mode-banner" class="fm-quick-meal-edit-banner" style="display: none;">
+                <appui:Icon name="edit-banner-icon" icon="fm-edit" class="fm-quick-meal-edit-banner-icon" />
+                <appui:Text name="edit-banner-text" text="@UI:QUICK_MEAL_LOG_EDIT_BANNER" size="M" class="fm-quick-meal-edit-banner-text" />
+            </ui:VisualElement>
             <ui:VisualElement class="fm-quick-meal-section">
                 <appui:Text text="Tipo de comida" size="M" class="fm-quick-meal-section-title">
                     <Bindings>

@@ -30,6 +30,7 @@ namespace eu.foodmission.platform
 
         private VisualElement _questionsContainer;
         private Unity.AppUI.UI.TextField _inputMealName;
+        private VisualElement _editModeBanner;
         private Unity.AppUI.UI.Text _feedbackLabel;
         private FMButton _btnSubmitQuickMeal;
 
@@ -54,6 +55,7 @@ namespace eu.foodmission.platform
 
             _questionsContainer = contentContainer.Q<VisualElement>("questions-container");
             _inputMealName = contentContainer.Q<Unity.AppUI.UI.TextField>("input-meal-name");
+            _editModeBanner = contentContainer.Q<VisualElement>("edit-mode-banner");
             _feedbackLabel = contentContainer.Q<Unity.AppUI.UI.Text>("feedback-label");
             _btnSubmitQuickMeal = contentContainer.Q<FMButton>("btn-submit-quick-meal");
 
@@ -78,10 +80,27 @@ namespace eu.foodmission.platform
                     if (success)
                     {
                         _audioService?.PlaySfx(SfxType.ProgressPath);
-                        ScheduleNavigateToHome(1000);
+                        if (_viewModel.IsEditing)
+                        {
+                            ScheduleNavigateBack(1000);
+                        }
+                        else
+                        {
+                            ScheduleNavigateToHome(1000);
+                        }
                     }
                 };
             }
+        }
+
+        private void ScheduleNavigateBack(long delayMs = 1000)
+        {
+            _navigationScheduleItem?.Pause();
+            _navigationScheduleItem = schedule.Execute(() =>
+            {
+                if (panel == null) return;
+                _navController?.PopBackStack();
+            }).StartingIn(delayMs);
         }
 
         private void ScheduleNavigateToHome(long delayMs = 1500)
@@ -104,7 +123,39 @@ namespace eu.foodmission.platform
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
-            _ = _viewModel?.LoadActiveQuestQuestionsAsync();
+
+            string mealLogId = null;
+            bool isEdit = false;
+
+            if (args != null)
+            {
+                foreach (var a in args)
+                {
+                    if (a.name == "mealLogId") mealLogId = a.value;
+                    else if (a.name == "mode" && a.value == "edit") isEdit = true;
+                }
+            }
+
+            if (isEdit && !string.IsNullOrEmpty(mealLogId))
+            {
+                if (MealLogViewModel.PendingQuickMealEditPayload != null &&
+                    MealLogViewModel.PendingQuickMealEditPayload.id == mealLogId)
+                {
+                    var payload = MealLogViewModel.PendingQuickMealEditPayload;
+                    MealLogViewModel.PendingQuickMealEditPayload = null;
+                    _ = _viewModel?.LoadForEditAsync(payload);
+                }
+                else
+                {
+                    _ = _viewModel?.LoadForEditByIdAsync(mealLogId);
+                }
+            }
+            else
+            {
+                _viewModel?.ResetEditState();
+                _ = _viewModel?.LoadActiveQuestQuestionsAsync();
+            }
+
             UpdateView();
         }
 
@@ -161,6 +212,10 @@ namespace eu.foodmission.platform
                     _viewModel.ErrorMessage = "";
                 }
             }
+            else if (e.PropertyName == nameof(_viewModel.IsEditing))
+            {
+                UpdateEditState();
+            }
             else if (e.PropertyName == nameof(_viewModel.ErrorDetail))
             {
                 if (_viewModel.ErrorDetail != null)
@@ -207,9 +262,30 @@ namespace eu.foodmission.platform
                 }
             }
 
+            UpdateEditState();
             RebuildTypeButtons();
             RebuildQuestions();
             UpdateSubmitState();
+        }
+
+        private void UpdateEditState()
+        {
+            if (_viewModel == null) return;
+            bool isEditing = _viewModel.IsEditing;
+            if (_editModeBanner != null)
+            {
+                _editModeBanner.style.display = isEditing ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+            if (_btnSubmitQuickMeal != null)
+            {
+                _btnSubmitQuickMeal.title = isEditing
+                    ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUICK_MEAL_LOG_UPDATE_SUBMIT")
+                    : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SAVE");
+            }
+            if (_inputMealName != null && isEditing && !string.IsNullOrEmpty(_viewModel.MealName))
+            {
+                _inputMealName.value = _viewModel.MealName;
+            }
         }
 
         private void RebuildTypeButtons()

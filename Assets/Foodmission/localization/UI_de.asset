@@ -3092,6 +3092,66 @@ MonoBehaviour:
     m_Localized: "Bitte w\xE4hlen Sie mindestens eine Mahlzeit aus."
     m_Metadata:
       m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: "Bearbeitung des vereinfachten Ern\xE4hrungsprotokolls"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: "\xC4nderungen speichern"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: Mahlzeit erfolgreich aktualisiert!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Rindfleisch durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Rindfleisch durch H\xFChnchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Rindfleisch durch Schweinefleisch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Schweinefleisch durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Schweinefleisch durch H\xFChnchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 H\xFChnchen durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Zuckerhaltiges Getr\xE4nk durch Wasser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack durch Obst / N\xFCsse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Ges\xFC\xDFte Zerealien durch Haferflocken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Fertiggericht durch Selbstgekochtes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Verarbeitetes Fleisch durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Vereinfachtes Ern\xE4hrungsprotokoll \xF6ffnen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

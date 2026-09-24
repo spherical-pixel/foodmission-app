@@ -222,5 +222,63 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(clicked, "EditButton clicked event should be triggered");
         }
+
+        [Test]
+        public void FMMealLogCard_WithFlagsAndSwaps_RendersRowsWithDisplayName()
+        {
+            var log = new MealLog
+            {
+                id = "log-quick-1",
+                typeOfMeal = "LUNCH",
+                timestamp = "2026-08-13T12:00:00Z",
+                flags = new[] { ClientEventTypes.MealVegan, ClientEventTypes.MealLegumeConsumed },
+                swaps = new[] { ClientEventTypes.SwapBeefToLegumes }
+            };
+
+            var card = new FMMealLogCard
+            {
+                MealLogData = log
+            };
+
+            var itemsContainer = card.Q(className: "fm-meal-card-items");
+            Assert.IsNotNull(itemsContainer);
+            Assert.AreEqual(DisplayStyle.Flex, itemsContainer.style.display.value);
+
+            var rows = itemsContainer.Query(className: "fm-meal-card-item-row").ToList();
+            Assert.AreEqual(3, rows.Count, "Should render 2 flag rows and 1 swap row");
+
+            var name1 = rows[0].Q<Text>(className: "fm-meal-card-item-name");
+            var name2 = rows[1].Q<Text>(className: "fm-meal-card-item-name");
+            var name3 = rows[2].Q<Text>(className: "fm-meal-card-item-name");
+
+            Assert.IsNotNull(name1);
+            Assert.IsNotNull(name2);
+            Assert.IsNotNull(name3);
+
+            Assert.IsTrue(name1.text.StartsWith("• 🌿"));
+            Assert.IsTrue(name2.text.StartsWith("• 🫘"));
+            Assert.IsTrue(name3.text.StartsWith("• 🥩 -> 🥗"));
+        }
+
+        [Test]
+        public void MealLogHelpers_GetFlagLocalizationKey_ReturnsExpectedKeys()
+        {
+            Assert.AreEqual("EVENTS_MEAT_FREE", MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.MealMeatFree));
+            Assert.AreEqual("EVENTS_LEGUMES_CONSUMED", MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.MealLegumeConsumed));
+            Assert.AreEqual("EVENTS_VEGAN_MEAL", MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.MealVegan));
+            Assert.AreEqual("EVENTS_SUSTAINABLE_PLATE", MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.MealSustainablePlate));
+            Assert.AreEqual("EVENTS_ANCIENT_GRAIN", MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.MealAncientGrain));
+            Assert.AreEqual("EVENTS_ALTERNATIVE_STAPLE", MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.MealAlternativeStaple));
+            Assert.AreEqual("EVENTS_MEAT_CONSUMED", MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.MealMeatConsumed));
+            Assert.IsNull(MealLogHelpers.GetFlagLocalizationKey("UNKNOWN_FLAG"));
+        }
+
+        [Test]
+        public void MealLogHelpers_GetDisplayNameForFlag_ReturnsNonEmptyWithEmoji()
+        {
+            string displayName = MealLogHelpers.GetDisplayNameForFlag(ClientEventTypes.MealMeatFree);
+            Assert.IsNotEmpty(displayName);
+            Assert.IsTrue(displayName.StartsWith("🥗"));
+        }
     }
 }

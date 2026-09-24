@@ -779,6 +779,100 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
         }
+
+        [Test]
+        public async Task LoadForEditAsync_HydratesMealTypeFlagsAndSwaps()
+        {
+            var existingLog = new MealLog
+            {
+                id = "ml-edit-1",
+                typeOfMeal = "BREAKFAST",
+                flags = new[] { ClientEventTypes.MealMeatFree, ClientEventTypes.MealLegumeConsumed },
+                swaps = new[] { ClientEventTypes.SwapBeefToLegumes }
+            };
+
+            _mockMealLogService.Setup(s => s.GetLogAsync("ml-edit-1"))
+                .ReturnsAsync((existingLog, null));
+
+            await _vm.LoadForEditAsync(existingLog);
+
+            Assert.IsTrue(_vm.IsEditing);
+            Assert.AreEqual("ml-edit-1", _vm.EditingMealLogId);
+            Assert.AreEqual("BREAKFAST", _vm.SelectedMealType);
+
+            // Verify flags are checked in diet section
+            var dietSec = _vm.Sections.FirstOrDefault(s => s.Id == "sec_diet");
+            Assert.IsNotNull(dietSec);
+            var meatFreeItem = dietSec.Items.FirstOrDefault(i => i.EventType == ClientEventTypes.MealMeatFree);
+            Assert.IsNotNull(meatFreeItem);
+            Assert.IsTrue(meatFreeItem.IsChecked);
+
+            var legumeItem = dietSec.Items.FirstOrDefault(i => i.EventType == ClientEventTypes.MealLegumeConsumed);
+            Assert.IsNotNull(legumeItem);
+            Assert.IsTrue(legumeItem.IsChecked);
+
+            // Verify swap is checked in swaps section
+            var swapSec = _vm.Sections.FirstOrDefault(s => s.Id == "sec_swaps");
+            Assert.IsNotNull(swapSec);
+            var swapItem = swapSec.Items.FirstOrDefault(i => i.EventType == ClientEventTypes.SwapBeefToLegumes || i.SelectedSwapOption == ClientEventTypes.SwapBeefToLegumes);
+            Assert.IsNotNull(swapItem);
+            Assert.IsTrue(swapItem.IsChecked);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WhenEditing_CallsUpdateLogAsyncInsteadOfCreate()
+        {
+            var existingLog = new MealLog
+            {
+                id = "ml-edit-2",
+                typeOfMeal = "DINNER",
+                flags = new[] { ClientEventTypes.MealMeatFree }
+            };
+
+            await _vm.LoadForEditAsync(existingLog);
+
+            // Toggle an additional flag
+            var dietSec = _vm.Sections.First(s => s.Id == "sec_diet");
+            var sustainableItem = dietSec.Items.First(i => i.EventType == ClientEventTypes.MealSustainablePlate);
+            sustainableItem.IsChecked = true;
+
+            _mockMealLogService.Setup(s => s.UpdateLogAsync("ml-edit-2", It.IsAny<UpdateMealLogRequest>()))
+                .ReturnsAsync((existingLog, null));
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsTrue(success);
+            Assert.IsTrue(_vm.SubmitSuccess);
+            Assert.AreEqual("@UI:QUICK_MEAL_LOG_UPDATE_SUCCESS", _vm.SuccessMessage);
+
+            _mockMealLogService.Verify(s => s.UpdateLogAsync("ml-edit-2", It.Is<UpdateMealLogRequest>(r =>
+                r.typeOfMeal == "DINNER" &&
+                r.flags != null &&
+                r.flags.Contains(ClientEventTypes.MealMeatFree) &&
+                r.flags.Contains(ClientEventTypes.MealSustainablePlate))), Times.Once);
+
+            _mockMealLogService.Verify(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ResetEditState_ClearsEditFlagsAndRestoresCreationDefaults()
+        {
+            var existingLog = new MealLog
+            {
+                id = "ml-edit-3",
+                typeOfMeal = "DINNER",
+                flags = new[] { ClientEventTypes.MealMeatFree }
+            };
+
+            await _vm.LoadForEditAsync(existingLog);
+            Assert.IsTrue(_vm.IsEditing);
+
+            _vm.ResetEditState();
+
+            Assert.IsFalse(_vm.IsEditing);
+            Assert.IsTrue(string.IsNullOrEmpty(_vm.EditingMealLogId));
+            Assert.IsNull(_vm.EditingMealLog);
+        }
     }
 }
 

@@ -76,6 +76,12 @@ namespace eu.foodmission.platform
         [JsonProperty("typeOfMeal", NullValueHandling = NullValueHandling.Ignore)]
         public string typeOfMeal;
 
+        [JsonProperty("flags", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] flags;
+
+        [JsonProperty("swaps", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] swaps;
+
         [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
         public string timestamp;
 

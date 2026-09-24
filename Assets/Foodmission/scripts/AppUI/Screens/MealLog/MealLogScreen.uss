@@ -1,4 +1,3 @@
-/* Edit mode banner */
 .fm-ml-edit-banner {
     display: none;
     flex-direction: row;
@@ -29,7 +28,6 @@
     margin-left: 8px;
 }
 
-/* Step visibility */
 .fm-ml-step {
     display: none;
     flex-direction: column;
@@ -39,26 +37,22 @@
     display: flex;
 }
 
-/* Step heading */
 .fm-ml-step-heading {
     margin-bottom: 12px;
+    white-space: wrap;
 }
 
-/* Step buttons container */
 .fm-ml-step-buttons {
     flex-direction: column;
 }
 
-/* Back inline */
 .fm-ml-back-inline {
     display: none;
-    /*font-size: var(--appui-font-sizes-body-md);*/
     color: var(--appui-foregrounds-100);
     margin-bottom: 8px;
     padding: 0;
     min-height: auto;
     background-color: transparent;
-    
 }
 
 .fm-ml-back-inline .appui-icon {
@@ -73,7 +67,6 @@
     opacity: 0.8;
 }
 
-/* Logged meals zone */
 .fm-ml-logged-zone {
     display: none;
     flex-direction: column;
@@ -97,14 +90,11 @@
     justify-content: flex-end;
 }
 
-
-/* Preset results */
 .fm-ml-preset-results {
     flex-direction: column;
     margin-bottom: 8px;
 }
 
-/* Selected items */
 .fm-ml-selected-chips {
     flex-direction: column;
     justify-content: flex-start;
@@ -118,13 +108,11 @@
     flex-shrink: 0;
 }
 
-/* Preset card accent border */
 .fm-ml-chip-preset {
     border-color: var(--appui-color-accent);
     border-width: 1px;
 }
 
-/* Log actions row */
 .fm-ml-log-actions-row {
     flex-direction: column;
     align-items: flex-start;
@@ -136,17 +124,13 @@
     align-self: flex-start;
 }
 
-/* Log button */
 .fm-ml-log-btn {
     align-self: flex-start;
     margin-top: 12px;
     width: 100%;
 }
 
-
-/* Meal card badge */
 .fm-ml-card-badge {
-    /*color: var(--appui-base-100);*/
     font-size: var(--appui-font-sizes-body-md);
     padding: 2px 8px;
     border-radius: 4px;
@@ -164,7 +148,6 @@
     color: var(--appui-warning-300);
 }
 
-/* Preset recipe badge */
 .fm-ml-preset-badge {
     font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: bold;
@@ -178,31 +161,19 @@
     align-self: center;
 }
 
-/* Quick meal banner */
 .fm-quick-meal-banner {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--appui-backgrounds-200);
     border-radius: 16px;
     padding: 16px;
-    margin-bottom: 20px;
-}
-
-.fm-quick-meal-banner-text {
-    flex-grow: 1;
-    flex-shrink: 1;
-    white-space: normal;
-    color: var(--appui-foregrounds-50);
-    -unity-font-style: bold;
-    margin-right: 12px;
 }
 
 .fm-quick-meal-banner-btn {
     flex-shrink: 0;
+    width: 100%;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
-
-
-
-

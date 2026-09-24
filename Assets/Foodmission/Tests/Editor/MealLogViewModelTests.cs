@@ -991,5 +991,86 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_quick_meal_log, requestedRoute);
         }
+
+        [Test]
+        public void IsQuickMeal_WithFlags_ReturnsTrue()
+        {
+            var log = new MealLog
+            {
+                id = "log-1",
+                typeOfMeal = "LUNCH",
+                flags = new[] { "MEAL_MEAT_FREE" }
+            };
+            Assert.IsTrue(MealLogHelpers.IsQuickMeal(log));
+        }
+
+        [Test]
+        public void IsQuickMeal_WithSwaps_ReturnsTrue()
+        {
+            var log = new MealLog
+            {
+                id = "log-2",
+                typeOfMeal = "DINNER",
+                swaps = new[] { "SWAP_BEEF_TO_LEGUMES" }
+            };
+            Assert.IsTrue(MealLogHelpers.IsQuickMeal(log));
+        }
+
+        [Test]
+        public void IsQuickMeal_WithTraditionalMealItemsAndNoFlags_ReturnsFalse()
+        {
+            var log = new MealLog
+            {
+                id = "log-3",
+                mealId = "meal-3",
+                typeOfMeal = "BREAKFAST",
+                meal = new Meal
+                {
+                    id = "meal-3",
+                    name = "Toast and coffee",
+                    items = new[]
+                    {
+                        new MealItemDetail { id = "item-1", notes = "Bread" }
+                    }
+                }
+            };
+            Assert.IsFalse(MealLogHelpers.IsQuickMeal(log));
+        }
+
+        [Test]
+        public void IsQuickMeal_WithNullLog_ReturnsFalse()
+        {
+            Assert.IsFalse(MealLogHelpers.IsQuickMeal(null));
+        }
+
+        [Test]
+        public void NavigateToQuickMealLogEdit_RaisesNavigationRequested_WithQuickMealActionAndArguments()
+        {
+            string requestedAction = null;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) =>
+            {
+                requestedAction = action;
+                requestedArgs = args;
+            };
+
+            var quickLog = new MealLog
+            {
+                id = "ml-quick-99",
+                typeOfMeal = "LUNCH",
+                flags = new[] { ClientEventTypes.MealMeatFree }
+            };
+
+            _vm.NavigateToQuickMealLogEdit(quickLog);
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_quick_meal_log, requestedAction);
+            Assert.IsNotNull(requestedArgs);
+            Assert.AreEqual(2, requestedArgs.Length);
+            Assert.AreEqual("mealLogId", requestedArgs[0].name);
+            Assert.AreEqual("ml-quick-99", requestedArgs[0].value);
+            Assert.AreEqual("mode", requestedArgs[1].name);
+            Assert.AreEqual("edit", requestedArgs[1].value);
+            Assert.AreEqual(quickLog, MealLogViewModel.PendingQuickMealEditPayload);
+        }
     }
 }

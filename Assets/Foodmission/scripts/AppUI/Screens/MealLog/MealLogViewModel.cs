@@ -9,6 +9,7 @@ using UnityEngine;
 
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
+using Unity.AppUI.Navigation;
 
 namespace eu.foodmission.platform
 {
@@ -1620,9 +1621,24 @@ namespace eu.foodmission.platform
             };
         }
 
+        public static MealLog PendingQuickMealEditPayload { get; set; }
+
         public void NavigateToQuickMealLog()
         {
             RaiseNavigationRequested(Actions.open_quick_meal_log);
+        }
+
+        public void NavigateToQuickMealLogEdit(MealLog log)
+        {
+            if (log == null) return;
+            PendingQuickMealEditPayload = log;
+            RaiseNavigationRequested(
+                Actions.open_quick_meal_log,
+                new[]
+                {
+                    new Argument("mealLogId", log.id),
+                    new Argument("mode", "edit")
+                });
         }
     }
 }
