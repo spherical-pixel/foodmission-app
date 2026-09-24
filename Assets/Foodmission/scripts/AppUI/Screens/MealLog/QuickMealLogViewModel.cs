@@ -678,6 +678,21 @@ namespace eu.foodmission.platform
             SelectedMealType = mealType;
         }
 
+        /// <summary>
+        /// Temporary workaround flag:
+        /// The backend currently only accepts habits and sustainable food flags (MEAL_*) in POST /meal-logs,
+        /// and does not yet accept nutrition and health flags (NUTRITION_*).
+        /// When this is true, nutrition flags are excluded from CreateMealLogRequest.flags and emitted
+        /// directly as client events via IEventService.RecordClientEventAsync.
+        /// Once the backend supports nutrition flags in meal-logs, set this to false to restore sending them in flags.
+        /// </summary>
+        public const bool EmitNutritionEventsDirectly = true;
+
+        public static bool IsNutritionEvent(string eventType)
+        {
+            return !string.IsNullOrEmpty(eventType) && eventType.StartsWith("NUTRITION_");
+        }
+
         public async Task<bool> SubmitQuickMealLogAsync()
         {
             if (_isSubmitting) return false;
@@ -688,7 +703,7 @@ namespace eu.foodmission.platform
 
             try
             {
-                // 1. Separate checked items into flags and swaps across all sections
+                // 1. Separate checked items into flags, swaps, and nutrition events across all sections
                 var allChecked = new List<QuickMealCheckItem>();
                 if (Sections != null && Sections.Count > 0)
                 {
@@ -707,6 +722,7 @@ namespace eu.foodmission.platform
 
                 var flags = new List<string>();
                 var swaps = new List<string>();
+                var nutritionEvents = new List<string>();
 
                 foreach (var q in allChecked)
                 {
@@ -722,7 +738,18 @@ namespace eu.foodmission.platform
                     {
                         if (!swaps.Contains(ev)) swaps.Add(ev);
                     }
-                    else if ((ev.StartsWith("MEAL_") || ev.StartsWith("NUTRITION_")) && ev != ClientEventTypes.MealLogged)
+                    else if (IsNutritionEvent(ev))
+                    {
+                        if (EmitNutritionEventsDirectly)
+                        {
+                            if (!nutritionEvents.Contains(ev)) nutritionEvents.Add(ev);
+                        }
+                        else
+                        {
+                            if (!flags.Contains(ev)) flags.Add(ev);
+                        }
+                    }
+                    else if (ev.StartsWith("MEAL_") && ev != ClientEventTypes.MealLogged)
                     {
                         if (!flags.Contains(ev)) flags.Add(ev);
                     }
@@ -734,16 +761,17 @@ namespace eu.foodmission.platform
                     flags.Remove(ClientEventTypes.MealMeatConsumed);
                 }
 
-                // Backend requires at least one flag when mealId is omitted
-                if (flags.Count == 0)
+                // Selection check: require at least one flag (or nutrition event if emitted directly)
+                // Note: swaps alone cannot log a meal when mealId is omitted
+                if (flags.Count == 0 && nutritionEvents.Count == 0)
                 {
                     ErrorMessage = "@UI:QUICK_MEAL_LOG_EMPTY_SELECTION";
                     ShowToastRequest?.Invoke(ErrorMessage);
                     return false;
                 }
 
-                // 2. Submit meal log directly with flags and swaps
-                if (_mealLogService != null)
+                // 2. Submit meal log directly with flags and swaps when meal flags are present
+                if (_mealLogService != null && flags.Count > 0)
                 {
                     var logReq = new CreateMealLogRequest
                     {
@@ -757,6 +785,31 @@ namespace eu.foodmission.platform
                     {
                         ErrorDetail = logErr;
                         return false;
+                    }
+                }
+
+                // 3. Emit nutrition events directly (temporary workaround while backend does not accept NUTRITION_* in flags)
+                if (EmitNutritionEventsDirectly && nutritionEvents.Count > 0 && _eventService != null)
+                {
+                    foreach (var nutritionEv in nutritionEvents)
+                    {
+                        var eventReq = new CreateClientEventRequest
+                        {
+                            eventType = nutritionEv,
+                            metadata = new
+                            {
+                                mealType = SelectedMealType,
+                                source = "quick_meal_log",
+                                sessionId = _eventService.CurrentSessionId
+                            }
+                        };
+                        var (_, eventErr) = await _eventService.RecordClientEventAsync(eventReq);
+                        if (eventErr != null && flags.Count == 0)
+                        {
+                            // If this was the only action (no meal log created) and recording failed, report error
+                            ErrorDetail = eventErr;
+                            return false;
+                        }
                     }
                 }
 

@@ -650,10 +650,61 @@ namespace eu.foodmission.platform.Tests
             bool success = await _vm.SubmitQuickMealLogAsync();
 
             Assert.IsTrue(success);
+            // Habit flag goes to meal log, nutrition flag is excluded from meal log flags
             _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
                 r.flags != null &&
                 r.flags.Contains(ClientEventTypes.MealMeatFree) &&
-                r.flags.Contains(ClientEventTypes.NutritionFruitVegServingAdded))), Times.Once);
+                !r.flags.Contains(ClientEventTypes.NutritionFruitVegServingAdded))), Times.Once);
+
+            // Nutrition flag is emitted directly as a client event
+            _mockEventService.Verify(e => e.RecordClientEventAsync(It.Is<CreateClientEventRequest>(req =>
+                req.eventType == ClientEventTypes.NutritionFruitVegServingAdded)), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WithOnlyNutritionFlag_EmitsDirectEventAndSucceedsWithoutMealLogCall()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+
+            var nutritionSec = _vm.Sections.First(s => s.Id == "sec_nutrition");
+            _vm.ToggleQuestion("q_wholegrain");
+            Assert.AreEqual(1, nutritionSec.SelectedCount);
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsTrue(success);
+            Assert.IsTrue(_vm.SubmitSuccess);
+            Assert.AreEqual("@UI:QUICK_MEAL_LOG_SUCCESS", _vm.SuccessMessage);
+
+            // No meal flags present, so meal log service should not be called with empty flags
+            _mockMealLogService.Verify(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
+
+            // Event emitted directly
+            _mockEventService.Verify(e => e.RecordClientEventAsync(It.Is<CreateClientEventRequest>(req =>
+                req.eventType == ClientEventTypes.NutritionWholegrainChosen)), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WhenNutritionDirectEmitFailsAndNoMealFlags_ReturnsFalseAndSetsErrorDetail()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+
+            var nutritionSec = _vm.Sections.First(s => s.Id == "sec_nutrition");
+            _vm.ToggleQuestion("q_salt_free");
+
+            var expectedErr = new ApiErrorResponse { statusCode = 500, message = "Event failed" };
+            _mockEventService.Setup(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()))
+                .ReturnsAsync(((UserEvent)null, expectedErr));
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsFalse(success);
+            Assert.IsFalse(_vm.SubmitSuccess);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            Assert.AreEqual(500, _vm.ErrorDetail.statusCode);
+            Assert.AreEqual("Event failed", _vm.ErrorDetail.message);
         }
 
         [Test]
