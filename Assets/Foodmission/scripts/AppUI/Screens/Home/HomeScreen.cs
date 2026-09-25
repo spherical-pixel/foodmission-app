@@ -18,6 +18,16 @@ namespace eu.foodmission.platform
     [Preserve]
     class HomeScreen : NavigationScreenBase<HomeScreenViewModel>
     {
+        private static bool _hasDeferredOnboardingThisSession = false;
+        private static bool _hasDeferredNotificationsThisSession = false;
+        private static bool _hasDeferredPilotSurveyThisSession = false;
+
+        public static void ResetSessionDeferredFlags()
+        {
+            _hasDeferredOnboardingThisSession = false;
+            _hasDeferredNotificationsThisSession = false;
+            _hasDeferredPilotSurveyThisSession = false;
+        }
         private LinearProgress _healthProgress;
         private LinearProgress _sustainabilityProgress;
         private LinearProgress _knowledgeProgress;
@@ -62,7 +72,6 @@ namespace eu.foodmission.platform
             base.OnEnter(controller, destination, args);
             _ = _viewModel?.LoadActiveQuestAsync();
             RefreshActiveQuestWidget();
-            CheckPendingGamificationRewardsAsync();
             //SetupRewardDebugButton();
         }
 
@@ -96,22 +105,38 @@ namespace eu.foodmission.platform
             RefreshActiveQuestWidget();
             _ = _viewModel?.LoadActiveQuestAsync();
 
-            CheckWhatsNewAsync();
-            CheckPendingProfileReminder();
-            CheckPendingNotificationPrompt();
-            CheckPendingLegalConsentAsync();
-            CheckPendingPilotConsentAsync();
-            CheckPendingPilotSurveyAsync();
-            CheckPendingGamificationRewardsAsync();
-            //SetupRewardDebugButton();
-            // #if DEVELOPER_MODE
-            //             SetupPilotDebugPanel();
-            // #endif
+            EvaluateNextPendingHomePromptAsync();
         }
 
-        private async void CheckPendingLegalConsentAsync()
+        private async void EvaluateNextPendingHomePromptAsync()
         {
             if (_viewModel == null) return;
+
+            // 1. Consentimiento legal obligatorio (máxima prioridad)
+            if (await CheckPendingLegalConsentAsync()) return;
+
+            // 2. Consentimiento piloto obligatorio
+            if (await CheckPendingPilotConsentAsync()) return;
+
+            // 3. Recompensas de gamificación (si hay celebración con avatar/partículas, no abrir más ventanas)
+            if (await CheckPendingGamificationRewardsAsync()) return;
+
+            // 4. Novedades de la versión (What's New)
+            if (await CheckWhatsNewAsync()) return;
+
+            // 5. Recordatorio de Onboarding (perfil o encuesta inicial)
+            if (CheckPendingProfileReminder()) return;
+
+            // 6. Solicitud de notificaciones push
+            if (CheckPendingNotificationPrompt()) return;
+
+            // 7. Encuesta periódica del piloto
+            if (await CheckPendingPilotSurveyAsync()) return;
+        }
+
+        private async Task<bool> CheckPendingLegalConsentAsync()
+        {
+            if (_viewModel == null) return false;
             var status = await _viewModel.CheckPendingLegalConsentAsync();
             if (status != null && status.mustAccept && status.documents != null)
             {
@@ -119,15 +144,12 @@ namespace eu.foodmission.platform
                 {
                     if (!doc.accepted)
                     {
-                        bool accepted = await ShowPendingLegalConsent(doc);
-
-                        if (!accepted)
-                        {
-                            break;
-                        }
+                        _ = ShowPendingLegalConsent(doc);
+                        return true;
                     }
                 }
             }
+            return false;
         }
 
         private async Task<bool> ShowPendingLegalConsent(PendingLegalConsent pendingLegalConsent)
@@ -231,11 +253,11 @@ namespace eu.foodmission.platform
                 );
         }
 
-        private void CheckPendingNotificationPrompt()
+        private bool CheckPendingNotificationPrompt()
         {
-            if (_viewModel == null || !_viewModel.ShouldPromptForNotifications())
+            if (_viewModel == null || _hasDeferredNotificationsThisSession || !_viewModel.ShouldPromptForNotifications())
             {
-                return;
+                return false;
             }
 
             NutriMessageDialog.Show(
@@ -248,24 +270,25 @@ namespace eu.foodmission.platform
                     }, ButtonVariant.Accent),
                     new FMDialogAction("@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_NO", () =>
                     {
+                        _hasDeferredNotificationsThisSession = true;
                         _viewModel.DeclineNotifications();
                     }, ButtonVariant.Default)
                 }
             );
+
+            return true;
         }
 
-        private async void CheckPendingPilotConsentAsync()
+        private async Task<bool> CheckPendingPilotConsentAsync()
         {
-            if (_viewModel == null) return;
-            if (!_viewModel.IsUserInPilotCountry()) return;
+            if (_viewModel == null) return false;
+            if (!_viewModel.IsUserInPilotCountry()) return false;
 
             bool hasConsent = await _viewModel.HasAcceptedPilotConsentAsync();
-            if (hasConsent) return;
+            if (hasConsent) return false;
 
             var (content, error) = await _viewModel.GetPilotConsentFormAsync();
-            if (string.IsNullOrEmpty(content)) return;
-
-
+            if (string.IsNullOrEmpty(content)) return false;
 
             FMDialog.ShowScrollableMD(
                 this,
@@ -274,7 +297,6 @@ namespace eu.foodmission.platform
                 onAccept: async () =>
                 {
                     await _viewModel.AcceptPilotConsentAsync();
-                    CheckPendingPilotSurveyAsync();
                 },
                 onCancel: () =>
                 {
@@ -286,7 +308,7 @@ namespace eu.foodmission.platform
                         {
                             new FMDialogAction("@UI:TXT_REVIEW_DOCUMENT", () =>
                             {
-                                CheckPendingPilotConsentAsync();
+                                _ = CheckPendingPilotConsentAsync();
                             }, ButtonVariant.Accent),
                             new FMDialogAction("@UI:TXT_CANCEL", () => { }, ButtonVariant.Default)
                         }
@@ -294,18 +316,16 @@ namespace eu.foodmission.platform
                 }
             );
 
-
+            return true;
         }
 
-        private async void CheckPendingPilotSurveyAsync()
+        private async Task<bool> CheckPendingPilotSurveyAsync()
         {
-            if (_viewModel == null) return;
+            if (_viewModel == null || _hasDeferredPilotSurveyThisSession) return false;
 
             var survey = await _viewModel.CheckPendingPilotSurveyAsync();
             if (survey != null)
             {
-
-
                 NutriMessageDialog.Show(
                     message: "@UI:NEW_SURVEY_MESSAGE",
                     actions: new[]
@@ -316,27 +336,35 @@ namespace eu.foodmission.platform
                         }, ButtonVariant.Accent),
                         new FMDialogAction("@UI:NEW_SURVEY_LATER", () =>
                         {
+                            _hasDeferredPilotSurveyThisSession = true;
                             _viewModel.PostponePilotSurvey(survey.slug);
                         }, ButtonVariant.Default),
                         new FMDialogAction("@UI:NEW_SURVEY_DECLINE", () =>
                         {
+                            _hasDeferredPilotSurveyThisSession = true;
                             _viewModel.SkipPilotSurvey(survey.slug);
                         }, ButtonVariant.Default)
                     }
                 );
+
+                return true;
             }
 
+            return false;
         }
 
-        private async void CheckPendingGamificationRewardsAsync()
+        private async Task<bool> CheckPendingGamificationRewardsAsync()
         {
-            if (_viewModel == null || _isDisplayingCelebrationQueue) return;
+            if (_viewModel == null || _isDisplayingCelebrationQueue) return false;
 
             var rewards = await _viewModel.CheckPendingGamificationRewardsAsync();
             if (rewards != null && rewards.Count > 0)
             {
                 ShowCelebrationQueue(new System.Collections.Generic.Queue<PendingRewardCelebration>(rewards));
+                return true;
             }
+
+            return false;
         }
 
         private void ShowCelebrationQueue(System.Collections.Generic.Queue<PendingRewardCelebration> queue)
@@ -617,26 +645,52 @@ namespace eu.foodmission.platform
             root.Add(debugCard);
         }
 
-        private void CheckPendingProfileReminder()
+        private bool CheckPendingProfileReminder()
         {
-            var storeService = App.current?.services?.GetService<IStoreService>();
-            if (storeService == null) return;
+            if (_viewModel == null || _hasDeferredOnboardingThisSession) return false;
 
-            var state = storeService.GetAppState();
-            if (!state.hasCompletedExtendedProfile && state.hasSkippedExtendedProfile)
-            {
-                NutriMessageDialog.Show(
-                    message: "Tienes pendiente completar tu perfil extendido. ¿Quieres completarlo ahora?",
-                    actions: new[]
-                    {
-                        new FMDialogAction("Completar Perfil", () =>
+            var pendingType = _viewModel.GetPendingOnboardingType();
+            if (pendingType == PendingOnboardingType.None) return false;
+
+            string messageKey = pendingType == PendingOnboardingType.Profile
+                ? "ONBOARDING_REMINDER_PROFILE_MSG"
+                : "ONBOARDING_REMINDER_SURVEY_MSG";
+
+            string actionKey = pendingType == PendingOnboardingType.Profile
+                ? "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE"
+                : "ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY";
+
+            NutriMessageDialog.Show(
+                message: LocalizationSettings.StringDatabase.GetLocalizedString("UI", messageKey),
+                actions: new[]
+                {
+                    new FMDialogAction(
+                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", actionKey),
+                        () =>
                         {
-                            _viewModel?.NavigateToOnboardingProfile();
-                        }, ButtonVariant.Accent),
-                        new FMDialogAction("Más Tarde", () => { }, ButtonVariant.Default)
-                    }
-                );
-            }
+                            if (pendingType == PendingOnboardingType.Profile)
+                            {
+                                _viewModel.NavigateToOnboardingProfile();
+                            }
+                            else
+                            {
+                                _viewModel.NavigateToOnboardingSurvey();
+                            }
+                        },
+                        ButtonVariant.Accent
+                    ),
+                    new FMDialogAction(
+                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LATER"),
+                        () =>
+                        {
+                            _hasDeferredOnboardingThisSession = true;
+                        },
+                        ButtonVariant.Default
+                    )
+                }
+            );
+
+            return true;
         }
 
         private void RegisterEvents()
@@ -791,23 +845,25 @@ namespace eu.foodmission.platform
             if (_caloriesLeftLabel != null) _caloriesLeftLabel.text = _viewModel.CaloriesLeft.ToString();
         }
 
-        private async void CheckWhatsNewAsync()
+        private async Task<bool> CheckWhatsNewAsync()
         {
             try
             {
                 var whatsNewService = App.current?.services?.GetService<IWhatsNewService>();
-                if (whatsNewService == null) return;
+                if (whatsNewService == null) return false;
 
                 var (shouldShow, notes) = await whatsNewService.CheckShouldShowAsync();
                 if (shouldShow)
                 {
                     ShowWhatsNewModal(notes);
+                    return true;
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[HomeScreen] What's New check failed: {ex.Message}");
             }
+            return false;
         }
 
         private void ShowWhatsNewModal(string releaseNotes)

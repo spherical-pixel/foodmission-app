@@ -51,6 +51,17 @@ namespace eu.foodmission.platform
 
             if (_viewModel != null)
             {
+                if (args != null)
+                {
+                    foreach (var arg in args)
+                    {
+                        if (arg.name == "fromHome" && arg.value?.ToString() == "true")
+                        {
+                            _viewModel.FromHome = true;
+                        }
+                    }
+                }
+
                 await _viewModel.LoadCatalogOptionsAsync();
                 PopulateAllQuestionOptions();
             }

@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace eu.foodmission.platform
 {
+    public enum PendingOnboardingType
+    {
+        None,
+        Profile,
+        Survey
+    }
+
     [ObservableObject]
     public partial class HomeScreenViewModel : ViewModelBase
     {
@@ -158,9 +165,34 @@ namespace eu.foodmission.platform
             return res != null && res.accepted;
         }
 
+        public PendingOnboardingType GetPendingOnboardingType()
+        {
+            var state = _storeService.GetAppState();
+            if (!state.hasCompletedExtendedProfile)
+            {
+                return PendingOnboardingType.Profile;
+            }
+
+            bool surveyAnswered = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
+            if (state.hasCompletedExtendedProfile && !surveyAnswered)
+            {
+                return PendingOnboardingType.Survey;
+            }
+
+            return PendingOnboardingType.None;
+        }
+
         public void NavigateToOnboardingProfile()
         {
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.register_to_onboarding);
+        }
+
+        public void NavigateToOnboardingSurvey()
+        {
+            RaiseNavigationRequested(
+                Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboarding_survey,
+                new Unity.AppUI.Navigation.Argument("fromHome", "true")
+            );
         }
 
         public async System.Threading.Tasks.Task<SurveyDto> CheckPendingPilotSurveyAsync()

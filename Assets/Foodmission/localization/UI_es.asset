@@ -3136,6 +3136,23 @@ MonoBehaviour:
     m_Localized: "\u26A1 Abrir el registro simplificado de comidas"
     m_Metadata:
       m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "Tienes pendiente completar tu perfil. \xBFQuieres completarlo ahora?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Tienes pendiente completar tu encuesta de h\xE1bitos alimentarios.
+      \xBFQuieres completarla ahora?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: Completar Perfil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: Completar Encuesta
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

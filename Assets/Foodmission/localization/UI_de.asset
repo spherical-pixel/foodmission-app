@@ -3152,6 +3152,24 @@ MonoBehaviour:
     m_Localized: "\u26A1 Vereinfachtes Ern\xE4hrungsprotokoll \xF6ffnen"
     m_Metadata:
       m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "Du musst dein Profil noch vervollst\xE4ndigen. M\xF6chtest du das
+      jetzt tun?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Deine erste Umfrage zu deinen Essgewohnheiten steht noch aus. M\xF6chtest
+      du sie jetzt ausf\xFCllen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: "Profil vervollst\xE4ndigen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: "Umfrage ausf\xFCllen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

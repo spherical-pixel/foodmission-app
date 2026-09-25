@@ -3071,6 +3071,22 @@ MonoBehaviour:
     m_Key: QUICK_MEAL_LOG_GOTO_BUTTON
     m_Metadata:
       m_Items: []
+  - m_Id: 49870781398638592
+    m_Key: ONBOARDING_REMINDER_PROFILE_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Key: ONBOARDING_REMINDER_SURVEY_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Key: ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Key: ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

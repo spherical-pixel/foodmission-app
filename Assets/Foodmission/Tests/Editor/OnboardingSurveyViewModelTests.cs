@@ -167,5 +167,31 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(vm.ErrorDetail);
             Assert.AreEqual("Server error occurred", vm.ErrorDetail.message);
         }
+
+        [Test]
+        public async Task FullFlow_WhenFromHomeIsTrue_NavigatesToHome()
+        {
+            var mockAuthService = new Mock<IAuthService>();
+            mockAuthService.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, (ApiErrorResponse)null));
+
+            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, mockAuthService.Object);
+            vm.Initialize();
+            vm.FromHome = true;
+
+            string requestedAction = null;
+            vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            vm.MeatMealsIndex = 0;
+            vm.BeefFrequencyIndex = 0;
+            vm.FoodWasteFrequencyIndex = 0;
+            vm.UltraProcessedFrequencyIndex = 0;
+            vm.ReusableContainersFrequencyIndex = 0;
+
+            for (int i = 0; i < 6; i++)
+                await vm.GoNextAsync();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
+        }
     }
 }

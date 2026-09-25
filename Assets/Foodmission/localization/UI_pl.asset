@@ -3172,6 +3172,24 @@ MonoBehaviour:
     m_Localized: "\u26A1 Otw\xF3rz uproszczony dziennik posi\u0142k\xF3w"
     m_Metadata:
       m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "Musisz jeszcze doko\u0144czy\u0107 sw\xF3j profil. Czy chcesz to
+      zrobi\u0107 teraz?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Czeka na Ciebie pocz\u0105tkowa ankieta dotycz\u0105ca nawyk\xF3w
+      \u017Cywieniowych. Czy chcesz j\u0105 teraz wype\u0142ni\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: "Uzupe\u0142nij profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: "Wype\u0142nij ankiet\u0119"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

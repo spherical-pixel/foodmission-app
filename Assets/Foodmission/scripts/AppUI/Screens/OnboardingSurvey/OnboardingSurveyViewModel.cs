@@ -39,6 +39,7 @@ namespace eu.foodmission.platform
         [ObservableProperty] private int m_FoodWasteFrequencyIndex = -1;
         [ObservableProperty] private int m_UltraProcessedFrequencyIndex = -1;
         [ObservableProperty] private int m_ReusableContainersFrequencyIndex = -1;
+        [ObservableProperty] private bool m_FromHome = false;
 
         public OnboardingSurveyViewModel(IStoreService storeService, ICatalogService catalogService, IAuthService authService = null) : base(storeService)
         {
@@ -208,8 +209,15 @@ namespace eu.foodmission.platform
                     ErrorDetail = null;
                 }
 
-                // 3. Complete survey flow & navigate to OnboardingAvatar screen
-                RaiseNavigationRequested(Actions.onboardingprofile_to_onboardingavatar, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
+                // 3. Complete survey flow & navigate to next screen
+                if (FromHome)
+                {
+                    RaiseNavigationRequested(Actions.go_to_home);
+                }
+                else
+                {
+                    RaiseNavigationRequested(Actions.onboardingprofile_to_onboardingavatar, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
+                }
             }
             finally
             {

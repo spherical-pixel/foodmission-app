@@ -201,18 +201,27 @@ MonoBehaviour:
   - m_Id: 35547983100502016
     m_Localized: 'Insieme, uniremo la tua cucina alla tutela del pianeta.
 
+      
 
+      
 
+      
 
+      
 
       Cucina,
       impara, condividi e cresci ogni giorno.
 
+      
 
+      
 
+      
 
+      
 
-      Pronto a iniziare?'
+      Pronto
+      a iniziare?'
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -2389,12 +2398,17 @@ MonoBehaviour:
       documento relativo a {0}. Se non sei d''accordo, puoi disconnetterti o cancellare
       il tuo account.
 
+      
 
+      
 
+      
 
+      
 
-      Ti invitiamo a dedicare qualche minuto a rileggere
-      il nuovo documento relativo a {0} e a contattarci se ritieni che contenga errori.'
+      Ti invitiamo a
+      dedicare qualche minuto a rileggere il nuovo documento relativo a {0} e a contattarci
+      se ritieni che contenga errori.'
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -3165,6 +3179,23 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49593946022600704
     m_Localized: "\u26A1 Apri il registro dei pasti semplificato"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: Hai ancora il tuo profilo da completare. Vuoi completarlo ora?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: Hai ancora il questionario iniziale sulle abitudini alimentari in
+      sospeso. Vuoi completarlo ora?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: Completa profilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: Completa questionario
     m_Metadata:
       m_Items: []
   references:

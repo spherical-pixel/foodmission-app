@@ -533,5 +533,88 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_quest, requestedAction);
         }
+
+        [Test]
+        public void GetPendingOnboardingType_WhenProfileSkippedAndNotCompleted_ReturnsProfile()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = false,
+                hasSkippedExtendedProfile = true,
+                userOnboardingSurvey = new OnboardingSurveyData()
+            });
+
+            var result = _vm.GetPendingOnboardingType();
+
+            Assert.AreEqual(PendingOnboardingType.Profile, result);
+        }
+
+        [Test]
+        public void GetPendingOnboardingType_WhenProfileCompletedAndSurveyNotAnswered_ReturnsSurvey()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = true,
+                hasSkippedExtendedProfile = false,
+                userOnboardingSurvey = new OnboardingSurveyData()
+            });
+
+            var result = _vm.GetPendingOnboardingType();
+
+            Assert.AreEqual(PendingOnboardingType.Survey, result);
+        }
+
+        [Test]
+        public void GetPendingOnboardingType_WhenBothCompleted_ReturnsNone()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = true,
+                hasSkippedExtendedProfile = false,
+                userOnboardingSurvey = new OnboardingSurveyData
+                {
+                    weeklyMeatConsumption = "ZERO_TO_FOUR"
+                }
+            });
+
+            var result = _vm.GetPendingOnboardingType();
+
+            Assert.AreEqual(PendingOnboardingType.None, result);
+        }
+
+        [Test]
+        public void GetPendingOnboardingType_WhenProfileNotSkippedAndNotCompleted_ReturnsNone()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = false,
+                hasSkippedExtendedProfile = false,
+                userOnboardingSurvey = new OnboardingSurveyData()
+            });
+
+            var result = _vm.GetPendingOnboardingType();
+
+            Assert.AreEqual(PendingOnboardingType.None, result);
+        }
+
+        [Test]
+        public void NavigateToOnboardingSurvey_RaisesNavigationWithFromHome()
+        {
+            string requestedAction = null;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) =>
+            {
+                requestedAction = action;
+                requestedArgs = args;
+            };
+
+            _vm.NavigateToOnboardingSurvey();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboarding_survey, requestedAction);
+            Assert.IsNotNull(requestedArgs);
+            Assert.AreEqual(1, requestedArgs.Length);
+            Assert.AreEqual("fromHome", requestedArgs[0].name);
+            Assert.AreEqual("true", requestedArgs[0].value?.ToString());
+        }
     }
 }

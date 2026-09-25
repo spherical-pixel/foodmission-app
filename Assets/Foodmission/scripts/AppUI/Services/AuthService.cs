@@ -601,6 +601,7 @@ namespace eu.foodmission.platform
             var nutriService = App.current?.services?.GetService<INutriService>();
             nutriService?.ApplyLoadout(null);
 
+            HomeScreen.ResetSessionDeferredFlags();
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log($"[{GetType().Name}] User logged out and session state fully cleaned");
         }

@@ -3135,6 +3135,24 @@ MonoBehaviour:
     m_Localized: "\u26A1 Odpri poenostavljen dnevnik obrokov"
     m_Metadata:
       m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "\u0160e vedno morate dokon\u010Dati svoj profil. Ali ga \u017Eelite
+      dokon\u010Dati zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Va\u0161a za\u010Detna anketa o prehranjevalnih navadah \u0161e
+      vedno \u010Daka. Ali jo \u017Eelite izpolniti zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: "Dokon\u010Daj profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: Izpolni anketo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -259,9 +259,13 @@ MonoBehaviour:
     m_Localized: 'Denne handlingen vil slette alle opplysningene dine permanent fra
       plattformen.
 
+      
 
+      
 
+      
 
+      
 
       Er du sikker?'
     m_Metadata:
@@ -3136,6 +3140,24 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49593946022600704
     m_Localized: "\u26A1 \xC5pne forenklet m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "Du m\xE5 fortsatt fullf\xF8re profilen din. Vil du fullf\xF8re
+      den n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Du har fortsatt den f\xF8rste unders\xF8kelsen om spisevaner p\xE5
+      vent. Vil du fullf\xF8re den n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: "Fullf\xF8r profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: "Fullf\xF8r unders\xF8kelse"
     m_Metadata:
       m_Items: []
   references:
