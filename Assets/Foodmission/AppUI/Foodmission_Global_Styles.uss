@@ -2197,3 +2197,8 @@
 .appui-dialog__header.appui-heading{
     white-space: normal;
 }
+
+.fm-active-quest-cart-quick-meal-btn{
+    background-color: var(--appui-primary-200);
+    color: var(--appui-primary-1000);
+}

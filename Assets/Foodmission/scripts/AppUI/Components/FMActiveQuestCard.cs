@@ -95,6 +95,7 @@ namespace eu.foodmission.platform.Components
                 size = Size.S,
                 variant = ButtonVariant.Accent
             };
+            _btnQuickMeal.AddToClassList("fm-active-quest-cart-quick-meal-btn");
             _btnQuickMeal.style.marginTop = 25;
             _btnQuickMeal.style.width = Length.Percent(100);
             if (_btnQuickMeal.clickable != null)

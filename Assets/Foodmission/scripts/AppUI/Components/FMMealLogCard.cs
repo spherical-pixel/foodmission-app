@@ -109,6 +109,9 @@ namespace eu.foodmission.platform.Components
 
             this.Add(actionsContainer);
 
+            // TODO: By now disabled the edit/delete buttons
+            actionsContainer.style.display = DisplayStyle.None;
+
             UpdateMealLogData();
         }
 

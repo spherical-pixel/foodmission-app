@@ -11,4 +11,6 @@
     </activity>
   </application>
   <uses-permission android:name="android.permission.VIBRATE" />
+  <!-- Eliminar el ID de publicidad que arrastra Firebase Analytics -->
+  <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
 </manifest>
