@@ -60,6 +60,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e130786fde754a08986026019979bdd
+    m_Address: Foodmission/AppUI/Templates/ChallengeDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 404211e31bd7c415695601ee71d57fd1
+    m_Address: Foodmission/AppUI/Templates/MissionDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 43fb5003364a54be8894f82dc1b6a3c0
     m_Address: Foodmission/AppUI/Templates/RecipeEditorScreen.uxml
     m_ReadOnly: 0
@@ -217,6 +227,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ebac471f1dd824238b155070d79439fa
     m_Address: Foodmission/AppUI/Templates/FoodFactScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edbad3840ad844072aa9fb7c8dee4b39
+    m_Address: Foodmission/AppUI/Templates/QuickMealLogScreen.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

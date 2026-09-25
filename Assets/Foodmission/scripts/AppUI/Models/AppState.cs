@@ -142,10 +142,10 @@ namespace eu.foodmission.platform
         public int userDailyTimeCommitmentMinutes = 0;
         public string userSegment = "";
         public string userCurrentQuestId = "";
-        public PilotSurveyCycleState pilotSurveyCycleState;
-        public bool pilotConsentAccepted = false;
         public int userXp = 0;
         public int userPoints = 0;
+        public PilotSurveyCycleState pilotSurveyCycleState;
+        public bool pilotConsentAccepted = false;
         public ProgressIndicator[] userProgressIndicators = new ProgressIndicator[0];
         public string[] userBadges = new string[0];
 
@@ -216,10 +216,10 @@ namespace eu.foodmission.platform
                 userDailyTimeCommitmentMinutes = this.userDailyTimeCommitmentMinutes,
                 userSegment = this.userSegment,
                 userCurrentQuestId = this.userCurrentQuestId,
-                pilotSurveyCycleState = this.pilotSurveyCycleState?.Copy(),
-                pilotConsentAccepted = this.pilotConsentAccepted,
                 userXp = this.userXp,
                 userPoints = this.userPoints,
+                pilotSurveyCycleState = this.pilotSurveyCycleState?.Copy(),
+                pilotConsentAccepted = this.pilotConsentAccepted,
                 userProgressIndicators = this.userProgressIndicators != null ? (ProgressIndicator[])this.userProgressIndicators.Clone() : new ProgressIndicator[0],
                 userBadges = this.userBadges != null ? (string[])this.userBadges.Clone() : new string[0],
                 isAuthenticating = this.isAuthenticating,

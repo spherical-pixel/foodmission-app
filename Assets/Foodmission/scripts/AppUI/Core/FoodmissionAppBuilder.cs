@@ -34,6 +34,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IThemeService, ThemeService>();
             builder.services.AddSingleton<IKeyboardService, KeyboardService>();
             builder.services.AddSingleton<INutriService, NutriService>();
+            builder.services.AddSingleton<IFoodyService, FoodyService>();
             builder.services.AddSingleton<IAvatarService, AvatarService>();
             builder.services.AddSingleton<ICatalogService, CatalogService>();
             builder.services.AddSingleton<IFoodProductService, FoodProductService>();
@@ -58,6 +59,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IGamificationService, GamificationService>();
             builder.services.AddSingleton<IChallengeService, ChallengeService>();
             builder.services.AddSingleton<IMissionService, MissionService>();
+            builder.services.AddSingleton<IActivityEventMapper, ActivityEventMapper>();
             builder.services.AddSingleton<IQuestService, QuestService>();
             builder.services.AddSingleton<IDimensionService, DimensionService>();
             builder.services.AddSingleton<ISpriteService, SpriteService>();
@@ -110,6 +112,9 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<MissionsViewModel>();
             builder.services.AddTransient<QuestsViewModel>();
             builder.services.AddTransient<QuestDetailViewModel>();
+            builder.services.AddTransient<MissionDetailViewModel>();
+            builder.services.AddTransient<ChallengeDetailViewModel>();
+            builder.services.AddTransient<QuickMealLogViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

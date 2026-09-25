@@ -483,6 +483,7 @@ namespace eu.foodmission.platform
                 pilotConsentAccepted: profile.preferences?.pilotConsentAccepted ?? false
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
+            _ = App.current?.services?.GetService<INutriService>()?.SyncLoadoutAsync();
             _ = SyncGamificationAsync();
         }
 
@@ -597,6 +598,10 @@ namespace eu.foodmission.platform
             var avatarService = App.current?.services?.GetService<IAvatarService>();
             avatarService?.ClearFaceTexture();
 
+            var nutriService = App.current?.services?.GetService<INutriService>();
+            nutriService?.ApplyLoadout(null);
+
+            HomeScreen.ResetSessionDeferredFlags();
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log($"[{GetType().Name}] User logged out and session state fully cleaned");
         }

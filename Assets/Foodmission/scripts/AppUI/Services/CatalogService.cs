@@ -15,9 +15,10 @@ namespace eu.foodmission.platform
     {
         private readonly IStoreService _storeService;
 
-        // Startup cache (keyed by lang)
+        // Startup cache (keyed by lang and country)
         private CatalogData _cachedData;
         private string _cachedStartupLang;
+        private string _cachedStartupCountry;
 
         // Country/region caches (keyed by lang)
         private List<CatalogItem> _cachedCountries;
@@ -43,9 +44,18 @@ namespace eu.foodmission.platform
 
         // ── Startup (bulk) ───────────────────────────────────────────────
 
-        public async Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang)
+        public Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang)
+            => LoadStartupAsync(lang, null);
+
+        public async Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang, string country)
         {
-            if (_cachedData != null && _cachedStartupLang == lang)
+            string effectiveCountry = country;
+            if (string.IsNullOrEmpty(effectiveCountry))
+            {
+                effectiveCountry = _storeService?.GetAppState()?.userCountry;
+            }
+
+            if (_cachedData != null && _cachedStartupLang == lang && _cachedStartupCountry == effectiveCountry)
             {
                 return (_cachedData, null);
             }
@@ -53,6 +63,10 @@ namespace eu.foodmission.platform
             try
             {
                 string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/startup?lang={Uri.EscapeDataString(lang)}";
+                if (!string.IsNullOrEmpty(effectiveCountry))
+                {
+                    url += $"&country={Uri.EscapeDataString(effectiveCountry)}";
+                }
 
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
@@ -81,8 +95,9 @@ namespace eu.foodmission.platform
 
                 _cachedData = response.data;
                 _cachedStartupLang = lang;
+                _cachedStartupCountry = effectiveCountry;
 
-                Debug.Log($"[{GetType().Name}] Catalog loaded successfully (lang={lang})");
+                Debug.Log($"[{GetType().Name}] Catalog loaded successfully (lang={lang}, country={effectiveCountry})");
                 return (_cachedData, null);
             }
             catch (Exception ex)
@@ -95,13 +110,21 @@ namespace eu.foodmission.platform
         // ── Non-paginated catalog lists (type-of-meals, meal-categories, etc.) ──
 
         private async Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetCatalogListAsync(
-            string endpoint, string lang)
+            string endpoint, string lang, string queryParams = null)
         {
             try
             {
                 string url = $"{ApiConfig.BaseUrl}/api/v1/catalog/{endpoint}?lang={Uri.EscapeDataString(lang)}";
+                if (!string.IsNullOrEmpty(queryParams))
+                {
+                    url += queryParams.StartsWith("&") ? queryParams : $"&{queryParams}";
+                }
                 using UnityWebRequest request = UnityWebRequest.Get(url);
-                request.SetRequestHeader("Authorization", _storeService.GetAppState().tokenType + " " + _storeService.GetAppState().accessToken);
+                AppState s = _storeService?.GetAppState();
+                if (s != null && !string.IsNullOrEmpty(s.accessToken))
+                {
+                    request.SetRequestHeader("Authorization", $"{s.tokenType} {s.accessToken}");
+                }
                 request.SetRequestHeader("Accept", "application/json");
 
                 UnityWebRequestAsyncOperation operation = request.SendWebRequest();
@@ -120,6 +143,20 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[{GetType().Name}] GetCatalogListAsync({endpoint}) exception: {ex.Message}");
                 return (null, null);
             }
+        }
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetAnnualIncomeLevelsAsync(string lang)
+            => GetAnnualIncomeLevelsAsync(lang, null);
+
+        public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetAnnualIncomeLevelsAsync(string lang, string country)
+        {
+            string effectiveCountry = country;
+            if (string.IsNullOrEmpty(effectiveCountry))
+            {
+                effectiveCountry = _storeService?.GetAppState()?.userCountry;
+            }
+            string q = !string.IsNullOrEmpty(effectiveCountry) ? $"country={Uri.EscapeDataString(effectiveCountry)}" : null;
+            return GetCatalogListAsync("annual-income-levels", lang, q);
         }
 
         public Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetTypeOfMealsAsync(string lang)

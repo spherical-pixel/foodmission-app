@@ -346,7 +346,14 @@ namespace eu.foodmission.platform
                     if (mp == null) continue;
                     if (mp.completed || mp.progress >= 100f)
                     {
-                        if (!string.IsNullOrEmpty(mp.missionId)) completedMissionCodes.Add(mp.missionId);
+                        if (!string.IsNullOrEmpty(mp.missionId))
+                        {
+                            completedMissionCodes.Add(mp.missionId);
+                            string code = _missionService?.GetCachedCode(mp.missionId);
+                            if (!string.IsNullOrEmpty(code)) completedMissionCodes.Add(code);
+                        }
+                        if (!string.IsNullOrEmpty(mp.missionCode)) completedMissionCodes.Add(mp.missionCode);
+                        if (!string.IsNullOrEmpty(mp.missionTitle)) completedMissionCodes.Add(mp.missionTitle);
                     }
                 }
             }
@@ -359,7 +366,14 @@ namespace eu.foodmission.platform
                     if (cp == null) continue;
                     if (cp.completed || cp.progress >= 100f)
                     {
-                        if (!string.IsNullOrEmpty(cp.challengeId)) completedChallengeCodes.Add(cp.challengeId);
+                        if (!string.IsNullOrEmpty(cp.challengeId))
+                        {
+                            completedChallengeCodes.Add(cp.challengeId);
+                            string code = _challengeService?.GetCachedCode(cp.challengeId);
+                            if (!string.IsNullOrEmpty(code)) completedChallengeCodes.Add(code);
+                        }
+                        if (!string.IsNullOrEmpty(cp.challengeCode)) completedChallengeCodes.Add(cp.challengeCode);
+                        if (!string.IsNullOrEmpty(cp.challengeTitle)) completedChallengeCodes.Add(cp.challengeTitle);
                     }
                 }
             }
@@ -401,11 +415,14 @@ namespace eu.foodmission.platform
                     }
                     else if (string.Equals(cType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
                     {
-                        isItemCompleted = completedMissionCodes.Contains(code);
+                        isItemCompleted = completedMissionCodes.Contains(code) ||
+                                          (!string.IsNullOrEmpty(it.label) && completedMissionCodes.Contains(it.label));
                     }
-                    else if (string.Equals(cType, "CHALLENGE", StringComparison.OrdinalIgnoreCase))
+                    else if (string.Equals(cType, "CHALLENGE", StringComparison.OrdinalIgnoreCase) ||
+                             string.Equals(cType, QuestContentType.Challenge, StringComparison.OrdinalIgnoreCase))
                     {
-                        isItemCompleted = completedChallengeCodes.Contains(code);
+                        isItemCompleted = completedChallengeCodes.Contains(code) ||
+                                          (!string.IsNullOrEmpty(it.label) && completedChallengeCodes.Contains(it.label));
                     }
                 }
 
@@ -489,11 +506,19 @@ namespace eu.foodmission.platform
                     RaiseNavigationRequested(Actions.open_food_fact, new Argument("code", code));
                 }
             }
-            else if (string.Equals(contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) ||
-                     string.Equals(contentType, "CHALLENGE", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
             {
-                // Future extension point: when Mission or Challenge detail screen is created, navigate here.
-                Debug.Log($"[{GetType().Name}] OpenActivity for {contentType} ({code}): action deferred for future implementation.");
+                if (!string.IsNullOrEmpty(code))
+                {
+                    RaiseNavigationRequested(Actions.open_mission, new Argument("code", code));
+                }
+            }
+            else if (string.Equals(contentType, "CHALLENGE", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!string.IsNullOrEmpty(code))
+                {
+                    RaiseNavigationRequested(Actions.open_challenge, new Argument("code", code));
+                }
             }
         }
 
@@ -550,6 +575,7 @@ namespace eu.foodmission.platform
 
                 _storeService?.store?.Dispatch(AppActions.setCurrentQuest.Invoke(targetId));
                 IsCurrentQuest = true;
+                await LoadQuestAsync(_quest.code ?? _quest.id);
                 return true;
             }
             catch (Exception ex)

@@ -17,6 +17,9 @@ namespace eu.foodmission.platform
         public int? nutriscoreScore;
         public int? novaGroup;
         public string ecoscoreGrade;
+        public bool? isVegan;
+        public bool? isVegetarian;
+        public bool? isPalmOilFree;
     }
 
     [Serializable]
@@ -80,6 +83,9 @@ namespace eu.foodmission.platform
         public DateTime? createdAt;
         public DateTime? lastModified;
         public string rawNutriments;
+        public bool? isVegan;
+        public bool? isVegetarian;
+        public bool? isPalmOilFree;
     }
 
     [Serializable]

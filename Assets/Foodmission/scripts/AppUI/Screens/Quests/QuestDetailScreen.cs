@@ -240,7 +240,9 @@ namespace eu.foodmission.platform
                 // Interactivity & Navigation
                 string cType = act.Item?.contentType ?? string.Empty;
                 bool isNavigable = string.Equals(cType, QuestContentType.Quiz, StringComparison.OrdinalIgnoreCase) ||
-                                   string.Equals(cType, QuestContentType.FoodFact, StringComparison.OrdinalIgnoreCase);
+                                   string.Equals(cType, QuestContentType.FoodFact, StringComparison.OrdinalIgnoreCase) ||
+                                   string.Equals(cType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) ||
+                                   string.Equals(cType, "CHALLENGE", StringComparison.OrdinalIgnoreCase);
 
                 if (isNavigable)
                 {

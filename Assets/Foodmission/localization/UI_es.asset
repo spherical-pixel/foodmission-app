@@ -2964,6 +2964,195 @@ MonoBehaviour:
     m_Localized: Comida actualizada correctamente
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Registro simplificado de comidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: "\xBFCu\xE1les fueron las caracter\xEDsticas principales de tu plato?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: "Nombre o descripci\xF3n (opcional)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: 'Ej: Ensalada de lentejas y verduras'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: "\xA1Misi\xF3n completada!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: "\xA1Reto completado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: "H\xE1bitos y alimentaci\xF3n sostenible"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Comida sin carne / vegetariana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Sustituciones de alimentos (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: "Nutrici\xF3n y salud"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: "Raci\xF3n de legumbres consumida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: Comida 100% vegetal / vegana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Plato equilibrado (\xBD verdura, \xBC prote\xEDna, \xBC carbohidratos)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Cereales tradicionales o integrales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: "Tub\xE9rculo o alimento b\xE1sico alternativo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "Raci\xF3n de carne contabilizada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: "Raci\xF3n de verdura fresca o ensalada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: Pan o cereales 100% integrales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Comida rica en fibra vegetal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: "Sin sal a\xF1adida en la mesa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: Grasa saludable (aceite de oliva, frutos secos)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Sin az\xFAcares a\xF1adidos ni dulces industriales"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: "\xBFComida 100% vegetal o sin carne?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: "\xBFIncluy\xF3 verduras frescas o legumbres?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: "\xBFPlato sostenible o cereal alternativo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: "Selecciona la sustituci\xF3n realizada:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: "\xA1Comida y progresos registrados con \xE9xito!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Por favor, selecciona al menos una opci\xF3n sobre tu comida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: "Edici\xF3n del registro de comidas simplificado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Guardar cambios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: "\xA1Comida actualizada correctamente!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Ternera por legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Ternera por pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Ternera por cerdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Cerdo por legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Cerdo por pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Pollo por legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Refresco por agua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack por fruta / frutos secos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Cereales azucarados por avena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Ultraprocesado por casero"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Carne procesada por legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Abrir el registro simplificado de comidas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "Tienes pendiente completar tu perfil. \xBFQuieres completarlo ahora?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Tienes pendiente completar tu encuesta de h\xE1bitos alimentarios.
+      \xBFQuieres completarla ahora?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: Completar Perfil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: Completar Encuesta
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

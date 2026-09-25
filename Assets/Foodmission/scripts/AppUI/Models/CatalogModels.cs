@@ -10,6 +10,9 @@ namespace eu.foodmission.platform
     public class CatalogMeta
     {
         public string countryCode;
+        public string currency;
+        public double min;
+        public double max;
     }
 
     /// <summary>

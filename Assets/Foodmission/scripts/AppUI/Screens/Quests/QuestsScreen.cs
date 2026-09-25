@@ -59,6 +59,7 @@ namespace eu.foodmission.platform
             if (_activeQuestBanner != null)
             {
                 _activeQuestBanner.Clicked += () => _viewModel?.OpenActiveQuest();
+                _activeQuestBanner.QuickMealClicked += () => _viewModel?.NavigateToQuickMealLog();
             }
 
             _groupLevelFilters = contentContainer.Q<ActionGroup>("group-level-filters");
@@ -100,6 +101,10 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            if (_activeQuestBanner == null)
+            {
+                CacheUIElements();
+            }
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;

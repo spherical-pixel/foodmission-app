@@ -180,11 +180,14 @@ namespace eu.foodmission.platform.Components
             dialog.style.flexGrow = 1;
             dialog.style.height = Length.Percent(100);
 
+
+
             if (dialog.contentContainer != null)
             {
                 dialog.contentContainer.style.flexGrow = 1;
                 dialog.contentContainer.style.flexShrink = 1;
                 dialog.contentContainer.style.height = Length.Percent(100);
+
             }
 
             var scrollView = new ScrollView();
@@ -197,23 +200,42 @@ namespace eu.foodmission.platform.Components
 
             // Buscar todos los elementos de tipo LinkElement dentro del Markdown
             var linkElements = markdownElement.Query<LinkElement>().ToList();
+            long lastLinkClickTicks = 0;
             foreach (var link in linkElements)
             {
-                link.RegisterCallback<MouseDownEvent>(evt =>
+                void OnLinkTriggered()
                 {
-                    // El tooltip o title suele contener la URL o destino
                     string url = link.Url;
+                    if (string.IsNullOrEmpty(url)) return;
 
-                    if (!string.IsNullOrEmpty(url) && url.StartsWith("mailto:"))
+                    long now = DateTime.UtcNow.Ticks;
+                    if (now - lastLinkClickTicks < TimeSpan.FromMilliseconds(400).Ticks) return;
+                    lastLinkClickTicks = now;
+
+                    if (url.StartsWith("mailto:", StringComparison.OrdinalIgnoreCase))
                     {
-                        Debug.Log($"[FMDialog] - ShowScrollableMD: Se hizo clic en un correo electrónico: {url}");
-                        Application.OpenURL(url);
+                        Debug.Log($"[FMDialog] - ShowScrollableMD: Se abrió enlace de correo: {url}");
+                    }
+                    else if (url.StartsWith("tel:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Debug.Log($"[FMDialog] - ShowScrollableMD: Se abrió enlace de teléfono: {url}");
                     }
                     else
                     {
-                        Debug.Log($"[FMDialog] - ShowScrollableMD: Se hizo clic en un enlace web: {url}");
-                        Application.OpenURL(url);
+                        Debug.Log($"[FMDialog] - ShowScrollableMD: Se abrió enlace web: {url}");
                     }
+                    Application.OpenURL(url);
+                }
+
+                link.RegisterCallback<ClickEvent>(evt =>
+                {
+                    OnLinkTriggered();
+                    evt.StopPropagation();
+                });
+                link.RegisterCallback<MouseDownEvent>(evt =>
+                {
+                    OnLinkTriggered();
+                    evt.StopPropagation();
                 });
             }
             markdownElement.style.flexGrow = 1;
@@ -237,6 +259,17 @@ namespace eu.foodmission.platform.Components
             }
 
             ApplySafeArea();
+
+            if (dialog.style.paddingBottom == Length.Pixels(0))
+            {
+                dialog.style.paddingBottom = Length.Pixels(75);
+            }
+
+            if (dialog.style.paddingTop == Length.Pixels(0))
+            {
+                dialog.style.paddingTop = Length.Pixels(75);
+            }
+
 
             var modal = Modal.Build(anchor, dialog);
             if (themeService != null)

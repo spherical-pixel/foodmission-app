@@ -12,6 +12,7 @@ namespace eu.foodmission.platform
         public const string AppSessionEnded = "APP_SESSION_ENDED";
 
         // Meal & Diet Patterns
+        public const string MealLogged = "MEAL_LOGGED";
         public const string MealMeatConsumed = "MEAL_MEAT_CONSUMED";
         public const string MealMeatFree = "MEAL_MEAT_FREE";
         public const string MealLegumeConsumed = "MEAL_LEGUME_CONSUMED";
@@ -21,6 +22,7 @@ namespace eu.foodmission.platform
         public const string MealAlternativeStaple = "MEAL_ALTERNATIVE_STAPLE";
         public const string MealAncientGrain = "MEAL_ANCIENT_GRAIN";
         public const string MealSustainablePlate = "MEAL_SUSTAINABLE_PLATE";
+        public const string FoodWasteReported = "FOOD_WASTE_REPORTED";
 
         // Substitutions & Swaps
         public const string SwapBeefToPork = "SWAP_BEEF_TO_PORK";
@@ -84,6 +86,7 @@ namespace eu.foodmission.platform
         public const string LearningFootprintCompared = "LEARNING_FOOTPRINT_COMPARED";
         public const string LearningRecipeExplored = "LEARNING_RECIPE_EXPLORED";
         public const string LearningRecipeShared = "LEARNING_RECIPE_SHARED";
+        public const string LearningFactViewed = "LEARNING_FACT_VIEWED";
         public const string LearningFactRead = "LEARNING_FACT_READ";
 
         public static readonly string[] All = {
@@ -136,5 +139,7 @@ namespace eu.foodmission.platform
         public string source;
         public string timestamp;
         public string groupId;
+        [JsonProperty("metadata")]
+        public Newtonsoft.Json.Linq.JObject metadata;
     }
 }

@@ -2980,6 +2980,196 @@ MonoBehaviour:
     m_Localized: Mahlzeit erfolgreich aktualisiert
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: "Vereinfachtes Ern\xE4hrungsprotokoll"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Was waren die wichtigsten Merkmale Ihres Gerichts?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Name oder Beschreibung (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: "Beispiel: Linsen-Gem\xFCse-Salat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: Mission abgeschlossen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: Herausforderung abgeschlossen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: "Gewohnheiten und nachhaltige Ern\xE4hrung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Fleischlose / vegetarische Gerichte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Lebensmittelersatz (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: "Ern\xE4hrung und Gesundheit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: "Verzehrte Menge an H\xFClsenfr\xFCchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: 100 % pflanzliche / vegane Mahlzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Ausgewogene Mahlzeit (\xBD Gem\xFCse, \xBC Eiwei\xDF, \xBC Kohlenhydrate)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Traditionelle Getreidesorten oder Vollkornprodukte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: Knolle oder alternatives Grundnahrungsmittel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "Zugez\xE4hlte Fleischmenge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: "Eine Portion frisches Gem\xFCse oder Salat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: Brot oder Getreideprodukte aus 100 % Vollkorn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Eine ballaststoffreiche Mahlzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: "Kein zus\xE4tzliches Salz am Tisch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: "Gesunde Fette (Oliven\xF6l, N\xFCsse)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Ohne Zuckerzusatz oder industrielle S\xFC\xDFstoffe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: Eine zu 100 % pflanzliche oder fleischfreie Mahlzeit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: "War frisches Gem\xFCse oder H\xFClsenfr\xFCchte dabei?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: Nachhaltiges Gericht oder alternatives Getreide?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: "W\xE4hlen Sie die vorgenommene Ersetzung aus:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: Mahlzeit und Fortschritt erfolgreich erfasst!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Bitte w\xE4hlen Sie mindestens eine Mahlzeit aus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: "Bearbeitung des vereinfachten Ern\xE4hrungsprotokolls"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: "\xC4nderungen speichern"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: Mahlzeit erfolgreich aktualisiert!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Rindfleisch durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Rindfleisch durch H\xFChnchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Rindfleisch durch Schweinefleisch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Schweinefleisch durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Schweinefleisch durch H\xFChnchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 H\xFChnchen durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Zuckerhaltiges Getr\xE4nk durch Wasser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack durch Obst / N\xFCsse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Ges\xFC\xDFte Zerealien durch Haferflocken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Fertiggericht durch Selbstgekochtes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Verarbeitetes Fleisch durch H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Vereinfachtes Ern\xE4hrungsprotokoll \xF6ffnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "Du musst dein Profil noch vervollst\xE4ndigen. M\xF6chtest du das
+      jetzt tun?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Deine erste Umfrage zu deinen Essgewohnheiten steht noch aus. M\xF6chtest
+      du sie jetzt ausf\xFCllen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: "Profil vervollst\xE4ndigen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: "Umfrage ausf\xFCllen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

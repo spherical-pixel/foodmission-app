@@ -45,8 +45,11 @@ namespace eu.foodmission.platform.Components
         private readonly VisualElement _cardContainer;
         private readonly Unity.AppUI.UI.Text _questTitleText;
         private readonly ScrollView _timelineContainer;
+        private readonly Unity.AppUI.UI.Button _openButton;
+        private readonly FMButton _btnQuickMeal;
 
         public event Action Clicked;
+        public event Action QuickMealClicked;
 
         public FMActiveQuestCard()
         {
@@ -55,7 +58,7 @@ namespace eu.foodmission.platform.Components
             // Section Heading ("Active Quests")
             _headingText = new Unity.AppUI.UI.Text();
             _headingText.AddToClassList("fm-active-quest-heading");
-            _headingText.text = GetDefaultHeading();
+            _headingText.text = "@UI:ACTIVE_QUESTS";
             Add(_headingText);
 
             // Card Container
@@ -78,32 +81,29 @@ namespace eu.foodmission.platform.Components
             _timelineContainer.AddToClassList("fm-active-quest-timeline");
             _cardContainer.Add(_timelineContainer);
 
-            // Click interaction on card and timeline
-            _cardContainer.RegisterCallback<ClickEvent>(evt =>
-            {
-                evt.StopPropagation();
-                Clicked?.Invoke();
-            });
+            // Full clickable overlay button (placed beneath the CTA button, covering the card)
+            _openButton = new Unity.AppUI.UI.Button();
+            _openButton.AddToClassList("fm-full-button");
+            _openButton.quiet = true;
+            _openButton.clicked += () => Clicked?.Invoke();
+            _cardContainer.Add(_openButton);
 
-            _timelineContainer.RegisterCallback<ClickEvent>(evt =>
+            // Quick Meal Check CTA Button (placed on top of _openButton)
+            _btnQuickMeal = new FMButton
             {
-                evt.StopPropagation();
-                Clicked?.Invoke();
-            });
-        }
-
-        private static string GetDefaultHeading()
-        {
-            try
+                title = "@UI:QUICK_MEAL_LOG_GOTO_BUTTON",
+                size = Size.S,
+                variant = ButtonVariant.Accent
+            };
+            _btnQuickMeal.AddToClassList("fm-active-quest-cart-quick-meal-btn");
+            _btnQuickMeal.style.marginTop = 25;
+            _btnQuickMeal.style.width = Length.Percent(100);
+            if (_btnQuickMeal.clickable != null)
             {
-                string loc = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "ACTIVE_QUESTS");
-                if (!string.IsNullOrEmpty(loc)) return loc;
+                _btnQuickMeal.clickable.keepEventPropagation = false;
             }
-            catch
-            {
-                // Fallback if localization is not ready
-            }
-            return "Active Quests";
+            _btnQuickMeal.clicked += () => QuickMealClicked?.Invoke();
+            _cardContainer.Add(_btnQuickMeal);
         }
 
         /// <summary>

@@ -46,6 +46,8 @@ namespace eu.foodmission.platform
                 .Get(TemplateAddresses.EditProfile));
             CacheUIElements();
             RegisterManualEvents();
+
+
         }
 
         private void CacheUIElements()
@@ -63,7 +65,7 @@ namespace eu.foodmission.platform
             _countryDropdown = contentContainer.Q<FormFieldItemDropDownField>("country");
             _regionDropdown = contentContainer.Q<FormFieldItemDropDownField>("region");
             _yearOfBirthDropdown = contentContainer.Q<FormFieldItemDropDownField>("yearofbirth-dropdown");
-            
+
         }
 
         private void RegisterManualEvents()
@@ -83,7 +85,7 @@ namespace eu.foodmission.platform
                 _activityLevelDropdown.Dropdown.RegisterValueChangedCallback(OnActivityLevelChanged);
             }
 
-            if( _dietaryPreferencesDropdown != null)
+            if (_dietaryPreferencesDropdown != null)
             {
                 _dietaryPreferencesDropdown.Dropdown.RegisterValueChangedCallback(OnDietaryPreferencesChanged);
             }
@@ -118,12 +120,13 @@ namespace eu.foodmission.platform
                 _segmentDropdown.Dropdown.RegisterValueChangedCallback(OnSegmentChanged);
             }
 
-            if( _countryDropdown != null)
+            if (_countryDropdown != null)
             {
+                _countryDropdown.SetEnabled(false);
                 _countryDropdown.Dropdown.RegisterValueChangedCallback(OnCountryChanged);
             }
 
-            if( _regionDropdown != null)
+            if (_regionDropdown != null)
             {
                 _regionDropdown.Dropdown.RegisterValueChangedCallback(OnRegionChanged);
             }
@@ -196,7 +199,7 @@ namespace eu.foodmission.platform
         {
             base.OnEnter(controller, destination, args);
 
-            if( args != null && args.Length > 0)
+            if (args != null && args.Length > 0)
             {
                 // Handle any arguments passed during navigation if needed
                 Debug.Log($"EditProfileScreen received {args.Length} arguments.");
@@ -243,7 +246,7 @@ namespace eu.foodmission.platform
             };
         }
 
-        
+
         private void PrePopulateDropdownSelections()
         {
             SetDropdownSelection(_genderDropdown, _viewModel.SelectedGenderIndex);
@@ -305,7 +308,7 @@ namespace eu.foodmission.platform
         private void OnDietaryPreferencesChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             // Multi-select dropdown: always sync (including empty selection) so deselection clears the array.
-            if( _viewModel == null) return;
+            if (_viewModel == null) return;
             _viewModel.SelectedDietaryPreferenceIndices = evt.newValue?.ToArray() ?? new int[0];
         }
 
@@ -392,7 +395,7 @@ namespace eu.foodmission.platform
         private void OnCountryChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             var value = evt.newValue?.ToArray();
-            
+
             if (_viewModel == null || value == null || value.Length == 0)
             {
                 return;
@@ -462,7 +465,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        
+
 
         protected override void OnViewModelBound()
         {
@@ -550,6 +553,6 @@ namespace eu.foodmission.platform
                 .Show();
         }
 
-        
+
     }
 }

@@ -204,6 +204,10 @@ MonoBehaviour:
 
       
 
+      
+
+      
+
       Kook,
       leer, deel en groei elke dag.
 
@@ -211,7 +215,12 @@ MonoBehaviour:
 
       
 
-      Klaar om te beginnen?'
+      
+
+      
+
+      Klaar
+      om te beginnen?'
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -268,6 +277,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38465306467753984
     m_Localized: 'Hierdoor worden al je gegevens definitief van het platform verwijderd.
+
+      
+
+      
 
       
 
@@ -2141,9 +2154,13 @@ MonoBehaviour:
 
       
 
-      Beantwoord dan een paar optionele
-      vragen, zodat we je tips, receptsuggesties en dagelijkse uitdagingen op maat
-      kunnen maken.'
+      
+
+      
+
+      Beantwoord dan
+      een paar optionele vragen, zodat we je tips, receptsuggesties en dagelijkse
+      uitdagingen op maat kunnen maken.'
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2247,6 +2264,10 @@ MonoBehaviour:
   - m_Id: 34305618675228672
     m_Localized: 'Oeps! Dit gedeelte is nog niet beschikbaar, maar maak je geen zorgen:
       we zijn ermee bezig, dus je kunt er binnenkort van genieten.
+
+      
+
+      
 
       
 
@@ -2408,9 +2429,13 @@ MonoBehaviour:
 
       
 
-      Neem alstublieft even
-      de tijd om het nieuwe document van {0} nogmaals door te nemen, en neem gerust
-      contact met ons op als u denkt dat er iets niet klopt.'
+      
+
+      
+
+      Neem
+      alstublieft even de tijd om het nieuwe document van {0} nogmaals door te nemen,
+      en neem gerust contact met ons op als u denkt dat er iets niet klopt.'
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -2995,6 +3020,195 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672711
     m_Localized: Maaltijd succesvol bijgewerkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Vereenvoudigd maaltijdlogboek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Wat waren de belangrijkste kenmerken van je gerecht?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Naam of beschrijving (optioneel)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: 'Bijvoorbeeld: Salade met linzen en groenten'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: Missie voltooid!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: Uitdaging voltooid!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: Gewoontes en duurzame voeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Vleesloze / vegetarische gerechten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Vervangingen in voedingsmiddelen (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: Voeding en gezondheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: Geconsumeerde hoeveelheid peulvruchten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: 100% plantaardige / veganistische maaltijd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Evenwichtig bord (\xBD groenten, \xBC eiwitten, \xBC koolhydraten)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Traditionele granen of volkoren granen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: Knol of alternatief basisvoedsel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: Aantal stukken vlees geteld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: Portie verse groenten of salade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: 100% volkorenbrood of ontbijtgranen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Maaltijd rijk aan voedingsvezels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: Geen extra zout aan tafel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: Gezonde vetten (olijfolie, noten)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Geen toegevoegde suikers of industri\xEBle zoetstoffen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: Een 100% plantaardige of vleesloze maaltijd?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: Zat er verse groente of peulvruchten bij?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: "Duurzame ma\xEFs of een alternatief graan?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: 'Selecteer de aangebrachte wijziging:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: Maaltijd en voortgang succesvol geregistreerd!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Kies alstublieft ten minste \xE9\xE9n maaltijdoptie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: Het bewerken van het vereenvoudigde maaltijdlogboek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Wijzigingen opslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: Maaltijd succesvol bijgewerkt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Rundvlees voor peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Rundvlees voor kip"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Rundvlees voor varkensvlees"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Varkensvlees voor peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Varkensvlees voor kip"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Kip voor peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Suikerrijke drank voor water"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack voor fruit / noten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Suikerrijke ontbijtgranen voor haver"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Ultraverwerkt voor zelfgemaakt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Bewerkt vlees voor peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Open het vereenvoudigde maaltijdlogboek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: Je moet je profiel nog voltooien. Wil je dit nu doen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Je initi\xEBle enqu\xEAte over eetgewoonten staat nog open. Wil
+      je deze nu invullen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: Profiel voltooien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: "Enqu\xEAte invullen"
     m_Metadata:
       m_Items: []
   references:

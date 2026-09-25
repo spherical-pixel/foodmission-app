@@ -1,0 +1,60 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:eu="eu.foodmission.platform.Components" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Quests/QuestDetailScreen.uss?fileID=7433441132597879392&amp;guid=5821b2fde381647d297af73b5ef1cbff&amp;type=3#QuestDetailScreen"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Missions/MissionDetailScreen.uss?fileID=7433441132597879392&amp;guid=ae0bf96b4b97f4d49886c0d747caa382&amp;type=3#MissionDetailScreen"/>
+    <ui:VisualElement name="root" class="fm-root fm-activity-detail-root">
+        <ui:VisualElement name="card" class="fm-quest-detail-card fm-activity-detail-card">
+            <ui:VisualElement class="fm-activity-header-badges">
+                <appui:Text name="mission-level-badge" text="BEGINNER" size="S" class="fm-activity-badge"/>
+                <appui:Text name="mission-duration-badge" text="⏱️ 1 semana" size="S" class="fm-activity-badge"/>
+            </ui:VisualElement>
+            <appui:Text name="mission-title" text="" size="XXL" class="fm-quest-detail-title fm-activity-title"/>
+            <ui:VisualElement name="banner-container" class="fm-quest-detail-banner-container">
+                <ui:Image name="image-dimension-banner" class="fm-quizzes-dim-icon fm-quest-detail-banner-image"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-activity-section">
+                <appui:Text text="🎯 Objetivo" size="L" class="fm-activity-section-title"/>
+                <appui:Text name="mission-goal" text="" size="M" class="fm-quest-detail-desc"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-activity-section">
+                <appui:Text text="💡 Por qué importa" size="L" class="fm-activity-section-title"/>
+                <appui:Text name="mission-why-it-matters" text="" size="M" class="fm-quest-detail-desc fm-activity-why-text"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-activity-progress-card">
+                <ui:VisualElement class="fm-activity-progress-header">
+                    <appui:Text text="Progreso de la misión" size="M" class="fm-activity-progress-title"/>
+                    <appui:Text name="mission-progress-label" text="0%" size="M" class="fm-activity-progress-pct"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="fm-activity-progress-track">
+                    <ui:VisualElement name="mission-progress-fill" class="fm-activity-progress-fill"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-activity-tabs-header">
+                <ui:Button name="tab-btn-app" text="📱 Usar la app" class="fm-activity-tab-btn fm-activity-tab-btn--active"/>
+                <ui:Button name="tab-btn-direct" text="💬 Informar a Nutri" class="fm-activity-tab-btn"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="tab-content-app" class="fm-activity-tab-content">
+                <appui:Text name="native-module-hint" text="Registra esta acción usando las herramientas de Foodmission para acumular progreso automáticamente." size="M" class="fm-activity-tab-desc"/>
+                <eu:FMButton name="btn-go-module" title="Ir al módulo" variant="Accent" size="L" class="fm-activity-action-btn"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="tab-content-direct" class="fm-activity-tab-content" style="display: none;">
+                <appui:Text name="direct-nutri-prompt" text="¿Has realizado esta acción hoy o fuera de la app?" size="M" class="fm-activity-tab-desc"/>
+                <ui:VisualElement name="swap-container" class="fm-activity-swap-container" style="display: none;">
+                    <appui:Text text="Selecciona la sustitución realizada:" size="S" class="fm-activity-swap-title"/>
+                    <ui:VisualElement name="swap-options-list" class="fm-activity-swap-list"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="stepper-container" class="fm-activity-stepper-container">
+                    <appui:Text text="Número de comidas / acciones:" size="S" class="fm-activity-stepper-title"/>
+                    <ui:VisualElement class="fm-activity-stepper-controls">
+                        <ui:Button name="btn-stepper-minus" text="-" class="fm-activity-stepper-btn"/>
+                        <appui:Text name="stepper-count-label" text="1" size="XL" class="fm-activity-stepper-value"/>
+                        <ui:Button name="btn-stepper-plus" text="+" class="fm-activity-stepper-btn"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <appui:Text name="direct-feedback-label" text="" size="M" class="fm-activity-feedback-text" style="display: none;"/>
+                <eu:FMButton name="btn-submit-direct" title="Guardar y Registrar" variant="Accent" size="L" class="fm-activity-action-btn"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
+    </ui:VisualElement>
+</ui:UXML>

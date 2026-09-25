@@ -1073,7 +1073,8 @@
 .fm-pantry-item .fm-full-button,
 .fm-groups-item .fm-full-button,
 .fm-group-member-item .fm-full-button,
-.fm-quiz-item-content .fm-full-button{
+.fm-quiz-item-content .fm-full-button,
+.fm-active-quest-card .fm-full-button {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -1081,6 +1082,8 @@
     top: 0;
     left: 0;
     bottom: 0;
+    background-color: transparent;
+    border-width: 0;
 }
 
 .fm-shopping-list-item-list .appui-icon,
@@ -1543,7 +1546,7 @@
 
 
 .appui-button--icon-only .appui-button__leadingicon {
-    --unity-image-tint-color: var(--appui-foregrounds-50);
+    --unity-image-tint-color: var(--appui-foregrounds-100);
 }
 
 .appui-date-picker-pane .appui-button,
@@ -1875,7 +1878,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
     margin-top: 4px;
 }
 
@@ -1884,6 +1886,8 @@
     padding: 6px 12px;
     align-items: flex-start;
     flex-grow: 1;
+    margin-right: 8px;
+    margin-bottom: 8px;
 }
 
 .is-selected.appui-actionbutton{
@@ -2192,4 +2196,9 @@
 
 .appui-dialog__header.appui-heading{
     white-space: normal;
+}
+
+.fm-active-quest-cart-quick-meal-btn{
+    background-color: var(--appui-primary-200);
+    color: var(--appui-primary-1000);
 }

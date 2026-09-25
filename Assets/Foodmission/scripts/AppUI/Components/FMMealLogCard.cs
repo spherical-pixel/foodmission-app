@@ -96,6 +96,7 @@ namespace eu.foodmission.platform.Components
             _mealName = new Unity.AppUI.UI.Text();
             _mealName.AddToClassList("fm-meal-card-text");
             _mealName.AddToClassList("fm-meal-card-title");
+            _mealName.style.display = DisplayStyle.None;
             this.Add(_mealName);
 
             _itemsContainer = new VisualElement();
@@ -107,6 +108,9 @@ namespace eu.foodmission.platform.Components
             this.Add(_badge);
 
             this.Add(actionsContainer);
+
+            // TODO: By now disabled the edit/delete buttons
+            actionsContainer.style.display = DisplayStyle.None;
 
             UpdateMealLogData();
         }
@@ -128,7 +132,14 @@ namespace eu.foodmission.platform.Components
                 string label = _typeLabel ?? _mealLogData.typeOfMeal;
 
                 _heading.text = $"{emoji} {label} - {DateTime.Parse(_mealLogData.timestamp).ToLocalTime():g}";
-                _mealName.text = $"{_mealLogData.meal?.name ?? "Meal"}";
+                if (_mealLogData.meal != null && !string.IsNullOrEmpty(_mealLogData.meal.name))
+                {
+                    _mealName.text = _mealLogData.meal.name;
+                }
+                else
+                {
+                    _mealName.text = $"{emoji} {label}";
+                }
 
                 _itemsContainer.Clear();
 
@@ -161,6 +172,37 @@ namespace eu.foodmission.platform.Components
                         }
 
                         _itemsContainer.Add(row);
+                    }
+                    _itemsContainer.style.display = DisplayStyle.Flex;
+                }
+                else if ((_mealLogData.flags != null && _mealLogData.flags.Length > 0) ||
+                         (_mealLogData.swaps != null && _mealLogData.swaps.Length > 0))
+                {
+                    if (_mealLogData.flags != null)
+                    {
+                        foreach (string flag in _mealLogData.flags)
+                        {
+                            VisualElement row = new VisualElement();
+                            row.AddToClassList("fm-meal-card-item-row");
+                            Unity.AppUI.UI.Text nameLabel = new Unity.AppUI.UI.Text();
+                            nameLabel.AddToClassList("fm-meal-card-item-name");
+                            nameLabel.text = $"• {MealLogHelpers.GetDisplayNameForFlag(flag)}";
+                            row.Add(nameLabel);
+                            _itemsContainer.Add(row);
+                        }
+                    }
+                    if (_mealLogData.swaps != null)
+                    {
+                        foreach (string swap in _mealLogData.swaps)
+                        {
+                            VisualElement row = new VisualElement();
+                            row.AddToClassList("fm-meal-card-item-row");
+                            Unity.AppUI.UI.Text nameLabel = new Unity.AppUI.UI.Text();
+                            nameLabel.AddToClassList("fm-meal-card-item-name");
+                            nameLabel.text = $"• {ActivityEventMapper.GetSwapDisplayName(swap)}";
+                            row.Add(nameLabel);
+                            _itemsContainer.Add(row);
+                        }
                     }
                     _itemsContainer.style.display = DisplayStyle.Flex;
                 }

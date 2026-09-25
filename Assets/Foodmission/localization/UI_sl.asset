@@ -2962,6 +2962,197 @@ MonoBehaviour:
     m_Localized: "Obrok uspe\u0161no posodobljen"
     m_Metadata:
       m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Poenostavljen dnevnik obrokov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: "Katere so bile glavne zna\u010Dilnosti va\u0161e jedi?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Ime ali opis (neobvezno)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: "Npr.: Solata iz le\u010De in zelenjave"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: "Misija zaklju\u010Dena!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: "Izziv zaklju\u010Den!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: Navade in trajnostna prehrana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Hrana brez mesa / vegetarijanska hrana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: "Nadomestki \u017Eivil (Swaps)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: Prehrana in zdravje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: "Porcija zau\u017Eitih stro\u010Dnic"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: 100 % rastlinski / veganski obrok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Uravnote\u017Een obrok (\xBD zelenjave, \xBC beljakovin, \xBC ogljikovih
+      hidratov)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: "Tradicionalna ali polnozrnata \u017Eita"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: Gomolj ali nadomestna osnovna hrana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "\u0160tevilo odmerkov mesa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: "Porcija sve\u017Ee zelenjave ali solate"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: "100 % polnozrnati kruh ali \u017Eitni izdelki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Obrok, bogat z vlakninami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: Brez dodane soli pri mizi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: "Zdrave ma\u0161\u010Dobe (olj\u010Dno olje, ore\u0161ki)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: Brez dodanih sladkorjev ali industrijskih sladil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: 100 % rastlinski obrok ali obrok brez mesa?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: "Ali je vsebovala sve\u017Eo zelenjavo ali stro\u010Dnice?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: "Trajnostna jed ali alternativna \u017Eitna vrsta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: 'Izberite izvedeno zamenjavo:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: "Obrok in napredek sta bila uspe\u0161no zabele\u017Eena!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Izberite vsaj eno mo\u017Enost obroka."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: Urejanje poenostavljenega dnevnika obrokov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Shrani spremembe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: "Obrok uspe\u0161no posodobljen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Govedina s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Govedina s pi\u0161\u010Dancem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Govedina s svinjino"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Svinjina s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Svinjina s pi\u0161\u010Dancem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Pi\u0161\u010Danec s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Sladka pija\u010Da z vodo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Prigrizek s sadjem / ore\u0161\u010Dki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Sladkani kosmi\u010Di z ovsom"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Predelana hrana z doma\u010Do"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Predelano meso s stro\u010Dnicami"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Odpri poenostavljen dnevnik obrokov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "\u0160e vedno morate dokon\u010Dati svoj profil. Ali ga \u017Eelite
+      dokon\u010Dati zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Va\u0161a za\u010Detna anketa o prehranjevalnih navadah \u0161e
+      vedno \u010Daka. Ali jo \u017Eelite izpolniti zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: "Dokon\u010Daj profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: Izpolni anketo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

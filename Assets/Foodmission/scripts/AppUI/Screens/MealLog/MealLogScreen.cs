@@ -49,6 +49,7 @@ namespace eu.foodmission.platform
         private VisualElement _selectionAndButton;
         private VisualElement _selectedChips;
         private FMButton _btnLogSelected;
+        private FMButton _btnGoQuickMeal;
         private VisualElement _loggedMealsZone;
         private VisualElement _mealList;
         private FMArrowStepper _dayStepper;
@@ -85,12 +86,21 @@ namespace eu.foodmission.platform
             _selectionAndButton = contentContainer.Q<VisualElement>("selection-and-button");
             _selectedChips = contentContainer.Q<VisualElement>("selected-chips");
             _btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
+            _btnGoQuickMeal = contentContainer.Q<FMButton>("btn-go-quick-meal");
             _loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
             _dayStepper = contentContainer.Q<FMArrowStepper>("day-stepper");
             _editModeBanner = contentContainer.Q<VisualElement>("edit-mode-banner");
             _editModeTitle = contentContainer.Q<Unity.AppUI.UI.Text>("edit-mode-title");
             _btnCancelEdit = contentContainer.Q<FMButton>("btn-cancel-edit");
+
+            if (_btnGoQuickMeal != null)
+            {
+                _btnGoQuickMeal.clicked += () =>
+                {
+                    _viewModel?.NavigateToQuickMealLog();
+                };
+            }
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
@@ -141,6 +151,9 @@ namespace eu.foodmission.platform
                 UpdateStepVisibility();
                 RebuildSelectedChips();
             }
+
+            // Refresh logs on screen entry so edits made in QuickMealLog are immediately visible
+            _ = _viewModel?.LoadTodayAsync();
         }
 
         private async Task SafeLoadRecipePresetAsync(string recipeId, int? mealTypeIndex = null, bool eatenOut = false)
@@ -582,9 +595,16 @@ namespace eu.foodmission.platform
 
                 card.EditButton.clicked += async () =>
                 {
-                    await _viewModel.LoadForEditAsync(captured);
-                    UpdateEditModeUI();
-                    UpdateStepVisibility();
+                    if (MealLogHelpers.IsQuickMeal(captured))
+                    {
+                        _viewModel.NavigateToQuickMealLogEdit(captured);
+                    }
+                    else
+                    {
+                        await _viewModel.LoadForEditAsync(captured);
+                        UpdateEditModeUI();
+                        UpdateStepVisibility();
+                    }
                 };
 
                 card.RemoveButton.clicked += () => ConfirmDeleteMealLog(captured);

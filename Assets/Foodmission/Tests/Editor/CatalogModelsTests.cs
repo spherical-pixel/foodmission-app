@@ -110,5 +110,31 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("es", result.data.countryCode);
             Assert.IsTrue(result.data.content.Contains("Formulario de Consentimiento"));
         }
+
+        [Test]
+        public void CatalogMeta_WithCurrencyMinMax_Roundtrips_Via_JsonUtility()
+        {
+            var item = new CatalogItem
+            {
+                code = "FROM_10000_TO_19999",
+                label = "NOK 110,000 - NOK 219,999 per year",
+                meta = new CatalogMeta
+                {
+                    currency = "NOK",
+                    min = 110000,
+                    max = 220000
+                }
+            };
+
+            string json = JsonUtility.ToJson(item);
+            var result = JsonUtility.FromJson<CatalogItem>(json);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("FROM_10000_TO_19999", result.code);
+            Assert.IsNotNull(result.meta);
+            Assert.AreEqual("NOK", result.meta.currency);
+            Assert.AreEqual(110000, result.meta.min);
+            Assert.AreEqual(220000, result.meta.max);
+        }
     }
 }

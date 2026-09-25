@@ -339,5 +339,16 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(Actions.open_quest, requestedAction);
         }
+
+        [Test]
+        public void NavigateToQuickMealLog_RequestsQuickMealLogNavigation()
+        {
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.NavigateToQuickMealLog();
+
+            Assert.AreEqual(Actions.open_quick_meal_log, requestedAction);
+        }
     }
 }

@@ -292,7 +292,6 @@
     color: var(--appui-foregrounds-200, #c0c0c0);
     font-size: var(--appui-font-sizes-body-md);
     white-space: normal;
-    line-height: 1.4;
 }
 
 /* ── NUTRITION TABLE ─────────────────────────────────────── */

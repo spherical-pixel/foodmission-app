@@ -28,8 +28,6 @@
 
 .fm-quest-detail-title {
     -unity-font-style: bold;
-    
-    line-height: 120%;
     margin-bottom: 16px;
     white-space: normal;
     color: var(--appui-foregrounds-50);

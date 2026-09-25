@@ -17,6 +17,8 @@ namespace eu.foodmission.platform
         public string createdAt;
         public string updatedAt;
         public Meal meal;
+        public string[] flags;
+        public string[] swaps;
 
         // Client-only markers (never from API)
         public bool isProduct;
@@ -35,11 +37,17 @@ namespace eu.foodmission.platform
 
     public class CreateMealLogRequest
     {
-        [JsonProperty("mealId")]
+        [JsonProperty("mealId", NullValueHandling = NullValueHandling.Ignore)]
         public string mealId;
 
         [JsonProperty("typeOfMeal")]
         public string typeOfMeal;
+
+        [JsonProperty("flags", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] flags;
+
+        [JsonProperty("swaps", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] swaps;
 
         [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
         public string timestamp;
@@ -67,6 +75,12 @@ namespace eu.foodmission.platform
 
         [JsonProperty("typeOfMeal", NullValueHandling = NullValueHandling.Ignore)]
         public string typeOfMeal;
+
+        [JsonProperty("flags", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] flags;
+
+        [JsonProperty("swaps", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] swaps;
 
         [JsonProperty("timestamp", NullValueHandling = NullValueHandling.Ignore)]
         public string timestamp;

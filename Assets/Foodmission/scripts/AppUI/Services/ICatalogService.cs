@@ -6,6 +6,10 @@ namespace eu.foodmission.platform
     public interface ICatalogService
     {
         Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang);
+        Task<(CatalogData Result, ApiErrorResponse Error)> LoadStartupAsync(string lang, string country);
+
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetAnnualIncomeLevelsAsync(string lang);
+        Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetAnnualIncomeLevelsAsync(string lang, string country);
 
         Task<(CatalogItem[] Result, ApiErrorResponse Error)> GetTypeOfMealsAsync(string lang);
 

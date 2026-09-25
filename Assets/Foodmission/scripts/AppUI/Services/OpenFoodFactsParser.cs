@@ -76,6 +76,7 @@ namespace eu.foodmission.platform
         public string brands { get; set; }
         public string[] categories_tags { get; set; }
         public string[] labels_tags { get; set; }
+        public string[] ingredients_analysis_tags { get; set; }
         public string quantity { get; set; }
         public string serving_size { get; set; }
         public string[] packaging_tags { get; set; }
@@ -212,7 +213,60 @@ namespace eu.foodmission.platform
                 };
             }
 
+            var (isVegan, isVegetarian, isPalmOilFree) = ParseDietFlags(raw.ingredients_analysis_tags, raw.labels_tags);
+            mapped.isVegan = isVegan;
+            mapped.isVegetarian = isVegetarian;
+            mapped.isPalmOilFree = isPalmOilFree;
+
             return mapped;
+        }
+
+        public static (bool? isVegan, bool? isVegetarian, bool? isPalmOilFree) ParseDietFlags(
+            string[] ingredientsAnalysisTags,
+            string[] labelsTags)
+        {
+            bool? isVegan = null;
+            bool? isVegetarian = null;
+            bool? isPalmOilFree = null;
+
+            if (ingredientsAnalysisTags != null)
+            {
+                foreach (var tag in ingredientsAnalysisTags)
+                {
+                    if (string.IsNullOrEmpty(tag)) continue;
+                    string lower = tag.ToLowerInvariant();
+                    if (lower == "en:vegan") isVegan = true;
+                    else if (lower == "en:non-vegan") isVegan = false;
+                    else if (lower == "en:vegetarian") isVegetarian = true;
+                    else if (lower == "en:non-vegetarian") isVegetarian = false;
+                    else if (lower == "en:palm-oil-free") isPalmOilFree = true;
+                    else if (lower == "en:palm-oil" || lower == "en:may-contain-palm-oil") isPalmOilFree = false;
+                }
+            }
+
+            if (labelsTags != null)
+            {
+                foreach (var tag in labelsTags)
+                {
+                    if (string.IsNullOrEmpty(tag)) continue;
+                    string lower = tag.ToLowerInvariant();
+                    if (!isVegan.HasValue && (lower == "en:vegan" || lower.EndsWith(":vegan")))
+                        isVegan = true;
+                    if (!isVegetarian.HasValue && (lower == "en:vegetarian" || lower.EndsWith(":vegetarian")))
+                        isVegetarian = true;
+                    if (!isPalmOilFree.HasValue && (lower == "en:palm-oil-free" || lower == "en:without-palm-oil" || lower.EndsWith(":palm-oil-free")))
+                        isPalmOilFree = true;
+                    else if (!isPalmOilFree.HasValue && lower == "en:palm-oil")
+                        isPalmOilFree = false;
+                }
+            }
+
+            if (isVegan == true && !isVegetarian.HasValue)
+            {
+                isVegetarian = true;
+            }
+
+            return (isVegan, isVegetarian, isPalmOilFree);
         }
 
         public static string GetLocalizedField(OffProductRaw raw, string fieldName, string targetLang = "en")

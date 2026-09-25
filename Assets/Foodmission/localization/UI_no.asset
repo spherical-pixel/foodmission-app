@@ -263,6 +263,10 @@ MonoBehaviour:
 
       
 
+      
+
+      
+
       Er du sikker?'
     m_Metadata:
       m_Items: []
@@ -2963,6 +2967,197 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672711
     m_Localized: "M\xE5ltid ble oppdatert"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: "Forenklet m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Hva var de viktigste kjennetegnene ved retten din?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Navn eller beskrivelse (valgfritt)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: "F.eks.: Lins- og gr\xF8nnsakssalat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: "Oppdrag fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: "Utfordring fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: "Vaner og b\xE6rekraftig mat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: "Kj\xF8ttfri / vegetarisk mat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Erstatninger for matvarer (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: "Ern\xE6ring og helse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: Andel av inntatte belgfrukter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: "100 % plantebasert / vegansk m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Et balansert m\xE5ltid (\xBD gr\xF8nnsaker, \xBC proteiner, \xBC
+      karbohydrater)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Tradisjonelle korn eller fullkorn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: "Knoll eller alternativt hovedn\xE6ringsmiddel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "Antall kj\xF8ttstykker som er telt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: "En porsjon ferske gr\xF8nnsaker eller salat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: "100 % fullkornsbr\xF8d eller fullkornsprodukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: "Et m\xE5ltid med h\xF8yt innhold av kostfiber"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: Ingen tilsatt salt ved bordet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: "Sunn fett (olivenolje, n\xF8tter)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Ingen tilsatt sukker eller industrielt fremstilt s\xF8tsaker"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: "100 % plantebasert eller kj\xF8ttfritt m\xE5ltid?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: "Inneholdt den ferske gr\xF8nnsaker eller belgfrukter?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: "B\xE6rekraftig tallerken eller alternativt korn?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: 'Velg hvilken erstatning som er gjort:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: "M\xE5ltid og fremgang er registrert!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: "Vennligst velg minst ett m\xE5ltidsalternativ."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: "Redigering av forenklet m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Lagre endringer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: "M\xE5ltid oppdatert!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Storfekj\xF8tt med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Storfekj\xF8tt med kylling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Storfekj\xF8tt med svinekj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Svinekj\xF8tt med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Svinekj\xF8tt med kylling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Kylling med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Sukkerholdig drikke med vann"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack med frukt / n\xF8tter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Sukkerholdige frokostblandinger med havre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Ultraprosessert med hjemmelaget"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Bearbeidet kj\xF8tt med belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 \xC5pne forenklet m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: "Du m\xE5 fortsatt fullf\xF8re profilen din. Vil du fullf\xF8re
+      den n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: "Du har fortsatt den f\xF8rste unders\xF8kelsen om spisevaner p\xE5
+      vent. Vil du fullf\xF8re den n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: "Fullf\xF8r profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: "Fullf\xF8r unders\xF8kelse"
     m_Metadata:
       m_Items: []
   references:

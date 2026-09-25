@@ -33,8 +33,8 @@
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25367919163596800)"/>
                 </Bindings>
             </appui:Button>
-            <ui:VisualElement name="fm-login-footer" style="flex-direction: column; justify-content: center; gap: 24px; margin-top: 16px;">
-                <appui:Button name="btForgotPassword" quiet="true" variant="Default">
+            <ui:VisualElement name="fm-login-footer" style="flex-direction: column; justify-content: center; margin-top: 16px;">
+                <appui:Button name="btForgotPassword" quiet="true" variant="Default" style="margin-bottom: 24px;">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25368981371084800)"/>
                     </Bindings>

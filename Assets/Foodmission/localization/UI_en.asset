@@ -264,6 +264,10 @@ MonoBehaviour:
 
       
 
+      
+
+      
+
       Are
       you sure?'
     m_Metadata:
@@ -2373,6 +2377,10 @@ MonoBehaviour:
 
       
 
+      
+
+      
+
       Please
       take a moment to review again the new document of {0}, and feel free to contact
       us if you think something is wrong in it.'
@@ -2957,6 +2965,196 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672711
     m_Localized: Meal updated successfully
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Simplified meal log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: What were the key features of your dish?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Name or description (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: 'E.g.: Lentil and vegetable salad'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: Mission completed!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: Challenge completed!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: Habits and Sustainable Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Meat-free / vegetarian food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Food substitutions (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: Nutrition and Health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: Portion of legumes consumed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: 100% plant-based / vegan meal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Balanced plate (\xBD vegetables, \xBC protein, \xBC carbohydrates)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Traditional or whole grains
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: Tuber or alternative staple food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: Portion of meat counted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: Portion of fresh vegetables or salad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: 100% whole grain bread or cereals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Meal rich in dietary fiber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: No added salt at the table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: Healthy fats (olive oil, nuts)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: No added sugars or industrial sweets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: 100% plant-based or meat-free meal?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: Did it include fresh vegetables or legumes?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: Sustainable plate or alternative grain?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: 'Select the substitution made:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: Meal and progress successfully recorded!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: Please select at least one meal option.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: Editing simplified meal log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Save changes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: Meal updated successfully!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Beef for legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Beef for chicken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Beef for pork"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Pork for legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Pork for chicken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Chicken for legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Sugary drink for water"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack for fruit / nuts"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Sugary cereal for oats"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Ultra-processed for homecooked"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Processed meat for legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Open simplified meal log"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: You still need to complete your profile. Would you like to complete
+      it now?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: You still have your initial eating habits survey pending. Would
+      you like to complete it now?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: Complete Profile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: Complete Survey
     m_Metadata:
       m_Items: []
   references:

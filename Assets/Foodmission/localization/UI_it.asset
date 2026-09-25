@@ -205,6 +205,10 @@ MonoBehaviour:
 
       
 
+      
+
+      
+
       Cucina,
       impara, condividi e cresci ogni giorno.
 
@@ -212,8 +216,12 @@ MonoBehaviour:
 
       
 
-      Pronto a
-      iniziare?'
+      
+
+      
+
+      Pronto
+      a iniziare?'
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -2394,9 +2402,13 @@ MonoBehaviour:
 
       
 
-      Ti invitiamo a dedicare qualche minuto
-      a rileggere il nuovo documento relativo a {0} e a contattarci se ritieni che
-      contenga errori.'
+      
+
+      
+
+      Ti invitiamo a
+      dedicare qualche minuto a rileggere il nuovo documento relativo a {0} e a contattarci
+      se ritieni che contenga errori.'
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -2492,11 +2504,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44199025098874880
-    m_Localized: Scegli un percorso per iniziare a imparare e a fare progressi.
+    m_Localized: Scegli una missione per iniziare a imparare e a fare progressi.
     m_Metadata:
       m_Items: []
   - m_Id: 44199294499020800
-    m_Localized: Esplora i percorsi
+    m_Localized: Esplora le missioni
     m_Metadata:
       m_Items: []
   - m_Id: 46966269096747008
@@ -2979,6 +2991,211 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672711
     m_Localized: Pasto aggiornato con successo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49206146878136320
+    m_Localized: Registro dei pasti semplificato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207590964420608
+    m_Localized: Quali erano le caratteristiche principali del tuo piatto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49207906585796608
+    m_Localized: Nome o descrizione (facoltativo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49210861586210816
+    m_Localized: 'Es.: Insalata di lenticchie e verdure'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712256
+    m_Localized: Registro dei pasti semplificato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712257
+    m_Localized: Quali erano le caratteristiche principali del tuo piatto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712258
+    m_Localized: Nome o descrizione (facoltativo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49247263887712259
+    m_Localized: 'Es.: Insalata di lenticchie e verdure'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137687277568
+    m_Localized: Missione completata!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49260137691471872
+    m_Localized: Sfida completata!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49265187998392320
+    m_Localized: Abitudini e alimentazione sostenibile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380160
+    m_Localized: Cibi senza carne / vegetariani
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380161
+    m_Localized: Sostituzioni alimentari (Swaps)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380162
+    m_Localized: Alimentazione e salute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380163
+    m_Localized: "Quantit\xE0 di legumi consumata"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380164
+    m_Localized: Pasto 100% vegetale / vegano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380165
+    m_Localized: "Piatto equilibrato (\xBD verdure, \xBC proteine, \xBC carboidrati)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380166
+    m_Localized: Cereali tradizionali o integrali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380167
+    m_Localized: Tubero o alimento base alternativo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380168
+    m_Localized: "Quantit\xE0 di carne conteggiata"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380169
+    m_Localized: Porzione di verdure fresche o insalata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380170
+    m_Localized: Pane o cereali integrali al 100%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380171
+    m_Localized: Pasto ricco di fibre alimentari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380172
+    m_Localized: Senza sale aggiunto a tavola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380173
+    m_Localized: Grassi salutari (olio d'oliva, frutta secca)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589228380174
+    m_Localized: "Senza zuccheri aggiunti n\xE9 dolcificanti industriali"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574464
+    m_Localized: Pasto 100% vegetale o senza carne?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574465
+    m_Localized: C'erano verdure fresche o legumi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574466
+    m_Localized: Piatto sostenibile o cereali alternativi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49269589232574467
+    m_Localized: 'Seleziona la sostituzione effettuata:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49495302372057088
+    m_Localized: Pasto e progressi registrati con successo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49525565470793728
+    m_Localized: Seleziona almeno un'opzione per il pasto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340042166272
+    m_Localized: Modifica del registro pasti semplificato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360576
+    m_Localized: Salva modifiche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49555340046360577
+    m_Localized: Pasto aggiornato con successo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392702091264
+    m_Localized: "\U0001F969 -> \U0001F957 Manzo con legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392706285568
+    m_Localized: "\U0001F969 -> \U0001F357 Manzo con pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479872
+    m_Localized: "\U0001F969 -> \U0001F437 Manzo con maiale"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479873
+    m_Localized: "\U0001F437 -> \U0001F957 Maiale con legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479874
+    m_Localized: "\U0001F437 -> \U0001F357 Maiale con pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479875
+    m_Localized: "\U0001F357 -> \U0001F957 Pollo con legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479876
+    m_Localized: "\U0001F964 -> \U0001F4A7 Bevanda zuccherata con acqua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392710479877
+    m_Localized: "\U0001F36A -> \U0001F34E Snack con frutta / frutta secca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392714674176
+    m_Localized: "\U0001F963 -> \U0001F33E Cereali zuccherati con avena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868480
+    m_Localized: "\U0001F355 -> \U0001F372 Ultra-processato con cibo fatto in casa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49560392718868481
+    m_Localized: "\U0001F32D -> \U0001FAD8 Carne lavorata con legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49593946022600704
+    m_Localized: "\u26A1 Apri il registro dei pasti semplificato"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781398638592
+    m_Localized: Hai ancora il tuo profilo da completare. Vuoi completarlo ora?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832896
+    m_Localized: Hai ancora il questionario iniziale sulle abitudini alimentari in
+      sospeso. Vuoi completarlo ora?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832897
+    m_Localized: Completa profilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49870781402832898
+    m_Localized: Completa questionario
     m_Metadata:
       m_Items: []
   references:

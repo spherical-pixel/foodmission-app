@@ -263,6 +263,32 @@ namespace eu.foodmission.platform
             _regions = regions ?? new List<CatalogItem>();
             RegionOptions = _regions.Select(r => r.label).ToList();
             SelectedRegionIndex = RegionOptions.Count > 0 ? 0 : -1;
+
+            try
+            {
+                var (incomes, _) = await _catalogService.GetAnnualIncomeLevelsAsync(lang, countryCode);
+                if (incomes != null && incomes.Length > 0)
+                {
+                    string prevIncomeCode = (_selectedAnnualIncomeIndex >= 0 && _catalogData?.annualIncomeLevels != null && _selectedAnnualIncomeIndex < _catalogData.annualIncomeLevels.Length)
+                        ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code
+                        : null;
+
+                    if (_catalogData != null)
+                    {
+                        _catalogData.annualIncomeLevels = incomes;
+                    }
+                    AnnualIncomeOptions = incomes.Select(i => i.label).ToList();
+
+                    if (!string.IsNullOrEmpty(prevIncomeCode))
+                    {
+                        SelectedAnnualIncomeIndex = FindCatalogIndex(incomes, prevIncomeCode);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Failed to reload income levels for {countryCode}: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -299,7 +325,7 @@ namespace eu.foodmission.platform
                 AppState state = _storeService.GetAppState();
                 string lang = state.lang ?? "en";
 
-                var (data, _) = await _catalogService.LoadStartupAsync(lang);
+                var (data, _) = await _catalogService.LoadStartupAsync(lang, state?.userCountry);
 
                 if (data == null)
                 {
