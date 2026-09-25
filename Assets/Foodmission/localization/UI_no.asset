@@ -3221,6 +3221,25 @@ MonoBehaviour:
     m_Localized: "Angi m\xE5l"
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: "Produktet ditt {0} er i ferd med \xE5 g\xE5 ut p\xE5 dato. S\xF8rg
+      for \xE5 bruke det opp!"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 49931095032979456
+    m_Localized: Hva har du spist i dag?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Husk \xE5 registrere m\xE5ltidene dine for \xE5 holde oversikt
+      over vanene dine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Melding fra spiskammeret
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3236,3 +3255,4 @@ MonoBehaviour:
         - id: 28906308236206080
         - id: 28898960193085440
         - id: 46966269096747008
+        - id: 49931095037173762

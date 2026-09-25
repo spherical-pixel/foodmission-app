@@ -3257,6 +3257,25 @@ MonoBehaviour:
     m_Localized: Ustaw cele
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: "Tw\xF3j produkt {0} wkr\xF3tce straci wa\u017Cno\u015B\u0107. Pami\u0119taj,
+      \u017Ceby go zu\u017Cy\u0107!"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
+  - m_Id: 49931095032979456
+    m_Localized: "Co dzisiaj jad\u0142e\u015B?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Nie zapomnij zapisywa\u0107 swoich posi\u0142k\xF3w, aby \u015Bledzi\u0107
+      swoje nawyki."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: "Og\u0142oszenie dotycz\u0105ce spi\u017Carni"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3272,3 +3291,4 @@ MonoBehaviour:
         - id: 28906308236206080
         - id: 28898960193085440
         - id: 46966269096747008
+        - id: 49931095037173762

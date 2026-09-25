@@ -3272,6 +3272,25 @@ MonoBehaviour:
     m_Localized: Doelen instellen
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: Je product {0} is bijna over de datum. Zorg ervoor dat je het nog
+      opmaakt!
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 49931095032979456
+    m_Localized: Wat heb je vandaag gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: Vergeet niet je maaltijden bij te houden om inzicht te krijgen in
+      je eetgewoonten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Mededeling over de voorraadkast
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3287,3 +3306,4 @@ MonoBehaviour:
         - id: 28906308236206080
         - id: 28898960193085440
         - id: 46966269096747008
+        - id: 49931095037173762

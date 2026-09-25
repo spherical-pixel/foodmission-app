@@ -3232,6 +3232,25 @@ MonoBehaviour:
     m_Localized: Ziele festlegen
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: Ihr Produkt {0} ist kurz vor dem Verfallsdatum. Verwenden Sie es
+      unbedingt noch auf!
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 49931095032979456
+    m_Localized: Was hast du heute gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Vergiss nicht, deine Mahlzeiten einzutragen, um den \xDCberblick
+      \xFCber deine Essgewohnheiten zu behalten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Hinweis zur Vorratskammer
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3247,3 +3266,4 @@ MonoBehaviour:
         - id: 28906308236206080
         - id: 28898960193085440
         - id: 46966269096747008
+        - id: 49931095037173762

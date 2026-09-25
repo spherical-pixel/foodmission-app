@@ -3218,6 +3218,23 @@ MonoBehaviour:
     m_Localized: Set Goals
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095032979456
+    m_Localized: What have you eaten today?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Don\u2019t forget to log your meals to keep track of your habits."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Pantry Notice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: Your product {0} is about to go off. Make sure you use it up!
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
   references:
     version: 2
     RefIds:
@@ -3233,3 +3250,4 @@ MonoBehaviour:
         - id: 28906308236206080
         - id: 28898960193085440
         - id: 46966269096747008
+        - id: 49931095037173762

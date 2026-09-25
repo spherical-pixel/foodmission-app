@@ -3215,6 +3215,24 @@ MonoBehaviour:
     m_Localized: Nastavi cilje
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: "Va\u0161 izdelek {0} se bo kmalu iztekel. Poskrbite, da ga porabite!"
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 49931095032979456
+    m_Localized: Kaj si danes jedel?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Ne pozabi bele\u017Eiti svojih obrokov, da bo\u0161 lahko spremljal
+      svoje navade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Obvestilo o shrambi
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3230,3 +3248,4 @@ MonoBehaviour:
         - id: 28906308236206080
         - id: 28898960193085440
         - id: 46966269096747008
+        - id: 49931095037173762

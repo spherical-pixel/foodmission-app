@@ -3135,6 +3135,22 @@ MonoBehaviour:
     m_Key: GOALS_EDIT_BUTTON
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095032979456
+    m_Key: NOTIFICATION_DAILY_MEAL_REMINDER_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Key: NOTIFICATION_DAILY_MEAL_REMINDER_BODY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Key: NOTIFICATION_ABOUT_TO_EXPIRE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Key: NOTIFICATION_ABOUT_TO_EXPIRE_BODY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

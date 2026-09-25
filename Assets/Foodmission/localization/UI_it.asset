@@ -3261,6 +3261,24 @@ MonoBehaviour:
     m_Localized: Imposta obiettivi
     m_Metadata:
       m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: Il tuo prodotto {0} sta per scadere. Assicurati di consumarlo!
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
+  - m_Id: 49931095032979456
+    m_Localized: Cosa hai mangiato oggi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: Non dimenticare di registrare i tuoi pasti per tenere traccia delle
+      tue abitudini.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Avviso sulla dispensa
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3276,3 +3294,4 @@ MonoBehaviour:
         - id: 28906308236206080
         - id: 28898960193085440
         - id: 46966269096747008
+        - id: 49931095037173762
