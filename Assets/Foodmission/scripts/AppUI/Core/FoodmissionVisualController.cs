@@ -262,47 +262,50 @@ namespace eu.foodmission.platform
             AddDrawerButton(menuContainer, "🏅 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES"), async () =>
             {
                 _profileDrawer.Close();
-                var gamificationService = App.current?.services?.GetService<IGamificationService>();
-                var storeService = App.current?.services?.GetService<IStoreService>();
-                var state = storeService?.GetAppState();
+                NutriMessageDialog.ShowNotAvailable();
 
-                var badges = state?.userBadges;
-                if (badges == null || badges.Length == 0)
-                {
-                    if (gamificationService != null)
-                    {
-                        var (rewardsResp, _) = await gamificationService.GetEarnedRewardsAsync();
-                        if (rewardsResp?.earnedRewards != null)
-                        {
-                            var badgeList = new List<string>();
-                            foreach (var r in rewardsResp.earnedRewards)
-                            {
-                                if (r.reward != null && !string.IsNullOrEmpty(r.reward.badgeId))
-                                {
-                                    badgeList.Add(r.reward.badgeId);
-                                }
-                            }
-                            badges = badgeList.ToArray();
-                            storeService?.store.Dispatch(AppActions.setBadges.Invoke(badges));
-                        }
-                    }
-                }
+                // var gamificationService = App.current?.services?.GetService<IGamificationService>();
+                // var storeService = App.current?.services?.GetService<IStoreService>();
+                // var state = storeService?.GetAppState();
 
-                if (badges != null && badges.Length > 0)
-                {
-                    string badgeNames = string.Join("\n• ", badges);
-                    NutriMessageDialog.Show(
-                        message: $"🏅 {LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES")}\n\n• {badgeNames}",
-                        actions: new[] { new FMDialogAction("@UI:TXT_ACCEPT", null, ButtonVariant.Accent) }
-                    );
-                }
-                else
-                {
-                    NutriMessageDialog.Show(
-                        message: "Aún no has desbloqueado ninguna medalla. ¡Completa misiones, retos y quizzes para conseguir tus primeras insignias!",
-                        actions: new[] { new FMDialogAction("@UI:TXT_ACCEPT", null, ButtonVariant.Accent) }
-                    );
-                }
+                // var badges = state?.userBadges;
+                // if (badges == null || badges.Length == 0)
+                // {
+                //     if (gamificationService != null)
+                //     {
+                //         var (rewardsResp, _) = await gamificationService.GetEarnedRewardsAsync();
+                //         if (rewardsResp?.earnedRewards != null)
+                //         {
+                //             var badgeList = new List<string>();
+                //             foreach (var r in rewardsResp.earnedRewards)
+                //             {
+                //                 if (r.reward != null && !string.IsNullOrEmpty(r.reward.badgeId))
+                //                 {
+                //                     badgeList.Add(r.reward.badgeId);
+                //                 }
+                //             }
+                //             badges = badgeList.ToArray();
+                //             storeService?.store.Dispatch(AppActions.setBadges.Invoke(badges));
+                //         }
+                //     }
+                // }
+
+                // if (badges != null /*&& badges.Length > 0*/)
+                // {
+                //     string badgeNames = string.Join("\n• ", badges);
+                //     NutriMessageDialog.Show(
+                //         message: $"🏅 {LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIEW_BADGES")}\n\n• {badgeNames}",
+                //         actions: new[] { new FMDialogAction("@UI:TXT_ACCEPT", null, ButtonVariant.Accent) }
+                //     );
+                // }
+                // else
+                // {
+                //     string noBadgesMsg = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "DRAWER_NO_BADGES_MSG");
+                //     NutriMessageDialog.Show(
+                //         message: noBadgesMsg,
+                //         actions: new[] { new FMDialogAction("@UI:TXT_ACCEPT", null, ButtonVariant.Accent) }
+                //     );
+                // }
             });
 
 

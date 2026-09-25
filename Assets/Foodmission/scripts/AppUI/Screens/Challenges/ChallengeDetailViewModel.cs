@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -183,7 +184,7 @@ namespace eu.foodmission.platform
                 }
 
                 ReportSuccess = true;
-                SuccessMessage = "¡Reto completado con éxito!";
+                SuccessMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "CHALLENGE_REPORT_SUCCESS");
 
                 // Reload challenge progress to reflect backend evaluator update
                 if (!string.IsNullOrEmpty(Challenge.code))

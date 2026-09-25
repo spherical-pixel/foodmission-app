@@ -6,7 +6,6 @@
         <ui:VisualElement name="card" class="fm-quest-detail-card fm-activity-detail-card">
             <ui:VisualElement class="fm-activity-header-badges">
                 <appui:Text name="challenge-level-badge" text="BEGINNER" size="S" class="fm-activity-badge"/>
-                <appui:Text name="challenge-frequency-badge" text="⚡ Diario" size="S" class="fm-activity-badge"/>
             </ui:VisualElement>
             <appui:Text name="challenge-title" text="" size="XXL" class="fm-quest-detail-title fm-activity-title"/>
             <ui:VisualElement name="banner-container" class="fm-quest-detail-banner-container">

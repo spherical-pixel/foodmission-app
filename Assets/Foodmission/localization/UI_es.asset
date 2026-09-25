@@ -1350,8 +1350,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "\xA1Bienvenido a Foodmission!\r\nEsta breve encuesta nos ayuda
-      a conocer tus h\xE1bitos alimenticios, tu concienciaci\xF3n sobre el desperdicio
+    m_Localized: "\xA1Bienvenido a Foodmission!\nEsta breve encuesta nos ayuda a
+      conocer tus h\xE1bitos alimenticios, tu concienciaci\xF3n sobre el desperdicio
       de alimentos y tus elecciones sostenibles, para que Nutri pueda ofrecerte recomendaciones
       personalizadas."
     m_Metadata:
@@ -2025,8 +2025,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "\xA1Bienvenido a FOODMISSION! \r\nUna plataforma de ciencia ciudadana
-      para mejorar tus h\xE1bitos alimenticios y sostenibles. \r\nVamos a crear tu
+    m_Localized: "\xA1Bienvenido a FOODMISSION! \nUna plataforma de ciencia ciudadana
+      para mejorar tus h\xE1bitos alimenticios y sostenibles. \nVamos a crear tu
       cuenta en unos sencillos pasos."
     m_Metadata:
       m_Items: []
@@ -2118,7 +2118,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "En tu pa\xEDs no hay ning\xFAn piloto del proyecto en marcha.\r\nPuedes
+    m_Localized: "En tu pa\xEDs no hay ning\xFAn piloto del proyecto en marcha.\nPuedes
       explorar y utilizar la plataforma, pero tus datos no se utilizar\xE1n para
       la investigaci\xF3n del piloto del proyecto."
     m_Metadata:
@@ -2135,7 +2135,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34022749457342464
     m_Localized: "\xA1Hola! Para personalizar tu experiencia en Foodmission y ayudarte
-      a alcanzar tus objetivos, nos gustar\xEDa conocerte un poco mejor. \xBFTe apetece?\r\n\r\nResponde
+      a alcanzar tus objetivos, nos gustar\xEDa conocerte un poco mejor. \xBFTe apetece?\n\nResponde
       a unas cuantas preguntas opcionales para que podamos personalizar tus consejos,
       sugerencias de recetas y retos diarios."
     m_Metadata:
@@ -2230,7 +2230,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "\xA1Ups! Esta secci\xF3n a\xFAn no est\xE1 disponible, pero no
-      te preocupes: estamos trabajando para que puedas disfrutarla muy pronto.\r\n\r\nFOODMISSION
+      te preocupes: estamos trabajando para que puedas disfrutarla muy pronto.\n\nFOODMISSION
       sigue en constante evoluci\xF3n. Vamos mejorando la app y a\xF1adiendo nuevas
       funcionalidades gracias al feedback de personas como t\xFA. \xA1Gracias por
       ayudarnos a seguir creciendo!"
@@ -2376,7 +2376,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 40938002757705728
     m_Localized: "Para seguir utilizando la plataforma, debes aceptar el nuevo documento
-      de {0}. Si no est\xE1s de acuerdo, puedes cerrar sesi\xF3n o eliminar tu cuenta.\r\n\r\nPor
+      de {0}. Si no est\xE1s de acuerdo, puedes cerrar sesi\xF3n o eliminar tu cuenta.\n\nPor
       favor, dedica un momento a revisar de nuevo el nuevo documento de {0} y no
       dudes en ponerte en contacto con nosotros si crees que hay alg\xFAn error en
       \xE9l."
@@ -2399,9 +2399,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "\xA1Hola!\r\n\r\nComo participante en el programa piloto, tenemos
-      una breve encuesta para ti. Tus respuestas nos ayudar\xE1n a mejorar la plataforma
-      FOODMISSION. \r\n\r\n\xBFTe gustar\xEDa completarla ahora?"
+    m_Localized: "\xA1Hola!\n\nComo participante en el programa piloto, tenemos una
+      breve encuesta para ti. Tus respuestas nos ayudar\xE1n a mejorar la plataforma
+      FOODMISSION. \n\n\xBFTe gustar\xEDa completarla ahora?"
     m_Metadata:
       m_Items: []
   - m_Id: 41564040676237312
@@ -3235,6 +3235,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
+  - m_Id: 49940717584244736
+    m_Localized: "\xA1Registrado con \xE9xito!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: "\xA1Reto completado con \xE9xito!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: No se pudieron cargar las comidas guardadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: Error inesperado al guardar el registro de comida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: Error inesperado al actualizar el registro de comida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: "Escanear c\xF3digo de barras"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: "No se encontr\xF3 ning\xFAn producto para el c\xF3digo de barras:
+      {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: "Error al importar el c\xF3digo de barras: {0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

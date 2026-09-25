@@ -3151,6 +3151,38 @@ MonoBehaviour:
     m_Key: NOTIFICATION_ABOUT_TO_EXPIRE_BODY
     m_Metadata:
       m_Items: []
+  - m_Id: 49940717584244736
+    m_Key: MISSION_REPORT_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Key: CHALLENGE_REPORT_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Key: MEAL_LOG_ERROR_LOAD_PRESETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Key: MEAL_LOG_ERROR_SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Key: MEAL_LOG_ERROR_UPDATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Key: BARCODE_SCAN_TOOLTIP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Key: BARCODE_NOT_FOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Key: BARCODE_IMPORT_ERROR
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -201,27 +201,18 @@ MonoBehaviour:
   - m_Id: 35547983100502016
     m_Localized: 'Insieme, uniremo la tua cucina alla tutela del pianeta.
 
-      
 
-      
 
-      
 
-      
 
       Cucina,
       impara, condividi e cresci ogni giorno.
 
-      
 
-      
 
-      
 
-      
 
-      Pronto
-      a iniziare?'
+      Pronto a iniziare?'
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -278,7 +269,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38465306467753984
     m_Localized: "Questa operazione canceller\xE0 definitivamente tutti i tuoi dati
-      dalla piattaforma.\r\n\r\nSei sicuro?"
+      dalla piattaforma.\n\nSei sicuro?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -2036,9 +2027,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Benvenuto su FOODMISSION! \r\nUna piattaforma di citizen science
+    m_Localized: "Benvenuto su FOODMISSION! \nUna piattaforma di citizen science
       pensata per aiutarti a migliorare le tue abitudini in materia di sostenibilit\xE0
-      e alimentazione. \r\nCreiamo il tuo account in pochi semplici passaggi."
+      e alimentazione. \nCreiamo il tuo account in pochi semplici passaggi."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2133,15 +2124,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "Nel tuo Paese non \xE8 in corso alcun progetto pilota.\r\nPuoi
-      esplorare e utilizzare la piattaforma, ma i tuoi dati non saranno utilizzati
-      ai fini della ricerca del progetto pilota."
+    m_Localized: "Nel tuo Paese non \xE8 in corso alcun progetto pilota.\nPuoi esplorare
+      e utilizzare la piattaforma, ma i tuoi dati non saranno utilizzati ai fini
+      della ricerca del progetto pilota."
     m_Metadata:
       m_Items: []
   - m_Id: 34022749457342464
     m_Localized: "Ciao! Per personalizzare la tua esperienza su Foodmission e aiutarti
       a raggiungere i tuoi obiettivi, vorremmo conoscerti un po\u2019 meglio. Ti
-      va?\r\n\r\nRispondi a qualche domanda facoltativa, cos\xEC potremo personalizzare
+      va?\n\nRispondi a qualche domanda facoltativa, cos\xEC potremo personalizzare
       i tuoi consigli, i suggerimenti sulle ricette e le sfide quotidiane."
     m_Metadata:
       m_Items: []
@@ -2246,10 +2237,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Ops! Questa sezione non \xE8 ancora disponibile, ma non preoccuparti:
-      ci stiamo lavorando e potrai usarla molto presto.\r\n\r\nFOODMISSION \xE8 in
-      continua evoluzione. Stiamo migliorando l'app e aggiungendo nuove funzionalit\xE0
-      grazie ai feedback di utenti come te. Grazie per aiutarci a crescere sempre
-      di pi\xF9!"
+      ci stiamo lavorando e potrai usarla molto presto.\n\nFOODMISSION \xE8 in continua
+      evoluzione. Stiamo migliorando l'app e aggiungendo nuove funzionalit\xE0 grazie
+      ai feedback di utenti come te. Grazie per aiutarci a crescere sempre di pi\xF9!"
     m_Metadata:
       m_Items: []
   - m_Id: 34310338294833152
@@ -2398,17 +2388,12 @@ MonoBehaviour:
       documento relativo a {0}. Se non sei d''accordo, puoi disconnetterti o cancellare
       il tuo account.
 
-      
 
-      
 
-      
 
-      
 
-      Ti invitiamo a
-      dedicare qualche minuto a rileggere il nuovo documento relativo a {0} e a contattarci
-      se ritieni che contenga errori.'
+      Ti invitiamo a dedicare qualche minuto a rileggere
+      il nuovo documento relativo a {0} e a contattarci se ritieni che contenga errori.'
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -2416,9 +2401,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Ciao!\r\n\r\nIn qualit\xE0 di partecipante al progetto pilota,
-      vorremmo sottoporti un breve sondaggio. Le tue risposte ci aiuteranno a migliorare
-      la piattaforma FOODMISSION. \r\n\r\nTi va di compilarlo adesso?"
+    m_Localized: "Ciao!\n\nIn qualit\xE0 di partecipante al progetto pilota, vorremmo
+      sottoporti un breve sondaggio. Le tue risposte ci aiuteranno a migliorare la
+      piattaforma FOODMISSION. \n\nTi va di compilarlo adesso?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -3277,6 +3262,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49931095037173761
     m_Localized: Avviso sulla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: Registrato con successo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: Sfida completata con successo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: Impossibile caricare gli elementi preimpostati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: Errore imprevisto durante il salvataggio del pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: Errore imprevisto durante l'aggiornamento del pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: Scansiona codice a barre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: 'Nessun prodotto trovato per il codice a barre: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: 'Errore durante l''importazione del codice a barre: {0}'
     m_Metadata:
       m_Items: []
   references:

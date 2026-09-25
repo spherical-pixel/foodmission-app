@@ -198,8 +198,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Skupaj bomo va\u0161o kuhinjo povezali s skrbjo za planet.\r\n\r\nVsak
-      dan kuhajte, se u\u010Dite, delite in rastite.\r\n\r\nSte pripravljeni za\u010Deti?"
+    m_Localized: "Skupaj bomo va\u0161o kuhinjo povezali s skrbjo za planet.\n\nVsak
+      dan kuhajte, se u\u010Dite, delite in rastite.\n\nSte pripravljeni za\u010Deti?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: "Ta dejanja bodo trajno izbrisala vse va\u0161e podatke s platforme.\r\n\r\nSte
+    m_Localized: "Ta dejanja bodo trajno izbrisala vse va\u0161e podatke s platforme.\n\nSte
       prepri\u010Dani?"
     m_Metadata:
       m_Items: []
@@ -1344,7 +1344,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Dobrodo\u0161li v Foodmission!\r\nTa kratka anketa nam pomaga razumeti
+    m_Localized: "Dobrodo\u0161li v Foodmission!\nTa kratka anketa nam pomaga razumeti
       va\u0161e prehranjevalne navade, ozave\u0161\u010Denost o izgubi hrane in trajnostne
       odlo\u010Ditve, da vam bo Nutri lahko pripravil priporo\u010Dila po meri."
     m_Metadata:
@@ -2013,9 +2013,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Dobrodo\u0161li na FOODMISSION! \r\nPlatforma za dr\u017Eavljansko
+    m_Localized: "Dobrodo\u0161li na FOODMISSION! \nPlatforma za dr\u017Eavljansko
       znanost, ki vam pomaga izbolj\u0161ati trajnostne navade in prehranske navade.
-      \r\nV nekaj preprostih korakih si ustvarimo ra\u010Dun."
+      \nV nekaj preprostih korakih si ustvarimo ra\u010Dun."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2111,7 +2111,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "V va\u0161i dr\u017Eavi se pilotni projekt ne izvaja.\r\nPlatformo
+    m_Localized: "V va\u0161i dr\u017Eavi se pilotni projekt ne izvaja.\nPlatformo
       lahko raziskujete in uporabljate, vendar va\u0161i podatki ne bodo uporabljeni
       za raziskavo v okviru pilotnega projekta."
     m_Metadata:
@@ -2119,8 +2119,8 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Pozdravljeni! Da bi vam lahko prilagodili izku\u0161njo na Foodmissionu
       in vam pomagali dose\u010Di va\u0161e cilje, bi vas radi malo bolje spoznali.
-      Ste za to?\r\n\r\nProsimo, odgovorite na nekaj neobveznih vpra\u0161anj, da
-      bomo lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
+      Ste za to?\n\nProsimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
+      lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2223,9 +2223,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Ups! Ta razdelek \u0161e ni na voljo, a ne skrbite: delamo na tem,
-      da ga boste lahko kmalu uporabljali.\r\n\r\nFOODMISSION se nenehno razvija.
-      Aplikacijo izbolj\u0161ujemo in dodajamo nove funkcije na podlagi povratnih
-      informacij od uporabnikov, kot ste vi. Hvala, da nam pomagate rasti!"
+      da ga boste lahko kmalu uporabljali.\n\nFOODMISSION se nenehno razvija. Aplikacijo
+      izbolj\u0161ujemo in dodajamo nove funkcije na podlagi povratnih informacij
+      od uporabnikov, kot ste vi. Hvala, da nam pomagate rasti!"
     m_Metadata:
       m_Items: []
   - m_Id: 34310338294833152
@@ -2373,9 +2373,9 @@ MonoBehaviour:
   - m_Id: 40938002757705728
     m_Localized: "\u010Ce \u017Eelite \u0161e naprej uporabljati platformo, morate
       sprejeti nov dokument {0}. \u010Ce se s tem ne strinjate, se lahko odjavite
-      ali izbri\u0161ete svoj ra\u010Dun.\r\n\r\nVzemite si trenutek \u010Dasa in
-      \u0161e enkrat preglejte nov dokument {0} ter nas brez zadr\u017Ekov obvestite,
-      \u010De menite, da je v njem kaj narobe."
+      ali izbri\u0161ete svoj ra\u010Dun.\n\nVzemite si trenutek \u010Dasa in \u0161e
+      enkrat preglejte nov dokument {0} ter nas brez zadr\u017Ekov obvestite, \u010De
+      menite, da je v njem kaj narobe."
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
@@ -2383,9 +2383,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Pozdravljeni!\r\n\r\nKot udele\u017Eenec pilotnega projekta smo
-      za vas pripravili kratek vpra\u0161alnik. Va\u0161i odgovori nam bodo pomagali
-      izbolj\u0161ati platformo FOODMISSION. \r\n\r\nAli bi ga \u017Eeleli izpolniti
+    m_Localized: "Pozdravljeni!\n\nKot udele\u017Eenec pilotnega projekta smo za
+      vas pripravili kratek vpra\u0161alnik. Va\u0161i odgovori nam bodo pomagali
+      izbolj\u0161ati platformo FOODMISSION. \n\nAli bi ga \u017Eeleli izpolniti
       zdaj?"
     m_Metadata:
       m_Items: []
@@ -3231,6 +3231,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49931095037173761
     m_Localized: Obvestilo o shrambi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: "Uspe\u0161no zabele\u017Eeno!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: "Izziv uspe\u0161no zaklju\u010Den!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: "Prednastavljenih elementov ni bilo mogo\u010De nalo\u017Eiti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: "Nepri\u010Dakovana napaka pri shranjevanju obroka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: "Nepri\u010Dakovana napaka pri posodabljanju obroka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: "Skeniraj \u010Drtno kodo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: "Izdelka za \u010Drtno kodo ni bilo mogo\u010De najti: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: "Napaka pri uvozu \u010Drtne kode: {0}"
     m_Metadata:
       m_Items: []
   references:

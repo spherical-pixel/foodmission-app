@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -183,7 +184,7 @@ namespace eu.foodmission.platform
                 }
 
                 ReportSuccess = true;
-                SuccessMessage = "¡Registrado con éxito!";
+                SuccessMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MISSION_REPORT_SUCCESS");
 
                 // Reload mission progress to reflect backend evaluator update
                 if (!string.IsNullOrEmpty(Mission.code))

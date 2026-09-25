@@ -22,7 +22,7 @@ namespace eu.foodmission.platform
         protected override bool IsFixedContent => false;
 
         private Unity.AppUI.UI.Text _levelBadge;
-        private Unity.AppUI.UI.Text _frequencyBadge;
+
         private Unity.AppUI.UI.Text _challengeTitle;
         private Image _imageDimensionBanner;
         private Unity.AppUI.UI.Text _challengeGoal;
@@ -65,7 +65,6 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _levelBadge = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-level-badge");
-            _frequencyBadge = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-frequency-badge");
             _challengeTitle = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-title");
             _imageDimensionBanner = contentContainer.Q<Image>("image-dimension-banner");
             _challengeGoal = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-goal");
@@ -239,10 +238,7 @@ namespace eu.foodmission.platform
                     _levelBadge.text = challenge.level ?? "BEGINNER";
                 }
 
-                if (_frequencyBadge != null)
-                {
-                    _frequencyBadge.text = "⚡ Diario";
-                }
+
 
                 if (_imageDimensionBanner != null && _bannerService != null && _viewModel.Dimension != null)
                 {
