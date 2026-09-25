@@ -138,6 +138,9 @@ namespace eu.foodmission.platform
 
         [JsonProperty("pilotConsentAccepted", NullValueHandling = NullValueHandling.Ignore)]
         public bool? pilotConsentAccepted;
+
+        [JsonProperty("goals", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] goals;
     }
 
     /// <summary>

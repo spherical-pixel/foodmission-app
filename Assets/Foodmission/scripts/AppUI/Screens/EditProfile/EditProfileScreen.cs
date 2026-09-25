@@ -18,6 +18,7 @@ namespace eu.foodmission.platform
     class EditProfileScreen : NavigationScreenBase<EditProfileViewModel>
     {
         private Unity.AppUI.UI.Button _submitButton;
+        private Unity.AppUI.UI.Button _btnEditGoals;
         private FormFieldItemDropDownField _genderDropdown;
         private FormFieldItemDropDownField _activityLevelDropdown;
         private FormFieldItemDropDownField _dietaryPreferencesDropdown;
@@ -53,6 +54,7 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _submitButton = contentContainer.Q<Unity.AppUI.UI.Button>("submit-button");
+            _btnEditGoals = contentContainer.Q<Unity.AppUI.UI.Button>("btn-edit-goals");
             _genderDropdown = contentContainer.Q<FormFieldItemDropDownField>("gender-dropdown");
             _activityLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("activity-level-dropdown");
             _educationLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("education-level-dropdown");
@@ -73,6 +75,11 @@ namespace eu.foodmission.platform
             if (_submitButton != null)
             {
                 _submitButton.clicked += OnSubmitClicked;
+            }
+
+            if (_btnEditGoals != null)
+            {
+                _btnEditGoals.clicked += OnEditGoalsClicked;
             }
 
             if (_genderDropdown != null)
@@ -142,6 +149,11 @@ namespace eu.foodmission.platform
             if (_submitButton != null)
             {
                 _submitButton.clicked -= OnSubmitClicked;
+            }
+
+            if (_btnEditGoals != null)
+            {
+                _btnEditGoals.clicked -= OnEditGoalsClicked;
             }
 
             if (_genderDropdown != null)
@@ -463,6 +475,11 @@ namespace eu.foodmission.platform
             {
                 await _viewModel.SubmitAsync();
             }
+        }
+
+        private void OnEditGoalsClicked()
+        {
+            _navController?.Navigate(Unity.AppUI.Navigation.Generated.Actions.editprofile_to_onboardinggoals, new Argument("fromEditProfile", "true"));
         }
 
 

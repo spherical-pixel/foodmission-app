@@ -496,7 +496,7 @@ namespace eu.foodmission.platform
 
         private void NavigateNextScreen()
         {
-            RaiseNavigationRequested(Actions.onboardingprofile_to_onboarding_survey);
+            RaiseNavigationRequested(Actions.onboardingprofile_to_onboarding_goals);
         }
 
         private string GetLocalized(string key)

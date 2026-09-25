@@ -652,13 +652,21 @@ namespace eu.foodmission.platform
             var pendingType = _viewModel.GetPendingOnboardingType();
             if (pendingType == PendingOnboardingType.None) return false;
 
-            string messageKey = pendingType == PendingOnboardingType.Profile
-                ? "ONBOARDING_REMINDER_PROFILE_MSG"
-                : "ONBOARDING_REMINDER_SURVEY_MSG";
+            string messageKey = pendingType switch
+            {
+                PendingOnboardingType.Profile => "ONBOARDING_REMINDER_PROFILE_MSG",
+                PendingOnboardingType.Survey  => "ONBOARDING_REMINDER_SURVEY_MSG",
+                PendingOnboardingType.Goals   => "ONBOARDING_REMINDER_GOALS_MSG",
+                _                             => "ONBOARDING_REMINDER_PROFILE_MSG"
+            };
 
-            string actionKey = pendingType == PendingOnboardingType.Profile
-                ? "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE"
-                : "ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY";
+            string actionKey = pendingType switch
+            {
+                PendingOnboardingType.Profile => "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE",
+                PendingOnboardingType.Survey  => "ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY",
+                PendingOnboardingType.Goals   => "ONBOARDING_REMINDER_BTN_COMPLETE_GOALS",
+                _                             => "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE"
+            };
 
             NutriMessageDialog.Show(
                 message: LocalizationSettings.StringDatabase.GetLocalizedString("UI", messageKey),
@@ -672,9 +680,13 @@ namespace eu.foodmission.platform
                             {
                                 _viewModel.NavigateToOnboardingProfile();
                             }
-                            else
+                            else if (pendingType == PendingOnboardingType.Survey)
                             {
                                 _viewModel.NavigateToOnboardingSurvey();
+                            }
+                            else
+                            {
+                                _viewModel.NavigateToOnboardingGoals();
                             }
                         },
                         ButtonVariant.Accent

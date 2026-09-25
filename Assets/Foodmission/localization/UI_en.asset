@@ -3157,6 +3157,67 @@ MonoBehaviour:
     m_Localized: Complete Survey
     m_Metadata:
       m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: My Goals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: Hello! To personalize your experience, we would like to know your
+      sustainability and nutrition interests and goals. In the next steps you can
+      choose which topics interest you most. You can change them at any time!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: Through this app, I would like to adopt a more sustainable diet
+      by eating less meat and discovering alternative protein sources.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: Through this app, I would like to understand the environmental impact
+      of my food choices (e.g. carbon and water footprint) in order to consume more
+      sustainably.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: Through this app, I would like to learn where my food comes from
+      and how it is produced in order to choose minimally processed food products,
+      choose more local foods, support eco-friendly farming, support animal welfare,
+      and/or choose Fair Trade products.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: Through this app, I would like to learn how to choose products with
+      more eco-friendly packaging.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: Through this app, I would like to reduce my food waste through better
+      meal planning and reusing leftovers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: Through this app, I would like to understand the nutritional value
+      of my diet in order to make healthier food choices (e.g. eating more protein,
+      fiber and vitamines and less added sugar and salt).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: Please select at least one goal to complete.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: My Goals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: You haven't selected your sustainability goals yet. Would you like
+      to set them now?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Set Goals
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

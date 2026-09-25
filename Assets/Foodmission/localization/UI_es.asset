@@ -3153,6 +3153,70 @@ MonoBehaviour:
     m_Localized: Completar Encuesta
     m_Metadata:
       m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Mis Objetivos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "\xA1Hola! Para personalizar tu experiencia, queremos conocer tus
+      intereses y metas de sostenibilidad y nutrici\xF3n. En los siguientes pasos
+      podr\xE1s elegir qu\xE9 temas te interesan m\xE1s. \xA1Podr\xE1s cambiarlos
+      cuando quieras!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "A trav\xE9s de esta app, me gustar\xEDa adoptar una dieta m\xE1s
+      sostenible comiendo menos carne y descubriendo fuentes alternativas de prote\xEDnas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "A trav\xE9s de esta app, me gustar\xEDa comprender el impacto ambiental
+      de mis elecciones alimentarias (ej. huella de carbono e h\xEDdrica) para consumir
+      de forma m\xE1s sostenible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "A trav\xE9s de esta aplicaci\xF3n, me gustar\xEDa saber de d\xF3nde
+      proceden los alimentos que consumo y c\xF3mo se producen, con el fin de elegir
+      productos alimenticios m\xEDnimamente procesados, optar por alimentos m\xE1s
+      locales, apoyar la agricultura respetuosa con el medio ambiente, promover el
+      bienestar animal y/o elegir productos de Comercio Justo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "A trav\xE9s de esta app, me gustar\xEDa aprender a elegir productos
+      con envases m\xE1s respetuosos con el medio ambiente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "A trav\xE9s de esta app, me gustar\xEDa reducir mi desperdicio
+      de alimentos mediante una mejor planificaci\xF3n de comidas y la reutilizaci\xF3n
+      de sobras."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "A trav\xE9s de esta app, me gustar\xEDa comprender el valor nutricional
+      de mi dieta para tomar decisiones m\xE1s saludables (ej. m\xE1s prote\xEDnas,
+      fibra y vitaminas, y menos az\xFAcar y sal a\xF1adidos)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: Por favor, selecciona al menos un objetivo para completar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Mis Objetivos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "A\xFAn no has seleccionado tus objetivos de sostenibilidad. \xBFQuieres
+      establecerlos ahora?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Establecer Objetivos
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

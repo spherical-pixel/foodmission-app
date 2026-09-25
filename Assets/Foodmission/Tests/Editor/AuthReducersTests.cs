@@ -352,6 +352,23 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ProfileSyncedReducer_AppliesGoals()
+        {
+            var state = new AppState();
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 0,
+                country: "", region: "", zip: "",
+                gender: "", annualIncome: "", educationLevel: "", activityLevel: "",
+                goals: new[] { "REDUCING_MEAT_CONSUMPTION", "SALT" }
+            );
+            var action = AppActions.profileSynced.Invoke(payload);
+
+            var newState = AppReducers.ProfileSyncedReducer(state, action);
+
+            CollectionAssert.AreEqual(new[] { "REDUCING_MEAT_CONSUMPTION", "SALT" }, newState.userGoals);
+        }
+
+        [Test]
         public void ProfileSyncedReducer_WithNullPreferences_KeepsEmptyDefaults()
         {
             var state = new AppState { userDietaryPreference = new[] { "VEGAN" } };

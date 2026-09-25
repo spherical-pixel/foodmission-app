@@ -198,5 +198,33 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("en", newState.lang);
         }
 
+        [Test]
+        public void SetUserGoalsReducer_UpdatesGoals()
+        {
+            var goals = new[] { "REDUCING_MEAT_CONSUMPTION", "ENERGY_CONSUMPTION" };
+            var action = AppActions.setUserGoals.Invoke(goals);
+
+            var newState = AppReducers.SetUserGoalsReducer(m_InitialState, action);
+
+            Assert.IsNotNull(newState.userGoals);
+            Assert.AreEqual(2, newState.userGoals.Length);
+            Assert.AreEqual("REDUCING_MEAT_CONSUMPTION", newState.userGoals[0]);
+            Assert.AreEqual("ENERGY_CONSUMPTION", newState.userGoals[1]);
+        }
+
+        [Test]
+        public void LogoutReducer_ClearsUserGoals()
+        {
+            var state = new AppState
+            {
+                userGoals = new[] { "REDUCING_MEAT_CONSUMPTION" }
+            };
+            var action = AppActions.logout.Invoke();
+
+            var newState = AppReducers.LogoutReducer(state, action);
+
+            Assert.IsNotNull(newState.userGoals);
+            Assert.AreEqual(0, newState.userGoals.Length);
+        }
     }
 }

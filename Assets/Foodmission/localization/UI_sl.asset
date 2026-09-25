@@ -3153,6 +3153,68 @@ MonoBehaviour:
     m_Localized: Izpolni anketo
     m_Metadata:
       m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Moji cilji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Pozdravljeni! Da bi prilagodili va\u0161o izku\u0161njo, bi radi
+      spoznali va\u0161e interese in cilje glede trajnosti in prehrane. V naslednjih
+      korakih lahko izberete teme, ki vas najbolj zanimajo. Kadar koli jih lahko
+      spremenite!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: Prek te aplikacije bi rad prevzel bolj trajnostno prehrano z manj
+      mesa in odkrivanjem alternativnih virov beljakovin.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "Prek te aplikacije bi rad razumel okoljski vpliv svojih prehranskih
+      izbir (npr. oglji\u010Dni in vodni odtis) ter tako u\u017Eival bolj trajnostno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "S pomo\u010Djo te aplikacije bi rad izvedel, od kod prihaja moja
+      hrana in kako se prideluje, da bi lahko izbiral \u010Dim manj predelane \u017Eivilske
+      izdelke, ve\u010D lokalnih \u017Eivil, podpiral okolju prijazno kmetijstvo,
+      skrbel za dobro po\u010Dutje \u017Eivali in/ali izbiral izdelke pravi\u010Dne
+      trgovine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "Prek te aplikacije bi se rad nau\u010Dil izbirati izdelke z bolj
+      okolju prijazno embala\u017Eo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "Prek te aplikacije bi rad zmanj\u0161al koli\u010Dino zavr\u017Eene
+      hrane z bolj\u0161im na\u010Drtovanjem obrokov in ponovno uporabo ostankov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "Prek te aplikacije bi rad razumel prehransko vrednost svoje prehrane
+      in sprejemal bolj zdrave odlo\u010Ditve (npr. ve\u010D beljakovin, vlaknin
+      in vitaminov ter manj sladkorja in soli)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Za zaklju\u010Dek izberite vsaj en cilj."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Moji cilji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Svojih ciljev trajnostnosti \u0161e niste izbrali. Ali jih \u017Eelite
+      zdaj nastaviti?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Nastavi cilje
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

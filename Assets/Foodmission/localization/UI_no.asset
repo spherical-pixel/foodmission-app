@@ -3160,6 +3160,67 @@ MonoBehaviour:
     m_Localized: "Fullf\xF8r unders\xF8kelse"
     m_Metadata:
       m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: "Mine m\xE5l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Hei! For \xE5 tilpasse opplevelsen din vil vi gjerne vite dine
+      interesser og m\xE5l for b\xE6rekraft og ern\xE6ring. I de neste trinnene kan
+      du velge hvilke emner som interesserer deg mest. Du kan endre dem n\xE5r som
+      helst!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 ta i bruk et mer b\xE6rekraftig
+      kosthold ved \xE5 spise mindre kj\xF8tt og oppdage alternative proteinkilder."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 forst\xE5 milj\xF8p\xE5virkningen
+      av matvalgene mine (f.eks. karbon- og vannavtrykk) for \xE5 spise mer b\xE6rekraftig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 l\xE6re hvor maten min kommer
+      fra og hvordan den produseres, slik at jeg kan velge matvarer som er minimalt
+      bearbeidet, velge mer lokal mat, st\xF8tte milj\xF8vennlig jordbruk, fremme
+      dyrevelferd og/eller velge Fair Trade-produkter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "Gjennom denne appen vil jeg l\xE6re \xE5 velge produkter med mer
+      milj\xF8vennlig emballasje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 redusere matsvinn gjennom
+      bedre m\xE5ltidsplanlegging og gjenbruk av rester."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 forst\xE5 n\xE6ringsverdien
+      i kostholdet mitt for \xE5 ta sunnere matvalg (f.eks. mer protein, fiber og
+      vitaminer og mindre tilsatt sukker og salt)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Vennligst velg minst ett m\xE5l for \xE5 fullf\xF8re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: "Mine m\xE5l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Du har ikke valgt b\xE6rekraftsm\xE5lene dine enn\xE5. Vil du angi
+      dem n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: "Angi m\xE5l"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

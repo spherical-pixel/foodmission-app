@@ -146,5 +146,22 @@ namespace eu.foodmission.platform.Tests
             copy.userCurrentQuestId = "other-quest";
             Assert.AreEqual("quest-healthy-breakfast", state.userCurrentQuestId);
         }
+
+        [Test]
+        public void Copy_PreservesUserGoals()
+        {
+            var state = new AppState
+            {
+                userGoals = new[] { "REDUCING_MEAT_CONSUMPTION", "LAND_USE" }
+            };
+
+            var copy = state.Copy();
+            Assert.AreEqual(2, copy.userGoals.Length);
+            Assert.AreEqual("REDUCING_MEAT_CONSUMPTION", copy.userGoals[0]);
+            Assert.AreEqual("LAND_USE", copy.userGoals[1]);
+
+            copy.userGoals[0] = "MODIFIED";
+            Assert.AreEqual("REDUCING_MEAT_CONSUMPTION", state.userGoals[0]);
+        }
     }
 }

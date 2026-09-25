@@ -117,6 +117,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<PilotSurveyCycleState> setPilotCycleState = "app/setPilotCycleState";
         public static readonly ActionCreator<bool> setPilotConsent = "app/setPilotConsent";
         public static readonly ActionCreator<string> setCurrentQuest = "app/setCurrentQuest";
+        public static readonly ActionCreator<string[]> setUserGoals = "app/setUserGoals";
 
         // Profile sync
         public static readonly ActionCreator<ProfilePayload> profileSynced = "app/profileSynced";
@@ -164,6 +165,7 @@ namespace eu.foodmission.platform
             public readonly string onboardingProfileSkippedAt;
             public readonly PilotSurveyCycleState pilotSurveyCycleState;
             public readonly bool pilotConsentAccepted;
+            public readonly string[] goals;
 
             public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
@@ -184,7 +186,8 @@ namespace eu.foodmission.platform
                 bool onboardingProfileCompleted = false,
                 string onboardingProfileSkippedAt = null,
                 PilotSurveyCycleState pilotSurveyCycleState = null,
-                bool pilotConsentAccepted = false)
+                bool pilotConsentAccepted = false,
+                string[] goals = null)
             {
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
@@ -211,6 +214,7 @@ namespace eu.foodmission.platform
                 this.onboardingProfileSkippedAt = onboardingProfileSkippedAt;
                 this.pilotSurveyCycleState = pilotSurveyCycleState;
                 this.pilotConsentAccepted = pilotConsentAccepted;
+                this.goals = goals;
             }
         }
     }
@@ -353,6 +357,7 @@ namespace eu.foodmission.platform
             newState.userPoints = 0;
             newState.userProgressIndicators = new ProgressIndicator[0];
             newState.userBadges = new string[0];
+            newState.userGoals = new string[0];
 
             // Clear temporal data
             newState.isAuthenticating = false;
@@ -549,6 +554,11 @@ namespace eu.foodmission.platform
                 newState.pilotConsentAccepted = true;
             }
 
+            if (action.payload.goals != null)
+            {
+                newState.userGoals = (string[])action.payload.goals.Clone();
+            }
+
             return newState;
         }
 
@@ -592,6 +602,13 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userOnboardingSurvey = action.payload;
+            return newState;
+        }
+
+        public static AppState SetUserGoalsReducer(AppState state, IAction<string[]> action)
+        {
+            var newState = state.Copy();
+            newState.userGoals = action.payload != null ? (string[])action.payload.Clone() : new string[0];
             return newState;
         }
 

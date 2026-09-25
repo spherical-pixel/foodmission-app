@@ -53,6 +53,9 @@ namespace Unity.AppUI.Navigation.Generated
         public const string open_mission = "open_mission";
         public const string open_challenge = "open_challenge";
         public const string open_quick_meal_log = "open_quick_meal_log";
+        public const string onboardingprofile_to_onboarding_goals = "onboardingprofile_to_onboarding_goals";
+        public const string onboardinggoals_to_onboardingsurvey = "onboardinggoals_to_onboardingsurvey";
+        public const string editprofile_to_onboardinggoals = "editprofile_to_onboardinggoals";
     }
     public static partial class Destinations
     {
@@ -81,6 +84,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string foodwasteadd = "FoodWasteAdd";
         public const string forceupdate = "ForceUpdate";
         public const string testsurvey = "TestSurvey";
+        public const string onboardinggoals = "OnboardingGoals";
         public const string onboardingsurvey = "OnboardingSurvey";
         public const string quick_search = "QUICK_SEARCH";
         public const string recipebook = "RecipeBook";

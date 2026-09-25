@@ -3190,6 +3190,73 @@ MonoBehaviour:
     m_Localized: "Wype\u0142nij ankiet\u0119"
     m_Metadata:
       m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Moje cele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Cze\u015B\u0107! Aby spersonalizowa\u0107 Twoje do\u015Bwiadczenie,
+      chcemy pozna\u0107 Twoje zainteresowania i cele w zakresie zr\xF3wnowa\u017Conego
+      rozwoju i od\u017Cywiania. W kolejnych krokach mo\u017Cesz wybra\u0107 tematy,
+      kt\xF3re najbardziej Ci\u0119 interesuj\u0105. Mo\u017Cesz je zmieni\u0107
+      w ka\u017Cdej chwili!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 przyj\u0105\u0107
+      bardziej zr\xF3wnowa\u017Con\u0105 diet\u0119, jedz\u0105c mniej mi\u0119sa
+      i odkrywaj\u0105c alternatywne \u017Ar\xF3d\u0142a bia\u0142ka."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 zrozumie\u0107 wp\u0142yw
+      moich wybor\xF3w \u017Cywieniowych na \u015Brodowisko (np. \u015Blad w\u0119glowy
+      i wodny), aby konsumowa\u0107 w spos\xF3b bardziej zr\xF3wnowa\u017Cony."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "Dzi\u0119ki tej aplikacji chcia\u0142bym dowiedzie\u0107 si\u0119,
+      sk\u0105d pochodzi moja \u017Cywno\u015B\u0107 i jak jest produkowana, aby
+      wybiera\u0107 produkty spo\u017Cywcze poddane minimalnej obr\xF3bce, si\u0119ga\u0107
+      cz\u0119\u015Bciej po lokalne produkty, wspiera\u0107 rolnictwo przyjazne dla
+      \u015Brodowiska, dba\u0107 o dobrostan zwierz\u0105t i/lub wybiera\u0107 produkty
+      sprawiedliwego handlu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 nauczy\u0107 si\u0119
+      wybiera\u0107 produkty w bardziej przyjaznych dla \u015Brodowiska opakowaniach."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 ograniczy\u0107 marnowanie
+      \u017Cywno\u015Bci poprzez lepsze planowanie posi\u0142k\xF3w i ponowne wykorzystanie
+      resztek."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 zrozumie\u0107 warto\u015B\u0107
+      od\u017Cywcz\u0105 mojej diety, aby dokonywa\u0107 zdrowszych wybor\xF3w \u017Cywieniowych
+      (np. wi\u0119cej bia\u0142ka, b\u0142onnika i witamin, a mniej cukru i soli)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Wybierz co najmniej jeden cel, aby zako\u0144czy\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Moje cele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Nie wybra\u0142e\u015B jeszcze swoich cel\xF3w zr\xF3wnowa\u017Conego
+      rozwoju. Czy chcesz je teraz ustawi\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Ustaw cele
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

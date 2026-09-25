@@ -3211,6 +3211,67 @@ MonoBehaviour:
     m_Localized: "Enqu\xEAte invullen"
     m_Metadata:
       m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Mijn Doelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: Hallo! Om je ervaring te personaliseren, willen we graag je interesses
+      en doelen op het gebied van duurzaamheid en voeding weten. In de volgende stappen
+      kun je kiezen welke onderwerpen je het meest interesseren. Je kunt ze op elk
+      moment wijzigen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: Via deze app wil ik een duurzamer dieet aannemen door minder vlees
+      te eten en alternatieve eiwitbronnen te ontdekken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: Via deze app wil ik de milieu-impact van mijn voedselkeuzes begrijpen
+      (bijv. koolstof- en watervoetafdruk) om duurzamer te consumeren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: Via deze app wil ik graag leren waar mijn voedsel vandaan komt en
+      hoe het wordt geproduceerd, zodat ik voor zo min mogelijk bewerkte voedingsmiddelen
+      kan kiezen, meer lokale producten kan kopen, milieuvriendelijke landbouw kan
+      steunen, dierenwelzijn kan bevorderen en/of Fair Trade-producten kan kiezen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: Via deze app wil ik leren hoe ik producten met milieuvriendelijkere
+      verpakkingen kan kiezen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: Via deze app wil ik mijn voedselverspilling verminderen door maaltijden
+      beter te plannen en restjes te hergebruiken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: Via deze app wil ik de voedingswaarde van mijn dieet begrijpen om
+      gezondere keuzes te maken (bijv. meer eiwitten, vezels en vitamines en minder
+      suiker en zout).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Selecteer ten minste \xE9\xE9n doel om te voltooien."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Mijn Doelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: Je hebt je duurzaamheidsdoelen nog niet geselecteerd. Wil je ze
+      nu instellen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Doelen instellen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

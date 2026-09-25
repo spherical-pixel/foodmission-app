@@ -3087,6 +3087,54 @@ MonoBehaviour:
     m_Key: ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY
     m_Metadata:
       m_Items: []
+  - m_Id: 49923301089206272
+    m_Key: ONBOARDING_REMINDER_GOALS_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Key: ONBOARDING_REMINDER_BTN_COMPLETE_GOALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Key: GOALS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Key: GOALS_WELCOME_NUTRI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Key: GOALS_Q_DIM_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Key: GOALS_Q_DIM_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Key: GOALS_Q_DIM_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Key: GOALS_Q_DIM_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Key: GOALS_Q_DIM_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Key: GOALS_Q_DIM_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Key: GOALS_VALIDATION_ERROR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Key: GOALS_EDIT_BUTTON
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

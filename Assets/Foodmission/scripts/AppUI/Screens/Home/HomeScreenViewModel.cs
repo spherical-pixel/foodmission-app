@@ -9,7 +9,8 @@ namespace eu.foodmission.platform
     {
         None,
         Profile,
-        Survey
+        Survey,
+        Goals
     }
 
     [ObservableObject]
@@ -179,6 +180,12 @@ namespace eu.foodmission.platform
                 return PendingOnboardingType.Survey;
             }
 
+            bool goalsSet = state.userGoals != null && state.userGoals.Length > 0;
+            if (!goalsSet)
+            {
+                return PendingOnboardingType.Goals;
+            }
+
             return PendingOnboardingType.None;
         }
 
@@ -192,6 +199,16 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(
                 Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboarding_survey,
                 new Unity.AppUI.Navigation.Argument("fromHome", "true")
+            );
+        }
+
+        public void NavigateToOnboardingGoals()
+        {
+            // fromHome=true → on completion, OnboardingGoalsViewModel returns to Home
+            RaiseNavigationRequested(
+                Unity.AppUI.Navigation.Generated.Actions.editprofile_to_onboardinggoals,
+                new Unity.AppUI.Navigation.Argument("fromHome", "true"),
+                new Unity.AppUI.Navigation.Argument("fromEditProfile", "false")
             );
         }
 

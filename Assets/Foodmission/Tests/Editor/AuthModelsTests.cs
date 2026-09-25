@@ -179,6 +179,17 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ProfileResponse_Deserializes_Goals()
+        {
+            string json = @"{""id"":""uid1"",""email"":""a@b.com"",""preferences"":{""goals"":[""REDUCING_MEAT_CONSUMPTION"",""WATER_USE""]}}";
+
+            var result = JsonConvert.DeserializeObject<ProfileResponse>(json);
+
+            Assert.IsNotNull(result.preferences);
+            CollectionAssert.AreEqual(new[] { "REDUCING_MEAT_CONSUMPTION", "WATER_USE" }, result.preferences.goals);
+        }
+
+        [Test]
         public void RefreshResponse_Roundtrips_Via_JsonUtility()
         {
             var resp = new RefreshResponse

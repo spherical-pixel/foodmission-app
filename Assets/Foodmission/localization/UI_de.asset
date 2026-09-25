@@ -3170,6 +3170,68 @@ MonoBehaviour:
     m_Localized: "Umfrage ausf\xFCllen"
     m_Metadata:
       m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Meine Ziele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Hallo! Um deine Erfahrung zu personalisieren, m\xF6chten wir deine
+      Interessen und Ziele in Bezug auf Nachhaltigkeit und Ern\xE4hrung erfahren.
+      In den n\xE4chsten Schritten kannst du ausw\xE4hlen, welche Themen dich am
+      meisten interessieren. Du kannst sie jederzeit \xE4ndern!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "\xDCber diese App m\xF6chte ich mich nachhaltiger ern\xE4hren,
+      indem ich weniger Fleisch esse und alternative Proteinquellen entdecke."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "\xDCber diese App m\xF6chte ich die Umweltauswirkungen meiner Lebensmittelentscheidungen
+      verstehen (z. B. CO2- und Wasserfu\xDFabdruck), um nachhaltiger zu konsumieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "Mit dieser App m\xF6chte ich erfahren, woher meine Lebensmittel
+      stammen und wie sie hergestellt werden, um m\xF6glichst wenig verarbeitete
+      Lebensmittel zu w\xE4hlen, mehr regionale Produkte zu kaufen, umweltfreundliche
+      Landwirtschaft und Tierschutz zu unterst\xFCtzen und/oder Fair-Trade-Produkte
+      zu w\xE4hlen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "\xDCber diese App m\xF6chte ich lernen, wie ich Produkte mit umweltfreundlicheren
+      Verpackungen ausw\xE4hle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "\xDCber diese App m\xF6chte ich meine Lebensmittelverschwendung
+      durch bessere Mahlzeitenplanung und die Wiederverwendung von Resten reduzieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "\xDCber diese App m\xF6chte ich den N\xE4hrwert meiner Ern\xE4hrung
+      verstehen, um ges\xFCndere Lebensmittelentscheidungen zu treffen (z. B. mehr
+      Protein, Ballaststoffe und Vitamine und weniger Zucker und Salz)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Bitte w\xE4hle mindestens ein Ziel aus, um fortzufahren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Meine Ziele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Du hast deine Nachhaltigkeitsziele noch nicht ausgew\xE4hlt. M\xF6chtest
+      du sie jetzt festlegen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Ziele festlegen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
