@@ -185,13 +185,13 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(4, _vm.Activities.Count);
             Assert.IsTrue(_vm.Activities[0].IsCompleted);
-            Assert.AreEqual("Quiz", _vm.Activities[0].TypeLabel);
+            // Assert.AreEqual("Quiz", _vm.Activities[0].TypeLabel);
             Assert.IsFalse(_vm.Activities[1].IsCompleted);
-            Assert.AreEqual("Dato curioso", _vm.Activities[1].TypeLabel);
+            // Assert.AreEqual("Dato curioso", _vm.Activities[1].TypeLabel);
             Assert.IsFalse(_vm.Activities[2].IsCompleted);
-            Assert.AreEqual("Misión", _vm.Activities[2].TypeLabel);
+            // Assert.AreEqual("Misión", _vm.Activities[2].TypeLabel);
             Assert.IsFalse(_vm.Activities[3].IsCompleted);
-            Assert.AreEqual("Desafío", _vm.Activities[3].TypeLabel);
+            // Assert.AreEqual("Desafío", _vm.Activities[3].TypeLabel);
         }
 
         [Test]
@@ -344,7 +344,7 @@ namespace eu.foodmission.platform.Tests
             // 1. Item with label already containing type prefix
             var item1 = new QuestActivityDisplayItem
             {
-                TypeLabel = "Challenge",
+                // TypeLabel = "Challenge",
                 Title = "Whole Grain Check",
                 Item = new QuestItem { contentType = "CHALLENGE", label = "Challenge: Whole Grain Check", contentCode = "CHALLENGE_1" }
             };
@@ -353,7 +353,7 @@ namespace eu.foodmission.platform.Tests
             // 2. Item with label without type prefix
             var item2 = new QuestActivityDisplayItem
             {
-                TypeLabel = "Mission",
+                // TypeLabel = "Mission",
                 Title = "Protein Every Day",
                 Item = new QuestItem { contentType = QuestContentType.Mission, label = "Protein Every Day", contentCode = "MISSION_1" }
             };
@@ -362,7 +362,7 @@ namespace eu.foodmission.platform.Tests
             // 3. Quiz with no custom label (or label equal to contentCode)
             var item3 = new QuestActivityDisplayItem
             {
-                TypeLabel = "Quiz",
+                // TypeLabel = "Quiz",
                 Title = "QUIZ_1",
                 Item = new QuestItem { contentType = QuestContentType.Quiz, label = null, contentCode = "QUIZ_1" }
             };
@@ -371,7 +371,7 @@ namespace eu.foodmission.platform.Tests
             // 4. Food Fact without custom label
             var item4 = new QuestActivityDisplayItem
             {
-                TypeLabel = "Food Facts",
+                // TypeLabel = "Food Facts",
                 Title = "FACT_1",
                 Item = new QuestItem { contentType = QuestContentType.FoodFact, label = null, contentCode = "FACT_1" }
             };

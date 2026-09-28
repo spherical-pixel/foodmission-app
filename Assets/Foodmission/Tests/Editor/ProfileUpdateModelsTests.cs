@@ -145,5 +145,21 @@ namespace eu.foodmission.platform.Tests
             var populatedSurvey = new OnboardingSurveyData { weeklyMeatConsumption = "ZERO_TO_FOUR" };
             Assert.IsTrue(populatedSurvey.HasAnswers());
         }
+
+        [Test]
+        public void ToJson_IncludesGoalsWhenSet()
+        {
+            var request = new ProfileUpdateRequest
+            {
+                preferences = new ProfileUpdatePreferences
+                {
+                    goals = new[] { "REDUCING_MEAT_CONSUMPTION", "SUGAR" }
+                }
+            };
+
+            string json = request.ToJson();
+
+            StringAssert.Contains("\"goals\":[\"REDUCING_MEAT_CONSUMPTION\",\"SUGAR\"]", json);
+        }
     }
 }

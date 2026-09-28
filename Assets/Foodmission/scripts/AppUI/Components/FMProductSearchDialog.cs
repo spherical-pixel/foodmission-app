@@ -189,7 +189,7 @@ namespace eu.foodmission.platform.Components
             scanButton.style.marginLeft = 5;
             scanButton.style.marginRight = 30;
             scanButton.style.display = DisplayStyle.None;
-            scanButton.tooltip = "Scan barcode";
+            scanButton.tooltip = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "BARCODE_SCAN_TOOLTIP") ?? "Scan barcode";
             searchRow.Add(scanButton);
 
             var searchSpinner = new CircularProgress { size = Size.S };
@@ -354,12 +354,16 @@ namespace eu.foodmission.platform.Components
                 }
                 else
                 {
-                    FMDialog.ShowAlert(anchor, title, $"Could not find product for barcode: {barcode}", AlertSemantic.Warning);
+                    string notFoundTemplate = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "BARCODE_NOT_FOUND") ?? "Could not find product for barcode: {0}";
+                    string msg = string.Format(notFoundTemplate, barcode);
+                    FMDialog.ShowAlert(anchor, title, msg, AlertSemantic.Warning);
                 }
             }
             catch (Exception ex)
             {
-                FMDialog.ShowAlert(anchor, title, $"Error importing barcode: {ex.Message}", AlertSemantic.Error);
+                string errorTemplate = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "BARCODE_IMPORT_ERROR") ?? "Error importing barcode: {0}";
+                string msg = string.Format(errorTemplate, ex.Message);
+                FMDialog.ShowAlert(anchor, title, msg, AlertSemantic.Error);
             }
         }
 

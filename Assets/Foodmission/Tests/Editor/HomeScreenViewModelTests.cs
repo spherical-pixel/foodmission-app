@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json.Linq;
@@ -574,7 +575,8 @@ namespace eu.foodmission.platform.Tests
                 userOnboardingSurvey = new OnboardingSurveyData
                 {
                     weeklyMeatConsumption = "ZERO_TO_FOUR"
-                }
+                },
+                userGoals = new[] { TopicCode.ReducingMeatConsumption }
             });
 
             var result = _vm.GetPendingOnboardingType();
@@ -598,6 +600,44 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void GetPendingOnboardingType_WhenProfileAndSurveyDoneButNoGoals_ReturnsGoals()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = true,
+                hasSkippedExtendedProfile = false,
+                userOnboardingSurvey = new OnboardingSurveyData
+                {
+                    weeklyMeatConsumption = "ZERO_TO_FOUR"
+                },
+                userGoals = null
+            });
+
+            var result = _vm.GetPendingOnboardingType();
+
+            Assert.AreEqual(PendingOnboardingType.Goals, result);
+        }
+
+        [Test]
+        public void GetPendingOnboardingType_WhenProfileAndSurveyDoneAndGoalsEmpty_ReturnsGoals()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = true,
+                hasSkippedExtendedProfile = false,
+                userOnboardingSurvey = new OnboardingSurveyData
+                {
+                    weeklyMeatConsumption = "ZERO_TO_FOUR"
+                },
+                userGoals = System.Array.Empty<string>()
+            });
+
+            var result = _vm.GetPendingOnboardingType();
+
+            Assert.AreEqual(PendingOnboardingType.Goals, result);
+        }
+
+        [Test]
         public void NavigateToOnboardingSurvey_RaisesNavigationWithFromHome()
         {
             string requestedAction = null;
@@ -615,6 +655,26 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, requestedArgs.Length);
             Assert.AreEqual("fromHome", requestedArgs[0].name);
             Assert.AreEqual("true", requestedArgs[0].value?.ToString());
+        }
+
+        [Test]
+        public void NavigateToOnboardingGoals_RaisesNavigationWithFromHomeTrue()
+        {
+            string requestedAction = null;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) =>
+            {
+                requestedAction = action;
+                requestedArgs = args;
+            };
+
+            _vm.NavigateToOnboardingGoals();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.editprofile_to_onboardinggoals, requestedAction);
+            Assert.IsNotNull(requestedArgs);
+            Assert.AreEqual(2, requestedArgs.Length);
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && a.value?.ToString() == "true"));
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromEditProfile" && a.value?.ToString() == "false"));
         }
     }
 }

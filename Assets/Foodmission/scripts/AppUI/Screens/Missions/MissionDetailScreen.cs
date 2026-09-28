@@ -243,7 +243,7 @@ namespace eu.foodmission.platform
                 {
                     _durationBadge.text = !string.IsNullOrEmpty(mission.duration)
                         ? $"⏱️ {mission.duration}"
-                        : "⏱️ 1 semana";
+                        : $"⏱️ ";
                 }
 
                 if (_imageDimensionBanner != null && _bannerService != null && _viewModel.Dimension != null)

@@ -73,6 +73,7 @@ namespace eu.foodmission.platform.Tests
                 .AddCase(AppActions.setExtendedProfile, AppReducers.SetExtendedProfileReducer)
                 .AddCase(AppActions.setSkippedExtendedProfile, AppReducers.SetSkippedExtendedProfileReducer)
                 .AddCase(AppActions.setOnboardingSurvey, AppReducers.SetOnboardingSurveyReducer)
+                .AddCase(AppActions.setUserGoals, AppReducers.SetUserGoalsReducer)
                 .AddCase(AppActions.setAvatar, AppReducers.SetAvatarReducer)
                 .AddCase(AppActions.setPilotCycleState, AppReducers.SetPilotCycleStateReducer)
                 .AddCase(AppActions.setPilotConsent, AppReducers.SetPilotConsentReducer)

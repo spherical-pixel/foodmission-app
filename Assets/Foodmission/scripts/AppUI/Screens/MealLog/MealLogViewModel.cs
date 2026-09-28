@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation.Generated;
@@ -371,7 +372,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] SelectMealPreset failed: {ex.Message}");
-                ErrorMessage = "Could not load preset items";
+                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_LOAD_PRESETS") ?? "Could not load preset items";
             }
         }
 
@@ -807,7 +808,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] SaveAsync failed: {ex.Message}");
-                ErrorMessage = "Unexpected error saving meal log";
+                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_SAVE") ?? "Unexpected error saving meal log";
                 IsSaving = false;
                 return false;
             }
@@ -1028,7 +1029,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] SaveEditAsync failed: {ex.Message}");
-                ErrorMessage = "Unexpected error updating meal log";
+                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_UPDATE") ?? "Unexpected error updating meal log";
                 IsSaving = false;
                 return false;
             }
@@ -1118,7 +1119,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] ConfirmUpdateAndSaveAsync failed: {ex.Message}");
-                ErrorMessage = "Unexpected error saving meal log";
+                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_SAVE") ?? "Unexpected error saving meal log";
                 IsSaving = false;
                 return false;
             }

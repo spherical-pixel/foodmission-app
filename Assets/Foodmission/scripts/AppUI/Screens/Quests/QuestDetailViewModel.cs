@@ -15,8 +15,8 @@ namespace eu.foodmission.platform
         public QuestItem Item { get; set; }
         public int StepIndex { get; set; }
         public string Title { get; set; }
-        public string TypeLabel { get; set; }
-        public string TypeIcon { get; set; }
+        // public string TypeLabel { get; set; }
+        // public string TypeIcon { get; set; }
         public bool IsCompleted { get; set; }
         public float Progress { get; set; }
         public string StatusText { get; set; }
@@ -431,19 +431,19 @@ namespace eu.foodmission.platform
                     completedCount++;
                 }
 
-                var (typeLabel, typeIcon) = GetTypeMetadata(it.contentType);
+                // var (typeLabel, typeIcon) = GetTypeMetadata(it.contentType);
 
                 string statusText = isItemCompleted
-                    ? (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED") ?? "Completado")
-                    : (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING") ?? "Pendiente");
+                    ? (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED"))
+                    : (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING"));
 
                 activityItems.Add(new QuestActivityDisplayItem
                 {
                     Item = it,
                     StepIndex = i + 1,
                     Title = !string.IsNullOrEmpty(it.label) ? it.label : it.contentCode,
-                    TypeLabel = typeLabel,
-                    TypeIcon = typeIcon,
+                    // TypeLabel = typeLabel,
+                    // TypeIcon = typeIcon,
                     IsCompleted = isItemCompleted,
                     Progress = isItemCompleted ? 100f : 0f,
                     StatusText = statusText
@@ -463,27 +463,27 @@ namespace eu.foodmission.platform
             Activities = activityItems;
         }
 
-        private static (string Label, string Icon) GetTypeMetadata(string contentType)
-        {
-            if (string.IsNullOrEmpty(contentType))
-                return ("Actividad", "star");
+        // private static (string Label, string Icon) GetTypeMetadata(string contentType)
+        // {
+        //     if (string.IsNullOrEmpty(contentType))
+        //         return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_ACTIVITY"), "star");
 
-            switch (contentType.ToUpperInvariant())
-            {
-                case QuestContentType.Quiz:
-                    return ("Quiz", "help-circle");
-                case QuestContentType.FoodFact:
-                    return ("Dato curioso", "lightbulb");
-                case QuestContentType.Mission:
-                    return ("Misión", "target");
-                case "CHALLENGE":
-                    return ("Desafío", "award");
-                case QuestContentType.MicroLearning:
-                    return ("Lectura", "book-open");
-                default:
-                    return ("Actividad", "star");
-            }
-        }
+        //     switch (contentType.ToUpperInvariant())
+        //     {
+        //         case QuestContentType.Quiz:
+        //             return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_QUIZ"), "help-circle");
+        //         case QuestContentType.FoodFact:
+        //             return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_FOOD_FACT"), "lightbulb");
+        //         case QuestContentType.Mission:
+        //             return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_MISSION"), "target");
+        //         case "CHALLENGE":
+        //             return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_CHALLENGE"), "award");
+        //         case QuestContentType.MicroLearning:
+        //             return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_READING"), "book-open");
+        //         default:
+        //             return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_ACTIVITY"), "star");
+        //     }
+        // }
 
         public void OpenActivity(QuestActivityDisplayItem activity)
         {

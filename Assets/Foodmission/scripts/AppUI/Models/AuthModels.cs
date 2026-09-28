@@ -236,5 +236,6 @@ namespace eu.foodmission.platform
         public string segment;
         public PilotSurveyCycleState pilotSurveyCycleState;
         public bool pilotConsentAccepted;
+        public string[] goals;
     }
 }

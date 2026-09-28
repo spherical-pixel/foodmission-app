@@ -24,7 +24,6 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaTop => false;
         protected override bool IsFixedContent => false;
 
-        private Unity.AppUI.UI.Text _activeQuestHint;
         private VisualElement _typesContainer;
         private readonly List<(string Code, FMButton Button)> _typeButtons = new();
 
@@ -50,7 +49,6 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
-            _activeQuestHint = contentContainer.Q<Unity.AppUI.UI.Text>("active-quest-hint");
             _typesContainer = contentContainer.Q<VisualElement>("types-row") ?? contentContainer.Q<VisualElement>(className: "fm-quick-meal-types-row");
 
             _questionsContainer = contentContainer.Q<VisualElement>("questions-container");
@@ -250,17 +248,6 @@ namespace eu.foodmission.platform
         {
             if (_viewModel == null) return;
 
-            if (_activeQuestHint != null)
-            {
-                if (!string.IsNullOrEmpty(_viewModel.ActiveQuestTitle))
-                {
-                    _activeQuestHint.text = $"Vinculado a tu misión activa: {_viewModel.ActiveQuestTitle}";
-                }
-                else
-                {
-                    _activeQuestHint.text = "Registra los aspectos saludables y sostenibles de tu comida.";
-                }
-            }
 
             UpdateEditState();
             RebuildTypeButtons();

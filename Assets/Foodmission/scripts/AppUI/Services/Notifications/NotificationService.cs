@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.AppUI.MVVM;
+using UnityEngine.Localization.Settings;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+
 
 
 #if UNITY_ANDROID
@@ -301,8 +305,8 @@ namespace eu.foodmission.platform
                 CancelNotification(notifId);
             }
 
-            string title = "Aviso de despensa";
-            string body = $"Tu producto '{itemName}' caduca pronto. ¡Aprovecha para consumirlo!";
+            string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOTIFICATION_ABOUT_TO_EXPIRE_TITLE");
+            string body = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOTIFICATION_ABOUT_TO_EXPIRE_BODY", new object[] { itemName });
 
             ScheduleNativeNotification(notifId, NotificationChannels.PantryExpiryId, title, body, reminderTime, "go_to_pantry", itemId);
 
@@ -449,8 +453,8 @@ namespace eu.foodmission.platform
             }
 
             string notifId = "daily_meal_reminder";
-            string title = "¿Qué has comido hoy?";
-            string body = "No olvides registrar tus comidas en Foodmission para mantener tus hábitos al día.";
+            string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOTIFICATION_DAILY_MEAL_REMINDER_TITLE");
+            string body = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOTIFICATION_DAILY_MEAL_REMINDER_BODY");
 
             CancelNotification(notifId);
             ScheduleNativeNotification(notifId, NotificationChannels.DailyRemindersId, title, body, target, "go_to_meal_log", "");

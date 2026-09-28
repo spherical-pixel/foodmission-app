@@ -3087,38 +3087,6 @@ MonoBehaviour:
     m_Key: ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY
     m_Metadata:
       m_Items: []
-  - m_Id: 50951420206112768
-    m_Key: NUTRI_EDITOR_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50951420206112769
-    m_Key: EDIT_NUTRI
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50951420206112770
-    m_Key: FOODY_CATEGORY_ANTENNAS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50951420206112771
-    m_Key: FOODY_CATEGORY_GLASSES
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50951420206112772
-    m_Key: FOODY_CATEGORY_EARS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50951420206112773
-    m_Key: FOODY_BUY_CONFIRM_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50951420206112774
-    m_Key: FOODY_BUY_CONFIRM_MSG
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50951420206112775
-    m_Key: FOODY_INSUFFICIENT_POINTS
-    m_Metadata:
-      m_Items: []
   - m_Id: 49923301089206272
     m_Key: ONBOARDING_REMINDER_GOALS_MSG
     m_Metadata:
