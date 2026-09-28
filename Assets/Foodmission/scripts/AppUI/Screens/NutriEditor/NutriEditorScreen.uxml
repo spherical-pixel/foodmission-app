@@ -1,0 +1,28 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.NutriEditorViewModel, Foodmission" class="fm-root" style="flex-grow: 1; background-color: rgba(2, 70, 57, 0); height: 100%; width: 100%;">
+        <ui:VisualElement name="back" style="flex-grow: 1;">
+            <appui:ExVisualElement name="frame" class="box-background fm-shadow-wrapper fm-edito-avatar-box" style="flex-grow: 1; justify-content: space-between;">
+                <ui:VisualElement name="Top" style="align-items: center; flex-grow: 1; justify-content: flex-start; padding-top: 100px;">
+                    <fm:FMNutriView name="nutri-view" style="height: 1200px; width: 100%;"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Bottom" style="position: relative; flex-shrink: 0;">
+                    <ui:VisualElement name="edit" style="flex-grow: 1;">
+                        <ui:VisualElement name="linea_1" class="fm-button-avatar-list" style="justify-content: center;">
+                            <fm:FMButton title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-icon-antennas-category" name="btAntennas" class="fm-button-avatar fm-button-shadow" style="margin-left: 10px; margin-right: 10px;"/>
+                            <fm:FMButton title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-icon-glasses-category" name="btGlasses" class="fm-button-avatar fm-button-shadow" style="margin-left: 10px; margin-right: 10px;"/>
+                            <fm:FMButton title="" subtitle="" quiet="false" variant="Accent" trailing-icon="" leading-icon="fm-icon-ears-category" name="btEars" class="fm-button-avatar fm-button-shadow" style="margin-left: 10px; margin-right: 10px;"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <appui:Spacer/>
+                    <ui:VisualElement name="Buttons" style="flex-grow: 1; display: none;">
+                        <fm:FMButton title="Save &amp; continue" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btSave" class="fm-button-align-left fm-button fm-button-shadow"/>
+                        <appui:Spacer/>
+                        <fm:FMButton title="Exit without saving" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btExit" class="fm-button-align-left fm-button fm-button-shadow"/>
+                        <appui:Spacer name="btExit"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </appui:ExVisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

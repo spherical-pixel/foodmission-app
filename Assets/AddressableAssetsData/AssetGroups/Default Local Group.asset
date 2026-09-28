@@ -95,6 +95,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c3bf21df06d2439280c6a666827e623
+    m_Address: Foodmission/AppUI/Templates/NutriEditorScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 61e6e124fb6e849c4ac488d29545f911
     m_Address: Foodmission/AppUI/Templates/RegisterScreen.uxml
     m_ReadOnly: 0
@@ -102,6 +107,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d4a73a26fa8a42bda6560ad6312ec0b
     m_Address: Foodmission/AppUI/Templates/QuizScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f487efc457b44ff29346c1680172432
+    m_Address: Foodmission/AppUI/Templates/NutriEditorPanelItem.uxml
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

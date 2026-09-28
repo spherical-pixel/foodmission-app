@@ -53,6 +53,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string open_mission = "open_mission";
         public const string open_challenge = "open_challenge";
         public const string open_quick_meal_log = "open_quick_meal_log";
+        public const string go_to_nutri_editor = "go_to_nutri_editor";
     }
     public static partial class Destinations
     {
@@ -99,6 +100,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string mission_detail = "MissionDetail";
         public const string challenge_detail = "ChallengeDetail";
         public const string quick_meallog = "QuickMealLog";
+        public const string nutri_editor = "NUTRI_EDITOR";
     }
     public static partial class Graphs
     {

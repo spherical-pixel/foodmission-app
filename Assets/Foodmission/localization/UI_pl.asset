@@ -3190,6 +3190,158 @@ MonoBehaviour:
     m_Localized: "Wype\u0142nij ankiet\u0119"
     m_Metadata:
       m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Nie wybra\u0142e\u015B jeszcze swoich cel\xF3w zr\xF3wnowa\u017Conego
+      rozwoju. Czy chcesz je teraz ustawi\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Ustaw cele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Moje cele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Cze\u015B\u0107! Aby spersonalizowa\u0107 Twoje do\u015Bwiadczenie,
+      chcemy pozna\u0107 Twoje zainteresowania i cele w zakresie zr\xF3wnowa\u017Conego
+      rozwoju i od\u017Cywiania. W kolejnych krokach mo\u017Cesz wybra\u0107 tematy,
+      kt\xF3re najbardziej Ci\u0119 interesuj\u0105. Mo\u017Cesz je zmieni\u0107
+      w ka\u017Cdej chwili!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 przyj\u0105\u0107
+      bardziej zr\xF3wnowa\u017Con\u0105 diet\u0119, jedz\u0105c mniej mi\u0119sa
+      i odkrywaj\u0105c alternatywne \u017Ar\xF3d\u0142a bia\u0142ka."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 zrozumie\u0107 wp\u0142yw
+      moich wybor\xF3w \u017Cywieniowych na \u015Brodowisko (np. \u015Blad w\u0119glowy
+      i wodny), aby konsumowa\u0107 w spos\xF3b bardziej zr\xF3wnowa\u017Cony."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "Dzi\u0119ki tej aplikacji chcia\u0142bym dowiedzie\u0107 si\u0119,
+      sk\u0105d pochodzi moja \u017Cywno\u015B\u0107 i jak jest produkowana, aby
+      wybiera\u0107 produkty spo\u017Cywcze poddane minimalnej obr\xF3bce, si\u0119ga\u0107
+      cz\u0119\u015Bciej po lokalne produkty, wspiera\u0107 rolnictwo przyjazne dla
+      \u015Brodowiska, dba\u0107 o dobrostan zwierz\u0105t i/lub wybiera\u0107 produkty
+      sprawiedliwego handlu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 nauczy\u0107 si\u0119
+      wybiera\u0107 produkty w bardziej przyjaznych dla \u015Brodowiska opakowaniach."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 ograniczy\u0107 marnowanie
+      \u017Cywno\u015Bci poprzez lepsze planowanie posi\u0142k\xF3w i ponowne wykorzystanie
+      resztek."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "Za po\u015Brednictwem tej aplikacji chc\u0119 zrozumie\u0107 warto\u015B\u0107
+      od\u017Cywcz\u0105 mojej diety, aby dokonywa\u0107 zdrowszych wybor\xF3w \u017Cywieniowych
+      (np. wi\u0119cej bia\u0142ka, b\u0142onnika i witamin, a mniej cukru i soli)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Wybierz co najmniej jeden cel, aby zako\u0144czy\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Moje cele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095032979456
+    m_Localized: "Co dzisiaj jad\u0142e\u015B?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Nie zapomnij zapisywa\u0107 swoich posi\u0142k\xF3w, aby \u015Bledzi\u0107
+      swoje nawyki."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: "Og\u0142oszenie dotycz\u0105ce spi\u017Carni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: "Tw\xF3j produkt {0} wkr\xF3tce straci wa\u017Cno\u015B\u0107. Pami\u0119taj,
+      \u017Ceby go zu\u017Cy\u0107!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: "Pomy\u015Blnie zarejestrowano!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: "Wyzwanie pomy\u015Blnie uko\u0144czone!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: "Nie mo\u017Cna za\u0142adowa\u0107 zapisanych pozycji"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: "Nieoczekiwany b\u0142\u0105d podczas zapisywania posi\u0142ku"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: "Nieoczekiwany b\u0142\u0105d podczas aktualizacji posi\u0142ku"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: Skanuj kod kreskowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: 'Nie znaleziono produktu dla kodu kreskowego: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: "B\u0142\u0105d importowania kodu kreskowego: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112768
+    m_Localized: Dostosuj Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112769
+    m_Localized: Dostosuj Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112770
+    m_Localized: Anteny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112771
+    m_Localized: Okulary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112772
+    m_Localized: Uszy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112773
+    m_Localized: Odblokuj akcesorium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112774
+    m_Localized: "{0:plural:Czy chcesz odblokowa\u0107 ten przedmiot za {0} FoodyCoin?|Czy
+      chcesz odblokowa\u0107 ten przedmiot za {0} FoodyCoiny?|Czy chcesz odblokowa\u0107
+      ten przedmiot za {0} FoodyCoin\xF3w?|Czy chcesz odblokowa\u0107 ten przedmiot
+      za {0} FoodyCoiny?}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112775
+    m_Localized: "Za ma\u0142o FoodyCoin\xF3w"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -62,6 +62,8 @@ namespace eu.foodmission.platform
 
         private bool _isFromOnboarding;
         private AvatarEditorPanelItem _avatarEditorPanelItem;
+        private AvatarEditorItemEnum? _currentOpenItem;
+        private bool _isTransitioning;
 
         public AvatarEditor()
         {
@@ -188,6 +190,7 @@ namespace eu.foodmission.platform
             _viewModel?.AvatarService.SetFullBodyCameraActive(false);
             _viewModel?.AvatarService.SetAvatarCameraActive(false);
 
+            CloseSelectorItemAvatar(false);
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
         }
@@ -259,19 +262,64 @@ namespace eu.foodmission.platform
 
         private void OpenSelectorItemAvatar(AvatarEditorItemEnum itemEnum)
         {
+            if (_isTransitioning) return;
+            if (_avatarEditorPanelItem != null && _avatarEditorPanelItem.IsClosing) return;
+
+            if (_avatarEditorPanelItem != null)
+            {
+                if (_currentOpenItem == itemEnum)
+                {
+                    // Tapping active category toggles panel closed
+                    CloseSelectorItemAvatar(true);
+                    return;
+                }
+
+                CloseSelectorItemAvatar(false);
+            }
+
+            _currentOpenItem = itemEnum;
             _avatarEditorPanelItem = new AvatarEditorPanelItem();
-            _avatarEditorPanelItem.Init(CloseSelectorItemAvatar, itemEnum, _viewModel.AvatarService);
+            _avatarEditorPanelItem.Init(OnPanelClosed, itemEnum, _viewModel.AvatarService);
             Add(_avatarEditorPanelItem);
+            _avatarEditorPanelItem.AnimateIn();
         }
 
-        private void CloseSelectorItemAvatar()
+        private void OnPanelClosed()
         {
-            Debug.Log("CloseSelectorItemAvatar");
             if (_avatarEditorPanelItem != null)
             {
                 _avatarEditorPanelItem.Dispose();
                 Remove(_avatarEditorPanelItem);
                 _avatarEditorPanelItem = null;
+                _currentOpenItem = null;
+            }
+            _isTransitioning = false;
+        }
+
+        private void CloseSelectorItemAvatar(bool animate = false)
+        {
+            if (_avatarEditorPanelItem != null)
+            {
+                var item = _avatarEditorPanelItem;
+                _avatarEditorPanelItem = null;
+                _currentOpenItem = null;
+
+                if (animate)
+                {
+                    _isTransitioning = true;
+                    item.AnimateOut(() =>
+                    {
+                        item.Dispose();
+                        Remove(item);
+                        _isTransitioning = false;
+                    });
+                }
+                else
+                {
+                    item.Dispose();
+                    Remove(item);
+                    _isTransitioning = false;
+                }
             }
         }
     }

@@ -3211,6 +3211,150 @@ MonoBehaviour:
     m_Localized: "Enqu\xEAte invullen"
     m_Metadata:
       m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: Je hebt je duurzaamheidsdoelen nog niet geselecteerd. Wil je ze
+      nu instellen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Doelen instellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Mijn Doelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: Hallo! Om je ervaring te personaliseren, willen we graag je interesses
+      en doelen op het gebied van duurzaamheid en voeding weten. In de volgende stappen
+      kun je kiezen welke onderwerpen je het meest interesseren. Je kunt ze op elk
+      moment wijzigen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: Via deze app wil ik een duurzamer dieet aannemen door minder vlees
+      te eten en alternatieve eiwitbronnen te ontdekken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: Via deze app wil ik de milieu-impact van mijn voedselkeuzes begrijpen
+      (bijv. koolstof- en watervoetafdruk) om duurzamer te consumeren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: Via deze app wil ik graag leren waar mijn voedsel vandaan komt en
+      hoe het wordt geproduceerd, zodat ik voor zo min mogelijk bewerkte voedingsmiddelen
+      kan kiezen, meer lokale producten kan kopen, milieuvriendelijke landbouw kan
+      steunen, dierenwelzijn kan bevorderen en/of Fair Trade-producten kan kiezen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: Via deze app wil ik leren hoe ik producten met milieuvriendelijkere
+      verpakkingen kan kiezen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: Via deze app wil ik mijn voedselverspilling verminderen door maaltijden
+      beter te plannen en restjes te hergebruiken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: Via deze app wil ik de voedingswaarde van mijn dieet begrijpen om
+      gezondere keuzes te maken (bijv. meer eiwitten, vezels en vitamines en minder
+      suiker en zout).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Selecteer ten minste \xE9\xE9n doel om te voltooien."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Mijn Doelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095032979456
+    m_Localized: Wat heb je vandaag gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: Vergeet niet je maaltijden bij te houden om inzicht te krijgen in
+      je eetgewoonten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Mededeling over de voorraadkast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: Je product {0} is bijna over de datum. Zorg ervoor dat je het nog
+      opmaakt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: Succesvol geregistreerd!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: Uitdaging succesvol voltooid!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: Kon vooraf ingestelde items niet laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: Onverwachte fout bij het opslaan van de maaltijd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: Onverwachte fout bij het bijwerken van de maaltijd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: Strekkode scannen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: 'Geen product gevonden voor strekkode: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: 'Fout bij importeren van strekkode: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112768
+    m_Localized: Personaliseer Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112769
+    m_Localized: Personaliseer Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112770
+    m_Localized: Antennes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112771
+    m_Localized: Bril
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112772
+    m_Localized: Oren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112773
+    m_Localized: Accessoire ontgrendelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112774
+    m_Localized: '{0:plural:Wil je dit item ontgrendelen voor {0} FoodyCoin?|Wil
+      je dit item ontgrendelen voor {0} FoodyCoins?}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112775
+    m_Localized: Niet genoeg FoodyCoins
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -3087,6 +3087,134 @@ MonoBehaviour:
     m_Key: ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY
     m_Metadata:
       m_Items: []
+  - m_Id: 50951420206112768
+    m_Key: NUTRI_EDITOR_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112769
+    m_Key: EDIT_NUTRI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112770
+    m_Key: FOODY_CATEGORY_ANTENNAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112771
+    m_Key: FOODY_CATEGORY_GLASSES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112772
+    m_Key: FOODY_CATEGORY_EARS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112773
+    m_Key: FOODY_BUY_CONFIRM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112774
+    m_Key: FOODY_BUY_CONFIRM_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112775
+    m_Key: FOODY_INSUFFICIENT_POINTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301089206272
+    m_Key: ONBOARDING_REMINDER_GOALS_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Key: ONBOARDING_REMINDER_BTN_COMPLETE_GOALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Key: GOALS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Key: GOALS_WELCOME_NUTRI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Key: GOALS_Q_DIM_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Key: GOALS_Q_DIM_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Key: GOALS_Q_DIM_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Key: GOALS_Q_DIM_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Key: GOALS_Q_DIM_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Key: GOALS_Q_DIM_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Key: GOALS_VALIDATION_ERROR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Key: GOALS_EDIT_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095032979456
+    m_Key: NOTIFICATION_DAILY_MEAL_REMINDER_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Key: NOTIFICATION_DAILY_MEAL_REMINDER_BODY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Key: NOTIFICATION_ABOUT_TO_EXPIRE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Key: NOTIFICATION_ABOUT_TO_EXPIRE_BODY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Key: MISSION_REPORT_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Key: CHALLENGE_REPORT_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Key: MEAL_LOG_ERROR_LOAD_PRESETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Key: MEAL_LOG_ERROR_SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Key: MEAL_LOG_ERROR_UPDATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Key: BARCODE_SCAN_TOOLTIP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Key: BARCODE_NOT_FOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Key: BARCODE_IMPORT_ERROR
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

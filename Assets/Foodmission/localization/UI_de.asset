@@ -3170,6 +3170,151 @@ MonoBehaviour:
     m_Localized: "Umfrage ausf\xFCllen"
     m_Metadata:
       m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Du hast deine Nachhaltigkeitsziele noch nicht ausgew\xE4hlt. M\xF6chtest
+      du sie jetzt festlegen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Ziele festlegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Meine Ziele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Hallo! Um deine Erfahrung zu personalisieren, m\xF6chten wir deine
+      Interessen und Ziele in Bezug auf Nachhaltigkeit und Ern\xE4hrung erfahren.
+      In den n\xE4chsten Schritten kannst du ausw\xE4hlen, welche Themen dich am
+      meisten interessieren. Du kannst sie jederzeit \xE4ndern!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "\xDCber diese App m\xF6chte ich mich nachhaltiger ern\xE4hren,
+      indem ich weniger Fleisch esse und alternative Proteinquellen entdecke."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "\xDCber diese App m\xF6chte ich die Umweltauswirkungen meiner Lebensmittelentscheidungen
+      verstehen (z. B. CO2- und Wasserfu\xDFabdruck), um nachhaltiger zu konsumieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "Mit dieser App m\xF6chte ich erfahren, woher meine Lebensmittel
+      stammen und wie sie hergestellt werden, um m\xF6glichst wenig verarbeitete
+      Lebensmittel zu w\xE4hlen, mehr regionale Produkte zu kaufen, umweltfreundliche
+      Landwirtschaft und Tierschutz zu unterst\xFCtzen und/oder Fair-Trade-Produkte
+      zu w\xE4hlen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "\xDCber diese App m\xF6chte ich lernen, wie ich Produkte mit umweltfreundlicheren
+      Verpackungen ausw\xE4hle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "\xDCber diese App m\xF6chte ich meine Lebensmittelverschwendung
+      durch bessere Mahlzeitenplanung und die Wiederverwendung von Resten reduzieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "\xDCber diese App m\xF6chte ich den N\xE4hrwert meiner Ern\xE4hrung
+      verstehen, um ges\xFCndere Lebensmittelentscheidungen zu treffen (z. B. mehr
+      Protein, Ballaststoffe und Vitamine und weniger Zucker und Salz)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Bitte w\xE4hle mindestens ein Ziel aus, um fortzufahren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Meine Ziele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095032979456
+    m_Localized: Was hast du heute gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Vergiss nicht, deine Mahlzeiten einzutragen, um den \xDCberblick
+      \xFCber deine Essgewohnheiten zu behalten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Hinweis zur Vorratskammer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: Ihr Produkt {0} ist kurz vor dem Verfallsdatum. Verwenden Sie es
+      unbedingt noch auf!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: Erfolgreich eingetragen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: Herausforderung erfolgreich abgeschlossen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: Gespeicherte Elemente konnten nicht geladen werden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: Unerwarteter Fehler beim Speichern der Mahlzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: Unerwarteter Fehler beim Aktualisieren der Mahlzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: Barcode scannen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: "Kein Produkt f\xFCr Barcode gefunden: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: 'Fehler beim Importieren des Barcodes: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112768
+    m_Localized: Foody anpassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112769
+    m_Localized: Foody anpassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112770
+    m_Localized: Antennen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112771
+    m_Localized: Brille
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112772
+    m_Localized: Ohren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112773
+    m_Localized: "Zubeh\xF6r freischalten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112774
+    m_Localized: "{0:plural:M\xF6chtest du dieses Objekt f\xFCr {0} FoodyCoin freischalten?|M\xF6chtest
+      du dieses Objekt f\xFCr {0} FoodyCoins freischalten?}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112775
+    m_Localized: Nicht genug FoodyCoins
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

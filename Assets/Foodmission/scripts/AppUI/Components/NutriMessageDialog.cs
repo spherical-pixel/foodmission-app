@@ -190,7 +190,11 @@ namespace eu.foodmission.platform.Components
                     if (nutriService != null)
                     {
                         nutriService.SetAction(NutriAction.Idle);
-                        nutriService.SetCameraActive(false);
+                        if (!FMNutriView.HasActiveViews)
+                        {
+                            nutriService.SetCameraActive(false);
+                            nutriService.SetActive(false);
+                        }
                     }
 
                     root.RemoveFromClassList("fm-nutri-dialog--visible");
@@ -214,6 +218,24 @@ namespace eu.foodmission.platform.Components
             var panelRoot = App.current.rootVisualElement;
             modal = Modal.Build(panelRoot, root);
             modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
+            modal.dismissed += (m, dismissType) =>
+            {
+                if (s_SpeechSchedule != null)
+                {
+                    s_SpeechSchedule.Pause();
+                    s_SpeechSchedule = null;
+                }
+
+                if (nutriService != null)
+                {
+                    nutriService.SetAction(NutriAction.Idle);
+                    if (!FMNutriView.HasActiveViews)
+                    {
+                        nutriService.SetCameraActive(false);
+                        nutriService.SetActive(false);
+                    }
+                }
+            };
             modal.Show();
 
             root.schedule.Execute(() => root.AddToClassList("fm-nutri-dialog--visible")).StartingIn(50);

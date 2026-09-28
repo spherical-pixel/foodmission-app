@@ -94,6 +94,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<OnboardingGroupsViewModel>();
             builder.services.AddTransient<EditProfileViewModel>();
             builder.services.AddTransient<AvatarEditorViewModel>();
+            builder.services.AddTransient<NutriEditorViewModel>();
             builder.services.AddTransient<ForceUpdateScreenViewModel>();
             builder.services.AddTransient<FoodInfoViewModel>();
             builder.services.AddTransient<QuickSearchViewModel>();

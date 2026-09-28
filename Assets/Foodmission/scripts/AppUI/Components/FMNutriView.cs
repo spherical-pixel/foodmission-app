@@ -13,9 +13,15 @@ namespace eu.foodmission.platform.Components
         private Image _nutriImage;
         private INutriService _nutriService;
         private IAudioService _audioService;
+        private bool _isAttached = false;
 
         // Static count to manage overlapping/simultaneous views (e.g., during screen transitions)
         private static int s_ActiveViewsCount = 0;
+
+        /// <summary>
+        /// Indicates whether any FMNutriView is currently attached and active in the UI.
+        /// </summary>
+        public static bool HasActiveViews => s_ActiveViewsCount > 0;
 
         /// <summary>
         /// Callback executed when Nutri is clicked.
@@ -63,6 +69,9 @@ namespace eu.foodmission.platform.Components
 
         private void OnAttachToPanel(AttachToPanelEvent evt)
         {
+            if (_isAttached) return;
+            _isAttached = true;
+
             _nutriService = App.current?.services?.GetService<INutriService>();
             _audioService = App.current?.services?.GetService<IAudioService>();
             if (_nutriService != null)
@@ -82,6 +91,9 @@ namespace eu.foodmission.platform.Components
 
         private void OnDetachFromPanel(DetachFromPanelEvent evt)
         {
+            if (!_isAttached) return;
+            _isAttached = false;
+
             _nutriImage.image = null;
 
             if (_nutriService != null)
@@ -94,6 +106,25 @@ namespace eu.foodmission.platform.Components
                     _nutriService.SetActive(false);
                 }
                 _nutriService = null;
+            }
+        }
+
+        /// <summary>
+        /// Ensures Nutri and its camera are active and bound to this view.
+        /// Useful when resuming screens or after dismissals.
+        /// </summary>
+        public void RefreshView()
+        {
+            _nutriService ??= App.current?.services?.GetService<INutriService>();
+            _audioService ??= App.current?.services?.GetService<IAudioService>();
+            if (_nutriService != null)
+            {
+                _nutriService.SetActive(true);
+                _nutriService.SetCameraActive(true);
+                if (_nutriImage != null && _nutriService.NutriCameraRenderTexture != null)
+                {
+                    _nutriImage.image = _nutriService.NutriCameraRenderTexture;
+                }
             }
         }
     }

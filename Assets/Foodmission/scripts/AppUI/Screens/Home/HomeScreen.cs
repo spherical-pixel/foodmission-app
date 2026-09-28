@@ -72,6 +72,7 @@ namespace eu.foodmission.platform
             base.OnEnter(controller, destination, args);
             _ = _viewModel?.LoadActiveQuestAsync();
             RefreshActiveQuestWidget();
+            _nutriView?.RefreshView();
             //SetupRewardDebugButton();
         }
 
@@ -701,6 +702,7 @@ namespace eu.foodmission.platform
                 _activeQuestCard.QuickMealClicked += OnActiveQuestQuickMealClicked;
             }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked += OnChooseQuestClicked;
+            if (_nutriView != null) _nutriView.OnClick = () => _navController?.Navigate(Actions.go_to_nutri_editor);
             if (_viewModel != null) _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -712,6 +714,7 @@ namespace eu.foodmission.platform
                 _activeQuestCard.QuickMealClicked -= OnActiveQuestQuickMealClicked;
             }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked -= OnChooseQuestClicked;
+            if (_nutriView != null) _nutriView.OnClick = null;
             if (_viewModel != null) _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
         }
 

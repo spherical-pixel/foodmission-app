@@ -3160,6 +3160,150 @@ MonoBehaviour:
     m_Localized: "Fullf\xF8r unders\xF8kelse"
     m_Metadata:
       m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Du har ikke valgt b\xE6rekraftsm\xE5lene dine enn\xE5. Vil du angi
+      dem n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: "Angi m\xE5l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: "Mine m\xE5l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Hei! For \xE5 tilpasse opplevelsen din vil vi gjerne vite dine
+      interesser og m\xE5l for b\xE6rekraft og ern\xE6ring. I de neste trinnene kan
+      du velge hvilke emner som interesserer deg mest. Du kan endre dem n\xE5r som
+      helst!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 ta i bruk et mer b\xE6rekraftig
+      kosthold ved \xE5 spise mindre kj\xF8tt og oppdage alternative proteinkilder."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 forst\xE5 milj\xF8p\xE5virkningen
+      av matvalgene mine (f.eks. karbon- og vannavtrykk) for \xE5 spise mer b\xE6rekraftig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 l\xE6re hvor maten min kommer
+      fra og hvordan den produseres, slik at jeg kan velge matvarer som er minimalt
+      bearbeidet, velge mer lokal mat, st\xF8tte milj\xF8vennlig jordbruk, fremme
+      dyrevelferd og/eller velge Fair Trade-produkter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "Gjennom denne appen vil jeg l\xE6re \xE5 velge produkter med mer
+      milj\xF8vennlig emballasje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 redusere matsvinn gjennom
+      bedre m\xE5ltidsplanlegging og gjenbruk av rester."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "Gjennom denne appen \xF8nsker jeg \xE5 forst\xE5 n\xE6ringsverdien
+      i kostholdet mitt for \xE5 ta sunnere matvalg (f.eks. mer protein, fiber og
+      vitaminer og mindre tilsatt sukker og salt)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Vennligst velg minst ett m\xE5l for \xE5 fullf\xF8re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: "Mine m\xE5l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095032979456
+    m_Localized: Hva har du spist i dag?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Husk \xE5 registrere m\xE5ltidene dine for \xE5 holde oversikt
+      over vanene dine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Melding fra spiskammeret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: "Produktet ditt {0} er i ferd med \xE5 g\xE5 ut p\xE5 dato. S\xF8rg
+      for \xE5 bruke det opp!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: Vellykket registrert!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: "Utfordring fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: "Kunne ikke laste forh\xE5ndsinnstilte elementer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: "Uventet feil ved lagring av m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: "Uventet feil ved oppdatering av m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: Skann strekkode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: 'Fant ikke produkt for strekkode: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: 'Feil ved import av strekkode: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112768
+    m_Localized: Tilpass Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112769
+    m_Localized: Tilpass Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112770
+    m_Localized: Antenner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112771
+    m_Localized: Briller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112772
+    m_Localized: "\xD8rer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112773
+    m_Localized: "L\xE5s opp tilbeh\xF8r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112774
+    m_Localized: "{0:plural:Vil du l\xE5se opp dette elementet for {0} FoodyCoin?|Vil
+      du l\xE5se opp dette elementet for {0} FoodyCoins?}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112775
+    m_Localized: Ikke nok FoodyCoins
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

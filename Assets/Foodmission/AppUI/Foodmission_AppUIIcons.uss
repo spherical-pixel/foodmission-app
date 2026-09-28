@@ -125,6 +125,27 @@
     --appui-icon-fm-shopping-list-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-shopping-list.png");
     --appui-icon-fm-search-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-search.png");
     --appui-icon-fm-icon-coin-regular: url("project:/Assets/Foodmission/graphics/png/icons/fm-icon-coin.png");
+    --appui-icon-fm-icon-antennas-category-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/fm-icon-antennas-category.png");
+    --appui-icon-fm-icon-glasses-category-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/fm-icon-glasses-category.png");
+    --appui-icon-fm-icon-ears-category-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/fm-icon-ears-category.png");
+    --appui-icon-fm-icon-antennas-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/antennas/fm-icon-antennas-1.png");
+    --appui-icon-fm-icon-antennas-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/antennas/fm-icon-antennas-2.png");
+    --appui-icon-fm-icon-antennas-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/antennas/fm-icon-antennas-3.png");
+    --appui-icon-fm-icon-antennas-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/antennas/fm-icon-antennas-4.png");
+    --appui-icon-fm-icon-antennas-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/antennas/fm-icon-antennas-5.png");
+    --appui-icon-fm-icon-antennas-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/antennas/fm-icon-antennas-6.png");
+    --appui-icon-fm-icon-glasses-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/glasses/fm-icon-glasses-1.png");
+    --appui-icon-fm-icon-glasses-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/glasses/fm-icon-glasses-2.png");
+    --appui-icon-fm-icon-glasses-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/glasses/fm-icon-glasses-3.png");
+    --appui-icon-fm-icon-glasses-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/glasses/fm-icon-glasses-4.png");
+    --appui-icon-fm-icon-glasses-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/glasses/fm-icon-glasses-5.png");
+    --appui-icon-fm-icon-glasses-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/glasses/fm-icon-glasses-6.png");
+    --appui-icon-fm-icon-ears-1-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/ears/fm-icon-ears-1.png");
+    --appui-icon-fm-icon-ears-2-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/ears/fm-icon-ears-2.png");
+    --appui-icon-fm-icon-ears-3-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/ears/fm-icon-ears-3.png");
+    --appui-icon-fm-icon-ears-4-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/ears/fm-icon-ears-4.png");
+    --appui-icon-fm-icon-ears-5-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/ears/fm-icon-ears-5.png");
+    --appui-icon-fm-icon-ears-6-regular: url("project:/Assets/Foodmission/art/ui_sprites/icons-foody/ears/fm-icon-ears-6.png");
 }
 
 .appui-icon--arrow-up--regular {
@@ -610,4 +631,37 @@
 .appui-icon--fm-icon-coin--regular {
     --unity-image: var(--appui-icon-fm-icon-coin-regular);
 }
+
+.appui-icon--fm-icon-antennas-category--regular {
+    --unity-image: var(--appui-icon-fm-icon-antennas-category-regular);
+}
+
+.appui-icon--fm-icon-glasses-category--regular {
+    --unity-image: var(--appui-icon-fm-icon-glasses-category-regular);
+}
+
+.appui-icon--fm-icon-ears-category--regular {
+    --unity-image: var(--appui-icon-fm-icon-ears-category-regular);
+}
+
+.appui-icon--fm-icon-antennas-1--regular { --unity-image: var(--appui-icon-fm-icon-antennas-1-regular); }
+.appui-icon--fm-icon-antennas-2--regular { --unity-image: var(--appui-icon-fm-icon-antennas-2-regular); }
+.appui-icon--fm-icon-antennas-3--regular { --unity-image: var(--appui-icon-fm-icon-antennas-3-regular); }
+.appui-icon--fm-icon-antennas-4--regular { --unity-image: var(--appui-icon-fm-icon-antennas-4-regular); }
+.appui-icon--fm-icon-antennas-5--regular { --unity-image: var(--appui-icon-fm-icon-antennas-5-regular); }
+.appui-icon--fm-icon-antennas-6--regular { --unity-image: var(--appui-icon-fm-icon-antennas-6-regular); }
+
+.appui-icon--fm-icon-glasses-1--regular { --unity-image: var(--appui-icon-fm-icon-glasses-1-regular); }
+.appui-icon--fm-icon-glasses-2--regular { --unity-image: var(--appui-icon-fm-icon-glasses-2-regular); }
+.appui-icon--fm-icon-glasses-3--regular { --unity-image: var(--appui-icon-fm-icon-glasses-3-regular); }
+.appui-icon--fm-icon-glasses-4--regular { --unity-image: var(--appui-icon-fm-icon-glasses-4-regular); }
+.appui-icon--fm-icon-glasses-5--regular { --unity-image: var(--appui-icon-fm-icon-glasses-5-regular); }
+.appui-icon--fm-icon-glasses-6--regular { --unity-image: var(--appui-icon-fm-icon-glasses-6-regular); }
+
+.appui-icon--fm-icon-ears-1--regular { --unity-image: var(--appui-icon-fm-icon-ears-1-regular); }
+.appui-icon--fm-icon-ears-2--regular { --unity-image: var(--appui-icon-fm-icon-ears-2-regular); }
+.appui-icon--fm-icon-ears-3--regular { --unity-image: var(--appui-icon-fm-icon-ears-3-regular); }
+.appui-icon--fm-icon-ears-4--regular { --unity-image: var(--appui-icon-fm-icon-ears-4-regular); }
+.appui-icon--fm-icon-ears-5--regular { --unity-image: var(--appui-icon-fm-icon-ears-5-regular); }
+.appui-icon--fm-icon-ears-6--regular { --unity-image: var(--appui-icon-fm-icon-ears-6-regular); }
 

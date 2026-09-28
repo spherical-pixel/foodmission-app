@@ -3153,6 +3153,151 @@ MonoBehaviour:
     m_Localized: Izpolni anketo
     m_Metadata:
       m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Svojih ciljev trajnostnosti \u0161e niste izbrali. Ali jih \u017Eelite
+      zdaj nastaviti?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Nastavi cilje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: Moji cilji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Pozdravljeni! Da bi prilagodili va\u0161o izku\u0161njo, bi radi
+      spoznali va\u0161e interese in cilje glede trajnosti in prehrane. V naslednjih
+      korakih lahko izberete teme, ki vas najbolj zanimajo. Kadar koli jih lahko
+      spremenite!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: Prek te aplikacije bi rad prevzel bolj trajnostno prehrano z manj
+      mesa in odkrivanjem alternativnih virov beljakovin.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "Prek te aplikacije bi rad razumel okoljski vpliv svojih prehranskih
+      izbir (npr. oglji\u010Dni in vodni odtis) ter tako u\u017Eival bolj trajnostno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "S pomo\u010Djo te aplikacije bi rad izvedel, od kod prihaja moja
+      hrana in kako se prideluje, da bi lahko izbiral \u010Dim manj predelane \u017Eivilske
+      izdelke, ve\u010D lokalnih \u017Eivil, podpiral okolju prijazno kmetijstvo,
+      skrbel za dobro po\u010Dutje \u017Eivali in/ali izbiral izdelke pravi\u010Dne
+      trgovine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "Prek te aplikacije bi se rad nau\u010Dil izbirati izdelke z bolj
+      okolju prijazno embala\u017Eo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: "Prek te aplikacije bi rad zmanj\u0161al koli\u010Dino zavr\u017Eene
+      hrane z bolj\u0161im na\u010Drtovanjem obrokov in ponovno uporabo ostankov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "Prek te aplikacije bi rad razumel prehransko vrednost svoje prehrane
+      in sprejemal bolj zdrave odlo\u010Ditve (npr. ve\u010D beljakovin, vlaknin
+      in vitaminov ter manj sladkorja in soli)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: "Za zaklju\u010Dek izberite vsaj en cilj."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: Moji cilji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095032979456
+    m_Localized: Kaj si danes jedel?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: "Ne pozabi bele\u017Eiti svojih obrokov, da bo\u0161 lahko spremljal
+      svoje navade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Obvestilo o shrambi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: "Va\u0161 izdelek {0} se bo kmalu iztekel. Poskrbite, da ga porabite!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: "Uspe\u0161no zabele\u017Eeno!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: "Izziv uspe\u0161no zaklju\u010Den!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: "Prednastavljenih elementov ni bilo mogo\u010De nalo\u017Eiti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: "Nepri\u010Dakovana napaka pri shranjevanju obroka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: "Nepri\u010Dakovana napaka pri posodabljanju obroka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: "Skeniraj \u010Drtno kodo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: "Izdelka za \u010Drtno kodo ni bilo mogo\u010De najti: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: "Napaka pri uvozu \u010Drtne kode: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112768
+    m_Localized: Prilagodi Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112769
+    m_Localized: Prilagodi Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112770
+    m_Localized: Antene
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112771
+    m_Localized: "O\u010Dala"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112772
+    m_Localized: "U\u0161esa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112773
+    m_Localized: Odkleni dodatek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112774
+    m_Localized: "{0:plural:Ali \u017Eelite odkleniti ta element za {0} FoodyCoin?|Ali
+      \u017Eelite odkleniti ta element za {0} FoodyCoina?|Ali \u017Eelite odkleniti
+      ta element za {0} FoodyCoine?|Ali \u017Eelite odkleniti ta element za {0} FoodyCoinov?}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112775
+    m_Localized: Ni dovolj FoodyCoinov
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

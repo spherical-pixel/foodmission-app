@@ -111,6 +111,13 @@ namespace eu.foodmission.platform.Tests
             view.OnClick = () => { };
             Assert.IsTrue(view.HasClickAction);
         }
+
+        [Test]
+        public void FMNutriView_RefreshView_DoesNotThrowWhenUnbound()
+        {
+            var view = new FMNutriView();
+            Assert.DoesNotThrow(() => view.RefreshView());
+        }
     }
 
     [TestFixture]

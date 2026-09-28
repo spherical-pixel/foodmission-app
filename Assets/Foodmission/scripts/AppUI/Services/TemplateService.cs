@@ -55,7 +55,9 @@ namespace eu.foodmission.platform
             TemplateAddresses.QuestDetailScreen,
             TemplateAddresses.MissionDetailScreen,
             TemplateAddresses.ChallengeDetailScreen,
-            TemplateAddresses.QuickMealLogScreen
+            TemplateAddresses.QuickMealLogScreen,
+            TemplateAddresses.NutriEditor,
+            TemplateAddresses.NutriEditorPanelItem
         };
 
         public async Task PreloadAllAsync()

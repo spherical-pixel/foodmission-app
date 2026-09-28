@@ -12,6 +12,7 @@ namespace eu.foodmission.platform
     [UxmlElement]
     public partial class AvatarEditorPanelItem : VisualElement, IDisposable
     {
+        private VisualElement _selectorItemAvatar;
         private Unity.AppUI.UI.Button _btLeftParts;
         private Unity.AppUI.UI.Button _btRightParts;
         private Unity.AppUI.UI.Button _btLeftColor;
@@ -27,6 +28,9 @@ namespace eu.foodmission.platform
         private IAvatarService _avatarService;
         private AvatarConfig _configSnapshot;
         private AvatarConfig _editingConfig;
+        private bool _isClosing;
+
+        public bool IsClosing => _isClosing;
 
         private VisualElement _selectorParts;
         private VisualElement _selectorColor;
@@ -64,11 +68,17 @@ namespace eu.foodmission.platform
             var localizedString = new LocalizedString("UI", itemEnum.ToString());
             _heading.text = localizedString.GetLocalizedString();
 
+            this.style.position = Position.Absolute;
+            this.style.bottom = 0;
+            this.style.left = 0;
+            this.style.right = 0;
+
             PrepareButtonsForItem();
         }
 
         private void CacheUIElements()
         {
+            _selectorItemAvatar = contentContainer.Q<VisualElement>("SelectorItemAvatar");
             _btLeftParts = contentContainer.Q<Unity.AppUI.UI.Button>("btLeftParts");
             _btRightParts = contentContainer.Q<Unity.AppUI.UI.Button>("btRightParts");
             _btLeftColor = contentContainer.Q<Unity.AppUI.UI.Button>("btLeftColor");
@@ -104,7 +114,38 @@ namespace eu.foodmission.platform
 
         public void Dispose()
         {
+            _isClosing = true;
             UnregisterManualEvents();
+        }
+
+        public void AnimateIn()
+        {
+            if (_selectorItemAvatar == null) return;
+            _selectorItemAvatar.RemoveFromClassList("fm-avatar-panel-anim--visible");
+            _selectorItemAvatar.RemoveFromClassList("fm-avatar-panel-anim--exit");
+            _selectorItemAvatar.AddToClassList("fm-avatar-panel-anim");
+
+            _selectorItemAvatar.schedule.Execute(() =>
+            {
+                _selectorItemAvatar.AddToClassList("fm-avatar-panel-anim--visible");
+            }).StartingIn(16);
+        }
+
+        public void AnimateOut(Action onComplete)
+        {
+            if (_selectorItemAvatar == null)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            _selectorItemAvatar.RemoveFromClassList("fm-avatar-panel-anim--visible");
+            _selectorItemAvatar.AddToClassList("fm-avatar-panel-anim--exit");
+
+            _selectorItemAvatar.schedule.Execute(() =>
+            {
+                onComplete?.Invoke();
+            }).StartingIn(220);
         }
 
         private void OnLeftPartsClicked()
@@ -133,14 +174,18 @@ namespace eu.foodmission.platform
 
         private void OnOkClicked()
         {
-            _onClose?.Invoke();
+            if (_isClosing) return;
+            _isClosing = true;
+            AnimateOut(() => _onClose?.Invoke());
         }
 
         private void OnKoClicked()
         {
+            if (_isClosing) return;
+            _isClosing = true;
             if (_configSnapshot != null)
                 _avatarService.SetAvatarConfig(_configSnapshot);
-            _onClose?.Invoke();
+            AnimateOut(() => _onClose?.Invoke());
         }
 
         private void PrepareButtonsForItem()
@@ -197,11 +242,20 @@ namespace eu.foodmission.platform
         private void RefreshSelectionVisuals()
         {
             AvatarPartConfig targetPart = GetPartConfigForItem(_itemEnum, _editingConfig);
+            if (targetPart == null) return;
+
+            int startIndex = _itemEnum switch
+            {
+                AvatarEditorItemEnum.Eyes => 1,
+                AvatarEditorItemEnum.Nose => 1,
+                AvatarEditorItemEnum.Mouth => 1,
+                _ => 0
+            };
 
             var parts = _scrollParts?.Children().GetEnumerator();
             if (parts != null)
             {
-                int idx = 0;
+                int idx = startIndex;
                 while (parts.MoveNext())
                 {
                     if (parts.Current is Unity.AppUI.UI.Button btn)

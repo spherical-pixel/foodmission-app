@@ -1140,6 +1140,66 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &1000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_nutri_editor
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 979, y: 5950}
+  m_Guid: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
+  m_Destination: {fileID: 1000005}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &1000005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: NUTRI_EDITOR
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1408.5, y: 5950}
+  m_Guid: 7f8a9b0c-1d2e-3f4a-5b6c-7d8e9f0a1b2c
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: '@UI:EDIT_NUTRI'
+  m_TemplateSettings:
+    rid: 4008881095781384299
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4008881095781384299
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.NutriEditorScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1204,6 +1264,8 @@ MonoBehaviour:
   - {fileID: 1000001}
   - {fileID: 1000002}
   - {fileID: 1000003}
+  - {fileID: 1000004}
+  - {fileID: 1000005}
   - {fileID: 1371056722271922227}
   - {fileID: 142085582493077005}
   - {fileID: 930171435224601288}
@@ -2377,6 +2439,7 @@ MonoBehaviour:
   - {fileID: 1000003}
   - {fileID: -7616555657261677819}
   - {fileID: -7349625825304333666}
+  - {fileID: 1000004}
   m_Label: 
   m_StartDestination: {fileID: -8582299972390442400}
 --- !u!114 &4900769893359248207

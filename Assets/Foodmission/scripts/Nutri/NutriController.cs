@@ -6,102 +6,90 @@ namespace eu.foodmission.platform
 {
     public class NutriController : MonoBehaviour
     {
+        [Header("Animación y Cámara")]
         [SerializeField] private NutriAnimationController _nutriAnimationController;
-
         public NutriAnimationController NutriAnimationController => _nutriAnimationController;
 
         [SerializeField] private Camera _nutriCamera;
         public Camera NutriCamera => _nutriCamera;
 
-        private readonly Dictionary<(string type, int slot), GameObject> _accessoryMap = new();
-        private bool _accessoriesCached;
+        [Header("Accesorios")]
+        [Tooltip("Ranuras 1..6 de Antenas (Elemento 0 = Ranura 1)")]
+        [SerializeField] private List<GameObject> _antennas = new();
 
-        private void Awake()
+        [Tooltip("Ranuras 1..6 de Orejas (Elemento 0 = Ranura 1)")]
+        [SerializeField] private List<GameObject> _ears = new();
+
+        [Tooltip("Ranuras 1..6 de Gafas (Elemento 0 = Ranura 1)")]
+        [SerializeField] private List<GameObject> _glasses = new();
+
+        public IReadOnlyList<GameObject> Antennas => _antennas;
+        public IReadOnlyList<GameObject> Ears => _ears;
+        public IReadOnlyList<GameObject> Glasses => _glasses;
+
+        private List<GameObject> GetListForType(string type)
         {
-            EnsureAccessoriesCached();
-        }
-
-        public void EnsureAccessoriesCached()
-        {
-            if (_accessoriesCached) return;
-            _accessoriesCached = true;
-
-            var allTransforms = GetComponentsInChildren<Transform>(true);
-            foreach (var t in allTransforms)
-            {
-                string name = t.gameObject.name;
-
-                // Match Antennas1..6
-                if (name.StartsWith("Antennas", StringComparison.OrdinalIgnoreCase) &&
-                    int.TryParse(name.Substring("Antennas".Length), out int antSlot))
-                {
-                    _accessoryMap[(FoodyItemType.Antennas, antSlot)] = t.gameObject;
-                }
-                // Match Ears1..6
-                else if (name.StartsWith("Ears", StringComparison.OrdinalIgnoreCase) &&
-                         int.TryParse(name.Substring("Ears".Length), out int earSlot))
-                {
-                    _accessoryMap[(FoodyItemType.Ears, earSlot)] = t.gameObject;
-                }
-                // Match Glasses1..6
-                else if (name.StartsWith("Glasses", StringComparison.OrdinalIgnoreCase) &&
-                         int.TryParse(name.Substring("Glasses".Length), out int glassSlot))
-                {
-                    _accessoryMap[(FoodyItemType.Glasses, glassSlot)] = t.gameObject;
-                }
-            }
+            string norm = FoodyItemType.Normalize(type);
+            if (norm == FoodyItemType.Antennas) return _antennas;
+            if (norm == FoodyItemType.Ears) return _ears;
+            if (norm == FoodyItemType.Glasses) return _glasses;
+            return null;
         }
 
         public void EquipItem(string type, int slot)
         {
-            EnsureAccessoriesCached();
-            string normType = FoodyItemType.Normalize(type);
-            UnequipItem(normType);
+            UnequipItem(type);
 
-            if (_accessoryMap.TryGetValue((normType, slot), out var go))
+            var list = GetListForType(type);
+            if (list == null || slot < 1 || slot > list.Count) return;
+
+            var target = list[slot - 1];
+            if (target != null)
             {
-                go.SetActive(true);
+                target.SetActive(true);
             }
         }
 
         public void UnequipItem(string type)
         {
-            EnsureAccessoriesCached();
-            string normType = FoodyItemType.Normalize(type);
-            for (int slot = 1; slot <= 6; slot++)
+            var list = GetListForType(type);
+            if (list == null) return;
+
+            for (int i = 0; i < list.Count; i++)
             {
-                if (_accessoryMap.TryGetValue((normType, slot), out var go))
+                if (list[i] != null)
                 {
-                    go.SetActive(false);
+                    list[i].SetActive(false);
                 }
             }
         }
 
         public void UnequipAll()
         {
-            EnsureAccessoriesCached();
-            foreach (var kvp in _accessoryMap)
-            {
-                kvp.Value.SetActive(false);
-            }
+            UnequipItem(FoodyItemType.Antennas);
+            UnequipItem(FoodyItemType.Ears);
+            UnequipItem(FoodyItemType.Glasses);
         }
 
         public bool IsEquipped(string type, int slot)
         {
-            EnsureAccessoriesCached();
-            string normType = FoodyItemType.Normalize(type);
-            return _accessoryMap.TryGetValue((normType, slot), out var go) && go.activeSelf;
+            var list = GetListForType(type);
+            if (list == null || slot < 1 || slot > list.Count) return false;
+
+            var target = list[slot - 1];
+            return target != null && target.activeSelf;
         }
 
         public int GetEquippedSlot(string type)
         {
-            EnsureAccessoriesCached();
-            string normType = FoodyItemType.Normalize(type);
-            for (int slot = 1; slot <= 6; slot++)
+            var list = GetListForType(type);
+            if (list == null) return 0;
+
+            for (int i = 0; i < list.Count; i++)
             {
-                if (_accessoryMap.TryGetValue((normType, slot), out var go) && go.activeSelf)
+                if (list[i] != null && list[i].activeSelf)
                 {
-                    return slot;
+                    return i + 1;
                 }
             }
             return 0;

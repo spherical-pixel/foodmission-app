@@ -75,6 +75,13 @@
     aspect-ratio: 1;
     width: auto;
     height: auto;
+    color: var(--appui-primary-50);
+    overflow: visible;
+}
+
+.fm-button-avatar.appui-button--icon-only .appui-button__leadingicon,
+.fm-button-avatar-scroll.appui-button--icon-only .appui-button__leadingicon {
+    --unity-image-tint-color: var(--appui-alias-actions-accent-foreground-color-default);
 }
 
 .appui-button.fm-button-avatar-scroll-arrow {
@@ -83,10 +90,123 @@
     height: auto;
 }
 
+.fm-nutri-scroll-parts {
+    height: 200px;
+    min-height: 200px;
+}
+
+.fm-nutri-scroll-parts .unity-scroll-view__content-container {
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
 .fm-button-avatar #appui-button__leading-icon {
     width: 85%;
     height: 85%;
 }
+
+.fm-button-avatar-scroll #appui-button__leading-icon {
+    width: 80%;
+    height: 80%;
+}
+
+/* Nutri Editor Styles */
+.fm-button-nutri-category {
+    width: 76px;
+    height: 76px;
+    min-width: 76px;
+    min-height: 76px;
+    border-radius: 20px;
+    margin: 8px 12px;
+    background-color: var(--appui-backgrounds-100);
+}
+
+.fm-button-nutri-category #appui-button__leading-icon {
+    width: 75%;
+    height: 75%;
+}
+
+.fm-button-nutri-scroll {
+    margin: 6px;
+    min-width: 120px;
+    min-height: 120px;
+    width: 120px;
+    height: 120px;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    background-color: var(--appui-backgrounds-100);
+    border-width: 3px;
+    border-color: transparent;
+}
+
+.option-selected,
+.fm-button-avatar-scroll.option-selected,
+.fm-button-nutri-scroll.option-selected {
+    border-color: var(--appui-primary-100);
+    border-width: 3.5px;
+}
+
+.fm-nutri-cost-badge {
+    position: absolute;
+    bottom: -25px;
+    right: -15px;
+    justify-content: center;
+    
+/*     
+    flex-direction: row;
+    align-items: center;
+    background-color: #F7B500;
+    border-radius: 14px;
+    padding-left: 6px;
+    padding-right: 6px;
+    height: 24px;
+    min-width: 24px;
+    border-width: 1.5px;
+    border-color: var(--appui-backgrounds-100); */
+}
+
+.appui-button .fm-nutri-cost-badge-image-coin,
+.appui-button:hover .fm-nutri-cost-badge-image-coin,
+.appui-button:active .fm-nutri-cost-badge-image-coin,
+.appui-button--accent .fm-nutri-cost-badge-image-coin,
+.appui-button--accent:hover .fm-nutri-cost-badge-image-coin,
+.appui-button--accent:active .fm-nutri-cost-badge-image-coin,
+.fm-nutri-cost-badge .appui-icon,
+.fm-nutri-cost-badge-image-coin {
+    --unity-image-tint-color: rgb(255, 255, 255);
+    -unity-image-tint-color: rgb(255, 255, 255);
+}
+
+.fm-nutri-cost-badge__text {
+    /*font-size: 13px;*/
+    -unity-font-style: bold;
+    color: #222222;
+    -unity-text-align: middle-center;
+    
+}
+
+/* Bottom Sheet Panel Slide-up Animation (Avatar & Nutri Editors) */
+.fm-nutri-panel-anim,
+.fm-avatar-panel-anim {
+    translate: 0 100%;
+    transition-property: translate;
+    transition-duration: 0.28s;
+    transition-timing-function: ease-out;
+}
+
+.fm-nutri-panel-anim--visible,
+.fm-avatar-panel-anim--visible {
+    translate: 0 0%;
+}
+
+.fm-nutri-panel-anim--exit,
+.fm-avatar-panel-anim--exit {
+    translate: 0 100%;
+    transition-duration: 0.22s;
+    transition-timing-function: ease-in;
+}
+
 
 .fm-button-drawer {
     font-size: var(--appui-font-sizes-500);

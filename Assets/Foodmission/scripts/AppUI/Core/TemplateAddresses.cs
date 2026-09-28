@@ -43,5 +43,8 @@ namespace eu.foodmission.platform
         public const string MissionDetailScreen = "Foodmission/AppUI/Templates/MissionDetailScreen.uxml";
         public const string ChallengeDetailScreen = "Foodmission/AppUI/Templates/ChallengeDetailScreen.uxml";
         public const string QuickMealLogScreen = "Foodmission/AppUI/Templates/QuickMealLogScreen.uxml";
+        public const string NutriEditor = "Foodmission/AppUI/Templates/NutriEditorScreen.uxml";
+        public const string NutriEditorPanelItem = "Foodmission/AppUI/Templates/NutriEditorPanelItem.uxml";
     }
 }
+

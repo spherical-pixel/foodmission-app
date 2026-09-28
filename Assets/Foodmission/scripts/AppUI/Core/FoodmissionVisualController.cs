@@ -252,6 +252,11 @@ namespace eu.foodmission.platform
                 _profileDrawer.Close();
                 _cachedNavController?.Navigate(Actions.go_to_avatar_editor);
             });
+            AddDrawerButton(menuContainer, "🤖 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EDIT_NUTRI"), () =>
+            {
+                _profileDrawer.Close();
+                _cachedNavController?.Navigate(Actions.go_to_nutri_editor);
+            });
 
             AddDrawerButton(menuContainer, "👥 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MANAGE_GROUPS"), () =>
             {

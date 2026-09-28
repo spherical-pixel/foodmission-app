@@ -3198,6 +3198,151 @@ MonoBehaviour:
     m_Localized: Completa questionario
     m_Metadata:
       m_Items: []
+  - m_Id: 49923301089206272
+    m_Localized: "Non hai ancora selezionato i tuoi obiettivi di sostenibilit\xE0.
+      Vuoi impostarli ora?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49923301093400576
+    m_Localized: Imposta obiettivi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265920
+    m_Localized: I miei obiettivi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265921
+    m_Localized: "Ciao! Per personalizzare la tua esperienza, vorremmo conoscere
+      i tuoi interessi e obiettivi di sostenibilit\xE0 e nutrizione. Nei passaggi
+      successivi puoi scegliere quali argomenti ti interessano di pi\xF9. Puoi modificarli
+      in qualsiasi momento!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265922
+    m_Localized: "Attraverso questa app vorrei adottare una dieta pi\xF9 sostenibile
+      mangiando meno carne e scoprendo fonti proteiche alternative."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265923
+    m_Localized: "Attraverso questa app vorrei comprendere l'impatto ambientale delle
+      mie scelte alimentari (es. impronta di carbonio e idrica) per consumare in
+      modo pi\xF9 sostenibile."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265924
+    m_Localized: "Grazie a questa app, vorrei scoprire da dove proviene il cibo che
+      mangio e come viene prodotto, in modo da scegliere prodotti alimentari minimamente
+      lavorati, privilegiare i prodotti locali, sostenere l\u2019agricoltura sostenibile,
+      promuovere il benessere degli animali e/o scegliere prodotti del Commercio
+      Equo e Solidale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265925
+    m_Localized: "Attraverso questa app vorrei imparare a scegliere prodotti con
+      imballaggi pi\xF9 ecologici."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265926
+    m_Localized: Attraverso questa app vorrei ridurre i miei sprechi alimentari grazie
+      a una migliore pianificazione dei pasti e al riutilizzo degli avanzi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265927
+    m_Localized: "Attraverso questa app vorrei comprendere il valore nutrizionale
+      della mia dieta per fare scelte alimentari pi\xF9 sane (es. pi\xF9 proteine,
+      fibre e vitamine e meno zuccheri e sale aggiunti)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265928
+    m_Localized: Seleziona almeno un obiettivo per completare.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49915767645265929
+    m_Localized: I miei obiettivi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095032979456
+    m_Localized: Cosa hai mangiato oggi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173760
+    m_Localized: Non dimenticare di registrare i tuoi pasti per tenere traccia delle
+      tue abitudini.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173761
+    m_Localized: Avviso sulla dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49931095037173762
+    m_Localized: Il tuo prodotto {0} sta per scadere. Assicurati di consumarlo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717584244736
+    m_Localized: Registrato con successo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439040
+    m_Localized: Sfida completata con successo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439041
+    m_Localized: Impossibile caricare gli elementi preimpostati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439042
+    m_Localized: Errore imprevisto durante il salvataggio del pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439043
+    m_Localized: Errore imprevisto durante l'aggiornamento del pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439044
+    m_Localized: Scansiona codice a barre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439045
+    m_Localized: 'Nessun prodotto trovato per il codice a barre: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49940717588439046
+    m_Localized: 'Errore durante l''importazione del codice a barre: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112768
+    m_Localized: Personalizza Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112769
+    m_Localized: Personalizza Foody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112770
+    m_Localized: Antenne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112771
+    m_Localized: Occhiali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112772
+    m_Localized: Orecchie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112773
+    m_Localized: Sblocca accessorio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112774
+    m_Localized: '{0:plural:Vuoi sbloccare questo oggetto per {0} FoodyCoin?|Vuoi
+      sbloccare questo oggetto per {0} FoodyCoins?}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50951420206112775
+    m_Localized: FoodyCoins insufficienti
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
