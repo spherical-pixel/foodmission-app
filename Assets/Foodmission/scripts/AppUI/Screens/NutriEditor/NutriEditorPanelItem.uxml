@@ -1,5 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <ui:VisualElement name="SelectorItemNutri" class="fm-avatar-panel-item-spacing fm-nutri-panel-anim" style="position: absolute; bottom: 0; right: 0; left: 0;">
         <ui:VisualElement name="PanelContainer" class="box-background" style="justify-content: flex-end; overflow: hidden; flex-direction: column-reverse; border-bottom-left-radius: 0; border-bottom-right-radius: 0; align-content: flex-end; margin-bottom: 0; background-color: rgb(209, 209, 209);">
             <ui:VisualElement name="Bottom" style="position: relative; flex-shrink: 0;">
@@ -13,9 +13,17 @@
                     <appui:Spacer/>
                 </ui:VisualElement>
                 <ui:VisualElement name="Buttons" style="flex-grow: 1;">
-                    <appui:Button title="Confirm" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btConfirm" class="fm-button-align-left fm-button"/>
+                    <appui:Button title="Confirm" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btConfirm" class="fm-button-align-left fm-button">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000050)"/>
+                        </Bindings>
+                    </appui:Button>
                     <appui:Spacer/>
-                    <appui:Button title="Cancel" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btCancel" class="fm-button-align-left fm-button"/>
+                    <appui:Button title="Cancel" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btCancel" class="fm-button-align-left fm-button">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25353325686808576)"/>
+                        </Bindings>
+                    </appui:Button>
                     <appui:Spacer/>
                 </ui:VisualElement>
             </ui:VisualElement>

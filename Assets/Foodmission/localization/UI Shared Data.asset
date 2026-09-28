@@ -3183,6 +3183,38 @@ MonoBehaviour:
     m_Key: BARCODE_IMPORT_ERROR
     m_Metadata:
       m_Items: []
+  - m_Id: 50999984831586304
+    m_Key: NUTRI_EDITOR_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50999984831586305
+    m_Key: EDIT_NUTRI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50999984835780608
+    m_Key: FOODY_CATEGORY_ANTENNAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50999984835780609
+    m_Key: FOODY_CATEGORY_GLASSES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50999984835780610
+    m_Key: FOODY_CATEGORY_EARS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50999984835780611
+    m_Key: FOODY_BUY_CONFIRM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50999984835780612
+    m_Key: FOODY_BUY_CONFIRM_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50999984835780613
+    m_Key: FOODY_INSUFFICIENT_POINTS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
