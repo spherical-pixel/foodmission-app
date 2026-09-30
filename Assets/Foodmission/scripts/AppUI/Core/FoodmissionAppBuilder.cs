@@ -69,6 +69,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IPilotSurveyService, PilotSurveyService>();
             builder.services.AddSingleton<INotificationService, NotificationService>();
             builder.services.AddSingleton<NotificationRoutingService>();
+            builder.services.AddSingleton<IFoodFootprintCalculator, FoodFootprintCalculator>();
 
             // ViewModels (Transient - new instance each time)
             builder.services.AddTransient<SplashScreenViewModel>();
@@ -117,6 +118,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<MissionDetailViewModel>();
             builder.services.AddTransient<ChallengeDetailViewModel>();
             builder.services.AddTransient<QuickMealLogViewModel>();
+            builder.services.AddTransient<FoodComparisonViewModel>();
         }
 
         protected override void OnAppInitialized(FoodmissionApp app)

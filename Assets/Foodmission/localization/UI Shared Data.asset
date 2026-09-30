@@ -2403,14 +2403,6 @@ MonoBehaviour:
     m_Key: QUEST_CHANGE_CANCEL_BTN
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Key: HOME_NO_ACTIVE_QUEST_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Key: HOME_NO_ACTIVE_QUEST_BUTTON
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966074812391424
     m_Key: REWARD_CELEBRATION_TITLE
     m_Metadata:
@@ -3213,6 +3205,222 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 50999984835780613
     m_Key: FOODY_INSUFFICIENT_POINTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Key: CHALLENGE_BTN_COMPARE_PROTEINS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Key: FC_SCREEN_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Key: FC_SCREEN_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Key: FC_EMPTY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Key: FC_EMPTY_DESC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Key: FC_BTN_GO_SHOPPING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Key: FC_DUEL_PROMPT_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Key: FC_DUEL_PROMPT_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Key: FC_BTN_VIEW_MATRIX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Key: FC_LABEL_CO2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Key: FC_LABEL_PNAS_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Key: FC_CITATION_CLARK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Key: FC_BTN_RESET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Key: FC_CAT_FISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Key: FC_CAT_RED_MEAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Key: FC_CAT_WHITE_MEAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Key: FC_CAT_LEGUMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Key: FC_CAT_PLANT_ALT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Key: FC_CAT_EGGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Key: FC_CAT_CHEESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Key: FC_CAT_NUTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Key: FC_CAT_PROTEIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Key: FC_LOADING_DUEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Key: FC_HEADER_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Key: FC_EMPTY_TIPS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Key: FC_EMPTY_TIPS_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Key: FC_BTN_PLAY_SAMPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Key: FC_DUEL_TAG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Key: FC_BADGE_LOWER_FOOTPRINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Key: FC_MATRIX_BADGE_LOWER_FOOTPRINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Key: FC_DUEL_CHOOSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Key: FC_VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Key: FC_FOOTPRINT_UNIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Key: FC_FOOTPRINT_VALUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Key: FC_SCORE_VALUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Key: FC_FEEDBACK_CORRECT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Key: FC_FEEDBACK_ALMOST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Key: FC_FEEDBACK_RATIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Key: FC_FEEDBACK_SLIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Key: FC_LABEL_GLOBAL_IMPACT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Key: FC_LABEL_ECOSCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Key: FC_LABEL_NUTRISCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Key: FC_LABEL_NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Key: FC_NOVA_GROUP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Key: FC_TAKEAWAY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Key: FC_TAKEAWAY_DEFAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Key: FC_DISCLAIMER_DIRECT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Key: FC_DISCLAIMER_ESTIMATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Key: FC_SAMPLE_BEEF_BURGER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Key: FC_SAMPLE_LENTILS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Key: FC_SAMPLE_CHICKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Key: FC_SAMPLE_TOFU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Key: FC_SAMPLE_SALMON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Key: FC_SAMPLE_EGGS
     m_Metadata:
       m_Items: []
   m_Metadata:

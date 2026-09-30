@@ -133,10 +133,18 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetGenericFoodById {id}"));
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetGenericFoodById {id}", logAsError: request.responseCode != 429)); // 429 is transient throttling, not an app error
             }
 
-            GenericFood category = JsonUtility.FromJson<GenericFood>(request.downloadHandler.text);
+            GenericFood category = null;
+            try
+            {
+                category = JsonConvert.DeserializeObject<GenericFood>(request.downloadHandler.text);
+            }
+            catch (Exception)
+            {
+                category = JsonUtility.FromJson<GenericFood>(request.downloadHandler.text);
+            }
 
             if (category != null && !string.IsNullOrEmpty(category.id))
             {

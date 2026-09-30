@@ -7,9 +7,9 @@
 }
 
 .fm-activity-detail-card {
-    background-color: var(--appui-backgrounds-200);
-    border-radius: 24px;
-    padding: 24px 20px;
+    background-color: var(--fm-surface-bg-transparent-80);
+    border-radius: 45px;
+    padding: 35px;
     display: flex;
     flex-direction: column;
     height: auto;
@@ -27,11 +27,13 @@
 .fm-activity-badge {
     align-self: flex-start;
     margin-right: 8px;
+    color: var(--appui-primary-100);
 }
 
 .fm-activity-title {
     -unity-font-style: bold;
-    margin-bottom: 16px;
+    margin-top: 15px;
+    margin-bottom: 25px;
     white-space: normal;
     color: var(--appui-foregrounds-50);
 }
@@ -39,17 +41,18 @@
 .fm-activity-section {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    margin-top: 40px;
 }
 
 .fm-activity-section-title {
     -unity-font-style: bold;
     margin-bottom: 8px;
-    color: var(--appui-foregrounds-100);
+    color: var(--appui-primary-100);
 }
 
 .fm-activity-why-text {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     white-space: normal;
 }
 
@@ -141,13 +144,40 @@
     color: var(--appui-primary-800);
 }
 
-.fm-activity-tab-content {
+.fm-activity-tab-content,
+.fm-activity-action-box {
     display: flex;
     flex-direction: column;
     background-color: var(--appui-backgrounds-100);
     border-radius: 16px;
     padding: 20px;
     margin-bottom: 16px;
+}
+
+.fm-activity-completed-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: rgba(0, 139, 58, 0.12);
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: rgba(0, 139, 58, 0.4); */
+    padding: 24px 20px;
+    margin-bottom: 16px;
+}
+
+.fm-activity-completed-badge-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.fm-activity-completed-badge {
+    -unity-font-style: bold;
+    color: var(--appui-primary-100);
+    -unity-text-align: middle-center;
+    white-space: nowrap;
 }
 
 .fm-activity-tab-desc {

@@ -2489,15 +2489,6 @@ MonoBehaviour:
     m_Localized: Behalte die aktuelle Version bei
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Localized: "W\xE4hle eine Quest aus, um mit dem Lernen zu beginnen und Fortschritte
-      zu machen."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Localized: Quests entdecken
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966269096747008
     m_Localized: '{0:plural:FoodyCoin verdient!|FoodyCoins verdient!}'
     m_Metadata:
@@ -3316,6 +3307,230 @@ MonoBehaviour:
       - rid: 4008881209995690407
   - m_Id: 50999984835780613
     m_Localized: Nicht genug FoodyCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Localized: "\u2696\uFE0F Proteine von meiner Liste vergleichen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Localized: Lebensmittelvergleich
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Localized: "Entdecken Sie die Umweltauswirkungen Ihrer Eink\xE4ufe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Localized: "Fast bereit f\xFCr die Herausforderung!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Localized: "Um diese Herausforderung zu starten, ben\xF6tigen Sie mindestens
+      2 Proteinquellen auf Ihrer Einkaufsliste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Localized: "\U0001F6D2 Zur Einkaufsliste gehen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Localized: "\U0001F914 Was hat einen geringeren Fu\xDFabdruck?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Localized: 'Tippen Sie auf das Lebensmittel, von dem Sie glauben, dass es weniger
+      Emissionen verursacht:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Localized: "\U0001F4CA Detaillierten Vergleich ansehen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Localized: "CO\u2082-Fu\xDFabdruck (kg CO\u2082e/kg)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Localized: PNAS-Umweltauswirkungen (0-100)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Localized: "Daten gesch\xE4tzt nach Clark et al. (PNAS 2022) und globalen Agrardatenbanken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Localized: "\U0001F504 Andere Lebensmittel vergleichen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Localized: "Fisch & Meeresfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Localized: Fleisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Localized: "Gefl\xFCgel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Localized: "H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Localized: Pflanzliche Alternativen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Localized: Eier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Localized: "K\xE4se"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Localized: "N\xFCsse & Samen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Localized: Protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Localized: Das Duell wird vorbereitet...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Localized: "\u2696\uFE0F UMWELTVERGLEICH"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Localized: "\U0001F4A1 Empfohlene Proteinquellen:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Localized: "\u2022 H\xFClsenfr\xFCchte (Linsen, Kichererbsen, Bohnen, Soja)\n\u2022
+      Fisch und Meeresfr\xFCchte\n\u2022 Eier und K\xE4se\n\u2022 Wei\xDFes Fleisch
+      (Huhn, Pute) und rotes Fleisch\n\u2022 Tofu und pflanzliche Alternativen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Localized: "\u26A1 Empfohlene Beispiele vergleichen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Localized: UMWELT-MINIDUELL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Localized: "\U0001F331 Geringerer Fu\xDFabdruck"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Localized: "\U0001F3C6 Geringerer Fu\xDFabdruck"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Localized: "\U0001F449 W\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Localized: "kg CO\u2082e / kg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Localized: "{0:F1} kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Localized: '{0:F1} / 100'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Localized: Richtig geraten!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Localized: Fast!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Localized: "{0} verursacht etwa {1:F1}-mal weniger CO\u2082e als {2} ({3:F1}
+      vs. {4:F1} kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Localized: "{0} hat einen etwas geringeren Fu\xDFabdruck als {1} ({2:F1} vs.
+      {3:F1} kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Localized: Gesamtwirkung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Localized: Verarbeitungsgrad (NOVA)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Localized: Gruppe {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Localized: Wissenschaftliches Fazit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Localized: "Pflanzliche Proteinquellen verursachen 10- bis 50-mal weniger Treibhausgasemissionen
+      und ben\xF6tigen deutlich weniger Land und Wasser als rotes Fleisch (Clark
+      et al., PNAS 2022)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Localized: Direkte Daten (OpenFoodFacts)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Localized: "* Sch\xE4tzung (Clark / Poore et al.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Localized: Rindfleisch-Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Localized: Gekochte Linsen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Localized: "H\xE4hnchenbrust"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Localized: Fester Tofu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Localized: Frischer Lachs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Localized: Freilandeier
     m_Metadata:
       m_Items: []
   references:

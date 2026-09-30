@@ -31,6 +31,12 @@ namespace eu.foodmission.platform
             _logo = contentContainer.Q<VisualElement>("logofoodmission");
             _logo.RemoveFromClassList("visible");
             _logo.RemoveFromClassList("exit");
+
+            var anim = contentContainer.Q<Components.UISpriteAnimation>();
+            if (anim != null && anim.Sprites != null && anim.Sprites.Length > 0)
+            {
+                Components.FMLoadingOverlay.PreloadSprites(anim.Sprites);
+            }
         }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)

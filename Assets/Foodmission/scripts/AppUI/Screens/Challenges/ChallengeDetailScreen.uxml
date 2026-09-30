@@ -13,11 +13,11 @@
             </ui:VisualElement>
             <ui:VisualElement class="fm-activity-section">
                 <appui:Text text="🏆 Reto" size="L" class="fm-activity-section-title"/>
-                <appui:Text name="challenge-goal" text="" size="M" class="fm-quest-detail-desc"/>
+                <appui:Text name="challenge-goal" text="" size="L" class="fm-quest-detail-desc"/>
             </ui:VisualElement>
             <ui:VisualElement class="fm-activity-section">
                 <appui:Text text="💡 Por qué importa" size="L" class="fm-activity-section-title"/>
-                <appui:Text name="challenge-why-it-matters" text="" size="M" class="fm-quest-detail-desc fm-activity-why-text"/>
+                <appui:Text name="challenge-why-it-matters" text="" size="L" class="fm-quest-detail-desc fm-activity-why-text"/>
             </ui:VisualElement>
             <ui:VisualElement class="fm-activity-progress-card">
                 <ui:VisualElement class="fm-activity-progress-header">
@@ -28,30 +28,14 @@
                     <ui:VisualElement name="challenge-progress-fill" class="fm-activity-progress-fill"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement class="fm-activity-tabs-header">
-                <ui:Button name="tab-btn-app" text="📱 Usar la app" class="fm-activity-tab-btn fm-activity-tab-btn--active"/>
-                <ui:Button name="tab-btn-direct" text="💬 Informar a Nutri" class="fm-activity-tab-btn"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="tab-content-app" class="fm-activity-tab-content">
+            <ui:VisualElement name="challenge-action-box" class="fm-activity-action-box">
                 <appui:Text name="native-module-hint" text="Registra esta acción usando las herramientas de Foodmission para completar el reto automáticamente." size="M" class="fm-activity-tab-desc"/>
                 <eu:FMButton name="btn-go-module" title="Ir al módulo" variant="Accent" size="L" class="fm-activity-action-btn"/>
             </ui:VisualElement>
-            <ui:VisualElement name="tab-content-direct" class="fm-activity-tab-content" style="display: none;">
-                <appui:Text name="direct-nutri-prompt" text="¿Has completado este reto hoy?" size="M" class="fm-activity-tab-desc"/>
-                <ui:VisualElement name="swap-container" class="fm-activity-swap-container" style="display: none;">
-                    <appui:Text text="Selecciona la sustitución realizada:" size="S" class="fm-activity-swap-title"/>
-                    <ui:VisualElement name="swap-options-list" class="fm-activity-swap-list"/>
+            <ui:VisualElement name="challenge-completed-box" class="fm-activity-completed-box" style="display: none;">
+                <ui:VisualElement class="fm-activity-completed-badge-row">
+                    <appui:Text text="RETO COMPLETADO" size="M" class="fm-activity-completed-badge"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="stepper-container" class="fm-activity-stepper-container">
-                    <appui:Text text="Número de comidas / acciones:" size="S" class="fm-activity-stepper-title"/>
-                    <ui:VisualElement class="fm-activity-stepper-controls">
-                        <ui:Button name="btn-stepper-minus" text="-" class="fm-activity-stepper-btn"/>
-                        <appui:Text name="stepper-count-label" text="1" size="XL" class="fm-activity-stepper-value"/>
-                        <ui:Button name="btn-stepper-plus" text="+" class="fm-activity-stepper-btn"/>
-                    </ui:VisualElement>
-                </ui:VisualElement>
-                <appui:Text name="direct-feedback-label" text="" size="M" class="fm-activity-feedback-text" style="display: none;"/>
-                <eu:FMButton name="btn-submit-direct" title="Guardar y Completar" variant="Accent" size="L" class="fm-activity-action-btn"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement class="fm-bottom-nav-padding"/>

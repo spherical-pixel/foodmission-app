@@ -20,6 +20,15 @@ namespace eu.foodmission.platform
         public bool? isVegan;
         public bool? isVegetarian;
         public bool? isPalmOilFree;
+        public float? carbonFootprint;
+        public string[] categories;
+        public OpenFoodFactsInfoDto openFoodFactsInfo;
+
+        public string ResolvedImageUrl => !string.IsNullOrEmpty(imageUrl)
+            ? imageUrl
+            : (!string.IsNullOrEmpty(imageFrontUrl)
+                ? imageFrontUrl
+                : openFoodFactsInfo?.imageUrl);
     }
 
     [Serializable]

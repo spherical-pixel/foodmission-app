@@ -1,0 +1,705 @@
+/* =========================================================================
+   FoodComparisonScreen — Visual Redesign & Side-by-Side Comparison
+   ========================================================================= */
+
+.hidden {
+    display: none;
+}
+
+.fm-fc-root {
+    flex-grow: 0;
+    flex-shrink: 0;
+    min-height: 100%;
+    width: 100%;
+}
+
+/* ── HEADER / HERO ──────────────────────────────────────────────────────── */
+
+.fm-fc-header {
+    margin-bottom: 20px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.fm-fc-header-badge-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.fm-fc-badge {
+    border-radius: 44px;
+    padding: 35px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    background-color: var(--fm-surface-bg-transparent-80);
+    color: var(--appui-primary-100);
+    width: 100%;
+}
+
+
+
+.fm-fc-title {
+    color: var(--appui-foregrounds-100);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    width: 100%;
+}
+
+.fm-fc-subtitle {
+    color: var(--appui-foregrounds-200);
+    -unity-text-align: middle-center;
+    white-space: normal;
+    max-width: 90%;
+}
+
+/* ── CARDS COMMON ───────────────────────────────────────────────────────── */
+
+.fm-fc-card {
+    background-color: var(--fm-surface-bg-transparent-80);
+    border-radius: 44px;
+    padding: 25px;
+    margin-bottom: 16px;
+}
+
+.fm-fc-state-container {
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+/* ── STATE 1: EMPTY STATE ────────────────────────────────────────────────── */
+
+.fm-fc-empty-state {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.fm-fc-empty-card {
+    align-items: center;
+    padding: 35px;
+    margin-top: 12px;
+}
+
+.fm-fc-mascot-circle {
+    width: 160px;
+    height: 160px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.fm-fc-mascot-emoji {
+    font-size: 88px;
+    -unity-text-align: middle-center;
+}
+
+.fm-fc-empty-title {
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    white-space: normal;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.fm-fc-empty-desc {
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    margin-bottom: 20px;
+    white-space: normal;
+    width: 100%;
+}
+
+.fm-fc-empty-tips-box {
+    width: 100%;
+    background-color: var(--fm-surface-bg);
+    border-radius: 32px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.fm-fc-empty-tips-title {
+    color: var(--appui-primary-100);
+    -unity-font-style: bold;
+    white-space: normal;
+    margin-bottom: 12px;
+}
+
+.fm-fc-empty-tips-list {
+    color: var(--appui-foregrounds-50);
+    white-space: normal;
+}
+
+/* ── STATE 2: NUTRI DUEL ────────────────────────────────────────────────── */
+
+.fm-fc-duel-state {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.fm-fc-duel-header-card {
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.fm-fc-duel-tag-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    width: auto;
+    max-width: 100%;
+}
+
+.fm-fc-duel-badge-icon {
+    font-size: 44px;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.fm-fc-duel-tag {
+    color: var(--appui-alias-actions-accent-foreground-color-default);
+    -unity-font-style: bold;
+    letter-spacing: 0.5px;
+    white-space: normal;
+    flex-shrink: 0;
+    width:100%;
+}
+
+.fm-fc-duel-title {
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+    white-space: normal;
+    width:100%;
+}
+
+.fm-fc-duel-subtitle {
+    color: var(--appui-alias-actions-accent-foreground-color-default);
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+/* Duel Arena: Side-by-side Cards */
+.fm-fc-duel-arena {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.fm-fc-duel-card {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    background-color: var(--fm-surface-bg-transparent-80);
+    border-radius: 44px;
+    padding: 35px;
+    align-items: center;
+    border-width: 0px;
+    border-color: var(--appui-backgrounds-300);
+    position: relative;
+    overflow: hidden;
+}
+
+.fm-fc-duel-card--left {
+    margin-right: 6px;
+}
+
+.fm-fc-duel-card--right {
+    margin-left: 6px;
+}
+
+.fm-fc-duel-card:hover {
+    border-color: var(--appui-primary-800);
+}
+
+.fm-fc-duel-card--selected {
+    /*background-color: var(--appui-backgrounds-300);*/
+    border-color: var(--appui-primary-800);
+    border-width: 6px;
+}
+
+.fm-fc-duel-card--winner {
+    border-color: #008b3a;
+    /*background-color: rgba(0, 139, 58, 0.08);*/
+    border-width: 6px;
+}
+
+.fm-fc-duel-card--loser {
+    opacity: 0.75;
+    border-width: 6px;
+    border-color: #ff0000;
+}
+
+/* VS Floating Badge */
+.fm-fc-duel-vs-badge {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    border-radius: 64px;
+    background-color: var(--appui-primary-800);
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    margin-left: -64px;
+    top: 144px;
+    border-width: 3px;
+    border-color: var(--appui-backgrounds-100);
+}
+
+.fm-fc-duel-vs-text {
+    color: #ffffff;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+}
+
+/* Food Avatar Circle */
+.fm-fc-food-avatar-circle {
+    width: 256px;
+    height: 256px;
+    /*border-radius: 128px;*/
+    /*background-color: var(--appui-backgrounds-100);*/
+    align-items: center;
+    justify-content: center;
+    margin-top: 75px;
+    margin-bottom: 20px;
+    /*border-width: 3px;
+    border-color: var(--appui-backgrounds-300);*/
+    overflow: hidden;
+    position: relative;
+}
+
+.fm-fc-food-product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 64px;
+}
+
+.fm-fc-food-emoji {
+    font-size: 88px;
+    -unity-text-align: middle-center;
+}
+
+.fm-fc-food-cat-pill {
+    border-radius: 32px;
+    padding: 25px;
+    background-color: var(--fm-surface-bg);
+    color: var(--appui-primary-100);
+    -unity-font-style: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    white-space: normal;
+    /*text-overflow: ellipsis;*/
+    overflow: hidden;
+    -unity-text-align: middle-center;
+    min-width: 65%;
+    max-width: 95%;
+}
+
+.fm-fc-food-title {
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    white-space: normal;
+    min-height: 58px;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+/* CTA before reveal */
+.fm-fc-duel-cta-container {
+    width: 100%;
+    align-items: center;
+    margin-top: auto;
+}
+
+.fm-fc-duel-tap-label {
+    background-color: var(--appui-backgrounds-100);
+    border-radius: 12px;
+    padding: 6px 12px;
+    color: var(--appui-primary-800);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    border-width: 1px;
+    border-color: var(--appui-backgrounds-300);
+    width: 100%;
+}
+
+/* Revealed results */
+.fm-fc-duel-result-box {
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top-width: 5px;
+    border-top-color: var(--appui-backgrounds-300);
+}
+
+.fm-fc-duel-footprint-value {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.fm-fc-duel-footprint-unit {
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.fm-fc-duel-footprint-disclaimer {
+    color: var(--appui-foregrounds-200);
+    -unity-text-align: middle-center;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 32px;
+    background-color: var(--appui-backgrounds-100);
+    white-space: normal;
+    width: 100%;
+}
+
+.fm-fc-winner-ribbon {
+    position: absolute;
+    top: 25px;
+    left: 8px;
+    right: 8px;
+    background-color: #008b3a;
+    color: #ffffff;
+    border-radius: 32px;
+    padding: 15px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+/* Duel Feedback Card */
+.fm-fc-feedback-card {
+    border-color: var(--appui-alias-actions-accent-foreground-color-default);
+    padding: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.fm-fc-feedback-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.fm-fc-feedback-icon {
+    font-size: 44px;
+    margin-right: 8px;
+}
+
+.fm-fc-feedback-title {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.fm-fc-feedback-body {
+    color: var(--appui-foregrounds-100);
+    -unity-text-align: middle-center;
+    white-space: normal;
+    margin-bottom: 16px;
+}
+
+/* ── STATE 3: FULL COMPARISON MATRIX ────────────────────────────────────── */
+
+.fm-fc-matrix-state {
+    width: 100%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto;
+}
+
+/* Top Side-by-Side Product Header */
+.fm-fc-matrix-header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+
+.fm-fc-col-left {
+    margin-right: 6px;
+}
+
+.fm-fc-col-right {
+    margin-left: 6px;
+}
+
+.fm-fc-matrix-header-card {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    background-color: var(--fm-surface-bg-transparent-80);
+    border-radius: 44px;
+    padding: 25px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.fm-fc-food-avatar-circle-sm {
+    width: 160px;
+    height: 160px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 75px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.fm-fc-food-product-image-sm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 44px;
+}
+
+.fm-fc-food-emoji-sm {
+    font-size: 88px;
+    -unity-text-align: middle-center;
+}
+
+.fm-fc-matrix-product-title {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    min-height: 48px;
+    margin-bottom: 6px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.fm-fc-matrix-winner-pill {
+    position: absolute;
+    top: 25px;
+    left: 8px;
+    right: 8px;
+    background-color: #008b3a;
+    color: #ffffff;
+    border-radius: 32px;
+    padding: 15px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+/* Comparison Matrix Rows Container */
+.fm-fc-matrix-table {
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+
+.fm-fc-matrix-row {
+    background-color: var(--fm-surface-bg-transparent-80);
+    border-radius: 44px;
+    padding: 25px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+
+.fm-fc-matrix-row-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom-width: 5px;
+    border-bottom-color: var(--appui-backgrounds-300);
+    flex-shrink: 0;
+}
+
+.fm-fc-row-icon {
+    font-size: 44px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.fm-fc-row-label {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    white-space: normal;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+
+.fm-fc-matrix-row-values {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.fm-fc-metric-cell {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 32px;
+    background-color: var(--fm-surface-bg);
+    min-height: 96px;
+}
+
+.fm-fc-metric-cell--winner {
+    border-width: 6px;
+    border-color: #008b3a;
+}
+
+.fm-fc-metric-highlight-val {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    width:100%;
+}
+
+.fm-fc-metric-sublabel {
+    color: var(--appui-foregrounds-200);
+    -unity-text-align: middle-center;
+    margin-top: 2px;
+}
+
+.fm-fc-metric-disclaimer {
+    color: var(--appui-foregrounds-200);
+    -unity-text-align: middle-center;
+    white-space: normal;
+    margin-top: 10px;
+    padding: 10px 35px;
+    border-radius: 32px;
+    background-color: var(--appui-backgrounds-100);
+    max-width: 100%;
+}
+
+/* Score Pills / Badges */
+.fm-fc-score-badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 36px;
+    align-items: center;
+    justify-content: center;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.fm-fc-score-badge--a { background-color: #008b3a; }
+.fm-fc-score-badge--b { background-color: #85BB2F; }
+.fm-fc-score-badge--c { background-color: #FECB02; color: #1A1A1A; }
+.fm-fc-score-badge--d { background-color: #EE8100; }
+.fm-fc-score-badge--e { background-color: #E63329; }
+.fm-fc-score-badge--unknown { background-color: #4A4A4A; color: #CCCCCC; }
+
+/* NOVA Pill */
+.fm-fc-nova-pill {
+    border-radius: 32px;
+    padding: 35px;
+    background-color: var(--appui-backgrounds-300);
+    color: var(--appui-foregrounds-100);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* Takeaway Card */
+.fm-fc-takeaway-card {
+    flex-shrink: 0;
+}
+
+.fm-fc-takeaway-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.fm-fc-takeaway-icon {
+    font-size: 44px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.fm-fc-takeaway-title {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    white-space: normal;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+
+.fm-fc-takeaway-body {
+    color: var(--appui-foregrounds-50);
+    white-space: normal;
+}
+
+/* Citation Card */
+.fm-fc-citation-card {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.fm-fc-citation-icon {
+    font-size: 44px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.fm-fc-citation-text {
+    color: var(--appui-foregrounds-50);
+    white-space: normal;
+    flex-shrink: 1;
+}
+
+/* Bottom Actions */
+.fm-fc-bottom-actions {
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.fm-fc-btn-main {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.fm-fc-btn-secondary {
+    margin-top: 10px;
+    width: 100%;
+}

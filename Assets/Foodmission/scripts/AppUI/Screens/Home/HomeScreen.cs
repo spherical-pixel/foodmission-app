@@ -73,6 +73,7 @@ namespace eu.foodmission.platform
             _ = _viewModel?.LoadActiveQuestAsync();
             RefreshActiveQuestWidget();
             _nutriView?.RefreshView();
+            //SetupFoodComparisonDebugPanel();
             //SetupRewardDebugButton();
         }
 
@@ -84,8 +85,6 @@ namespace eu.foodmission.platform
             _caloriesCircular = contentContainer.Q<CircularProgress>("calories-circular");
             _caloriesConsumedLabel = contentContainer.Q<Label>("calories-consumed");
             _caloriesLeftLabel = contentContainer.Q<Label>("calories-left");
-
-
 
             _activeQuestCard = contentContainer.Q<FMActiveQuestCard>("active-quest-card");
             _noActiveQuestBanner = contentContainer.Q<VisualElement>("no-active-quest-banner");
@@ -458,6 +457,91 @@ namespace eu.foodmission.platform
             }
         }
 
+        private void SetupFoodComparisonDebugPanel()
+        {
+            var root = contentContainer.Q<VisualElement>("root") ?? contentContainer;
+            if (root == null) return;
+
+            var existing = root.Q<VisualElement>("test-food-comparison-panel");
+            if (existing != null)
+            {
+                existing.parent?.Remove(existing);
+            }
+
+            var panel = new VisualElement();
+            panel.name = "test-food-comparison-panel";
+            panel.style.marginTop = 16;
+            panel.style.marginBottom = 16;
+            panel.style.marginLeft = 20;
+            panel.style.marginRight = 20;
+            panel.style.paddingTop = 12;
+            panel.style.paddingBottom = 12;
+            panel.style.paddingLeft = 12;
+            panel.style.paddingRight = 12;
+            panel.style.borderTopLeftRadius = 12;
+            panel.style.borderTopRightRadius = 12;
+            panel.style.borderBottomLeftRadius = 12;
+            panel.style.borderBottomRightRadius = 12;
+            panel.style.borderTopWidth = 1;
+            panel.style.borderBottomWidth = 1;
+            panel.style.borderLeftWidth = 1;
+            panel.style.borderRightWidth = 1;
+            panel.style.borderTopColor = new Color(0f, 0.545f, 0.227f, 0.5f);
+            panel.style.borderBottomColor = new Color(0f, 0.545f, 0.227f, 0.5f);
+            panel.style.borderLeftColor = new Color(0f, 0.545f, 0.227f, 0.5f);
+            panel.style.borderRightColor = new Color(0f, 0.545f, 0.227f, 0.5f);
+            panel.style.backgroundColor = new Color(0.12f, 0.12f, 0.12f, 0.4f);
+
+            var header = new Text
+            {
+                text = "🧪 Comparador de Alimentos (Test Modos)"
+            };
+            header.style.unityFontStyleAndWeight = FontStyle.Bold;
+            header.style.color = new Color(0.1f, 0.85f, 0.35f);
+            header.style.marginBottom = 8;
+            header.style.unityTextAlign = TextAnchor.MiddleCenter;
+            panel.Add(header);
+
+            var grid = new VisualElement();
+            grid.style.flexDirection = FlexDirection.Row;
+            grid.style.flexWrap = Wrap.Wrap;
+            grid.style.justifyContent = Justify.SpaceBetween;
+
+            var btnShopping = new FMButton { title = "🛒 Duelo Lista", variant = ButtonVariant.Accent, size = Size.S };
+            btnShopping.style.width = Length.Percent(48);
+            btnShopping.style.marginBottom = 8;
+            btnShopping.clicked += () => _viewModel?.NavigateToFoodComparison("proteins", "shopping_list");
+            grid.Add(btnShopping);
+
+            var btnSample = new FMButton { title = "⚡ Duelo Ejemplos", variant = ButtonVariant.Default, size = Size.S };
+            btnSample.style.width = Length.Percent(48);
+            btnSample.style.marginBottom = 8;
+            btnSample.clicked += () => _viewModel?.NavigateToFoodComparison("sample", "sample");
+            grid.Add(btnSample);
+
+            var btnMatrix = new FMButton { title = "📊 Ver Matriz", variant = ButtonVariant.Default, size = Size.S };
+            btnMatrix.style.width = Length.Percent(48);
+            btnMatrix.clicked += () => _viewModel?.NavigateToFoodComparison("matrix", "matrix");
+            grid.Add(btnMatrix);
+
+            var btnEmpty = new FMButton { title = "🥑 Modo Vacío", variant = ButtonVariant.Default, size = Size.S };
+            btnEmpty.style.width = Length.Percent(48);
+            btnEmpty.clicked += () => _viewModel?.NavigateToFoodComparison("empty", "empty");
+            grid.Add(btnEmpty);
+
+            panel.Add(grid);
+
+            if (_activeQuestCard != null && _activeQuestCard.parent != null)
+            {
+                int index = _activeQuestCard.parent.IndexOf(_activeQuestCard);
+                _activeQuestCard.parent.Insert(index, panel);
+            }
+            else
+            {
+                root.Add(panel);
+            }
+        }
+
         private async void SetupPilotDebugPanel()
         {
             var root = contentContainer.Q<VisualElement>("root") ?? contentContainer;
@@ -656,17 +740,17 @@ namespace eu.foodmission.platform
             string messageKey = pendingType switch
             {
                 PendingOnboardingType.Profile => "ONBOARDING_REMINDER_PROFILE_MSG",
-                PendingOnboardingType.Survey  => "ONBOARDING_REMINDER_SURVEY_MSG",
-                PendingOnboardingType.Goals   => "ONBOARDING_REMINDER_GOALS_MSG",
-                _                             => "ONBOARDING_REMINDER_PROFILE_MSG"
+                PendingOnboardingType.Survey => "ONBOARDING_REMINDER_SURVEY_MSG",
+                PendingOnboardingType.Goals => "ONBOARDING_REMINDER_GOALS_MSG",
+                _ => "ONBOARDING_REMINDER_PROFILE_MSG"
             };
 
             string actionKey = pendingType switch
             {
                 PendingOnboardingType.Profile => "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE",
-                PendingOnboardingType.Survey  => "ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY",
-                PendingOnboardingType.Goals   => "ONBOARDING_REMINDER_BTN_COMPLETE_GOALS",
-                _                             => "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE"
+                PendingOnboardingType.Survey => "ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY",
+                PendingOnboardingType.Goals => "ONBOARDING_REMINDER_BTN_COMPLETE_GOALS",
+                _ => "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE"
             };
 
             NutriMessageDialog.Show(

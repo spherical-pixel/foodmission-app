@@ -2474,14 +2474,6 @@ MonoBehaviour:
     m_Localized: Continuar con el actual
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Localized: Elige un quest para empezar a aprender y progresar.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Localized: Explorar Quests
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966074812391424
     m_Localized: "\xA1Recompensa conseguida!"
     m_Metadata:
@@ -3301,6 +3293,230 @@ MonoBehaviour:
       - rid: 4008881209995690413
   - m_Id: 50999984835780613
     m_Localized: No tienes suficientes FoodyCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Localized: "\u2696\uFE0F Comparar prote\xEDnas de mi lista"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Localized: Comparador de Alimentos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Localized: Descubre el impacto ambiental de lo que compras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Localized: "\xA1Casi listo para el reto!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Localized: "Para empezar este reto necesitas tener al menos 2 fuentes de prote\xEDna
+      en tu lista de la compra."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Localized: "\U0001F6D2 Ir a la lista de la compra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Localized: "\U0001F914 \xBFCu\xE1l contamina menos?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Localized: 'Toca el alimento que crees que genera menor huella de carbono:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Localized: "\U0001F4CA Ver comparativa detallada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Localized: "Huella de carbono (kg CO\u2082e/kg)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Localized: Impacto ambiental PNAS (0-100)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Localized: "Datos estimados seg\xFAn Clark et al. (PNAS 2022) y bases de datos
+      agroalimentarias globales."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Localized: "\U0001F504 Comparar otros alimentos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Localized: Pescados y Mariscos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Localized: Carne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Localized: Carne blanca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Localized: Legumbres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Localized: Alt. vegetal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Localized: Huevos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Localized: Quesos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Localized: Frutos secos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Localized: "Prote\xEDna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Localized: Preparando el duelo...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Localized: "\u2696\uFE0F COMPARATIVA AMBIENTAL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Localized: "\U0001F4A1 Fuentes de prote\xEDna recomendadas:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Localized: "\u2022 Legumbres (lentejas, garbanzos, alubias, soja)\n\u2022 Pescados
+      y mariscos\n\u2022 Huevos y quesos\n\u2022 Carnes blancas (pollo, pavo) y rojas\n\u2022
+      Tofu y alternativas vegetales"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Localized: "\u26A1 Comparar ejemplos recomendados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Localized: MINI-DUELO AMBIENTAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Localized: "\U0001F331 Menor huella"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Localized: "\U0001F3C6 Menor huella"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Localized: "\U0001F449 Elegir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Localized: "kg CO\u2082e / kg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Localized: "{0:F1} kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Localized: '{0:F1} / 100'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Localized: "\xA1Has acertado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Localized: "\xA1Casi!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Localized: "{0} genera aproximadamente {1:F1}x menos emisiones de CO\u2082e
+      que {2} ({3:F1} vs {4:F1} kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Localized: "{0} tiene una huella ligeramente menor que {1} ({2:F1} vs {3:F1}
+      kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Localized: Impacto global
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Localized: Grado de procesamiento (NOVA)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Localized: Grupo {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Localized: "Conclusi\xF3n cient\xEDfica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Localized: "Las fuentes de prote\xEDna de origen vegetal generan entre 10 y
+      50 veces menos emisiones de gases de efecto invernadero y requieren significativamente
+      menos suelo y agua que las carnes rojas (Clark et al., PNAS 2022)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Localized: Dato directo (OpenFoodFacts)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Localized: "* Estimaci\xF3n (Clark / Poore et al.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Localized: Hamburguesa de ternera
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Localized: Lentejas cocidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Localized: Pechuga de pollo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Localized: Tofu firme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Localized: "Salm\xF3n fresco"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Localized: Huevos camperos
     m_Metadata:
       m_Items: []
   references:

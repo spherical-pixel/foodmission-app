@@ -57,7 +57,8 @@ namespace eu.foodmission.platform
             TemplateAddresses.ChallengeDetailScreen,
             TemplateAddresses.QuickMealLogScreen,
             TemplateAddresses.NutriEditor,
-            TemplateAddresses.NutriEditorPanelItem
+            TemplateAddresses.NutriEditorPanelItem,
+            TemplateAddresses.FoodComparison
         };
 
         public async Task PreloadAllAsync()
@@ -87,6 +88,15 @@ namespace eu.foodmission.platform
         {
             if (_cache.TryGetValue(address, out VisualTreeAsset asset))
             {
+                return asset;
+            }
+
+            // Fallback on-demand synchronous load if missed by preload
+            var handle = Addressables.LoadAssetAsync<VisualTreeAsset>(address);
+            asset = handle.WaitForCompletion();
+            if (handle.Status == AsyncOperationStatus.Succeeded && asset != null)
+            {
+                _cache[address] = asset;
                 return asset;
             }
 

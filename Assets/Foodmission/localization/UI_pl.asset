@@ -2504,15 +2504,6 @@ MonoBehaviour:
     m_Localized: "Zachowaj obecn\u0105 wersj\u0119"
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Localized: "Wybierz zadanie, aby rozpocz\u0105\u0107 nauk\u0119 i robi\u0107
-      post\u0119py."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Localized: Odkryj zadania
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966269096747008
     m_Localized: "{0:plural:Zdobyto FoodyCoin!|Zdobyto FoodyCoiny!|Zdobyto FoodyCoin\xF3w!|Zdobyto
       FoodyCoiny!}"
@@ -3343,6 +3334,231 @@ MonoBehaviour:
       - rid: 4008881209995690411
   - m_Id: 50999984835780613
     m_Localized: "Za ma\u0142o FoodyCoin\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Localized: "\u2696\uFE0F Por\xF3wnaj bia\u0142ka z mojej listy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Localized: "Por\xF3wnanie \u017Cywno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Localized: "Odkryj wp\u0142yw kupowanych produkt\xF3w na \u015Brodowisko"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Localized: Prawie gotowy na wyzwanie!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Localized: "Aby rozpocz\u0105\u0107 to wyzwanie, potrzebujesz co najmniej 2
+      \u017Ar\xF3de\u0142 bia\u0142ka na swojej li\u015Bcie zakup\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Localized: "\U0001F6D2 Przejd\u017A do listy zakup\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Localized: "\U0001F914 Co ma mniejszy \u015Blad w\u0119glowy?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Localized: "Dotknij jedzenia, kt\xF3re Twoim zdaniem ma mniejszy \u015Blad
+      w\u0119glowy:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Localized: "\U0001F4CA Zobacz szczeg\xF3\u0142owe por\xF3wnanie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Localized: "\u015Alad w\u0119glowy (kg CO\u2082e/kg)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Localized: "Wp\u0142yw na \u015Brodowisko PNAS (0-100)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Localized: Dane szacunkowe na podstawie Clark et al. (PNAS 2022) i globalnych
+      baz danych.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Localized: "\U0001F504 Por\xF3wnaj inne produkty"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Localized: Ryby i owoce morza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Localized: "Mi\u0119so"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Localized: "Dr\xF3b"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Localized: "Ro\u015Bliny str\u0105czkowe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Localized: "Alternatywy ro\u015Blinne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Localized: Jaja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Localized: Ser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Localized: Orzechy i nasiona
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Localized: "Bia\u0142ko"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Localized: Przygotowywanie pojedynku...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Localized: "\u2696\uFE0F POR\xD3WNANIE \u015ARODOWISKOWE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Localized: "\U0001F4A1 Zalecane \u017Ar\xF3d\u0142a bia\u0142ka:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Localized: "\u2022 Ro\u015Bliny str\u0105czkowe (soczewica, ciecierzyca, fasola,
+      soja)\n\u2022 Ryby i owoce morza\n\u2022 Jajka i sery\n\u2022 Bia\u0142e mi\u0119so
+      (kurczak, indyk) i czerwone mi\u0119so\n\u2022 Tofu i alternatywy ro\u015Blinne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Localized: "\u26A1 Por\xF3wnaj polecane przyk\u0142ady"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Localized: EKOLOGICZNY MINIPOJEDYNEK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Localized: "\U0001F331 Mniejszy \u015Blad"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Localized: "\U0001F3C6 Mniejszy \u015Blad"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Localized: "\U0001F449 Wybierz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Localized: "kg CO\u2082e / kg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Localized: "{0:F1} kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Localized: '{0:F1} / 100'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Localized: Brawo, dobrze!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Localized: Prawie!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Localized: "{0} generuje oko\u0142o {1:F1}x mniej CO\u2082e ni\u017C {2} ({3:F1}
+      vs {4:F1} kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Localized: "{0} ma nieco mniejszy \u015Blad ni\u017C {1} ({2:F1} vs {3:F1}
+      kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Localized: "Wp\u0142yw ca\u0142kowity"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Localized: "Stopie\u0144 przetworzenia (NOVA)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Localized: Grupa {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Localized: Wniosek naukowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Localized: "Ro\u015Blinne \u017Ar\xF3d\u0142a bia\u0142ka powoduj\u0105 od
+      10 do 50 razy mniejsze emisje gaz\xF3w cieplarnianych i wymagaj\u0105 znacznie
+      mniej ziemi i wody ni\u017C czerwone mi\u0119so (Clark et al., PNAS 2022)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Localized: "Dane bezpo\u015Brednie (OpenFoodFacts)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Localized: '* Szacunek (Clark / Poore et al.)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Localized: "Burger wo\u0142owy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Localized: Gotowana soczewica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Localized: "Pier\u015B z kurczaka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Localized: Tofu twarde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Localized: "\u015Awie\u017Cy \u0142oso\u015B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Localized: Jajka z wolnego wybiegu
     m_Metadata:
       m_Items: []
   references:

@@ -517,6 +517,17 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.open_quick_meal_log);
         }
 
+        public void NavigateToFoodComparison(string mode = "proteins", string source = "shopping_list")
+        {
+            var args = new[]
+            {
+                new Unity.AppUI.Navigation.Argument("challengeCode", "CH.B1.1"),
+                new Unity.AppUI.Navigation.Argument("mode", mode),
+                new Unity.AppUI.Navigation.Argument("source", source)
+            };
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison, args);
+        }
+
         public void SetCurrentQuestForTesting(string title, string code, string id, bool[] states)
         {
             CurrentQuestTitle = title;
@@ -576,10 +587,10 @@ namespace eu.foodmission.platform
                 System.DateTime lastSeenDate;
                 bool hasValidDate = System.DateTime.TryParse(lastSeenTs, out lastSeenDate);
 
-                // Filter events strictly to MISSION_COMPLETED, CHALLENGE_COMPLETED, and QUEST_COMPLETED
+                // Filter events strictly to MISSION_COMPLETED and QUEST_COMPLETED
                 var candidateEvents = profile.recentEvents?
                     .Where(e => !string.IsNullOrEmpty(e.id) && !celebratedIds.Contains(e.id))
-                    .Where(e => e.eventType == "MISSION_COMPLETED" || e.eventType == "CHALLENGE_COMPLETED" || e.eventType == "QUEST_COMPLETED")
+                    .Where(e => e.eventType == "MISSION_COMPLETED" || e.eventType == "QUEST_COMPLETED")
                     .Where(e =>
                     {
                         if (string.IsNullOrEmpty(e.timestamp)) return false;
@@ -627,14 +638,12 @@ namespace eu.foodmission.platform
                 foreach (var evt in candidateEvents)
                 {
                     bool isMission = evt.eventType == "MISSION_COMPLETED";
-                    bool isChallenge = evt.eventType == "CHALLENGE_COMPLETED";
                     bool isQuest = evt.eventType == "QUEST_COMPLETED";
 
                     string code = null;
                     if (evt.metadata != null)
                     {
                         if (isMission) code = evt.metadata["missionCode"]?.ToString();
-                        else if (isChallenge) code = evt.metadata["challengeCode"]?.ToString();
                         else if (isQuest) code = evt.metadata["questCode"]?.ToString();
                     }
 
@@ -660,10 +669,6 @@ namespace eu.foodmission.platform
                                     matches = true;
                                 }
                                 else if (isMission && w.reason.StartsWith("Mission ", System.StringComparison.OrdinalIgnoreCase))
-                                {
-                                    matches = true;
-                                }
-                                else if (isChallenge && w.reason.StartsWith("Challenge ", System.StringComparison.OrdinalIgnoreCase))
                                 {
                                     matches = true;
                                 }
@@ -695,15 +700,6 @@ namespace eu.foodmission.platform
                                 pointsEarned = mProg.reward.points ?? 0;
                             }
                         }
-                        else if (isChallenge && _challengeService != null)
-                        {
-                            var (cProg, _) = await _challengeService.GetChallengeProgressAsync(code);
-                            if (cProg?.reward != null)
-                            {
-                                xpEarned = cProg.reward.xp ?? 0;
-                                pointsEarned = cProg.reward.points ?? 0;
-                            }
-                        }
                         else if (isQuest && _questService != null)
                         {
                             var (qProg, _) = await _questService.GetQuestProgressAsync(code);
@@ -725,12 +721,12 @@ namespace eu.foodmission.platform
 
                     if (!reward.xp.HasValue && !reward.points.HasValue)
                     {
-                        reward.xp = isQuest ? 100 : (isMission ? 50 : 25);
+                        reward.xp = isQuest ? 100 : 50;
                     }
 
                     string contextTitle = isQuest
                         ? "@UI:QUEST_REWARD_TITLE"
-                        : (isMission ? "@UI:MISSION_REWARD_TITLE" : "@UI:CHALLENGE_REWARD_TITLE");
+                        : "@UI:MISSION_REWARD_TITLE";
 
                     results.Add(new PendingRewardCelebration
                     {

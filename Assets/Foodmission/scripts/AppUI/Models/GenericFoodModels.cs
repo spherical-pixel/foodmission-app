@@ -22,6 +22,10 @@ namespace eu.foodmission.platform
         public bool vegetarian;
         public bool meatOrFish;
         public bool legume;
+        public float? proteins;
+        public float? proteinsPlant;
+        public float? proteinsAnimal;
+        public string[] langualCodes;
     }
 
     [Serializable]

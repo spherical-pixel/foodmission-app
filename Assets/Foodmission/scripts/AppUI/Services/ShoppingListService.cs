@@ -47,7 +47,15 @@ namespace eu.foodmission.platform
             }
 
             string json = request.downloadHandler.text;
-            ShoppingListPagedResponse response = JsonUtility.FromJson<ShoppingListPagedResponse>(json);
+            ShoppingListPagedResponse response = null;
+            try
+            {
+                response = JsonConvert.DeserializeObject<ShoppingListPagedResponse>(json);
+            }
+            catch (Exception)
+            {
+                response = JsonUtility.FromJson<ShoppingListPagedResponse>(json);
+            }
             return (response?.data, null);
         }
 
@@ -155,7 +163,15 @@ namespace eu.foodmission.platform
             }
 
             string json = request.downloadHandler.text;
-            ShoppingListItemPagedResponse response = JsonUtility.FromJson<ShoppingListItemPagedResponse>(json);
+            ShoppingListItemPagedResponse response = null;
+            try
+            {
+                response = JsonConvert.DeserializeObject<ShoppingListItemPagedResponse>(json);
+            }
+            catch (Exception)
+            {
+                response = JsonUtility.FromJson<ShoppingListItemPagedResponse>(json);
+            }
             return (response?.data, null);
         }
 

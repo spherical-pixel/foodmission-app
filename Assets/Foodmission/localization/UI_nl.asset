@@ -2532,14 +2532,6 @@ MonoBehaviour:
     m_Localized: Behoud de huidige versie
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Localized: Kies een opdracht om te beginnen met leren en vooruitgang te boeken.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Localized: Ontdek missies
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966269096747008
     m_Localized: '{0:plural:FoodyCoin verdiend!|FoodyCoins verdiend!}'
     m_Metadata:
@@ -3356,6 +3348,231 @@ MonoBehaviour:
       - rid: 4008881209995690405
   - m_Id: 50999984835780613
     m_Localized: Niet genoeg FoodyCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Localized: "\u2696\uFE0F Eiwitten uit mijn lijst vergelijken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Localized: Voedselvergelijker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Localized: Ontdek de milieu-impact van wat je koopt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Localized: Bijna klaar voor de uitdaging!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Localized: Om deze uitdaging te starten, heb je minimaal 2 eiwitbronnen op
+      je boodschappenlijst nodig.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Localized: "\U0001F6D2 Ga naar boodschappenlijst"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Localized: "\U0001F914 Welke heeft een lagere voetafdruk?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Localized: 'Tik op het voedsel waarvan je denkt dat het een lagere ecologische
+      voetafdruk heeft:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Localized: "\U0001F4CA Bekijk gedetailleerde vergelijking"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Localized: "Koolstofvoetafdruk (kg CO\u2082e/kg)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Localized: PNAS milieu-impact (0-100)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Localized: Gegevens geschat op basis van Clark et al. (PNAS 2022) en wereldwijde
+      databanken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Localized: "\U0001F504 Andere voedingsmiddelen vergelijken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Localized: Vis & zeevruchten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Localized: Vlees
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Localized: Gevogelte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Localized: Peulvruchten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Localized: Plantaardige alternatieven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Localized: Eieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Localized: Kaas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Localized: Noten & zaden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Localized: Eiwit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Localized: Het duel wordt voorbereid...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Localized: "\u2696\uFE0F MILIEUVERGELIJKING"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Localized: "\U0001F4A1 Aanbevolen eiwitbronnen:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Localized: "\u2022 Peulvruchten (linzen, kikkererwten, bonen, soja)\n\u2022
+      Vis en zeevruchten\n\u2022 Eieren en kaas\n\u2022 Wit vlees (kip, kalkoen)
+      en rood vlees\n\u2022 Tofu en plantaardige alternatieven"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Localized: "\u26A1 Aanbevolen voorbeelden vergelijken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Localized: MILIEU-MINIDUEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Localized: "\U0001F331 Kleinere voetafdruk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Localized: "\U0001F3C6 Kleinere voetafdruk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Localized: "\U0001F449 Kiezen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Localized: "kg CO\u2082e / kg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Localized: "{0:F1} kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Localized: '{0:F1} / 100'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Localized: Goed geraden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Localized: Bijna!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Localized: "{0} veroorzaakt ongeveer {1:F1}x minder CO\u2082e dan {2} ({3:F1}
+      vs {4:F1} kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Localized: "{0} heeft een iets kleinere voetafdruk dan {1} ({2:F1} vs {3:F1}
+      kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Localized: Totale impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Localized: Bewerkingsgraad (NOVA)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Localized: Groep {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Localized: Wetenschappelijke conclusie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Localized: Plantaardige eiwitbronnen stoten 10 tot 50 keer minder broeikasgassen
+      uit en hebben aanzienlijk minder land en water nodig dan rood vlees (Clark
+      et al., PNAS 2022).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Localized: Directe gegevens (OpenFoodFacts)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Localized: '* Schatting (Clark / Poore et al.)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Localized: Rundvleesburger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Localized: Gekookte linzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Localized: Kipfilet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Localized: Stevige tofu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Localized: Verse zalm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Localized: Scharreleieren
     m_Metadata:
       m_Items: []
   references:

@@ -2479,14 +2479,6 @@ MonoBehaviour:
     m_Localized: "Behold den n\xE5v\xE6rende"
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Localized: "Velg et oppdrag for \xE5 begynne \xE5 l\xE6re og gj\xF8re fremskritt."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Localized: Utforsk oppdrag
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966269096747008
     m_Localized: '{0:plural:FoodyCoin tjent!|FoodyCoins tjent!}'
     m_Metadata:
@@ -3305,6 +3297,229 @@ MonoBehaviour:
       - rid: 4008881209995690410
   - m_Id: 50999984835780613
     m_Localized: Ikke nok FoodyCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Localized: "\u2696\uFE0F Sammenlign proteiner fra listen min"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Localized: Matsammenligning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Localized: "Oppdag milj\xF8p\xE5virkningen av det du kj\xF8per"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Localized: Nesten klar for utfordringen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Localized: "For \xE5 starte denne utfordringen trenger du minst 2 proteinkilder
+      p\xE5 handlelisten din."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Localized: "\U0001F6D2 G\xE5 til handleliste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Localized: "\U0001F914 Hvilken har lavere fotavtrykk?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Localized: "Trykk p\xE5 maten du tror genererer lavere karbonavtrykk:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Localized: "\U0001F4CA Se detaljert sammenligning"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Localized: "Karbonavtrykk (kg CO\u2082e/kg)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Localized: "PNAS milj\xF8p\xE5virkning (0-100)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Localized: "Data ansl\xE5tt fra Clark et al. (PNAS 2022) og globale databaser."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Localized: "\U0001F504 Sammenlign annen mat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Localized: "Fisk og sj\xF8mat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Localized: "Kj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Localized: "Fj\xE6rkre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Localized: Belgfrukter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Localized: Plantebaserte alternativer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Localized: Egg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Localized: Ost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Localized: "N\xF8tter og fr\xF8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Localized: Protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Localized: Forbereder duellen...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Localized: "\u2696\uFE0F MILJ\xD8SAMMENLIGNING"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Localized: "\U0001F4A1 Anbefalte proteinkilder:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Localized: "\u2022 Belgfrukter (linser, kikerter, b\xF8nner, soya)\n\u2022
+      Fisk og sj\xF8mat\n\u2022 Egg og ost\n\u2022 Hvitt kj\xF8tt (kylling, kalkun)
+      og r\xF8dt kj\xF8tt\n\u2022 Tofu og plantebaserte alternativer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Localized: "\u26A1 Sammenlign anbefalte eksempler"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Localized: "MILJ\xD8-MINIDUELL"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Localized: "\U0001F331 Lavere fotavtrykk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Localized: "\U0001F3C6 Lavere fotavtrykk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Localized: "\U0001F449 Velg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Localized: "kg CO\u2082e / kg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Localized: "{0:F1} kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Localized: '{0:F1} / 100'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Localized: Riktig!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Localized: Nesten!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Localized: "{0} gir omtrent {1:F1}x mindre CO\u2082e enn {2} ({3:F1} vs {4:F1}
+      kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Localized: "{0} har et litt lavere fotavtrykk enn {1} ({2:F1} vs {3:F1} kg
+      CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Localized: "Samlet p\xE5virkning"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Localized: Bearbeidingsgrad (NOVA)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Localized: Gruppe {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Localized: Vitenskapelig konklusjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Localized: "Plantebaserte proteinkilder gir 10 til 50 ganger lavere klimagassutslipp
+      og krever betydelig mindre areal og vann enn r\xF8dt kj\xF8tt (Clark et al.,
+      PNAS 2022)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Localized: Direkte data (OpenFoodFacts)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Localized: '* Estimat (Clark / Poore et al.)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Localized: Storfeburger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Localized: Kokte linser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Localized: Kyllingbryst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Localized: Fast tofu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Localized: Fersk laks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Localized: "Frittg\xE5ende egg"
     m_Metadata:
       m_Items: []
   references:

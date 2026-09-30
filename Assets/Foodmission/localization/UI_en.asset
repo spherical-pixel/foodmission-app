@@ -2477,14 +2477,6 @@ MonoBehaviour:
     m_Localized: Keep the current one
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Localized: Choose a quest to start learning and making progress.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Localized: Explore Quests
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966074812391424
     m_Localized: Reward earned!
     m_Metadata:
@@ -3300,6 +3292,230 @@ MonoBehaviour:
       - rid: 4008881209995690406
   - m_Id: 50999984835780613
     m_Localized: Not enough FoodyCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Localized: "\u2696\uFE0F Compare proteins from my list"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Localized: Food Comparison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Localized: Discover the environmental impact of what you buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Localized: Almost ready for the challenge!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Localized: To start this challenge, you need at least 2 protein sources in
+      your shopping list.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Localized: "\U0001F6D2 Go to Shopping List"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Localized: "\U0001F914 Which has a lower footprint?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Localized: 'Tap the food you think generates a lower carbon footprint:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Localized: "\U0001F4CA View detailed comparison"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Localized: "Carbon footprint (kg CO\u2082e/kg)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Localized: PNAS environmental impact (0-100)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Localized: Data estimated from Clark et al. (PNAS 2022) and global agri-food
+      databases.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Localized: "\U0001F504 Compare other foods"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Localized: Fish & Seafood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Localized: Meat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Localized: Poultry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Localized: Legumes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Localized: Plant alternatives
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Localized: Eggs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Localized: Cheese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Localized: Nuts & Seeds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Localized: Protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Localized: Preparing the duel...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Localized: "\u2696\uFE0F ENVIRONMENTAL COMPARISON"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Localized: "\U0001F4A1 Recommended protein sources:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Localized: "\u2022 Legumes (lentils, chickpeas, beans, soy)\n\u2022 Fish and
+      seafood\n\u2022 Eggs and cheese\n\u2022 White meat (chicken, turkey) and red
+      meat\n\u2022 Tofu and plant-based alternatives"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Localized: "\u26A1 Compare recommended examples"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Localized: ENVIRONMENTAL MINI-DUEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Localized: "\U0001F331 Lower footprint"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Localized: "\U0001F3C6 Lower footprint"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Localized: "\U0001F449 Choose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Localized: "kg CO\u2082e / kg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Localized: "{0:F1} kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Localized: '{0:F1} / 100'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Localized: You got it right!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Localized: Almost!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Localized: "{0} generates about {1:F1}x less CO\u2082e than {2} ({3:F1} vs
+      {4:F1} kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Localized: "{0} has a slightly lower footprint than {1} ({2:F1} vs {3:F1} kg
+      CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Localized: Global impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Localized: Processing level (NOVA)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Localized: Group {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Localized: Scientific takeaway
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Localized: Plant-based protein sources generate 10 to 50 times fewer greenhouse
+      gas emissions and require significantly less land and water than red meat (Clark
+      et al., PNAS 2022).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Localized: Direct data (OpenFoodFacts)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Localized: '* Estimate (Clark / Poore et al.)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Localized: Beef burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Localized: Cooked lentils
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Localized: Chicken breast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Localized: Firm tofu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Localized: Fresh salmon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Localized: Free-range eggs
     m_Metadata:
       m_Items: []
   references:

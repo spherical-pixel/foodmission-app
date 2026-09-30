@@ -49,7 +49,7 @@
 }
 
 .fm-activity-why-text {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     white-space: normal;
 }
 

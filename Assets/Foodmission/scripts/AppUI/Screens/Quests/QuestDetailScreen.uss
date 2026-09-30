@@ -57,8 +57,12 @@
 }
 
 .fm-quest-detail-desc {
+    margin-top: 20px;
     margin-bottom: 48px;
+    padding-left: 25px;
+    padding-right: 25px;
     color: var(--appui-foregrounds-50);
+    /*-unity-font-style: bold;*/
 }
 
 

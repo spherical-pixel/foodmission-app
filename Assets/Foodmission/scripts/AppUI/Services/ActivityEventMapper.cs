@@ -430,17 +430,34 @@ namespace eu.foodmission.platform
             string codeUpper = challengeCode.Trim().ToUpperInvariant();
 
             // 1. Diet changes challenges
-            if (codeUpper == "CH.B1.1" || codeUpper == "CH.A1.5")
+            if (codeUpper == "CH.B1.1")
             {
                 return new ActivityMapping
                 {
                     ActivityCode = challengeCode,
                     TargetEventTypes = new[] { ClientEventTypes.LearningFootprintCompared },
-                    NativeModuleAction = "go_to_shopping_list",
-                    NativeModuleLabelKey = "@UI:GO_TO_SHOPPING_LIST",
+                    NativeModuleAction = Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison,
+                    NativeModuleLabelKey = "@UI:CHALLENGE_BTN_COMPARE_PROTEINS",
                     NativeModuleExplanationKey = "@UI:CHALLENGE_HINT_COMPARE_FOOTPRINT",
-                    NativeModuleButtonTitle = "Ir a la Lista de la Compra",
-                    NativeModuleHint = "Compara la huella ecológica de diferentes productos en tu lista de la compra.",
+                    NativeModuleButtonTitle = "⚖️ Comparar proteínas de mi lista",
+                    NativeModuleHint = "Compara la huella ecológica de dos fuentes de proteína de tu lista de la compra.",
+                    QuestionType = DirectQuestionType.SingleChoice,
+                    NutriPromptKey = "@UI:NUTRI_PROMPT_COMPARE_FOOTPRINT",
+                    DirectQuestionPrompt = "⚖️ ¿Has comparado la huella ambiental de dos alimentos?"
+                };
+            }
+
+            if (codeUpper == "CH.A1.5")
+            {
+                return new ActivityMapping
+                {
+                    ActivityCode = challengeCode,
+                    TargetEventTypes = new[] { ClientEventTypes.LearningFootprintCompared },
+                    NativeModuleAction = Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison,
+                    NativeModuleLabelKey = "@UI:CHALLENGE_BTN_COMPARE_PROTEINS",
+                    NativeModuleExplanationKey = "@UI:CHALLENGE_HINT_COMPARE_FOOTPRINT",
+                    NativeModuleButtonTitle = "⚖️ Comparar alimentos",
+                    NativeModuleHint = "Compara la huella ecológica de diferentes productos.",
                     QuestionType = DirectQuestionType.SingleChoice,
                     NutriPromptKey = "@UI:NUTRI_PROMPT_COMPARE_FOOTPRINT",
                     DirectQuestionPrompt = "⚖️ ¿Has comparado la huella ambiental de dos alimentos?"

@@ -20,8 +20,20 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private Challenge _challenge;
 
-        [ObservableProperty]
         private ChallengeProgress _challengeProgress;
+        public ChallengeProgress ChallengeProgress
+        {
+            get => _challengeProgress;
+            set
+            {
+                if (SetProperty(ref _challengeProgress, value))
+                {
+                    OnPropertyChanged(nameof(IsCompleted));
+                }
+            }
+        }
+
+        public bool IsCompleted => ChallengeProgress?.completed == true || (ChallengeProgress != null && ChallengeProgress.progress >= 100f);
 
         [ObservableProperty]
         private ActivityMapping _mapping;
@@ -139,6 +151,18 @@ namespace eu.foodmission.platform
         public void NavigateToNativeModule()
         {
             if (Mapping == null || string.IsNullOrEmpty(Mapping.NativeModuleAction)) return;
+
+            if (Mapping.NativeModuleAction == Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison && Challenge != null)
+            {
+                RaiseNavigationRequested(Mapping.NativeModuleAction, new[]
+                {
+                    new Unity.AppUI.Navigation.Argument("challengeCode", Challenge.code ?? "CH.B1.1"),
+                    new Unity.AppUI.Navigation.Argument("mode", "proteins"),
+                    new Unity.AppUI.Navigation.Argument("source", "shopping_list")
+                });
+                return;
+            }
+
             RaiseNavigationRequested(Mapping.NativeModuleAction);
         }
 

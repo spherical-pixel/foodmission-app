@@ -2471,14 +2471,6 @@ MonoBehaviour:
     m_Localized: "Ohranite trenutno razli\u010Dico"
     m_Metadata:
       m_Items: []
-  - m_Id: 44199025098874880
-    m_Localized: "Izberi nalogo, da se za\u010Dne\u0161 u\u010Diti in napredovati."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44199294499020800
-    m_Localized: "Razi\u0161\u010Di naloge"
-    m_Metadata:
-      m_Items: []
   - m_Id: 46966269096747008
     m_Localized: "{0:plural:Prislu\u017Een FoodyCoin!|Prislu\u017Eena FoodyCoina!|Prislu\u017Eeni
       FoodyCoini!|Prislu\u017Eenih FoodyCoinov!}"
@@ -3299,6 +3291,232 @@ MonoBehaviour:
       - rid: 4008881209995690412
   - m_Id: 50999984835780613
     m_Localized: Ni dovolj FoodyCoinov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050452561920
+    m_Localized: "\u2696\uFE0F Primerjajte beljakovine z mojega seznama"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950528
+    m_Localized: "Primerjava \u017Eivil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950529
+    m_Localized: Odkrijte vpliv tega, kar kupujete, na okolje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950530
+    m_Localized: Skoraj pripravljeni na izziv!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950531
+    m_Localized: "Za za\u010Detek tega izziva potrebujete na svojem nakupovalnem
+      seznamu vsaj 2 vira beljakovin."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950532
+    m_Localized: "\U0001F6D2 Pojdi na nakupovalni seznam"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950533
+    m_Localized: "\U0001F914 Kaj ima manj\u0161i odtis?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950534
+    m_Localized: "Dotaknite se \u017Eivila, za katerega menite, da ima manj\u0161i
+      oglji\u010Dni odtis:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950535
+    m_Localized: "\U0001F4CA Oglejte si podrobno primerjavo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950536
+    m_Localized: "Oglji\u010Dni odtis (kg CO\u2082e/kg)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950537
+    m_Localized: Vpliv na okolje PNAS (0-100)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950538
+    m_Localized: Podatki ocenjeni na podlagi Clark et al. (PNAS 2022) in svetovnih
+      baz podatkov.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51022050460950539
+    m_Localized: "\U0001F504 Primerjaj druga \u017Eivila"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178685038592
+    m_Localized: "Ribe in morski sade\u017Ei"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232896
+    m_Localized: Meso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232897
+    m_Localized: Perutnina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232898
+    m_Localized: "Stro\u010Dnice"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232899
+    m_Localized: Rastlinske alternative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232900
+    m_Localized: Jajca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232901
+    m_Localized: Sir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232902
+    m_Localized: "Ore\u0161\u010Dki in semena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232903
+    m_Localized: Beljakovine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232904
+    m_Localized: Pripravljanje dvoboja...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232905
+    m_Localized: "\u2696\uFE0F OKOLJSKA PRIMERJAVA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232906
+    m_Localized: "\U0001F4A1 Priporo\u010Deni viri beljakovin:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232907
+    m_Localized: "\u2022 Stro\u010Dnice (le\u010Da, \u010Di\u010Derika, fi\u017Eol,
+      soja)\n\u2022 Ribe in morski sade\u017Ei\n\u2022 Jajca in siri\n\u2022 Belo
+      meso (pi\u0161\u010Danec, puran) in rde\u010De meso\n\u2022 Tofu in rastlinske
+      alternative"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232908
+    m_Localized: "\u26A1 Primerjaj priporo\u010Dene primere"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232909
+    m_Localized: OKOLJSKI MINI DVOBOJ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232910
+    m_Localized: "\U0001F331 Manj\u0161i odtis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232911
+    m_Localized: "\U0001F3C6 Manj\u0161i odtis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232912
+    m_Localized: "\U0001F449 Izberi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232913
+    m_Localized: VS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232914
+    m_Localized: "kg CO\u2082e / kg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232915
+    m_Localized: "{0:F1} kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232916
+    m_Localized: '{0:F1} / 100'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232917
+    m_Localized: Pravilno!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232918
+    m_Localized: Skoraj!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232919
+    m_Localized: "{0} povzro\u010Di pribli\u017Eno {1:F1}-krat manj CO\u2082e kot
+      {2} ({3:F1} proti {4:F1} kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232920
+    m_Localized: "{0} ima nekoliko manj\u0161i odtis kot {1} ({2:F1} proti {3:F1}
+      kg CO\u2082e/kg)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232921
+    m_Localized: Skupni vpliv
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232922
+    m_Localized: Eco-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232923
+    m_Localized: Nutri-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232924
+    m_Localized: Stopnja predelave (NOVA)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232925
+    m_Localized: Skupina {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232926
+    m_Localized: "Znanstveni zaklju\u010Dek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232927
+    m_Localized: "Rastlinski viri beljakovin povzro\u010Dijo 10- do 50-krat manj
+      izpustov toplogrednih plinov ter zahtevajo bistveno manj zemlje in vode kot
+      rde\u010De meso (Clark et al., PNAS 2022)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232928
+    m_Localized: Neposredni podatki (OpenFoodFacts)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232929
+    m_Localized: '* Ocena (Clark / Poore et al.)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232930
+    m_Localized: Goveji burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232931
+    m_Localized: "Kuhana le\u010Da"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232932
+    m_Localized: "Pi\u0161\u010Dan\u010Dje prsi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232933
+    m_Localized: Trdi tofu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232934
+    m_Localized: "Sve\u017E losos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232935
+    m_Localized: Jajca iz proste reje
     m_Metadata:
       m_Items: []
   references:

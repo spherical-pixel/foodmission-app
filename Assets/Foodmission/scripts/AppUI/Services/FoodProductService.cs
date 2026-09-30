@@ -117,7 +117,7 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetFoodById {id}"));
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetFoodById {id}", logAsError: request.responseCode != 429)); // 429 is transient throttling, not an app error
             }
 
             FoodProduct food = JsonUtility.FromJson<FoodProduct>(request.downloadHandler.text);
@@ -220,11 +220,21 @@ namespace eu.foodmission.platform
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                bool is404 = request.responseCode == 404;
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] FindByBarcode {barcode}", logAsError: !is404));
+                // 404 = unknown barcode; 429 = throttled, callers retry — neither is an app error
+                bool isExpected = request.responseCode == 404 || request.responseCode == 429;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] FindByBarcode {barcode}", logAsError: !isExpected));
             }
 
-            FoodProduct food = JsonUtility.FromJson<FoodProduct>(request.downloadHandler.text);
+            // Newtonsoft keeps nullable fields (e.g. openFoodFactsInfo.novaGroup) that JsonUtility drops
+            FoodProduct food;
+            try
+            {
+                food = JsonConvert.DeserializeObject<FoodProduct>(request.downloadHandler.text);
+            }
+            catch (Exception)
+            {
+                food = JsonUtility.FromJson<FoodProduct>(request.downloadHandler.text);
+            }
 
             if (food != null && !string.IsNullOrEmpty(food.id))
             {

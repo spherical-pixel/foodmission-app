@@ -62,14 +62,14 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void GetChallengeMapping_FootprintChallenge_ReturnsLearningEvents()
+        public void GetChallengeMapping_FootprintChallenge_ReturnsFoodComparisonAndEvents()
         {
             // CH.B1.1: Which Protein Has the Lowest Footprint?
             var mapping = _mapper.GetChallengeMapping("CH.B1.1");
 
             Assert.IsNotNull(mapping);
             Assert.Contains(ClientEventTypes.LearningFootprintCompared, mapping.TargetEventTypes);
-            Assert.AreEqual("go_to_shopping_list", mapping.NativeModuleAction);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison, mapping.NativeModuleAction);
         }
 
         [Test]

@@ -462,13 +462,14 @@ namespace eu.foodmission.platform.Tests
             var result = await vm.CheckPendingGamificationRewardsAsync();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(3, result.Count);
-            // First 2 must be activities (Mission and Challenge)
+            // Challenge events are no longer tracked via gamification events (now handled directly via PATCH progress)
+            Assert.AreEqual(2, result.Count);
+            // First is Mission
             Assert.IsFalse(result[0].IsQuest);
-            Assert.IsFalse(result[1].IsQuest);
-            // Last must be Quest
-            Assert.IsTrue(result[2].IsQuest);
-            Assert.AreEqual("@UI:QUEST_REWARD_TITLE", result[2].ContextTitle);
+            Assert.AreEqual("@UI:MISSION_REWARD_TITLE", result[0].ContextTitle);
+            // Second is Quest
+            Assert.IsTrue(result[1].IsQuest);
+            Assert.AreEqual("@UI:QUEST_REWARD_TITLE", result[1].ContextTitle);
         }
 
         [Test]
@@ -675,6 +676,26 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(2, requestedArgs.Length);
             Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && a.value?.ToString() == "true"));
             Assert.IsTrue(requestedArgs.Any(a => a.name == "fromEditProfile" && a.value?.ToString() == "false"));
+        }
+
+        [Test]
+        public void NavigateToFoodComparison_RaisesNavigationToGoToFoodComparison_WithArgs()
+        {
+            string requestedAction = null;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) =>
+            {
+                requestedAction = action;
+                requestedArgs = args;
+            };
+
+            _vm.NavigateToFoodComparison(mode: "sample", source: "sample");
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison, requestedAction);
+            Assert.IsNotNull(requestedArgs);
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "challengeCode" && a.value?.ToString() == "CH.B1.1"));
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "mode" && a.value?.ToString() == "sample"));
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "source" && a.value?.ToString() == "sample"));
         }
     }
 }

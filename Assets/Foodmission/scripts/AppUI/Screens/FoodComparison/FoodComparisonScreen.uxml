@@ -1,0 +1,197 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xmlns:fm="eu.foodmission.platform.Components" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/FoodComparison/FoodComparisonScreen.uss?fileID=7433441132597879392&amp;guid=fbbb0723b8e514be6addb5e2095961b1&amp;type=3#FoodComparisonScreen"/>
+    <ui:VisualElement name="root" class="fm-root fm-fc-root">
+        <ui:VisualElement class="fm-fc-header">
+            <ui:VisualElement class="fm-fc-header-badge-row">
+                <appui:Text text="@UI:FC_HEADER_BADGE" size="S" class="fm-fc-badge"/>
+            </ui:VisualElement>
+            <appui:Heading name="fc-title" size="L" text="@UI:FC_SCREEN_TITLE" class="fm-fc-title"/>
+            <appui:Text name="fc-subtitle" size="M" text="@UI:FC_SCREEN_SUBTITLE" class="fm-fc-subtitle"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="fc-state-empty" class="fm-fc-state-container fm-fc-empty-state">
+            <ui:VisualElement class="fm-fc-card fm-fc-empty-card">
+                <ui:VisualElement class="fm-fc-mascot-circle">
+                    <appui:Text text="🥑" class="fm-fc-mascot-emoji"/>
+                </ui:VisualElement>
+                <appui:Heading size="M" text="@UI:FC_EMPTY_TITLE" class="fm-fc-empty-title"/>
+                <appui:Text size="M" text="@UI:FC_EMPTY_DESC" class="fm-fc-empty-desc"/>
+                <fm:FMButton name="btn-go-to-shopping-list" title="@UI:FC_BTN_GO_SHOPPING" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-fc-btn-main fm-button fm-button-align-left"/>
+                <appui:Spacer/>
+                <fm:FMButton name="btn-play-sample-duel" title="@UI:FC_BTN_PLAY_SAMPLE" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-fc-btn-secondary fm-button fm-button-align-left"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="fc-state-duel" class="fm-fc-state-container fm-fc-duel-state">
+            <ui:VisualElement class="fm-fc-card fm-fc-duel-header-card">
+                <ui:VisualElement class="fm-fc-duel-tag-row">
+                    <appui:Text text="⚡" class="fm-fc-duel-badge-icon"/>
+                    <appui:Text text="@UI:FC_DUEL_TAG" size="S" class="fm-fc-duel-tag"/>
+                </ui:VisualElement>
+                <appui:Heading size="M" text="@UI:FC_DUEL_PROMPT_TITLE" class="fm-fc-duel-title"/>
+                <appui:Text size="S" text="@UI:FC_DUEL_PROMPT_SUBTITLE" class="fm-fc-duel-subtitle"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-fc-duel-arena">
+                <ui:VisualElement name="card-duel-a" class="fm-fc-duel-card fm-fc-duel-card--left">
+                    <appui:Text name="card-duel-a-badge" text="@UI:FC_BADGE_LOWER_FOOTPRINT" class="fm-fc-winner-ribbon" style="display: none;"/>
+                    <ui:VisualElement class="fm-fc-food-avatar-circle">
+                        <ui:Image name="card-duel-a-image" scale-mode="ScaleToFit" class="fm-fc-food-product-image" style="display: none;"/>
+                        <appui:Text name="card-duel-a-emoji" text="🥩" class="fm-fc-food-emoji"/>
+                    </ui:VisualElement>
+                    <appui:Text name="card-duel-a-category" text="" class="fm-fc-food-cat-pill"/>
+                    <appui:Heading name="card-duel-a-title" size="XS" text="" class="fm-fc-food-title"/>
+                    <ui:VisualElement name="card-duel-a-cta-container" class="fm-fc-duel-cta-container">
+                        <appui:Text name="card-duel-a-cta" text="@UI:FC_DUEL_CHOOSE" class="fm-fc-duel-tap-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="card-duel-a-result" class="fm-fc-duel-result-box" style="display: none;">
+                        <appui:Text name="card-duel-a-footprint" text="" class="fm-fc-duel-footprint-value"/>
+                        <appui:Text text="@UI:FC_FOOTPRINT_UNIT" class="fm-fc-duel-footprint-unit"/>
+                        <appui:Text name="card-duel-a-disclaimer" text="" size="S" class="fm-fc-duel-footprint-disclaimer"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="card-duel-b" class="fm-fc-duel-card fm-fc-duel-card--right">
+                    <appui:Text name="card-duel-b-badge" text="@UI:FC_BADGE_LOWER_FOOTPRINT" class="fm-fc-winner-ribbon" style="display: none;"/>
+                    <ui:VisualElement class="fm-fc-food-avatar-circle">
+                        <ui:Image name="card-duel-b-image" scale-mode="ScaleToFit" class="fm-fc-food-product-image" style="display: none;"/>
+                        <appui:Text name="card-duel-b-emoji" text="🫘" class="fm-fc-food-emoji"/>
+                    </ui:VisualElement>
+                    <appui:Text name="card-duel-b-category" text="" class="fm-fc-food-cat-pill"/>
+                    <appui:Heading name="card-duel-b-title" size="XS" text="" class="fm-fc-food-title"/>
+                    <ui:VisualElement name="card-duel-b-cta-container" class="fm-fc-duel-cta-container">
+                        <appui:Text name="card-duel-b-cta" text="@UI:FC_DUEL_CHOOSE" class="fm-fc-duel-tap-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="card-duel-b-result" class="fm-fc-duel-result-box" style="display: none;">
+                        <appui:Text name="card-duel-b-footprint" text="" class="fm-fc-duel-footprint-value"/>
+                        <appui:Text text="@UI:FC_FOOTPRINT_UNIT" class="fm-fc-duel-footprint-unit"/>
+                        <appui:Text name="card-duel-b-disclaimer" text="" size="S" class="fm-fc-duel-footprint-disclaimer"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="duel-vs-badge" picking-mode="Ignore" class="fm-fc-duel-vs-badge">
+                    <appui:Text text="@UI:FC_VS" class="fm-fc-duel-vs-text"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="duel-feedback-banner" class="fm-fc-card fm-fc-feedback-card" style="display: none;">
+                <ui:VisualElement class="fm-fc-feedback-header">
+                    <appui:Text name="duel-feedback-icon" text="🎉" class="fm-fc-feedback-icon"/>
+                    <appui:Heading name="duel-feedback-title" size="S" text="" class="fm-fc-feedback-title"/>
+                </ui:VisualElement>
+                <appui:Text name="duel-feedback-body" size="M" text="" class="fm-fc-feedback-body"/>
+                <fm:FMButton name="btn-view-matrix" title="@UI:FC_BTN_VIEW_MATRIX" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-fc-btn-main fm-button fm-button-align-left"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="fc-state-matrix" class="fm-fc-state-container fm-fc-matrix-state">
+            <ui:VisualElement class="fm-fc-matrix-header-row">
+                <ui:VisualElement class="fm-fc-matrix-header-card fm-fc-col-left">
+                    <appui:Text name="matrix-winner-badge-a" text="@UI:FC_MATRIX_BADGE_LOWER_FOOTPRINT" class="fm-fc-matrix-winner-pill hidden"/>
+                    <ui:VisualElement class="fm-fc-food-avatar-circle-sm">
+                        <ui:Image name="matrix-image-a" scale-mode="ScaleToFit" class="fm-fc-food-product-image-sm" style="display: none;"/>
+                        <appui:Text name="matrix-emoji-a" text="🥩" class="fm-fc-food-emoji-sm"/>
+                    </ui:VisualElement>
+                    <appui:Heading name="matrix-title-a" size="XS" text="" class="fm-fc-matrix-product-title"/>
+                    <appui:Text name="matrix-cat-a" text="" class="fm-fc-food-cat-pill"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="fm-fc-matrix-header-card fm-fc-col-right">
+                    <appui:Text name="matrix-winner-badge-b" text="@UI:FC_MATRIX_BADGE_LOWER_FOOTPRINT" class="fm-fc-matrix-winner-pill hidden"/>
+                    <ui:VisualElement class="fm-fc-food-avatar-circle-sm">
+                        <ui:Image name="matrix-image-b" scale-mode="ScaleToFit" class="fm-fc-food-product-image-sm" style="display: none;"/>
+                        <appui:Text name="matrix-emoji-b" text="🫘" class="fm-fc-food-emoji-sm"/>
+                    </ui:VisualElement>
+                    <appui:Heading name="matrix-title-b" size="XS" text="" class="fm-fc-matrix-product-title"/>
+                    <appui:Text name="matrix-cat-b" text="" class="fm-fc-food-cat-pill"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-fc-matrix-table">
+                <ui:VisualElement class="fm-fc-matrix-row">
+                    <ui:VisualElement class="fm-fc-matrix-row-header">
+                        <appui:Text text="🌍" class="fm-fc-row-icon"/>
+                        <appui:Text text="@UI:FC_LABEL_CO2" class="fm-fc-row-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fm-fc-matrix-row-values">
+                        <ui:VisualElement name="matrix-co2-box-a" class="fm-fc-metric-cell fm-fc-col-left">
+                            <appui:Text name="matrix-co2-a" text="" class="fm-fc-metric-highlight-val"/>
+                            <appui:Text name="matrix-co2-disclaimer-a" text="" size="S" class="fm-fc-metric-sublabel fm-fc-metric-disclaimer"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="matrix-co2-box-b" class="fm-fc-metric-cell fm-fc-col-right">
+                            <appui:Text name="matrix-co2-b" text="" class="fm-fc-metric-highlight-val"/>
+                            <appui:Text name="matrix-co2-disclaimer-b" text="" size="S" class="fm-fc-metric-sublabel fm-fc-metric-disclaimer"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="fm-fc-matrix-row">
+                    <ui:VisualElement class="fm-fc-matrix-row-header">
+                        <appui:Text text="📊" class="fm-fc-row-icon"/>
+                        <appui:Text text="@UI:FC_LABEL_PNAS_SCORE" class="fm-fc-row-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fm-fc-matrix-row-values">
+                        <ui:VisualElement name="matrix-score-box-a" class="fm-fc-metric-cell fm-fc-col-left">
+                            <appui:Text name="matrix-score-a" text="" class="fm-fc-metric-highlight-val"/>
+                            <appui:Text text="@UI:FC_LABEL_GLOBAL_IMPACT" class="fm-fc-metric-sublabel"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="matrix-score-box-b" class="fm-fc-metric-cell fm-fc-col-right">
+                            <appui:Text name="matrix-score-b" text="" class="fm-fc-metric-highlight-val"/>
+                            <appui:Text text="@UI:FC_LABEL_GLOBAL_IMPACT" class="fm-fc-metric-sublabel"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="matrix-row-ecoscore" class="fm-fc-matrix-row">
+                    <ui:VisualElement class="fm-fc-matrix-row-header">
+                        <appui:Text text="🌱" class="fm-fc-row-icon"/>
+                        <appui:Text text="@UI:FC_LABEL_ECOSCORE" class="fm-fc-row-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fm-fc-matrix-row-values">
+                        <ui:VisualElement class="fm-fc-metric-cell fm-fc-col-left">
+                            <appui:Text name="matrix-ecoscore-a" text="" class="fm-fc-score-badge fm-fc-score-badge--a"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="fm-fc-metric-cell fm-fc-col-right">
+                            <appui:Text name="matrix-ecoscore-b" text="" class="fm-fc-score-badge fm-fc-score-badge--a"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="matrix-row-nutriscore" class="fm-fc-matrix-row">
+                    <ui:VisualElement class="fm-fc-matrix-row-header">
+                        <appui:Text text="🥗" class="fm-fc-row-icon"/>
+                        <appui:Text text="@UI:FC_LABEL_NUTRISCORE" class="fm-fc-row-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fm-fc-matrix-row-values">
+                        <ui:VisualElement class="fm-fc-metric-cell fm-fc-col-left">
+                            <appui:Text name="matrix-nutriscore-a" text="" class="fm-fc-score-badge fm-fc-score-badge--a"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="fm-fc-metric-cell fm-fc-col-right">
+                            <appui:Text name="matrix-nutriscore-b" text="" class="fm-fc-score-badge fm-fc-score-badge--a"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="matrix-row-nova" class="fm-fc-matrix-row">
+                    <ui:VisualElement class="fm-fc-matrix-row-header">
+                        <appui:Text text="⚙️" class="fm-fc-row-icon"/>
+                        <appui:Text text="@UI:FC_LABEL_NOVA" class="fm-fc-row-label"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="fm-fc-matrix-row-values">
+                        <ui:VisualElement class="fm-fc-metric-cell fm-fc-col-left">
+                            <appui:Text name="matrix-nova-a" text="" class="fm-fc-nova-pill"/>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="fm-fc-metric-cell fm-fc-col-right">
+                            <appui:Text name="matrix-nova-b" text="" class="fm-fc-nova-pill"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-fc-card fm-fc-takeaway-card">
+                <ui:VisualElement class="fm-fc-takeaway-header">
+                    <appui:Text text="💡" class="fm-fc-takeaway-icon"/>
+                    <appui:Heading size="XS" text="@UI:FC_TAKEAWAY_TITLE" class="fm-fc-takeaway-title"/>
+                </ui:VisualElement>
+                <appui:Text name="matrix-takeaway-text" size="M" text="" class="fm-fc-takeaway-body"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-fc-card fm-fc-citation-card">
+                <appui:Text text="📚" class="fm-fc-citation-icon"/>
+                <appui:Text text="@UI:FC_CITATION_CLARK" class="fm-fc-citation-text"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="fm-fc-bottom-actions">
+                <fm:FMButton name="btn-reset-comparison" title="@UI:FC_BTN_RESET" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-fc-btn-secondary fm-button fm-button-align-left"/>
+                <appui:Spacer/>
+                <fm:FMButton name="btn-done-comparison" title="@UI:TXT_DONE" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-fc-btn-main fm-buttom fm-button-align-left"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
+    </ui:VisualElement>
+</ui:UXML>
