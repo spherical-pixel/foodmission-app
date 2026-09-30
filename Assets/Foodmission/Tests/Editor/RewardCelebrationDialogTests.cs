@@ -328,5 +328,69 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(item);
             Assert.IsTrue(completed);
         }
+
+        [Test]
+        public void CreateRewardVisual_WhenQuestUnlocked_CreatesQuestUnlockedContent()
+        {
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.QuestUnlocked,
+                Title = "@UI:QUEST_UNLOCKED_TITLE",
+                Subtitle = "Reduce One Meat Meal",
+                IconEmoji = "🔓"
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+            Assert.IsNotNull(visual);
+            Assert.IsTrue(visual.ClassListContains("fm-reward-content--quest-unlocked"));
+
+            var emoji = visual.Q<Text>(className: "fm-reward-icon-emoji");
+            Assert.IsNotNull(emoji);
+            Assert.AreEqual("🔓", emoji.text);
+
+            var title = visual.Q<Text>(className: "fm-reward-title");
+            Assert.IsNotNull(title);
+            Assert.AreEqual("@UI:QUEST_UNLOCKED_TITLE", title.text);
+
+            var subtitle = visual.Q<Text>(className: "fm-reward-subtitle");
+            Assert.IsNotNull(subtitle);
+            Assert.AreEqual("Reduce One Meat Meal", subtitle.text);
+        }
+
+        [Test]
+        public void BuildPresentationQueue_WithExtraItem_AppendsExtraItemToEnd()
+        {
+            var reward = new ContentReward { xp = 50 };
+            var extra = new RewardPresentationItem
+            {
+                Type = RewardType.QuestUnlocked,
+                Title = "@UI:QUEST_UNLOCKED_TITLE",
+                Subtitle = "Next Quest"
+            };
+
+            var queue = RewardCelebrationDialog.BuildPresentationQueue(reward, extraItem: extra);
+
+            Assert.AreEqual(2, queue.Count);
+            Assert.AreEqual(RewardType.Xp, queue[0].Type);
+            Assert.AreEqual(RewardType.QuestUnlocked, queue[1].Type);
+            Assert.AreEqual("Next Quest", queue[1].Subtitle);
+        }
+
+        [Test]
+        public void BuildPresentationQueue_WhenRewardNullButExtraItemPresent_ReturnsListWithExtraItem()
+        {
+            var extra = new RewardPresentationItem
+            {
+                Type = RewardType.QuestUnlocked,
+                Title = "@UI:QUEST_UNLOCKED_TITLE",
+                Subtitle = "First Quest"
+            };
+
+            var queue = RewardCelebrationDialog.BuildPresentationQueue(null, extraItem: extra);
+
+            Assert.AreEqual(1, queue.Count);
+            Assert.AreEqual(RewardType.QuestUnlocked, queue[0].Type);
+            Assert.AreEqual("First Quest", queue[0].Subtitle);
+        }
     }
 }

@@ -350,5 +350,63 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(Actions.open_quick_meal_log, requestedAction);
         }
+
+        [Test]
+        public void RebuildDisplayGroups_EvaluatesSequentialUnlocking()
+        {
+            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+
+            var dietGroup = _vm.DisplayGroups.FirstOrDefault(g => g.Dimension?.id == "dim-1");
+            Assert.IsNotNull(dietGroup);
+            Assert.AreEqual(3, dietGroup.Quests.Count);
+
+            // q-1: completed and unlocked
+            var itemQ1 = dietGroup.Quests.FirstOrDefault(q => q.Quest.id == "q-1");
+            Assert.IsNotNull(itemQ1);
+            Assert.IsTrue(itemQ1.IsCompleted);
+            Assert.IsFalse(itemQ1.IsLocked);
+
+            // q-2: unlocked (since q-1 is completed), but not completed
+            var itemQ2 = dietGroup.Quests.FirstOrDefault(q => q.Quest.id == "q-2");
+            Assert.IsNotNull(itemQ2);
+            Assert.IsFalse(itemQ2.IsCompleted);
+            Assert.IsFalse(itemQ2.IsLocked);
+
+            // q-3: locked (since q-2 is not completed)
+            var itemQ3 = dietGroup.Quests.FirstOrDefault(q => q.Quest.id == "q-3");
+            Assert.IsNotNull(itemQ3);
+            Assert.IsFalse(itemQ3.IsCompleted);
+            Assert.IsTrue(itemQ3.IsLocked);
+            Assert.AreEqual("Plant-Based Week", itemQ3.PreviousQuestTitle);
+        }
+
+        [Test]
+        public void SetStatusFilter_Pending_IncludesBothUnlockedPendingAndLockedQuests()
+        {
+            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+
+            _vm.SetStatusFilter(QuestFilterStatus.Pending);
+
+            var dietGroup = _vm.DisplayGroups.FirstOrDefault(g => g.Dimension?.id == "dim-1");
+            Assert.IsNotNull(dietGroup);
+            // q-1 was completed so it should be excluded; q-2 and q-3 should be included
+            Assert.AreEqual(2, dietGroup.Quests.Count);
+            Assert.IsTrue(dietGroup.Quests.Any(q => q.Quest.id == "q-2" && !q.IsLocked));
+            Assert.IsTrue(dietGroup.Quests.Any(q => q.Quest.id == "q-3" && q.IsLocked));
+        }
+
+        [Test]
+        public void SetStatusFilter_Completed_ExcludesLockedQuests()
+        {
+            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+
+            _vm.SetStatusFilter(QuestFilterStatus.Completed);
+
+            var dietGroup = _vm.DisplayGroups.FirstOrDefault(g => g.Dimension?.id == "dim-1");
+            Assert.IsNotNull(dietGroup);
+            Assert.AreEqual(1, dietGroup.Quests.Count);
+            Assert.AreEqual("q-1", dietGroup.Quests[0].Quest.id);
+            Assert.IsFalse(dietGroup.Quests[0].IsLocked);
+        }
     }
 }

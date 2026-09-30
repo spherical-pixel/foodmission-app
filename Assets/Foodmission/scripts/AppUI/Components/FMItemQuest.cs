@@ -49,6 +49,14 @@ namespace eu.foodmission.platform.Components
             set => SetCompleted(value);
         }
 
+        [UxmlAttribute("is-locked")]
+        [CreateProperty]
+        public bool IsLocked
+        {
+            get => _isLocked;
+            set => SetLocked(value);
+        }
+
         /* ========= INTERNAL ELEMENTS ========= */
         private readonly VisualElement _titlesContainer;
         private readonly Unity.AppUI.UI.Text _titleText;
@@ -65,6 +73,7 @@ namespace eu.foodmission.platform.Components
         private string _level = QuestLevel.Beginner;
         private string _subtitle = "";
         private bool _isCompleted = false;
+        private bool _isLocked = false;
 
         public event Action OnQuestClicked;
         public Unity.AppUI.UI.Button OpenButton => _openButton;
@@ -162,6 +171,7 @@ namespace eu.foodmission.platform.Components
 
             SetLevel(QuestLevel.Beginner);
             SetCompleted(false);
+            SetLocked(false);
             SetSubtitle(null);
         }
 
@@ -214,8 +224,15 @@ namespace eu.foodmission.platform.Components
         {
             _isCompleted = isCompleted;
 
+            if (_isLocked)
+            {
+                return;
+            }
+
             _statusBadge.RemoveFromClassList("fm-quiz-status-badge--completed");
             _statusBadge.RemoveFromClassList("fm-quiz-status-badge--pending");
+            _statusBadge.RemoveFromClassList("fm-quiz-status-badge--locked");
+            _statusIcon.iconName = "check";
 
             if (_isCompleted)
             {
@@ -228,6 +245,35 @@ namespace eu.foodmission.platform.Components
                 _statusBadge.AddToClassList("fm-quiz-status-badge--pending");
                 _statusIcon.style.display = DisplayStyle.None;
                 _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING") ?? "Pendiente";
+            }
+        }
+
+        public void SetLocked(bool isLocked)
+        {
+            _isLocked = isLocked;
+
+            _statusBadge.RemoveFromClassList("fm-quiz-status-badge--locked");
+            RemoveFromClassList("fm-quest-item--locked");
+
+            if (_isLocked)
+            {
+                AddToClassList("fm-quest-item--locked");
+                _statusBadge.RemoveFromClassList("fm-quiz-status-badge--completed");
+                _statusBadge.RemoveFromClassList("fm-quiz-status-badge--pending");
+                _statusBadge.AddToClassList("fm-quiz-status-badge--locked");
+
+                _statusIcon.style.display = DisplayStyle.Flex;
+                _statusIcon.iconName = "lock";
+
+                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUEST_STATUS_LOCKED") ?? "Bloqueado";
+                _arrowIcon.iconName = "lock";
+                _arrowIcon.style.opacity = 0.5f;
+            }
+            else
+            {
+                _arrowIcon.iconName = "fm-arrow-right";
+                _arrowIcon.style.opacity = 1f;
+                SetCompleted(_isCompleted);
             }
         }
     }

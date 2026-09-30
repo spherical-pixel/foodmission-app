@@ -62,6 +62,7 @@ namespace eu.foodmission.platform
         private readonly IChallengeService _challengeService;
         private readonly IFoodFactService _foodFactService;
         private readonly IGamificationService _gamificationService;
+        private readonly IQuestProgressionService _questProgressionService;
         private bool _isCheckingRewards;
 
         public HomeScreenViewModel(
@@ -76,7 +77,8 @@ namespace eu.foodmission.platform
             IMissionService missionService = null,
             IChallengeService challengeService = null,
             IFoodFactService foodFactService = null,
-            IGamificationService gamificationService = null) : base(storeService)
+            IGamificationService gamificationService = null,
+            IQuestProgressionService questProgressionService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -88,6 +90,7 @@ namespace eu.foodmission.platform
             _challengeService = challengeService ?? App.current?.services?.GetService<IChallengeService>();
             _foodFactService = foodFactService ?? App.current?.services?.GetService<IFoodFactService>();
             _gamificationService = gamificationService ?? App.current?.services?.GetService<IGamificationService>();
+            _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
 
             // Get initial state
             AppState state = _storeService?.GetAppState();
@@ -634,6 +637,7 @@ namespace eu.foodmission.platform
                 }
 
                 var results = new System.Collections.Generic.List<PendingRewardCelebration>();
+                Quest[] cachedQuests = null;
 
                 foreach (var evt in candidateEvents)
                 {
@@ -644,7 +648,14 @@ namespace eu.foodmission.platform
                     if (evt.metadata != null)
                     {
                         if (isMission) code = evt.metadata["missionCode"]?.ToString();
-                        else if (isQuest) code = evt.metadata["questCode"]?.ToString();
+                        else if (isQuest)
+                        {
+                            code = evt.metadata["questCode"]?.ToString();
+                            if (string.IsNullOrEmpty(code) && evt.metadata.ContainsKey("code"))
+                            {
+                                code = evt.metadata["code"]?.ToString();
+                            }
+                        }
                     }
 
                     // Correlate with wallet entries
@@ -711,6 +722,22 @@ namespace eu.foodmission.platform
                         }
                     }
 
+                    // Resolve next quest unlocked in sequence for quests
+                    Quest unlockedQuest = null;
+                    if (isQuest && !string.IsNullOrEmpty(code) && _questService != null && _questProgressionService != null)
+                    {
+                        if (cachedQuests == null)
+                        {
+                            var (allQuests, _) = await _questService.GetQuestsAsync();
+                            cachedQuests = allQuests;
+                        }
+
+                        if (cachedQuests != null && cachedQuests.Length > 0)
+                        {
+                            unlockedQuest = _questProgressionService.GetNextQuest(code, cachedQuests);
+                        }
+                    }
+
                     celebratedIds.Add(evt.id);
 
                     var reward = new ContentReward
@@ -734,7 +761,8 @@ namespace eu.foodmission.platform
                         ContextTitle = contextTitle,
                         EventId = evt.id,
                         Code = code,
-                        IsQuest = isQuest
+                        IsQuest = isQuest,
+                        UnlockedQuest = unlockedQuest
                     });
                 }
 
@@ -765,5 +793,6 @@ namespace eu.foodmission.platform
         public string EventId { get; set; }
         public string Code { get; set; }
         public bool IsQuest { get; set; }
+        public Quest UnlockedQuest { get; set; }
     }
 }
