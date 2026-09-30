@@ -261,6 +261,39 @@ namespace eu.foodmission.platform.Tests
             Assert.AreSame(error, _vm.ErrorDetail);
         }
 
+        [Test]
+        public async Task LoadAsync_ExpiredEndpointError_SetsErrorDetail()
+        {
+            var error = new ApiErrorResponse { message = "expired down" };
+            _mockPantryService
+                .Setup(x => x.GetExpiredItemsAsync())
+                .Returns(Task.FromResult<(ExpiredPantryItem[] Result, ApiErrorResponse Error)>((null, error)));
+
+            await _vm.LoadAsync();
+
+            Assert.AreSame(error, _vm.ErrorDetail);
+            Assert.AreEqual(0, _vm.ExpiredItems.Count);
+        }
+
+        [Test]
+        public async Task LoadAsync_UnexpectedException_ShowsMonthCacheAndError()
+        {
+            _mockPantryService
+                .Setup(x => x.GetPantryAsync())
+                .Returns(Task.FromException<(Pantry Result, ApiErrorResponse Error)>(new Exception("boom")));
+            _mockLocalStorage
+                .Setup(x => x.GetValue<PaginatedFoodWasteResponse>(CacheKey(CurrentMonth), It.IsAny<PaginatedFoodWasteResponse>()))
+                .Returns(Page(1, 1, Waste("cached", "2026-09-05T10:00:00Z")));
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex(@"\[FoodWasteViewModel\]"));
+
+            await _vm.LoadAsync();
+
+            Assert.AreEqual(1, _vm.History.Count);
+            Assert.AreEqual("cached", _vm.History[0].id);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
         // ── Search ──────────────────────────────────────────────────────
 
         [Test]

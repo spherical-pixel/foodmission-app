@@ -12,7 +12,6 @@ namespace eu.foodmission.platform
     public partial class SettingsViewModel : ViewModelBase
     {
         private readonly IAuthService _authService;
-        private readonly ICatalogService _catalogService;
         private readonly IAudioService _audioService;
         private readonly INotificationService _notificationService;
         private CancellationTokenSource _syncCts;
@@ -49,10 +48,9 @@ namespace eu.foodmission.platform
         private string m_UserName = "User";
 
 
-        public SettingsViewModel(IStoreService storeService, IAuthService authService, ICatalogService catalogService, IAudioService audioService = null, INotificationService notificationService = null) : base(storeService)
+        public SettingsViewModel(IStoreService storeService, IAuthService authService, IAudioService audioService = null, INotificationService notificationService = null) : base(storeService)
         {
             _authService = authService;
-            _catalogService = catalogService;
             _audioService = audioService;
             _notificationService = notificationService;
             SynchronizeState(_storeService.GetAppState());

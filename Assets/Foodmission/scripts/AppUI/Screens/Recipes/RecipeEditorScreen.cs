@@ -632,17 +632,7 @@ namespace eu.foodmission.platform
 
         private static (float qty, string unit) ParseMeasure(string measure, float? fallbackQty, string fallbackUnit)
         {
-            if (fallbackQty.HasValue && !string.IsNullOrEmpty(fallbackUnit))
-            {
-                return (fallbackQty.Value, fallbackUnit);
-            }
-
-            string defaultUnit = string.IsNullOrEmpty(fallbackUnit) ? UnitCodes.Default : fallbackUnit;
-            if (UnitCatalog.Current.TryParseMeasure(measure, out float qty, out string unit))
-            {
-                return (qty, unit);
-            }
-            return (fallbackQty ?? 1f, defaultUnit);
+            return UnitCatalog.Current.ResolveMeasure(measure, fallbackQty, fallbackUnit);
         }
 
         private async Task SafeLoadForEditAsync(string recipeId)

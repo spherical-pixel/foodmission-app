@@ -17,7 +17,6 @@ namespace eu.foodmission.platform
         private readonly IAuthService _authService;
         private readonly ITemplateService _templateService;
         private readonly IAppUpdateService _appUpdateService;
-        private readonly ICatalogService _catalogService;
         private readonly IGenericFoodService _genericFoodService;
         private readonly IDimensionService _dimensionService;
 
@@ -32,14 +31,12 @@ namespace eu.foodmission.platform
             IAuthService authService,
             ITemplateService templateService,
             IAppUpdateService appUpdateService,
-            ICatalogService catalogService,
             IGenericFoodService genericFoodService = null,
             IDimensionService dimensionService = null) : base(storeService)
         {
             _authService = authService;
             _templateService = templateService;
             _appUpdateService = appUpdateService;
-            _catalogService = catalogService;
             _genericFoodService = genericFoodService;
             _dimensionService = dimensionService;
         }

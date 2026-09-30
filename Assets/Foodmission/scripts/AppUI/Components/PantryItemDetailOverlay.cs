@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -27,6 +26,7 @@ namespace eu.foodmission.platform
         private static Unity.AppUI.UI.Text _errorText;
         private static Unity.AppUI.UI.FloatField _quantityField;
         private static Dropdown _unitDropdown;
+        private static UnitChoiceSnapshot _unitChoices = UnitChoiceSnapshot.From(UnitCatalog.Current);
         private static DateField _expiryDateField;
         private static VisualElement _quickDateRow;
         private static Unity.AppUI.UI.TextArea _notesField;
@@ -195,9 +195,9 @@ namespace eu.foodmission.platform
 
             if (_unitDropdown != null)
             {
-                List<string> unitLabels = new List<string>(UnitCatalog.Current.Labels);
-                _unitDropdown.sourceItems = unitLabels;
-                _unitDropdown.bindItem = (item, i) => item.label = unitLabels[i];
+                _unitChoices = UnitChoiceSnapshot.From(UnitCatalog.Current);
+                _unitDropdown.sourceItems = _unitChoices.Labels;
+                _unitDropdown.bindItem = (item, i) => item.label = _unitChoices.Labels[i];
             }
 
             SetupQuickDateButtons();
@@ -232,7 +232,7 @@ namespace eu.foodmission.platform
 
             if (_unitDropdown != null)
             {
-                int unitIdx = IndexOfUnit(_viewModel.Unit);
+                int unitIdx = _unitChoices.IndexOf(_viewModel.Unit);
                 _unitDropdown.SetValueWithoutNotify(unitIdx >= 0 ? new[] { unitIdx } : new int[0]);
             }
 
@@ -311,9 +311,9 @@ namespace eu.foodmission.platform
                     _viewModel.Quantity = _quantityField.value;
                 }
 
-                if (_unitDropdown != null && _unitDropdown.selectedIndex >= 0 && _unitDropdown.selectedIndex < UnitCatalog.Current.Codes.Count)
+                if (_unitDropdown != null && _unitDropdown.selectedIndex >= 0)
                 {
-                    _viewModel.Unit = UnitCatalog.Current.Codes[_unitDropdown.selectedIndex];
+                    _viewModel.Unit = _unitChoices.CodeAt(_unitDropdown.selectedIndex);
                 }
 
                 if (_notesField != null)
@@ -439,19 +439,6 @@ namespace eu.foodmission.platform
                     }
                     break;
             }
-        }
-
-        private static int IndexOfUnit(string code)
-        {
-            IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
-            for (int i = 0; i < codes.Count; i++)
-            {
-                if (string.Equals(codes[i], code, StringComparison.OrdinalIgnoreCase))
-                {
-                    return i;
-                }
-            }
-            return -1;
         }
     }
 }

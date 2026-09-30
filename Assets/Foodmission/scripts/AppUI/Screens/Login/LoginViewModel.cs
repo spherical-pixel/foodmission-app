@@ -14,7 +14,6 @@ namespace eu.foodmission.platform
     public partial class LoginViewModel : ViewModelBase
     {
         private readonly IAuthService _authService;
-        private readonly ICatalogService _catalogService;
         private bool _hasNavigated; // Prevents double navigation
 
         /// <summary>
@@ -60,10 +59,9 @@ namespace eu.foodmission.platform
 
         public event System.Action<string> ShowErrorRequest;
 
-        public LoginViewModel(IAuthService authService, IStoreService storeService, ICatalogService catalogService) : base(storeService)
+        public LoginViewModel(IAuthService authService, IStoreService storeService) : base(storeService)
         {
             _authService = authService;
-            _catalogService = catalogService;
 
             // Get's initial state of Redux and synchronizes it with the ViewModel
             AppState state = _storeService.GetAppState();

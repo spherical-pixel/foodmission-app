@@ -347,7 +347,14 @@ namespace eu.foodmission.platform
             {
                 return;
             }
-            FoodWasteRecordOverlay.Show(this, view, onSaved: () => _viewModel?.OnWasteRecorded());
+            FoodWasteRecordOverlay.Show(this, view, onSaved: () =>
+            {
+                // The user may have left the screen while the overlay was open.
+                if (panel != null)
+                {
+                    _viewModel?.OnWasteRecorded();
+                }
+            });
         }
 
         private void OnPopoverVisibilityChanged(bool isVisible)
@@ -402,6 +409,11 @@ namespace eu.foodmission.platform
 
         private void ShowPositiveToast(string message)
         {
+            // Async confirm handlers can finish after the screen was detached.
+            if (panel == null)
+            {
+                return;
+            }
             Toast.Build(this, message, NotificationDuration.Short)
                 .SetStyle(NotificationStyle.Positive)
                 .SetPosition(PopupNotificationPlacement.Bottom)

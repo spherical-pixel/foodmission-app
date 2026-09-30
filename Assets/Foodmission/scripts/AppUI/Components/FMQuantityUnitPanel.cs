@@ -22,9 +22,8 @@ namespace eu.foodmission.platform.Components
         {
             get
             {
-                IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
                 int idx = _unitDropdown != null ? _unitDropdown.selectedIndex : -1;
-                return idx >= 0 && idx < codes.Count ? codes[idx] : UnitCodes.Default;
+                return _unitChoices.CodeAt(idx);
             }
             set
             {
@@ -37,6 +36,7 @@ namespace eu.foodmission.platform.Components
 
         private readonly Unity.AppUI.UI.FloatField _qtyField;
         private readonly Dropdown _unitDropdown;
+        private readonly UnitChoiceSnapshot _unitChoices;
 
         public FMQuantityUnitPanel()
         {
@@ -54,10 +54,10 @@ namespace eu.foodmission.platform.Components
             unitLabel.style.marginBottom = 4;
             Add(unitLabel);
 
-            List<string> unitLabels = new List<string>(UnitCatalog.Current.Labels);
+            _unitChoices = UnitChoiceSnapshot.From(UnitCatalog.Current);
             _unitDropdown = new Dropdown();
-            _unitDropdown.bindItem = (item, i) => item.label = unitLabels[i];
-            _unitDropdown.sourceItems = unitLabels;
+            _unitDropdown.bindItem = (item, i) => item.label = _unitChoices.Labels[i];
+            _unitDropdown.sourceItems = _unitChoices.Labels;
             _unitDropdown.SetValueWithoutNotify(new[] { 0 });
             _unitDropdown.style.marginBottom = 8;
             Add(_unitDropdown);
@@ -77,24 +77,11 @@ namespace eu.foodmission.platform.Components
             {
                 return;
             }
-            int idx = IndexOfCode(unit);
+            int idx = _unitChoices.IndexOf(unit);
             if (idx >= 0)
             {
                 _unitDropdown.SetValueWithoutNotify(new[] { idx });
             }
-        }
-
-        private static int IndexOfCode(string code)
-        {
-            IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
-            for (int i = 0; i < codes.Count; i++)
-            {
-                if (string.Equals(codes[i], code, StringComparison.OrdinalIgnoreCase))
-                {
-                    return i;
-                }
-            }
-            return -1;
         }
     }
 }

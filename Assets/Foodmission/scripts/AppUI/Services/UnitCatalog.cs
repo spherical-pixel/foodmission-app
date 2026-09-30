@@ -22,7 +22,7 @@ namespace eu.foodmission.platform
             { "piece", UnitCodes.Pieces }, { "pieces", UnitCodes.Pieces }, { "pcs", UnitCodes.Pieces }, { "unit", UnitCodes.Pieces }, { "units", UnitCodes.Pieces }
         };
 
-        private static readonly Regex MeasureRegex = new(@"^(\d+(?:[.,]\d+)?)\s*(.*)$", RegexOptions.Compiled);
+        private static readonly Regex MeasureRegex = new(@"^(\d*[.,]?\d+)\s*(.*)$", RegexOptions.Compiled);
 
         private static IUnitCatalog s_fallback;
 
@@ -90,8 +90,31 @@ namespace eu.foodmission.platform
 
         public bool TryParseMeasure(string measure, out float quantity, out string unit)
         {
+            bool parsed = TryParseMeasureCore(measure, out quantity, out string resolved);
+            unit = resolved ?? UnitCodes.Default;
+            return parsed;
+        }
+
+        public (float Quantity, string Unit) ResolveMeasure(string measure, float? storedQuantity, string storedUnit)
+        {
+            if (storedQuantity.HasValue && !string.IsNullOrEmpty(storedUnit))
+            {
+                return (storedQuantity.Value, storedUnit);
+            }
+
+            string fallbackUnit = string.IsNullOrEmpty(storedUnit) ? UnitCodes.Default : storedUnit;
+            if (TryParseMeasureCore(measure, out float quantity, out string resolved))
+            {
+                return (quantity, resolved ?? fallbackUnit);
+            }
+            return (storedQuantity ?? 1f, fallbackUnit);
+        }
+
+        /// <summary>Parses the leading number; <paramref name="unit"/> is null when the unit text is not recognised.</summary>
+        private bool TryParseMeasureCore(string measure, out float quantity, out string unit)
+        {
             quantity = 1f;
-            unit = UnitCodes.Default;
+            unit = null;
 
             if (string.IsNullOrWhiteSpace(measure))
             {
@@ -110,7 +133,7 @@ namespace eu.foodmission.platform
             }
 
             quantity = parsed;
-            unit = ResolveCode(match.Groups[2].Value) ?? UnitCodes.Default;
+            unit = ResolveCode(match.Groups[2].Value);
             return true;
         }
 

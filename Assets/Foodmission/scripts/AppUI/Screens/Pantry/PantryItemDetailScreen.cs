@@ -27,6 +27,7 @@ namespace eu.foodmission.platform
         private Text _nameLabel;
         private Unity.AppUI.UI.FloatField _quantityField;
         private Dropdown _unitDropdown;
+        private UnitChoiceSnapshot _unitChoices = UnitChoiceSnapshot.From(UnitCatalog.Current);
         private Dropdown _locationDropdown;
         private Unity.AppUI.UI.TextField _notesField;
         private Unity.AppUI.UI.TextField _expiryField;
@@ -114,9 +115,9 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
 
-            List<string> unitLabels = new List<string>(UnitCatalog.Current.Labels);
-            _unitDropdown.sourceItems = unitLabels;
-            _unitDropdown.bindItem = (item, i) => item.label = unitLabels[i];
+            _unitChoices = UnitChoiceSnapshot.From(UnitCatalog.Current);
+            _unitDropdown.sourceItems = _unitChoices.Labels;
+            _unitDropdown.bindItem = (item, i) => item.label = _unitChoices.Labels[i];
             _locationDropdown.sourceItems = LocationChoices;
             _locationDropdown.bindItem = (item, i) => item.label = LocationChoices[i];
 
@@ -282,7 +283,7 @@ namespace eu.foodmission.platform
 
             _quantityField.SetValueWithoutNotify(_viewModel.Quantity);
 
-            int unitIdx = IndexOfUnit(_viewModel.Unit);
+            int unitIdx = _unitChoices.IndexOf(_viewModel.Unit);
             _unitDropdown.SetValueWithoutNotify(unitIdx >= 0 ? new[] { unitIdx } : new int[0]);
 
             int locIdx = LocationValues.IndexOf(_viewModel.Location);
@@ -350,9 +351,7 @@ namespace eu.foodmission.platform
         private async void OnSaveClicked()
         {
             _viewModel.Quantity = _quantityField.value;
-            IReadOnlyList<string> unitCodes = UnitCatalog.Current.Codes;
-            int selectedUnit = _unitDropdown.selectedIndex;
-            _viewModel.Unit = selectedUnit >= 0 && selectedUnit < unitCodes.Count ? unitCodes[selectedUnit] : UnitCodes.Default;
+            _viewModel.Unit = _unitChoices.CodeAt(_unitDropdown.selectedIndex);
             _viewModel.Location = LocationValues[_locationDropdown.selectedIndex];
             _viewModel.Notes = _notesField.value;
             _viewModel.ExpiryDate = _expiryField.value;
@@ -427,19 +426,6 @@ namespace eu.foodmission.platform
                         semantic: AlertSemantic.Destructive);
                 }),
                 new FMDialogAction(cancelLabel, () => { }));
-        }
-
-        private static int IndexOfUnit(string code)
-        {
-            IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
-            for (int i = 0; i < codes.Count; i++)
-            {
-                if (string.Equals(codes[i], code, StringComparison.OrdinalIgnoreCase))
-                {
-                    return i;
-                }
-            }
-            return -1;
         }
     }
 }

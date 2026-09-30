@@ -12,7 +12,6 @@ namespace eu.foodmission.platform.Tests
     public class SettingsViewModelTests
     {
         private Mock<IAuthService> _mockAuthService;
-        private Mock<ICatalogService> _mockCatalogService;
         private Mock<IAudioService> _mockAudioService;
         private Mock<INotificationService> _mockNotificationService;
         private TestStoreService _storeService;
@@ -22,12 +21,11 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _mockAuthService = new Mock<IAuthService>();
-            _mockCatalogService = new Mock<ICatalogService>();
             _mockAudioService = new Mock<IAudioService>();
             _mockNotificationService = new Mock<INotificationService>();
             _mockNotificationService.Setup(n => n.RequestPermissionsAsync()).ReturnsAsync(true);
             _storeService = new TestStoreService();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object, _mockNotificationService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockAudioService.Object, _mockNotificationService.Object);
         }
 
         [TearDown]
@@ -71,7 +69,7 @@ namespace eu.foodmission.platform.Tests
             _storeService.SetAppState(state);
 
             _vm?.Dispose();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object, _mockAudioService.Object, _mockNotificationService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockAudioService.Object, _mockNotificationService.Object);
 
             Assert.AreEqual("dark", _vm.Theme);
             Assert.AreEqual("en", _vm.Lang);
@@ -271,7 +269,7 @@ namespace eu.foodmission.platform.Tests
             _storeService.SetAppState(state);
 
             _vm?.Dispose();
-            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object, _mockCatalogService.Object);
+            _vm = new SettingsViewModel(_storeService, _mockAuthService.Object);
 
             Assert.AreEqual("User", _vm.UserName);
         }

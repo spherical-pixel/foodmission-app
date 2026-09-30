@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -84,7 +85,8 @@ namespace eu.foodmission.platform
                     _pantryItems = new List<PantryItemView>(enriched);
                 }
 
-                var (expired, _) = expiredTask.Result;
+                var (expired, expiredError) = expiredTask.Result;
+                firstError ??= expiredError;
                 ExpiredItems = MapExpired(expired);
 
                 ErrorDetail = firstError;
@@ -92,6 +94,12 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[FoodWasteViewModel] LoadAsync failed: {ex.Message}");
+                // Show what we have for the month instead of a blank screen.
+                ApplyHistory(SelectedMonth, (null, new ApiErrorResponse()));
+                ErrorDetail = new ApiErrorResponse
+                {
+                    message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_LOADING_WASTE_LOG")
+                };
             }
             finally
             {

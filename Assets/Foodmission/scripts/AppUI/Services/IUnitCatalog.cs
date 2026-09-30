@@ -23,6 +23,12 @@ namespace eu.foodmission.platform
         /// <summary>Parses "200 g", "1,5 kg", "2". False when there is no leading number (outputs 1 and the default unit).</summary>
         bool TryParseMeasure(string measure, out float quantity, out string unit);
 
+        /// <summary>
+        /// Quantity and unit for a stored ingredient: stored values win when both exist; otherwise the measure text
+        /// is parsed, keeping the stored unit when the text's unit is not recognised.
+        /// </summary>
+        (float Quantity, string Unit) ResolveMeasure(string measure, float? storedQuantity, string storedUnit);
+
         /// <summary>Loads labels for a language. Idempotent per language; failures keep the current lists.</summary>
         Task LoadAsync(string lang);
     }

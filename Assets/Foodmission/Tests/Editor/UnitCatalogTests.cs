@@ -148,6 +148,58 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(unit, u);
         }
 
+        [Test]
+        public void TryParseMeasure_DecimalWithoutLeadingZero()
+        {
+            Assert.IsTrue(_catalog.TryParseMeasure(".5 cup", out float q, out string u));
+            Assert.AreEqual(0.5f, q, 0.0001f);
+            Assert.AreEqual("CUPS", u);
+        }
+
+        [Test]
+        public void ResolveMeasure_StoredQuantityAndUnit_WinOverText()
+        {
+            var (q, u) = _catalog.ResolveMeasure("200 g", 3f, "KG");
+            Assert.AreEqual(3f, q);
+            Assert.AreEqual("KG", u);
+        }
+
+        [Test]
+        public void ResolveMeasure_UnknownUnitText_KeepsStoredUnit()
+        {
+            var (q, u) = _catalog.ResolveMeasure("2 pinch", null, "G");
+            Assert.AreEqual(2f, q);
+            Assert.AreEqual("G", u);
+        }
+
+        [Test]
+        public void ResolveMeasure_UnknownUnitText_NoStoredUnit_FallsBackToDefault()
+        {
+            var (q, u) = _catalog.ResolveMeasure("2 pinch", null, null);
+            Assert.AreEqual(2f, q);
+            Assert.AreEqual(UnitCodes.Default, u);
+        }
+
+        [Test]
+        public void ResolveMeasure_RecognisedUnitText_UsesIt()
+        {
+            var (q, u) = _catalog.ResolveMeasure("1,5 kg", null, "G");
+            Assert.AreEqual(1.5f, q, 0.0001f);
+            Assert.AreEqual("KG", u);
+        }
+
+        [Test]
+        public void ResolveMeasure_NoNumber_UsesStoredValuesOrDefaults()
+        {
+            var (q, u) = _catalog.ResolveMeasure("a pinch", 4f, null);
+            Assert.AreEqual(4f, q);
+            Assert.AreEqual(UnitCodes.Default, u);
+
+            var (q2, u2) = _catalog.ResolveMeasure(null, null, "ML");
+            Assert.AreEqual(1f, q2);
+            Assert.AreEqual("ML", u2);
+        }
+
         [TestCase("a pinch of salt")]
         [TestCase("")]
         [TestCase(null)]
