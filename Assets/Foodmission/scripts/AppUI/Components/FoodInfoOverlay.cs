@@ -83,6 +83,12 @@ namespace eu.foodmission.platform
         {
             Dismiss();
 
+            if (!string.IsNullOrEmpty(foodId))
+            {
+                _ = App.current?.services?.GetService<IChallengeSessionService>()
+                    ?.ReportAsync(ChallengeCompletionTrigger.ProductViewed, $"{foodType}:{foodId}");
+            }
+
             var root = anchor?.panel?.visualTree;
             if (root == null)
             {

@@ -602,6 +602,10 @@ namespace eu.foodmission.platform
             var nutriService = App.current?.services?.GetService<INutriService>();
             nutriService?.ApplyLoadout(null);
 
+            // Challenge state is per user: a stale session or completed cache would credit or block the next user
+            App.current?.services?.GetService<IChallengeSessionService>()?.Cancel();
+            App.current?.services?.GetService<IChallengeCompletionService>()?.Reset();
+
             HomeScreen.ResetSessionDeferredFlags();
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log($"[{GetType().Name}] User logged out and session state fully cleaned");

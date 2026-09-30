@@ -213,5 +213,19 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(success);
             _mockShoppingListService.Verify(s => s.UpdateItemAsync("list-1", "item-1", 3f, "PIECES", null, false), Times.Once);
         }
+
+        [Test]
+        public async Task LoadAsync_OnSuccess_ReportsRecipeViewed()
+        {
+            var session = new Mock<IChallengeSessionService>();
+            var vm = new RecipeDetailViewModel(_storeService, _mockRecipeService.Object, _mockShoppingListService.Object, _mockCatalogService.Object, session.Object);
+            _mockRecipeService.Setup(s => s.GetRecipeAsync("r-1"))
+                .ReturnsAsync((new Recipe { id = "r-1", userId = "user-1", title = "Pasta" }, null));
+
+            await vm.LoadAsync("r-1");
+
+            session.Verify(s => s.ReportAsync(ChallengeCompletionTrigger.RecipeViewed, "r-1"), Times.Once);
+            vm.Dispose();
+        }
     }
 }

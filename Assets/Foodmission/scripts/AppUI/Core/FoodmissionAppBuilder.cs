@@ -58,6 +58,8 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IFoodFactService, FoodFactService>();
             builder.services.AddSingleton<IGamificationService, GamificationService>();
             builder.services.AddSingleton<IChallengeService, ChallengeService>();
+            builder.services.AddSingleton<IChallengeCompletionService, ChallengeCompletionService>();
+            builder.services.AddSingleton<IChallengeSessionService, ChallengeSessionService>();
             builder.services.AddSingleton<IMissionService, MissionService>();
             builder.services.AddSingleton<IActivityEventMapper, ActivityEventMapper>();
             builder.services.AddSingleton<IQuestService, QuestService>();

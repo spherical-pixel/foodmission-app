@@ -31,6 +31,5 @@ namespace eu.foodmission.platform
     public interface IActivityEventMapper
     {
         ActivityMapping GetMissionMapping(string missionCode);
-        ActivityMapping GetChallengeMapping(string challengeCode);
     }
 }

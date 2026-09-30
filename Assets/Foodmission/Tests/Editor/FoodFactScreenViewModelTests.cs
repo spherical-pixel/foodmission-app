@@ -162,5 +162,20 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(_vm.EarnedReward);
             Assert.IsFalse(_storeService.DispatchedActionTypes.Contains("app/addWalletReward"));
         }
+
+        [Test]
+        public async Task MarkAsReadAsync_ReportsFoodFactReadWithCode()
+        {
+            var session = new Mock<IChallengeSessionService>();
+            var foodFactService = new Mock<IFoodFactService>();
+            foodFactService.Setup(s => s.MarkAsReadAsync("FF1.2.8")).ReturnsAsync(((FoodFactProgressResponse)null, (ApiErrorResponse)null));
+            var vm = new FoodFactScreenViewModel(_storeService, foodFactService.Object, session.Object);
+            vm.FoodFactData = new FoodFact { code = "FF1.2.8" };
+
+            await vm.MarkAsReadAsync();
+
+            session.Verify(s => s.ReportAsync(ChallengeCompletionTrigger.FoodFactRead, "FF1.2.8"), Times.Once);
+            vm.Dispose();
+        }
     }
 }

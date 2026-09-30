@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
+
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -11,14 +15,29 @@ namespace eu.foodmission.platform
     {
         private readonly IChallengeService _challengeService;
         private readonly IDimensionService _dimensionService;
-        private readonly IEventService _eventService;
-        private readonly IActivityEventMapper _activityEventMapper;
+        private readonly IChallengeCompletionService _completion;
+        private readonly IChallengeSessionService _session;
 
         [ObservableProperty]
         private bool _isLoading;
 
         [ObservableProperty]
+        private bool _isCompleting;
+
+        [ObservableProperty]
         private Challenge _challenge;
+
+        [ObservableProperty]
+        private Dimension _dimension;
+
+        [ObservableProperty]
+        private ChallengeInteraction _interaction;
+
+        [ObservableProperty]
+        private ApiErrorResponse _errorDetail;
+
+        [ObservableProperty]
+        private ContentReward _earnedReward;
 
         private ChallengeProgress _challengeProgress;
         public ChallengeProgress ChallengeProgress
@@ -28,61 +47,89 @@ namespace eu.foodmission.platform
             {
                 if (SetProperty(ref _challengeProgress, value))
                 {
-                    OnPropertyChanged(nameof(IsCompleted));
+                    NotifyStateChanged();
                 }
             }
         }
 
-        public bool IsCompleted => ChallengeProgress?.completed == true || (ChallengeProgress != null && ChallengeProgress.progress >= 100f);
+        public bool IsCompleted =>
+            ChallengeProgress?.completed == true ||
+            (ChallengeProgress != null && ChallengeProgress.progress >= 100f) ||
+            (Challenge != null && _completion != null && _completion.IsCompleted(Challenge.code));
 
-        [ObservableProperty]
-        private ActivityMapping _mapping;
+        public bool HasHelperModule =>
+            !IsCompleted && Interaction != null && Interaction.Type != ChallengeInteractionType.Confirm &&
+            !string.IsNullOrEmpty(Interaction.ModuleAction);
 
-        [ObservableProperty]
-        private Dimension _dimension;
+        public bool ShowsAutoCompleteHint => HasHelperModule && Interaction.AutoCompletes;
 
-        [ObservableProperty]
-        private int _selectedTabIndex; // 0: Native App Module, 1: Direct Report
+        public bool ShowsDoneButton => Challenge != null && !IsCompleted;
 
-        [ObservableProperty]
-        private int _selectedCount = 1;
+        /// <summary>"Más tarde" stays visible when loading failed, so the user always has a way out.</summary>
+        public bool ShowsLaterButton => !IsCompleted && !IsLoading;
 
-        [ObservableProperty]
-        private string _selectedSwapOption = "";
+        /// <summary>All actions are disabled while the completion PATCH runs.</summary>
+        public bool AreActionsEnabled => !IsCompleting;
 
-        [ObservableProperty]
-        private bool _isReportingDirect;
-
-        [ObservableProperty]
-        private bool _reportSuccess;
-
-        [ObservableProperty]
-        private string _successMessage = "";
-
-        [ObservableProperty]
-        private ApiErrorResponse _errorDetail;
+        /// <summary>UI.csv key for the level badge, e.g. CHALLENGE_LEVEL_BEGINNER; null when unknown.</summary>
+        public string LevelKey => string.IsNullOrEmpty(Challenge?.level) ? null : $"CHALLENGE_LEVEL_{Challenge.level.Trim().ToUpperInvariant()}";
 
         public ChallengeDetailViewModel(
             IStoreService storeService,
             IChallengeService challengeService,
             IDimensionService dimensionService,
-            IEventService eventService,
-            IActivityEventMapper activityEventMapper) : base(storeService)
+            IChallengeCompletionService completion,
+            IChallengeSessionService session) : base(storeService)
         {
             _challengeService = challengeService;
             _dimensionService = dimensionService;
-            _eventService = eventService;
-            _activityEventMapper = activityEventMapper;
+            _completion = completion;
+            _session = session;
+
+            // Auto-completion from a helper module can finish while this screen is visible again
+            if (_completion != null)
+            {
+                _completion.ChallengeCompleted += OnChallengeCompleted;
+            }
+        }
+
+        protected override void OnDispose()
+        {
+            if (_completion != null)
+            {
+                _completion.ChallengeCompleted -= OnChallengeCompleted;
+            }
+            base.OnDispose();
+        }
+
+        private void OnChallengeCompleted(string challengeCode, ContentReward reward)
+        {
+            if (Challenge == null || IsCompleted ||
+                !string.Equals(Challenge.code, challengeCode, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            ChallengeProgress = new ChallengeProgress
+            {
+                challengeId = Challenge.id,
+                challengeCode = Challenge.code,
+                completed = true,
+                progress = 100f
+            };
         }
 
         public async Task LoadChallengeAsync(string codeOrId, bool forceRefresh = false)
         {
-            if (string.IsNullOrEmpty(codeOrId)) return;
+            if (string.IsNullOrEmpty(codeOrId))
+            {
+                return;
+            }
 
             IsLoading = true;
+            NotifyStateChanged();
             ErrorDetail = null;
-            ReportSuccess = false;
-            SuccessMessage = "";
+            EarnedReward = null;
 
             try
             {
@@ -97,140 +144,115 @@ namespace eu.foodmission.platform
                     ErrorDetail = challengeErr;
                     return;
                 }
+
                 Challenge = challenge;
+                Interaction = ChallengeInteractionCatalog.Get(challenge?.code);
 
                 var (progress, _) = await _challengeService.GetChallengeProgressAsync(codeOrId);
                 ChallengeProgress = progress;
 
-                if (_activityEventMapper != null && Challenge != null)
+                if (_dimensionService != null && !string.IsNullOrEmpty(challenge?.dimensionId))
                 {
-                    Mapping = _activityEventMapper.GetChallengeMapping(Challenge.code);
-                    SelectedCount = Mapping?.DefaultCount ?? 1;
-                    if (Mapping?.SwapOptions != null && Mapping.SwapOptions.Length > 0)
-                    {
-                        SelectedSwapOption = Mapping.SwapOptions[0];
-                    }
-                }
-
-                if (_dimensionService != null && Challenge != null && !string.IsNullOrEmpty(Challenge.dimensionId))
-                {
-                    Dimension = _dimensionService.GetDimension(Challenge.dimensionId);
+                    Dimension = _dimensionService.GetDimension(challenge.dimensionId);
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[{GetType().Name}] LoadChallengeAsync error: {ex.Message}");
+                Debug.LogError($"[ChallengeDetailViewModel] LoadChallengeAsync error: {ex.Message}");
+                ErrorDetail = new ApiErrorResponse { message = ex.Message };
             }
             finally
             {
                 IsLoading = false;
+                NotifyStateChanged();
             }
         }
 
-        public void SetTabIndex(int index)
+        public void OpenHelperModule()
         {
-            SelectedTabIndex = Math.Clamp(index, 0, 1);
-        }
-
-        public void IncrementCount()
-        {
-            int max = Mapping?.MaxCount ?? 7;
-            SelectedCount = Math.Min(SelectedCount + 1, max);
-        }
-
-        public void DecrementCount()
-        {
-            SelectedCount = Math.Max(SelectedCount - 1, 0);
-        }
-
-        public void SelectSwapOption(string swap)
-        {
-            SelectedSwapOption = swap ?? "";
-        }
-
-        public void NavigateToNativeModule()
-        {
-            if (Mapping == null || string.IsNullOrEmpty(Mapping.NativeModuleAction)) return;
-
-            if (Mapping.NativeModuleAction == Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison && Challenge != null)
+            if (!HasHelperModule || Challenge == null)
             {
-                RaiseNavigationRequested(Mapping.NativeModuleAction, new[]
-                {
-                    new Unity.AppUI.Navigation.Argument("challengeCode", Challenge.code ?? "CH.B1.1"),
-                    new Unity.AppUI.Navigation.Argument("mode", "proteins"),
-                    new Unity.AppUI.Navigation.Argument("source", "shopping_list")
-                });
                 return;
             }
 
-            RaiseNavigationRequested(Mapping.NativeModuleAction);
+            _session?.Begin(Challenge.code, Interaction);
+
+            var args = new List<Argument>();
+            if (Interaction.Type == ChallengeInteractionType.Comparator)
+            {
+                args.Add(new Argument("challengeCode", Challenge.code));
+                args.Add(new Argument("mode", Interaction.ComparisonMode));
+                args.Add(new Argument("source", "shopping_list"));
+            }
+            else if (!string.IsNullOrEmpty(Interaction.FoodFactCode))
+            {
+                args.Add(new Argument("code", Interaction.FoodFactCode));
+            }
+
+            RaiseNavigationRequested(Interaction.ModuleAction, args.ToArray());
         }
 
-        public async Task<bool> SubmitDirectReportAsync()
+        /// <summary>"¡Ya lo he hecho!". Returns true when the challenge is (already) completed.</summary>
+        public async Task<bool> MarkCompletedAsync()
         {
-            if (Challenge == null || Mapping == null) return false;
-            if (_eventService == null) return false;
+            if (Challenge == null)
+            {
+                return false;
+            }
 
-            IsReportingDirect = true;
-            ReportSuccess = false;
+            if (IsCompleted)
+            {
+                return true;
+            }
+
+            if (IsCompleting || _completion == null)
+            {
+                return false;
+            }
+
+            IsCompleting = true;
+            NotifyStateChanged();
             ErrorDetail = null;
-
             try
             {
-                string targetEventType = ClientEventTypes.MealLogged;
-                if (Mapping.QuestionType == DirectQuestionType.SwapSelector && !string.IsNullOrEmpty(SelectedSwapOption))
+                ChallengeCompletionResult result = await _completion.CompleteAsync(Challenge.code);
+                if (!result.Success)
                 {
-                    targetEventType = SelectedSwapOption;
-                }
-                else if (Mapping.TargetEventTypes != null && Mapping.TargetEventTypes.Length > 0)
-                {
-                    targetEventType = Mapping.TargetEventTypes[0];
-                }
-
-                var request = new CreateClientEventRequest
-                {
-                    eventType = targetEventType,
-                    metadata = new
-                    {
-                        challengeCode = Challenge.code,
-                        challengeId = Challenge.id,
-                        count = SelectedCount,
-                        sessionId = _eventService.CurrentSessionId,
-                        reportedVia = "direct_nutri_dialog"
-                    }
-                };
-
-                var (result, err) = await _eventService.RecordClientEventAsync(request);
-                if (err != null)
-                {
-                    ErrorDetail = err;
+                    ErrorDetail = result.Error ?? new ApiErrorResponse();
                     return false;
                 }
 
-                ReportSuccess = true;
-                SuccessMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "CHALLENGE_REPORT_SUCCESS");
-
-                // Reload challenge progress to reflect backend evaluator update
-                if (!string.IsNullOrEmpty(Challenge.code))
+                if (_session != null && string.Equals(_session.ActiveChallengeCode, Challenge.code, StringComparison.OrdinalIgnoreCase))
                 {
-                    var (updatedProgress, _) = await _challengeService.GetChallengeProgressAsync(Challenge.code);
-                    if (updatedProgress != null)
-                    {
-                        ChallengeProgress = updatedProgress;
-                    }
+                    _session.Cancel();
                 }
 
+                EarnedReward = result.Reward;
+                ChallengeProgress = new ChallengeProgress
+                {
+                    challengeId = Challenge.id,
+                    challengeCode = Challenge.code,
+                    completed = true,
+                    progress = 100f
+                };
                 return true;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[{GetType().Name}] SubmitDirectReportAsync error: {ex.Message}");
-                return false;
             }
             finally
             {
-                IsReportingDirect = false;
+                IsCompleting = false;
+                NotifyStateChanged();
             }
+        }
+
+        private void NotifyStateChanged()
+        {
+            OnPropertyChanged(nameof(IsCompleted));
+            OnPropertyChanged(nameof(HasHelperModule));
+            OnPropertyChanged(nameof(ShowsAutoCompleteHint));
+            OnPropertyChanged(nameof(LevelKey));
+            OnPropertyChanged(nameof(ShowsDoneButton));
+            OnPropertyChanged(nameof(ShowsLaterButton));
+            OnPropertyChanged(nameof(AreActionsEnabled));
         }
     }
 }

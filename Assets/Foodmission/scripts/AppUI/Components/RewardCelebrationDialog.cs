@@ -42,6 +42,16 @@ namespace eu.foodmission.platform.Components
     {
         private static bool s_IsAdvancing;
         private static Modal s_CurrentModal;
+
+        // One celebration at a time: rewards earned together (e.g. a food fact and the challenge it completes) queue up
+        private static readonly CelebrationQueue<PendingCelebration> s_Celebrations = new CelebrationQueue<PendingCelebration>();
+
+        private sealed class PendingCelebration
+        {
+            public List<RewardPresentationItem> Items;
+            public string ContextTitle;
+            public Action OnDismiss;
+        }
         private static VisualTreeAsset s_CachedConfetiParticlesTemplate;
 
         private static void LoadParticlesTemplateAsync(Action onComplete)
@@ -172,20 +182,43 @@ namespace eu.foodmission.platform.Components
                 return;
             }
 
-            var rootElement = App.current?.rootVisualElement;
-            if (rootElement == null)
+            if (App.current?.rootVisualElement == null)
             {
                 Debug.LogWarning("[RewardCelebrationDialog] Cannot show celebration modal: App.current or rootVisualElement is null.");
                 onDismiss?.Invoke();
                 return;
             }
 
+            var celebration = new PendingCelebration { Items = queue, ContextTitle = contextTitle, OnDismiss = onDismiss };
+            if (s_Celebrations.TryBegin(celebration))
+            {
+                Present(celebration);
+            }
+        }
+
+        private static void Present(PendingCelebration celebration)
+        {
+            var rootElement = App.current?.rootVisualElement;
+            if (rootElement == null)
+            {
+                Debug.LogWarning("[RewardCelebrationDialog] Cannot show queued celebration: rootVisualElement is null.");
+                celebration.OnDismiss?.Invoke();
+                PresentNext();
+                return;
+            }
 
             LoadParticlesTemplateAsync(() =>
             {
-                ShowModal(rootElement, queue, contextTitle, onDismiss);
+                ShowModal(rootElement, celebration.Items, celebration.ContextTitle, celebration.OnDismiss);
             });
+        }
 
+        private static void PresentNext()
+        {
+            if (s_Celebrations.OnDismissed(out PendingCelebration next))
+            {
+                Present(next);
+            }
         }
 
 
@@ -195,13 +228,6 @@ namespace eu.foodmission.platform.Components
             string contextTitle,
             Action onDismiss)
         {
-            // Close any existing celebration modal first
-            if (s_CurrentModal != null)
-            {
-                s_CurrentModal.Dismiss(DismissType.Action);
-                s_CurrentModal = null;
-            }
-
             s_IsAdvancing = false;
 
             // Root Modal Container
@@ -326,6 +352,7 @@ namespace eu.foodmission.platform.Components
                 }
 
                 onDismiss?.Invoke();
+                PresentNext();
             }
 
             void DisplayItem(int index)

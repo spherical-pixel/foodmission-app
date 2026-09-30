@@ -161,8 +161,8 @@ namespace eu.foodmission.platform.Tests
                 .Returns(pending.Task);
 
             // The guess starts the request and the Done button calls again before it finishes
-            Task<ChallengeProgress> fromGuess = _vm.CompleteChallengeAsync();
-            Task<ChallengeProgress> fromDone = _vm.CompleteChallengeAsync();
+            Task<bool> fromGuess = _vm.CompleteChallengeAsync();
+            Task<bool> fromDone = _vm.CompleteChallengeAsync();
             pending.SetResult((new ChallengeProgress { challengeCode = "CH.B1.1", completed = true }, null));
             await Task.WhenAll(fromGuess, fromDone);
 

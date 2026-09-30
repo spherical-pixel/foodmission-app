@@ -3303,14 +3303,6 @@ MonoBehaviour:
     m_Key: FC_HEADER_BADGE
     m_Metadata:
       m_Items: []
-  - m_Id: 51673178689232906
-    m_Key: FC_EMPTY_TIPS_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51673178689232907
-    m_Key: FC_EMPTY_TIPS_LIST
-    m_Metadata:
-      m_Items: []
   - m_Id: 51673178689232908
     m_Key: FC_BTN_PLAY_SAMPLE
     m_Metadata:
@@ -3421,6 +3413,74 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 51673178689232935
     m_Key: FC_SAMPLE_EGGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232936
+    m_Key: CHALLENGE_BTN_DONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232937
+    m_Key: CHALLENGE_BTN_LATER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232938
+    m_Key: CHALLENGE_WHY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232939
+    m_Key: CHALLENGE_HINT_AUTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232940
+    m_Key: CHALLENGE_COMPLETED_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232941
+    m_Key: CHALLENGE_LEVEL_BEGINNER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232942
+    m_Key: CHALLENGE_LEVEL_INTERMEDIATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232943
+    m_Key: CHALLENGE_LEVEL_ADVANCED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232944
+    m_Key: CHALLENGE_BTN_OPEN_SEARCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232945
+    m_Key: CHALLENGE_BTN_OPEN_PANTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232946
+    m_Key: CHALLENGE_BTN_OPEN_RECIPES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232947
+    m_Key: CHALLENGE_BTN_READ_FOOD_FACT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232948
+    m_Key: CHALLENGE_BTN_LOG_WASTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232949
+    m_Key: CHALLENGE_BTN_OPEN_WASTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232950
+    m_Key: CHALLENGE_BTN_OPEN_MEAL_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232951
+    m_Key: CHALLENGE_BTN_OPEN_SHOPPING_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232952
+    m_Key: CHALLENGE_BTN_COMPARE_FOODS
     m_Metadata:
       m_Items: []
   m_Metadata:

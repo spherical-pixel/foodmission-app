@@ -3407,16 +3407,6 @@ MonoBehaviour:
     m_Localized: "\u2696\uFE0F UMWELTVERGLEICH"
     m_Metadata:
       m_Items: []
-  - m_Id: 51673178689232906
-    m_Localized: "\U0001F4A1 Empfohlene Proteinquellen:"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51673178689232907
-    m_Localized: "\u2022 H\xFClsenfr\xFCchte (Linsen, Kichererbsen, Bohnen, Soja)\n\u2022
-      Fisch und Meeresfr\xFCchte\n\u2022 Eier und K\xE4se\n\u2022 Wei\xDFes Fleisch
-      (Huhn, Pute) und rotes Fleisch\n\u2022 Tofu und pflanzliche Alternativen"
-    m_Metadata:
-      m_Items: []
   - m_Id: 51673178689232908
     m_Localized: "\u26A1 Empfohlene Beispiele vergleichen"
     m_Metadata:
@@ -3448,11 +3438,13 @@ MonoBehaviour:
   - m_Id: 51673178689232915
     m_Localized: "{0:F1} kg CO\u2082e"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 51673178689232916
     m_Localized: '{0:F1} / 100'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 51673178689232917
     m_Localized: Richtig geraten!
     m_Metadata:
@@ -3465,12 +3457,14 @@ MonoBehaviour:
     m_Localized: "{0} verursacht etwa {1:F1}-mal weniger CO\u2082e als {2} ({3:F1}
       vs. {4:F1} kg CO\u2082e/kg)."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 51673178689232920
     m_Localized: "{0} hat einen etwas geringeren Fu\xDFabdruck als {1} ({2:F1} vs.
       {3:F1} kg CO\u2082e/kg)."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 51673178689232921
     m_Localized: Gesamtwirkung
     m_Metadata:
@@ -3490,7 +3484,8 @@ MonoBehaviour:
   - m_Id: 51673178689232925
     m_Localized: Gruppe {0}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 51673178689232926
     m_Localized: Wissenschaftliches Fazit
     m_Metadata:
@@ -3533,6 +3528,83 @@ MonoBehaviour:
     m_Localized: Freilandeier
     m_Metadata:
       m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: "W\xE4hle eine Quest aus, um mit dem Lernen zu beginnen und Fortschritte
+      zu machen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: Quests entdecken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232936
+    m_Localized: "\u2705 Erledigt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232937
+    m_Localized: "Sp\xE4ter erledigen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232938
+    m_Localized: "\U0001F4A1 Warum es wichtig ist"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232939
+    m_Localized: Nutri markiert es als erledigt, sobald du es in der App machst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232940
+    m_Localized: "\u2705 HERAUSFORDERUNG ABGESCHLOSSEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232941
+    m_Localized: "ANF\xC4NGER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232942
+    m_Localized: MITTELSTUFE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232943
+    m_Localized: FORTGESCHRITTEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232944
+    m_Localized: "\U0001F50E Produkt suchen oder scannen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232945
+    m_Localized: "\U0001F96B Meinen Vorrat \xF6ffnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232946
+    m_Localized: "\U0001F4D6 Rezepte ansehen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232947
+    m_Localized: "\U0001F4A1 Lebensmittelfakt lesen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232948
+    m_Localized: "\U0001F5D1\uFE0F Lebensmittelabfall erfassen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232949
+    m_Localized: "\U0001F5D1\uFE0F Mein Abfallprotokoll \xF6ffnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232950
+    m_Localized: "\U0001F37D\uFE0F Mein Ern\xE4hrungsprotokoll \xF6ffnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232951
+    m_Localized: "\U0001F6D2 Meine Einkaufsliste \xF6ffnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232952
+    m_Localized: "\u2696\uFE0F Lebensmittel vergleichen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3551,3 +3623,8 @@ MonoBehaviour:
         - id: 49931095037173762
         - id: 50999984835780612
         - id: 49940717588439046
+        - id: 51673178689232916
+        - id: 51673178689232915
+        - id: 51673178689232919
+        - id: 51673178689232920
+        - id: 51673178689232925

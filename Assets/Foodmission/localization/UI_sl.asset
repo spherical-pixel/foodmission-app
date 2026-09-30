@@ -3392,17 +3392,6 @@ MonoBehaviour:
     m_Localized: "\u2696\uFE0F OKOLJSKA PRIMERJAVA"
     m_Metadata:
       m_Items: []
-  - m_Id: 51673178689232906
-    m_Localized: "\U0001F4A1 Priporo\u010Deni viri beljakovin:"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51673178689232907
-    m_Localized: "\u2022 Stro\u010Dnice (le\u010Da, \u010Di\u010Derika, fi\u017Eol,
-      soja)\n\u2022 Ribe in morski sade\u017Ei\n\u2022 Jajca in siri\n\u2022 Belo
-      meso (pi\u0161\u010Danec, puran) in rde\u010De meso\n\u2022 Tofu in rastlinske
-      alternative"
-    m_Metadata:
-      m_Items: []
   - m_Id: 51673178689232908
     m_Localized: "\u26A1 Primerjaj priporo\u010Dene primere"
     m_Metadata:
@@ -3434,11 +3423,13 @@ MonoBehaviour:
   - m_Id: 51673178689232915
     m_Localized: "{0:F1} kg CO\u2082e"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 51673178689232916
     m_Localized: '{0:F1} / 100'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 51673178689232917
     m_Localized: Pravilno!
     m_Metadata:
@@ -3451,12 +3442,14 @@ MonoBehaviour:
     m_Localized: "{0} povzro\u010Di pribli\u017Eno {1:F1}-krat manj CO\u2082e kot
       {2} ({3:F1} proti {4:F1} kg CO\u2082e/kg)."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 51673178689232920
     m_Localized: "{0} ima nekoliko manj\u0161i odtis kot {1} ({2:F1} proti {3:F1}
       kg CO\u2082e/kg)."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 51673178689232921
     m_Localized: Skupni vpliv
     m_Metadata:
@@ -3476,7 +3469,8 @@ MonoBehaviour:
   - m_Id: 51673178689232925
     m_Localized: Skupina {0}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 51673178689232926
     m_Localized: "Znanstveni zaklju\u010Dek"
     m_Metadata:
@@ -3519,6 +3513,83 @@ MonoBehaviour:
     m_Localized: Jajca iz proste reje
     m_Metadata:
       m_Items: []
+  - m_Id: 44199025098874880
+    m_Localized: "Izberi nalogo, da se za\u010Dne\u0161 u\u010Diti in napredovati."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44199294499020800
+    m_Localized: "Razi\u0161\u010Di naloge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232936
+    m_Localized: "\u2705 Opravljeno!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232937
+    m_Localized: Naredim kasneje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232938
+    m_Localized: "\U0001F4A1 Zakaj je pomembno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232939
+    m_Localized: "Nutri ga bo ozna\u010Dil kot opravljenega, ko ga opravi\u0161 v
+      aplikaciji."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232940
+    m_Localized: "\u2705 IZZIV OPRAVLJEN"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232941
+    m_Localized: "ZA\u010CETNIK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232942
+    m_Localized: SREDNJA RAVEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232943
+    m_Localized: NAPREDNO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232944
+    m_Localized: "\U0001F50E Poi\u0161\u010Di ali skeniraj izdelek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232945
+    m_Localized: "\U0001F96B Odpri mojo shrambo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232946
+    m_Localized: "\U0001F4D6 Brskaj po receptih"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232947
+    m_Localized: "\U0001F4A1 Preberi zanimivost"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232948
+    m_Localized: "\U0001F5D1\uFE0F Zabele\u017Ei zavr\u017Eena \u017Eivila"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232949
+    m_Localized: "\U0001F5D1\uFE0F Odpri moj dnevnik zavr\u017Eene hrane"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232950
+    m_Localized: "\U0001F37D\uFE0F Odpri dnevnik obrokov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232951
+    m_Localized: "\U0001F6D2 Odpri nakupovalni seznam"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232952
+    m_Localized: "\u2696\uFE0F Primerjaj \u017Eivila"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -3537,3 +3608,8 @@ MonoBehaviour:
         - id: 49931095037173762
         - id: 50999984835780612
         - id: 49940717588439046
+        - id: 51673178689232916
+        - id: 51673178689232915
+        - id: 51673178689232919
+        - id: 51673178689232920
+        - id: 51673178689232925

@@ -20,12 +20,15 @@ namespace eu.foodmission.platform
         private ContentReward _earnedReward;
 
         private readonly IFoodFactService _foodFactService;
+        private readonly IChallengeSessionService _challengeSession;
 
         public FoodFactScreenViewModel(
             IStoreService storeService,
-            IFoodFactService foodFactService) : base(storeService)
+            IFoodFactService foodFactService,
+            IChallengeSessionService challengeSession = null) : base(storeService)
         {
             _foodFactService = foodFactService;
+            _challengeSession = challengeSession ?? App.current?.services?.GetService<IChallengeSessionService>();
         }
 
         public async Task LoadFoodFactDataByCodeOrId(string codeOrId)
@@ -62,6 +65,9 @@ namespace eu.foodmission.platform
 
             if (_foodFactService == null)
                 return null;
+
+            // Reading counts even if the fact was already marked as read before
+            _ = _challengeSession?.ReportAsync(ChallengeCompletionTrigger.FoodFactRead, FoodFactData.code);
 
             try
             {

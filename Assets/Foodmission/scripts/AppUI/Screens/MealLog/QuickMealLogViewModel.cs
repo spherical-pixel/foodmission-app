@@ -418,9 +418,10 @@ namespace eu.foodmission.platform
 
                 if (isMission || isChallenge)
                 {
+                    // Challenges are completed from their Nutri screen (PATCH), not through events: no mapping
                     var mapping = isMission
                         ? _activityEventMapper?.GetMissionMapping(it.contentCode)
-                        : _activityEventMapper?.GetChallengeMapping(it.contentCode);
+                        : null;
 
                     string icon = isMission ? "🎯" : "🏆";
                     string prompt = mapping?.DirectQuestionPrompt;

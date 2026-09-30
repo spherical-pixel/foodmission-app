@@ -14,6 +14,7 @@ namespace eu.foodmission.platform
         private readonly IRecipeService _recipeService;
         private readonly IShoppingListService _shoppingListService;
         private readonly ICatalogService _catalogService;
+        private readonly IChallengeSessionService _challengeSession;
 
         [ObservableProperty] private Recipe m_Recipe;
         [ObservableProperty] private bool m_IsLoading;
@@ -27,11 +28,13 @@ namespace eu.foodmission.platform
             IStoreService storeService,
             IRecipeService recipeService,
             IShoppingListService shoppingListService,
-            ICatalogService catalogService) : base(storeService)
+            ICatalogService catalogService,
+            IChallengeSessionService challengeSession = null) : base(storeService)
         {
             _recipeService = recipeService;
             _shoppingListService = shoppingListService;
             _catalogService = catalogService;
+            _challengeSession = challengeSession ?? App.current?.services?.GetService<IChallengeSessionService>();
         }
 
         public async Task<CatalogItem[]> GetMealTypesAsync()
@@ -56,6 +59,10 @@ namespace eu.foodmission.platform
                 var (recipe, error) = await _recipeService.GetRecipeAsync(id);
                 if (error != null) { ErrorDetail = error; return; }
                 Recipe = recipe;
+                if (!string.IsNullOrEmpty(recipe?.id))
+                {
+                    _ = _challengeSession?.ReportAsync(ChallengeCompletionTrigger.RecipeViewed, recipe.id);
+                }
                 var state = _storeService.GetAppState();
                 IsOwner = !string.IsNullOrEmpty(recipe?.userId) && recipe.userId == state.userId;
                 HasNutritionInfo = recipe?.nutritionalInfo != null;

@@ -14,6 +14,7 @@ namespace eu.foodmission.platform
     {
         private readonly IFoodWasteService _foodWasteService;
         private readonly IPantryService _pantryService;
+        private readonly IChallengeSessionService _challengeSession;
 
         private PantryItem[] _pantryItems = Array.Empty<PantryItem>();
 
@@ -59,11 +60,13 @@ namespace eu.foodmission.platform
         public FoodWasteAddViewModel(
             IStoreService storeService,
             IFoodWasteService foodWasteService,
-            IPantryService pantryService)
+            IPantryService pantryService,
+            IChallengeSessionService challengeSession = null)
             : base(storeService)
         {
             _foodWasteService = foodWasteService;
             _pantryService = pantryService;
+            _challengeSession = challengeSession ?? App.current?.services?.GetService<IChallengeSessionService>();
         }
 
         public async Task LoadPantryItemsAsync()
@@ -146,6 +149,7 @@ namespace eu.foodmission.platform
             }
 
             ErrorDetail = null;
+            _ = _challengeSession?.ReportAsync(ChallengeCompletionTrigger.FoodWasteLogged, created?.id ?? Guid.NewGuid().ToString());
             return true;
         }
 

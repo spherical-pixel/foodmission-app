@@ -61,29 +61,7 @@ namespace eu.foodmission.platform.Tests
             Assert.Contains(ClientEventTypes.ShoppingOriginChecked, mapping.TargetEventTypes);
         }
 
-        [Test]
-        public void GetChallengeMapping_FootprintChallenge_ReturnsFoodComparisonAndEvents()
-        {
-            // CH.B1.1: Which Protein Has the Lowest Footprint?
-            var mapping = _mapper.GetChallengeMapping("CH.B1.1");
 
-            Assert.IsNotNull(mapping);
-            Assert.Contains(ClientEventTypes.LearningFootprintCompared, mapping.TargetEventTypes);
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_food_comparison, mapping.NativeModuleAction);
-        }
-
-        [Test]
-        public void GetChallengeMapping_FindNonMeatProteins_ReturnsProteinVarietyEventsAndCountStepper()
-        {
-            // CH.B1.2: Find Three Non-Meat Proteins in fridge/pantry
-            var mapping = _mapper.GetChallengeMapping("CH.B1.2");
-
-            Assert.IsNotNull(mapping);
-            Assert.AreEqual(ClientEventTypes.NutritionProteinVarietyLogged, mapping.TargetEventTypes[0]);
-            Assert.AreEqual(DirectQuestionType.CountStepper, mapping.QuestionType);
-            Assert.AreEqual(3, mapping.DefaultCount);
-            Assert.AreEqual("go_to_pantry", mapping.NativeModuleAction);
-        }
 
         [Test]
         public void GetMissionMapping_UnknownCode_ReturnsSensibleDefault()

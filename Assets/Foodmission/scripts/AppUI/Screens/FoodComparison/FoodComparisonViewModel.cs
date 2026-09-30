@@ -54,6 +54,7 @@ namespace eu.foodmission.platform
         private readonly IFoodFootprintCalculator _footprintCalculator;
         private readonly IChallengeService _challengeService;
         private readonly IAuthService _authService;
+        private readonly IChallengeCompletionService _completion;
         private readonly IFoodProductService _foodProductService;
         private readonly IGenericFoodService _genericFoodService;
 
@@ -70,7 +71,6 @@ namespace eu.foodmission.platform
         private static readonly HashSet<string> s_FetchedFoodProductIds = new();
         private static DateTime s_LastRequestUtc = DateTime.MinValue;
 
-        private Task<ChallengeProgress> _completionTask;
 
         [ObservableProperty]
         private ApiErrorResponse _errorDetail;
@@ -137,7 +137,8 @@ namespace eu.foodmission.platform
             IChallengeService challengeService = null,
             IFoodProductService foodProductService = null,
             IGenericFoodService genericFoodService = null,
-            IAuthService authService = null) : base(storeService)
+            IAuthService authService = null,
+            IChallengeCompletionService completionService = null) : base(storeService)
         {
             _shoppingListService = shoppingListService;
             _footprintCalculator = footprintCalculator;
@@ -145,6 +146,10 @@ namespace eu.foodmission.platform
             _foodProductService = foodProductService;
             _genericFoodService = genericFoodService;
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
+            // An injected IChallengeService (tests) gets its own completion service; otherwise share the app singleton
+            _completion = completionService
+                ?? (challengeService == null ? App.current?.services?.GetService<IChallengeCompletionService>() : null)
+                ?? new ChallengeCompletionService(_challengeService, _authService);
         }
 
         public async Task LoadComparisonDataAsync(string challengeCode, string mode, string source)
@@ -295,49 +300,28 @@ namespace eu.foodmission.platform
 
         public bool IsChallengeCompleted => _isChallengeCompleted;
 
-        // Completes the challenge once. Concurrent callers (the guess and the Done button) share the same
-        // in-flight request, and a failed request leaves the challenge incomplete so it can be retried.
-        public Task<ChallengeProgress> CompleteChallengeAsync()
+        // Completes the challenge once through the shared service (single in-flight request, success-only).
+        public async Task<bool> CompleteChallengeAsync()
         {
-            if (string.IsNullOrEmpty(ChallengeCode) || _isChallengeCompleted || _challengeService == null)
+            if (string.IsNullOrEmpty(ChallengeCode) || _isChallengeCompleted || _completion == null)
             {
-                return Task.FromResult<ChallengeProgress>(null);
+                return _isChallengeCompleted;
             }
 
-            if (_completionTask == null || _completionTask.IsCompleted)
-            {
-                _completionTask = SendChallengeCompletionAsync();
-            }
-            return _completionTask;
-        }
-
-        private async Task<ChallengeProgress> SendChallengeCompletionAsync()
-        {
             ErrorDetail = null;
-            var (updatedProgress, err) = await _challengeService.UpdateChallengeProgressAsync(
-                ChallengeCode,
-                completed: true,
-                progress: 100f
-            );
-
-            if (err != null)
+            ChallengeCompletionResult result = await _completion.CompleteAsync(ChallengeCode);
+            if (!result.Success)
             {
-                Debug.LogWarning($"[{GetType().Name}] UpdateChallengeProgressAsync failed for {ChallengeCode}: {err.message}");
-                ErrorDetail = err;
-                return null;
+                ErrorDetail = result.Error ?? new ApiErrorResponse();
+                return false;
             }
 
             _isChallengeCompleted = true;
-
-            if (updatedProgress?.reward != null &&
-                ((updatedProgress.reward.xp.HasValue && updatedProgress.reward.xp.Value > 0) ||
-                 (updatedProgress.reward.points.HasValue && updatedProgress.reward.points.Value > 0)))
+            if (result.Reward != null)
             {
-                EarnedReward = updatedProgress.reward;
-                _ = _authService?.SyncGamificationAsync();
+                EarnedReward = result.Reward;
             }
-
-            return updatedProgress;
+            return true;
         }
 
         private sealed class OffSnapshot

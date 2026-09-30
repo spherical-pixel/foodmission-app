@@ -37,6 +37,39 @@ namespace eu.foodmission.platform
         private Label _pointsLabel;
         private bool _storeSubscribed;
 
+        private bool _challengeSessionSubscribed;
+
+        private void SubscribeChallengeSessionEvents()
+        {
+            if (_challengeSessionSubscribed)
+            {
+                return;
+            }
+
+            var session = App.current?.services?.GetService<IChallengeSessionService>();
+            if (session == null)
+            {
+                return;
+            }
+
+            session.AutoCompleted += OnChallengeAutoCompleted;
+            _challengeSessionSubscribed = true;
+        }
+
+        // Challenges auto-completed from a helper module: the reward is shown wherever the user is
+        private void OnChallengeAutoCompleted(string challengeCode, ContentReward reward)
+        {
+            if (reward != null)
+            {
+                RewardCelebrationDialog.Show(reward, contextTitle: "@UI:CHALLENGE_REWARD_TITLE");
+            }
+            else
+            {
+                NutriMessageDialog.Show("@UI:CHALLENGE_REPORT_SUCCESS",
+                    new FMDialogAction("@UI:TXT_ACCEPT", null, ButtonVariant.Accent));
+            }
+        }
+
         private void SubscribeAvatarEvents()
         {
             if (_avatarSubscribed) return;
@@ -839,6 +872,8 @@ namespace eu.foodmission.platform
                 Debug.LogWarning($"[{GetType().Name}] SetupAppBar - null parameters: appBar={appBar != null}, destination={destination != null}, navController={navController != null}");
                 return;
             }
+
+            SubscribeChallengeSessionEvents();
 
             appBar.compact = false;
             appBar.title = destination.label;

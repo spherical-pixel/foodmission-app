@@ -185,5 +185,29 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, _vm.PantryItemOptions.Count);
             Assert.IsFalse(_vm.IsLoading);
         }
+
+        [Test]
+        public async Task SaveAsync_OnSuccess_ReportsFoodWasteLoggedToChallengeSession()
+        {
+            var session = new Mock<IChallengeSessionService>();
+            var vm = new FoodWasteAddViewModel(_storeService, _mockFoodWasteService.Object, _mockPantryService.Object, session.Object);
+            _mockPantryService
+                .Setup(x => x.GetItemsAsync())
+                .Returns(Task.FromResult<(PantryItem[] Result, ApiErrorResponse Error)>((new PantryItem[]
+                {
+                    new PantryItem { id = "pi1", foodProductId = "fp1", quantity = 2, unit = "kg" }
+                }, null)));
+            await vm.LoadPantryItemsAsync();
+            vm.OnPantryItemSelected(0);
+            _mockFoodWasteService
+                .Setup(x => x.CreateAsync(It.IsAny<CreateFoodWasteRequest>()))
+                .Returns(Task.FromResult<(FoodWaste Result, ApiErrorResponse Error)>((new FoodWaste { id = "fw1" }, null)));
+
+            bool saved = await vm.SaveAsync();
+
+            Assert.IsTrue(saved);
+            session.Verify(s => s.ReportAsync(ChallengeCompletionTrigger.FoodWasteLogged, "fw1"), Times.Once);
+            vm.Dispose();
+        }
     }
 }

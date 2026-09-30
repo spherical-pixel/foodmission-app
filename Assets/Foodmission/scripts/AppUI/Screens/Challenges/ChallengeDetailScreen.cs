@@ -1,14 +1,16 @@
 using System;
 using System.ComponentModel;
-using eu.foodmission.platform.Components;
-using MainraGames;
+
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
-using UnityEngine;
+
 using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
+
+using eu.foodmission.platform.Components;
+using MainraGames;
 
 namespace eu.foodmission.platform
 {
@@ -21,22 +23,26 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaTop => false;
         protected override bool IsFixedContent => false;
 
-        private Unity.AppUI.UI.Text _levelBadge;
+        private Text _levelBadge;
+        private Heading _title;
+        private Text _task;
+        private Text _whyItMatters;
+        private VisualElement _card;
+        private FMNutriView _nutriView;
+        private INutriService _nutriService;
+        private IVisualElementScheduledItem _cardSchedule;
+        private IVisualElementScheduledItem _nutriSpeechSchedule;
+        private static NutriSfxType s_LastTalkSfx = NutriSfxType.Talk1;
 
-        private Unity.AppUI.UI.Text _challengeTitle;
-        private Image _imageDimensionBanner;
-        private Unity.AppUI.UI.Text _challengeGoal;
-        private Unity.AppUI.UI.Text _challengeWhyItMatters;
-        private Unity.AppUI.UI.Text _progressLabel;
-        private VisualElement _progressFill;
+        private Text _autoHint;
+        private VisualElement _actions;
+        private VisualElement _completedBox;
+        private FMButton _btnHelper;
+        private FMButton _btnDone;
+        private FMButton _btnLater;
 
-        private VisualElement _challengeActionBox;
-        private VisualElement _challengeCompletedBox;
-        private Unity.AppUI.UI.Text _nativeModuleHint;
-        private FMButton _btnGoModule;
-
-        private IBannerService _bannerService;
-        private IAudioService _audioService;
+        private readonly IAudioService _audioService;
+        private bool _isLeaving;
 
         public ChallengeDetailScreen()
         {
@@ -44,60 +50,79 @@ namespace eu.foodmission.platform
                 .GetRequiredService<ITemplateService>()
                 .Get(TemplateAddresses.ChallengeDetailScreen));
 
-            _bannerService = App.current?.services?.GetService<IBannerService>();
             _audioService = App.current?.services?.GetService<IAudioService>();
-
+            _nutriService = App.current?.services?.GetService<INutriService>();
             CacheUIElements();
         }
 
         private void CacheUIElements()
         {
-            _levelBadge = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-level-badge");
-            _challengeTitle = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-title");
-            _imageDimensionBanner = contentContainer.Q<Image>("image-dimension-banner");
-            _challengeGoal = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-goal");
-            _challengeWhyItMatters = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-why-it-matters");
-            _progressLabel = contentContainer.Q<Unity.AppUI.UI.Text>("challenge-progress-label");
-            _progressFill = contentContainer.Q<VisualElement>("challenge-progress-fill");
+            _card = contentContainer.Q<VisualElement>("challenge-card");
+            _nutriView = contentContainer.Q<FMNutriView>("nutri-view") ?? contentContainer.Q<FMNutriView>();
+            _card?.AddToClassList("fm-challenge-card--entering");
 
-            _challengeActionBox = contentContainer.Q<VisualElement>("challenge-action-box");
-            _challengeCompletedBox = contentContainer.Q<VisualElement>("challenge-completed-box");
-            _nativeModuleHint = contentContainer.Q<Unity.AppUI.UI.Text>("native-module-hint");
-            _btnGoModule = contentContainer.Q<FMButton>("btn-go-module");
+            _levelBadge = contentContainer.Q<Text>("challenge-level-badge");
+            _title = contentContainer.Q<Heading>("challenge-title");
+            _task = contentContainer.Q<Text>("challenge-task");
+            _whyItMatters = contentContainer.Q<Text>("challenge-why-it-matters");
+            _autoHint = contentContainer.Q<Text>("challenge-auto-hint");
+            _actions = contentContainer.Q<VisualElement>("challenge-actions");
+            _completedBox = contentContainer.Q<VisualElement>("challenge-completed-box");
+            _btnHelper = contentContainer.Q<FMButton>("btn-helper-module");
+            _btnDone = contentContainer.Q<FMButton>("btn-mark-done");
+            _btnLater = contentContainer.Q<FMButton>("btn-later");
 
-            if (_btnGoModule != null)
+            if (_btnHelper != null)
             {
-                _btnGoModule.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.NavigateToNativeModule();
-                };
+                _btnHelper.clicked += OnHelperClicked;
+            }
+            if (_btnDone != null)
+            {
+                _btnDone.clicked += OnDoneClicked;
+            }
+            if (_btnLater != null)
+            {
+                _btnLater.clicked += OnLaterClicked;
             }
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
+            _isLeaving = false;
 
-            string challengeCodeOrId = null;
+            _nutriView?.RefreshView();
+            PlayEntranceAnimation();
+            PlayNutriTalking();
+
+            string codeOrId = null;
             if (args != null)
             {
                 foreach (var a in args)
                 {
                     if (a.name == "code" || a.name == "id")
                     {
-                        challengeCodeOrId = a.value;
+                        codeOrId = a.value;
                         break;
                     }
                 }
             }
 
-            if (!string.IsNullOrEmpty(challengeCodeOrId))
+            // Also runs when coming back from a helper module, so auto-completion is reflected
+            if (!string.IsNullOrEmpty(codeOrId))
             {
-                _ = _viewModel?.LoadChallengeAsync(challengeCodeOrId);
+                _ = _viewModel?.LoadChallengeAsync(codeOrId);
             }
 
             UpdateView();
+        }
+
+        public override void OnExit(NavController controller, NavDestination destination, Argument[] args)
+        {
+            ResetNutriToIdle();
+            _cardSchedule?.Pause();
+            _cardSchedule = null;
+            base.OnExit(controller, destination, args);
         }
 
         protected override void OnViewModelBound()
@@ -112,6 +137,9 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
+            ResetNutriToIdle();
+            _cardSchedule?.Pause();
+            _cardSchedule = null;
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
@@ -119,87 +147,205 @@ namespace eu.foodmission.platform
             base.OnViewModelUnbinding();
         }
 
+        private void PlayEntranceAnimation()
+        {
+            if (_card == null)
+            {
+                return;
+            }
+
+            _cardSchedule?.Pause();
+            _card.AddToClassList("fm-challenge-card--entering");
+
+            _cardSchedule = _card.schedule.Execute(() =>
+            {
+                _card.RemoveFromClassList("fm-challenge-card--entering");
+                _cardSchedule = null;
+            }).StartingIn(50);
+        }
+
+        private void PlayNutriTalking(float durationSeconds = 1.5f, long startDelayMs = 100)
+        {
+            _nutriService ??= App.current?.services?.GetService<INutriService>();
+            if (_nutriService == null)
+            {
+                return;
+            }
+
+            _nutriSpeechSchedule?.Pause();
+            _nutriSpeechSchedule = null;
+
+            _nutriSpeechSchedule = schedule.Execute(() =>
+            {
+                NutriSfxType[] candidates = s_LastTalkSfx switch
+                {
+                    NutriSfxType.Talk1 => new[] { NutriSfxType.Talk2, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk2 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk3 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2 },
+                    _ => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2, NutriSfxType.Talk3 }
+                };
+
+                NutriSfxType sfxType = candidates[UnityEngine.Random.Range(0, candidates.Length)];
+                s_LastTalkSfx = sfxType;
+
+                _nutriService.SetAction(NutriAction.Talking);
+                _audioService?.PlayNutriSfx(sfxType, 0.5f);
+
+                _nutriSpeechSchedule = schedule.Execute(() =>
+                {
+                    _nutriService?.SetAction(NutriAction.Idle);
+                    _nutriSpeechSchedule = null;
+                }).StartingIn((long)(durationSeconds * 1000));
+            }).StartingIn(startDelayMs);
+        }
+
+        private void ResetNutriToIdle()
+        {
+            if (_nutriSpeechSchedule != null)
+            {
+                _nutriSpeechSchedule.Pause();
+                _nutriSpeechSchedule = null;
+            }
+
+            _nutriService ??= App.current?.services?.GetService<INutriService>();
+            _nutriService?.SetAction(NutriAction.Idle);
+        }
+
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_viewModel.Challenge) ||
-                e.PropertyName == nameof(_viewModel.ChallengeProgress) ||
-                e.PropertyName == nameof(_viewModel.IsCompleted) ||
-                e.PropertyName == nameof(_viewModel.Dimension) ||
-                e.PropertyName == nameof(_viewModel.Mapping))
-            {
-                UpdateView();
-            }
-            else if (e.PropertyName == nameof(_viewModel.ErrorDetail))
+            if (e.PropertyName == nameof(_viewModel.ErrorDetail))
             {
                 UpdateApiErrorState();
+            }
+            else
+            {
+                UpdateView();
             }
         }
 
         private void UpdateView()
         {
-            if (_viewModel == null) return;
-
-            var challenge = _viewModel.Challenge;
-            if (challenge != null)
+            if (_viewModel == null)
             {
-                if (_challengeTitle != null) _challengeTitle.text = challenge.title ?? string.Empty;
-                if (_challengeGoal != null) _challengeGoal.text = challenge.task ?? challenge.title ?? string.Empty;
-                if (_challengeWhyItMatters != null) _challengeWhyItMatters.text = challenge.whyItMatters ?? string.Empty;
-
-                if (_levelBadge != null)
-                {
-                    _levelBadge.text = challenge.level;
-                }
-
-                if (_imageDimensionBanner != null && _bannerService != null && _viewModel.Dimension != null)
-                {
-                    _ = _bannerService.BindDimensionBanner(_imageDimensionBanner, _viewModel.Dimension.code);
-                }
+                return;
             }
 
-            var mapping = _viewModel.Mapping;
-            if (mapping != null)
+            Challenge challenge = _viewModel.Challenge;
+            if (_title != null)
             {
-                if (_nativeModuleHint != null)
+                _title.text = challenge?.title ?? string.Empty;
+            }
+            if (_task != null)
+            {
+                _task.text = challenge?.task ?? string.Empty;
+            }
+            if (_whyItMatters != null)
+            {
+                _whyItMatters.text = challenge?.whyItMatters ?? string.Empty;
+            }
+            if (_levelBadge != null)
+            {
+                string levelKey = _viewModel.LevelKey;
+                _levelBadge.text = levelKey != null ? Localize(levelKey) : string.Empty;
+                _levelBadge.EnableInClassList("hidden", levelKey == null);
+            }
+
+            bool completed = _viewModel.IsCompleted;
+            _actions?.EnableInClassList("hidden", completed);
+            _completedBox?.EnableInClassList("hidden", !completed);
+            _btnDone?.EnableInClassList("hidden", !_viewModel.ShowsDoneButton);
+            _btnLater?.EnableInClassList("hidden", !_viewModel.ShowsLaterButton);
+
+            bool hasHelper = _viewModel.HasHelperModule;
+            _btnHelper?.EnableInClassList("hidden", !hasHelper);
+            if (_btnHelper != null && hasHelper)
+            {
+                _btnHelper.title = Localize(_viewModel.Interaction.ModuleButtonKey);
+            }
+            _autoHint?.EnableInClassList("hidden", !_viewModel.ShowsAutoCompleteHint);
+
+            bool actionsEnabled = _viewModel.AreActionsEnabled;
+            _btnHelper?.SetEnabled(actionsEnabled);
+            _btnDone?.SetEnabled(actionsEnabled);
+            _btnLater?.SetEnabled(actionsEnabled);
+        }
+
+        private void OnHelperClicked()
+        {
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            _viewModel?.OpenHelperModule();
+        }
+
+        private async void OnDoneClicked()
+        {
+            if (_viewModel == null || _isLeaving)
+            {
+                return;
+            }
+
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+
+            // The user can still leave through the app bar / system back while the PATCH runs, which unbinds
+            // _viewModel and _navController: keep local references so the reward is shown anyway
+            ChallengeDetailViewModel viewModel = _viewModel;
+            NavController navController = _navController;
+            try
+            {
+                bool completed = await viewModel.MarkCompletedAsync();
+                if (!completed)
                 {
-                    _nativeModuleHint.text = mapping.NativeModuleHint ?? string.Empty;
+                    // ErrorDetail shows the API error dialog; stay so the user can retry
+                    return;
                 }
-                if (_btnGoModule != null)
+
+                bool stillOnScreen = _viewModel == viewModel;
+                _isLeaving = true;
+                ResetNutriToIdle();
+                ContentReward reward = viewModel.EarnedReward;
+                if (reward != null)
                 {
-                    _btnGoModule.title = mapping.NativeModuleButtonTitle ?? "Ir al módulo";
+                    RewardCelebrationDialog.Show(reward, contextTitle: "@UI:CHALLENGE_REWARD_TITLE",
+                        onDismiss: () =>
+                        {
+                            if (stillOnScreen)
+                            {
+                                navController?.PopBackStack();
+                            }
+                        });
+                }
+                else if (stillOnScreen)
+                {
+                    navController?.PopBackStack();
                 }
             }
-
-            var progress = _viewModel.ChallengeProgress;
-            bool isCompleted = _viewModel.IsCompleted;
-            int pct = isCompleted ? 100 : (progress != null ? (int)Mathf.Clamp(progress.progress, 0, 100) : 0);
-
-            if (_progressLabel != null) _progressLabel.text = $"{pct}%";
-            if (_progressFill != null) _progressFill.style.width = Length.Percent(pct);
-
-            if (_challengeActionBox != null)
+            catch (Exception ex)
             {
-                _challengeActionBox.style.display = isCompleted ? DisplayStyle.None : DisplayStyle.Flex;
+                UnityEngine.Debug.LogError($"[ChallengeDetailScreen] Done failed: {ex.Message}");
+                _isLeaving = false;
             }
+        }
 
-            if (_challengeCompletedBox != null)
-            {
-                _challengeCompletedBox.style.display = isCompleted ? DisplayStyle.Flex : DisplayStyle.None;
-            }
+        private void OnLaterClicked()
+        {
+            // "Más tarde": no PATCH, the challenge stays pending in its quest
+            ResetNutriToIdle();
+            _navController?.PopBackStack();
         }
 
         private void UpdateApiErrorState()
         {
-            if (_viewModel?.ErrorDetail != null)
+            if (_viewModel?.ErrorDetail == null)
             {
-                FMDialog.ShowApiError(
-                    this,
-                    LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "ERROR_TITLE") ?? "Error",
-                    _viewModel.ErrorDetail,
-                    onOk: () => { }
-                );
-                _viewModel.ErrorDetail = null;
+                return;
             }
+
+            FMDialog.ShowApiError(this, Localize("ERROR_TITLE"), _viewModel.ErrorDetail);
+            _viewModel.ErrorDetail = null;
+        }
+
+        private static string Localize(string key)
+        {
+            return LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
         }
     }
 }
