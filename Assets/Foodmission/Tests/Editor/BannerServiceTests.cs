@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -80,13 +81,21 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task BindBanner_WithNullOrEmptyAddress_HidesImageAndReturnsFalse()
+        public async Task BindBanner_WithNullAddress_FallsBackToDefaultBanner()
         {
+            // A null address falls back to the default banner. The sprite service is faked so the test
+            // does not wait on an Addressables load, which never completes in EditMode.
+            var sprites = new Mock<ISpriteService>();
+            sprites
+                .Setup(s => s.BindSprite(It.IsAny<Image>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<Action<Sprite>>(), It.IsAny<string>()))
+                .ReturnsAsync(false);
+            using var bannerService = new BannerService(sprites.Object);
             var image = new Image();
-            bool result = await _bannerService.BindBanner(image, null);
+
+            bool result = await bannerService.BindBanner(image, null);
+
             Assert.IsFalse(result);
-            Assert.IsNull(image.sprite);
-            Assert.AreEqual(DisplayStyle.None, image.style.display.value);
+            sprites.Verify(s => s.BindSprite(image, null, true, null, "dimensions/default"), Times.Once);
         }
 
         [Test]

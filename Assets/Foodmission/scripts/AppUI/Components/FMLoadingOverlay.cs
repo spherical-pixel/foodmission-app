@@ -64,7 +64,8 @@ namespace eu.foodmission.platform.Components
                 return;
             }
 
-            var root = anchor?.panel?.visualTree ?? App.current?.rootVisualElement;
+            // Fall back to the anchor itself when it is not attached to a panel yet (and there is no App).
+            var root = anchor?.panel?.visualTree ?? App.current?.rootVisualElement ?? anchor;
             VisualElement targetContainer = root?.Q<Unity.AppUI.UI.Panel>() ?? root;
 
             if (targetContainer == null)

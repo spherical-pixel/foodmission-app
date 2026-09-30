@@ -426,6 +426,13 @@ namespace eu.foodmission.platform.Tests
                     IsChecked = true,
                     SelectedSwapOption = "SWAP_BEEF_TO_CHICKEN",
                     EventType = "SWAP_BEEF_TO_CHICKEN"
+                },
+                // A swap alone cannot log a meal: at least one meal flag is required.
+                new QuickMealCheckItem
+                {
+                    Id = "q-meat-free",
+                    EventType = ClientEventTypes.MealMeatFree,
+                    IsChecked = true
                 }
             };
 
@@ -440,8 +447,8 @@ namespace eu.foodmission.platform.Tests
                 r.swaps != null &&
                 r.swaps.Contains("SWAP_BEEF_TO_CHICKEN") &&
                 r.flags != null &&
-                r.flags.Length == 0 &&
-                !r.flags.Contains(ClientEventTypes.MealMeatFree))), Times.Once);
+                r.flags.Length == 1 &&
+                r.flags.Contains(ClientEventTypes.MealMeatFree))), Times.Once);
         }
 
         [Test]
@@ -564,6 +571,7 @@ namespace eu.foodmission.platform.Tests
 
             _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
                 .ThrowsAsync(new System.Exception("Connection refused"));
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex(@"\[QuickMealLogViewModel\] SubmitQuickMealLogAsync error"));
 
             bool success = await _vm.SubmitQuickMealLogAsync();
 
@@ -606,7 +614,8 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_vm.Sections.Any(s => s.Id == "sec_waste"));
 
             var dietSec = _vm.Sections.First(s => s.Id == "sec_diet");
-            Assert.IsTrue(dietSec.IsExpanded);
+            // Sections start collapsed.
+            Assert.IsFalse(dietSec.IsExpanded);
             Assert.AreEqual(0, dietSec.SelectedCount);
         }
 
@@ -617,13 +626,13 @@ namespace eu.foodmission.platform.Tests
             await _vm.LoadActiveQuestQuestionsAsync();
 
             var dietSec = _vm.Sections.First(s => s.Id == "sec_diet");
-            Assert.IsTrue(dietSec.IsExpanded);
-
-            _vm.ToggleSection("sec_diet");
             Assert.IsFalse(dietSec.IsExpanded);
 
             _vm.ToggleSection("sec_diet");
             Assert.IsTrue(dietSec.IsExpanded);
+
+            _vm.ToggleSection("sec_diet");
+            Assert.IsFalse(dietSec.IsExpanded);
         }
 
         [Test]

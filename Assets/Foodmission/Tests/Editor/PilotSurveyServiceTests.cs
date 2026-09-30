@@ -44,6 +44,11 @@ namespace eu.foodmission.platform.Tests
             _service = new PilotSurveyService(_mockSurveyService.Object, _storeService, _localStorageService);
         }
 
+        private static string DaysAgo(int days)
+        {
+            return DateTime.UtcNow.Date.AddDays(-days).ToString("yyyy-MM-dd");
+        }
+
         [Test]
         public void IsPilotCountry_ValidatesPilotCountryCodesCorrectly()
         {
@@ -58,6 +63,11 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_service.IsPilotCountry("es"));
             Assert.IsFalse(_service.IsPilotCountry("fr"));
             Assert.IsFalse(_service.IsPilotCountry("us"));
+            // Empty/null means "the current user's country" (the fixture user is in "de").
+            Assert.IsTrue(_service.IsPilotCountry(""));
+            Assert.IsTrue(_service.IsPilotCountry(null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user-123", userCountry = "" });
             Assert.IsFalse(_service.IsPilotCountry(""));
             Assert.IsFalse(_service.IsPilotCountry(null));
         }
@@ -119,8 +129,9 @@ namespace eu.foodmission.platform.Tests
 
             // Simulate 2 active dates in cycle state
             var state = _service.GetCurrentCycleState();
-            state.activeDatesInCycle = new List<string> { "2026-08-30", "2026-08-31" };
-            state.cycleStartDate = "2026-08-30";
+            // GetPendingPilotSurveyAsync records today's usage, so "today" is one of the two days.
+            state.activeDatesInCycle = new List<string> { DaysAgo(1), DaysAgo(0) };
+            state.cycleStartDate = DaysAgo(1);
             _localStorageService.SetValue<string>("pilot_cycle_state_test-user-123", Newtonsoft.Json.JsonConvert.SerializeObject(state));
 
             var survey = await _service.GetPendingPilotSurveyAsync();
@@ -134,7 +145,7 @@ namespace eu.foodmission.platform.Tests
             await _service.AcceptPilotConsentAsync();
 
             var state = _service.GetCurrentCycleState();
-            state.activeDatesInCycle = new List<string> { "2026-08-30", "2026-08-31" };
+            state.activeDatesInCycle = new List<string> { DaysAgo(1), DaysAgo(0) };
             _localStorageService.SetValue<string>("pilot_cycle_state_test-user-123", Newtonsoft.Json.JsonConvert.SerializeObject(state));
 
             _service.PostponeSurvey("second-use");
@@ -149,7 +160,7 @@ namespace eu.foodmission.platform.Tests
             await _service.AcceptPilotConsentAsync();
 
             var state = _service.GetCurrentCycleState();
-            state.activeDatesInCycle = new List<string> { "2026-08-30", "2026-08-31", "2026-09-01" }; // 3 days
+            state.activeDatesInCycle = new List<string> { DaysAgo(2), DaysAgo(1), DaysAgo(0) }; // 3 days
             _localStorageService.SetValue<string>("pilot_cycle_state_test-user-123", Newtonsoft.Json.JsonConvert.SerializeObject(state));
 
             _service.SkipSurvey("second-use");

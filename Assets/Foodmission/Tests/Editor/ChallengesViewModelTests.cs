@@ -255,24 +255,19 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void OpenChallenge_RequestsOpenChallengeNavigation()
+        public void OpenChallenge_RaisesChallengeSelectedWithoutNavigating()
         {
             string requestedAction = null;
-            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
-            _vm.NavigationRequested += (action, args) =>
-            {
-                requestedAction = action;
-                requestedArgs = args;
-            };
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+            Challenge selected = null;
+            _vm.OnChallengeSelected += c => selected = c;
 
             var testChallenge = _mockChallenges[0];
             _vm.OpenChallenge(testChallenge);
 
-            Assert.AreEqual("open_challenge", requestedAction);
-            Assert.IsNotNull(requestedArgs);
-            Assert.AreEqual(1, requestedArgs.Length);
-            Assert.AreEqual("code", requestedArgs[0].name);
-            Assert.AreEqual(testChallenge.code, requestedArgs[0].value);
+            // The screen decides how to present the challenge (Nutri challenge screen).
+            Assert.AreSame(testChallenge, selected);
+            Assert.IsNull(requestedAction);
         }
 
         [Test]

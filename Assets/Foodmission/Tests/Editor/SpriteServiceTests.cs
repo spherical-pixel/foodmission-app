@@ -81,7 +81,10 @@ namespace eu.foodmission.platform.Tests
             var element = new VisualElement();
             bool result = await _spriteService.BindBackgroundSprite(element, null);
             Assert.IsFalse(result);
-            Assert.AreEqual(StyleKeyword.None, element.style.backgroundImage.keyword);
+            // Unity 6 reports keyword Null after assigning StyleKeyword.None; check there is no image instead.
+            Background background = element.style.backgroundImage.value;
+            Assert.IsNull(background.sprite);
+            Assert.IsNull(background.texture);
         }
 
         [Test]

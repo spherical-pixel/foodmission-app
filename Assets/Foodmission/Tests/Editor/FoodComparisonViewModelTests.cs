@@ -726,6 +726,8 @@ namespace eu.foodmission.platform.Tests
 
             _vm.HasInsufficientProteins = true;
             _vm.CurrentState = ComparisonState.SelectionOrEmpty;
+            // The duel is only entered from a challenge; without one the sample opens the full comparison.
+            _vm.ChallengeCode = "CH.B1.1";
 
             _vm.LoadSampleDuel();
 
@@ -866,8 +868,9 @@ namespace eu.foodmission.platform.Tests
 
             var beefItem = _vm.AvailableItems.Find(i => i.Id == "gf-beef");
             Assert.IsNotNull(beefItem);
-            Assert.AreEqual("🥩", beefItem.Emoji);
-            Assert.AreEqual("🥩 Carne", beefItem.Category);
+            // "meat-and-poultry" maps to 🍗 in FMSearchOrCategoryField.GetCategoryEmoji.
+            Assert.AreEqual("🍗", beefItem.Emoji);
+            Assert.AreEqual("🍗 Carne", beefItem.Category);
         }
 
         [Test]

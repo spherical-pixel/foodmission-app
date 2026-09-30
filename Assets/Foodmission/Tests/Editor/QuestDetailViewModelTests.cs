@@ -341,41 +341,39 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void TimelineDisplayLabel_FormatsCorrectlyAccordingToMockup()
         {
-            // 1. Item with label already containing type prefix
+            string Prefix(string type) => UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ACTIVITY_" + type);
+
+            // 1. Label already containing the type prefix: not duplicated
             var item1 = new QuestActivityDisplayItem
             {
-                // TypeLabel = "Challenge",
                 Title = "Whole Grain Check",
                 Item = new QuestItem { contentType = "CHALLENGE", label = "Challenge: Whole Grain Check", contentCode = "CHALLENGE_1" }
             };
             Assert.AreEqual("Challenge: Whole Grain Check", item1.TimelineDisplayLabel);
 
-            // 2. Item with label without type prefix
+            // 2. Mission label without prefix: "{MISSION}: label"
             var item2 = new QuestActivityDisplayItem
             {
-                // TypeLabel = "Mission",
                 Title = "Protein Every Day",
                 Item = new QuestItem { contentType = QuestContentType.Mission, label = "Protein Every Day", contentCode = "MISSION_1" }
             };
-            Assert.AreEqual("Mission: Protein Every Day", item2.TimelineDisplayLabel);
+            Assert.AreEqual(Prefix(QuestContentType.Mission) + ": Protein Every Day", item2.TimelineDisplayLabel);
 
-            // 3. Quiz with no custom label (or label equal to contentCode)
+            // 3. Quiz: "{QUIZ}: contentCode"
             var item3 = new QuestActivityDisplayItem
             {
-                // TypeLabel = "Quiz",
                 Title = "QUIZ_1",
                 Item = new QuestItem { contentType = QuestContentType.Quiz, label = null, contentCode = "QUIZ_1" }
             };
-            Assert.AreEqual("Quiz", item3.TimelineDisplayLabel);
+            Assert.AreEqual(Prefix(QuestContentType.Quiz) + ": QUIZ_1", item3.TimelineDisplayLabel);
 
-            // 4. Food Fact without custom label
+            // 4. Food fact: "{FOOD_FACT}: contentCode"
             var item4 = new QuestActivityDisplayItem
             {
-                // TypeLabel = "Food Facts",
                 Title = "FACT_1",
                 Item = new QuestItem { contentType = QuestContentType.FoodFact, label = null, contentCode = "FACT_1" }
             };
-            Assert.AreEqual("Food Facts", item4.TimelineDisplayLabel);
+            Assert.AreEqual(Prefix(QuestContentType.FoodFact) + ": FACT_1", item4.TimelineDisplayLabel);
         }
 
         [Test]

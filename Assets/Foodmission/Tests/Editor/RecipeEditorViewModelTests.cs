@@ -220,6 +220,7 @@ namespace eu.foodmission.platform.Tests
             _viewModel.Title = "Pasta";
             _mockRecipeService.Setup(s => s.CreateRecipeAsync(It.IsAny<CreateRecipeRequest>()))
                 .ReturnsAsync((null, new ApiErrorResponse { message = "save failed" }));
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex(@"\[RecipeEditorViewModel\] CreateRecipeAsync error"));
 
             await _viewModel.SaveAsync();
 

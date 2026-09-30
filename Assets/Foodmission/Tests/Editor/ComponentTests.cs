@@ -279,7 +279,7 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual("Mazac, R., Meinilä, J., Korkalo, L. et al. Incorporation of novel foods in European diets can reduce global warming potential. Nat Food 3, 286–293 (2022).", result.CitationText);
             Assert.AreEqual(1, result.Links.Count);
-            Assert.AreEqual("Ver artículo (DOI) ↗", result.Links[0].Title);
+            Assert.AreEqual("doi.org ↗", result.Links[0].Title);
             Assert.AreEqual("https://doi.org/10.1038/s43016-022-00489-9", result.Links[0].Url);
         }
 

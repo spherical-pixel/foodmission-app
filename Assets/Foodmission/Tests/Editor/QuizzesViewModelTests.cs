@@ -491,6 +491,7 @@ namespace eu.foodmission.platform.Tests
         {
             _mockQuizService.Setup(q => q.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>()))
                 .ThrowsAsync(new Exception("Network timeout"));
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex(@"\[QuizzesViewModel\] OpenRandomQuizAsync failed"));
 
             await _vm.LoadDataAsync();
 

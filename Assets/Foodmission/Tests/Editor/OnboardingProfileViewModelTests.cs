@@ -163,7 +163,7 @@ namespace eu.foodmission.platform.Tests
             };
 
             _mockCatalogService
-                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
 
             await _vm.LoadCatalogDataAsync();
@@ -181,7 +181,7 @@ namespace eu.foodmission.platform.Tests
         public async Task LoadCatalogDataAsync_WithNullData_ShowsError()
         {
             _mockCatalogService
-                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>(((CatalogData)null, null)));
 
             bool eventFired = false;
@@ -197,7 +197,7 @@ namespace eu.foodmission.platform.Tests
         public async Task LoadCatalogDataAsync_WithException_FiresShowErrorRequest()
         {
             _mockCatalogService
-                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Throws(new Exception("Network error"));
 
             LogAssert.Expect(LogType.Error, "[OnboardingProfileViewModel] LoadCatalogDataAsync exception: Network error");
@@ -230,7 +230,7 @@ namespace eu.foodmission.platform.Tests
             };
 
             _mockCatalogService
-                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
 
             await _vm.LoadCatalogDataAsync();
@@ -272,7 +272,7 @@ namespace eu.foodmission.platform.Tests
             };
 
             _mockCatalogService
-                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
 
             await _vm.LoadCatalogDataAsync();
@@ -313,7 +313,7 @@ namespace eu.foodmission.platform.Tests
             };
 
             _mockCatalogService
-                .Setup(x => x.LoadStartupAsync(It.IsAny<string>()))
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
 
             await _vm.LoadCatalogDataAsync();

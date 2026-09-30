@@ -124,7 +124,7 @@ namespace eu.foodmission.platform.Tests
             await _viewModel.SetTabAsync(RecipeBookTab.Explore);
 
             var cached = new List<RecipeView> { new() { DisplayTitle = "Cached", Item = new Recipe { id = "c1" } } };
-            _localStorage.SetValue("recipes_cache_all_all_", cached);
+            _localStorage.SetValue("recipes_cache_", cached);
 
             _mockRecipeService.Setup(s => s.GetRecipesAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),

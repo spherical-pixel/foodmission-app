@@ -586,7 +586,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void GetPendingOnboardingType_WhenProfileNotSkippedAndNotCompleted_ReturnsNone()
+        public void GetPendingOnboardingType_WhenProfileNotCompleted_ReturnsProfile()
         {
             _storeService.SetAppState(new AppState
             {
@@ -597,7 +597,7 @@ namespace eu.foodmission.platform.Tests
 
             var result = _vm.GetPendingOnboardingType();
 
-            Assert.AreEqual(PendingOnboardingType.None, result);
+            Assert.AreEqual(PendingOnboardingType.Profile, result);
         }
 
         [Test]

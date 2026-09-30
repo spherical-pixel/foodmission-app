@@ -28,9 +28,9 @@ namespace eu.foodmission.platform.Tests
             var item = queue[0];
             Assert.AreEqual(RewardType.Xp, item.Type);
             Assert.AreEqual("+50 XP", item.Title);
-            Assert.AreEqual("⭐", item.IconEmoji);
+            Assert.IsNull(item.IconEmoji);
             Assert.AreEqual(50, item.Value);
-            Assert.AreEqual("@UI:REWARD_XP_EARNED", item.Subtitle);
+            Assert.AreEqual(UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_XP_EARNED", new object[] { 50 }), item.Subtitle);
         }
 
         [Test]
@@ -42,10 +42,10 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, queue.Count);
             var item = queue[0];
             Assert.AreEqual(RewardType.Points, item.Type);
-            Assert.AreEqual("+10 Pts", item.Title);
-            Assert.AreEqual("🌱", item.IconEmoji);
+            Assert.AreEqual("+10", item.Title);
+            Assert.IsNull(item.IconEmoji);
             Assert.AreEqual(10, item.Value);
-            Assert.AreEqual("@UI:REWARD_POINTS_EARNED", item.Subtitle);
+            Assert.AreEqual(UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_POINTS_EARNED", new object[] { 10 }), item.Subtitle);
         }
 
         [Test]

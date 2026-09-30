@@ -30,30 +30,35 @@ namespace eu.foodmission.platform
                     return string.Empty;
                 }
 
-                string generatedLabel = "";
-                generatedLabel += LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ACTIVITY_" + Item.contentType) + ": ";
-                if (Item.contentType == QuestContentType.Quiz)
+                string prefix = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ACTIVITY_" + Item.contentType);
+                string text;
+                if (Item.contentType == QuestContentType.Quiz || Item.contentType == QuestContentType.FoodFact)
                 {
-                    generatedLabel += Item.contentCode;
+                    text = Item.contentCode;
                 }
-                else if (Item.contentType == QuestContentType.Mission)
+                else if (Item.contentType == QuestContentType.Mission || Item.contentType == QuestContentType.Challenge)
                 {
-                    generatedLabel += Item.label;
-                }
-                else if (Item.contentType == QuestContentType.Challenge)
-                {
-                    generatedLabel += Item.label;
-                }
-                else if (Item.contentType == QuestContentType.FoodFact)
-                {
-                    generatedLabel += Item.contentCode;
+                    text = Item.label;
                 }
                 else
                 {
-                    generatedLabel += Item.label ?? Item.contentCode;
+                    text = Item.label ?? Item.contentCode;
                 }
-                return generatedLabel;
+
+                // Backend labels sometimes already carry the type ("Challenge: ..."); don't prefix twice.
+                string typeWord = (Item.contentType ?? string.Empty).Replace('_', ' ');
+                if (HasTypePrefix(text, prefix) || HasTypePrefix(text, typeWord))
+                {
+                    return text;
+                }
+                return prefix + ": " + text;
             }
+        }
+
+        private static bool HasTypePrefix(string text, string type)
+        {
+            return !string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(type) &&
+                   text.StartsWith(type + ":", StringComparison.OrdinalIgnoreCase);
         }
     }
 

@@ -206,6 +206,7 @@ namespace eu.foodmission.platform
         {
             if (string.IsNullOrWhiteSpace(name)) return;
             Ingredients.Add(new RecipeIngredientInput { Name = name, Measure = measure });
+            HasNoIngredientsWarning = false;
             OnPropertyChanged(nameof(Ingredients));
         }
 
