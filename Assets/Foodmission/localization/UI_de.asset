@@ -3605,6 +3605,47 @@ MonoBehaviour:
     m_Localized: "\u2696\uFE0F Lebensmittel vergleichen"
     m_Metadata:
       m_Items: []
+  - m_Id: 51673178689232953
+    m_Localized: 'Max.: {0} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232954
+    m_Localized: Welches Lebensmittel aus deiner Vorratskammer hast du verschwendet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232955
+    m_Localized: Keine passenden Artikel in deiner Vorratskammer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232956
+    m_Localized: Abgelaufene Lebensmittel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232957
+    m_Localized: Dein Verschwendungsprotokoll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232958
+    m_Localized: Du hast noch keine Verschwendung erfasst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232959
+    m_Localized: "Eintrag l\xF6schen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232960
+    m_Localized: "Dadurch wird der Eintrag gel\xF6scht. Der Artikel kehrt nicht in
+      deine Vorratskammer zur\xFCck."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232961
+    m_Localized: "Eintrag gel\xF6scht"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232962
+    m_Localized: Du hast diesen Monat keine Verschwendung erfasst
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

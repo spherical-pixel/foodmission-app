@@ -198,6 +198,99 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_vm.IsLoading);
         }
 
+        private void SetupEmptyReload()
+        {
+            _mockPantryService
+                .Setup(x => x.GetPantryAsync())
+                .Returns(Task.FromResult<(Pantry Result, ApiErrorResponse Error)>((new Pantry { id = "p1", items = Array.Empty<PantryItem>() }, null)));
+            _mockPantryService
+                .Setup(x => x.GetExpiredItemsAsync())
+                .Returns(Task.FromResult<(ExpiredPantryItem[] Result, ApiErrorResponse Error)>((Array.Empty<ExpiredPantryItem>(), null)));
+        }
+
+        [Test]
+        public async Task BatchWasteExpiredAsync_PartialFailure_KeepsErrorAfterReloadAndCancelsOnlySucceeded()
+        {
+            _vm.ExpiredItems = new[]
+            {
+                new ExpiredPantryItem { pantryItemId = "exp1" },
+                new ExpiredPantryItem { pantryItemId = "exp2" }
+            };
+            _vm.ExpiredItemCount = 2;
+            _mockPantryService
+                .Setup(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()))
+                .Returns(Task.FromResult<(BatchWasteResult Result, ApiErrorResponse Error)>((new BatchWasteResult
+                {
+                    successCount = 1,
+                    errorCount = 1,
+                    successes = new[] { new FoodWaste { id = "w1", pantryItemId = "exp1" } },
+                    errors = new[] { new BatchWasteErrorItem { pantryItemId = "exp2", error = "Pantry item not found" } }
+                }, null)));
+            SetupEmptyReload();
+
+            int count = await _vm.BatchWasteExpiredAsync();
+
+            Assert.AreEqual(1, count);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            StringAssert.Contains("Pantry item not found", _vm.ErrorDetail.message);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("exp1"), Times.Once);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("exp2"), Times.Never);
+        }
+
+        [Test]
+        public async Task BatchWasteExpiredAsync_RequestError_KeepsErrorAfterReload()
+        {
+            var apiError = new ApiErrorResponse { message = "down" };
+            _vm.ExpiredItems = new[] { new ExpiredPantryItem { pantryItemId = "exp1" } };
+            _vm.ExpiredItemCount = 1;
+            _mockPantryService
+                .Setup(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()))
+                .Returns(Task.FromResult<(BatchWasteResult Result, ApiErrorResponse Error)>((null, apiError)));
+            SetupEmptyReload();
+
+            int count = await _vm.BatchWasteExpiredAsync();
+
+            Assert.AreEqual(0, count);
+            Assert.AreSame(apiError, _vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task BatchWasteExpiredAsync_ReportsChallengeThroughSharedBatcher()
+        {
+            var challengeSession = new Mock<IChallengeSessionService>();
+            challengeSession
+                .Setup(x => x.ReportAsync(It.IsAny<ChallengeCompletionTrigger>(), It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+            var vm = new PantryViewModel(
+                _storeService,
+                _mockPantryService.Object,
+                _mockFoodProductService.Object,
+                _mockGenericFoodService.Object,
+                _mockLocalStorage.Object,
+                _mockOpenFoodFactsClient.Object,
+                _mockNotificationService.Object,
+                _mockFoodWasteService.Object,
+                _mockMealService.Object,
+                _mockMealLogService.Object,
+                _mockMealItemService.Object,
+                expiredWasteBatcher: new ExpiredWasteBatcher(_mockPantryService.Object, _mockNotificationService.Object, challengeSession.Object));
+            vm.ExpiredItems = new[] { new ExpiredPantryItem { pantryItemId = "exp1" } };
+            vm.ExpiredItemCount = 1;
+            _mockPantryService
+                .Setup(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()))
+                .Returns(Task.FromResult<(BatchWasteResult Result, ApiErrorResponse Error)>((new BatchWasteResult
+                {
+                    successCount = 1,
+                    successes = new[] { new FoodWaste { id = "w1", pantryItemId = "exp1" } }
+                }, null)));
+            SetupEmptyReload();
+
+            await vm.BatchWasteExpiredAsync();
+
+            challengeSession.Verify(x => x.ReportAsync(ChallengeCompletionTrigger.FoodWasteLogged, "w1"), Times.Once);
+            vm.Dispose();
+        }
+
         [Test]
         public async Task BatchWasteExpiredAsync_SendsOnlyPantryItemIdForExpiredItems()
         {

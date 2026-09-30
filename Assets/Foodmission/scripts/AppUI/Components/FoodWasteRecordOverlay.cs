@@ -73,6 +73,7 @@ namespace eu.foodmission.platform
             _pantryService = App.current.services.GetService<IPantryService>();
             _notificationService = App.current.services.GetService<INotificationService>();
             var themeService = App.current.services.GetService<IThemeService>();
+            string unitLabel = UnitCatalog.Current.GetLabel(itemView.Item.unit);
 
             // ── 1. Base Overlay Container ──────────────────────────────
             _overlay = new VisualElement
@@ -128,7 +129,7 @@ namespace eu.foodmission.platform
             nameHeading.AddToClassList("fm-food-waste-record-overlay__food-name");
             infoCol.Add(nameHeading);
 
-            string qtyInfo = $"{itemView.Item.quantity} {itemView.Item.unit}";
+            string qtyInfo = $"{itemView.Item.quantity:0.##} {unitLabel}";
             var qtySub = new Unity.AppUI.UI.Text { text = qtyInfo };
             qtySub.AddToClassList("fm-food-waste-record-overlay__food-qty");
             infoCol.Add(qtySub);
@@ -167,7 +168,7 @@ namespace eu.foodmission.platform
 
             // ── Field 2: Cantidad desperdiciada ─────────────────────────
             string qtyLabelStr = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUANTITY_WASTED");
-            var qtySection = CreateFormSection($"{qtyLabelStr} ({itemView.Item.unit}) *");
+            var qtySection = CreateFormSection($"{qtyLabelStr} ({unitLabel}) *");
 
             float maxAvailable = itemView.Item.quantity;
             _quantityField = new Unity.AppUI.UI.FloatField();
@@ -186,7 +187,7 @@ namespace eu.foodmission.platform
                     string maxErr = string.Format(
                         LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QTY_EXCEEDS_MAX"),
                         maxAvailable,
-                        itemView.Item.unit);
+                        unitLabel);
                     ShowError(maxErr);
                     _btnSave?.SetEnabled(false);
                 }
@@ -198,7 +199,7 @@ namespace eu.foodmission.platform
             });
             qtySection.Add(_quantityField);
 
-            var maxHelp = new Unity.AppUI.UI.Text { text = $"Máximo: {itemView.Item.quantity} {itemView.Item.unit}" };
+            var maxHelp = new Unity.AppUI.UI.Text { text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FW_MAX_QUANTITY", new object[] { itemView.Item.quantity, unitLabel }) };
             maxHelp.AddToClassList("fm-food-waste-record-overlay__helper");
             qtySection.Add(maxHelp);
             scroll.Add(qtySection);
@@ -319,7 +320,7 @@ namespace eu.foodmission.platform
                 string maxErr = string.Format(
                     LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QTY_EXCEEDS_MAX"),
                     maxAvailable,
-                    _currentItemView.Item.unit);
+                    UnitCatalog.Current.GetLabel(_currentItemView.Item.unit));
                 ShowError(maxErr);
                 return;
             }
@@ -360,6 +361,9 @@ namespace eu.foodmission.platform
                         ShowError(errStr);
                         return;
                     }
+
+                    _ = App.current?.services?.GetService<IChallengeSessionService>()
+                        ?.ReportAsync(ChallengeCompletionTrigger.FoodWasteLogged, created?.id ?? Guid.NewGuid().ToString());
                 }
                 else if (_pantryService != null)
                 {

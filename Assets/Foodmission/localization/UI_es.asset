@@ -3590,6 +3590,47 @@ MonoBehaviour:
     m_Localized: "\u2696\uFE0F Comparar alimentos"
     m_Metadata:
       m_Items: []
+  - m_Id: 51673178689232953
+    m_Localized: "M\xE1ximo: {0} {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232954
+    m_Localized: "\xBFQu\xE9 alimento de tu despensa has desperdiciado?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232955
+    m_Localized: No hay alimentos que coincidan en tu despensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232956
+    m_Localized: Alimentos caducados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232957
+    m_Localized: Tu registro de desperdicio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232958
+    m_Localized: "A\xFAn no has registrado desperdicio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232959
+    m_Localized: Eliminar registro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232960
+    m_Localized: "Se eliminar\xE1 el registro de desperdicio. El alimento no volver\xE1
+      a tu despensa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232961
+    m_Localized: Registro eliminado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232962
+    m_Localized: No has registrado desperdicio este mes
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

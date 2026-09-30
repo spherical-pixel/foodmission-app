@@ -27,6 +27,8 @@ namespace eu.foodmission.platform
         private readonly IMealService _mealService;
         private readonly IMealLogService _mealLogService;
         private readonly IMealItemService _mealItemService;
+        private readonly IPantryItemEnricher _pantryItemEnricher;
+        private readonly IExpiredWasteBatcher _expiredWasteBatcher;
 
         private const string CacheKey = "pantry_cache";
         private const string FoodSearchCachePrefix = "food_search_";
@@ -69,7 +71,9 @@ namespace eu.foodmission.platform
             IFoodWasteService foodWasteService = null,
             IMealService mealService = null,
             IMealLogService mealLogService = null,
-            IMealItemService mealItemService = null)
+            IMealItemService mealItemService = null,
+            IPantryItemEnricher pantryItemEnricher = null,
+            IExpiredWasteBatcher expiredWasteBatcher = null)
             : base(storeService)
         {
             _pantryService = pantryService;
@@ -82,6 +86,8 @@ namespace eu.foodmission.platform
             _mealService = mealService;
             _mealLogService = mealLogService;
             _mealItemService = mealItemService;
+            _pantryItemEnricher = pantryItemEnricher ?? new PantryItemEnricher(foodProductService, genericFoodService);
+            _expiredWasteBatcher = expiredWasteBatcher ?? new ExpiredWasteBatcher(pantryService, notificationService);
         }
 
 
@@ -177,16 +183,9 @@ namespace eu.foodmission.platform
             ApplyFilter();
         }
 
-        private async Task<PantryItemView[]> EnrichItemsAsync(PantryItem[] items)
+        private Task<PantryItemView[]> EnrichItemsAsync(PantryItem[] items)
         {
-            Task<PantryItemView>[] tasks = new Task<PantryItemView>[items.Length];
-
-            for (int i = 0; i < items.Length; i++)
-            {
-                tasks[i] = EnrichItemAsync(items[i]);
-            }
-
-            return await Task.WhenAll(tasks);
+            return _pantryItemEnricher.EnrichAsync(items);
         }
 
         private void SaveCacheFromAllItems()
@@ -198,28 +197,9 @@ namespace eu.foodmission.platform
             _localStorage.SetValue(CacheKey, new PantryItemArrayWrapper { items = raw });
         }
 
-        private async Task<PantryItemView> EnrichItemAsync(PantryItem item)
+        private Task<PantryItemView> EnrichItemAsync(PantryItem item)
         {
-            string displayName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
-            string imageUrl = null;
-
-            if (!string.IsNullOrEmpty(item.foodProductId))
-            {
-                var (food, _) = await _foodProductService.GetFoodByIdAsync(item.foodProductId);
-                displayName = food?.name ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
-            }
-            else if (!string.IsNullOrEmpty(item.genericFoodId))
-            {
-                var (genericFood, _) = await _genericFoodService.GetGenericFoodByIdAsync(item.genericFoodId);
-                displayName = genericFood?.foodName ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
-            }
-
-            return new PantryItemView
-            {
-                Item = item,
-                DisplayName = displayName,
-                ImageUrl = imageUrl
-            };
+            return _pantryItemEnricher.EnrichAsync(item);
         }
 
         public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
@@ -423,7 +403,7 @@ namespace eu.foodmission.platform
                     Debug.LogWarning($"[{GetType().Name}] Could not load generic food for add: {gfError?.message}");
                     return;
                 }
-                await AddGenericFoodItemAsync(genericFood, 1f, "PIECES");
+                await AddGenericFoodItemAsync(genericFood, 1f, UnitCodes.Pieces);
             }
             catch (Exception ex)
             {
@@ -433,7 +413,7 @@ namespace eu.foodmission.platform
 
         private async Task AddFoodProductToPantryAsync(FoodProduct food)
         {
-            var (added, addError) = await _pantryService.AddItemAsync(food.id, null, 1f, "PIECES");
+            var (added, addError) = await _pantryService.AddItemAsync(food.id, null, 1f, UnitCodes.Pieces);
 
             if (addError != null)
             {
@@ -462,7 +442,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            var (added, addError) = await _pantryService.AddItemAsync(foodItem.id, null, quantity ?? 1f, unit ?? "PIECES");
+            var (added, addError) = await _pantryService.AddItemAsync(foodItem.id, null, quantity ?? 1f, unit ?? UnitCodes.Default);
 
             if (addError != null)
             {
@@ -498,7 +478,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity ?? 1f, unit ?? "PIECES");
+            var (added, error) = await _pantryService.AddItemAsync(null, genericFood.id, quantity ?? 1f, unit ?? UnitCodes.Default);
 
             if (error != null)
             {
@@ -547,7 +527,7 @@ namespace eu.foodmission.platform
                         foodProductId = !string.IsNullOrEmpty(view.Item.foodProductId) ? view.Item.foodProductId : null,
                         genericFoodId = !string.IsNullOrEmpty(view.Item.genericFoodId) ? view.Item.genericFoodId : null,
                         quantity = (int)Math.Max(1, Math.Round(view.Item.quantity > 0 ? view.Item.quantity : 1)),
-                        unit = !string.IsNullOrEmpty(view.Item.unit) ? view.Item.unit : "PIECES"
+                        unit = !string.IsNullOrEmpty(view.Item.unit) ? view.Item.unit : UnitCodes.Default
                     };
                     var (_, itemErr) = await _mealItemService.CreateAsync(mealId, itemReq);
                     if (itemErr != null)
@@ -697,37 +677,26 @@ namespace eu.foodmission.platform
 
         public async Task<int> BatchWasteExpiredAsync()
         {
-            if (ExpiredItems == null || ExpiredItems.Length == 0) return 0;
-
-            if (_notificationService != null)
+            if (ExpiredItems == null || ExpiredItems.Length == 0)
             {
-                foreach (var exp in ExpiredItems)
-                {
-                    _notificationService.CancelPantryReminder(exp.pantryItemId);
-                }
+                return 0;
             }
 
-            var batchRequest = new BatchWasteRequest
-            {
-                items = ExpiredItems.Select(e => new BatchWasteItemRequest
-                {
-                    pantryItemId = e.pantryItemId
-                }).ToArray()
-            };
-
-            var (result, error) = await _pantryService.BatchWasteAsync(batchRequest);
-
-            if (error != null)
-            {
-                ErrorDetail = error;
-            }
+            List<string> ids = ExpiredItems.Select(e => e.pantryItemId).ToList();
+            var (wasted, error) = await _expiredWasteBatcher.WasteAsync(ids);
 
             ExpiredItems = Array.Empty<ExpiredPantryItem>();
             ExpiredItemCount = 0;
 
             await LoadAsync();
 
-            return result?.successCount ?? 0;
+            // LoadAsync resets ErrorDetail; keep the batch error visible.
+            if (error != null)
+            {
+                ErrorDetail = error;
+            }
+
+            return wasted;
         }
     }
 }

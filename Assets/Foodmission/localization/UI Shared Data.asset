@@ -3483,6 +3483,46 @@ MonoBehaviour:
     m_Key: CHALLENGE_BTN_COMPARE_FOODS
     m_Metadata:
       m_Items: []
+  - m_Id: 51673178689232953
+    m_Key: FW_MAX_QUANTITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232954
+    m_Key: FW_SEARCH_PROMPT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232955
+    m_Key: FW_SEARCH_NO_RESULTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232956
+    m_Key: FW_EXPIRED_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232957
+    m_Key: FW_HISTORY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232958
+    m_Key: FW_HISTORY_EMPTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232959
+    m_Key: FW_DELETE_CONFIRM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232960
+    m_Key: FW_DELETE_CONFIRM_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232961
+    m_Key: FW_DELETE_SUCCESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232962
+    m_Key: FW_MONTH_EMPTY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

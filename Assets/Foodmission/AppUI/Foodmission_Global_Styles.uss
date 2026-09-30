@@ -1305,6 +1305,36 @@
     margin: 16px 0;
 }
 
+/* ── FMPantryPickerField ─────────────────────────────── */
+.fm-ppf {
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.fm-ppf-field {
+    margin-bottom: 4px;
+}
+
+.fm-ppf-results {
+    display: none;
+}
+
+.fm-ppf-results.visible {
+    display: flex;
+}
+
+/* ── FMItemFoodWaste ─────────────────────────────────── */
+.fm-waste-item-date {
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foregrounds-50);
+    opacity: 0.7;
+    margin-right: 8px;
+}
+
+.fm-waste-item-hidden {
+    display: none;
+}
+
 .fm-scf-create-row {
     flex-direction: row;
     align-items: center;

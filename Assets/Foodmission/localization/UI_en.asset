@@ -3589,6 +3589,47 @@ MonoBehaviour:
     m_Localized: "\u2696\uFE0F Compare foods"
     m_Metadata:
       m_Items: []
+  - m_Id: 51673178689232953
+    m_Localized: 'Max: {0} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232954
+    m_Localized: Which food from your pantry did you waste?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232955
+    m_Localized: No matching items in your pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232956
+    m_Localized: Expired food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232957
+    m_Localized: Your waste log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232958
+    m_Localized: You haven't logged any waste yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232959
+    m_Localized: Delete record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232960
+    m_Localized: This will delete the waste record. The item won't return to your
+      pantry.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232961
+    m_Localized: Record deleted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232962
+    m_Localized: You haven't logged any waste this month
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

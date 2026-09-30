@@ -31,7 +31,6 @@ namespace Unity.AppUI.Navigation.Generated
         public const string go_to_editprofile = "go_to_editprofile";
         public const string go_to_avatar_editor = "go_to_avatar_editor";
         public const string go_to_foodwaste = "go_to_foodwaste";
-        public const string go_to_foodwaste_add = "go_to_foodwaste_add";
         public const string loading_to_forceupdate = "loading_to_forceupdate";
         public const string goto_test_survey = "goto_test_survey";
         public const string onboardingprofile_to_onboarding_survey = "onboardingprofile_to_onboarding_survey";
@@ -83,7 +82,6 @@ namespace Unity.AppUI.Navigation.Generated
         public const string editprofile = "EditProfile";
         public const string edit_avatar = "EDIT_AVATAR";
         public const string foodwaste = "FoodWaste";
-        public const string foodwasteadd = "FoodWasteAdd";
         public const string forceupdate = "ForceUpdate";
         public const string testsurvey = "TestSurvey";
         public const string onboardinggoals = "OnboardingGoals";

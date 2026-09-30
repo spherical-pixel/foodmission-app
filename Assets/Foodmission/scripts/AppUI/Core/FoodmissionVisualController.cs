@@ -584,11 +584,11 @@ namespace eu.foodmission.platform
                 CloseMenuDrawer();
                 _cachedNavController?.Navigate(Actions.go_to_recipes);
             });
-            // AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOOD_WASTE"), () =>
-            // {
-            //     CloseMenuDrawer();
-            //     _cachedNavController?.Navigate(Actions.go_to_foodwaste);
-            // });
+            AddMenuItem(container, "🗑️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOOD_WASTE"), () =>
+            {
+                CloseMenuDrawer();
+                _cachedNavController?.Navigate(Actions.go_to_foodwaste);
+            });
             AddMenuItem(container, "🌐 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GLOBAL_COMMUNITY"), () =>
             {
                 CloseMenuDrawer();

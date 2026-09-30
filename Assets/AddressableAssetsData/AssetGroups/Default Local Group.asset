@@ -250,11 +250,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f002d526211874ba984cb4f2746657e4
-    m_Address: Foodmission/AppUI/Templates/FoodWasteAddScreen.uxml
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd0a788c8b0e84f09abf06face9e8624
     m_Address: Foodmission/AppUI/Templates/GroupsJoinScreen.uxml
     m_ReadOnly: 0

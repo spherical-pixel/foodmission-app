@@ -123,7 +123,7 @@ namespace eu.foodmission.platform
 
         private static ChallengeInteraction LogWaste(int requiredCount)
         {
-            return Module(Actions.go_to_foodwaste_add, "CHALLENGE_BTN_LOG_WASTE", ChallengeCompletionTrigger.FoodWasteLogged, requiredCount);
+            return Module(Actions.go_to_foodwaste, "CHALLENGE_BTN_LOG_WASTE", ChallengeCompletionTrigger.FoodWasteLogged, requiredCount);
         }
 
         private static ChallengeInteraction WasteLog()

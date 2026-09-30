@@ -3633,6 +3633,47 @@ MonoBehaviour:
     m_Localized: "\u2696\uFE0F Confronta alimenti"
     m_Metadata:
       m_Items: []
+  - m_Id: 51673178689232953
+    m_Localized: 'Massimo: {0} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232954
+    m_Localized: Quale alimento della tua dispensa hai sprecato?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232955
+    m_Localized: Nessun alimento corrispondente nella tua dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232956
+    m_Localized: Alimenti scaduti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232957
+    m_Localized: Il tuo registro degli sprechi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232958
+    m_Localized: Non hai ancora registrato sprechi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232959
+    m_Localized: Elimina registrazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232960
+    m_Localized: "La registrazione dello spreco verr\xE0 eliminata. L'alimento non
+      torner\xE0 nella tua dispensa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232961
+    m_Localized: Registrazione eliminata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51673178689232962
+    m_Localized: Non hai registrato sprechi questo mese
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

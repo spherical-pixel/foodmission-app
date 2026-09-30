@@ -1056,39 +1056,6 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
---- !u!114 &1000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
-  m_Name: FoodWasteAdd
-  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
-  m_Position: {x: 1386, y: 6310}
-  m_Guid: 2b3c4d5e6f7890abcdef12345678901a
-  m_Parent: {fileID: 4583499250303890363}
-  m_Actions: []
-  m_Label: FoodWasteAdd
-  m_TemplateSettings:
-    rid: 3341417627117944932
-  m_Arguments: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 3341417627117944932
-      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
-      data:
-        m_ScreenType: eu.foodmission.platform.FoodWasteAddScreen, Foodmission, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-        m_ShowBottomNavBar: 1
-        m_ShowAppBar: 1
-        m_ShowBackButton: 0
-        m_ShowDrawer: 1
-        m_ShowNavigationRail: 0
 --- !u!114 &1000002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,33 +1071,6 @@ MonoBehaviour:
   m_Position: {x: 916, y: 6783.5}
   m_Guid: 3a4b5c6d-7e8f-90ab-cdef-1234567890ab
   m_Destination: {fileID: 1000000}
-  m_Options:
-    m_PopUpToStrategy: 0
-    m_PopUpToRoute: {fileID: 0}
-    m_PopUpToInclusive: 0
-    m_EnterAnim: 0
-    m_ExitAnim: 0
-    m_PopEnterAnim: 0
-    m_PopExitAnim: 0
-    m_PopUpToSaveState: 0
-    m_RestoreState: 0
-    m_LaunchSingleTop: 0
-  m_DefaultArguments: []
---- !u!114 &1000003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
-  m_Name: go_to_foodwaste_add
-  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
-  m_Position: {x: 950, y: 6291}
-  m_Guid: 4b5c6d7e-8f90-abcd-ef12-34567890abcd
-  m_Destination: {fileID: 1000001}
   m_Options:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}
@@ -1264,9 +1204,7 @@ MonoBehaviour:
   - {fileID: -6196883293665439386}
   - {fileID: -7923476310698617090}
   - {fileID: 1000000}
-  - {fileID: 1000001}
   - {fileID: 1000002}
-  - {fileID: 1000003}
   - {fileID: 1000004}
   - {fileID: 1000005}
   - {fileID: 1371056722271922227}
@@ -2366,6 +2304,68 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &4291847192847192098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_food_comparison
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 4250}
+  m_Guid: 594968e6-29f9-4cca-ae70-e6b168398e99
+  m_Destination: {fileID: 4291847192847192099}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &4291847192847192099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: FoodComparison
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 450, y: 4250}
+  m_Guid: c0a9e712-4215-4678-bf5b-d352ea942999
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions:
+  - {fileID: 673415384649435719}
+  - {fileID: -183864760696684321}
+  m_Label: '@UI:FC_SCREEN_TITLE'
+  m_TemplateSettings:
+    rid: 685283817655151599
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 685283817655151599
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.FoodComparisonScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &4519001266055914913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2447,7 +2447,7 @@ MonoBehaviour:
   - {fileID: -2672747531530209858}
   - {fileID: -6196883293665439386}
   - {fileID: 1000002}
-  - {fileID: 1000003}
+  - {fileID: 0}
   - {fileID: -7616555657261677819}
   - {fileID: -7349625825304333666}
   - {fileID: 1000004}
@@ -2876,66 +2876,6 @@ MonoBehaviour:
         m_ShowBackButton: 0
         m_ShowDrawer: 0
         m_ShowNavigationRail: 0
---- !u!114 &7964142450801946633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
-  m_Name: GroupsCreate
-  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
-  m_Position: {x: 1386, y: 2818}
-  m_Guid: 74301a475e4054ad18d4c8cc3ad0e93a
-  m_Parent: {fileID: 4583499250303890363}
-  m_Actions: []
-  m_Label: GroupsCreate
-  m_TemplateSettings:
-    rid: 3341417627117944924
-  m_Arguments: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 3341417627117944924
-      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
-      data:
-        m_ScreenType: eu.foodmission.platform.GroupsCreateScreen, Foodmission, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-        m_ShowBottomNavBar: 1
-        m_ShowAppBar: 1
-        m_ShowBackButton: 1
-        m_ShowDrawer: 1
-        m_ShowNavigationRail: 0
---- !u!114 &8647505148312902360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
-  m_Name: go_to_quizzes
-  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
-  m_Position: {x: -102, y: 2179}
-  m_Guid: 72f09ca8-4008-4aab-aecb-9866e32baf8f
-  m_Destination: {fileID: -7257701155362442244}
-  m_Options:
-    m_PopUpToStrategy: 0
-    m_PopUpToRoute: {fileID: 0}
-    m_PopUpToInclusive: 0
-    m_EnterAnim: 0
-    m_ExitAnim: 0
-    m_PopEnterAnim: 0
-    m_PopExitAnim: 0
-    m_PopUpToSaveState: 0
-    m_RestoreState: 0
-    m_LaunchSingleTop: 0
-  m_DefaultArguments: []
 --- !u!114 &7429980358298452535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2965,8 +2905,8 @@ MonoBehaviour:
     - rid: 4448174743850320655
       type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
       data:
-        m_ScreenType: eu.foodmission.platform.OnboardingGoalsScreen, Foodmission, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
+        m_ScreenType: eu.foodmission.platform.OnboardingGoalsScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         m_ShowBottomNavBar: 0
         m_ShowAppBar: 0
         m_ShowBackButton: 0
@@ -3053,7 +2993,7 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
---- !u!114 &4291847192847192099
+--- !u!114 &7964142450801946633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3063,32 +3003,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
-  m_Name: FoodComparison
+  m_Name: GroupsCreate
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
-  m_Position: {x: 450, y: 4250}
-  m_Guid: c0a9e712-4215-4678-bf5b-d352ea942999
-  m_Parent: {fileID: 6576446744998733474}
-  m_Actions:
-  - {fileID: 673415384649435719}
-  - {fileID: -183864760696684321}
-  m_Label: '@UI:FC_SCREEN_TITLE'
+  m_Position: {x: 1386, y: 2818}
+  m_Guid: 74301a475e4054ad18d4c8cc3ad0e93a
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: GroupsCreate
   m_TemplateSettings:
-    rid: 685283817655151599
+    rid: 3341417627117944924
   m_Arguments: []
   references:
     version: 2
     RefIds:
-    - rid: 685283817655151599
+    - rid: 3341417627117944924
       type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
       data:
-        m_ScreenType: eu.foodmission.platform.FoodComparisonScreen, Foodmission,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-        m_ShowBottomNavBar: 0
+        m_ScreenType: eu.foodmission.platform.GroupsCreateScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
         m_ShowAppBar: 1
         m_ShowBackButton: 1
-        m_ShowDrawer: 0
+        m_ShowDrawer: 1
         m_ShowNavigationRail: 0
---- !u!114 &4291847192847192098
+--- !u!114 &8647505148312902360
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3098,11 +3036,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
-  m_Name: go_to_food_comparison
+  m_Name: go_to_quizzes
   m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
-  m_Position: {x: 969, y: 4250}
-  m_Guid: 594968e6-29f9-4cca-ae70-e6b168398e99
-  m_Destination: {fileID: 4291847192847192099}
+  m_Position: {x: -102, y: 2179}
+  m_Guid: 72f09ca8-4008-4aab-aecb-9866e32baf8f
+  m_Destination: {fileID: -7257701155362442244}
   m_Options:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}
@@ -3115,5 +3053,3 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
-
-

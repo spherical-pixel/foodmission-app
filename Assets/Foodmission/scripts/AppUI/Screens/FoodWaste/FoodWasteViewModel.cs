@@ -1,180 +1,310 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Unity.AppUI.MVVM;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
+
+using UnityEngine;
 
 namespace eu.foodmission.platform
 {
     [ObservableObject]
     public partial class FoodWasteViewModel : ViewModelBase
     {
-        private readonly IFoodWasteService _foodWasteService;
-        private readonly ILocalStorageService _localStorage;
+        private const string CacheKeyPrefix = "foodwaste_cache_";
+        private const int PageSize = 50;
+        private const int MaxPagesPerMonth = 20;
 
-        private const string CacheKey = "foodwaste_cache";
-        private const int PageSize = 20;
+        private readonly IFoodWasteService _foodWasteService;
+        private readonly IPantryService _pantryService;
+        private readonly IPantryItemEnricher _pantryItemEnricher;
+        private readonly ILocalStorageService _localStorage;
+        private readonly IExpiredWasteBatcher _expiredWasteBatcher;
 
         private List<FoodWaste> _allWaste = new();
-        private int _currentPage = 1;
-        private int _totalPages = 1;
+        private List<PantryItemView> _pantryItems = new();
 
         [ObservableProperty]
-        private List<FoodWasteGroup> m_Groups = new();
+        private List<FoodWaste> _history = new();
 
         [ObservableProperty]
-        private bool m_IsLoading;
+        private DateTime _selectedMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 
         [ObservableProperty]
-        private string m_ErrorMessage = "";
+        private List<PantryItemView> _expiredItems = new();
 
         [ObservableProperty]
-        private string m_FilterDateFrom = "";
+        private bool _isLoading;
 
         [ObservableProperty]
-        private string m_FilterDateTo = "";
-
-        [ObservableProperty]
-        private string m_FilterWasteReason = "";
-
-        [ObservableProperty]
-        private bool m_HasMorePages;
-
-        [ObservableProperty]
-        private ApiErrorResponse m_ErrorDetail;
+        private ApiErrorResponse _errorDetail;
 
         public FoodWasteViewModel(
             IStoreService storeService,
             IFoodWasteService foodWasteService,
-            ILocalStorageService localStorage)
+            IPantryService pantryService,
+            IPantryItemEnricher pantryItemEnricher,
+            ILocalStorageService localStorage,
+            INotificationService notificationService = null,
+            IChallengeSessionService challengeSession = null,
+            IExpiredWasteBatcher expiredWasteBatcher = null)
             : base(storeService)
         {
             _foodWasteService = foodWasteService;
+            _pantryService = pantryService;
+            _pantryItemEnricher = pantryItemEnricher;
             _localStorage = localStorage;
+            _expiredWasteBatcher = expiredWasteBatcher ?? new ExpiredWasteBatcher(pantryService, notificationService, challengeSession);
         }
 
-        public async Task LoadAsync(int page = 1)
+        public async Task LoadAsync()
         {
             IsLoading = true;
-            ErrorMessage = "";
-
-            var (response, error) = await _foodWasteService.GetListAsync(
-                page, PageSize,
-                string.IsNullOrEmpty(FilterWasteReason) ? null : FilterWasteReason,
-                null,
-                string.IsNullOrEmpty(FilterDateFrom) ? null : FilterDateFrom,
-                string.IsNullOrEmpty(FilterDateTo) ? null : FilterDateTo);
-
-            if (error != null)
+            try
             {
-                ErrorDetail = error;
-                bool hadData = _allWaste.Count > 0;
-                LoadFromCache();
-                if (hadData)
-                    ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_REFRESH_CACHED");
+                var historyTask = FetchMonthAsync(SelectedMonth);
+                var pantryTask = _pantryService.GetPantryAsync();
+                var expiredTask = _pantryService.GetExpiredItemsAsync();
+
+                await Task.WhenAll(historyTask, pantryTask, expiredTask);
+
+                ApiErrorResponse firstError = ApplyHistory(SelectedMonth, historyTask.Result);
+
+                var (pantry, pantryError) = pantryTask.Result;
+                if (pantryError != null)
+                {
+                    firstError ??= pantryError;
+                    _pantryItems = new List<PantryItemView>();
+                }
+                else
+                {
+                    PantryItemView[] enriched = await _pantryItemEnricher.EnrichAsync(pantry?.items ?? Array.Empty<PantryItem>());
+                    _pantryItems = new List<PantryItemView>(enriched);
+                }
+
+                var (expired, _) = expiredTask.Result;
+                ExpiredItems = MapExpired(expired);
+
+                ErrorDetail = firstError;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodWasteViewModel] LoadAsync failed: {ex.Message}");
+            }
+            finally
+            {
                 IsLoading = false;
-                return;
             }
+        }
 
-            _currentPage = page;
-            _totalPages = response.totalPages;
-            HasMorePages = _currentPage < _totalPages;
+        /// <summary>
+        /// Shows the history of the month containing <paramref name="month"/>. Pantry data is not reloaded.
+        /// </summary>
+        public async Task SetSelectedMonthAsync(DateTime month)
+        {
+            DateTime monthStart = new DateTime(month.Year, month.Month, 1);
+            SelectedMonth = monthStart;
 
-            if (page == 1)
+            IsLoading = true;
+            try
             {
-                _allWaste = response.data != null
-                    ? new List<FoodWaste>(response.data)
-                    : new List<FoodWaste>();
+                var fetched = await FetchMonthAsync(monthStart);
+
+                // A newer month selection won the race; drop this response.
+                if (monthStart != SelectedMonth)
+                {
+                    return;
+                }
+
+                ApiErrorResponse error = ApplyHistory(monthStart, fetched);
+                if (error != null)
+                {
+                    ErrorDetail = error;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodWasteViewModel] SetSelectedMonthAsync failed: {ex.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private async Task<(List<FoodWaste> Records, ApiErrorResponse Error)> FetchMonthAsync(DateTime monthStart)
+        {
+            string dateFrom = monthStart.ToUniversalTime().ToString("o");
+            string dateTo = monthStart.AddMonths(1).AddSeconds(-1).ToUniversalTime().ToString("o");
+
+            List<FoodWaste> records = new();
+            int page = 1;
+            int totalPages = 1;
+            do
+            {
+                var (response, error) = await _foodWasteService.GetListAsync(page, PageSize, null, null, dateFrom, dateTo);
+                if (error != null)
+                {
+                    return (null, error);
+                }
+                if (response?.data != null)
+                {
+                    records.AddRange(response.data);
+                }
+                totalPages = response?.totalPages ?? 1;
+                page++;
+            }
+            while (page <= totalPages && page <= MaxPagesPerMonth);
+
+            return (records, null);
+        }
+
+        /// <summary>Applies fetched records (or the month cache on error) and returns the error, if any.</summary>
+        private ApiErrorResponse ApplyHistory(DateTime monthStart, (List<FoodWaste> Records, ApiErrorResponse Error) fetched)
+        {
+            if (fetched.Error != null)
+            {
+                FoodWaste[] cached = _localStorage.GetValue<PaginatedFoodWasteResponse>(CacheKey(monthStart), null)?.data;
+                _allWaste = cached != null ? new List<FoodWaste>(cached) : new List<FoodWaste>();
             }
             else
             {
-                _allWaste.AddRange(response.data ?? Array.Empty<FoodWaste>());
+                _allWaste = fetched.Records ?? new List<FoodWaste>();
+                SaveCache(monthStart);
             }
 
-            ErrorDetail = null;
-            SaveCache();
-            BuildGroups();
-            IsLoading = false;
+            RebuildHistory();
+            return fetched.Error;
         }
 
-        public async Task LoadNextPageAsync()
+        /// <summary>
+        /// Candidates the user can register as waste. Pantry items only for now; the single entry point
+        /// lets other sources (non-pantry products) be merged later without touching the screen.
+        /// </summary>
+        public Task<List<PantryItemView>> SearchCandidatesAsync(string query)
         {
-            if (!HasMorePages || IsLoading) return;
-            await LoadAsync(_currentPage + 1);
-        }
-
-        private void LoadFromCache()
-        {
-            FoodWaste[] cached = _localStorage.GetValue<PaginatedFoodWasteResponse>(CacheKey)?.data;
-            _allWaste = cached != null ? new List<FoodWaste>(cached) : new List<FoodWaste>();
-            BuildGroups();
-
-            if (_allWaste.Count == 0)
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_LOADING_WASTE_LOG");
-        }
-
-        private void SaveCache()
-        {
-            _localStorage.SetValue(CacheKey, new PaginatedFoodWasteResponse { data = _allWaste.ToArray() });
-        }
-
-        private void BuildGroups()
-        {
-            if (_allWaste.Count == 0)
+            if (string.IsNullOrWhiteSpace(query))
             {
-                Groups = new List<FoodWasteGroup>();
-                return;
+                return Task.FromResult(new List<PantryItemView>());
             }
 
-            List<FoodWasteGroup> groups = new();
-
-            foreach (IGrouping<string, FoodWaste> g in _allWaste.GroupBy(w => GetMonthKey(w.wastedAt)))
-            {
-                groups.Add(new FoodWasteGroup { MonthKey = g.Key, Items = g.ToList() });
-            }
-
-            Groups = groups;
+            string q = query.Trim();
+            List<PantryItemView> matches = _pantryItems
+                .Where(v => !string.IsNullOrEmpty(v?.DisplayName) && v.DisplayName.IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0)
+                .OrderBy(v => v.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+            return Task.FromResult(matches);
         }
 
-        public async Task DeleteWasteAsync(string wasteId)
+        public async Task<bool> DeleteWasteAsync(string wasteId)
         {
-            var (success, error) = await _foodWasteService.DeleteAsync(wasteId);
+            try
+            {
+                var (_, error) = await _foodWasteService.DeleteAsync(wasteId);
+                if (error != null)
+                {
+                    ErrorDetail = error;
+                    return false;
+                }
+
+                _allWaste = _allWaste.FindAll(w => w.id != wasteId);
+                SaveCache(SelectedMonth);
+                RebuildHistory();
+                ErrorDetail = null;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodWasteViewModel] DeleteWasteAsync failed: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<int> BatchWasteExpiredAsync()
+        {
+            if (ExpiredItems == null || ExpiredItems.Count == 0)
+            {
+                return 0;
+            }
+
+            List<string> ids = ExpiredItems.Select(v => v.Item.id).ToList();
+            var (wasted, error) = await _expiredWasteBatcher.WasteAsync(ids);
+
+            await LoadAsync();
+
+            // LoadAsync resets ErrorDetail; keep the batch error visible.
             if (error != null)
             {
                 ErrorDetail = error;
             }
-            else
+
+            return wasted;
+        }
+
+        public void OnWasteRecorded()
+        {
+            _ = LoadAsync();
+        }
+
+        private List<PantryItemView> MapExpired(ExpiredPantryItem[] expired)
+        {
+            List<PantryItemView> result = new();
+            if (expired == null)
             {
-                ErrorDetail = null;
-                _allWaste = _allWaste.FindAll(w => w.id != wasteId);
-                SaveCache();
-                BuildGroups();
+                return result;
             }
+
+            DateTime today = DateTime.UtcNow.Date;
+            foreach (ExpiredPantryItem e in expired)
+            {
+                if (string.IsNullOrEmpty(e?.expiryDate) || !DateTime.TryParse(e.expiryDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime exp))
+                {
+                    continue;
+                }
+                if (exp.Date >= today)
+                {
+                    continue;
+                }
+
+                PantryItemView match = _pantryItems.Find(v => v.Item?.id == e.pantryItemId);
+                if (match != null && !result.Contains(match))
+                {
+                    result.Add(match);
+                }
+            }
+            return result;
         }
 
-        public async Task<FoodWasteStatistics> LoadStatisticsAsync()
+        private static string CacheKey(DateTime monthStart)
         {
-            var (stats, _) = await _foodWasteService.GetStatisticsAsync(
-                string.IsNullOrEmpty(FilterDateFrom) ? null : FilterDateFrom,
-                string.IsNullOrEmpty(FilterDateTo) ? null : FilterDateTo);
-            return stats;
+            return CacheKeyPrefix + monthStart.ToString("yyyy-MM", CultureInfo.InvariantCulture);
         }
 
-        private static string GetMonthKey(string isoDate)
+        private void SaveCache(DateTime monthStart)
         {
-            if (string.IsNullOrEmpty(isoDate)) return LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
-            if (DateTime.TryParse(isoDate, out DateTime dt))
-                return dt.ToString("yyyy-MM");
-            return LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
+            _localStorage.SetValue(CacheKey(monthStart), new PaginatedFoodWasteResponse { data = _allWaste.ToArray() });
         }
-    }
 
-    public class FoodWasteGroup
-    {
-        public string MonthKey;
-        public List<FoodWaste> Items;
+        private void RebuildHistory()
+        {
+            History = _allWaste
+                .OrderByDescending(w => ParseDate(w.wastedAt) ?? DateTime.MinValue)
+                .ToList();
+        }
+
+        private static DateTime? ParseDate(string isoDate)
+        {
+            if (string.IsNullOrEmpty(isoDate))
+            {
+                return null;
+            }
+            if (DateTime.TryParse(isoDate, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out DateTime dt))
+            {
+                return dt;
+            }
+            return null;
+        }
     }
 }

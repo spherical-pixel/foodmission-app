@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -12,19 +11,54 @@ namespace eu.foodmission.platform.Tests
     public class FoodWasteViewModelTests
     {
         private Mock<IFoodWasteService> _mockFoodWasteService;
+        private Mock<IPantryService> _mockPantryService;
+        private Mock<IPantryItemEnricher> _mockEnricher;
         private Mock<ILocalStorageService> _mockLocalStorage;
+        private Mock<INotificationService> _mockNotificationService;
+        private Mock<IChallengeSessionService> _mockChallengeSession;
         private TestStoreService _storeService;
         private FoodWasteViewModel _vm;
+        private Dictionary<string, string> _names;
+
+        private static string Yesterday => DateTime.UtcNow.Date.AddDays(-1).ToString("yyyy-MM-dd");
+        private static string Tomorrow => DateTime.UtcNow.Date.AddDays(1).ToString("yyyy-MM-dd");
+        private static DateTime CurrentMonth => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 
         [SetUp]
         public void SetUp()
         {
             _mockFoodWasteService = new Mock<IFoodWasteService>();
+            _mockPantryService = new Mock<IPantryService>();
+            _mockEnricher = new Mock<IPantryItemEnricher>();
             _mockLocalStorage = new Mock<ILocalStorageService>();
+            _mockNotificationService = new Mock<INotificationService>();
+            _mockChallengeSession = new Mock<IChallengeSessionService>();
             _storeService = new TestStoreService();
             _storeService.SetAppState(new AppState());
+            _names = new Dictionary<string, string>();
 
-            _vm = new FoodWasteViewModel(_storeService, _mockFoodWasteService.Object, _mockLocalStorage.Object);
+            _mockEnricher
+                .Setup(x => x.EnrichAsync(It.IsAny<PantryItem[]>()))
+                .Returns<PantryItem[]>(items => Task.FromResult(items
+                    .Select(i => new PantryItemView { Item = i, DisplayName = _names.TryGetValue(i.id, out string n) ? n : i.id })
+                    .ToArray()));
+
+            _mockChallengeSession
+                .Setup(x => x.ReportAsync(It.IsAny<ChallengeCompletionTrigger>(), It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+
+            SetupHistory(1, Page(1, 1));
+            SetupPantry();
+            SetupExpired();
+
+            _vm = new FoodWasteViewModel(
+                _storeService,
+                _mockFoodWasteService.Object,
+                _mockPantryService.Object,
+                _mockEnricher.Object,
+                _mockLocalStorage.Object,
+                _mockNotificationService.Object,
+                _mockChallengeSession.Object);
         }
 
         [TearDown]
@@ -34,361 +68,352 @@ namespace eu.foodmission.platform.Tests
             _storeService?.Dispose();
         }
 
-        // ── Constructor ──────────────────────────────────────────────────
+        // ── Helpers ─────────────────────────────────────────────────────
+
+        private static PaginatedFoodWasteResponse Page(int page, int totalPages, params FoodWaste[] data)
+        {
+            return new PaginatedFoodWasteResponse { data = data, page = page, totalPages = totalPages, limit = 50, total = data.Length };
+        }
+
+        private static FoodWaste Waste(string id, string wastedAt, string pantryItemId = null)
+        {
+            return new FoodWaste { id = id, wastedAt = wastedAt, quantity = 1f, unit = "KG", wasteReason = WasteReason.Expired, pantryItemId = pantryItemId };
+        }
+
+        private static (string From, string To) MonthRange(DateTime monthStart)
+        {
+            return (monthStart.ToUniversalTime().ToString("o"), monthStart.AddMonths(1).AddSeconds(-1).ToUniversalTime().ToString("o"));
+        }
+
+        private static string CacheKey(DateTime monthStart)
+        {
+            return "foodwaste_cache_" + monthStart.ToString("yyyy-MM");
+        }
+
+        private PantryItem Item(string id, string name)
+        {
+            _names[id] = name;
+            return new PantryItem { id = id, quantity = 1f, unit = "PIECES" };
+        }
+
+        private void SetupHistory(int page, PaginatedFoodWasteResponse response, ApiErrorResponse error = null)
+        {
+            _mockFoodWasteService
+                .Setup(x => x.GetListAsync(page, It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((error == null ? response : null, error)));
+        }
+
+        private void SetupPantry(params PantryItem[] items)
+        {
+            _mockPantryService
+                .Setup(x => x.GetPantryAsync())
+                .Returns(Task.FromResult<(Pantry Result, ApiErrorResponse Error)>((new Pantry { id = "pantry", items = items }, null)));
+        }
+
+        private void SetupExpired(params ExpiredPantryItem[] items)
+        {
+            _mockPantryService
+                .Setup(x => x.GetExpiredItemsAsync())
+                .Returns(Task.FromResult<(ExpiredPantryItem[] Result, ApiErrorResponse Error)>((items, null)));
+        }
+
+        // ── Month selection ─────────────────────────────────────────────
 
         [Test]
-        public void Constructor_InitializesDefaults()
+        public void Constructor_SelectsCurrentMonth()
         {
-            Assert.IsNotNull(_vm.Groups);
-            Assert.AreEqual(0, _vm.Groups.Count);
+            Assert.AreEqual(CurrentMonth, _vm.SelectedMonth);
+        }
+
+        [Test]
+        public async Task LoadAsync_RequestsSelectedMonthRange()
+        {
+            await _vm.LoadAsync();
+
+            var (from, to) = MonthRange(CurrentMonth);
+            _mockFoodWasteService.Verify(x => x.GetListAsync(1, It.IsAny<int>(), null, null, from, to), Times.Once);
+        }
+
+        [Test]
+        public async Task LoadAsync_ListsRecordsNewestFirst_UnparseableDatesLast()
+        {
+            SetupHistory(1, Page(1, 1,
+                Waste("bad", "garbage"),
+                Waste("early", "2026-09-05T10:00:00Z"),
+                Waste("late", "2026-09-20T10:00:00Z")));
+
+            await _vm.LoadAsync();
+
+            CollectionAssert.AreEqual(new[] { "late", "early", "bad" }, _vm.History.Select(w => w.id).ToArray());
             Assert.IsFalse(_vm.IsLoading);
-            Assert.IsFalse(_vm.HasMorePages);
-            Assert.AreEqual("", _vm.ErrorMessage);
             Assert.IsNull(_vm.ErrorDetail);
         }
 
-        // ── LoadAsync ────────────────────────────────────────────────────
-
         [Test]
-        public async Task LoadAsync_OnSuccess_PopulatesGroups()
+        public async Task LoadAsync_FetchesAllPagesOfTheMonth()
         {
-            var response = new PaginatedFoodWasteResponse
-            {
-                data = new[]
-                {
-                    new FoodWaste { id = "1", quantity = 1.5f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" },
-                },
-                total = 1,
-                page = 1,
-                limit = 20,
-                totalPages = 1
-            };
-
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((response, null)));
+            SetupHistory(1, Page(1, 2, Waste("p1", "2026-09-20T10:00:00Z")));
+            SetupHistory(2, Page(2, 2, Waste("p2", "2026-09-10T10:00:00Z")));
 
             await _vm.LoadAsync();
 
-            Assert.AreEqual(1, _vm.Groups.Count);
-            Assert.IsFalse(_vm.IsLoading);
-            Assert.IsNull(_vm.ErrorDetail);
-            Assert.IsFalse(_vm.HasMorePages);
-            _mockLocalStorage.Verify(x => x.SetValue(It.IsAny<string>(), It.IsAny<PaginatedFoodWasteResponse>()), Times.Once);
+            CollectionAssert.AreEqual(new[] { "p1", "p2" }, _vm.History.Select(w => w.id).ToArray());
+            _mockFoodWasteService.Verify(x => x.GetListAsync(3, It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
 
         [Test]
-        public async Task LoadAsync_WhenHasMorePages_SetsHasMorePagesTrue()
+        public async Task SetSelectedMonthAsync_ReloadsOnlyHistoryForThatMonth()
         {
-            var response = new PaginatedFoodWasteResponse
-            {
-                data = new[] { new FoodWaste { id = "1", quantity = 1f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" } },
-                total = 21,
-                page = 1,
-                limit = 20,
-                totalPages = 2
-            };
+            await _vm.LoadAsync();
+            DateTime previous = CurrentMonth.AddMonths(-1);
 
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((response, null)));
+            await _vm.SetSelectedMonthAsync(previous.AddDays(10));
+
+            Assert.AreEqual(previous, _vm.SelectedMonth);
+            var (from, to) = MonthRange(previous);
+            _mockFoodWasteService.Verify(x => x.GetListAsync(1, It.IsAny<int>(), null, null, from, to), Times.Once);
+            _mockPantryService.Verify(x => x.GetPantryAsync(), Times.Once);
+        }
+
+        [Test]
+        public async Task SetSelectedMonthAsync_EmptyMonth_ClearsHistory()
+        {
+            SetupHistory(1, Page(1, 1, Waste("w1", "2026-09-05T10:00:00Z")));
+            await _vm.LoadAsync();
+            SetupHistory(1, Page(1, 1));
+
+            await _vm.SetSelectedMonthAsync(CurrentMonth.AddMonths(-1));
+
+            Assert.AreEqual(0, _vm.History.Count);
+        }
+
+        [Test]
+        public async Task LoadAsync_SavesCachePerMonth()
+        {
+            SetupHistory(1, Page(1, 1, Waste("w1", "2026-09-05T10:00:00Z")));
 
             await _vm.LoadAsync();
 
-            Assert.IsTrue(_vm.HasMorePages);
+            _mockLocalStorage.Verify(x => x.SetValue(CacheKey(CurrentMonth), It.IsAny<PaginatedFoodWasteResponse>()), Times.Once);
         }
 
         [Test]
-        public async Task LoadAsync_OnApiError_SetsErrorDetail()
+        public async Task LoadAsync_HistoryError_FallsBackToMonthCache()
         {
-            var error = new ApiErrorResponse { message = "Server error", statusCode = 500 };
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((null, error)));
-
+            var error = new ApiErrorResponse { message = "offline" };
+            SetupHistory(1, null, error);
             _mockLocalStorage
-                .Setup(x => x.GetValue<PaginatedFoodWasteResponse>(It.IsAny<string>(), It.IsAny<PaginatedFoodWasteResponse>()))
-                .Returns((PaginatedFoodWasteResponse)null);
+                .Setup(x => x.GetValue<PaginatedFoodWasteResponse>(CacheKey(CurrentMonth), It.IsAny<PaginatedFoodWasteResponse>()))
+                .Returns(Page(1, 1, Waste("cached", "2026-09-05T10:00:00Z")));
 
             await _vm.LoadAsync();
 
-            Assert.AreEqual(error, _vm.ErrorDetail);
+            Assert.AreEqual(1, _vm.History.Count);
+            Assert.AreEqual("cached", _vm.History[0].id);
+            Assert.AreSame(error, _vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task LoadAsync_HistoryErrorWithEmptyCache_EmptyHistoryAndErrorDetail()
+        {
+            var error = new ApiErrorResponse { message = "offline" };
+            SetupHistory(1, null, error);
+
+            await _vm.LoadAsync();
+
+            Assert.AreEqual(0, _vm.History.Count);
+            Assert.AreSame(error, _vm.ErrorDetail);
             Assert.IsFalse(_vm.IsLoading);
         }
 
+        // ── Pantry / expired ────────────────────────────────────────────
+
         [Test]
-        public async Task LoadAsync_OnApiError_LoadsFromCache()
+        public async Task LoadAsync_MapsOnlyPastExpiredItemsPresentInPantry()
         {
-            var cachedData = new PaginatedFoodWasteResponse
-            {
-                data = new[]
-                {
-                    new FoodWaste { id = "cached-1", quantity = 1.0f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" }
-                }
-            };
-
-            var error = new ApiErrorResponse { message = "Server error", statusCode = 500 };
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((null, error)));
-
-            _mockLocalStorage
-                .Setup(x => x.GetValue<PaginatedFoodWasteResponse>(It.IsAny<string>(), It.IsAny<PaginatedFoodWasteResponse>()))
-                .Returns(cachedData);
+            SetupPantry(Item("i1", "Milk"), Item("i2", "Rice"));
+            SetupExpired(
+                new ExpiredPantryItem { pantryItemId = "i1", expiryDate = Yesterday },
+                new ExpiredPantryItem { pantryItemId = "i2", expiryDate = Tomorrow },
+                new ExpiredPantryItem { pantryItemId = "ghost", expiryDate = Yesterday },
+                new ExpiredPantryItem { pantryItemId = "i1", expiryDate = null });
 
             await _vm.LoadAsync();
 
-            Assert.AreEqual(error, _vm.ErrorDetail);
-            Assert.AreEqual(1, _vm.Groups.Count);
-            Assert.IsFalse(_vm.IsLoading);
+            Assert.AreEqual(1, _vm.ExpiredItems.Count);
+            Assert.AreEqual("i1", _vm.ExpiredItems[0].Item.id);
+            Assert.AreEqual("Milk", _vm.ExpiredItems[0].DisplayName);
         }
 
         [Test]
-        public void LoadAsync_WhenServiceThrows_PropagatesException()
+        public async Task LoadAsync_PantryError_NoExpiredNoCandidatesAndErrorDetail()
         {
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Throws(new Exception("Network failure"));
-
-            Assert.ThrowsAsync<Exception>(async () => await _vm.LoadAsync());
-        }
-
-        [Test]
-        public async Task LoadAsync_OnPageOne_ReplacesExistingData()
-        {
-            var page1 = new PaginatedFoodWasteResponse
-            {
-                data = new[] { new FoodWaste { id = "1", quantity = 1f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" } },
-                total = 2,
-                page = 1,
-                limit = 20,
-                totalPages = 2
-            };
-
-            _mockFoodWasteService
-                .SetupSequence(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((page1, null)))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((page1, null)));
-
-            await _vm.LoadAsync(1);
-            Assert.AreEqual(1, _vm.Groups.Count);
-
-            await _vm.LoadAsync(1);
-            Assert.AreEqual(1, _vm.Groups.Count, "Page 1 should replace, not append");
-        }
-
-        [Test]
-        public async Task LoadAsync_WithFilter_SendsFilterToService()
-        {
-            _vm.FilterWasteReason = "EXPIRED";
-
-            var response = new PaginatedFoodWasteResponse
-            {
-                data = Array.Empty<FoodWaste>(),
-                total = 0,
-                page = 1,
-                limit = 20,
-                totalPages = 1
-            };
-
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((response, null)));
+            var error = new ApiErrorResponse { message = "pantry down" };
+            _mockPantryService
+                .Setup(x => x.GetPantryAsync())
+                .Returns(Task.FromResult<(Pantry Result, ApiErrorResponse Error)>((null, error)));
+            SetupExpired(new ExpiredPantryItem { pantryItemId = "i1", expiryDate = Yesterday });
 
             await _vm.LoadAsync();
 
-            _mockFoodWasteService.Verify(
-                x => x.GetListAsync(1, 20, "EXPIRED", null, null, null), Times.Once);
+            Assert.AreEqual(0, _vm.ExpiredItems.Count);
+            Assert.AreEqual(0, (await _vm.SearchCandidatesAsync("a")).Count);
+            Assert.AreSame(error, _vm.ErrorDetail);
         }
 
-        // ── LoadNextPageAsync ────────────────────────────────────────────
+        // ── Search ──────────────────────────────────────────────────────
 
         [Test]
-        public async Task LoadNextPageAsync_WhenHasMorePages_AppendsData()
+        public async Task SearchCandidatesAsync_EmptyQuery_ReturnsEmpty()
         {
-            var page1 = new PaginatedFoodWasteResponse
-            {
-                data = new[] { new FoodWaste { id = "1", quantity = 1f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" } },
-                total = 2,
-                page = 1,
-                limit = 1,
-                totalPages = 2
-            };
+            SetupPantry(Item("i1", "Milk"));
+            await _vm.LoadAsync();
 
-            var page2 = new PaginatedFoodWasteResponse
-            {
-                data = new[] { new FoodWaste { id = "2", quantity = 2f, unit = "kg", wasteReason = "SPOILED", wastedAt = "2026-05-20T10:00:00Z" } },
-                total = 2,
-                page = 2,
-                limit = 1,
-                totalPages = 2
-            };
-
-            _mockFoodWasteService
-                .SetupSequence(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((page1, null)))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((page2, null)));
-
-            await _vm.LoadAsync(1);
-            await _vm.LoadNextPageAsync();
-
-            Assert.AreEqual(2, _vm.Groups[0].Items.Count);
-            Assert.IsFalse(_vm.HasMorePages);
+            Assert.AreEqual(0, (await _vm.SearchCandidatesAsync("")).Count);
+            Assert.AreEqual(0, (await _vm.SearchCandidatesAsync("   ")).Count);
         }
 
         [Test]
-        public async Task LoadNextPageAsync_WhenNoMorePages_DoesNotLoad()
+        public async Task SearchCandidatesAsync_CaseInsensitiveContains_SortedByName()
         {
-            var response = new PaginatedFoodWasteResponse
-            {
-                data = new[] { new FoodWaste { id = "1", quantity = 1f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" } },
-                total = 1,
-                page = 1,
-                limit = 20,
-                totalPages = 1
-            };
+            SetupPantry(Item("i1", "Whole milk"), Item("i2", "Rice"), Item("i3", "Milk"));
+            await _vm.LoadAsync();
 
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((response, null)));
+            List<PantryItemView> result = await _vm.SearchCandidatesAsync("MILK");
 
-            await _vm.LoadAsync(1);
-            Assert.IsFalse(_vm.HasMorePages);
-
-            await _vm.LoadNextPageAsync();
-
-            _mockFoodWasteService.Verify(
-                x => x.GetListAsync(2, It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
-                Times.Never);
+            CollectionAssert.AreEqual(new[] { "Milk", "Whole milk" }, result.Select(v => v.DisplayName).ToArray());
         }
 
-        [Test]
-        public async Task LoadNextPageAsync_WhenLoading_DoesNotLoad()
-        {
-            var response = new PaginatedFoodWasteResponse
-            {
-                data = new[] { new FoodWaste { id = "1", quantity = 1f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" } },
-                total = 21,
-                page = 1,
-                limit = 20,
-                totalPages = 2
-            };
-
-            _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((response, null)));
-
-            _vm.IsLoading = true;
-            await _vm.LoadNextPageAsync();
-
-            _mockFoodWasteService.Verify(
-                x => x.GetListAsync(2, It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
-                Times.Never);
-        }
-
-        // ── DeleteWasteAsync ─────────────────────────────────────────────
+        // ── Delete ──────────────────────────────────────────────────────
 
         [Test]
-        public async Task DeleteWasteAsync_OnSuccess_RemovesFromList()
+        public async Task DeleteWasteAsync_Success_RemovesRecord()
         {
-            var response = new PaginatedFoodWasteResponse
-            {
-                data = new[]
-                {
-                    new FoodWaste { id = "1", quantity = 1f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" },
-                    new FoodWaste { id = "2", quantity = 2f, unit = "kg", wasteReason = "SPOILED", wastedAt = "2026-05-20T10:00:00Z" }
-                },
-                total = 2,
-                page = 1,
-                limit = 20,
-                totalPages = 1
-            };
-
+            SetupHistory(1, Page(1, 1, Waste("w1", "2026-09-05T10:00:00Z"), Waste("w2", "2026-09-06T10:00:00Z")));
             _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((response, null)));
-
-            _mockFoodWasteService
-                .Setup(x => x.DeleteAsync("1"))
+                .Setup(x => x.DeleteAsync("w1"))
                 .Returns(Task.FromResult<(bool Success, ApiErrorResponse Error)>((true, null)));
-
             await _vm.LoadAsync();
-            Assert.AreEqual(2, _vm.Groups[0].Items.Count);
 
-            await _vm.DeleteWasteAsync("1");
+            bool ok = await _vm.DeleteWasteAsync("w1");
 
-            Assert.AreEqual(1, _vm.Groups[0].Items.Count);
-            Assert.AreEqual("2", _vm.Groups[0].Items[0].id);
-            Assert.IsNull(_vm.ErrorDetail);
-            _mockLocalStorage.Verify(x => x.SetValue(It.IsAny<string>(), It.IsAny<PaginatedFoodWasteResponse>()), Times.Exactly(2));
+            Assert.IsTrue(ok);
+            CollectionAssert.AreEqual(new[] { "w2" }, _vm.History.Select(w => w.id).ToArray());
         }
 
         [Test]
-        public async Task DeleteWasteAsync_OnApiError_SetsErrorDetail()
+        public async Task DeleteWasteAsync_Error_KeepsRecordAndSetsErrorDetail()
         {
-            var response = new PaginatedFoodWasteResponse
-            {
-                data = new[] { new FoodWaste { id = "1", quantity = 1f, unit = "kg", wasteReason = "EXPIRED", wastedAt = "2026-05-15T10:00:00Z" } },
-                total = 1,
-                page = 1,
-                limit = 20,
-                totalPages = 1
-            };
-
+            var error = new ApiErrorResponse { message = "nope" };
+            SetupHistory(1, Page(1, 1, Waste("w1", "2026-09-05T10:00:00Z")));
             _mockFoodWasteService
-                .Setup(x => x.GetListAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(PaginatedFoodWasteResponse Result, ApiErrorResponse Error)>((response, null)));
-
-            var error = new ApiErrorResponse { message = "Delete failed", statusCode = 500 };
-            _mockFoodWasteService
-                .Setup(x => x.DeleteAsync("1"))
+                .Setup(x => x.DeleteAsync("w1"))
                 .Returns(Task.FromResult<(bool Success, ApiErrorResponse Error)>((false, error)));
-
             await _vm.LoadAsync();
-            Assert.AreEqual(1, _vm.Groups[0].Items.Count);
 
-            await _vm.DeleteWasteAsync("1");
+            bool ok = await _vm.DeleteWasteAsync("w1");
 
-            Assert.AreEqual(error, _vm.ErrorDetail);
-            Assert.AreEqual(1, _vm.Groups[0].Items.Count, "Item should not be removed on error");
+            Assert.IsFalse(ok);
+            Assert.AreEqual(1, _vm.History.Count);
+            Assert.AreSame(error, _vm.ErrorDetail);
+        }
+
+        // ── Batch waste ─────────────────────────────────────────────────
+
+        [Test]
+        public async Task BatchWasteExpiredAsync_NoExpired_ReturnsZeroWithoutCall()
+        {
+            await _vm.LoadAsync();
+
+            int wasted = await _vm.BatchWasteExpiredAsync();
+
+            Assert.AreEqual(0, wasted);
+            _mockPantryService.Verify(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()), Times.Never);
         }
 
         [Test]
-        public void DeleteWasteAsync_WhenServiceThrows_PropagatesException()
+        public async Task BatchWasteExpiredAsync_SendsExpiredIdsReportsAndReloads()
         {
-            _mockFoodWasteService
-                .Setup(x => x.DeleteAsync(It.IsAny<string>()))
-                .Throws(new Exception("Delete failed"));
-
-            Assert.ThrowsAsync<Exception>(async () => await _vm.DeleteWasteAsync("1"));
-        }
-
-        // ── LoadStatisticsAsync ──────────────────────────────────────────
-
-        [Test]
-        public async Task LoadStatisticsAsync_OnSuccess_ReturnsStatistics()
-        {
-            var stats = new FoodWasteStatistics
-            {
-                totalWaste = 3.5f,
-                totalCost = 12.50f,
-                totalCarbon = 5.2f,
-                wasteByReason = new[]
+            SetupPantry(Item("i1", "Milk"));
+            SetupExpired(new ExpiredPantryItem { pantryItemId = "i1", expiryDate = Yesterday });
+            BatchWasteRequest sent = null;
+            _mockPantryService
+                .Setup(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()))
+                .Callback<BatchWasteRequest>(r => sent = r)
+                .Returns(Task.FromResult<(BatchWasteResult Result, ApiErrorResponse Error)>((new BatchWasteResult
                 {
-                    new WasteByReason { reason = "EXPIRED", count = 2 }
-                }
-            };
+                    successCount = 1,
+                    successes = new[] { Waste("w1", "2026-09-29T10:00:00Z", "i1") }
+                }, null)));
+            await _vm.LoadAsync();
 
-            _mockFoodWasteService
-                .Setup(x => x.GetStatisticsAsync(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult<(FoodWasteStatistics Result, ApiErrorResponse Error)>((stats, null)));
+            int wasted = await _vm.BatchWasteExpiredAsync();
 
-            var result = await _vm.LoadStatisticsAsync();
+            Assert.AreEqual(1, wasted);
+            CollectionAssert.AreEqual(new[] { "i1" }, sent.items.Select(i => i.pantryItemId).ToArray());
+            _mockChallengeSession.Verify(x => x.ReportAsync(ChallengeCompletionTrigger.FoodWasteLogged, "w1"), Times.Once);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("i1"), Times.Once);
+            _mockPantryService.Verify(x => x.GetPantryAsync(), Times.Exactly(2));
+        }
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(3.5f, result.totalWaste);
-            Assert.AreEqual(12.50f, result.totalCost);
-            Assert.AreEqual(1, result.wasteByReason.Length);
+        [Test]
+        public async Task BatchWasteExpiredAsync_RequestError_KeepsErrorAfterReload()
+        {
+            var error = new ApiErrorResponse { message = "down" };
+            SetupPantry(Item("i1", "Milk"));
+            SetupExpired(new ExpiredPantryItem { pantryItemId = "i1", expiryDate = Yesterday });
+            _mockPantryService
+                .Setup(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()))
+                .Returns(Task.FromResult<(BatchWasteResult Result, ApiErrorResponse Error)>((null, error)));
+            await _vm.LoadAsync();
+
+            int wasted = await _vm.BatchWasteExpiredAsync();
+
+            Assert.AreEqual(0, wasted);
+            Assert.AreSame(error, _vm.ErrorDetail);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder(It.IsAny<string>()), Times.Never);
+            _mockChallengeSession.Verify(x => x.ReportAsync(It.IsAny<ChallengeCompletionTrigger>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task BatchWasteExpiredAsync_PartialFailureInBody_SetsErrorDetailFromErrors()
+        {
+            SetupPantry(Item("i1", "Milk"), Item("i2", "Rice"));
+            SetupExpired(
+                new ExpiredPantryItem { pantryItemId = "i1", expiryDate = Yesterday },
+                new ExpiredPantryItem { pantryItemId = "i2", expiryDate = Yesterday });
+            _mockPantryService
+                .Setup(x => x.BatchWasteAsync(It.IsAny<BatchWasteRequest>()))
+                .Returns(Task.FromResult<(BatchWasteResult Result, ApiErrorResponse Error)>((new BatchWasteResult
+                {
+                    successCount = 1,
+                    errorCount = 1,
+                    successes = new[] { Waste("w1", "2026-09-29T10:00:00Z", "i1") },
+                    errors = new[] { new BatchWasteErrorItem { pantryItemId = "i2", error = "Pantry item not found" } }
+                }, null)));
+            await _vm.LoadAsync();
+
+            int wasted = await _vm.BatchWasteExpiredAsync();
+
+            Assert.AreEqual(1, wasted);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            StringAssert.Contains("Pantry item not found", _vm.ErrorDetail.message);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("i1"), Times.Once);
+            _mockNotificationService.Verify(x => x.CancelPantryReminder("i2"), Times.Never);
+            _mockChallengeSession.Verify(x => x.ReportAsync(ChallengeCompletionTrigger.FoodWasteLogged, It.IsAny<string>()), Times.Once);
+        }
+
+        // ── OnWasteRecorded ─────────────────────────────────────────────
+
+        [Test]
+        public async Task OnWasteRecorded_ReloadsData()
+        {
+            await _vm.LoadAsync();
+
+            _vm.OnWasteRecorded();
+            await Task.Yield();
+
+            _mockFoodWasteService.Verify(x => x.GetListAsync(1, It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));
         }
     }
 }

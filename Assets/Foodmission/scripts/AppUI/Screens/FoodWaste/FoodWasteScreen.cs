@@ -1,34 +1,48 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading.Tasks;
-
-using UnityEngine;
-using UnityEngine.Accessibility;
 
 using eu.foodmission.platform.Components;
 
+using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
-using Unity.AppUI.Navigation;
-using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 
+using UnityEngine;
+using UnityEngine.Accessibility;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
     [Preserve]
     class FoodWasteScreen : NavigationScreenBase<FoodWasteViewModel>
     {
-        private VisualElement _wasteContainer;
-        private Text _errorText;
+        private FMPantryPickerField _pantrySearch;
+        private VisualElement _mainContent;
+        private VisualElement _expiredSection;
+        private VisualElement _expiredContainer;
+        private Text _expiredTitle;
+        private Unity.AppUI.UI.Button _btnMoveAll;
+        private Text _historyTitle;
         private Text _emptyState;
-        private Unity.AppUI.UI.Button _btnAdd;
-        private ScrollView _scrollView;
+        private FMArrowStepper _monthStepper;
+        private VisualElement _historyContainer;
+        private readonly List<DateTime> _stepperMonths = new();
 
-        private AccessibilityNode _addButtonNode;
+        private const int MonthsInStepper = 12;
+
+        private AccessibilityNode _searchNode;
+        private AccessibilityNode _moveAllNode;
+
+        override protected bool IsFixedContent => false;
+        protected override bool ApplySafeAreaTop => false;
+        protected override bool ApplySafeAreaBottom => false;
+        protected override bool ApplySafeAreaLeft => false;
+        protected override bool ApplySafeAreaRight => false;
 
         public FoodWasteScreen()
         {
@@ -38,39 +52,73 @@ namespace eu.foodmission.platform
             CacheUIElements();
         }
 
+        private static string L(string key)
+        {
+            return LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
+        }
+
+        private static CultureInfo CurrentCulture()
+        {
+            return LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentCulture;
+        }
+
         private void CacheUIElements()
         {
-            _wasteContainer = contentContainer.Q<VisualElement>("waste-container");
-            _errorText = contentContainer.Q<Text>("error-message");
+            _pantrySearch = contentContainer.Q<FMPantryPickerField>("pantry-search");
+            _mainContent = contentContainer.Q<VisualElement>("main-content");
+            _expiredSection = contentContainer.Q<VisualElement>("expired-section");
+            _expiredContainer = contentContainer.Q<VisualElement>("expired-container");
+            _expiredTitle = contentContainer.Q<Text>("expired-title");
+            _btnMoveAll = contentContainer.Q<Unity.AppUI.UI.Button>("btn-move-all-to-waste");
+            _historyTitle = contentContainer.Q<Text>("history-title");
             _emptyState = contentContainer.Q<Text>("empty-state");
-            _btnAdd = contentContainer.Q<Unity.AppUI.UI.Button>("btn-add-waste");
-            _scrollView = contentContainer.Q<ScrollView>("scroll-view");
+            _monthStepper = contentContainer.Q<FMArrowStepper>("month-stepper");
+            _historyContainer = contentContainer.Q<VisualElement>("history-container");
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
 
-            _btnAdd.clicked += OnAddClicked;
-            _scrollView?.RegisterCallback<GeometryChangedEvent>(OnScrollChanged);
+            ApplyTexts();
+
+            if (_pantrySearch != null)
+            {
+                _pantrySearch.SearchAsync = query => _viewModel.SearchCandidatesAsync(query);
+                _pantrySearch.FormatItem = view =>
+                    $"{view.DisplayName} · {FoodWasteFormatter.FormatQuantity(view.Item.quantity, UnitCatalog.Current.GetLabel(view.Item.unit))}";
+                _pantrySearch.OnItemSelected += ShowRecordOverlay;
+                _pantrySearch.OnPopoverVisibilityChanged += OnPopoverVisibilityChanged;
+            }
+            if (_btnMoveAll != null)
+            {
+                _btnMoveAll.clicked += OnMoveAllClicked;
+            }
+            SetupMonthStepper();
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
-            RebuildGroups();
+            RebuildExpired();
+            RebuildHistory();
             UpdateLoadingState();
-            UpdateErrorState();
 
-            _ = _viewModel.LoadAsync().ContinueWith(t =>
-            {
-                if (t.IsFaulted)
-                    Debug.LogError($"[{GetType().Name}] LoadAsync failed: {t.Exception}");
-            }, TaskContinuationOptions.OnlyOnFaulted);
+            _ = SafeLoadAsync();
         }
 
         protected override void OnViewModelUnbinding()
         {
-            _btnAdd.clicked -= OnAddClicked;
-            if (_scrollView != null)
-                _scrollView.UnregisterCallback<GeometryChangedEvent>(OnScrollChanged);
+            if (_pantrySearch != null)
+            {
+                _pantrySearch.OnItemSelected -= ShowRecordOverlay;
+                _pantrySearch.OnPopoverVisibilityChanged -= OnPopoverVisibilityChanged;
+                _pantrySearch.SearchAsync = null;
+                _pantrySearch.FormatItem = null;
+                _pantrySearch.ClearSearch();
+            }
+            if (_btnMoveAll != null)
+            {
+                _btnMoveAll.clicked -= OnMoveAllClicked;
+            }
+            _monthStepper?.UnregisterValueChangedCallback(OnMonthChanged);
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             base.OnViewModelUnbinding();
         }
@@ -82,50 +130,72 @@ namespace eu.foodmission.platform
         protected override void SetupAccessibilityNodes()
         {
             base.SetupAccessibilityNodes();
-            if (_accessibilityHierarchy == null) return;
+            if (_accessibilityHierarchy == null)
+            {
+                return;
+            }
 
-            _addButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnAdd, "Add food waste");
+            _searchNode = CreateNode(_accessibilityHierarchy, _pantrySearch?.InputElement, L("FW_SEARCH_PROMPT"), AccessibilityRole.SearchField);
+            _moveAllNode = CreateNode(_accessibilityHierarchy, _btnMoveAll, L("MOVE_TO_WASTE"), AccessibilityRole.Button);
         }
 
         protected override void TeardownAccessibilityNodes()
         {
-            _addButtonNode = null;
+            _searchNode = null;
+            _moveAllNode = null;
             base.TeardownAccessibilityNodes();
         }
 
-        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        private AccessibilityNode CreateNode(AccessibilityHierarchy hierarchy, VisualElement element, string label, AccessibilityRole role)
         {
-            if (button == null) return null;
+            if (element == null)
+            {
+                return null;
+            }
             var node = hierarchy.AddNode(label);
-            node.role = AccessibilityRole.Button;
-            if (!button.enabledSelf) node.state = AccessibilityState.Disabled;
+            node.role = role;
             node.frameGetter = () =>
             {
-                if (button.panel == null) return Rect.zero;
-                var r = button.worldBound;
-                var s = button.panel.scaledPixelsPerPoint;
+                if (element.panel == null)
+                {
+                    return Rect.zero;
+                }
+                var r = element.worldBound;
+                var s = element.panel.scaledPixelsPerPoint;
                 return new Rect(r.position * s, r.size * s);
             };
             node.invoked += () =>
             {
                 using var evt = NavigationSubmitEvent.GetPooled();
-                evt.target = button;
-                button.SendEvent(evt);
+                evt.target = element;
+                element.SendEvent(evt);
                 return true;
             };
             return node;
         }
 
-        private void OnScrollChanged(GeometryChangedEvent evt)
+        // --------------------------------------------------------------------
+        // Rendering
+        // --------------------------------------------------------------------
+
+        private void ApplyTexts()
         {
-            if (_scrollView?.verticalScroller == null) return;
-            if (_scrollView.verticalScroller.value >= _scrollView.verticalScroller.highValue - 50f)
+            if (_pantrySearch != null)
             {
-                _ = _viewModel.LoadNextPageAsync().ContinueWith(t =>
-                {
-                    if (t.IsFaulted)
-                        Debug.LogError($"[{GetType().Name}] LoadNextPageAsync failed: {t.Exception}");
-                }, TaskContinuationOptions.OnlyOnFaulted);
+                _pantrySearch.Placeholder = L("FW_SEARCH_PROMPT");
+                _pantrySearch.NoResultsText = L("FW_SEARCH_NO_RESULTS");
+            }
+            if (_expiredTitle != null)
+            {
+                _expiredTitle.text = L("FW_EXPIRED_TITLE");
+            }
+            if (_historyTitle != null)
+            {
+                _historyTitle.text = L("FW_HISTORY_TITLE");
+            }
+            if (_emptyState != null)
+            {
+                _emptyState.text = L("FW_MONTH_EMPTY");
             }
         }
 
@@ -133,14 +203,14 @@ namespace eu.foodmission.platform
         {
             switch (e.PropertyName)
             {
-                case nameof(_viewModel.Groups):
-                    RebuildGroups();
+                case nameof(_viewModel.History):
+                    RebuildHistory();
+                    break;
+                case nameof(_viewModel.ExpiredItems):
+                    RebuildExpired();
                     break;
                 case nameof(_viewModel.IsLoading):
                     UpdateLoadingState();
-                    break;
-                case nameof(_viewModel.ErrorMessage):
-                    UpdateErrorState();
                     break;
                 case nameof(_viewModel.ErrorDetail):
                     UpdateApiErrorState();
@@ -148,144 +218,243 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void RebuildGroups()
+        private void RebuildExpired()
         {
-            _wasteContainer.Clear();
+            _expiredContainer.Clear();
 
-            if (_viewModel.Groups == null || _viewModel.Groups.Count == 0)
+            List<PantryItemView> items = _viewModel.ExpiredItems;
+            bool hasItems = items != null && items.Count > 0;
+            _expiredSection.EnableInClassList("visible", hasItems);
+            if (!hasItems)
             {
-                _emptyState?.EnableInClassList("visible", true);
                 return;
             }
 
-            _emptyState?.EnableInClassList("visible", false);
-
-            foreach (FoodWasteGroup group in _viewModel.Groups)
+            CultureInfo culture = CurrentCulture();
+            foreach (PantryItemView view in items)
             {
-                var header = new Text { text = FormatMonth(group.MonthKey) };
-                header.AddToClassList("fm-fw-section-header");
-                _wasteContainer.Add(header);
-
-                foreach (FoodWaste item in group.Items)
+                PantryItemView captured = view;
+                var card = new FMItemPantry
                 {
-                    FoodWaste captured = item;
+                    Text = captured.DisplayName,
+                    Detail = FoodWasteFormatter.FormatQuantity(captured.Item.quantity, UnitCatalog.Current.GetLabel(captured.Item.unit)),
+                    ExpiryText = FoodWasteFormatter.FormatShortDate(captured.Item.expiryDate, culture)
+                };
+                card.ExpiryLabel.AddToClassList("fm-fw-expired-label");
+                card.InfoButton.style.display = DisplayStyle.None;
+                card.OpenButton.clicked += () => ShowRecordOverlay(captured);
+                card.RemoveButton.clicked += () => ShowRecordOverlay(captured);
+                _expiredContainer.Add(card);
+            }
+        }
 
-                    var row = new VisualElement();
-                    row.AddToClassList("fm-fw-row");
+        private void SetupMonthStepper()
+        {
+            if (_monthStepper == null)
+            {
+                return;
+            }
 
-                    var info = new VisualElement();
-                    info.AddToClassList("fm-fw-row-info");
+            _monthStepper.UnregisterValueChangedCallback(OnMonthChanged);
+            _stepperMonths.Clear();
 
-                    string foodName = captured.foodProduct?.name ?? captured.foodProductId ?? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
-                    var nameLabel = new Text { text = foodName };
-                    nameLabel.AddToClassList("fm-fw-row-name");
+            CultureInfo culture = CurrentCulture();
+            DateTime current = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            List<string> choices = new();
+            for (int i = MonthsInStepper - 1; i >= 0; i--)
+            {
+                DateTime month = current.AddMonths(-i);
+                _stepperMonths.Add(month);
+                choices.Add(FoodWasteFormatter.FormatMonth(month.ToString("yyyy-MM", CultureInfo.InvariantCulture), culture));
+            }
 
-                    string detail = $"{captured.quantity} {captured.unit} · {FormatWasteReason(captured.wasteReason)}";
-                    var detailLabel = new Text { text = detail };
-                    detailLabel.AddToClassList("fm-fw-row-detail");
+            _monthStepper.Cyclic = false;
+            _monthStepper.Choices = choices.ToArray();
+            int selected = _stepperMonths.IndexOf(_viewModel.SelectedMonth);
+            _monthStepper.SelectedIndex = selected >= 0 ? selected : _stepperMonths.Count - 1;
+            // Registered after setting the index: setting SelectedIndex fires valueChanged.
+            _monthStepper.RegisterValueChangedCallback(OnMonthChanged);
+        }
 
-                    info.Add(nameLabel);
-                    info.Add(detailLabel);
-                    row.Add(info);
+        private void OnMonthChanged(object sender, ChangeEvent<int> evt)
+        {
+            if (evt.newValue >= 0 && evt.newValue < _stepperMonths.Count)
+            {
+                _ = SafeSetMonthAsync(_stepperMonths[evt.newValue]);
+            }
+        }
 
-                    if (captured.carbonFootprint > 0)
-                    {
-                        var badge = new Text { text = $"{captured.carbonFootprint:F1} kg CO₂" };
-                        badge.AddToClassList("fm-fw-row-badge");
-                        badge.AddToClassList("fm-fw-row-badge--carbon");
-                        row.Add(badge);
-                    }
+        private void RebuildHistory()
+        {
+            _historyContainer.Clear();
 
-                    if (captured.costEstimate > 0)
-                    {
-                        var badge = new Text { text = $"€{captured.costEstimate:F2}" };
-                        badge.AddToClassList("fm-fw-row-badge");
-                        badge.AddToClassList("fm-fw-row-badge--cost");
-                        row.Add(badge);
-                    }
+            List<FoodWaste> history = _viewModel.History;
+            bool isEmpty = history == null || history.Count == 0;
+            _emptyState?.EnableInClassList("visible", isEmpty);
+            if (isEmpty)
+            {
+                return;
+            }
 
-                    var deleteBtn = new IconButton { icon = "trash" };
-                    string capturedId = captured.id;
-                    deleteBtn.RegisterCallback<ClickEvent>(evt =>
-                    {
-                        evt.StopPropagation();
-                        FMDialog.ShowConfirm(
-                            this,
-                            "@UI:DELETE_WASTE",
-                            LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MSG", new object[] { foodName }),
-                            onConfirm: () => _ = DeleteWasteSafeAsync(capturedId),
-                            semantic: AlertSemantic.Destructive);
-                    });
-                    row.Add(deleteBtn);
+            CultureInfo culture = CurrentCulture();
+            string unknown = L("UNKNOWN");
 
-                    _wasteContainer.Add(row);
-                }
+            foreach (FoodWaste waste in history)
+            {
+                FoodWaste captured = waste;
+                string reasonKey = FoodWasteFormatter.GetReasonKey(captured.wasteReason);
+                string reasonText = reasonKey != null ? L(reasonKey) : captured.wasteReason;
+
+                var card = new FMItemFoodWaste
+                {
+                    Text = FoodWasteFormatter.GetDisplayName(captured, unknown),
+                    Detail = FoodWasteFormatter.FormatDetail(captured.quantity, UnitCatalog.Current.GetLabel(captured.unit), reasonText),
+                    DateText = FoodWasteFormatter.FormatShortDate(captured.wastedAt, culture)
+                };
+                card.RemoveButton.clicked += () => ConfirmDelete(captured.id);
+                _historyContainer.Add(card);
             }
         }
 
         private void UpdateLoadingState()
         {
-            bool isLoading = _viewModel.IsLoading;
-            if (isLoading)
+            if (_viewModel.IsLoading)
+            {
                 FMLoadingOverlay.Show();
+            }
             else
+            {
                 FMLoadingOverlay.Hide();
-            _btnAdd?.SetEnabled(!isLoading);
-        }
-
-        private void UpdateErrorState()
-        {
-            bool hasError = !string.IsNullOrEmpty(_viewModel.ErrorMessage);
-            _errorText?.EnableInClassList("visible", hasError);
-            if (_errorText != null)
-                _errorText.text = _viewModel.ErrorMessage;
-        }
-
-        private void OnAddClicked()
-        {
-            _navController?.Navigate(Actions.go_to_foodwaste_add);
+            }
         }
 
         private void UpdateApiErrorState()
         {
             if (_viewModel.ErrorDetail != null)
             {
-                FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail);
+                FMDialog.ShowApiError(this, L("ERROR_TITLE"), _viewModel.ErrorDetail);
                 _viewModel.ErrorDetail = null;
             }
         }
 
-        private static string FormatWasteReason(string reason)
+        // --------------------------------------------------------------------
+        // Actions
+        // --------------------------------------------------------------------
+
+        private void ShowRecordOverlay(PantryItemView view)
         {
-            return reason switch
+            if (view?.Item == null)
             {
-                "EXPIRED" => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_EXPIRED"),
-                "SPOILED" => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_SPOILED"),
-                "OVERCOOKED" => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_OVERCOOKED"),
-                "UNWANTED" => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_UNWANTED"),
-                "PORTION_TOO_LARGE" => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_PORTION_LARGE"),
-                "OTHER" => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REASON_OTHER"),
-                _ => reason
-            };
+                return;
+            }
+            FoodWasteRecordOverlay.Show(this, view, onSaved: () => _viewModel?.OnWasteRecorded());
         }
 
-        private static string FormatMonth(string key)
+        private void OnPopoverVisibilityChanged(bool isVisible)
         {
-            if (string.IsNullOrEmpty(key) || key == "Unknown") return LocalizationSettings.StringDatabase.GetLocalizedString("UI", "UNKNOWN");
-            if (DateTime.TryParse(key + "-01", out DateTime dt))
-                return dt.ToString("MMMM yyyy");
-            return key;
+            _mainContent?.EnableInClassList("fm-fw-hidden", isVisible);
         }
 
-        private async Task DeleteWasteSafeAsync(string wasteId)
+        private void ConfirmDelete(string wasteId)
+        {
+            FMDialog.ShowConfirm(
+                this,
+                "@UI:FW_DELETE_CONFIRM_TITLE",
+                L("FW_DELETE_CONFIRM_MSG"),
+                onConfirm: async () =>
+                {
+                    bool ok = await SafeDeleteAsync(wasteId);
+                    if (ok)
+                    {
+                        ShowPositiveToast(L("FW_DELETE_SUCCESS"));
+                    }
+                },
+                semantic: AlertSemantic.Destructive);
+        }
+
+        private void OnMoveAllClicked()
+        {
+            int count = _viewModel.ExpiredItems?.Count ?? 0;
+            if (count == 0)
+            {
+                return;
+            }
+
+            string message = count == 1
+                ? L("MOVE_EXPIRED_MSG")
+                : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MOVE_EXPIRED_MSG_PLURAL", new object[] { count });
+
+            FMDialog.ShowConfirm(
+                this,
+                "@UI:MOVE_TO_WASTE",
+                message,
+                onConfirm: async () =>
+                {
+                    int wasted = await SafeBatchWasteAsync();
+                    if (wasted > 0)
+                    {
+                        string key = wasted == 1 ? "ITEMS_MOVED_WASTE" : "ITEMS_MOVED_WASTE_PLURAL";
+                        ShowPositiveToast(LocalizationSettings.StringDatabase.GetLocalizedString("UI", key, new object[] { wasted }));
+                    }
+                },
+                semantic: AlertSemantic.Destructive);
+        }
+
+        private void ShowPositiveToast(string message)
+        {
+            Toast.Build(this, message, NotificationDuration.Short)
+                .SetStyle(NotificationStyle.Positive)
+                .SetPosition(PopupNotificationPlacement.Bottom)
+                .Show();
+        }
+
+        private async Task SafeLoadAsync()
         {
             try
             {
-                await _viewModel.DeleteWasteAsync(wasteId);
+                await _viewModel.LoadAsync();
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[FoodWasteScreen] Delete failed: {ex.Message}");
+                Debug.LogError($"[FoodWasteScreen] LoadAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task SafeSetMonthAsync(DateTime month)
+        {
+            try
+            {
+                await _viewModel.SetSelectedMonthAsync(month);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodWasteScreen] SetSelectedMonthAsync failed: {ex.Message}");
+            }
+        }
+
+        private async Task<bool> SafeDeleteAsync(string wasteId)
+        {
+            try
+            {
+                return await _viewModel.DeleteWasteAsync(wasteId);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodWasteScreen] DeleteWasteAsync failed: {ex.Message}");
+                return false;
+            }
+        }
+
+        private async Task<int> SafeBatchWasteAsync()
+        {
+            try
+            {
+                return await _viewModel.BatchWasteExpiredAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodWasteScreen] BatchWasteExpiredAsync failed: {ex.Message}");
+                return 0;
             }
         }
     }

@@ -1,86 +1,69 @@
-.fm-fw-root {
+.fm-fw-back {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.fm-fw-main {
     flex-grow: 1;
-    padding: 16px;
+    margin-top: 16px;
 }
-.fm-fw-header {
-    margin-bottom: 12px;
+
+.fm-fw-main.fm-fw-hidden {
+    visibility: hidden;
 }
-.fm-fw-spinner {
-    align-self: center;
+
+.fm-fw-section {
+    flex-direction: column;
+    margin-bottom: 16px;
     display: none;
 }
-.fm-fw-spinner.visible {
+
+.fm-fw-section.visible {
     display: flex;
 }
-.fm-fw-error {
-    color: var(--fm-color-error);
-    display: none;
+
+.fm-fw-section-header-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px 8px;
+}
+
+.fm-fw-section-title {
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-definition: var(--appui-font-weights-200);
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.fm-fw-month-stepper {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.fm-fw-container {
+    flex-direction: column;
+}
+
+.fm-fw-scroll {
+    flex-grow: 1;
     margin-bottom: 8px;
 }
-.fm-fw-error.visible {
-    display: flex;
-}
+
 .fm-fw-empty {
-    color: var(--fm-color-text-secondary);
+    align-self: center;
+    margin-top: 32px;
+    opacity: 0.5;
     display: none;
-    margin-top: 24px;
-    text-align: center;
 }
+
 .fm-fw-empty.visible {
     display: flex;
 }
-.fm-fw-scroll {
-    flex-grow: 1;
-}
-.fm-fw-container {
-    flex-grow: 1;
-}
-.fm-fw-fab {
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
-}
-.fm-fw-section-header {
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--fm-color-text-secondary);
-    margin-top: 16px;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-}
-.fm-fw-row {
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--fm-color-border);
-}
-.fm-fw-row:active {
-    background-color: var(--fm-color-surface-pressed);
-}
-.fm-fw-row-info {
-    flex-grow: 1;
-}
-.fm-fw-row-name {
-    font-size: 16px;
-}
-.fm-fw-row-detail {
-    font-size: 12px;
-    color: var(--fm-color-text-secondary);
-}
-.fm-fw-row-badge {
-    font-size: 12px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-left: 8px;
-}
-.fm-fw-row-badge--carbon {
-    background-color: var(--fm-color-success);
-    color: white;
-}
-.fm-fw-row-badge--cost {
-    background-color: var(--fm-color-warning);
-    color: white;
+
+.fm-fw-expired-label {
+    color: var(--appui-color-danger-700);
 }

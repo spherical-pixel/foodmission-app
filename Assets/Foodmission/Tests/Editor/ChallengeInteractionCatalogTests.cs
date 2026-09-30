@@ -89,9 +89,10 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Get_WasteChallenges_UseAddScreenOnlyWhenAutoCompleting()
+        public void Get_WasteChallenges_OpenFoodWasteScreen()
         {
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_foodwaste_add, ChallengeInteractionCatalog.Get("CH.B5.3").ModuleAction);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_foodwaste, ChallengeInteractionCatalog.Get("CH.B5.3").ModuleAction);
+            Assert.IsTrue(ChallengeInteractionCatalog.Get("CH.B5.3").AutoCompletes);
             Assert.AreEqual(3, ChallengeInteractionCatalog.Get("CH.B5.3").RequiredCount);
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_foodwaste, ChallengeInteractionCatalog.Get("CH.I5.1").ModuleAction);
             Assert.IsFalse(ChallengeInteractionCatalog.Get("CH.I5.1").AutoCompletes);
