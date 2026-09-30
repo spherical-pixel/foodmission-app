@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 using Unity.AppUI.UI;
@@ -13,54 +12,6 @@ namespace eu.foodmission.platform.Components
     public partial class FMQuantityUnitPanel : ExVisualElement
     {
 
-        private static List<string> _unitValues;
-        private static List<string> _unitLabels;
-        private static string _cachedLang;
-
-        public static List<string> UnitValues => _unitValues;
-        public static List<string> UnitChoices => _unitLabels;
-
-        public static string GetUnitLabel(string unitCode)
-        {
-            if (string.IsNullOrEmpty(unitCode)) return "";
-            if (_unitValues != null && _unitLabels != null)
-            {
-                int idx = _unitValues.IndexOf(unitCode);
-                if (idx >= 0 && idx < _unitLabels.Count)
-                    return _unitLabels[idx];
-            }
-            return unitCode;
-        }
-
-        public static async Task InitializeAsync(ICatalogService catalogService, string lang)
-        {
-            if (_unitValues != null && _cachedLang == lang) return;
-
-            try
-            {
-                var (units, error) = await catalogService.GetUnitsAsync(lang);
-                if (error == null && units != null && units.Length > 0)
-                {
-                    _unitValues = new List<string>(units.Length);
-                    _unitLabels = new List<string>(units.Length);
-                    foreach (var u in units)
-                    {
-                        _unitValues.Add(u.code);
-                        _unitLabels.Add(u.label);
-                    }
-                    Debug.Log($"[FMQuantityUnitPanel] Units loaded from API: {_unitValues.Count} (lang={lang})");
-                    _cachedLang = lang;
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"[FMQuantityUnitPanel] Failed to load units from API: {ex.Message}");
-            }
-
-            Debug.Log("[FMQuantityUnitPanel] Using default unit catalog");
-        }
-
         public float Quantity
         {
             get => _qtyField.value;
@@ -69,15 +20,15 @@ namespace eu.foodmission.platform.Components
 
         public string Unit
         {
-            get => _unitDropdown != null && _unitDropdown.selectedIndex >= 0
-                ? UnitValues[_unitDropdown.selectedIndex]
-                : "PIECES";
+            get
+            {
+                IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
+                int idx = _unitDropdown != null ? _unitDropdown.selectedIndex : -1;
+                return idx >= 0 && idx < codes.Count ? codes[idx] : UnitCodes.Default;
+            }
             set
             {
-                if (_unitDropdown == null) return;
-                int idx = UnitValues.IndexOf(value);
-                if (idx >= 0)
-                    _unitDropdown.SetValueWithoutNotify(new[] { idx });
+                SetUnitWithoutNotify(value);
             }
         }
 
@@ -103,9 +54,10 @@ namespace eu.foodmission.platform.Components
             unitLabel.style.marginBottom = 4;
             Add(unitLabel);
 
+            List<string> unitLabels = new List<string>(UnitCatalog.Current.Labels);
             _unitDropdown = new Dropdown();
-            _unitDropdown.bindItem = (item, i) => item.label = UnitChoices[i];
-            _unitDropdown.sourceItems = UnitChoices;
+            _unitDropdown.bindItem = (item, i) => item.label = unitLabels[i];
+            _unitDropdown.sourceItems = unitLabels;
             _unitDropdown.SetValueWithoutNotify(new[] { 0 });
             _unitDropdown.style.marginBottom = 8;
             Add(_unitDropdown);
@@ -121,10 +73,28 @@ namespace eu.foodmission.platform.Components
 
         public void SetUnitWithoutNotify(string unit)
         {
-            if (_unitDropdown == null) return;
-            int idx = UnitValues.IndexOf(unit);
+            if (_unitDropdown == null)
+            {
+                return;
+            }
+            int idx = IndexOfCode(unit);
             if (idx >= 0)
+            {
                 _unitDropdown.SetValueWithoutNotify(new[] { idx });
+            }
+        }
+
+        private static int IndexOfCode(string code)
+        {
+            IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
+            for (int i = 0; i < codes.Count; i++)
+            {
+                if (string.Equals(codes[i], code, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }

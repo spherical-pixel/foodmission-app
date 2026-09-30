@@ -129,12 +129,12 @@ namespace eu.foodmission.platform
                 _searchCategoryField.SearchByFoodGroupAsync = (foodGroup, page, pageSize) => _viewModel.SearchByFoodGroupAsync(foodGroup, page, pageSize);
                 _searchCategoryField.OnProductConfirmed = async (product, qty, unit) =>
                 {
-                    await SafeImportAndAddItemAsync(product, qty ?? 1f, unit ?? "PIECES");
+                    await SafeImportAndAddItemAsync(product, qty ?? 1f, unit ?? UnitCodes.Default);
                     RebuildItems();
                 };
                 _searchCategoryField.OnGenericFoodConfirmed = async (food, qty, unit) =>
                 {
-                    await SafeAddGenericFoodItemAsync(food, qty ?? 1f, unit ?? "PIECES");
+                    await SafeAddGenericFoodItemAsync(food, qty ?? 1f, unit ?? UnitCodes.Default);
                     RebuildItems();
                 };
 

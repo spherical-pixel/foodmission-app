@@ -18,7 +18,7 @@ namespace eu.foodmission.platform
             string foodProductId,
             string genericFoodId,
             float quantity,
-            string unit = "PIECES",
+            string unit = UnitCodes.Default,
             string notes = null,
             string location = null,
             string expiryDate = null);

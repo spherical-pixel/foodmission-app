@@ -100,7 +100,7 @@ namespace eu.foodmission.platform
         {
             _store.Dispatch(AppActions.setLanguage.Invoke(lang));
             ScheduleSettingsSync();
-            FMQuantityUnitPanel.InitializeAsync(_catalogService, lang)
+            UnitCatalog.Current.LoadAsync(lang)
                 .ContinueWith(t =>
                 {
                     if (t.IsFaulted)

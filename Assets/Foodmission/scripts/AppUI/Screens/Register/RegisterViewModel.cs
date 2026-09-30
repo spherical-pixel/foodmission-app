@@ -429,7 +429,7 @@ namespace eu.foodmission.platform
                     }
 
                     string lang = _storeService.GetAppState().lang ?? "en";
-                    _ = Components.FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
+                    _ = UnitCatalog.Current.LoadAsync(lang);
 
                     RaiseNavigationRequested(Actions.register_to_onboarding);
                 }

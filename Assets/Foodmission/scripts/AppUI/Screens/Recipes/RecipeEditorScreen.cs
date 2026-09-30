@@ -157,7 +157,7 @@ namespace eu.foodmission.platform
                 _searchIngredientsField.OnProductConfirmed = (product, qty, unit) =>
                 {
                     string name = product.name ?? product.genericName ?? "Product";
-                    ShowQuantityDialog(name, qty ?? 1f, unit ?? "PIECES", async (selectedQty, selectedUnit) =>
+                    ShowQuantityDialog(name, qty ?? 1f, unit ?? UnitCodes.Default, async (selectedQty, selectedUnit) =>
                     {
                         string measure = FormatMeasure(selectedQty, selectedUnit);
                         string resolvedFoodProductId = null;
@@ -180,7 +180,7 @@ namespace eu.foodmission.platform
                 _searchIngredientsField.OnGenericFoodConfirmed = (food, qty, unit) =>
                 {
                     string name = food.foodName ?? "Ingredient";
-                    ShowQuantityDialog(name, qty ?? 1f, unit ?? "PIECES", (selectedQty, selectedUnit) =>
+                    ShowQuantityDialog(name, qty ?? 1f, unit ?? UnitCodes.Default, (selectedQty, selectedUnit) =>
                     {
                         string measure = FormatMeasure(selectedQty, selectedUnit);
                         _viewModel.AddIngredientFromGenericFood(food.id, name, measure, selectedQty, selectedUnit);
@@ -576,8 +576,7 @@ namespace eu.foodmission.platform
                 var idx = i;
 
                 var (qty, unit) = ParseMeasure(captured.Measure, captured.Quantity, captured.Unit);
-                string unitLabel = FMQuantityUnitPanel.GetUnitLabel(unit);
-                string unitDisplay = string.IsNullOrEmpty(unitLabel) ? unit : unitLabel;
+                string unitDisplay = UnitCatalog.Current.GetLabel(unit);
                 string label = qty > 0
                     ? $"{captured.Name} \u00d7 {qty:0.##} {unitDisplay}".Trim()
                     : captured.Name;
@@ -612,7 +611,7 @@ namespace eu.foodmission.platform
         {
             var panel = new FMQuantityUnitPanel();
             panel.SetQuantityWithoutNotify(initialQty > 0 ? initialQty : 1f);
-            panel.SetUnitWithoutNotify(string.IsNullOrEmpty(initialUnit) ? "PIECES" : initialUnit);
+            panel.SetUnitWithoutNotify(string.IsNullOrEmpty(initialUnit) ? UnitCodes.Pieces : initialUnit);
 
             FMDialog.ShowCustom(
                 this,
@@ -627,8 +626,7 @@ namespace eu.foodmission.platform
 
         private static string FormatMeasure(float qty, string unit)
         {
-            string unitLabel = FMQuantityUnitPanel.GetUnitLabel(unit);
-            string unitDisplay = string.IsNullOrEmpty(unitLabel) ? unit : unitLabel;
+            string unitDisplay = UnitCatalog.Current.GetLabel(unit);
             return qty > 0 ? $"{qty} {unitDisplay}".Trim() : unitDisplay;
         }
 
@@ -639,44 +637,12 @@ namespace eu.foodmission.platform
                 return (fallbackQty.Value, fallbackUnit);
             }
 
-            if (string.IsNullOrWhiteSpace(measure))
+            string defaultUnit = string.IsNullOrEmpty(fallbackUnit) ? UnitCodes.Default : fallbackUnit;
+            if (UnitCatalog.Current.TryParseMeasure(measure, out float qty, out string unit))
             {
-                return (fallbackQty ?? 1f, string.IsNullOrEmpty(fallbackUnit) ? "PIECES" : fallbackUnit);
+                return (qty, unit);
             }
-
-            string[] parts = measure.Trim().Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length > 0 && float.TryParse(parts[0], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float parsedQty))
-            {
-                string rawUnit = parts.Length > 1 ? parts[1].Trim() : "";
-                string matchedUnit = FindMatchingUnitCode(rawUnit);
-                return (parsedQty, !string.IsNullOrEmpty(matchedUnit) ? matchedUnit : (fallbackUnit ?? "PIECES"));
-            }
-            else if (parts.Length > 0 && float.TryParse(parts[0].Replace(',', '.'), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float parsedQty2))
-            {
-                string rawUnit = parts.Length > 1 ? parts[1].Trim() : "";
-                string matchedUnit = FindMatchingUnitCode(rawUnit);
-                return (parsedQty2, !string.IsNullOrEmpty(matchedUnit) ? matchedUnit : (fallbackUnit ?? "PIECES"));
-            }
-
-            return (fallbackQty ?? 1f, fallbackUnit ?? "PIECES");
-        }
-
-        private static string FindMatchingUnitCode(string rawUnit)
-        {
-            if (string.IsNullOrWhiteSpace(rawUnit)) return "PIECES";
-            var values = FMQuantityUnitPanel.UnitValues;
-            var choices = FMQuantityUnitPanel.UnitChoices;
-            if (values != null)
-            {
-                int exactIdx = values.FindIndex(v => string.Equals(v, rawUnit, StringComparison.OrdinalIgnoreCase));
-                if (exactIdx >= 0) return values[exactIdx];
-                if (choices != null)
-                {
-                    int labelIdx = choices.FindIndex(c => string.Equals(c, rawUnit, StringComparison.OrdinalIgnoreCase));
-                    if (labelIdx >= 0 && labelIdx < values.Count) return values[labelIdx];
-                }
-            }
-            return rawUnit;
+            return (fallbackQty ?? 1f, defaultUnit);
         }
 
         private async Task SafeLoadForEditAsync(string recipeId)

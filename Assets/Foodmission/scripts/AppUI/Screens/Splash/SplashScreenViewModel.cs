@@ -88,7 +88,7 @@ namespace eu.foodmission.platform
             else
             {
                 string lang = _storeService.GetAppState().lang ?? "en";
-                await FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
+                await UnitCatalog.Current.LoadAsync(lang);
 
                 // Pre-warm generic foods & categories cache in background during splash load
                 if (_genericFoodService != null)

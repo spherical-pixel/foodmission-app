@@ -114,8 +114,9 @@ namespace eu.foodmission.platform
         {
             base.OnViewModelBound();
 
-            _unitDropdown.sourceItems = FMQuantityUnitPanel.UnitChoices;
-            _unitDropdown.bindItem = (item, i) => item.label = FMQuantityUnitPanel.UnitChoices[i];
+            List<string> unitLabels = new List<string>(UnitCatalog.Current.Labels);
+            _unitDropdown.sourceItems = unitLabels;
+            _unitDropdown.bindItem = (item, i) => item.label = unitLabels[i];
             _locationDropdown.sourceItems = LocationChoices;
             _locationDropdown.bindItem = (item, i) => item.label = LocationChoices[i];
 
@@ -281,7 +282,7 @@ namespace eu.foodmission.platform
 
             _quantityField.SetValueWithoutNotify(_viewModel.Quantity);
 
-            int unitIdx = FMQuantityUnitPanel.UnitValues.IndexOf(_viewModel.Unit);
+            int unitIdx = IndexOfUnit(_viewModel.Unit);
             _unitDropdown.SetValueWithoutNotify(unitIdx >= 0 ? new[] { unitIdx } : new int[0]);
 
             int locIdx = LocationValues.IndexOf(_viewModel.Location);
@@ -349,7 +350,9 @@ namespace eu.foodmission.platform
         private async void OnSaveClicked()
         {
             _viewModel.Quantity = _quantityField.value;
-            _viewModel.Unit = FMQuantityUnitPanel.UnitValues[_unitDropdown.selectedIndex];
+            IReadOnlyList<string> unitCodes = UnitCatalog.Current.Codes;
+            int selectedUnit = _unitDropdown.selectedIndex;
+            _viewModel.Unit = selectedUnit >= 0 && selectedUnit < unitCodes.Count ? unitCodes[selectedUnit] : UnitCodes.Default;
             _viewModel.Location = LocationValues[_locationDropdown.selectedIndex];
             _viewModel.Notes = _notesField.value;
             _viewModel.ExpiryDate = _expiryField.value;
@@ -424,6 +427,19 @@ namespace eu.foodmission.platform
                         semantic: AlertSemantic.Destructive);
                 }),
                 new FMDialogAction(cancelLabel, () => { }));
+        }
+
+        private static int IndexOfUnit(string code)
+        {
+            IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
+            for (int i = 0; i < codes.Count; i++)
+            {
+                if (string.Equals(codes[i], code, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }

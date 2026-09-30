@@ -240,7 +240,7 @@ namespace eu.foodmission.platform
                     genericId = request.FoodId;
                 }
 
-                var (added, error) = await _pantryService.AddItemAsync(productId, genericId, 1f, "PIECES");
+                var (added, error) = await _pantryService.AddItemAsync(productId, genericId, 1f, UnitCodes.Pieces);
                 if (error != null)
                 {
                     ErrorDetail = error;
@@ -333,7 +333,7 @@ namespace eu.foodmission.platform
                     genericId = request.FoodId;
                 }
 
-                var (added, itemError) = await _shoppingListService.AddItemAsync(targetListId, productId, 1f, "PIECES", null, false, genericId);
+                var (added, itemError) = await _shoppingListService.AddItemAsync(targetListId, productId, 1f, UnitCodes.Pieces, null, false, genericId);
 
                 // If 404 (list was deleted/not found), clear stale target, create a new default list and retry once
                 if (itemError != null && (itemError.statusCode == 404 || (itemError.message != null && itemError.message.ToLowerInvariant().Contains("not found"))))
@@ -347,7 +347,7 @@ namespace eu.foodmission.platform
                     var (newList, createErr) = await _shoppingListService.CreateListAsync(defaultName);
                     if (createErr == null && newList != null)
                     {
-                        (added, itemError) = await _shoppingListService.AddItemAsync(newList.id, productId, 1f, "PIECES", null, false, genericId);
+                        (added, itemError) = await _shoppingListService.AddItemAsync(newList.id, productId, 1f, UnitCodes.Pieces, null, false, genericId);
                         targetListId = newList.id;
                     }
                 }

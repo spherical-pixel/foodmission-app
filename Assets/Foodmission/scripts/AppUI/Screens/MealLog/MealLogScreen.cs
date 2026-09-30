@@ -883,7 +883,7 @@ namespace eu.foodmission.platform
             foreach (MealLogItem entry in _viewModel.SelectedItems)
             {
                 MealLogItem captured = entry;
-                string unitLabel = FMQuantityUnitPanel.GetUnitLabel(entry.unit);
+                string unitLabel = UnitCatalog.Current.GetLabel(entry.unit);
                 string label = (entry.quantity.HasValue && entry.quantity.Value > 0)
                     ? $"{entry.name} \u00d7 {entry.quantity.Value}{(string.IsNullOrEmpty(unitLabel) ? "" : " " + unitLabel)}"
                     : entry.name;
@@ -913,7 +913,7 @@ namespace eu.foodmission.platform
         {
             var panel = new FMQuantityUnitPanel();
             panel.SetQuantityWithoutNotify(item.quantity ?? 1f);
-            panel.SetUnitWithoutNotify(!string.IsNullOrEmpty(item.unit) ? item.unit : "PIECES");
+            panel.SetUnitWithoutNotify(!string.IsNullOrEmpty(item.unit) ? item.unit : UnitCodes.Default);
 
             FMDialog.ShowCustom(
                 this,

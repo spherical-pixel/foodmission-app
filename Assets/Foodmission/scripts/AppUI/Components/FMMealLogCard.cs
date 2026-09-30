@@ -164,7 +164,7 @@ namespace eu.foodmission.platform.Components
 
                         if (item.quantity.HasValue && item.quantity.Value > 0)
                         {
-                            string unitStr = !string.IsNullOrEmpty(item.unit) ? $" {item.unit}" : "";
+                            string unitStr = !string.IsNullOrEmpty(item.unit) ? $" {UnitCatalog.Current.GetLabel(item.unit)}" : "";
                             Unity.AppUI.UI.Text qtyLabel = new Unity.AppUI.UI.Text();
                             qtyLabel.AddToClassList("fm-meal-card-item-qty");
                             qtyLabel.text = $"{item.quantity.Value}{unitStr}";

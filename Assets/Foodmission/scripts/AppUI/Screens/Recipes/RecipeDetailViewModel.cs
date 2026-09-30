@@ -254,7 +254,7 @@ namespace eu.foodmission.platform
                         foodProductId: ing.foodProductId,
                         genericFoodId: ing.genericFoodId,
                         quantity: 1f,
-                        unit: "PIECES");
+                        unit: UnitCodes.Default);
 
                     if (addErr != null && (addErr.statusCode == 429 || (addErr.error != null && addErr.error.Equals("ThrottlerException", StringComparison.OrdinalIgnoreCase))))
                     {
@@ -264,7 +264,7 @@ namespace eu.foodmission.platform
                             foodProductId: ing.foodProductId,
                             genericFoodId: ing.genericFoodId,
                             quantity: 1f,
-                            unit: "PIECES");
+                            unit: UnitCodes.Default);
                     }
 
                     if (added != null)

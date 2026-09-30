@@ -107,7 +107,7 @@ namespace eu.foodmission.platform
                     _hasNavigated = true;
 
                     string lang = _storeService.GetAppState().lang ?? "en";
-                    _ = Components.FMQuantityUnitPanel.InitializeAsync(_catalogService, lang);
+                    _ = UnitCatalog.Current.LoadAsync(lang);
 
                     RaiseNavigationRequested(Actions.go_to_home);
                 }

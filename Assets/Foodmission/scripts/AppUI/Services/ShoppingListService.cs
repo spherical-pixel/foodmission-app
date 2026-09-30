@@ -175,14 +175,14 @@ namespace eu.foodmission.platform
             return (response?.data, null);
         }
 
-        public async Task<(ShoppingListItem Result, ApiErrorResponse Error)> AddItemAsync(string listId, string foodProductId = null, float quantity = 1, string unit = "PIECES", string notes = null, bool? checkedState = null, string genericFoodId = null)
+        public async Task<(ShoppingListItem Result, ApiErrorResponse Error)> AddItemAsync(string listId, string foodProductId = null, float quantity = 1, string unit = UnitCodes.Default, string notes = null, bool? checkedState = null, string genericFoodId = null)
         {
             AddShoppingListItemRequest body = new()
             {
                 foodProductId = foodProductId,
                 genericFoodId = genericFoodId,
                 quantity = quantity,
-                unit = unit ?? "PIECES",
+                unit = unit ?? UnitCodes.Default,
                 notes = notes,
                 @checked = checkedState
             };

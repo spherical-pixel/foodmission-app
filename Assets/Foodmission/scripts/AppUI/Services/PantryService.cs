@@ -138,7 +138,7 @@ namespace eu.foodmission.platform
             string foodProductId,
             string genericFoodId,
             float quantity,
-            string unit = "PIECES",
+            string unit = UnitCodes.Default,
             string notes = null,
             string location = null,
             string expiryDate = null)
@@ -161,7 +161,7 @@ namespace eu.foodmission.platform
                 foodProductId = string.IsNullOrEmpty(foodProductId) ? null : foodProductId,
                 genericFoodId = string.IsNullOrEmpty(genericFoodId) ? null : genericFoodId,
                 quantity = quantity,
-                unit = unit ?? "PIECES",
+                unit = unit ?? UnitCodes.Default,
                 notes = notes,
                 location = string.IsNullOrEmpty(location) ? null : location,
                 expiryDate = effectiveExpiryDate

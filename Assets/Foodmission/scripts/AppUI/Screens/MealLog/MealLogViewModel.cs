@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -1545,7 +1544,7 @@ namespace eu.foodmission.platform
                 genericFoodId = foodType == FoodInfoType.Generic ? foodId : null,
                 name = foodName ?? "Alimento",
                 quantity = 1f,
-                unit = "PIECES"
+                unit = UnitCodes.Pieces
             };
 
             SelectedItems = new List<MealLogItem> { newItem };
@@ -1593,33 +1592,8 @@ namespace eu.foodmission.platform
 
         public static (float quantity, string unit) TryParseMeasure(string measure)
         {
-            if (string.IsNullOrWhiteSpace(measure))
-                return (1f, "PIECES");
-
-            Match match = Regex.Match(measure.Trim(), @"^([\d.]+)\s*(.*)$");
-            if (match.Success && float.TryParse(match.Groups[1].Value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float qty))
-            {
-                string unitText = match.Groups[2].Value.Trim().ToLowerInvariant();
-                return (qty, TryParseUnit(unitText));
-            }
-
-            return (1f, "PIECES");
-        }
-
-        private static string TryParseUnit(string unitText)
-        {
-            if (string.IsNullOrEmpty(unitText)) return "PIECES";
-
-            return unitText switch
-            {
-                "g" or "gr" or "gram" or "grams" => "G",
-                "kg" or "kgs" or "kilogram" or "kilograms" => "KG",
-                "ml" or "milliliter" or "milliliters" => "ML",
-                "l" or "liter" or "liters" or "litre" or "litres" => "L",
-                "cup" or "cups" => "CUPS",
-                "piece" or "pieces" or "pcs" or "unit" or "units" => "PIECES",
-                _ => "PIECES",
-            };
+            UnitCatalog.Current.TryParseMeasure(measure, out float quantity, out string unit);
+            return (quantity, unit);
         }
 
         public static MealLog PendingQuickMealEditPayload { get; set; }

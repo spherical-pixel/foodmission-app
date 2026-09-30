@@ -48,6 +48,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IMealItemService, MealItemService>();
             builder.services.AddSingleton<IRecipeService, RecipeService>();
             builder.services.AddSingleton<IFoodWasteService, FoodWasteService>();
+            builder.services.AddSingleton<IUnitCatalog, UnitCatalog>();
             builder.services.AddSingleton<ITemplateService, TemplateService>();
             builder.services.AddSingleton<IImageService, ImageService>();
             builder.services.AddSingleton<IAppUpdateService, AppUpdateService>();

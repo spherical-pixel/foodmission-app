@@ -201,7 +201,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, food.id, 1f, "PIECES");
+            var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, food.id, 1f, UnitCodes.Pieces);
 
             if (addError != null && (addError.statusCode == 409 || (addError.error != null && addError.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (addError.message != null && addError.message.ToLowerInvariant().Contains("already"))))
             {
@@ -516,7 +516,7 @@ namespace eu.foodmission.platform
             }
 
             float addQty = quantity ?? 1f;
-            string addUnit = unit ?? "PIECES";
+            string addUnit = unit ?? UnitCodes.Default;
             var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, foodItem.id, addQty, addUnit);
 
             if (addError != null && (addError.statusCode == 409 || (addError.error != null && addError.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (addError.message != null && addError.message.ToLowerInvariant().Contains("already"))))
@@ -583,7 +583,7 @@ namespace eu.foodmission.platform
 
             ErrorMessage = "";
             float addQty = quantity ?? 1f;
-            string addUnit = unit ?? "PIECES";
+            string addUnit = unit ?? UnitCodes.Default;
             var (added, addError) = await _shoppingListService.AddItemAsync(_currentListId, genericFoodId: food.id, quantity: addQty, unit: addUnit);
 
             if (addError != null && (addError.statusCode == 409 || (addError.error != null && addError.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase)) || (addError.message != null && addError.message.ToLowerInvariant().Contains("already"))))
@@ -670,7 +670,7 @@ namespace eu.foodmission.platform
             string foodProductId = view.Item.foodProductId;
             string genericFoodId = view.Item.genericFoodId;
             float quantity = view.Item.quantity > 0 ? view.Item.quantity : 1f;
-            string unit = !string.IsNullOrEmpty(view.Item.unit) ? view.Item.unit : "PIECES";
+            string unit = !string.IsNullOrEmpty(view.Item.unit) ? view.Item.unit : UnitCodes.Default;
 
             var (pantryItem, pantryError) = await _pantryService.AddItemAsync(
                 foodProductId, genericFoodId, quantity, unit);

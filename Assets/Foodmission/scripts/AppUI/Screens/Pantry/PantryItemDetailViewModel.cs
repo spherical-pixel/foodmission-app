@@ -200,7 +200,7 @@ namespace eu.foodmission.platform
                         foodProductId = !string.IsNullOrEmpty(ItemView.Item.foodProductId) ? ItemView.Item.foodProductId : null,
                         genericFoodId = !string.IsNullOrEmpty(ItemView.Item.genericFoodId) ? ItemView.Item.genericFoodId : null,
                         quantity = (int)Mathf.Max(1, Mathf.Round(Quantity > 0 ? Quantity : 1)),
-                        unit = !string.IsNullOrEmpty(Unit) ? Unit : "PIECES"
+                        unit = !string.IsNullOrEmpty(Unit) ? Unit : UnitCodes.Default
                     };
                     var (_, itemErr) = await _mealItemService.CreateAsync(mealId, itemReq);
                     if (itemErr != null)

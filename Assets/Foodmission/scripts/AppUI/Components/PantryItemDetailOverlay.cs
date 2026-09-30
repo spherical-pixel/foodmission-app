@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -194,8 +195,9 @@ namespace eu.foodmission.platform
 
             if (_unitDropdown != null)
             {
-                _unitDropdown.sourceItems = FMQuantityUnitPanel.UnitChoices;
-                _unitDropdown.bindItem = (item, i) => item.label = FMQuantityUnitPanel.UnitChoices[i];
+                List<string> unitLabels = new List<string>(UnitCatalog.Current.Labels);
+                _unitDropdown.sourceItems = unitLabels;
+                _unitDropdown.bindItem = (item, i) => item.label = unitLabels[i];
             }
 
             SetupQuickDateButtons();
@@ -230,7 +232,7 @@ namespace eu.foodmission.platform
 
             if (_unitDropdown != null)
             {
-                int unitIdx = FMQuantityUnitPanel.UnitValues.IndexOf(_viewModel.Unit);
+                int unitIdx = IndexOfUnit(_viewModel.Unit);
                 _unitDropdown.SetValueWithoutNotify(unitIdx >= 0 ? new[] { unitIdx } : new int[0]);
             }
 
@@ -309,9 +311,9 @@ namespace eu.foodmission.platform
                     _viewModel.Quantity = _quantityField.value;
                 }
 
-                if (_unitDropdown != null && _unitDropdown.selectedIndex >= 0 && _unitDropdown.selectedIndex < FMQuantityUnitPanel.UnitValues.Count)
+                if (_unitDropdown != null && _unitDropdown.selectedIndex >= 0 && _unitDropdown.selectedIndex < UnitCatalog.Current.Codes.Count)
                 {
-                    _viewModel.Unit = FMQuantityUnitPanel.UnitValues[_unitDropdown.selectedIndex];
+                    _viewModel.Unit = UnitCatalog.Current.Codes[_unitDropdown.selectedIndex];
                 }
 
                 if (_notesField != null)
@@ -437,6 +439,19 @@ namespace eu.foodmission.platform
                     }
                     break;
             }
+        }
+
+        private static int IndexOfUnit(string code)
+        {
+            IReadOnlyList<string> codes = UnitCatalog.Current.Codes;
+            for (int i = 0; i < codes.Count; i++)
+            {
+                if (string.Equals(codes[i], code, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }
