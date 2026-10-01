@@ -1009,7 +1009,15 @@ namespace eu.foodmission.platform
 
         private void ExecuteOnMainThread(Action action)
         {
-            _step1?.schedule.Execute(action).ExecuteLater(0);
+            _step1?.schedule.Execute(() =>
+            {
+                // The deferred update can run after OnExit has released the view model.
+                if (_viewModel == null || panel == null)
+                {
+                    return;
+                }
+                action();
+            }).ExecuteLater(0);
         }
 
 
