@@ -58,6 +58,7 @@ namespace eu.foodmission.platform
         private FMButton _btnChooseQuest;
         private FMNutriView _nutriView;
         private bool _isDisplayingCelebrationQueue;
+        private Quest _questToOfferAfterCelebrations;
 
         public HomeScreen()
         {
@@ -399,7 +400,24 @@ namespace eu.foodmission.platform
             if (_viewModel == null || _isDisplayingCelebrationQueue) return false;
 
             var rewards = await _viewModel.CheckPendingGamificationRewardsAsync();
-            if (rewards != null && rewards.Count > 0)
+            if (rewards == null || rewards.Count == 0)
+            {
+                // Safety net: the active quest is already completed but its QUEST_COMPLETED was never celebrated
+                string questBefore = _viewModel?.GetCurrentQuestIdFromStore();
+                PendingRewardCelebration completedQuest = _viewModel != null ? await _viewModel.CheckCompletedActiveQuestAsync() : null;
+                if (completedQuest != null)
+                {
+                    rewards = new System.Collections.Generic.List<PendingRewardCelebration> { completedQuest };
+                }
+                else if (_viewModel != null && !string.IsNullOrEmpty(questBefore) && string.IsNullOrEmpty(_viewModel.GetCurrentQuestIdFromStore()))
+                {
+                    // The completed quest was cleared (it had been celebrated already): show the "no active quest" widget
+                    _ = _viewModel.LoadActiveQuestAsync();
+                    RefreshActiveQuestWidget();
+                }
+            }
+
+            if (_viewModel != null && rewards != null && rewards.Count > 0)
             {
                 ShowCelebrationQueue(new System.Collections.Generic.Queue<PendingRewardCelebration>(rewards));
                 return true;
@@ -412,14 +430,16 @@ namespace eu.foodmission.platform
         {
             if (queue == null || queue.Count == 0)
             {
-                _isDisplayingCelebrationQueue = false;
-                _ = _viewModel?.LoadActiveQuestAsync();
-                RefreshActiveQuestWidget();
+                FinishCelebrationQueue();
                 return;
             }
 
             _isDisplayingCelebrationQueue = true;
             var item = queue.Dequeue();
+            if (item.UnlockedQuest != null)
+            {
+                _questToOfferAfterCelebrations = item.UnlockedQuest;
+            }
 
             RewardPresentationItem unlockedQuestCard = null;
             if (item.UnlockedQuest != null)
@@ -448,12 +468,25 @@ namespace eu.foodmission.platform
                     }
                     else
                     {
-                        _isDisplayingCelebrationQueue = false;
-                        _ = _viewModel?.LoadActiveQuestAsync();
-                        RefreshActiveQuestWidget();
+                        FinishCelebrationQueue();
                     }
                 }
             );
+        }
+
+        /// <summary>After the celebrations, a completed quest leads to the next one (its detail has the "Start" button).</summary>
+        private void FinishCelebrationQueue()
+        {
+            _isDisplayingCelebrationQueue = false;
+            _ = _viewModel?.LoadActiveQuestAsync();
+            RefreshActiveQuestWidget();
+
+            Quest next = _questToOfferAfterCelebrations;
+            _questToOfferAfterCelebrations = null;
+            if (next != null)
+            {
+                _viewModel?.OpenQuest(next);
+            }
         }
 
         private void SetupRewardDebugButton()

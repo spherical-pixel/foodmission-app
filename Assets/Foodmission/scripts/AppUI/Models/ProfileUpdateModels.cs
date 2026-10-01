@@ -49,6 +49,10 @@ namespace eu.foodmission.platform
         [JsonProperty("currentQuestId", NullValueHandling = NullValueHandling.Ignore)]
         public string currentQuestId;
 
+        /// <summary>Sends <c>"currentQuestId": null</c> (nulls are otherwise omitted) to leave the user without an active quest.</summary>
+        [JsonIgnore]
+        public bool clearCurrentQuest;
+
         [JsonProperty("healthGoals", NullValueHandling = NullValueHandling.Ignore)]
         public object healthGoals;
 
@@ -73,10 +77,21 @@ namespace eu.foodmission.platform
         [JsonProperty("zip", NullValueHandling = NullValueHandling.Ignore)]
         public string zip;
 
-        public string ToJson() => JsonConvert.SerializeObject(this, new JsonSerializerSettings
+        public string ToJson()
         {
-            NullValueHandling = NullValueHandling.Ignore
-        });
+            string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            if (!clearCurrentQuest)
+            {
+                return json;
+            }
+
+            var obj = Newtonsoft.Json.Linq.JObject.Parse(json);
+            obj["currentQuestId"] = Newtonsoft.Json.Linq.JValue.CreateNull();
+            return obj.ToString(Formatting.None);
+        }
     }
 
     /// <summary>

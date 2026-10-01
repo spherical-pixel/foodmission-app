@@ -57,6 +57,7 @@ namespace eu.foodmission.platform
         private readonly ILegalService _legalService;
         private readonly IPilotSurveyService _pilotSurveyService;
         private readonly IMissionNudgeService _missionNudgeService;
+        private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
         private readonly IQuestService _questService;
         private readonly IQuizService _quizService;
@@ -81,7 +82,8 @@ namespace eu.foodmission.platform
             IFoodFactService foodFactService = null,
             IGamificationService gamificationService = null,
             IQuestProgressionService questProgressionService = null,
-            IMissionNudgeService missionNudgeService = null) : base(storeService)
+            IMissionNudgeService missionNudgeService = null,
+            IAuthService authService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -95,6 +97,7 @@ namespace eu.foodmission.platform
             _gamificationService = gamificationService ?? App.current?.services?.GetService<IGamificationService>();
             _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
             _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
+            _authService = authService ?? App.current?.services?.GetService<IAuthService>();
 
             // Get initial state
             AppState state = _storeService?.GetAppState();
@@ -539,6 +542,27 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.open_quest, args.ToArray());
         }
 
+        public void OpenQuest(Quest quest)
+        {
+            if (quest == null)
+            {
+                return;
+            }
+
+            var args = new System.Collections.Generic.List<Unity.AppUI.Navigation.Argument>();
+            if (!string.IsNullOrEmpty(quest.code))
+            {
+                args.Add(new Unity.AppUI.Navigation.Argument("code", quest.code));
+            }
+            if (!string.IsNullOrEmpty(quest.id))
+            {
+                args.Add(new Unity.AppUI.Navigation.Argument("id", quest.id));
+            }
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.open_quest, args.ToArray());
+        }
+
+        public string GetCurrentQuestIdFromStore() => _storeService?.GetAppState()?.userCurrentQuestId;
+
         public void NavigateToQuests()
         {
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_quests);
@@ -567,6 +591,129 @@ namespace eu.foodmission.platform
             CurrentQuestId = id;
             CurrentQuestActivityStates = states ?? System.Array.Empty<bool>();
             HasActiveQuest = !string.IsNullOrEmpty(title);
+        }
+
+        /// <summary>
+        /// Safety net for a completed quest whose QUEST_COMPLETED was never celebrated (e.g. it was completed while the app was
+        /// closed and the reward check missed it): returns its celebration, offers the next quest and clears the current quest.
+        /// </summary>
+        public async System.Threading.Tasks.Task<PendingRewardCelebration> CheckCompletedActiveQuestAsync()
+        {
+            AppState state = _storeService?.GetAppState();
+            string questId = state?.userCurrentQuestId;
+            if (string.IsNullOrEmpty(questId) || string.IsNullOrEmpty(state.userId) || _questService == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                var (progress, error) = await _questService.GetQuestProgressAsync(questId);
+                if (error != null || progress == null || !(progress.completed || progress.progress >= 100f))
+                {
+                    return null;
+                }
+
+                var celebratedQuests = LoadCelebratedQuests(state.userId);
+                bool alreadyCelebrated = celebratedQuests.Contains(questId) ||
+                                         (!string.IsNullOrEmpty(progress.questCode) && celebratedQuests.Contains(progress.questCode));
+                PendingRewardCelebration celebration = null;
+                if (!alreadyCelebrated)
+                {
+                    string code = !string.IsNullOrEmpty(progress.questCode) ? progress.questCode : questId;
+                    celebration = new PendingRewardCelebration
+                    {
+                        Reward = new ContentReward
+                        {
+                            xp = progress.reward?.xp ?? 100,
+                            points = progress.reward?.points
+                        },
+                        ContextTitle = "@UI:QUEST_REWARD_TITLE",
+                        Code = code,
+                        IsQuest = true,
+                        UnlockedQuest = await FindNextQuestAsync(questId, progress.questCode)
+                    };
+                    MarkQuestCelebrated(state.userId, questId, progress.questCode);
+                }
+
+                await ClearCurrentQuestIfAsync(questId, progress.questCode);
+                return celebration;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] CheckCompletedActiveQuestAsync error: {ex.Message}");
+                return null;
+            }
+        }
+
+        private async System.Threading.Tasks.Task<Quest> FindNextQuestAsync(string questId, string questCode)
+        {
+            if (_questService == null || _questProgressionService == null)
+            {
+                return null;
+            }
+
+            var (allQuests, _) = await _questService.GetQuestsAsync();
+            if (allQuests == null || allQuests.Length == 0)
+            {
+                return null;
+            }
+
+            return _questProgressionService.GetNextQuest(questId, allQuests) ??
+                   (!string.IsNullOrEmpty(questCode) ? _questProgressionService.GetNextQuest(questCode, allQuests) : null);
+        }
+
+        /// <summary>A completed quest stops being the active one: the user picks the next quest (offered after the celebration).</summary>
+        private async System.Threading.Tasks.Task ClearCurrentQuestIfAsync(string questId, string questCode)
+        {
+            string current = _storeService?.GetAppState()?.userCurrentQuestId;
+            bool isCurrent = !string.IsNullOrEmpty(current) &&
+                             (string.Equals(current, questId, System.StringComparison.OrdinalIgnoreCase) ||
+                              string.Equals(current, questCode, System.StringComparison.OrdinalIgnoreCase));
+            if (!isCurrent)
+            {
+                return;
+            }
+
+            if (_authService != null)
+            {
+                var (success, error) = await _authService.UpdateProfileAsync(new ProfileUpdateRequest { clearCurrentQuest = true });
+                if (!success)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Clearing the completed current quest failed: {error?.message}");
+                }
+            }
+            _storeService?.store?.Dispatch(AppActions.setCurrentQuest.Invoke(string.Empty));
+        }
+
+        private static bool IsQuestEventCelebrated(UserEvent evt, System.Collections.Generic.HashSet<string> celebratedQuests)
+        {
+            string questId = evt.metadata?["questId"]?.ToString();
+            string questCode = evt.metadata?["questCode"]?.ToString();
+            return (!string.IsNullOrEmpty(questId) && celebratedQuests.Contains(questId)) ||
+                   (!string.IsNullOrEmpty(questCode) && celebratedQuests.Contains(questCode));
+        }
+
+        private static string CelebratedQuestsKey(string userId) => $"celebrated_quest_ids_{userId}";
+
+        private static System.Collections.Generic.HashSet<string> LoadCelebratedQuests(string userId) =>
+            new System.Collections.Generic.HashSet<string>(
+                PlayerPrefs.GetString(CelebratedQuestsKey(userId), "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries),
+                System.StringComparer.OrdinalIgnoreCase);
+
+        private static void MarkQuestCelebrated(string userId, string questId, string questCode)
+        {
+            var set = LoadCelebratedQuests(userId);
+            if (!string.IsNullOrEmpty(questId))
+            {
+                set.Add(questId);
+            }
+            if (!string.IsNullOrEmpty(questCode))
+            {
+                set.Add(questCode);
+            }
+            PlayerPrefs.SetString(CelebratedQuestsKey(userId), string.Join(",", set.TakeLast(50)));
+            PlayerPrefs.Save();
         }
 
         public async System.Threading.Tasks.Task<System.Collections.Generic.List<PendingRewardCelebration>> CheckPendingGamificationRewardsAsync()
@@ -635,29 +782,12 @@ namespace eu.foodmission.platform
                     .OrderBy(e => e.timestamp)
                     .ToList();
 
-                // Advance cursor to the newest event timestamp among ALL returned events
-                string maxEventTs = profile.recentEvents?
-                    .Where(e => !string.IsNullOrEmpty(e.timestamp))
-                    .OrderByDescending(e => e.timestamp)
-                    .FirstOrDefault()?.timestamp;
-
-                if (!string.IsNullOrEmpty(maxEventTs))
-                {
-                    bool shouldUpdateCursor = false;
-                    if (hasValidDate && System.DateTime.TryParse(maxEventTs, out var maxDate))
-                    {
-                        shouldUpdateCursor = maxDate > lastSeenDate;
-                    }
-                    else
-                    {
-                        shouldUpdateCursor = string.Compare(maxEventTs, lastSeenTs, System.StringComparison.Ordinal) > 0;
-                    }
-
-                    if (shouldUpdateCursor)
-                    {
-                        PlayerPrefs.SetString(cursorKey, maxEventTs);
-                    }
-                }
+                // The cursor is only a floor set on the first run (so history isn't celebrated). It is not advanced:
+                // celebratedIds decides what was already shown, so events missed by a failed check are retried.
+                var celebratedQuests = LoadCelebratedQuests(userId);
+                candidateEvents = candidateEvents?
+                    .Where(e => e.eventType != "QUEST_COMPLETED" || !IsQuestEventCelebrated(e, celebratedQuests))
+                    .ToList();
 
                 if (candidateEvents == null || candidateEvents.Count == 0)
                 {
@@ -768,6 +898,12 @@ namespace eu.foodmission.platform
                     }
 
                     celebratedIds.Add(evt.id);
+                    if (isQuest)
+                    {
+                        string questId = evt.metadata?["questId"]?.ToString();
+                        MarkQuestCelebrated(userId, questId, code);
+                        await ClearCurrentQuestIfAsync(questId, code);
+                    }
 
                     var reward = new ContentReward
                     {

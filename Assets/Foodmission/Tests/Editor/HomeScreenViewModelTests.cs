@@ -42,6 +42,7 @@ namespace eu.foodmission.platform.Tests
             _storeService?.Dispose();
             PlayerPrefs.DeleteKey("last_seen_gamif_ts_test-user");
             PlayerPrefs.DeleteKey("celebrated_gamif_ids_test-user");
+            PlayerPrefs.DeleteKey("celebrated_quest_ids_test-user");
         }
 
         [Test]
@@ -834,6 +835,140 @@ namespace eu.foodmission.platform.Tests
 
             _vm.OpenMissionModule(MissionInteractionCatalog.QuickMealLog);
             Assert.AreEqual(Actions.open_quick_meal_log, action);
+        }
+
+        // ── Completed quests that were never celebrated (2026-10-01) ─────────────────
+
+        private static UserEvent QuestCompletedEvent(string id, string questId, string timestamp) => new UserEvent
+        {
+            id = id,
+            eventType = "QUEST_COMPLETED",
+            timestamp = timestamp,
+            metadata = JObject.FromObject(new { questId, questCode = "QUEST.A.BEGINNER.1" })
+        };
+
+        private static Quest[] TwoQuests() => new[]
+        {
+            new Quest { id = "q1", code = "QUEST.A.BEGINNER.1", level = QuestLevel.Beginner, dimensionId = "A" },
+            new Quest { id = "q2", code = "QUEST.A.BEGINNER.2", level = QuestLevel.Beginner, dimensionId = "A" }
+        };
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenProcessingFails_DoesNotLoseTheEventsForTheNextCheck()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var mockQuests = new Mock<IQuestService>();
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent { id = "ev-session", eventType = "APP_SESSION_OPENED", timestamp = "2026-10-01T16:32:54.495Z" },
+                    QuestCompletedEvent("ev-quest", "q1", "2026-10-01T16:06:05.533Z")
+                }
+            }, (ApiErrorResponse)null));
+            mockQuests.SetupSequence(q => q.GetQuestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ThrowsAsync(new System.Exception("network"))
+                .ReturnsAsync((TwoQuests(), (ApiErrorResponse)null));
+            mockQuests.Setup(q => q.GetQuestProgressAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(((QuestProgress)null, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-10-01T16:05:04.760Z");
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, questService: mockQuests.Object, gamificationService: mockGamification.Object);
+
+            UnityEngine.TestTools.LogAssert.Expect(LogType.Error, new System.Text.RegularExpressions.Regex("network"));
+            Assert.IsNull(await vm.CheckPendingGamificationRewardsAsync());
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].IsQuest);
+            Assert.AreEqual("q2", result[0].UnlockedQuest?.id);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_QuestCompletedForCurrentQuest_ClearsCurrentQuest()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var mockQuests = new Mock<IQuestService>();
+            var mockAuth = new Mock<IAuthService>();
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[] { QuestCompletedEvent("ev-quest", "q1", "2026-10-01T16:06:05.533Z") }
+            }, (ApiErrorResponse)null));
+            mockQuests.Setup(q => q.GetQuestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((TwoQuests(), (ApiErrorResponse)null));
+            mockQuests.Setup(q => q.GetQuestProgressAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(((QuestProgress)null, (ApiErrorResponse)null));
+            mockAuth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((true, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123", userCurrentQuestId = "q1" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-10-01T16:05:04.760Z");
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, questService: mockQuests.Object, gamificationService: mockGamification.Object, authService: mockAuth.Object);
+
+            await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsTrue(string.IsNullOrEmpty(_storeService.GetAppState().userCurrentQuestId));
+            mockAuth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.clearCurrentQuest)), Times.Once);
+        }
+
+        [Test]
+        public async Task CheckCompletedActiveQuestAsync_ActiveQuestAlreadyCompleted_CelebratesClearsAndOffersNext()
+        {
+            var mockQuests = new Mock<IQuestService>();
+            var mockAuth = new Mock<IAuthService>();
+            var mockGamification = new Mock<IGamificationService>();
+            mockQuests.Setup(q => q.GetQuestProgressAsync("q1", It.IsAny<string>())).ReturnsAsync((new QuestProgress
+            {
+                questId = "q1",
+                questCode = "QUEST.A.BEGINNER.1",
+                completed = true,
+                progress = 100,
+                reward = new ContentReward { xp = 30, points = 30 }
+            }, (ApiErrorResponse)null));
+            mockQuests.Setup(q => q.GetQuestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((TwoQuests(), (ApiErrorResponse)null));
+            mockAuth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((true, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123", userCurrentQuestId = "q1" });
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, questService: mockQuests.Object, gamificationService: mockGamification.Object, authService: mockAuth.Object);
+
+            PendingRewardCelebration celebration = await vm.CheckCompletedActiveQuestAsync();
+
+            Assert.IsNotNull(celebration);
+            Assert.IsTrue(celebration.IsQuest);
+            Assert.AreEqual(30, celebration.Reward.xp);
+            Assert.AreEqual("q2", celebration.UnlockedQuest?.id);
+            Assert.IsTrue(string.IsNullOrEmpty(_storeService.GetAppState().userCurrentQuestId));
+            mockAuth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.clearCurrentQuest)), Times.Once);
+
+            // The QUEST_COMPLETED event showing up later must not celebrate the same quest again
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[] { QuestCompletedEvent("ev-quest", "q1", "2026-10-01T16:06:05.533Z") }
+            }, (ApiErrorResponse)null));
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-10-01T16:05:04.760Z");
+            Assert.IsNull(await vm.CheckPendingGamificationRewardsAsync());
+        }
+
+        [Test]
+        public async Task CheckCompletedActiveQuestAsync_ActiveQuestInProgress_DoesNothing()
+        {
+            var mockQuests = new Mock<IQuestService>();
+            var mockAuth = new Mock<IAuthService>();
+            mockQuests.Setup(q => q.GetQuestProgressAsync("q1", It.IsAny<string>())).ReturnsAsync((new QuestProgress { questId = "q1", completed = false, progress = 50 }, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123", userCurrentQuestId = "q1" });
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, questService: mockQuests.Object, authService: mockAuth.Object);
+
+            Assert.IsNull(await vm.CheckCompletedActiveQuestAsync());
+            Assert.AreEqual("q1", _storeService.GetAppState().userCurrentQuestId);
+            mockAuth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+        }
+
+        [Test]
+        public void ProfileUpdateRequest_ClearCurrentQuest_SendsExplicitNull()
+        {
+            string json = new ProfileUpdateRequest { clearCurrentQuest = true }.ToJson();
+
+            Assert.IsTrue(JObject.Parse(json).TryGetValue("currentQuestId", out JToken value));
+            Assert.AreEqual(JTokenType.Null, value.Type);
+            Assert.IsFalse(json.Contains("clearCurrentQuest"));
         }
     }
 }
