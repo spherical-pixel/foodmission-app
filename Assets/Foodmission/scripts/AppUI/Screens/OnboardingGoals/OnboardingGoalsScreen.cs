@@ -29,6 +29,8 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            // IsLoading is only raised when the dimensions were not preloaded at startup.
+            TrackLoadingOverlay(() => _viewModel.IsLoading || _viewModel.IsSubmitting, nameof(OnboardingGoalsViewModel.IsLoading), nameof(OnboardingGoalsViewModel.IsSubmitting));
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged += OnViewModelPropertyChangedInternal;

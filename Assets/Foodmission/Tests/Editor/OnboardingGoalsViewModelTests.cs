@@ -256,5 +256,39 @@ namespace eu.foodmission.platform.Tests
             _dimensionServiceMock.Verify(d => d.PreloadAsync(null, false), Times.Once);
             Assert.IsTrue(eventFired);
         }
+
+        [Test]
+        public async Task EnsureDimensionsLoadedAsync_WhenNotLoaded_IsLoadingWhileRequestPending()
+        {
+            var pending = new TaskCompletionSource<(Dimension[] Result, ApiErrorResponse Error)>();
+            _dimensionServiceMock.Setup(d => d.IsLoaded).Returns(false);
+            _dimensionServiceMock.Setup(d => d.PreloadAsync(null, false)).Returns(pending.Task);
+
+            Task load = _vm.EnsureDimensionsLoadedAsync();
+            Assert.IsTrue(_vm.IsLoading);
+
+            pending.SetResult((new[] { new Dimension { code = "DIET_CHANGES" } }, null));
+            await load;
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
+        [Test]
+        public async Task EnsureDimensionsLoadedAsync_WhenAlreadyLoaded_NeverIsLoading()
+        {
+            _dimensionServiceMock.Setup(d => d.IsLoaded).Returns(true);
+            bool wasLoading = false;
+            _vm.PropertyChanged += (_, e) =>
+            {
+                if (e.PropertyName == nameof(OnboardingGoalsViewModel.IsLoading) && _vm.IsLoading)
+                {
+                    wasLoading = true;
+                }
+            };
+
+            await _vm.EnsureDimensionsLoadedAsync();
+
+            Assert.IsFalse(wasLoading);
+            _dimensionServiceMock.Verify(d => d.PreloadAsync(It.IsAny<string>(), It.IsAny<bool>()), Times.Never);
+        }
     }
 }

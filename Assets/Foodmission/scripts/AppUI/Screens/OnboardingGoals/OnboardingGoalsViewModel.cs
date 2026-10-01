@@ -21,6 +21,13 @@ namespace eu.foodmission.platform
             set => SetProperty(ref m_IsSubmitting, value);
         }
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
+
         private bool m_FromEditProfile;
         public bool FromEditProfile
         {
@@ -63,10 +70,18 @@ namespace eu.foodmission.platform
         {
             if (_dimensionService != null && !_dimensionService.IsLoaded)
             {
-                var (result, error) = await _dimensionService.PreloadAsync();
-                if (result != null && error == null)
+                IsLoading = true;
+                try
                 {
-                    OnDimensionsLoaded?.Invoke();
+                    var (result, error) = await _dimensionService.PreloadAsync();
+                    if (result != null && error == null)
+                    {
+                        OnDimensionsLoaded?.Invoke();
+                    }
+                }
+                finally
+                {
+                    IsLoading = false;
                 }
             }
         }
