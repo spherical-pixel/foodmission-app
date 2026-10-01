@@ -1,0 +1,2319 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "purpose": "Coverage-first inventory for rule-driven mission/challenge progress",
+  "ruleTemplate": {
+    "window": {
+      "type": "since_start",
+      "days": 7
+    },
+    "counters": {},
+    "target": "false",
+    "progress": "0",
+    "notes": [
+      "TODO: map to concrete EventType counters",
+      "TODO: replace placeholder target/progress expressions"
+    ]
+  },
+  "missions": [
+    {
+      "code": "M.A1.1",
+      "shape": "bounded_max_with_fail",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "meatMeals": {
+            "event": "MEAL_MEAT_CONSUMED",
+            "distinctBy": "metadata.mealId"
+          }
+        },
+        "target": "meatMeals <= 3",
+        "fail": "meatMeals > 3",
+        "resolveAt": "window_end",
+        "progress": "max(0, min(1 - (meatMeals / 4), 1))",
+        "notes": [
+          "Goal is \"remain below four meat meals\", so at most 3 meat meals in the window"
+        ]
+      }
+    },
+    {
+      "code": "M.A1.2",
+      "shape": "ratio_majority",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "plantProteinMeals": {
+            "event": "MEAL_LEGUME_CONSUMED",
+            "distinctBy": "metadata.mealId"
+          },
+          "meatMeals": {
+            "event": "MEAL_MEAT_CONSUMED",
+            "distinctBy": "metadata.mealId"
+          }
+        },
+        "target": "plantProteinMeals > meatMeals && (plantProteinMeals + meatMeals) >= 5",
+        "progress": "min(plantProteinMeals / max(plantProteinMeals + meatMeals, 1), 1)",
+        "notes": [
+          "Proxy for non-meat protein majority using currently available event types",
+          "May need additional non-meat protein events beyond legumes"
+        ]
+      }
+    },
+    {
+      "code": "M.A1.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "legumeMeals": {
+            "event": "MEAL_LEGUME_CONSUMED",
+            "distinctBy": "metadata.mealId"
+          }
+        },
+        "target": "legumeMeals >= 5",
+        "progress": "min(legumeMeals / 5, 1)",
+        "notes": [
+          "Direct mapping from mission goal"
+        ]
+      }
+    },
+    {
+      "code": "M.A1.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "alternativeStapleMeals": {
+            "event": "MEAL_ALTERNATIVE_STAPLE",
+            "distinctBy": "metadata.mealId"
+          }
+        },
+        "target": "alternativeStapleMeals >= 5",
+        "progress": "min(alternativeStapleMeals / 5, 1)",
+        "notes": [
+          "Direct mapping from mission goal"
+        ]
+      }
+    },
+    {
+      "code": "M.A1.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "sustainablePlateMeals": {
+            "event": "MEAL_SUSTAINABLE_PLATE",
+            "distinctBy": "metadata.mealId"
+          }
+        },
+        "target": "sustainablePlateMeals >= 10",
+        "progress": "min(sustainablePlateMeals / 10, 1)",
+        "notes": [
+          "Depends on consistent emission of MEAL_SUSTAINABLE_PLATE"
+        ]
+      }
+    },
+    {
+      "code": "M.A2.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.A2.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.A2.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "multiCriteriaPurchases": {
+            "event": "SHOPPING_MULTICRITERIA_PURCHASE",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "multiCriteriaPurchases >= 3",
+        "progress": "min(multiCriteriaPurchases / 3, 1)",
+        "notes": [
+          "Direct mapping for at least 3 purchase decisions with multiple environmental dimensions",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.A2.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "seasonalProduceMeals": {
+            "event": "MEAL_SEASONAL_PRODUCE",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "seasonalProduceMeals >= 4",
+        "progress": "min(seasonalProduceMeals / 4, 1)",
+        "notes": [
+          "Counts the measurable part of the goal: 4 logged meals with seasonal products",
+          "The \"think of one reason why they were selected\" part is reflective and not captured by any event",
+          "Same event as M.B2.2 / M.I2.2 at a different level; they never share a quest",
+          "Seasonality is self-attested; not checked against a seasonal calendar"
+        ]
+      }
+    },
+    {
+      "code": "M.A2.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.A3.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "novaGreenScorePurchases": {
+            "event": "PROCESSING_NOVA_SCORE_COMPARED",
+            "distinctBy": "metadata.productId",
+            "where": {
+              "metadata.comparedWith": "GREEN_SCORE"
+            }
+          }
+        },
+        "target": "novaGreenScorePurchases >= 3",
+        "progress": "min(novaGreenScorePurchases / 3, 1)",
+        "notes": [
+          "Direct mapping: three distinct products whose NOVA class was considered together with Green-Score",
+          "Nutri-Score comparisons do not count; the goal names Green-Score only",
+          "Same event as M.I3.4 at a different level; they never share a quest",
+          "Cannot verify the comparison preceded a purchase; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.A3.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "allScoresComparisons": {
+            "event": "PROCESSING_ALL_SCORES_COMPARED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "allScoresComparisons >= 3",
+        "progress": "min(allScoresComparisons / 3, 1)",
+        "notes": [
+          "Direct mapping: three distinct foods whose NOVA class, Nutri-Score and Green-Score were compared together",
+          "Client should only offer this when all three scores are available for the product, per the goal",
+          "Deliberately excludes PROCESSING_NOVA_SCORE_COMPARED, which M.A3.1 (same quest) counts",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.A3.3",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "novaChecks": {
+            "event": "PROCESSING_NOVA_CHECKED",
+            "distinctBy": "metadata.productId"
+          },
+          "ingredientReviews": {
+            "event": "PROCESSING_INGREDIENTS_REVIEWED",
+            "distinctBy": "metadata.productId"
+          },
+          "packagingChecks": {
+            "event": "SHOPPING_PACKAGING_INFO_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "novaChecks >= 3 && ingredientReviews >= 3 && packagingChecks >= 3",
+        "progress": "(min(novaChecks / 3, 1) + min(ingredientReviews / 3, 1) + min(packagingChecks / 3, 1)) / 3",
+        "notes": [
+          "Approximates identifying trade-offs across three foods with multiple evidence sources"
+        ]
+      }
+    },
+    {
+      "code": "M.A3.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "indicatorComparisons": {
+            "event": "PROCESSING_INDICATORS_COMPARED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "indicatorComparisons >= 3",
+        "progress": "min(indicatorComparisons / 3, 1)",
+        "notes": [
+          "Tracks three multi-indicator observations across products",
+          "Documented differences are not directly represented in current events"
+        ]
+      }
+    },
+    {
+      "code": "M.A3.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "productionAwarePurchases": {
+            "anyOf": [
+              "PROCESSING_NOVA_CHECKED",
+              "PROCESSING_GREENSCORE_CHECKED",
+              "PROCESSING_PRODUCTION_METHOD_CHECKED",
+              "PROCESSING_INDICATORS_COMPARED"
+            ],
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "productionAwarePurchases >= 5",
+        "progress": "min(productionAwarePurchases / 5, 1)",
+        "notes": [
+          "Counts purchases where at least one production-related indicator was checked"
+        ]
+      }
+    },
+    {
+      "code": "M.A4.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.A4.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "reusableChoices": {
+            "event": "PACKAGING_REUSABLE_SPOT_CHOSEN"
+          }
+        },
+        "target": "reusableChoices >= 5",
+        "progress": "min(reusableChoices / 5, 1)",
+        "notes": [
+          "Counts occasions where a reusable/refillable packaging system was used (step-up of M.I4.3)",
+          "No distinctBy: the goal counts occasions, not distinct products"
+        ]
+      }
+    },
+    {
+      "code": "M.A4.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.A4.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "smartPackagingFindings": {
+            "event": "PACKAGING_SMART_OBSERVED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "smartPackagingFindings >= 2",
+        "progress": "min(smartPackagingFindings / 2, 1)",
+        "notes": [
+          "Counts distinct products with an observed packaging innovation (freshness/temperature indicator, QR code, traceability)",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.A4.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "packagingInformedPurchases": {
+            "event": "SHOPPING_PACKAGING_INFO_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "packagingInformedPurchases >= 5",
+        "progress": "min(packagingInformedPurchases / 5, 1)",
+        "notes": [
+          "Counts distinct products where packaging information was checked while shopping (step-up of M.I4.1)",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.A5.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "halfPlateSaves": {
+            "event": "FOOD_WASTE_HALF_PLATE_SAVED"
+          }
+        },
+        "target": "halfPlateSaves >= 7",
+        "progress": "min(halfPlateSaves / 7, 1)",
+        "notes": [
+          "Direct mapping: counts logged Half Plate Saved actions (step-up of M.B5.1)",
+          "No distinctBy: the goal counts actions, not distinct meals or products"
+        ]
+      }
+    },
+    {
+      "code": "M.A5.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "fullPlateSaves": {
+            "event": "FOOD_WASTE_FULL_PLATE_SAVED"
+          }
+        },
+        "target": "fullPlateSaves >= 7",
+        "progress": "min(fullPlateSaves / 7, 1)",
+        "notes": [
+          "Direct mapping: counts logged Full Plate Saved actions (step-up of M.B5.2)",
+          "No distinctBy: the goal counts actions, not distinct meals or products"
+        ]
+      }
+    },
+    {
+      "code": "M.A5.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "expiredConsumed": {
+            "event": "FOOD_WASTE_EXPIRED_CONSUMED"
+          }
+        },
+        "target": "expiredConsumed >= 4",
+        "progress": "min(expiredConsumed / 4, 1)",
+        "notes": [
+          "Direct mapping: counts logged Expired Product Consumed actions (step-up of M.B5.3)",
+          "No distinctBy: the goal counts actions, not distinct products"
+        ]
+      }
+    },
+    {
+      "code": "M.A5.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "fifoDays": {
+            "event": "FOOD_WASTE_FIFO_ORGANIZED",
+            "distinctBy": "metadata.dayBucket"
+          }
+        },
+        "target": "fifoDays >= 3",
+        "progress": "min(fifoDays / 3, 1)",
+        "notes": [
+          "Counts distinct days with a FIFO organisation of fridge, freezer or pantry",
+          "Goal gives no number (\"throughout the week\"); 3 distinct days is an assumed threshold",
+          "metadata.dayBucket is server-set (UTC day the event was recorded)"
+        ]
+      }
+    },
+    {
+      "code": "M.A5.5",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "mealPlans": {
+            "event": "FOOD_WASTE_MEAL_PLANNED"
+          },
+          "fridgeChecks": {
+            "event": "FOOD_WASTE_FRIDGE_PANTRY_CHECKED"
+          }
+        },
+        "target": "mealPlans >= 1 && fridgeChecks >= 1",
+        "progress": "(min(mealPlans, 1) + min(fridgeChecks, 1)) / 2",
+        "notes": [
+          "Requires a weekly meal plan plus a fridge/freezer/pantry review",
+          "Cannot verify that all main meals were planned, that both happened before the first shopping trip, or that only planned foods were bought; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.A6.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.A6.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "highFibreBreakfastDays": {
+            "event": "NUTRITION_HIGH_FIBRE_MEAL",
+            "distinctBy": "metadata.dayBucket",
+            "where": {
+              "metadata.mealType": "BREAKFAST"
+            }
+          }
+        },
+        "target": "highFibreBreakfastDays >= 7",
+        "progress": "min(highFibreBreakfastDays / 7, 1)",
+        "notes": [
+          "Every day of the week: counts distinct days with a high-fibre breakfast",
+          "Client contract: metadata.mealType set to BREAKFAST (same values as meal log typeOfMeal)",
+          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+        ]
+      }
+    },
+    {
+      "code": "M.A6.3",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "loggedDays": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket"
+          },
+          "meals": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealLogId"
+          },
+          "sugarFreeMeals": {
+            "event": "NUTRITION_ADDED_SUGAR_AVOIDED",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "loggedDays >= 7 && sugarFreeMeals >= meals",
+        "progress": "min(loggedDays / 7, 1) * min(sugarFreeMeals / max(meals, 1), 1)",
+        "notes": [
+          "Throughout the week: a meal logged on each of the 7 days, and every logged meal flagged NUTRITION_ADDED_SUGAR_AVOIDED (no product with added sugar among its first three ingredients)",
+          "Per meal log: the flag is sent as a meal log flag, so one unflagged meal on any day blocks completion",
+          "Both meal counters use metadata.mealLogId, set on MEAL_LOGGED and on every meal flag event, so a retried log counts once",
+          "Cannot verify that every meal of the day was logged; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.A6.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.A6.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "plantFoods": {
+            "event": "NUTRITION_PLANT_DIVERSITY_COUNT",
+            "distinctBy": "metadata.genericFoodId"
+          }
+        },
+        "target": "plantFoods >= 20",
+        "progress": "min(plantFoods / 20, 1)",
+        "notes": [
+          "Counts distinct plant foods (fruits, vegetables, pulses, herbs, nuts, seeds, whole grains) eaten during the week",
+          "Client contract: one event per plant food, with metadata.genericFoodId set to the GenericFood id so brands of the same food count once",
+          "Events without metadata.genericFoodId are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.B1.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "mealLogs": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket"
+          }
+        },
+        "target": "mealLogs >= 7",
+        "progress": "min(mealLogs / 7, 1)",
+        "notes": [
+          "Enforces one logged-meal day per day by counting distinct mealDayBucket values",
+          "Relies on MEAL_LOGGED metadata.mealDayBucket (YYYY-MM-DD, UTC)"
+        ]
+      }
+    },
+    {
+      "code": "M.B1.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "mealLogs": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket"
+          }
+        },
+        "target": "mealLogs >= 7",
+        "progress": "min(mealLogs / 7, 1)",
+        "notes": [
+          "Cannot prove completeness against all consumed meals without a denominator signal"
+        ]
+      }
+    },
+    {
+      "code": "M.B1.3",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "rolling_lookback",
+          "days": 7
+        },
+        "counters": {
+          "currentMeatMeals": {
+            "event": "MEAL_MEAT_CONSUMED",
+            "distinctBy": "metadata.mealId"
+          },
+          "previousMeatMeals": {
+            "event": "MEAL_MEAT_CONSUMED",
+            "distinctBy": "metadata.mealId",
+            "window": {
+              "type": "rolling_lookback",
+              "days": 7,
+              "offsetDays": 7
+            }
+          }
+        },
+        "target": "previousMeatMeals >= 1 && currentMeatMeals <= previousMeatMeals - 1",
+        "progress": "previousMeatMeals > 0 ? clamp((previousMeatMeals - currentMeatMeals) / previousMeatMeals, 0, 1) : 0",
+        "notes": [
+          "Compares the current 7-day meat-meal count against the previous 7 days",
+          "Needs counter-specific windows so the baseline week is evaluated separately"
+        ]
+      }
+    },
+    {
+      "code": "M.B1.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "proteinSwaps": {
+            "anyOf": [
+              "SWAP_BEEF_TO_PORK",
+              "SWAP_BEEF_TO_CHICKEN",
+              "SWAP_BEEF_TO_LEGUMES",
+              "SWAP_PORK_TO_CHICKEN",
+              "SWAP_PORK_TO_LEGUMES",
+              "SWAP_CHICKEN_TO_LEGUMES"
+            ]
+          }
+        },
+        "target": "proteinSwaps >= 2",
+        "progress": "min(proteinSwaps / 2, 1)",
+        "notes": [
+          "Direct mapping from the swap-based mission goal"
+        ]
+      }
+    },
+    {
+      "code": "M.B1.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "beefReductionSwaps": {
+            "anyOf": [
+              "SWAP_BEEF_TO_CHICKEN",
+              "SWAP_BEEF_TO_LEGUMES"
+            ]
+          }
+        },
+        "target": "beefReductionSwaps >= 2",
+        "progress": "min(beefReductionSwaps / 2, 1)",
+        "notes": [
+          "Direct mapping from the beef-reduction mission goal"
+        ]
+      }
+    },
+    {
+      "code": "M.B2.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "originChecks": {
+            "event": "SHOPPING_ORIGIN_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "originChecks >= 5",
+        "progress": "min(originChecks / 5, 1)",
+        "notes": [
+          "Counts distinct products whose country of origin was looked up",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the product was actually consumed this week; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.B2.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "seasonalProduceMeals": {
+            "event": "MEAL_SEASONAL_PRODUCE",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "seasonalProduceMeals >= 5",
+        "progress": "min(seasonalProduceMeals / 5, 1)",
+        "notes": [
+          "Direct mapping from mission goal: 5 logged meals with at least one seasonal fruit or vegetable",
+          "Reported as a MEAL_SEASONAL_PRODUCE flag on POST /meal-logs; distinct by meal log so each logged meal counts once",
+          "Seasonality is self-attested; not checked against a seasonal calendar"
+        ]
+      }
+    },
+    {
+      "code": "M.B2.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "certifiedChoices": {
+            "event": "SHOPPING_CERTIFICATION_CHOSEN"
+          }
+        },
+        "target": "certifiedChoices >= 3",
+        "progress": "min(certifiedChoices / 3, 1)",
+        "notes": [
+          "Counts occasions where a product with a sustainability certification was chosen",
+          "No distinctBy: the goal counts occasions, so rebuying the same certified product counts again"
+        ]
+      }
+    },
+    {
+      "code": "M.B2.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "localProduceMeals": {
+            "event": "MEAL_LOCAL_PRODUCE",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "localProduceMeals >= 3",
+        "progress": "min(localProduceMeals / 3, 1)",
+        "notes": [
+          "Direct mapping from mission goal: 3 logged meals containing at least one locally produced product",
+          "Reported as a MEAL_LOCAL_PRODUCE flag on POST /meal-logs; distinct by meal log so each logged meal counts once",
+          "Deliberately excludes SHOPPING_LOCAL_CHOSEN: the goal is about meals eaten, not purchases",
+          "Locality is self-attested; not checked against product origin data"
+        ]
+      }
+    },
+    {
+      "code": "M.B2.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "packagingInfoChecks": {
+            "event": "SHOPPING_PACKAGING_INFO_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "packagingInfoChecks >= 5",
+        "progress": "min(packagingInfoChecks / 5, 1)",
+        "notes": [
+          "Counts distinct products where sustainability-related information on the packaging was looked for",
+          "Deliberately excludes SHOPPING_ORIGIN_CHECKED and SHOPPING_CERTIFICATION_CHOSEN to avoid overlap with M.B2.1/M.B2.3 in the same quests",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the product was actually consumed this week; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.B3.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "productionMethodChecks": {
+            "event": "PROCESSING_PRODUCTION_METHOD_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "productionMethodChecks >= 5",
+        "progress": "min(productionMethodChecks / 5, 1)",
+        "notes": [
+          "Counts distinct products whose production method was looked up",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Self-attested; the goal allows packaging, Open Food Facts or QR codes as sources"
+        ]
+      }
+    },
+    {
+      "code": "M.B3.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "novaChecks": {
+            "event": "PROCESSING_NOVA_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "novaChecks >= 3",
+        "progress": "min(novaChecks / 3, 1)",
+        "notes": [
+          "Counts distinct products whose NOVA classification was checked",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.B3.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "ingredientReviews": {
+            "event": "PROCESSING_INGREDIENTS_REVIEWED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "ingredientReviews >= 5",
+        "progress": "min(ingredientReviews / 5, 1)",
+        "notes": [
+          "Counts distinct products whose ingredient list was reviewed",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the product was actually consumed this week; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.B3.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "greenScoreChecks": {
+            "event": "PROCESSING_GREENSCORE_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "greenScoreChecks >= 5",
+        "progress": "min(greenScoreChecks / 5, 1)",
+        "notes": [
+          "Counts distinct products whose Green-Score was identified",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the food was actually consumed; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.B3.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "processingSwaps": {
+            "anyOf": [
+              "SWAP_SUGARY_DRINK_TO_WATER",
+              "SWAP_SNACK_TO_FRUIT_NUTS",
+              "SWAP_SUGARY_CEREAL_TO_OATS",
+              "SWAP_READY_MEAL_TO_HOMECOOKED",
+              "SWAP_PROCESSED_MEAT_TO_LEGUMES"
+            ]
+          }
+        },
+        "target": "processingSwaps >= 2",
+        "progress": "min(processingSwaps / 2, 1)",
+        "notes": [
+          "Direct mapping from the processing-swap mission goal"
+        ]
+      }
+    },
+    {
+      "code": "M.B4.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "materialObservations": {
+            "event": "PACKAGING_MATERIAL_OBSERVED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "materialObservations >= 5",
+        "progress": "min(materialObservations / 5, 1)",
+        "notes": [
+          "Counts distinct products whose packaging material was identified",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the product was actually consumed this week; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.B4.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "recyclingLabelReads": {
+            "event": "PACKAGING_RECYCLING_LABEL_READ",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "recyclingLabelReads >= 10",
+        "progress": "min(recyclingLabelReads / 10, 1)",
+        "notes": [
+          "Counts distinct food packages whose disposal/recycling instructions were checked",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.B4.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "packagingTypesObserved": {
+            "event": "PACKAGING_MATERIAL_OBSERVED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "packagingTypesObserved >= 10",
+        "progress": "min(packagingTypesObserved / 10, 1)",
+        "notes": [
+          "Counts ten distinct foods whose packaging type was observed",
+          "Overlap accepted for now: same event as M.B4.1 (same quest) with a higher target, so completing M.B4.3 also completes M.B4.1",
+          "The reflection part is not captured by any event",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.B4.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "reusableSpots": {
+            "event": "PACKAGING_REUSABLE_SPOT_CHOSEN"
+          }
+        },
+        "target": "reusableSpots >= 5",
+        "progress": "min(reusableSpots / 5, 1)",
+        "notes": [
+          "Counts occasions where a reusable/refillable packaging option was identified",
+          "No distinctBy: the goal counts occasions, not distinct products"
+        ]
+      }
+    },
+    {
+      "code": "M.B4.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "packagingCharacteristics": {
+            "anyOf": [
+              "PACKAGING_MATERIAL_OBSERVED",
+              "PACKAGING_RECYCLING_LABEL_READ",
+              "PACKAGING_REUSABLE_SPOT_CHOSEN"
+            ],
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "packagingCharacteristics >= 10",
+        "progress": "min(packagingCharacteristics / 10, 1)",
+        "notes": [
+          "Counts ten distinct products with at least one packaging characteristic looked up (material, recycling instructions, reuse)",
+          "Overlap accepted for now: shares events with M.B4.1, M.B4.2 and M.B4.3 in the same quest (PACKAGING_REUSABLE_SPOT_CHOSEN is also M.B4.4, which is in a different quest)",
+          "No dedicated event for recycled-content claims; covered only if the client records them as one of the listed events",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.B5.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "halfPlateSaves": {
+            "event": "FOOD_WASTE_HALF_PLATE_SAVED"
+          }
+        },
+        "target": "halfPlateSaves >= 5",
+        "progress": "min(halfPlateSaves / 5, 1)",
+        "notes": [
+          "Direct mapping: counts logged Half Plate Saved actions",
+          "No distinctBy: the goal counts actions, not distinct meals or products"
+        ]
+      }
+    },
+    {
+      "code": "M.B5.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "fullPlateSaves": {
+            "event": "FOOD_WASTE_FULL_PLATE_SAVED"
+          }
+        },
+        "target": "fullPlateSaves >= 3",
+        "progress": "min(fullPlateSaves / 3, 1)",
+        "notes": [
+          "Direct mapping: counts logged Full Plate Saved actions",
+          "No distinctBy: the goal counts actions, not distinct meals or products"
+        ]
+      }
+    },
+    {
+      "code": "M.B5.3",
+      "shape": "one_shot_event",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "expiredConsumed": {
+            "event": "FOOD_WASTE_EXPIRED_CONSUMED"
+          }
+        },
+        "target": "expiredConsumed >= 1",
+        "progress": "min(expiredConsumed, 1)",
+        "notes": [
+          "Direct mapping: one logged Expired Product Consumed action"
+        ]
+      }
+    },
+    {
+      "code": "M.B5.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "storageInstructionReads": {
+            "event": "FOOD_WASTE_STORAGE_INSTRUCTIONS_READ",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "storageInstructionReads >= 5",
+        "progress": "min(storageInstructionReads / 5, 1)",
+        "notes": [
+          "Counts distinct products whose after-opening storage instructions were read",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the product was purchased; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.B5.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "foodSavingDays": {
+            "anyOf": [
+              "FOOD_WASTE_HALF_PLATE_SAVED",
+              "FOOD_WASTE_FULL_PLATE_SAVED",
+              "FOOD_WASTE_EXPIRED_CONSUMED"
+            ],
+            "distinctBy": "metadata.dayBucket"
+          }
+        },
+        "target": "foodSavingDays >= 4",
+        "progress": "min(foodSavingDays / 4, 1)",
+        "notes": [
+          "Counts distinct days with at least one of the three food-saving tracking actions",
+          "metadata.dayBucket is server-set (UTC day the event was recorded)",
+          "Intentionally overlaps with M.B5.1/M.B5.2 in the same quest: this mission builds consistency on top of them"
+        ]
+      }
+    },
+    {
+      "code": "M.B6.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "proteinDays": {
+            "event": "NUTRITION_PROTEIN_INCLUDED",
+            "distinctBy": "metadata.dayBucket"
+          }
+        },
+        "target": "proteinDays >= 7",
+        "progress": "min(proteinDays / 7, 1)",
+        "notes": [
+          "Every day of the week: counts distinct days with at least one protein-rich meal",
+          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+        ]
+      }
+    },
+    {
+      "code": "M.B6.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "fruitVegDays": {
+            "event": "NUTRITION_FRUIT_VEG_SERVING_ADDED",
+            "distinctBy": "metadata.dayBucket"
+          }
+        },
+        "target": "fruitVegDays >= 7",
+        "progress": "min(fruitVegDays / 7, 1)",
+        "notes": [
+          "Every day of the week: counts distinct days with at least one extra fruit/vegetable serving",
+          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+        ]
+      }
+    },
+    {
+      "code": "M.B6.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "drinkSwaps": {
+            "event": "SWAP_SUGARY_DRINK_TO_WATER"
+          }
+        },
+        "target": "drinkSwaps >= 3",
+        "progress": "min(drinkSwaps / 3, 1)",
+        "notes": [
+          "Direct mapping: counts Sugary Drink → Water swaps"
+        ]
+      }
+    },
+    {
+      "code": "M.B6.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "wholegrainDays": {
+            "event": "NUTRITION_WHOLEGRAIN_CHOSEN",
+            "distinctBy": "metadata.dayBucket"
+          }
+        },
+        "target": "wholegrainDays >= 7",
+        "progress": "min(wholegrainDays / 7, 1)",
+        "notes": [
+          "Every day of the week: counts distinct days with at least one whole-grain choice",
+          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+        ]
+      }
+    },
+    {
+      "code": "M.B6.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "snackSwaps": {
+            "event": "SWAP_SNACK_TO_FRUIT_NUTS"
+          }
+        },
+        "target": "snackSwaps >= 5",
+        "progress": "min(snackSwaps / 5, 1)",
+        "notes": [
+          "Direct mapping: counts Snack → Fruit or Nuts swaps"
+        ]
+      }
+    },
+    {
+      "code": "M.I1.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "proteinSwaps": {
+            "anyOf": [
+              "SWAP_BEEF_TO_PORK",
+              "SWAP_BEEF_TO_CHICKEN",
+              "SWAP_BEEF_TO_LEGUMES",
+              "SWAP_PORK_TO_CHICKEN",
+              "SWAP_PORK_TO_LEGUMES",
+              "SWAP_CHICKEN_TO_LEGUMES"
+            ]
+          }
+        },
+        "target": "proteinSwaps >= 4",
+        "progress": "min(proteinSwaps / 4, 1)",
+        "notes": [
+          "Direct mapping from the swap-based mission goal (intermediate step-up of M.B1.4)"
+        ]
+      }
+    },
+    {
+      "code": "M.I1.2",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "levelOneSwaps": {
+            "anyOf": [
+              "SWAP_BEEF_TO_PORK",
+              "SWAP_BEEF_TO_CHICKEN"
+            ]
+          },
+          "levelTwoSwaps": {
+            "event": "SWAP_BEEF_TO_LEGUMES"
+          },
+          "levelThreeSwaps": {
+            "anyOf": [
+              "SWAP_PORK_TO_LEGUMES",
+              "SWAP_CHICKEN_TO_LEGUMES"
+            ]
+          }
+        },
+        "target": "levelOneSwaps >= 1 && levelTwoSwaps >= 1 && levelThreeSwaps >= 1",
+        "progress": "(min(levelOneSwaps, 1) + min(levelTwoSwaps, 1) + min(levelThreeSwaps, 1)) / 3",
+        "notes": [
+          "Level 1: Beef → Pork or Beef → Chicken",
+          "Level 2: Beef → Legumes",
+          "Level 3: Pork → Legumes or Chicken → Legumes",
+          "SWAP_PORK_TO_CHICKEN is not part of any impact level in the mission goal, so it does not count",
+          "Levels can be completed in any order; the goal does not require a strict progression"
+        ]
+      }
+    },
+    {
+      "code": "M.I1.3",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "loggedDays": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket"
+          },
+          "meatDays": {
+            "event": "MEAL_MEAT_CONSUMED",
+            "distinctBy": "metadata.mealDayBucket"
+          }
+        },
+        "target": "(loggedDays - meatDays) >= 2",
+        "progress": "clamp((loggedDays - meatDays) / 2, 0, 1)",
+        "notes": [
+          "Meat-free day = a day with at least one logged meal and no MEAL_MEAT_CONSUMED meal",
+          "Meat days are a subset of logged days, so loggedDays - meatDays counts meat-free days",
+          "Both counters use metadata.mealDayBucket (the meal log day), set on MEAL_LOGGED and on every meal flag/swap event",
+          "Cannot verify that every meal of the day was logged; one logged meat-free meal is enough for that day to count"
+        ]
+      }
+    },
+    {
+      "code": "M.I1.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "legumeMeals": {
+            "event": "MEAL_LEGUME_CONSUMED",
+            "distinctBy": "metadata.mealId"
+          }
+        },
+        "target": "legumeMeals >= 4",
+        "progress": "min(legumeMeals / 4, 1)",
+        "notes": [
+          "Direct mapping from mission goal (intermediate step towards M.A1.3)"
+        ]
+      }
+    },
+    {
+      "code": "M.I1.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "proteinSources": {
+            "event": "NUTRITION_PROTEIN_VARIETY_LOGGED",
+            "distinctBy": "metadata.proteinSource"
+          }
+        },
+        "target": "proteinSources >= 4",
+        "progress": "min(proteinSources / 4, 1)",
+        "notes": [
+          "Direct mapping: four distinct protein sources consumed during the week",
+          "Client contract: one event per source, with metadata.proteinSource set to a stable key (e.g. LEGUMES, DAIRY, EGGS, FISH, NUTS, SEEDS, TOFU, LEAN_MEAT)",
+          "Same rule as M.I6.5 in a different dimension; they never share a quest",
+          "Events without metadata.proteinSource are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.I2.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "localProduceMeals": {
+            "event": "MEAL_LOCAL_PRODUCE",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "localProduceMeals >= 3",
+        "progress": "min(localProduceMeals / 3, 1)",
+        "notes": [
+          "Counts the measurable part of the goal: 3 logged meals with locally produced products",
+          "Origin tracking is implied by flagging a product as local; no separate threshold is given in the goal",
+          "Deliberately excludes SHOPPING_ORIGIN_CHECKED, which M.I2.4 (same quest) is likely to count",
+          "Same rule as M.B2.4 at a different level; they never share a quest",
+          "Locality is self-attested; not checked against product origin data"
+        ]
+      }
+    },
+    {
+      "code": "M.I2.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "seasonalProduceMeals": {
+            "event": "MEAL_SEASONAL_PRODUCE",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "seasonalProduceMeals >= 8",
+        "progress": "min(seasonalProduceMeals / 8, 1)",
+        "notes": [
+          "Direct mapping from mission goal: 8 logged meals with seasonal ingredients",
+          "Same event as M.B2.2 with a higher target; they never share a quest",
+          "Seasonality is self-attested; not checked against a seasonal calendar"
+        ]
+      }
+    },
+    {
+      "code": "M.I2.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "certifiedProductMeals": {
+            "event": "MEAL_CERTIFIED_PRODUCT",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "certifiedProductMeals >= 3",
+        "progress": "min(certifiedProductMeals / 3, 1)",
+        "notes": [
+          "Direct mapping from mission goal: 3 logged meals using certified products",
+          "Reported as a MEAL_CERTIFIED_PRODUCT flag on POST /meal-logs; distinct by meal log so each logged meal counts once",
+          "Deliberately excludes SHOPPING_CERTIFICATION_CHOSEN: the goal is about meals eaten, not purchases, and M.I2.4 (same quest) may count certification lookups",
+          "Certification is self-attested; not checked against product label data"
+        ]
+      }
+    },
+    {
+      "code": "M.I2.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.I2.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "informedSelections": {
+            "event": "SHOPPING_PACKAGING_INFO_CHECKED"
+          }
+        },
+        "target": "informedSelections >= 5",
+        "progress": "min(informedSelections / 5, 1)",
+        "notes": [
+          "Counts occasions where a product was selected after examining environmental information on its package",
+          "No distinctBy: the goal counts occasions, not distinct products",
+          "Keep SHOPPING_PACKAGING_INFO_CHECKED out of M.I2.4 (same quests) to avoid overlap"
+        ]
+      }
+    },
+    {
+      "code": "M.I3.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "informedProducts": {
+            "anyOf": [
+              "PROCESSING_NOVA_CHECKED",
+              "PROCESSING_GREENSCORE_CHECKED",
+              "PROCESSING_INGREDIENTS_REVIEWED"
+            ],
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "informedProducts >= 5",
+        "progress": "min(informedProducts / 5, 1)",
+        "notes": [
+          "Counts distinct products checked via NOVA, Green-Score or ingredient list; any one source per product is enough",
+          "Proxy: no event signals that the check actually guided a purchase",
+          "Could be tightened with a where filter (e.g. metadata.purchased: true) once the client sends such a flag",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.I3.2",
+      "shape": "one_shot_event",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "novaCategoryComparisons": {
+            "event": "PROCESSING_NOVA_CATEGORY_COMPARED"
+          }
+        },
+        "target": "novaCategoryComparisons >= 1",
+        "progress": "min(novaCategoryComparisons, 1)",
+        "notes": [
+          "Direct mapping: one NOVA comparison across at least three products of the same food category",
+          "One event per completed comparison, metadata { category, productIds }",
+          "The engine cannot check productIds length or that the NOVA classes differ; the client must only emit once >= 3 same-category products are compared",
+          "Deliberately excludes PROCESSING_INDICATORS_COMPARED (multiple indicators on one product), which M.I3.4 (same quest) is likely to count"
+        ]
+      }
+    },
+    {
+      "code": "M.I3.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "processingSwaps": {
+            "anyOf": [
+              "SWAP_SUGARY_DRINK_TO_WATER",
+              "SWAP_SNACK_TO_FRUIT_NUTS",
+              "SWAP_SUGARY_CEREAL_TO_OATS",
+              "SWAP_READY_MEAL_TO_HOMECOOKED",
+              "SWAP_PROCESSED_MEAT_TO_LEGUMES"
+            ]
+          }
+        },
+        "target": "processingSwaps >= 4",
+        "progress": "min(processingSwaps / 4, 1)",
+        "notes": [
+          "Direct mapping from the processing-swap mission goal (intermediate step-up of M.B3.5)"
+        ]
+      }
+    },
+    {
+      "code": "M.I3.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "novaScoreComparisons": {
+            "event": "PROCESSING_NOVA_SCORE_COMPARED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "novaScoreComparisons >= 4",
+        "progress": "min(novaScoreComparisons / 4, 1)",
+        "notes": [
+          "Direct mapping: four distinct products whose NOVA class was compared with Green-Score or Nutri-Score",
+          "metadata.comparedWith is GREEN_SCORE or NUTRI_SCORE; either counts, and a product compared with both counts once",
+          "Deliberately excludes PROCESSING_INDICATORS_COMPARED: it does not record which indicators were compared",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the product was actually purchased; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.I3.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "recordedFoods": {
+            "anyOf": [
+              "PROCESSING_NOVA_CHECKED",
+              "PROCESSING_GREENSCORE_CHECKED",
+              "PROCESSING_PRODUCTION_METHOD_CHECKED"
+            ],
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "recordedFoods >= 6",
+        "progress": "min(recordedFoods / 6, 1)",
+        "notes": [
+          "Counts six distinct foods with at least one production-related indicator recorded (NOVA, Green-Score or production method)",
+          "The \"reflect on whether they influenced your choices\" part is reflective and not captured by any event",
+          "Deliberately excludes PROCESSING_NOVA_SCORE_COMPARED, which M.I3.4 (same quest) counts",
+          "Client must send metadata.productId; events without it are each counted separately",
+          "Cannot verify the food was actually consumed; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.I4.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "packagingInformedPurchases": {
+            "event": "SHOPPING_PACKAGING_INFO_CHECKED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "packagingInformedPurchases >= 3",
+        "progress": "min(packagingInformedPurchases / 3, 1)",
+        "notes": [
+          "Counts distinct products where packaging information was checked while shopping",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.I4.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "recyclabilityEvaluations": {
+            "event": "PACKAGING_RECYCLABILITY_EVALUATED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "recyclabilityEvaluations >= 10",
+        "progress": "min(recyclabilityEvaluations / 10, 1)",
+        "notes": [
+          "Counts distinct food packages evaluated as easy or difficult to recycle",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.I4.3",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "reusableChoices": {
+            "event": "PACKAGING_REUSABLE_SPOT_CHOSEN"
+          }
+        },
+        "target": "reusableChoices >= 2",
+        "progress": "min(reusableChoices / 2, 1)",
+        "notes": [
+          "Counts occasions where a reusable/refillable packaging option was chosen",
+          "No distinctBy: the goal counts occasions, not distinct products"
+        ]
+      }
+    },
+    {
+      "code": "M.I4.4",
+      "shape": "one_shot_event",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "packagingComparisons": {
+            "event": "PACKAGING_COMPARISON_MADE"
+          }
+        },
+        "target": "packagingComparisons >= 1",
+        "progress": "min(packagingComparisons, 1)",
+        "notes": [
+          "Direct mapping: one comparison of packaging materials across three similar food products",
+          "One event per completed comparison, metadata { category, productIds }",
+          "The engine cannot check productIds length or similarity; the client must only emit once >= 3 similar products are compared"
+        ]
+      }
+    },
+    {
+      "code": "M.I4.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "circularPackagingFound": {
+            "anyOf": [
+              "PACKAGING_REUSABLE_SPOT_CHOSEN",
+              "PACKAGING_RECYCLABILITY_EVALUATED"
+            ],
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "circularPackagingFound >= 4",
+        "progress": "min(circularPackagingFound / 4, 1)",
+        "notes": [
+          "Counts four distinct products whose packaging was identified as reusable, refillable or recyclable",
+          "Overlap accepted for now: shares events with M.I4.2 and M.I4.3 in the same quest",
+          "PACKAGING_RECYCLABILITY_EVALUATED also fires when packaging is judged hard to recycle; the rule cannot tell the outcome apart",
+          "Client must send metadata.productId; events without it are each counted separately"
+        ]
+      }
+    },
+    {
+      "code": "M.I5.1",
+      "shape": "one_shot_event",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "mealPlans": {
+            "event": "FOOD_WASTE_MEAL_PLANNED"
+          }
+        },
+        "target": "mealPlans >= 1",
+        "progress": "min(mealPlans, 1)",
+        "notes": [
+          "Direct mapping: one meal plan created",
+          "Cannot verify the plan preceded a main shopping trip; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.I5.2",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "leftoverMeals": {
+            "event": "FOOD_WASTE_FULL_PLATE_SAVED"
+          }
+        },
+        "target": "leftoverMeals >= 3",
+        "progress": "min(leftoverMeals / 3, 1)",
+        "notes": [
+          "Counts three occasions a full meal was eaten from leftovers (Full Plate Saved, as defined in M.I5.5)",
+          "Cannot verify the leftovers were eaten before preparing a new meal; self-attested",
+          "Same rule as M.I5.5 and M.B5.2; M.I5.5 is in no quest and M.B5.2 is at a different level"
+        ]
+      }
+    },
+    {
+      "code": "M.I5.3",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "fridgeChecks": {
+            "event": "FOOD_WASTE_FRIDGE_PANTRY_CHECKED"
+          },
+          "expiredConsumed": {
+            "event": "FOOD_WASTE_EXPIRED_CONSUMED"
+          },
+          "fullPlateSaves": {
+            "event": "FOOD_WASTE_FULL_PLATE_SAVED"
+          }
+        },
+        "target": "fridgeChecks >= 1 && (expiredConsumed >= 3 || fullPlateSaves >= 3)",
+        "progress": "(min(fridgeChecks, 1) + max(min(expiredConsumed / 3, 1), min(fullPlateSaves / 3, 1))) / 2",
+        "notes": [
+          "Requires one fridge/pantry check plus the tracking component (3 Expired Consumed OR 3 Full Plate Saved)",
+          "Tracking actions are not mixed: 2 expired + 1 full plate does not complete it",
+          "Cannot verify the check happened before a main shopping trip; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.I5.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.I5.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "fullPlateSaves": {
+            "event": "FOOD_WASTE_FULL_PLATE_SAVED"
+          }
+        },
+        "target": "fullPlateSaves >= 3",
+        "progress": "min(fullPlateSaves / 3, 1)",
+        "notes": [
+          "Direct mapping: three logged Full Plate Saved actions",
+          "Same rule as M.B5.2 at a different level; M.I5.5 is currently in no quest"
+        ]
+      }
+    },
+    {
+      "code": "M.I6.1",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "processedMeatSwaps": {
+            "event": "SWAP_PROCESSED_MEAT_TO_LEGUMES"
+          }
+        },
+        "target": "processedMeatSwaps >= 2",
+        "progress": "min(processedMeatSwaps / 2, 1)",
+        "notes": [
+          "Direct mapping: counts Processed Meat → Legumes swaps"
+        ]
+      }
+    },
+    {
+      "code": "M.I6.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "M.I6.3",
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "loggedDays": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket"
+          },
+          "meals": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealLogId"
+          },
+          "saltFreeMeals": {
+            "event": "NUTRITION_SALT_FREE_TABLE",
+            "distinctBy": "metadata.mealLogId"
+          }
+        },
+        "target": "loggedDays >= 7 && saltFreeMeals >= meals",
+        "progress": "min(loggedDays / 7, 1) * min(saltFreeMeals / max(meals, 1), 1)",
+        "notes": [
+          "Throughout the week: a meal logged on each of the 7 days, and every logged meal flagged NUTRITION_SALT_FREE_TABLE (no salt added at the table)",
+          "Per meal log: the flag is sent as a meal log flag, so one unflagged meal on any day blocks completion",
+          "Both meal counters use metadata.mealLogId, set on MEAL_LOGGED and on every meal flag event, so a retried log counts once",
+          "Cannot verify that every meal of the day was logged; self-attested"
+        ]
+      }
+    },
+    {
+      "code": "M.I6.4",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "healthyFatChoices": {
+            "event": "NUTRITION_HEALTHY_FAT_CHOSEN"
+          }
+        },
+        "target": "healthyFatChoices >= 5",
+        "progress": "min(healthyFatChoices / 5, 1)",
+        "notes": [
+          "Counts occasions where an unsaturated fat source was chosen over a saturated one",
+          "No distinctBy: the goal counts occasions, not distinct foods"
+        ]
+      }
+    },
+    {
+      "code": "M.I6.5",
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "proteinSources": {
+            "event": "NUTRITION_PROTEIN_VARIETY_LOGGED",
+            "distinctBy": "metadata.proteinSource"
+          }
+        },
+        "target": "proteinSources >= 4",
+        "progress": "min(proteinSources / 4, 1)",
+        "notes": [
+          "Counts distinct protein sources consumed during the week",
+          "Client contract: one event per source, with metadata.proteinSource set to a stable key (e.g. LEGUMES, DAIRY, EGGS, FISH, NUTS, SEEDS, TOFU, LEAN_MEAT)",
+          "Events without metadata.proteinSource are each counted separately"
+        ]
+      }
+    }
+  ],
+  "challenges": [
+    {
+      "code": "CH.A1.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A1.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A1.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A1.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A1.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A2.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A2.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A2.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A2.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A2.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A3.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A3.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A3.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A3.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A3.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A4.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A4.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A4.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A4.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A4.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A5.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A5.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A5.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A5.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A5.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A6.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A6.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A6.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A6.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.A6.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B1.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B1.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B1.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B1.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B1.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B2.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B2.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B2.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B2.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B2.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B3.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B3.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B3.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B3.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B3.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B4.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B4.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B4.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B4.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B4.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B5.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B5.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B5.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B5.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B5.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B6.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B6.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B6.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B6.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.B6.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I1.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I1.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I1.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I1.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I1.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I2.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I2.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I2.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I2.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I2.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I3.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I3.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I3.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I3.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I3.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I4.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I4.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I4.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I4.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I4.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I5.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I5.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I5.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I5.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I5.5",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I6.1",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I6.2",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I6.3",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I6.4",
+      "shape": "undecided"
+    },
+    {
+      "code": "CH.I6.5",
+      "shape": "undecided"
+    }
+  ]
+}
