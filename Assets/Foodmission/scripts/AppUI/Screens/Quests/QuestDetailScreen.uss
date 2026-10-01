@@ -173,3 +173,7 @@
     color: var(--appui-foregrounds-50);
 }
 
+
+.hidden {
+    display: none;
+}

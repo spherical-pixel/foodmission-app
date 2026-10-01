@@ -559,9 +559,12 @@ namespace eu.foodmission.platform
 
         public string CurrentActiveQuestId => _storeService?.GetAppState()?.userCurrentQuestId;
 
+        /// <summary>A completed quest can't be started again (and the active one is already started).</summary>
+        public bool CanStartQuest => _quest != null && !IsCompleted && !IsCurrentQuest;
+
         public async Task<bool> StartQuestAsync()
         {
-            if (_quest == null) return false;
+            if (!CanStartQuest) return false;
             string targetId = !string.IsNullOrEmpty(_quest.id) ? _quest.id : _quest.code;
             if (string.IsNullOrEmpty(targetId)) return false;
             if (_isStartingQuest) return false;

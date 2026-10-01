@@ -131,6 +131,10 @@ namespace eu.foodmission.platform
                 e.PropertyName == nameof(_viewModel.TotalActivitiesCount))
             {
                 UpdateView();
+                if (e.PropertyName == nameof(_viewModel.IsCompleted))
+                {
+                    UpdateStartQuestButton();
+                }
             }
             else if (e.PropertyName == nameof(_viewModel.ErrorDetail))
             {
@@ -283,6 +287,9 @@ namespace eu.foodmission.platform
         private void UpdateStartQuestButton()
         {
             if (_btnStartQuest == null || _viewModel == null) return;
+
+            // A completed quest has nothing left to start
+            _btnStartQuest.EnableInClassList("hidden", _viewModel.IsCompleted && !_viewModel.IsCurrentQuest);
 
             if (_viewModel.IsCurrentQuest)
             {

@@ -527,5 +527,38 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(factActivity.IsCompleted);
             Assert.AreEqual(100f, factActivity.Progress);
         }
+
+        [Test]
+        public async Task StartQuestAsync_WhenQuestAlreadyCompleted_DoesNotStartIt()
+        {
+            var mockAuthService = new Mock<IAuthService>();
+            var vm = new QuestDetailViewModel(
+                _storeService,
+                _mockQuestService.Object,
+                _mockDimensionService.Object,
+                _mockQuizService.Object,
+                _mockMissionService.Object,
+                _mockChallengeService.Object,
+                authService: mockAuthService.Object
+            );
+            vm.SetQuestForTesting(_mockQuest, new QuestProgress { questId = "q-100", userId = "user-1", completed = true, progress = 100f });
+
+            Assert.IsFalse(vm.CanStartQuest);
+            Assert.IsFalse(await vm.StartQuestAsync());
+            mockAuthService.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            Assert.IsTrue(string.IsNullOrEmpty(_storeService.GetAppState().userCurrentQuestId));
+        }
+
+        [Test]
+        public void CanStartQuest_OnlyForQuestsNotCompletedAndNotActive()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress);
+            Assert.IsTrue(_vm.CanStartQuest);
+
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q-100" });
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress);
+            Assert.IsFalse(_vm.CanStartQuest);
+        }
     }
 }
