@@ -128,5 +128,23 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(items[1].MealLog.flags);
             CollectionAssert.AreEqual(new[] { ClientEventTypes.SwapSugaryDrinkToWater }, items[1].MealLog.swaps);
         }
+
+        [Test]
+        public void Build_MealWithFoodWasteFlag_IsSentLast()
+        {
+            // Backend v0.3.0 rejects FOOD_WASTE_* meal-log flags (assumed flags): they must not block the rest
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.B5.1", Now), CheckInPlannerTests.M("M.A1.3", Now), CheckInPlannerTests.M("M.B2.1")));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].Meals["LUNCH"] = new HashSet<string> { ClientEventTypes.FoodWasteHalfPlateSaved };
+            answers.MealDays[0].Meals["DINNER"] = new HashSet<string> { ClientEventTypes.MealLegumeConsumed };
+            answers.MissionSteps[0].Count = 1;
+
+            var items = CheckInBuilder.Build(plan, answers, "r1", Now);
+
+            Assert.AreEqual(3, items.Count);
+            Assert.AreEqual("DINNER", items[0].MealLog.typeOfMeal);
+            Assert.IsNotNull(items[1].Event);
+            Assert.AreEqual("LUNCH", items[2].MealLog.typeOfMeal);
+        }
     }
 }

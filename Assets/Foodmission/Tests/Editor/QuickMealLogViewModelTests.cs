@@ -883,5 +883,28 @@ namespace eu.foodmission.platform.Tests
             _vm.SetOnlyMissionItems(false);
             Assert.Greater(_vm.Sections.SelectMany(s => s.Items).Count(), 2);
         }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_SendsCheckedItemsHiddenByTheMissionFilter()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q1" });
+            _mockQuestService.Setup(q => q.GetQuestAsync("q1", It.IsAny<string>())).ReturnsAsync((new Quest
+            {
+                id = "q1",
+                items = new[] { new QuestItem { id = "i1", contentType = QuestContentType.Mission, contentCode = "M.A1.3" } }
+            }, (ApiErrorResponse)null));
+            await _vm.LoadActiveQuestQuestionsAsync();
+            _vm.ToggleQuestion("q_salt_free");
+            _vm.SetOnlyMissionItems(true);
+            _vm.ToggleQuestion("q_legumes");
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "ml-f" }, null));
+
+            Assert.IsTrue(await _vm.SubmitQuickMealLogAsync());
+
+            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.flags.Contains(ClientEventTypes.NutritionSaltFreeTable) &&
+                r.flags.Contains(ClientEventTypes.MealLegumeConsumed))), Times.Once);
+        }
     }
 }

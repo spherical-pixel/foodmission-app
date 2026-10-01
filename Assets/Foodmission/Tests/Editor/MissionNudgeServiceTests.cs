@@ -56,6 +56,18 @@ namespace eu.foodmission.platform.Tests
             return new CheckInPlan(new List<CheckInMealDay>(), dayEvents, new List<CheckInMissionStep>());
         }
 
+        /// <summary>Lets the service see the current quest <paramref name="days"/> days ago, with nothing pending then.</summary>
+        private async Task SeeQuestDaysAgo(int days)
+        {
+            DateTime now = _now;
+            int pending = _pendingDays;
+            _now = now.AddDays(-days);
+            _pendingDays = 0;
+            await _service.GetNudgeAsync();
+            _now = now;
+            _pendingDays = pending;
+        }
+
         private void SetQuest(params string[] missionCodes)
         {
             var items = Array.ConvertAll(missionCodes, c => new QuestItem { contentType = QuestContentType.Mission, contentCode = c });
@@ -75,6 +87,7 @@ namespace eu.foodmission.platform.Tests
         {
             _pendingDays = 3;
             SetProgress(P("M.B2.1", 0, _now.AddDays(-5)));
+            await SeeQuestDaysAgo(5);
 
             var nudge = await _service.GetNudgeAsync();
 
@@ -87,6 +100,7 @@ namespace eu.foodmission.platform.Tests
         {
             _pendingDays = 1;
             SetProgress(P("M.B2.1", 0, _now.AddDays(-3)));
+            await SeeQuestDaysAgo(5);
 
             var nudge = await _service.GetNudgeAsync();
 
@@ -98,7 +112,8 @@ namespace eu.foodmission.platform.Tests
         public async Task GetNudge_MissingDaysCooldown_ThenStalledCanStillShow()
         {
             _pendingDays = 2;
-            SetProgress(P("M.B2.1", 0, _now.AddDays(-3)));
+            SetProgress(P("M.B2.1", 0, _now.AddDays(-3)), P("M.B3.2", 100, completed: true));
+            await SeeQuestDaysAgo(5);
             Assert.AreEqual(MissionNudgeKind.MissingDays, (await _service.GetNudgeAsync()).Kind);
 
             _now = _now.AddHours(1);
@@ -203,6 +218,23 @@ namespace eu.foodmission.platform.Tests
             _service.Reset();
 
             Assert.IsNotNull(await _service.GetNudgeAsync(), "cooldown forgotten after reset");
+        }
+
+        [Test]
+        public async Task GetNudge_MissingDays_IgnoresDaysBeforeTheQuestWasFirstSeen()
+        {
+            // startedAt is null until the first progress, so the plan covers 7 days; a user who just picked
+            // the quest must not hear about days before that
+            _pendingDays = 6;
+
+            var first = await _service.GetNudgeAsync();
+            Assert.IsTrue(first == null || first.Kind != MissionNudgeKind.MissingDays);
+
+            _now = _now.AddDays(3);
+            _pendingDays = 6;
+            var later = await _service.GetNudgeAsync();
+            Assert.AreEqual(MissionNudgeKind.MissingDays, later.Kind);
+            Assert.AreEqual(3, later.MissingDays, "only the days since the quest was first seen");
         }
     }
 }

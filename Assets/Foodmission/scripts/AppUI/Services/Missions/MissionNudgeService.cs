@@ -17,6 +17,7 @@ namespace eu.foodmission.platform
         public const int MissingDaysThreshold = 2;
         private const string KeyPrefix = "mission_nudge_";
         private const string MissingDaysKey = "__missing_days__";
+        private const string QuestSeenKeyPrefix = "__quest_seen__";
 
         [Serializable]
         private class MissionNudgeState
@@ -63,7 +64,7 @@ namespace eu.foodmission.platform
                 Dictionary<string, MissionNudgeState> states = Load(state.userId);
                 DateTime now = UtcNow();
 
-                MissionNudge nudge = await GetMissingDaysNudgeAsync(states, now)
+                MissionNudge nudge = await GetMissingDaysNudgeAsync(state.userCurrentQuestId, states, now)
                     ?? await GetStalledMissionNudgeAsync(state.userCurrentQuestId, states, now);
 
                 Save(state.userId, states);
@@ -85,8 +86,17 @@ namespace eu.foodmission.platform
             }
         }
 
-        private async Task<MissionNudge> GetMissingDaysNudgeAsync(Dictionary<string, MissionNudgeState> states, DateTime now)
+        private async Task<MissionNudge> GetMissingDaysNudgeAsync(string questId, Dictionary<string, MissionNudgeState> states, DateTime now)
         {
+            // startedAt is null until the first progress, so remember when this quest was first seen as current:
+            // days before that are not "missing"
+            string questKey = QuestSeenKeyPrefix + questId;
+            if (!states.TryGetValue(questKey, out MissionNudgeState questState))
+            {
+                questState = new MissionNudgeState { FirstSeenAtUtc = now, LastChangeAtUtc = now };
+                states[questKey] = questState;
+            }
+
             if (_checkInService == null || IsOnCooldown(states, MissingDaysKey, now))
             {
                 return null;
@@ -98,7 +108,7 @@ namespace eu.foodmission.platform
                 return null;
             }
 
-            int days = plan.PendingPastDays(NowLocal());
+            int days = plan.PendingPastDays(NowLocal(), questState.FirstSeenAtUtc.ToLocalTime());
             if (days < MissingDaysThreshold)
             {
                 return null;

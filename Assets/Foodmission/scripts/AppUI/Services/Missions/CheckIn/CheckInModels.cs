@@ -118,13 +118,17 @@ namespace eu.foodmission.platform
             MissionSteps = missionSteps;
         }
 
-        /// <summary>Past days the user hasn't told anything about: no meal log at all, or an open day-event day.</summary>
-        public int PendingPastDays(DateTime nowLocal)
+        /// <summary>
+        /// Past days the user hasn't told anything about: no meal log at all, or an open day-event day.
+        /// Days before <paramref name="notBeforeLocal"/> (e.g. when the quest was first seen) don't count.
+        /// </summary>
+        public int PendingPastDays(DateTime nowLocal, DateTime? notBeforeLocal = null)
         {
             DateTime today = nowLocal.Date;
+            DateTime first = notBeforeLocal?.Date ?? DateTime.MinValue;
             return MealDays.Where(d => !d.HasAnyLog && d.Questions.Count > 0).Select(d => d.Day)
                 .Concat(DayEvents.SelectMany(e => e.OpenDays))
-                .Where(d => d < today)
+                .Where(d => d < today && d >= first)
                 .Distinct()
                 .Count();
         }

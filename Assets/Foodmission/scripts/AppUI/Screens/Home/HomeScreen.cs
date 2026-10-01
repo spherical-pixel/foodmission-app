@@ -324,13 +324,15 @@ namespace eu.foodmission.platform
 
         private async Task<bool> CheckMissionNudgeAsync()
         {
-            if (_viewModel == null)
+            HomeScreenViewModel viewModel = _viewModel;
+            if (viewModel == null)
             {
                 return false;
             }
 
-            MissionNudge nudge = await _viewModel.CheckMissionNudgeAsync();
-            if (nudge == null)
+            MissionNudge nudge = await viewModel.CheckMissionNudgeAsync();
+            // The user may have left Home while the nudge was loading: never show it over another screen
+            if (nudge == null || _viewModel != viewModel || panel == null)
             {
                 return false;
             }
@@ -340,16 +342,16 @@ namespace eu.foodmission.platform
             if (nudge.Kind == MissionNudgeKind.MissingDays)
             {
                 message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MISSING_DAYS", new object[] { nudge.MissingDays });
-                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => _viewModel.OpenCheckIn(), ButtonVariant.Accent));
+                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => viewModel.OpenCheckIn(), ButtonVariant.Accent));
             }
             else
             {
                 message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MESSAGE", new object[] { nudge.MissionTitle });
                 if (nudge.AutoModule != null)
                 {
-                    actions.Add(new FMDialogAction("@UI:" + nudge.AutoModule.ButtonKey, () => _viewModel.OpenMissionModule(nudge.AutoModule), ButtonVariant.Accent));
+                    actions.Add(new FMDialogAction("@UI:" + nudge.AutoModule.ButtonKey, () => viewModel.OpenMissionModule(nudge.AutoModule), ButtonVariant.Accent));
                 }
-                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => _viewModel.OpenCheckIn(nudge.MissionCode),
+                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => viewModel.OpenCheckIn(nudge.MissionCode),
                     nudge.AutoModule != null ? ButtonVariant.Default : ButtonVariant.Accent));
             }
             actions.Add(new FMDialogAction("@UI:MISSION_NUDGE_NOT_NOW", () => { }, ButtonVariant.Default));

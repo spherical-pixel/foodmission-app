@@ -36,14 +36,20 @@ namespace eu.foodmission.platform
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
-            if (_viewModel == null)
+            MissionCheckInViewModel viewModel = _viewModel;
+            if (viewModel == null)
             {
                 return;
             }
 
             string code = args?.FirstOrDefault(a => a.name == "code")?.value;
-            await _viewModel.LoadAsync(string.IsNullOrEmpty(code) ? null : code);
-            if (_viewModel.IsUpToDate)
+            await viewModel.LoadAsync(string.IsNullOrEmpty(code) ? null : code);
+            // The user may have gone back while the plan was loading
+            if (_viewModel != viewModel || panel == null)
+            {
+                return;
+            }
+            if (viewModel.IsUpToDate)
             {
                 NavController navController = _navController;
                 NutriMessageDialog.Show(L("MISSION_CHECKIN_UP_TO_DATE"),

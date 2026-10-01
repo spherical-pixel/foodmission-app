@@ -434,6 +434,9 @@ namespace eu.foodmission.platform
         private HashSet<string> _missionEvents = new HashSet<string>(StringComparer.Ordinal);
 
         public bool OnlyMissionItems { get; private set; }
+
+        /// <summary>Every section, including items the mission filter hides (checks, submit and hydration use these).</summary>
+        private List<QuickMealSection> DataSections => OnlyMissionItems ? _allSections : (Sections ?? _allSections);
         public bool HasMissionItems => _missionEvents.Count > 0;
 
         public void SetOnlyMissionItems(bool value)
@@ -528,9 +531,9 @@ namespace eu.foodmission.platform
         public void ToggleQuestion(string id)
         {
             QuickMealCheckItem target = null;
-            if (Sections != null)
+            if (DataSections.Count > 0)
             {
-                foreach (var sec in Sections)
+                foreach (var sec in DataSections)
                 {
                     var found = sec.Items?.FirstOrDefault(q => q.Id == id);
                     if (found != null) { target = found; break; }
@@ -596,9 +599,9 @@ namespace eu.foodmission.platform
 
         private IEnumerable<QuickMealCheckItem> GetAllItems()
         {
-            if (Sections != null)
+            if (DataSections.Count > 0)
             {
-                foreach (var sec in Sections)
+                foreach (var sec in DataSections)
                 {
                     if (sec.Items == null) continue;
                     foreach (var item in sec.Items)
@@ -637,9 +640,9 @@ namespace eu.foodmission.platform
         public void SelectSwapForQuestion(string id, string swapOption)
         {
             QuickMealCheckItem target = null;
-            if (Sections != null)
+            if (DataSections.Count > 0)
             {
-                foreach (var sec in Sections)
+                foreach (var sec in DataSections)
                 {
                     var found = sec.Items?.FirstOrDefault(q => q.Id == id);
                     if (found != null) { target = found; break; }
@@ -671,9 +674,9 @@ namespace eu.foodmission.platform
         {
             if (string.IsNullOrEmpty(eventType)) return;
 
-            if (Sections != null)
+            if (DataSections.Count > 0)
             {
-                foreach (var sec in Sections)
+                foreach (var sec in DataSections)
                 {
                     if (sec.Items == null) continue;
                     foreach (var it in sec.Items)
@@ -750,9 +753,9 @@ namespace eu.foodmission.platform
             var swapsSet = new HashSet<string>(log.swaps ?? Array.Empty<string>());
 
             var allItems = new List<QuickMealCheckItem>();
-            if (Sections != null && Sections.Count > 0)
+            if (DataSections.Count > 0)
             {
-                foreach (var sec in Sections)
+                foreach (var sec in DataSections)
                 {
                     if (sec.Items != null) allItems.AddRange(sec.Items);
                 }
@@ -842,9 +845,9 @@ namespace eu.foodmission.platform
             {
                 // 1. Separate checked items into flags, swaps, and nutrition events across all sections
                 var allChecked = new List<QuickMealCheckItem>();
-                if (Sections != null && Sections.Count > 0)
+                if (DataSections.Count > 0)
                 {
-                    foreach (var sec in Sections)
+                    foreach (var sec in DataSections)
                     {
                         if (sec.Items != null)
                         {
