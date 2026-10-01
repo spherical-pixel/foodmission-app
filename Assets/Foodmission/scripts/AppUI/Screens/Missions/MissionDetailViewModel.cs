@@ -118,7 +118,7 @@ namespace eu.foodmission.platform
                 Mission = mission;
                 Interaction = MissionInteractionCatalog.Get(mission?.code ?? codeOrId);
 
-                var (progress, _) = await _missionService.GetMissionProgressAsync(codeOrId);
+                var (progress, _) = await _missionService.GetMissionProgressAsync(mission?.code ?? codeOrId);
                 MissionProgress = progress;
 
                 IsCurrentQuestMission = await IsInCurrentQuestAsync(mission?.code ?? codeOrId);

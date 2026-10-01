@@ -235,5 +235,68 @@ namespace eu.foodmission.platform.Tests
             Assert.AreSame(error, _vm.ErrorDetail);
             Assert.IsFalse(_vm.IsLoading);
         }
+
+        [Test]
+        public async Task Send_AfterMidnight_SendsWhatWasPlannedForTheLoadDay()
+        {
+            DateTime beforeMidnight = Now.Date.AddHours(23).AddMinutes(50);
+            _vm.Clock = () => beforeMidnight;
+            var inputs = CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A5.4"));
+            inputs.NowLocal = beforeMidnight;
+            _checkIn.Setup(c => c.LoadPlanAsync(null)).ReturnsAsync((CheckInPlanner.Plan(inputs), (ApiErrorResponse)null));
+            await _vm.LoadAsync(null);
+            _vm.ToggleEventDay(0, beforeMidnight.Date);
+
+            _vm.Clock = () => beforeMidnight.AddMinutes(20);
+            await CompleteAsync();
+
+            Assert.AreEqual(1, _sent.Count);
+            Assert.AreEqual(1, _sent[0].Count, "the answer for the load day is not dropped");
+        }
+
+        [Test]
+        public async Task Send_WhenProgressRefreshThrows_StillCompletesWithoutError()
+        {
+            CheckInOutcome outcome = null;
+            _vm.CheckInCompleted += o => outcome = o;
+            _missions.Setup(m => m.GetMissionProgressAsync("M.A5.4", It.IsAny<string>())).ThrowsAsync(new Exception("boom"));
+            await LoadAsync("M.A5.4", CheckInPlannerTests.M("M.A5.4"));
+            _vm.ToggleEventDay(0, Now.Date);
+
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Warning, new System.Text.RegularExpressions.Regex("boom"));
+            await CompleteAsync();
+
+            Assert.IsNotNull(outcome);
+            Assert.IsNull(outcome.SingleMissionProgress);
+            Assert.IsNull(_vm.ErrorDetail);
+        }
+
+        [Test]
+        public async Task Send_AfterFullSuccess_CompletingAgainOnlyShowsTheResult()
+        {
+            int completions = 0;
+            _vm.CheckInCompleted += _ => completions++;
+            await LoadAsync(null, CheckInPlannerTests.M("M.A5.4"));
+            _vm.ToggleEventDay(0, Now.Date);
+
+            await CompleteAsync();
+            await _vm.GoNextAsync();
+
+            Assert.AreEqual(1, _sent.Count, "nothing is sent twice");
+            Assert.AreEqual(2, completions);
+        }
+
+        [Test]
+        public async Task LoadAsync_WhenServiceFails_MarksLoadFailed()
+        {
+            _checkIn.Setup(c => c.LoadPlanAsync(null)).ReturnsAsync(((CheckInPlan)null, new ApiErrorResponse { message = "x" }));
+
+            await _vm.LoadAsync(null);
+
+            Assert.IsTrue(_vm.LoadFailed);
+
+            await LoadAsync(null, CheckInPlannerTests.M("M.A5.4"));
+            Assert.IsFalse(_vm.LoadFailed);
+        }
     }
 }

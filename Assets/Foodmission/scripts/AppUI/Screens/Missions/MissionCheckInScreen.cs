@@ -44,6 +44,17 @@ namespace eu.foodmission.platform
             _swipeView?.AddToClassList("fm-mission-report-swipeview");
         }
 
+        /// <summary>A failed load leaves nothing to answer: OK goes back instead of leaving an empty screen.</summary>
+        protected override Action OnApiErrorDismissed()
+        {
+            if (_viewModel == null || !_viewModel.LoadFailed)
+            {
+                return null;
+            }
+            NavController navController = _navController;
+            return () => navController?.PopBackStack();
+        }
+
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);

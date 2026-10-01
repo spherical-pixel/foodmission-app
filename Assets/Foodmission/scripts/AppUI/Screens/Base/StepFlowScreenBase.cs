@@ -7,6 +7,7 @@ using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -45,6 +46,9 @@ namespace eu.foodmission.platform
 
         // ── Companion Slot Configuration ────────────────────
         protected virtual void SetupCompanionSlot(VisualElement slot) { }
+
+        /// <summary>Action for the API error dialog's OK button (null = just close it).</summary>
+        protected virtual Action OnApiErrorDismissed() => null;
 
         protected StepFlowScreenBase()
         {
@@ -266,7 +270,7 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.ErrorDetail):
                     if (_viewModel.ErrorDetail != null)
                     {
-                        FMDialog.ShowApiError(this, "Error", _viewModel.ErrorDetail);
+                        FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail, onOk: OnApiErrorDismissed());
                         _viewModel.ErrorDetail = null;
                     }
                     break;

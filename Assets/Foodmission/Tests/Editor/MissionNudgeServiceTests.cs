@@ -236,5 +236,19 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(MissionNudgeKind.MissingDays, later.Kind);
             Assert.AreEqual(3, later.MissingDays, "only the days since the quest was first seen");
         }
+
+        [Test]
+        public async Task GetNudge_IsEvaluatedAtMostEvery30Minutes()
+        {
+            await _service.GetNudgeAsync();
+            _now = _now.AddMinutes(10);
+            await _service.GetNudgeAsync();
+            _checkIn.Verify(c => c.LoadPlanAsync(null), Times.Once);
+            _missions.Verify(m => m.GetUserProgressListAsync(null), Times.Once);
+
+            _now = _now.AddMinutes(25);
+            await _service.GetNudgeAsync();
+            _checkIn.Verify(c => c.LoadPlanAsync(null), Times.Exactly(2));
+        }
     }
 }

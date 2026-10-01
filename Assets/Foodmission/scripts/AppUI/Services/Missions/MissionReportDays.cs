@@ -29,19 +29,26 @@ namespace eu.foodmission.platform
             return days;
         }
 
+        /// <summary>How long before its typical hour a meal of today can already be reported.</summary>
+        public const int TodayLeadHours = 2;
+
+        public static int TypicalHour(string mealType) => mealType switch
+        {
+            "BREAKFAST" => 8,
+            "LUNCH" => 13,
+            "SNACK" => 17,
+            "DINNER" => 20,
+            _ => 13
+        };
+
+        /// <summary>Today, a meal is offered from <see cref="TodayLeadHours"/> before its typical hour (breakfast always).</summary>
+        public static bool IsOfferedToday(string mealType, DateTime nowLocal) =>
+            mealType == "BREAKFAST" || nowLocal.TimeOfDay >= TimeSpan.FromHours(TypicalHour(mealType) - TodayLeadHours);
+
         /// <summary>Local moment used for a reported meal: a typical hour of the meal type, clamped to now.</summary>
         public static DateTime TimestampFor(DateTime day, string mealType, DateTime nowLocal)
         {
-            int hour = mealType switch
-            {
-                "BREAKFAST" => 8,
-                "LUNCH" => 13,
-                "SNACK" => 17,
-                "DINNER" => 20,
-                _ => 13
-            };
-
-            DateTime moment = day.Date.AddHours(hour);
+            DateTime moment = day.Date.AddHours(TypicalHour(mealType));
             return moment > nowLocal ? nowLocal : moment;
         }
     }

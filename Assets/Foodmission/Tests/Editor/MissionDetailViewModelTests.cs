@@ -143,5 +143,17 @@ namespace eu.foodmission.platform.Tests
             Assert.AreSame(error, _vm.ErrorDetail);
             Assert.IsFalse(_vm.IsLoading);
         }
+
+        [Test]
+        public async Task LoadMissionAsync_ById_FetchesProgressByMissionCode()
+        {
+            _missions.Setup(m => m.GetMissionAsync("mission-id", null)).ReturnsAsync((new Mission { id = "mission-id", code = "M.B2.1", title = "T", level = "BEGINNER" }, (ApiErrorResponse)null));
+            _missions.Setup(m => m.GetMissionProgressAsync(It.IsAny<string>(), null)).ReturnsAsync((new MissionProgress { missionCode = "M.B2.1", progress = 10 }, (ApiErrorResponse)null));
+
+            await _vm.LoadMissionAsync("mission-id");
+
+            _missions.Verify(m => m.GetMissionProgressAsync("M.B2.1", null), Times.Once);
+            _missions.Verify(m => m.GetMissionProgressAsync("mission-id", null), Times.Never);
+        }
     }
 }

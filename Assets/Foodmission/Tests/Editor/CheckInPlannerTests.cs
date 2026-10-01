@@ -125,5 +125,32 @@ namespace eu.foodmission.platform.Tests
             // -2 and -1 have no meals. FIFO is today-only. Today never counts.
             Assert.AreEqual(2, plan.PendingPastDays(Now));
         }
+
+        [Test]
+        public void MealDays_Today_OffersMealTypesFromTwoHoursBeforeTheirTypicalHour()
+        {
+            var inputs = Inputs(M("M.A1.3", Now.AddDays(-1)));
+            inputs.NowLocal = Now.Date.AddHours(10);
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            CheckInMealDay today = plan.MealDays.Single(d => d.Day == Now.Date);
+            CollectionAssert.AreEqual(new[] { "BREAKFAST" }, today.OpenMealTypes.ToArray());
+            CheckInMealDay yesterday = plan.MealDays.Single(d => d.Day == Now.Date.AddDays(-1));
+            Assert.AreEqual(CheckInMealTypes.All.Length, yesterday.OpenMealTypes.Count, "past days offer every meal type");
+
+            inputs.NowLocal = Now.Date.AddHours(11);
+            CollectionAssert.AreEqual(new[] { "BREAKFAST", "LUNCH" }, CheckInPlanner.Plan(inputs).MealDays.Single(d => d.Day == Now.Date).OpenMealTypes.ToArray());
+        }
+
+        [Test]
+        public void MealDays_TodayWithEveryOfferedMealLogged_IsSkipped()
+        {
+            var inputs = Inputs(M("M.A1.3"));
+            inputs.NowLocal = Now.Date.AddHours(10);
+            inputs.LoggedMealTypes[Now.Date] = new HashSet<string> { "BREAKFAST" };
+
+            Assert.IsFalse(CheckInPlanner.Plan(inputs).MealDays.Any(d => d.Day == Now.Date));
+        }
     }
 }

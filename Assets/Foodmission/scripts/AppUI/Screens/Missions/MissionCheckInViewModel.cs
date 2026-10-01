@@ -42,6 +42,13 @@ namespace eu.foodmission.platform
         public int SummaryStepIndex => Plan.StepCount;
         public bool HasPartialSend => _pendingItems != null && _pendingItems.Any(i => i.Sent);
 
+        /// <summary>The plan could not be loaded: the screen leaves after showing the error.</summary>
+        public bool LoadFailed { get; private set; }
+
+        // Moment the plan was built: answers are sent as planned even if the day changes before sending
+        private DateTime _planNowLocal;
+        private CheckInOutcome _outcome;
+
         public event Action<CheckInOutcome> CheckInCompleted;
 
         public MissionCheckInViewModel(
@@ -59,12 +66,16 @@ namespace eu.foodmission.platform
         {
             IsLoading = true;
             ErrorDetail = null;
+            LoadFailed = false;
             OnlyMissionCode = onlyMissionCode;
+            _outcome = null;
+            _planNowLocal = Clock();
             try
             {
                 var (plan, error) = await _checkInService.LoadPlanAsync(onlyMissionCode);
                 if (error != null)
                 {
+                    LoadFailed = true;
                     ErrorDetail = error;
                     return;
                 }
@@ -83,6 +94,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[MissionCheckInViewModel] LoadAsync error: {ex.Message}");
+                LoadFailed = true;
                 ErrorDetail = new ApiErrorResponse { message = ex.Message };
             }
             finally
@@ -271,6 +283,12 @@ namespace eu.foodmission.platform
             {
                 return;
             }
+            // Everything was already sent: only show the result again
+            if (_outcome != null)
+            {
+                CheckInCompleted?.Invoke(_outcome);
+                return;
+            }
 
             _pendingItems = CurrentItems();
             if (_pendingItems.Count == 0)
@@ -289,12 +307,8 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                MissionProgress progress = null;
-                if (!string.IsNullOrEmpty(OnlyMissionCode) && _missionService != null)
-                {
-                    (progress, _) = await _missionService.GetMissionProgressAsync(OnlyMissionCode);
-                }
-                CheckInCompleted?.Invoke(new CheckInOutcome(_pendingItems.Count, progress));
+                _outcome = new CheckInOutcome(_pendingItems.Count, await TryGetSingleMissionProgressAsync());
+                CheckInCompleted?.Invoke(_outcome);
             }
             catch (Exception ex)
             {
@@ -310,8 +324,28 @@ namespace eu.foodmission.platform
 
         // ── Helpers ───────────────────────────────────────────
 
+        /// <summary>Progress shown after a successful send; failing to fetch it must not turn the send into an error.</summary>
+        private async Task<MissionProgress> TryGetSingleMissionProgressAsync()
+        {
+            if (string.IsNullOrEmpty(OnlyMissionCode) || _missionService == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                var (progress, _) = await _missionService.GetMissionProgressAsync(OnlyMissionCode);
+                return progress;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[MissionCheckInViewModel] Progress refresh after send failed: {ex.Message}");
+                return null;
+            }
+        }
+
         private List<PendingReportItem> CurrentItems() =>
-            _pendingItems ?? CheckInBuilder.Build(Plan, Answers, _reportId, Clock());
+            _pendingItems ?? CheckInBuilder.Build(Plan, Answers, _reportId, _planNowLocal);
 
         /// <summary>Items one step would produce on its own (summary counts).</summary>
         private List<PendingReportItem> BuildFor(int stepIndex)
@@ -336,7 +370,7 @@ namespace eu.foodmission.platform
                     oneAnswers.MissionSteps[0] = Answers.MissionSteps[index];
                     break;
             }
-            return CheckInBuilder.Build(onePlan, oneAnswers, _reportId, Clock());
+            return CheckInBuilder.Build(onePlan, oneAnswers, _reportId, _planNowLocal);
         }
 
         private string PromptKeyFor(int stepIndex) => KindOf(stepIndex) switch

@@ -15,6 +15,9 @@ namespace eu.foodmission.platform
         public static readonly TimeSpan StallThreshold = TimeSpan.FromDays(2);
         public static readonly TimeSpan NudgeCooldown = TimeSpan.FromHours(24);
         public const int MissingDaysThreshold = 2;
+        /// <summary>Home is entered often and a full check costs ~6 requests: evaluate at most this often.</summary>
+        public static readonly TimeSpan CheckInterval = TimeSpan.FromMinutes(30);
+        private const string LastCheckKey = "__last_check__";
         private const string KeyPrefix = "mission_nudge_";
         private const string MissingDaysKey = "__missing_days__";
         private const string QuestSeenKeyPrefix = "__quest_seen__";
@@ -63,6 +66,11 @@ namespace eu.foodmission.platform
 
                 Dictionary<string, MissionNudgeState> states = Load(state.userId);
                 DateTime now = UtcNow();
+                if (states.TryGetValue(LastCheckKey, out MissionNudgeState lastCheck) && now - lastCheck.LastChangeAtUtc < CheckInterval)
+                {
+                    return null;
+                }
+                states[LastCheckKey] = new MissionNudgeState { FirstSeenAtUtc = now, LastChangeAtUtc = now };
 
                 MissionNudge nudge = await GetMissingDaysNudgeAsync(state.userCurrentQuestId, states, now)
                     ?? await GetStalledMissionNudgeAsync(state.userCurrentQuestId, states, now);

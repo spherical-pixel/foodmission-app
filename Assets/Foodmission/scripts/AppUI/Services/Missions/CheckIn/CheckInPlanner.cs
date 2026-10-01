@@ -97,7 +97,14 @@ namespace eu.foodmission.platform
                     .Select(q => new CheckInMealQuestion(q.EventType, q.Only))
                     .ToList();
 
-                string[] open = CheckInMealTypes.All.Where(t => !logged.Contains(t)).ToArray();
+                bool isToday = entry.Key == inputs.NowLocal.Date;
+                string[] open = CheckInMealTypes.All
+                    .Where(t => !logged.Contains(t) && (!isToday || MissionReportDays.IsOfferedToday(t, inputs.NowLocal)))
+                    .ToArray();
+                if (open.Length == 0)
+                {
+                    continue;
+                }
                 mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions));
             }
 
