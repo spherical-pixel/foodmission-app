@@ -483,6 +483,11 @@ namespace eu.foodmission.platform
                     events.UnionWith(step.Options.Select(o => o.EventType));
                 }
             }
+            // Meat-reduction missions count meat portions, but a meat-free meal is the answer that helps them
+            if (events.Contains(ClientEventTypes.MealMeatConsumed))
+            {
+                events.Add(ClientEventTypes.MealMeatFree);
+            }
             return events;
         }
 

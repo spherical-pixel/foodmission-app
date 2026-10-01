@@ -891,5 +891,24 @@ namespace eu.foodmission.platform.Tests
                 r.flags.Contains(ClientEventTypes.NutritionSaltFreeTable) &&
                 r.flags.Contains(ClientEventTypes.MealLegumeConsumed))), Times.Once);
         }
+
+        [Test]
+        public async Task OnlyMissionItems_MeatMission_AlsoShowsMeatFreeMeal()
+        {
+            // Meat-reduction missions are helped by meat-free meals too, not only by counting meat portions
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q1" });
+            _mockQuestService.Setup(q => q.GetQuestAsync("q1", It.IsAny<string>())).ReturnsAsync((new Quest
+            {
+                id = "q1",
+                items = new[] { new QuestItem { id = "i1", contentType = QuestContentType.Mission, contentCode = "M.B1.3" } }
+            }, (ApiErrorResponse)null));
+            await _vm.LoadActiveQuestQuestionsAsync();
+
+            _vm.SetOnlyMissionItems(true);
+
+            var events = _vm.Sections.SelectMany(s => s.Items).Select(i => i.EventType).ToArray();
+            CollectionAssert.Contains(events, ClientEventTypes.MealMeatConsumed);
+            CollectionAssert.Contains(events, ClientEventTypes.MealMeatFree);
+        }
     }
 }
