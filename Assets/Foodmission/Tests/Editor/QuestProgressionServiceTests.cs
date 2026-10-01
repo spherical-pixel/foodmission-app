@@ -13,7 +13,27 @@ namespace eu.foodmission.platform.Tests
         [SetUp]
         public void SetUp()
         {
-            _service = new QuestProgressionService();
+            // Pin the flag so these tests don't depend on FM_UNLOCK_ALL_QUESTS being defined
+            _service = new QuestProgressionService { UnlockAllQuests = false };
+        }
+
+        [Test]
+        public void EvaluateProgression_WhenUnlockAllQuests_EveryQuestIsUnlocked()
+        {
+            var service = new QuestProgressionService { UnlockAllQuests = true };
+            var quests = new List<Quest>
+            {
+                new Quest { id = "q1", code = "QUEST.DIET.BEGINNER.1", dimensionId = "dim1", level = "BEGINNER", title = "B1" },
+                new Quest { id = "q2", code = "QUEST.DIET.BEGINNER.2", dimensionId = "dim1", level = "BEGINNER", title = "B2" },
+                new Quest { id = "q3", code = "QUEST.DIET.INTERMEDIATE.1", dimensionId = "dim1", level = "INTERMEDIATE", title = "I1" }
+            };
+
+            var states = service.EvaluateProgression(quests, new List<QuestProgress>());
+
+            Assert.AreEqual(3, states.Count);
+            Assert.IsTrue(states.All(s => s.IsUnlocked), "All quests should be unlocked");
+            Assert.IsTrue(states.All(s => !s.IsCompleted), "Unlocking must not mark quests as completed");
+            Assert.AreEqual("q1", states[1].PreviousQuest?.id);
         }
 
         [Test]

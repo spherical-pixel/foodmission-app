@@ -9,6 +9,17 @@ namespace eu.foodmission.platform
     {
         private static readonly Regex CodeNumberRegex = new Regex(@"\.(\d+)$", RegexOptions.Compiled);
 
+        /// <summary>
+        /// Development switch: when true every quest is reported as unlocked, ignoring the sequential order.
+        /// Defaults to whether the FM_UNLOCK_ALL_QUESTS scripting define is set (Player Settings).
+        /// </summary>
+        public bool UnlockAllQuests { get; set; } =
+#if FM_UNLOCK_ALL_QUESTS
+            true;
+#else
+            false;
+#endif
+
         public IReadOnlyList<QuestProgressionState> EvaluateProgression(
             IEnumerable<Quest> allQuests,
             IEnumerable<QuestProgress> userProgress)
@@ -54,7 +65,7 @@ namespace eu.foodmission.platform
                     float progressVal = prog != null ? prog.progress : 0f;
 
                     // Unlocked if it's the first quest or if the previous quest was completed, or if already completed
-                    bool isUnlocked = (i == 0) || previousWasCompleted || isCompleted;
+                    bool isUnlocked = UnlockAllQuests || (i == 0) || previousWasCompleted || isCompleted;
 
                     result.Add(new QuestProgressionState
                     {
