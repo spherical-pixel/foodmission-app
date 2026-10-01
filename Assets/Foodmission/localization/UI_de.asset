@@ -4004,6 +4004,10 @@ MonoBehaviour:
     m_Localized: Nur was meine Missionen brauchen
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: Markiere mindestens eine Option, um diese Mahlzeit zu erfassen.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

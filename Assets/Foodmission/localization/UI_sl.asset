@@ -3983,6 +3983,10 @@ MonoBehaviour:
     m_Localized: Samo to, kar potrebujejo moje misije
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: "Ozna\u010Di vsaj eno mo\u017Enost, da se ta obrok zabele\u017Ei."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

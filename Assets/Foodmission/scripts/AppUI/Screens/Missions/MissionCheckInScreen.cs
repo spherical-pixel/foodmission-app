@@ -25,13 +25,24 @@ namespace eu.foodmission.platform
         protected override string CompleteButtonLabel => "@UI:MISSION_REPORT_SEND";
 
         private Text _bubbleText;
+        private VisualElement _bubbleCard;
         private readonly Dictionary<int, VisualElement> _bodies = new Dictionary<int, VisualElement>();
+        private readonly Dictionary<int, VisualElement> _cards = new Dictionary<int, VisualElement>();
+        private SwipeView _swipeView;
+        private const float StepPadding = 64f;
 
         private static string L(string key) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
 
         private static string LF(string key, params object[] args) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key, args);
 
         private static IFormatProvider Formatter => LocalizationSettings.SelectedLocale?.Formatter ?? CultureInfo.CurrentCulture;
+
+        public MissionCheckInScreen()
+        {
+            // The page scrolls as a whole; the SwipeView grows to the current step when it doesn't fit (FitSwipeViewToStep)
+            _swipeView = contentContainer.Q<SwipeView>("step-swipeview");
+            _swipeView?.AddToClassList("fm-mission-report-swipeview");
+        }
 
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
@@ -79,6 +90,7 @@ namespace eu.foodmission.platform
                 _viewModel.CheckInCompleted -= OnCheckInCompleted;
             }
             _bodies.Clear();
+            _cards.Clear();
             base.OnViewModelUnbinding();
         }
 
@@ -96,9 +108,11 @@ namespace eu.foodmission.platform
             var container = new VisualElement();
             var nutri = new FMNutriView();
             nutri.AddToClassList("fm-step-flow__guide-nutri");
+            nutri.AddToClassList("fm-mission-report-nutri");
             container.Add(nutri);
 
             var card = new ExVisualElement();
+            _bubbleCard = card;
             card.AddToClassList("box-background");
             card.AddToClassList("fm-shadow-wrapper");
             card.AddToClassList("fm-step-flow__guide-card");
@@ -113,6 +127,7 @@ namespace eu.foodmission.platform
         {
             base.OnStepChanged(stepIndex);
             UpdateBubble();
+            FitSwipeViewToStep(stepIndex);
             if (_viewModel != null && _viewModel.KindOf(stepIndex) == CheckInStepKind.Summary)
             {
                 RenderSummary(stepIndex);
@@ -128,25 +143,51 @@ namespace eu.foodmission.platform
             }
 
             int step = _viewModel.CurrentStepIndex;
-            _bubbleText.text = _viewModel.KindOf(step) == CheckInStepKind.MealDay
+            string message = _viewModel.KindOf(step) == CheckInStepKind.MealDay
                 ? LF(_viewModel.NutriPromptKey, DayLabel(_viewModel.Plan.MealDays[_viewModel.ItemIndexOf(step)].Day))
                 : L(_viewModel.NutriPromptKey);
+            if (_bubbleText.text == message && _bubbleCard != null && _bubbleCard.ClassListContains("fm-step-flow__guide-card--visible"))
+            {
+                return;
+            }
+
+            // The guide card starts transparent (StepFlowScreen.uss): fade out, swap the text, fade in (as OnboardingSurveyScreen)
+            _bubbleCard?.RemoveFromClassList("fm-step-flow__guide-card--visible");
+            _bubbleCard?.AddToClassList("fm-step-flow__guide-card--exit");
+            _bubbleText.schedule.Execute(() =>
+            {
+                _bubbleText.text = message;
+                _bubbleCard?.RemoveFromClassList("fm-step-flow__guide-card--exit");
+                _bubbleCard?.AddToClassList("fm-step-flow__guide-card--visible");
+            }).StartingIn(150);
         }
 
         protected override VisualElement CreateStepContent(int stepIndex)
         {
             var root = new VisualElement();
             root.AddToClassList("fm-mission-report-step");
+            // The card keeps the hint readable on any theme; RenderStep only clears the inner body
+            var card = new VisualElement();
+            card.AddToClassList("fm-mission-report-body");
+            root.Add(card);
+            _cards[stepIndex] = card;
+            // SwipeView items share one fixed height: grow the SwipeView to the current step so the page scrolls instead
+            card.RegisterCallback<GeometryChangedEvent>(_ =>
+            {
+                if (_viewModel != null && _viewModel.CurrentStepIndex == stepIndex)
+                {
+                    FitSwipeViewToStep(stepIndex);
+                }
+            });
             if (stepIndex == 0)
             {
                 var hint = new Text { text = L("MISSION_REPORT_INTRO") };
                 hint.AddToClassList("fm-mission-report-hint");
-                root.Add(hint);
+                card.Add(hint);
             }
 
             var body = new VisualElement();
-            body.AddToClassList("fm-mission-report-body");
-            root.Add(body);
+            card.Add(body);
             _bodies[stepIndex] = body;
 
             if (_viewModel != null && stepIndex < _viewModel.SummaryStepIndex)
@@ -157,6 +198,22 @@ namespace eu.foodmission.platform
         }
 
         // ── Step rendering ────────────────────────────────────
+
+        private void FitSwipeViewToStep(int stepIndex)
+        {
+            if (_swipeView == null || !_cards.TryGetValue(stepIndex, out VisualElement card) || float.IsNaN(card.layout.height))
+            {
+                return;
+            }
+            // Only grow when the step doesn't fit: a fixed minimum left empty scrollable space under short steps
+            _swipeView.style.minHeight = card.layout.height + StepPadding;
+        }
+
+        /// <summary>Re-renders on the next frame: rebuilding the step inside a chip's click handler would destroy the clicked button.</summary>
+        private void RenderStepLater(int stepIndex)
+        {
+            schedule.Execute(() => RenderStep(stepIndex));
+        }
 
         private void RenderStep(int stepIndex)
         {
@@ -191,7 +248,7 @@ namespace eu.foodmission.platform
                 mealRow.Add(Chip(L("TYPE_" + mealType), answer.Meals.ContainsKey(mealType), () =>
                 {
                     _viewModel.ToggleMeal(stepIndex, captured);
-                    RenderStep(stepIndex);
+                    RenderStepLater(stepIndex);
                 }));
             }
             body.Add(mealRow);
@@ -216,10 +273,17 @@ namespace eu.foodmission.platform
                     questions.Add(Chip(L(question.LabelKey), checkedEvents.Contains(question.EventType), () =>
                     {
                         _viewModel.ToggleMealEvent(stepIndex, mealCaptured, eventCaptured);
-                        RenderStep(stepIndex);
+                        RenderStepLater(stepIndex);
                     }));
                 }
                 body.Add(questions);
+
+                if (!CheckInBuilder.CanSendMeal(day, mealType, checkedEvents))
+                {
+                    var emptyHint = new Text { text = L("MISSION_CHECKIN_MEAL_EMPTY_HINT") };
+                    emptyHint.AddToClassList("fm-mission-report-meal-hint");
+                    body.Add(emptyHint);
+                }
             }
         }
 
@@ -233,7 +297,7 @@ namespace eu.foodmission.platform
                 row.Add(Chip(DayLabel(day), selected.Contains(day), () =>
                 {
                     _viewModel.ToggleEventDay(stepIndex, captured);
-                    RenderStep(stepIndex);
+                    RenderStepLater(stepIndex);
                 }));
             }
             body.Add(row);
@@ -254,8 +318,8 @@ namespace eu.foodmission.platform
                 case MissionStepType.YesNo:
                     var row = new VisualElement();
                     row.AddToClassList("fm-mission-report-row");
-                    row.Add(Chip(L("MISSION_REPORT_YES"), answer.Confirmed, () => { _viewModel.SetConfirmed(stepIndex, true); RenderStep(stepIndex); }));
-                    row.Add(Chip(L("MISSION_REPORT_NO"), !answer.Confirmed, () => { _viewModel.SetConfirmed(stepIndex, false); RenderStep(stepIndex); }));
+                    row.Add(Chip(L("MISSION_REPORT_YES"), answer.Confirmed, () => { _viewModel.SetConfirmed(stepIndex, true); RenderStepLater(stepIndex); }));
+                    row.Add(Chip(L("MISSION_REPORT_NO"), !answer.Confirmed, () => { _viewModel.SetConfirmed(stepIndex, false); RenderStepLater(stepIndex); }));
                     body.Add(row);
                     break;
                 case MissionStepType.OptionPicker:
@@ -298,8 +362,16 @@ namespace eu.foodmission.platform
 
         private static FMButton Chip(string title, bool selected, Action onClick)
         {
-            var chip = new FMButton { title = title, variant = selected ? ButtonVariant.Accent : ButtonVariant.Default, size = Size.S };
+            // The UI font has no "✓" glyph: mark selection with App UI's check icon
+            var chip = new FMButton
+            {
+                title = title,
+                leadingIcon = selected ? "check" : string.Empty,
+                variant = selected ? ButtonVariant.Accent : ButtonVariant.Default,
+                size = Size.S
+            };
             chip.AddToClassList("fm-mission-report-chip");
+            chip.EnableInClassList("fm-mission-report-chip--selected", selected);
             chip.clicked += onClick;
             return chip;
         }

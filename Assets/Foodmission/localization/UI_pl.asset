@@ -4036,6 +4036,11 @@ MonoBehaviour:
     m_Localized: "Tylko to, czego potrzebuj\u0105 moje misje"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: "Zaznacz co najmniej jedn\u0105 opcj\u0119, aby zapisa\u0107 ten
+      posi\u0142ek."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

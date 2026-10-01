@@ -4042,6 +4042,10 @@ MonoBehaviour:
     m_Localized: Alleen wat mijn missies nodig hebben
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: "Markeer minstens \xE9\xE9n optie om deze maaltijd vast te leggen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

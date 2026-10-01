@@ -3985,6 +3985,10 @@ MonoBehaviour:
     m_Localized: Solo lo de mis misiones
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: "Marca al menos una opci\xF3n para registrar esta comida."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

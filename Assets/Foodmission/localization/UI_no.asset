@@ -3990,6 +3990,10 @@ MonoBehaviour:
     m_Localized: Bare det oppdragene mine trenger
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: "Merk av minst ett alternativ for \xE5 registrere dette m\xE5ltidet."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

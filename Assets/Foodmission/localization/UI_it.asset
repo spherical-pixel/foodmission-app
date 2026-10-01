@@ -4026,6 +4026,10 @@ MonoBehaviour:
     m_Localized: "Solo ci\xF2 che serve alle mie missioni"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: Seleziona almeno un'opzione per registrare questo pasto.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

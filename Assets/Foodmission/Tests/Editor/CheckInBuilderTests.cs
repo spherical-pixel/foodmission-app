@@ -129,5 +129,30 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("DINNER", items[1].MealLog.typeOfMeal);
             Assert.IsNotNull(items[2].Event);
         }
+
+        [Test]
+        public void Build_ChosenMealWithMeatQuestionUnchecked_IsSentAsMeatFree()
+        {
+            // The user saw "had meat?" for this meal and left it unchecked: the meal had no meat
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.B1.3", Now)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].Meals["LUNCH"] = new HashSet<string>();
+
+            var log = CheckInBuilder.Build(plan, answers, "r1", Now).Single().MealLog;
+
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.MealMeatFree }, log.flags);
+        }
+
+        [Test]
+        public void Build_ChosenMealWithoutMeatQuestionAndNothingChecked_IsNotSent()
+        {
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A1.3", Now)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].Meals["LUNCH"] = new HashSet<string>();
+
+            Assert.AreEqual(0, CheckInBuilder.Build(plan, answers, "r1", Now).Count);
+            Assert.IsFalse(CheckInBuilder.CanSendMeal(plan.MealDays[0], "LUNCH", answers.MealDays[0].Meals["LUNCH"]));
+            Assert.IsTrue(CheckInBuilder.CanSendMeal(plan.MealDays[0], "LUNCH", new HashSet<string> { ClientEventTypes.MealLegumeConsumed }));
+        }
     }
 }

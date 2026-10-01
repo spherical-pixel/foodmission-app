@@ -3867,6 +3867,10 @@ MonoBehaviour:
     m_Key: EVENTS_ONLY_MY_MISSIONS
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Key: MISSION_CHECKIN_MEAL_EMPTY_HINT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

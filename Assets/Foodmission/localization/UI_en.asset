@@ -3983,6 +3983,10 @@ MonoBehaviour:
     m_Localized: Only what my missions need
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347477
+    m_Localized: Mark at least one option to record this meal.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

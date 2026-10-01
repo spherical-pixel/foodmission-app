@@ -25,14 +25,7 @@ namespace eu.foodmission.platform
                         continue;
                     }
 
-                    List<CheckInMealQuestion> applicable = day.QuestionsFor(mealType).Where(q => checkedEvents.Contains(q.EventType)).ToList();
-                    List<string> flags = applicable.Where(q => !q.IsSwap).Select(q => q.EventType).ToList();
-                    List<string> swaps = applicable.Where(q => q.IsSwap).Select(q => q.EventType).ToList();
-                    if (flags.Contains(ClientEventTypes.MealMeatFree) || flags.Contains(ClientEventTypes.MealVegan))
-                    {
-                        flags.Remove(ClientEventTypes.MealMeatConsumed);
-                    }
-                    if (flags.Count == 0 && swaps.Count == 0)
+                    if (!TryBuildMeal(day, mealType, checkedEvents, out List<string> flags, out List<string> swaps))
                     {
                         continue;
                     }
@@ -63,6 +56,31 @@ namespace eu.foodmission.platform
             }
 
             return items;
+        }
+
+        /// <summary>Whether a chosen meal would produce a meal log (otherwise the screen tells the user to mark something).</summary>
+        public static bool CanSendMeal(CheckInMealDay day, string mealType, ISet<string> checkedEvents) =>
+            TryBuildMeal(day, mealType, checkedEvents, out _, out _);
+
+        private static bool TryBuildMeal(CheckInMealDay day, string mealType, ISet<string> checkedEvents, out List<string> flags, out List<string> swaps)
+        {
+            IReadOnlyList<CheckInMealQuestion> questions = day.QuestionsFor(mealType);
+            List<CheckInMealQuestion> applicable = questions.Where(q => checkedEvents != null && checkedEvents.Contains(q.EventType)).ToList();
+            flags = applicable.Where(q => !q.IsSwap).Select(q => q.EventType).ToList();
+            swaps = applicable.Where(q => q.IsSwap).Select(q => q.EventType).ToList();
+
+            if (flags.Contains(ClientEventTypes.MealMeatFree) || flags.Contains(ClientEventTypes.MealVegan))
+            {
+                flags.Remove(ClientEventTypes.MealMeatConsumed);
+            }
+            // The user was asked "had meat?" for this meal and left it unchecked: the meal was meat-free
+            if (!flags.Contains(ClientEventTypes.MealMeatConsumed) && !flags.Contains(ClientEventTypes.MealMeatFree) &&
+                !flags.Contains(ClientEventTypes.MealVegan) && questions.Any(q => q.EventType == ClientEventTypes.MealMeatConsumed))
+            {
+                flags.Add(ClientEventTypes.MealMeatFree);
+            }
+
+            return flags.Count > 0 || swaps.Count > 0;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
@@ -201,17 +202,30 @@ namespace eu.foodmission.platform
         {
             if (_swipeView == null) return;
 
-            _swipeView.Clear();
             int count = _viewModel.StepCount > 0 ? _viewModel.StepCount : StepCount;
-            for (int i = 0; i < count; i++)
+
+            // Use SwipeView's source-items API: it (re)creates the items with their index set. Adding children
+            // directly only works once (SwipeView polls its hierarchy a single time), so steps rebuilt later
+            // (e.g. after async data loads) all kept index 0 and were stacked at x = 0.
+            _swipeView.bindItem = (item, index) =>
             {
-                var stepItem = new SwipeViewItem();
-                var content = CreateStepContent(i);
+                item.Clear();
+                var content = CreateStepContent(index);
                 if (content != null)
                 {
-                    stepItem.Add(content);
+                    item.Add(content);
                 }
-                _swipeView.Add(stepItem);
+            };
+            var indexes = new List<int>(count);
+            for (int i = 0; i < count; i++)
+            {
+                indexes.Add(i);
+            }
+            _swipeView.sourceItems = indexes;
+
+            if (_viewModel.CurrentStepIndex > 0 && _viewModel.CurrentStepIndex < count)
+            {
+                _swipeView.SetValueWithoutNotify(_viewModel.CurrentStepIndex);
             }
         }
 
