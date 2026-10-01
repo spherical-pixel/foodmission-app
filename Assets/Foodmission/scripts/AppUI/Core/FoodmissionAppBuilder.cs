@@ -64,6 +64,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IChallengeCompletionService, ChallengeCompletionService>();
             builder.services.AddSingleton<IChallengeSessionService, ChallengeSessionService>();
             builder.services.AddSingleton<IMissionService, MissionService>();
+            builder.services.AddSingleton<IMissionEventEmitter, MissionEventEmitter>();
             builder.services.AddSingleton<IActivityEventMapper, ActivityEventMapper>();
             builder.services.AddSingleton<IQuestService, QuestService>();
             builder.services.AddSingleton<IQuestProgressionService, QuestProgressionService>();
