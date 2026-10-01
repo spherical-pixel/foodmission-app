@@ -2352,3 +2352,49 @@
     background-color: var(--appui-primary-200);
     color: var(--appui-primary-1000);
 }
+/* ── Mission check-in (MissionCheckInScreen, code-built StepFlow) ── */
+.fm-mission-report-step {
+    width: 100%;
+    flex-grow: 1;
+    padding: 16px;
+}
+
+.fm-mission-report-hint {
+    color: var(--appui-foregrounds-50);
+    margin-bottom: 16px;
+    white-space: normal;
+}
+
+.fm-mission-report-body {
+    background-color: var(--fm-surface-bg-transparent-80);
+    border-radius: 32px;
+    padding: 24px;
+    flex-shrink: 0;
+}
+
+.fm-mission-report-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.fm-mission-report-label {
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: normal;
+    margin-right: 12px;
+}
+
+.fm-mission-report-meal-title {
+    -unity-font-style: bold;
+    margin: 12px 0 4px 0;
+}
+
+.fm-mission-report-chip {
+    margin: 4px;
+}
+
+.fm-mission-report-bubble {
+    white-space: normal;
+}
