@@ -158,7 +158,16 @@ namespace eu.foodmission.platform
         {
             if (_viewModel != null)
             {
-                await _viewModel.SaveAvatarAsync(true);
+                // Onboarding save waits for the face capture and the profile sync before going home.
+                ShowLoadingOverlay();
+                try
+                {
+                    await _viewModel.SaveAvatarAsync(true);
+                }
+                finally
+                {
+                    HideLoadingOverlay();
+                }
             }
             CloseSelectorItemAvatar();
             OnNavigationRequested(Actions.go_to_home, null);
