@@ -100,7 +100,7 @@ namespace eu.foodmission.platform.Components
             _titlesContainer.Add(_titleText);
 
             _subtitleText = new Unity.AppUI.UI.Text();
-            _subtitleText.size = TextSize.XS;
+            _subtitleText.size = TextSize.S;
             _subtitleText.AddToClassList("fm-mission-item-duration");
             _subtitleText.AddToClassList("fm-quest-item-subtitle");
             _subtitleText.style.display = DisplayStyle.None;

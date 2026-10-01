@@ -96,7 +96,7 @@ namespace eu.foodmission.platform.Components
             _titlesContainer.Add(_titleText);
 
             _durationText = new Unity.AppUI.UI.Text();
-            _durationText.size = TextSize.XS;
+            _durationText.size = TextSize.S;
             _durationText.AddToClassList("fm-mission-item-duration");
             _durationText.style.display = DisplayStyle.None;
             _durationText.style.opacity = 0.75f;
