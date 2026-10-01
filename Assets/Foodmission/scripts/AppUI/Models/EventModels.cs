@@ -22,6 +22,9 @@ namespace eu.foodmission.platform
         public const string MealAlternativeStaple = "MEAL_ALTERNATIVE_STAPLE";
         public const string MealAncientGrain = "MEAL_ANCIENT_GRAIN";
         public const string MealSustainablePlate = "MEAL_SUSTAINABLE_PLATE";
+        public const string MealSeasonalProduce = "MEAL_SEASONAL_PRODUCE";
+        public const string MealLocalProduce = "MEAL_LOCAL_PRODUCE";
+        public const string MealCertifiedProduct = "MEAL_CERTIFIED_PRODUCT";
         public const string FoodWasteReported = "FOOD_WASTE_REPORTED";
 
         // Substitutions & Swaps
@@ -51,6 +54,9 @@ namespace eu.foodmission.platform
         public const string ProcessingGreenscoreChecked = "PROCESSING_GREENSCORE_CHECKED";
         public const string ProcessingIndicatorsCompared = "PROCESSING_INDICATORS_COMPARED";
         public const string ProcessingProductionMethodChecked = "PROCESSING_PRODUCTION_METHOD_CHECKED";
+        public const string ProcessingNovaCategoryCompared = "PROCESSING_NOVA_CATEGORY_COMPARED";
+        public const string ProcessingNovaScoreCompared = "PROCESSING_NOVA_SCORE_COMPARED";
+        public const string ProcessingAllScoresCompared = "PROCESSING_ALL_SCORES_COMPARED";
 
         // Packaging & Circularity
         public const string PackagingMaterialObserved = "PACKAGING_MATERIAL_OBSERVED";
@@ -91,10 +97,10 @@ namespace eu.foodmission.platform
 
         public static readonly string[] All = {
             AppSessionOpened, AppSessionEnded,
-            MealMeatConsumed, MealMeatFree, MealLegumeConsumed, MealVegan, MealVegetarianDay, MealVeganDay, MealAlternativeStaple, MealAncientGrain, MealSustainablePlate,
+            MealMeatConsumed, MealMeatFree, MealLegumeConsumed, MealVegan, MealVegetarianDay, MealVeganDay, MealAlternativeStaple, MealAncientGrain, MealSustainablePlate, MealSeasonalProduce, MealLocalProduce, MealCertifiedProduct,
             SwapBeefToPork, SwapBeefToChicken, SwapBeefToLegumes, SwapPorkToChicken, SwapPorkToLegumes, SwapChickenToLegumes, SwapSugaryDrinkToWater, SwapSnackToFruitNuts, SwapSugaryCerealToOats, SwapReadyMealToHomecooked, SwapProcessedMeatToLegumes,
             ShoppingOriginChecked, ShoppingLocalChosen, ShoppingSeasonalChosen, ShoppingCertificationChosen, ShoppingPackagingInfoChecked, ShoppingMulticriteriaPurchase,
-            ProcessingNovaChecked, ProcessingIngredientsReviewed, ProcessingGreenscoreChecked, ProcessingIndicatorsCompared, ProcessingProductionMethodChecked,
+            ProcessingNovaChecked, ProcessingIngredientsReviewed, ProcessingGreenscoreChecked, ProcessingIndicatorsCompared, ProcessingProductionMethodChecked, ProcessingNovaCategoryCompared, ProcessingNovaScoreCompared, ProcessingAllScoresCompared,
             PackagingMaterialObserved, PackagingRecyclingLabelRead, PackagingReusableSpotChosen, PackagingRecyclabilityEvaluated, PackagingComparisonMade, PackagingSmartObserved,
             FoodWasteHalfPlateSaved, FoodWasteFullPlateSaved, FoodWasteExpiredConsumed, FoodWasteStorageInstructionsRead, FoodWasteMealPlanned, FoodWasteFridgePantryChecked, FoodWasteFifoOrganized, FoodWasteLogged,
             NutritionProteinIncluded, NutritionFruitVegServingAdded, NutritionWholegrainChosen, NutritionHighFibreMeal, NutritionSaltFreeTable, NutritionHealthyFatChosen, NutritionProteinVarietyLogged, NutritionRainbowColoursLogged, NutritionAddedSugarAvoided, NutritionPlantDiversityCount,

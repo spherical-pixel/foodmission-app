@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -105,6 +106,36 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsFalse(json.Contains("\"progress\""));
             Assert.IsTrue(json.Contains("\"completed\":true"));
+        }
+
+        [Test]
+        public void MissionProgress_DeserializesStartedAt()
+        {
+            string json = "{\"missionId\":\"m1\",\"missionCode\":\"M.B1.1\",\"progress\":40,\"completed\":false,\"startedAt\":\"2026-09-28T12:11:24.250Z\"}";
+
+            var progress = JsonConvert.DeserializeObject<MissionProgress>(json);
+
+            Assert.IsTrue(progress.startedAt.HasValue);
+            Assert.AreEqual(new DateTime(2026, 9, 28, 12, 11, 24, 250, DateTimeKind.Utc), progress.startedAt.Value.ToUniversalTime());
+        }
+
+        [Test]
+        public void MissionProgress_MissingStartedAt_IsNull()
+        {
+            var progress = JsonConvert.DeserializeObject<MissionProgress>("{\"missionCode\":\"M.B1.1\",\"progress\":0}");
+
+            Assert.IsFalse(progress.startedAt.HasValue);
+        }
+
+        [Test]
+        public void ClientEventTypes_ContainsMissionRuleEvents()
+        {
+            CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.MealSeasonalProduce);
+            CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.MealLocalProduce);
+            CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.MealCertifiedProduct);
+            CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.ProcessingNovaCategoryCompared);
+            CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.ProcessingNovaScoreCompared);
+            CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.ProcessingAllScoresCompared);
         }
     }
 }

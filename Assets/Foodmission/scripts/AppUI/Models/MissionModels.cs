@@ -42,6 +42,8 @@ namespace eu.foodmission.platform
         public bool completed;
         public string missionTitle;
         public ContentReward reward;
+        /// <summary>When the mission started for this user (backend sets it at the first progress &gt; 0). Null before that.</summary>
+        public DateTime? startedAt;
     }
 
     public class MissionFilterParams
