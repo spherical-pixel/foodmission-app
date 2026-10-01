@@ -98,7 +98,8 @@ namespace eu.foodmission.platform
             _btnDiffHard = contentContainer.Q<ActionButton>("btn-diff-hard");
             _categoriesGrid = contentContainer.Q<VisualElement>("categories-grid");
 
-            _scrollView = contentContainer.Q<ScrollView>("scroll-view");
+            // The whole screen scrolls inside NavigationScreen's own ScrollView (infinite scroll listens to it)
+            _scrollView = scrollView;
             _viewForYou = contentContainer.Q<VisualElement>("view-for-you");
             _foryouEmptyPantry = contentContainer.Q<VisualElement>("foryou-empty-pantry");
             _btnGoToPantry = contentContainer.Q<FMButton>("btn-go-to-pantry");

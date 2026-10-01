@@ -121,7 +121,9 @@ namespace eu.foodmission.platform.Tests
             _mockDimensionService.Setup(d => d.IsLoaded).Returns(true);
             _mockDimensionService.Setup(d => d.GetAllDimensions()).Returns(_mockDimensions);
 
-            _vm = new QuestsViewModel(_storeService, _mockQuestService.Object, _mockDimensionService.Object);
+            // Pin the flag so these tests don't depend on FM_UNLOCK_ALL_QUESTS being defined
+            _vm = new QuestsViewModel(_storeService, _mockQuestService.Object, _mockDimensionService.Object,
+                questProgressionService: new QuestProgressionService { UnlockAllQuests = false });
         }
 
         [TearDown]

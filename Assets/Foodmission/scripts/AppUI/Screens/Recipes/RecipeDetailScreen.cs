@@ -133,6 +133,7 @@ namespace eu.foodmission.platform
             }
 
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            UpdateActionButtonsVisibility();
         }
 
         protected override void OnViewModelUnbinding()
@@ -255,6 +256,7 @@ namespace eu.foodmission.platform
             RebuildTags(r);
             RebuildMeta(r);
             UpdateVideoButtonVisibility();
+            UpdateActionButtonsVisibility();
         }
 
         private async void LoadHeroImage(string url)
@@ -889,12 +891,12 @@ namespace eu.foodmission.platform
                 _btnAddToShoppingListNode = _accessibilityHierarchy.AddNode("Add to shopping list");
                 _btnAddToShoppingListNode.role = UnityEngine.Accessibility.AccessibilityRole.Button;
             }
-            if (_btnEdit != null && _btnEdit.enabledSelf)
+            if (_btnEdit != null && _viewModel?.IsOwner == true)
             {
                 _btnEditNode = _accessibilityHierarchy.AddNode("Edit");
                 _btnEditNode.role = UnityEngine.Accessibility.AccessibilityRole.Button;
             }
-            if (_btnDelete != null && _btnDelete.enabledSelf)
+            if (_btnDelete != null && _viewModel?.IsOwner == true)
             {
                 _btnDeleteNode = _accessibilityHierarchy.AddNode("Delete");
                 _btnDeleteNode.role = UnityEngine.Accessibility.AccessibilityRole.Button;

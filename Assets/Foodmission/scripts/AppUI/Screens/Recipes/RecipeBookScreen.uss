@@ -1,8 +1,7 @@
 .fm-recipes-root {
-    flex-grow: 1;
+    flex-grow: 0;
 }
 
-/* Header with Title and Create Button */
 .fm-r-top-header {
     flex-direction: row;
     align-items: center;
@@ -24,7 +23,6 @@
     width: 100%;
 }
 
-/* Tabs */
 .fm-r-tabs-container {
     margin-bottom: 12px;
     flex-shrink: 0;
@@ -34,7 +32,6 @@
     width: 100%;
 }
 
-/* Search and Filters */
 .fm-r-filter-section {
     margin-bottom: 12px;
     flex-shrink: 0;
@@ -107,7 +104,6 @@
     color: white;
 }
 
-/* Main scroll */
 .fm-r-scroll {
     flex-grow: 1;
 }
@@ -116,7 +112,6 @@
     flex-direction: column;
 }
 
-/* Nutri Empty Pantry Banner */
 .fm-r-empty-pantry-card {
     flex-direction: row;
     align-items: center;
@@ -175,7 +170,6 @@
     margin-bottom: 25px;
 }
 
-/* General Empty Cards */
 .fm-r-empty-card {
     flex-direction: column;
     align-items: center;
@@ -260,7 +254,6 @@
     height: 1px;
 }
 
-/* Recipe Card Styling */
 .fm-r-card {
     flex-direction: column;
     border-radius: 20px;

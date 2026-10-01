@@ -56,57 +56,55 @@
             </ui:VisualElement>
             <ui:VisualElement name="categories-grid" class="fm-r-categories-grid"/>
         </ui:VisualElement>
-        <ui:ScrollView name="scroll-view" mode="Vertical" horizontal-scroller-visibility="Hidden" class="fm-r-scroll">
-            <ui:VisualElement name="view-for-you" class="fm-r-view">
-                <ui:VisualElement name="foryou-empty-pantry" class="fm-r-empty-pantry-card">
-                    <ui:VisualElement class="fm-r-empty-pantry-info">
-                        <appui:Heading name="empty-pantry-title" size="M" text="Tu despensa está vacía" class="fm-r-empty-pantry-title">
-                            <Bindings>
-                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47367747309395971)"/>
-                            </Bindings>
-                        </appui:Heading>
-                        <appui:Text name="empty-pantry-desc" text="¡Añade alimentos a tu despensa para recibir sugerencias de recetas y evitar el desperdicio!" class="fm-r-empty-pantry-desc">
-                            <Bindings>
-                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47367747309395972)"/>
-                            </Bindings>
-                        </appui:Text>
-                        <fm:FMButton name="btn-go-to-pantry" title="Ir a la Despensa" variant="Accent" size="M" class="fm-r-pantry-btn">
-                            <Bindings>
-                                <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47367747309395973)"/>
-                            </Bindings>
-                        </fm:FMButton>
-                    </ui:VisualElement>
-                </ui:VisualElement>
-                <ui:VisualElement name="foryou-content" class="fm-r-foryou-content">
-                    <appui:Text name="foryou-header-text" text="Aprovecha lo que tienes en casa" class="fm-r-section-subtitle">
+        <ui:VisualElement name="view-for-you" class="fm-r-view">
+            <ui:VisualElement name="foryou-empty-pantry" class="fm-r-empty-pantry-card">
+                <ui:VisualElement class="fm-r-empty-pantry-info">
+                    <appui:Heading name="empty-pantry-title" size="M" text="Tu despensa está vacía" class="fm-r-empty-pantry-title">
                         <Bindings>
-                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(48511689140723712)"/>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47367747309395971)"/>
+                        </Bindings>
+                    </appui:Heading>
+                    <appui:Text name="empty-pantry-desc" text="¡Añade alimentos a tu despensa para recibir sugerencias de recetas y evitar el desperdicio!" class="fm-r-empty-pantry-desc">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47367747309395972)"/>
                         </Bindings>
                     </appui:Text>
-                    <ui:VisualElement name="recommendations-container" class="fm-r-container"/>
+                    <fm:FMButton name="btn-go-to-pantry" title="Ir a la Despensa" variant="Accent" size="M" class="fm-r-pantry-btn">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(47367747309395973)"/>
+                        </Bindings>
+                    </fm:FMButton>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="view-explore" class="fm-r-view">
-                <ui:VisualElement name="results-header" class="fm-r-results-header">
-                    <appui:Text name="counter-text" text="Recetas encontradas" class="fm-r-counter"/>
-                </ui:VisualElement>
-                <appui:Text name="empty-state" text="No se han encontrado recetas" class="fm-r-empty">
+            <ui:VisualElement name="foryou-content" class="fm-r-foryou-content">
+                <appui:Text name="foryou-header-text" text="Aprovecha lo que tienes en casa" class="fm-r-section-subtitle">
                     <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(28541196946104320)"/>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(48511689140723712)"/>
                     </Bindings>
                 </appui:Text>
-                <ui:VisualElement name="items-container" class="fm-r-container"/>
-                <ui:VisualElement name="scroll-sentinel" class="fm-r-sentinel"/>
+                <ui:VisualElement name="recommendations-container" class="fm-r-container"/>
             </ui:VisualElement>
-            <ui:VisualElement name="view-my-recipes" class="fm-r-view" style="display: none;">
-                <ui:VisualElement name="my-recipes-empty" class="fm-r-empty-my-recipes">
-                    <appui:Heading name="my-recipes-empty-title" size="M" text="Aún no has creado recetas" class="fm-r-empty-pantry-title"/>
-                    <appui:Text name="my-recipes-empty-desc" text="Comparte tus recetas favoritas con la comunidad." class="fm-r-empty-pantry-desc"/>
-                    <fm:FMButton name="btn-create-first-recipe" title="Crear receta" variant="Accent" size="M" class="fm-r-create-first-btn"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="my-recipes-container" class="fm-r-container"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="view-explore" class="fm-r-view">
+            <ui:VisualElement name="results-header" class="fm-r-results-header">
+                <appui:Text name="counter-text" text="Recetas encontradas" class="fm-r-counter"/>
             </ui:VisualElement>
-            <ui:VisualElement class="fm-bottom-nav-padding"/>
-        </ui:ScrollView>
+            <appui:Text name="empty-state" text="No se han encontrado recetas" class="fm-r-empty">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(28541196946104320)"/>
+                </Bindings>
+            </appui:Text>
+            <ui:VisualElement name="items-container" class="fm-r-container"/>
+            <ui:VisualElement name="scroll-sentinel" class="fm-r-sentinel"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="view-my-recipes" class="fm-r-view" style="display: none;">
+            <ui:VisualElement name="my-recipes-empty" class="fm-r-empty-my-recipes">
+                <appui:Heading name="my-recipes-empty-title" size="M" text="Aún no has creado recetas" class="fm-r-empty-pantry-title"/>
+                <appui:Text name="my-recipes-empty-desc" text="Comparte tus recetas favoritas con la comunidad." class="fm-r-empty-pantry-desc"/>
+                <fm:FMButton name="btn-create-first-recipe" title="Crear receta" variant="Accent" size="M" class="fm-r-create-first-btn"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="my-recipes-container" class="fm-r-container"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
     </ui:VisualElement>
 </ui:UXML>
