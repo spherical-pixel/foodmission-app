@@ -32,6 +32,8 @@ namespace eu.foodmission.platform
     {
         public Quest Quest { get; set; }
         public bool IsCompleted { get; set; }
+        public bool IsLocked { get; set; }
+        public string PreviousQuestTitle { get; set; }
         public float Progress { get; set; }
     }
 
@@ -91,6 +93,7 @@ namespace eu.foodmission.platform
         private readonly IQuizService _quizService;
         private readonly IMissionService _missionService;
         private readonly IChallengeService _challengeService;
+        private readonly IQuestProgressionService _questProgressionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         private Quest[] _rawQuests = Array.Empty<Quest>();
@@ -108,13 +111,15 @@ namespace eu.foodmission.platform
             IDimensionService dimensionService,
             IQuizService quizService = null,
             IMissionService missionService = null,
-            IChallengeService challengeService = null) : base(storeService)
+            IChallengeService challengeService = null,
+            IQuestProgressionService questProgressionService = null) : base(storeService)
         {
             _questService = questService;
             _dimensionService = dimensionService;
             _quizService = quizService ?? App.current?.services?.GetService<IQuizService>();
             _missionService = missionService ?? App.current?.services?.GetService<IMissionService>();
             _challengeService = challengeService ?? App.current?.services?.GetService<IChallengeService>();
+            _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
 
             if (_store != null)
             {
@@ -309,19 +314,17 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            // Map progress by questId and questCode
-            var progressById = new Dictionary<string, QuestProgress>(StringComparer.OrdinalIgnoreCase);
-            var progressByCode = new Dictionary<string, QuestProgress>(StringComparer.OrdinalIgnoreCase);
-
-            if (_rawProgress != null)
+            // Evaluate progression for all quests
+            var progressionStates = _questProgressionService?.EvaluateProgression(_rawQuests, _rawProgress);
+            var stateById = new Dictionary<string, QuestProgressionState>(StringComparer.OrdinalIgnoreCase);
+            var stateByCode = new Dictionary<string, QuestProgressionState>(StringComparer.OrdinalIgnoreCase);
+            if (progressionStates != null)
             {
-                foreach (var p in _rawProgress)
+                foreach (var st in progressionStates)
                 {
-                    if (p == null) continue;
-                    if (!string.IsNullOrEmpty(p.questId))
-                        progressById[p.questId] = p;
-                    if (!string.IsNullOrEmpty(p.questCode))
-                        progressByCode[p.questCode] = p;
+                    if (st?.Quest == null) continue;
+                    if (!string.IsNullOrEmpty(st.Quest.id)) stateById[st.Quest.id] = st;
+                    if (!string.IsNullOrEmpty(st.Quest.code)) stateByCode[st.Quest.code] = st;
                 }
             }
 
@@ -342,24 +345,16 @@ namespace eu.foodmission.platform
 
                 totalMatchingLevel++;
 
-                bool isCompleted = false;
-                float progressVal = 0f;
+                QuestProgressionState progState = null;
+                if (!string.IsNullOrEmpty(q.id) && stateById.TryGetValue(q.id, out var stId)) progState = stId;
+                else if (!string.IsNullOrEmpty(q.code) && stateByCode.TryGetValue(q.code, out var stCode)) progState = stCode;
 
-                QuestProgress prog = null;
-                if (!string.IsNullOrEmpty(q.id) && progressById.TryGetValue(q.id, out var progFoundId))
-                {
-                    prog = progFoundId;
-                }
-                else if (!string.IsNullOrEmpty(q.code) && progressByCode.TryGetValue(q.code, out var progFoundCode))
-                {
-                    prog = progFoundCode;
-                }
-
-                if (prog != null)
-                {
-                    isCompleted = prog.completed || prog.progress >= 100f;
-                    progressVal = prog.progress;
-                }
+                bool isCompleted = progState?.IsCompleted ?? false;
+                bool isLocked = progState?.IsLocked ?? false;
+                float progressVal = progState?.ProgressPercent ?? 0f;
+                string prevTitle = !string.IsNullOrEmpty(progState?.PreviousQuest?.title)
+                    ? progState.PreviousQuest.title
+                    : (!string.IsNullOrEmpty(progState?.PreviousQuest?.name) ? progState.PreviousQuest.name : progState?.PreviousQuest?.code);
 
                 if (isCompleted)
                 {
@@ -380,6 +375,8 @@ namespace eu.foodmission.platform
                 {
                     Quest = q,
                     IsCompleted = isCompleted,
+                    IsLocked = isLocked,
+                    PreviousQuestTitle = prevTitle,
                     Progress = progressVal
                 });
             }
@@ -472,6 +469,19 @@ namespace eu.foodmission.platform
             return 4;
         }
 
+        private static readonly System.Text.RegularExpressions.Regex CodeNumberRegex = new System.Text.RegularExpressions.Regex(@"\.(\d+)$", System.Text.RegularExpressions.RegexOptions.Compiled);
+
+        private static int GetQuestSequenceNumber(Quest q)
+        {
+            if (q == null || string.IsNullOrEmpty(q.code)) return 0;
+            var match = CodeNumberRegex.Match(q.code);
+            if (match.Success && int.TryParse(match.Groups[1].Value, out int num))
+            {
+                return num;
+            }
+            return 0;
+        }
+
         private static int CompareQuestDisplayItems(QuestDisplayItem a, QuestDisplayItem b)
         {
             if (a == null && b == null) return 0;
@@ -482,6 +492,11 @@ namespace eu.foodmission.platform
             int levelB = GetLevelOrder(b.Quest?.level);
             if (levelA != levelB)
                 return levelA.CompareTo(levelB);
+
+            int seqA = GetQuestSequenceNumber(a.Quest);
+            int seqB = GetQuestSequenceNumber(b.Quest);
+            if (seqA != seqB)
+                return seqA.CompareTo(seqB);
 
             return string.Compare(a.Quest?.code, b.Quest?.code, StringComparison.OrdinalIgnoreCase);
         }

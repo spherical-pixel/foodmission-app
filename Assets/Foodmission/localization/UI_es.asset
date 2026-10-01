@@ -3631,6 +3631,30 @@ MonoBehaviour:
     m_Localized: No has registrado desperdicio este mes
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: Bloqueado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: Quest bloqueado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: 'Debes completar primero: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: "\xA1Nuevo Quest Desbloqueado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: el quest anterior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: Ir a la Quest
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -3523,6 +3523,30 @@ MonoBehaviour:
     m_Key: FW_MONTH_EMPTY
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Key: QUEST_STATUS_LOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Key: QUEST_LOCKED_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Key: QUEST_LOCKED_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Key: QUEST_UNLOCKED_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Key: QUEST_PREVIOUS_FALLBACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Key: QUEST_UNLOCKED_ACTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

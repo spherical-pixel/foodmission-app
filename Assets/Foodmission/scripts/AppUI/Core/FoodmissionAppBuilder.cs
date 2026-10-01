@@ -66,6 +66,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IMissionService, MissionService>();
             builder.services.AddSingleton<IActivityEventMapper, ActivityEventMapper>();
             builder.services.AddSingleton<IQuestService, QuestService>();
+            builder.services.AddSingleton<IQuestProgressionService, QuestProgressionService>();
             builder.services.AddSingleton<IDimensionService, DimensionService>();
             builder.services.AddSingleton<ISpriteService, SpriteService>();
             builder.services.AddSingleton<IBannerService, BannerService>();

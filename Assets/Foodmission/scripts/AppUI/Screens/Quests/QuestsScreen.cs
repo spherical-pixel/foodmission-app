@@ -282,9 +282,29 @@ namespace eu.foodmission.platform
 
                         questCard.SetLevel(qItem.Quest.level);
                         questCard.SetCompleted(qItem.IsCompleted);
+                        questCard.SetLocked(qItem.IsLocked);
 
                         var questRef = qItem.Quest;
-                        questCard.OnQuestClicked += () => _viewModel?.OpenQuest(questRef);
+                        bool isLocked = qItem.IsLocked;
+                        string prevTitle = qItem.PreviousQuestTitle;
+
+                        questCard.OnQuestClicked += () =>
+                        {
+                            if (isLocked)
+                            {
+                                string prevName = !string.IsNullOrEmpty(prevTitle)
+                                    ? prevTitle
+                                    : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_PREVIOUS_FALLBACK");
+                                string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_LOCKED_MSG", new object[] { prevName });
+                                string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_LOCKED_TITLE");
+
+                                FMDialog.ShowAlert(this, title, message);
+                            }
+                            else
+                            {
+                                _viewModel?.OpenQuest(questRef);
+                            }
+                        };
 
                         cardsContainer.Add(questCard);
                     }

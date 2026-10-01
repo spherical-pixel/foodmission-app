@@ -3646,6 +3646,30 @@ MonoBehaviour:
     m_Localized: Du hast diesen Monat keine Verschwendung erfasst
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: Gesperrt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: Gesperrte Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: "Du musst zuerst abschlie\xDFen: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: Neue Quest freigeschaltet!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: die vorherige Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: Quest anzeigen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

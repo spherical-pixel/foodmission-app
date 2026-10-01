@@ -20,7 +20,8 @@ namespace eu.foodmission.platform.Components
         Badge,
         AvatarItem,
         PetItem,
-        Collectible
+        Collectible,
+        QuestUnlocked
     }
 
     public class RewardPresentationItem
@@ -79,104 +80,100 @@ namespace eu.foodmission.platform.Components
         /// <summary>
         /// Builds the presentation queue of individual reward items from a ContentReward payload.
         /// </summary>
-        public static List<RewardPresentationItem> BuildPresentationQueue(ContentReward reward, string contextTitle = null)
+        public static List<RewardPresentationItem> BuildPresentationQueue(ContentReward reward, string contextTitle = null, RewardPresentationItem extraItem = null)
         {
             var list = new List<RewardPresentationItem>();
-            if (reward == null)
+            if (reward != null)
             {
-                return list;
+                if (reward.xp.HasValue && reward.xp.Value > 0)
+                {
+                    list.Add(new RewardPresentationItem
+                    {
+                        Type = RewardType.Xp,
+                        Title = $"+{reward.xp.Value} XP",
+                        Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_XP_EARNED", new object[] { reward.xp.Value }),
+                        Value = reward.xp.Value
+                    });
+                }
+
+                if (reward.points.HasValue && reward.points.Value > 0)
+                {
+                    list.Add(new RewardPresentationItem
+                    {
+                        Type = RewardType.Points,
+                        Title = $"+{reward.points.Value}",
+                        Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_POINTS_EARNED", new object[] { reward.points.Value }),
+                        Value = reward.points.Value
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(reward.badgeId))
+                {
+                    list.Add(new RewardPresentationItem
+                    {
+                        Type = RewardType.Badge,
+                        Title = "@UI:REWARD_BADGE_UNLOCKED",
+                        Subtitle = reward.badgeId,
+                        IconEmoji = "🏅",
+                        Value = 1,
+                        RawId = reward.badgeId
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(reward.avatarItem))
+                {
+                    list.Add(new RewardPresentationItem
+                    {
+                        Type = RewardType.AvatarItem,
+                        Title = "@UI:REWARD_AVATAR_ITEM",
+                        Subtitle = reward.avatarItem,
+                        IconEmoji = "🎁",
+                        Value = 1,
+                        RawId = reward.avatarItem
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(reward.petItem))
+                {
+                    list.Add(new RewardPresentationItem
+                    {
+                        Type = RewardType.PetItem,
+                        Title = "@UI:REWARD_PET_ITEM",
+                        Subtitle = reward.petItem,
+                        IconEmoji = "🐾",
+                        Value = 1,
+                        RawId = reward.petItem
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(reward.collectible))
+                {
+                    list.Add(new RewardPresentationItem
+                    {
+                        Type = RewardType.Collectible,
+                        Title = "@UI:REWARD_COLLECTIBLE",
+                        Subtitle = reward.collectible,
+                        IconEmoji = "🏆",
+                        Value = 1,
+                        RawId = reward.collectible
+                    });
+                }
             }
 
-            if (reward.xp.HasValue && reward.xp.Value > 0)
+            if (extraItem != null)
             {
-                list.Add(new RewardPresentationItem
-                {
-                    Type = RewardType.Xp,
-                    Title = $"+{reward.xp.Value} XP",
-                    Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_XP_EARNED", new object[] { reward.xp.Value }),
-                    Value = reward.xp.Value
-                });
-            }
-
-            if (reward.points.HasValue && reward.points.Value > 0)
-            {
-                list.Add(new RewardPresentationItem
-                {
-                    Type = RewardType.Points,
-                    Title = $"+{reward.points.Value}",
-                    Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "REWARD_POINTS_EARNED", new object[] { reward.points.Value }),
-                    Value = reward.points.Value
-                });
-            }
-
-            if (!string.IsNullOrEmpty(reward.badgeId))
-            {
-                list.Add(new RewardPresentationItem
-                {
-                    Type = RewardType.Badge,
-                    Title = "@UI:REWARD_BADGE_UNLOCKED",
-                    Subtitle = reward.badgeId,
-                    IconEmoji = "🏅",
-                    Value = 1,
-                    RawId = reward.badgeId
-                });
-            }
-
-            if (!string.IsNullOrEmpty(reward.avatarItem))
-            {
-                list.Add(new RewardPresentationItem
-                {
-                    Type = RewardType.AvatarItem,
-                    Title = "@UI:REWARD_AVATAR_ITEM",
-                    Subtitle = reward.avatarItem,
-                    IconEmoji = "🎁",
-                    Value = 1,
-                    RawId = reward.avatarItem
-                });
-            }
-
-            if (!string.IsNullOrEmpty(reward.petItem))
-            {
-                list.Add(new RewardPresentationItem
-                {
-                    Type = RewardType.PetItem,
-                    Title = "@UI:REWARD_PET_ITEM",
-                    Subtitle = reward.petItem,
-                    IconEmoji = "🐾",
-                    Value = 1,
-                    RawId = reward.petItem
-                });
-            }
-
-            if (!string.IsNullOrEmpty(reward.collectible))
-            {
-                list.Add(new RewardPresentationItem
-                {
-                    Type = RewardType.Collectible,
-                    Title = "@UI:REWARD_COLLECTIBLE",
-                    Subtitle = reward.collectible,
-                    IconEmoji = "🏆",
-                    Value = 1,
-                    RawId = reward.collectible
-                });
+                list.Add(extraItem);
             }
 
             return list;
         }
 
         /// <summary>
-        /// Displays the global reward celebration modal for the earned rewards.
+        /// Displays the global reward celebration modal for a pre-built presentation queue.
         /// </summary>
-        public static void Show(ContentReward reward, string contextTitle = null, Action onDismiss = null)
+        public static void Show(List<RewardPresentationItem> queue, string contextTitle = null, Action onDismiss = null)
         {
-            if (reward == null)
-            {
-                onDismiss?.Invoke();
-                return;
-            }
-
-            var queue = BuildPresentationQueue(reward, contextTitle);
-            if (queue.Count == 0)
+            if (queue == null || queue.Count == 0)
             {
                 onDismiss?.Invoke();
                 return;
@@ -219,6 +216,21 @@ namespace eu.foodmission.platform.Components
             {
                 Present(next);
             }
+        }
+
+        /// <summary>
+        /// Displays the global reward celebration modal for the earned rewards.
+        /// </summary>
+        public static void Show(ContentReward reward, string contextTitle = null, Action onDismiss = null, RewardPresentationItem extraItem = null)
+        {
+            if (reward == null && extraItem == null)
+            {
+                onDismiss?.Invoke();
+                return;
+            }
+
+            var queue = BuildPresentationQueue(reward, contextTitle, extraItem);
+            Show(queue, contextTitle, onDismiss);
         }
 
 
@@ -320,7 +332,7 @@ namespace eu.foodmission.platform.Components
 
             // Audio & Mascot Feedback
             var audioService = App.current?.services?.GetService<IAudioService>();
-            var sfx = queue.Any(q => q.Type == RewardType.Badge) ? SfxType.WinBadge : SfxType.MissionCompleted;
+            var sfx = queue.Any(q => q.Type == RewardType.Badge || q.Type == RewardType.QuestUnlocked) ? SfxType.WinBadge : SfxType.MissionCompleted;
             audioService?.PlaySfx(sfx);
 
             var avatarService = App.current?.services?.GetService<IAvatarService>();
@@ -390,7 +402,7 @@ namespace eu.foodmission.platform.Components
                 // Audio feedback for subsequent steps
                 if (index > 0)
                 {
-                    var stepSfx = item.Type == RewardType.Badge ? SfxType.WinBadge : SfxType.MissionCompleted;
+                    var stepSfx = (item.Type == RewardType.Badge || item.Type == RewardType.QuestUnlocked) ? SfxType.WinBadge : SfxType.MissionCompleted;
                     audioService?.PlaySfx(stepSfx);
                 }
 
@@ -465,6 +477,7 @@ namespace eu.foodmission.platform.Components
                 RewardType.AvatarItem => BuildAvatarItemContent(item),
                 RewardType.PetItem => BuildPetItemContent(item),
                 RewardType.Collectible => BuildCollectibleContent(item),
+                RewardType.QuestUnlocked => BuildQuestUnlockedContent(item),
                 _ => BuildDefaultContent(item)
             };
         }
@@ -854,6 +867,31 @@ namespace eu.foodmission.platform.Components
             container.Add(iconCircle);
 
             var title = new Text { text = item?.Title ?? "" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Visual content builder for Quest Unlocked announcements.
+        /// </summary>
+        public static VisualElement BuildQuestUnlockedContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--quest-unlocked");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "🔓" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "@UI:QUEST_UNLOCKED_TITLE" };
             title.AddToClassList("fm-reward-title");
             container.Add(title);
 

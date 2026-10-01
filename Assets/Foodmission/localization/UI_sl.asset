@@ -3630,6 +3630,30 @@ MonoBehaviour:
     m_Localized: "Ta mesec nisi zabele\u017Eil zavr\u017Eenih \u017Eivil"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: Zaklenjeno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: Zaklenjena naloga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: "Najprej mora\u0161 dokon\u010Dati: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: Nova naloga odklenjena!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: "prej\u0161njo nalogo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: Ogled naloge
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

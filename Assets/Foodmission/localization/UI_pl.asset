@@ -3674,6 +3674,30 @@ MonoBehaviour:
     m_Localized: "W tym miesi\u0105cu nie zarejestrowa\u0142e\u015B marnowania"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: Zablokowane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: Zablokowane zadanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: "Musisz najpierw uko\u0144czy\u0107: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: Odblokowano nowe zadanie!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: poprzednie zadanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: Zobacz zadanie
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -3674,6 +3674,30 @@ MonoBehaviour:
     m_Localized: Non hai registrato sprechi questo mese
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: Bloccato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: Quest bloccata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: 'Devi prima completare: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: Nuova quest sbloccata!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: la quest precedente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: Vedi quest
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

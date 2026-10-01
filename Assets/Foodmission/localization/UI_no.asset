@@ -3634,6 +3634,30 @@ MonoBehaviour:
     m_Localized: "Du har ikke registrert svinn denne m\xE5neden"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: "L\xE5st"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: "L\xE5st oppdrag"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: "Du m\xE5 f\xF8rst fullf\xF8re: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: "Nytt oppdrag l\xE5st opp!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: det forrige oppdraget
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: Vis oppdrag
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

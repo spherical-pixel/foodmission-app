@@ -3630,6 +3630,30 @@ MonoBehaviour:
     m_Localized: You haven't logged any waste this month
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: Locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: Locked Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: 'You must first complete: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: New Quest Unlocked!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: the previous quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: View Quest
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -3687,6 +3687,30 @@ MonoBehaviour:
     m_Localized: Je hebt deze maand geen verspilling geregistreerd
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725672153088
+    m_Localized: Vergrendeld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347392
+    m_Localized: Vergrendelde quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347393
+    m_Localized: 'Je moet eerst voltooien: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347394
+    m_Localized: Nieuwe quest ontgrendeld!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347395
+    m_Localized: de vorige quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347396
+    m_Localized: Quest bekijken
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

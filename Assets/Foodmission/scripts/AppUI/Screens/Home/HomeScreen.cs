@@ -380,9 +380,27 @@ namespace eu.foodmission.platform
             _isDisplayingCelebrationQueue = true;
             var item = queue.Dequeue();
 
+            RewardPresentationItem unlockedQuestCard = null;
+            if (item.UnlockedQuest != null)
+            {
+                string questTitle = !string.IsNullOrEmpty(item.UnlockedQuest.title)
+                    ? item.UnlockedQuest.title
+                    : item.UnlockedQuest.name;
+
+                unlockedQuestCard = new RewardPresentationItem
+                {
+                    Type = RewardType.QuestUnlocked,
+                    Title = "@UI:QUEST_UNLOCKED_TITLE",
+                    Subtitle = questTitle,
+                    IconEmoji = "🔓",
+                    RawId = item.UnlockedQuest.code ?? item.UnlockedQuest.id
+                };
+            }
+
             RewardCelebrationDialog.Show(
                 item.Reward,
                 contextTitle: item.ContextTitle,
+                extraItem: unlockedQuestCard,
                 onDismiss: () =>
                 {
                     if (queue.Count > 0)
@@ -439,8 +457,18 @@ namespace eu.foodmission.platform
                     collectible = "Trofeo Huella Cero"*/
                 };
 
+                var simulatedQuestItem = new RewardPresentationItem
+                {
+                    Type = RewardType.QuestUnlocked,
+                    Title = "@UI:QUEST_UNLOCKED_TITLE",
+                    Subtitle = "Reducir el consumo de carne roja II",
+                    IconEmoji = "🔓"
+                };
+
                 RewardCelebrationDialog.Show(
-                    simulatedReward
+                    simulatedReward,
+                    contextTitle: "@UI:QUEST_REWARD_TITLE",
+                    extraItem: simulatedQuestItem
                 );
             };
 

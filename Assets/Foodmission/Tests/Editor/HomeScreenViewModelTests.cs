@@ -697,5 +697,108 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(requestedArgs.Any(a => a.name == "mode" && a.value?.ToString() == "sample"));
             Assert.IsTrue(requestedArgs.Any(a => a.name == "source" && a.value?.ToString() == "sample"));
         }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenQuestCompleted_ResolvesNextUnlockedQuest()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var mockQuest = new Mock<IQuestService>();
+            var questProgression = new QuestProgressionService();
+
+            var q1 = new Quest { id = "q1", code = "QUEST.HEALTH.BEGINNER.1", title = "Health Quest 1", dimensionId = "HEALTH", level = "BEGINNER" };
+            var q2 = new Quest { id = "q2", code = "QUEST.HEALTH.BEGINNER.2", title = "Health Quest 2", dimensionId = "HEALTH", level = "BEGINNER" };
+            var allQuests = new[] { q1, q2 };
+
+            mockQuest.Setup(q => q.GetQuestsAsync(null, null, null))
+                .ReturnsAsync((allQuests, (ApiErrorResponse)null));
+
+            var profile = new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-quest-1",
+                        eventType = "QUEST_COMPLETED",
+                        timestamp = "2026-09-23T10:05:00Z",
+                        metadata = JObject.FromObject(new { questCode = "QUEST.HEALTH.BEGINNER.1" })
+                    }
+                }
+            };
+
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                questService: mockQuest.Object,
+                gamificationService: mockGamification.Object,
+                questProgressionService: questProgression
+            );
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].IsQuest);
+            Assert.IsNotNull(result[0].UnlockedQuest);
+            Assert.AreEqual("QUEST.HEALTH.BEGINNER.2", result[0].UnlockedQuest.code);
+            Assert.AreEqual("Health Quest 2", result[0].UnlockedQuest.title);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenLastQuestCompleted_UnlockedQuestIsNull()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var mockQuest = new Mock<IQuestService>();
+            var questProgression = new QuestProgressionService();
+
+            var q1 = new Quest { id = "q1", code = "QUEST.HEALTH.ADVANCED.10", title = "Last Health Quest", dimensionId = "HEALTH", level = "ADVANCED" };
+            var allQuests = new[] { q1 };
+
+            mockQuest.Setup(q => q.GetQuestsAsync(null, null, null))
+                .ReturnsAsync((allQuests, (ApiErrorResponse)null));
+
+            var profile = new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-quest-last",
+                        eventType = "QUEST_COMPLETED",
+                        timestamp = "2026-09-23T10:05:00Z",
+                        metadata = JObject.FromObject(new { questCode = "QUEST.HEALTH.ADVANCED.10" })
+                    }
+                }
+            };
+
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                questService: mockQuest.Object,
+                gamificationService: mockGamification.Object,
+                questProgressionService: questProgression
+            );
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].IsQuest);
+            Assert.IsNull(result[0].UnlockedQuest);
+        }
     }
 }
