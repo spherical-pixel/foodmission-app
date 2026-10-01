@@ -304,7 +304,7 @@ namespace eu.foodmission.platform
             {
                 FMDialog.ShowApiError(
                     this,
-                    LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "ERROR_TITLE") ?? "Error",
+                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"),
                     _viewModel.ErrorDetail,
                     onOk: () => { }
                 );

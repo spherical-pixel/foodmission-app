@@ -267,7 +267,7 @@ namespace eu.foodmission.platform
             {
                 FMDialog.ShowApiError(
                     this,
-                    LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "ERROR_TITLE") ?? "Error",
+                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"),
                     _viewModel.ErrorDetail,
                     onOk: () => { }
                 );
@@ -281,13 +281,13 @@ namespace eu.foodmission.platform
 
             if (_viewModel.IsCurrentQuest)
             {
-                _btnStartQuest.title = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUEST_ACTIVE") ?? "Misión activa";
+                _btnStartQuest.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_ACTIVE");
                 _btnStartQuest.SetEnabled(false);
                 _btnStartQuest.variant = ButtonVariant.Default;
             }
             else
             {
-                _btnStartQuest.title = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "START_QUEST") ?? "Empezar quest";
+                _btnStartQuest.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "START_QUEST");
                 _btnStartQuest.SetEnabled(!_viewModel.IsStartingQuest);
                 _btnStartQuest.variant = ButtonVariant.Accent;
             }

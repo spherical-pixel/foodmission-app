@@ -225,7 +225,7 @@ namespace eu.foodmission.platform.Components
             helpPill.pickingMode = PickingMode.Ignore;
 
             var guide = new LocalizedTextElement();
-            guide.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SCAN_HELP") ?? "Coloca el código de barras en el marco";
+            guide.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SCAN_HELP");
             //guide.style.color = Color.white;
             //guide.style.fontSize = 15;
             guide.style.unityTextAlign = TextAnchor.MiddleCenter;

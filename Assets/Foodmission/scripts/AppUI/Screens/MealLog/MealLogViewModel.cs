@@ -371,7 +371,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] SelectMealPreset failed: {ex.Message}");
-                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_LOAD_PRESETS") ?? "Could not load preset items";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_ERROR_LOAD_PRESETS");
             }
         }
 
@@ -807,7 +807,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] SaveAsync failed: {ex.Message}");
-                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_SAVE") ?? "Unexpected error saving meal log";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_ERROR_SAVE");
                 IsSaving = false;
                 return false;
             }
@@ -1028,7 +1028,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] SaveEditAsync failed: {ex.Message}");
-                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_UPDATE") ?? "Unexpected error updating meal log";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_ERROR_UPDATE");
                 IsSaving = false;
                 return false;
             }
@@ -1118,7 +1118,7 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] ConfirmUpdateAndSaveAsync failed: {ex.Message}");
-                ErrorMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MEAL_LOG_ERROR_SAVE") ?? "Unexpected error saving meal log";
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_ERROR_SAVE");
                 IsSaving = false;
                 return false;
             }

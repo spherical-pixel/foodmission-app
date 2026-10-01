@@ -102,7 +102,7 @@ namespace eu.foodmission.platform
             _overlayTitle = new Heading();
             _overlayTitle.name = "overlay-title";
             _overlayTitle.size = HeadingSize.M;
-            _overlayTitle.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_DETAILS") ?? "Detalles del producto";
+            _overlayTitle.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_DETAILS");
             _overlayTitle.AddToClassList("fm-pantry-item-detail-overlay__title");
             appBar.Add(_overlayTitle);
 
@@ -355,10 +355,10 @@ namespace eu.foodmission.platform
                 message = $"¿Qué ocurrió con {displayName}?";
             }
 
-            string eatenLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_EATEN") ?? "Registrar como comido";
-            string wasteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_WASTE") ?? "Registrar como desperdicio";
-            string deleteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_DELETE") ?? "Solo eliminar de la despensa";
-            string cancelLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CANCEL") ?? "Cancelar";
+            string eatenLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_EATEN");
+            string wasteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_WASTE");
+            string deleteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_DELETE");
+            string cancelLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CANCEL");
 
             NutriMessageDialog.Show(
                 message,

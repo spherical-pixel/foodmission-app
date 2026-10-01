@@ -220,7 +220,7 @@ namespace eu.foodmission.platform
                 if (_viewModel.ErrorDetail != null)
                 {
                     _audioService?.PlaySfx(SfxType.NegativeButton);
-                    string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE") ?? "Error";
+                    string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE");
                     FMDialog.ShowApiError(this, title, _viewModel.ErrorDetail);
                     _viewModel.ErrorDetail = null;
                 }

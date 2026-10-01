@@ -332,7 +332,7 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
-                    _editModeTitle.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EDITING_MEAL_TITLE") ?? "Editando comida";
+                    _editModeTitle.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "EDITING_MEAL_TITLE");
                 }
             }
 
@@ -340,11 +340,11 @@ namespace eu.foodmission.platform
             {
                 if (isEditing)
                 {
-                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SAVE_CHANGES") ?? "Guardar cambios";
+                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SAVE_CHANGES");
                 }
                 else
                 {
-                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOG_DISHES") ?? "Log Selected";
+                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOG_DISHES");
                 }
             }
 
@@ -617,8 +617,8 @@ namespace eu.foodmission.platform
         {
             if (log == null || string.IsNullOrEmpty(log.id)) return;
 
-            string confirmTitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DELETE_LOG") ?? "Eliminar registro";
-            string confirmMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MEAL_LOG") ?? "¿Seguro que quieres eliminar este registro de comida?";
+            string confirmTitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DELETE_LOG");
+            string confirmMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_DELETE_MEAL_LOG");
 
             FMDialog.ShowConfirm(
                 this,
@@ -636,7 +636,7 @@ namespace eu.foodmission.platform
                     await _viewModel.DeleteLogAsync(log.id);
                     RebuildMealCards();
 
-                    string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_DELETED_SUCCESS") ?? "Comida eliminada del registro";
+                    string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_DELETED_SUCCESS");
                     Toast.Build(this, toastMsg, NotificationDuration.Short)
                         .SetStyle(NotificationStyle.Positive)
                         .SetPosition(PopupNotificationPlacement.Bottom)
@@ -654,8 +654,8 @@ namespace eu.foodmission.platform
             var choices = new List<string>();
             DateTime today = DateTime.Today;
 
-            string todayLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TODAY") ?? "Hoy";
-            string yesterdayLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "YESTERDAY") ?? "Ayer";
+            string todayLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TODAY");
+            string yesterdayLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "YESTERDAY");
 
             // 30 days rolling range: from today - 29 to today
             for (int i = 29; i >= 0; i--)
@@ -975,7 +975,7 @@ namespace eu.foodmission.platform
                 {
                     if (wasEditing)
                     {
-                        string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_UPDATED_SUCCESS") ?? "Comida actualizada correctamente";
+                        string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_UPDATED_SUCCESS");
                         Toast.Build(this, toastMsg, NotificationDuration.Short)
                             .SetStyle(NotificationStyle.Positive)
                             .SetPosition(PopupNotificationPlacement.Bottom)

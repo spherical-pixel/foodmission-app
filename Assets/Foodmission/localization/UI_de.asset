@@ -3657,7 +3657,8 @@ MonoBehaviour:
   - m_Id: 52041725676347393
     m_Localized: "Du musst zuerst abschlie\xDFen: {0}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 52041725676347394
     m_Localized: Neue Quest freigeschaltet!
     m_Metadata:
@@ -3668,6 +3669,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347396
     m_Localized: Quest anzeigen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347397
+    m_Localized: Produktdetails
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347398
+    m_Localized: Auswahl erfassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347399
+    m_Localized: "{0} Aktivit\xE4ten"
     m_Metadata:
       m_Items: []
   references:
@@ -3693,3 +3706,4 @@ MonoBehaviour:
         - id: 51673178689232919
         - id: 51673178689232920
         - id: 51673178689232925
+        - id: 52041725676347393

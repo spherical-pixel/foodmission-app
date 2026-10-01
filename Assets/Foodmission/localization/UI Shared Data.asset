@@ -3547,6 +3547,18 @@ MonoBehaviour:
     m_Key: QUEST_UNLOCKED_ACTION
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347397
+    m_Key: ITEM_DETAILS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347398
+    m_Key: LOG_DISHES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347399
+    m_Key: QUEST_ACTIVITIES_COUNT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

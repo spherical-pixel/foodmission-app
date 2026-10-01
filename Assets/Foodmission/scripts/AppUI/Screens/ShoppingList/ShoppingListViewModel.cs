@@ -90,7 +90,7 @@ namespace eu.foodmission.platform
                 return (targetList, null);
             }
 
-            string defaultName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST") ?? "Default";
+            string defaultName = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST");
             var (created, createError) = await _shoppingListService.CreateListAsync(defaultName);
             if (createError != null)
             {

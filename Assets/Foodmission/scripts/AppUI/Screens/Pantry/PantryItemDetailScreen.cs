@@ -377,10 +377,10 @@ namespace eu.foodmission.platform
                 message = $"¿Qué ocurrió con {displayName}?";
             }
 
-            string eatenLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_EATEN") ?? "Registrar como comido";
-            string wasteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_WASTE") ?? "Registrar como desperdicio";
-            string deleteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_DELETE") ?? "Solo eliminar de la despensa";
-            string cancelLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CANCEL") ?? "Cancelar";
+            string eatenLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_EATEN");
+            string wasteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_WASTE");
+            string deleteLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ACTION_DELETE");
+            string cancelLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CANCEL");
 
             NutriMessageDialog.Show(
                 message,
@@ -389,7 +389,7 @@ namespace eu.foodmission.platform
                     bool ok = await _viewModel.ConsumeAsync();
                     if (ok)
                     {
-                        string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_EATEN_SUCCESS") ?? "Comida registrada con éxito";
+                        string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_EATEN_SUCCESS");
                         Toast.Build(this, toastMsg, NotificationDuration.Short)
                             .SetStyle(NotificationStyle.Positive)
                             .SetPosition(PopupNotificationPlacement.Bottom)
@@ -417,7 +417,7 @@ namespace eu.foodmission.platform
                         onConfirm: async () =>
                         {
                             await _viewModel.DeleteAsync();
-                            string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_DELETED_SUCCESS") ?? "Producto eliminado de la despensa";
+                            string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "PANTRY_ITEM_DELETED_SUCCESS");
                             Toast.Build(this, toastMsg, NotificationDuration.Short)
                                 .SetStyle(NotificationStyle.Positive)
                                 .SetPosition(PopupNotificationPlacement.Bottom)

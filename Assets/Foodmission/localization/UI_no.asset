@@ -3645,7 +3645,8 @@ MonoBehaviour:
   - m_Id: 52041725676347393
     m_Localized: "Du m\xE5 f\xF8rst fullf\xF8re: {0}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690410
   - m_Id: 52041725676347394
     m_Localized: "Nytt oppdrag l\xE5st opp!"
     m_Metadata:
@@ -3656,6 +3657,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347396
     m_Localized: Vis oppdrag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347397
+    m_Localized: Produktdetaljer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347398
+    m_Localized: Registrer valgte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347399
+    m_Localized: '{0} aktiviteter'
     m_Metadata:
       m_Items: []
   references:
@@ -3681,3 +3694,4 @@ MonoBehaviour:
         - id: 51673178689232919
         - id: 51673178689232920
         - id: 51673178689232925
+        - id: 52041725676347393

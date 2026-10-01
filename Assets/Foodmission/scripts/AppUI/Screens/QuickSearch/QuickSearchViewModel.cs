@@ -247,7 +247,7 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                StatusMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_ADDED_TO_PANTRY") ?? "Añadido a la despensa";
+                StatusMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_ADDED_TO_PANTRY");
             }
             catch (Exception ex)
             {
@@ -384,7 +384,7 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                StatusMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_ADDED_TO_SHOPPING_LIST") ?? "Añadido a la lista de la compra";
+                StatusMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_ADDED_TO_SHOPPING_LIST");
             }
             catch (Exception ex)
             {

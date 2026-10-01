@@ -3641,7 +3641,8 @@ MonoBehaviour:
   - m_Id: 52041725676347393
     m_Localized: "Najprej mora\u0161 dokon\u010Dati: {0}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 52041725676347394
     m_Localized: Nova naloga odklenjena!
     m_Metadata:
@@ -3652,6 +3653,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347396
     m_Localized: Ogled naloge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347397
+    m_Localized: Podrobnosti izdelka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347398
+    m_Localized: "Zabele\u017Ei izbrano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347399
+    m_Localized: '{0} dejavnosti'
     m_Metadata:
       m_Items: []
   references:
@@ -3677,3 +3690,4 @@ MonoBehaviour:
         - id: 51673178689232919
         - id: 51673178689232920
         - id: 51673178689232925
+        - id: 52041725676347393

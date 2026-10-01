@@ -272,8 +272,7 @@ namespace eu.foodmission.platform
 
                         if (qItem.Quest.items != null && qItem.Quest.items.Length > 0)
                         {
-                            string actFormat = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUEST_ACTIVITIES_COUNT") ?? "{0} actividades";
-                            questCard.SetSubtitle(string.Format(actFormat, qItem.Quest.items.Length));
+                            questCard.SetSubtitle(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_ACTIVITIES_COUNT", new object[] { qItem.Quest.items.Length }));
                         }
                         else if (!string.IsNullOrEmpty(qItem.Quest.description))
                         {
@@ -322,7 +321,7 @@ namespace eu.foodmission.platform
             {
                 FMDialog.ShowApiError(
                     this,
-                    LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "ERROR_TITLE") ?? "Error",
+                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"),
                     _viewModel.ErrorDetail,
                     onOk: () => { }
                 );

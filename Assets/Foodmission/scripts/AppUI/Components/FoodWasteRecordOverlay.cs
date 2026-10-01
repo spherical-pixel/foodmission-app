@@ -309,8 +309,7 @@ namespace eu.foodmission.platform
             float qty = _quantityField.value;
             if (qty <= 0)
             {
-                ShowError(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QTY_MUST_BE_POSITIVE")
-                    ?? "La cantidad debe ser mayor que 0.");
+                ShowError(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QTY_MUST_BE_POSITIVE"));
                 return;
             }
 

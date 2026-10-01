@@ -121,16 +121,16 @@ namespace eu.foodmission.platform.Components
             {
                 case FoodFactLevel.Intermediate:
                     _levelBadge.AddToClassList("fm-quiz-level-badge--intermediate");
-                    localizedLevel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_LEVEL_INTERMEDIATE") ?? "Intermedio";
+                    localizedLevel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_LEVEL_INTERMEDIATE");
                     break;
                 case FoodFactLevel.Advanced:
                     _levelBadge.AddToClassList("fm-quiz-level-badge--advanced");
-                    localizedLevel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_LEVEL_ADVANCED") ?? "Avanzado";
+                    localizedLevel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_LEVEL_ADVANCED");
                     break;
                 case FoodFactLevel.Beginner:
                 default:
                     _levelBadge.AddToClassList("fm-quiz-level-badge--beginner");
-                    localizedLevel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_LEVEL_BEGINNER") ?? "Principiante";
+                    localizedLevel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_LEVEL_BEGINNER");
                     break;
             }
 
@@ -148,13 +148,13 @@ namespace eu.foodmission.platform.Components
             {
                 _statusBadge.AddToClassList("fm-quiz-status-badge--completed");
                 _statusIcon.style.display = DisplayStyle.Flex;
-                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "FOODFACT_STATUS_READ") ?? "Leído";
+                _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOODFACT_STATUS_READ");
             }
             else
             {
                 _statusBadge.AddToClassList("fm-quiz-status-badge--pending");
                 _statusIcon.style.display = DisplayStyle.None;
-                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "FOODFACT_STATUS_UNREAD") ?? "No leído";
+                _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOODFACT_STATUS_UNREAD");
             }
         }
     }

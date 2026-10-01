@@ -204,16 +204,16 @@ namespace eu.foodmission.platform.Components
             {
                 case QuestLevel.Intermediate:
                     _levelBadge.AddToClassList("fm-quiz-level-badge--intermediate");
-                    localizedLevel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_LEVEL_INTERMEDIATE") ?? "Intermedio";
+                    localizedLevel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_LEVEL_INTERMEDIATE");
                     break;
                 case QuestLevel.Advanced:
                     _levelBadge.AddToClassList("fm-quiz-level-badge--advanced");
-                    localizedLevel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_LEVEL_ADVANCED") ?? "Avanzado";
+                    localizedLevel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_LEVEL_ADVANCED");
                     break;
                 case QuestLevel.Beginner:
                 default:
                     _levelBadge.AddToClassList("fm-quiz-level-badge--beginner");
-                    localizedLevel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_LEVEL_BEGINNER") ?? "Principiante";
+                    localizedLevel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_LEVEL_BEGINNER");
                     break;
             }
 
@@ -238,13 +238,13 @@ namespace eu.foodmission.platform.Components
             {
                 _statusBadge.AddToClassList("fm-quiz-status-badge--completed");
                 _statusIcon.style.display = DisplayStyle.Flex;
-                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED") ?? "Completado";
+                _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED");
             }
             else
             {
                 _statusBadge.AddToClassList("fm-quiz-status-badge--pending");
                 _statusIcon.style.display = DisplayStyle.None;
-                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING") ?? "Pendiente";
+                _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_STATUS_PENDING");
             }
         }
 
@@ -265,7 +265,7 @@ namespace eu.foodmission.platform.Components
                 _statusIcon.style.display = DisplayStyle.Flex;
                 _statusIcon.iconName = "lock";
 
-                _statusText.text = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUEST_STATUS_LOCKED") ?? "Bloqueado";
+                _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_STATUS_LOCKED");
                 _arrowIcon.iconName = "lock";
                 _arrowIcon.style.opacity = 0.5f;
             }

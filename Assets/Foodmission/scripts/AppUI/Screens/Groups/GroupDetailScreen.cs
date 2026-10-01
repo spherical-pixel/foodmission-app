@@ -310,8 +310,8 @@ namespace eu.foodmission.platform
 
             if (_viewModel.Members == null) return;
 
-            string adminLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADMIN_BADGE") ?? "ADMIN";
-            string virtualLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIRTUAL_MEMBER_BADGE") ?? "VIRTUAL";
+            string adminLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ADMIN_BADGE");
+            string virtualLabel = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "VIRTUAL_MEMBER_BADGE");
 
             foreach (GroupMember member in _viewModel.Members)
             {
@@ -436,9 +436,8 @@ namespace eu.foodmission.platform
         {
             Debug.LogError("OnMakeAdminClicked CLICK ->>> ");
             string displayName = GetMemberUsername(member);
-            string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAKE_ADMIN") ?? "Make Admin";
-            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_MAKE_ADMIN", new object[] { displayName })
-                ?? $"Are you sure you want to promote {displayName} to group administrator?";
+            string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MAKE_ADMIN");
+            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONFIRM_MAKE_ADMIN", new object[] { displayName });
 
             FMDialog.ShowConfirm(
                 this,
@@ -577,8 +576,7 @@ namespace eu.foodmission.platform
                 await _viewModel.MakeAdminAsync(memberId);
                 if (_viewModel.ErrorDetail == null)
                 {
-                    string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEMBER_PROMOTED_ADMIN", new object[] { displayName })
-                        ?? $"{displayName} is now an administrator";
+                    string toastMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEMBER_PROMOTED_ADMIN", new object[] { displayName });
                     Toast.Build(this, toastMsg, NotificationDuration.Short)
                         .SetPosition(PopupNotificationPlacement.Bottom)
                         .Show();
