@@ -179,38 +179,6 @@ namespace eu.foodmission.platform
                 : MissionInteraction.Unknown;
         }
 
-        /// <summary>Question Quick Meal Log shows for a current-quest mission; null when the mission isn't meal-related.</summary>
-        public static QuickMealMissionQuestion GetQuickMealQuestion(string missionCode)
-        {
-            MissionInteraction interaction = Get(missionCode);
-            if (!interaction.AutoModules.Contains(QuickMealLog))
-            {
-                return null;
-            }
-
-            foreach (MissionReportStep step in interaction.Steps)
-            {
-                if (step.Type != MissionStepType.MealReport)
-                {
-                    continue;
-                }
-
-                if (step.EventType != null)
-                {
-                    return new QuickMealMissionQuestion { EventType = step.EventType };
-                }
-
-                if (step.Options.All(o => o.IsSwap))
-                {
-                    return new QuickMealMissionQuestion { SwapOptions = step.Options.Select(o => o.EventType).ToArray() };
-                }
-
-                return new QuickMealMissionQuestion { EventType = step.Options[0].EventType };
-            }
-
-            return null;
-        }
-
         // ── Interaction factories ─────────────────────────────
 
         private static MissionInteraction Auto(params MissionReportStep[] steps) =>

@@ -28,6 +28,7 @@ namespace eu.foodmission.platform
         private readonly List<(string Code, FMButton Button)> _typeButtons = new();
 
         private VisualElement _questionsContainer;
+        private FormFieldItemCheckbox _onlyMissionsToggle;
         private Unity.AppUI.UI.TextField _inputMealName;
         private VisualElement _editModeBanner;
         private Unity.AppUI.UI.Text _feedbackLabel;
@@ -52,6 +53,7 @@ namespace eu.foodmission.platform
             _typesContainer = contentContainer.Q<VisualElement>("types-row") ?? contentContainer.Q<VisualElement>(className: "fm-quick-meal-types-row");
 
             _questionsContainer = contentContainer.Q<VisualElement>("questions-container");
+            _onlyMissionsToggle = contentContainer.Q<FormFieldItemCheckbox>("only-missions-toggle");
             _inputMealName = contentContainer.Q<Unity.AppUI.UI.TextField>("input-meal-name");
             _editModeBanner = contentContainer.Q<VisualElement>("edit-mode-banner");
             _feedbackLabel = contentContainer.Q<Unity.AppUI.UI.Text>("feedback-label");
@@ -165,7 +167,13 @@ namespace eu.foodmission.platform
             {
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;
             }
+            _onlyMissionsToggle?.RegisterCallback<ChangeEvent<CheckboxState>>(OnOnlyMissionsChanged);
             UpdateView();
+        }
+
+        private void OnOnlyMissionsChanged(ChangeEvent<CheckboxState> evt)
+        {
+            _viewModel?.SetOnlyMissionItems(evt.newValue == CheckboxState.Checked);
         }
 
         protected override void OnViewModelUnbinding()
@@ -177,6 +185,7 @@ namespace eu.foodmission.platform
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             }
+            _onlyMissionsToggle?.UnregisterCallback<ChangeEvent<CheckboxState>>(OnOnlyMissionsChanged);
             base.OnViewModelUnbinding();
         }
 
@@ -248,6 +257,8 @@ namespace eu.foodmission.platform
         private void UpdateView()
         {
             if (_viewModel == null) return;
+
+            _onlyMissionsToggle?.EnableInClassList("fm-quick-meal-only-missions--hidden", !_viewModel.HasMissionItems);
 
 
             UpdateEditState();

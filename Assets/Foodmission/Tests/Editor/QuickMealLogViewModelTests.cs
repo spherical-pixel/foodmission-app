@@ -11,7 +11,6 @@ namespace eu.foodmission.platform.Tests
     {
         private Mock<IQuestService> _mockQuestService;
         private Mock<IEventService> _mockEventService;
-        private Mock<IActivityEventMapper> _mockActivityEventMapper;
         private Mock<ICatalogService> _mockCatalogService;
         private Mock<IMealLogService> _mockMealLogService;
         private Mock<IMealService> _mockMealService;
@@ -27,7 +26,6 @@ namespace eu.foodmission.platform.Tests
 
             _mockQuestService = new Mock<IQuestService>();
             _mockEventService = new Mock<IEventService>();
-            _mockActivityEventMapper = new Mock<IActivityEventMapper>();
             _mockCatalogService = new Mock<ICatalogService>();
             _mockMealLogService = new Mock<IMealLogService>();
             _mockMealService = new Mock<IMealService>();
@@ -55,7 +53,6 @@ namespace eu.foodmission.platform.Tests
                 _storeService,
                 _mockQuestService.Object,
                 _mockEventService.Object,
-                _mockActivityEventMapper.Object,
                 _mockCatalogService.Object,
                 _mockMealLogService.Object,
                 _mockMealService.Object
@@ -112,11 +109,12 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("Aventura de las Legumbres", _vm.ActiveQuestTitle);
             Assert.AreEqual("QUEST.LEGUMES", _vm.ActiveQuestCode);
             Assert.IsNotNull(_vm.Sections);
-            Assert.AreEqual(3, _vm.Sections.Count);
+            Assert.AreEqual(5, _vm.Sections.Count);
             Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_diet"));
             Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_swaps"));
+            Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_origin"));
+            Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_waste"));
             Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_nutrition"));
-            Assert.IsFalse(_vm.Sections.Any(s => s.Id == "sec_waste"));
         }
 
 
@@ -607,11 +605,12 @@ namespace eu.foodmission.platform.Tests
             await _vm.LoadActiveQuestQuestionsAsync();
 
             Assert.IsNotNull(_vm.Sections);
-            Assert.AreEqual(3, _vm.Sections.Count);
+            Assert.AreEqual(5, _vm.Sections.Count);
             Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_diet"));
             Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_swaps"));
+            Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_origin"));
+            Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_waste"));
             Assert.IsTrue(_vm.Sections.Any(s => s.Id == "sec_nutrition"));
-            Assert.IsFalse(_vm.Sections.Any(s => s.Id == "sec_waste"));
 
             var dietSec = _vm.Sections.First(s => s.Id == "sec_diet");
             // Sections start collapsed.
@@ -633,87 +632,6 @@ namespace eu.foodmission.platform.Tests
 
             _vm.ToggleSection("sec_diet");
             Assert.IsFalse(dietSec.IsExpanded);
-        }
-
-        [Test]
-        public async Task ToggleQuestion_InSections_UpdatesSelectedCountAndSubmitsFlags()
-        {
-            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
-            await _vm.LoadActiveQuestQuestionsAsync();
-
-            var dietSec = _vm.Sections.First(s => s.Id == "sec_diet");
-            Assert.AreEqual(0, dietSec.SelectedCount);
-
-            // Toggle item in diet
-            _vm.ToggleQuestion("q_meat_free");
-            Assert.AreEqual(1, dietSec.SelectedCount);
-
-            // Toggle item in nutrition
-            var nutritionSec = _vm.Sections.First(s => s.Id == "sec_nutrition");
-            _vm.ToggleQuestion("q_fruit_veg");
-            Assert.AreEqual(1, nutritionSec.SelectedCount);
-
-            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
-                .ReturnsAsync((new MealLog { id = "ml-sec-1" }, null));
-
-            bool success = await _vm.SubmitQuickMealLogAsync();
-
-            Assert.IsTrue(success);
-            // Habit flag goes to meal log, nutrition flag is excluded from meal log flags
-            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
-                r.flags != null &&
-                r.flags.Contains(ClientEventTypes.MealMeatFree) &&
-                !r.flags.Contains(ClientEventTypes.NutritionFruitVegServingAdded))), Times.Once);
-
-            // Nutrition flag is emitted directly as a client event
-            _mockEventService.Verify(e => e.RecordClientEventAsync(It.Is<CreateClientEventRequest>(req =>
-                req.eventType == ClientEventTypes.NutritionFruitVegServingAdded)), Times.Once);
-        }
-
-        [Test]
-        public async Task SubmitQuickMealLogAsync_WithOnlyNutritionFlag_EmitsDirectEventAndSucceedsWithoutMealLogCall()
-        {
-            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
-            await _vm.LoadActiveQuestQuestionsAsync();
-
-            var nutritionSec = _vm.Sections.First(s => s.Id == "sec_nutrition");
-            _vm.ToggleQuestion("q_wholegrain");
-            Assert.AreEqual(1, nutritionSec.SelectedCount);
-
-            bool success = await _vm.SubmitQuickMealLogAsync();
-
-            Assert.IsTrue(success);
-            Assert.IsTrue(_vm.SubmitSuccess);
-            Assert.AreEqual("@UI:QUICK_MEAL_LOG_SUCCESS", _vm.SuccessMessage);
-
-            // No meal flags present, so meal log service should not be called with empty flags
-            _mockMealLogService.Verify(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
-
-            // Event emitted directly
-            _mockEventService.Verify(e => e.RecordClientEventAsync(It.Is<CreateClientEventRequest>(req =>
-                req.eventType == ClientEventTypes.NutritionWholegrainChosen)), Times.Once);
-        }
-
-        [Test]
-        public async Task SubmitQuickMealLogAsync_WhenNutritionDirectEmitFailsAndNoMealFlags_ReturnsFalseAndSetsErrorDetail()
-        {
-            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
-            await _vm.LoadActiveQuestQuestionsAsync();
-
-            var nutritionSec = _vm.Sections.First(s => s.Id == "sec_nutrition");
-            _vm.ToggleQuestion("q_salt_free");
-
-            var expectedErr = new ApiErrorResponse { statusCode = 500, message = "Event failed" };
-            _mockEventService.Setup(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()))
-                .ReturnsAsync(((UserEvent)null, expectedErr));
-
-            bool success = await _vm.SubmitQuickMealLogAsync();
-
-            Assert.IsFalse(success);
-            Assert.IsFalse(_vm.SubmitSuccess);
-            Assert.IsNotNull(_vm.ErrorDetail);
-            Assert.AreEqual(500, _vm.ErrorDetail.statusCode);
-            Assert.AreEqual("Event failed", _vm.ErrorDetail.message);
         }
 
         [Test]
@@ -753,29 +671,6 @@ namespace eu.foodmission.platform.Tests
                 r.swaps.Length == 2 &&
                 r.swaps.Contains(ClientEventTypes.SwapBeefToLegumes) &&
                 r.swaps.Contains(ClientEventTypes.SwapSugaryDrinkToWater))), Times.Once);
-        }
-
-        [Test]
-        public async Task SubmitQuickMealLogAsync_WithOnlySwapsAndNoFlags_DoesNotSendRequestAndSetsErrorMessage()
-        {
-            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
-            await _vm.LoadActiveQuestQuestionsAsync();
-
-            var swapSec = _vm.Sections.First(s => s.Id == "sec_swaps");
-            string swap1Id = $"q_{ClientEventTypes.SwapBeefToLegumes.ToLowerInvariant()}";
-            _vm.ToggleQuestion(swap1Id);
-            Assert.AreEqual(1, swapSec.SelectedCount);
-
-            string toastRequested = null;
-            _vm.ShowToastRequest += msg => toastRequested = msg;
-
-            bool success = await _vm.SubmitQuickMealLogAsync();
-
-            Assert.IsFalse(success);
-            Assert.IsFalse(_vm.SubmitSuccess);
-            Assert.AreEqual("@UI:QUICK_MEAL_LOG_EMPTY_SELECTION", _vm.ErrorMessage);
-            Assert.AreEqual("@UI:QUICK_MEAL_LOG_EMPTY_SELECTION", toastRequested);
-            _mockMealLogService.Verify(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
         }
 
         [Test]
@@ -882,6 +777,111 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(string.IsNullOrEmpty(_vm.EditingMealLogId));
             Assert.IsNull(_vm.EditingMealLog);
         }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_SendsNutritionAsMealLogFlags()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+            _vm.ToggleQuestion("q_meat_free");
+            _vm.ToggleQuestion("q_fruit_veg");
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "ml-1" }, null));
+
+            Assert.IsTrue(await _vm.SubmitQuickMealLogAsync());
+
+            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.flags.Contains(ClientEventTypes.MealMeatFree) &&
+                r.flags.Contains(ClientEventTypes.NutritionFruitVegServingAdded))), Times.Once);
+            _mockEventService.Verify(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()), Times.Never);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WithOnlyNutritionFlag_CreatesMealLog()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+            _vm.ToggleQuestion("q_wholegrain");
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "ml-2" }, null));
+
+            Assert.IsTrue(await _vm.SubmitQuickMealLogAsync());
+
+            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.flags.Length == 1 && r.flags[0] == ClientEventTypes.NutritionWholegrainChosen)), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WithOnlySwap_AddsImpliedFlag()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+            _vm.ToggleQuestion($"q_{ClientEventTypes.SwapBeefToLegumes.ToLowerInvariant()}");
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "ml-3" }, null));
+
+            Assert.IsTrue(await _vm.SubmitQuickMealLogAsync());
+
+            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.flags.Length == 1 && r.flags[0] == ClientEventTypes.MealLegumeConsumed &&
+                r.swaps.Length == 1 && r.swaps[0] == ClientEventTypes.SwapBeefToLegumes)), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WithOnlySwapWithoutImpliedFlag_SendsSwapsOnly()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+            _vm.ToggleQuestion($"q_{ClientEventTypes.SwapSugaryDrinkToWater.ToLowerInvariant()}");
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "ml-4" }, null));
+
+            await _vm.SubmitQuickMealLogAsync();
+
+            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.flags == null && r.swaps.Length == 1 && r.swaps[0] == ClientEventTypes.SwapSugaryDrinkToWater)), Times.Once);
+        }
+
+        [Test]
+        public async Task Sections_IncludeOriginAndWasteFlags()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
+            await _vm.LoadActiveQuestQuestionsAsync();
+
+            var origin = _vm.Sections.First(s => s.Id == "sec_origin");
+            CollectionAssert.AreEquivalent(
+                new[] { ClientEventTypes.MealSeasonalProduce, ClientEventTypes.MealLocalProduce, ClientEventTypes.MealCertifiedProduct },
+                origin.Items.Select(i => i.EventType).ToArray());
+            var waste = _vm.Sections.First(s => s.Id == "sec_waste");
+            CollectionAssert.AreEquivalent(
+                new[] { ClientEventTypes.FoodWasteHalfPlateSaved, ClientEventTypes.FoodWasteFullPlateSaved, ClientEventTypes.FoodWasteExpiredConsumed },
+                waste.Items.Select(i => i.EventType).ToArray());
+        }
+
+        [Test]
+        public async Task OnlyMissionItems_FiltersSectionsToCurrentQuestMealMissions()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q1" });
+            _mockQuestService.Setup(q => q.GetQuestAsync("q1", It.IsAny<string>())).ReturnsAsync((new Quest
+            {
+                id = "q1",
+                items = new[]
+                {
+                    new QuestItem { id = "i1", contentType = QuestContentType.Mission, contentCode = "M.A1.3" },
+                    new QuestItem { id = "i2", contentType = QuestContentType.Mission, contentCode = "M.B6.5" }
+                }
+            }, (ApiErrorResponse)null));
+            await _vm.LoadActiveQuestQuestionsAsync();
+            Assert.IsTrue(_vm.HasMissionItems);
+
+            _vm.SetOnlyMissionItems(true);
+
+            var events = _vm.Sections.SelectMany(s => s.Items).Select(i => i.EventType).ToArray();
+            CollectionAssert.AreEquivalent(new[] { ClientEventTypes.MealLegumeConsumed, ClientEventTypes.SwapSnackToFruitNuts }, events);
+            Assert.IsFalse(_vm.Sections.Any(s => s.Items.Count == 0));
+
+            _vm.SetOnlyMissionItems(false);
+            Assert.Greater(_vm.Sections.SelectMany(s => s.Items).Count(), 2);
+        }
     }
 }
-

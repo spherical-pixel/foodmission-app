@@ -336,4 +336,10 @@
     white-space: nowrap;
 }
 
+.fm-quick-meal-only-missions {
+    margin-bottom: 12px;
+}
 
+.fm-quick-meal-only-missions--hidden {
+    display: none;
+}

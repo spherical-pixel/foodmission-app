@@ -40,7 +40,6 @@ namespace eu.foodmission.platform
         private readonly IMealService _mealService;
         private readonly IMissionService _missionService;
         private readonly IChallengeService _challengeService;
-        private readonly IActivityEventMapper _activityEventMapper;
         private readonly ICatalogService _catalogService;
         private readonly IAuthService _authService;
 
@@ -101,7 +100,6 @@ namespace eu.foodmission.platform
             IStoreService storeService,
             IQuestService questService,
             IEventService eventService,
-            IActivityEventMapper activityEventMapper,
             ICatalogService catalogService = null,
             IMealLogService mealLogService = null,
             IMealService mealService = null,
@@ -111,7 +109,6 @@ namespace eu.foodmission.platform
         {
             _questService = questService;
             _eventService = eventService;
-            _activityEventMapper = activityEventMapper;
             _catalogService = catalogService;
             _mealLogService = mealLogService;
             _mealService = mealService;
@@ -190,6 +187,7 @@ namespace eu.foodmission.platform
                 var appState = _storeService?.GetAppState();
                 string currentQuestId = appState?.userCurrentQuestId;
 
+                _missionEvents = new HashSet<string>(StringComparer.Ordinal);
                 if (!string.IsNullOrEmpty(currentQuestId) && _questService != null)
                 {
                     var (quest, _) = await _questService.GetQuestAsync(currentQuestId);
@@ -197,17 +195,22 @@ namespace eu.foodmission.platform
                     {
                         ActiveQuestTitle = quest.GetDisplayName();
                         ActiveQuestCode = quest.code ?? "";
+                        _missionEvents = MissionMealEvents((quest.items ?? Array.Empty<QuestItem>())
+                            .Where(i => i != null && string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
+                            .Select(i => i.contentCode));
                     }
                 }
 
                 Questions = GetDefaultQuestions();
-                Sections = BuildStandardSections();
+                _allSections = BuildStandardSections();
+                ApplySectionFilter();
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] LoadActiveQuestQuestionsAsync error: {ex.Message}");
                 Questions = GetDefaultQuestions();
-                Sections = BuildStandardSections();
+                _allSections = BuildStandardSections();
+                ApplySectionFilter();
             }
             finally
             {
@@ -359,8 +362,52 @@ namespace eu.foodmission.platform
                     Icon = "🍬",
                     Prompt = "@UI:EVENTS_ADDED_SUGAR_AVOIDED",
                     EventType = ClientEventTypes.NutritionAddedSugarAvoided
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_protein_included",
+                    Icon = "🍳",
+                    Prompt = "@UI:" + MealFlagLabels.KeyFor(ClientEventTypes.NutritionProteinIncluded),
+                    EventType = ClientEventTypes.NutritionProteinIncluded
+                },
+                new QuickMealCheckItem
+                {
+                    Id = "q_rainbow",
+                    Icon = "🌈",
+                    Prompt = "@UI:" + MealFlagLabels.KeyFor(ClientEventTypes.NutritionRainbowColoursLogged),
+                    EventType = ClientEventTypes.NutritionRainbowColoursLogged
                 }
             };
+            // 3. Origen y temporada
+            sections.Add(new QuickMealSection
+            {
+                Id = "sec_origin",
+                Title = "@UI:EVENTS_SECTIONS_ORIGIN",
+                Icon = "🌍",
+                IsExpanded = false,
+                Items = new List<QuickMealCheckItem>
+                {
+                    FlagItem("q_seasonal", "🍂", ClientEventTypes.MealSeasonalProduce),
+                    FlagItem("q_local", "📍", ClientEventTypes.MealLocalProduce),
+                    FlagItem("q_certified", "🏷️", ClientEventTypes.MealCertifiedProduct)
+                }
+            });
+
+            // 5. Desperdicio (meal-log flags agreed with backend; rejected by v0.3.0 until they are added)
+            sections.Add(new QuickMealSection
+            {
+                Id = "sec_waste",
+                Title = "@UI:EVENTS_SECTIONS_WASTE",
+                Icon = "♻️",
+                IsExpanded = false,
+                Items = new List<QuickMealCheckItem>
+                {
+                    FlagItem("q_half_plate", "🍽️", ClientEventTypes.FoodWasteHalfPlateSaved),
+                    FlagItem("q_leftovers", "♻️", ClientEventTypes.FoodWasteFullPlateSaved),
+                    FlagItem("q_expired", "📅", ClientEventTypes.FoodWasteExpiredConsumed)
+                }
+            });
+
             sections.Add(new QuickMealSection
             {
                 Id = "sec_nutrition",
@@ -371,6 +418,69 @@ namespace eu.foodmission.platform
             });
 
             return sections;
+        }
+
+        private static QuickMealCheckItem FlagItem(string id, string icon, string eventType) => new QuickMealCheckItem
+        {
+            Id = id,
+            Icon = icon,
+            Prompt = "@UI:" + MealFlagLabels.KeyFor(eventType),
+            EventType = eventType
+        };
+
+        // ── "Only my missions" filter ─────────────────────────
+
+        private List<QuickMealSection> _allSections = new List<QuickMealSection>();
+        private HashSet<string> _missionEvents = new HashSet<string>(StringComparer.Ordinal);
+
+        public bool OnlyMissionItems { get; private set; }
+        public bool HasMissionItems => _missionEvents.Count > 0;
+
+        public void SetOnlyMissionItems(bool value)
+        {
+            OnlyMissionItems = value;
+            ApplySectionFilter();
+        }
+
+        private void ApplySectionFilter()
+        {
+            if (!OnlyMissionItems || _missionEvents.Count == 0)
+            {
+                Sections = _allSections;
+            }
+            else
+            {
+                // Filtered sections share the item instances, so checks survive toggling the filter
+                Sections = _allSections
+                    .Select(s => new QuickMealSection
+                    {
+                        Id = s.Id,
+                        Title = s.Title,
+                        Icon = s.Icon,
+                        IsExpanded = true,
+                        Items = s.Items.Where(i => _missionEvents.Contains(i.EventType ?? string.Empty)).ToList()
+                    })
+                    .Where(s => s.Items.Count > 0)
+                    .ToList();
+            }
+            OnPropertyChanged(nameof(HasMissionItems));
+        }
+
+        private static HashSet<string> MissionMealEvents(IEnumerable<string> missionCodes)
+        {
+            var events = new HashSet<string>(StringComparer.Ordinal);
+            foreach (string code in missionCodes)
+            {
+                foreach (MissionReportStep step in MissionInteractionCatalog.Get(code).Steps.Where(s => s.Type == MissionStepType.MealReport))
+                {
+                    if (step.EventType != null)
+                    {
+                        events.Add(step.EventType);
+                    }
+                    events.UnionWith(step.Options.Select(o => o.EventType));
+                }
+            }
+            return events;
         }
 
         private List<QuickMealCheckItem> GetDefaultQuestions()
@@ -402,89 +512,6 @@ namespace eu.foodmission.platform
                     IsChecked = false
                 }
             };
-        }
-
-        private async Task<List<QuickMealCheckItem>> BuildQuestionsFromQuestAsync(Quest quest)
-        {
-            var list = new List<QuickMealCheckItem>();
-            if (quest?.items == null) return list;
-
-            foreach (var it in quest.items)
-            {
-                if (it == null) continue;
-                string cType = it.contentType ?? "";
-                bool isMission = string.Equals(cType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase);
-                bool isChallenge = string.Equals(cType, "CHALLENGE", StringComparison.OrdinalIgnoreCase);
-
-                if (isMission || isChallenge)
-                {
-                    // Challenges are completed from their Nutri screen (PATCH), not through events: no mapping
-                    var mapping = isMission
-                        ? _activityEventMapper?.GetMissionMapping(it.contentCode)
-                        : null;
-
-                    string icon = isMission ? "🎯" : "🏆";
-                    string prompt = mapping?.DirectQuestionPrompt;
-
-                    if (string.IsNullOrEmpty(prompt) && !string.IsNullOrEmpty(it.label))
-                    {
-                        prompt = it.label;
-                    }
-
-                    if (string.IsNullOrEmpty(prompt))
-                    {
-                        if (isMission && _missionService != null)
-                        {
-                            var (m, _) = await _missionService.GetMissionAsync(it.contentCode);
-                            if (m != null)
-                            {
-                                prompt = !string.IsNullOrEmpty(m.title) ? $"¿{m.title}?" : m.goal;
-                            }
-                        }
-                        else if (isChallenge && _challengeService != null)
-                        {
-                            var (ch, _) = await _challengeService.GetChallengeAsync(it.contentCode);
-                            if (ch != null)
-                            {
-                                prompt = !string.IsNullOrEmpty(ch.title) ? $"¿{ch.title}?" : ch.task;
-                            }
-                        }
-                    }
-
-                    if (string.IsNullOrEmpty(prompt))
-                    {
-                        prompt = !string.IsNullOrEmpty(it.contentCode) ? $"¿Completado ({it.contentCode})?" : "¿Completado?";
-                        icon = "✓";
-                    }
-
-                    string[] swapOpts = mapping?.SwapOptions ?? Array.Empty<string>();
-                    string eventType = (swapOpts.Length > 0)
-                        ? null
-                        : ((mapping?.TargetEventTypes != null && mapping.TargetEventTypes.Length > 0)
-                            ? mapping.TargetEventTypes[0]
-                            : ClientEventTypes.MealLogged);
-
-                    list.Add(new QuickMealCheckItem
-                    {
-                        Id = it.id ?? it.contentCode,
-                        Icon = icon,
-                        Prompt = prompt,
-                        EventType = eventType,
-                        ActivityCode = it.contentCode,
-                        IsChecked = false,
-                        QuestionType = mapping?.QuestionType ?? DirectQuestionType.SingleChoice,
-                        SwapOptions = swapOpts,
-                        SelectedSwapOption = null
-                    });
-                }
-            }
-
-            if (list.Count == 0)
-            {
-                return GetDefaultQuestions();
-            }
-
-            return list;
         }
 
         public void ToggleSection(string sectionId)
@@ -803,21 +830,6 @@ namespace eu.foodmission.platform
             SelectedMealType = mealType;
         }
 
-        /// <summary>
-        /// Temporary workaround flag:
-        /// The backend currently only accepts habits and sustainable food flags (MEAL_*) in POST /meal-logs,
-        /// and does not yet accept nutrition and health flags (NUTRITION_*).
-        /// When this is true, nutrition flags are excluded from CreateMealLogRequest.flags and emitted
-        /// directly as client events via IEventService.RecordClientEventAsync.
-        /// Once the backend supports nutrition flags in meal-logs, set this to false to restore sending them in flags.
-        /// </summary>
-        public const bool EmitNutritionEventsDirectly = true;
-
-        public static bool IsNutritionEvent(string eventType)
-        {
-            return !string.IsNullOrEmpty(eventType) && eventType.StartsWith("NUTRITION_");
-        }
-
         public async Task<bool> SubmitQuickMealLogAsync()
         {
             if (_isSubmitting) return false;
@@ -847,7 +859,6 @@ namespace eu.foodmission.platform
 
                 var flags = new List<string>();
                 var swaps = new List<string>();
-                var nutritionEvents = new List<string>();
 
                 foreach (var q in allChecked)
                 {
@@ -861,22 +872,17 @@ namespace eu.foodmission.platform
 
                     if (ev.StartsWith("SWAP_"))
                     {
-                        if (!swaps.Contains(ev)) swaps.Add(ev);
-                    }
-                    else if (IsNutritionEvent(ev))
-                    {
-                        if (EmitNutritionEventsDirectly)
+                        if (!swaps.Contains(ev))
                         {
-                            if (!nutritionEvents.Contains(ev)) nutritionEvents.Add(ev);
-                        }
-                        else
-                        {
-                            if (!flags.Contains(ev)) flags.Add(ev);
+                            swaps.Add(ev);
                         }
                     }
-                    else if (ev.StartsWith("MEAL_") && ev != ClientEventTypes.MealLogged)
+                    else if (ev != ClientEventTypes.MealLogged)
                     {
-                        if (!flags.Contains(ev)) flags.Add(ev);
+                        if (!flags.Contains(ev))
+                        {
+                            flags.Add(ev);
+                        }
                     }
                 }
 
@@ -886,13 +892,19 @@ namespace eu.foodmission.platform
                     flags.Remove(ClientEventTypes.MealMeatConsumed);
                 }
 
-                // Selection check: require at least one flag (or nutrition event if emitted directly)
-                // Note: swaps alone cannot log a meal when mealId is omitted
-                if (flags.Count == 0 && nutritionEvents.Count == 0)
+                // Selection check: require at least one flag or swap
+                if (flags.Count == 0 && swaps.Count == 0)
                 {
                     ErrorMessage = "@UI:QUICK_MEAL_LOG_EMPTY_SELECTION";
                     ShowToastRequest?.Invoke(ErrorMessage);
                     return false;
+                }
+
+                // Backend v0.3.0 rejects meal logs without flags: add the true flag a swap implies when there is one.
+                // A swap without an implied flag is still sent alone and fails until backend accepts swaps-only logs.
+                if (flags.Count == 0)
+                {
+                    flags.AddRange(SwapImpliedFlags.For(swaps));
                 }
 
                 // 2. Submit meal log: if in Edit Mode, update the existing log via PATCH
@@ -920,13 +932,13 @@ namespace eu.foodmission.platform
                     return true;
                 }
 
-                // 2b. Creation mode: submit meal log directly with flags and swaps when meal flags are present
-                if (_mealLogService != null && flags.Count > 0)
+                // 2b. Creation mode: submit meal log with its flags and swaps
+                if (_mealLogService != null)
                 {
                     var logReq = new CreateMealLogRequest
                     {
                         typeOfMeal = SelectedMealType,
-                        flags = flags.ToArray(),
+                        flags = flags.Count > 0 ? flags.ToArray() : null,
                         swaps = swaps.Count > 0 ? swaps.ToArray() : null,
                         timestamp = DateTime.UtcNow.ToString("o")
                     };
@@ -935,31 +947,6 @@ namespace eu.foodmission.platform
                     {
                         ErrorDetail = logErr;
                         return false;
-                    }
-                }
-
-                // 3. Emit nutrition events directly (temporary workaround while backend does not accept NUTRITION_* in flags)
-                if (EmitNutritionEventsDirectly && nutritionEvents.Count > 0 && _eventService != null)
-                {
-                    foreach (var nutritionEv in nutritionEvents)
-                    {
-                        var eventReq = new CreateClientEventRequest
-                        {
-                            eventType = nutritionEv,
-                            metadata = new
-                            {
-                                mealType = SelectedMealType,
-                                source = "quick_meal_log",
-                                sessionId = _eventService.CurrentSessionId
-                            }
-                        };
-                        var (_, eventErr) = await _eventService.RecordClientEventAsync(eventReq);
-                        if (eventErr != null && flags.Count == 0)
-                        {
-                            // If this was the only action (no meal log created) and recording failed, report error
-                            ErrorDetail = eventErr;
-                            return false;
-                        }
                     }
                 }
 

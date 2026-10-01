@@ -136,15 +136,5 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("productId", step.DistinctField);
             Assert.AreEqual("GREEN_SCORE", step.FixedMetadata["comparedWith"]);
         }
-
-        [Test]
-        public void GetQuickMealQuestion_ReturnsFlagSwapsOrNull()
-        {
-            Assert.AreEqual(ClientEventTypes.MealLegumeConsumed, MissionInteractionCatalog.GetQuickMealQuestion("M.A1.3").EventType);
-            CollectionAssert.Contains(MissionInteractionCatalog.GetQuickMealQuestion("M.B1.5").SwapOptions, ClientEventTypes.SwapBeefToLegumes);
-            Assert.AreEqual(ClientEventTypes.SwapSnackToFruitNuts, MissionInteractionCatalog.GetQuickMealQuestion("M.B6.5").EventType);
-            Assert.IsNull(MissionInteractionCatalog.GetQuickMealQuestion("M.B2.1"));
-            Assert.IsNull(MissionInteractionCatalog.GetQuickMealQuestion("M.A2.1"));
-        }
     }
 }

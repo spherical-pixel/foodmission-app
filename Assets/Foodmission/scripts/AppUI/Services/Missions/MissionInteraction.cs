@@ -131,11 +131,4 @@ namespace eu.foodmission.platform
             Steps = steps ?? Array.Empty<MissionReportStep>();
         }
     }
-
-    public sealed class QuickMealMissionQuestion
-    {
-        /// <summary>Flag or swap checked by a single-choice question; null when SwapOptions is used.</summary>
-        public string EventType { get; set; }
-        public string[] SwapOptions { get; set; } = Array.Empty<string>();
-    }
 }
