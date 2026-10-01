@@ -539,6 +539,8 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            // Only the initial quiz load blocks the screen; answering keeps its own animation (IsLoading stays false).
+            TrackLoadingOverlay(() => _viewModel.IsLoading, nameof(QuizScreenViewModel.IsLoading));
         }
 
         protected override async void OnViewModelUnbinding()

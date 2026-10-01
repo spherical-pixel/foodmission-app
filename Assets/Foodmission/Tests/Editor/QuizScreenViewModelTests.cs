@@ -74,6 +74,37 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task LoadQuizDataByCodeOrId_WhileRequestPending_IsLoading()
+        {
+            // QuizScreen shows the blocking loading overlay only for this initial load.
+            var pending = new TaskCompletionSource<(Quiz, ApiErrorResponse)>();
+            _mockQuizService.Setup(s => s.GetQuizAsync("Q.B1.1", null)).Returns(pending.Task);
+
+            Task load = _vm.LoadQuizDataByCodeOrId("Q.B1.1");
+            Assert.IsTrue(_vm.IsLoading);
+
+            pending.SetResult((new Quiz { id = "quiz-1" }, null));
+            await load;
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
+        [Test]
+        public async Task SubmitResponse_WhileRequestPending_IsNotLoading()
+        {
+            // Answering must not trigger the blocking overlay (it would break the answer animation).
+            _vm.QuizData = new Quiz { id = "quiz-1", code = "Q.B1.1" };
+            var pending = new TaskCompletionSource<(QuizProgress, ApiErrorResponse)>();
+            _mockQuizService.Setup(s => s.SubmitQuizAnswerAsync("quiz-1", "Option A", null)).Returns(pending.Task);
+
+            Task submit = _vm.SubmitResponse(new QuizOption { label = "Option A" });
+            Assert.IsFalse(_vm.IsLoading);
+
+            pending.SetResult((new QuizProgress { quizId = "quiz-1", completed = true }, null));
+            await submit;
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
+        [Test]
         public async Task SubmitResponse_WhenProgressContainsReward_DispatchesWalletReward()
         {
             var quiz = new Quiz { id = "quiz-1", code = "Q.B1.1" };
