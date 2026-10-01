@@ -3666,6 +3666,322 @@ MonoBehaviour:
   - m_Id: 52041725676347399
     m_Localized: '{0} activities'
     m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 52041725676347400
+    m_Localized: How many products did you choose looking at several environmental
+      aspects?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347401
+    m_Localized: In how many products did you compare the NOVA group with another
+      score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347402
+    m_Localized: In how many products did you compare Nutri-Score, NOVA and Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347403
+    m_Localized: In how many products did you check the NOVA group?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347404
+    m_Localized: How many ingredient lists did you read?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347405
+    m_Localized: In how many products did you check the packaging information?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347406
+    m_Localized: How many products did you compare using different indicators?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347407
+    m_Localized: How many times did you choose a reusable option (bag, container,
+      bulk)?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347408
+    m_Localized: How many products with smart packaging did you find?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347409
+    m_Localized: Did you plan your meals for the next few days?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347410
+    m_Localized: Did you check your fridge and pantry before shopping?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347411
+    m_Localized: How many different plant foods did you eat this week?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347412
+    m_Localized: In how many products did you check where they come from?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347413
+    m_Localized: How many times did you choose a product with a sustainability label?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347414
+    m_Localized: In how many products did you check how they were produced?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347415
+    m_Localized: In how many products did you check the Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347416
+    m_Localized: In how many products did you look at the packaging material?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347417
+    m_Localized: How many recycling labels did you read?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347418
+    m_Localized: In how many products did you read how to store them?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347419
+    m_Localized: Did you compare foods from different NOVA processing levels?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347420
+    m_Localized: For how many products did you check whether the packaging is recyclable?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347421
+    m_Localized: Did you compare the packaging of two similar products?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347422
+    m_Localized: "Did you organise your food \u201Cfirst in, first out\u201D today?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347423
+    m_Localized: What did you check, and in how many products?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347424
+    m_Localized: What did you notice about the packaging, and in how many products?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347425
+    m_Localized: Which protein sources did you eat this week?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347426
+    m_Localized: NOVA group
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347427
+    m_Localized: Green-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347428
+    m_Localized: Production method
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347429
+    m_Localized: Compared indicators
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347430
+    m_Localized: Ingredient list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347431
+    m_Localized: Material
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347432
+    m_Localized: Recycling label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347433
+    m_Localized: Reusable option
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347434
+    m_Localized: Recyclability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347435
+    m_Localized: "\U0001FAD8 Legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347436
+    m_Localized: "\U0001F9C0 Dairy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347437
+    m_Localized: "\U0001F95A Eggs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347438
+    m_Localized: "\U0001F41F Fish"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347439
+    m_Localized: "\U0001F95C Nuts"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347440
+    m_Localized: "\U0001F33B Seeds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347441
+    m_Localized: "\U0001F331 Tofu or soy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347442
+    m_Localized: "\U0001F357 Lean meat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347443
+    m_Localized: Seasonal products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347444
+    m_Localized: Local products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347445
+    m_Localized: "Certified products (organic, fair trade\u2026)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347446
+    m_Localized: Included protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347447
+    m_Localized: Fruit and vegetables of many colours
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347448
+    m_Localized: Served myself less and saved the rest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347449
+    m_Localized: It was leftovers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347450
+    m_Localized: Used food past its best-before date
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347451
+    m_Localized: Which meals did you have on {0} that you haven't told me about yet?
+      Pick them and tell me what they had.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347452
+    m_Localized: '{0}: {1} meal(s)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347453
+    m_Localized: "Got it, thanks for telling me! \U0001F64C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347454
+    m_Localized: "You're up to date, I have nothing to ask you right now \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347455
+    m_Localized: "If you already logged it in the app, you don't need to tell me
+      again \U0001F609"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347456
+    m_Localized: This is what I'll record. All good?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347457
+    m_Localized: "{0} \u2192 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347458
+    m_Localized: "\u2705 Record it"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347459
+    m_Localized: Today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347460
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347461
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347462
+    m_Localized: Got it! Your mission is at {0}%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347463
+    m_Localized: "Got it! Mission completed \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347464
+    m_Localized: Great
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347465
+    m_Localized: "\U0001F4AC Tell Nutri"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347466
+    m_Localized: "\U0001F37D\uFE0F Log it in my meal diary"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347467
+    m_Localized: If you log it in the app, the mission advances by itself.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347468
+    m_Localized: This mission will be available soon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347469
+    m_Localized: Start this mission's quest to report your progress.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347470
+    m_Localized: "\u2705 MISSION COMPLETED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347471
+    m_Localized: "I don't see any progress in \u201C{0}\u201D yet. You can do it
+      in the app or just tell me."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347472
+    m_Localized: You have {0} days you haven't told me about yet. Shall we catch
+      up now?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347473
+    m_Localized: Not now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347474
+    m_Localized: Origin and season
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347475
+    m_Localized: Food waste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347476
+    m_Localized: Only what my missions need
+    m_Metadata:
       m_Items: []
   references:
     version: 2
@@ -3691,3 +4007,4 @@ MonoBehaviour:
         - id: 51673178689232920
         - id: 51673178689232925
         - id: 52041725676347393
+        - id: 52041725676347399

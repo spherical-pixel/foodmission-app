@@ -3710,6 +3710,321 @@ MonoBehaviour:
   - m_Id: 52041725676347399
     m_Localized: "{0} attivit\xE0"
     m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
+  - m_Id: 52041725676347400
+    m_Localized: Quanti prodotti hai scelto considerando diversi aspetti ambientali?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347401
+    m_Localized: In quanti prodotti hai confrontato il gruppo NOVA con un altro punteggio?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347402
+    m_Localized: In quanti prodotti hai confrontato Nutri-Score, NOVA e Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347403
+    m_Localized: In quanti prodotti hai controllato il gruppo NOVA?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347404
+    m_Localized: Quante liste di ingredienti hai letto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347405
+    m_Localized: In quanti prodotti hai controllato le informazioni sulla confezione?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347406
+    m_Localized: Quanti prodotti hai confrontato usando indicatori diversi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347407
+    m_Localized: Quante volte hai scelto un'opzione riutilizzabile (borsa, contenitore,
+      sfuso)?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347408
+    m_Localized: Quanti prodotti con confezione intelligente hai trovato?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347409
+    m_Localized: Hai pianificato i tuoi pasti per i prossimi giorni?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347410
+    m_Localized: Hai controllato frigo e dispensa prima di fare la spesa?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347411
+    m_Localized: Quanti alimenti vegetali diversi hai mangiato questa settimana?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347412
+    m_Localized: In quanti prodotti hai controllato da dove provengono?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347413
+    m_Localized: "Quante volte hai scelto un prodotto con un marchio di sostenibilit\xE0?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347414
+    m_Localized: In quanti prodotti hai controllato come sono stati prodotti?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347415
+    m_Localized: In quanti prodotti hai controllato il Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347416
+    m_Localized: In quanti prodotti hai guardato il materiale della confezione?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347417
+    m_Localized: Quante etichette di riciclo hai letto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347418
+    m_Localized: In quanti prodotti hai letto come conservarli?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347419
+    m_Localized: Hai confrontato alimenti di diversi livelli di trasformazione NOVA?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347420
+    m_Localized: "Per quanti prodotti hai verificato se la confezione \xE8 riciclabile?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347421
+    m_Localized: Hai confrontato la confezione di due prodotti simili?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347422
+    m_Localized: "Oggi hai organizzato il cibo secondo il principio \u201Cprimo a
+      entrare, primo a uscire\u201D?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347423
+    m_Localized: Cosa hai controllato e in quanti prodotti?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347424
+    m_Localized: Cosa hai notato della confezione e in quanti prodotti?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347425
+    m_Localized: Quali fonti di proteine hai mangiato questa settimana?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347426
+    m_Localized: Gruppo NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347427
+    m_Localized: Green-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347428
+    m_Localized: Metodo di produzione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347429
+    m_Localized: Indicatori confrontati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347430
+    m_Localized: Lista ingredienti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347431
+    m_Localized: Materiale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347432
+    m_Localized: Etichetta di riciclo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347433
+    m_Localized: Opzione riutilizzabile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347434
+    m_Localized: "Riciclabilit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347435
+    m_Localized: "\U0001FAD8 Legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347436
+    m_Localized: "\U0001F9C0 Latticini"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347437
+    m_Localized: "\U0001F95A Uova"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347438
+    m_Localized: "\U0001F41F Pesce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347439
+    m_Localized: "\U0001F95C Frutta secca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347440
+    m_Localized: "\U0001F33B Semi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347441
+    m_Localized: "\U0001F331 Tofu o soia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347442
+    m_Localized: "\U0001F357 Carne magra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347443
+    m_Localized: Prodotti di stagione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347444
+    m_Localized: Prodotti locali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347445
+    m_Localized: "Prodotti certificati (biologici, commercio equo\u2026)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347446
+    m_Localized: Con proteine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347447
+    m_Localized: Frutta e verdura di tanti colori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347448
+    m_Localized: Mi sono servito di meno e ho conservato il resto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347449
+    m_Localized: Erano avanzi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347450
+    m_Localized: Ho usato cibo oltre il termine minimo di conservazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347451
+    m_Localized: Quali pasti hai fatto il {0} di cui non mi hai ancora parlato? Sceglili
+      e dimmi cosa contenevano.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347452
+    m_Localized: '{0}: {1} pasto/i'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347453
+    m_Localized: "Fatto, grazie per avermelo detto! \U0001F64C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347454
+    m_Localized: "Sei in pari, non ho nulla da chiederti ora \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347455
+    m_Localized: "Se l'hai gi\xE0 registrato nell'app, non serve dirmelo di nuovo
+      \U0001F609"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347456
+    m_Localized: "Ecco cosa registrer\xF2. Va tutto bene?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347457
+    m_Localized: "{0} \u2192 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347458
+    m_Localized: "\u2705 Registra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347459
+    m_Localized: Oggi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347460
+    m_Localized: "S\xEC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347461
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347462
+    m_Localized: "Fatto! La tua missione \xE8 al {0}%."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347463
+    m_Localized: "Fatto! Missione completata \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347464
+    m_Localized: Ottimo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347465
+    m_Localized: "\U0001F4AC Raccontalo a Nutri"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347466
+    m_Localized: "\U0001F37D\uFE0F Registralo nel mio diario dei pasti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347467
+    m_Localized: Se lo registri nell'app, la missione avanza da sola.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347468
+    m_Localized: "Questa missione sar\xE0 presto disponibile."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347469
+    m_Localized: Inizia la quest di questa missione per registrare i tuoi progressi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347470
+    m_Localized: "\u2705 MISSIONE COMPLETATA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347471
+    m_Localized: "Non vedo ancora progressi in \u201C{0}\u201D. Puoi farlo nell'app
+      o semplicemente dirmelo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347472
+    m_Localized: Hai {0} giorni di cui non mi hai ancora parlato. Ci aggiorniamo
+      adesso?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347473
+    m_Localized: Non ora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347474
+    m_Localized: Origine e stagione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347475
+    m_Localized: Spreco alimentare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347476
+    m_Localized: "Solo ci\xF2 che serve alle mie missioni"
+    m_Metadata:
       m_Items: []
   references:
     version: 2
@@ -3735,3 +4050,4 @@ MonoBehaviour:
         - id: 51673178689232920
         - id: 51673178689232925
         - id: 52041725676347393
+        - id: 52041725676347399

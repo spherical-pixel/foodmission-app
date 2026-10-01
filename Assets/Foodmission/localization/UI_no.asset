@@ -3670,6 +3670,325 @@ MonoBehaviour:
   - m_Id: 52041725676347399
     m_Localized: '{0} aktiviteter'
     m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 52041725676347400
+    m_Localized: "Hvor mange produkter valgte du ut fra flere milj\xF8hensyn?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347401
+    m_Localized: For hvor mange produkter sammenlignet du NOVA-gruppen med en annen
+      score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347402
+    m_Localized: For hvor mange produkter sammenlignet du Nutri-Score, NOVA og Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347403
+    m_Localized: For hvor mange produkter sjekket du NOVA-gruppen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347404
+    m_Localized: Hvor mange ingredienslister leste du?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347405
+    m_Localized: For hvor mange produkter sjekket du informasjonen om emballasjen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347406
+    m_Localized: Hvor mange produkter sammenlignet du ved hjelp av ulike indikatorer?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347407
+    m_Localized: "Hvor mange ganger valgte du et gjenbrukbart alternativ (pose, beholder,
+      l\xF8svekt)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347408
+    m_Localized: Hvor mange produkter med smart emballasje fant du?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347409
+    m_Localized: "Planla du m\xE5ltidene dine for de neste dagene?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347410
+    m_Localized: "Sjekket du kj\xF8leskapet og spiskammeret f\xF8r du handlet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347411
+    m_Localized: Hvor mange forskjellige plantebaserte matvarer spiste du denne uken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347412
+    m_Localized: For hvor mange produkter sjekket du hvor de kommer fra?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347413
+    m_Localized: "Hvor mange ganger valgte du et produkt med b\xE6rekraftsmerke?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347414
+    m_Localized: For hvor mange produkter sjekket du hvordan de ble produsert?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347415
+    m_Localized: For hvor mange produkter sjekket du Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347416
+    m_Localized: "For hvor mange produkter s\xE5 du p\xE5 emballasjematerialet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347417
+    m_Localized: Hvor mange resirkuleringsmerker leste du?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347418
+    m_Localized: For hvor mange produkter leste du hvordan de skal oppbevares?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347419
+    m_Localized: "Sammenlignet du matvarer fra ulike NOVA-bearbeidingsniv\xE5er?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347420
+    m_Localized: For hvor mange produkter sjekket du om emballasjen kan resirkuleres?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347421
+    m_Localized: Sammenlignet du emballasjen til to lignende produkter?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347422
+    m_Localized: "Organiserte du maten etter \xABf\xF8rst inn, f\xF8rst ut\xBB i
+      dag?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347423
+    m_Localized: Hva sjekket du, og for hvor mange produkter?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347424
+    m_Localized: Hva la du merke til ved emballasjen, og for hvor mange produkter?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347425
+    m_Localized: Hvilke proteinkilder spiste du denne uken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347426
+    m_Localized: NOVA-gruppe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347427
+    m_Localized: Green-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347428
+    m_Localized: Produksjonsmetode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347429
+    m_Localized: Sammenlignet indikatorer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347430
+    m_Localized: Ingrediensliste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347431
+    m_Localized: Materiale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347432
+    m_Localized: Resirkuleringsmerke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347433
+    m_Localized: Gjenbrukbart alternativ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347434
+    m_Localized: Resirkulerbarhet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347435
+    m_Localized: "\U0001FAD8 Belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347436
+    m_Localized: "\U0001F9C0 Meieriprodukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347437
+    m_Localized: "\U0001F95A Egg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347438
+    m_Localized: "\U0001F41F Fisk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347439
+    m_Localized: "\U0001F95C N\xF8tter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347440
+    m_Localized: "\U0001F33B Fr\xF8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347441
+    m_Localized: "\U0001F331 Tofu eller soya"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347442
+    m_Localized: "\U0001F357 Magert kj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347443
+    m_Localized: Sesongvarer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347444
+    m_Localized: Lokale produkter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347445
+    m_Localized: "Sertifiserte produkter (\xF8kologisk, rettferdig handel\u2026)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347446
+    m_Localized: Inneholdt protein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347447
+    m_Localized: "Frukt og gr\xF8nnsaker i mange farger"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347448
+    m_Localized: "Forsynte meg med mindre og tok vare p\xE5 resten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347449
+    m_Localized: Det var rester
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347450
+    m_Localized: "Brukte mat etter best f\xF8r-datoen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347451
+    m_Localized: "Hvilke m\xE5ltider hadde du {0} som du ikke har fortalt meg om
+      enn\xE5? Velg dem og fortell meg hva de inneholdt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347452
+    m_Localized: "{0}: {1} m\xE5ltid(er)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347453
+    m_Localized: "Notert, takk for at du fortalte meg det! \U0001F64C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347454
+    m_Localized: "Du er \xE0 jour, jeg har ingenting \xE5 sp\xF8rre om akkurat n\xE5
+      \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347455
+    m_Localized: "Hvis du allerede har registrert det i appen, trenger du ikke fortelle
+      meg det igjen \U0001F609"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347456
+    m_Localized: Dette er det jeg registrerer. Ser alt riktig ut?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347457
+    m_Localized: "{0} \u2192 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347458
+    m_Localized: "\u2705 Registrer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347459
+    m_Localized: I dag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347460
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347461
+    m_Localized: Nei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347462
+    m_Localized: "Notert! Oppdraget ditt er p\xE5 {0} %."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347463
+    m_Localized: "Notert! Oppdraget er fullf\xF8rt \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347464
+    m_Localized: Flott
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347465
+    m_Localized: "\U0001F4AC Fortell det til Nutri"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347466
+    m_Localized: "\U0001F37D\uFE0F F\xF8r det inn i m\xE5ltidsdagboken min"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347467
+    m_Localized: "Hvis du registrerer det i appen, g\xE5r oppdraget fremover av seg
+      selv."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347468
+    m_Localized: Dette oppdraget blir snart tilgjengelig.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347469
+    m_Localized: "Start questen til dette oppdraget for \xE5 registrere fremgangen
+      din."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347470
+    m_Localized: "\u2705 OPPDRAG FULLF\xD8RT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347471
+    m_Localized: "Jeg ser ingen fremgang i \xAB{0}\xBB enn\xE5. Du kan gj\xF8re det
+      i appen eller bare fortelle meg det."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347472
+    m_Localized: "Du har {0} dager du ikke har fortalt meg om enn\xE5. Skal vi ta
+      det igjen n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347473
+    m_Localized: "Ikke n\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347474
+    m_Localized: Opprinnelse og sesong
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347475
+    m_Localized: Matsvinn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347476
+    m_Localized: Bare det oppdragene mine trenger
+    m_Metadata:
       m_Items: []
   references:
     version: 2
@@ -3695,3 +4014,4 @@ MonoBehaviour:
         - id: 51673178689232920
         - id: 51673178689232925
         - id: 52041725676347393
+        - id: 52041725676347399

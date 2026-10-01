@@ -3723,6 +3723,324 @@ MonoBehaviour:
   - m_Id: 52041725676347399
     m_Localized: '{0} activiteiten'
     m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 52041725676347400
+    m_Localized: Hoeveel producten koos je op basis van meerdere milieuaspecten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347401
+    m_Localized: Bij hoeveel producten vergeleek je de NOVA-groep met een andere
+      score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347402
+    m_Localized: Bij hoeveel producten vergeleek je Nutri-Score, NOVA en Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347403
+    m_Localized: Bij hoeveel producten keek je naar de NOVA-groep?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347404
+    m_Localized: "Hoeveel ingredi\xEBntenlijsten heb je gelezen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347405
+    m_Localized: Bij hoeveel producten bekeek je de verpakkingsinformatie?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347406
+    m_Localized: Hoeveel producten vergeleek je met verschillende indicatoren?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347407
+    m_Localized: Hoe vaak koos je een herbruikbare optie (tas, bakje, onverpakt)?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347408
+    m_Localized: Hoeveel producten met slimme verpakking heb je gevonden?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347409
+    m_Localized: Heb je je maaltijden voor de komende dagen gepland?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347410
+    m_Localized: Heb je je koelkast en voorraadkast gecontroleerd voor het boodschappen
+      doen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347411
+    m_Localized: Hoeveel verschillende plantaardige voedingsmiddelen at je deze week?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347412
+    m_Localized: Bij hoeveel producten keek je waar ze vandaan komen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347413
+    m_Localized: Hoe vaak koos je een product met een duurzaamheidskeurmerk?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347414
+    m_Localized: Bij hoeveel producten keek je hoe ze geproduceerd zijn?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347415
+    m_Localized: Bij hoeveel producten keek je naar de Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347416
+    m_Localized: Bij hoeveel producten keek je naar het verpakkingsmateriaal?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347417
+    m_Localized: Hoeveel recyclinglabels heb je gelezen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347418
+    m_Localized: Bij hoeveel producten las je hoe je ze moet bewaren?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347419
+    m_Localized: Heb je voedingsmiddelen van verschillende NOVA-bewerkingsniveaus
+      vergeleken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347420
+    m_Localized: Bij hoeveel producten controleerde je of de verpakking recyclebaar
+      is?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347421
+    m_Localized: Heb je de verpakking van twee vergelijkbare producten vergeleken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347422
+    m_Localized: "Heb je vandaag je eten geordend volgens \u201Ceerst erin, eerst
+      eruit\u201D?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347423
+    m_Localized: Waar heb je naar gekeken, en bij hoeveel producten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347424
+    m_Localized: Waar lette je op bij de verpakking, en bij hoeveel producten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347425
+    m_Localized: Welke eiwitbronnen at je deze week?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347426
+    m_Localized: NOVA-groep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347427
+    m_Localized: Green-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347428
+    m_Localized: Productiemethode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347429
+    m_Localized: Indicatoren vergeleken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347430
+    m_Localized: "Ingredi\xEBntenlijst"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347431
+    m_Localized: Materiaal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347432
+    m_Localized: Recyclinglabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347433
+    m_Localized: Herbruikbare optie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347434
+    m_Localized: Recyclebaarheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347435
+    m_Localized: "\U0001FAD8 Peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347436
+    m_Localized: "\U0001F9C0 Zuivel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347437
+    m_Localized: "\U0001F95A Eieren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347438
+    m_Localized: "\U0001F41F Vis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347439
+    m_Localized: "\U0001F95C Noten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347440
+    m_Localized: "\U0001F33B Zaden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347441
+    m_Localized: "\U0001F331 Tofu of soja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347442
+    m_Localized: "\U0001F357 Mager vlees"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347443
+    m_Localized: Seizoensproducten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347444
+    m_Localized: Lokale producten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347445
+    m_Localized: "Gecertificeerde producten (biologisch, fairtrade\u2026)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347446
+    m_Localized: Eiwit toegevoegd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347447
+    m_Localized: Groente en fruit in veel kleuren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347448
+    m_Localized: Minder opgeschept en de rest bewaard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347449
+    m_Localized: Het waren restjes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347450
+    m_Localized: Eten na de houdbaarheidsdatum gebruikt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347451
+    m_Localized: Welke maaltijden had je op {0} die je me nog niet hebt verteld?
+      Kies ze en vertel me wat erin zat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347452
+    m_Localized: '{0}: {1} maaltijd(en)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347453
+    m_Localized: "Genoteerd, bedankt dat je het me vertelde! \U0001F64C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347454
+    m_Localized: "Je bent helemaal bij, ik heb nu niets te vragen \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347455
+    m_Localized: "Als je het al in de app hebt gelogd, hoef je het me niet nog eens
+      te vertellen \U0001F609"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347456
+    m_Localized: Dit ga ik vastleggen. Klopt alles?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347457
+    m_Localized: "{0} \u2192 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347458
+    m_Localized: "\u2705 Vastleggen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347459
+    m_Localized: Vandaag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347460
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347461
+    m_Localized: Nee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347462
+    m_Localized: Genoteerd! Je missie staat op {0}%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347463
+    m_Localized: "Genoteerd! Missie voltooid \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347464
+    m_Localized: Top
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347465
+    m_Localized: "\U0001F4AC Vertel het Nutri"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347466
+    m_Localized: "\U0001F37D\uFE0F Noteer het in mijn maaltijddagboek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347467
+    m_Localized: Als je het in de app vastlegt, gaat de missie vanzelf vooruit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347468
+    m_Localized: Deze missie is binnenkort beschikbaar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347469
+    m_Localized: Start de quest van deze missie om je voortgang te melden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347470
+    m_Localized: "\u2705 MISSIE VOLTOOID"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347471
+    m_Localized: "Ik zie nog geen voortgang bij \u201C{0}\u201D. Je kunt het in de
+      app doen of het mij gewoon vertellen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347472
+    m_Localized: Er zijn {0} dagen waarover je me nog niets hebt verteld. Zullen
+      we het nu bijwerken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347473
+    m_Localized: Nu niet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347474
+    m_Localized: Herkomst en seizoen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347475
+    m_Localized: Voedselverspilling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347476
+    m_Localized: Alleen wat mijn missies nodig hebben
+    m_Metadata:
       m_Items: []
   references:
     version: 2
@@ -3748,3 +4066,4 @@ MonoBehaviour:
         - id: 51673178689232920
         - id: 51673178689232925
         - id: 52041725676347393
+        - id: 52041725676347399

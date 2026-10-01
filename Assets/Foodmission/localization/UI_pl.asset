@@ -3710,6 +3710,331 @@ MonoBehaviour:
   - m_Id: 52041725676347399
     m_Localized: "{0} aktywno\u015Bci"
     m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
+  - m_Id: 52041725676347400
+    m_Localized: "Ile produkt\xF3w wybra\u0142e\u015B, bior\u0105c pod uwag\u0119
+      kilka aspekt\xF3w \u015Brodowiskowych?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347401
+    m_Localized: "W ilu produktach por\xF3wna\u0142e\u015B grup\u0119 NOVA z inn\u0105
+      ocen\u0105?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347402
+    m_Localized: "W ilu produktach por\xF3wna\u0142e\u015B Nutri-Score, NOVA i Green-Score?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347403
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B grup\u0119 NOVA?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347404
+    m_Localized: "Ile list sk\u0142adnik\xF3w przeczyta\u0142e\u015B?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347405
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B informacje o opakowaniu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347406
+    m_Localized: "Ile produkt\xF3w por\xF3wna\u0142e\u015B, u\u017Cywaj\u0105c r\xF3\u017Cnych
+      wska\u017Anik\xF3w?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347407
+    m_Localized: "Ile razy wybra\u0142e\u015B opcj\u0119 wielokrotnego u\u017Cytku
+      (torba, pojemnik, na wag\u0119)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347408
+    m_Localized: "Ile produkt\xF3w z inteligentnym opakowaniem znalaz\u0142e\u015B?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347409
+    m_Localized: "Czy zaplanowa\u0142e\u015B posi\u0142ki na najbli\u017Csze dni?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347410
+    m_Localized: "Czy sprawdzi\u0142e\u015B lod\xF3wk\u0119 i spi\u017Carni\u0119
+      przed zakupami?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347411
+    m_Localized: "Ile r\xF3\u017Cnych produkt\xF3w ro\u015Blinnych zjad\u0142e\u015B
+      w tym tygodniu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347412
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, sk\u0105d pochodz\u0105?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347413
+    m_Localized: "Ile razy wybra\u0142e\u015B produkt z oznaczeniem zr\xF3wnowa\u017Conego
+      rozwoju?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347414
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, jak zosta\u0142y wyprodukowane?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347415
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B Green-Score?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347416
+    m_Localized: "W ilu produktach zwr\xF3ci\u0142e\u015B uwag\u0119 na materia\u0142
+      opakowania?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347417
+    m_Localized: "Ile oznacze\u0144 recyklingu przeczyta\u0142e\u015B?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347418
+    m_Localized: "W ilu produktach przeczyta\u0142e\u015B, jak je przechowywa\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347419
+    m_Localized: "Czy por\xF3wna\u0142e\u015B \u017Cywno\u015B\u0107 o r\xF3\u017Cnym
+      stopniu przetworzenia NOVA?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347420
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, czy opakowanie nadaje si\u0119
+      do recyklingu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347421
+    m_Localized: "Czy por\xF3wna\u0142e\u015B opakowania dw\xF3ch podobnych produkt\xF3w?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347422
+    m_Localized: "Czy dzi\u015B uporz\u0105dkowa\u0142e\u015B \u017Cywno\u015B\u0107
+      wed\u0142ug zasady \u201Epierwsze wesz\u0142o, pierwsze wysz\u0142o\u201D?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347423
+    m_Localized: "Co sprawdzi\u0142e\u015B i w ilu produktach?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347424
+    m_Localized: "Na co zwr\xF3ci\u0142e\u015B uwag\u0119 w opakowaniu i w ilu produktach?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347425
+    m_Localized: "Jakie \u017Ar\xF3d\u0142a bia\u0142ka jad\u0142e\u015B w tym tygodniu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347426
+    m_Localized: Grupa NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347427
+    m_Localized: Green-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347428
+    m_Localized: Metoda produkcji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347429
+    m_Localized: "Por\xF3wnane wska\u017Aniki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347430
+    m_Localized: "Lista sk\u0142adnik\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347431
+    m_Localized: "Materia\u0142"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347432
+    m_Localized: Oznaczenie recyklingu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347433
+    m_Localized: "Opcja wielokrotnego u\u017Cytku"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347434
+    m_Localized: "Mo\u017Cliwo\u015B\u0107 recyklingu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347435
+    m_Localized: "\U0001FAD8 Ro\u015Bliny str\u0105czkowe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347436
+    m_Localized: "\U0001F9C0 Nabia\u0142"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347437
+    m_Localized: "\U0001F95A Jajka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347438
+    m_Localized: "\U0001F41F Ryby"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347439
+    m_Localized: "\U0001F95C Orzechy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347440
+    m_Localized: "\U0001F33B Nasiona"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347441
+    m_Localized: "\U0001F331 Tofu lub soja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347442
+    m_Localized: "\U0001F357 Chude mi\u0119so"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347443
+    m_Localized: Produkty sezonowe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347444
+    m_Localized: Produkty lokalne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347445
+    m_Localized: "Produkty certyfikowane (ekologiczne, sprawiedliwy handel\u2026)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347446
+    m_Localized: "Z bia\u0142kiem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347447
+    m_Localized: Owoce i warzywa w wielu kolorach
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347448
+    m_Localized: "Na\u0142o\u017Cy\u0142em mniej i zachowa\u0142em reszt\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347449
+    m_Localized: "To by\u0142y resztki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347450
+    m_Localized: "Wykorzysta\u0142em \u017Cywno\u015B\u0107 po dacie minimalnej trwa\u0142o\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347451
+    m_Localized: "Jakie posi\u0142ki zjad\u0142e\u015B {0}, o kt\xF3rych jeszcze
+      mi nie powiedzia\u0142e\u015B? Wybierz je i powiedz, co w nich by\u0142o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347452
+    m_Localized: "{0}: {1} posi\u0142ek/posi\u0142ki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347453
+    m_Localized: "Zapisane, dzi\u0119ki, \u017Ce mi powiedzia\u0142e\u015B! \U0001F64C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347454
+    m_Localized: "Jeste\u015B na bie\u017C\u0105co, nie mam teraz o co pyta\u0107
+      \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347455
+    m_Localized: "Je\u015Bli ju\u017C zapisa\u0142e\u015B to w aplikacji, nie musisz
+      mi tego m\xF3wi\u0107 ponownie \U0001F609"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347456
+    m_Localized: "Oto, co zapisz\u0119. Wszystko si\u0119 zgadza?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347457
+    m_Localized: "{0} \u2192 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347458
+    m_Localized: "\u2705 Zapisz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347459
+    m_Localized: "Dzi\u015B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347460
+    m_Localized: Tak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347461
+    m_Localized: Nie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347462
+    m_Localized: Zapisane! Twoja misja jest na {0}%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347463
+    m_Localized: "Zapisane! Misja uko\u0144czona \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347464
+    m_Localized: Super
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347465
+    m_Localized: "\U0001F4AC Powiedz Nutri"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347466
+    m_Localized: "\U0001F37D\uFE0F Zapisz w moim dzienniku posi\u0142k\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347467
+    m_Localized: "Je\u015Bli zapiszesz to w aplikacji, misja post\u0105pi sama."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347468
+    m_Localized: "Ta misja b\u0119dzie wkr\xF3tce dost\u0119pna."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347469
+    m_Localized: "Rozpocznij questa tej misji, aby zg\u0142asza\u0107 post\u0119py."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347470
+    m_Localized: "\u2705 MISJA UKO\u0143CZONA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347471
+    m_Localized: "Nie widz\u0119 jeszcze post\u0119p\xF3w w \u201E{0}\u201D. Mo\u017Cesz
+      to zrobi\u0107 w aplikacji albo po prostu mi powiedzie\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347472
+    m_Localized: "Masz {0} dni, o kt\xF3rych jeszcze mi nie powiedzia\u0142e\u015B.
+      Nadrobimy to teraz?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347473
+    m_Localized: Nie teraz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347474
+    m_Localized: Pochodzenie i sezon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347475
+    m_Localized: "Marnowanie \u017Cywno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347476
+    m_Localized: "Tylko to, czego potrzebuj\u0105 moje misje"
+    m_Metadata:
       m_Items: []
   references:
     version: 2
@@ -3735,3 +4060,4 @@ MonoBehaviour:
         - id: 51673178689232920
         - id: 51673178689232925
         - id: 52041725676347393
+        - id: 52041725676347399

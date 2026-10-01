@@ -3666,6 +3666,322 @@ MonoBehaviour:
   - m_Id: 52041725676347399
     m_Localized: '{0} dejavnosti'
     m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 52041725676347400
+    m_Localized: "Koliko izdelkov si izbral glede na ve\u010D okoljskih vidikov?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347401
+    m_Localized: Pri koliko izdelkih si primerjal skupino NOVA z drugo oceno?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347402
+    m_Localized: Pri koliko izdelkih si primerjal Nutri-Score, NOVA in Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347403
+    m_Localized: Pri koliko izdelkih si preveril skupino NOVA?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347404
+    m_Localized: Koliko seznamov sestavin si prebral?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347405
+    m_Localized: "Pri koliko izdelkih si preveril podatke o embala\u017Ei?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347406
+    m_Localized: "Koliko izdelkov si primerjal z razli\u010Dnimi kazalniki?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347407
+    m_Localized: "Kolikokrat si izbral mo\u017Enost za ve\u010Dkratno uporabo (vre\u010Dka,
+      posoda, rinfuza)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347408
+    m_Localized: "Koliko izdelkov s pametno embala\u017Eo si na\u0161el?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347409
+    m_Localized: "Si na\u010Drtoval obroke za naslednje dni?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347410
+    m_Localized: Si pred nakupovanjem preveril hladilnik in shrambo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347411
+    m_Localized: "Koliko razli\u010Dnih rastlinskih \u017Eivil si pojedel ta teden?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347412
+    m_Localized: Pri koliko izdelkih si preveril, od kod prihajajo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347413
+    m_Localized: Kolikokrat si izbral izdelek z oznako trajnosti?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347414
+    m_Localized: Pri koliko izdelkih si preveril, kako so bili pridelani?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347415
+    m_Localized: Pri koliko izdelkih si preveril Green-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347416
+    m_Localized: "Pri koliko izdelkih si bil pozoren na material embala\u017Ee?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347417
+    m_Localized: Koliko oznak za recikliranje si prebral?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347418
+    m_Localized: Pri koliko izdelkih si prebral, kako jih shranjevati?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347419
+    m_Localized: "Si primerjal \u017Eivila razli\u010Dnih stopenj predelave NOVA?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347420
+    m_Localized: "Pri koliko izdelkih si preveril, ali je embala\u017Ea primerna
+      za recikliranje?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347421
+    m_Localized: "Si primerjal embala\u017Eo dveh podobnih izdelkov?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347422
+    m_Localized: "Si danes hrano uredil po na\u010Delu \xBBprvo noter, prvo ven\xAB?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347423
+    m_Localized: Kaj si preveril in pri koliko izdelkih?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347424
+    m_Localized: "Na kaj si bil pozoren pri embala\u017Ei in pri koliko izdelkih?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347425
+    m_Localized: Katere vire beljakovin si jedel ta teden?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347426
+    m_Localized: Skupina NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347427
+    m_Localized: Green-Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347428
+    m_Localized: "Na\u010Din pridelave"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347429
+    m_Localized: Primerjal kazalnike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347430
+    m_Localized: Seznam sestavin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347431
+    m_Localized: Material
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347432
+    m_Localized: Oznaka za recikliranje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347433
+    m_Localized: "Mo\u017Enost za ve\u010Dkratno uporabo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347434
+    m_Localized: "Mo\u017Enost recikliranja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347435
+    m_Localized: "\U0001FAD8 Stro\u010Dnice"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347436
+    m_Localized: "\U0001F9C0 Mle\u010Dni izdelki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347437
+    m_Localized: "\U0001F95A Jajca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347438
+    m_Localized: "\U0001F41F Ribe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347439
+    m_Localized: "\U0001F95C Ore\u0161\u010Dki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347440
+    m_Localized: "\U0001F33B Semena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347441
+    m_Localized: "\U0001F331 Tofu ali soja"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347442
+    m_Localized: "\U0001F357 Pusto meso"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347443
+    m_Localized: Sezonski izdelki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347444
+    m_Localized: Lokalni izdelki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347445
+    m_Localized: "Certificirani izdelki (ekolo\u0161ki, pravi\u010Dna trgovina\u2026)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347446
+    m_Localized: Z beljakovinami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347447
+    m_Localized: Sadje in zelenjava v mnogih barvah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347448
+    m_Localized: Postregel sem si manj in shranil ostanek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347449
+    m_Localized: Bili so ostanki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347450
+    m_Localized: "Uporabil sem \u017Eivilo po datumu minimalne trajnosti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347451
+    m_Localized: "Katere obroke si imel {0}, o katerih mi \u0161e nisi povedal? Izberi
+      jih in mi povej, kaj so vsebovali."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347452
+    m_Localized: '{0}: {1} obrok(i)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347453
+    m_Localized: "Zabele\u017Eeno, hvala, da si mi povedal! \U0001F64C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347454
+    m_Localized: "Na teko\u010Dem si, trenutno te nimam ni\u010Desar vpra\u0161ati
+      \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347455
+    m_Localized: "\u010Ce si to \u017Ee zabele\u017Eil v aplikaciji, mi ni treba
+      znova povedati \U0001F609"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347456
+    m_Localized: "To bom zabele\u017Eil. Je vse v redu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347457
+    m_Localized: "{0} \u2192 {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347458
+    m_Localized: "\u2705 Zabele\u017Ei"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347459
+    m_Localized: Danes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347460
+    m_Localized: Da
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347461
+    m_Localized: Ne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347462
+    m_Localized: "Zabele\u017Eeno! Tvoja misija je na {0} %."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347463
+    m_Localized: "Zabele\u017Eeno! Misija opravljena \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347464
+    m_Localized: "Odli\u010Dno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347465
+    m_Localized: "\U0001F4AC Povej Nutriju"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347466
+    m_Localized: "\U0001F37D\uFE0F Zabele\u017Ei v moj dnevnik obrokov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347467
+    m_Localized: "\u010Ce to zabele\u017Ei\u0161 v aplikaciji, misija napreduje sama."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347468
+    m_Localized: Ta misija bo kmalu na voljo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347469
+    m_Localized: "Za\u010Dni quest te misije, da bo\u0161 lahko bele\u017Eil napredek."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347470
+    m_Localized: "\u2705 MISIJA OPRAVLJENA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347471
+    m_Localized: "Pri \xBB{0}\xAB \u0161e ne vidim napredka. Lahko to naredi\u0161
+      v aplikaciji ali mi preprosto pove\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347472
+    m_Localized: "Ima\u0161 {0} dni, o katerih mi \u0161e nisi povedal. Bova to nadoknadila
+      zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347473
+    m_Localized: Ne zdaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347474
+    m_Localized: Izvor in sezona
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347475
+    m_Localized: "Zavr\u017Eena hrana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347476
+    m_Localized: Samo to, kar potrebujejo moje misije
+    m_Metadata:
       m_Items: []
   references:
     version: 2
@@ -3691,3 +4007,4 @@ MonoBehaviour:
         - id: 51673178689232920
         - id: 51673178689232925
         - id: 52041725676347393
+        - id: 52041725676347399

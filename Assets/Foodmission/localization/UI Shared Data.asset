@@ -3559,6 +3559,314 @@ MonoBehaviour:
     m_Key: QUEST_ACTIVITIES_COUNT
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347400
+    m_Key: MISSION_Q_SHOPPING_MULTICRITERIA_PURCHASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347401
+    m_Key: MISSION_Q_PROCESSING_NOVA_SCORE_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347402
+    m_Key: MISSION_Q_PROCESSING_ALL_SCORES_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347403
+    m_Key: MISSION_Q_PROCESSING_NOVA_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347404
+    m_Key: MISSION_Q_PROCESSING_INGREDIENTS_REVIEWED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347405
+    m_Key: MISSION_Q_SHOPPING_PACKAGING_INFO_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347406
+    m_Key: MISSION_Q_PROCESSING_INDICATORS_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347407
+    m_Key: MISSION_Q_PACKAGING_REUSABLE_SPOT_CHOSEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347408
+    m_Key: MISSION_Q_PACKAGING_SMART_OBSERVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347409
+    m_Key: MISSION_Q_FOOD_WASTE_MEAL_PLANNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347410
+    m_Key: MISSION_Q_FOOD_WASTE_FRIDGE_PANTRY_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347411
+    m_Key: MISSION_Q_NUTRITION_PLANT_DIVERSITY_COUNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347412
+    m_Key: MISSION_Q_SHOPPING_ORIGIN_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347413
+    m_Key: MISSION_Q_SHOPPING_CERTIFICATION_CHOSEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347414
+    m_Key: MISSION_Q_PROCESSING_PRODUCTION_METHOD_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347415
+    m_Key: MISSION_Q_PROCESSING_GREENSCORE_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347416
+    m_Key: MISSION_Q_PACKAGING_MATERIAL_OBSERVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347417
+    m_Key: MISSION_Q_PACKAGING_RECYCLING_LABEL_READ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347418
+    m_Key: MISSION_Q_FOOD_WASTE_STORAGE_INSTRUCTIONS_READ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347419
+    m_Key: MISSION_Q_PROCESSING_NOVA_CATEGORY_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347420
+    m_Key: MISSION_Q_PACKAGING_RECYCLABILITY_EVALUATED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347421
+    m_Key: MISSION_Q_PACKAGING_COMPARISON_MADE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347422
+    m_Key: MISSION_QD_FOOD_WASTE_FIFO_ORGANIZED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347423
+    m_Key: MISSION_Q_PRODUCT_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347424
+    m_Key: MISSION_Q_PACKAGING_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347425
+    m_Key: MISSION_Q_PROTEIN_SOURCES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347426
+    m_Key: MISSION_OPT_PROCESSING_NOVA_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347427
+    m_Key: MISSION_OPT_PROCESSING_GREENSCORE_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347428
+    m_Key: MISSION_OPT_PROCESSING_PRODUCTION_METHOD_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347429
+    m_Key: MISSION_OPT_PROCESSING_INDICATORS_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347430
+    m_Key: MISSION_OPT_PROCESSING_INGREDIENTS_REVIEWED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347431
+    m_Key: MISSION_OPT_PACKAGING_MATERIAL_OBSERVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347432
+    m_Key: MISSION_OPT_PACKAGING_RECYCLING_LABEL_READ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347433
+    m_Key: MISSION_OPT_PACKAGING_REUSABLE_SPOT_CHOSEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347434
+    m_Key: MISSION_OPT_PACKAGING_RECYCLABILITY_EVALUATED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347435
+    m_Key: MISSION_OPT_PROTEIN_LEGUMES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347436
+    m_Key: MISSION_OPT_PROTEIN_DAIRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347437
+    m_Key: MISSION_OPT_PROTEIN_EGGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347438
+    m_Key: MISSION_OPT_PROTEIN_FISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347439
+    m_Key: MISSION_OPT_PROTEIN_NUTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347440
+    m_Key: MISSION_OPT_PROTEIN_SEEDS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347441
+    m_Key: MISSION_OPT_PROTEIN_TOFU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347442
+    m_Key: MISSION_OPT_PROTEIN_LEAN_MEAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347443
+    m_Key: EVENTS_SEASONAL_PRODUCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347444
+    m_Key: EVENTS_LOCAL_PRODUCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347445
+    m_Key: EVENTS_CERTIFIED_PRODUCT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347446
+    m_Key: EVENTS_PROTEIN_INCLUDED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347447
+    m_Key: EVENTS_RAINBOW_COLOURS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347448
+    m_Key: EVENTS_HALF_PLATE_SAVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347449
+    m_Key: EVENTS_FULL_PLATE_SAVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347450
+    m_Key: EVENTS_EXPIRED_CONSUMED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347451
+    m_Key: MISSION_CHECKIN_Q_MEALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347452
+    m_Key: MISSION_CHECKIN_SUMMARY_MEALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347453
+    m_Key: MISSION_CHECKIN_RESULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347454
+    m_Key: MISSION_CHECKIN_UP_TO_DATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347455
+    m_Key: MISSION_REPORT_INTRO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347456
+    m_Key: MISSION_REPORT_SUMMARY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347457
+    m_Key: MISSION_REPORT_SUMMARY_LINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347458
+    m_Key: MISSION_REPORT_SEND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347459
+    m_Key: MISSION_REPORT_DAY_TODAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347460
+    m_Key: MISSION_REPORT_YES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347461
+    m_Key: MISSION_REPORT_NO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347462
+    m_Key: MISSION_REPORT_RESULT_PROGRESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347463
+    m_Key: MISSION_REPORT_RESULT_COMPLETED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347464
+    m_Key: MISSION_REPORT_CLOSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347465
+    m_Key: MISSION_BTN_TELL_NUTRI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347466
+    m_Key: MISSION_BTN_QUICK_MEAL_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347467
+    m_Key: MISSION_HINT_AUTO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347468
+    m_Key: MISSION_NOT_AVAILABLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347469
+    m_Key: MISSION_NOT_CURRENT_QUEST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347470
+    m_Key: MISSION_COMPLETED_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347471
+    m_Key: MISSION_NUDGE_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347472
+    m_Key: MISSION_NUDGE_MISSING_DAYS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347473
+    m_Key: MISSION_NUDGE_NOT_NOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347474
+    m_Key: EVENTS_SECTIONS_ORIGIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347475
+    m_Key: EVENTS_SECTIONS_WASTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347476
+    m_Key: EVENTS_ONLY_MY_MISSIONS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -867,6 +867,39 @@ MonoBehaviour:
         m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 1
+--- !u!114 &-1483995792726768817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: MissionCheckIn
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1302, y: 1922}
+  m_Guid: a6c61d0bacde4fbfbde141ffa3fbd707
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: MissionCheckIn
+  m_TemplateSettings:
+    rid: 4448174737455317399
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4448174737455317399
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.MissionCheckInScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 0
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &-1477136575185016345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,6 +1287,8 @@ MonoBehaviour:
   - {fileID: 4291847192847192016}
   - {fileID: 4291847192847192098}
   - {fileID: 4291847192847192099}
+  - {fileID: -1483995792726768817}
+  - {fileID: 535277622299341194}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,6 +1358,33 @@ MonoBehaviour:
   m_Position: {x: 3074, y: 621}
   m_Guid: 5458b228-3c59-45b9-b85a-92e8a8d02b1f
   m_Destination: {fileID: -1271847245592751178}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &535277622299341194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: open_mission_checkin
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 867, y: 1922}
+  m_Guid: 388b5a13-9d07-4a2a-ad6f-94c5e57f63e3
+  m_Destination: {fileID: -1483995792726768817}
   m_Options:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}
@@ -2731,6 +2793,7 @@ MonoBehaviour:
   - {fileID: 4291847192847192098}
   - {fileID: -183864760696684321}
   - {fileID: -2824669300076319144}
+  - {fileID: 535277622299341194}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955
