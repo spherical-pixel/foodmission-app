@@ -44,6 +44,21 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async System.Threading.Tasks.Task LoadCatalogOptionsAsync_WhileRequestsPending_IsLoading()
+        {
+            var pending = new System.Threading.Tasks.TaskCompletionSource<(CatalogItem[] Result, ApiErrorResponse Error)>();
+            _catalogServiceMock.Setup(c => c.GetWeeklyMeatRangesAsync(It.IsAny<string>())).Returns(pending.Task);
+
+            Assert.IsFalse(_vm.IsLoading);
+            var load = _vm.LoadCatalogOptionsAsync();
+            Assert.IsTrue(_vm.IsLoading);
+
+            pending.SetResult((new CatalogItem[0], null));
+            await load;
+            Assert.IsFalse(_vm.IsLoading);
+        }
+
+        [Test]
         public void Initialize_SetsStepCountAndInitialState()
         {
             Assert.AreEqual(6, _vm.StepCount);

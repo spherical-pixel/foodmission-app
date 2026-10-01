@@ -16,6 +16,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool m_IsSubmitting;
 
+        [ObservableProperty]
+        private bool _isLoading;
+
 
 
         public string[] MeatMealsOptions { get; private set; } = System.Array.Empty<string>();
@@ -72,6 +75,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            IsLoading = true;
             try
             {
                 string lang = _storeService.GetAppState().lang ?? "en";
@@ -126,6 +130,10 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogWarning($"[OnboardingSurveyViewModel] LoadCatalogOptionsAsync exception: {ex.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 

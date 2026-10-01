@@ -31,6 +31,7 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            TrackLoadingOverlay(() => _viewModel.IsLoading || _viewModel.IsSubmitting, nameof(OnboardingSurveyViewModel.IsLoading), nameof(OnboardingSurveyViewModel.IsSubmitting));
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged += OnViewModelPropertyChangedInternal;
