@@ -606,6 +606,9 @@ namespace eu.foodmission.platform
             App.current?.services?.GetService<IChallengeSessionService>()?.Cancel();
             App.current?.services?.GetService<IChallengeCompletionService>()?.Reset();
 
+            // Nudge state is per user
+            App.current?.services?.GetService<IMissionNudgeService>()?.Reset();
+
             HomeScreen.ResetSessionDeferredFlags();
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log($"[{GetType().Name}] User logged out and session state fully cleaned");
