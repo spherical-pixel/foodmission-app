@@ -185,9 +185,9 @@ namespace eu.foodmission.platform
         {
             bool isJoining = _viewModel.IsJoining;
             if (isJoining)
-                FMLoadingOverlay.Show();
+                ShowLoadingOverlay();
             else
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
 
             if (_btnJoin != null) _btnJoin.SetEnabled(!isJoining);
             if (_inviteCodeField != null) _inviteCodeField.SetEnabled(!isJoining);

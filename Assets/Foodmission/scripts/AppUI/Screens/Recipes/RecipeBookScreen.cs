@@ -598,9 +598,9 @@ namespace eu.foodmission.platform
         private void UpdateLoadingState()
         {
             if (_viewModel.IsLoading)
-                FMLoadingOverlay.Show();
+                ShowLoadingOverlay();
             else
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
         }
 
         private void UpdateErrorState()

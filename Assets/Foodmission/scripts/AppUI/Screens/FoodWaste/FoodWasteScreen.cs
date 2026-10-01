@@ -320,11 +320,11 @@ namespace eu.foodmission.platform
         {
             if (_viewModel.IsLoading)
             {
-                FMLoadingOverlay.Show();
+                ShowLoadingOverlay();
             }
             else
             {
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
             }
         }
 

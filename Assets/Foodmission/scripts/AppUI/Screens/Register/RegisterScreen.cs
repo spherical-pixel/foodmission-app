@@ -250,6 +250,7 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            TrackLoadingOverlay(() => _viewModel.IsLoadingLegalDocs || _viewModel.IsLoadingConsent || _viewModel.IsSubmitting, nameof(RegisterViewModel.IsLoadingLegalDocs), nameof(RegisterViewModel.IsLoadingConsent), nameof(RegisterViewModel.IsSubmitting));
             if (_viewModel == null) return;
 
             _viewModel.PropertyChanged += OnPropertyChanged;

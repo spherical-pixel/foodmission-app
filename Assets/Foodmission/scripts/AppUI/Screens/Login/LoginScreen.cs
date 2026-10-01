@@ -120,7 +120,7 @@ namespace eu.foodmission.platform
                 _viewModel.ShowErrorRequest -= OnShowErrorRequested;
             }
 
-            FMLoadingOverlay.Hide();
+            HideLoadingOverlay();
 
             UnregisterManualEvents();
 
@@ -145,11 +145,11 @@ namespace eu.foodmission.platform
         {
             if (isLoading)
             {
-                FMLoadingOverlay.Show();
+                ShowLoadingOverlay();
             }
             else
             {
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
             }
         }
 

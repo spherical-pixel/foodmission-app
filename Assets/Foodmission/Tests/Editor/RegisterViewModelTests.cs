@@ -362,6 +362,37 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task Register_WhileAwaitingAuthService_IsSubmitting()
+        {
+            var pending = new TaskCompletionSource<(bool success, string userId, string error)>();
+            _mockAuthService
+                .Setup(x => x.RegisterAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(pending.Task);
+
+            _vm.Username = "testuser";
+            _vm.Email = "test@example.com";
+            _vm.Password = "password123";
+            _vm.SelectedYearOfBirthIndex = _vm.YearOfBirthOptions.IndexOf("2000");
+            _vm.SelectedCountryIndex = 0;
+            _vm.SelectedRegionIndex = 0;
+            _vm.PostalCode = "12345";
+            _vm.HasAcceptedTerms = CheckboxState.Checked;
+            _vm.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+            _vm.HasAcceptedPilotConsent = CheckboxState.Checked;
+
+            Assert.IsFalse(_vm.IsSubmitting);
+
+            _vm.Register();
+            Assert.IsTrue(_vm.IsSubmitting);
+
+            pending.SetResult((false, null, "error"));
+            await Task.Delay(100);
+            Assert.IsFalse(_vm.IsSubmitting);
+        }
+
+        [Test]
         public async Task LoadLegalDocumentsAsync_PopulatesTermsAndPrivacy()
         {
             var mockLegalService = new Mock<ILegalService>();

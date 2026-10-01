@@ -99,6 +99,7 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            TrackLoadingOverlay(() => _viewModel.IsLoading, nameof(FoodFactsViewModel.IsLoading));
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
@@ -257,6 +258,10 @@ namespace eu.foodmission.platform
         /// <param name="args"></param>
         public override void OnExit(NavController controller, NavDestination destination, Argument[] args)
         {
+            // Leaving mid-load: the view model's final IsLoading=false will no longer reach this screen.
+            UntrackLoadingOverlay();
+            HideLoadingOverlay();
+
             TryDeactivateAccessibility();
             UnsubscribeFromScreenReaderStatus();
 
@@ -295,6 +300,76 @@ namespace eu.foodmission.platform
         /// Virtual methos for additional logic before unbinding the ViewModel.
         /// </summary>
         protected virtual void OnViewModelUnbinding() { }
+
+        // --------------------------------------------------------------------
+        // Loading overlay
+        // --------------------------------------------------------------------
+
+        /// <summary>Shows the global loading overlay on behalf of this screen.</summary>
+        protected void ShowLoadingOverlay(string message = null)
+        {
+            Components.FMLoadingOverlay.Show(message, this, this);
+        }
+
+        /// <summary>Hides the loading overlay only if this screen opened it.</summary>
+        protected void HideLoadingOverlay()
+        {
+            Components.FMLoadingOverlay.HideFor(this);
+        }
+
+        private INotifyPropertyChanged _loadingSource;
+        private Func<bool> _isBusy;
+        private string[] _busyProperties;
+
+        /// <summary>
+        /// Shows the loading overlay while <paramref name="isBusy"/> is true, re-evaluated whenever one of
+        /// <paramref name="busyProperties"/> changes on the view model. Call from <c>OnViewModelBound</c>;
+        /// the subscription is removed automatically on exit.
+        /// </summary>
+        protected void TrackLoadingOverlay(Func<bool> isBusy, params string[] busyProperties)
+        {
+            UntrackLoadingOverlay();
+
+            _loadingSource = _viewModel as INotifyPropertyChanged;
+            _isBusy = isBusy;
+            _busyProperties = busyProperties ?? Array.Empty<string>();
+            if (_loadingSource != null)
+            {
+                _loadingSource.PropertyChanged += OnBusyPropertyChanged;
+            }
+            ApplyLoadingOverlay();
+        }
+
+        private void UntrackLoadingOverlay()
+        {
+            if (_loadingSource != null)
+            {
+                _loadingSource.PropertyChanged -= OnBusyPropertyChanged;
+            }
+            _loadingSource = null;
+            _isBusy = null;
+            _busyProperties = null;
+        }
+
+        private void OnBusyPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (_busyProperties != null && Array.IndexOf(_busyProperties, e.PropertyName) >= 0)
+            {
+                ApplyLoadingOverlay();
+            }
+        }
+
+        private void ApplyLoadingOverlay()
+        {
+            if (_isBusy != null && _isBusy())
+            {
+                ShowLoadingOverlay();
+            }
+            else
+            {
+                HideLoadingOverlay();
+            }
+        }
 
         // --------------------------------------------------------------------
         // Navigation Handling

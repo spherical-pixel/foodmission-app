@@ -249,7 +249,7 @@ namespace eu.foodmission.platform
             _categoryDropdown?.UnregisterValueChangedCallback(OnCategoryDropdownChanged);
             _cuisineDropdown?.UnregisterValueChangedCallback(OnCuisineDropdownChanged);
 
-            FMLoadingOverlay.Hide();
+            HideLoadingOverlay();
             base.OnViewModelUnbinding();
         }
 
@@ -268,9 +268,9 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.IsSaving):
                     UpdateNavigationControls();
                     if (_viewModel.IsSaving)
-                        FMLoadingOverlay.Show(L("RECIPES_SAVING", "Guardando receta..."));
+                        ShowLoadingOverlay(L("RECIPES_SAVING", "Guardando receta..."));
                     else
-                        FMLoadingOverlay.Hide();
+                        HideLoadingOverlay();
                     break;
                 case nameof(_viewModel.Ingredients):
                     RebuildIngredients();

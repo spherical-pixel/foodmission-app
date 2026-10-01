@@ -39,6 +39,9 @@ namespace eu.foodmission.platform
         private bool _isLoadingLegalDocs = false;
 
         [ObservableProperty]
+        private bool _isSubmitting;
+
+        [ObservableProperty]
         private string _username = "";
 
         [ObservableProperty]
@@ -366,76 +369,84 @@ namespace eu.foodmission.platform
 
             if (fieldsOk)
             {
-                // Get country and region ISO codes
-                string countryIso = GetSelectedCountryIso();
-                string regionIso = GetSelectedRegionIso();
-
-                // Call RegisterAsync with optional fields
-                var result = await _authService.RegisterAsync(
-                    Username,
-                    Email,
-                    Password,
-                    SelectedYearOfBirthIndex >= 0 ? int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : 0,
-                    country: !string.IsNullOrEmpty(countryIso) ? countryIso : null,
-                    region: !string.IsNullOrEmpty(regionIso) ? regionIso : null,
-                    zip: !string.IsNullOrEmpty(PostalCode) ? PostalCode : null
-                );
-
-                if (result.success)
+                IsSubmitting = true;
+                try
                 {
-                    // Registration and auto-login successful - navigation handled by auth state change
-                    Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
+                    // Get country and region ISO codes
+                    string countryIso = GetSelectedCountryIso();
+                    string regionIso = GetSelectedRegionIso();
 
-                    // Record acceptance of required legal documents on the backend
-                    if (_legalService != null)
+                    // Call RegisterAsync with optional fields
+                    var result = await _authService.RegisterAsync(
+                        Username,
+                        Email,
+                        Password,
+                        SelectedYearOfBirthIndex >= 0 ? int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : 0,
+                        country: !string.IsNullOrEmpty(countryIso) ? countryIso : null,
+                        region: !string.IsNullOrEmpty(regionIso) ? regionIso : null,
+                        zip: !string.IsNullOrEmpty(PostalCode) ? PostalCode : null
+                    );
+
+                    if (result.success)
                     {
-                        string locale = _storeService.GetAppState().lang ?? "en";
+                        // Registration and auto-login successful - navigation handled by auth state change
+                        Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
 
-                        if (string.IsNullOrEmpty(TermsDocumentKey) || string.IsNullOrEmpty(PrivacyDocumentKey))
+                        // Record acceptance of required legal documents on the backend
+                        if (_legalService != null)
                         {
-                            var (docs, _) = await _legalService.GetRequiredDocumentsAsync(locale);
-                            if (docs != null)
+                            string locale = _storeService.GetAppState().lang ?? "en";
+
+                            if (string.IsNullOrEmpty(TermsDocumentKey) || string.IsNullOrEmpty(PrivacyDocumentKey))
                             {
-                                foreach (var doc in docs)
+                                var (docs, _) = await _legalService.GetRequiredDocumentsAsync(locale);
+                                if (docs != null)
                                 {
-                                    if (!string.IsNullOrEmpty(doc.key))
+                                    foreach (var doc in docs)
                                     {
-                                        await _legalService.AcceptConsentAsync(doc.key);
+                                        if (!string.IsNullOrEmpty(doc.key))
+                                        {
+                                            await _legalService.AcceptConsentAsync(doc.key);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
-                            if (!string.IsNullOrEmpty(TermsDocumentKey))
+                            else
                             {
-                                await _legalService.AcceptConsentAsync(TermsDocumentKey);
-                            }
-                            if (!string.IsNullOrEmpty(PrivacyDocumentKey))
-                            {
-                                await _legalService.AcceptConsentAsync(PrivacyDocumentKey);
+                                if (!string.IsNullOrEmpty(TermsDocumentKey))
+                                {
+                                    await _legalService.AcceptConsentAsync(TermsDocumentKey);
+                                }
+                                if (!string.IsNullOrEmpty(PrivacyDocumentKey))
+                                {
+                                    await _legalService.AcceptConsentAsync(PrivacyDocumentKey);
+                                }
                             }
                         }
-                    }
 
-                    // Record acceptance of pilot consent if applicable
-                    if (IsPilotCountry && HasAcceptedPilotConsent == CheckboxState.Checked)
+                        // Record acceptance of pilot consent if applicable
+                        if (IsPilotCountry && HasAcceptedPilotConsent == CheckboxState.Checked)
+                        {
+                            var pilotService = _pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
+                            if (pilotService != null)
+                            {
+                                await pilotService.AcceptPilotConsentAsync();
+                            }
+                        }
+
+                        string lang = _storeService.GetAppState().lang ?? "en";
+                        _ = UnitCatalog.Current.LoadAsync(lang);
+
+                        RaiseNavigationRequested(Actions.register_to_onboarding);
+                    }
+                    else
                     {
-                        var pilotService = _pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
-                        if (pilotService != null)
-                        {
-                            await pilotService.AcceptPilotConsentAsync();
-                        }
+                        ShowErrorRequest?.Invoke(result.error);
                     }
-
-                    string lang = _storeService.GetAppState().lang ?? "en";
-                    _ = UnitCatalog.Current.LoadAsync(lang);
-
-                    RaiseNavigationRequested(Actions.register_to_onboarding);
                 }
-                else
+                finally
                 {
-                    ShowErrorRequest?.Invoke(result.error);
+                    IsSubmitting = false;
                 }
             }
             else

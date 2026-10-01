@@ -122,5 +122,55 @@ namespace eu.foodmission.platform.Tests
             // If AssetDatabase loaded editor sprites, anim will be present. Otherwise fallback spinner is present.
             Assert.IsTrue(anim != null || spinner != null);
         }
+
+        [Test]
+        public void HideFor_Owner_HidesOverlay()
+        {
+            var owner = new object();
+            FMLoadingOverlay.Show("Loading", _rootContainer, owner);
+
+            FMLoadingOverlay.HideFor(owner);
+
+            Assert.IsNull(FMLoadingOverlay.CurrentOverlay);
+            Assert.AreEqual(0, _rootContainer.childCount);
+        }
+
+        [Test]
+        public void HideFor_OtherOwner_KeepsOverlay()
+        {
+            var previousScreen = new object();
+            var nextScreen = new object();
+            FMLoadingOverlay.Show("Loading", _rootContainer, nextScreen);
+
+            // The screen being left must not hide the overlay opened by the next screen.
+            FMLoadingOverlay.HideFor(previousScreen);
+
+            Assert.IsNotNull(FMLoadingOverlay.CurrentOverlay);
+        }
+
+        [Test]
+        public void HideFor_WhenShownWithoutOwner_KeepsOverlay()
+        {
+            FMLoadingOverlay.Show("Loading", _rootContainer);
+
+            FMLoadingOverlay.HideFor(new object());
+
+            Assert.IsNotNull(FMLoadingOverlay.CurrentOverlay);
+        }
+
+        [Test]
+        public void Show_WhenAlreadyShowing_TransfersOwnership()
+        {
+            var first = new object();
+            var second = new object();
+            FMLoadingOverlay.Show("First", _rootContainer, first);
+            FMLoadingOverlay.Show("Second", _rootContainer, second);
+
+            FMLoadingOverlay.HideFor(first);
+            Assert.IsNotNull(FMLoadingOverlay.CurrentOverlay);
+
+            FMLoadingOverlay.HideFor(second);
+            Assert.IsNull(FMLoadingOverlay.CurrentOverlay);
+        }
     }
 }

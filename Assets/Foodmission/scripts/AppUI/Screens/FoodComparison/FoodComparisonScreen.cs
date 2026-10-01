@@ -113,7 +113,7 @@ namespace eu.foodmission.platform
             UpdateVisualState();
             if (_viewModel != null && _viewModel.IsLoading)
             {
-                FMLoadingOverlay.Show(_viewModel.LoadingText);
+                ShowLoadingOverlay(_viewModel.LoadingText);
             }
         }
 
@@ -126,7 +126,7 @@ namespace eu.foodmission.platform
                 // Leaving mid-load must not leave the global overlay blocking the next screen
                 if (_viewModel.IsLoading)
                 {
-                    FMLoadingOverlay.Hide();
+                    HideLoadingOverlay();
                 }
             }
             base.OnViewModelUnbinding();
@@ -210,11 +210,11 @@ namespace eu.foodmission.platform
         {
             if (_viewModel != null && _viewModel.IsLoading)
             {
-                FMLoadingOverlay.Show(_viewModel.LoadingText);
+                ShowLoadingOverlay(_viewModel.LoadingText);
             }
             else
             {
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
             }
         }
 

@@ -155,9 +155,9 @@ namespace eu.foodmission.platform
                     bool saving = _viewModel.IsSaving;
                     _btnSave.SetEnabled(!saving);
                     if (saving)
-                        FMLoadingOverlay.Show();
+                        ShowLoadingOverlay();
                     else
-                        FMLoadingOverlay.Hide();
+                        HideLoadingOverlay();
                     break;
                 case nameof(_viewModel.ErrorMessage):
                     UpdateErrorState();
@@ -297,9 +297,9 @@ namespace eu.foodmission.platform
         {
             bool isLoading = _viewModel.IsLoading;
             if (isLoading)
-                FMLoadingOverlay.Show();
+                ShowLoadingOverlay();
             else
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
             _btnSave?.SetEnabled(!isLoading);
             _btnDelete?.SetEnabled(!isLoading);
         }

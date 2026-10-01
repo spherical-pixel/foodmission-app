@@ -451,6 +451,7 @@ namespace eu.foodmission.platform
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            TrackLoadingOverlay(() => _viewModel.IsLoading || _viewModel.IsSubmitting, nameof(OnboardingProfileViewModel.IsLoading), nameof(OnboardingProfileViewModel.IsSubmitting));
             if (_viewModel != null)
             {
                 _viewModel.ShowErrorRequest += OnShowErrorRequested;

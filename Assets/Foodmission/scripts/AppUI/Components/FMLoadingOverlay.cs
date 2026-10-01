@@ -13,6 +13,7 @@ namespace eu.foodmission.platform.Components
     {
         private static VisualElement s_CurrentOverlay;
         private static Heading s_CurrentHeading;
+        private static object s_Owner;
         private static Sprite[] s_CachedSprites;
 
         /// <summary>
@@ -53,8 +54,11 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        public static void Show(string message = null, VisualElement anchor = null)
+        /// <param name="owner">Who opened the overlay (usually a screen). Only that owner can close it with <see cref="HideFor"/>.</param>
+        public static void Show(string message = null, VisualElement anchor = null, object owner = null)
         {
+            s_Owner = owner;
+
             if (s_CurrentOverlay != null && s_CurrentOverlay.parent != null)
             {
                 if (!string.IsNullOrEmpty(message) && s_CurrentHeading != null)
@@ -153,8 +157,21 @@ namespace eu.foodmission.platform.Components
             NotifyLayoutChanged();
         }
 
+        /// <summary>
+        /// Hides the overlay only if <paramref name="owner"/> opened it, so a screen being left does not close
+        /// the overlay the next screen has just shown.
+        /// </summary>
+        public static void HideFor(object owner)
+        {
+            if (owner != null && ReferenceEquals(s_Owner, owner))
+            {
+                Hide();
+            }
+        }
+
         public static void Hide()
         {
+            s_Owner = null;
             if (s_CurrentOverlay != null)
             {
                 var anim = s_CurrentOverlay.Q<UISpriteAnimation>();

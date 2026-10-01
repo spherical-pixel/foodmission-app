@@ -171,7 +171,7 @@ namespace eu.foodmission.platform
         private async void OnSaveClicked()
         {
             CloseCategoryPanel();
-            FMLoadingOverlay.Show();
+            ShowLoadingOverlay();
             try
             {
                 if (_viewModel != null)
@@ -181,7 +181,7 @@ namespace eu.foodmission.platform
             }
             finally
             {
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
             }
 
             OnNavigationRequested(Actions.go_to_home, null);

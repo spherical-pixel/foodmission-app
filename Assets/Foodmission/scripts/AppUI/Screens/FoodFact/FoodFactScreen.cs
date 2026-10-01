@@ -53,6 +53,7 @@ namespace eu.foodmission.platform
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
+            TrackLoadingOverlay(() => _viewModel.IsLoading, nameof(FoodFactScreenViewModel.IsLoading));
 
             if (args != null)
             {

@@ -712,11 +712,11 @@ namespace eu.foodmission.platform
         {
             if (_viewModel.IsLoading || _viewModel.IsAddingToShoppingList)
             {
-                FMLoadingOverlay.Show();
+                ShowLoadingOverlay();
             }
             else
             {
-                FMLoadingOverlay.Hide();
+                HideLoadingOverlay();
             }
         }
 
