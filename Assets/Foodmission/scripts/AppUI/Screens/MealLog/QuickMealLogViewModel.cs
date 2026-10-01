@@ -195,7 +195,7 @@ namespace eu.foodmission.platform
                     var (quest, _) = await _questService.GetQuestAsync(currentQuestId);
                     if (quest != null)
                     {
-                        ActiveQuestTitle = !string.IsNullOrEmpty(quest.title) ? quest.title : quest.name;
+                        ActiveQuestTitle = quest.GetDisplayName();
                         ActiveQuestCode = quest.code ?? "";
                     }
                 }

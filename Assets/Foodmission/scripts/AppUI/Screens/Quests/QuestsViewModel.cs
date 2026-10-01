@@ -277,7 +277,7 @@ namespace eu.foodmission.platform
         {
             if (quest == null) return;
             OnQuestSelected?.Invoke(quest);
-            Debug.Log($"[{GetType().Name}] OpenQuest clicked: {quest.code} - {quest.title ?? quest.name}");
+            Debug.Log($"[{GetType().Name}] OpenQuest clicked: {quest.code} - {quest.GetDisplayName()}");
 
             var args = new List<Argument>();
             if (!string.IsNullOrEmpty(quest.code))
@@ -352,9 +352,7 @@ namespace eu.foodmission.platform
                 bool isCompleted = progState?.IsCompleted ?? false;
                 bool isLocked = progState?.IsLocked ?? false;
                 float progressVal = progState?.ProgressPercent ?? 0f;
-                string prevTitle = !string.IsNullOrEmpty(progState?.PreviousQuest?.title)
-                    ? progState.PreviousQuest.title
-                    : (!string.IsNullOrEmpty(progState?.PreviousQuest?.name) ? progState.PreviousQuest.name : progState?.PreviousQuest?.code);
+                string prevTitle = progState?.PreviousQuest?.GetDisplayName();
 
                 if (isCompleted)
                 {
@@ -524,7 +522,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            ActiveQuestTitle = !string.IsNullOrEmpty(activeQuest.title) ? activeQuest.title : (!string.IsNullOrEmpty(activeQuest.name) ? activeQuest.name : activeQuest.code);
+            ActiveQuestTitle = activeQuest.GetDisplayName();
             ActiveQuestCode = activeQuest.code ?? "";
             ActiveQuestId = activeQuest.id ?? activeQuestId;
 

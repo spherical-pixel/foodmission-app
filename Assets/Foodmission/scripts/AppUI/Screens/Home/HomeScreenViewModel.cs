@@ -341,7 +341,7 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                CurrentQuestTitle = !string.IsNullOrEmpty(quest.title) ? quest.title : (!string.IsNullOrEmpty(quest.name) ? quest.name : quest.code);
+                CurrentQuestTitle = quest.GetDisplayName();
                 CurrentQuestCode = quest.code ?? "";
                 CurrentQuestId = quest.id ?? questId;
 

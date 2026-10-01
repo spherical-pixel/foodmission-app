@@ -266,9 +266,7 @@ namespace eu.foodmission.platform
                         if (qItem?.Quest == null) continue;
 
                         var questCard = new FMItemQuest();
-                        questCard.Text = !string.IsNullOrEmpty(qItem.Quest.title)
-                            ? qItem.Quest.title
-                            : (!string.IsNullOrEmpty(qItem.Quest.name) ? qItem.Quest.name : (qItem.Quest.code ?? ""));
+                        questCard.Text = qItem.Quest.GetDisplayName();
 
                         if (qItem.Quest.items != null && qItem.Quest.items.Length > 0)
                         {

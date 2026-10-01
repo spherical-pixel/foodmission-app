@@ -300,7 +300,7 @@ namespace eu.foodmission.platform
             }
 
             QuestCode = quest.code ?? string.Empty;
-            QuestTitle = !string.IsNullOrEmpty(quest.title) ? quest.title : (!string.IsNullOrEmpty(quest.name) ? quest.name : quest.code);
+            QuestTitle = quest.GetDisplayName();
             QuestDescription = quest.description ?? string.Empty;
             QuestLevel = quest.level ?? eu.foodmission.platform.QuestLevel.Beginner;
 

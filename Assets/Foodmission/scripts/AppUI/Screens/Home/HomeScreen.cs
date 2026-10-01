@@ -383,9 +383,7 @@ namespace eu.foodmission.platform
             RewardPresentationItem unlockedQuestCard = null;
             if (item.UnlockedQuest != null)
             {
-                string questTitle = !string.IsNullOrEmpty(item.UnlockedQuest.title)
-                    ? item.UnlockedQuest.title
-                    : item.UnlockedQuest.name;
+                string questTitle = item.UnlockedQuest.GetDisplayName();
 
                 unlockedQuestCard = new RewardPresentationItem
                 {
