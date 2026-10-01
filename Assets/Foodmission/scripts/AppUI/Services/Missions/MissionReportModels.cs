@@ -58,4 +58,42 @@ namespace eu.foodmission.platform
             Completed = completed;
         }
     }
+
+    public enum CheckInStepKind
+    {
+        MealDay,
+        DayEvent,
+        MissionStep,
+        Summary
+    }
+
+    public sealed class CheckInSummaryLine
+    {
+        public CheckInStepKind Kind { get; }
+        /// <summary>DayEvent / MissionStep: the step's question. MealDay: null (the screen formats the day).</summary>
+        public string PromptKey { get; }
+        public DateTime? Day { get; }
+        public int Count { get; }
+
+        public CheckInSummaryLine(CheckInStepKind kind, string promptKey, DateTime? day, int count)
+        {
+            Kind = kind;
+            PromptKey = promptKey;
+            Day = day;
+            Count = count;
+        }
+    }
+
+    public sealed class CheckInOutcome
+    {
+        public int ItemsSent { get; }
+        /// <summary>Single-mission mode: the mission's refreshed progress; null in all-missions mode.</summary>
+        public MissionProgress SingleMissionProgress { get; }
+
+        public CheckInOutcome(int itemsSent, MissionProgress singleMissionProgress)
+        {
+            ItemsSent = itemsSent;
+            SingleMissionProgress = singleMissionProgress;
+        }
+    }
 }
