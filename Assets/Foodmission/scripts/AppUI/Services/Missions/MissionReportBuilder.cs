@@ -53,7 +53,7 @@ namespace eu.foodmission.platform
                         break;
 
                     case MissionStepType.DayPicker:
-                        // No occurredAt in backend v0.3.0: an event can only be recorded for today
+                        // No occurredAt in backend (v0.3.1): an event can only be recorded for today
                         if (step.MaxCount > 0 && allowedDays.Contains(nowLocal.Date) && answer.Days.Any(d => d.Date == nowLocal.Date))
                         {
                             AddEvent(items, indexOffset, missionCode, reportId, step.EventType, step, null);

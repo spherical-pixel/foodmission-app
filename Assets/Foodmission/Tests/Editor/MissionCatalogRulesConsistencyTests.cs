@@ -25,7 +25,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         /// <summary>
-        /// Counters the app can't satisfy for past days with backend v0.3.0: they count distinct server
+        /// Counters the app can't satisfy for past days with backend (v0.3.1): they count distinct server
         /// dayBucket (creation day), so back-dated meal logs land on today. Agreed with the user on 2026-10-01.
         /// Remove an entry when backend switches that rule to mealDayBucket (the test fails to remind you).
         /// </summary>

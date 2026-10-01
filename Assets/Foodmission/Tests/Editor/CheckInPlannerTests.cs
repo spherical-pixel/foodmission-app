@@ -88,7 +88,7 @@ namespace eu.foodmission.platform.Tests
 
             var de = plan.DayEvents.Single();
             Assert.AreEqual("M.A5.4", de.MissionCode);
-            CollectionAssert.AreEqual(new[] { Now.Date }, de.OpenDays, "no occurredAt in backend v0.3.0: today only");
+            CollectionAssert.AreEqual(new[] { Now.Date }, de.OpenDays, "no occurredAt in backend (v0.3.1): today only");
             Assert.AreEqual(0, plan.MealDays.Count);
 
             inputs.CoveredEventDays[ClientEventTypes.FoodWasteFifoOrganized].Add(Now.Date);

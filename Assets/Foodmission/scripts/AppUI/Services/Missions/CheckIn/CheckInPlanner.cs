@@ -53,7 +53,7 @@ namespace eu.foodmission.platform
                             break;
 
                         case MissionStepType.DayPicker:
-                            // No occurredAt in backend v0.3.0: only today can be recorded
+                            // No occurredAt in backend (v0.3.1): only today can be recorded
                             IEnumerable<DateTime> eventDays = window.Where(d => d == inputs.NowLocal.Date);
                             var existing = dayEvents.FindIndex(d => d.Step.EventType == step.EventType);
                             if (existing >= 0)

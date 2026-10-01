@@ -812,7 +812,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SubmitQuickMealLogAsync_WithOnlySwap_AddsImpliedFlag()
+        public async Task SubmitQuickMealLogAsync_WithOnlySwap_SendsSwapsOnly()
         {
             _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
             await _vm.LoadActiveQuestQuestionsAsync();
@@ -823,23 +823,8 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(await _vm.SubmitQuickMealLogAsync());
 
             _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
-                r.flags.Length == 1 && r.flags[0] == ClientEventTypes.MealLegumeConsumed &&
+                r.flags == null &&
                 r.swaps.Length == 1 && r.swaps[0] == ClientEventTypes.SwapBeefToLegumes)), Times.Once);
-        }
-
-        [Test]
-        public async Task SubmitQuickMealLogAsync_WithOnlySwapWithoutImpliedFlag_SendsSwapsOnly()
-        {
-            _storeService.SetAppState(new AppState { userCurrentQuestId = "" });
-            await _vm.LoadActiveQuestQuestionsAsync();
-            _vm.ToggleQuestion($"q_{ClientEventTypes.SwapSugaryDrinkToWater.ToLowerInvariant()}");
-            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
-                .ReturnsAsync((new MealLog { id = "ml-4" }, null));
-
-            await _vm.SubmitQuickMealLogAsync();
-
-            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
-                r.flags == null && r.swaps.Length == 1 && r.swaps[0] == ClientEventTypes.SwapSugaryDrinkToWater)), Times.Once);
         }
 
         [Test]

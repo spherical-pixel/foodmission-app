@@ -393,7 +393,7 @@ namespace eu.foodmission.platform
                 }
             });
 
-            // 5. Desperdicio (meal-log flags agreed with backend; rejected by v0.3.0 until they are added)
+            // 5. Desperdicio
             sections.Add(new QuickMealSection
             {
                 Id = "sec_waste",
@@ -901,13 +901,6 @@ namespace eu.foodmission.platform
                     ErrorMessage = "@UI:QUICK_MEAL_LOG_EMPTY_SELECTION";
                     ShowToastRequest?.Invoke(ErrorMessage);
                     return false;
-                }
-
-                // Backend v0.3.0 rejects meal logs without flags: add the true flag a swap implies when there is one.
-                // A swap without an implied flag is still sent alone and fails until backend accepts swaps-only logs.
-                if (flags.Count == 0)
-                {
-                    flags.AddRange(SwapImpliedFlags.For(swaps));
                 }
 
                 // 2. Submit meal log: if in Edit Mode, update the existing log via PATCH

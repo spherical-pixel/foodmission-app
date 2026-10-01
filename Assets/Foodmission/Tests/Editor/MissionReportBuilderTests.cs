@@ -92,7 +92,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void Build_DayPicker_SendsOnlyToday()
         {
-            // Backend v0.3.0 has no occurredAt: past days can't be dated, so they are dropped
+            // Backend (v0.3.1) has no occurredAt: past days can't be dated, so they are dropped
             var answer = new MissionStepAnswer();
             answer.Days.Add(Now.Date.AddDays(-1));
             answer.Days.Add(Now.Date);

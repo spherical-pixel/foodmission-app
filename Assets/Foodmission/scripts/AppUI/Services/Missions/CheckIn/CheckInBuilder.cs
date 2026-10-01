@@ -10,7 +10,6 @@ namespace eu.foodmission.platform
         public static List<PendingReportItem> Build(CheckInPlan plan, CheckInAnswers answers, string reportId, DateTime nowLocal)
         {
             var items = new List<PendingReportItem>();
-            var deferredLogs = new List<PendingReportItem>();
             if (plan == null || answers == null)
             {
                 return items;
@@ -37,23 +36,15 @@ namespace eu.foodmission.platform
                     {
                         continue;
                     }
-                    if (flags.Count == 0)
-                    {
-                        flags.AddRange(SwapImpliedFlags.For(swaps));
-                    }
 
                     DateTime moment = MissionReportDays.TimestampFor(day.Day, mealType, nowLocal);
-                    var mealLog = new PendingReportItem(new CreateMealLogRequest
+                    items.Add(new PendingReportItem(new CreateMealLogRequest
                     {
                         typeOfMeal = mealType,
                         flags = flags.Count > 0 ? flags.ToArray() : null,
                         swaps = swaps.Count > 0 ? swaps.ToArray() : null,
                         timestamp = moment.ToUniversalTime().ToString("o")
-                    });
-                    // Backend v0.3.0 rejects swaps-only logs and FOOD_WASTE_* flags (agreed, not deployed yet):
-                    // send those logs last so a rejection never blocks the rest of the check-in
-                    bool mayBeRejected = flags.Count == 0 || flags.Any(f => f.StartsWith("FOOD_WASTE_", StringComparison.Ordinal));
-                    (mayBeRejected ? deferredLogs : items).Add(mealLog);
+                    }));
                 }
             }
 
@@ -71,7 +62,6 @@ namespace eu.foodmission.platform
                 items.AddRange(MissionReportBuilder.Build(missionStep.MissionCode, new[] { missionStep.Step }, new[] { answers.MissionSteps[i] }, reportId, null, nowLocal, items.Count));
             }
 
-            items.AddRange(deferredLogs);
             return items;
         }
     }
