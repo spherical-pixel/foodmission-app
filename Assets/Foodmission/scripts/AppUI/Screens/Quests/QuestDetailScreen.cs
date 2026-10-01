@@ -136,8 +136,12 @@ namespace eu.foodmission.platform
             {
                 UpdateApiErrorState();
             }
-            else if (e.PropertyName == nameof(_viewModel.IsCurrentQuest) ||
-                     e.PropertyName == nameof(_viewModel.IsStartingQuest))
+            else if (e.PropertyName == nameof(_viewModel.IsCurrentQuest))
+            {
+                UpdateStartQuestButton();
+                RebuildActivities();
+            }
+            else if (e.PropertyName == nameof(_viewModel.IsStartingQuest))
             {
                 UpdateStartQuestButton();
             }
@@ -245,17 +249,18 @@ namespace eu.foodmission.platform
                                    string.Equals(cType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) ||
                                    string.Equals(cType, "CHALLENGE", StringComparison.OrdinalIgnoreCase);
 
-                if (isNavigable)
+                // Activities are only reachable from the active quest
+                if (isNavigable && _viewModel.IsCurrentQuest)
                 {
                     row.AddToClassList("fm-quest-timeline-row--clickable");
-                }
 
-                var capturedAct = act;
-                row.RegisterCallback<ClickEvent>(_ =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.OpenActivity(capturedAct);
-                });
+                    var capturedAct = act;
+                    row.RegisterCallback<ClickEvent>(_ =>
+                    {
+                        _audioService?.PlaySfx(SfxType.PositiveButton);
+                        _viewModel?.OpenActivity(capturedAct);
+                    });
+                }
 
                 _activitiesContainer.Add(row);
             }

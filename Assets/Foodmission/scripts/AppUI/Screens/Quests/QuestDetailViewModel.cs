@@ -492,7 +492,11 @@ namespace eu.foodmission.platform
 
         public void OpenActivity(QuestActivityDisplayItem activity)
         {
-            if (activity?.Item == null) return;
+            // Activities can only be opened from the user's active quest
+            if (activity?.Item == null || !IsCurrentQuest)
+            {
+                return;
+            }
 
             string contentType = activity.Item.contentType ?? string.Empty;
             string code = activity.Item.contentCode ?? string.Empty;

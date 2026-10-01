@@ -238,6 +238,31 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(404, _vm.ErrorDetail.statusCode);
         }
 
+        private void MakeQuestCurrent()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q-100" });
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress);
+        }
+
+        [Test]
+        public void OpenActivity_WhenQuestIsNotCurrent_DoesNotNavigate()
+        {
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "other-quest-id" });
+            _vm.SetQuestForTesting(_mockQuest, _mockProgress);
+
+            string requestedRoute = null;
+            _vm.NavigationRequested += (route, args) => requestedRoute = route;
+
+            var quizActivity = new QuestActivityDisplayItem
+            {
+                Item = new QuestItem { contentType = QuestContentType.Quiz, contentCode = "QUIZ_1" }
+            };
+
+            _vm.OpenActivity(quizActivity);
+
+            Assert.IsNull(requestedRoute);
+        }
+
         [Test]
         public void OpenActivity_WhenQuiz_RequestsOpenQuizNavigation()
         {
@@ -255,6 +280,7 @@ namespace eu.foodmission.platform.Tests
                 Item = new QuestItem { contentType = QuestContentType.Quiz, contentCode = "QUIZ_1" }
             };
 
+            MakeQuestCurrent();
             _vm.OpenActivity(quizActivity);
 
             Assert.AreEqual(Actions.open_quiz, requestedRoute);
@@ -280,6 +306,7 @@ namespace eu.foodmission.platform.Tests
                 Item = new QuestItem { contentType = QuestContentType.FoodFact, contentCode = "FACT_1" }
             };
 
+            MakeQuestCurrent();
             _vm.OpenActivity(factActivity);
 
             Assert.AreEqual(Actions.open_food_fact, requestedRoute);
@@ -305,6 +332,7 @@ namespace eu.foodmission.platform.Tests
                 Item = new QuestItem { contentType = QuestContentType.Mission, contentCode = "MISSION_1" }
             };
 
+            MakeQuestCurrent();
             _vm.OpenActivity(missionActivity);
 
             Assert.AreEqual(Actions.open_mission, requestedRoute);
@@ -330,6 +358,7 @@ namespace eu.foodmission.platform.Tests
                 Item = new QuestItem { contentType = "CHALLENGE", contentCode = "CHALLENGE_1" }
             };
 
+            MakeQuestCurrent();
             _vm.OpenActivity(challengeActivity);
 
             Assert.AreEqual(Actions.open_challenge, requestedRoute);
