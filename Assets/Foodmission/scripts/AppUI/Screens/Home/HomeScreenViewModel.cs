@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
@@ -55,6 +56,7 @@ namespace eu.foodmission.platform
         private readonly INotificationService _notificationService;
         private readonly ILegalService _legalService;
         private readonly IPilotSurveyService _pilotSurveyService;
+        private readonly IMissionNudgeService _missionNudgeService;
         private readonly ICatalogService _catalogService;
         private readonly IQuestService _questService;
         private readonly IQuizService _quizService;
@@ -78,7 +80,8 @@ namespace eu.foodmission.platform
             IChallengeService challengeService = null,
             IFoodFactService foodFactService = null,
             IGamificationService gamificationService = null,
-            IQuestProgressionService questProgressionService = null) : base(storeService)
+            IQuestProgressionService questProgressionService = null,
+            IMissionNudgeService missionNudgeService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -91,6 +94,7 @@ namespace eu.foodmission.platform
             _foodFactService = foodFactService ?? App.current?.services?.GetService<IFoodFactService>();
             _gamificationService = gamificationService ?? App.current?.services?.GetService<IGamificationService>();
             _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
+            _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
 
             // Get initial state
             AppState state = _storeService?.GetAppState();
@@ -229,6 +233,31 @@ namespace eu.foodmission.platform
         public void SkipPilotSurvey(string slug)
         {
             _pilotSurveyService?.SkipSurvey(slug);
+        }
+
+        public System.Threading.Tasks.Task<MissionNudge> CheckMissionNudgeAsync()
+        {
+            return _missionNudgeService != null
+                ? _missionNudgeService.GetNudgeAsync()
+                : System.Threading.Tasks.Task.FromResult<MissionNudge>(null);
+        }
+
+        /// <summary>Opens the Nutri check-in; with a code only that mission is asked.</summary>
+        public void OpenCheckIn(string missionCode = null)
+        {
+            var args = string.IsNullOrEmpty(missionCode)
+                ? Array.Empty<Unity.AppUI.Navigation.Argument>()
+                : new[] { new Unity.AppUI.Navigation.Argument("code", missionCode) };
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.open_mission_checkin, args);
+        }
+
+        public void OpenMissionModule(MissionModuleLink module)
+        {
+            if (module == null || string.IsNullOrEmpty(module.Action))
+            {
+                return;
+            }
+            RaiseNavigationRequested(module.Action);
         }
 
         public void NavigateToPilotSurvey(string slugOrId)

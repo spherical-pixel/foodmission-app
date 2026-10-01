@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using UnityEngine;
 
+using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
+
 namespace eu.foodmission.platform.Tests
 {
     [TestFixture]
@@ -799,6 +802,38 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, result.Count);
             Assert.IsTrue(result[0].IsQuest);
             Assert.IsNull(result[0].UnlockedQuest);
+        }
+
+        [Test]
+        public async Task CheckMissionNudgeAsync_ReturnsServiceNudge()
+        {
+            var nudge = MissionNudge.ForStalledMission("M.B1.4", "Swap", MissionInteractionCatalog.QuickMealLog);
+            var service = new Mock<IMissionNudgeService>();
+            service.Setup(s => s.GetNudgeAsync()).ReturnsAsync(nudge);
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                missionNudgeService: service.Object);
+
+            Assert.AreSame(nudge, await vm.CheckMissionNudgeAsync());
+            vm.Dispose();
+        }
+
+        [Test]
+        public void OpenCheckIn_And_OpenMissionModule_Navigate()
+        {
+            string action = null;
+            Argument[] args = null;
+            _vm.NavigationRequested += (a, ar) => { action = a; args = ar; };
+
+            _vm.OpenCheckIn("M.B1.4");
+            Assert.AreEqual(Actions.open_mission_checkin, action);
+            Assert.AreEqual("M.B1.4", args[0].value);
+
+            _vm.OpenCheckIn();
+            Assert.AreEqual(Actions.open_mission_checkin, action);
+            Assert.AreEqual(0, args.Length, "all-missions mode has no code");
+
+            _vm.OpenMissionModule(MissionInteractionCatalog.QuickMealLog);
+            Assert.AreEqual(Actions.open_quick_meal_log, action);
         }
     }
 }

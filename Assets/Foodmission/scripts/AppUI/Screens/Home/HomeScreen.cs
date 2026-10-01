@@ -132,6 +132,9 @@ namespace eu.foodmission.platform
 
             // 7. Encuesta periódica del piloto
             if (await CheckPendingPilotSurveyAsync()) return;
+
+            // 8. Días sin contar o misión activa sin avances: Nutri propone el check-in
+            if (await CheckMissionNudgeAsync()) return;
         }
 
         private async Task<bool> CheckPendingLegalConsentAsync()
@@ -316,6 +319,42 @@ namespace eu.foodmission.platform
                 }
             );
 
+            return true;
+        }
+
+        private async Task<bool> CheckMissionNudgeAsync()
+        {
+            if (_viewModel == null)
+            {
+                return false;
+            }
+
+            MissionNudge nudge = await _viewModel.CheckMissionNudgeAsync();
+            if (nudge == null)
+            {
+                return false;
+            }
+
+            var actions = new System.Collections.Generic.List<FMDialogAction>();
+            string message;
+            if (nudge.Kind == MissionNudgeKind.MissingDays)
+            {
+                message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MISSING_DAYS", new object[] { nudge.MissingDays });
+                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => _viewModel.OpenCheckIn(), ButtonVariant.Accent));
+            }
+            else
+            {
+                message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MESSAGE", new object[] { nudge.MissionTitle });
+                if (nudge.AutoModule != null)
+                {
+                    actions.Add(new FMDialogAction("@UI:" + nudge.AutoModule.ButtonKey, () => _viewModel.OpenMissionModule(nudge.AutoModule), ButtonVariant.Accent));
+                }
+                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => _viewModel.OpenCheckIn(nudge.MissionCode),
+                    nudge.AutoModule != null ? ButtonVariant.Default : ButtonVariant.Accent));
+            }
+            actions.Add(new FMDialogAction("@UI:MISSION_NUDGE_NOT_NOW", () => { }, ButtonVariant.Default));
+
+            NutriMessageDialog.Show(message: message, actions: actions.ToArray());
             return true;
         }
 
