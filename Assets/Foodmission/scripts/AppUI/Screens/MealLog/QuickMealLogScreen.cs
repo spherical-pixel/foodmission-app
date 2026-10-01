@@ -46,7 +46,33 @@ namespace eu.foodmission.platform
             _audioService = App.current?.services?.GetService<IAudioService>();
 
             CacheUIElements();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            AddDevDayOffsetButton();
+#endif
         }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        /// <summary>Development-only: shifts the meal-log date (+0…+6 days) to test day-based missions. Not localized on purpose.</summary>
+        private void AddDevDayOffsetButton()
+        {
+            if (_onlyMissionsToggle?.parent == null)
+            {
+                return;
+            }
+
+            var button = new FMButton { variant = ButtonVariant.Default, size = Size.S, quiet = true };
+            button.AddToClassList("fm-quick-meal-dev-offset");
+            void Refresh() => button.title = $"DEV · meal date +{DevMealDayOffset.Days}d";
+            Refresh();
+            button.clicked += () =>
+            {
+                DevMealDayOffset.Cycle();
+                Refresh();
+            };
+            VisualElement parent = _onlyMissionsToggle.parent;
+            parent.Insert(parent.IndexOf(_onlyMissionsToggle), button);
+        }
+#endif
 
         private void CacheUIElements()
         {

@@ -29,6 +29,9 @@ namespace eu.foodmission.platform
         {
             if (request == null) return (null, null);
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            request = DevMealDayOffset.ApplyTo(request, DateTime.UtcNow);
+#endif
             byte[] body = request.ToJsonBody();
             string url = $"{ApiConfig.BaseUrl}/api/v1/meal-logs";
 

@@ -2421,3 +2421,9 @@
 .fm-mission-report-bubble {
     white-space: normal;
 }
+
+/* Development-only meal date offset (Quick Meal Log) */
+.fm-quick-meal-dev-offset {
+    align-self: flex-start;
+    margin: 4px 0;
+}
