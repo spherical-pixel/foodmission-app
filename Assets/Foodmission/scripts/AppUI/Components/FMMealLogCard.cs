@@ -199,7 +199,7 @@ namespace eu.foodmission.platform.Components
                             row.AddToClassList("fm-meal-card-item-row");
                             Unity.AppUI.UI.Text nameLabel = new Unity.AppUI.UI.Text();
                             nameLabel.AddToClassList("fm-meal-card-item-name");
-                            nameLabel.text = $"• {ActivityEventMapper.GetSwapDisplayName(swap)}";
+                            nameLabel.text = $"• {SwapLocalization.GetSwapDisplayName(swap)}";
                             row.Add(nameLabel);
                             _itemsContainer.Add(row);
                         }

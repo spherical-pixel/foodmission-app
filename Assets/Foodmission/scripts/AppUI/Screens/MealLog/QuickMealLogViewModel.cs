@@ -304,7 +304,7 @@ namespace eu.foodmission.platform
             {
                 Id = $"q_{swap.ToLowerInvariant()}",
                 Icon = "🔄",
-                Prompt = ActivityEventMapper.GetSwapLocalizationTag(swap) ?? ActivityEventMapper.GetSwapDisplayName(swap),
+                Prompt = SwapLocalization.GetSwapLocalizationTag(swap) ?? SwapLocalization.GetSwapDisplayName(swap),
                 EventType = swap,
                 IsChecked = false
             }).ToList();

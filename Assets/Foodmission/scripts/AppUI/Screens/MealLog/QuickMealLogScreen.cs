@@ -561,7 +561,7 @@ namespace eu.foodmission.platform
 
                     var chipLabel = new Unity.AppUI.UI.Text();
                     chipLabel.AddToClassList("fm-quick-meal-swap-chip-text");
-                    chipLabel.text = ActivityEventMapper.GetSwapDisplayName(swap);
+                    chipLabel.text = SwapLocalization.GetSwapDisplayName(swap);
                     chip.Add(chipLabel);
 
                     string capturedSwap = swap;
