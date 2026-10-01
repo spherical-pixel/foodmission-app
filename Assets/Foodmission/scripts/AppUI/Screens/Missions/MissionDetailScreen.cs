@@ -1,17 +1,20 @@
-using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using eu.foodmission.platform.Components;
-using MainraGames;
+
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
-using UnityEngine;
+
 using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
+using eu.foodmission.platform.Components;
+using MainraGames;
+
 namespace eu.foodmission.platform
 {
+    /// <summary>Nutri mission detail (spec §3.7): automatic modules, helper modules and "Tell Nutri" (check-in for this mission).</summary>
     [Preserve]
     public class MissionDetailScreen : NavigationScreenBase<MissionDetailViewModel>
     {
@@ -21,34 +24,28 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaTop => false;
         protected override bool IsFixedContent => false;
 
-        private Unity.AppUI.UI.Text _levelBadge;
-        private Unity.AppUI.UI.Text _durationBadge;
-        private Unity.AppUI.UI.Text _missionTitle;
-        private Image _imageDimensionBanner;
-        private Unity.AppUI.UI.Text _missionGoal;
-        private Unity.AppUI.UI.Text _missionWhyItMatters;
-        private Unity.AppUI.UI.Text _progressLabel;
+        private Text _levelBadge;
+        private Heading _title;
+        private Text _goal;
+        private Text _whyItMatters;
+        private Text _status;
+        private Text _autoHint;
+        private Text _progressLabel;
         private VisualElement _progressFill;
+        private VisualElement _card;
+        private VisualElement _actions;
+        private VisualElement _autoModules;
+        private VisualElement _helperModules;
+        private VisualElement _completedBox;
+        private FMButton _btnTellNutri;
+        private FMButton _btnLater;
+        private FMNutriView _nutriView;
+        private INutriService _nutriService;
+        private IVisualElementScheduledItem _cardSchedule;
+        private IVisualElementScheduledItem _nutriSpeechSchedule;
+        private static NutriSfxType s_LastTalkSfx = NutriSfxType.Talk1;
 
-        private UnityEngine.UIElements.Button _tabBtnApp;
-        private UnityEngine.UIElements.Button _tabBtnDirect;
-        private VisualElement _tabContentApp;
-        private VisualElement _tabContentDirect;
-
-        private Unity.AppUI.UI.Text _nativeModuleHint;
-        private FMButton _btnGoModule;
-
-        private VisualElement _swapContainer;
-        private VisualElement _swapOptionsList;
-        private Unity.AppUI.UI.Text _directNutriPrompt;
-        private UnityEngine.UIElements.Button _btnStepperMinus;
-        private UnityEngine.UIElements.Button _btnStepperPlus;
-        private Unity.AppUI.UI.Text _stepperCountLabel;
-        private Unity.AppUI.UI.Text _directFeedbackLabel;
-        private FMButton _btnSubmitDirect;
-
-        private IBannerService _bannerService;
-        private IAudioService _audioService;
+        private readonly IAudioService _audioService;
 
         public MissionDetailScreen()
         {
@@ -56,93 +53,39 @@ namespace eu.foodmission.platform
                 .GetRequiredService<ITemplateService>()
                 .Get(TemplateAddresses.MissionDetailScreen));
 
-            _bannerService = App.current?.services?.GetService<IBannerService>();
             _audioService = App.current?.services?.GetService<IAudioService>();
-
+            _nutriService = App.current?.services?.GetService<INutriService>();
             CacheUIElements();
         }
 
         private void CacheUIElements()
         {
-            _levelBadge = contentContainer.Q<Unity.AppUI.UI.Text>("mission-level-badge");
-            _durationBadge = contentContainer.Q<Unity.AppUI.UI.Text>("mission-duration-badge");
-            _missionTitle = contentContainer.Q<Unity.AppUI.UI.Text>("mission-title");
-            _imageDimensionBanner = contentContainer.Q<Image>("image-dimension-banner");
-            _missionGoal = contentContainer.Q<Unity.AppUI.UI.Text>("mission-goal");
-            _missionWhyItMatters = contentContainer.Q<Unity.AppUI.UI.Text>("mission-why-it-matters");
-            _progressLabel = contentContainer.Q<Unity.AppUI.UI.Text>("mission-progress-label");
+            _card = contentContainer.Q<VisualElement>("mission-card");
+            _nutriView = contentContainer.Q<FMNutriView>("nutri-view") ?? contentContainer.Q<FMNutriView>();
+            _card?.AddToClassList("fm-mission-card--entering");
+
+            _levelBadge = contentContainer.Q<Text>("mission-level-badge");
+            _title = contentContainer.Q<Heading>("mission-title");
+            _goal = contentContainer.Q<Text>("mission-goal");
+            _whyItMatters = contentContainer.Q<Text>("mission-why-it-matters");
+            _status = contentContainer.Q<Text>("mission-status");
+            _autoHint = contentContainer.Q<Text>("mission-auto-hint");
+            _progressLabel = contentContainer.Q<Text>("mission-progress-label");
             _progressFill = contentContainer.Q<VisualElement>("mission-progress-fill");
+            _actions = contentContainer.Q<VisualElement>("mission-actions");
+            _autoModules = contentContainer.Q<VisualElement>("mission-auto-modules");
+            _helperModules = contentContainer.Q<VisualElement>("mission-helper-modules");
+            _completedBox = contentContainer.Q<VisualElement>("mission-completed-box");
+            _btnTellNutri = contentContainer.Q<FMButton>("btn-tell-nutri");
+            _btnLater = contentContainer.Q<FMButton>("btn-later");
 
-            _tabBtnApp = contentContainer.Q<UnityEngine.UIElements.Button>("tab-btn-app");
-            _tabBtnDirect = contentContainer.Q<UnityEngine.UIElements.Button>("tab-btn-direct");
-            _tabContentApp = contentContainer.Q<VisualElement>("tab-content-app");
-            _tabContentDirect = contentContainer.Q<VisualElement>("tab-content-direct");
-
-            _nativeModuleHint = contentContainer.Q<Unity.AppUI.UI.Text>("native-module-hint");
-            _btnGoModule = contentContainer.Q<FMButton>("btn-go-module");
-
-            _directNutriPrompt = contentContainer.Q<Unity.AppUI.UI.Text>("direct-nutri-prompt");
-            _swapContainer = contentContainer.Q<VisualElement>("swap-container");
-            _swapOptionsList = contentContainer.Q<VisualElement>("swap-options-list");
-            _btnStepperMinus = contentContainer.Q<UnityEngine.UIElements.Button>("btn-stepper-minus");
-            _btnStepperPlus = contentContainer.Q<UnityEngine.UIElements.Button>("btn-stepper-plus");
-            _stepperCountLabel = contentContainer.Q<Unity.AppUI.UI.Text>("stepper-count-label");
-            _directFeedbackLabel = contentContainer.Q<Unity.AppUI.UI.Text>("direct-feedback-label");
-            _btnSubmitDirect = contentContainer.Q<FMButton>("btn-submit-direct");
-
-            if (_tabBtnApp != null)
+            if (_btnTellNutri != null)
             {
-                _tabBtnApp.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.SetTabIndex(0);
-                };
+                _btnTellNutri.clicked += OnTellNutriClicked;
             }
-
-            if (_tabBtnDirect != null)
+            if (_btnLater != null)
             {
-                _tabBtnDirect.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.SetTabIndex(1);
-                };
-            }
-
-            if (_btnStepperMinus != null)
-            {
-                _btnStepperMinus.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.DecrementCount();
-                };
-            }
-
-            if (_btnStepperPlus != null)
-            {
-                _btnStepperPlus.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.IncrementCount();
-                };
-            }
-
-            if (_btnGoModule != null)
-            {
-                _btnGoModule.clicked += () =>
-                {
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _viewModel?.NavigateToNativeModule();
-                };
-            }
-
-            if (_btnSubmitDirect != null)
-            {
-                _btnSubmitDirect.clicked += async () =>
-                {
-                    if (_viewModel == null) return;
-                    _audioService?.PlaySfx(SfxType.PositiveButton);
-                    await _viewModel.SubmitDirectReportAsync();
-                };
+                _btnLater.clicked += OnLaterClicked;
             }
         }
 
@@ -150,25 +93,38 @@ namespace eu.foodmission.platform
         {
             base.OnEnter(controller, destination, args);
 
-            string missionCodeOrId = null;
+            _nutriView?.RefreshView();
+            PlayEntranceAnimation();
+            PlayNutriTalking();
+
+            string codeOrId = null;
             if (args != null)
             {
                 foreach (var a in args)
                 {
                     if (a.name == "code" || a.name == "id")
                     {
-                        missionCodeOrId = a.value;
+                        codeOrId = a.value;
                         break;
                     }
                 }
             }
 
-            if (!string.IsNullOrEmpty(missionCodeOrId))
+            // Also runs when coming back from the check-in or a module, so the progress refreshes
+            if (!string.IsNullOrEmpty(codeOrId))
             {
-                _ = _viewModel?.LoadMissionAsync(missionCodeOrId);
+                _ = _viewModel?.LoadMissionAsync(codeOrId);
             }
 
             UpdateView();
+        }
+
+        public override void OnExit(NavController controller, NavDestination destination, Argument[] args)
+        {
+            ResetNutriToIdle();
+            _cardSchedule?.Pause();
+            _cardSchedule = null;
+            base.OnExit(controller, destination, args);
         }
 
         protected override void OnViewModelBound()
@@ -184,6 +140,9 @@ namespace eu.foodmission.platform
 
         protected override void OnViewModelUnbinding()
         {
+            ResetNutriToIdle();
+            _cardSchedule?.Pause();
+            _cardSchedule = null;
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
@@ -191,216 +150,193 @@ namespace eu.foodmission.platform
             base.OnViewModelUnbinding();
         }
 
+        private void PlayEntranceAnimation()
+        {
+            if (_card == null)
+            {
+                return;
+            }
+
+            _cardSchedule?.Pause();
+            _card.AddToClassList("fm-mission-card--entering");
+
+            _cardSchedule = _card.schedule.Execute(() =>
+            {
+                _card.RemoveFromClassList("fm-mission-card--entering");
+                _cardSchedule = null;
+            }).StartingIn(50);
+        }
+
+        private void PlayNutriTalking(float durationSeconds = 1.5f, long startDelayMs = 100)
+        {
+            _nutriService ??= App.current?.services?.GetService<INutriService>();
+            if (_nutriService == null)
+            {
+                return;
+            }
+
+            _nutriSpeechSchedule?.Pause();
+            _nutriSpeechSchedule = null;
+
+            _nutriSpeechSchedule = schedule.Execute(() =>
+            {
+                NutriSfxType[] candidates = s_LastTalkSfx switch
+                {
+                    NutriSfxType.Talk1 => new[] { NutriSfxType.Talk2, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk2 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk3 },
+                    NutriSfxType.Talk3 => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2 },
+                    _ => new[] { NutriSfxType.Talk1, NutriSfxType.Talk2, NutriSfxType.Talk3 }
+                };
+
+                NutriSfxType sfxType = candidates[UnityEngine.Random.Range(0, candidates.Length)];
+                s_LastTalkSfx = sfxType;
+
+                _nutriService.SetAction(NutriAction.Talking);
+                _audioService?.PlayNutriSfx(sfxType, 0.5f);
+
+                _nutriSpeechSchedule = schedule.Execute(() =>
+                {
+                    _nutriService?.SetAction(NutriAction.Idle);
+                    _nutriSpeechSchedule = null;
+                }).StartingIn((long)(durationSeconds * 1000));
+            }).StartingIn(startDelayMs);
+        }
+
+        private void ResetNutriToIdle()
+        {
+            if (_nutriSpeechSchedule != null)
+            {
+                _nutriSpeechSchedule.Pause();
+                _nutriSpeechSchedule = null;
+            }
+
+            _nutriService ??= App.current?.services?.GetService<INutriService>();
+            _nutriService?.SetAction(NutriAction.Idle);
+        }
+
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_viewModel.Mission) ||
-                e.PropertyName == nameof(_viewModel.MissionProgress) ||
-                e.PropertyName == nameof(_viewModel.Dimension) ||
-                e.PropertyName == nameof(_viewModel.Mapping))
-            {
-                UpdateView();
-            }
-            else if (e.PropertyName == nameof(_viewModel.SelectedSwapOption))
-            {
-                RebuildSwapOptions();
-            }
-            else if (e.PropertyName == nameof(_viewModel.SelectedTabIndex))
-            {
-                UpdateTabSelection();
-            }
-            else if (e.PropertyName == nameof(_viewModel.SelectedCount))
-            {
-                UpdateStepper();
-            }
-            else if (e.PropertyName == nameof(_viewModel.ReportSuccess) ||
-                     e.PropertyName == nameof(_viewModel.SuccessMessage) ||
-                     e.PropertyName == nameof(_viewModel.IsReportingDirect))
-            {
-                UpdateDirectReportState();
-            }
-            else if (e.PropertyName == nameof(_viewModel.ErrorDetail))
+            if (e.PropertyName == nameof(_viewModel.ErrorDetail))
             {
                 UpdateApiErrorState();
+            }
+            else
+            {
+                UpdateView();
             }
         }
 
         private void UpdateView()
         {
-            if (_viewModel == null) return;
-
-            var mission = _viewModel.Mission;
-            if (mission != null)
+            if (_viewModel == null)
             {
-                if (_missionTitle != null) _missionTitle.text = mission.title ?? string.Empty;
-                if (_missionGoal != null) _missionGoal.text = mission.goal ?? string.Empty;
-                if (_missionWhyItMatters != null) _missionWhyItMatters.text = mission.whyItMatters ?? string.Empty;
-
-                if (_levelBadge != null)
-                {
-                    _levelBadge.text = mission.level ?? "BEGINNER";
-                }
-
-                if (_durationBadge != null)
-                {
-                    _durationBadge.text = !string.IsNullOrEmpty(mission.duration)
-                        ? $"⏱️ {mission.duration}"
-                        : $"⏱️ ";
-                }
-
-                if (_imageDimensionBanner != null && _bannerService != null && _viewModel.Dimension != null)
-                {
-                    _ = _bannerService.BindDimensionBanner(_imageDimensionBanner, _viewModel.Dimension.code);
-                }
+                return;
             }
 
-            var mapping = _viewModel.Mapping;
-            if (mapping != null)
+            Mission mission = _viewModel.Mission;
+            if (_title != null)
             {
-                if (_nativeModuleHint != null)
-                {
-                    _nativeModuleHint.text = mapping.NativeModuleHint ?? string.Empty;
-                }
-                if (_btnGoModule != null)
-                {
-                    _btnGoModule.title = mapping.NativeModuleButtonTitle ?? "Ir al módulo";
-                }
-                if (_directNutriPrompt != null)
-                {
-                    _directNutriPrompt.text = mapping.DirectQuestionPrompt ?? "¿Has completado esta acción?";
-                }
+                _title.text = mission?.title ?? string.Empty;
+            }
+            if (_goal != null)
+            {
+                _goal.text = mission?.goal ?? string.Empty;
+            }
+            if (_whyItMatters != null)
+            {
+                _whyItMatters.text = mission?.whyItMatters ?? string.Empty;
+            }
+            if (_levelBadge != null)
+            {
+                string levelKey = _viewModel.LevelKey;
+                _levelBadge.text = levelKey != null ? Localize(levelKey) : string.Empty;
+                _levelBadge.EnableInClassList("hidden", levelKey == null);
             }
 
-            var progress = _viewModel.MissionProgress;
-            int pct = 0;
-            if (progress != null)
+            int pct = _viewModel.ProgressPercent;
+            if (_progressLabel != null)
             {
-                pct = (int)Mathf.Clamp(progress.progress, 0, 100);
+                _progressLabel.text = $"{pct}%";
             }
-            if (_progressLabel != null) _progressLabel.text = $"{pct}%";
-            if (_progressFill != null) _progressFill.style.width = Length.Percent(pct);
+            if (_progressFill != null)
+            {
+                _progressFill.style.width = Length.Percent(pct);
+            }
 
-            UpdateTabSelection();
-            RebuildSwapOptions();
-            UpdateStepper();
-            UpdateDirectReportState();
+            _completedBox?.EnableInClassList("hidden", !_viewModel.IsCompleted);
+            _actions?.EnableInClassList("hidden", !_viewModel.CanAct);
+
+            string statusKey = _viewModel.IsPendingRule ? "MISSION_NOT_AVAILABLE"
+                : _viewModel.ShowsNotCurrentQuest ? "MISSION_NOT_CURRENT_QUEST"
+                : null;
+            if (_status != null)
+            {
+                _status.text = statusKey != null ? Localize(statusKey) : string.Empty;
+                _status.EnableInClassList("hidden", statusKey == null);
+            }
+
+            _autoHint?.EnableInClassList("hidden", _viewModel.AutoModules.Count == 0);
+            RebuildModuleButtons(_autoModules, _viewModel.AutoModules, ButtonVariant.Accent);
+            RebuildModuleButtons(_helperModules, _viewModel.HelperModules, ButtonVariant.Default);
         }
 
-        private void RebuildSwapOptions()
+        private void RebuildModuleButtons(VisualElement container, IReadOnlyList<MissionModuleLink> modules, ButtonVariant variant)
         {
-            if (_swapContainer == null || _swapOptionsList == null || _viewModel == null) return;
-
-            var mapping = _viewModel.Mapping;
-            if (mapping != null && mapping.QuestionType == DirectQuestionType.SwapSelector &&
-                mapping.SwapOptions != null && mapping.SwapOptions.Length > 0)
+            if (container == null)
             {
-                _swapContainer.style.display = DisplayStyle.Flex;
-                _swapOptionsList.Clear();
-
-                foreach (var swap in mapping.SwapOptions)
-                {
-                    if (string.IsNullOrEmpty(swap)) continue;
-
-                    var row = new VisualElement();
-                    row.AddToClassList("fm-activity-swap-item");
-                    bool isSelected = swap == _viewModel.SelectedSwapOption;
-                    if (isSelected) row.AddToClassList("fm-activity-swap-item--active");
-
-                    var radio = new VisualElement();
-                    radio.AddToClassList("fm-activity-swap-item-radio");
-                    if (isSelected) radio.AddToClassList("fm-activity-swap-item-radio--active");
-                    row.Add(radio);
-
-                    var label = new Unity.AppUI.UI.Text();
-                    label.AddToClassList("fm-activity-swap-item-text");
-                    label.text = ActivityEventMapper.GetSwapDisplayName(swap);
-                    row.Add(label);
-
-                    string capturedSwap = swap;
-                    row.RegisterCallback<ClickEvent>(_ =>
-                    {
-                        _audioService?.PlaySfx(SfxType.PositiveButton);
-                        _viewModel?.SelectSwapOption(capturedSwap);
-                    });
-
-                    _swapOptionsList.Add(row);
-                }
+                return;
             }
-            else
+
+            container.Clear();
+            foreach (MissionModuleLink module in modules)
             {
-                _swapContainer.style.display = DisplayStyle.None;
+                MissionModuleLink captured = module;
+                var button = new FMButton
+                {
+                    title = Localize(module.ButtonKey),
+                    variant = variant,
+                    size = Size.L,
+                    trailingIcon = "fm-arrow-right"
+                };
+                button.AddToClassList("fm-mission-btn");
+                button.AddToClassList("fm-button");
+                button.AddToClassList("fm-button-align-left");
+                button.clicked += () =>
+                {
+                    _audioService?.PlaySfx(SfxType.PositiveButton);
+                    _viewModel?.OpenModule(captured);
+                };
+                container.Add(button);
             }
         }
 
-        private void UpdateTabSelection()
+        private void OnTellNutriClicked()
         {
-            if (_viewModel == null) return;
-
-            bool isAppTab = _viewModel.SelectedTabIndex == 0;
-
-            if (_tabBtnApp != null)
-            {
-                if (isAppTab) _tabBtnApp.AddToClassList("fm-activity-tab-btn--active");
-                else _tabBtnApp.RemoveFromClassList("fm-activity-tab-btn--active");
-            }
-
-            if (_tabBtnDirect != null)
-            {
-                if (!isAppTab) _tabBtnDirect.AddToClassList("fm-activity-tab-btn--active");
-                else _tabBtnDirect.RemoveFromClassList("fm-activity-tab-btn--active");
-            }
-
-            if (_tabContentApp != null)
-            {
-                _tabContentApp.style.display = isAppTab ? DisplayStyle.Flex : DisplayStyle.None;
-            }
-
-            if (_tabContentDirect != null)
-            {
-                _tabContentDirect.style.display = !isAppTab ? DisplayStyle.Flex : DisplayStyle.None;
-            }
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            _viewModel?.OpenCheckIn();
         }
 
-        private void UpdateStepper()
+        private void OnLaterClicked()
         {
-            if (_viewModel == null || _stepperCountLabel == null) return;
-            _stepperCountLabel.text = _viewModel.SelectedCount.ToString();
-        }
-
-        private void UpdateDirectReportState()
-        {
-            if (_viewModel == null) return;
-
-            if (_directFeedbackLabel != null)
-            {
-                if (_viewModel.ReportSuccess)
-                {
-                    _directFeedbackLabel.style.display = DisplayStyle.Flex;
-                    _directFeedbackLabel.text = _viewModel.SuccessMessage ?? "¡Registrado con éxito!";
-                }
-                else
-                {
-                    _directFeedbackLabel.style.display = DisplayStyle.None;
-                }
-            }
-
-            if (_btnSubmitDirect != null)
-            {
-                _btnSubmitDirect.SetEnabled(!_viewModel.IsReportingDirect);
-            }
+            // "Más tarde" only leaves the screen
+            ResetNutriToIdle();
+            _navController?.PopBackStack();
         }
 
         private void UpdateApiErrorState()
         {
-            if (_viewModel?.ErrorDetail != null)
+            if (_viewModel?.ErrorDetail == null)
             {
-                FMDialog.ShowApiError(
-                    this,
-                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"),
-                    _viewModel.ErrorDetail,
-                    onOk: () => { }
-                );
-                _viewModel.ErrorDetail = null;
+                return;
             }
+
+            FMDialog.ShowApiError(this, Localize("ERROR_TITLE"), _viewModel.ErrorDetail);
+            _viewModel.ErrorDetail = null;
+        }
+
+        private static string Localize(string key)
+        {
+            return LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
         }
     }
 }

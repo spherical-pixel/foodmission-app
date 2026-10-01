@@ -57,6 +57,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string onboardinggoals_to_onboardingsurvey = "onboardinggoals_to_onboardingsurvey";
         public const string editprofile_to_onboardinggoals = "editprofile_to_onboardinggoals";
         public const string go_to_food_comparison = "go_to_food_comparison";
+        public const string open_mission_checkin = "open_mission_checkin";
     }
     public static partial class Destinations
     {

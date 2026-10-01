@@ -1,154 +1,147 @@
 using System;
 using System.Threading.Tasks;
+
 using Moq;
 using NUnit.Framework;
+
+using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 
 namespace eu.foodmission.platform.Tests
 {
     [TestFixture]
     public class MissionDetailViewModelTests
     {
-        private Mock<IMissionService> _mockMissionService;
-        private Mock<IEventService> _mockEventService;
-        private Mock<IDimensionService> _mockDimensionService;
-        private Mock<IActivityEventMapper> _mockActivityEventMapper;
-        private TestStoreService _storeService;
+        private Mock<IMissionService> _missions;
+        private Mock<IDimensionService> _dimensions;
+        private Mock<IQuestService> _quests;
+        private TestStoreService _store;
         private MissionDetailViewModel _vm;
-        private Func<bool> _originalOverride;
+        private string _navAction;
+        private Argument[] _navArgs;
 
         [SetUp]
         public void SetUp()
         {
-            _originalOverride = FoodProductFlow.UseDirectClientOverride;
-            FoodProductFlow.UseDirectClientOverride = () => false;
-
-            _mockMissionService = new Mock<IMissionService>();
-            _mockEventService = new Mock<IEventService>();
-            _mockDimensionService = new Mock<IDimensionService>();
-            _mockActivityEventMapper = new Mock<IActivityEventMapper>();
-            _storeService = new TestStoreService();
-            _storeService.SetAppState(new AppState
+            _navAction = null;
+            _navArgs = null;
+            _missions = new Mock<IMissionService>();
+            _dimensions = new Mock<IDimensionService>();
+            _dimensions.Setup(d => d.IsLoaded).Returns(true);
+            _quests = new Mock<IQuestService>();
+            _store = new TestStoreService();
+            _store.SetAppState(new AppState { userId = "u1", userCurrentQuestId = "q1", lang = "es" });
+            _quests.Setup(q => q.GetQuestAsync("q1", null)).ReturnsAsync((new Quest
             {
-                accessToken = "test-token",
-                tokenType = "Bearer",
-                lang = "es"
-            });
-
-            _vm = new MissionDetailViewModel(
-                _storeService,
-                _mockMissionService.Object,
-                _mockDimensionService.Object,
-                _mockEventService.Object,
-                _mockActivityEventMapper.Object
-            );
+                id = "q1",
+                items = new[]
+                {
+                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B1.4" },
+                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.A2.1" }
+                }
+            }, (ApiErrorResponse)null));
+            _vm = new MissionDetailViewModel(_store, _missions.Object, _dimensions.Object, _quests.Object);
+            _vm.NavigationRequested += (action, args) => { _navAction = action; _navArgs = args; };
         }
 
         [TearDown]
         public void TearDown()
         {
-            FoodProductFlow.UseDirectClientOverride = _originalOverride;
             _vm?.Dispose();
         }
 
-        [Test]
-        public void InitialState_ShouldHaveDefaultValues()
+        private Task LoadAsync(string code, float progress = 0f, bool completed = false)
         {
+            _missions.Setup(m => m.GetMissionAsync(code, null)).ReturnsAsync((new Mission { id = "id", code = code, title = "T", level = "BEGINNER" }, (ApiErrorResponse)null));
+            _missions.Setup(m => m.GetMissionProgressAsync(code, null)).ReturnsAsync((new MissionProgress { missionCode = code, progress = progress, completed = completed }, (ApiErrorResponse)null));
+            return _vm.LoadMissionAsync(code);
+        }
+
+        [Test]
+        public async Task Load_CurrentQuestMission_CanActWithCatalogModules()
+        {
+            await LoadAsync("M.B1.4", 40f);
+
+            Assert.AreSame(MissionInteractionCatalog.Get("M.B1.4"), _vm.Interaction);
+            Assert.IsTrue(_vm.IsCurrentQuestMission);
+            Assert.IsTrue(_vm.CanAct);
+            Assert.AreEqual(40, _vm.ProgressPercent);
+            Assert.AreSame(MissionInteractionCatalog.QuickMealLog, _vm.AutoModules[0]);
+            Assert.AreEqual("CHALLENGE_LEVEL_BEGINNER", _vm.LevelKey);
+        }
+
+        [Test]
+        public async Task Load_MissionOutsideCurrentQuest_CannotAct()
+        {
+            await LoadAsync("M.B2.1");
+
+            Assert.IsFalse(_vm.IsCurrentQuestMission);
+            Assert.IsFalse(_vm.CanAct);
+            Assert.IsTrue(_vm.ShowsNotCurrentQuest);
+            Assert.AreEqual(0, _vm.HelperModules.Count);
+        }
+
+        [Test]
+        public async Task Load_PendingRule_IsNotAvailable()
+        {
+            await LoadAsync("M.A2.1");
+
+            Assert.IsTrue(_vm.IsPendingRule);
+            Assert.IsFalse(_vm.CanAct);
+            Assert.IsFalse(_vm.ShowsNotCurrentQuest);
+        }
+
+        [Test]
+        public async Task Load_Completed_CannotAct()
+        {
+            await LoadAsync("M.B1.4", 100f, true);
+
+            Assert.IsTrue(_vm.IsCompleted);
+            Assert.IsFalse(_vm.CanAct);
+        }
+
+        [Test]
+        public async Task OpenCheckIn_NavigatesWithMissionCode()
+        {
+            await LoadAsync("M.B1.4");
+
+            _vm.OpenCheckIn();
+
+            Assert.AreEqual(Actions.open_mission_checkin, _navAction);
+            Assert.AreEqual("code", _navArgs[0].name);
+            Assert.AreEqual("M.B1.4", _navArgs[0].value);
+        }
+
+        [Test]
+        public async Task OpenCheckIn_WhenCannotAct_DoesNothing()
+        {
+            await LoadAsync("M.B2.1");
+
+            _vm.OpenCheckIn();
+
+            Assert.IsNull(_navAction);
+        }
+
+        [Test]
+        public async Task OpenModule_NavigatesToModuleAction()
+        {
+            await LoadAsync("M.B1.4");
+
+            _vm.OpenModule(_vm.AutoModules[0]);
+
+            Assert.AreEqual(Actions.open_quick_meal_log, _navAction);
+        }
+
+        [Test]
+        public async Task Load_MissionError_SetsErrorDetail()
+        {
+            var error = new ApiErrorResponse { message = "404" };
+            _missions.Setup(m => m.GetMissionAsync("M.B1.4", null)).ReturnsAsync(((Mission)null, error));
+
+            await _vm.LoadMissionAsync("M.B1.4");
+
+            Assert.AreSame(error, _vm.ErrorDetail);
             Assert.IsFalse(_vm.IsLoading);
-            Assert.IsNull(_vm.Mission);
-            Assert.IsNull(_vm.MissionProgress);
-            Assert.AreEqual(0, _vm.SelectedTabIndex);
-            Assert.AreEqual(1, _vm.SelectedCount);
-        }
-
-        [Test]
-        public async Task LoadMissionAsync_WhenSuccessful_SetsMissionProgressAndMapping()
-        {
-            var mission = new Mission
-            {
-                id = "m-1",
-                code = "M.A1.1",
-                title = "Stay in the Green Zone",
-                goal = "Remain below 4 meat meals per week",
-                dimensionId = "dim-1",
-                level = "ADVANCED"
-            };
-
-            var progress = new MissionProgress
-            {
-                missionId = "m-1",
-                completed = false,
-                progress = 50f
-            };
-
-            var mapping = new ActivityMapping
-            {
-                ActivityCode = "M.A1.1",
-                TargetEventTypes = new[] { ClientEventTypes.MealMeatConsumed },
-                NativeModuleAction = "go_to_meallog",
-                QuestionType = DirectQuestionType.CountStepper
-            };
-
-            _mockMissionService.Setup(s => s.GetMissionAsync("M.A1.1", It.IsAny<string>()))
-                .ReturnsAsync((mission, null));
-            _mockMissionService.Setup(s => s.GetMissionProgressAsync("M.A1.1", It.IsAny<string>()))
-                .ReturnsAsync((progress, null));
-            _mockActivityEventMapper.Setup(m => m.GetMissionMapping("M.A1.1"))
-                .Returns(mapping);
-
-            await _vm.LoadMissionAsync("M.A1.1");
-
-            Assert.IsNotNull(_vm.Mission);
-            Assert.AreEqual("M.A1.1", _vm.Mission.code);
-            Assert.IsNotNull(_vm.MissionProgress);
-            Assert.AreEqual(50f, _vm.MissionProgress.progress);
-            Assert.IsNotNull(_vm.Mapping);
-            Assert.AreEqual("go_to_meallog", _vm.Mapping.NativeModuleAction);
-        }
-
-        [Test]
-        public async Task SubmitDirectReportAsync_EmitsClientEventAndSetsSuccess()
-        {
-            var mission = new Mission { id = "m-1", code = "M.A1.1" };
-            var mapping = new ActivityMapping
-            {
-                ActivityCode = "M.A1.1",
-                TargetEventTypes = new[] { ClientEventTypes.MealMeatConsumed },
-                QuestionType = DirectQuestionType.CountStepper
-            };
-
-            _vm.Mission = mission;
-            _vm.Mapping = mapping;
-            _vm.SelectedCount = 2;
-
-            _mockEventService.Setup(s => s.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()))
-                .ReturnsAsync((new UserEvent { id = "ev-1", eventType = ClientEventTypes.MealMeatConsumed }, null));
-
-            bool success = await _vm.SubmitDirectReportAsync();
-
-            Assert.IsTrue(success);
-            Assert.IsTrue(_vm.ReportSuccess);
-            _mockEventService.Verify(s => s.RecordClientEventAsync(It.Is<CreateClientEventRequest>(
-                r => r.eventType == ClientEventTypes.MealMeatConsumed
-            )), Times.Once);
-        }
-
-        [Test]
-        public void Stepper_IncrementAndDecrement_ClampsCorrectly()
-        {
-            _vm.SelectedCount = 1;
-            _vm.Mapping = new ActivityMapping { MaxCount = 5, DefaultCount = 1 };
-
-            _vm.IncrementCount();
-            Assert.AreEqual(2, _vm.SelectedCount);
-
-            _vm.DecrementCount();
-            Assert.AreEqual(1, _vm.SelectedCount);
-
-            _vm.DecrementCount();
-            Assert.AreEqual(0, _vm.SelectedCount);
-
-            _vm.DecrementCount(); // Below zero clamp
-            Assert.AreEqual(0, _vm.SelectedCount);
         }
     }
 }

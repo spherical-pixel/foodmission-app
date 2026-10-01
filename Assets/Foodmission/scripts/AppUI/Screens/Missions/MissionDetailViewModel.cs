@@ -1,18 +1,24 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
+
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
     [ObservableObject]
     public partial class MissionDetailViewModel : ViewModelBase
     {
+        private static readonly IReadOnlyList<MissionModuleLink> NoModules = Array.Empty<MissionModuleLink>();
+
         private readonly IMissionService _missionService;
         private readonly IDimensionService _dimensionService;
-        private readonly IEventService _eventService;
-        private readonly IActivityEventMapper _activityEventMapper;
+        private readonly IQuestService _questService;
 
         [ObservableProperty]
         private bool _isLoading;
@@ -21,57 +27,80 @@ namespace eu.foodmission.platform
         private Mission _mission;
 
         [ObservableProperty]
-        private MissionProgress _missionProgress;
-
-        [ObservableProperty]
-        private ActivityMapping _mapping;
-
-        [ObservableProperty]
         private Dimension _dimension;
 
         [ObservableProperty]
-        private int _selectedTabIndex; // 0: Native App Module, 1: Direct Report
-
-        [ObservableProperty]
-        private int _selectedCount = 1;
-
-        [ObservableProperty]
-        private string _selectedSwapOption = "";
-
-        [ObservableProperty]
-        private bool _isReportingDirect;
-
-        [ObservableProperty]
-        private bool _reportSuccess;
-
-        [ObservableProperty]
-        private string _successMessage = "";
-
-        [ObservableProperty]
         private ApiErrorResponse _errorDetail;
+
+        private MissionInteraction _interaction = MissionInteraction.Unknown;
+        public MissionInteraction Interaction
+        {
+            get => _interaction;
+            private set
+            {
+                if (SetProperty(ref _interaction, value ?? MissionInteraction.Unknown))
+                {
+                    NotifyStateChanged();
+                }
+            }
+        }
+
+        private MissionProgress _missionProgress;
+        public MissionProgress MissionProgress
+        {
+            get => _missionProgress;
+            private set
+            {
+                if (SetProperty(ref _missionProgress, value))
+                {
+                    NotifyStateChanged();
+                }
+            }
+        }
+
+        private bool _isCurrentQuestMission;
+        public bool IsCurrentQuestMission
+        {
+            get => _isCurrentQuestMission;
+            private set
+            {
+                if (SetProperty(ref _isCurrentQuestMission, value))
+                {
+                    NotifyStateChanged();
+                }
+            }
+        }
+
+        public int ProgressPercent => (int)Math.Clamp(MissionProgress?.progress ?? 0f, 0f, 100f);
+        public bool IsCompleted => MissionProgress?.completed == true || (MissionProgress?.progress ?? 0f) >= 100f;
+        public bool IsPendingRule => Mission != null && Interaction.Status == MissionInteractionStatus.PendingRule;
+        public bool CanAct => Mission != null && !IsCompleted && !IsPendingRule && IsCurrentQuestMission;
+        public bool ShowsNotCurrentQuest => Mission != null && !IsCompleted && !IsPendingRule && !IsCurrentQuestMission;
+        public IReadOnlyList<MissionModuleLink> AutoModules => CanAct ? Interaction.AutoModules : NoModules;
+        public IReadOnlyList<MissionModuleLink> HelperModules => CanAct ? Interaction.HelperModules : NoModules;
+        /// <summary>UI.csv key for the level badge (shared with challenges); null when unknown.</summary>
+        public string LevelKey => string.IsNullOrEmpty(Mission?.level) ? null : $"CHALLENGE_LEVEL_{Mission.level.Trim().ToUpperInvariant()}";
 
         public MissionDetailViewModel(
             IStoreService storeService,
             IMissionService missionService,
             IDimensionService dimensionService,
-            IEventService eventService,
-            IActivityEventMapper activityEventMapper) : base(storeService)
+            IQuestService questService) : base(storeService)
         {
             _missionService = missionService;
             _dimensionService = dimensionService;
-            _eventService = eventService;
-            _activityEventMapper = activityEventMapper;
+            _questService = questService;
         }
 
         public async Task LoadMissionAsync(string codeOrId, bool forceRefresh = false)
         {
-            if (string.IsNullOrEmpty(codeOrId)) return;
+            if (string.IsNullOrEmpty(codeOrId))
+            {
+                return;
+            }
 
             IsLoading = true;
             ErrorDetail = null;
-            ReportSuccess = false;
-            SuccessMessage = "";
-
             try
             {
                 if (_dimensionService != null && (!_dimensionService.IsLoaded || forceRefresh))
@@ -79,134 +108,81 @@ namespace eu.foodmission.platform
                     await _dimensionService.PreloadAsync(force: forceRefresh);
                 }
 
-                var (mission, missionErr) = await _missionService.GetMissionAsync(codeOrId);
-                if (missionErr != null)
+                var (mission, missionError) = await _missionService.GetMissionAsync(codeOrId);
+                if (missionError != null)
                 {
-                    ErrorDetail = missionErr;
+                    ErrorDetail = missionError;
                     return;
                 }
+
                 Mission = mission;
+                Interaction = MissionInteractionCatalog.Get(mission?.code ?? codeOrId);
 
                 var (progress, _) = await _missionService.GetMissionProgressAsync(codeOrId);
                 MissionProgress = progress;
 
-                if (_activityEventMapper != null && Mission != null)
-                {
-                    Mapping = _activityEventMapper.GetMissionMapping(Mission.code);
-                    SelectedCount = Mapping?.DefaultCount ?? 1;
-                    if (Mapping?.SwapOptions != null && Mapping.SwapOptions.Length > 0)
-                    {
-                        SelectedSwapOption = Mapping.SwapOptions[0];
-                    }
-                }
+                IsCurrentQuestMission = await IsInCurrentQuestAsync(mission?.code ?? codeOrId);
 
-                if (_dimensionService != null && Mission != null && !string.IsNullOrEmpty(Mission.dimensionId))
+                if (_dimensionService != null && !string.IsNullOrEmpty(mission?.dimensionId))
                 {
-                    Dimension = _dimensionService.GetDimension(Mission.dimensionId);
+                    Dimension = _dimensionService.GetDimension(mission.dimensionId);
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[{GetType().Name}] LoadMissionAsync error: {ex.Message}");
+                Debug.LogError($"[MissionDetailViewModel] LoadMissionAsync error: {ex.Message}");
+                ErrorDetail = new ApiErrorResponse { message = ex.Message };
             }
             finally
             {
                 IsLoading = false;
+                NotifyStateChanged();
             }
         }
 
-        public void SetTabIndex(int index)
+        public void OpenModule(MissionModuleLink module)
         {
-            SelectedTabIndex = Math.Clamp(index, 0, 1);
-        }
-
-        public void IncrementCount()
-        {
-            int max = Mapping?.MaxCount ?? 7;
-            SelectedCount = Math.Min(SelectedCount + 1, max);
-        }
-
-        public void DecrementCount()
-        {
-            SelectedCount = Math.Max(SelectedCount - 1, 0);
-        }
-
-        public void SelectSwapOption(string swap)
-        {
-            SelectedSwapOption = swap ?? "";
-        }
-
-        public void NavigateToNativeModule()
-        {
-            if (Mapping == null || string.IsNullOrEmpty(Mapping.NativeModuleAction)) return;
-            RaiseNavigationRequested(Mapping.NativeModuleAction);
-        }
-
-        public async Task<bool> SubmitDirectReportAsync()
-        {
-            if (Mission == null || Mapping == null) return false;
-            if (_eventService == null) return false;
-
-            IsReportingDirect = true;
-            ReportSuccess = false;
-            ErrorDetail = null;
-
-            try
+            if (!CanAct || module == null || string.IsNullOrEmpty(module.Action))
             {
-                string targetEventType = ClientEventTypes.MealLogged;
-                if (Mapping.QuestionType == DirectQuestionType.SwapSelector && !string.IsNullOrEmpty(SelectedSwapOption))
-                {
-                    targetEventType = SelectedSwapOption;
-                }
-                else if (Mapping.TargetEventTypes != null && Mapping.TargetEventTypes.Length > 0)
-                {
-                    targetEventType = Mapping.TargetEventTypes[0];
-                }
-
-                var request = new CreateClientEventRequest
-                {
-                    eventType = targetEventType,
-                    metadata = new
-                    {
-                        missionCode = Mission.code,
-                        missionId = Mission.id,
-                        count = SelectedCount,
-                        sessionId = _eventService.CurrentSessionId,
-                        reportedVia = "direct_nutri_dialog"
-                    }
-                };
-
-                var (result, err) = await _eventService.RecordClientEventAsync(request);
-                if (err != null)
-                {
-                    ErrorDetail = err;
-                    return false;
-                }
-
-                ReportSuccess = true;
-                SuccessMessage = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MISSION_REPORT_SUCCESS");
-
-                // Reload mission progress to reflect backend evaluator update
-                if (!string.IsNullOrEmpty(Mission.code))
-                {
-                    var (updatedProgress, _) = await _missionService.GetMissionProgressAsync(Mission.code);
-                    if (updatedProgress != null)
-                    {
-                        MissionProgress = updatedProgress;
-                    }
-                }
-
-                return true;
+                return;
             }
-            catch (Exception ex)
+            RaiseNavigationRequested(module.Action);
+        }
+
+        public void OpenCheckIn()
+        {
+            if (!CanAct || !Interaction.CanReport)
             {
-                Debug.LogError($"[{GetType().Name}] SubmitDirectReportAsync error: {ex.Message}");
+                return;
+            }
+            RaiseNavigationRequested(Actions.open_mission_checkin, new Argument("code", Mission.code));
+        }
+
+        private async Task<bool> IsInCurrentQuestAsync(string missionCode)
+        {
+            string questId = _storeService?.GetAppState()?.userCurrentQuestId;
+            if (string.IsNullOrEmpty(questId) || _questService == null || string.IsNullOrEmpty(missionCode))
+            {
                 return false;
             }
-            finally
-            {
-                IsReportingDirect = false;
-            }
+
+            var (quest, _) = await _questService.GetQuestAsync(questId);
+            return quest?.items?.Any(i =>
+                i != null &&
+                string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(i.contentCode, missionCode, StringComparison.OrdinalIgnoreCase)) == true;
+        }
+
+        private void NotifyStateChanged()
+        {
+            OnPropertyChanged(nameof(ProgressPercent));
+            OnPropertyChanged(nameof(IsCompleted));
+            OnPropertyChanged(nameof(IsPendingRule));
+            OnPropertyChanged(nameof(CanAct));
+            OnPropertyChanged(nameof(ShowsNotCurrentQuest));
+            OnPropertyChanged(nameof(AutoModules));
+            OnPropertyChanged(nameof(HelperModules));
+            OnPropertyChanged(nameof(LevelKey));
         }
     }
 }

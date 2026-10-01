@@ -1,274 +1,172 @@
-.fm-activity-detail-root {
+.hidden {
+    display: none;
+}
+
+.fm-mission-root {
     flex-grow: 0;
     flex-shrink: 0;
+    width: 100%;
+    min-height: 100%;
     height: auto;
-    display: flex;
-    flex-direction: column;
+    align-items: stretch;
 }
 
-.fm-activity-detail-card {
-    background-color: var(--appui-backgrounds-200);
-    border-radius: 24px;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    flex-grow: 0;
+.fm-mission-nutri {
+    height: 720px;
+    margin-bottom: 0;
     flex-shrink: 0;
 }
 
-.fm-activity-header-badges {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 12px;
+.fm-mission-card {
+    background-color: var(--fm-surface-bg-transparent-80);
+    border-radius: 44px;
+    padding: 35px;
+    margin: 0 16px 16px 16px;
+    align-items: stretch;
+    height: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    translate: 0 0;
+    opacity: 1;
+    transition-property: translate, opacity;
+    transition-duration: 0.45s;
+    transition-timing-function: ease-out-cubic;
 }
 
-.fm-activity-badge {
-    align-self: flex-start;
-    margin-right: 8px;
+.fm-mission-card--entering {
+    translate: 0 120px;
+    opacity: 0;
+    transition-duration: 0s;
 }
 
-.fm-activity-title {
+.fm-mission-badge {
+    align-self: center;
+    border-radius: 32px;
+    padding: 12px 25px;
+    background-color: var(--fm-surface-bg);
+    color: var(--appui-primary-100);
     -unity-font-style: bold;
-    margin-bottom: 16px;
-    white-space: normal;
-    color: var(--appui-foregrounds-50);
-}
-
-.fm-activity-section {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 20px;
+    white-space: nowrap;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
 }
 
-.fm-activity-section-title {
-    -unity-font-style: bold;
-    margin-bottom: 8px;
-    color: var(--appui-foregrounds-100);
-}
-
-.fm-activity-why-text {
+.fm-mission-title {
     color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
     white-space: normal;
+    margin-bottom: 16px;
+    flex-shrink: 0;
 }
 
-/* =========================================================================
-   PROGRESS CARD
-   ========================================================================= */
-
-.fm-activity-progress-card {
-    background-color: var(--appui-backgrounds-100);
-    border-radius: 16px;
-    padding: 16px 20px;
+.fm-mission-goal {
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    white-space: normal;
     margin-bottom: 24px;
-    width: 100%;
-}
-
-.fm-activity-progress-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 12px;
-    min-height: 28px;
-}
-
-.fm-activity-progress-title {
-    -unity-font-style: bold;
-    color: var(--appui-foregrounds-100);
-    flex-grow: 1;
-    flex-shrink: 1;
-    white-space: nowrap;
-    overflow: visible;
-}
-
-.fm-activity-progress-pct {
-    -unity-font-style: bold;
-    color: var(--appui-primary-800);
     flex-shrink: 0;
-    white-space: nowrap;
-    margin-left: 16px;
-    -unity-text-align: middle-right;
-    overflow: visible;
 }
 
-.fm-activity-progress-track {
-    width: 100%;
-    height: 12px;
-    background-color: var(--appui-backgrounds-300);
-    border-radius: 6px;
-    overflow: hidden;
+.fm-mission-why-box {
+    background-color: var(--fm-surface-bg);
+    border-radius: 32px;
+    padding: 25px;
+    margin-bottom: 24px;
+    height: auto;
+    flex-shrink: 0;
 }
 
-.fm-activity-progress-fill {
-    height: 100%;
-    width: 0%;
-    background-color: var(--appui-primary-800);
-    border-radius: 6px;
-}
-
-/* =========================================================================
-   TWO-TAB SELECTOR
-   ========================================================================= */
-
-.fm-activity-tabs-header {
-    display: flex;
-    flex-direction: row;
-    background-color: var(--appui-backgrounds-100);
-    border-radius: 16px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.fm-activity-tab-btn {
-    flex-grow: 1;
-    height: 140px;
-    border-radius: 12px;
-    border-width: 0;
-    background-color: transparent;
-    color: var(--appui-foregrounds-200);
+.fm-mission-why-title {
+    color: var(--appui-primary-100);
     -unity-font-style: bold;
-    align-items: center;
-    justify-content: center;
-    margin-left: 2px;
-    margin-right: 2px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
 }
 
-.fm-activity-tab-btn--active {
-    background-color: var(--appui-backgrounds-200);
-    color: var(--appui-primary-800);
-}
-
-.fm-activity-tab-content {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--appui-backgrounds-100);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
-}
-
-.fm-activity-tab-desc {
-    color: var(--appui-foregrounds-100);
-    margin-bottom: 20px;
+.fm-mission-why-text {
+    color: var(--appui-foregrounds-50);
     white-space: normal;
+    flex-shrink: 0;
 }
 
-.fm-activity-action-btn {
-    width: 100%;
+.fm-mission-actions {
+    align-items: stretch;
+    flex-shrink: 0;
+    flex-grow: 0;
+    height: auto;
 }
 
-/* =========================================================================
-   STEPPER CONTROLS
-   ========================================================================= */
-
-.fm-activity-stepper-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.fm-activity-stepper-title {
+.fm-mission-hint {
+    color: var(--appui-foregrounds-200);
+    -unity-text-align: middle-center;
+    white-space: normal;
     margin-bottom: 12px;
-    color: var(--appui-foregrounds-200);
+    flex-shrink: 0;
 }
 
-.fm-activity-stepper-controls {
-    display: flex;
+.fm-mission-btn {
+    width: 100%;
+    margin-top: 10px;
+    flex-shrink: 0;
+}
+
+.fm-mission-completed {
+    align-items: center;
+    margin-top: 10px;
+    flex-shrink: 0;
+}
+
+.fm-mission-completed-badge {
+    border-radius: 32px;
+    padding: 25px 35px;
+    background-color: rgb(0, 139, 58);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.fm-mission-root .fm-bottom-nav-padding {
+    flex-shrink: 0;
+}
+
+.fm-mission-progress-row {
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    margin: 8px 0 16px 0;
 }
 
-.fm-activity-stepper-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
-    border-width: 0;
-    background-color: var(--appui-primary-800);
-    color: var(--appui-backgrounds-50);
-    -unity-font-style: bold;
-    align-items: center;
-    justify-content: center;
-}
-
-.fm-activity-stepper-value {
-    -unity-font-style: bold;
-    min-width: 40px;
-    -unity-text-align: middle-center;
-    color: var(--appui-foregrounds-50);
-    margin-left: 16px;
-    margin-right: 16px;
-}
-
-.fm-activity-feedback-text {
-    color: #649E82;
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
-    margin-bottom: 16px;
-}
-
-/* =========================================================================
-   SWAP OPTIONS SELECTOR
-   ========================================================================= */
-
-.fm-activity-swap-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-}
-
-.fm-activity-swap-title {
-    margin-bottom: 8px;
-    color: var(--appui-foregrounds-200);
-    -unity-font-style: bold;
-}
-
-.fm-activity-swap-list {
-    display: flex;
-    flex-direction: column;
-}
-
-.fm-activity-swap-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: var(--appui-backgrounds-200);
-    border-radius: 12px;
-    padding: 10px 14px;
-    margin-bottom: 8px;
-    border-width: 2px;
-    border-color: transparent;
-}
-
-.fm-activity-swap-item--active {
-    border-color: var(--appui-primary-800);
-    background-color: var(--appui-primary-100);
-}
-
-.fm-activity-swap-item-radio {
-    width: 18px;
-    height: 18px;
-    border-radius: 9px;
-    border-width: 2px;
-    border-color: var(--appui-foregrounds-200);
-    background-color: transparent;
-    margin-right: 10px;
-    align-items: center;
-    justify-content: center;
-}
-
-.fm-activity-swap-item-radio--active {
-    border-color: var(--appui-primary-800);
-    background-color: var(--appui-primary-800);
-}
-
-.fm-activity-swap-item-text {
+.fm-mission-progress-track {
     flex-grow: 1;
-    color: var(--appui-foregrounds-50);
+    height: 16px;
+    border-radius: 8px;
+    background-color: var(--fm-surface-bg);
+    overflow: hidden;
+    margin-right: 12px;
+}
+
+.fm-mission-progress-fill {
+    height: 100%;
+    width: 0;
+    background-color: var(--appui-accent-100);
+}
+
+.fm-mission-progress-label {
     -unity-font-style: bold;
+}
+
+.fm-mission-status {
+    -unity-text-align: middle-center;
     white-space: normal;
+    margin: 12px 0;
+}
+
+.fm-mission-module-list {
+    flex-shrink: 0;
+}
+
+.fm-mission-module-list > .fm-mission-btn {
+    margin-bottom: 12px;
 }
