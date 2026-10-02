@@ -135,7 +135,7 @@
 .fm-mission-progress-row {
     flex-direction: row;
     align-items: center;
-    margin: 8px 0 16px 0;
+    margin: 10px 15px 20px 15px;
 }
 
 .fm-mission-progress-track {
@@ -150,11 +150,13 @@
 .fm-mission-progress-fill {
     height: 100%;
     width: 0;
-    background-color: var(--appui-accent-100);
+    background-color: var(--appui-primary-100);
 }
 
 .fm-mission-progress-label {
     -unity-font-style: bold;
+    white-space: nowrap;
+
 }
 
 .fm-mission-status {
