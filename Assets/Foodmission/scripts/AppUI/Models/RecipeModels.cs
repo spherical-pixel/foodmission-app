@@ -40,6 +40,9 @@ namespace eu.foodmission.platform
         public string[] allergens;
         public RecipeNutritionalInfo nutritionalInfo;
         public RecipeIngredient[] ingredients;
+        /// <summary>"THEMEALDB" (imported; externalId = TheMealDB idMeal) or "USER" (community).</summary>
+        public string origin;
+        public string externalId;
     }
 
     [Serializable]

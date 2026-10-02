@@ -4221,6 +4221,26 @@ MonoBehaviour:
     m_Localized: "Povpre\u010Dna ocena {0:0.0} od 5 ({1})"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347536
+    m_Localized: Vse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347537
+    m_Localized: TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347538
+    m_Localized: Skupnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347539
+    m_Localized: 'Vir: TheMealDB'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347540
+    m_Localized: "\U0001F465 Recept skupnosti"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

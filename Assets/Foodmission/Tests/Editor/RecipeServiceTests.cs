@@ -105,5 +105,15 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+
+        [Test]
+        public void BuildRecipesListUrl_AddsOriginOnlyWhenSet()
+        {
+            string withOrigin = RecipeService.BuildRecipesListUrl("https://api.test", 1, 20, "es", null, null, null, null, null, null, "USER");
+            string without = RecipeService.BuildRecipesListUrl("https://api.test", 2, 20, "es", "pasta", null, null, null, null, null, null);
+
+            Assert.AreEqual("https://api.test/api/v1/recipes?page=1&limit=20&lang=es&origin=USER", withOrigin);
+            Assert.AreEqual("https://api.test/api/v1/recipes?page=2&limit=20&lang=es&search=pasta", without);
+        }
     }
 }

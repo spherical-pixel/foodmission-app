@@ -23,6 +23,9 @@ namespace eu.foodmission.platform
         private Heading _recipeTitle;
         private Text _ratingText;
         private FMStarRating _ratingStars;
+        private VisualElement _recipeSource;
+        private Text _recipeSourceText;
+        private Icon _recipeSourceIcon;
         private VisualElement _rateCard;
         private Heading _rateTitle;
         private FMStarRating _rateStars;
@@ -72,6 +75,10 @@ namespace eu.foodmission.platform
             _recipeTitle = contentContainer.Q<Heading>("recipe-title");
             _ratingText = contentContainer.Q<Text>("rating-text");
             _ratingStars = contentContainer.Q<FMStarRating>("rating-stars");
+            _recipeSource = contentContainer.Q<VisualElement>("recipe-source");
+            _recipeSourceText = contentContainer.Q<Text>("recipe-source-text");
+            _recipeSourceIcon = contentContainer.Q<Icon>("recipe-source-icon");
+            _recipeSource?.AddManipulator(new UnityEngine.UIElements.Clickable(OnSourceClicked));
             _rateCard = contentContainer.Q<VisualElement>("rate-card");
             _rateTitle = contentContainer.Q<Heading>("rate-title");
             _rateStars = contentContainer.Q<FMStarRating>("rate-stars");
@@ -256,6 +263,7 @@ namespace eu.foodmission.platform
             Debug.Log($"[RecipeDetailScreen] RebuildAll: title='{r.title}', category='{r.category}', cuisineType='{r.cuisineType}', servings={r.servings}, eco={r.sustainabilityScore}");
 
             if (_recipeTitle != null) _recipeTitle.text = r.title ?? "";
+            UpdateSourceLine();
             UpdateRatingUI();
 
             if (_description != null)
@@ -758,6 +766,36 @@ namespace eu.foodmission.platform
             _btnAddToShoppingList?.SetEnabled(!_viewModel.IsAddingToShoppingList);
         }
 
+        private void UpdateSourceLine()
+        {
+            if (_recipeSource == null)
+            {
+                return;
+            }
+            Recipe recipe = _viewModel?.Recipe;
+            string url = RecipeOriginLinks.SourceUrl(recipe);
+            string key = url != null
+                ? "RECIPE_SOURCE_THEMEALDB"
+                : recipe?.origin == RecipeOriginLinks.CommunityOrigin ? "RECIPE_SOURCE_COMMUNITY" : null;
+
+            _recipeSource.EnableInClassList("fm-rd-action--hidden", key == null);
+            _recipeSource.EnableInClassList("fm-rd-source--link", url != null);
+            _recipeSourceIcon?.EnableInClassList("fm-rd-action--hidden", url == null);
+            if (_recipeSourceText != null)
+            {
+                _recipeSourceText.text = key != null ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", key) : "";
+            }
+        }
+
+        private void OnSourceClicked()
+        {
+            string url = RecipeOriginLinks.SourceUrl(_viewModel?.Recipe);
+            if (url != null)
+            {
+                Application.OpenURL(url);
+            }
+        }
+
         private void UpdateRatingUI()
         {
             if (_viewModel == null)
@@ -835,6 +873,18 @@ namespace eu.foodmission.platform
                 var summaryNode = _accessibilityHierarchy.AddNode(summary);
                 summaryNode.role = UnityEngine.Accessibility.AccessibilityRole.StaticText;
                 _ratingNodes.Add(summaryNode);
+            }
+
+            if (RecipeOriginLinks.SourceUrl(_viewModel.Recipe) != null && _recipeSourceText != null)
+            {
+                var sourceNode = _accessibilityHierarchy.AddNode(_recipeSourceText.text);
+                sourceNode.role = UnityEngine.Accessibility.AccessibilityRole.Button;
+                sourceNode.invoked += () =>
+                {
+                    OnSourceClicked();
+                    return true;
+                };
+                _ratingNodes.Add(sourceNode);
             }
 
             if (_viewModel.CanRate && _rateStars != null)

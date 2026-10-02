@@ -4220,6 +4220,26 @@ MonoBehaviour:
     m_Localized: Average rating {0:0.0} of 5 ({1})
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347536
+    m_Localized: All
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347537
+    m_Localized: TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347538
+    m_Localized: Community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347539
+    m_Localized: 'Source: TheMealDB'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347540
+    m_Localized: "\U0001F465 Community recipe"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

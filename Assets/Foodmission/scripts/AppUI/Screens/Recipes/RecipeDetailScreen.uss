@@ -50,6 +50,31 @@
     color: var(--appui-foregrounds-200);
 }
 
+.fm-rd-source {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.fm-rd-source__text {
+    color: var(--appui-foregrounds-50);
+    white-space: nowrap;
+}
+
+.fm-rd-source__icon {
+    margin-left: 6px;
+}
+
+.fm-rd-source--link {
+    cursor: link;
+}
+
+.fm-rd-source--link .fm-rd-source__text {
+    -unity-font-style: bold;
+}
+
 .fm-rd-rate-card {
     align-items: center;
     margin-top: 24px;

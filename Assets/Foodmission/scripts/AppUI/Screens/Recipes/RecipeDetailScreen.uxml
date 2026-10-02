@@ -16,6 +16,10 @@
                     <eu.foodmission.platform.Components.FMStarRating name="rating-stars" class="fm-star-rating--small"/>
                     <appui:Text name="rating-text" class="fm-rd-rating"/>
                 </ui:VisualElement>
+                <ui:VisualElement name="recipe-source" class="fm-rd-source fm-rd-action--hidden">
+                    <appui:Text name="recipe-source-text" text="" class="fm-rd-source__text"/>
+                    <appui:Icon name="recipe-source-icon" icon="arrow-square-out" size="S" class="fm-rd-source__icon fm-rd-action--hidden"/>
+                </ui:VisualElement>
                 <ui:VisualElement name="badges-strip" class="fm-rd-badges"/>
             </ui:VisualElement>
             <appui:Text name="description" class="fm-rd-section fm-rd-description"/>

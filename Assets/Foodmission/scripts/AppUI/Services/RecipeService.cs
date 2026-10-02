@@ -38,17 +38,12 @@ namespace eu.foodmission.platform
         public static string BuildRecipeUrl(string baseUrl, string id, string lang)
             => $"{baseUrl}/api/v1/recipes/{Uri.EscapeDataString(id)}?lang={Uri.EscapeDataString(lang ?? "en")}";
 
-        public async Task<(PaginatedRecipeResponse Result, ApiErrorResponse Error)> GetRecipesAsync(
-            string search = null,
-            string category = null,
-            string cuisineType = null,
-            string difficulty = null,
-            string[] dietaryLabels = null,
-            string[] tags = null,
-            int page = 1,
-            int limit = 20)
+        public static string BuildRecipesListUrl(
+            string baseUrl, int page, int limit, string lang,
+            string search, string category, string cuisineType, string difficulty,
+            string[] dietaryLabels, string[] tags, string origin)
         {
-            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/recipes?page={page}&limit={limit}&lang={Uri.EscapeDataString(Lang)}");
+            var sb = new StringBuilder($"{baseUrl}/api/v1/recipes?page={page}&limit={limit}&lang={Uri.EscapeDataString(lang ?? "en")}");
 
             if (!string.IsNullOrEmpty(search))
                 sb.Append($"&search={Uri.EscapeDataString(search)}");
@@ -74,8 +69,25 @@ namespace eu.foodmission.platform
                         sb.Append($"&tags={Uri.EscapeDataString(tag)}");
                 }
             }
+            if (!string.IsNullOrEmpty(origin))
+            {
+                sb.Append($"&origin={Uri.EscapeDataString(origin)}");
+            }
+            return sb.ToString();
+        }
 
-            string url = sb.ToString();
+        public async Task<(PaginatedRecipeResponse Result, ApiErrorResponse Error)> GetRecipesAsync(
+            string search = null,
+            string category = null,
+            string cuisineType = null,
+            string difficulty = null,
+            string[] dietaryLabels = null,
+            string[] tags = null,
+            int page = 1,
+            int limit = 20,
+            string origin = null)
+        {
+            string url = BuildRecipesListUrl(ApiConfig.BaseUrl, page, limit, Lang, search, category, cuisineType, difficulty, dietaryLabels, tags, origin);
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);

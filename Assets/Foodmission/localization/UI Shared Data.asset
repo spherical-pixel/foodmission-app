@@ -4103,6 +4103,26 @@ MonoBehaviour:
     m_Key: RECIPE_RATING_A11Y
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347536
+    m_Key: RECIPE_ORIGIN_ALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347537
+    m_Key: RECIPE_ORIGIN_THEMEALDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347538
+    m_Key: RECIPE_ORIGIN_COMMUNITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347539
+    m_Key: RECIPE_SOURCE_THEMEALDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347540
+    m_Key: RECIPE_SOURCE_COMMUNITY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

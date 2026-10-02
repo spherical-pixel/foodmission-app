@@ -12,7 +12,8 @@ namespace eu.foodmission.platform
             string[] dietaryLabels = null,
             string[] tags = null,
             int page = 1,
-            int limit = 20);
+            int limit = 20,
+            string origin = null);
 
         Task<(Recipe Result, ApiErrorResponse Error)> GetRecipeAsync(string id);
 

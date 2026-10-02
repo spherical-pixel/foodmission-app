@@ -4277,6 +4277,26 @@ MonoBehaviour:
     m_Localized: "\u015Arednia ocena {0:0.0} z 5 ({1})"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347536
+    m_Localized: Wszystkie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347537
+    m_Localized: TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347538
+    m_Localized: "Spo\u0142eczno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347539
+    m_Localized: "\u0179r\xF3d\u0142o: TheMealDB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347540
+    m_Localized: "\U0001F465 Przepis spo\u0142eczno\u015Bci"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

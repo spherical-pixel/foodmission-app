@@ -36,6 +36,10 @@ namespace eu.foodmission.platform
         private readonly List<string> _cuisineOptions = new();
         private readonly List<string> _cuisineCodes = new();
         private ActionGroup _groupDifficultyFilters;
+        private ActionGroup _groupOriginFilters;
+        private ActionButton _btnOriginAll;
+        private ActionButton _btnOriginTheMealDb;
+        private ActionButton _btnOriginCommunity;
         private ActionButton _btnDiffAll;
         private ActionButton _btnDiffEasy;
         private ActionButton _btnDiffMedium;
@@ -92,6 +96,10 @@ namespace eu.foodmission.platform
             _searchBar = contentContainer.Q<SearchBar>("search-bar");
             _cuisineDropdown = contentContainer.Q<Dropdown>("cuisine-dropdown");
             _groupDifficultyFilters = contentContainer.Q<ActionGroup>("group-difficulty-filters");
+            _groupOriginFilters = contentContainer.Q<ActionGroup>("group-origin-filters");
+            _btnOriginAll = contentContainer.Q<ActionButton>("btn-origin-all");
+            _btnOriginTheMealDb = contentContainer.Q<ActionButton>("btn-origin-themealdb");
+            _btnOriginCommunity = contentContainer.Q<ActionButton>("btn-origin-community");
             _btnDiffAll = contentContainer.Q<ActionButton>("btn-diff-all");
             _btnDiffEasy = contentContainer.Q<ActionButton>("btn-diff-easy");
             _btnDiffMedium = contentContainer.Q<ActionButton>("btn-diff-medium");
@@ -286,6 +294,10 @@ namespace eu.foodmission.platform
             if (_btnDiffMedium != null) _btnDiffMedium.clicked += () => _ = _viewModel?.SetDifficultyAsync("medium");
             if (_btnDiffHard != null) _btnDiffHard.clicked += () => _ = _viewModel?.SetDifficultyAsync("hard");
 
+            if (_btnOriginAll != null) _btnOriginAll.clicked += () => _ = _viewModel?.SetOriginAsync(RecipeOriginFilter.All);
+            if (_btnOriginTheMealDb != null) _btnOriginTheMealDb.clicked += () => _ = _viewModel?.SetOriginAsync(RecipeOriginFilter.TheMealDb);
+            if (_btnOriginCommunity != null) _btnOriginCommunity.clicked += () => _ = _viewModel?.SetOriginAsync(RecipeOriginFilter.Community);
+
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             UpdateTabViews();
@@ -382,6 +394,7 @@ namespace eu.foodmission.platform
                 _ => 0
             };
             _groupDifficultyFilters?.SetSelectionWithoutNotify(new[] { diffIndex });
+            _groupOriginFilters?.SetSelectionWithoutNotify(new[] { (int)_viewModel.SelectedOrigin });
 
             if (_viewForYou != null)
                 _viewForYou.style.display = _viewModel.CurrentTab == RecipeBookTab.ForYou ? DisplayStyle.Flex : DisplayStyle.None;

@@ -4222,6 +4222,26 @@ MonoBehaviour:
     m_Localized: "Valoraci\xF3n media {0:0.0} de 5 ({1})"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347536
+    m_Localized: Todas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347537
+    m_Localized: TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347538
+    m_Localized: Comunidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347539
+    m_Localized: 'Fuente: TheMealDB'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347540
+    m_Localized: "\U0001F465 Receta de la comunidad"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
