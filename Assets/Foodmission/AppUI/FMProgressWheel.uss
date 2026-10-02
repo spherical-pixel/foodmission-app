@@ -1,0 +1,146 @@
+/* Progress wheels section on Home (FMProgressWheelGrid / FMProgressWheelCard) */
+
+.fm-wheels-section {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+}
+
+.fm-wheels-section__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.fm-wheels-section__title {
+    color: var(--appui-foregrounds-200);
+    -unity-font-style: bold;
+    flex-shrink: 1;
+}
+
+.fm-wheels-section__message {
+    background-color: var(--fm-card-bg);
+    border-radius: 24px;
+    padding: 24px;
+    align-items: center;
+}
+
+.fm-wheels-section__message > * {
+    margin-bottom: 12px;
+}
+
+.fm-wheels-section--hidden {
+    display: none;
+}
+
+.fm-wheels-section__part--hidden {
+    display: none;
+}
+
+.fm-wheel-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.fm-wheel-card {
+    background-color: var(--fm-card-bg);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    align-items: center;
+    --box-shadow-offset-x: 0;
+    --box-shadow-offset-y: 4px;
+    --box-shadow-blur: 12px;
+    --box-shadow-spread: 0;
+    --box-shadow-color: rgba(0, 0, 0, 0.18);
+}
+
+.fm-wheel-grid--cols-2 > .fm-wheel-card {
+    width: 48%;
+}
+
+.fm-wheel-grid--cols-1 > .fm-wheel-card {
+    width: 100%;
+}
+
+.fm-wheel-card--horizontal {
+    flex-direction: row;
+    align-items: center;
+}
+
+.fm-wheel-card__ring-wrapper {
+    width: 220px;
+    height: 220px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 16px;
+}
+
+.fm-wheel-card--horizontal .fm-wheel-card__ring-wrapper {
+    margin-bottom: 0;
+    margin-right: 24px;
+}
+
+.fm-wheel-card__ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    --progress-color: var(--fm-wheel-default);
+}
+
+.fm-wheel-card--co2 .fm-wheel-card__ring { --progress-color: var(--fm-wheel-co2); }
+.fm-wheel-card--energy .fm-wheel-card__ring { --progress-color: var(--fm-wheel-energy); }
+.fm-wheel-card--water .fm-wheel-card__ring { --progress-color: var(--fm-wheel-water); }
+.fm-wheel-card--land .fm-wheel-card__ring { --progress-color: var(--fm-wheel-land); }
+
+.fm-wheel-card__percent {
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.fm-wheel-card__texts {
+    align-items: center;
+    width: 100%;
+}
+
+.fm-wheel-card--horizontal .fm-wheel-card__texts {
+    align-items: flex-start;
+    flex-shrink: 1;
+}
+
+.fm-wheel-card__name {
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    margin-bottom: 4px;
+}
+
+.fm-wheel-card__stage,
+.fm-wheel-card__stage-title,
+.fm-wheel-card__value,
+.fm-wheel-card__meta {
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.fm-wheel-card--horizontal .fm-wheel-card__name,
+.fm-wheel-card--horizontal .fm-wheel-card__stage,
+.fm-wheel-card--horizontal .fm-wheel-card__stage-title,
+.fm-wheel-card--horizontal .fm-wheel-card__value,
+.fm-wheel-card--horizontal .fm-wheel-card__meta {
+    -unity-text-align: middle-left;
+}
+
+.fm-wheel-card__stage-title {
+    color: var(--appui-foregrounds-200);
+    margin-bottom: 8px;
+}
+
+.fm-wheel-card__meta {
+    color: var(--appui-foregrounds-200);
+}
