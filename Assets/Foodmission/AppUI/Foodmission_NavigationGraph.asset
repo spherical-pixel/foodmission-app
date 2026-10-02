@@ -241,6 +241,33 @@ MonoBehaviour:
         m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
+--- !u!114 &-7176301613669967976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_badges
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 969, y: 3895}
+  m_Guid: 92efd302-b60a-4068-9c00-ed078395f131
+  m_Destination: {fileID: -2540462644321292587}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &-6196883293665439386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,6 +651,39 @@ MonoBehaviour:
     m_RestoreState: 1
     m_LaunchSingleTop: 1
   m_DefaultArguments: []
+--- !u!114 &-2540462644321292587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: Badges
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 1386, y: 3895}
+  m_Guid: 07470374-4300-4216-b118-fa51f76036da
+  m_Parent: {fileID: 4583499250303890363}
+  m_Actions: []
+  m_Label: Badges
+  m_TemplateSettings:
+    rid: 2657032574904041746
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 2657032574904041746
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.BadgesScreen, Foodmission, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 1
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 1
+        m_ShowNavigationRail: 0
 --- !u!114 &-2513852977472789739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1289,6 +1349,8 @@ MonoBehaviour:
   - {fileID: 4291847192847192099}
   - {fileID: -1483995792726768817}
   - {fileID: 535277622299341194}
+  - {fileID: -2540462644321292587}
+  - {fileID: -7176301613669967976}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2513,6 +2575,7 @@ MonoBehaviour:
   - {fileID: -7349625825304333666}
   - {fileID: 1000004}
   - {fileID: 4291847192847192098}
+  - {fileID: -7176301613669967976}
   m_Label: 
   m_StartDestination: {fileID: -8582299972390442400}
 --- !u!114 &4900769893359248207

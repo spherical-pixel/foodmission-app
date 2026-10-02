@@ -4034,6 +4034,30 @@ MonoBehaviour:
     m_Localized: Verlassen
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347484
+    m_Localized: Abzeichen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347485
+    m_Localized: '{0} von {1} Abzeichen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347486
+    m_Localized: Erhalten am {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347487
+    m_Localized: Erhalten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347488
+    m_Localized: Gesperrt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347489
+    m_Localized: Neues Abzeichen!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

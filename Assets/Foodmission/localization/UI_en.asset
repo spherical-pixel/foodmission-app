@@ -4012,6 +4012,30 @@ MonoBehaviour:
     m_Localized: Leave
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347484
+    m_Localized: Badges
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347485
+    m_Localized: '{0} of {1} badges'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347486
+    m_Localized: Earned on {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347487
+    m_Localized: Earned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347488
+    m_Localized: Locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347489
+    m_Localized: New badge!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

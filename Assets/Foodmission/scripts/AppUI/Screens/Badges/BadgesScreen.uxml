@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="BadgesScreen.uss"/>
+    <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.BadgesViewModel, Foodmission" class="fm-root fm-badges-root">
+        <ui:VisualElement name="header" class="fm-badges-header">
+            <appui:Heading name="screen-title" size="L"/>
+            <appui:Text name="summary" class="fm-badges-summary"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="badges-grid" class="fm-badges-grid"/>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
+    </ui:VisualElement>
+</ui:UXML>

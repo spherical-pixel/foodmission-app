@@ -4020,6 +4020,30 @@ MonoBehaviour:
     m_Localized: Avslutt
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347484
+    m_Localized: Merker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347485
+    m_Localized: '{0} av {1} merker'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347486
+    m_Localized: Opptjent {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347487
+    m_Localized: Opptjent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347488
+    m_Localized: "L\xE5st"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347489
+    m_Localized: Nytt merke!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

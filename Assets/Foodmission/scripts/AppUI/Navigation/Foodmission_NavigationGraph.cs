@@ -58,6 +58,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string editprofile_to_onboardinggoals = "editprofile_to_onboardinggoals";
         public const string go_to_food_comparison = "go_to_food_comparison";
         public const string open_mission_checkin = "open_mission_checkin";
+        public const string go_to_badges = "go_to_badges";
     }
     public static partial class Destinations
     {
@@ -106,6 +107,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string quick_meallog = "QuickMealLog";
         public const string nutri_editor = "NUTRI_EDITOR";
         public const string food_comparison = "FoodComparison";
+        public const string badges = "Badges";
     }
     public static partial class Graphs
     {

@@ -4068,6 +4068,30 @@ MonoBehaviour:
     m_Localized: "Wyjd\u017A"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347484
+    m_Localized: Odznaki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347485
+    m_Localized: '{0} z {1} odznak'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347486
+    m_Localized: Zdobyto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347487
+    m_Localized: Zdobyta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347488
+    m_Localized: Zablokowana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347489
+    m_Localized: Nowa odznaka!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
