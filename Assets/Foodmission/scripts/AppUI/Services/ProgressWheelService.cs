@@ -14,7 +14,8 @@ namespace eu.foodmission.platform
         private readonly IAuthService _authService;
         private readonly HashSet<string> _recoveryAttemptedUsers = new HashSet<string>();
         private Task _inFlight;
-        private bool _isLoading;
+        private string _inFlightUserId;
+        private int _activeRequests;
 
         public ProgressWheelService(IStoreService storeService, IGamificationService gamificationService, IAuthService authService)
         {
@@ -23,17 +24,26 @@ namespace eu.foodmission.platform
             _authService = authService;
         }
 
-        public bool IsLoading => _isLoading;
+        public bool IsLoading => _activeRequests > 0;
         public event Action LoadingChanged;
 
         public Task RefreshAsync()
         {
-            if (_inFlight != null && !_inFlight.IsCompleted)
+            string userId = _storeService?.GetAppState()?.userId ?? "";
+            if (_inFlight != null && !_inFlight.IsCompleted && _inFlightUserId == userId)
             {
                 return _inFlight;
             }
+            _inFlightUserId = userId;
             _inFlight = RefreshCoreAsync();
             return _inFlight;
+        }
+
+        /// <summary>True when the session that started a request is still the active one (no logout / user switch meanwhile).</summary>
+        private bool IsSameSession(string userId)
+        {
+            AppState current = _storeService?.GetAppState();
+            return current != null && !string.IsNullOrEmpty(current.accessToken) && (current.userId ?? "") == userId;
         }
 
         private async Task RefreshCoreAsync()
@@ -44,10 +54,15 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            string userId = state.userId ?? "";
             SetLoading(true);
             try
             {
                 var (wheels, error) = await _gamificationService.GetProgressWheelsAsync();
+                if (!IsSameSession(userId))
+                {
+                    return;
+                }
                 if (error != null)
                 {
                     Debug.LogWarning($"[{nameof(ProgressWheelService)}] Could not load progress wheels: {error.statusCode} {error.message}");
@@ -58,6 +73,10 @@ namespace eu.foodmission.platform
                 {
                     _recoveryAttemptedUsers.Add(state.userId ?? "");
                     var (result, submitError) = await _gamificationService.SubmitOnboardingSurveyAsync(state.userOnboardingSurvey);
+                    if (!IsSameSession(userId))
+                    {
+                        return;
+                    }
                     if (submitError == null && result != null)
                     {
                         _storeService.store.Dispatch(AppActions.setUserSegment.Invoke(result.segment));
@@ -111,14 +130,15 @@ namespace eu.foodmission.platform
             return wheels.Where(w => w != null && !hiddenSet.Contains(w.kind)).ToList();
         }
 
+        // Counter: a refresh for a new user may overlap one still finishing for the previous user.
         private void SetLoading(bool value)
         {
-            if (_isLoading == value)
+            bool wasLoading = IsLoading;
+            _activeRequests = Math.Max(0, _activeRequests + (value ? 1 : -1));
+            if (wasLoading != IsLoading)
             {
-                return;
+                LoadingChanged?.Invoke();
             }
-            _isLoading = value;
-            LoadingChanged?.Invoke();
         }
     }
 }

@@ -175,5 +175,39 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.AreEqual(new[] { "CO2_REDUCTION", "WATER_SAVINGS", "LAND_USE_REDUCTION" }, System.Linq.Enumerable.Select(visible, w => w.kind));
             Assert.AreEqual(0, ProgressWheelService.GetVisible(null, null).Count);
         }
+
+        [Test]
+        public async Task Refresh_FinishingAfterLogout_DoesNotWriteOldUserData()
+        {
+            var pending = new TaskCompletionSource<(ProgressWheel[], ApiErrorResponse)>();
+            _gamification.Setup(g => g.GetProgressWheelsAsync()).Returns(pending.Task);
+
+            Task refresh = _service.RefreshAsync();
+            _store.store.Dispatch(AppActions.logout.Invoke());
+            pending.SetResult((new[] { Wheel("CO2_REDUCTION") }, null));
+            await refresh;
+
+            Assert.AreEqual(0, _store.GetAppState().progressWheels.Length);
+            Assert.IsFalse(_service.IsLoading);
+        }
+
+        [Test]
+        public async Task Refresh_ForAnotherUserWhileInFlight_StartsNewRequest()
+        {
+            var first = new TaskCompletionSource<(ProgressWheel[], ApiErrorResponse)>();
+            _gamification.SetupSequence(g => g.GetProgressWheelsAsync())
+                .Returns(first.Task)
+                .ReturnsAsync((new[] { Wheel("WATER_SAVINGS") }, (ApiErrorResponse)null));
+
+            Task refreshA = _service.RefreshAsync();
+            _store.SetAppState(new AppState { userId = "u2", accessToken = "t2", tokenType = "Bearer" });
+            Task refreshB = _service.RefreshAsync();
+            first.SetResult((new[] { Wheel("CO2_REDUCTION") }, null));
+            await Task.WhenAll(refreshA, refreshB);
+
+            _gamification.Verify(g => g.GetProgressWheelsAsync(), Times.Exactly(2));
+            Assert.AreEqual(1, _store.GetAppState().progressWheels.Length);
+            Assert.AreEqual("WATER_SAVINGS", _store.GetAppState().progressWheels[0].kind);
+        }
     }
 }
