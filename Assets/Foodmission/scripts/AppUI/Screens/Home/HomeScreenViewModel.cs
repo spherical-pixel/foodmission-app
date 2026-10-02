@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
 using UnityEngine;
@@ -68,6 +70,8 @@ namespace eu.foodmission.platform
         private readonly IBadgeService _badgeService;
         private readonly BadgeCelebrationTracker _badgeTracker = new BadgeCelebrationTracker();
         private readonly IQuestProgressionService _questProgressionService;
+        private readonly IProgressWheelService _progressWheelService;
+        private IDisposableSubscription _wheelsSubscription;
         private bool _isCheckingRewards;
 
         public HomeScreenViewModel(
@@ -86,7 +90,8 @@ namespace eu.foodmission.platform
             IQuestProgressionService questProgressionService = null,
             IMissionNudgeService missionNudgeService = null,
             IAuthService authService = null,
-            IBadgeService badgeService = null) : base(storeService)
+            IBadgeService badgeService = null,
+            IProgressWheelService progressWheelService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -102,6 +107,11 @@ namespace eu.foodmission.platform
             _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
             _badgeService = badgeService ?? App.current?.services?.GetService<IBadgeService>();
+            _progressWheelService = progressWheelService ?? App.current?.services?.GetService<IProgressWheelService>();
+            if (_progressWheelService != null)
+            {
+                _progressWheelService.LoadingChanged += OnProgressWheelsLoadingChanged;
+            }
 
             // Get initial state
             AppState state = _storeService?.GetAppState();
@@ -113,6 +123,7 @@ namespace eu.foodmission.platform
                     SelectUserState,
                     OnUserStateChanged
                 );
+                _wheelsSubscription = _store.Subscribe(ProgressWheelSection.Signature, _ => ProgressWheelsChanged?.Invoke());
             }
 
             _ = LoadActiveQuestAsync();
@@ -206,6 +217,42 @@ namespace eu.foodmission.platform
         public void NavigateToOnboardingProfile()
         {
             RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.register_to_onboarding);
+        }
+
+        public event System.Action ProgressWheelsChanged;
+
+        public ProgressWheelSectionModel GetProgressWheelSection()
+        {
+            return ProgressWheelSection.Build(_storeService?.GetAppState(), _progressWheelService?.IsLoading ?? false);
+        }
+
+        public void RefreshProgressWheels()
+        {
+            if (_progressWheelService != null)
+            {
+                _ = _progressWheelService.RefreshAsync();
+            }
+        }
+
+        public Task SaveHiddenWheelsAsync(IReadOnlyCollection<string> hiddenKinds)
+        {
+            return _progressWheelService != null ? _progressWheelService.SetHiddenAsync(hiddenKinds) : Task.CompletedTask;
+        }
+
+        private void OnProgressWheelsLoadingChanged()
+        {
+            ProgressWheelsChanged?.Invoke();
+        }
+
+        protected override void OnDispose()
+        {
+            _wheelsSubscription?.Dispose();
+            _wheelsSubscription = null;
+            if (_progressWheelService != null)
+            {
+                _progressWheelService.LoadingChanged -= OnProgressWheelsLoadingChanged;
+            }
+            base.OnDispose();
         }
 
         public void NavigateToOnboardingSurvey()
