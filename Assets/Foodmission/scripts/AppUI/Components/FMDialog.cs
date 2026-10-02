@@ -122,14 +122,20 @@ namespace eu.foodmission.platform.Components
             scrollView.Add(text);
             dialog.contentContainer.Add(scrollView);
 
-            dialog.SetPrimaryAction(0, acceptLabel, onAccept ?? (() => { }));
-            dialog.primaryButton.AddToClassList("fm-button");
-            dialog.primaryButton.variant = ButtonVariant.Accent;
+            if (!string.IsNullOrEmpty(acceptLabel))
+            {
+                dialog.SetPrimaryAction(0, acceptLabel, onAccept ?? (() => { }));
+                dialog.primaryButton.AddToClassList("fm-button");
+                dialog.primaryButton.variant = ButtonVariant.Accent;
+            }
 
             // SetCancelAction only accepts (actionId, displayText); cancel callback via dismissed event.
-            dialog.SetCancelAction(1, cancelLabel);
-            dialog.cancelButton.AddToClassList("fm-button");
-            dialog.cancelButton.variant = ButtonVariant.Accent;
+            if (!string.IsNullOrEmpty(cancelLabel))
+            {
+                dialog.SetCancelAction(1, cancelLabel);
+                dialog.cancelButton.AddToClassList("fm-button");
+                dialog.cancelButton.variant = ButtonVariant.Accent;
+            }
 
             var themeService = App.current?.services?.GetService<IThemeService>();
             void ApplySafeArea()
@@ -243,14 +249,20 @@ namespace eu.foodmission.platform.Components
             scrollView.Add(markdownElement);
             dialog.contentContainer.Add(scrollView);
 
-            dialog.SetPrimaryAction(0, acceptLabel, onAccept ?? (() => { }));
-            dialog.primaryButton.AddToClassList("fm-button");
-            dialog.primaryButton.variant = ButtonVariant.Accent;
+            if (!string.IsNullOrEmpty(acceptLabel))
+            {
+                dialog.SetPrimaryAction(0, acceptLabel, onAccept ?? (() => { }));
+                dialog.primaryButton.AddToClassList("fm-button");
+                dialog.primaryButton.variant = ButtonVariant.Accent;
+            }
 
             // SetCancelAction only accepts (actionId, displayText); cancel callback via dismissed event.
-            dialog.SetCancelAction(1, cancelLabel);
-            dialog.cancelButton.AddToClassList("fm-button");
-            dialog.cancelButton.variant = ButtonVariant.Accent;
+            if (!string.IsNullOrEmpty(cancelLabel))
+            {
+                dialog.SetCancelAction(1, cancelLabel);
+                dialog.cancelButton.AddToClassList("fm-button");
+                dialog.cancelButton.variant = ButtonVariant.Accent;
+            }
 
             var themeService = App.current?.services?.GetService<IThemeService>();
             void ApplySafeArea()

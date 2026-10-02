@@ -557,8 +557,8 @@ namespace eu.foodmission.platform
                 this,
                 "@UI:T&C_TITLE",
                 text,
-                onAccept: () => { },
-                acceptLabel: "@UI:TXT_ACCEPT"
+                acceptLabel: null,
+                cancelLabel: "@UI:TXT_BACK"
             );
         }
 
@@ -572,8 +572,8 @@ namespace eu.foodmission.platform
                 this,
                 "@UI:PRIVACY_POLICY_TITLE",
                 text,
-                onAccept: () => { },
-                acceptLabel: "@UI:TXT_ACCEPT"
+                acceptLabel: null,
+                cancelLabel: "@UI:TXT_BACK"
             );
         }
 
@@ -587,8 +587,8 @@ namespace eu.foodmission.platform
                 this,
                 "@UI:PILOT_CONSENT_TITLE",
                 text,
-                onAccept: () => { },
-                acceptLabel: "@UI:TXT_ACCEPT"
+                acceptLabel: null,
+                cancelLabel: "@UI:TXT_BACK"
             );
         }
 
