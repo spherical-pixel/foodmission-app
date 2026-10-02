@@ -2310,6 +2310,16 @@
     font-size: 80px;
 }
 
+.fm-reward-badge-image {
+    width: 160px;
+    height: 160px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.fm-reward-icon-emoji--hidden {
+    display: none;
+}
+
 .fm-reward-title {
     
     text-align: center;

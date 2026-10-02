@@ -392,5 +392,36 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(RewardType.QuestUnlocked, queue[0].Type);
             Assert.AreEqual("First Quest", queue[0].Subtitle);
         }
+
+        [Test]
+        public void BuildPresentationQueue_WhenBadgeHasName_UsesNameAsSubtitle()
+        {
+            var reward = new ContentReward { badgeId = "CHEF", badgeName = "Chef" };
+            var queue = RewardCelebrationDialog.BuildPresentationQueue(reward);
+
+            Assert.AreEqual(1, queue.Count);
+            Assert.AreEqual("Chef", queue[0].Subtitle);
+            Assert.AreEqual("CHEF", queue[0].RawId);
+        }
+
+        [Test]
+        public void CreateRewardVisual_WhenBadgeWithoutApp_KeepsEmojiAndDoesNotLoadSprite()
+        {
+            // App.current is null in EditMode: no Addressables load may start (it would hang the test run).
+            var item = new RewardPresentationItem
+            {
+                Type = RewardType.Badge,
+                Title = "@UI:REWARD_BADGE_UNLOCKED",
+                Subtitle = "Chef",
+                IconEmoji = "🏅",
+                Value = 1,
+                RawId = "CHEF"
+            };
+
+            var visual = RewardCelebrationDialog.CreateRewardVisual(item);
+
+            Assert.IsNull(visual.Q(className: "fm-reward-badge-image"));
+            Assert.IsNotNull(visual.Q(className: "fm-reward-icon-emoji"));
+        }
     }
 }
