@@ -161,5 +161,32 @@ namespace eu.foodmission.platform.Tests
 
             StringAssert.Contains("\"goals\":[\"REDUCING_MEAT_CONSUMPTION\",\"SUGAR\"]", json);
         }
+
+        [Test]
+        public void BuildSettingsRequest_AlwaysSendsHiddenProgressWheels()
+        {
+            var state = new AppState { lang = "es", theme = "dark", hiddenProgressWheels = new string[0] };
+
+            string json = AuthService.BuildSettingsRequest(state).ToJson();
+
+            StringAssert.Contains("\"hiddenProgressWheels\":[]", json);
+        }
+
+        [Test]
+        public void BuildSettingsRequest_IncludesHiddenKinds()
+        {
+            var state = new AppState { hiddenProgressWheels = new[] { "LAND_USE_REDUCTION" } };
+
+            string json = AuthService.BuildSettingsRequest(state).ToJson();
+
+            StringAssert.Contains("\"hiddenProgressWheels\":[\"LAND_USE_REDUCTION\"]", json);
+        }
+
+        [Test]
+        public void SettingsDto_WithoutHidden_OmitsKey()
+        {
+            string json = new ProfileUpdateRequest { settings = new UserSettingsDto { theme = "dark" } }.ToJson();
+            StringAssert.DoesNotContain("hiddenProgressWheels", json);
+        }
     }
 }

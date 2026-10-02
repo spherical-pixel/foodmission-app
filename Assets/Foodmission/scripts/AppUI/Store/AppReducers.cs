@@ -549,6 +549,10 @@ namespace eu.foodmission.platform
                 {
                     newState.devicePushRegistration = s.devicePushRegistration.Copy();
                 }
+                if (s.hiddenProgressWheels != null)
+                {
+                    newState.hiddenProgressWheels = (string[])s.hiddenProgressWheels.Clone();
+                }
             }
 
             if (action.payload.pilotSurveyCycleState != null)

@@ -488,12 +488,9 @@ namespace eu.foodmission.platform
             _ = SyncGamificationAsync();
         }
 
-        public async Task SyncSettingsAsync()
+        public static ProfileUpdateRequest BuildSettingsRequest(AppState state)
         {
-            AppState state = _storeService.GetAppState();
-            if (string.IsNullOrEmpty(state.accessToken)) return;
-
-            var request = new ProfileUpdateRequest
+            return new ProfileUpdateRequest
             {
                 language = state.lang,
 
@@ -507,9 +504,18 @@ namespace eu.foodmission.platform
                     pushNotificationsEnabled = state.pushNotificationsEnabled,
                     notificationPreferredTime = state.notificationPreferredTime,
                     backgroundPattern = state.backgroundPattern,
-                    devicePushRegistration = state.devicePushRegistration
+                    devicePushRegistration = state.devicePushRegistration,
+                    hiddenProgressWheels = state.hiddenProgressWheels ?? new string[0]
                 }
             };
+        }
+
+        public async Task SyncSettingsAsync()
+        {
+            AppState state = _storeService.GetAppState();
+            if (string.IsNullOrEmpty(state.accessToken)) return;
+
+            var request = BuildSettingsRequest(state);
 
             try
             {

@@ -571,5 +571,33 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsEmpty(newState.userCurrentQuestId);
         }
+
+        [Test]
+        public void ProfileSynced_NullHidden_KeepsLocal()
+        {
+            var state = new AppState { hiddenProgressWheels = new[] { "WATER_SAVINGS" } };
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 1990, country: "ES", region: "", zip: "", gender: "", annualIncome: "",
+                educationLevel: "", activityLevel: "",
+                settings: new UserSettingsDto { theme = "dark", hiddenProgressWheels = null });
+
+            var newState = AppReducers.ProfileSyncedReducer(state, AppActions.profileSynced.Invoke(payload));
+
+            CollectionAssert.AreEqual(new[] { "WATER_SAVINGS" }, newState.hiddenProgressWheels);
+        }
+
+        [Test]
+        public void ProfileSynced_HiddenArray_IsApplied()
+        {
+            var state = new AppState { hiddenProgressWheels = new[] { "WATER_SAVINGS" } };
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 1990, country: "ES", region: "", zip: "", gender: "", annualIncome: "",
+                educationLevel: "", activityLevel: "",
+                settings: new UserSettingsDto { hiddenProgressWheels = new string[0] });
+
+            var newState = AppReducers.ProfileSyncedReducer(state, AppActions.profileSynced.Invoke(payload));
+
+            Assert.AreEqual(0, newState.hiddenProgressWheels.Length);
+        }
     }
 }
