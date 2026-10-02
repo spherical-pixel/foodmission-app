@@ -125,5 +125,30 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(0, _vm.Badges.Count);
             Assert.IsNull(_vm.ErrorDetail);
         }
+
+        [Test]
+        public async Task LoadBadgesAsync_CountsAreSetBeforeBadgesChanges()
+        {
+            // The screen rebuilds (summary included) on the Badges change, so the counts must already be final.
+            Returns(
+                new UserBadge { code = "FIRST_STEP", earned = true, sortOrder = 1 },
+                new UserBadge { code = "CHEF", earned = false, sortOrder = 2 });
+
+            int totalWhenBadgesChanged = -1;
+            int earnedWhenBadgesChanged = -1;
+            _vm.PropertyChanged += (_, e) =>
+            {
+                if (e.PropertyName == nameof(BadgesViewModel.Badges))
+                {
+                    totalWhenBadgesChanged = _vm.TotalCount;
+                    earnedWhenBadgesChanged = _vm.EarnedCount;
+                }
+            };
+
+            await _vm.LoadBadgesAsync();
+
+            Assert.AreEqual(2, totalWhenBadgesChanged);
+            Assert.AreEqual(1, earnedWhenBadgesChanged);
+        }
     }
 }

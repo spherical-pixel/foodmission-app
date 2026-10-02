@@ -65,16 +65,19 @@ namespace eu.foodmission.platform
                 ErrorDetail = null;
                 UserBadge[] source = response.badges ?? Array.Empty<UserBadge>();
 
-                Badges = source
+                List<BadgeItem> items = source
                     .Where(b => b != null && !string.IsNullOrEmpty(b.code))
                     .OrderBy(b => b.sortOrder)
                     .ThenBy(b => b.code, StringComparer.Ordinal)
                     .Select(ToItem)
                     .ToList();
-                EarnedCount = Badges.Count(b => b.Earned);
-                TotalCount = Badges.Count;
 
-                string[] earnedCodes = Badges.Where(b => b.Earned).Select(b => b.Code).ToArray();
+                // Counts first: the screen rebuilds (summary included) when Badges changes.
+                EarnedCount = items.Count(b => b.Earned);
+                TotalCount = items.Count;
+                Badges = items;
+
+                string[] earnedCodes = items.Where(b => b.Earned).Select(b => b.Code).ToArray();
                 _storeService?.store?.Dispatch(AppActions.setBadges.Invoke(earnedCodes));
             }
             catch (Exception ex)
