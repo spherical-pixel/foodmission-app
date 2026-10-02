@@ -18,6 +18,12 @@ namespace eu.foodmission.platform
     {
         private readonly ICatalogService _catalogService;
         private readonly IAuthService _authService;
+        private readonly ILegalService _legalService;
+        private readonly IPilotSurveyService _pilotSurveyService;
+
+        private string _cachedTermsText;
+        private string _cachedPrivacyText;
+        private string _cachedConsentText;
 
         // Catalog data (source of truth for code lookup)
         private CatalogData _catalogData;
@@ -168,12 +174,84 @@ namespace eu.foodmission.platform
         /// </summary>
         public event System.Action<string> ShowErrorRequest;
 
-        public EditProfileViewModel(IStoreService storeService, ICatalogService catalogService, IAuthService authService) : base(storeService)
+        public EditProfileViewModel(
+            IStoreService storeService,
+            ICatalogService catalogService,
+            IAuthService authService,
+            ILegalService legalService = null,
+            IPilotSurveyService pilotSurveyService = null) : base(storeService)
         {
             _catalogService = catalogService;
             _authService = authService;
+            _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
+            _pilotSurveyService = pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
 
             BuildYearOfBirthOptions();
+        }
+
+        public bool IsPilotCountry => _pilotSurveyService != null && _pilotSurveyService.IsPilotCountry();
+
+        public async Task<string> GetTermsTextAsync()
+        {
+            if (!string.IsNullOrEmpty(_cachedTermsText)) return _cachedTermsText;
+            if (_legalService == null) return string.Empty;
+
+            string lang = _storeService?.GetAppState()?.lang ?? "en";
+            var (docs, _) = await _legalService.GetRequiredDocumentsAsync(lang);
+            if (docs != null)
+            {
+                foreach (var doc in docs)
+                {
+                    if (doc.docType == LegalDocType.TermsOfService)
+                    {
+                        _cachedTermsText = doc.content;
+                        break;
+                    }
+                }
+            }
+            return _cachedTermsText ?? string.Empty;
+        }
+
+        public async Task<string> GetPrivacyTextAsync()
+        {
+            if (!string.IsNullOrEmpty(_cachedPrivacyText)) return _cachedPrivacyText;
+            if (_legalService == null) return string.Empty;
+
+            string lang = _storeService?.GetAppState()?.lang ?? "en";
+            var (docs, _) = await _legalService.GetRequiredDocumentsAsync(lang);
+            if (docs != null)
+            {
+                foreach (var doc in docs)
+                {
+                    if (doc.docType == LegalDocType.PrivacyPolicy)
+                    {
+                        _cachedPrivacyText = doc.content;
+                        break;
+                    }
+                }
+            }
+            return _cachedPrivacyText ?? string.Empty;
+        }
+
+        public async Task<string> GetPilotConsentTextAsync()
+        {
+            if (!string.IsNullOrEmpty(_cachedConsentText)) return _cachedConsentText;
+            if (_catalogService == null) return string.Empty;
+
+            string countryCode = _storeService?.GetAppState()?.userCountry;
+            string lang = _storeService?.GetAppState()?.lang ?? "en";
+            var (consentData, _) = await _catalogService.GetConsentFormAsync(countryCode, lang);
+            if (consentData != null && !string.IsNullOrEmpty(consentData.content))
+            {
+                _cachedConsentText = consentData.content;
+            }
+            return _cachedConsentText ?? string.Empty;
+        }
+
+        public async Task<(bool success, string error)> DeleteAccountAsync()
+        {
+            if (_authService == null) return (false, "AuthService not available");
+            return await _authService.DeleteAccountAsync();
         }
 
         private void BuildYearOfBirthOptions()

@@ -15,6 +15,8 @@ namespace eu.foodmission.platform.Tests
     {
         private Mock<ICatalogService> _mockCatalogService;
         private Mock<IAuthService> _mockAuthService;
+        private Mock<ILegalService> _mockLegalService;
+        private Mock<IPilotSurveyService> _mockPilotSurveyService;
         private TestStoreService _storeService;
         private EditProfileViewModel _vm;
 
@@ -23,6 +25,8 @@ namespace eu.foodmission.platform.Tests
         {
             _mockCatalogService = new Mock<ICatalogService>();
             _mockAuthService = new Mock<IAuthService>();
+            _mockLegalService = new Mock<ILegalService>();
+            _mockPilotSurveyService = new Mock<IPilotSurveyService>();
             _storeService = new TestStoreService();
 
             _storeService.SetAppState(new AppState
@@ -34,10 +38,16 @@ namespace eu.foodmission.platform.Tests
                 userCountry = "ES",
                 userRegion = "CT",
                 userZip = "08001",
-                userYearOfBirth = 1990
+                userYearOfBirth = 1990,
+                lang = "en"
             });
 
-            _vm = new EditProfileViewModel(_storeService, _mockCatalogService.Object, _mockAuthService.Object);
+            _vm = new EditProfileViewModel(
+                _storeService,
+                _mockCatalogService.Object,
+                _mockAuthService.Object,
+                _mockLegalService.Object,
+                _mockPilotSurveyService.Object);
         }
 
         [TearDown]
@@ -665,6 +675,89 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(capturedRequest.preferences);
             Assert.AreEqual("HEALTH", capturedRequest.preferences.motivation);
             Assert.AreEqual(15, capturedRequest.preferences.dailyTimeCommitmentMinutes);
+        }
+
+        [Test]
+        public void IsPilotCountry_WhenPilotServiceReturnsTrue_ReturnsTrue()
+        {
+            _mockPilotSurveyService.Setup(s => s.IsPilotCountry(It.IsAny<string>())).Returns(true);
+            Assert.IsTrue(_vm.IsPilotCountry);
+        }
+
+        [Test]
+        public void IsPilotCountry_WhenPilotServiceReturnsFalse_ReturnsFalse()
+        {
+            _mockPilotSurveyService.Setup(s => s.IsPilotCountry(It.IsAny<string>())).Returns(false);
+            Assert.IsFalse(_vm.IsPilotCountry);
+        }
+
+        [Test]
+        public async Task GetTermsTextAsync_ReturnsAndCachesTermsContent()
+        {
+            var doc = new LegalDocument { docType = LegalDocType.TermsOfService, content = "Terms and conditions body" };
+            _mockLegalService.Setup(s => s.GetRequiredDocumentsAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[] { doc }, null));
+
+            string first = await _vm.GetTermsTextAsync();
+            string second = await _vm.GetTermsTextAsync();
+
+            Assert.AreEqual("Terms and conditions body", first);
+            Assert.AreEqual("Terms and conditions body", second);
+            _mockLegalService.Verify(s => s.GetRequiredDocumentsAsync(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task GetPrivacyTextAsync_ReturnsAndCachesPrivacyContent()
+        {
+            var doc = new LegalDocument { docType = LegalDocType.PrivacyPolicy, content = "Privacy policy body" };
+            _mockLegalService.Setup(s => s.GetRequiredDocumentsAsync(It.IsAny<string>()))
+                .ReturnsAsync((new[] { doc }, null));
+
+            string first = await _vm.GetPrivacyTextAsync();
+            string second = await _vm.GetPrivacyTextAsync();
+
+            Assert.AreEqual("Privacy policy body", first);
+            Assert.AreEqual("Privacy policy body", second);
+            _mockLegalService.Verify(s => s.GetRequiredDocumentsAsync(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task GetPilotConsentTextAsync_ReturnsAndCachesConsentContent()
+        {
+            var consentData = new ConsentFormData { content = "Consent form body" };
+            _mockCatalogService.Setup(s => s.GetConsentFormAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((consentData, null));
+
+            string first = await _vm.GetPilotConsentTextAsync();
+            string second = await _vm.GetPilotConsentTextAsync();
+
+            Assert.AreEqual("Consent form body", first);
+            Assert.AreEqual("Consent form body", second);
+            _mockCatalogService.Verify(s => s.GetConsentFormAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task DeleteAccountAsync_WhenAuthServiceSucceeds_ReturnsTrue()
+        {
+            _mockAuthService.Setup(s => s.DeleteAccountAsync(It.IsAny<bool>())).ReturnsAsync((true, null));
+
+            var (success, error) = await _vm.DeleteAccountAsync();
+
+            Assert.IsTrue(success);
+            Assert.IsNull(error);
+            _mockAuthService.Verify(s => s.DeleteAccountAsync(It.IsAny<bool>()), Times.Once);
+        }
+
+        [Test]
+        public async Task DeleteAccountAsync_WhenAuthServiceFails_ReturnsFalseWithError()
+        {
+            _mockAuthService.Setup(s => s.DeleteAccountAsync(It.IsAny<bool>())).ReturnsAsync((false, "Network error"));
+
+            var (success, error) = await _vm.DeleteAccountAsync();
+
+            Assert.IsFalse(success);
+            Assert.AreEqual("Network error", error);
+            _mockAuthService.Verify(s => s.DeleteAccountAsync(It.IsAny<bool>()), Times.Once);
         }
     }
 }

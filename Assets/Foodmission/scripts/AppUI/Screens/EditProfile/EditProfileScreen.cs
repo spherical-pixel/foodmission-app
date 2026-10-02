@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
+using Unity.AppUI.Navigation.Generated;
 
 namespace eu.foodmission.platform
 {
@@ -19,6 +20,11 @@ namespace eu.foodmission.platform
     {
         private Unity.AppUI.UI.Button _submitButton;
         private Unity.AppUI.UI.Button _btnEditGoals;
+        private Unity.AppUI.UI.Button _btnTerms;
+        private Unity.AppUI.UI.Button _btnPrivacy;
+        private Unity.AppUI.UI.Button _btnConsent;
+        private VisualElement _spacerConsent;
+        private Unity.AppUI.UI.Button _btnDeleteAccount;
         private FormFieldItemDropDownField _genderDropdown;
         private FormFieldItemDropDownField _activityLevelDropdown;
         private FormFieldItemDropDownField _dietaryPreferencesDropdown;
@@ -33,6 +39,10 @@ namespace eu.foodmission.platform
         private FormFieldItemDropDownField _yearOfBirthDropdown;
 
         private AccessibilityNode _submitButtonNode;
+        private AccessibilityNode _btnTermsNode;
+        private AccessibilityNode _btnPrivacyNode;
+        private AccessibilityNode _btnConsentNode;
+        private AccessibilityNode _btnDeleteAccountNode;
 
         protected override bool IsFixedContent => false;
         protected override bool ApplySafeAreaBottom => false;
@@ -55,6 +65,11 @@ namespace eu.foodmission.platform
         {
             _submitButton = contentContainer.Q<Unity.AppUI.UI.Button>("submit-button");
             _btnEditGoals = contentContainer.Q<Unity.AppUI.UI.Button>("btn-edit-goals");
+            _btnTerms = contentContainer.Q<Unity.AppUI.UI.Button>("btn-terms");
+            _btnPrivacy = contentContainer.Q<Unity.AppUI.UI.Button>("btn-privacy");
+            _btnConsent = contentContainer.Q<Unity.AppUI.UI.Button>("btn-consent");
+            _spacerConsent = contentContainer.Q<VisualElement>("spacer-consent");
+            _btnDeleteAccount = contentContainer.Q<Unity.AppUI.UI.Button>("btn-delete-account");
             _genderDropdown = contentContainer.Q<FormFieldItemDropDownField>("gender-dropdown");
             _activityLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("activity-level-dropdown");
             _educationLevelDropdown = contentContainer.Q<FormFieldItemDropDownField>("education-level-dropdown");
@@ -80,6 +95,26 @@ namespace eu.foodmission.platform
             if (_btnEditGoals != null)
             {
                 _btnEditGoals.clicked += OnEditGoalsClicked;
+            }
+
+            if (_btnTerms != null)
+            {
+                _btnTerms.clicked += OnTermsClicked;
+            }
+
+            if (_btnPrivacy != null)
+            {
+                _btnPrivacy.clicked += OnPrivacyClicked;
+            }
+
+            if (_btnConsent != null)
+            {
+                _btnConsent.clicked += OnConsentClicked;
+            }
+
+            if (_btnDeleteAccount != null)
+            {
+                _btnDeleteAccount.clicked += OnDeleteAccountClicked;
             }
 
             if (_genderDropdown != null)
@@ -156,6 +191,26 @@ namespace eu.foodmission.platform
                 _btnEditGoals.clicked -= OnEditGoalsClicked;
             }
 
+            if (_btnTerms != null)
+            {
+                _btnTerms.clicked -= OnTermsClicked;
+            }
+
+            if (_btnPrivacy != null)
+            {
+                _btnPrivacy.clicked -= OnPrivacyClicked;
+            }
+
+            if (_btnConsent != null)
+            {
+                _btnConsent.clicked -= OnConsentClicked;
+            }
+
+            if (_btnDeleteAccount != null)
+            {
+                _btnDeleteAccount.clicked -= OnDeleteAccountClicked;
+            }
+
             if (_genderDropdown != null)
             {
                 _genderDropdown.Dropdown.UnregisterValueChangedCallback(OnGenderChanged);
@@ -225,6 +280,16 @@ namespace eu.foodmission.platform
                 PopulateDropdowns();
                 PrePopulateDropdownSelections();
                 UpdateSubmitButtonState();
+
+                bool isPilot = _viewModel.IsPilotCountry;
+                if (_btnConsent != null)
+                {
+                    _btnConsent.style.display = isPilot ? DisplayStyle.Flex : DisplayStyle.None;
+                }
+                if (_spacerConsent != null)
+                {
+                    _spacerConsent.style.display = isPilot ? DisplayStyle.Flex : DisplayStyle.None;
+                }
             }
         }
 
@@ -482,6 +547,79 @@ namespace eu.foodmission.platform
             _navController?.Navigate(Unity.AppUI.Navigation.Generated.Actions.editprofile_to_onboardinggoals, new Argument("fromEditProfile", "true"));
         }
 
+        private async void OnTermsClicked()
+        {
+            if (_viewModel == null) return;
+            string text = await _viewModel.GetTermsTextAsync();
+            if (string.IsNullOrEmpty(text)) text = "Missing Terms and Conditions text.";
+
+            FMDialog.ShowScrollableMD(
+                this,
+                "@UI:T&C_TITLE",
+                text,
+                acceptLabel: null,
+                cancelLabel: "@UI:TXT_BACK"
+            );
+        }
+
+        private async void OnPrivacyClicked()
+        {
+            if (_viewModel == null) return;
+            string text = await _viewModel.GetPrivacyTextAsync();
+            if (string.IsNullOrEmpty(text)) text = "Missing Privacy Policy text.";
+
+            FMDialog.ShowScrollableMD(
+                this,
+                "@UI:PRIVACY_POLICY_TITLE",
+                text,
+                acceptLabel: null,
+                cancelLabel: "@UI:TXT_BACK"
+            );
+        }
+
+        private async void OnConsentClicked()
+        {
+            if (_viewModel == null) return;
+            string text = await _viewModel.GetPilotConsentTextAsync();
+            if (string.IsNullOrEmpty(text)) text = "Missing Pilot Consent text.";
+
+            FMDialog.ShowScrollableMD(
+                this,
+                "@UI:PILOT_CONSENT_TITLE",
+                text,
+                acceptLabel: null,
+                cancelLabel: "@UI:TXT_BACK"
+            );
+        }
+
+        private void OnDeleteAccountClicked()
+        {
+            FMDialog.ShowAlert(
+                App.current?.rootVisualElement,
+                "@UI:DELETE_ACCOUNT_TITLE",
+                "@UI:DELETE_ACCOUNT_MESSAGE",
+                AlertSemantic.Destructive,
+                "@UI:TXT_ACCEPT", onOk: async () =>
+                {
+                    if (_viewModel == null) return;
+
+                    var (success, error) = await _viewModel.DeleteAccountAsync();
+                    if (success)
+                    {
+                        var storeService = App.current?.services?.GetService<IStoreService>();
+                        storeService?.store.Dispatch(AppActions.logout.Invoke());
+                        _navController?.Navigate(Actions.go_to_auth);
+                    }
+                    else
+                    {
+                        Debug.LogError($"[EditProfileScreen] Delete account failed: {error}");
+                        OnShowErrorRequested(error);
+                    }
+                },
+                "@UI:TXT_CANCEL", onKo: () => { }
+            );
+        }
+
 
 
         protected override void OnViewModelBound()
@@ -519,12 +657,23 @@ namespace eu.foodmission.platform
             if (_accessibilityHierarchy == null) return;
 
             _submitButtonNode = CreateButtonNode(_accessibilityHierarchy, _submitButton, "Save profile");
+            _btnTermsNode = CreateButtonNode(_accessibilityHierarchy, _btnTerms, "Terms and conditions");
+            _btnPrivacyNode = CreateButtonNode(_accessibilityHierarchy, _btnPrivacy, "Privacy policy");
+            if (_viewModel != null && _viewModel.IsPilotCountry)
+            {
+                _btnConsentNode = CreateButtonNode(_accessibilityHierarchy, _btnConsent, "Pilot consent");
+            }
+            _btnDeleteAccountNode = CreateButtonNode(_accessibilityHierarchy, _btnDeleteAccount, "Delete account");
             _yearOfBirthDropdown?.CreateAccessibilityNode(_accessibilityHierarchy, "Year of birth");
         }
 
         protected override void TeardownAccessibilityNodes()
         {
             _submitButtonNode = null;
+            _btnTermsNode = null;
+            _btnPrivacyNode = null;
+            _btnConsentNode = null;
+            _btnDeleteAccountNode = null;
             _yearOfBirthDropdown?.DestroyAccessibilityNode();
             base.TeardownAccessibilityNodes();
         }
