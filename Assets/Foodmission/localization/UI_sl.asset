@@ -4037,6 +4037,158 @@ MonoBehaviour:
     m_Localized: "Nova zna\u010Dka!"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347490
+    m_Localized: Tvoj vpliv
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347491
+    m_Localized: "Tvoj vpliv \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347492
+    m_Localized: Prilagodi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347493
+    m_Localized: Vidna kolesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347494
+    m_Localized: Vsa kolesa so skrita.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347495
+    m_Localized: "Izpolni kratko anketo in za\u010Dni spremljati svoj vpliv."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347496
+    m_Localized: "Za\u010Dni anketo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347497
+    m_Localized: '{0:0} %'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347498
+    m_Localized: Stopnja {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347499
+    m_Localized: '{0:0.##} / {1:0.##} {2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347500
+    m_Localized: Cilj {0:0} %
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347501
+    m_Localized: Skupaj {0:0.##} {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347502
+    m_Localized: "Zmanj\u0161anje CO\u2082"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347503
+    m_Localized: "Zmanj\u0161anje porabe energije"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347504
+    m_Localized: Prihranek vode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347505
+    m_Localized: "Manj\u0161a raba zemlji\u0161\u010D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347506
+    m_Localized: "kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347507
+    m_Localized: kWh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347508
+    m_Localized: L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347509
+    m_Localized: "m\xB2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347510
+    m_Localized: "Za\u010Detnik"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347511
+    m_Localized: Srednja raven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347512
+    m_Localized: Napredni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347513
+    m_Localized: Prvi koraki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347514
+    m_Localized: "Gradnja bolj\u0161ih navad"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347515
+    m_Localized: Ustvarjanje razlike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347516
+    m_Localized: Ustvarjanje pozitivnih sprememb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347517
+    m_Localized: "Bolj trajnostno \u017Eivljenje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347518
+    m_Localized: Ohranjanje zagona
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347519
+    m_Localized: Dosledne trajnostne izbire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347520
+    m_Localized: "Pove\u010Devanje tvojega vpliva"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347521
+    m_Localized: Spodbujanje pozitivnih sprememb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347522
+    m_Localized: Biti zgled drugim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347523
+    m_Localized: "Trajnostni \u017Eivljenjski slog"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347524
+    m_Localized: "Kar najve\u010Dji vpliv"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347525
+    m_Localized: Okoljsko vodstvo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347526
+    m_Localized: "Spodbujanje ve\u010Djih sprememb"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347527
+    m_Localized: Prvak FOODMISSION
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

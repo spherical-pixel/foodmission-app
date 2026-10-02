@@ -4092,6 +4092,159 @@ MonoBehaviour:
     m_Localized: Nowa odznaka!
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347490
+    m_Localized: "Tw\xF3j wp\u0142yw"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347491
+    m_Localized: "Tw\xF3j wp\u0142yw \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347492
+    m_Localized: Dostosuj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347493
+    m_Localized: "Widoczne ko\u0142a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347494
+    m_Localized: "Wszystkie ko\u0142a s\u0105 ukryte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347495
+    m_Localized: "Wype\u0142nij kr\xF3tk\u0105 ankiet\u0119, aby \u015Bledzi\u0107
+      sw\xF3j wp\u0142yw."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347496
+    m_Localized: "Rozpocznij ankiet\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347497
+    m_Localized: '{0:0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347498
+    m_Localized: Etap {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347499
+    m_Localized: '{0:0.##} / {1:0.##} {2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347500
+    m_Localized: Cel {0:0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347501
+    m_Localized: "\u0141\u0105cznie {0:0.##} {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347502
+    m_Localized: "Redukcja CO\u2082"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347503
+    m_Localized: Redukcja energii
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347504
+    m_Localized: "Oszcz\u0119dno\u015B\u0107 wody"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347505
+    m_Localized: "Mniejsze zu\u017Cycie grunt\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347506
+    m_Localized: "kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347507
+    m_Localized: kWh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347508
+    m_Localized: L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347509
+    m_Localized: "m\xB2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347510
+    m_Localized: "Pocz\u0105tkuj\u0105cy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347511
+    m_Localized: "\u015Aredniozaawansowany"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347512
+    m_Localized: Zaawansowany
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347513
+    m_Localized: Pierwsze kroki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347514
+    m_Localized: "Budowanie lepszych nawyk\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347515
+    m_Localized: Wprowadzanie zmian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347516
+    m_Localized: Tworzenie pozytywnych zmian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347517
+    m_Localized: "Bardziej zr\xF3wnowa\u017Cone \u017Cycie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347518
+    m_Localized: Utrzymanie tempa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347519
+    m_Localized: "Konsekwentne zr\xF3wnowa\u017Cone wybory"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347520
+    m_Localized: "Zwi\u0119kszanie swojego wp\u0142ywu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347521
+    m_Localized: Inspirowanie pozytywnych zmian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347522
+    m_Localized: "Dawanie przyk\u0142adu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347523
+    m_Localized: "Zr\xF3wnowa\u017Cony styl \u017Cycia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347524
+    m_Localized: "Maksymalizacja swojego wp\u0142ywu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347525
+    m_Localized: "Przyw\xF3dztwo ekologiczne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347526
+    m_Localized: "Nap\u0119dzanie wi\u0119kszych zmian"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347527
+    m_Localized: Mistrz FOODMISSION
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
