@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Guid: 07470374-4300-4216-b118-fa51f76036da
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: Badges
+  m_Label: '@UI:BADGES_TITLE'
   m_TemplateSettings:
     rid: 2657032574904041746
   m_Arguments: []
