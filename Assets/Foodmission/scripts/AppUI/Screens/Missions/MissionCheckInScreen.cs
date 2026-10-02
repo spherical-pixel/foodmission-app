@@ -386,6 +386,11 @@ namespace eu.foodmission.platform
             }
 
             body.Clear();
+            // Nothing to record: Nutri's bubble says so, an empty card would only look broken
+            if (_cards.TryGetValue(stepIndex, out VisualElement card))
+            {
+                card.EnableInClassList("fm-mission-report-body--empty", _viewModel.IsSummaryEmpty);
+            }
             foreach (CheckInSummaryLine line in _viewModel.BuildSummary())
             {
                 string text = line.Kind == CheckInStepKind.MealDay

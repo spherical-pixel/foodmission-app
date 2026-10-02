@@ -2381,6 +2381,10 @@
     flex-shrink: 0;
 }
 
+.fm-mission-report-body--empty {
+    display: none;
+}
+
 .fm-mission-report-row {
     flex-direction: row;
     flex-wrap: wrap;
