@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Sprites
   m_GUID: 3c3aa15792d3647f9b7dbbc0b43aafe8
   m_SerializeEntries:
+  - m_GUID: 02d1593c139274d75aa3462fb8ac37ed
+    m_Address: badges/badge_ADVENTURER
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0347d213f06c24be0ab195fa73909edd
     m_Address: dimensions/diet_changes
     m_ReadOnly: 0
@@ -60,8 +65,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3450470e323ba4f5aaa79c6875e3e664
+    m_Address: badges/badge_STYLISH_disabled
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3528a8b767ff04a5ca81897de74a4eec
     m_Address: topics/salt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 366ffa63a707844faa0a7062ac4b565a
+    m_Address: badges/badge_FIRST_STEP_disabled
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -85,8 +100,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bf2fbd9cfca242dc82729d44e905219
+    m_Address: badges/badge_MISSIONARY_disabled
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c6dff5881d3e42ccbf1000bd5163804
+    m_Address: badges/badge_STYLISH
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 609ef2d8169394386b541f6fe70de418
     m_Address: knowledge/quiz
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 699f6673ee29042849eb6f2ce39179df
+    m_Address: badges/badge_CHEF
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -100,8 +130,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71bbb0d28b6fb48bbabfb0de180aa38b
+    m_Address: badges/badge_MISSIONARY
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7aa15b9dfbc8a4bc3bfbbf2f59f2cee2
     m_Address: topics/default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fd2089729ab44ad4a76aa0a587acae8
+    m_Address: badges/badge_CHEF_disabled
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8468ac4d5c1954769ba863414d3f60f1
+    m_Address: badges/badge_CURIOUS_FOODIE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -130,6 +175,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b4abaa6bf09c4823b91fd3035581a6b
+    m_Address: badges/badge_LEGENDARY_ADVENTURER_disabled
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae23cbbaac58f40a7af28efff11b163a
     m_Address: topics/water_use
     m_ReadOnly: 0
@@ -137,6 +187,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af8a05fd95b644b58a0d8a29ddb2b5b4
     m_Address: knowledge/foodfacts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7def4813ddca4a01a2f8b39179fc213
+    m_Address: badges/badge_SHOPPING_LIST_disabled
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -160,8 +215,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bef1027cd5d294a589c100e107509f3b
+    m_Address: badges/badge_LEGENDARY_ADVENTURER
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c1d7dda9b99424fe68aa973fbafd680d
     m_Address: topics/leftovers_waste
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c31d41afedbef4e6daee8254e7f55086
+    m_Address: badges/badge_BRAINY
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c39cf97277b944be993c6cb9f0e3c3b4
+    m_Address: badges/badge_FIRST_STEP
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7c37d5c776894af5a77289f79faf1b0
+    m_Address: badges/badge_BRAINY_disabled
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -170,8 +245,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce2a2a1d3f03149808ab4f78f772ff8a
+    m_Address: badges/badge_SURVEY_BEGINNER
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d16d9bfd2fce9468e97ab22866dd3b90
     m_Address: topics/capacity_to_reuse_packaging
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d55175342756d40348f64bddd34fd019
+    m_Address: badges/badge_SURVEY_BEGINNER_disabled
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -190,8 +275,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef7408c18f42648e99e02c8f744528ad
+    m_Address: badges/badge_SHOPPING_LIST
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: efa98834daee54a1fb743561891d35d2
     m_Address: topics/fair_trade_labour
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f292ea21f1de1462f871018edcebc39e
+    m_Address: badges/badge_CURIOUS_FOODIE_disabled
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -202,6 +297,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fead22063941843bfaea2417f47b7fac
     m_Address: dimensions/default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fee9554e165244e9992d4aa7c3530e6f
+    m_Address: badges/badge_ADVENTURER_disabled
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

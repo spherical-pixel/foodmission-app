@@ -85,6 +85,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f5ee1ea0e6724b91b62816bee0842d5
+    m_Address: Foodmission/AppUI/Templates/BadgesScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5245105518b3a4cd78a9ed6f25e1d9f7
     m_Address: Foodmission/AppUI/Templates/FoodInfoScreen.uxml
     m_ReadOnly: 0

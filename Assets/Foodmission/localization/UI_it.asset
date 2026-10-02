@@ -4056,6 +4056,30 @@ MonoBehaviour:
     m_Localized: Esci
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347484
+    m_Localized: Badge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347485
+    m_Localized: '{0} di {1} badge'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347486
+    m_Localized: Ottenuto il {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347487
+    m_Localized: Ottenuto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347488
+    m_Localized: Bloccato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347489
+    m_Localized: Nuovo badge!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

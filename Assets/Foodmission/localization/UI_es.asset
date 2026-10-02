@@ -4014,6 +4014,30 @@ MonoBehaviour:
     m_Localized: Salir
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347484
+    m_Localized: Medallas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347485
+    m_Localized: '{0} de {1} medallas'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347486
+    m_Localized: Conseguida el {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347487
+    m_Localized: Conseguida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347488
+    m_Localized: Bloqueada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347489
+    m_Localized: "\xA1Nueva medalla!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

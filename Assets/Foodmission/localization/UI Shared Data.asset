@@ -3895,6 +3895,30 @@ MonoBehaviour:
     m_Key: MISSION_CHECKIN_CLOSE_CONFIRM
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347484
+    m_Key: BADGES_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347485
+    m_Key: BADGES_SUMMARY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347486
+    m_Key: BADGES_EARNED_ON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347487
+    m_Key: BADGES_EARNED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347488
+    m_Key: BADGES_LOCKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347489
+    m_Key: BADGE_EARNED_TITLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -113,7 +113,7 @@ namespace eu.foodmission.platform.Components
                     {
                         Type = RewardType.Badge,
                         Title = "@UI:REWARD_BADGE_UNLOCKED",
-                        Subtitle = reward.badgeId,
+                        Subtitle = string.IsNullOrEmpty(reward.badgeName) ? reward.badgeId : reward.badgeName,
                         IconEmoji = "🏅",
                         Value = 1,
                         RawId = reward.badgeId
@@ -762,6 +762,19 @@ namespace eu.foodmission.platform.Components
             iconText.AddToClassList("fm-reward-icon-emoji");
             iconCircle.Add(iconText);
             container.Add(iconCircle);
+
+            // Real badge art when the id is a badge code with a sprite; the emoji stays until it loads (or if it can't).
+            var spriteService = App.current?.services?.GetService<ISpriteService>();
+            if (spriteService != null && BadgeSprites.LooksLikeCode(item?.RawId))
+            {
+                var badgeImage = new VisualElement();
+                badgeImage.AddToClassList("fm-reward-badge-image");
+                iconCircle.Add(badgeImage);
+                _ = spriteService.BindBackgroundSprite(
+                    badgeImage,
+                    BadgeSprites.Address(item.RawId, true),
+                    _ => iconText.AddToClassList("fm-reward-icon-emoji--hidden"));
+            }
 
             var title = new Text { text = item?.Title ?? "" };
             title.AddToClassList("fm-reward-title");

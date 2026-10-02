@@ -31,6 +31,7 @@ namespace eu.foodmission.platform
             TemplateAddresses.MealLog,
             TemplateAddresses.FoodWaste,
             TemplateAddresses.Groups,
+            TemplateAddresses.Badges,
             TemplateAddresses.GroupsCreate,
             TemplateAddresses.GroupsJoin,
             TemplateAddresses.GroupDetail,

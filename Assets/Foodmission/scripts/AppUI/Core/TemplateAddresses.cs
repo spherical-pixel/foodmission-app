@@ -21,6 +21,7 @@ namespace eu.foodmission.platform
         public const string GroupsCreate = "Foodmission/AppUI/Templates/GroupsCreateScreen.uxml";
         public const string GroupsJoin = "Foodmission/AppUI/Templates/GroupsJoinScreen.uxml";
         public const string GroupDetail = "Foodmission/AppUI/Templates/GroupDetailScreen.uxml";
+        public const string Badges = "Foodmission/AppUI/Templates/BadgesScreen.uxml";
         public const string OnboardingGroups = "Foodmission/AppUI/Templates/OnboardingGroupsScreen.uxml";
         public const string AvatarEditorPanelItem = "Foodmission/AppUI/Templates/AvatarEditorPanelItem.uxml";
         public const string ForceUpdate = "Foodmission/AppUI/Templates/ForceUpdateScreen.uxml";

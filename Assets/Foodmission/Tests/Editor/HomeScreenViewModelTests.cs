@@ -43,6 +43,7 @@ namespace eu.foodmission.platform.Tests
             PlayerPrefs.DeleteKey("last_seen_gamif_ts_test-user");
             PlayerPrefs.DeleteKey("celebrated_gamif_ids_test-user");
             PlayerPrefs.DeleteKey("celebrated_quest_ids_test-user");
+            PlayerPrefs.DeleteKey("celebrated_badges_test-user");
         }
 
         [Test]
@@ -969,6 +970,242 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(JObject.Parse(json).TryGetValue("currentQuestId", out JToken value));
             Assert.AreEqual(JTokenType.Null, value.Type);
             Assert.IsFalse(json.Contains("clearCurrentQuest"));
+        }
+
+        private static UserBadgesResponse BadgesResponse(params UserBadge[] badges)
+        {
+            return new UserBadgesResponse { badges = badges, earnedCount = badges.Length, totalCount = 10 };
+        }
+
+        private HomeScreenViewModel CreateVmWithBadges(Mock<IGamificationService> gamification, Mock<IBadgeService> badges)
+        {
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+            return new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: gamification.Object,
+                badgeService: badges.Object
+            );
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenNewBadge_ReturnsBadgeCelebrationWithWalletReward()
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "FIRST_STEP", "CHEF" },
+                    recentEvents = new UserEvent[0],
+                    recentWalletEntries = new[]
+                    {
+                        new WalletEntry { id = "w-1", currency = "XP", amount = 30, reason = "Badge CHEF completed" },
+                        new WalletEntry { id = "w-2", currency = "POINTS", amount = 5, reason = "Badge CHEF completed" },
+                        new WalletEntry { id = "w-3", currency = "XP", amount = 99, reason = "Mission M.B1.1 completed" }
+                    }
+                }, (ApiErrorResponse)null));
+
+            var badges = new Mock<IBadgeService>();
+            badges.Setup(b => b.GetMyBadgesAsync())
+                .ReturnsAsync((BadgesResponse(new UserBadge { code = "CHEF", name = "Chef", earned = true }), (ApiErrorResponse)null));
+
+            PlayerPrefs.SetString("celebrated_badges_test-user", "FIRST_STEP");
+            var vm = CreateVmWithBadges(gamification, badges);
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].IsBadge);
+            Assert.AreEqual("@UI:BADGE_EARNED_TITLE", result[0].ContextTitle);
+            Assert.AreEqual("CHEF", result[0].Code);
+            Assert.AreEqual("CHEF", result[0].Reward.badgeId);
+            Assert.AreEqual("Chef", result[0].Reward.badgeName);
+            Assert.AreEqual(30, result[0].Reward.xp);
+            Assert.AreEqual(5, result[0].Reward.points);
+            CollectionAssert.AreEqual(new[] { "FIRST_STEP", "CHEF" }, _storeService.GetAppState().userBadges);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenNewBadgeWithoutWallet_HasNoXpFallback()
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "STYLISH" },
+                    recentEvents = new UserEvent[0],
+                    recentWalletEntries = new WalletEntry[0]
+                }, (ApiErrorResponse)null));
+
+            var badges = new Mock<IBadgeService>();
+            badges.Setup(b => b.GetMyBadgesAsync())
+                .ReturnsAsync((BadgesResponse(new UserBadge { code = "STYLISH", name = "Stylish", earned = true }), (ApiErrorResponse)null));
+
+            PlayerPrefs.SetString("celebrated_badges_test-user", "");
+            var vm = CreateVmWithBadges(gamification, badges);
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.AreEqual(1, result.Count);
+            Assert.IsNull(result[0].Reward.xp);
+            Assert.IsNull(result[0].Reward.points);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenMissionAndBadge_OrdersBadgeLast()
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "MISSIONARY" },
+                    recentEvents = new[]
+                    {
+                        new UserEvent
+                        {
+                            id = "ev-mission-9",
+                            eventType = "MISSION_COMPLETED",
+                            timestamp = "2026-09-23T10:05:00Z",
+                            metadata = JObject.FromObject(new { missionCode = "M.B1.9" })
+                        }
+                    },
+                    recentWalletEntries = new[]
+                    {
+                        new WalletEntry { id = "w-1", currency = "XP", amount = 50, reason = "Mission M.B1.9 completed" }
+                    }
+                }, (ApiErrorResponse)null));
+
+            var badges = new Mock<IBadgeService>();
+            badges.Setup(b => b.GetMyBadgesAsync())
+                .ReturnsAsync((BadgesResponse(new UserBadge { code = "MISSIONARY", name = "Missionary", earned = true }), (ApiErrorResponse)null));
+
+            PlayerPrefs.SetString("celebrated_badges_test-user", "");
+            var vm = CreateVmWithBadges(gamification, badges);
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("@UI:MISSION_REWARD_TITLE", result[0].ContextTitle);
+            Assert.IsTrue(result[1].IsBadge);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenBadgeAlreadyCelebrated_ReturnsNull()
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "CHEF" },
+                    recentEvents = new UserEvent[0],
+                    recentWalletEntries = new WalletEntry[0]
+                }, (ApiErrorResponse)null));
+
+            var badges = new Mock<IBadgeService>();
+            PlayerPrefs.SetString("celebrated_badges_test-user", "CHEF");
+            var vm = CreateVmWithBadges(gamification, badges);
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNull(result);
+            badges.Verify(b => b.GetMyBadgesAsync(), Times.Never);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenBadgeDetailsFail_DoesNotMarkCelebrated()
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "CHEF" },
+                    recentEvents = new UserEvent[0],
+                    recentWalletEntries = new WalletEntry[0]
+                }, (ApiErrorResponse)null));
+
+            var badges = new Mock<IBadgeService>();
+            badges.Setup(b => b.GetMyBadgesAsync())
+                .ReturnsAsync(((UserBadgesResponse)null, new ApiErrorResponse { message = "boom" }));
+
+            PlayerPrefs.SetString("celebrated_badges_test-user", "");
+            var vm = CreateVmWithBadges(gamification, badges);
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNull(result);
+            Assert.AreEqual("", PlayerPrefs.GetString("celebrated_badges_test-user", "missing"));
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_FirstRun_CelebratesOnlyRecentBadge()
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "CHEF", "FIRST_STEP" },
+                    recentEvents = new UserEvent[0],
+                    recentWalletEntries = new WalletEntry[0]
+                }, (ApiErrorResponse)null));
+
+            var badges = new Mock<IBadgeService>();
+            badges.Setup(b => b.GetMyBadgesAsync())
+                .ReturnsAsync((BadgesResponse(
+                    new UserBadge { code = "CHEF", name = "Chef", earned = true, earnedAt = System.DateTime.UtcNow.AddDays(-5) },
+                    new UserBadge { code = "FIRST_STEP", name = "First Step", earned = true, earnedAt = System.DateTime.UtcNow.AddMinutes(-1) }
+                ), (ApiErrorResponse)null));
+
+            var vm = CreateVmWithBadges(gamification, badges);
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("FIRST_STEP", result[0].Code);
+            badges.Verify(b => b.GetMyBadgesAsync(), Times.Once);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_FirstGamificationRun_StillReturnsRecentBadge()
+        {
+            // No last_seen_gamif_ts yet: the mission/quest cursor is established and returns early,
+            // but badge detection is independent of that cursor.
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "FIRST_STEP" },
+                    recentEvents = new UserEvent[0],
+                    recentWalletEntries = new WalletEntry[0]
+                }, (ApiErrorResponse)null));
+
+            var badges = new Mock<IBadgeService>();
+            badges.Setup(b => b.GetMyBadgesAsync())
+                .ReturnsAsync((BadgesResponse(
+                    new UserBadge { code = "FIRST_STEP", name = "First Step", earned = true, earnedAt = System.DateTime.UtcNow.AddMinutes(-1) }
+                ), (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.DeleteKey("last_seen_gamif_ts_test-user");
+            var vm = new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                gamificationService: gamification.Object,
+                badgeService: badges.Object
+            );
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("FIRST_STEP", result[0].Code);
         }
     }
 }

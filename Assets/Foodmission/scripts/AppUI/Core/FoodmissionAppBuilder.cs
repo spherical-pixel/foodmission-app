@@ -60,6 +60,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IQuizService, QuizService>();
             builder.services.AddSingleton<IFoodFactService, FoodFactService>();
             builder.services.AddSingleton<IGamificationService, GamificationService>();
+            builder.services.AddSingleton<IBadgeService, BadgeService>();
             builder.services.AddSingleton<IChallengeService, ChallengeService>();
             builder.services.AddSingleton<IChallengeCompletionService, ChallengeCompletionService>();
             builder.services.AddSingleton<IChallengeSessionService, ChallengeSessionService>();
@@ -116,6 +117,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<QuizScreenViewModel>();
             builder.services.AddTransient<QuizzesViewModel>();
             builder.services.AddTransient<FoodFactsViewModel>();
+            builder.services.AddTransient<BadgesViewModel>();
             builder.services.AddTransient<FoodFactScreenViewModel>();
             builder.services.AddTransient<KnowledgeViewModel>();
             builder.services.AddTransient<ChallengesViewModel>();
