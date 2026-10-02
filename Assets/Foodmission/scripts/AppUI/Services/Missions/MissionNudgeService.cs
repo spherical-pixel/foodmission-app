@@ -173,7 +173,9 @@ namespace eu.foodmission.platform
 
                 if (!states.TryGetValue(code, out MissionNudgeState missionState))
                 {
-                    DateTime baseline = progress?.startedAt?.ToUniversalTime() ?? now;
+                    // With progress, the last change is unknown (it may have been minutes ago): count from now.
+                    // Without progress, the mission has been idle since it started.
+                    DateTime baseline = value > 0f ? now : progress?.startedAt?.ToUniversalTime() ?? now;
                     if (baseline > now)
                     {
                         baseline = now;

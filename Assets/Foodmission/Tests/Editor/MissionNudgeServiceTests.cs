@@ -150,6 +150,19 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task GetNudge_FirstSightWithProgress_CountsFromNowNotFromStart()
+        {
+            // Progress may have moved minutes ago: startedAt says nothing about the last change
+            SetQuest("M.B2.1");
+            SetProgress(P("M.B2.1", 42.8f, _now.AddDays(-5)));
+
+            Assert.IsNull(await _service.GetNudgeAsync());
+
+            _now = _now.AddDays(2).AddMinutes(1);
+            Assert.AreEqual("M.B2.1", (await _service.GetNudgeAsync())?.MissionCode, "still nudged once it really stalls");
+        }
+
+        [Test]
         public async Task GetNudge_PicksTheLongestStalled()
         {
             SetProgress(P("M.B2.1", 0, _now.AddDays(-3)), P("M.B3.2", 0, _now.AddDays(-5)));
