@@ -3987,6 +3987,31 @@ MonoBehaviour:
     m_Localized: Mark at least one option to record this meal.
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "You haven't marked anything, so there's nothing to record. Go back
+      if you want to mark something, or close and we'll catch up another day \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: Leave without recording?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: What you've marked won't be recorded.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: Part of it was already recorded, but the rest will be lost.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: Leave
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -31,6 +31,7 @@ namespace eu.foodmission.platform
         private FMButton _btnPrevious;
         private FMButton _btnNext;
         private ScrollView _bodyScroll;
+        private IconButton _btnClose;
 
         // ── Customization Settings ──────────────────────────
         protected virtual bool AllowSwipeGestures => false;
@@ -50,6 +51,15 @@ namespace eu.foodmission.platform
         /// <summary>Action for the API error dialog's OK button (null = just close it).</summary>
         protected virtual Action OnApiErrorDismissed() => null;
 
+        /// <summary>Shows a ✕ (top right) that leaves the flow from any step. Off by default; each flow opts in.</summary>
+        protected virtual bool ShowCloseButton => false;
+
+        /// <summary>Called by the ✕. Default: go back; override to confirm first.</summary>
+        protected virtual void OnCloseRequested()
+        {
+            _navController?.PopBackStack();
+        }
+
         protected StepFlowScreenBase()
         {
             InitializeComponent(App.current.services
@@ -66,6 +76,32 @@ namespace eu.foodmission.platform
             _btnPrevious = contentContainer.Q<FMButton>("btn-previous");
             _btnNext = contentContainer.Q<FMButton>("btn-next");
             _bodyScroll = contentContainer.Q<ScrollView>("step-body-scroll");
+            SetupCloseButton();
+        }
+
+        private void SetupCloseButton()
+        {
+            if (!ShowCloseButton)
+            {
+                return;
+            }
+            VisualElement root = contentContainer.Q<VisualElement>("root");
+            if (root == null)
+            {
+                return;
+            }
+            root.AddToClassList("fm-step-flow--closable");
+            _btnClose = new IconButton { name = "btn-close", icon = "x", quiet = true, size = Size.L };
+            _btnClose.AddToClassList("fm-step-flow__close");
+            _btnClose.clicked += OnCloseClicked;
+            root.Add(_btnClose);
+        }
+
+        private void OnCloseClicked()
+        {
+            _audioService ??= App.current?.services?.GetService<IAudioService>();
+            _audioService?.PlaySfx(SfxType.NegativeButton);
+            OnCloseRequested();
         }
 
         protected override void OnViewModelBound()

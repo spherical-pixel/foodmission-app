@@ -3987,6 +3987,32 @@ MonoBehaviour:
     m_Localized: "Ozna\u010Di vsaj eno mo\u017Enost, da se ta obrok zabele\u017Ei."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "Ni\u010Desar nisi ozna\u010Dil, zato ni ni\u010Desar za bele\u017Eenje.
+      Vrni se, \u010De \u017Eeli\u0161 kaj ozna\u010Diti, ali zapri in se sli\u0161iva
+      kak drug dan \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: Zapri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: "Zapre\u0161 brez bele\u017Eenja?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: "Kar si ozna\u010Dil, ne bo zabele\u017Eeno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: "Del je \u017Ee zabele\u017Een, ostalo pa se bo izgubilo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: Zapri
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

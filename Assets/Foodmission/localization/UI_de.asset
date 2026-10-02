@@ -4008,6 +4008,32 @@ MonoBehaviour:
     m_Localized: Markiere mindestens eine Option, um diese Mahlzeit zu erfassen.
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "Du hast nichts markiert, also gibt es nichts zu erfassen. Geh zur\xFCck,
+      wenn du etwas markieren m\xF6chtest, oder schlie\xDFe und wir machen an einem
+      anderen Tag weiter \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: "Schlie\xDFen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: Verlassen, ohne zu erfassen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: Was du markiert hast, wird nicht erfasst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: Ein Teil wurde bereits erfasst, der Rest geht verloren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: Verlassen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

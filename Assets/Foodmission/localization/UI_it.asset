@@ -4030,6 +4030,32 @@ MonoBehaviour:
     m_Localized: Seleziona almeno un'opzione per registrare questo pasto.
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "Non hai segnato nulla, quindi non c'\xE8 niente da registrare.
+      Torna indietro se vuoi segnare qualcosa, oppure chiudi e ci sentiamo un altro
+      giorno \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: Chiudi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: Uscire senza registrare?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: "Quello che hai segnato non verr\xE0 registrato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: "Una parte \xE8 gi\xE0 stata registrata, ma il resto andr\xE0 perso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: Esci
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

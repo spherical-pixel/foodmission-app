@@ -110,14 +110,65 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SummaryStep_IsInvalidWhenNothingToSend()
+        public async Task SummaryStep_WhenNothingToSend_SaysSoAndClosesWithoutSending()
         {
             await LoadAsync(null, CheckInPlannerTests.M("M.B2.1"));
-            Assert.IsFalse(_vm.IsStepValid(_vm.SummaryStepIndex));
+            bool dismissed = false;
+            bool completed = false;
+            _vm.CheckInDismissed += () => dismissed = true;
+            _vm.CheckInCompleted += _ => completed = true;
 
+            await _vm.GoToStepAsync(_vm.SummaryStepIndex);
+            Assert.IsTrue(_vm.IsSummaryEmpty);
+            Assert.AreEqual("MISSION_CHECKIN_SUMMARY_EMPTY", _vm.NutriPromptKey);
+            Assert.IsTrue(_vm.IsStepValid(_vm.SummaryStepIndex), "the empty summary must still let the user leave");
+
+            await _vm.GoNextAsync();
+
+            Assert.IsTrue(dismissed);
+            Assert.IsFalse(completed);
+            Assert.AreEqual(0, _sent.Count);
+        }
+
+        [Test]
+        public async Task SummaryStep_WithSomethingToSend_UsesTheSummaryPrompt()
+        {
+            await LoadAsync(null, CheckInPlannerTests.M("M.B2.1"));
             _vm.SetCount(0, 2);
 
+            await _vm.GoToStepAsync(_vm.SummaryStepIndex);
+
+            Assert.IsFalse(_vm.IsSummaryEmpty);
+            Assert.AreEqual("MISSION_REPORT_SUMMARY_TITLE", _vm.NutriPromptKey);
             Assert.IsTrue(_vm.IsStepValid(_vm.SummaryStepIndex));
+        }
+
+        [Test]
+        public async Task HasUnsentAnswers_TracksAnswersUntilTheyAreSent()
+        {
+            await LoadAsync(null, CheckInPlannerTests.M("M.B2.1"));
+            Assert.IsFalse(_vm.HasUnsentAnswers);
+
+            _vm.SetCount(0, 2);
+            Assert.IsTrue(_vm.HasUnsentAnswers);
+
+            await CompleteAsync();
+            Assert.IsFalse(_vm.HasUnsentAnswers);
+        }
+
+        [Test]
+        public async Task HasUnsentAnswers_AfterPartialSend_IsTrue()
+        {
+            await LoadAsync(null, CheckInPlannerTests.M("M.B2.1"));
+            _vm.SetCount(0, 2);
+            _emitter.Setup(e => e.SendAsync(It.IsAny<IReadOnlyList<PendingReportItem>>()))
+                .Callback<IReadOnlyList<PendingReportItem>>(items => items[0].Sent = true)
+                .ReturnsAsync(MissionReportSendResult.Fail(new ApiErrorResponse { message = "x" }));
+
+            await CompleteAsync();
+
+            Assert.IsTrue(_vm.HasPartialSend);
+            Assert.IsTrue(_vm.HasUnsentAnswers);
         }
 
         [Test]

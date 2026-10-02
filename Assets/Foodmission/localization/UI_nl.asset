@@ -4046,6 +4046,31 @@ MonoBehaviour:
     m_Localized: "Markeer minstens \xE9\xE9n optie om deze maaltijd vast te leggen."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "Je hebt niets gemarkeerd, dus er is niets vast te leggen. Ga terug
+      als je iets wilt markeren, of sluit af en we praten een andere dag verder \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: Sluiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: Afsluiten zonder vast te leggen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: Wat je hebt gemarkeerd, wordt niet vastgelegd.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: Een deel is al vastgelegd, maar de rest gaat verloren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: Afsluiten
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

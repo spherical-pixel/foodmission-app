@@ -3871,6 +3871,30 @@ MonoBehaviour:
     m_Key: MISSION_CHECKIN_MEAL_EMPTY_HINT
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Key: MISSION_CHECKIN_SUMMARY_EMPTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Key: MISSION_CHECKIN_CLOSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Key: MISSION_CHECKIN_CLOSE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Key: MISSION_CHECKIN_CLOSE_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Key: MISSION_CHECKIN_CLOSE_PARTIAL_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Key: MISSION_CHECKIN_CLOSE_CONFIRM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

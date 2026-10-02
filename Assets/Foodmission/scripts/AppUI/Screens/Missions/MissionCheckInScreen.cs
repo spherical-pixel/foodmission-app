@@ -22,7 +22,9 @@ namespace eu.foodmission.platform
         protected override int StepCount => _viewModel != null && _viewModel.StepCount > 0 ? _viewModel.StepCount : 1;
         protected override string NextButtonLabel => "@UI:TXT_NEXT";
         protected override string PreviousButtonLabel => "@UI:TXT_BACK";
-        protected override string CompleteButtonLabel => "@UI:MISSION_REPORT_SEND";
+        // Nothing marked: the last button only closes
+        protected override string CompleteButtonLabel => _viewModel != null && _viewModel.IsSummaryEmpty ? "@UI:MISSION_CHECKIN_CLOSE" : "@UI:MISSION_REPORT_SEND";
+        protected override bool ShowCloseButton => true;
 
         private Text _bubbleText;
         private VisualElement _bubbleCard;
@@ -81,6 +83,30 @@ namespace eu.foodmission.platform
             OnStepChanged(_viewModel.CurrentStepIndex);
         }
 
+        protected override void OnCloseRequested()
+        {
+            if (_viewModel == null || _viewModel.IsSubmitting)
+            {
+                return;
+            }
+            NavController navController = _navController;
+            if (!_viewModel.HasUnsentAnswers)
+            {
+                ResetNutriToIdle();
+                navController?.PopBackStack();
+                return;
+            }
+            string messageKey = _viewModel.HasPartialSend ? "MISSION_CHECKIN_CLOSE_PARTIAL_MESSAGE" : "MISSION_CHECKIN_CLOSE_MESSAGE";
+            FMDialog.ShowConfirm(this, L("MISSION_CHECKIN_CLOSE_TITLE"), L(messageKey),
+                () =>
+                {
+                    ResetNutriToIdle();
+                    navController?.PopBackStack();
+                },
+                semantic: AlertSemantic.Destructive,
+                confirmLabel: "@UI:MISSION_CHECKIN_CLOSE_CONFIRM");
+        }
+
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
@@ -90,6 +116,7 @@ namespace eu.foodmission.platform
             {
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;
                 _viewModel.CheckInCompleted += OnCheckInCompleted;
+                _viewModel.CheckInDismissed += OnCheckInDismissed;
             }
         }
 
@@ -99,6 +126,7 @@ namespace eu.foodmission.platform
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
                 _viewModel.CheckInCompleted -= OnCheckInCompleted;
+                _viewModel.CheckInDismissed -= OnCheckInDismissed;
             }
             _bodies.Clear();
             _cards.Clear();
@@ -402,6 +430,12 @@ namespace eu.foodmission.platform
         }
 
         // ── Completion ────────────────────────────────────────
+
+        private void OnCheckInDismissed()
+        {
+            ResetNutriToIdle();
+            _navController?.PopBackStack();
+        }
 
         private void OnCheckInCompleted(CheckInOutcome outcome)
         {

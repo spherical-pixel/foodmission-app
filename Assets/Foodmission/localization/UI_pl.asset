@@ -4041,6 +4041,33 @@ MonoBehaviour:
       posi\u0142ek."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "Nic nie zaznaczy\u0142e\u015B, wi\u0119c nie ma czego zapisa\u0107.
+      Wr\xF3\u0107, je\u015Bli chcesz co\u015B zaznaczy\u0107, albo zamknij i porozmawiamy
+      innego dnia \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: Zamknij
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: "Wyj\u015B\u0107 bez zapisywania?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: "To, co zaznaczy\u0142e\u015B, nie zostanie zapisane."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: "Cz\u0119\u015B\u0107 zosta\u0142a ju\u017C zapisana, ale reszta
+      przepadnie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: "Wyjd\u017A"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

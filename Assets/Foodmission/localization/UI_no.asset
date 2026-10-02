@@ -3994,6 +3994,32 @@ MonoBehaviour:
     m_Localized: "Merk av minst ett alternativ for \xE5 registrere dette m\xE5ltidet."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "Du har ikke merket av noe, s\xE5 det er ingenting \xE5 registrere.
+      G\xE5 tilbake hvis du vil merke noe, eller lukk og s\xE5 tar vi det en annen
+      dag \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: Lukk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: "Avslutte uten \xE5 registrere?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: Det du har merket av, blir ikke registrert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: "En del er allerede registrert, men resten g\xE5r tapt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: Avslutt
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

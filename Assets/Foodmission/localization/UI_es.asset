@@ -3989,6 +3989,31 @@ MonoBehaviour:
     m_Localized: "Marca al menos una opci\xF3n para registrar esta comida."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347478
+    m_Localized: "No has marcado nada, as\xED que no hay nada que registrar. Vuelve
+      atr\xE1s si quieres marcar algo, o cierra y seguimos otro d\xEDa \U0001F60A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347479
+    m_Localized: Cerrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347480
+    m_Localized: "\xBFSalir sin registrar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347481
+    m_Localized: "Lo que has marcado no se registrar\xE1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347482
+    m_Localized: "Una parte ya se ha registrado, pero el resto se perder\xE1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347483
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

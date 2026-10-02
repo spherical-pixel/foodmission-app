@@ -15,6 +15,7 @@ namespace eu.foodmission.platform
     {
         private const string MealDayPromptKey = "MISSION_CHECKIN_Q_MEALS";
         private const string SummaryPromptKey = "MISSION_REPORT_SUMMARY_TITLE";
+        private const string EmptySummaryPromptKey = "MISSION_CHECKIN_SUMMARY_EMPTY";
 
         private readonly ICheckInService _checkInService;
         private readonly IMissionEventEmitter _emitter;
@@ -42,6 +43,12 @@ namespace eu.foodmission.platform
         public int SummaryStepIndex => Plan.StepCount;
         public bool HasPartialSend => _pendingItems != null && _pendingItems.Any(i => i.Sent);
 
+        /// <summary>Nothing was marked: the summary says so and completing only closes the check-in.</summary>
+        public bool IsSummaryEmpty => _outcome == null && CurrentItems().Count == 0;
+
+        /// <summary>Leaving now would lose answers that were not sent (closing asks for confirmation).</summary>
+        public bool HasUnsentAnswers => _outcome == null && CurrentItems().Any(i => !i.Sent);
+
         /// <summary>The plan could not be loaded: the screen leaves after showing the error.</summary>
         public bool LoadFailed { get; private set; }
 
@@ -50,6 +57,9 @@ namespace eu.foodmission.platform
         private CheckInOutcome _outcome;
 
         public event Action<CheckInOutcome> CheckInCompleted;
+
+        /// <summary>Completed with nothing to send: the screen just closes.</summary>
+        public event Action CheckInDismissed;
 
         public MissionCheckInViewModel(
             IStoreService storeService,
@@ -262,7 +272,8 @@ namespace eu.foodmission.platform
         {
             if (stepIndex == SummaryStepIndex)
             {
-                return !IsSubmitting && CurrentItems().Count > 0;
+                // An empty summary stays valid so the user can always leave
+                return !IsSubmitting;
             }
             return stepIndex >= 0 && stepIndex < Plan.StepCount;
         }
@@ -290,11 +301,13 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            _pendingItems = CurrentItems();
-            if (_pendingItems.Count == 0)
+            List<PendingReportItem> items = CurrentItems();
+            if (items.Count == 0)
             {
+                CheckInDismissed?.Invoke();
                 return;
             }
+            _pendingItems = items;
 
             IsSubmitting = true;
             ErrorDetail = null;
@@ -378,7 +391,7 @@ namespace eu.foodmission.platform
             CheckInStepKind.MealDay => MealDayPromptKey,
             CheckInStepKind.DayEvent => Plan.DayEvents[ItemIndexOf(stepIndex)].Step.PromptKey,
             CheckInStepKind.MissionStep => Plan.MissionSteps[ItemIndexOf(stepIndex)].Step.PromptKey,
-            _ => SummaryPromptKey
+            _ => IsSummaryEmpty ? EmptySummaryPromptKey : SummaryPromptKey
         };
 
         private bool CanEdit(int stepIndex, CheckInStepKind kind) =>

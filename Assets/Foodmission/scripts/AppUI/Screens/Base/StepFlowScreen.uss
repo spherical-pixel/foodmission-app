@@ -112,3 +112,14 @@
     transition-duration: 150ms, 150ms, 150ms;
     transition-timing-function: ease-in, ease-in, ease-in;
 }
+
+/* Optional ✕ (StepFlowScreenBase.ShowCloseButton) */
+.fm-step-flow__close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+}
+
+.fm-step-flow--closable > .fm-step-flow__progress {
+    padding-right: 64px;
+}
