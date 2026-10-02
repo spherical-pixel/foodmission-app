@@ -560,5 +560,33 @@ namespace eu.foodmission.platform.Tests
             _vm.SetQuestForTesting(_mockQuest, _mockProgress);
             Assert.IsFalse(_vm.CanStartQuest);
         }
+            [Test]
+        public void Activities_PendingMission_ShowsItsProgressPercent()
+        {
+            var quest = new Quest
+            {
+                id = "q-200",
+                items = new[]
+                {
+                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B1.1", label = "Mission one", sortOrder = 1 },
+                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B1.2", label = "Mission two", sortOrder = 2 },
+                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B1.3", label = "Mission three", sortOrder = 3 },
+                    new QuestItem { contentType = QuestContentType.Quiz, contentCode = "QUIZ_1", sortOrder = 4 }
+                }
+            };
+            var missionProgress = new[]
+            {
+                new MissionProgress { missionId = "id-1", missionCode = "M.B1.1", progress = 14.2857f },
+                new MissionProgress { missionId = "id-2", missionCode = "M.B1.2", progress = 100f, completed = true }
+            };
+
+            _vm.SetQuestForTesting(quest, new QuestProgress { questId = "q-200", progress = 0f }, missionProgress: missionProgress);
+
+            Dictionary<string, QuestActivityDisplayItem> byCode = _vm.Activities.ToDictionary(a => a.Item.contentCode);
+            Assert.AreEqual("14%", byCode["M.B1.1"].ProgressLabel);
+            Assert.IsNull(byCode["M.B1.2"].ProgressLabel, "completed missions already show the completed node");
+            Assert.AreEqual("0%", byCode["M.B1.3"].ProgressLabel);
+            Assert.IsNull(byCode["QUIZ_1"].ProgressLabel);
+        }
     }
 }

@@ -20,6 +20,8 @@ namespace eu.foodmission.platform
         public bool IsCompleted { get; set; }
         public float Progress { get; set; }
         public string StatusText { get; set; }
+        /// <summary>"NN%" for a pending mission, so the quest shows that it is moving; null otherwise.</summary>
+        public string ProgressLabel { get; set; }
 
         public string TimelineDisplayLabel
         {
@@ -344,11 +346,17 @@ namespace eu.foodmission.platform
             }
 
             var completedMissionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var missionPercentByCode = new Dictionary<string, float>(StringComparer.OrdinalIgnoreCase);
             if (missionProgress != null)
             {
                 foreach (var mp in missionProgress)
                 {
                     if (mp == null) continue;
+                    string progressCode = !string.IsNullOrEmpty(mp.missionCode) ? mp.missionCode : _missionService?.GetCachedCode(mp.missionId);
+                    if (!string.IsNullOrEmpty(progressCode))
+                    {
+                        missionPercentByCode[progressCode] = mp.progress;
+                    }
                     if (mp.completed || mp.progress >= 100f)
                     {
                         if (!string.IsNullOrEmpty(mp.missionId))
@@ -442,6 +450,13 @@ namespace eu.foodmission.platform
                     ? (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED"))
                     : (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING"));
 
+                string progressLabel = null;
+                if (!isItemCompleted && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
+                {
+                    missionPercentByCode.TryGetValue(it.contentCode ?? string.Empty, out float percent);
+                    progressLabel = $"{(int)Math.Clamp(percent, 0f, 100f)}%";
+                }
+
                 activityItems.Add(new QuestActivityDisplayItem
                 {
                     Item = it,
@@ -451,7 +466,8 @@ namespace eu.foodmission.platform
                     // TypeIcon = typeIcon,
                     IsCompleted = isItemCompleted,
                     Progress = isItemCompleted ? 100f : 0f,
-                    StatusText = statusText
+                    StatusText = statusText,
+                    ProgressLabel = progressLabel
                 });
             }
 

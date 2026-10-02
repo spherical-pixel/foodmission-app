@@ -173,6 +173,13 @@
     color: var(--appui-foregrounds-50);
 }
 
+.fm-quest-timeline-percent {
+    -unity-font-style: bold;
+    flex-shrink: 0;
+    padding-left: 12px;
+    color: var(--appui-accent-100);
+}
+
 
 .hidden {
     display: none;

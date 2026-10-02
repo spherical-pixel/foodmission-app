@@ -246,6 +246,14 @@ namespace eu.foodmission.platform
                 label.AddToClassList("fm-quest-timeline-label");
                 row.Add(label);
 
+                if (!string.IsNullOrEmpty(act.ProgressLabel))
+                {
+                    var percent = new Unity.AppUI.UI.Text();
+                    percent.text = act.ProgressLabel;
+                    percent.AddToClassList("fm-quest-timeline-percent");
+                    row.Add(percent);
+                }
+
                 // Interactivity & Navigation
                 string cType = act.Item?.contentType ?? string.Empty;
                 bool isNavigable = string.Equals(cType, QuestContentType.Quiz, StringComparison.OrdinalIgnoreCase) ||
