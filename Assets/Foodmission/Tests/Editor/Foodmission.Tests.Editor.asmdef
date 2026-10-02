@@ -3,6 +3,7 @@
     "rootNamespace": "eu.foodmission.platform.Tests",
     "references": [
         "Foodmission",
+        "Foodmission.Editor",
         "Unity.AppUI.Redux",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
