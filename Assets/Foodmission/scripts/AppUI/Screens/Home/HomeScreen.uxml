@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/FMProgressWheel.uss?fileID=7433441132597879392&amp;guid=0cce8fad8612c407c8975a0413072653&amp;type=3#FMProgressWheel"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.HomeScreenViewModel, Foodmission" class="fm-root">
         <eu.foodmission.platform.Components.FMNutriView name="nutri-render" class="fm-home-nutri-image" style="margin-bottom: 80px; height: 900px; padding-top: 0; margin-top: -150px;"/>
         <appui:Heading text="Your nutritional intelligence status" size="S" class="centered-text" style="margin-top: -100px;">
@@ -41,6 +42,18 @@
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(44199294499020800)"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FMButton>
+        </ui:VisualElement>
+        <ui:VisualElement name="wheels-section" class="fm-wheels-section fm-wheels-section--hidden">
+            <ui:VisualElement class="fm-wheels-section__header">
+                <appui:Heading name="wheels-title" text="" size="XS" class="fm-wheels-section__title"/>
+                <appui:Button name="btn-wheels-customize" title="@UI:WHEELS_CUSTOMIZE" quiet="true" size="S"/>
+            </ui:VisualElement>
+            <eu.foodmission.platform.Components.FMProgressWheelGrid name="wheels-grid" columns="2" min-card-width="420"/>
+            <ui:VisualElement name="wheels-message" class="fm-wheels-section__message fm-wheels-section__part--hidden">
+                <appui:Text name="wheels-message-text" text="" class="centered-text"/>
+                <eu.foodmission.platform.Components.FMButton name="btn-wheels-survey" title="@UI:WHEELS_SURVEY_CTA_BUTTON" variant="Accent" size="M" class="fm-button"/>
+            </ui:VisualElement>
+            <appui:CircularProgress name="wheels-loading" variant="Indeterminate" size="M" class="fm-wheels-section__part--hidden"/>
         </ui:VisualElement>
         <ui:VisualElement name="VisualElement" class="fm-home-selectors-row" style="flex-grow: 1; display: none;">
             <eu.foodmission.platform.Components.FMArrowStepper stepper-choices="" stepper-selected-index="0" name="period-stepper"/>
