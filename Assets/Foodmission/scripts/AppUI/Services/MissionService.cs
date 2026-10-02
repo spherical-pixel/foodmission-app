@@ -30,6 +30,32 @@ namespace eu.foodmission.platform
             return null;
         }
 
+        /// <summary>
+        /// The progress endpoints return <c>missionId</c> but no <c>missionCode</c>: fills the code where it is missing.
+        /// Returns how many entries are still without a code.
+        /// </summary>
+        public static int FillMissionCodes(MissionProgress[] list, Func<string, string> codeForId)
+        {
+            int missing = 0;
+            if (list == null)
+            {
+                return missing;
+            }
+            foreach (MissionProgress progress in list)
+            {
+                if (progress == null || !string.IsNullOrEmpty(progress.missionCode))
+                {
+                    continue;
+                }
+                progress.missionCode = codeForId?.Invoke(progress.missionId);
+                if (string.IsNullOrEmpty(progress.missionCode))
+                {
+                    missing++;
+                }
+            }
+            return missing;
+        }
+
         private static void CacheMission(Mission mission)
         {
             if (mission == null || string.IsNullOrEmpty(mission.id) || string.IsNullOrEmpty(mission.code)) return;
@@ -188,17 +214,11 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var progressList = JsonConvert.DeserializeObject<MissionProgress[]>(raw);
-                if (progressList != null && progressList.Length > 0)
+                if (FillMissionCodes(progressList, GetCachedCode) > 0)
                 {
-                    bool needsCache = false;
-                    lock (s_MissionCacheLock)
-                    {
-                        needsCache = s_MissionIdToCodeMap.Count == 0;
-                    }
-                    if (needsCache)
-                    {
-                        _ = GetMissionsAsync();
-                    }
+                    // Unknown ids: load the catalog once so callers can match progress by code
+                    await GetMissionsAsync();
+                    FillMissionCodes(progressList, GetCachedCode);
                 }
                 return (progressList, null);
             }
@@ -241,6 +261,7 @@ namespace eu.foodmission.platform
             {
                 string raw = request.downloadHandler.text;
                 var progress = JsonConvert.DeserializeObject<MissionProgress>(raw);
+                FillMissionCodes(new[] { progress }, id => isUuid ? GetCachedCode(id) : codeOrId);
                 return (progress, null);
             }
             catch (Exception ex)

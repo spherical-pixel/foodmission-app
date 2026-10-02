@@ -99,5 +99,25 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(error);
             Assert.AreEqual("Authentication required", error.message);
         }
+
+        [Test]
+        public void FillMissionCodes_SetsCodeFromMissionId_WhenBackendOmitsIt()
+        {
+            // GET /missions/progress returns missionId but no missionCode
+            var list = new[]
+            {
+                new MissionProgress { missionId = "id-1", startedAt = new DateTime(2026, 10, 2, 6, 50, 0, DateTimeKind.Utc) },
+                new MissionProgress { missionId = "id-2", missionCode = "M.KEEP" },
+                new MissionProgress { missionId = "id-unknown" },
+                null
+            };
+
+            int missing = MissionService.FillMissionCodes(list, id => id == "id-1" ? "M.B1.1" : id == "id-2" ? "M.OTHER" : null);
+
+            Assert.AreEqual("M.B1.1", list[0].missionCode);
+            Assert.AreEqual("M.KEEP", list[1].missionCode);
+            Assert.IsNull(list[2].missionCode);
+            Assert.AreEqual(1, missing);
+        }
     }
 }
