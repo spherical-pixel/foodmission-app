@@ -38,6 +38,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<string> setUserSegment = "app/setUserSegment";
         public static readonly ActionCreator<ProgressWheel[]> setProgressWheels = "app/setProgressWheels";
         public static readonly ActionCreator<string[]> setHiddenProgressWheels = "app/setHiddenProgressWheels";
+        public static readonly ActionCreator<string[]> markHiddenProgressWheelsSynced = "app/markHiddenProgressWheelsSynced";
 
         public readonly struct WalletPayload
         {
@@ -364,6 +365,7 @@ namespace eu.foodmission.platform
             newState.userBadges = new string[0];
             newState.progressWheels = new ProgressWheel[0];
             newState.hiddenProgressWheels = new string[0];
+            newState.hiddenProgressWheelsPendingSync = false;
             newState.userGoals = new string[0];
 
             // Clear temporal data
@@ -549,7 +551,7 @@ namespace eu.foodmission.platform
                 {
                     newState.devicePushRegistration = s.devicePushRegistration.Copy();
                 }
-                if (s.hiddenProgressWheels != null)
+                if (s.hiddenProgressWheels != null && !state.hiddenProgressWheelsPendingSync)
                 {
                     newState.hiddenProgressWheels = (string[])s.hiddenProgressWheels.Clone();
                 }
@@ -672,6 +674,20 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.hiddenProgressWheels = action.payload != null ? (string[])action.payload.Clone() : new string[0];
+            newState.hiddenProgressWheelsPendingSync = true;
+            return newState;
+        }
+
+        /// <summary>Payload = the list the PATCH sent; clears the pending flag only if the user did not change it meanwhile.</summary>
+        public static AppState MarkHiddenProgressWheelsSyncedReducer(AppState state, IAction<string[]> action)
+        {
+            var newState = state.Copy();
+            string[] sent = action.payload ?? new string[0];
+            string[] current = state.hiddenProgressWheels ?? new string[0];
+            if (sent.Length == current.Length && System.Linq.Enumerable.SequenceEqual(sent, current))
+            {
+                newState.hiddenProgressWheelsPendingSync = false;
+            }
             return newState;
         }
 

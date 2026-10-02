@@ -163,9 +163,9 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void BuildSettingsRequest_AlwaysSendsHiddenProgressWheels()
+        public void BuildSettingsRequest_PendingEmptyHidden_SendsEmptyArray()
         {
-            var state = new AppState { lang = "es", theme = "dark", hiddenProgressWheels = new string[0] };
+            var state = new AppState { lang = "es", theme = "dark", hiddenProgressWheels = new string[0], hiddenProgressWheelsPendingSync = true };
 
             string json = AuthService.BuildSettingsRequest(state).ToJson();
 
@@ -173,13 +173,24 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void BuildSettingsRequest_IncludesHiddenKinds()
+        public void BuildSettingsRequest_PendingHidden_IncludesKinds()
         {
-            var state = new AppState { hiddenProgressWheels = new[] { "LAND_USE_REDUCTION" } };
+            var state = new AppState { hiddenProgressWheels = new[] { "LAND_USE_REDUCTION" }, hiddenProgressWheelsPendingSync = true };
 
             string json = AuthService.BuildSettingsRequest(state).ToJson();
 
             StringAssert.Contains("\"hiddenProgressWheels\":[\"LAND_USE_REDUCTION\"]", json);
+        }
+
+        [Test]
+        public void BuildSettingsRequest_NotPending_OmitsHidden()
+        {
+            // Other settings syncs (theme, push token...) must not overwrite a list chosen on another device.
+            var state = new AppState { theme = "dark", hiddenProgressWheels = new string[0], hiddenProgressWheelsPendingSync = false };
+
+            string json = AuthService.BuildSettingsRequest(state).ToJson();
+
+            StringAssert.DoesNotContain("hiddenProgressWheels", json);
         }
 
         [Test]

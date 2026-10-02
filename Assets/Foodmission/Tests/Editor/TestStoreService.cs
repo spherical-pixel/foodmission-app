@@ -88,6 +88,7 @@ namespace eu.foodmission.platform.Tests
                 .AddCase(AppActions.setUserSegment, AppReducers.SetUserSegmentReducer)
                 .AddCase(AppActions.setProgressWheels, AppReducers.SetProgressWheelsReducer)
                 .AddCase(AppActions.setHiddenProgressWheels, AppReducers.SetHiddenProgressWheelsReducer)
+                .AddCase(AppActions.markHiddenProgressWheelsSynced, AppReducers.MarkHiddenProgressWheelsSyncedReducer)
                 // Food Info
                 .AddCase(AppActions.foodInfoAddRequested, AppReducers.FoodInfoAddRequestedReducer)
                 .AddCase(AppActions.foodInfoAddRequestConsumed, AppReducers.FoodInfoAddRequestConsumedReducer);

@@ -505,7 +505,8 @@ namespace eu.foodmission.platform
                     notificationPreferredTime = state.notificationPreferredTime,
                     backgroundPattern = state.backgroundPattern,
                     devicePushRegistration = state.devicePushRegistration,
-                    hiddenProgressWheels = state.hiddenProgressWheels ?? new string[0]
+                    // Only a pending local change is sent, so other settings syncs don't overwrite a list chosen on another device.
+                    hiddenProgressWheels = state.hiddenProgressWheelsPendingSync ? (state.hiddenProgressWheels ?? new string[0]) : null
                 }
             };
         }
@@ -527,6 +528,10 @@ namespace eu.foodmission.platform
                 if (!success)
                 {
                     Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
+                }
+                else if (request.settings?.hiddenProgressWheels != null)
+                {
+                    _storeService.store.Dispatch(AppActions.markHiddenProgressWheelsSynced.Invoke(request.settings.hiddenProgressWheels));
                 }
             }
             catch (Exception ex)

@@ -163,5 +163,33 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(42.5f, restored.progressWheels[0].percentComplete);
             CollectionAssert.AreEqual(new[] { "CO2_REDUCTION" }, restored.hiddenProgressWheels);
         }
+
+        [Test]
+        public void SetHiddenProgressWheels_MarksPendingSync()
+        {
+            var newState = AppReducers.SetHiddenProgressWheelsReducer(_initialState, AppActions.setHiddenProgressWheels.Invoke(new[] { "CO2_REDUCTION" }));
+            Assert.IsTrue(newState.hiddenProgressWheelsPendingSync);
+        }
+
+        [Test]
+        public void MarkHiddenSynced_ClearsPendingOnlyWhenListUnchanged()
+        {
+            _initialState.hiddenProgressWheels = new[] { "CO2_REDUCTION" };
+            _initialState.hiddenProgressWheelsPendingSync = true;
+
+            var stale = AppReducers.MarkHiddenProgressWheelsSyncedReducer(_initialState, AppActions.markHiddenProgressWheelsSynced.Invoke(new string[0]));
+            Assert.IsTrue(stale.hiddenProgressWheelsPendingSync);
+
+            var synced = AppReducers.MarkHiddenProgressWheelsSyncedReducer(_initialState, AppActions.markHiddenProgressWheelsSynced.Invoke(new[] { "CO2_REDUCTION" }));
+            Assert.IsFalse(synced.hiddenProgressWheelsPendingSync);
+        }
+
+        [Test]
+        public void Logout_And_Copy_HandlePendingSync()
+        {
+            _initialState.hiddenProgressWheelsPendingSync = true;
+            Assert.IsTrue(_initialState.Copy().hiddenProgressWheelsPendingSync);
+            Assert.IsFalse(AppReducers.LogoutReducer(_initialState, AppActions.logout.Invoke()).hiddenProgressWheelsPendingSync);
+        }
     }
 }
