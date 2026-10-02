@@ -1,3 +1,5 @@
+using System;
+
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
 using UnityEngine;
@@ -34,6 +36,8 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<ProgressIndicator[]> setProgressIndicators = "app/setProgressIndicators";
         public static readonly ActionCreator<string[]> setBadges = "app/setBadges";
         public static readonly ActionCreator<string> setUserSegment = "app/setUserSegment";
+        public static readonly ActionCreator<ProgressWheel[]> setProgressWheels = "app/setProgressWheels";
+        public static readonly ActionCreator<string[]> setHiddenProgressWheels = "app/setHiddenProgressWheels";
 
         public readonly struct WalletPayload
         {
@@ -358,6 +362,8 @@ namespace eu.foodmission.platform
             newState.userPoints = 0;
             newState.userProgressIndicators = new ProgressIndicator[0];
             newState.userBadges = new string[0];
+            newState.progressWheels = new ProgressWheel[0];
+            newState.hiddenProgressWheels = new string[0];
             newState.userGoals = new string[0];
 
             // Clear temporal data
@@ -648,6 +654,20 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userSegment = action.payload ?? "";
+            return newState;
+        }
+
+        public static AppState SetProgressWheelsReducer(AppState state, IAction<ProgressWheel[]> action)
+        {
+            var newState = state.Copy();
+            newState.progressWheels = action.payload != null ? Array.ConvertAll(action.payload, w => w?.Copy()) : new ProgressWheel[0];
+            return newState;
+        }
+
+        public static AppState SetHiddenProgressWheelsReducer(AppState state, IAction<string[]> action)
+        {
+            var newState = state.Copy();
+            newState.hiddenProgressWheels = action.payload != null ? (string[])action.payload.Clone() : new string[0];
             return newState;
         }
 

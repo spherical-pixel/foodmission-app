@@ -62,6 +62,11 @@ namespace eu.foodmission.platform
         public float allTimeTotal;
         public string cycleStartedAt;
         public string lastUpdatedAt;
+
+        public ProgressWheel Copy()
+        {
+            return (ProgressWheel)MemberwiseClone();
+        }
     }
 
     /// <summary>Response of POST /users/me/gamification/onboarding-survey.</summary>
