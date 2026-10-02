@@ -24,6 +24,15 @@ namespace eu.foodmission.platform
         [ObservableProperty] private bool m_HasNutritionInfo;
         [ObservableProperty] private bool m_HasVideo;
 
+        // Rating: average/count shown under the hero image; MyRating (0 = not rated) drives the "rate this recipe" card.
+        [ObservableProperty] private float _averageRating;
+        [ObservableProperty] private int _ratingCount;
+        [ObservableProperty] private int _myRating;
+        [ObservableProperty] private bool _canRate;
+        [ObservableProperty] private bool _isRatingBusy;
+        /// <summary>Rating save/remove failures, kept apart from ErrorDetail so the screen can title them correctly.</summary>
+        [ObservableProperty] private ApiErrorResponse _ratingErrorDetail;
+
         public RecipeDetailViewModel(
             IStoreService storeService,
             IRecipeService recipeService,
@@ -67,6 +76,16 @@ namespace eu.foodmission.platform
                 IsOwner = !string.IsNullOrEmpty(recipe?.userId) && recipe.userId == state.userId;
                 HasNutritionInfo = recipe?.nutritionalInfo != null;
                 HasVideo = !string.IsNullOrEmpty(recipe?.videoUrl);
+
+                AverageRating = recipe?.rating ?? 0f;
+                RatingCount = recipe?.ratingCount ?? 0;
+                MyRating = 0;
+                // Authors cannot rate their own recipes (avoids inflating the average).
+                CanRate = recipe != null && !IsOwner;
+                if (CanRate)
+                {
+                    await LoadRatingAsync(recipe.id);
+                }
             }
             catch (Exception ex)
             {
@@ -74,6 +93,83 @@ namespace eu.foodmission.platform
                 ErrorDetail = new ApiErrorResponse { message = ex.Message };
             }
             finally { IsLoading = false; }
+        }
+
+        private async Task LoadRatingAsync(string recipeId)
+        {
+            var (rating, error) = await _recipeService.GetRatingAsync(recipeId);
+            if (error != null)
+            {
+                // Not critical: the average from the recipe stays visible and the user can still rate.
+                Debug.LogWarning($"[RecipeDetailViewModel] Could not load rating for {recipeId}: {error.message}");
+                return;
+            }
+            ApplyRating(rating);
+        }
+
+        public async Task RateAsync(int stars)
+        {
+            if (!CanRate || Recipe == null || IsRatingBusy || stars < 1 || stars > 5 || stars == MyRating)
+            {
+                return;
+            }
+
+            int previous = MyRating;
+            MyRating = stars;
+            IsRatingBusy = true;
+            try
+            {
+                var (rating, error) = await _recipeService.RateAsync(Recipe.id, stars);
+                if (error != null)
+                {
+                    MyRating = previous;
+                    RatingErrorDetail = error;
+                    return;
+                }
+                ApplyRating(rating);
+            }
+            finally
+            {
+                IsRatingBusy = false;
+            }
+        }
+
+        public async Task RemoveRatingAsync()
+        {
+            if (!CanRate || Recipe == null || IsRatingBusy || MyRating == 0)
+            {
+                return;
+            }
+
+            int previous = MyRating;
+            MyRating = 0;
+            IsRatingBusy = true;
+            try
+            {
+                var (rating, error) = await _recipeService.RemoveRatingAsync(Recipe.id);
+                if (error != null)
+                {
+                    MyRating = previous;
+                    RatingErrorDetail = error;
+                    return;
+                }
+                ApplyRating(rating);
+            }
+            finally
+            {
+                IsRatingBusy = false;
+            }
+        }
+
+        private void ApplyRating(RecipeRating rating)
+        {
+            if (rating == null)
+            {
+                return;
+            }
+            AverageRating = rating.rating;
+            RatingCount = rating.ratingCount;
+            MyRating = rating.myRating ?? 0;
         }
 
         public void LogRecipe(int mealTypeIndex = 0, bool eatenOut = false)

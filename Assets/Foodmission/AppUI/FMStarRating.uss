@@ -1,0 +1,58 @@
+/* FMStarRating: five tinted fm-star images; colours in Foodmission_Theme.uss (--fm-star-filled / --fm-star-empty) */
+
+.fm-star-rating {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    --fm-star-size: 40px;
+}
+
+.fm-star-rating--small {
+    --fm-star-size: 28px;
+}
+
+.fm-star-rating--large {
+    --fm-star-size: 72px;
+}
+
+.fm-star-rating__star {
+    width: var(--fm-star-size);
+    height: var(--fm-star-size);
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.fm-star-rating--large .fm-star-rating__star {
+    margin-right: 16px;
+}
+
+.fm-star-rating__empty,
+.fm-star-rating__fill-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--fm-star-size);
+    height: var(--fm-star-size);
+    background-image: url("project://database/Assets/Foodmission/graphics/png/icons/fm-star.png?fileID=21300000&guid=b4db6c7cc883c433caa9e390badce675&type=3#fm-star");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.fm-star-rating__empty {
+    -unity-background-image-tint-color: var(--fm-star-empty);
+}
+
+.fm-star-rating__fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.fm-star-rating__fill-image {
+    -unity-background-image-tint-color: var(--fm-star-filled);
+}
+
+.fm-star-rating--interactive .fm-star-rating__star {
+    cursor: link;
+}

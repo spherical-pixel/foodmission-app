@@ -3,6 +3,8 @@ using Unity.AppUI.UI;
 using Unity.Properties;
 using UnityEngine.UIElements;
 
+using eu.foodmission.platform.Components;
+
 namespace eu.foodmission.platform
 {
     /// <summary>
@@ -17,6 +19,8 @@ namespace eu.foodmission.platform
         private readonly Text _heroEmoji;
         private readonly VisualElement _heroImageContainer;
         private readonly Text _ratingText;
+        private readonly VisualElement _ratingRow;
+        private readonly FMStarRating _ratingStars;
         private readonly VisualElement _metaPillsRow;
         private readonly Text _timeBadge;
         private readonly Text _difficultyBadge;
@@ -78,9 +82,16 @@ namespace eu.foodmission.platform
             metaContainer.AddToClassList("fm-r-card-meta-container");
             Add(metaContainer);
 
+            _ratingRow = new VisualElement();
+            _ratingRow.AddToClassList("fm-r-card-rating-row");
+            _ratingStars = new FMStarRating();
+            _ratingStars.AddToClassList("fm-star-rating--small");
+            _ratingRow.Add(_ratingStars);
             _ratingText = new Text();
             _ratingText.AddToClassList("fm-r-card-rating");
-            metaContainer.Add(_ratingText);
+            _ratingRow.Add(_ratingText);
+            _ratingRow.style.display = DisplayStyle.None;
+            metaContainer.Add(_ratingRow);
         }
 
         [UxmlAttribute("text")]
@@ -111,8 +122,17 @@ namespace eu.foodmission.platform
             set
             {
                 _ratingText.text = value;
-                _ratingText.style.display = string.IsNullOrEmpty(value) ? DisplayStyle.None : DisplayStyle.Flex;
+                _ratingRow.style.display = string.IsNullOrEmpty(value) ? DisplayStyle.None : DisplayStyle.Flex;
             }
+        }
+
+        /// <summary>Average stars (0–5) drawn next to <see cref="RatingText"/>.</summary>
+        [UxmlAttribute("rating-value")]
+        [CreateProperty]
+        public float RatingValue
+        {
+            get => _ratingStars.value;
+            set => _ratingStars.value = value;
         }
 
         [UxmlAttribute("time-text")]

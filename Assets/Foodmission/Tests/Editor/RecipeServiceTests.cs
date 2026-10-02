@@ -75,5 +75,45 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+
+        [Test]
+        public void BuildRatingUrl_EscapesId()
+        {
+            Assert.AreEqual("https://api.test/api/v1/recipes/abc%201/rating", RecipeService.BuildRatingUrl("https://api.test", "abc 1"));
+        }
+
+        [Test]
+        public void RecipeRating_Deserializes_WithAndWithoutMyRating()
+        {
+            var mine = Newtonsoft.Json.JsonConvert.DeserializeObject<RecipeRating>("{\"recipeId\":\"r1\",\"rating\":4.25,\"ratingCount\":8,\"myRating\":5}");
+            var none = Newtonsoft.Json.JsonConvert.DeserializeObject<RecipeRating>("{\"recipeId\":\"r1\",\"rating\":0,\"ratingCount\":0,\"myRating\":null}");
+
+            Assert.AreEqual(4.25f, mine.rating, 0.0001f);
+            Assert.AreEqual(8, mine.ratingCount);
+            Assert.AreEqual(5, mine.myRating);
+            Assert.IsNull(none.myRating);
+        }
+
+        [Test]
+        public async Task RateAsync_InvalidInput_ReturnsErrorWithoutRequest()
+        {
+            var (result, error) = await _service.RateAsync("", 3);
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+
+            (result, error) = await _service.RateAsync("r1", 6);
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public void BuildRecipesListUrl_AddsOriginOnlyWhenSet()
+        {
+            string withOrigin = RecipeService.BuildRecipesListUrl("https://api.test", 1, 20, "es", null, null, null, null, null, null, "USER");
+            string without = RecipeService.BuildRecipesListUrl("https://api.test", 2, 20, "es", "pasta", null, null, null, null, null, null);
+
+            Assert.AreEqual("https://api.test/api/v1/recipes?page=1&limit=20&lang=es&origin=USER", withOrigin);
+            Assert.AreEqual("https://api.test/api/v1/recipes?page=2&limit=20&lang=es&search=pasta", without);
+        }
     }
 }

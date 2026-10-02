@@ -22,6 +22,16 @@ namespace eu.foodmission.platform
         private Text _heroEmoji;
         private Heading _recipeTitle;
         private Text _ratingText;
+        private FMStarRating _ratingStars;
+        private VisualElement _recipeSource;
+        private Text _recipeSourceText;
+        private Icon _recipeSourceIcon;
+        private VisualElement _rateCard;
+        private Heading _rateTitle;
+        private FMStarRating _rateStars;
+        private Text _rateHint;
+        private Unity.AppUI.UI.Button _btnRemoveRating;
+        private readonly System.Collections.Generic.List<UnityEngine.Accessibility.AccessibilityNode> _ratingNodes = new System.Collections.Generic.List<UnityEngine.Accessibility.AccessibilityNode>();
         private VisualElement _badgesStrip;
         private Text _description;
 
@@ -64,6 +74,16 @@ namespace eu.foodmission.platform
             _heroEmoji = contentContainer.Q<Text>("hero-emoji");
             _recipeTitle = contentContainer.Q<Heading>("recipe-title");
             _ratingText = contentContainer.Q<Text>("rating-text");
+            _ratingStars = contentContainer.Q<FMStarRating>("rating-stars");
+            _recipeSource = contentContainer.Q<VisualElement>("recipe-source");
+            _recipeSourceText = contentContainer.Q<Text>("recipe-source-text");
+            _recipeSourceIcon = contentContainer.Q<Icon>("recipe-source-icon");
+            _recipeSource?.AddManipulator(new UnityEngine.UIElements.Clickable(OnSourceClicked));
+            _rateCard = contentContainer.Q<VisualElement>("rate-card");
+            _rateTitle = contentContainer.Q<Heading>("rate-title");
+            _rateStars = contentContainer.Q<FMStarRating>("rate-stars");
+            _rateHint = contentContainer.Q<Text>("rate-hint");
+            _btnRemoveRating = contentContainer.Q<Unity.AppUI.UI.Button>("btn-remove-rating");
             _badgesStrip = contentContainer.Q<VisualElement>("badges-strip");
             _description = contentContainer.Q<Text>("description");
 
@@ -132,8 +152,18 @@ namespace eu.foodmission.platform
                 _btnWatchVideo.clickable.clicked += OnWatchVideoClicked;
             }
 
+            if (_rateStars != null)
+            {
+                _rateStars.StarClicked += OnRateStarClicked;
+            }
+            if (_btnRemoveRating != null)
+            {
+                _btnRemoveRating.clickable.clicked += OnRemoveRatingClicked;
+            }
+
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
             UpdateActionButtonsVisibility();
+            UpdateRatingUI();
         }
 
         protected override void OnViewModelUnbinding()
@@ -168,6 +198,16 @@ namespace eu.foodmission.platform
                 _btnWatchVideo.clickable.clicked -= OnWatchVideoClicked;
             }
 
+            if (_rateStars != null)
+            {
+                _rateStars.StarClicked -= OnRateStarClicked;
+            }
+
+            if (_btnRemoveRating != null)
+            {
+                _btnRemoveRating.clickable.clicked -= OnRemoveRatingClicked;
+            }
+
             base.OnViewModelUnbinding();
         }
 
@@ -194,6 +234,20 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.ErrorDetail):
                     UpdateErrorState();
                     break;
+                case nameof(_viewModel.AverageRating):
+                case nameof(_viewModel.RatingCount):
+                case nameof(_viewModel.MyRating):
+                case nameof(_viewModel.CanRate):
+                case nameof(_viewModel.IsRatingBusy):
+                    UpdateRatingUI();
+                    break;
+                case nameof(_viewModel.RatingErrorDetail):
+                    if (_viewModel.RatingErrorDetail != null)
+                    {
+                        FMDialog.ShowApiError(this, "RECIPE_RATE_ERROR", _viewModel.RatingErrorDetail);
+                        _viewModel.RatingErrorDetail = null;
+                    }
+                    break;
             }
         }
 
@@ -209,29 +263,8 @@ namespace eu.foodmission.platform
             Debug.Log($"[RecipeDetailScreen] RebuildAll: title='{r.title}', category='{r.category}', cuisineType='{r.cuisineType}', servings={r.servings}, eco={r.sustainabilityScore}");
 
             if (_recipeTitle != null) _recipeTitle.text = r.title ?? "";
-            if (_ratingText != null)
-            {
-                var ratingStr = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RATING") + ":";
-                if (r.ratingCount > 0)
-                {
-                    ratingStr += $" {r.rating:F1}/5 ({r.ratingCount})";
-                }
-                else
-                {
-                    //ratingStr += LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_REVIEWS");
-                    ratingStr = null; // Hide rating text if no reviews
-                }
-                _ratingText.text = ratingStr;
-
-                if (_ratingText.text == null || string.IsNullOrWhiteSpace(_ratingText.text))
-                {
-                    _ratingText.style.display = DisplayStyle.None;
-                }
-                else
-                {
-                    _ratingText.style.display = DisplayStyle.Flex;
-                }
-            }
+            UpdateSourceLine();
+            UpdateRatingUI();
 
             if (_description != null)
             {
@@ -733,6 +766,148 @@ namespace eu.foodmission.platform
             _btnAddToShoppingList?.SetEnabled(!_viewModel.IsAddingToShoppingList);
         }
 
+        private void UpdateSourceLine()
+        {
+            if (_recipeSource == null)
+            {
+                return;
+            }
+            Recipe recipe = _viewModel?.Recipe;
+            string url = RecipeOriginLinks.SourceUrl(recipe);
+            string key = url != null
+                ? "RECIPE_SOURCE_THEMEALDB"
+                : recipe?.origin == RecipeOriginLinks.CommunityOrigin ? "RECIPE_SOURCE_COMMUNITY" : null;
+
+            _recipeSource.EnableInClassList("fm-rd-action--hidden", key == null);
+            _recipeSource.EnableInClassList("fm-rd-source--link", url != null);
+            _recipeSourceIcon?.EnableInClassList("fm-rd-action--hidden", url == null);
+            if (_recipeSourceText != null)
+            {
+                _recipeSourceText.text = key != null ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", key) : "";
+            }
+        }
+
+        private void OnSourceClicked()
+        {
+            string url = RecipeOriginLinks.SourceUrl(_viewModel?.Recipe);
+            if (url != null)
+            {
+                Application.OpenURL(url);
+            }
+        }
+
+        private void UpdateRatingUI()
+        {
+            if (_viewModel == null)
+            {
+                return;
+            }
+
+            int count = _viewModel.RatingCount;
+            if (_ratingStars != null)
+            {
+                _ratingStars.value = count > 0 ? _viewModel.AverageRating : 0f;
+            }
+            if (_ratingText != null)
+            {
+                _ratingText.text = count > 0
+                    ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_RATING_SUMMARY", new object[] { _viewModel.AverageRating, count })
+                    : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_REVIEWS");
+            }
+
+            bool canRate = _viewModel.CanRate;
+            _rateCard?.EnableInClassList("fm-rd-action--hidden", !canRate);
+            if (canRate)
+            {
+                int mine = _viewModel.MyRating;
+                if (_rateTitle != null)
+                {
+                    _rateTitle.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_RATE_TITLE");
+                }
+                if (_rateStars != null)
+                {
+                    _rateStars.value = mine;
+                    _rateStars.SetEnabled(!_viewModel.IsRatingBusy);
+                }
+                if (_rateHint != null)
+                {
+                    _rateHint.text = mine > 0
+                        ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_RATE_YOURS", new object[] { mine })
+                        : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_RATE_HINT");
+                }
+                _btnRemoveRating?.EnableInClassList("fm-rd-action--hidden", mine == 0);
+                _btnRemoveRating?.SetEnabled(!_viewModel.IsRatingBusy);
+            }
+
+            RefreshRatingAccessibilityNodes();
+        }
+
+        private void OnRateStarClicked(int stars)
+        {
+            _ = _viewModel?.RateAsync(stars);
+        }
+
+        private void OnRemoveRatingClicked()
+        {
+            _ = _viewModel?.RemoveRatingAsync();
+        }
+
+        private void RefreshRatingAccessibilityNodes()
+        {
+            if (_accessibilityHierarchy == null || _viewModel == null)
+            {
+                return;
+            }
+
+            foreach (var node in _ratingNodes)
+            {
+                _accessibilityHierarchy.RemoveNode(node);
+            }
+            _ratingNodes.Clear();
+
+            if (_ratingStars != null)
+            {
+                string summary = _viewModel.RatingCount > 0
+                    ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_RATING_A11Y", new object[] { _viewModel.AverageRating, _viewModel.RatingCount })
+                    : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NO_REVIEWS");
+                var summaryNode = _accessibilityHierarchy.AddNode(summary);
+                summaryNode.role = UnityEngine.Accessibility.AccessibilityRole.StaticText;
+                _ratingNodes.Add(summaryNode);
+            }
+
+            if (RecipeOriginLinks.SourceUrl(_viewModel.Recipe) != null && _recipeSourceText != null)
+            {
+                var sourceNode = _accessibilityHierarchy.AddNode(_recipeSourceText.text);
+                sourceNode.role = UnityEngine.Accessibility.AccessibilityRole.Button;
+                sourceNode.invoked += () =>
+                {
+                    OnSourceClicked();
+                    return true;
+                };
+                _ratingNodes.Add(sourceNode);
+            }
+
+            if (_viewModel.CanRate && _rateStars != null)
+            {
+                for (int i = 1; i <= FMStarRating.StarCount; i++)
+                {
+                    int stars = i;
+                    var node = _accessibilityHierarchy.AddNode(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_RATE_STAR_A11Y", new object[] { stars }));
+                    node.role = UnityEngine.Accessibility.AccessibilityRole.Button;
+                    if (stars == _viewModel.MyRating)
+                    {
+                        node.state = UnityEngine.Accessibility.AccessibilityState.Selected;
+                    }
+                    node.invoked += () =>
+                    {
+                        OnRateStarClicked(stars);
+                        return true;
+                    };
+                    _ratingNodes.Add(node);
+                }
+            }
+        }
+
         private void UpdateErrorState()
         {
             if (_viewModel.ErrorDetail != null)
@@ -906,6 +1081,7 @@ namespace eu.foodmission.platform
                 _btnWatchVideoNode = _accessibilityHierarchy.AddNode("Watch video guide");
                 _btnWatchVideoNode.role = UnityEngine.Accessibility.AccessibilityRole.Button;
             }
+            RefreshRatingAccessibilityNodes();
         }
 
         protected override void TeardownAccessibilityNodes()
@@ -915,6 +1091,7 @@ namespace eu.foodmission.platform
             _btnEditNode = null;
             _btnDeleteNode = null;
             _btnWatchVideoNode = null;
+            _ratingNodes.Clear();
             base.TeardownAccessibilityNodes();
         }
     }

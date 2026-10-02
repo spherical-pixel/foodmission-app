@@ -2,6 +2,16 @@ using System;
 
 namespace eu.foodmission.platform
 {
+    /// <summary>GET/PUT/DELETE /recipes/:id/rating — aggregate plus the current user's own stars (null when not rated).</summary>
+    [Serializable]
+    public class RecipeRating
+    {
+        public string recipeId;
+        public float rating;
+        public int ratingCount;
+        public int? myRating;
+    }
+
     [Serializable]
     public class Recipe
     {
@@ -30,6 +40,9 @@ namespace eu.foodmission.platform
         public string[] allergens;
         public RecipeNutritionalInfo nutritionalInfo;
         public RecipeIngredient[] ingredients;
+        /// <summary>"THEMEALDB" (imported; externalId = TheMealDB idMeal) or "USER" (community).</summary>
+        public string origin;
+        public string externalId;
     }
 
     [Serializable]

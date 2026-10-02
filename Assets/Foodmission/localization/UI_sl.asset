@@ -4189,6 +4189,58 @@ MonoBehaviour:
     m_Localized: Prvak FOODMISSION
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347528
+    m_Localized: '{0:0.0} ({1})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347529
+    m_Localized: "Kaj meni\u0161?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347530
+    m_Localized: Tapni zvezdico in oceni recept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347531
+    m_Localized: 'Tvoja ocena: {0}/5'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347532
+    m_Localized: Odstrani mojo oceno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347533
+    m_Localized: "Ocene ni bilo mogo\u010De shraniti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347534
+    m_Localized: Oceni z {0} od 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347535
+    m_Localized: "Povpre\u010Dna ocena {0:0.0} od 5 ({1})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347536
+    m_Localized: Vse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347537
+    m_Localized: TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347538
+    m_Localized: Skupnost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347539
+    m_Localized: 'Vir: TheMealDB'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347540
+    m_Localized: "\U0001F465 Recept skupnosti"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

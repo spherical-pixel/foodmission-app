@@ -227,5 +227,103 @@ namespace eu.foodmission.platform.Tests
             session.Verify(s => s.ReportAsync(ChallengeCompletionTrigger.RecipeViewed, "r-1"), Times.Once);
             vm.Dispose();
         }
+
+        // ── Rating ──────────────────────────────────────────────────────────
+
+        [Test]
+        public async Task LoadAsync_OtherUsersRecipe_LoadsMyRating()
+        {
+            _mockRecipeService.Setup(s => s.GetRecipeAsync("r1"))
+                .ReturnsAsync((new Recipe { id = "r1", userId = "user-other", rating = 3f, ratingCount = 2 }, null));
+            _mockRecipeService.Setup(s => s.GetRatingAsync("r1"))
+                .ReturnsAsync((new RecipeRating { recipeId = "r1", rating = 4.2f, ratingCount = 12, myRating = 4 }, null));
+
+            await _viewModel.LoadAsync("r1");
+
+            Assert.IsTrue(_viewModel.CanRate);
+            Assert.AreEqual(4, _viewModel.MyRating);
+            Assert.AreEqual(4.2f, _viewModel.AverageRating, 0.001f);
+            Assert.AreEqual(12, _viewModel.RatingCount);
+        }
+
+        [Test]
+        public async Task LoadAsync_OwnRecipe_CannotRateAndSkipsRatingRequest()
+        {
+            _mockRecipeService.Setup(s => s.GetRecipeAsync("r1"))
+                .ReturnsAsync((new Recipe { id = "r1", userId = "user-1", rating = 3.5f, ratingCount = 4 }, null));
+
+            await _viewModel.LoadAsync("r1");
+
+            Assert.IsFalse(_viewModel.CanRate);
+            Assert.AreEqual(3.5f, _viewModel.AverageRating, 0.001f);
+            Assert.AreEqual(4, _viewModel.RatingCount);
+            _mockRecipeService.Verify(s => s.GetRatingAsync(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task RateAsync_OnSuccess_UpdatesMyRatingAndAggregate()
+        {
+            await LoadOtherUsersRecipeAsync(myRating: null);
+            _mockRecipeService.Setup(s => s.RateAsync("r1", 5))
+                .ReturnsAsync((new RecipeRating { recipeId = "r1", rating = 4.5f, ratingCount = 3, myRating = 5 }, null));
+
+            await _viewModel.RateAsync(5);
+
+            Assert.AreEqual(5, _viewModel.MyRating);
+            Assert.AreEqual(4.5f, _viewModel.AverageRating, 0.001f);
+            Assert.AreEqual(3, _viewModel.RatingCount);
+            Assert.IsNull(_viewModel.ErrorDetail);
+            Assert.IsFalse(_viewModel.IsRatingBusy);
+        }
+
+        [Test]
+        public async Task RateAsync_OnError_RestoresPreviousRatingAndSetsError()
+        {
+            await LoadOtherUsersRecipeAsync(myRating: 2);
+            var error = new ApiErrorResponse { statusCode = 500, message = "boom" };
+            _mockRecipeService.Setup(s => s.RateAsync("r1", 5))
+                .ReturnsAsync(((RecipeRating)null, error));
+
+            await _viewModel.RateAsync(5);
+
+            Assert.AreEqual(2, _viewModel.MyRating);
+            Assert.AreSame(error, _viewModel.RatingErrorDetail);
+            Assert.IsNull(_viewModel.ErrorDetail);
+            Assert.IsFalse(_viewModel.IsRatingBusy);
+        }
+
+        [Test]
+        public async Task RateAsync_OutOfRangeOrOwner_DoesNothing()
+        {
+            await LoadOtherUsersRecipeAsync(myRating: null);
+
+            await _viewModel.RateAsync(0);
+            await _viewModel.RateAsync(6);
+
+            _mockRecipeService.Verify(s => s.RateAsync(It.IsAny<string>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public async Task RemoveRatingAsync_ClearsMyRatingAndUpdatesAggregate()
+        {
+            await LoadOtherUsersRecipeAsync(myRating: 4);
+            _mockRecipeService.Setup(s => s.RemoveRatingAsync("r1"))
+                .ReturnsAsync((new RecipeRating { recipeId = "r1", rating = 3f, ratingCount = 1, myRating = null }, null));
+
+            await _viewModel.RemoveRatingAsync();
+
+            Assert.AreEqual(0, _viewModel.MyRating);
+            Assert.AreEqual(3f, _viewModel.AverageRating, 0.001f);
+            Assert.AreEqual(1, _viewModel.RatingCount);
+        }
+
+        private async Task LoadOtherUsersRecipeAsync(int? myRating)
+        {
+            _mockRecipeService.Setup(s => s.GetRecipeAsync("r1"))
+                .ReturnsAsync((new Recipe { id = "r1", userId = "user-other", rating = 4f, ratingCount = 2 }, null));
+            _mockRecipeService.Setup(s => s.GetRatingAsync("r1"))
+                .ReturnsAsync((new RecipeRating { recipeId = "r1", rating = 4f, ratingCount = 2, myRating = myRating }, null));
+            await _viewModel.LoadAsync("r1");
+        }
     }
 }

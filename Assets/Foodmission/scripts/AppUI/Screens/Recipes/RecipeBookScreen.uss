@@ -354,7 +354,13 @@
     justify-content: space-between;
 }
 
+.fm-r-card-rating-row {
+    flex-direction: row;
+    align-items: center;
+}
+
 .fm-r-card-rating {
     font-size: var(--appui-font-sizes-body-xs);
     color: var(--appui-foregrounds-200);
+    margin-left: 4px;
 }

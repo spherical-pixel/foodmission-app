@@ -36,6 +36,7 @@ namespace eu.foodmission.platform
         [ObservableProperty] private string m_SelectedDifficulty = "all";
         [ObservableProperty] private string m_SelectedCategory = "all";
         [ObservableProperty] private string m_SelectedCuisine = "all";
+        [ObservableProperty] private RecipeOriginFilter _selectedOrigin = RecipeOriginFilter.All;
         [ObservableProperty] private int m_CurrentPage = 1;
         [ObservableProperty] private int m_ExpiringItemsCount;
         [ObservableProperty] private int m_TotalPantryItems;
@@ -106,12 +107,19 @@ namespace eu.foodmission.platform
             await LoadAsync();
         }
 
+        public async Task SetOriginAsync(RecipeOriginFilter origin)
+        {
+            SelectedOrigin = origin;
+            await LoadAsync();
+        }
+
         public async Task ClearFiltersAsync()
         {
             SearchText = "";
             SelectedDifficulty = "all";
             SelectedCategory = "all";
             SelectedCuisine = "all";
+            SelectedOrigin = RecipeOriginFilter.All;
             await LoadAsync();
         }
 
@@ -224,7 +232,8 @@ namespace eu.foodmission.platform
                 cuisineType: cuisine,
                 difficulty: difficulty,
                 page: 1,
-                limit: 20);
+                limit: 20,
+                origin: RecipeOriginLinks.ToQueryValue(SelectedOrigin));
 
             if (pageErr != null)
             {
@@ -327,7 +336,8 @@ namespace eu.foodmission.platform
                         cuisineType: cuisine,
                         difficulty: difficulty,
                         page: CurrentPage,
-                        limit: 20);
+                        limit: 20,
+                        origin: RecipeOriginLinks.ToQueryValue(SelectedOrigin));
 
                     if (err != null)
                     {

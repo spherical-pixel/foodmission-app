@@ -4210,6 +4210,58 @@ MonoBehaviour:
     m_Localized: FOODMISSION-Champion
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347528
+    m_Localized: '{0:0.0} ({1})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347529
+    m_Localized: Wie hat es dir gefallen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347530
+    m_Localized: Tippe auf einen Stern, um das Rezept zu bewerten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347531
+    m_Localized: 'Deine Bewertung: {0}/5'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347532
+    m_Localized: Meine Bewertung entfernen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347533
+    m_Localized: Deine Bewertung konnte nicht gespeichert werden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347534
+    m_Localized: Mit {0} von 5 bewerten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347535
+    m_Localized: Durchschnittliche Bewertung {0:0.0} von 5 ({1})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347536
+    m_Localized: Alle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347537
+    m_Localized: TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347538
+    m_Localized: Community
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347539
+    m_Localized: 'Quelle: TheMealDB'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347540
+    m_Localized: "\U0001F465 Rezept aus der Community"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

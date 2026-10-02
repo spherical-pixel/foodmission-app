@@ -101,7 +101,7 @@ namespace eu.foodmission.platform.Tests
             _mockRecipeService.Setup(s => s.GetRecipesAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
-                It.IsAny<int>(), It.IsAny<int>()))
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync((new PaginatedRecipeResponse
                 {
                     data = new[] { new Recipe { id = "r1", title = "Pasta" } },
@@ -129,7 +129,7 @@ namespace eu.foodmission.platform.Tests
             _mockRecipeService.Setup(s => s.GetRecipesAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
-                It.IsAny<int>(), It.IsAny<int>()))
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync((null, new ApiErrorResponse { message = "network" }));
 
             await _viewModel.LoadAsync();
@@ -170,9 +170,9 @@ namespace eu.foodmission.platform.Tests
             _mockRecipeService.Setup(s => s.GetRecipesAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
-                It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<string, string, string, string, string[], string[], int, int>(
-                    (s, cat, cui, diff, dl, t, p, l) => requestedDifficulty = diff)
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
+                .Callback<string, string, string, string, string[], string[], int, int, string>(
+                    (s, cat, cui, diff, dl, t, p, l, o) => requestedDifficulty = diff)
                 .ReturnsAsync((new PaginatedRecipeResponse { data = new Recipe[0], total = 0 }, null));
 
             await _viewModel.SetDifficultyAsync("easy");
@@ -190,9 +190,9 @@ namespace eu.foodmission.platform.Tests
             _mockRecipeService.Setup(s => s.GetRecipesAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
-                It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<string, string, string, string, string[], string[], int, int>(
-                    (s, cat, cui, diff, dl, t, p, l) => requestedCategory = cat)
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
+                .Callback<string, string, string, string, string[], string[], int, int, string>(
+                    (s, cat, cui, diff, dl, t, p, l, o) => requestedCategory = cat)
                 .ReturnsAsync((new PaginatedRecipeResponse { data = new Recipe[0], total = 0 }, null));
 
             await _viewModel.SetCategoryAsync("pasta");
@@ -233,9 +233,9 @@ namespace eu.foodmission.platform.Tests
             _mockRecipeService.Setup(s => s.GetRecipesAsync(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
-                It.IsAny<int>(), It.IsAny<int>()))
-                .Callback<string, string, string, string, string[], string[], int, int>(
-                    (s, cat, cui, diff, dl, t, p, l) => requestedCuisine = cui)
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
+                .Callback<string, string, string, string, string[], string[], int, int, string>(
+                    (s, cat, cui, diff, dl, t, p, l, o) => requestedCuisine = cui)
                 .ReturnsAsync((new PaginatedRecipeResponse { data = new Recipe[0], total = 0 }, null));
 
             await _viewModel.SetCuisineAsync("Italian");
@@ -274,6 +274,59 @@ namespace eu.foodmission.platform.Tests
 
             await _viewModel.ClearFiltersAsync();
             Assert.AreEqual("all", _viewModel.SelectedCuisine);
+        }
+
+        [Test]
+        public async Task SetOriginAsync_SendsOriginAndRestartsFromFirstPage()
+        {
+            await _viewModel.SetTabAsync(RecipeBookTab.Explore);
+            _mockRecipeService.Setup(s => s.GetRecipesAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
+                .ReturnsAsync((new PaginatedRecipeResponse { data = new Recipe[0], total = 0, page = 1, limit = 20, totalPages = 1 }, null));
+            _viewModel.CurrentPage = 3;
+
+            await _viewModel.SetOriginAsync(RecipeOriginFilter.TheMealDb);
+
+            Assert.AreEqual(RecipeOriginFilter.TheMealDb, _viewModel.SelectedOrigin);
+            Assert.AreEqual(1, _viewModel.CurrentPage);
+            _mockRecipeService.Verify(s => s.GetRecipesAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
+                1, It.IsAny<int>(), "THEMEALDB"), Times.Once);
+
+            await _viewModel.SetOriginAsync(RecipeOriginFilter.All);
+            _mockRecipeService.Verify(s => s.GetRecipesAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<string[]>(),
+                1, It.IsAny<int>(), null), Times.AtLeastOnce);
+        }
+
+        [TestCase(RecipeOriginFilter.All, null)]
+        [TestCase(RecipeOriginFilter.TheMealDb, "THEMEALDB")]
+        [TestCase(RecipeOriginFilter.Community, "USER")]
+        public void OriginFilter_MapsToBackendCode(RecipeOriginFilter filter, string expected)
+        {
+            Assert.AreEqual(expected, RecipeOriginLinks.ToQueryValue(filter));
+        }
+
+        [Test]
+        public void SourceUrl_OnlyForTheMealDbWithExternalId()
+        {
+            Assert.AreEqual("https://www.themealdb.com/meal/52772",
+                RecipeOriginLinks.SourceUrl(new Recipe { origin = "THEMEALDB", externalId = "52772" }));
+            Assert.IsNull(RecipeOriginLinks.SourceUrl(new Recipe { origin = "THEMEALDB", externalId = "" }));
+            Assert.IsNull(RecipeOriginLinks.SourceUrl(new Recipe { origin = "USER", externalId = "52772" }));
+            Assert.IsNull(RecipeOriginLinks.SourceUrl(null));
+        }
+
+        [Test]
+        public void Recipe_DeserializesOrigin()
+        {
+            var r = Newtonsoft.Json.JsonConvert.DeserializeObject<Recipe>("{\"id\":\"r1\",\"origin\":\"THEMEALDB\",\"externalId\":\"52772\"}");
+            Assert.AreEqual("THEMEALDB", r.origin);
+            Assert.AreEqual("52772", r.externalId);
         }
     }
 }

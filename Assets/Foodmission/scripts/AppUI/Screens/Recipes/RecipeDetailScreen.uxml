@@ -1,6 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Recipes/RecipeDetailScreen.uss?fileID=7433441132597879392&amp;guid=3015b3c6890854fa7a44b3c0127f1683&amp;type=3#RecipeDetailScreen"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/FMStarRating.uss?fileID=7433441132597879392&amp;guid=93b07e2cd50b149509e8a1973594e84b&amp;type=3#FMStarRating"/>
     <ui:VisualElement name="back" class="fm-back-screen-transparent"/>
     <ui:VisualElement name="root" class="fm-root">
         <ui:ScrollView name="scroll-view" mode="Vertical" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="fm-rd-scroll">
@@ -11,7 +12,14 @@
                     <appui:Text name="hero-emoji" text="📚" class="fm-rd-hero-emoji"/>
                     <appui:Button name="btn-watch-video" label="Watch video guide" quiet="true" title="" leading-icon="play" class="fm-rd-video-button fm-rd-action--hidden" style="font-size: 64px;"/>
                 </ui:VisualElement>
-                <appui:Text name="rating-text" class="fm-rd-rating"/>
+                <ui:VisualElement name="rating-summary" class="fm-rd-rating-row">
+                    <eu.foodmission.platform.Components.FMStarRating name="rating-stars" class="fm-star-rating--small"/>
+                    <appui:Text name="rating-text" class="fm-rd-rating"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="recipe-source" class="fm-rd-source fm-rd-action--hidden">
+                    <appui:Text name="recipe-source-text" text="" class="fm-rd-source__text"/>
+                    <appui:Icon name="recipe-source-icon" icon="arrow-square-out" size="S" class="fm-rd-source__icon fm-rd-action--hidden"/>
+                </ui:VisualElement>
                 <ui:VisualElement name="badges-strip" class="fm-rd-badges"/>
             </ui:VisualElement>
             <appui:Text name="description" class="fm-rd-section fm-rd-description"/>
@@ -59,6 +67,12 @@
                     </Bindings>
                 </appui:AccordionItem>
             </appui:Accordion>
+            <ui:VisualElement name="rate-card" class="fm-rd-rate-card fm-rd-action--hidden">
+                <appui:Heading name="rate-title" text="" size="XS" class="fm-rd-rate-title"/>
+                <eu.foodmission.platform.Components.FMStarRating name="rate-stars" interactive="true" class="fm-star-rating--large"/>
+                <appui:Text name="rate-hint" text="" class="fm-rd-rate-hint"/>
+                <appui:Button name="btn-remove-rating" title="@UI:RECIPE_RATE_REMOVE" quiet="true" size="S" class="fm-rd-remove-rating fm-rd-action--hidden"/>
+            </ui:VisualElement>
         </ui:ScrollView>
         <ui:VisualElement name="actions-bar" class="fm-rd-actions">
             <appui:Button name="btn-log" variant="Accent" label="Log recipe" title="LOG" class="fm-button">
