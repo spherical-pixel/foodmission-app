@@ -95,19 +95,19 @@
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="GOALS_EDIT_BUTTON"/>
                 </Bindings>
             </fm:FMButton>
-            <appui:Spacer spacing="S"/>
+            <appui:Spacer spacing="XL"/>
             <fm:FMButton variant="Primary" title="📜 Términos y condiciones" name="btn-terms" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="T&amp;C_TITLE"/>
                 </Bindings>
             </fm:FMButton>
-            <appui:Spacer spacing="S"/>
+            <appui:Spacer spacing="XL"/>
             <fm:FMButton variant="Primary" title="🔒 Política de privacidad" name="btn-privacy" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="PRIVACY_POLICY_TITLE"/>
                 </Bindings>
             </fm:FMButton>
-            <appui:Spacer spacing="S" name="spacer-consent"/>
+            <appui:Spacer spacing="XL" name="spacer-consent"/>
             <fm:FMButton variant="Primary" title="📋 Consentimiento informado" name="btn-consent" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="PILOT_CONSENT_TITLE"/>
