@@ -488,12 +488,9 @@ namespace eu.foodmission.platform
             _ = SyncGamificationAsync();
         }
 
-        public async Task SyncSettingsAsync()
+        public static ProfileUpdateRequest BuildSettingsRequest(AppState state)
         {
-            AppState state = _storeService.GetAppState();
-            if (string.IsNullOrEmpty(state.accessToken)) return;
-
-            var request = new ProfileUpdateRequest
+            return new ProfileUpdateRequest
             {
                 language = state.lang,
 
@@ -507,9 +504,19 @@ namespace eu.foodmission.platform
                     pushNotificationsEnabled = state.pushNotificationsEnabled,
                     notificationPreferredTime = state.notificationPreferredTime,
                     backgroundPattern = state.backgroundPattern,
-                    devicePushRegistration = state.devicePushRegistration
+                    devicePushRegistration = state.devicePushRegistration,
+                    // Only a pending local change is sent, so other settings syncs don't overwrite a list chosen on another device.
+                    hiddenProgressWheels = state.hiddenProgressWheelsPendingSync ? (state.hiddenProgressWheels ?? new string[0]) : null
                 }
             };
+        }
+
+        public async Task SyncSettingsAsync()
+        {
+            AppState state = _storeService.GetAppState();
+            if (string.IsNullOrEmpty(state.accessToken)) return;
+
+            var request = BuildSettingsRequest(state);
 
             try
             {
@@ -521,6 +528,10 @@ namespace eu.foodmission.platform
                 if (!success)
                 {
                     Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
+                }
+                else if (request.settings?.hiddenProgressWheels != null)
+                {
+                    _storeService.store.Dispatch(AppActions.markHiddenProgressWheelsSynced.Invoke(request.settings.hiddenProgressWheels));
                 }
             }
             catch (Exception ex)

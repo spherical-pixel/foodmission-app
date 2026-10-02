@@ -163,6 +163,13 @@
     --fm-surface-bg-transparent-80: rgba(255, 255, 255, 0.80);
     --fm-surface-bg-alt: #F5F5F5;
     --fm-card-bg: rgba(255, 255, 255, 0.90);
+    /* Progress wheels (ring >= 3:1 vs --fm-card-bg, checked by ProgressWheelThemeContrastTests) */
+    --fm-wheel-co2: #2E7D32;
+    --fm-wheel-energy: #B25E00;
+    --fm-wheel-water: #1565C0;
+    --fm-wheel-land: #795548;
+    --fm-wheel-default: #546E7A;
+    --fm-wheel-card-shadow: rgba(0, 0, 0, 0.18);
     --fm-icon-tint: var(--appui-primary-100);
     --fm-icon-tint-selected: var(--appui-primary-15);
     --fm-bg-screen-trans: rgba(255, 255, 255, 0.45);
@@ -294,6 +301,13 @@
     --fm-surface-bg-transparent-80: rgba(10, 20, 18, 0.80);
     --fm-surface-bg-alt: #0f1f1c;
     --fm-card-bg: rgba(15, 30, 26, 0.95);
+    /* Progress wheels (ring >= 3:1 vs --fm-card-bg, checked by ProgressWheelThemeContrastTests) */
+    --fm-wheel-co2: #66BB6A;
+    --fm-wheel-energy: #FFB74D;
+    --fm-wheel-water: #64B5F6;
+    --fm-wheel-land: #BCAAA4;
+    --fm-wheel-default: #B0BEC5;
+    --fm-wheel-card-shadow: rgba(0, 0, 0, 0.45);
 
     --fm-icon-tint: var(--appui-primary-1200);
     --fm-icon-tint-selected: var(--appui-primary-900);

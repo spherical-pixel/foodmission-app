@@ -4080,6 +4080,158 @@ MonoBehaviour:
     m_Localized: Nuovo badge!
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347490
+    m_Localized: Il tuo impatto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347491
+    m_Localized: "Il tuo impatto \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347492
+    m_Localized: Personalizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347493
+    m_Localized: Ruote visibili
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347494
+    m_Localized: Tutte le ruote sono nascoste.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347495
+    m_Localized: Rispondi a un breve sondaggio per iniziare a monitorare il tuo impatto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347496
+    m_Localized: Inizia il sondaggio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347497
+    m_Localized: '{0:0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347498
+    m_Localized: Fase {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347499
+    m_Localized: '{0:0.##} / {1:0.##} {2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347500
+    m_Localized: Obiettivo {0:0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347501
+    m_Localized: Totale {0:0.##} {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347502
+    m_Localized: "Riduzione di CO\u2082"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347503
+    m_Localized: Riduzione dell'energia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347504
+    m_Localized: Risparmio idrico
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347505
+    m_Localized: Riduzione del consumo di suolo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347506
+    m_Localized: "kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347507
+    m_Localized: kWh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347508
+    m_Localized: L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347509
+    m_Localized: "m\xB2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347510
+    m_Localized: Principiante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347511
+    m_Localized: Intermedio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347512
+    m_Localized: Avanzato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347513
+    m_Localized: Primi passi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347514
+    m_Localized: Costruire abitudini migliori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347515
+    m_Localized: Fare la differenza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347516
+    m_Localized: Creare un cambiamento positivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347517
+    m_Localized: "Vivere in modo pi\xF9 sostenibile"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347518
+    m_Localized: Mantenere lo slancio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347519
+    m_Localized: Scelte sostenibili costanti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347520
+    m_Localized: Aumentare il tuo impatto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347521
+    m_Localized: Ispirare un cambiamento positivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347522
+    m_Localized: Dare l'esempio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347523
+    m_Localized: Stile di vita sostenibile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347524
+    m_Localized: Massimizzare il tuo impatto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347525
+    m_Localized: Leadership ambientale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347526
+    m_Localized: "Guidare un cambiamento pi\xF9 grande"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347527
+    m_Localized: Campione FOODMISSION
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

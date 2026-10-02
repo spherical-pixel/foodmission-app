@@ -148,6 +148,12 @@ namespace eu.foodmission.platform
         public bool pilotConsentAccepted = false;
         public ProgressIndicator[] userProgressIndicators = new ProgressIndicator[0];
         public string[] userBadges = new string[0];
+        /// <summary>Last progress wheels received from the backend (cache shown on Home before refreshing).</summary>
+        public ProgressWheel[] progressWheels = new ProgressWheel[0];
+        /// <summary>Wheel kinds the user hid on Home; synced as settings.hiddenProgressWheels.</summary>
+        public string[] hiddenProgressWheels = new string[0];
+        /// <summary>True while a local hide/show change has not reached the server; only then is the list sent and kept over the server value.</summary>
+        public bool hiddenProgressWheelsPendingSync;
         public string[] userGoals = new string[0];
 
         // ==================== Temporal data (not persisted) ====================
@@ -223,6 +229,9 @@ namespace eu.foodmission.platform
                 pilotConsentAccepted = this.pilotConsentAccepted,
                 userProgressIndicators = this.userProgressIndicators != null ? (ProgressIndicator[])this.userProgressIndicators.Clone() : new ProgressIndicator[0],
                 userBadges = this.userBadges != null ? (string[])this.userBadges.Clone() : new string[0],
+                progressWheels = this.progressWheels != null ? Array.ConvertAll(this.progressWheels, w => w?.Copy()) : new ProgressWheel[0],
+                hiddenProgressWheels = this.hiddenProgressWheels != null ? (string[])this.hiddenProgressWheels.Clone() : new string[0],
+                hiddenProgressWheelsPendingSync = this.hiddenProgressWheelsPendingSync,
                 userGoals = this.userGoals != null ? (string[])this.userGoals.Clone() : new string[0],
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,

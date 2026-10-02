@@ -57,6 +57,18 @@ namespace eu.foodmission.platform
         private VisualElement _noActiveQuestBanner;
         private FMButton _btnChooseQuest;
         private FMNutriView _nutriView;
+
+        private VisualElement _wheelsSection;
+        private Heading _wheelsTitle;
+        private Unity.AppUI.UI.Button _btnWheelsCustomize;
+        private FMProgressWheelGrid _wheelsGrid;
+        private VisualElement _wheelsMessage;
+        private Text _wheelsMessageText;
+        private FMButton _btnWheelsSurvey;
+        private CircularProgress _wheelsLoading;
+        private readonly System.Collections.Generic.List<AccessibilityNode> _wheelNodes = new System.Collections.Generic.List<AccessibilityNode>();
+        private AccessibilityNode _wheelsCustomizeNode;
+        private string _wheelNodesKey;
         private bool _isDisplayingCelebrationQueue;
         private Quest _questToOfferAfterCelebrations;
 
@@ -94,6 +106,15 @@ namespace eu.foodmission.platform
             _periodStepper = contentContainer.Q<FMArrowStepper>("period-stepper");
             _scopeStepper = contentContainer.Q<FMArrowStepper>("scope-stepper");
             _nutriView = contentContainer.Q<FMNutriView>("nutri-render");
+
+            _wheelsSection = contentContainer.Q<VisualElement>("wheels-section");
+            _wheelsTitle = contentContainer.Q<Heading>("wheels-title");
+            _btnWheelsCustomize = contentContainer.Q<Unity.AppUI.UI.Button>("btn-wheels-customize");
+            _wheelsGrid = contentContainer.Q<FMProgressWheelGrid>("wheels-grid");
+            _wheelsMessage = contentContainer.Q<VisualElement>("wheels-message");
+            _wheelsMessageText = contentContainer.Q<Text>("wheels-message-text");
+            _btnWheelsSurvey = contentContainer.Q<FMButton>("btn-wheels-survey");
+            _wheelsLoading = contentContainer.Q<CircularProgress>("wheels-loading");
         }
 
         protected override void OnViewModelBound()
@@ -105,6 +126,8 @@ namespace eu.foodmission.platform
             SetupSteppers();
             RefreshActiveQuestWidget();
             _ = _viewModel?.LoadActiveQuestAsync();
+            RenderProgressWheels();
+            _viewModel?.RefreshProgressWheels();
 
             EvaluateNextPendingHomePromptAsync();
         }
@@ -900,6 +923,18 @@ namespace eu.foodmission.platform
             if (_btnChooseQuest != null) _btnChooseQuest.clicked += OnChooseQuestClicked;
             if (_nutriView != null) _nutriView.OnClick = () => _navController?.Navigate(Actions.go_to_nutri_editor);
             if (_viewModel != null) _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+            if (_btnWheelsCustomize != null)
+            {
+                _btnWheelsCustomize.clicked += OnWheelsCustomizeClicked;
+            }
+            if (_btnWheelsSurvey != null)
+            {
+                _btnWheelsSurvey.clicked += OnWheelsSurveyClicked;
+            }
+            if (_viewModel != null)
+            {
+                _viewModel.ProgressWheelsChanged += RenderProgressWheels;
+            }
         }
 
         private void UnregisterEvents()
@@ -912,6 +947,18 @@ namespace eu.foodmission.platform
             if (_btnChooseQuest != null) _btnChooseQuest.clicked -= OnChooseQuestClicked;
             if (_nutriView != null) _nutriView.OnClick = null;
             if (_viewModel != null) _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            if (_btnWheelsCustomize != null)
+            {
+                _btnWheelsCustomize.clicked -= OnWheelsCustomizeClicked;
+            }
+            if (_btnWheelsSurvey != null)
+            {
+                _btnWheelsSurvey.clicked -= OnWheelsSurveyClicked;
+            }
+            if (_viewModel != null)
+            {
+                _viewModel.ProgressWheelsChanged -= RenderProgressWheels;
+            }
         }
 
         private void OnActiveQuestClicked()
@@ -1106,6 +1153,15 @@ namespace eu.foodmission.platform
             _noActiveQuestBanner = null;
             _btnChooseQuest = null;
 
+            _wheelsSection = null;
+            _wheelsTitle = null;
+            _btnWheelsCustomize = null;
+            _wheelsGrid = null;
+            _wheelsMessage = null;
+            _wheelsMessageText = null;
+            _btnWheelsSurvey = null;
+            _wheelsLoading = null;
+
             base.OnViewModelUnbinding();
         }
 
@@ -1156,6 +1212,8 @@ namespace eu.foodmission.platform
                 _caloriesNode.role = AccessibilityRole.StaticText;
                 _caloriesNode.frameGetter = MakeElementFrameGetter(_caloriesCircular);
             }
+
+            RefreshWheelAccessibilityNodes();
         }
 
         protected override void TeardownAccessibilityNodes()
@@ -1164,11 +1222,186 @@ namespace eu.foodmission.platform
             _sustainabilityProgressNode = null;
             _knowledgeProgressNode = null;
             _caloriesNode = null;
+            _wheelNodes.Clear();
+            _wheelsCustomizeNode = null;
+            _wheelNodesKey = null;
 
             _periodStepper?.DestroyAccessibilityNode();
             _scopeStepper?.DestroyAccessibilityNode();
 
             base.TeardownAccessibilityNodes();
+        }
+
+        private void RenderProgressWheels()
+        {
+            if (_wheelsSection == null || _viewModel == null)
+            {
+                return;
+            }
+
+            ProgressWheelSectionModel model = _viewModel.GetProgressWheelSection();
+            bool visible = model.State != ProgressWheelSectionState.Hidden;
+            _wheelsSection.EnableInClassList("fm-wheels-section--hidden", !visible);
+            if (!visible)
+            {
+                RefreshWheelAccessibilityNodes();
+                return;
+            }
+
+            if (_wheelsTitle != null)
+            {
+                _wheelsTitle.text = ProgressWheelText.SectionHeader(model.Segment);
+            }
+            _btnWheelsCustomize?.EnableInClassList("fm-wheels-section__part--hidden", model.All.Count == 0);
+
+            bool showGrid = model.State == ProgressWheelSectionState.Grid;
+            _wheelsGrid?.EnableInClassList("fm-wheels-section__part--hidden", !showGrid);
+            if (_wheelsGrid != null)
+            {
+                _wheelsGrid.ForceSingleColumn = model.ForceSingleColumn;
+                _wheelsGrid.SetWheels(showGrid ? model.Visible : System.Array.Empty<ProgressWheel>());
+            }
+
+            bool showMessage = model.State == ProgressWheelSectionState.AllHidden || model.State == ProgressWheelSectionState.SurveyCta;
+            _wheelsMessage?.EnableInClassList("fm-wheels-section__part--hidden", !showMessage);
+            if (_wheelsMessageText != null && showMessage)
+            {
+                _wheelsMessageText.text = ProgressWheelText.Localize(model.State == ProgressWheelSectionState.SurveyCta ? "WHEELS_SURVEY_CTA_TEXT" : "WHEELS_ALL_HIDDEN");
+            }
+            _btnWheelsSurvey?.EnableInClassList("fm-wheels-section__part--hidden", model.State != ProgressWheelSectionState.SurveyCta);
+
+            _wheelsLoading?.EnableInClassList("fm-wheels-section__part--hidden", model.State != ProgressWheelSectionState.Loading);
+
+            RefreshWheelAccessibilityNodes();
+        }
+
+        private void OnWheelsSurveyClicked()
+        {
+            _viewModel?.NavigateToOnboardingSurvey();
+        }
+
+        private void OnWheelsCustomizeClicked()
+        {
+            if (_viewModel == null)
+            {
+                return;
+            }
+
+            // Captured so Save still works if the screen unbinds while the dialog is open.
+            HomeScreenViewModel viewModel = _viewModel;
+            ProgressWheelSectionModel model = viewModel.GetProgressWheelSection();
+            var hidden = new System.Collections.Generic.HashSet<string>(model.Hidden);
+            var toggles = new System.Collections.Generic.Dictionary<string, Unity.AppUI.UI.Toggle>();
+            var content = new VisualElement();
+
+            void UpdateLocks()
+            {
+                var enabled = new System.Collections.Generic.List<string>();
+                foreach (var pair in toggles)
+                {
+                    if (pair.Value.value)
+                    {
+                        enabled.Add(pair.Key);
+                    }
+                }
+                string locked = ProgressWheelSection.LockedKind(enabled);
+                foreach (var pair in toggles)
+                {
+                    pair.Value.SetEnabled(pair.Key != locked);
+                }
+            }
+
+            foreach (ProgressWheel wheel in ProgressWheelSection.CustomizableWheels(model.All))
+            {
+                var toggle = new Unity.AppUI.UI.Toggle { label = ProgressWheelText.Name(wheel) };
+                toggle.SetValueWithoutNotify(!hidden.Contains(wheel.kind));
+                toggle.RegisterValueChangedCallback(_ => UpdateLocks());
+                toggles[wheel.kind] = toggle;
+                content.Add(toggle);
+            }
+            UpdateLocks();
+
+            FMDialog.ShowCustom(
+                this,
+                "@UI:WHEELS_CUSTOMIZE_TITLE",
+                content,
+                new FMDialogAction("@UI:TXT_CANCEL", null),
+                new FMDialogAction("@UI:SAVE", () =>
+                {
+                    var newHidden = new System.Collections.Generic.List<string>();
+                    foreach (var pair in toggles)
+                    {
+                        if (!pair.Value.value)
+                        {
+                            newHidden.Add(pair.Key);
+                        }
+                    }
+                    _ = viewModel.SaveHiddenWheelsAsync(newHidden);
+                }, ButtonVariant.Accent));
+        }
+
+        private void RefreshWheelAccessibilityNodes()
+        {
+            if (_accessibilityHierarchy == null)
+            {
+                return;
+            }
+
+            bool sectionVisible = _wheelsSection != null && !_wheelsSection.ClassListContains("fm-wheels-section--hidden") && _wheelsGrid != null;
+            bool customizeVisible = sectionVisible && _btnWheelsCustomize != null && !_btnWheelsCustomize.ClassListContains("fm-wheels-section__part--hidden");
+            var labels = new System.Collections.Generic.List<string>();
+            if (sectionVisible)
+            {
+                foreach (FMProgressWheelCard card in _wheelsGrid.Cards)
+                {
+                    labels.Add(card.AccessibilityLabel);
+                }
+            }
+            string key = $"{customizeVisible}|{string.Join("\n", labels)}";
+
+            // Rebuilding on every render would move screen-reader focus off the wheel being read.
+            if (key == _wheelNodesKey)
+            {
+                return;
+            }
+            _wheelNodesKey = key;
+
+            foreach (AccessibilityNode node in _wheelNodes)
+            {
+                _accessibilityHierarchy.RemoveNode(node);
+            }
+            _wheelNodes.Clear();
+            if (_wheelsCustomizeNode != null)
+            {
+                _accessibilityHierarchy.RemoveNode(_wheelsCustomizeNode);
+                _wheelsCustomizeNode = null;
+            }
+
+            if (sectionVisible)
+            {
+                for (int i = 0; i < _wheelsGrid.Cards.Count; i++)
+                {
+                    FMProgressWheelCard card = _wheelsGrid.Cards[i];
+                    AccessibilityNode node = _accessibilityHierarchy.AddNode(labels[i]);
+                    node.role = AccessibilityRole.StaticText;
+                    node.frameGetter = MakeElementFrameGetter(card);
+                    _wheelNodes.Add(node);
+                }
+            }
+
+            if (customizeVisible)
+            {
+                _wheelsCustomizeNode = _accessibilityHierarchy.AddNode(ProgressWheelText.Localize("WHEELS_CUSTOMIZE"));
+                _wheelsCustomizeNode.role = AccessibilityRole.Button;
+                _wheelsCustomizeNode.frameGetter = MakeElementFrameGetter(_btnWheelsCustomize);
+                _wheelsCustomizeNode.invoked += () =>
+                {
+                    OnWheelsCustomizeClicked();
+                    return true;
+                };
+            }
+
+            AssistiveSupport.notificationDispatcher?.SendLayoutChanged();
         }
 
         private static Func<Rect> MakeElementFrameGetter(VisualElement element)

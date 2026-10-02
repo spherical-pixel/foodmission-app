@@ -4095,6 +4095,158 @@ MonoBehaviour:
     m_Localized: Nieuwe badge!
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347490
+    m_Localized: Jouw impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347491
+    m_Localized: "Jouw impact \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347492
+    m_Localized: Aanpassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347493
+    m_Localized: Zichtbare wielen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347494
+    m_Localized: Alle wielen zijn verborgen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347495
+    m_Localized: Beantwoord een korte vragenlijst om je impact te gaan volgen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347496
+    m_Localized: Vragenlijst starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347497
+    m_Localized: '{0:0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347498
+    m_Localized: Fase {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347499
+    m_Localized: '{0:0.##} / {1:0.##} {2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347500
+    m_Localized: Doel {0:0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347501
+    m_Localized: Totaal {0:0.##} {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347502
+    m_Localized: "CO\u2082-reductie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347503
+    m_Localized: Energiebesparing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347504
+    m_Localized: Waterbesparing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347505
+    m_Localized: Minder landgebruik
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347506
+    m_Localized: "kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347507
+    m_Localized: kWh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347508
+    m_Localized: L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347509
+    m_Localized: "m\xB2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347510
+    m_Localized: Beginner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347511
+    m_Localized: Gevorderd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347512
+    m_Localized: Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347513
+    m_Localized: Aan de slag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347514
+    m_Localized: Betere gewoonten opbouwen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347515
+    m_Localized: Het verschil maken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347516
+    m_Localized: "Positieve verandering cre\xEBren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347517
+    m_Localized: Duurzamer leven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347518
+    m_Localized: Het momentum vasthouden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347519
+    m_Localized: Consequent duurzame keuzes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347520
+    m_Localized: Je impact vergroten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347521
+    m_Localized: Positieve verandering inspireren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347522
+    m_Localized: Het goede voorbeeld geven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347523
+    m_Localized: Duurzame levensstijl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347524
+    m_Localized: Je impact maximaliseren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347525
+    m_Localized: Milieuleiderschap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347526
+    m_Localized: Grotere verandering stimuleren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347527
+    m_Localized: FOODMISSION-kampioen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

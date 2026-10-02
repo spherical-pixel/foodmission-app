@@ -1207,5 +1207,40 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual("FIRST_STEP", result[0].Code);
         }
+        [Test]
+        public void ProgressWheels_StoreChangeRaisesEvent_AndRefreshCallsService()
+        {
+            var wheels = new Mock<IProgressWheelService>();
+            wheels.Setup(w => w.RefreshAsync()).Returns(System.Threading.Tasks.Task.CompletedTask);
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                progressWheelService: wheels.Object);
+            int raised = 0;
+            vm.ProgressWheelsChanged += () => raised++;
+
+            _storeService.store.Dispatch(AppActions.setProgressWheels.Invoke(new[] { new ProgressWheel { kind = "CO2_REDUCTION" } }));
+            _storeService.store.Dispatch(AppActions.setWalletBalance.Invoke(new AppActions.WalletPayload(5, 5)));
+            vm.RefreshProgressWheels();
+
+            Assert.AreEqual(1, raised);
+            Assert.AreEqual(1, vm.GetProgressWheelSection().Visible.Count);
+            wheels.Verify(w => w.RefreshAsync(), Times.Once);
+            vm.Dispose();
+        }
+
+        [Test]
+        public void ProgressWheels_LoadingChangeRaisesEvent_AndDisposeUnhooks()
+        {
+            var wheels = new Mock<IProgressWheelService>();
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                progressWheelService: wheels.Object);
+            int raised = 0;
+            vm.ProgressWheelsChanged += () => raised++;
+
+            wheels.Raise(w => w.LoadingChanged += null);
+            vm.Dispose();
+            wheels.Raise(w => w.LoadingChanged += null);
+
+            Assert.AreEqual(1, raised);
+        }
     }
 }

@@ -168,5 +168,40 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
         }
-}
+
+        public static string BuildProgressWheelsUrl(string baseUrl)
+            => $"{baseUrl}/api/v1/users/me/gamification/progress-wheels";
+
+        public async Task<(ProgressWheel[] Result, ApiErrorResponse Error)> GetProgressWheelsAsync()
+        {
+            using UnityWebRequest request = UnityWebRequest.Get(BuildProgressWheelsUrl(ApiConfig.BaseUrl));
+            if (!string.IsNullOrEmpty(AuthHeader))
+            {
+                request.SetRequestHeader("Authorization", AuthHeader);
+            }
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetProgressWheelsAsync", logAsError: false));
+            }
+
+            try
+            {
+                var wheels = JsonConvert.DeserializeObject<ProgressWheel[]>(request.downloadHandler.text);
+                return (wheels ?? new ProgressWheel[0], null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize ProgressWheel[]: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
+    }
 }

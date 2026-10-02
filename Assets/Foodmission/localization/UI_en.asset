@@ -4036,6 +4036,158 @@ MonoBehaviour:
     m_Localized: New badge!
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347490
+    m_Localized: Your impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347491
+    m_Localized: "Your impact \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347492
+    m_Localized: Customise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347493
+    m_Localized: Visible wheels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347494
+    m_Localized: All the wheels are hidden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347495
+    m_Localized: Answer a short survey to start tracking your impact.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347496
+    m_Localized: Start survey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347497
+    m_Localized: '{0:0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347498
+    m_Localized: Stage {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347499
+    m_Localized: '{0:0.##} / {1:0.##} {2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347500
+    m_Localized: Goal {0:0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347501
+    m_Localized: Total {0:0.##} {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347502
+    m_Localized: "CO\u2082 reduction"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347503
+    m_Localized: Energy reduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347504
+    m_Localized: Water savings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347505
+    m_Localized: Land use reduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347506
+    m_Localized: "kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347507
+    m_Localized: kWh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347508
+    m_Localized: L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347509
+    m_Localized: "m\xB2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347510
+    m_Localized: Beginner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347511
+    m_Localized: Intermediate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347512
+    m_Localized: Advanced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347513
+    m_Localized: Getting started
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347514
+    m_Localized: Building better habits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347515
+    m_Localized: Making a difference
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347516
+    m_Localized: Creating positive change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347517
+    m_Localized: Living more sustainably
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347518
+    m_Localized: Keeping the momentum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347519
+    m_Localized: Consistent sustainable choices
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347520
+    m_Localized: Increasing your impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347521
+    m_Localized: Inspiring positive change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347522
+    m_Localized: Leading by example
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347523
+    m_Localized: Sustainable lifestyle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347524
+    m_Localized: Maximising your impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347525
+    m_Localized: Environmental leadership
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347526
+    m_Localized: Driving greater change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347527
+    m_Localized: FOODMISSION champion
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

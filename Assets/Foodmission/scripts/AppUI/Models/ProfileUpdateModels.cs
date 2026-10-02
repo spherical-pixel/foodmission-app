@@ -20,6 +20,8 @@ namespace eu.foodmission.platform
         public bool? backgroundPattern;
         public string notificationPreferredTime;
         public DevicePushRegistration devicePushRegistration;
+        /// <summary>Progress wheel kinds hidden on Home. Null = not sent (server keeps its value).</summary>
+        public string[] hiddenProgressWheels;
     }
 
     /// <summary>

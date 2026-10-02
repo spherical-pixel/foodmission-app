@@ -283,5 +283,15 @@ namespace eu.foodmission.platform.Tests
                 new[] { "weeklyMeatConsumption", "weeklyBeefConsumption", "weeklyFoodWaste", "weeklyUpfConsumption", "weeklyReusableOrRefill" },
                 System.Linq.Enumerable.Select(json.Properties(), p => p.Name));
         }
+
+        [Test]
+        public void ProgressWheelArray_DeserializesRawJsonArray()
+        {
+            string json = "[{\"kind\":\"CO2_REDUCTION\",\"stage\":1,\"percentComplete\":12.5},{\"kind\":\"WATER_SAVINGS\",\"stage\":2}]";
+            ProgressWheel[] wheels = JsonConvert.DeserializeObject<ProgressWheel[]>(json);
+            Assert.AreEqual(2, wheels.Length);
+            Assert.AreEqual(12.5f, wheels[0].percentComplete);
+            Assert.AreEqual("WATER_SAVINGS", wheels[1].kind);
+        }
     }
 }

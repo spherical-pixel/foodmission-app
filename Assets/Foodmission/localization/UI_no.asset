@@ -4044,6 +4044,159 @@ MonoBehaviour:
     m_Localized: Nytt merke!
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347490
+    m_Localized: Din innvirkning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347491
+    m_Localized: "Din innvirkning \xB7 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347492
+    m_Localized: Tilpass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347493
+    m_Localized: Synlige hjul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347494
+    m_Localized: Alle hjulene er skjult.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347495
+    m_Localized: "Svar p\xE5 en kort unders\xF8kelse for \xE5 f\xF8lge med p\xE5
+      din innvirkning."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347496
+    m_Localized: "Start unders\xF8kelsen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347497
+    m_Localized: '{0:0} %'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347498
+    m_Localized: Trinn {0}/{1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347499
+    m_Localized: '{0:0.##} / {1:0.##} {2}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347500
+    m_Localized: "M\xE5l {0:0} %"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347501
+    m_Localized: Totalt {0:0.##} {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347502
+    m_Localized: "CO\u2082-reduksjon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347503
+    m_Localized: Energireduksjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347504
+    m_Localized: Vannbesparelse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347505
+    m_Localized: Redusert arealbruk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347506
+    m_Localized: "kg CO\u2082e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347507
+    m_Localized: kWh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347508
+    m_Localized: L
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347509
+    m_Localized: "m\xB2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347510
+    m_Localized: Nybegynner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347511
+    m_Localized: Viderekommen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347512
+    m_Localized: Avansert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347513
+    m_Localized: Kom i gang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347514
+    m_Localized: Bygge bedre vaner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347515
+    m_Localized: "Gj\xF8re en forskjell"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347516
+    m_Localized: Skape positiv endring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347517
+    m_Localized: "Leve mer b\xE6rekraftig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347518
+    m_Localized: Holde farten oppe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347519
+    m_Localized: "Konsekvente b\xE6rekraftige valg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347520
+    m_Localized: "\xD8ke din innvirkning"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347521
+    m_Localized: Inspirere til positiv endring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347522
+    m_Localized: "G\xE5 foran med et godt eksempel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347523
+    m_Localized: "B\xE6rekraftig livsstil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347524
+    m_Localized: Maksimere din innvirkning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347525
+    m_Localized: "Milj\xF8lederskap"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347526
+    m_Localized: "Drive frem st\xF8rre endring"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347527
+    m_Localized: FOODMISSION-mester
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
