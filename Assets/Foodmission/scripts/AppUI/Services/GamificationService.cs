@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -124,5 +125,48 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
         }
-    }
+    
+        public static string BuildOnboardingSurveyUrl(string baseUrl)
+            => $"{baseUrl}/api/v1/users/me/gamification/onboarding-survey";
+
+        public async Task<(OnboardingSurveyResult Result, ApiErrorResponse Error)> SubmitOnboardingSurveyAsync(OnboardingSurveyData answers)
+        {
+            string url = BuildOnboardingSurveyUrl(ApiConfig.BaseUrl);
+            byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(answers ?? new OnboardingSurveyData()));
+
+            using UnityWebRequest request = new UnityWebRequest(url, "POST");
+            request.uploadHandler = new UploadHandlerRaw(body);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            if (!string.IsNullOrEmpty(AuthHeader))
+            {
+                request.SetRequestHeader("Authorization", AuthHeader);
+            }
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                // 409 (already onboarded) is an expected outcome; the caller falls back to PATCH.
+                bool alreadySubmitted = request.responseCode == 409;
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] SubmitOnboardingSurveyAsync", logAsError: !alreadySubmitted));
+            }
+
+            try
+            {
+                var result = JsonConvert.DeserializeObject<OnboardingSurveyResult>(request.downloadHandler.text);
+                return (result, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize OnboardingSurveyResult: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
+}
 }

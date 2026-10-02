@@ -54,5 +54,22 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+
+        [Test]
+        public async Task SubmitOnboardingSurveyAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.ignoreFailingMessages = true;
+            var (result, error) = await _service.SubmitOnboardingSurveyAsync(new OnboardingSurveyData());
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public void BuildOnboardingSurveyUrl_TargetsGamificationRoute()
+        {
+            Assert.AreEqual("https://api.test/api/v1/users/me/gamification/onboarding-survey",
+                GamificationService.BuildOnboardingSurveyUrl("https://api.test"));
+        }
     }
 }

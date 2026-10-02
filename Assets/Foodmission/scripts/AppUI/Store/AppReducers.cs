@@ -33,6 +33,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<WalletPayload> addWalletReward = "app/addWalletReward";
         public static readonly ActionCreator<ProgressIndicator[]> setProgressIndicators = "app/setProgressIndicators";
         public static readonly ActionCreator<string[]> setBadges = "app/setBadges";
+        public static readonly ActionCreator<string> setUserSegment = "app/setUserSegment";
 
         public readonly struct WalletPayload
         {
@@ -640,6 +641,13 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userProgressIndicators = action.payload != null ? (ProgressIndicator[])action.payload.Clone() : new ProgressIndicator[0];
+            return newState;
+        }
+
+        public static AppState SetUserSegmentReducer(AppState state, IAction<string> action)
+        {
+            var newState = state.Copy();
+            newState.userSegment = action.payload ?? "";
             return newState;
         }
 

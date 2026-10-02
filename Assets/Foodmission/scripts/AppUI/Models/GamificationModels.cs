@@ -41,6 +41,37 @@ namespace eu.foodmission.platform
         public string createdAt;
     }
 
+    /// <summary>
+    /// Sustainability progress wheel from GET /users/me/gamification/progress-wheels
+    /// (CO2_REDUCTION, ENERGY_REDUCTION, WATER_SAVINGS, LAND_USE_REDUCTION).
+    /// </summary>
+    [Serializable]
+    public class ProgressWheel
+    {
+        public string id;
+        public string kind;
+        public string label;
+        public string unit;
+        public string profile;
+        public int stage;
+        public string stageTitle;
+        public float sustainabilityTargetPercent;
+        public float accumulatedValue;
+        public float targetValue;
+        public float percentComplete;
+        public float allTimeTotal;
+        public string cycleStartedAt;
+        public string lastUpdatedAt;
+    }
+
+    /// <summary>Response of POST /users/me/gamification/onboarding-survey.</summary>
+    [Serializable]
+    public class OnboardingSurveyResult
+    {
+        public string segment;
+        public ProgressWheel[] progressWheels;
+    }
+
     [Serializable]
     public class ProgressIndicator
     {

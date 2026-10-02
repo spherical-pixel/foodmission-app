@@ -85,6 +85,7 @@ namespace eu.foodmission.platform.Tests
                 .AddCase(AppActions.addWalletReward, AppReducers.AddWalletRewardReducer)
                 .AddCase(AppActions.setProgressIndicators, AppReducers.SetProgressIndicatorsReducer)
                 .AddCase(AppActions.setBadges, AppReducers.SetBadgesReducer)
+                .AddCase(AppActions.setUserSegment, AppReducers.SetUserSegmentReducer)
                 // Food Info
                 .AddCase(AppActions.foodInfoAddRequested, AppReducers.FoodInfoAddRequestedReducer)
                 .AddCase(AppActions.foodInfoAddRequestConsumed, AppReducers.FoodInfoAddRequestConsumedReducer);

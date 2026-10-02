@@ -81,5 +81,15 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(0, newState.userBadges.Length);
             Assert.AreEqual(0, newState.userProgressIndicators.Length);
         }
+
+        [Test]
+        public void SetUserSegmentReducer_ShouldSetSegment()
+        {
+            var newState = AppReducers.SetUserSegmentReducer(_initialState, AppActions.setUserSegment.Invoke("ADVANCED"));
+            Assert.AreEqual("ADVANCED", newState.userSegment);
+
+            var cleared = AppReducers.SetUserSegmentReducer(newState, AppActions.setUserSegment.Invoke(null));
+            Assert.AreEqual("", cleared.userSegment);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace eu.foodmission.platform
     {
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
+        private readonly IGamificationService _gamificationService;
 
         [ObservableProperty]
         private bool m_IsSubmitting;
@@ -44,10 +45,11 @@ namespace eu.foodmission.platform
         [ObservableProperty] private int m_ReusableContainersFrequencyIndex = -1;
         [ObservableProperty] private bool m_FromHome = false;
 
-        public OnboardingSurveyViewModel(IStoreService storeService, ICatalogService catalogService, IAuthService authService = null) : base(storeService)
+        public OnboardingSurveyViewModel(IStoreService storeService, ICatalogService catalogService, IAuthService authService = null, IGamificationService gamificationService = null) : base(storeService)
         {
             _catalogService = catalogService;
             _authService = authService;
+            _gamificationService = gamificationService;
 
             _storeSubscription = _store.Subscribe(
                 state => state.lang,
@@ -191,8 +193,27 @@ namespace eu.foodmission.platform
                 // 1. Dispatch survey answers to Redux store (persisted in PlayerPrefs/LocalStorage)
                 _storeService.store.Dispatch(AppActions.setOnboardingSurvey.Invoke(surveyData));
 
-                // 2. Sync survey data inside preferences via PATCH /api/v1/users/me
-                if (_authService != null)
+                // 2. First submission: the backend scores the answers into a segment and creates the
+                //    wallet + progress wheels. 409 means onboarding was already applied (e.g. retaking the
+                //    survey from Home), so the answers are only updated via PATCH below.
+                bool needsPatch = true;
+                if (_gamificationService != null && surveyData.IsComplete())
+                {
+                    var (result, submitError) = await _gamificationService.SubmitOnboardingSurveyAsync(surveyData);
+                    if (submitError == null)
+                    {
+                        _storeService.store.Dispatch(AppActions.setUserSegment.Invoke(result?.segment));
+                        needsPatch = false;
+                    }
+                    else if (submitError.statusCode != 409)
+                    {
+                        ErrorDetail = submitError;
+                        return;
+                    }
+                }
+
+                // 3. Sync survey data inside preferences via PATCH /api/v1/users/me
+                if (needsPatch && _authService != null)
                 {
                     AppState state = _storeService.GetAppState();
 
@@ -214,10 +235,11 @@ namespace eu.foodmission.platform
                         ErrorDetail = error ?? new ApiErrorResponse { statusCode = 500, error = "COULD_NOT_SAVE_SURVEY", message = "Could not sync survey responses with server." };
                         return;
                     }
-                    ErrorDetail = null;
                 }
 
-                // 3. Complete survey flow & navigate to next screen
+                ErrorDetail = null;
+
+                // 4. Complete survey flow & navigate to next screen
                 if (FromHome)
                 {
                     RaiseNavigationRequested(Actions.go_to_home);

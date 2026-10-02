@@ -215,6 +215,15 @@ namespace eu.foodmission.platform
             set => weeklyReusableOrRefill = value;
         }
 
+        public bool IsComplete()
+        {
+            return !string.IsNullOrEmpty(weeklyMeatConsumption)
+                && !string.IsNullOrEmpty(weeklyBeefConsumption)
+                && !string.IsNullOrEmpty(weeklyFoodWaste)
+                && !string.IsNullOrEmpty(weeklyUpfConsumption)
+                && !string.IsNullOrEmpty(weeklyReusableOrRefill);
+        }
+
         public bool HasAnswers()
         {
             return !string.IsNullOrEmpty(weeklyMeatConsumption)

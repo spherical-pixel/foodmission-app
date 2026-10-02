@@ -217,5 +217,71 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(challengeProg.reward);
             Assert.AreEqual(15, challengeProg.reward.xp);
         }
+
+        [Test]
+        public void OnboardingSurveyResult_Deserializes_SegmentAndWheels()
+        {
+            string json = @"{
+                ""segment"": ""INTERMEDIATE"",
+                ""progressWheels"": [{
+                    ""id"": ""w-1"", ""kind"": ""CO2_REDUCTION"", ""label"": ""CO2 Reduction"", ""unit"": ""kg CO2e"",
+                    ""profile"": ""INTERMEDIATE"", ""stage"": 2, ""stageTitle"": ""Building Habits"",
+                    ""sustainabilityTargetPercent"": 20, ""accumulatedValue"": 1.5, ""targetValue"": 10,
+                    ""percentComplete"": 15, ""allTimeTotal"": 4.25,
+                    ""cycleStartedAt"": ""2026-10-01T08:00:00.000Z"", ""lastUpdatedAt"": ""2026-10-02T08:00:00.000Z""
+                }]
+            }";
+
+            var result = JsonConvert.DeserializeObject<OnboardingSurveyResult>(json);
+
+            Assert.AreEqual("INTERMEDIATE", result.segment);
+            Assert.AreEqual(1, result.progressWheels.Length);
+            ProgressWheel wheel = result.progressWheels[0];
+            Assert.AreEqual("CO2_REDUCTION", wheel.kind);
+            Assert.AreEqual("kg CO2e", wheel.unit);
+            Assert.AreEqual(2, wheel.stage);
+            Assert.AreEqual("Building Habits", wheel.stageTitle);
+            Assert.AreEqual(20f, wheel.sustainabilityTargetPercent);
+            Assert.AreEqual(1.5f, wheel.accumulatedValue);
+            Assert.AreEqual(10f, wheel.targetValue);
+            Assert.AreEqual(15f, wheel.percentComplete);
+            Assert.AreEqual(4.25f, wheel.allTimeTotal);
+        }
+
+        [Test]
+        public void OnboardingSurveyData_IsComplete_RequiresAllFiveAnswers()
+        {
+            var data = new OnboardingSurveyData
+            {
+                weeklyMeatConsumption = "ZERO_TO_FOUR",
+                weeklyBeefConsumption = "NEVER",
+                weeklyFoodWaste = "ZERO",
+                weeklyUpfConsumption = "ZERO_TO_THREE",
+            };
+            Assert.IsFalse(data.IsComplete());
+
+            data.weeklyReusableOrRefill = "TEN_PLUS";
+            Assert.IsTrue(data.IsComplete());
+        }
+
+        [Test]
+        public void OnboardingSurveyData_Serializes_OnlyBackendFields()
+        {
+            var data = new OnboardingSurveyData
+            {
+                weeklyMeatConsumption = "ZERO_TO_FOUR",
+                weeklyBeefConsumption = "NEVER",
+                weeklyFoodWaste = "ZERO",
+                weeklyUpfConsumption = "ZERO_TO_THREE",
+                weeklyReusableOrRefill = "TEN_PLUS",
+            };
+
+            var json = Newtonsoft.Json.Linq.JObject.Parse(JsonConvert.SerializeObject(data));
+
+            // POST /users/me/gamification/onboarding-survey uses forbidNonWhitelisted: no extra keys allowed.
+            CollectionAssert.AreEquivalent(
+                new[] { "weeklyMeatConsumption", "weeklyBeefConsumption", "weeklyFoodWaste", "weeklyUpfConsumption", "weeklyReusableOrRefill" },
+                System.Linq.Enumerable.Select(json.Properties(), p => p.Name));
+        }
     }
 }

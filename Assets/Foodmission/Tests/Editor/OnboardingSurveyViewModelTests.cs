@@ -208,5 +208,88 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
         }
+
+        private static async Task CompleteFlowAsync(OnboardingSurveyViewModel vm)
+        {
+            vm.MeatMealsIndex = 0;
+            vm.BeefFrequencyIndex = 0;
+            vm.FoodWasteFrequencyIndex = 0;
+            vm.UltraProcessedFrequencyIndex = 0;
+            vm.ReusableContainersFrequencyIndex = 0;
+
+            for (int i = 0; i < 6; i++)
+            {
+                await vm.GoNextAsync();
+            }
+        }
+
+        [Test]
+        public async Task FullFlow_SubmitSurveySucceeds_StoresSegmentAndSkipsPatch()
+        {
+            var auth = new Mock<IAuthService>();
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
+                .ReturnsAsync((new OnboardingSurveyResult { segment = "BEGINNER", progressWheels = new ProgressWheel[0] }, (ApiErrorResponse)null));
+
+            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
+            vm.Initialize();
+            string requestedAction = null;
+            vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            await CompleteFlowAsync(vm);
+
+            gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.Is<OnboardingSurveyData>(d =>
+                d.weeklyMeatConsumption == "ZERO_TO_FOUR" && d.weeklyReusableOrRefill == "ZERO_TO_TWO")), Times.Once);
+            auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            Assert.AreEqual("BEGINNER", _storeService.GetAppState().userSegment);
+            Assert.IsNull(vm.ErrorDetail);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboardingavatar, requestedAction);
+        }
+
+        [Test]
+        public async Task FullFlow_SurveyAlreadySubmitted_FallsBackToPatch()
+        {
+            var auth = new Mock<IAuthService>();
+            auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, (ApiErrorResponse)null));
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
+                .ReturnsAsync(((OnboardingSurveyResult)null, new ApiErrorResponse { statusCode = 409, message = "Onboarding survey already submitted" }));
+
+            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
+            vm.Initialize();
+            vm.FromHome = true;
+            string requestedAction = null;
+            vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            await CompleteFlowAsync(vm);
+
+            auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r =>
+                r.preferences.onboardingSurvey.weeklyMeatConsumption == "ZERO_TO_FOUR")), Times.Once);
+            Assert.IsNull(vm.ErrorDetail);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
+        }
+
+        [Test]
+        public async Task FullFlow_SubmitSurveyFails_SetsErrorDetailAndStays()
+        {
+            var auth = new Mock<IAuthService>();
+            var gamification = new Mock<IGamificationService>();
+            var expectedError = new ApiErrorResponse { statusCode = 500, error = "SERVER_ERROR", message = "Server error occurred" };
+            gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
+                .ReturnsAsync(((OnboardingSurveyResult)null, expectedError));
+
+            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
+            vm.Initialize();
+            string requestedAction = null;
+            vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            await CompleteFlowAsync(vm);
+
+            Assert.AreSame(expectedError, vm.ErrorDetail);
+            Assert.IsNull(requestedAction);
+            auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            Assert.AreEqual("", _storeService.GetAppState().userSegment ?? "");
+        }
     }
 }
