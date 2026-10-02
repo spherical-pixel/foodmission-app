@@ -29,7 +29,6 @@ namespace eu.foodmission.platform
 
         private static IFormatProvider DateFormatter => LocalizationSettings.SelectedLocale?.Formatter ?? CultureInfo.CurrentCulture;
 
-        private readonly Heading _title;
         private readonly Text _summary;
         private readonly VisualElement _grid;
         private readonly ISpriteService _spriteService;
@@ -43,15 +42,9 @@ namespace eu.foodmission.platform
                 .GetRequiredService<ITemplateService>()
                 .Get(TemplateAddresses.Badges));
 
-            _title = contentContainer.Q<Heading>("screen-title");
             _summary = contentContainer.Q<Text>("summary");
             _grid = contentContainer.Q<VisualElement>("badges-grid");
             _spriteService = App.current.services.GetService<ISpriteService>();
-
-            if (_title != null)
-            {
-                _title.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "BADGES_TITLE");
-            }
         }
 
         protected override void OnViewModelBound()
@@ -132,16 +125,24 @@ namespace eu.foodmission.platform
             var image = new VisualElement();
             image.AddToClassList("fm-badge-card__image");
             card.Add(image);
+
+            // 🏅 fallback while the sprite loads, or for a badge code that has no sprite yet.
+            var fallback = new Text { text = "🏅" };
+            fallback.AddToClassList("fm-badge-card__fallback");
+            image.Add(fallback);
+
             if (_spriteService != null)
             {
-                _ = _spriteService.BindBackgroundSprite(image, item.SpriteAddress);
+                _ = _spriteService.BindBackgroundSprite(image, item.SpriteAddress, _ => fallback.AddToClassList("hidden"));
             }
 
             var name = new Text { text = item.Name ?? item.Code };
+            name.size = TextSize.XXL;
             name.AddToClassList("fm-badge-card__name");
             card.Add(name);
 
             var description = new Text { text = item.Description ?? "" };
+            description.size = TextSize.M;
             description.AddToClassList("fm-badge-card__description");
             card.Add(description);
 
@@ -149,6 +150,7 @@ namespace eu.foodmission.platform
             {
                 string date = item.EarnedAt.Value.ToLocalTime().ToString("d", DateFormatter);
                 var meta = new Text { text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "BADGES_EARNED_ON", new object[] { date }) };
+                meta.size = TextSize.S;
                 meta.AddToClassList("fm-badge-card__meta");
                 card.Add(meta);
             }
@@ -156,6 +158,9 @@ namespace eu.foodmission.platform
             if (item.ShowProgress)
             {
                 var progress = new LinearProgress { variant = Progress.Variant.Determinate, value = item.Progress };
+                // Same look as the drawer XP bar; .fm-badge-card__progress only resets the drawer-specific margins.
+                progress.AddToClassList("fm-xp-progress");
+                progress.AddToClassList("appui-progress--rounded-corners");
                 progress.AddToClassList("fm-badge-card__progress");
                 card.Add(progress);
             }

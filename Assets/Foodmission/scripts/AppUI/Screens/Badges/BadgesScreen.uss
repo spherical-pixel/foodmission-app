@@ -15,7 +15,7 @@
 
 .fm-badges-summary {
     margin-top: 4px;
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-foregrounds-100);
 }
 
 .fm-badges-grid {
@@ -33,45 +33,58 @@
     padding: 12px;
     align-items: center;
     border-radius: 16px;
-    background-color: var(--appui-backgrounds-200);
     flex-shrink: 0;
 }
 
 .fm-badge-card__image {
-    width: 96px;
-    height: 96px;
+    width: 456px;
+    height: 456px;
     margin-bottom: 8px;
     -unity-background-scale-mode: scale-to-fit;
+    align-items: center;
+    justify-content: center;
+}
+
+.fm-badge-card__fallback {
+    font-size: 96px;
+    -unity-text-align: middle-center;
 }
 
 .fm-badge-card__name {
+    color: var(--appui-foregrounds-200);
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     white-space: normal;
+    margin-bottom: 10px;
+    width: 100%;
+
 }
 
 .fm-badge-card__description {
     margin-top: 4px;
-    font-size: 12px;
     -unity-text-align: middle-center;
     white-space: normal;
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-foregrounds-100);
+    min-height: 80px;
+    margin-bottom: 8px;
 }
 
 .fm-badge-card__meta {
     margin-top: 6px;
-    font-size: 11px;
     -unity-text-align: middle-center;
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-foregrounds-100);
 }
 
-.fm-badge-card__progress {
+/* Visuals come from the drawer's .fm-xp-progress; undo its drawer-only margins (badge overlap). */
+.fm-xp-progress.fm-badge-card__progress {
     margin-top: 8px;
+    margin-right: 0;
+    margin-bottom: 0;
     width: 100%;
 }
 
 .fm-badge-card--locked .fm-badge-card__name {
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-foregrounds-100);
 }
 
 .hidden {

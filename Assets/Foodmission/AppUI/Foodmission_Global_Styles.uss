@@ -2311,9 +2311,11 @@
 }
 
 .fm-reward-badge-image {
-    width: 160px;
-    height: 160px;
+    width: 456px;
+    height: 456px;
     -unity-background-scale-mode: scale-to-fit;
+    /* Hidden until the sprite loads (SpriteService.BindBackgroundSprite sets display: flex), so a missing sprite leaves no gap. */
+    display: none;
 }
 
 .fm-reward-icon-emoji--hidden {

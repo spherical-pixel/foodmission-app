@@ -3,7 +3,6 @@
     <Style src="BadgesScreen.uss"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.BadgesViewModel, Foodmission" class="fm-root fm-badges-root">
         <ui:VisualElement name="header" class="fm-badges-header">
-            <appui:Heading name="screen-title" size="L"/>
             <appui:Text name="summary" class="fm-badges-summary"/>
         </ui:VisualElement>
         <ui:VisualElement name="badges-grid" class="fm-badges-grid"/>
