@@ -1,5 +1,7 @@
 using System;
 
+using Newtonsoft.Json;
+
 namespace eu.foodmission.platform
 {
     [Serializable]
@@ -19,6 +21,10 @@ namespace eu.foodmission.platform
         public string avatarItem;
         public string petItem;
         public string collectible;
+
+        /// <summary>Display name of the badge, filled client-side for badge celebrations. Never sent or received.</summary>
+        [JsonIgnore]
+        public string badgeName { get; set; }
     }
 
     [Serializable]
@@ -91,5 +97,30 @@ namespace eu.foodmission.platform
         public string[] badges;
         public UserEvent[] recentEvents;
         public WalletEntry[] recentWalletEntries;
+    }
+
+    [Serializable]
+    public class UserBadge
+    {
+        public string code;
+        public string name;
+        public string description;
+        public string imageUrl;
+        public int sortOrder;
+        public string ruleCode;
+        public bool earned;
+        // DateTime? (not string) so Newtonsoft does not reformat the ISO date with the device culture.
+        public DateTime? earnedAt;
+        // 0–100, server-derived; always 100 when earned.
+        public float progress;
+        public string status;
+    }
+
+    [Serializable]
+    public class UserBadgesResponse
+    {
+        public UserBadge[] badges;
+        public int earnedCount;
+        public int totalCount;
     }
 }
