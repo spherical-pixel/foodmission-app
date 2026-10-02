@@ -65,6 +65,8 @@ namespace eu.foodmission.platform
         private readonly IChallengeService _challengeService;
         private readonly IFoodFactService _foodFactService;
         private readonly IGamificationService _gamificationService;
+        private readonly IBadgeService _badgeService;
+        private readonly BadgeCelebrationTracker _badgeTracker = new BadgeCelebrationTracker();
         private readonly IQuestProgressionService _questProgressionService;
         private bool _isCheckingRewards;
 
@@ -83,7 +85,8 @@ namespace eu.foodmission.platform
             IGamificationService gamificationService = null,
             IQuestProgressionService questProgressionService = null,
             IMissionNudgeService missionNudgeService = null,
-            IAuthService authService = null) : base(storeService)
+            IAuthService authService = null,
+            IBadgeService badgeService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -98,6 +101,7 @@ namespace eu.foodmission.platform
             _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
             _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
+            _badgeService = badgeService ?? App.current?.services?.GetService<IBadgeService>();
 
             // Get initial state
             AppState state = _storeService?.GetAppState();
@@ -716,6 +720,103 @@ namespace eu.foodmission.platform
             PlayerPrefs.Save();
         }
 
+        /// <summary>
+        /// Badges earned since the last check, as celebrations. The backend grants badges asynchronously and
+        /// has no inbox, so this diffs profile.badges against BadgeCelebrationTracker. Codes are marked
+        /// celebrated only once their celebrations are built; a failed /badges/me leaves them for the next check.
+        /// </summary>
+        private async System.Threading.Tasks.Task<System.Collections.Generic.List<PendingRewardCelebration>> CollectBadgeCelebrationsAsync(
+            string userId, GamificationProfileResponse profile)
+        {
+            var results = new System.Collections.Generic.List<PendingRewardCelebration>();
+            string[] earned = profile.badges ?? new string[0];
+            _storeService?.store?.Dispatch(AppActions.setBadges.Invoke(earned));
+
+            if (_badgeService == null)
+            {
+                return results;
+            }
+
+            UserBadge[] details = null;
+            if (_badgeTracker.IsFirstRun(userId))
+            {
+                // earnedAt is needed to tell a just-earned FIRST_STEP from history; without it, try again next check.
+                var (firstRunResponse, firstRunError) = await _badgeService.GetMyBadgesAsync();
+                if (firstRunResponse == null || firstRunError != null)
+                {
+                    return results;
+                }
+                details = firstRunResponse.badges;
+            }
+
+            var newCodes = _badgeTracker.GetNewlyEarned(userId, earned, details, System.DateTime.UtcNow);
+            if (newCodes.Count == 0)
+            {
+                return results;
+            }
+
+            if (details == null)
+            {
+                var (response, error) = await _badgeService.GetMyBadgesAsync();
+                if (response == null || error != null)
+                {
+                    return results;
+                }
+                details = response.badges;
+            }
+
+            foreach (string code in newCodes)
+            {
+                UserBadge badge = details?.FirstOrDefault(b => b != null && b.code == code);
+                var (xp, points) = SumBadgeWalletEntries(profile.recentWalletEntries, code);
+
+                results.Add(new PendingRewardCelebration
+                {
+                    Reward = new ContentReward
+                    {
+                        badgeId = code,
+                        badgeName = string.IsNullOrEmpty(badge?.name) ? code : badge.name,
+                        xp = xp > 0 ? (int?)xp : null,
+                        points = points > 0 ? (int?)points : null
+                    },
+                    ContextTitle = "@UI:BADGE_EARNED_TITLE",
+                    Code = code,
+                    IsBadge = true
+                });
+            }
+
+            _badgeTracker.MarkCelebrated(userId, newCodes);
+            return results;
+        }
+
+        /// <summary>A badge's own reward is credited with reason "Badge {CODE} completed" (CompletionRewardService).</summary>
+        private static (int Xp, int Points) SumBadgeWalletEntries(WalletEntry[] entries, string code)
+        {
+            int xp = 0;
+            int points = 0;
+            string prefix = $"Badge {code} ";
+            foreach (var w in entries ?? new WalletEntry[0])
+            {
+                if (w == null || w.amount <= 0 || string.IsNullOrEmpty(w.currency) || string.IsNullOrEmpty(w.reason))
+                {
+                    continue;
+                }
+                if (!w.reason.StartsWith(prefix, System.StringComparison.Ordinal))
+                {
+                    continue;
+                }
+                if (w.currency.Equals("XP", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    xp += w.amount;
+                }
+                else if (w.currency.Equals("POINTS", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    points += w.amount;
+                }
+            }
+            return (xp, points);
+        }
+
         public async System.Threading.Tasks.Task<System.Collections.Generic.List<PendingRewardCelebration>> CheckPendingGamificationRewardsAsync()
         {
             if (_isCheckingRewards) return null;
@@ -749,6 +850,9 @@ namespace eu.foodmission.platform
                         new AppActions.WalletPayload(profile.wallet.xp, profile.wallet.points)));
                 }
 
+                // Badges do not depend on the mission/quest cursor below, so they are collected first.
+                var badgeCelebrations = await CollectBadgeCelebrationsAsync(userId, profile);
+
                 // If first time checking for this user, establish cursor with current newest event timestamp
                 // so historical past events are not celebrated on cold start.
                 if (string.IsNullOrEmpty(lastSeenTs))
@@ -760,7 +864,7 @@ namespace eu.foodmission.platform
 
                     PlayerPrefs.SetString(cursorKey, newest);
                     PlayerPrefs.Save();
-                    return null;
+                    return badgeCelebrations.Count > 0 ? badgeCelebrations : null;
                 }
 
                 System.DateTime lastSeenDate;
@@ -792,7 +896,7 @@ namespace eu.foodmission.platform
                 if (candidateEvents == null || candidateEvents.Count == 0)
                 {
                     PlayerPrefs.Save();
-                    return null;
+                    return badgeCelebrations.Count > 0 ? badgeCelebrations : null;
                 }
 
                 var results = new System.Collections.Generic.List<PendingRewardCelebration>();
@@ -937,7 +1041,8 @@ namespace eu.foodmission.platform
                 PlayerPrefs.Save();
 
                 // Order so individual activities are presented first, and quest completion last
-                return results.OrderBy(r => r.IsQuest ? 1 : 0).ToList();
+                // Individual activities first, then quest completion, then badges (earned as a consequence of both)
+                return results.OrderBy(r => r.IsQuest ? 1 : 0).Concat(badgeCelebrations).ToList();
             }
             catch (System.Exception ex)
             {
@@ -958,6 +1063,7 @@ namespace eu.foodmission.platform
         public string EventId { get; set; }
         public string Code { get; set; }
         public bool IsQuest { get; set; }
+        public bool IsBadge { get; set; }
         public Quest UnlockedQuest { get; set; }
     }
 }
