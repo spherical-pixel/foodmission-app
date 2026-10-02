@@ -15,7 +15,7 @@
 }
 
 .fm-wheels-section__title {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     -unity-font-style: bold;
     flex-shrink: 0;
 }
@@ -101,6 +101,8 @@
 .fm-wheel-card__percent {
     -unity-font-style: bold;
     -unity-text-align: middle-center;
+    white-space: nowrap;
+    color: var(--appui-foregrounds-50);
 }
 
 .fm-wheel-card__texts {
@@ -108,9 +110,17 @@
     width: 100%;
 }
 
+/* Texts stretch to the container width: centred (max-content) Text elements are measured on one line
+   and then wrap without growing, so a two-line name overlapped the stage line. */
+.fm-wheel-card__texts > * {
+    align-self: stretch;
+}
+
 .fm-wheel-card--horizontal .fm-wheel-card__texts {
-    align-items: flex-start;
+    flex-grow: 1;
     flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
 }
 
 .fm-wheel-card__name {
@@ -118,12 +128,14 @@
     -unity-text-align: middle-center;
     white-space: normal;
     margin-bottom: 4px;
+    color: var(--appui-foregrounds-50);
 }
 
 .fm-wheel-card__stage,
 .fm-wheel-card__stage-title,
 .fm-wheel-card__value,
 .fm-wheel-card__meta {
+    color: var(--appui-foregrounds-50);
     -unity-text-align: middle-center;
     white-space: normal;
 }
@@ -137,10 +149,10 @@
 }
 
 .fm-wheel-card__stage-title {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     margin-bottom: 8px;
 }
 
 .fm-wheel-card__meta {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
 }

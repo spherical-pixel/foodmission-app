@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
+using UnityEngine.UIElements;
+
 using eu.foodmission.platform.Components;
 
 namespace eu.foodmission.platform.Tests
@@ -65,5 +67,24 @@ namespace eu.foodmission.platform.Tests
         }
 
         private static ProgressWheel W(string kind) => new ProgressWheel { kind = kind, stage = 1, profile = "BEGINNER", percentComplete = 20f };
+
+        [Test]
+        public void Card_ZeroProgress_HasNoRoundedCap()
+        {
+            var card = new FMProgressWheelCard();
+
+            card.Bind(new ProgressWheel { kind = "CO2_REDUCTION", stage = 1, profile = "BEGINNER", percentComplete = 0f });
+            Assert.IsFalse(card.Q<Unity.AppUI.UI.CircularProgress>().roundedProgressCorners);
+
+            card.Bind(new ProgressWheel { kind = "CO2_REDUCTION", stage = 1, profile = "BEGINNER", percentComplete = 12f });
+            Assert.IsTrue(card.Q<Unity.AppUI.UI.CircularProgress>().roundedProgressCorners);
+        }
+
+        [Test]
+        public void Card_MetaLine_UsesReadableSize()
+        {
+            var card = new FMProgressWheelCard();
+            Assert.AreEqual(Unity.AppUI.UI.TextSize.S, card.Q<Unity.AppUI.UI.Text>(className: "fm-wheel-card__meta").size);
+        }
     }
 }

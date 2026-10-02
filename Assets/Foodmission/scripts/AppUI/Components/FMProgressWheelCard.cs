@@ -49,7 +49,7 @@ namespace eu.foodmission.platform.Components
             _stage = AddText(texts, "fm-wheel-card__stage", TextSize.S);
             _stageTitle = AddText(texts, "fm-wheel-card__stage-title", TextSize.S);
             _value = AddText(texts, "fm-wheel-card__value", TextSize.S);
-            _meta = AddText(texts, "fm-wheel-card__meta", TextSize.XS);
+            _meta = AddText(texts, "fm-wheel-card__meta", TextSize.S);
             Add(texts);
         }
 
@@ -76,7 +76,10 @@ namespace eu.foodmission.platform.Components
                 _colorClass = colorClass;
             }
 
-            _ring.value = ProgressWheelText.ClampPercent(wheel?.percentComplete ?? 0f) / 100f;
+            float progress = ProgressWheelText.ClampPercent(wheel?.percentComplete ?? 0f) / 100f;
+            _ring.value = progress;
+            // App UI draws the rounded start cap even at 0, which shows as a stray dot on an empty ring.
+            _ring.roundedProgressCorners = progress > 0f;
 
             string name = ProgressWheelText.Name(wheel);
             string percent = ProgressWheelText.PercentText(wheel);
