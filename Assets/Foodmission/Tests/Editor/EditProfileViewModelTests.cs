@@ -739,25 +739,25 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task DeleteAccountAsync_WhenAuthServiceSucceeds_ReturnsTrue()
         {
-            _mockAuthService.Setup(s => s.DeleteAccountAsync()).ReturnsAsync((true, null));
+            _mockAuthService.Setup(s => s.DeleteAccountAsync(It.IsAny<bool>())).ReturnsAsync((true, null));
 
             var (success, error) = await _vm.DeleteAccountAsync();
 
             Assert.IsTrue(success);
             Assert.IsNull(error);
-            _mockAuthService.Verify(s => s.DeleteAccountAsync(), Times.Once);
+            _mockAuthService.Verify(s => s.DeleteAccountAsync(It.IsAny<bool>()), Times.Once);
         }
 
         [Test]
         public async Task DeleteAccountAsync_WhenAuthServiceFails_ReturnsFalseWithError()
         {
-            _mockAuthService.Setup(s => s.DeleteAccountAsync()).ReturnsAsync((false, "Network error"));
+            _mockAuthService.Setup(s => s.DeleteAccountAsync(It.IsAny<bool>())).ReturnsAsync((false, "Network error"));
 
             var (success, error) = await _vm.DeleteAccountAsync();
 
             Assert.IsFalse(success);
             Assert.AreEqual("Network error", error);
-            _mockAuthService.Verify(s => s.DeleteAccountAsync(), Times.Once);
+            _mockAuthService.Verify(s => s.DeleteAccountAsync(It.IsAny<bool>()), Times.Once);
         }
     }
 }
