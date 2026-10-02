@@ -274,6 +274,22 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void MealLogHelpers_EveryQuickLogFlag_HasLabelAndEmoji()
+        {
+            foreach (string flag in MealFlagLabels.Flags)
+            {
+                Assert.IsNotNull(MealLogHelpers.GetFlagLocalizationKey(flag), flag);
+                Assert.IsNotEmpty(MealLogHelpers.GetFlagEmoji(flag), flag);
+            }
+        }
+
+        [Test]
+        public void MealLogHelpers_GetFlagLocalizationKey_ReturnsNullForSwaps()
+        {
+            Assert.IsNull(MealLogHelpers.GetFlagLocalizationKey(ClientEventTypes.SwapBeefToLegumes));
+        }
+
+        [Test]
         public void MealLogHelpers_GetDisplayNameForFlag_ReturnsNonEmptyWithEmoji()
         {
             string displayName = MealLogHelpers.GetDisplayNameForFlag(ClientEventTypes.MealMeatFree);

@@ -24,6 +24,16 @@ namespace eu.foodmission.platform
 
         private static readonly Regex MeasureRegex = new(@"^(\d*[.,]?\d+)\s*(.*)$", RegexOptions.Compiled);
 
+        // "1/2 cup", "1 1/2 cups" (TheMealDB measures); unicode fractions are expanded to this form first.
+        private static readonly Regex FractionRegex = new(@"^(?:(\d+)\s+)?(\d+)\s*/\s*(\d+)\s*(.*)$", RegexOptions.Compiled);
+
+        private static readonly Dictionary<char, string> VulgarFractions = new()
+        {
+            { '½', "1/2" }, { '⅓', "1/3" }, { '⅔', "2/3" }, { '¼', "1/4" }, { '¾', "3/4" },
+            { '⅕', "1/5" }, { '⅖', "2/5" }, { '⅗', "3/5" }, { '⅘', "4/5" }, { '⅙', "1/6" },
+            { '⅚', "5/6" }, { '⅛', "1/8" }, { '⅜', "3/8" }, { '⅝', "5/8" }, { '⅞', "7/8" }
+        };
+
         private static IUnitCatalog s_fallback;
 
         /// <summary>
@@ -121,7 +131,25 @@ namespace eu.foodmission.platform
                 return false;
             }
 
-            Match match = MeasureRegex.Match(measure.Trim());
+            string text = ExpandVulgarFractions(measure.Trim());
+
+            Match fraction = FractionRegex.Match(text);
+            if (fraction.Success)
+            {
+                float whole = fraction.Groups[1].Success ? float.Parse(fraction.Groups[1].Value, CultureInfo.InvariantCulture) : 0f;
+                float numerator = float.Parse(fraction.Groups[2].Value, CultureInfo.InvariantCulture);
+                float denominator = float.Parse(fraction.Groups[3].Value, CultureInfo.InvariantCulture);
+                if (denominator == 0f)
+                {
+                    return false;
+                }
+
+                quantity = whole + numerator / denominator;
+                unit = ResolveCode(fraction.Groups[4].Value);
+                return true;
+            }
+
+            Match match = MeasureRegex.Match(text);
             if (!match.Success)
             {
                 return false;
@@ -135,6 +163,38 @@ namespace eu.foodmission.platform
             quantity = parsed;
             unit = ResolveCode(match.Groups[2].Value);
             return true;
+        }
+
+        /// <summary>"1½ cups" → "1 1/2 cups", "¾ kg" → "3/4 kg".</summary>
+        private static string ExpandVulgarFractions(string text)
+        {
+            bool hasFraction = false;
+            foreach (char c in text)
+            {
+                if (VulgarFractions.ContainsKey(c))
+                {
+                    hasFraction = true;
+                    break;
+                }
+            }
+            if (!hasFraction)
+            {
+                return text;
+            }
+
+            var sb = new System.Text.StringBuilder(text.Length + 8);
+            foreach (char c in text)
+            {
+                if (VulgarFractions.TryGetValue(c, out string expanded))
+                {
+                    sb.Append(' ').Append(expanded).Append(' ');
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+            return Regex.Replace(sb.ToString(), @"\s+", " ").Trim();
         }
 
         public async Task LoadAsync(string lang)

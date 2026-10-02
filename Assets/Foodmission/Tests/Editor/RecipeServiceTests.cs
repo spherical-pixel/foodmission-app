@@ -59,6 +59,13 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void BuildRecipeUrl_IncludesEscapedIdAndLang()
+        {
+            string url = RecipeService.BuildRecipeUrl("https://api.test", "abc 1", "es");
+            Assert.AreEqual("https://api.test/api/v1/recipes/abc%201?lang=es", url);
+        }
+
+        [Test]
         public async Task GetRecommendationsAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
         {
             UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex(".*GetRecommendationsAsync.*"));

@@ -156,6 +156,39 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("CUPS", u);
         }
 
+        [TestCase("1/2 cup", 0.5f, "CUPS")]
+        [TestCase("3/4kg", 0.75f, "KG")]
+        [TestCase("1 1/2 cups", 1.5f, "CUPS")]
+        [TestCase("2 1/4 l", 2.25f, "L")]
+        [TestCase("½ cup", 0.5f, "CUPS")]
+        [TestCase("1½ cups", 1.5f, "CUPS")]
+        [TestCase("1 ½ cups", 1.5f, "CUPS")]
+        [TestCase("¾ kg", 0.75f, "KG")]
+        [TestCase("1/2 tsp", 0.5f, "PIECES")]
+        [TestCase("½", 0.5f, "PIECES")]
+        public void TryParseMeasure_Fractions(string measure, float qty, string unit)
+        {
+            Assert.IsTrue(_catalog.TryParseMeasure(measure, out float q, out string u));
+            Assert.AreEqual(qty, q, 0.0001f);
+            Assert.AreEqual(unit, u);
+        }
+
+        [Test]
+        public void TryParseMeasure_ZeroDenominator_ReturnsFalse()
+        {
+            Assert.IsFalse(_catalog.TryParseMeasure("1/0 cup", out float q, out string u));
+            Assert.AreEqual(1f, q);
+            Assert.AreEqual(UnitCodes.Default, u);
+        }
+
+        [Test]
+        public void ResolveMeasure_Fraction_UsesParsedQuantity()
+        {
+            var (q, u) = _catalog.ResolveMeasure("1/2 tsp", null, "G");
+            Assert.AreEqual(0.5f, q, 0.0001f);
+            Assert.AreEqual("G", u);
+        }
+
         [Test]
         public void ResolveMeasure_StoredQuantityAndUnit_WinOverText()
         {

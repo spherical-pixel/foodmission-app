@@ -337,7 +337,7 @@ namespace eu.foodmission.platform
                 Traces = product.traces != null ? FormatTagsList(product.traces, "en") : "";
                 Categories = product.categories != null && product.categories.Length > 0 ? FormatTagsList(product.categories, "en") : "";
                 Stores = product.stores != null && product.stores.Length > 0 ? FormatTagsList(product.stores, "en") : "";
-                DietaryFlags = new DietaryFlags(null, null, null);
+                DietaryFlags = new DietaryFlags(product.isVegan, product.isVegetarian, product.isPalmOilFree);
 
                 MacroCards = BuildMacroCardsFromNutritionalInfo(product.nutritionalInfo);
                 NutritionDetail = BuildNutritionDetailFromNutritionalInfo(product.nutritionalInfo);

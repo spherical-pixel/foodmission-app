@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine.Localization.Settings;
 
@@ -20,23 +21,9 @@ namespace eu.foodmission.platform
             return TypeEmojis.TryGetValue(type, out string emoji) ? emoji : "🍽️";
         }
 
-        public static string GetFlagLocalizationKey(string flag) => flag switch
-        {
-            ClientEventTypes.MealMeatFree => "EVENTS_MEAT_FREE",
-            ClientEventTypes.MealLegumeConsumed => "EVENTS_LEGUMES_CONSUMED",
-            ClientEventTypes.MealVegan => "EVENTS_VEGAN_MEAL",
-            ClientEventTypes.MealSustainablePlate => "EVENTS_SUSTAINABLE_PLATE",
-            ClientEventTypes.MealAncientGrain => "EVENTS_ANCIENT_GRAIN",
-            ClientEventTypes.MealAlternativeStaple => "EVENTS_ALTERNATIVE_STAPLE",
-            ClientEventTypes.MealMeatConsumed => "EVENTS_MEAT_CONSUMED",
-            ClientEventTypes.NutritionFruitVegServingAdded => "EVENTS_FRUIT_VEG_SERVING",
-            ClientEventTypes.NutritionWholegrainChosen => "EVENTS_WHOLEGRAIN",
-            ClientEventTypes.NutritionHighFibreMeal => "EVENTS_HIGH_FIBRE",
-            ClientEventTypes.NutritionSaltFreeTable => "EVENTS_SALT_FREE",
-            ClientEventTypes.NutritionHealthyFatChosen => "EVENTS_HEALTHY_FAT",
-            ClientEventTypes.NutritionAddedSugarAvoided => "EVENTS_ADDED_SUGAR_AVOIDED",
-            _ => null
-        };
+        // Swaps have their own labels (SwapLocalization); only diet/nutrition/food waste flags here.
+        public static string GetFlagLocalizationKey(string flag) =>
+            flag != null && flag.StartsWith("SWAP_", StringComparison.Ordinal) ? null : MealFlagLabels.KeyFor(flag);
 
         public static string GetFlagEmoji(string flag) => flag switch
         {
@@ -47,6 +34,14 @@ namespace eu.foodmission.platform
             ClientEventTypes.MealAncientGrain => "🌾",
             ClientEventTypes.MealAlternativeStaple => "🥔",
             ClientEventTypes.MealMeatConsumed => "🥩",
+            ClientEventTypes.MealSeasonalProduce => "🍂",
+            ClientEventTypes.MealLocalProduce => "📍",
+            ClientEventTypes.MealCertifiedProduct => "🏷️",
+            ClientEventTypes.FoodWasteHalfPlateSaved => "🍽️",
+            ClientEventTypes.FoodWasteFullPlateSaved => "♻️",
+            ClientEventTypes.FoodWasteExpiredConsumed => "📅",
+            ClientEventTypes.NutritionProteinIncluded => "🍳",
+            ClientEventTypes.NutritionRainbowColoursLogged => "🌈",
             ClientEventTypes.NutritionFruitVegServingAdded => "🥦",
             ClientEventTypes.NutritionWholegrainChosen => "🍞",
             ClientEventTypes.NutritionHighFibreMeal => "🌾",

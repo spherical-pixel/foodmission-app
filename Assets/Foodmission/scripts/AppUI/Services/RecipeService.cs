@@ -25,6 +25,19 @@ namespace eu.foodmission.platform
             }
         }
 
+        // Backend translates NEVO-linked ingredient names with ?lang=.
+        private string Lang
+        {
+            get
+            {
+                AppState s = _storeService.GetAppState();
+                return string.IsNullOrEmpty(s?.lang) ? "en" : s.lang;
+            }
+        }
+
+        public static string BuildRecipeUrl(string baseUrl, string id, string lang)
+            => $"{baseUrl}/api/v1/recipes/{Uri.EscapeDataString(id)}?lang={Uri.EscapeDataString(lang ?? "en")}";
+
         public async Task<(PaginatedRecipeResponse Result, ApiErrorResponse Error)> GetRecipesAsync(
             string search = null,
             string category = null,
@@ -35,7 +48,7 @@ namespace eu.foodmission.platform
             int page = 1,
             int limit = 20)
         {
-            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/recipes?page={page}&limit={limit}");
+            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/recipes?page={page}&limit={limit}&lang={Uri.EscapeDataString(Lang)}");
 
             if (!string.IsNullOrEmpty(search))
                 sb.Append($"&search={Uri.EscapeDataString(search)}");
@@ -84,7 +97,7 @@ namespace eu.foodmission.platform
             if (string.IsNullOrEmpty(id))
                 return (null, null);
 
-            string url = $"{ApiConfig.BaseUrl}/api/v1/recipes/{Uri.EscapeDataString(id)}";
+            string url = BuildRecipeUrl(ApiConfig.BaseUrl, id, Lang);
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -112,7 +125,7 @@ namespace eu.foodmission.platform
             int page = 1,
             int limit = 20)
         {
-            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/recipes/me?page={page}&limit={limit}");
+            var sb = new StringBuilder($"{ApiConfig.BaseUrl}/api/v1/recipes/me?page={page}&limit={limit}&lang={Uri.EscapeDataString(Lang)}");
 
             if (!string.IsNullOrEmpty(search))
                 sb.Append($"&search={Uri.EscapeDataString(search)}");
