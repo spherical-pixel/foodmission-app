@@ -79,5 +79,37 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(ProgressWheelSection.LockedKind(new[] { "CO2_REDUCTION", "WATER_SAVINGS" }));
             Assert.IsNull(ProgressWheelSection.LockedKind(new string[0]));
         }
+
+        [Test]
+        public void Signature_ChangesWithBackendTexts()
+        {
+            var a = new AppState { progressWheels = new[] { new ProgressWheel { kind = "NEW_KIND", label = "New", unit = "kg", stageTitle = "One" } } };
+            string baseSig = ProgressWheelSection.Signature(a);
+
+            foreach (System.Action<ProgressWheel> change in new System.Action<ProgressWheel>[] { w => w.label = "Other", w => w.unit = "t", w => w.stageTitle = "Two" })
+            {
+                AppState b = a.Copy();
+                change(b.progressWheels[0]);
+                Assert.AreNotEqual(baseSig, ProgressWheelSection.Signature(b));
+            }
+        }
+
+        [Test]
+        public void CustomizableKinds_SkipsMissingAndDuplicateKinds()
+        {
+            var wheels = new[]
+            {
+                new ProgressWheel { kind = "CO2_REDUCTION" },
+                new ProgressWheel { kind = null },
+                null,
+                new ProgressWheel { kind = "" },
+                new ProgressWheel { kind = "CO2_REDUCTION" },
+                new ProgressWheel { kind = "WATER_SAVINGS" },
+            };
+
+            IReadOnlyList<ProgressWheel> result = ProgressWheelSection.CustomizableWheels(wheels);
+
+            CollectionAssert.AreEqual(new[] { "CO2_REDUCTION", "WATER_SAVINGS" }, System.Linq.Enumerable.Select(result, w => w.kind));
+        }
     }
 }

@@ -169,7 +169,7 @@
     --fm-wheel-water: #1565C0;
     --fm-wheel-land: #795548;
     --fm-wheel-default: #546E7A;
-    --fm-wheel-track: rgba(0, 0, 0, 0.12);
+    --fm-wheel-card-shadow: rgba(0, 0, 0, 0.18);
     --fm-icon-tint: var(--appui-primary-100);
     --fm-icon-tint-selected: var(--appui-primary-15);
     --fm-bg-screen-trans: rgba(255, 255, 255, 0.45);
@@ -307,7 +307,7 @@
     --fm-wheel-water: #64B5F6;
     --fm-wheel-land: #BCAAA4;
     --fm-wheel-default: #B0BEC5;
-    --fm-wheel-track: rgba(255, 255, 255, 0.15);
+    --fm-wheel-card-shadow: rgba(0, 0, 0, 0.45);
 
     --fm-icon-tint: var(--appui-primary-1200);
     --fm-icon-tint-selected: var(--appui-primary-900);

@@ -17,7 +17,7 @@
 .fm-wheels-section__title {
     color: var(--appui-foregrounds-200);
     -unity-font-style: bold;
-    flex-shrink: 1;
+    flex-shrink: 0;
 }
 
 .fm-wheels-section__message {
@@ -53,10 +53,10 @@
     margin-bottom: 24px;
     align-items: center;
     --box-shadow-offset-x: 0;
-    --box-shadow-offset-y: 4px;
-    --box-shadow-blur: 12px;
+    --box-shadow-offset-y: 4;
+    --box-shadow-blur: 12;
     --box-shadow-spread: 0;
-    --box-shadow-color: rgba(0, 0, 0, 0.18);
+    --box-shadow-color: var(--fm-wheel-card-shadow);
 }
 
 .fm-wheel-grid--cols-2 > .fm-wheel-card {

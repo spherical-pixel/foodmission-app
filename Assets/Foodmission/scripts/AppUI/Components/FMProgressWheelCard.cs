@@ -5,8 +5,9 @@ using UnityEngine.UIElements;
 namespace eu.foodmission.platform.Components
 {
     /// <summary>One sustainability progress wheel: ring with percent plus every value the backend sends.</summary>
+    /// <remarks>Extends App UI ExVisualElement because only it renders the --box-shadow-* USS variables.</remarks>
     [UxmlElement]
-    public partial class FMProgressWheelCard : VisualElement
+    public partial class FMProgressWheelCard : ExVisualElement
     {
         public const string UssClassName = "fm-wheel-card";
         public const string HorizontalUssClassName = "fm-wheel-card--horizontal";

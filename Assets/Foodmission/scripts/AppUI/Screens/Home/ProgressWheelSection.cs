@@ -76,12 +76,28 @@ namespace eu.foodmission.platform
                   .Append(w.accumulatedValue.ToString("R", CultureInfo.InvariantCulture)).Append('|')
                   .Append(w.targetValue.ToString("R", CultureInfo.InvariantCulture)).Append('|')
                   .Append(w.allTimeTotal.ToString("R", CultureInfo.InvariantCulture)).Append('|')
-                  .Append(w.sustainabilityTargetPercent.ToString("R", CultureInfo.InvariantCulture)).Append(';');
+                  .Append(w.sustainabilityTargetPercent.ToString("R", CultureInfo.InvariantCulture)).Append('|')
+                  .Append(w.label).Append('|').Append(w.unit).Append('|').Append(w.stageTitle).Append(';');
             }
             sb.Append('#').Append(string.Join(",", state.hiddenProgressWheels ?? new string[0]));
             sb.Append('#').Append(state.userSegment).Append('#').Append(state.lang).Append('#').Append(state.scale);
             sb.Append('#').Append(state.userOnboardingSurvey != null && state.userOnboardingSurvey.IsComplete());
             return sb.ToString();
+        }
+
+        /// <summary>Wheels that get a toggle in the Personalizar dialog: one per non-empty kind, backend order.</summary>
+        public static IReadOnlyList<ProgressWheel> CustomizableWheels(IEnumerable<ProgressWheel> wheels)
+        {
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            var result = new List<ProgressWheel>();
+            foreach (ProgressWheel wheel in wheels ?? Array.Empty<ProgressWheel>())
+            {
+                if (wheel != null && !string.IsNullOrEmpty(wheel.kind) && seen.Add(wheel.kind))
+                {
+                    result.Add(wheel);
+                }
+            }
+            return result;
         }
 
         public static string LockedKind(IReadOnlyCollection<string> enabledKinds)

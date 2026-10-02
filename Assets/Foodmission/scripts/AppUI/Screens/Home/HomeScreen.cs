@@ -68,6 +68,7 @@ namespace eu.foodmission.platform
         private CircularProgress _wheelsLoading;
         private readonly System.Collections.Generic.List<AccessibilityNode> _wheelNodes = new System.Collections.Generic.List<AccessibilityNode>();
         private AccessibilityNode _wheelsCustomizeNode;
+        private string _wheelNodesKey;
         private bool _isDisplayingCelebrationQueue;
         private Quest _questToOfferAfterCelebrations;
 
@@ -1223,6 +1224,7 @@ namespace eu.foodmission.platform
             _caloriesNode = null;
             _wheelNodes.Clear();
             _wheelsCustomizeNode = null;
+            _wheelNodesKey = null;
 
             _periodStepper?.DestroyAccessibilityNode();
             _scopeStepper?.DestroyAccessibilityNode();
@@ -1285,7 +1287,9 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            ProgressWheelSectionModel model = _viewModel.GetProgressWheelSection();
+            // Captured so Save still works if the screen unbinds while the dialog is open.
+            HomeScreenViewModel viewModel = _viewModel;
+            ProgressWheelSectionModel model = viewModel.GetProgressWheelSection();
             var hidden = new System.Collections.Generic.HashSet<string>(model.Hidden);
             var toggles = new System.Collections.Generic.Dictionary<string, Unity.AppUI.UI.Toggle>();
             var content = new VisualElement();
@@ -1307,7 +1311,7 @@ namespace eu.foodmission.platform
                 }
             }
 
-            foreach (ProgressWheel wheel in model.All)
+            foreach (ProgressWheel wheel in ProgressWheelSection.CustomizableWheels(model.All))
             {
                 var toggle = new Unity.AppUI.UI.Toggle { label = ProgressWheelText.Name(wheel) };
                 toggle.SetValueWithoutNotify(!hidden.Contains(wheel.kind));
@@ -1332,7 +1336,7 @@ namespace eu.foodmission.platform
                             newHidden.Add(pair.Key);
                         }
                     }
-                    _ = _viewModel?.SaveHiddenWheelsAsync(newHidden);
+                    _ = viewModel.SaveHiddenWheelsAsync(newHidden);
                 }, ButtonVariant.Accent));
         }
 
@@ -1342,6 +1346,25 @@ namespace eu.foodmission.platform
             {
                 return;
             }
+
+            bool sectionVisible = _wheelsSection != null && !_wheelsSection.ClassListContains("fm-wheels-section--hidden") && _wheelsGrid != null;
+            bool customizeVisible = sectionVisible && _btnWheelsCustomize != null && !_btnWheelsCustomize.ClassListContains("fm-wheels-section__part--hidden");
+            var labels = new System.Collections.Generic.List<string>();
+            if (sectionVisible)
+            {
+                foreach (FMProgressWheelCard card in _wheelsGrid.Cards)
+                {
+                    labels.Add(card.AccessibilityLabel);
+                }
+            }
+            string key = $"{customizeVisible}|{string.Join("\n", labels)}";
+
+            // Rebuilding on every render would move screen-reader focus off the wheel being read.
+            if (key == _wheelNodesKey)
+            {
+                return;
+            }
+            _wheelNodesKey = key;
 
             foreach (AccessibilityNode node in _wheelNodes)
             {
@@ -1354,20 +1377,19 @@ namespace eu.foodmission.platform
                 _wheelsCustomizeNode = null;
             }
 
-            if (_wheelsSection == null || _wheelsSection.ClassListContains("fm-wheels-section--hidden") || _wheelsGrid == null)
+            if (sectionVisible)
             {
-                return;
+                for (int i = 0; i < _wheelsGrid.Cards.Count; i++)
+                {
+                    FMProgressWheelCard card = _wheelsGrid.Cards[i];
+                    AccessibilityNode node = _accessibilityHierarchy.AddNode(labels[i]);
+                    node.role = AccessibilityRole.StaticText;
+                    node.frameGetter = MakeElementFrameGetter(card);
+                    _wheelNodes.Add(node);
+                }
             }
 
-            foreach (FMProgressWheelCard card in _wheelsGrid.Cards)
-            {
-                AccessibilityNode node = _accessibilityHierarchy.AddNode(card.AccessibilityLabel);
-                node.role = AccessibilityRole.StaticText;
-                node.frameGetter = MakeElementFrameGetter(card);
-                _wheelNodes.Add(node);
-            }
-
-            if (_btnWheelsCustomize != null && !_btnWheelsCustomize.ClassListContains("fm-wheels-section__part--hidden"))
+            if (customizeVisible)
             {
                 _wheelsCustomizeNode = _accessibilityHierarchy.AddNode(ProgressWheelText.Localize("WHEELS_CUSTOMIZE"));
                 _wheelsCustomizeNode.role = AccessibilityRole.Button;
@@ -1378,6 +1400,8 @@ namespace eu.foodmission.platform
                     return true;
                 };
             }
+
+            AssistiveSupport.notificationDispatcher?.SendLayoutChanged();
         }
 
         private static Func<Rect> MakeElementFrameGetter(VisualElement element)
