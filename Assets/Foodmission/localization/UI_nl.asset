@@ -4247,6 +4247,38 @@ MonoBehaviour:
     m_Localized: FOODMISSION-kampioen
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347528
+    m_Localized: '{0:0.0} ({1})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347529
+    m_Localized: Wat vond je ervan?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347530
+    m_Localized: Tik op een ster om dit recept te beoordelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347531
+    m_Localized: 'Jouw beoordeling: {0}/5'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347532
+    m_Localized: Mijn beoordeling verwijderen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347533
+    m_Localized: Je beoordeling kon niet worden opgeslagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347534
+    m_Localized: Beoordeel met {0} van 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347535
+    m_Localized: Gemiddelde beoordeling {0:0.0} van 5 ({1})
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -502,15 +502,9 @@ namespace eu.foodmission.platform
 
             var ratingCount = r?.ratingCount ?? 0;
             var ratingVal = r?.rating ?? 0f;
-            var ratingStr = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RATING") + ":";
-            if (ratingCount > 0)
-            {
-                ratingStr += $" {ratingVal:F1}/5 ({ratingCount})";
-            }
-            else
-            {
-                ratingStr = null;
-            }
+            string ratingStr = ratingCount > 0
+                ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_RATING_SUMMARY", new object[] { ratingVal, ratingCount })
+                : null;
 
             int totalMinutes = (r?.prepTime ?? 0) + (r?.cookTime ?? 0);
             string timeStr = totalMinutes > 0 ? $"⏱️ {totalMinutes} min" : null;
@@ -551,6 +545,7 @@ namespace eu.foodmission.platform
                 Text = captured.DisplayTitle,
                 //Author = authorStr,
                 RatingText = ratingStr,
+                RatingValue = ratingCount > 0 ? ratingVal : 0f,
                 ImageUrl = r?.imageUrl,
                 Emoji = captured.PlaceholderEmoji ?? "🍲",
                 TimeText = timeStr,

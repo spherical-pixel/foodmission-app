@@ -170,6 +170,9 @@
     --fm-wheel-land: #795548;
     --fm-wheel-default: #546E7A;
     --fm-wheel-card-shadow: rgba(0, 0, 0, 0.18);
+    /* Recipe rating stars (design: rating-star-on / rating-star-off) */
+    --fm-star-filled: #024639;
+    --fm-star-empty: #B5B5B5;
     --fm-icon-tint: var(--appui-primary-100);
     --fm-icon-tint-selected: var(--appui-primary-15);
     --fm-bg-screen-trans: rgba(255, 255, 255, 0.45);
@@ -308,6 +311,9 @@
     --fm-wheel-land: #BCAAA4;
     --fm-wheel-default: #B0BEC5;
     --fm-wheel-card-shadow: rgba(0, 0, 0, 0.45);
+    /* Recipe rating stars (design: rating-star-on / rating-star-off) */
+    --fm-star-filled: #A8E0D3;
+    --fm-star-empty: rgba(255, 255, 255, 0.25);
 
     --fm-icon-tint: var(--appui-primary-1200);
     --fm-icon-tint-selected: var(--appui-primary-900);

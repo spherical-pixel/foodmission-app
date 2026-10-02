@@ -34,5 +34,14 @@ namespace eu.foodmission.platform
             int expiringWithinDays = 7,
             int limit = 10,
             int offset = 0);
+
+        /// <summary>GET /recipes/:id/rating — average, count and the current user's rating.</summary>
+        Task<(RecipeRating Result, ApiErrorResponse Error)> GetRatingAsync(string id);
+
+        /// <summary>PUT /recipes/:id/rating with 1–5 stars (replaces the user's previous rating).</summary>
+        Task<(RecipeRating Result, ApiErrorResponse Error)> RateAsync(string id, int value);
+
+        /// <summary>DELETE /recipes/:id/rating — removes the user's rating.</summary>
+        Task<(RecipeRating Result, ApiErrorResponse Error)> RemoveRatingAsync(string id);
     }
 }

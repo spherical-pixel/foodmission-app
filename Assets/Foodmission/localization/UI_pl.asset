@@ -4245,6 +4245,38 @@ MonoBehaviour:
     m_Localized: Mistrz FOODMISSION
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347528
+    m_Localized: '{0:0.0} ({1})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347529
+    m_Localized: "Jak ci smakowa\u0142o?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347530
+    m_Localized: "Dotknij gwiazdki, aby oceni\u0107 przepis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347531
+    m_Localized: 'Twoja ocena: {0}/5'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347532
+    m_Localized: "Usu\u0144 moj\u0105 ocen\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347533
+    m_Localized: "Nie uda\u0142o si\u0119 zapisa\u0107 oceny"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347534
+    m_Localized: "Oce\u0144 na {0} z 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347535
+    m_Localized: "\u015Arednia ocena {0:0.0} z 5 ({1})"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

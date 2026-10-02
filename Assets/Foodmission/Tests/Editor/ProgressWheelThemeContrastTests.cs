@@ -12,7 +12,7 @@ namespace eu.foodmission.platform.Tests
     [TestFixture]
     public class ProgressWheelThemeContrastTests
     {
-        private static readonly string[] k_RingVars = { "--fm-wheel-co2", "--fm-wheel-energy", "--fm-wheel-water", "--fm-wheel-land", "--fm-wheel-default" };
+        private static readonly string[] k_RingVars = { "--fm-wheel-co2", "--fm-wheel-energy", "--fm-wheel-water", "--fm-wheel-land", "--fm-wheel-default", "--fm-star-filled" };
 
         [TestCase(".appui--light")]
         [TestCase(".appui--dark")]

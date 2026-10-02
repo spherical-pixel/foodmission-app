@@ -4232,6 +4232,38 @@ MonoBehaviour:
     m_Localized: Campione FOODMISSION
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347528
+    m_Localized: '{0:0.0} ({1})'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347529
+    m_Localized: Che ne pensi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347530
+    m_Localized: Tocca una stella per valutare la ricetta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347531
+    m_Localized: 'La tua valutazione: {0}/5'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347532
+    m_Localized: Rimuovi la mia valutazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347533
+    m_Localized: Impossibile salvare la valutazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347534
+    m_Localized: Valuta {0} su 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347535
+    m_Localized: Valutazione media {0:0.0} su 5 ({1})
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

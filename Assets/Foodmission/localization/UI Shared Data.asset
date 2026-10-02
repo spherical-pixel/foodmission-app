@@ -4071,6 +4071,38 @@ MonoBehaviour:
     m_Key: WHEEL_STAGE_ADVANCED_5
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347528
+    m_Key: RECIPE_RATING_SUMMARY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347529
+    m_Key: RECIPE_RATE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347530
+    m_Key: RECIPE_RATE_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347531
+    m_Key: RECIPE_RATE_YOURS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347532
+    m_Key: RECIPE_RATE_REMOVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347533
+    m_Key: RECIPE_RATE_ERROR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347534
+    m_Key: RECIPE_RATE_STAR_A11Y
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347535
+    m_Key: RECIPE_RATING_A11Y
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -258,5 +258,69 @@ namespace eu.foodmission.platform
             return (JsonConvert.DeserializeObject<MultipleRecommendationResponse>(
                 request.downloadHandler.text), null);
         }
+
+        public static string BuildRatingUrl(string baseUrl, string id)
+            => $"{baseUrl}/api/v1/recipes/{Uri.EscapeDataString(id)}/rating";
+
+        public Task<(RecipeRating Result, ApiErrorResponse Error)> GetRatingAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return Task.FromResult<(RecipeRating, ApiErrorResponse)>((null, new ApiErrorResponse { message = "Recipe id is required" }));
+            }
+            return SendRatingRequestAsync(UnityWebRequest.kHttpVerbGET, id, null, nameof(GetRatingAsync));
+        }
+
+        public Task<(RecipeRating Result, ApiErrorResponse Error)> RateAsync(string id, int value)
+        {
+            if (string.IsNullOrEmpty(id) || value < 1 || value > 5)
+            {
+                return Task.FromResult<(RecipeRating, ApiErrorResponse)>((null, new ApiErrorResponse { message = "A recipe id and a rating between 1 and 5 are required" }));
+            }
+            return SendRatingRequestAsync(UnityWebRequest.kHttpVerbPUT, id, JsonConvert.SerializeObject(new { value }), nameof(RateAsync));
+        }
+
+        public Task<(RecipeRating Result, ApiErrorResponse Error)> RemoveRatingAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return Task.FromResult<(RecipeRating, ApiErrorResponse)>((null, new ApiErrorResponse { message = "Recipe id is required" }));
+            }
+            return SendRatingRequestAsync(UnityWebRequest.kHttpVerbDELETE, id, null, nameof(RemoveRatingAsync));
+        }
+
+        private async Task<(RecipeRating Result, ApiErrorResponse Error)> SendRatingRequestAsync(string method, string id, string jsonBody, string context)
+        {
+            using UnityWebRequest request = new UnityWebRequest(BuildRatingUrl(ApiConfig.BaseUrl, id), method);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            if (jsonBody != null)
+            {
+                request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(jsonBody));
+                request.SetRequestHeader("Content-Type", "application/json");
+            }
+            request.SetRequestHeader("Accept", "application/json");
+            request.SetRequestHeader("Authorization", AuthHeader);
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] {context} {id}"));
+            }
+
+            try
+            {
+                return (JsonConvert.DeserializeObject<RecipeRating>(request.downloadHandler.text), null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] {context}: could not parse rating: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
     }
 }

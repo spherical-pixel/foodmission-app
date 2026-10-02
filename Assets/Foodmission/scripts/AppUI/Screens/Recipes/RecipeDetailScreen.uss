@@ -37,11 +37,47 @@
     display: none;
 }
 
-.fm-rd-rating {
+.fm-rd-rating-row {
+    flex-direction: row;
+    align-items: center;
     margin-top: 6px;
     margin-bottom: 12px;
+}
+
+.fm-rd-rating {
+    margin-left: 8px;
     font-size: var(--appui-font-sizes-body-md);
     color: var(--appui-foregrounds-200);
+}
+
+.fm-rd-rate-card {
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 32px;
+    border-radius: 24px;
+    background-color: var(--fm-card-bg);
+}
+
+.fm-rd-rate-title {
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin-bottom: 20px;
+    width: 100%;
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+}
+
+/* Quiet App UI buttons use a light title colour that disappears on the light card. */
+.fm-rd-remove-rating .appui-button__title {
+    color: var(--appui-foregrounds-50);
+}
+
+.fm-rd-rate-hint {
+    -unity-text-align: middle-center;
+    white-space: normal;
+    margin-top: 16px;
+    color: var(--appui-foregrounds-50);
 }
 
 .fm-rd-badges {
