@@ -37,6 +37,10 @@ namespace eu.foodmission.platform
         private VisualElement _autoModules;
         private VisualElement _helperModules;
         private VisualElement _completedBox;
+        private VisualElement _failedBox;
+        private Text _failedText;
+        private FMButton _btnRestartFailed;
+        private FMButton _btnRestartActive;
         private FMButton _btnTellNutri;
         private FMButton _btnLater;
         private FMNutriView _nutriView;
@@ -78,6 +82,10 @@ namespace eu.foodmission.platform
             _completedBox = contentContainer.Q<VisualElement>("mission-completed-box");
             _btnTellNutri = contentContainer.Q<FMButton>("btn-tell-nutri");
             _btnLater = contentContainer.Q<FMButton>("btn-later");
+            _failedBox = contentContainer.Q<VisualElement>("mission-failed-box");
+            _failedText = contentContainer.Q<Text>("mission-failed-text");
+            _btnRestartFailed = contentContainer.Q<FMButton>("btn-restart-failed");
+            _btnRestartActive = contentContainer.Q<FMButton>("btn-restart-active");
 
             if (_btnTellNutri != null)
             {
@@ -86,6 +94,14 @@ namespace eu.foodmission.platform
             if (_btnLater != null)
             {
                 _btnLater.clicked += OnLaterClicked;
+            }
+            if (_btnRestartFailed != null)
+            {
+                _btnRestartFailed.clicked += OnRestartFailedClicked;
+            }
+            if (_btnRestartActive != null)
+            {
+                _btnRestartActive.clicked += OnRestartActiveClicked;
             }
         }
 
@@ -264,10 +280,17 @@ namespace eu.foodmission.platform
             }
 
             _completedBox?.EnableInClassList("hidden", !_viewModel.IsCompleted);
+            _failedBox?.EnableInClassList("hidden", !_viewModel.IsFailed);
+            // "You can start it again" only where it can be restarted (the current quest)
+            _failedText?.EnableInClassList("hidden", !_viewModel.CanRestartFailed);
+            _btnRestartFailed?.EnableInClassList("hidden", !_viewModel.CanRestartFailed);
+            _btnRestartActive?.EnableInClassList("hidden", !_viewModel.CanRestartActive);
+            _progressLabel?.EnableInClassList("fm-mission-progress-label--failed", _viewModel.IsFailed);
             _actions?.EnableInClassList("hidden", !_viewModel.CanAct);
 
             string statusKey = _viewModel.IsPendingRule ? "MISSION_NOT_AVAILABLE"
                 : _viewModel.ShowsNotCurrentQuest ? "MISSION_NOT_CURRENT_QUEST"
+                : _viewModel.IsFailed && !_viewModel.IsCurrentQuestMission ? "MISSION_NOT_CURRENT_QUEST"
                 : null;
             if (_status != null)
             {
@@ -321,6 +344,26 @@ namespace eu.foodmission.platform
             // "Más tarde" only leaves the screen
             ResetNutriToIdle();
             _navController?.PopBackStack();
+        }
+
+        private void OnRestartFailedClicked()
+        {
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            _ = _viewModel?.RestartMissionAsync();
+        }
+
+        private void OnRestartActiveClicked()
+        {
+            FMDialog.ShowConfirm(
+                this,
+                Localize("MISSION_RESTART_CONFIRM_TITLE"),
+                Localize("MISSION_RESTART_CONFIRM_MESSAGE"),
+                () =>
+                {
+                    _audioService?.PlaySfx(SfxType.PositiveButton);
+                    _ = _viewModel?.RestartMissionAsync();
+                },
+                confirmLabel: "@UI:MISSION_BTN_RESTART");
         }
 
         private void UpdateApiErrorState()

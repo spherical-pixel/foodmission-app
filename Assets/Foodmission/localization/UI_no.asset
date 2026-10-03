@@ -4249,6 +4249,37 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Oppskrift fra fellesskapet"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: Mislyktes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C OPPDRAG IKKE FULLF\xD8RT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: "Tiden gikk ut, eller m\xE5let ble ikke n\xE5dd denne gangen. Du
+      kan starte oppdraget p\xE5 nytt n\xE5r du vil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: "Denne gangen ble ikke oppdraget {0} fullf\xF8rt. Ikke tenk p\xE5
+      det, du kan pr\xF8ve igjen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: "Start oppdraget p\xE5 nytt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: "Starte dette oppdraget p\xE5 nytt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: "Du mister fremgangen i dette oppdraget, og perioden starter p\xE5
+      nytt fra i dag."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

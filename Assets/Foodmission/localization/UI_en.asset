@@ -4240,6 +4240,37 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Community recipe"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: Failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C MISSION NOT ACHIEVED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: Time ran out or the goal could not be met this time. You can start
+      the mission again whenever you like.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: This time the mission {0} wasn't achieved. Don't worry, you can
+      try again!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: Restart mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: Restart this mission?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: You will lose this mission's progress and its time period will start
+      again from today.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

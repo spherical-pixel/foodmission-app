@@ -18,6 +18,7 @@ namespace eu.foodmission.platform
         // public string TypeLabel { get; set; }
         // public string TypeIcon { get; set; }
         public bool IsCompleted { get; set; }
+        public bool IsFailed { get; set; }
         public float Progress { get; set; }
         public string StatusText { get; set; }
         /// <summary>"NN%" for a pending mission, so the quest shows that it is moving; null otherwise.</summary>
@@ -347,6 +348,7 @@ namespace eu.foodmission.platform
 
             var completedMissionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var missionPercentByCode = new Dictionary<string, float>(StringComparer.OrdinalIgnoreCase);
+            var failedMissionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             if (missionProgress != null)
             {
                 foreach (var mp in missionProgress)
@@ -356,8 +358,12 @@ namespace eu.foodmission.platform
                     if (!string.IsNullOrEmpty(progressCode))
                     {
                         missionPercentByCode[progressCode] = mp.progress;
+                        if (MissionProgressState.IsFailed(mp))
+                        {
+                            failedMissionCodes.Add(progressCode);
+                        }
                     }
-                    if (mp.completed || mp.progress >= 100f)
+                    if (MissionProgressState.IsCompleted(mp))
                     {
                         if (!string.IsNullOrEmpty(mp.missionId))
                         {
@@ -450,8 +456,16 @@ namespace eu.foodmission.platform
                     ? (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED"))
                     : (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING"));
 
+                bool isItemFailed = !isItemCompleted
+                    && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase)
+                    && failedMissionCodes.Contains(it.contentCode ?? string.Empty);
+
                 string progressLabel = null;
-                if (!isItemCompleted && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
+                if (isItemFailed)
+                {
+                    progressLabel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MISSION_STATUS_FAILED");
+                }
+                else if (!isItemCompleted && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
                 {
                     missionPercentByCode.TryGetValue(it.contentCode ?? string.Empty, out float percent);
                     progressLabel = $"{(int)Math.Clamp(percent, 0f, 100f)}%";
@@ -465,6 +479,7 @@ namespace eu.foodmission.platform
                     // TypeLabel = typeLabel,
                     // TypeIcon = typeIcon,
                     IsCompleted = isItemCompleted,
+                    IsFailed = isItemFailed,
                     Progress = isItemCompleted ? 100f : 0f,
                     StatusText = statusText,
                     ProgressLabel = progressLabel

@@ -252,6 +252,7 @@ namespace eu.foodmission.platform
                         missionCard.SetDuration(mItem.Mission.duration);
                         missionCard.SetLevel(mItem.Mission.level);
                         missionCard.SetCompleted(mItem.IsCompleted);
+                        missionCard.SetFailed(mItem.IsFailed);
 
                         var missionRef = mItem.Mission;
                         missionCard.OnMissionClicked += () => _viewModel?.OpenMission(missionRef);

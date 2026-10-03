@@ -4299,6 +4299,37 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Recept uit de community"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: Mislukt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C MISSIE NIET GEHAALD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: De tijd is om of het doel is deze keer niet gehaald. Je kunt de
+      missie opnieuw beginnen wanneer je wilt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: Deze keer is de missie {0} niet gehaald. Geen zorgen, je kunt het
+      opnieuw proberen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: Missie opnieuw starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: Deze missie opnieuw starten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: Je verliest de voortgang van deze missie en de periode begint vandaag
+      opnieuw.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

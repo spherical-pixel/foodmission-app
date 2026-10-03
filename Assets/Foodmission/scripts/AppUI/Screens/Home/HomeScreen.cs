@@ -145,6 +145,9 @@ namespace eu.foodmission.platform
             // 3. Recompensas de gamificación (si hay celebración con avatar/partículas, no abrir más ventanas)
             if (await CheckPendingGamificationRewardsAsync()) return;
 
+            // 3b. Misiones fallidas: Nutri lo cuenta una vez y ofrece reiniciarlas
+            if (await CheckFailedMissionsAsync()) return;
+
             // 4. Novedades de la versión (What's New)
             if (await CheckWhatsNewAsync()) return;
 
@@ -344,6 +347,76 @@ namespace eu.foodmission.platform
             );
 
             return true;
+        }
+
+        private async Task<bool> CheckFailedMissionsAsync()
+        {
+            HomeScreenViewModel viewModel = _viewModel;
+            if (viewModel == null)
+            {
+                return false;
+            }
+
+            var failures = await viewModel.CheckFailedMissionsAsync();
+            // The user may have left Home while loading: never show it over another screen
+            if (failures == null || failures.Count == 0 || _viewModel != viewModel || panel == null)
+            {
+                return false;
+            }
+
+            ShowFailedMissionQueue(viewModel, new System.Collections.Generic.Queue<MissionProgress>(failures));
+            return true;
+        }
+
+        private void ShowFailedMissionQueue(HomeScreenViewModel viewModel, System.Collections.Generic.Queue<MissionProgress> queue)
+        {
+            if (queue.Count == 0 || _viewModel != viewModel || panel == null)
+            {
+                return;
+            }
+
+            MissionProgress failed = queue.Dequeue();
+            string title = !string.IsNullOrEmpty(failed.missionTitle) ? failed.missionTitle : failed.missionCode;
+            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_FAILED_NOTICE", new object[] { title });
+
+            void Next() => schedule.Execute(() => ShowFailedMissionQueue(viewModel, queue)).StartingIn(250);
+
+            NutriMessageDialog.Show(message: message, actions: new[]
+            {
+                new FMDialogAction("@UI:MISSION_BTN_RESTART", () => _ = RestartFailedMissionAsync(viewModel, failed, Next), ButtonVariant.Accent),
+                new FMDialogAction("@UI:CHALLENGE_BTN_LATER", () =>
+                {
+                    viewModel.AcknowledgeFailedMission(failed);
+                    Next();
+                }, ButtonVariant.Default)
+            });
+        }
+
+        private async Task RestartFailedMissionAsync(HomeScreenViewModel viewModel, MissionProgress failed, Action next)
+        {
+            try
+            {
+                ApiErrorResponse error = await viewModel.RestartFailedMissionAsync(failed);
+                // The user may have left Home during the request: never show anything over another screen
+                if (_viewModel != viewModel || panel == null)
+                {
+                    return;
+                }
+
+                _ = viewModel.LoadActiveQuestAsync();
+                RefreshActiveQuestWidget();
+                if (error != null)
+                {
+                    // The next queued notice waits until the error is closed
+                    FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), error, onOk: next);
+                    return;
+                }
+                next();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[HomeScreen] RestartFailedMissionAsync error: {ex.Message}");
+            }
         }
 
         private async Task<bool> CheckMissionNudgeAsync()

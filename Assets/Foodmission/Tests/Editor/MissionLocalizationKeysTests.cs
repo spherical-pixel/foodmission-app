@@ -66,5 +66,19 @@ namespace eu.foodmission.platform.Tests
             var missing = needed.Where(k => !keys.Contains(k)).ToList();
             Assert.IsEmpty(missing, "Missing UI.csv keys:\n" + string.Join("\n", missing));
         }
+
+        [Test]
+        public void MissionFailureKeys_ExistInUiCsv()
+        {
+            HashSet<string> keys = UiKeys();
+            foreach (string key in new[]
+            {
+                "MISSION_STATUS_FAILED", "MISSION_FAILED_BADGE", "MISSION_FAILED_MESSAGE", "MISSION_FAILED_NOTICE",
+                "MISSION_BTN_RESTART", "MISSION_RESTART_CONFIRM_TITLE", "MISSION_RESTART_CONFIRM_MESSAGE", "CHALLENGE_BTN_LATER"
+            })
+            {
+                Assert.IsTrue(keys.Contains(key), $"Missing UI.csv key {key}");
+            }
+        }
     }
 }

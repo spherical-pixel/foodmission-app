@@ -13,6 +13,14 @@ namespace eu.foodmission.platform
         public static readonly string[] All = { Beginner, Intermediate, Advanced };
     }
 
+    public static class ProgressStatus
+    {
+        public const string NotStarted = "NOT_STARTED";
+        public const string InProgress = "IN_PROGRESS";
+        public const string Completed = "COMPLETED";
+        public const string Failed = "FAILED";
+    }
+
     [Serializable]
     public class Mission
     {
@@ -40,9 +48,11 @@ namespace eu.foodmission.platform
         public string userId;
         public float progress;
         public bool completed;
+        /// <summary>NOT_STARTED, IN_PROGRESS, COMPLETED or FAILED (see <see cref="ProgressStatus"/>). Null on backends before pr-402.</summary>
+        public string status;
         public string missionTitle;
         public ContentReward reward;
-        /// <summary>When the mission started for this user (backend sets it at the first progress &gt; 0). Null before that.</summary>
+        /// <summary>When the current attempt started (set when the quest is selected, or at a restart). Null on rows created before pr-402.</summary>
         public DateTime? startedAt;
     }
 
@@ -61,6 +71,9 @@ namespace eu.foodmission.platform
 
         [JsonProperty("completed", NullValueHandling = NullValueHandling.Ignore)]
         public bool? completed;
+
+        [JsonProperty("failed", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? failed;
 
         public byte[] ToJsonBody()
         {

@@ -166,7 +166,7 @@ namespace eu.foodmission.platform
 
                 byCode.TryGetValue(code, out MissionProgress progress);
                 float value = progress?.progress ?? 0f;
-                if (progress?.completed == true || value >= 100f)
+                if (MissionProgressState.IsResolved(progress))
                 {
                     continue;
                 }

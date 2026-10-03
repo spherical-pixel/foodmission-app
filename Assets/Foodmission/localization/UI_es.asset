@@ -4242,6 +4242,37 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Receta de la comunidad"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: Fallida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C MISI\xD3N NO SUPERADA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: "Se acab\xF3 el tiempo o esta vez no se cumpli\xF3 el objetivo.
+      Puedes volver a empezar la misi\xF3n cuando quieras."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: "Esta vez la misi\xF3n {0} no se ha superado. \xA1No te preocupes,
+      puedes volver a intentarlo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: "Reiniciar misi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: "\xBFReiniciar esta misi\xF3n?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: "Perder\xE1s el progreso de esta misi\xF3n y su plazo volver\xE1
+      a empezar desde hoy."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

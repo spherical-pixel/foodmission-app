@@ -4262,6 +4262,37 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Rezept aus der Community"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: Nicht geschafft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C MISSION NICHT GESCHAFFT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: Die Zeit ist abgelaufen oder das Ziel wurde diesmal nicht erreicht.
+      Du kannst die Mission jederzeit neu starten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: Diesmal hat es mit der Mission {0} nicht geklappt. Keine Sorge,
+      du kannst es noch einmal versuchen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: Mission neu starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: Diese Mission neu starten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: Du verlierst den Fortschritt dieser Mission und ihr Zeitraum beginnt
+      ab heute neu.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -119,5 +119,49 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(list[2].missionCode);
             Assert.AreEqual(1, missing);
         }
+
+        [Test]
+        public void BuildProgressUrl_ByCodeAndByUuid()
+        {
+            Assert.AreEqual("https://x/api/v1/missions/by-code/M.A1.1/progress/restart?lang=es",
+                MissionService.BuildProgressUrl("https://x", "M.A1.1", "es", "/restart"));
+            string uuid = "3f2504e0-4f89-11d3-9a0c-0305e82c3301";
+            Assert.AreEqual($"https://x/api/v1/missions/{uuid}/progress?lang=en",
+                MissionService.BuildProgressUrl("https://x", uuid, "en"));
+        }
+
+        [Test]
+        public async Task RestartMissionProgressAsync_OnEmptyCode_ReturnsError()
+        {
+            var (result, error) = await _service.RestartMissionProgressAsync("");
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public async Task RestartMissionProgressAsync_WhenUnauthenticated_ReturnsAuthError()
+        {
+            _storeService.SetAppState(new AppState { accessToken = null, tokenType = null });
+            var (result, error) = await _service.RestartMissionProgressAsync("M.A1.1");
+            Assert.IsNull(result);
+            Assert.AreEqual("Authentication required", error.message);
+        }
+
+        [Test]
+        public async Task FailMissionProgressAsync_OnEmptyCode_ReturnsError()
+        {
+            var (result, error) = await _service.FailMissionProgressAsync(null);
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public async Task FailMissionProgressAsync_WhenUnauthenticated_ReturnsAuthError()
+        {
+            _storeService.SetAppState(new AppState { accessToken = null, tokenType = null });
+            var (result, error) = await _service.FailMissionProgressAsync("M.A1.1");
+            Assert.IsNull(result);
+            Assert.AreEqual("Authentication required", error.message);
+        }
     }
 }

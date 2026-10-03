@@ -558,7 +558,7 @@ namespace eu.foodmission.platform
                     foreach (var mp in _rawMissionProgress)
                     {
                         if (mp == null) continue;
-                        if (mp.completed || mp.progress >= 100f)
+                        if (MissionProgressState.IsCompleted(mp))
                         {
                             if (!string.IsNullOrEmpty(mp.missionId))
                             {

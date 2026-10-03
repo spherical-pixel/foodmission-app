@@ -77,7 +77,7 @@ namespace eu.foodmission.platform
                 {
                     MissionInteraction interaction = MissionInteractionCatalog.Get(code);
                     MissionProgress progress = progressList?.FirstOrDefault(p => string.Equals(p?.missionCode, code, StringComparison.OrdinalIgnoreCase));
-                    if (!interaction.CanReport || progress?.completed == true || (progress?.progress ?? 0f) >= 100f)
+                    if (!interaction.CanReport || MissionProgressState.IsResolved(progress))
                     {
                         continue;
                     }
