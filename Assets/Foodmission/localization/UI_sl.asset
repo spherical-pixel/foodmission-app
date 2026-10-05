@@ -3999,6 +3999,14 @@ MonoBehaviour:
     m_Localized: "Podpora FOODMISSION"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347557
+    m_Localized: "Nekatere teme so skrite, ker niso med tvojimi cilji. Posodobi svoje cilje, da vidi\u0161 ve\u010D vsebine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347558
+    m_Localized: "Uredi moje cilje"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

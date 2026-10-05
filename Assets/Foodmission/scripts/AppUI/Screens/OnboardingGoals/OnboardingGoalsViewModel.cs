@@ -42,6 +42,11 @@ namespace eu.foodmission.platform
             set => SetProperty(ref m_FromHome, value);
         }
 
+        /// <summary>
+        /// Navigation action run after saving when the flow was opened from a content list (Quests, Quizzes...).
+        /// </summary>
+        public string ReturnAction { get; set; }
+
         public HashSet<string> SelectedTopicCodes { get; private set; } = new(StringComparer.OrdinalIgnoreCase);
 
         public event Action OnSelectionChanged;
@@ -234,7 +239,11 @@ namespace eu.foodmission.platform
                 }
 
                 // 3. Navigate
-                if (FromHome)
+                if (!string.IsNullOrEmpty(ReturnAction))
+                {
+                    RaiseNavigationRequested(ReturnAction);
+                }
+                else if (FromHome)
                 {
                     RaiseNavigationRequested(Actions.go_to_home);
                 }

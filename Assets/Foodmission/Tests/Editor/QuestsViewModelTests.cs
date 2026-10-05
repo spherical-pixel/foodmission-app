@@ -410,5 +410,26 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("q-1", dietGroup.Quests[0].Quest.id);
             Assert.IsFalse(dietGroup.Quests[0].IsLocked);
         }
+    
+        [Test]
+        public void Goals_HideOtherDimensions_ButKeepCompletedAndActiveQuests()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "test-token",
+                lang = "es",
+                userGoals = new[] { "PLATE_WASTE" },
+                userCurrentQuestId = "q-2"
+            });
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _mockDimensionService.Setup(d => d.GetDimension("dim-2")).Returns(_mockDimensions[1]);
+
+            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+
+            var ids = _vm.DisplayGroups.SelectMany(g => g.Quests).Select(i => i.Quest.id).ToList();
+            CollectionAssert.AreEquivalent(new[] { "q-1", "q-2", "q-4" }, ids);
+            Assert.AreEqual(3, _vm.TotalQuestsCount);
+            Assert.IsTrue(_vm.HasGoalHiddenContent);
+        }
     }
 }

@@ -2461,3 +2461,20 @@
     align-self: flex-start;
     margin: 4px 0;
 }
+
+/* Content lists filtered by the user's goals (FMGoalsFilterHint) */
+.fm-goals-hint {
+    align-items: center;
+    margin: 8px 24px 24px 24px;
+}
+
+.fm-goals-hint--hidden {
+    display: none;
+}
+
+.fm-goals-hint__text {
+    white-space: normal;
+    -unity-text-align: middle-center;
+    color: var(--appui-foreground-muted, rgb(107, 114, 128));
+    margin-bottom: 8px;
+}

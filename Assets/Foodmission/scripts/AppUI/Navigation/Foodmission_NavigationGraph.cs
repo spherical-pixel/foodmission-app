@@ -59,6 +59,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string go_to_food_comparison = "go_to_food_comparison";
         public const string open_mission_checkin = "open_mission_checkin";
         public const string go_to_badges = "go_to_badges";
+        public const string go_to_onboarding_goals = "go_to_onboarding_goals";
     }
     public static partial class Destinations
     {

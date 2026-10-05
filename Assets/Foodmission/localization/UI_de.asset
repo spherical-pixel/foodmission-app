@@ -4016,6 +4016,14 @@ MonoBehaviour:
     m_Localized: "FOODMISSION-Support"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347557
+    m_Localized: "Einige Themen sind ausgeblendet, weil sie nicht zu deinen Zielen geh\xF6ren. Passe deine Ziele an, um mehr Inhalte zu sehen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347558
+    m_Localized: "Meine Ziele bearbeiten"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -79,6 +79,10 @@ namespace eu.foodmission.platform
                         {
                             _viewModel.FromHome = true;
                         }
+                        else if (arg.name == "returnTo" && !string.IsNullOrEmpty(arg.value?.ToString()))
+                        {
+                            _viewModel.ReturnAction = arg.value.ToString();
+                        }
                     }
                 }
 

@@ -77,6 +77,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _completedQuizzesCount;
 
+        [ObservableProperty]
+        private bool _hasGoalHiddenContent;
+
         private readonly IQuizService _quizService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -336,6 +339,11 @@ namespace eu.foodmission.platform
             OpenQuiz(selectedQuiz);
         }
 
+        public void OpenGoalsEditor()
+        {
+            RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_quizzes));
+        }
+
         public void SetRawDataForTesting(Quiz[] quizzes, QuizProgress[] progress)
         {
             _rawQuizzes = quizzes ?? Array.Empty<Quiz>();
@@ -350,8 +358,11 @@ namespace eu.foodmission.platform
                 DisplayGroups = new List<QuizDisplayGroup>();
                 TotalQuizzesCount = 0;
                 CompletedQuizzesCount = 0;
+                HasGoalHiddenContent = false;
                 return;
             }
+
+            var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
 
             // Map progress by quizId and quizCode
             var progressMap = new Dictionary<string, QuizProgress>(StringComparer.OrdinalIgnoreCase);
@@ -382,8 +393,6 @@ namespace eu.foodmission.platform
                         continue;
                 }
 
-                totalMatchingLevel++;
-
                 bool isCompleted = false;
                 bool? isCorrect = null;
 
@@ -393,6 +402,13 @@ namespace eu.foodmission.platform
                     isCorrect = prog.isCorrect;
                     isCompleted = prog.completed && prog.isCorrect == true;
                 }
+
+                if (!goalFilter.ShouldShow(_dimensionService?.GetDimensionForTopic(q.topicId), isCompleted || isCorrect.HasValue))
+                {
+                    continue;
+                }
+
+                totalMatchingLevel++;
 
                 if (isCompleted)
                 {
@@ -419,6 +435,7 @@ namespace eu.foodmission.platform
 
             TotalQuizzesCount = totalMatchingLevel;
             CompletedQuizzesCount = totalCompletedMatchingLevel;
+            HasGoalHiddenContent = goalFilter.HasHiddenContent;
 
             // Group by Topic
             var itemsByTopicId = new Dictionary<string, List<QuizDisplayItem>>(StringComparer.OrdinalIgnoreCase);

@@ -4003,6 +4003,14 @@ MonoBehaviour:
     m_Localized: "Assistenza FOODMISSION"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347557
+    m_Localized: "Alcuni temi sono nascosti perch\xE9 non fanno parte dei tuoi obiettivi. Aggiorna i tuoi obiettivi per vedere pi\xF9 contenuti."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347558
+    m_Localized: "Modifica i miei obiettivi"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

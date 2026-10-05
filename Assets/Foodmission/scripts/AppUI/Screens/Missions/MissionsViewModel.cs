@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation.Generated;
 using UnityEngine;
 
 namespace eu.foodmission.platform
@@ -69,6 +70,9 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private int _completedMissionsCount;
+
+        [ObservableProperty]
+        private bool _hasGoalHiddenContent;
 
         private readonly IMissionService _missionService;
         private readonly IDimensionService _dimensionService;
@@ -221,6 +225,11 @@ namespace eu.foodmission.platform
             Debug.Log($"[{GetType().Name}] OpenMission clicked: {mission.code} - {mission.title}");
         }
 
+        public void OpenGoalsEditor()
+        {
+            RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_missions));
+        }
+
         public void SetRawDataForTesting(Mission[] missions, MissionProgress[] progress)
         {
             _rawMissions = missions ?? Array.Empty<Mission>();
@@ -235,8 +244,11 @@ namespace eu.foodmission.platform
                 DisplayGroups = new List<MissionDisplayGroup>();
                 TotalMissionsCount = 0;
                 CompletedMissionsCount = 0;
+                HasGoalHiddenContent = false;
                 return;
             }
+
+            var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
 
             // Map progress by missionId
             var progressMap = new Dictionary<string, MissionProgress>(StringComparer.OrdinalIgnoreCase);
@@ -265,8 +277,6 @@ namespace eu.foodmission.platform
                         continue;
                 }
 
-                totalMatchingLevel++;
-
                 bool isCompleted = false;
                 bool isFailed = false;
                 float progressVal = m.progress ?? 0f;
@@ -281,6 +291,13 @@ namespace eu.foodmission.platform
                 {
                     isCompleted = true;
                 }
+
+                if (!goalFilter.ShouldShow(_dimensionService?.GetDimension(m.dimensionId), isCompleted || isFailed || progressVal > 0f || (!string.IsNullOrEmpty(m.id) && progressMap.ContainsKey(m.id))))
+                {
+                    continue;
+                }
+
+                totalMatchingLevel++;
 
                 if (isCompleted)
                 {
@@ -308,6 +325,7 @@ namespace eu.foodmission.platform
 
             TotalMissionsCount = totalMatchingLevel;
             CompletedMissionsCount = totalCompletedMatchingLevel;
+            HasGoalHiddenContent = goalFilter.HasHiddenContent;
 
             if (displayItems.Count == 0)
             {

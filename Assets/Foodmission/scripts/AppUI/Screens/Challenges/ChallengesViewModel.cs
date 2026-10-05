@@ -71,6 +71,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _completedChallengesCount;
 
+        [ObservableProperty]
+        private bool _hasGoalHiddenContent;
+
         private readonly IChallengeService _challengeService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -225,6 +228,11 @@ namespace eu.foodmission.platform
             // RaiseNavigationRequested(Actions.open_challenge, new Argument("code", codeOrId));
         }
 
+        public void OpenGoalsEditor()
+        {
+            RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_challenges));
+        }
+
         public void SetRawDataForTesting(Challenge[] challenges, ChallengeProgress[] progress)
         {
             _rawChallenges = challenges ?? Array.Empty<Challenge>();
@@ -239,8 +247,11 @@ namespace eu.foodmission.platform
                 DisplayGroups = new List<ChallengeDisplayGroup>();
                 TotalChallengesCount = 0;
                 CompletedChallengesCount = 0;
+                HasGoalHiddenContent = false;
                 return;
             }
+
+            var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
 
             // Map progress by challengeId
             var progressMap = new Dictionary<string, ChallengeProgress>(StringComparer.OrdinalIgnoreCase);
@@ -269,8 +280,6 @@ namespace eu.foodmission.platform
                         continue;
                 }
 
-                totalMatchingLevel++;
-
                 bool isCompleted = false;
                 float progressVal = ch.progress ?? 0f;
 
@@ -283,6 +292,13 @@ namespace eu.foodmission.platform
                 {
                     isCompleted = true;
                 }
+
+                if (!goalFilter.ShouldShow(_dimensionService?.GetDimension(ch.dimensionId), isCompleted || progressVal > 0f || (!string.IsNullOrEmpty(ch.id) && progressMap.ContainsKey(ch.id))))
+                {
+                    continue;
+                }
+
+                totalMatchingLevel++;
 
                 if (isCompleted)
                 {
@@ -309,6 +325,7 @@ namespace eu.foodmission.platform
 
             TotalChallengesCount = totalMatchingLevel;
             CompletedChallengesCount = totalCompletedMatchingLevel;
+            HasGoalHiddenContent = goalFilter.HasHiddenContent;
 
             if (displayItems.Count == 0)
             {

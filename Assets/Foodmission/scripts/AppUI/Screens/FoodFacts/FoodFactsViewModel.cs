@@ -76,6 +76,9 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int _completedFactsCount;
 
+        [ObservableProperty]
+        private bool _hasGoalHiddenContent;
+
         private readonly IFoodFactService _foodFactService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -250,6 +253,7 @@ namespace eu.foodmission.platform
                 }
             }
 
+            var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
             var matchingLevelFacts = new List<FoodFact>();
             var pendingFacts = new List<FoodFact>();
 
@@ -265,6 +269,11 @@ namespace eu.foodmission.platform
 
                 bool isCompleted = (!string.IsNullOrEmpty(f.id) && completedSet.Contains(f.id)) ||
                                    (!string.IsNullOrEmpty(f.code) && completedSet.Contains(f.code));
+
+                if (!goalFilter.ShouldShow(_dimensionService?.GetDimensionForTopic(f.topicId), isCompleted))
+                {
+                    continue;
+                }
 
                 if (string.Equals(_selectedStatus, FoodFactFilterStatus.Completed, StringComparison.OrdinalIgnoreCase) && !isCompleted)
                 {
@@ -292,6 +301,11 @@ namespace eu.foodmission.platform
             OpenFoodFact(selectedFact);
         }
 
+        public void OpenGoalsEditor()
+        {
+            RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_food_facts));
+        }
+
         public void SetRawDataForTesting(FoodFact[] facts, FoodFactProgressResponse[] progress = null)
         {
             _rawFacts = facts ?? Array.Empty<FoodFact>();
@@ -306,8 +320,11 @@ namespace eu.foodmission.platform
                 DisplayGroups = new List<FoodFactDisplayGroup>();
                 TotalFactsCount = 0;
                 CompletedFactsCount = 0;
+                HasGoalHiddenContent = false;
                 return;
             }
+
+            var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
 
             var completedSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             if (_rawProgress != null)
@@ -334,10 +351,15 @@ namespace eu.foodmission.platform
                         continue;
                 }
 
-                totalMatchingLevel++;
-
                 bool isCompleted = (!string.IsNullOrEmpty(f.id) && completedSet.Contains(f.id)) ||
                                    (!string.IsNullOrEmpty(f.code) && completedSet.Contains(f.code));
+
+                if (!goalFilter.ShouldShow(_dimensionService?.GetDimensionForTopic(f.topicId), isCompleted))
+                {
+                    continue;
+                }
+
+                totalMatchingLevel++;
 
                 if (isCompleted)
                 {
@@ -363,6 +385,7 @@ namespace eu.foodmission.platform
 
             TotalFactsCount = totalMatchingLevel;
             CompletedFactsCount = totalCompletedMatchingLevel;
+            HasGoalHiddenContent = goalFilter.HasHiddenContent;
 
             // Group by Topic
             var itemsByTopicId = new Dictionary<string, List<FoodFactDisplayItem>>(StringComparer.OrdinalIgnoreCase);

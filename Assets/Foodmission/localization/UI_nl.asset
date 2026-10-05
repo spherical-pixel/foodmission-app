@@ -4015,6 +4015,14 @@ MonoBehaviour:
     m_Localized: "FOODMISSION-support"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347557
+    m_Localized: "Sommige onderwerpen zijn verborgen omdat ze niet bij je doelen horen. Pas je doelen aan om meer inhoud te zien."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347558
+    m_Localized: "Mijn doelen aanpassen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

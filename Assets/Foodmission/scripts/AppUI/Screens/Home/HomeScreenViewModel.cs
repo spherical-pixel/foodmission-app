@@ -270,7 +270,7 @@ namespace eu.foodmission.platform
         {
             // fromHome=true → on completion, OnboardingGoalsViewModel returns to Home
             RaiseNavigationRequested(
-                Unity.AppUI.Navigation.Generated.Actions.editprofile_to_onboardinggoals,
+                Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_goals,
                 new Unity.AppUI.Navigation.Argument("fromHome", "true"),
                 new Unity.AppUI.Navigation.Argument("fromEditProfile", "false")
             );

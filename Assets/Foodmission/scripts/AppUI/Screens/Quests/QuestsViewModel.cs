@@ -74,6 +74,9 @@ namespace eu.foodmission.platform
         private int _completedQuestsCount;
 
         [ObservableProperty]
+        private bool _hasGoalHiddenContent;
+
+        [ObservableProperty]
         private bool _hasActiveQuest;
 
         [ObservableProperty]
@@ -288,6 +291,11 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Actions.open_quest, args.ToArray());
         }
 
+        public void OpenGoalsEditor()
+        {
+            RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_quests));
+        }
+
         public void SetRawDataForTesting(
             Quest[] quests,
             QuestProgress[] progress,
@@ -311,8 +319,13 @@ namespace eu.foodmission.platform
                 DisplayGroups = new List<QuestDisplayGroup>();
                 TotalQuestsCount = 0;
                 CompletedQuestsCount = 0;
+                HasGoalHiddenContent = false;
                 return;
             }
+
+            AppState appState = _storeService?.GetAppState();
+            var goalFilter = GoalContentFilter.FromGoals(appState?.userGoals);
+            string currentQuestId = appState?.userCurrentQuestId;
 
             // Evaluate progression for all quests
             var progressionStates = _questProgressionService?.EvaluateProgression(_rawQuests, _rawProgress);
@@ -343,8 +356,6 @@ namespace eu.foodmission.platform
                         continue;
                 }
 
-                totalMatchingLevel++;
-
                 QuestProgressionState progState = null;
                 if (!string.IsNullOrEmpty(q.id) && stateById.TryGetValue(q.id, out var stId)) progState = stId;
                 else if (!string.IsNullOrEmpty(q.code) && stateByCode.TryGetValue(q.code, out var stCode)) progState = stCode;
@@ -353,6 +364,16 @@ namespace eu.foodmission.platform
                 bool isLocked = progState?.IsLocked ?? false;
                 float progressVal = progState?.ProgressPercent ?? 0f;
                 string prevTitle = progState?.PreviousQuest?.GetDisplayName();
+
+                bool isActive = !string.IsNullOrEmpty(currentQuestId) &&
+                                (string.Equals(currentQuestId, q.id, StringComparison.OrdinalIgnoreCase) ||
+                                 string.Equals(currentQuestId, q.code, StringComparison.OrdinalIgnoreCase));
+                if (!goalFilter.ShouldShow(_dimensionService?.GetDimension(q.dimensionId), isCompleted || isActive || progressVal > 0f))
+                {
+                    continue;
+                }
+
+                totalMatchingLevel++;
 
                 if (isCompleted)
                 {
@@ -381,6 +402,7 @@ namespace eu.foodmission.platform
 
             TotalQuestsCount = totalMatchingLevel;
             CompletedQuestsCount = totalCompletedMatchingLevel;
+            HasGoalHiddenContent = goalFilter.HasHiddenContent;
 
             if (displayItems.Count == 0)
             {

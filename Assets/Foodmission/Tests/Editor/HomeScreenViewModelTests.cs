@@ -676,7 +676,7 @@ namespace eu.foodmission.platform.Tests
 
             _vm.NavigateToOnboardingGoals();
 
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.editprofile_to_onboardinggoals, requestedAction);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_goals, requestedAction);
             Assert.IsNotNull(requestedArgs);
             Assert.AreEqual(2, requestedArgs.Length);
             Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && a.value?.ToString() == "true"));

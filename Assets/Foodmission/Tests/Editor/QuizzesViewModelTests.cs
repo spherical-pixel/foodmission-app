@@ -504,5 +504,32 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Actions.open_quiz, requestedAction);
             Assert.IsFalse(_vm.IsLoading);
         }
+    
+        [Test]
+        public void Goals_HideOtherDimensions_ButKeepAnsweredQuizzes()
+        {
+            _storeService.SetAppState(new AppState { accessToken = "test-token", lang = "es", userGoals = new[] { "PLATE_WASTE" } });
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(_mockDimensions[0]);
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-2")).Returns(_mockDimensions[0]);
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-3")).Returns(_mockDimensions[1]);
+
+            _vm.SetRawDataForTesting(_mockQuizzes, _mockProgress);
+
+            var codes = _vm.DisplayGroups.SelectMany(g => g.Topics).SelectMany(t => t.Quizzes).Select(i => i.Quiz.code).ToList();
+            CollectionAssert.AreEquivalent(new[] { "Q1.1.1", "Q5.1.1" }, codes);
+            Assert.AreEqual(2, _vm.TotalQuizzesCount);
+            Assert.IsTrue(_vm.HasGoalHiddenContent);
+        }
+
+        [Test]
+        public void Goals_NotStored_NothingHidden()
+        {
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic(It.IsAny<string>())).Returns(_mockDimensions[0]);
+
+            _vm.SetRawDataForTesting(_mockQuizzes, _mockProgress);
+
+            Assert.AreEqual(4, _vm.TotalQuizzesCount);
+            Assert.IsFalse(_vm.HasGoalHiddenContent);
+        }
     }
 }

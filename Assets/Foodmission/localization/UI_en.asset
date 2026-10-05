@@ -3988,6 +3988,14 @@ MonoBehaviour:
     m_Localized: "FOODMISSION support"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347557
+    m_Localized: "Some topics are hidden because they are not among your goals. Update your goals to see more content."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347558
+    m_Localized: "Edit my goals"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

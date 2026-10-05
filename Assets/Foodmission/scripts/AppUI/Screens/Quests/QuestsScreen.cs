@@ -38,6 +38,7 @@ namespace eu.foodmission.platform
 
         private Unity.AppUI.UI.Text _emptyStateText;
         private VisualElement _groupsContainer;
+        private FMGoalsFilterHint _goalsHint;
         private FMActiveQuestCard _activeQuestBanner;
 
         public QuestsScreen()
@@ -76,6 +77,12 @@ namespace eu.foodmission.platform
 
             _emptyStateText = contentContainer.Q<Unity.AppUI.UI.Text>("empty-state");
             _groupsContainer = contentContainer.Q<VisualElement>("groups-container");
+            // After the groups, inside the scroll view
+            if (_goalsHint == null && _groupsContainer?.parent != null)
+            {
+                _goalsHint = new FMGoalsFilterHint();
+                _groupsContainer.parent.Add(_goalsHint);
+            }
         }
 
         private void RegisterManualEvents()
@@ -109,6 +116,11 @@ namespace eu.foodmission.platform
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+                if (_goalsHint != null)
+                {
+                    _goalsHint.RefreshTexts();
+                    _goalsHint.clicked += OnGoalsHintClicked;
+                }
             }
             UpdateFilterStates();
             RebuildHierarchy();
@@ -120,6 +132,10 @@ namespace eu.foodmission.platform
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+                if (_goalsHint != null)
+                {
+                    _goalsHint.clicked -= OnGoalsHintClicked;
+                }
             }
             _activeQuestBanner = null;
             base.OnViewModelUnbinding();
@@ -169,8 +185,14 @@ namespace eu.foodmission.platform
             _groupStatusFilters?.SetSelectionWithoutNotify(new[] { statusIndex });
         }
 
+        private void OnGoalsHintClicked()
+        {
+            _viewModel?.OpenGoalsEditor();
+        }
+
         private void RebuildHierarchy()
         {
+            _goalsHint?.SetVisible(_viewModel?.HasGoalHiddenContent == true);
             if (_groupsContainer == null) return;
             _groupsContainer.Clear();
 
