@@ -619,6 +619,7 @@ namespace eu.foodmission.platform
 
             // Nudge state is per user
             App.current?.services?.GetService<IMissionNudgeService>()?.Reset();
+            App.current?.services?.GetService<IDailyFoodFactService>()?.Reset();
 
             HomeScreen.ResetSessionDeferredFlags();
             _storeService.store.Dispatch(AppActions.logout.Invoke());

@@ -162,6 +162,28 @@ namespace eu.foodmission.platform
 
             // 8. Días sin contar o misión activa sin avances: Nutri propone el check-in
             if (await CheckMissionNudgeAsync()) return;
+
+            // 9. Quest activa y nada más pendiente: food fact del día
+            if (await CheckDailyFoodFactAsync()) return;
+        }
+
+        private async Task<bool> CheckDailyFoodFactAsync()
+        {
+            HomeScreenViewModel viewModel = _viewModel;
+            if (viewModel == null)
+            {
+                return false;
+            }
+
+            string code = await viewModel.CheckDailyFoodFactAsync();
+            // The user may have left Home while loading: never navigate away from another screen
+            if (string.IsNullOrEmpty(code) || _viewModel != viewModel || panel == null)
+            {
+                return false;
+            }
+
+            viewModel.OpenFoodFact(code);
+            return true;
         }
 
         private async Task<bool> CheckPendingLegalConsentAsync()

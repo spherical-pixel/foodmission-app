@@ -70,6 +70,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<ICheckInService, CheckInService>();
             builder.services.AddSingleton<IMissionNudgeService, MissionNudgeService>();
             builder.services.AddSingleton<IMissionFailureService, MissionFailureService>();
+            builder.services.AddSingleton<IDailyFoodFactService, DailyFoodFactService>();
             builder.services.AddSingleton<IQuestService, QuestService>();
             builder.services.AddSingleton<IQuestProgressionService, QuestProgressionService>();
             builder.services.AddSingleton<IDimensionService, DimensionService>();

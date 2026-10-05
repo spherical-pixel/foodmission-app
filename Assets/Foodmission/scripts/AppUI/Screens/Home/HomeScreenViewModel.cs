@@ -60,6 +60,7 @@ namespace eu.foodmission.platform
         private readonly IPilotSurveyService _pilotSurveyService;
         private readonly IMissionNudgeService _missionNudgeService;
         private readonly IMissionFailureService _missionFailureService;
+        private readonly IDailyFoodFactService _dailyFoodFactService;
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
         private readonly IQuestService _questService;
@@ -93,7 +94,8 @@ namespace eu.foodmission.platform
             IAuthService authService = null,
             IBadgeService badgeService = null,
             IProgressWheelService progressWheelService = null,
-            IMissionFailureService missionFailureService = null) : base(storeService)
+            IMissionFailureService missionFailureService = null,
+            IDailyFoodFactService dailyFoodFactService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -108,6 +110,7 @@ namespace eu.foodmission.platform
             _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
             _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
             _missionFailureService = missionFailureService ?? App.current?.services?.GetService<IMissionFailureService>();
+            _dailyFoodFactService = dailyFoodFactService ?? App.current?.services?.GetService<IDailyFoodFactService>();
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
             _badgeService = badgeService ?? App.current?.services?.GetService<IBadgeService>();
             _progressWheelService = progressWheelService ?? App.current?.services?.GetService<IProgressWheelService>();
@@ -297,6 +300,23 @@ namespace eu.foodmission.platform
             return _missionNudgeService != null
                 ? _missionNudgeService.GetNudgeAsync()
                 : System.Threading.Tasks.Task.FromResult<MissionNudge>(null);
+        }
+
+        /// <summary>Code of today's food fact for the active quest, or null.</summary>
+        public System.Threading.Tasks.Task<string> CheckDailyFoodFactAsync()
+        {
+            return _dailyFoodFactService != null
+                ? _dailyFoodFactService.GetFactToShowAsync()
+                : System.Threading.Tasks.Task.FromResult<string>(null);
+        }
+
+        public void OpenFoodFact(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+            {
+                return;
+            }
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.open_food_fact, new Unity.AppUI.Navigation.Argument("code", code));
         }
 
         /// <summary>Failed missions of the current quest the user hasn't been told about yet.</summary>

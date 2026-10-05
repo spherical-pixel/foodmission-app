@@ -83,6 +83,7 @@ namespace eu.foodmission.platform.Editor
             ShiftStored(storage, MissionNudgeService.StorageKey(userId), days, MissionNudgeService.ShiftStoredDates, "check-in nudge", shifted);
             ShiftStored(storage, MissionFailureService.StorageKey(userId), days, MissionFailureService.ShiftStoredDates, "acknowledged failures", shifted);
             ShiftStored(storage, PilotSurveyService.CycleStorageKeyFor(userId), days, PilotSurveyService.ShiftStoredDates, "survey cycle", shifted);
+            ShiftStored(storage, DailyFoodFactService.StorageKey(userId), days, DailyFoodFactService.ShiftStoredDates, "daily food fact", shifted);
 
             // The celebration cursor is a raw PlayerPrefs key (no FM_ prefix)
             string cursorKey = HomeScreenViewModel.CelebrationCursorKey(userId);
