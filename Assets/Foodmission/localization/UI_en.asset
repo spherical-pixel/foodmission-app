@@ -3969,31 +3969,37 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347552
-    m_Localized: "Share the app"
+    m_Localized: Share the app
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "Join me on #FOODMISSION \U0001F331 and discover how to eat healthier and more sustainably. Download the app here:"
+    m_Localized: "Join me on #FOODMISSION \U0001F331 and discover how to eat healthier
+      and more sustainably. Download the app here:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
-    m_Localized: "Try the FOODMISSION app"
+    m_Localized: Try the FOODMISSION app
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347555
-    m_Localized: "Contact support"
+    m_Localized: Contact support
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347556
-    m_Localized: "FOODMISSION support"
+    m_Localized: FOODMISSION support
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347557
-    m_Localized: "Some topics are hidden because they are not among your goals. Update your goals to see more content."
+    m_Localized: Some topics are hidden because they are not among your goals. Update
+      your goals to see more content.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347558
-    m_Localized: "Edit my goals"
+    m_Localized: Edit my goals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347559
+    m_Localized: "\U0001F4AC Check in with Foody"
     m_Metadata:
       m_Items: []
   references:

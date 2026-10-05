@@ -47,9 +47,11 @@ namespace eu.foodmission.platform.Components
         private readonly ScrollView _timelineContainer;
         private readonly Unity.AppUI.UI.Button _openButton;
         private readonly FMButton _btnQuickMeal;
+        private readonly FMButton _btnCheckIn;
 
         public event Action Clicked;
         public event Action QuickMealClicked;
+        public event Action CheckInClicked;
 
         public FMActiveQuestCard()
         {
@@ -104,6 +106,21 @@ namespace eu.foodmission.platform.Components
             }
             _btnQuickMeal.clicked += () => QuickMealClicked?.Invoke();
             _cardContainer.Add(_btnQuickMeal);
+
+            // Check-in with Foody CTA Button (also on top of _openButton)
+            _btnCheckIn = new FMButton
+            {
+                title = "@UI:HOME_QUEST_CHECKIN_BUTTON",
+                size = Size.S,
+                variant = ButtonVariant.Default
+            };
+            _btnCheckIn.AddToClassList("fm-active-quest-card-checkin-btn");
+            if (_btnCheckIn.clickable != null)
+            {
+                _btnCheckIn.clickable.keepEventPropagation = false;
+            }
+            _btnCheckIn.clicked += () => CheckInClicked?.Invoke();
+            _cardContainer.Add(_btnCheckIn);
         }
 
         /// <summary>

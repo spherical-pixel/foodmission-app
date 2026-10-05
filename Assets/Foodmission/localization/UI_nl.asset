@@ -3996,31 +3996,37 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347552
-    m_Localized: "Deel de app"
+    m_Localized: Deel de app
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "Doe mee met #FOODMISSION \U0001F331 en ontdek hoe je gezonder en duurzamer eet. Download de app hier:"
+    m_Localized: "Doe mee met #FOODMISSION \U0001F331 en ontdek hoe je gezonder en
+      duurzamer eet. Download de app hier:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
-    m_Localized: "Probeer de FOODMISSION-app"
+    m_Localized: Probeer de FOODMISSION-app
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347555
-    m_Localized: "Contact met support"
+    m_Localized: Contact met support
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347556
-    m_Localized: "FOODMISSION-support"
+    m_Localized: FOODMISSION-support
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347557
-    m_Localized: "Sommige onderwerpen zijn verborgen omdat ze niet bij je doelen horen. Pas je doelen aan om meer inhoud te zien."
+    m_Localized: Sommige onderwerpen zijn verborgen omdat ze niet bij je doelen horen.
+      Pas je doelen aan om meer inhoud te zien.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347558
-    m_Localized: "Mijn doelen aanpassen"
+    m_Localized: Mijn doelen aanpassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347559
+    m_Localized: "\U0001F4AC Inchecken bij Foody"
     m_Metadata:
       m_Items: []
   references:

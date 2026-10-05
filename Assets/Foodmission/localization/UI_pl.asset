@@ -4034,7 +4034,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "Do\u0142\u0105cz do mnie w #FOODMISSION \U0001F331 i odkryj, jak je\u015B\u0107 zdrowiej i bardziej zr\xF3wnowa\u017Cenie. Pobierz aplikacj\u0119 tutaj:"
+    m_Localized: "Do\u0142\u0105cz do mnie w #FOODMISSION \U0001F331 i odkryj, jak
+      je\u015B\u0107 zdrowiej i bardziej zr\xF3wnowa\u017Cenie. Pobierz aplikacj\u0119
+      tutaj:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
@@ -4046,15 +4048,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347556
-    m_Localized: "Pomoc FOODMISSION"
+    m_Localized: Pomoc FOODMISSION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347557
-    m_Localized: "Niekt\xF3re tematy s\u0105 ukryte, poniewa\u017C nie nale\u017C\u0105 do Twoich cel\xF3w. Zaktualizuj swoje cele, aby zobaczy\u0107 wi\u0119cej tre\u015Bci."
+    m_Localized: "Niekt\xF3re tematy s\u0105 ukryte, poniewa\u017C nie nale\u017C\u0105
+      do Twoich cel\xF3w. Zaktualizuj swoje cele, aby zobaczy\u0107 wi\u0119cej tre\u015Bci."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347558
-    m_Localized: "Edytuj moje cele"
+    m_Localized: Edytuj moje cele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347559
+    m_Localized: "\U0001F4AC Zamelduj si\u0119 u Foody"
     m_Metadata:
       m_Items: []
   references:

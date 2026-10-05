@@ -2382,6 +2382,11 @@
     background-color: var(--appui-primary-200);
     color: var(--appui-primary-1000);
 }
+
+.fm-active-quest-card-checkin-btn {
+    margin-top: 8px;
+    width: 100%;
+}
 /* ── Mission check-in (MissionCheckInScreen, code-built StepFlow) ── */
 .fm-mission-report-step {
     width: 100%;
@@ -2399,7 +2404,7 @@
 
 .fm-step-flow__guide-nutri.fm-mission-report-nutri {
     height: 520px;
-    margin-top: -140px;
+    margin-top: -100px;
     margin-bottom: 0;
 }
 
@@ -2475,6 +2480,6 @@
 .fm-goals-hint__text {
     white-space: normal;
     -unity-text-align: middle-center;
-    color: var(--appui-foreground-muted, rgb(107, 114, 128));
-    margin-bottom: 8px;
+    color: var(--appui-foreground-muted);
+    margin-bottom: 25px;
 }

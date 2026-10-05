@@ -3980,11 +3980,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347552
-    m_Localized: "Del appen"
+    m_Localized: Del appen
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "Bli med meg p\xE5 #FOODMISSION \U0001F331 og oppdag hvordan du kan spise sunnere og mer b\xE6rekraftig. Last ned appen her:"
+    m_Localized: "Bli med meg p\xE5 #FOODMISSION \U0001F331 og oppdag hvordan du
+      kan spise sunnere og mer b\xE6rekraftig. Last ned appen her:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
@@ -3992,19 +3993,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347555
-    m_Localized: "Kontakt support"
+    m_Localized: Kontakt support
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347556
-    m_Localized: "FOODMISSION-support"
+    m_Localized: FOODMISSION-support
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347557
-    m_Localized: "Noen temaer er skjult fordi de ikke er blant m\xE5lene dine. Oppdater m\xE5lene dine for \xE5 se mer innhold."
+    m_Localized: "Noen temaer er skjult fordi de ikke er blant m\xE5lene dine. Oppdater
+      m\xE5lene dine for \xE5 se mer innhold."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347558
     m_Localized: "Endre m\xE5lene mine"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347559
+    m_Localized: "\U0001F4AC Sjekk inn med Foody"
     m_Metadata:
       m_Items: []
   references:

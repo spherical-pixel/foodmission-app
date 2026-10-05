@@ -3997,31 +3997,37 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347552
-    m_Localized: "App teilen"
+    m_Localized: App teilen
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "Mach mit bei #FOODMISSION \U0001F331 und entdecke, wie du ges\xFCnder und nachhaltiger isst. Lade die App hier herunter:"
+    m_Localized: "Mach mit bei #FOODMISSION \U0001F331 und entdecke, wie du ges\xFCnder
+      und nachhaltiger isst. Lade die App hier herunter:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
-    m_Localized: "Probier die FOODMISSION-App aus"
+    m_Localized: Probier die FOODMISSION-App aus
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347555
-    m_Localized: "Support kontaktieren"
+    m_Localized: Support kontaktieren
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347556
-    m_Localized: "FOODMISSION-Support"
+    m_Localized: FOODMISSION-Support
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347557
-    m_Localized: "Einige Themen sind ausgeblendet, weil sie nicht zu deinen Zielen geh\xF6ren. Passe deine Ziele an, um mehr Inhalte zu sehen."
+    m_Localized: "Einige Themen sind ausgeblendet, weil sie nicht zu deinen Zielen
+      geh\xF6ren. Passe deine Ziele an, um mehr Inhalte zu sehen."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347558
-    m_Localized: "Meine Ziele bearbeiten"
+    m_Localized: Meine Ziele bearbeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347559
+    m_Localized: "\U0001F4AC Check-in mit Foody"
     m_Metadata:
       m_Items: []
   references:

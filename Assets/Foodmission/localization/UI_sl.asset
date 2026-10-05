@@ -3980,31 +3980,37 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347552
-    m_Localized: "Deli aplikacijo"
+    m_Localized: Deli aplikacijo
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "Pridru\u017Ei se mi v #FOODMISSION \U0001F331 in odkrij, kako jesti bolj zdravo in trajnostno. Prenesi aplikacijo tukaj:"
+    m_Localized: "Pridru\u017Ei se mi v #FOODMISSION \U0001F331 in odkrij, kako jesti
+      bolj zdravo in trajnostno. Prenesi aplikacijo tukaj:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
-    m_Localized: "Preizkusi aplikacijo FOODMISSION"
+    m_Localized: Preizkusi aplikacijo FOODMISSION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347555
-    m_Localized: "Stik s podporo"
+    m_Localized: Stik s podporo
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347556
-    m_Localized: "Podpora FOODMISSION"
+    m_Localized: Podpora FOODMISSION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347557
-    m_Localized: "Nekatere teme so skrite, ker niso med tvojimi cilji. Posodobi svoje cilje, da vidi\u0161 ve\u010D vsebine."
+    m_Localized: "Nekatere teme so skrite, ker niso med tvojimi cilji. Posodobi svoje
+      cilje, da vidi\u0161 ve\u010D vsebine."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347558
-    m_Localized: "Uredi moje cilje"
+    m_Localized: Uredi moje cilje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347559
+    m_Localized: "\U0001F4AC Javi se Foodyju"
     m_Metadata:
       m_Items: []
   references:

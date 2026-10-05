@@ -3891,6 +3891,10 @@ MonoBehaviour:
     m_Key: GOALS_FILTER_EDIT
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347559
+    m_Key: HOME_QUEST_CHECKIN_BUTTON
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

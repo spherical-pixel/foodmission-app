@@ -3981,31 +3981,37 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347552
-    m_Localized: "Compartir la app"
+    m_Localized: Compartir la app
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "\xDAnete a m\xED en #FOODMISSION \U0001F331 y descubre c\xF3mo comer de forma m\xE1s saludable y sostenible. Descarga la app aqu\xED:"
+    m_Localized: "\xDAnete a m\xED en #FOODMISSION \U0001F331 y descubre c\xF3mo
+      comer de forma m\xE1s saludable y sostenible. Descarga la app aqu\xED:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
-    m_Localized: "Prueba la app FOODMISSION"
+    m_Localized: Prueba la app FOODMISSION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347555
-    m_Localized: "Contactar con soporte"
+    m_Localized: Contactar con soporte
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347556
-    m_Localized: "Soporte FOODMISSION"
+    m_Localized: Soporte FOODMISSION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347557
-    m_Localized: "Algunos temas est\xE1n ocultos porque no forman parte de tus objetivos. Actualiza tus objetivos para ver m\xE1s contenido."
+    m_Localized: "Algunos temas est\xE1n ocultos porque no forman parte de tus objetivos.
+      Actualiza tus objetivos para ver m\xE1s contenido."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347558
-    m_Localized: "Editar mis objetivos"
+    m_Localized: Editar mis objetivos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347559
+    m_Localized: "\U0001F4AC Hacer check-in con Nutri"
     m_Metadata:
       m_Items: []
   references:

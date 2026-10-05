@@ -1014,6 +1014,7 @@ namespace eu.foodmission.platform
             {
                 _activeQuestCard.Clicked += OnActiveQuestClicked;
                 _activeQuestCard.QuickMealClicked += OnActiveQuestQuickMealClicked;
+                _activeQuestCard.CheckInClicked += OnActiveQuestCheckInClicked;
             }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked += OnChooseQuestClicked;
             if (_nutriView != null) _nutriView.OnClick = () => _navController?.Navigate(Actions.go_to_nutri_editor);
@@ -1038,6 +1039,7 @@ namespace eu.foodmission.platform
             {
                 _activeQuestCard.Clicked -= OnActiveQuestClicked;
                 _activeQuestCard.QuickMealClicked -= OnActiveQuestQuickMealClicked;
+                _activeQuestCard.CheckInClicked -= OnActiveQuestCheckInClicked;
             }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked -= OnChooseQuestClicked;
             if (_nutriView != null) _nutriView.OnClick = null;
@@ -1064,6 +1066,11 @@ namespace eu.foodmission.platform
         private void OnActiveQuestQuickMealClicked()
         {
             _viewModel?.NavigateToQuickMealLog();
+        }
+
+        private void OnActiveQuestCheckInClicked()
+        {
+            _viewModel?.OpenCheckIn();
         }
 
         private void OnChooseQuestClicked()
