@@ -3979,6 +3979,22 @@ MonoBehaviour:
       opnieuw.
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347548
+    m_Localized: "Ontdekt met #FOODMISSION \U0001F331 https://www.foodmission.eu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347549
+    m_Localized: Wist je dat...? Een weetje van FOODMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347550
+    m_Localized: Geleerd in een FOODMISSION-quiz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347551
+    m_Localized: Delen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

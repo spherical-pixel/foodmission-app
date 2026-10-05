@@ -9,6 +9,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Localization.Settings;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -27,6 +28,9 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaRight => false;
 
         private FMButton _btContinue;
+        private IconButton _btShare;
+        private AccessibilityNode _btContinueNode;
+        private AccessibilityNode _btShareNode;
         private VisualElement _factCard;
         private Image _imageTopic;
         private Text _textBody;
@@ -108,6 +112,7 @@ namespace eu.foodmission.platform
         private void CacheUIElements()
         {
             _btContinue = contentContainer.Q<FMButton>("bt-continue");
+            _btShare = contentContainer.Q<IconButton>("bt-share");
             _factCard = contentContainer.Q<VisualElement>("fact-card");
             _factCard?.AddToClassList("fm-foodfact-card--hidden");
 
@@ -128,6 +133,15 @@ namespace eu.foodmission.platform
             {
                 _btContinue.clicked += OnContinueClicked;
             }
+
+            if (_btShare != null)
+            {
+                _btShare.clicked += OnShareClicked;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                _btShare.clickable.longPressDuration = 800;
+                _btShare.clickable.longClicked += OnShareLongPressed;
+#endif
+            }
         }
 
         private void UnregisterManualEvents()
@@ -136,6 +150,95 @@ namespace eu.foodmission.platform
             {
                 _btContinue.clicked -= OnContinueClicked;
             }
+
+            if (_btShare != null)
+            {
+                _btShare.clicked -= OnShareClicked;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                _btShare.clickable.longClicked -= OnShareLongPressed;
+#endif
+            }
+        }
+
+        private async void OnShareClicked()
+        {
+            if (_viewModel == null)
+            {
+                return;
+            }
+            bool opened = await _viewModel.ShareAsync();
+            if (!opened)
+            {
+                Debug.LogError("[FoodFactScreen] Share sheet did not open");
+            }
+        }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        // Dev only: shares the text with the topic banner to test the image path on device.
+        private async void OnShareLongPressed()
+        {
+            if (_viewModel?.FoodFactData == null || _bannerService == null)
+            {
+                return;
+            }
+            Sprite banner = await _bannerService.LoadTopicBannerAsync(_viewModel.FoodFactData.topicId);
+            bool opened = await _viewModel.ShareAsync(banner);
+            Debug.Log($"[FoodFactScreen] Dev share with image -> {opened}");
+        }
+#endif
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null)
+            {
+                return;
+            }
+            _btContinueNode = CreateButtonNode(_accessibilityHierarchy, _btContinue, _btContinue?.title, OnContinueClicked);
+            _btShareNode = CreateButtonNode(_accessibilityHierarchy, _btShare,
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE"), OnShareClicked);
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _btContinueNode = null;
+            _btShareNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        // Invokes the handler directly: App UI buttons do not react to NavigationSubmitEvent.
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label, Action onInvoke)
+        {
+            if (button == null)
+            {
+                return null;
+            }
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf)
+            {
+                node.state = AccessibilityState.Disabled;
+            }
+            node.frameGetter = () =>
+            {
+                if (button.panel == null)
+                {
+                    return Rect.zero;
+                }
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                if (!button.enabledInHierarchy)
+                {
+                    return false;
+                }
+                onInvoke?.Invoke();
+                return true;
+            };
+            return node;
         }
 
         private async void OnContinueClicked()

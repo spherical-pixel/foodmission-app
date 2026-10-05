@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -156,6 +157,42 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNotNull(_vm.QuizProgress);
             Assert.IsFalse(_storeService.DispatchedActionTypes.Contains("app/addWalletReward"));
+        }
+
+        private static string Ui(string key) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
+
+        [Test]
+        public async Task ShareAsync_WithLoadedQuiz_SharesExplanationSourceAndFooter()
+        {
+            var share = new Mock<IShareService>();
+            ShareContent sent = null;
+            share.Setup(s => s.ShareAsync(It.IsAny<ShareContent>()))
+                .Callback<ShareContent>(c => sent = c)
+                .ReturnsAsync(true);
+            var vm = new QuizScreenViewModel(_storeService, _mockAvatarService.Object, _mockQuizService.Object, share.Object);
+            vm.QuizData = new Quiz { id = "q1", explanation = "Explanation", source = "Estudio en [Nature Food](https://doi.org/x)." };
+
+            bool result = await vm.ShareAsync();
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(ShareTextBuilder.Build("Explanation", "Estudio en [Nature Food](https://doi.org/x).", Ui("SHARE_FOOTER")), sent.Text);
+            StringAssert.DoesNotContain("](", sent.Text);
+            Assert.AreEqual(Ui("SHARE_SUBJECT_QUIZ"), sent.Subject);
+            Assert.IsNull(sent.Image);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task ShareAsync_WithoutQuizOrExplanation_DoesNotShare()
+        {
+            var share = new Mock<IShareService>();
+            var vm = new QuizScreenViewModel(_storeService, _mockAvatarService.Object, _mockQuizService.Object, share.Object);
+
+            Assert.IsFalse(await vm.ShareAsync());
+            vm.QuizData = new Quiz { id = "q1", explanation = null };
+            Assert.IsFalse(await vm.ShareAsync());
+            share.Verify(s => s.ShareAsync(It.IsAny<ShareContent>()), Times.Never);
+            vm.Dispose();
         }
     }
 }

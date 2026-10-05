@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -24,13 +25,15 @@ namespace eu.foodmission.platform
 
 
         private IQuizService _quizService;
+        private readonly IShareService _shareService;
 
 
 
 
-        public QuizScreenViewModel(IStoreService storeService, IAvatarService avatarService, IQuizService quizService) : base(storeService)
+        public QuizScreenViewModel(IStoreService storeService, IAvatarService avatarService, IQuizService quizService, IShareService shareService = null) : base(storeService)
         {
             _quizService = quizService;
+            _shareService = shareService ?? App.current?.services?.GetService<IShareService>();
             //_storeService = storeService;
 
         }
@@ -56,6 +59,21 @@ namespace eu.foodmission.platform
 
                 Debug.Log("LoadQuizDataByCodeOrId -> " + JsonUtility.ToJson(result));
             }
+        }
+
+        public Task<bool> ShareAsync()
+        {
+            if (_shareService == null || QuizData == null || string.IsNullOrWhiteSpace(QuizData.explanation))
+            {
+                return Task.FromResult(false);
+            }
+
+            string footer = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_FOOTER");
+            return _shareService.ShareAsync(new ShareContent
+            {
+                Text = ShareTextBuilder.Build(QuizData.explanation, QuizData.source, footer),
+                Subject = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_SUBJECT_QUIZ")
+            });
         }
 
         public async Task SubmitResponse(QuizOption option)

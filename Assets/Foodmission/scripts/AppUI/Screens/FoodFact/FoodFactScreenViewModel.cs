@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
 {
@@ -21,14 +22,17 @@ namespace eu.foodmission.platform
 
         private readonly IFoodFactService _foodFactService;
         private readonly IChallengeSessionService _challengeSession;
+        private readonly IShareService _shareService;
 
         public FoodFactScreenViewModel(
             IStoreService storeService,
             IFoodFactService foodFactService,
-            IChallengeSessionService challengeSession = null) : base(storeService)
+            IChallengeSessionService challengeSession = null,
+            IShareService shareService = null) : base(storeService)
         {
             _foodFactService = foodFactService;
             _challengeSession = challengeSession ?? App.current?.services?.GetService<IChallengeSessionService>();
+            _shareService = shareService ?? App.current?.services?.GetService<IShareService>();
         }
 
         public async Task LoadFoodFactDataByCodeOrId(string codeOrId)
@@ -56,6 +60,25 @@ namespace eu.foodmission.platform
 
                 Debug.Log($"[{GetType().Name}] LoadFoodFactDataByCodeOrId -> {result?.code}");
             }
+        }
+
+        /// <summary>
+        /// Opens the native share sheet with the fact text. The image is only passed by the dev long press for now.
+        /// </summary>
+        public Task<bool> ShareAsync(Sprite image = null)
+        {
+            if (_shareService == null || FoodFactData == null || string.IsNullOrWhiteSpace(FoodFactData.body))
+            {
+                return Task.FromResult(false);
+            }
+
+            string footer = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_FOOTER");
+            return _shareService.ShareAsync(new ShareContent
+            {
+                Text = ShareTextBuilder.Build(FoodFactData.body, FoodFactData.source, footer),
+                Subject = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_SUBJECT_FOOD_FACT"),
+                Image = image
+            });
         }
 
         public async Task<ContentReward> MarkAsReadAsync()

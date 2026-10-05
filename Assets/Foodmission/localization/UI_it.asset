@@ -3967,6 +3967,22 @@ MonoBehaviour:
       da oggi."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347548
+    m_Localized: "Scoperto con #FOODMISSION \U0001F331 https://www.foodmission.eu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347549
+    m_Localized: "Lo sapevi che...? Una curiosit\xE0 da FOODMISSION"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347550
+    m_Localized: Imparato in un quiz di FOODMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347551
+    m_Localized: Condividi
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

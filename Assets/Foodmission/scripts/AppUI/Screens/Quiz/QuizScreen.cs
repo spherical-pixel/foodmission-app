@@ -36,6 +36,9 @@ namespace eu.foodmission.platform
         private FMResponseQuiz _response4;
         private FMResponseQuiz _currentResponse = null;
         private FMButton _btContinue;
+        private IconButton _btShare;
+        private AccessibilityNode _btContinueNode;
+        private AccessibilityNode _btShareNode;
 
         private Text _questionText;
         private VisualElement _mainQuestionCard;
@@ -216,6 +219,7 @@ namespace eu.foodmission.platform
             _explanationCard.schedule.Execute(() =>
             {
                 _explanationCard.RemoveFromClassList("fm-quiz-explanation-card--hidden");
+                AddExplanationNodes();
             }).StartingIn(delay);
 
             if (onComplete != null)
@@ -227,6 +231,7 @@ namespace eu.foodmission.platform
         private void HideExplanationCard(Action onComplete = null)
         {
             _explanationCard.AddToClassList("fm-quiz-explanation-card--hidden");
+            RemoveExplanationNodes();
 
             if (onComplete != null)
             {
@@ -249,6 +254,7 @@ namespace eu.foodmission.platform
             _response4 = contentContainer.Q<FMResponseQuiz>("response-4");
 
             _btContinue = contentContainer.Q<FMButton>("bt-continue");
+            _btShare = contentContainer.Q<IconButton>("bt-share");
 
             _questionText = contentContainer.Q<Text>("text-question");
             _mainQuestionCard = contentContainer.Q<VisualElement>("main-question-card");
@@ -307,6 +313,24 @@ namespace eu.foodmission.platform
             if (_btContinue != null)
             {
                 _btContinue.clicked += OnContinueClicked;
+            }
+
+            if (_btShare != null)
+            {
+                _btShare.clicked += OnShareClicked;
+            }
+        }
+
+        private async void OnShareClicked()
+        {
+            if (_viewModel == null)
+            {
+                return;
+            }
+            bool opened = await _viewModel.ShareAsync();
+            if (!opened)
+            {
+                Debug.LogError("[QuizScreen] Share sheet did not open");
             }
         }
 
@@ -479,6 +503,92 @@ namespace eu.foodmission.platform
             {
                 _btContinue.clicked -= OnContinueClicked;
             }
+
+            if (_btShare != null)
+            {
+                _btShare.clicked -= OnShareClicked;
+            }
+        }
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_explanationCard != null && !_explanationCard.ClassListContains("fm-quiz-explanation-card--hidden"))
+            {
+                AddExplanationNodes();
+            }
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _btContinueNode = null;
+            _btShareNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        // Continue and Share only exist for screen readers while the explanation card is on screen,
+        // so they cannot be activated during the question.
+        private void AddExplanationNodes()
+        {
+            if (_accessibilityHierarchy == null || _btContinueNode != null)
+            {
+                return;
+            }
+            _btContinueNode = CreateButtonNode(_accessibilityHierarchy, _btContinue, _btContinue?.title, OnContinueClicked);
+            _btShareNode = CreateButtonNode(_accessibilityHierarchy, _btShare,
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE"), OnShareClicked);
+            AssistiveSupport.notificationDispatcher.SendLayoutChanged();
+        }
+
+        private void RemoveExplanationNodes()
+        {
+            if (_accessibilityHierarchy == null || _btContinueNode == null)
+            {
+                return;
+            }
+            _accessibilityHierarchy.RemoveNode(_btContinueNode);
+            if (_btShareNode != null)
+            {
+                _accessibilityHierarchy.RemoveNode(_btShareNode);
+            }
+            _btContinueNode = null;
+            _btShareNode = null;
+            AssistiveSupport.notificationDispatcher.SendLayoutChanged();
+        }
+
+        // Invokes the handler directly: App UI buttons do not react to NavigationSubmitEvent.
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label, Action onInvoke)
+        {
+            if (button == null)
+            {
+                return null;
+            }
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            if (!button.enabledSelf)
+            {
+                node.state = AccessibilityState.Disabled;
+            }
+            node.frameGetter = () =>
+            {
+                if (button.panel == null)
+                {
+                    return Rect.zero;
+                }
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                if (!button.enabledInHierarchy)
+                {
+                    return false;
+                }
+                onInvoke?.Invoke();
+                return true;
+            };
+            return node;
         }
 
         private void EnableQuizButtons()

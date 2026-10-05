@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+  <!-- Application.temporaryCachePath is the external cache dir when external storage is available, else the internal one -->
+  <external-cache-path name="share_external" path="share/" />
+  <cache-path name="share" path="share/" />
+</paths>

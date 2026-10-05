@@ -3963,6 +3963,22 @@ MonoBehaviour:
       nytt fra i dag."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347548
+    m_Localized: "Oppdaget med #FOODMISSION \U0001F331 https://www.foodmission.eu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347549
+    m_Localized: Visste du at...? Et matfakta fra FOODMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347550
+    m_Localized: "L\xE6rt i en FOODMISSION-quiz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347551
+    m_Localized: Del
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
