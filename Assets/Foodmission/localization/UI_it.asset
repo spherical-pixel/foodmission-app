@@ -3995,6 +3995,14 @@ MonoBehaviour:
     m_Localized: "Prova l'app FOODMISSION"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347555
+    m_Localized: "Contatta l'assistenza"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347556
+    m_Localized: "Assistenza FOODMISSION"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -188,10 +188,19 @@ namespace eu.foodmission.platform
             drawerRoot.Add(spacer);
 
 
-            VisualElement content = new VisualElement();
+            // Scrolls on short screens; otherwise the content fills the viewport so the footer stays at the bottom
+            var scroll = new ScrollView(ScrollViewMode.Vertical);
+            scroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+            scroll.style.flexGrow = 1;
+            scroll.style.flexShrink = 1;
+            scroll.contentViewport.style.flexGrow = 1;
+            drawerRoot.Add(scroll);
+
+            VisualElement content = scroll.contentContainer;
             content.style.flexGrow = 1;
+            content.style.flexShrink = 0;
+            content.style.minHeight = Length.Percent(100);
             content.style.paddingRight = 10;
-            drawerRoot.Add(content);
 
 
             // ── Header: [avatar] | [name / xp bar + badge] ──
@@ -319,20 +328,27 @@ namespace eu.foodmission.platform
                 _cachedNavController?.Navigate(Actions.go_to_auth);
             });
 
-            // ── Share the app (pinned to the bottom) ──
+            // ── Footer: contact support + share the app (pinned to the bottom) ──
             var bottomFiller = new VisualElement();
             bottomFiller.style.flexGrow = 1;
             content.Add(bottomFiller);
 
             content.Add(CreateDivider(16));
 
-            var shareContainer = new VisualElement();
-            shareContainer.style.paddingLeft = 8;
-            shareContainer.style.paddingRight = 4;
-            shareContainer.style.paddingBottom = 16 + (themeService?.safeAreaBottom ?? 0f);
-            content.Add(shareContainer);
+            var footerContainer = new VisualElement();
+            footerContainer.style.paddingLeft = 8;
+            footerContainer.style.paddingRight = 4;
+            footerContainer.style.paddingBottom = 16 + (themeService?.safeAreaBottom ?? 0f);
+            content.Add(footerContainer);
 
-            AddDrawerButton(shareContainer, "📲 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_APP"), () =>
+            AddDrawerButton(footerContainer, "✉️ " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CONTACT_SUPPORT"), () =>
+            {
+                _profileDrawer.Close();
+                string subject = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SUPPORT_EMAIL_SUBJECT");
+                Application.OpenURL(SupportContact.BuildMailtoUrl(subject, Application.version, Application.platform.ToString()));
+            });
+
+            AddDrawerButton(footerContainer, "📲 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_APP"), () =>
             {
                 _profileDrawer.Close();
                 ShareApp();

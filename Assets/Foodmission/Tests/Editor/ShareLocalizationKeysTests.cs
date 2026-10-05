@@ -27,7 +27,7 @@ namespace eu.foodmission.platform.Tests
                 }
             }
 
-            foreach (string key in new[] { "SHARE_FOOTER", "SHARE_SUBJECT_FOOD_FACT", "SHARE_SUBJECT_QUIZ", "SHARE", "SHARE_APP", "SHARE_APP_MESSAGE", "SHARE_SUBJECT_APP" })
+            foreach (string key in new[] { "SHARE_FOOTER", "SHARE_SUBJECT_FOOD_FACT", "SHARE_SUBJECT_QUIZ", "SHARE", "SHARE_APP", "SHARE_APP_MESSAGE", "SHARE_SUBJECT_APP", "CONTACT_SUPPORT", "SUPPORT_EMAIL_SUBJECT" })
             {
                 Assert.IsTrue(keys.Contains(key), $"Missing UI key {key}");
             }

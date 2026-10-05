@@ -3991,6 +3991,14 @@ MonoBehaviour:
     m_Localized: "Pr\xF8v FOODMISSION-appen"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347555
+    m_Localized: "Kontakt support"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347556
+    m_Localized: "FOODMISSION-support"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

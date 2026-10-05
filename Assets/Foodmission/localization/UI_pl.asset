@@ -4041,6 +4041,14 @@ MonoBehaviour:
     m_Localized: "Wypr\xF3buj aplikacj\u0119 FOODMISSION"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347555
+    m_Localized: "Skontaktuj si\u0119 z pomoc\u0105"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347556
+    m_Localized: "Pomoc FOODMISSION"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
