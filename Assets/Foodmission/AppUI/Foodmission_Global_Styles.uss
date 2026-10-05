@@ -2387,6 +2387,12 @@
     margin-top: 8px;
     width: 100%;
 }
+
+/* Default variant uses near-white text/border in light: unreadable on the white card */
+.appui--light .fm-active-quest-card-checkin-btn.appui-button {
+    color: var(--appui-foregrounds-50);
+    border-color: var(--appui-foregrounds-50);
+}
 /* ── Mission check-in (MissionCheckInScreen, code-built StepFlow) ── */
 .fm-mission-report-step {
     width: 100%;

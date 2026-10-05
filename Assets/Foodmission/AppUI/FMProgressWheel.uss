@@ -15,9 +15,10 @@
 }
 
 .fm-wheels-section__title {
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-foregrounds-100);
     -unity-font-style: bold;
     flex-shrink: 0;
+    flex-grow: 1;
 }
 
 .fm-wheels-section__message {
