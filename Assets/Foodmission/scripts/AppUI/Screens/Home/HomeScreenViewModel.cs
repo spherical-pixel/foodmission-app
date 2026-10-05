@@ -891,6 +891,20 @@ namespace eu.foodmission.platform
             return (xp, points);
         }
 
+        /// <summary>PlayerPrefs key of the newest gamification event already considered for celebrations.</summary>
+        public static string CelebrationCursorKey(string userId) => $"last_seen_gamif_ts_{userId}";
+
+        /// <summary>Dev time travel: moves the celebration cursor <paramref name="days"/> days back. Empty or unparsable values are returned unchanged.</summary>
+        public static string ShiftCelebrationCursor(string timestamp, int days)
+        {
+            if (string.IsNullOrEmpty(timestamp)
+                || !DateTime.TryParse(timestamp, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind, out DateTime parsed))
+            {
+                return timestamp;
+            }
+            return parsed.AddDays(-days).ToString("o", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
         public async System.Threading.Tasks.Task<System.Collections.Generic.List<PendingRewardCelebration>> CheckPendingGamificationRewardsAsync()
         {
             if (_isCheckingRewards) return null;
@@ -904,7 +918,7 @@ namespace eu.foodmission.platform
                     return null;
 
                 string userId = state.userId;
-                string cursorKey = $"last_seen_gamif_ts_{userId}";
+                string cursorKey = CelebrationCursorKey(userId);
                 string celebratedKey = $"celebrated_gamif_ids_{userId}";
 
                 string lastSeenTs = PlayerPrefs.GetString(cursorKey, "");

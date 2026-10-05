@@ -90,7 +90,7 @@ namespace eu.foodmission.platform
             string userId = _storeService?.GetAppState()?.userId;
             if (!string.IsNullOrEmpty(userId))
             {
-                _storage?.DeleteValue(KeyPrefix + userId);
+                _storage?.DeleteValue(StorageKey(userId));
             }
         }
 
@@ -227,9 +227,42 @@ namespace eu.foodmission.platform
             s.LastNudgeAtUtc = now;
         }
 
+        /// <summary>Local storage key of a user's nudge state.</summary>
+        public static string StorageKey(string userId) => KeyPrefix + userId;
+
+        /// <summary>Dev time travel: moves every stored date <paramref name="days"/> days back. Empty or corrupt state is returned unchanged.</summary>
+        public static string ShiftStoredDates(string json, int days)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                return json;
+            }
+
+            try
+            {
+                var states = JsonConvert.DeserializeObject<Dictionary<string, MissionNudgeState>>(json);
+                if (states == null)
+                {
+                    return json;
+                }
+
+                foreach (MissionNudgeState s in states.Values)
+                {
+                    s.FirstSeenAtUtc = s.FirstSeenAtUtc.AddDays(-days);
+                    s.LastChangeAtUtc = s.LastChangeAtUtc.AddDays(-days);
+                    s.LastNudgeAtUtc = s.LastNudgeAtUtc?.AddDays(-days);
+                }
+                return JsonConvert.SerializeObject(states);
+            }
+            catch (JsonException)
+            {
+                return json;
+            }
+        }
+
         private Dictionary<string, MissionNudgeState> Load(string userId)
         {
-            string json = _storage?.GetValue<string>(KeyPrefix + userId, null);
+            string json = _storage?.GetValue<string>(StorageKey(userId), null);
             if (string.IsNullOrEmpty(json))
             {
                 return new Dictionary<string, MissionNudgeState>(StringComparer.OrdinalIgnoreCase);
@@ -249,7 +282,7 @@ namespace eu.foodmission.platform
 
         private void Save(string userId, Dictionary<string, MissionNudgeState> states)
         {
-            _storage?.SetValue(KeyPrefix + userId, JsonConvert.SerializeObject(states));
+            _storage?.SetValue(StorageKey(userId), JsonConvert.SerializeObject(states));
         }
     }
 }
