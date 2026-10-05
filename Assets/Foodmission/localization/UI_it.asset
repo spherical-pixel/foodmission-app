@@ -2673,22 +2673,6 @@ MonoBehaviour:
     m_Localized: Pasto aggiornato con successo
     m_Metadata:
       m_Items: []
-  - m_Id: 49206146878136320
-    m_Localized: Registro dei pasti semplificato
-    m_Metadata:
-      m_Items: []
-  - m_Id: 49207590964420608
-    m_Localized: Quali erano le caratteristiche principali del tuo piatto?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 49207906585796608
-    m_Localized: Nome o descrizione (facoltativo)
-    m_Metadata:
-      m_Items: []
-  - m_Id: 49210861586210816
-    m_Localized: 'Es.: Insalata di lenticchie e verdure'
-    m_Metadata:
-      m_Items: []
   - m_Id: 49247263887712256
     m_Localized: Registro dei pasti semplificato
     m_Metadata:
