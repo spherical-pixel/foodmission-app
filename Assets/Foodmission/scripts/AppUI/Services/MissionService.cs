@@ -240,10 +240,8 @@ namespace eu.foodmission.platform
             if (string.IsNullOrEmpty(auth))
                 return (null, new ApiErrorResponse { message = "Authentication required" });
 
-            string effectiveLang = ResolveLang(lang);
             bool isUuid = Guid.TryParse(codeOrId, out _);
-            string pathSegment = isUuid ? Uri.EscapeDataString(codeOrId) : $"by-code/{Uri.EscapeDataString(codeOrId)}";
-            string url = $"{ApiConfig.BaseUrl}/api/v1/missions/{pathSegment}/progress?lang={Uri.EscapeDataString(effectiveLang)}";
+            string url = BuildProgressUrl(ApiConfig.BaseUrl, codeOrId, ResolveLang(lang));
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", auth);
@@ -271,56 +269,83 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(MissionProgress Result, ApiErrorResponse Error)> UpdateMissionProgressAsync(
+        public Task<(MissionProgress Result, ApiErrorResponse Error)> UpdateMissionProgressAsync(
             string codeOrId,
             bool? completed,
             float? progress,
             string lang = null)
         {
+            byte[] body = new UpdateMissionProgressRequest { completed = completed, progress = progress }.ToJsonBody();
+            return SendProgressRequestAsync(codeOrId, lang, null, "PATCH", body, nameof(UpdateMissionProgressAsync));
+        }
+
+        public Task<(MissionProgress Result, ApiErrorResponse Error)> RestartMissionProgressAsync(string codeOrId, string lang = null)
+        {
+            return SendProgressRequestAsync(codeOrId, lang, "/restart", "POST", null, nameof(RestartMissionProgressAsync));
+        }
+
+        public Task<(MissionProgress Result, ApiErrorResponse Error)> FailMissionProgressAsync(string codeOrId, string lang = null)
+        {
+            byte[] body = new UpdateMissionProgressRequest { failed = true }.ToJsonBody();
+            return SendProgressRequestAsync(codeOrId, lang, null, "PATCH", body, nameof(FailMissionProgressAsync));
+        }
+
+        public static string BuildProgressUrl(string baseUrl, string codeOrId, string lang, string suffix = null)
+        {
+            bool isUuid = Guid.TryParse(codeOrId, out _);
+            string pathSegment = isUuid ? Uri.EscapeDataString(codeOrId) : $"by-code/{Uri.EscapeDataString(codeOrId)}";
+            return $"{baseUrl}/api/v1/missions/{pathSegment}/progress{suffix}?lang={Uri.EscapeDataString(lang)}";
+        }
+
+        private async Task<(MissionProgress Result, ApiErrorResponse Error)> SendProgressRequestAsync(
+            string codeOrId,
+            string lang,
+            string suffix,
+            string method,
+            byte[] body,
+            string caller)
+        {
             if (string.IsNullOrEmpty(codeOrId))
+            {
                 return (null, new ApiErrorResponse { message = "Mission code or id is required" });
+            }
 
             string auth = AuthHeader;
             if (string.IsNullOrEmpty(auth))
+            {
                 return (null, new ApiErrorResponse { message = "Authentication required" });
+            }
 
-            string effectiveLang = ResolveLang(lang);
-            bool isUuid = Guid.TryParse(codeOrId, out _);
-            string pathSegment = isUuid ? Uri.EscapeDataString(codeOrId) : $"by-code/{Uri.EscapeDataString(codeOrId)}";
-            string url = $"{ApiConfig.BaseUrl}/api/v1/missions/{pathSegment}/progress?lang={Uri.EscapeDataString(effectiveLang)}";
-
-            var reqBody = new UpdateMissionProgressRequest
+            string url = BuildProgressUrl(ApiConfig.BaseUrl, codeOrId, ResolveLang(lang), suffix);
+            using UnityWebRequest request = new UnityWebRequest(url, method)
             {
-                completed = completed,
-                progress = progress
-            };
-            byte[] bodyRaw = reqBody.ToJsonBody();
-
-            using UnityWebRequest request = new UnityWebRequest(url, "PATCH")
-            {
-                uploadHandler = new UploadHandlerRaw(bodyRaw) { contentType = "application/json" },
+                uploadHandler = new UploadHandlerRaw(body ?? Array.Empty<byte>()) { contentType = "application/json" },
                 downloadHandler = new DownloadHandlerBuffer()
             };
             request.SetRequestHeader("Authorization", auth);
             request.SetRequestHeader("Accept", "application/json");
 
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] UpdateMissionProgressAsync {codeOrId}"));
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] {caller} {codeOrId}"));
             }
 
             try
             {
-                string raw = request.downloadHandler.text;
-                var updatedProgress = JsonConvert.DeserializeObject<MissionProgress>(raw);
-                return (updatedProgress, null);
+                var progress = JsonConvert.DeserializeObject<MissionProgress>(request.downloadHandler.text);
+                bool isUuid = Guid.TryParse(codeOrId, out _);
+                FillMissionCodes(new[] { progress }, id => isUuid ? GetCachedCode(id) : codeOrId);
+                return (progress, null);
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[{GetType().Name}] Failed to deserialize MissionProgress after update: {ex.Message}");
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize MissionProgress after {caller}: {ex.Message}");
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
         }

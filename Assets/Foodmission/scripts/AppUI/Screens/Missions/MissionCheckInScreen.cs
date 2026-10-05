@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 
+using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 
@@ -447,11 +448,25 @@ namespace eu.foodmission.platform
             ResetNutriToIdle();
             NavController navController = _navController;
             MissionProgress progress = outcome.SingleMissionProgress;
-            string message = progress == null
-                ? L("MISSION_CHECKIN_RESULT")
-                : progress.completed
-                    ? L("MISSION_REPORT_RESULT_COMPLETED")
-                    : LF("MISSION_REPORT_RESULT_PROGRESS", Mathf.RoundToInt(progress.progress));
+            string message;
+            if (progress == null)
+            {
+                message = L("MISSION_CHECKIN_RESULT");
+            }
+            else if (MissionProgressState.IsFailed(progress))
+            {
+                // Nutri tells it here, so Home won't announce it again
+                message = L("MISSION_FAILED_MESSAGE");
+                App.current?.services?.GetService<IMissionFailureService>()?.Acknowledge(progress);
+            }
+            else if (MissionProgressState.IsCompleted(progress))
+            {
+                message = L("MISSION_REPORT_RESULT_COMPLETED");
+            }
+            else
+            {
+                message = LF("MISSION_REPORT_RESULT_PROGRESS", Mathf.RoundToInt(progress.progress));
+            }
 
             NutriMessageDialog.Show(message,
                 new FMDialogAction("@UI:MISSION_REPORT_CLOSE", () => navController?.PopBackStack(), ButtonVariant.Accent));

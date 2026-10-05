@@ -3982,6 +3982,37 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Przepis spo\u0142eczno\u015Bci"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: Nieudana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C MISJA NIEUKO\u0143CZONA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: "Czas min\u0105\u0142 lub tym razem nie uda\u0142o si\u0119 osi\u0105gn\u0105\u0107
+      celu. Mo\u017Cesz rozpocz\u0105\u0107 misj\u0119 od nowa, kiedy tylko chcesz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: "Tym razem misja {0} si\u0119 nie uda\u0142a. Nie martw si\u0119,
+      mo\u017Cesz spr\xF3bowa\u0107 ponownie!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: "Rozpocznij misj\u0119 od nowa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: "Rozpocz\u0105\u0107 t\u0119 misj\u0119 od nowa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: "Stracisz post\u0119p w tej misji, a jej okres zacznie si\u0119
+      od nowa od dzisiaj."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

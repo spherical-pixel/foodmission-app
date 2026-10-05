@@ -30,6 +30,7 @@ namespace eu.foodmission.platform
     {
         public Mission Mission { get; set; }
         public bool IsCompleted { get; set; }
+        public bool IsFailed { get; set; }
         public float Progress { get; set; }
     }
 
@@ -267,11 +268,13 @@ namespace eu.foodmission.platform
                 totalMatchingLevel++;
 
                 bool isCompleted = false;
+                bool isFailed = false;
                 float progressVal = m.progress ?? 0f;
 
                 if (!string.IsNullOrEmpty(m.id) && progressMap.TryGetValue(m.id, out var prog))
                 {
-                    isCompleted = prog.completed || prog.progress >= 100f;
+                    isCompleted = MissionProgressState.IsCompleted(prog);
+                    isFailed = MissionProgressState.IsFailed(prog);
                     progressVal = prog.progress;
                 }
                 else if (m.progress.HasValue && m.progress.Value >= 100f)
@@ -298,6 +301,7 @@ namespace eu.foodmission.platform
                 {
                     Mission = m,
                     IsCompleted = isCompleted,
+                    IsFailed = isFailed,
                     Progress = progressVal
                 });
             }

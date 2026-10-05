@@ -137,5 +137,49 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.ProcessingNovaScoreCompared);
             CollectionAssert.Contains(ClientEventTypes.All, ClientEventTypes.ProcessingAllScoresCompared);
         }
+
+        [Test]
+        public void MissionProgress_Deserialization_ReadsStatus()
+        {
+            var p = JsonConvert.DeserializeObject<MissionProgress>(@"{ ""missionId"": ""m1"", ""progress"": 0, ""completed"": false, ""status"": ""FAILED"" }");
+            Assert.AreEqual(ProgressStatus.Failed, p.status);
+        }
+
+        [Test]
+        public void MissionProgressState_WithoutStatus_UsesLegacyRule()
+        {
+            Assert.IsTrue(MissionProgressState.IsCompleted(new MissionProgress { completed = true }));
+            Assert.IsTrue(MissionProgressState.IsCompleted(new MissionProgress { progress = 100f }));
+            Assert.IsFalse(MissionProgressState.IsCompleted(new MissionProgress { progress = 40f }));
+            Assert.IsFalse(MissionProgressState.IsFailed(new MissionProgress { progress = 0f }));
+            Assert.IsFalse(MissionProgressState.IsCompleted(null));
+            Assert.IsFalse(MissionProgressState.IsFailed(null));
+        }
+
+        [Test]
+        public void MissionProgressState_FailedAtFullProgress_IsFailedNotCompleted()
+        {
+            var p = new MissionProgress { status = ProgressStatus.Failed, progress = 100f, completed = false };
+            Assert.IsTrue(MissionProgressState.IsFailed(p));
+            Assert.IsFalse(MissionProgressState.IsCompleted(p));
+            Assert.IsTrue(MissionProgressState.IsResolved(p));
+        }
+
+        [Test]
+        public void MissionProgressState_WithStatus_TrustsStatus()
+        {
+            Assert.IsTrue(MissionProgressState.IsCompleted(new MissionProgress { status = ProgressStatus.Completed, progress = 100f, completed = true }));
+            Assert.IsFalse(MissionProgressState.IsResolved(new MissionProgress { status = ProgressStatus.InProgress, progress = 60f }));
+            Assert.IsFalse(MissionProgressState.IsResolved(new MissionProgress { status = ProgressStatus.NotStarted }));
+        }
+
+        [Test]
+        public void UpdateMissionProgressRequest_Failed_SerializedOnlyWhenSet()
+        {
+            string withFailed = Encoding.UTF8.GetString(new UpdateMissionProgressRequest { failed = true }.ToJsonBody());
+            string without = Encoding.UTF8.GetString(new UpdateMissionProgressRequest { progress = 10f }.ToJsonBody());
+            Assert.AreEqual("{\"failed\":true}", withFailed);
+            StringAssert.DoesNotContain("failed", without);
+        }
     }
 }

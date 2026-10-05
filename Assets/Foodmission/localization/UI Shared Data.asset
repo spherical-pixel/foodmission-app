@@ -3819,6 +3819,34 @@ MonoBehaviour:
     m_Key: RECIPE_SOURCE_COMMUNITY
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Key: MISSION_STATUS_FAILED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Key: MISSION_FAILED_BADGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Key: MISSION_FAILED_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Key: MISSION_FAILED_NOTICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Key: MISSION_BTN_RESTART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Key: MISSION_RESTART_CONFIRM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Key: MISSION_RESTART_CONFIRM_MESSAGE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

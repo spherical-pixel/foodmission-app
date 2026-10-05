@@ -59,6 +59,7 @@ namespace eu.foodmission.platform
         private readonly ILegalService _legalService;
         private readonly IPilotSurveyService _pilotSurveyService;
         private readonly IMissionNudgeService _missionNudgeService;
+        private readonly IMissionFailureService _missionFailureService;
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
         private readonly IQuestService _questService;
@@ -91,7 +92,8 @@ namespace eu.foodmission.platform
             IMissionNudgeService missionNudgeService = null,
             IAuthService authService = null,
             IBadgeService badgeService = null,
-            IProgressWheelService progressWheelService = null) : base(storeService)
+            IProgressWheelService progressWheelService = null,
+            IMissionFailureService missionFailureService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -105,6 +107,7 @@ namespace eu.foodmission.platform
             _gamificationService = gamificationService ?? App.current?.services?.GetService<IGamificationService>();
             _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
             _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
+            _missionFailureService = missionFailureService ?? App.current?.services?.GetService<IMissionFailureService>();
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
             _badgeService = badgeService ?? App.current?.services?.GetService<IBadgeService>();
             _progressWheelService = progressWheelService ?? App.current?.services?.GetService<IProgressWheelService>();
@@ -296,6 +299,30 @@ namespace eu.foodmission.platform
                 : System.Threading.Tasks.Task.FromResult<MissionNudge>(null);
         }
 
+        /// <summary>Failed missions of the current quest the user hasn't been told about yet.</summary>
+        public System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<MissionProgress>> CheckFailedMissionsAsync()
+        {
+            return _missionFailureService != null
+                ? _missionFailureService.GetUnacknowledgedFailuresAsync()
+                : System.Threading.Tasks.Task.FromResult<System.Collections.Generic.IReadOnlyList<MissionProgress>>(Array.Empty<MissionProgress>());
+        }
+
+        public void AcknowledgeFailedMission(MissionProgress failed)
+        {
+            _missionFailureService?.Acknowledge(failed);
+        }
+
+        public async System.Threading.Tasks.Task<ApiErrorResponse> RestartFailedMissionAsync(MissionProgress failed)
+        {
+            if (_missionFailureService == null)
+            {
+                return null;
+            }
+
+            var (_, error) = await _missionFailureService.RestartAsync(failed);
+            return error;
+        }
+
         /// <summary>Opens the Nutri check-in; with a code only that mission is asked.</summary>
         public void OpenCheckIn(string missionCode = null)
         {
@@ -469,7 +496,7 @@ namespace eu.foodmission.platform
                         foreach (var mp in missionProgress)
                         {
                             if (mp == null) continue;
-                            if (mp.completed || mp.progress >= 100f)
+                            if (MissionProgressState.IsCompleted(mp))
                             {
                                 if (!string.IsNullOrEmpty(mp.missionId))
                                 {

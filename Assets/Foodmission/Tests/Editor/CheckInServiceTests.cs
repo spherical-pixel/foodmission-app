@@ -128,5 +128,21 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(CheckInService.ReadDayBucket(new JObject()));
             Assert.IsNull(CheckInService.ReadDayBucket(null));
         }
+
+        [Test]
+        public async Task LoadPlan_SkipsFailedMissions()
+        {
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.A1.3", missionTitle = "Legumes", progress = 20, status = ProgressStatus.Failed, startedAt = Now.AddDays(-1).ToUniversalTime() },
+                new MissionProgress { missionCode = "M.A5.4", missionTitle = "FIFO", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+
+            var (plan, error) = await _service.LoadPlanAsync();
+
+            Assert.IsNull(error);
+            Assert.AreEqual(0, plan.MealDays.Count, "the failed meal mission asks nothing");
+            Assert.AreEqual(1, plan.DayEvents.Count);
+        }
     }
 }

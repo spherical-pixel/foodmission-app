@@ -3952,6 +3952,37 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Ricetta della comunit\xE0"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: Non riuscita
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C MISSIONE NON RIUSCITA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: "Il tempo \xE8 scaduto o questa volta l'obiettivo non \xE8 stato
+      raggiunto. Puoi ricominciare la missione quando vuoi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: "Questa volta la missione {0} non \xE8 riuscita. Non preoccuparti,
+      puoi riprovare!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: Ricomincia la missione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: Ricominciare questa missione?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: "Perderai i progressi di questa missione e il suo periodo ricomincer\xE0
+      da oggi."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

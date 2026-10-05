@@ -24,9 +24,15 @@
                 <ui:VisualElement name="mission-helper-modules" class="fm-mission-module-list"/>
                 <fm:FMButton name="btn-tell-nutri" title="@UI:MISSION_BTN_TELL_NUTRI" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-mission-btn fm-button fm-button-align-left"/>
                 <fm:FMButton name="btn-later" title="@UI:CHALLENGE_BTN_LATER" variant="Secondary" size="L" trailing-icon="fm-arrow-right" class="fm-mission-btn fm-button fm-button-align-left"/>
+                <fm:FMButton name="btn-restart-active" title="@UI:MISSION_BTN_RESTART" variant="Secondary" size="L" trailing-icon="fm-arrow-right" class="fm-mission-btn fm-button fm-button-align-left"/>
             </ui:VisualElement>
             <ui:VisualElement name="mission-completed-box" class="fm-mission-completed">
                 <appui:Text text="@UI:MISSION_COMPLETED_BADGE" size="M" class="fm-mission-completed-badge"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="mission-failed-box" class="fm-mission-failed">
+                <appui:Text text="@UI:MISSION_FAILED_BADGE" size="M" class="fm-mission-failed-badge"/>
+                <appui:Text name="mission-failed-text" text="@UI:MISSION_FAILED_MESSAGE" size="M" class="fm-mission-failed-text"/>
+                <fm:FMButton name="btn-restart-failed" title="@UI:MISSION_BTN_RESTART" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-mission-btn fm-button fm-button-align-left"/>
             </ui:VisualElement>
         </appui:ExVisualElement>
         <ui:VisualElement class="fm-bottom-nav-padding"/>

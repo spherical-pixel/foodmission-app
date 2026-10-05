@@ -3933,6 +3933,36 @@ MonoBehaviour:
     m_Localized: "\U0001F465 Recept skupnosti"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347541
+    m_Localized: "Neuspe\u0161no"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347542
+    m_Localized: "\u274C MISIJA NI USPELA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347543
+    m_Localized: "\u010Cas je potekel ali cilj tokrat ni bil dose\u017Een. Misijo
+      lahko znova za\u010Dne\u0161, kadar \u017Eeli\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347544
+    m_Localized: "Tokrat misija {0} ni uspela. Brez skrbi, lahko poskusi\u0161 znova!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347545
+    m_Localized: "Za\u010Dni misijo znova"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347546
+    m_Localized: "\u017Deli\u0161 to misijo za\u010Deti znova?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347547
+    m_Localized: "Napredek te misije bo izbrisan in njeno obdobje se bo za\u010Delo
+      znova od danes."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

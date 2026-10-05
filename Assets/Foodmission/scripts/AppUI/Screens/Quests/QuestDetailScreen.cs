@@ -233,6 +233,10 @@ namespace eu.foodmission.platform
                 {
                     node.AddToClassList("fm-quest-timeline-node--completed");
                 }
+                else if (act.IsFailed)
+                {
+                    node.AddToClassList("fm-quest-timeline-node--failed");
+                }
                 else
                 {
                     node.AddToClassList("fm-quest-timeline-node--pending");
@@ -251,6 +255,7 @@ namespace eu.foodmission.platform
                     var percent = new Unity.AppUI.UI.Text();
                     percent.text = act.ProgressLabel;
                     percent.AddToClassList("fm-quest-timeline-percent");
+                    percent.EnableInClassList("fm-quest-timeline-percent--failed", act.IsFailed);
                     row.Add(percent);
                 }
 

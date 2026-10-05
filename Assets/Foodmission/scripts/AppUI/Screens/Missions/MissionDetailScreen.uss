@@ -128,6 +128,33 @@
     width: 100%;
 }
 
+.fm-mission-failed {
+    align-items: center;
+    margin-top: 10px;
+    flex-shrink: 0;
+}
+
+.fm-mission-failed-badge {
+    border-radius: 32px;
+    padding: 25px 35px;
+    background-color: var(--fm-color-negative);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.fm-mission-failed-text {
+    margin-top: 16px;
+    margin-bottom: 6px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.fm-mission-progress-label--failed {
+    color: var(--fm-color-negative);
+}
+
 .fm-mission-root .fm-bottom-nav-padding {
     flex-shrink: 0;
 }

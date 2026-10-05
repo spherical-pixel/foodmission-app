@@ -152,6 +152,12 @@
     border-color: var(--appui-primary-100);
 }
 
+/* Failed mission node (red fill, same shape as pending) */
+.fm-quest-timeline-node--failed {
+    background-color: var(--fm-color-negative);
+    border-width: 0px;
+}
+
 /* Pending node (Solid dark green fill as in mockup) */
 .fm-quest-timeline-node--pending {
     background-color: var(--appui-primary-100);
@@ -184,6 +190,10 @@
     height: 80%;
     background-color: var(--appui-backgrounds-100);
     border-radius: 25px;
+}
+
+.fm-quest-timeline-percent--failed {
+    color: var(--fm-color-negative);
 }
 
 

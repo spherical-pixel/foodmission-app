@@ -263,5 +263,18 @@ namespace eu.foodmission.platform.Tests
             await _service.GetNudgeAsync();
             _checkIn.Verify(c => c.LoadPlanAsync(null), Times.Exactly(2));
         }
+
+        [Test]
+        public async Task StalledNudge_SkipsFailedMission()
+        {
+            _pendingDays = 1;
+            SetQuest("M.B2.1");
+            MissionProgress failed = P("M.B2.1", 0, _now.AddDays(-3));
+            failed.status = ProgressStatus.Failed;
+            SetProgress(failed);
+            await SeeQuestDaysAgo(5);
+
+            Assert.IsNull(await _service.GetNudgeAsync());
+        }
     }
 }

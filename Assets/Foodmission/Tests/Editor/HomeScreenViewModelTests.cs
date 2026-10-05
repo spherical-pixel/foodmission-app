@@ -1242,5 +1242,55 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(1, raised);
         }
+
+        private HomeScreenViewModel CreateWithFailures(IMissionFailureService failures)
+        {
+            return new HomeScreenViewModel(
+                _storeService,
+                _mockAudioService.Object,
+                _mockNotificationService.Object,
+                _mockLegalService.Object,
+                missionFailureService: failures);
+        }
+
+        [Test]
+        public async Task CheckFailedMissions_ReturnsServiceFailures()
+        {
+            var failures = new Mock<IMissionFailureService>();
+            var failed = new MissionProgress { missionCode = "M.A1.1", status = ProgressStatus.Failed };
+            failures.Setup(f => f.GetUnacknowledgedFailuresAsync()).ReturnsAsync(new[] { failed });
+            var vm = CreateWithFailures(failures.Object);
+
+            var result = await vm.CheckFailedMissionsAsync();
+
+            CollectionAssert.AreEqual(new[] { failed }, result);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task RestartFailedMission_RestartsThroughService_AndReturnsError()
+        {
+            var failures = new Mock<IMissionFailureService>();
+            var failed = new MissionProgress { missionCode = "M.A1.1", status = ProgressStatus.Failed };
+            var error = new ApiErrorResponse { message = "x" };
+            failures.Setup(f => f.RestartAsync(failed)).ReturnsAsync(((MissionProgress)null, error));
+            var vm = CreateWithFailures(failures.Object);
+
+            Assert.AreSame(error, await vm.RestartFailedMissionAsync(failed));
+            vm.Dispose();
+        }
+
+        [Test]
+        public void AcknowledgeFailedMission_AcknowledgesThroughService()
+        {
+            var failures = new Mock<IMissionFailureService>();
+            var failed = new MissionProgress { missionCode = "M.A1.1", status = ProgressStatus.Failed };
+            var vm = CreateWithFailures(failures.Object);
+
+            vm.AcknowledgeFailedMission(failed);
+
+            failures.Verify(f => f.Acknowledge(failed), Times.Once);
+            vm.Dispose();
+        }
     }
 }

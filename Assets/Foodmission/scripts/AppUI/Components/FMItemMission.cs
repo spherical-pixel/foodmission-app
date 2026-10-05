@@ -207,6 +207,7 @@ namespace eu.foodmission.platform.Components
 
             _statusBadge.RemoveFromClassList("fm-quiz-status-badge--completed");
             _statusBadge.RemoveFromClassList("fm-quiz-status-badge--pending");
+            _statusBadge.RemoveFromClassList("fm-quiz-status-badge--failed");
 
             if (_isCompleted)
             {
@@ -220,6 +221,20 @@ namespace eu.foodmission.platform.Components
                 _statusIcon.style.display = DisplayStyle.None;
                 _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUIZ_STATUS_PENDING");
             }
+        }
+
+        /// <summary>Call after <see cref="SetCompleted"/>: a failed mission shows the failed badge instead of "pending".</summary>
+        public void SetFailed(bool isFailed)
+        {
+            _statusBadge.EnableInClassList("fm-quiz-status-badge--failed", isFailed);
+            if (!isFailed)
+            {
+                return;
+            }
+
+            _statusBadge.RemoveFromClassList("fm-quiz-status-badge--pending");
+            _statusIcon.style.display = DisplayStyle.None;
+            _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_STATUS_FAILED");
         }
     }
 }

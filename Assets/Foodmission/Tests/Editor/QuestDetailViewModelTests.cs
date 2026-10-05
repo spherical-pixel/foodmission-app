@@ -588,5 +588,30 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("0%", byCode["M.B1.3"].ProgressLabel);
             Assert.IsNull(byCode["QUIZ_1"].ProgressLabel);
         }
+
+        [Test]
+        public void Activities_FailedMission_IsFailedNotCompleted_AndHasNoPercent()
+        {
+            var quest = new Quest
+            {
+                id = "q-201",
+                items = new[]
+                {
+                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.A1.2", label = "Protein", sortOrder = 1 }
+                }
+            };
+            var missionProgress = new[]
+            {
+                new MissionProgress { missionId = "id-1", missionCode = "M.A1.2", progress = 100f, status = ProgressStatus.Failed }
+            };
+
+            _vm.SetQuestForTesting(quest, new QuestProgress { questId = "q-201", progress = 0f }, missionProgress: missionProgress);
+
+            QuestActivityDisplayItem item = _vm.Activities.Single();
+            Assert.IsFalse(item.IsCompleted);
+            Assert.IsTrue(item.IsFailed);
+            Assert.IsFalse(item.ProgressLabel?.EndsWith("%") ?? false, "a failed mission shows the failed tag, not a percent");
+            Assert.AreEqual(0, _vm.CompletedActivitiesCount);
+        }
     }
 }

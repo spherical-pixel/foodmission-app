@@ -19,6 +19,7 @@ namespace eu.foodmission.platform
         private readonly IMissionService _missionService;
         private readonly IDimensionService _dimensionService;
         private readonly IQuestService _questService;
+        private readonly IMissionFailureService _failureService;
 
         [ObservableProperty]
         private bool _isLoading;
@@ -71,11 +72,16 @@ namespace eu.foodmission.platform
             }
         }
 
-        public int ProgressPercent => (int)Math.Clamp(MissionProgress?.progress ?? 0f, 0f, 100f);
-        public bool IsCompleted => MissionProgress?.completed == true || (MissionProgress?.progress ?? 0f) >= 100f;
+        public bool IsFailed => MissionProgressState.IsFailed(MissionProgress);
+        public int ProgressPercent => IsFailed ? 0 : (int)Math.Clamp(MissionProgress?.progress ?? 0f, 0f, 100f);
+        public bool IsCompleted => MissionProgressState.IsCompleted(MissionProgress);
         public bool IsPendingRule => Mission != null && Interaction.Status == MissionInteractionStatus.PendingRule;
-        public bool CanAct => Mission != null && !IsCompleted && !IsPendingRule && IsCurrentQuestMission;
-        public bool ShowsNotCurrentQuest => Mission != null && !IsCompleted && !IsPendingRule && !IsCurrentQuestMission;
+        public bool CanAct => Mission != null && !IsCompleted && !IsFailed && !IsPendingRule && IsCurrentQuestMission;
+        public bool ShowsNotCurrentQuest => Mission != null && !IsCompleted && !IsFailed && !IsPendingRule && !IsCurrentQuestMission;
+        /// <summary>Rules only run for the current quest, so a failed mission is restarted only from there.</summary>
+        public bool CanRestartFailed => Mission != null && IsFailed && IsCurrentQuestMission;
+        /// <summary>Only when the backend reports a status (pr-402+): older backends have no restart endpoint.</summary>
+        public bool CanRestartActive => CanAct && !string.IsNullOrEmpty(MissionProgress?.status);
         public IReadOnlyList<MissionModuleLink> AutoModules => CanAct ? Interaction.AutoModules : NoModules;
         public IReadOnlyList<MissionModuleLink> HelperModules => CanAct ? Interaction.HelperModules : NoModules;
         /// <summary>UI.csv key for the level badge (shared with challenges); null when unknown.</summary>
@@ -85,8 +91,10 @@ namespace eu.foodmission.platform
             IStoreService storeService,
             IMissionService missionService,
             IDimensionService dimensionService,
-            IQuestService questService) : base(storeService)
+            IQuestService questService,
+            IMissionFailureService failureService) : base(storeService)
         {
+            _failureService = failureService;
             _missionService = missionService;
             _dimensionService = dimensionService;
             _questService = questService;
@@ -122,6 +130,11 @@ namespace eu.foodmission.platform
                 MissionProgress = progress;
 
                 IsCurrentQuestMission = await IsInCurrentQuestAsync(mission?.code ?? codeOrId);
+                if (IsFailed)
+                {
+                    // Seeing the failed card here is being told: Home won't announce it again
+                    _failureService?.Acknowledge(MissionProgress);
+                }
 
                 if (_dimensionService != null && !string.IsNullOrEmpty(mission?.dimensionId))
                 {
@@ -173,10 +186,56 @@ namespace eu.foodmission.platform
                 string.Equals(i.contentCode, missionCode, StringComparison.OrdinalIgnoreCase)) == true;
         }
 
+        /// <summary>Restarts the failed mission, or gives up and restarts the active one. On error the progress is reloaded.</summary>
+        public async Task RestartMissionAsync()
+        {
+            string code = Mission?.code;
+            if (_failureService == null || string.IsNullOrEmpty(code) || (!CanRestartFailed && !CanRestartActive))
+            {
+                return;
+            }
+
+            IsLoading = true;
+            ErrorDetail = null;
+            try
+            {
+                var (result, error) = CanRestartFailed
+                    ? await _failureService.RestartAsync(MissionProgress)
+                    : await _failureService.GiveUpAndRestartAsync(code);
+
+                if (error != null)
+                {
+                    // Giving up may have succeeded before the restart failed: show the real state (Restart stays available)
+                    var (reloaded, _) = await _missionService.GetMissionProgressAsync(code);
+                    if (reloaded != null)
+                    {
+                        MissionProgress = reloaded;
+                    }
+                    ErrorDetail = error;
+                    return;
+                }
+
+                MissionProgress = result;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[MissionDetailViewModel] RestartMissionAsync error: {ex.Message}");
+                ErrorDetail = new ApiErrorResponse { message = ex.Message };
+            }
+            finally
+            {
+                IsLoading = false;
+                NotifyStateChanged();
+            }
+        }
+
         private void NotifyStateChanged()
         {
             OnPropertyChanged(nameof(ProgressPercent));
             OnPropertyChanged(nameof(IsCompleted));
+            OnPropertyChanged(nameof(IsFailed));
+            OnPropertyChanged(nameof(CanRestartFailed));
+            OnPropertyChanged(nameof(CanRestartActive));
             OnPropertyChanged(nameof(IsPendingRule));
             OnPropertyChanged(nameof(CanAct));
             OnPropertyChanged(nameof(ShowsNotCurrentQuest));

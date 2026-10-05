@@ -267,6 +267,15 @@
     --unity-image-tint-color: rgb(21, 128, 61);
 }
 
+.fm-quiz-status-badge--failed {
+    background-color: rgb(254, 226, 226);
+}
+
+.fm-quiz-status-badge--failed .fm-quiz-status-badge-text {
+    color: var(--fm-color-negative);
+    -unity-font-style: bold;
+}
+
 .fm-quiz-status-badge--pending {
     background-color: rgb(243, 244, 246);
 }

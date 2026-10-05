@@ -307,5 +307,20 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("ALL_MISSIONS", _vm.DisplayGroups[0].Dimension.code);
             Assert.AreEqual(4, _vm.DisplayGroups[0].TotalCount);
         }
+
+        [Test]
+        public void FailedMission_IsNotCompleted_AndIsMarkedFailed()
+        {
+            var progress = new[]
+            {
+                new MissionProgress { missionId = "m-1", status = ProgressStatus.Failed, progress = 100f, completed = false }
+            };
+            _vm.SetRawDataForTesting(_mockMissions, progress);
+
+            Assert.AreEqual(0, _vm.CompletedMissionsCount);
+            MissionDisplayItem item = _vm.DisplayGroups.SelectMany(g => g.Missions).First(m => m.Mission.id == "m-1");
+            Assert.IsFalse(item.IsCompleted);
+            Assert.IsTrue(item.IsFailed);
+        }
     }
 }
