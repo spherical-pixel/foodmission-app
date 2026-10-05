@@ -83,7 +83,7 @@ namespace eu.foodmission.platform
             HashSet<string> acknowledged = Load(userId);
             if (acknowledged.Add(AckKey(progress)))
             {
-                _storage?.SetValue(KeyPrefix + userId, JsonConvert.SerializeObject(acknowledged.ToList()));
+                _storage?.SetValue(StorageKey(userId), JsonConvert.SerializeObject(acknowledged.ToList()));
             }
         }
 
@@ -116,6 +116,46 @@ namespace eu.foodmission.platform
             return await _missionService.RestartMissionProgressAsync(missionCode);
         }
 
+        /// <summary>Local storage key of a user's acknowledged failures.</summary>
+        public static string StorageKey(string userId) => KeyPrefix + userId;
+
+        /// <summary>
+        /// Dev time travel: the backend moved startedAt <paramref name="days"/> days back, so the acknowledged keys follow.
+        /// Keys without a start (ticks 0) or in an unknown format are kept. Empty or corrupt state is returned unchanged.
+        /// </summary>
+        public static string ShiftStoredDates(string json, int days)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                return json;
+            }
+
+            try
+            {
+                var keys = JsonConvert.DeserializeObject<List<string>>(json);
+                if (keys == null)
+                {
+                    return json;
+                }
+
+                long delta = TimeSpan.FromDays(days).Ticks;
+                var shifted = keys.Select(key =>
+                {
+                    int bar = key?.LastIndexOf('|') ?? -1;
+                    if (bar < 0 || !long.TryParse(key.Substring(bar + 1), out long ticks) || ticks == 0L)
+                    {
+                        return key;
+                    }
+                    return $"{key.Substring(0, bar)}|{ticks - delta}";
+                }).ToList();
+                return JsonConvert.SerializeObject(shifted);
+            }
+            catch (JsonException)
+            {
+                return json;
+            }
+        }
+
         private static string AckKey(MissionProgress progress)
         {
             long ticks = progress.startedAt?.ToUniversalTime().Ticks ?? 0L;
@@ -124,7 +164,7 @@ namespace eu.foodmission.platform
 
         private HashSet<string> Load(string userId)
         {
-            string json = _storage?.GetValue<string>(KeyPrefix + userId, null);
+            string json = _storage?.GetValue<string>(StorageKey(userId), null);
             if (string.IsNullOrEmpty(json))
             {
                 return new HashSet<string>(StringComparer.Ordinal);

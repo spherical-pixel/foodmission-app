@@ -20,7 +20,7 @@ namespace eu.foodmission.platform
         private IDisposableSubscription _appStateSubscription;
 
         // localStorage key
-        private const string APP_STATE_KEY = "app_state";
+        public const string APP_STATE_KEY = "app_state";
 
         public IStore<AppState> store { get; }
 

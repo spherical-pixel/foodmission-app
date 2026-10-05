@@ -57,7 +57,48 @@ namespace eu.foodmission.platform
             }
         }
 
-        private string CycleStorageKey => $"pilot_cycle_state_{CurrentUserId}";
+        private string CycleStorageKey => CycleStorageKeyFor(CurrentUserId);
+
+        /// <summary>Local storage key of a user's survey cycle state.</summary>
+        public static string CycleStorageKeyFor(string userId) => $"pilot_cycle_state_{userId}";
+
+        /// <summary>Dev time travel: moves the cycle start and active days <paramref name="days"/> days back. Empty or corrupt state is returned unchanged.</summary>
+        public static string ShiftStoredDates(string json, int days)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                return json;
+            }
+
+            try
+            {
+                var state = JsonConvert.DeserializeObject<PilotSurveyCycleState>(json);
+                if (state == null)
+                {
+                    return json;
+                }
+
+                state.cycleStartDate = ShiftDay(state.cycleStartDate, days);
+                if (state.activeDatesInCycle != null)
+                {
+                    state.activeDatesInCycle = state.activeDatesInCycle.ConvertAll(d => ShiftDay(d, days));
+                }
+                return JsonConvert.SerializeObject(state);
+            }
+            catch (JsonException)
+            {
+                return json;
+            }
+        }
+
+        private static string ShiftDay(string day, int days)
+        {
+            if (!DateTime.TryParseExact(day, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsed))
+            {
+                return day;
+            }
+            return parsed.AddDays(-days).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        }
         private string ConsentStorageKey => $"pilot_consent_accepted_{CurrentUserId}";
 
         public bool DebugBypassEligibility { get; set; } = false;
