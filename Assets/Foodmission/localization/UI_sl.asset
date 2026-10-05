@@ -3979,6 +3979,18 @@ MonoBehaviour:
     m_Localized: Deli
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347552
+    m_Localized: "Deli aplikacijo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347553
+    m_Localized: "Pridru\u017Ei se mi v #FOODMISSION \U0001F331 in odkrij, kako jesti bolj zdravo in trajnostno. Prenesi aplikacijo tukaj:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347554
+    m_Localized: "Preizkusi aplikacijo FOODMISSION"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

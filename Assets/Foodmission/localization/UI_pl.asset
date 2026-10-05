@@ -4029,6 +4029,18 @@ MonoBehaviour:
     m_Localized: "Udost\u0119pnij"
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347552
+    m_Localized: "Udost\u0119pnij aplikacj\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347553
+    m_Localized: "Do\u0142\u0105cz do mnie w #FOODMISSION \U0001F331 i odkryj, jak je\u015B\u0107 zdrowiej i bardziej zr\xF3wnowa\u017Cenie. Pobierz aplikacj\u0119 tutaj:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347554
+    m_Localized: "Wypr\xF3buj aplikacj\u0119 FOODMISSION"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

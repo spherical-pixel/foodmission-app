@@ -3979,6 +3979,18 @@ MonoBehaviour:
     m_Localized: Del
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347552
+    m_Localized: "Del appen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347553
+    m_Localized: "Bli med meg p\xE5 #FOODMISSION \U0001F331 og oppdag hvordan du kan spise sunnere og mer b\xE6rekraftig. Last ned appen her:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347554
+    m_Localized: "Pr\xF8v FOODMISSION-appen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

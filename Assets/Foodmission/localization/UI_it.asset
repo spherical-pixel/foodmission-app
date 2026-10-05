@@ -3983,6 +3983,18 @@ MonoBehaviour:
     m_Localized: Condividi
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347552
+    m_Localized: "Condividi l'app"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347553
+    m_Localized: "Unisciti a me su #FOODMISSION \U0001F331 e scopri come mangiare in modo pi\xF9 sano e sostenibile. Scarica l'app qui:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347554
+    m_Localized: "Prova l'app FOODMISSION"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

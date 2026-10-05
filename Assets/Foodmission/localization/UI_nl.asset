@@ -3995,6 +3995,18 @@ MonoBehaviour:
     m_Localized: Delen
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347552
+    m_Localized: "Deel de app"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347553
+    m_Localized: "Doe mee met #FOODMISSION \U0001F331 en ontdek hoe je gezonder en duurzamer eet. Download de app hier:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347554
+    m_Localized: "Probeer de FOODMISSION-app"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
