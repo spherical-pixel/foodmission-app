@@ -75,6 +75,13 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IDimensionService, DimensionService>();
             builder.services.AddSingleton<ISpriteService, SpriteService>();
             builder.services.AddSingleton<IBannerService, BannerService>();
+#if UNITY_ANDROID && !UNITY_EDITOR
+            builder.services.AddSingleton<IShareService, AndroidShareService>();
+#elif UNITY_IOS && !UNITY_EDITOR
+            builder.services.AddSingleton<IShareService, IosShareService>();
+#else
+            builder.services.AddSingleton<IShareService, EditorShareService>();
+#endif
             builder.services.AddSingleton<ILegalService, LegalService>();
             builder.services.AddSingleton<ISurveyService, SurveyService>();
             builder.services.AddSingleton<IPilotSurveyService, PilotSurveyService>();

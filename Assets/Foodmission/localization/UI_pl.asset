@@ -4013,6 +4013,22 @@ MonoBehaviour:
       od nowa od dzisiaj."
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347548
+    m_Localized: "Odkryte w FOODMISSION \U0001F331 https://www.foodmission.eu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347549
+    m_Localized: "Czy wiesz, \u017Ce...? Ciekawostka od FOODMISSION"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347550
+    m_Localized: Z quizu FOODMISSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347551
+    m_Localized: "Udost\u0119pnij"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

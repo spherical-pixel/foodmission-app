@@ -3847,6 +3847,22 @@ MonoBehaviour:
     m_Key: MISSION_RESTART_CONFIRM_MESSAGE
     m_Metadata:
       m_Items: []
+  - m_Id: 52041725676347548
+    m_Key: SHARE_FOOTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347549
+    m_Key: SHARE_SUBJECT_FOOD_FACT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347550
+    m_Key: SHARE_SUBJECT_QUIZ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52041725676347551
+    m_Key: SHARE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

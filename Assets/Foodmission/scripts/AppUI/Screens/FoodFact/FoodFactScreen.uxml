@@ -9,11 +9,14 @@
                 <ui:Image name="image-topic" class="fm-quiz-topic-image"/>
                 <appui:Text name="text-body" size="L" class="fm-foodfact-body"/>
                 <fm:FMSourceItemView name="source-item-view"/>
-                <fm:FMButton name="bt-continue" title="Continuar_" trailing-icon="fm-arrow-right" variant="Accent" class="fm-button fm-button-align-left" style="margin-top: 40px;">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395779614007296)"/>
-                    </Bindings>
-                </fm:FMButton>
+                <ui:VisualElement name="actions-row" class="fm-share-row">
+                    <fm:FMButton name="bt-continue" title="Continuar_" trailing-icon="fm-arrow-right" variant="Accent" class="fm-button fm-button-align-left fm-share-row__continue">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395779614007296)"/>
+                        </Bindings>
+                    </fm:FMButton>
+                    <appui:IconButton name="bt-share" icon="share-network" size="L" class="fm-share-button"/>
+                </ui:VisualElement>
             </appui:ExVisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

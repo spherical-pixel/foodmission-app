@@ -15,6 +15,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-unity:13.15.0' // Assets/Firebase/Editor/MessagingDependencies.xml:27
     implementation 'com.google.flatbuffers:flatbuffers-java:1.12.0' // Assets/Firebase/Editor/MessagingDependencies.xml:22
 // Android Resolver Dependencies End
+    // Native share: FMShareFileProvider extends androidx FileProvider (outside the resolver block so it is kept)
+    implementation 'androidx.core:core:1.13.1'
 **DEPS**}
 
 // Android Resolver Exclusions Start

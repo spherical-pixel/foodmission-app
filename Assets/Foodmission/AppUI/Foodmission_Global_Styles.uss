@@ -1984,6 +1984,23 @@
     transition-timing-function: ease-in-cubic;
 }
 
+/* Continue + share row on the food fact and quiz explanation cards */
+.fm-share-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.fm-share-row__continue {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.fm-share-button {
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
 .fm-quiz-avatar-panel {
     height: 1200px;
 }

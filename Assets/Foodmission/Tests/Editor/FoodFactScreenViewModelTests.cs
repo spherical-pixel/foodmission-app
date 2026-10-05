@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
+using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -175,6 +176,42 @@ namespace eu.foodmission.platform.Tests
             await vm.MarkAsReadAsync();
 
             session.Verify(s => s.ReportAsync(ChallengeCompletionTrigger.FoodFactRead, "FF1.2.8"), Times.Once);
+            vm.Dispose();
+        }
+
+        private static string Ui(string key) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
+
+        [Test]
+        public async Task ShareAsync_WithLoadedFact_SharesBodySourceAndFooterWithoutImage()
+        {
+            var share = new Mock<IShareService>();
+            ShareContent sent = null;
+            share.Setup(s => s.ShareAsync(It.IsAny<ShareContent>()))
+                .Callback<ShareContent>(c => sent = c)
+                .ReturnsAsync(true);
+            var vm = new FoodFactScreenViewModel(_storeService, _mockFoodFactService.Object, null, share.Object);
+            vm.FoodFactData = new FoodFact { code = "FF1", body = "Body", source = "OMS (2023)." };
+
+            bool result = await vm.ShareAsync();
+
+            Assert.IsTrue(result);
+            Assert.IsNotNull(sent);
+            Assert.AreEqual(ShareTextBuilder.Build("Body", "OMS (2023).", Ui("SHARE_FOOTER")), sent.Text);
+            Assert.AreEqual(Ui("SHARE_SUBJECT_FOOD_FACT"), sent.Subject);
+            Assert.IsNull(sent.Image);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task ShareAsync_WithoutFact_DoesNotShare()
+        {
+            var share = new Mock<IShareService>();
+            var vm = new FoodFactScreenViewModel(_storeService, _mockFoodFactService.Object, null, share.Object);
+
+            Assert.IsFalse(await vm.ShareAsync());
+            vm.FoodFactData = new FoodFact { code = "FF1", body = "  " };
+            Assert.IsFalse(await vm.ShareAsync());
+            share.Verify(s => s.ShareAsync(It.IsAny<ShareContent>()), Times.Never);
             vm.Dispose();
         }
     }
