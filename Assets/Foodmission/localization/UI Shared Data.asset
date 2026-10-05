@@ -23,10 +23,6 @@ MonoBehaviour:
     m_Key: META_BARCODE
     m_Metadata:
       m_Items: []
-  - m_Id: 26341658554523648
-    m_Key: META_BRAND
-    m_Metadata:
-      m_Items: []
   - m_Id: 21294142477819908
     m_Key: META_BRANDS
     m_Metadata:
@@ -57,10 +53,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819907
     m_Key: META_SERVING_SIZE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625607
-    m_Key: NO_DATA_AVAILABLE
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625613
@@ -129,10 +121,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26341658558717953
     m_Key: TXT_NEXT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142465236992
-    m_Key: FOOD_INFO_TITLE
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625600
@@ -279,38 +267,6 @@ MonoBehaviour:
     m_Key: NUTR_GROUP_MINERALS
     m_Metadata:
       m_Items: []
-  - m_Id: 21294142473625648
-    m_Key: NUTRI_SCORE_LABEL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625649
-    m_Key: NOVA_GROUP_LABEL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625650
-    m_Key: ECO_SCORE_LABEL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625651
-    m_Key: TRAFFIC_LIGHT_LABEL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625656
-    m_Key: NOVA_1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625657
-    m_Key: NOVA_2
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819904
-    m_Key: NOVA_3
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819905
-    m_Key: NOVA_4
-    m_Metadata:
-      m_Items: []
   - m_Id: 15417204736
     m_Key: NAV_HOME
     m_Metadata:
@@ -441,10 +397,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25360689668284420
     m_Key: ERROR_PC_FORMAT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25360689668284421
-    m_Key: ERROR_T&C_A
     m_Metadata:
       m_Items: []
   - m_Id: 25367919163596800
@@ -787,14 +739,6 @@ MonoBehaviour:
     m_Key: SELECT_GENDER
     m_Metadata:
       m_Items: []
-  - m_Id: 40270509588340736
-    m_Key: TXT_COMPLETE_PROFILE_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 40270634402439168
-    m_Key: TXT_COMPLETE_PROFILE_MSG
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000001
     m_Key: FORGOT_PASSWORD_EMAIL_SENT
     m_Metadata:
@@ -811,18 +755,6 @@ MonoBehaviour:
     m_Key: MEAL_LOG_ADD
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000005
-    m_Key: MEAL_SELECTOR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000006
-    m_Key: SEARCH_MEALS_PLACEHOLDER
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000007
-    m_Key: CREATE_MEAL
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Key: TYPE_OF_MEAL
     m_Metadata:
@@ -835,32 +767,12 @@ MonoBehaviour:
     m_Key: EATEN_OUT
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000011
-    m_Key: DEDUCTION_LABEL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000013
-    m_Key: FOOD_WASTE_ADD
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000014
-    m_Key: PANTRY_ITEM_LABEL
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000015
     m_Key: QUANTITY_WASTED
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
     m_Key: WASTE_REASON_LABEL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000017
-    m_Key: DETECTION_METHOD
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000018
-    m_Key: ESTIMATED_COST
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000019
@@ -871,10 +783,6 @@ MonoBehaviour:
     m_Key: SAVE
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000021
-    m_Key: FILTER_ITEMS
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000022
     m_Key: MOVE_TO_WASTE
     m_Metadata:
@@ -883,56 +791,8 @@ MonoBehaviour:
     m_Key: PANTRY_EMPTY
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000024
-    m_Key: FOOD_WASTE_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000025
-    m_Key: WASTE_EMPTY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000026
-    m_Key: MEAL_LOG_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000027
-    m_Key: MEAL_LOG_EMPTY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000028
-    m_Key: SHOPPING_LISTS_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000029
-    m_Key: SHOPPING_LISTS_EMPTY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000030
-    m_Key: NEW_LIST
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000031
-    m_Key: SHOPPING_LIST_DETAIL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000032
-    m_Key: CLEAR_DONE
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000033
     m_Key: SHOPPING_ITEMS_EMPTY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000034
-    m_Key: PANTRY_ITEM_DETAIL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000035
-    m_Key: QUANTITY
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000036
-    m_Key: UNIT
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
@@ -947,24 +807,8 @@ MonoBehaviour:
     m_Key: SELECT_DEFAULT
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000047
-    m_Key: SKIP
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000048
-    m_Key: SAVE_CONTINUE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000049
-    m_Key: EXIT_NO_SAVE
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000050
     m_Key: CONFIRM
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000051
-    m_Key: HOME_STEPPER_CHOICES
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
@@ -985,10 +829,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000056
     m_Key: DELETE_LIST
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000057
-    m_Key: DELETE_WASTE
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -1027,24 +867,12 @@ MonoBehaviour:
     m_Key: LIST_NAME_PLACEHOLDER
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000067
-    m_Key: QUANTITY_PLACEHOLDER
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000068
     m_Key: MENU_VIEW
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
     m_Key: SELECT_FIRST
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000070
-    m_Key: ADD_ITEM_ERROR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000071
-    m_Key: MAX_QTY_LABEL
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000072
@@ -1063,40 +891,8 @@ MonoBehaviour:
     m_Key: THIS_ITEM
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000076
-    m_Key: COULD_NOT_SEARCH_MEALS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000077
-    m_Key: ENTER_MEAL_NAME
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000078
-    m_Key: COULD_NOT_CREATE_MEAL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000079
-    m_Key: SELECT_MEAL_FIRST
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000080
     m_Key: SELECT_MEAL_TYPE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000081
-    m_Key: COULD_NOT_LOG_MEAL
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000082
-    m_Key: MEAL_PANTRY_UPDATE_ERROR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000083
-    m_Key: ERROR_LOADING_MEAL_LOG
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000084
-    m_Key: SELECT_PANTRY_FIRST
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
@@ -1105,10 +901,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000086
     m_Key: COULD_NOT_SAVE_WASTE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000087
-    m_Key: COULD_NOT_REFRESH_CACHED
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
@@ -1127,20 +919,12 @@ MonoBehaviour:
     m_Key: ERROR_LOADING_PANTRY
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000092
-    m_Key: FAILED_IMPORT_FOOD
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000093
     m_Key: COULD_NOT_ADD_ITEM_MISSING
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000094
     m_Key: COULD_NOT_ADD_CATEGORY_ITEM
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000095
-    m_Key: AUTO_DETECTED_EXPIRED
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -1243,10 +1027,6 @@ MonoBehaviour:
     m_Key: UNEXPECTED_ERROR
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000121
-    m_Key: UNEXPECTED_ERROR_OCCURRED
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000122
     m_Key: CANNOT_ADD_PRODUCT
     m_Metadata:
@@ -1303,14 +1083,6 @@ MonoBehaviour:
     m_Key: REASON_OTHER
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985739
-    m_Key: DETECT_AUTOMATIC
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985740
-    m_Key: DETECT_MANUAL
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Key: LOC_FRIDGE
     m_Metadata:
@@ -1329,10 +1101,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7590950985751
     m_Key: LOC_CUPBOARD
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985752
-    m_Key: LOADING_LOCALIZATIONS
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
@@ -1379,20 +1147,12 @@ MonoBehaviour:
     m_Key: INVITE_CODE_LABEL
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950986008
-    m_Key: JOINING
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950986009
     m_Key: GROUP_MEMBERS
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986010
     m_Key: INVITE_CODE_SECTION
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950986011
-    m_Key: COPY_CODE
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
@@ -1529,14 +1289,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6800027757305856
     m_Key: ENV_CHANGE_MSG
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7834217718210560
-    m_Key: SECTION_GENERIC_FOODS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7834734070587392
-    m_Key: SECTION_PRODUCTS
     m_Metadata:
       m_Items: []
   - m_Id: 7835105786585088
@@ -1707,10 +1459,6 @@ MonoBehaviour:
     m_Key: RECIPE
     m_Metadata:
       m_Items: []
-  - m_Id: 26299707348213760
-    m_Key: SELECT_MEAL_TYP
-    m_Metadata:
-      m_Items: []
   - m_Id: 26305215656353792
     m_Key: WHAT_MEAL_TYPE_LOG
     m_Metadata:
@@ -1857,10 +1605,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 27101090557190144
     m_Key: DATE_PLUS_1_MONTH
-    m_Metadata:
-      m_Items: []
-  - m_Id: 28537754026500096
-    m_Key: RATING
     m_Metadata:
       m_Items: []
   - m_Id: 28538423429029888
@@ -2259,10 +2003,6 @@ MonoBehaviour:
     m_Key: QUIZZES_STATUS_TITLE
     m_Metadata:
       m_Items: []
-  - m_Id: 38390811899977728
-    m_Key: PANTRY_DELETE_OPTIONS_TITLE
-    m_Metadata:
-      m_Items: []
   - m_Id: 38390811904172032
     m_Key: PANTRY_DELETE_OPTIONS_MSG
     m_Metadata:
@@ -2365,10 +2105,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44130682094477312
     m_Key: ACTIVITY_MICRO_LEARNING
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44134788494254080
-    m_Key: QUEST_DETAIL
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
@@ -2683,10 +2419,6 @@ MonoBehaviour:
     m_Key: RECIPES_CUISINE_JAMAICAN
     m_Metadata:
       m_Items: []
-  - m_Id: 48534335161098273
-    m_Key: RECIPES_CUISINE_JAPANESE
-    m_Metadata:
-      m_Items: []
   - m_Id: 48534335161098274
     m_Key: RECIPES_CUISINE_KENYAN
     m_Metadata:
@@ -2815,18 +2547,6 @@ MonoBehaviour:
     m_Key: RECIPES_FIELD_PUBLIC
     m_Metadata:
       m_Items: []
-  - m_Id: 48786163199107086
-    m_Key: RECIPES_FIELD_ING_NAME
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107087
-    m_Key: RECIPES_FIELD_ING_MEASURE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107088
-    m_Key: RECIPES_FIELD_ADD
-    m_Metadata:
-      m_Items: []
   - m_Id: 48786163199107089
     m_Key: RECIPES_FIELD_NO_ING
     m_Metadata:
@@ -2881,10 +2601,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672709
     m_Key: SAVE_CHANGES
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48876441641672710
-    m_Key: CANCEL_EDIT
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672711
@@ -3143,10 +2859,6 @@ MonoBehaviour:
     m_Key: NOTIFICATION_ABOUT_TO_EXPIRE_BODY
     m_Metadata:
       m_Items: []
-  - m_Id: 49940717584244736
-    m_Key: MISSION_REPORT_SUCCESS
-    m_Metadata:
-      m_Items: []
   - m_Id: 49940717588439040
     m_Key: CHALLENGE_REPORT_SUCCESS
     m_Metadata:
@@ -3173,10 +2885,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 49940717588439046
     m_Key: BARCODE_IMPORT_ERROR
-    m_Metadata:
-      m_Items: []
-  - m_Id: 50999984831586304
-    m_Key: NUTRI_EDITOR_TITLE
     m_Metadata:
       m_Items: []
   - m_Id: 50999984831586305
@@ -3285,10 +2993,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 51673178689232901
     m_Key: FC_CAT_CHEESE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51673178689232902
-    m_Key: FC_CAT_NUTS
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232903
@@ -3503,10 +3207,6 @@ MonoBehaviour:
     m_Key: FW_HISTORY_TITLE
     m_Metadata:
       m_Items: []
-  - m_Id: 51673178689232958
-    m_Key: FW_HISTORY_EMPTY
-    m_Metadata:
-      m_Items: []
   - m_Id: 51673178689232959
     m_Key: FW_DELETE_CONFIRM_TITLE
     m_Metadata:
@@ -3541,10 +3241,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347395
     m_Key: QUEST_PREVIOUS_FALLBACK
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347396
-    m_Key: QUEST_UNLOCKED_ACTION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397

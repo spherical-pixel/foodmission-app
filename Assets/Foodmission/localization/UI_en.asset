@@ -155,10 +155,6 @@ MonoBehaviour:
     m_Localized: Invalid postal code format.
     m_Metadata:
       m_Items: []
-  - m_Id: 25360689668284421
-    m_Localized: You must accept the Terms and Conditions to continue.
-    m_Metadata:
-      m_Items: []
   - m_Id: 25367919163596800
     m_Localized: Sign in
     m_Metadata:
@@ -201,8 +197,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Together, we\u2019ll connect your kitchen with caring for the planet.\r\n\r\nCook,
-      learn, share, and grow every day.\r\n\r\nReady to get started?"
+    m_Localized: "Together, we\u2019ll connect your kitchen with caring for the planet.\n\nCook,
+      learn, share, and grow every day.\n\nReady to get started?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -260,13 +256,6 @@ MonoBehaviour:
   - m_Id: 38465306467753984
     m_Localized: 'This action will permanently delete all your data from the platform.
 
-      
-
-      
-
-      
-
-      
 
       Are
       you sure?'
@@ -512,14 +501,6 @@ MonoBehaviour:
     m_Localized: Gender
     m_Metadata:
       m_Items: []
-  - m_Id: 40270509588340736
-    m_Localized: Complete your profile
-    m_Metadata:
-      m_Items: []
-  - m_Id: 40270634402439168
-    m_Localized: This information helps us to tailor your experience
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000001
     m_Localized: Email sent. Check your inbox.
     m_Metadata:
@@ -536,18 +517,6 @@ MonoBehaviour:
     m_Localized: Log Meal
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000005
-    m_Localized: Meal
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000006
-    m_Localized: Search meals...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000007
-    m_Localized: Create meal
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: Type of meal
     m_Metadata:
@@ -560,32 +529,12 @@ MonoBehaviour:
     m_Localized: Eaten out
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000011
-    m_Localized: Select items to deduct from pantry
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000013
-    m_Localized: Log Waste
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000014
-    m_Localized: Pantry item
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000015
     m_Localized: Quantity wasted
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
     m_Localized: Waste reason
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000017
-    m_Localized: Detection method
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000018
-    m_Localized: "Estimated cost (\u20AC)"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000019
@@ -596,10 +545,6 @@ MonoBehaviour:
     m_Localized: Save
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000021
-    m_Localized: Filter items...
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000022
     m_Localized: Move to waste
     m_Metadata:
@@ -608,56 +553,8 @@ MonoBehaviour:
     m_Localized: Your pantry is empty. Tap + to add items.
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000024
-    m_Localized: Food Waste
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000025
-    m_Localized: No waste logged yet. Tap + to log waste.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000026
-    m_Localized: Meal Log
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000027
-    m_Localized: No meals logged yet. Tap + to log your first meal.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000028
-    m_Localized: Shopping Lists
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000029
-    m_Localized: No shopping lists yet. Tap New List to create one.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000030
-    m_Localized: New List
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000031
-    m_Localized: Shopping List
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000032
-    m_Localized: Clear done
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000033
     m_Localized: No items yet. Add some products.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000034
-    m_Localized: Item
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000035
-    m_Localized: Quantity
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000036
-    m_Localized: Unit
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
@@ -672,24 +569,8 @@ MonoBehaviour:
     m_Localized: Select...
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000047
-    m_Localized: Skip
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000048
-    m_Localized: Save & continue
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000049
-    m_Localized: Exit without saving
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000050
     m_Localized: Confirm
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000051
-    m_Localized: Calories,Carbon footprint,Amount spent,Proteins
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
@@ -710,10 +591,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000056
     m_Localized: Delete list
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000057
-    m_Localized: Delete waste entry
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -752,24 +629,12 @@ MonoBehaviour:
     m_Localized: List name
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000067
-    m_Localized: Quantity
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000068
     m_Localized: View
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
     m_Localized: Select an item first.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000070
-    m_Localized: Could not add the selected item.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000071
-    m_Localized: 'Max: {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000072
@@ -788,41 +653,8 @@ MonoBehaviour:
     m_Localized: this item
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000076
-    m_Localized: Could not search meals. Check your connection.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000077
-    m_Localized: Enter a meal name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000078
-    m_Localized: Could not create meal
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000079
-    m_Localized: Select a meal first
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000080
     m_Localized: Select type of meal
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000081
-    m_Localized: Could not log the meal
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000082
-    m_Localized: Meal logged but pantry could not be updated. Please check your pantry
-      items.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000083
-    m_Localized: Error loading meal log
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000084
-    m_Localized: Select a pantry item first
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
@@ -831,10 +663,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000086
     m_Localized: Could not save waste entry
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000087
-    m_Localized: Could not refresh. Showing cached data.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
@@ -853,20 +681,12 @@ MonoBehaviour:
     m_Localized: Error loading pantry
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000092
-    m_Localized: 'Failed to import food: {0}'
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000093
     m_Localized: 'Could not add item: the product may be missing required data'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000094
     m_Localized: Could not add category item
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000095
-    m_Localized: Auto-detected expired item
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -969,10 +789,6 @@ MonoBehaviour:
     m_Localized: Unexpected error. Please try again.
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000121
-    m_Localized: An unexpected error occurred
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000122
     m_Localized: 'Could not add: {0}'
     m_Metadata:
@@ -1029,14 +845,6 @@ MonoBehaviour:
     m_Localized: Other
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985739
-    m_Localized: Automatic
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985740
-    m_Localized: Manual
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: Fridge
     m_Metadata:
@@ -1055,10 +863,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7590950985751
     m_Localized: Cupboard
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985752
-    m_Localized: Loading localizations...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
@@ -1105,20 +909,12 @@ MonoBehaviour:
     m_Localized: Invite Code
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950986008
-    m_Localized: Joining...
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950986009
     m_Localized: Members
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986010
     m_Localized: Invite Code
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950986011
-    m_Localized: Copy Code
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
@@ -1256,14 +1052,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6800027757305856
     m_Localized: Changing the environment will log you out. Are you sure?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7834217718210560
-    m_Localized: Generic foods
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7834734070587392
-    m_Localized: Products
     m_Metadata:
       m_Items: []
   - m_Id: 7835105786585088
@@ -1443,10 +1231,6 @@ MonoBehaviour:
     m_Localized: Recipe
     m_Metadata:
       m_Items: []
-  - m_Id: 26299707348213760
-    m_Localized: Select a meal type
-    m_Metadata:
-      m_Items: []
   - m_Id: 26305215656353792
     m_Localized: What type of meal do you want to log?
     m_Metadata:
@@ -1469,10 +1253,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26318181705441280
     m_Localized: Please add at least one food item
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142465236992
-    m_Localized: Food Information
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625600
@@ -1501,10 +1281,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142473625606
     m_Localized: Product details
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625607
-    m_Localized: No data available
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625608
@@ -1667,22 +1443,6 @@ MonoBehaviour:
     m_Localized: Minerals
     m_Metadata:
       m_Items: []
-  - m_Id: 21294142473625648
-    m_Localized: Nutri-Score
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625649
-    m_Localized: NOVA Group
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625650
-    m_Localized: Eco-Score
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625651
-    m_Localized: Nutrient levels
-    m_Metadata:
-      m_Items: []
   - m_Id: 21294142473625652
     m_Localized: Fat
     m_Metadata:
@@ -1697,22 +1457,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142473625655
     m_Localized: Salt
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625656
-    m_Localized: Unprocessed
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625657
-    m_Localized: Culinary ingredients
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819904
-    m_Localized: Processed
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819905
-    m_Localized: Ultra-processed
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819906
@@ -1753,10 +1497,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26341658550329344
     m_Localized: Delete item
-    m_Metadata:
-      m_Items: []
-  - m_Id: 26341658554523648
-    m_Localized: Brand
     m_Metadata:
       m_Items: []
   - m_Id: 26341658558717952
@@ -1895,10 +1635,6 @@ MonoBehaviour:
     m_Localized: +1 month
     m_Metadata:
       m_Items: []
-  - m_Id: 28537754026500096
-    m_Localized: Rating
-    m_Metadata:
-      m_Items: []
   - m_Id: 28538423429029888
     m_Localized: No reviews
     m_Metadata:
@@ -2023,9 +1759,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Welcome to FOODMISSION! \r\nA citizen science platform to improve
-      your sustainable and nutritional behaviours. \r\nLet's set up your account
-      in a few simple steps."
+    m_Localized: "Welcome to FOODMISSION! \nA citizen science platform to improve
+      your sustainable and nutritional behaviours. \nLet's set up your account in
+      a few simple steps."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2134,7 +1870,7 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Hello! To personalise your experience on Foodmission and help you
       achieve your goals, we\u2019d like to get to know you a bit better. Are you
-      up for it?\r\n\r\nPlease answer a few optional questions so that we can personalise
+      up for it?\n\nPlease answer a few optional questions so that we can personalise
       your tips, recipe suggestions and daily challenges."
     m_Metadata:
       m_Items: []
@@ -2228,7 +1964,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Oops! This section isn\u2019t available yet, but don\u2019t worry:
-      we\u2019re working on it so you\u2019ll be able to enjoy it very soon.\r\n\r\nFOODMISSION
+      we\u2019re working on it so you\u2019ll be able to enjoy it very soon.\n\nFOODMISSION
       is constantly evolving. We\u2019re improving the app and adding new features
       thanks to feedback from people like you. Thank you for helping us to keep growing!"
     m_Metadata:
@@ -2316,10 +2052,6 @@ MonoBehaviour:
     m_Localized: Select a preferred time
     m_Metadata:
       m_Items: []
-  - m_Id: 38390811899977728
-    m_Localized: What happened to this product?
-    m_Metadata:
-      m_Items: []
   - m_Id: 38390811904172032
     m_Localized: What happened to {0}?
     m_Metadata:
@@ -2373,13 +2105,6 @@ MonoBehaviour:
     m_Localized: 'To continue using the platform, you must accept the new document
       of {0}. If you don''t agree, you can logout or delete your account.
 
-      
-
-      
-
-      
-
-      
 
       Please
       take a moment to review again the new document of {0}, and feel free to contact
@@ -2391,8 +2116,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Hello!\r\n\r\nAs a participant in the pilot, we have a short survey
-      for you. Your answers will help us improve the FOODMISSION platform. \r\n\r\nWould
+    m_Localized: "Hello!\n\nAs a participant in the pilot, we have a short survey
+      for you. Your answers will help us improve the FOODMISSION platform. \n\nWould
       you like to complete it now?"
     m_Metadata:
       m_Items: []
@@ -2438,10 +2163,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44130682094477312
     m_Localized: MICRO LEARNING
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44134788494254080
-    m_Localized: Quest
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
@@ -2755,10 +2476,6 @@ MonoBehaviour:
     m_Localized: Jamaican
     m_Metadata:
       m_Items: []
-  - m_Id: 48534335161098273
-    m_Localized: Japanese
-    m_Metadata:
-      m_Items: []
   - m_Id: 48534335161098274
     m_Localized: Kenyan
     m_Metadata:
@@ -2887,18 +2604,6 @@ MonoBehaviour:
     m_Localized: Make recipe public to the community
     m_Metadata:
       m_Items: []
-  - m_Id: 48786163199107086
-    m_Localized: Ingredient name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107087
-    m_Localized: Quantity / Measure
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107088
-    m_Localized: Add
-    m_Metadata:
-      m_Items: []
   - m_Id: 48786163199107089
     m_Localized: You haven't added any ingredients yet.
     m_Metadata:
@@ -2949,10 +2654,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672709
     m_Localized: Save changes
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48876441641672710
-    m_Localized: Cancel edit
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672711
@@ -3227,10 +2928,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690406
-  - m_Id: 49940717584244736
-    m_Localized: Successfully logged!
-    m_Metadata:
-      m_Items: []
   - m_Id: 49940717588439040
     m_Localized: Challenge completed successfully!
     m_Metadata:
@@ -3260,10 +2957,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690406
-  - m_Id: 50999984831586304
-    m_Localized: Customize Foody
-    m_Metadata:
-      m_Items: []
   - m_Id: 50999984831586305
     m_Localized: Customize Foody
     m_Metadata:
@@ -3374,10 +3067,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 51673178689232901
     m_Localized: Cheese
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51673178689232902
-    m_Localized: Nuts & Seeds
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232903
@@ -3609,10 +3298,6 @@ MonoBehaviour:
     m_Localized: Your waste log
     m_Metadata:
       m_Items: []
-  - m_Id: 51673178689232958
-    m_Localized: You haven't logged any waste yet
-    m_Metadata:
-      m_Items: []
   - m_Id: 51673178689232959
     m_Localized: Delete record
     m_Metadata:
@@ -3649,10 +3334,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347395
     m_Localized: the previous quest
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347396
-    m_Localized: View Quest
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397
