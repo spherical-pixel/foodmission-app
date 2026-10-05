@@ -36,7 +36,6 @@
             </eu.foodmission.platform.Components.FormFieldItemPassword>
             <eu.foodmission.platform.Components.FormFieldItemDropDownField name="yearofbirth-dropdown" dropdown-defaultmessage="Selecciona">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22815397693612032)"/>
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000042)"/>
                     <ui:DataBinding property="HelpTextText" data-source-path="YearOfBirthHelpTextValue" binding-mode="TwoWay"/>
                     <ui:DataBinding property="HelpTextVariant" data-source-path="YearOfBirthHelpTextVariant" binding-mode="TwoWay"/>
@@ -60,7 +59,6 @@
             </eu.foodmission.platform.Components.FormFieldItemDropDownField>
             <eu.foodmission.platform.Components.FormFieldItemTextField name="postalcode">
                 <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22820717341958144)"/>
                     <ui:DataBinding property="TextFieldValue" data-source-path="PostalCode" binding-mode="ToSource"/>
                     <ui:DataBinding property="HelpTextText" data-source-path="PostalCodeHelpTextValue" binding-mode="TwoWay"/>
                     <ui:DataBinding property="HelpTextVariant" data-source-path="PostalCodeHelpTextVariant" binding-mode="TwoWay"/>

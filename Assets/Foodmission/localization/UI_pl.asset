@@ -154,11 +154,6 @@ MonoBehaviour:
     m_Localized: "Nieprawid\u0142owy format kodu pocztowego."
     m_Metadata:
       m_Items: []
-  - m_Id: 25360689668284421
-    m_Localized: "Aby kontynuowa\u0107, musisz zaakceptowa\u0107 Warunki korzystania
-      z serwisu."
-    m_Metadata:
-      m_Items: []
   - m_Id: 25367919163596800
     m_Localized: "Zaloguj si\u0119"
     m_Metadata:
@@ -203,8 +198,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35547983100502016
     m_Localized: "Razem po\u0142\u0105czymy Twoj\u0105 kuchni\u0119 z trosk\u0105
-      o nasz\u0105 planet\u0119.\r\n\r\nGotuj, ucz si\u0119, dziel si\u0119 i rozwijaj
-      si\u0119 ka\u017Cdego dnia.\r\n\r\nGotowy, by zacz\u0105\u0107?"
+      o nasz\u0105 planet\u0119.\n\nGotuj, ucz si\u0119, dziel si\u0119 i rozwijaj
+      si\u0119 ka\u017Cdego dnia.\n\nGotowy, by zacz\u0105\u0107?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -261,7 +256,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38465306467753984
     m_Localized: "Ta czynno\u015B\u0107 spowoduje trwa\u0142e usuni\u0119cie wszystkich
-      Twoich danych z platformy.\r\n\r\nCzy na pewno chcesz to zrobi\u0107?"
+      Twoich danych z platformy.\n\nCzy na pewno chcesz to zrobi\u0107?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -504,15 +499,6 @@ MonoBehaviour:
     m_Localized: "P\u0142e\u0107"
     m_Metadata:
       m_Items: []
-  - m_Id: 40270509588340736
-    m_Localized: "Uzupe\u0142nij sw\xF3j profil"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 40270634402439168
-    m_Localized: "Te informacje pomagaj\u0105 nam dostosowa\u0107 serwis do Twoich
-      potrzeb"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000001
     m_Localized: "Wiadomo\u015B\u0107 e-mail zosta\u0142a wys\u0142ana. Sprawd\u017A
       swoj\u0105 skrzynk\u0119 odbiorcz\u0105."
@@ -531,18 +517,6 @@ MonoBehaviour:
     m_Localized: "Dziennik posi\u0142k\xF3w"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000005
-    m_Localized: "Posi\u0142ek"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000006
-    m_Localized: "Wyszukaj posi\u0142ki..."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000007
-    m_Localized: "Utw\xF3rz posi\u0142ek"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: "Rodzaj posi\u0142ku"
     m_Metadata:
@@ -555,18 +529,6 @@ MonoBehaviour:
     m_Localized: "Zjedzone na mie\u015Bcie"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000011
-    m_Localized: "Wybierz produkty, kt\xF3re chcesz odj\u0105\u0107 z zapas\xF3w"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000013
-    m_Localized: "Odpady z k\u0142\xF3d"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000014
-    m_Localized: "Produkt spo\u017Cywczy"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000015
     m_Localized: "Ilo\u015B\u0107 zmarnowana"
     m_Metadata:
@@ -575,24 +537,12 @@ MonoBehaviour:
     m_Localized: "Bezsensowny pow\xF3d"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000017
-    m_Localized: Metoda wykrywania
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000018
-    m_Localized: "Szacowany koszt (\u20AC)"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000019
     m_Localized: Uwagi
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000020
     m_Localized: Zapisz
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000021
-    m_Localized: Filtruj pozycje...
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
@@ -604,59 +554,8 @@ MonoBehaviour:
       produkty."
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000024
-    m_Localized: "Marnotrawstwo \u017Cywno\u015Bci"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000025
-    m_Localized: "Nie zarejestrowano jeszcze \u017Cadnych odpad\xF3w. Naci\u015Bnij
-      +, aby zarejestrowa\u0107 odpady."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000026
-    m_Localized: "Dziennik posi\u0142k\xF3w"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000027
-    m_Localized: "Nie zarejestrowano jeszcze \u017Cadnych posi\u0142k\xF3w. Naci\u015Bnij
-      \u201E+\u201D, aby zarejestrowa\u0107 sw\xF3j pierwszy posi\u0142ek."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000028
-    m_Localized: "Listy zakup\xF3w"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000029
-    m_Localized: "Nie ma jeszcze \u017Cadnych list zakup\xF3w. Kliknij \u201ENowa
-      lista\u201D, aby j\u0105 utworzy\u0107."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000030
-    m_Localized: Nowa lista
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000031
-    m_Localized: "Lista zakup\xF3w"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000032
-    m_Localized: Gotowe
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000033
     m_Localized: "Jeszcze nie ma \u017Cadnych produkt\xF3w. Dodaj kilka produkt\xF3w."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000034
-    m_Localized: Pozycja
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000035
-    m_Localized: "Ilo\u015B\u0107"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000036
-    m_Localized: Jednostka
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
@@ -671,24 +570,8 @@ MonoBehaviour:
     m_Localized: Wybierz...
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000047
-    m_Localized: "Pomi\u0144"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000048
-    m_Localized: Zapisz i kontynuuj
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000049
-    m_Localized: Zamknij bez zapisywania
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000050
     m_Localized: "Potwierd\u017A"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000051
-    m_Localized: "Kalorie, \u015Blad w\u0119glowy, wydane kwoty, bia\u0142ka"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
@@ -709,10 +592,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000056
     m_Localized: "Usu\u0144 list\u0119"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000057
-    m_Localized: "Usu\u0144 wpis dotycz\u0105cy odpad\xF3w"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -751,24 +630,12 @@ MonoBehaviour:
     m_Localized: Nazwa listy
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000067
-    m_Localized: "Ilo\u015B\u0107"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000068
     m_Localized: "Wy\u015Bwietl"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
     m_Localized: Najpierw wybierz produkt.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000070
-    m_Localized: "Nie uda\u0142o si\u0119 doda\u0107 wybranego elementu."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000071
-    m_Localized: 'Max: {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000072
@@ -789,44 +656,8 @@ MonoBehaviour:
     m_Localized: ten produkt
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000076
-    m_Localized: "Nie uda\u0142o si\u0119 wyszuka\u0107 posi\u0142k\xF3w. Sprawd\u017A
-      po\u0142\u0105czenie."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000077
-    m_Localized: "Wpisz nazw\u0119 posi\u0142ku"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000078
-    m_Localized: "Nie uda\u0142o si\u0119 utworzy\u0107 posi\u0142ku"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000079
-    m_Localized: "Najpierw wybierz posi\u0142ek"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000080
     m_Localized: "Wybierz rodzaj posi\u0142ku"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000081
-    m_Localized: "Nie uda\u0142o si\u0119 zarejestrowa\u0107 posi\u0142ku"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000082
-    m_Localized: "Posi\u0142ek zosta\u0142 zarejestrowany, ale nie uda\u0142o si\u0119
-      zaktualizowa\u0107 zawarto\u015Bci spi\u017Carni. Sprawd\u017A prosz\u0119
-      zawarto\u015B\u0107 swojej spi\u017Carni."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000083
-    m_Localized: "Wyst\u0105pi\u0142 b\u0142\u0105d podczas wczytywania dziennika
-      posi\u0142k\xF3w"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000084
-    m_Localized: "Najpierw wybierz produkt spo\u017Cywczy"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
@@ -835,11 +666,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000086
     m_Localized: "Nie uda\u0142o si\u0119 zapisa\u0107 wpisu dotycz\u0105cego odpad\xF3w"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000087
-    m_Localized: "Nie uda\u0142o si\u0119 od\u015Bwie\u017Cy\u0107 strony. Wy\u015Bwietlane
-      s\u0105 dane z pami\u0119ci podr\u0119cznej."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
@@ -860,10 +686,6 @@ MonoBehaviour:
       spi\u017Carni"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000092
-    m_Localized: "Nie uda\u0142o si\u0119 zaimportowa\u0107 jedzenia: {0}"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000093
     m_Localized: "Nie uda\u0142o si\u0119 doda\u0107 pozycji: w produkcie mog\u0105
       brakowa\u0107 wymaganych danych"
@@ -871,11 +693,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000094
     m_Localized: "Nie uda\u0142o si\u0119 doda\u0107 pozycji do kategorii"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000095
-    m_Localized: "Automatycznie wykryty element, kt\xF3rego termin wa\u017Cno\u015Bci
-      up\u0142yn\u0105\u0142"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -979,10 +796,6 @@ MonoBehaviour:
     m_Localized: "Wyst\u0105pi\u0142 nieoczekiwany b\u0142\u0105d. Spr\xF3buj ponownie."
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000121
-    m_Localized: "Wyst\u0105pi\u0142 nieoczekiwany b\u0142\u0105d"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000122
     m_Localized: "Nie uda\u0142o si\u0119 doda\u0107: {0}"
     m_Metadata:
@@ -1039,14 +852,6 @@ MonoBehaviour:
     m_Localized: Inne
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985739
-    m_Localized: Automatyczny
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985740
-    m_Localized: "Instrukcja obs\u0142ugi"
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: "Lod\xF3wka"
     m_Metadata:
@@ -1065,10 +870,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7590950985751
     m_Localized: Szafka
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985752
-    m_Localized: "\u0141adowanie lokalizacji..."
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
@@ -1115,20 +916,12 @@ MonoBehaviour:
     m_Localized: Kod zaproszeniowy
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950986008
-    m_Localized: "\u0141\u0105czenie si\u0119..."
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950986009
     m_Localized: "Cz\u0142onkowie"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986010
     m_Localized: Kod zaproszeniowy
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950986011
-    m_Localized: Skopiuj kod
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
@@ -1248,14 +1041,6 @@ MonoBehaviour:
     m_Localized: "Nie znaleziono wynik\xF3w"
     m_Metadata:
       m_Items: []
-  - m_Id: 7834217718210560
-    m_Localized: "\u017Bywno\u015B\u0107 bezmarkowa"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7834734070587392
-    m_Localized: Produkty
-    m_Metadata:
-      m_Items: []
   - m_Id: 7835105786585088
     m_Localized: "Produkty spo\u017Cywcze bez nazwy handlowej niedost\u0119pne"
     m_Metadata:
@@ -1361,7 +1146,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Witamy w Foodmission!\r\nTa kr\xF3tka ankieta pomo\u017Ce nam pozna\u0107
+    m_Localized: "Witamy w Foodmission!\nTa kr\xF3tka ankieta pomo\u017Ce nam pozna\u0107
       Twoje nawyki \u017Cywieniowe, \u015Bwiadomo\u015B\u0107 w zakresie marnotrawstwa
       \u017Cywno\u015Bci oraz wybory zgodne z zasadami zr\xF3wnowa\u017Conego rozwoju,
       dzi\u0119ki czemu Nutri b\u0119dzie mog\u0142o dostosowa\u0107 rekomendacje
@@ -1458,10 +1243,6 @@ MonoBehaviour:
     m_Localized: Przepis
     m_Metadata:
       m_Items: []
-  - m_Id: 26299707348213760
-    m_Localized: "Wybierz rodzaj posi\u0142ku"
-    m_Metadata:
-      m_Items: []
   - m_Id: 26305215656353792
     m_Localized: "Jaki rodzaj posi\u0142ku chcesz zarejestrowa\u0107?"
     m_Metadata:
@@ -1488,10 +1269,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819914
     m_Localized: Kod kreskowy
-    m_Metadata:
-      m_Items: []
-  - m_Id: 26341658554523648
-    m_Localized: Marka
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819908
@@ -1524,10 +1301,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819907
     m_Localized: "Wielko\u015B\u0107 porcji"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625607
-    m_Localized: "Brak dost\u0119pnych danych"
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625613
@@ -1596,10 +1369,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26341658558717953
     m_Localized: Dalej
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142465236992
-    m_Localized: "Informacje o produktach spo\u017Cywczych"
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625600
@@ -1746,38 +1515,6 @@ MonoBehaviour:
     m_Localized: "Minera\u0142y"
     m_Metadata:
       m_Items: []
-  - m_Id: 21294142473625648
-    m_Localized: Nutri-Score
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625649
-    m_Localized: Grupa NOVA
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625650
-    m_Localized: Wynik ekologiczny
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625651
-    m_Localized: "Poziomy sk\u0142adnik\xF3w od\u017Cywczych"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625656
-    m_Localized: Nieprzetworzone
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625657
-    m_Localized: "Sk\u0142adniki kulinarne"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819904
-    m_Localized: Przetworzone
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819905
-    m_Localized: Wysoce przetworzone
-    m_Metadata:
-      m_Items: []
   - m_Id: 26661509051441152
     m_Localized: Lista zmian
     m_Metadata:
@@ -1921,10 +1658,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
-  - m_Id: 28537754026500096
-    m_Localized: Ocena
-    m_Metadata:
-      m_Items: []
   - m_Id: 28538423429029888
     m_Localized: Brak recenzji
     m_Metadata:
@@ -2035,9 +1768,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Witamy w FOODMISSION! \r\nTo platforma naukowa oparta na udziale
+    m_Localized: "Witamy w FOODMISSION! \nTo platforma naukowa oparta na udziale
       obywateli, kt\xF3rej celem jest poprawa Twoich nawyk\xF3w zwi\u0105zanych ze
-      zr\xF3wnowa\u017Conym od\u017Cywianiem. \r\nZa\u0142\xF3\u017C konto w kilku
+      zr\xF3wnowa\u017Conym od\u017Cywianiem. \nZa\u0142\xF3\u017C konto w kilku
       prostych krokach."
     m_Metadata:
       m_Items: []
@@ -2137,7 +1870,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "W Twoim kraju nie jest prowadzony \u017Caden program pilota\u017Cowy.\r\nMo\u017Cesz
+    m_Localized: "W Twoim kraju nie jest prowadzony \u017Caden program pilota\u017Cowy.\nMo\u017Cesz
       zapozna\u0107 si\u0119 z platform\u0105 i z niej korzysta\u0107, ale Twoje
       dane nie zostan\u0105 wykorzystane w badaniach w ramach programu pilota\u017Cowego."
     m_Metadata:
@@ -2145,9 +1878,9 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Witaj! Aby dostosowa\u0107 Twoje do\u015Bwiadczenia na Foodmission
       do Twoich potrzeb i pom\xF3c Ci osi\u0105gn\u0105\u0107 Twoje cele, chcieliby\u015Bmy
-      Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?\r\n\r\nOdpowiedz
-      prosz\u0119 na kilka opcjonalnych pyta\u0144, aby\u015Bmy mogli dostosowa\u0107
-      do Ciebie porady, propozycje przepis\xF3w i codzienne wyzwania."
+      Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?\n\nOdpowiedz prosz\u0119
+      na kilka opcjonalnych pyta\u0144, aby\u015Bmy mogli dostosowa\u0107 do Ciebie
+      porady, propozycje przepis\xF3w i codzienne wyzwania."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -2254,7 +1987,7 @@ MonoBehaviour:
   - m_Id: 34305618675228672
     m_Localized: "Ups! Ta sekcja nie jest jeszcze dost\u0119pna, ale nie martw si\u0119:
       pracujemy nad ni\u0105, wi\u0119c ju\u017C wkr\xF3tce b\u0119dziesz m\xF3g\u0142
-      z niej korzysta\u0107.\r\n\r\nFOODMISSION nieustannie si\u0119 rozwija. Ulepszamy
+      z niej korzysta\u0107.\n\nFOODMISSION nieustannie si\u0119 rozwija. Ulepszamy
       aplikacj\u0119 i dodajemy nowe funkcje dzi\u0119ki opiniom od u\u017Cytkownik\xF3w
       takich jak Ty. Dzi\u0119kujemy za pomoc w naszym dalszym rozwoju!"
     m_Metadata:
@@ -2349,10 +2082,6 @@ MonoBehaviour:
     m_Localized: Wybierz dogodny termin
     m_Metadata:
       m_Items: []
-  - m_Id: 38390811899977728
-    m_Localized: "Co si\u0119 sta\u0142o z tym produktem?"
-    m_Metadata:
-      m_Items: []
   - m_Id: 38390811904172032
     m_Localized: "Co si\u0119 sta\u0142o z {0}?"
     m_Metadata:
@@ -2407,7 +2136,7 @@ MonoBehaviour:
   - m_Id: 40938002757705728
     m_Localized: "Aby nadal korzysta\u0107 z platformy, musisz zaakceptowa\u0107
       nowy dokument {0}. Je\u015Bli nie wyra\u017Casz zgody, mo\u017Cesz si\u0119
-      wylogowa\u0107 lub usun\u0105\u0107 swoje konto.\r\n\r\nPo\u015Bwi\u0119\u0107
+      wylogowa\u0107 lub usun\u0105\u0107 swoje konto.\n\nPo\u015Bwi\u0119\u0107
       chwil\u0119 na ponowne zapoznanie si\u0119 z nowym dokumentem {0} i skontaktuj
       si\u0119 z nami, je\u015Bli uwa\u017Casz, \u017Ce zawiera on jakie\u015B nie\u015Bcis\u0142o\u015Bci."
     m_Metadata:
@@ -2417,9 +2146,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Witaj!\r\n\r\nJako uczestnik programu pilota\u017Cowego mamy dla
-      Ciebie kr\xF3tk\u0105 ankiet\u0119. Twoje odpowiedzi pomog\u0105 nam ulepszy\u0107
-      platform\u0119 FOODMISSION. \r\n\r\nCzy chcesz j\u0105 wype\u0142ni\u0107 teraz?"
+    m_Localized: "Witaj!\n\nJako uczestnik programu pilota\u017Cowego mamy dla Ciebie
+      kr\xF3tk\u0105 ankiet\u0119. Twoje odpowiedzi pomog\u0105 nam ulepszy\u0107
+      platform\u0119 FOODMISSION. \n\nCzy chcesz j\u0105 wype\u0142ni\u0107 teraz?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -2465,10 +2194,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44130682094477312
     m_Localized: MIKRONAUKA
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44134788494254080
-    m_Localized: Quest
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
@@ -2784,10 +2509,6 @@ MonoBehaviour:
     m_Localized: Jamajska
     m_Metadata:
       m_Items: []
-  - m_Id: 48534335161098273
-    m_Localized: "Japo\u0144ska"
-    m_Metadata:
-      m_Items: []
   - m_Id: 48534335161098274
     m_Localized: "Kenia\u0144ska"
     m_Metadata:
@@ -2916,18 +2637,6 @@ MonoBehaviour:
     m_Localized: "Udost\u0119pnij przepis spo\u0142eczno\u015Bci"
     m_Metadata:
       m_Items: []
-  - m_Id: 48786163199107086
-    m_Localized: "Nazwa sk\u0142adnika"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107087
-    m_Localized: "Ilo\u015B\u0107 / Miara"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107088
-    m_Localized: Dodaj
-    m_Metadata:
-      m_Items: []
   - m_Id: 48786163199107089
     m_Localized: "Nie dodano jeszcze \u017Cadnych sk\u0142adnik\xF3w."
     m_Metadata:
@@ -2978,10 +2687,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672709
     m_Localized: Zapisz zmiany
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48876441641672710
-    m_Localized: "Anuluj edycj\u0119"
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672711
@@ -3267,10 +2972,6 @@ MonoBehaviour:
     m_Localized: "Og\u0142oszenie dotycz\u0105ce spi\u017Carni"
     m_Metadata:
       m_Items: []
-  - m_Id: 49940717584244736
-    m_Localized: "Pomy\u015Blnie zarejestrowano!"
-    m_Metadata:
-      m_Items: []
   - m_Id: 49940717588439040
     m_Localized: "Wyzwanie pomy\u015Blnie uko\u0144czone!"
     m_Metadata:
@@ -3300,10 +3001,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
-  - m_Id: 50999984831586304
-    m_Localized: Dostosuj Foody
-    m_Metadata:
-      m_Items: []
   - m_Id: 50999984831586305
     m_Localized: Dostosuj Foody
     m_Metadata:
@@ -3417,10 +3114,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 51673178689232901
     m_Localized: Ser
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51673178689232902
-    m_Localized: Orzechy i nasiona
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232903
@@ -3653,10 +3346,6 @@ MonoBehaviour:
     m_Localized: "Tw\xF3j dziennik marnowania"
     m_Metadata:
       m_Items: []
-  - m_Id: 51673178689232958
-    m_Localized: "Nie zarejestrowa\u0142e\u015B jeszcze marnowania"
-    m_Metadata:
-      m_Items: []
   - m_Id: 51673178689232959
     m_Localized: "Usu\u0144 wpis"
     m_Metadata:
@@ -3693,10 +3382,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347395
     m_Localized: poprzednie zadanie
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347396
-    m_Localized: Zobacz zadanie
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397

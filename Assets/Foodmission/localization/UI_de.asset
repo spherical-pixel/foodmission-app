@@ -154,11 +154,6 @@ MonoBehaviour:
     m_Localized: "Ung\xFCltiges Postleitzahlenformat."
     m_Metadata:
       m_Items: []
-  - m_Id: 25360689668284421
-    m_Localized: "Sie m\xFCssen die Allgemeinen Gesch\xE4ftsbedingungen akzeptieren,
-      um fortzufahren."
-    m_Metadata:
-      m_Items: []
   - m_Id: 25367919163596800
     m_Localized: Anmelden
     m_Metadata:
@@ -202,8 +197,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Gemeinsam verbinden wir Ihre K\xFCche mit dem Schutz unseres Planeten.\r\n\r\nKochen,
-      lernen, teilen und jeden Tag wachsen.\r\n\r\nSind Sie bereit, loszulegen?"
+    m_Localized: "Gemeinsam verbinden wir Ihre K\xFCche mit dem Schutz unseres Planeten.\n\nKochen,
+      lernen, teilen und jeden Tag wachsen.\n\nSind Sie bereit, loszulegen?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -260,7 +255,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38465306467753984
     m_Localized: "Durch diesen Vorgang werden alle Ihre Daten dauerhaft von der Plattform
-      gel\xF6scht.\r\n\r\nSind Sie sicher?"
+      gel\xF6scht.\n\nSind Sie sicher?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -503,14 +498,6 @@ MonoBehaviour:
     m_Localized: Geschlecht
     m_Metadata:
       m_Items: []
-  - m_Id: 40270509588340736
-    m_Localized: "Vervollst\xE4ndigen Sie Ihr Profil"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 40270634402439168
-    m_Localized: Diese Informationen helfen uns dabei, Ihr Erlebnis individuell anzupassen
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000001
     m_Localized: Die E-Mail wurde gesendet. Bitte sehen Sie in Ihrem Posteingang
       nach.
@@ -529,18 +516,6 @@ MonoBehaviour:
     m_Localized: Tagesbericht
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000005
-    m_Localized: Mahlzeit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000006
-    m_Localized: Gerichte suchen...
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000007
-    m_Localized: Mahlzeit erstellen
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: Art der Mahlzeit
     m_Metadata:
@@ -553,19 +528,6 @@ MonoBehaviour:
     m_Localized: "Ausw\xE4rts gegessen"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000011
-    m_Localized: "W\xE4hlen Sie Artikel aus, die aus der Vorratskammer abgezogen
-      werden sollen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000013
-    m_Localized: "Holzabf\xE4lle"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000014
-    m_Localized: Vorratsartikel
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000015
     m_Localized: Verschwendete Menge
     m_Metadata:
@@ -574,24 +536,12 @@ MonoBehaviour:
     m_Localized: Unsinniger Grund
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000017
-    m_Localized: Nachweismethode
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000018
-    m_Localized: "Gesch\xE4tzte Kosten (\u20AC)"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000019
     m_Localized: Anmerkungen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000020
     m_Localized: Speichern
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000021
-    m_Localized: Artikel filtern...
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
@@ -603,59 +553,8 @@ MonoBehaviour:
       hinzuzuf\xFCgen."
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000024
-    m_Localized: Lebensmittelverschwendung
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000025
-    m_Localized: "Es wurde noch kein Abfall erfasst. Tippen Sie auf \u201E+\u201C,
-      um Abfall zu erfassen."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000026
-    m_Localized: Essensprotokoll
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000027
-    m_Localized: "Es wurden noch keine Mahlzeiten erfasst. Tippe auf \u201E+\u201C,
-      um deine erste Mahlzeit zu erfassen."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000028
-    m_Localized: Einkaufslisten
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000029
-    m_Localized: "Es gibt noch keine Einkaufslisten. Tippen Sie auf \u201ENeue Liste\u201C,
-      um eine zu erstellen."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000030
-    m_Localized: Neue Liste
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000031
-    m_Localized: Einkaufsliste
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000032
-    m_Localized: Fertig
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000033
     m_Localized: "Noch keine Artikel. F\xFCgen Sie einige Produkte hinzu."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000034
-    m_Localized: Artikel
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000035
-    m_Localized: Anzahl
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000036
-    m_Localized: Einheit
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
@@ -670,24 +569,8 @@ MonoBehaviour:
     m_Localized: "Ausw\xE4hlen..."
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000047
-    m_Localized: "\xDCberspringen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000048
-    m_Localized: Speichern und weiter
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000049
-    m_Localized: Beenden ohne zu speichern
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000050
     m_Localized: "Best\xE4tigen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000051
-    m_Localized: "Kalorien, CO\u2082-Fu\xDFabdruck, Ausgaben, Proteine"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
@@ -708,10 +591,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000056
     m_Localized: "Liste l\xF6schen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000057
-    m_Localized: "Abfallbuchung l\xF6schen"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000058
@@ -750,24 +629,12 @@ MonoBehaviour:
     m_Localized: Name der Liste
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000067
-    m_Localized: Anzahl
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000068
     m_Localized: Anzeigen
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
     m_Localized: "W\xE4hlen Sie zun\xE4chst einen Artikel aus."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000070
-    m_Localized: "Das ausgew\xE4hlte Element konnte nicht hinzugef\xFCgt werden."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000071
-    m_Localized: 'Max: {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000072
@@ -786,42 +653,8 @@ MonoBehaviour:
     m_Localized: dieser Artikel
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000076
-    m_Localized: "Die Suche nach Gerichten war nicht m\xF6glich. Bitte \xFCberpr\xFCfen
-      Sie Ihre Internetverbindung."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000077
-    m_Localized: Geben Sie den Namen einer Mahlzeit ein
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000078
-    m_Localized: Mahlzeit konnte nicht angelegt werden
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000079
-    m_Localized: "W\xE4hlen Sie zuerst eine Mahlzeit aus"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000080
     m_Localized: "W\xE4hlen Sie die Art der Mahlzeit aus"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000081
-    m_Localized: Die Mahlzeit konnte nicht erfasst werden
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000082
-    m_Localized: "Die Mahlzeit wurde erfasst, aber die Vorratsliste konnte nicht
-      aktualisiert werden. Bitte \xFCberpr\xFCfen Sie Ihre Vorratsartikel."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000083
-    m_Localized: "Fehler beim Laden des Ern\xE4hrungsprotokolls"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000084
-    m_Localized: "W\xE4hlen Sie zun\xE4chst ein Produkt aus dem Vorratsschrank aus"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
@@ -830,11 +663,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000086
     m_Localized: Der Abfall-Eintrag konnte nicht gespeichert werden
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000087
-    m_Localized: Die Aktualisierung ist fehlgeschlagen. Es werden zwischengespeicherte
-      Daten angezeigt.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
@@ -853,10 +681,6 @@ MonoBehaviour:
     m_Localized: Fehler beim Laden der Vorratskammer
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000092
-    m_Localized: 'Der Import der Lebensmittel ist fehlgeschlagen: {0}'
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000093
     m_Localized: "Artikel konnte nicht hinzugef\xFCgt werden: Dem Produkt fehlen
       m\xF6glicherweise erforderliche Angaben"
@@ -864,10 +688,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000094
     m_Localized: "Kategorieeintrag konnte nicht hinzugef\xFCgt werden"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 41000000000000095
-    m_Localized: Automatisch erkannter abgelaufener Artikel
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -971,10 +791,6 @@ MonoBehaviour:
     m_Localized: Unerwarteter Fehler. Bitte versuchen Sie es erneut.
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000121
-    m_Localized: Es ist ein unerwarteter Fehler aufgetreten.
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000122
     m_Localized: "Konnte nicht hinzugef\xFCgt werden: {0}"
     m_Metadata:
@@ -1031,14 +847,6 @@ MonoBehaviour:
     m_Localized: Sonstiges
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950985739
-    m_Localized: Automatisch
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985740
-    m_Localized: Handbuch
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950985747
     m_Localized: "K\xFChlschrank"
     m_Metadata:
@@ -1057,10 +865,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7590950985751
     m_Localized: Schrank
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950985752
-    m_Localized: Lokalisierungen werden geladen...
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
@@ -1107,20 +911,12 @@ MonoBehaviour:
     m_Localized: Einladungscode
     m_Metadata:
       m_Items: []
-  - m_Id: 7590950986008
-    m_Localized: Beitritt...
-    m_Metadata:
-      m_Items: []
   - m_Id: 7590950986009
     m_Localized: Mitglieder
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986010
     m_Localized: Einladungscode
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7590950986011
-    m_Localized: Code kopieren
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
@@ -1240,14 +1036,6 @@ MonoBehaviour:
     m_Localized: Es wurden keine Ergebnisse gefunden
     m_Metadata:
       m_Items: []
-  - m_Id: 7834217718210560
-    m_Localized: No-Name-Lebensmittel
-    m_Metadata:
-      m_Items: []
-  - m_Id: 7834734070587392
-    m_Localized: Produkte
-    m_Metadata:
-      m_Items: []
   - m_Id: 7835105786585088
     m_Localized: "Generische Lebensmittel nicht verf\xFCgbar"
     m_Metadata:
@@ -1353,7 +1141,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Willkommen bei Foodmission!\r\nDiese kurze Umfrage hilft uns dabei,
+    m_Localized: "Willkommen bei Foodmission!\nDiese kurze Umfrage hilft uns dabei,
       Ihre Ern\xE4hrungsgewohnheiten, Ihr Bewusstsein f\xFCr Lebensmittelverschwendung
       und Ihre Entscheidungen im Hinblick auf Nachhaltigkeit besser zu verstehen,
       damit Nutri Ihnen ma\xDFgeschneiderte Empfehlungen geben kann."
@@ -1447,10 +1235,6 @@ MonoBehaviour:
     m_Localized: Rezept
     m_Metadata:
       m_Items: []
-  - m_Id: 26299707348213760
-    m_Localized: "W\xE4hlen Sie eine Mahlzeitart aus"
-    m_Metadata:
-      m_Items: []
   - m_Id: 26305215656353792
     m_Localized: "Welche Art von Mahlzeit m\xF6chtest du eintragen?"
     m_Metadata:
@@ -1477,10 +1261,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819914
     m_Localized: Barcode
-    m_Metadata:
-      m_Items: []
-  - m_Id: 26341658554523648
-    m_Localized: Marke
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819908
@@ -1513,10 +1293,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 21294142477819907
     m_Localized: "Portionsgr\xF6\xDFe"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625607
-    m_Localized: "Keine Daten verf\xFCgbar"
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625613
@@ -1585,10 +1361,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 26341658558717953
     m_Localized: Weiter
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142465236992
-    m_Localized: Informationen zu Lebensmitteln
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625600
@@ -1735,38 +1507,6 @@ MonoBehaviour:
     m_Localized: Mineralien
     m_Metadata:
       m_Items: []
-  - m_Id: 21294142473625648
-    m_Localized: Nutri-Score
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625649
-    m_Localized: NOVA-Gruppe
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625650
-    m_Localized: "\xD6ko-Score"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625651
-    m_Localized: "N\xE4hrstoffgehalte"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625656
-    m_Localized: Unbearbeitet
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142473625657
-    m_Localized: Kulinarische Zutaten
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819904
-    m_Localized: Bearbeitet
-    m_Metadata:
-      m_Items: []
-  - m_Id: 21294142477819905
-    m_Localized: Hochverarbeitet
-    m_Metadata:
-      m_Items: []
   - m_Id: 26661509051441152
     m_Localized: "\xC4nderungsliste"
     m_Metadata:
@@ -1910,10 +1650,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
-  - m_Id: 28537754026500096
-    m_Localized: Bewertung
-    m_Metadata:
-      m_Items: []
   - m_Id: 28538423429029888
     m_Localized: Keine Bewertungen
     m_Metadata:
@@ -2024,10 +1760,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Willkommen bei FOODMISSION! \r\nEine Citizen-Science-Plattform,
-      die Ihnen dabei hilft, Ihr Verhalten in Bezug auf Nachhaltigkeit und Ern\xE4hrung
-      zu verbessern. \r\nLassen Sie uns in wenigen einfachen Schritten Ihr Konto
-      einrichten."
+    m_Localized: "Willkommen bei FOODMISSION! \nEine Citizen-Science-Plattform, die
+      Ihnen dabei hilft, Ihr Verhalten in Bezug auf Nachhaltigkeit und Ern\xE4hrung
+      zu verbessern. \nLassen Sie uns in wenigen einfachen Schritten Ihr Konto einrichten."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
@@ -2123,7 +1858,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "In Ihrem Land l\xE4uft derzeit kein Pilotprojekt.\r\nSie k\xF6nnen
+    m_Localized: "In Ihrem Land l\xE4uft derzeit kein Pilotprojekt.\nSie k\xF6nnen
       die Plattform erkunden und nutzen, Ihre Daten werden jedoch nicht f\xFCr die
       Pilotstudie herangezogen."
     m_Metadata:
@@ -2131,7 +1866,7 @@ MonoBehaviour:
   - m_Id: 34022749457342464
     m_Localized: "Hallo! Um dein Erlebnis auf Foodmission individuell anzupassen
       und dir dabei zu helfen, deine Ziele zu erreichen, m\xF6chten wir dich gerne
-      etwas besser kennenlernen. Hast du Lust dazu?\r\n\r\nBitte beantworte ein paar
+      etwas besser kennenlernen. Hast du Lust dazu?\n\nBitte beantworte ein paar
       freiwillige Fragen, damit wir unsere Tipps, Rezeptvorschl\xE4ge und t\xE4glichen
       Herausforderungen individuell auf dich abstimmen k\xF6nnen."
     m_Metadata:
@@ -2237,7 +1972,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34305618675228672
     m_Localized: "Hoppla! Dieser Bereich ist noch nicht verf\xFCgbar, aber keine
-      Sorge: Wir arbeiten daran, damit du ihn schon bald nutzen kannst.\r\n\r\nFOODMISSION
+      Sorge: Wir arbeiten daran, damit du ihn schon bald nutzen kannst.\n\nFOODMISSION
       entwickelt sich st\xE4ndig weiter. Dank des Feedbacks von Nutzern wie dir verbessern
       wir die App und f\xFCgen neue Funktionen hinzu. Vielen Dank, dass du uns dabei
       hilfst, weiter zu wachsen!"
@@ -2333,10 +2068,6 @@ MonoBehaviour:
     m_Localized: "W\xE4hlen Sie einen Wunschtermin aus"
     m_Metadata:
       m_Items: []
-  - m_Id: 38390811899977728
-    m_Localized: Was ist mit diesem Produkt passiert?
-    m_Metadata:
-      m_Items: []
   - m_Id: 38390811904172032
     m_Localized: Was ist mit {0} passiert?
     m_Metadata:
@@ -2389,8 +2120,8 @@ MonoBehaviour:
   - m_Id: 40938002757705728
     m_Localized: "Um die Plattform weiterhin nutzen zu k\xF6nnen, m\xFCssen Sie das
       neue Dokument zu {0} akzeptieren. Wenn Sie damit nicht einverstanden sind,
-      k\xF6nnen Sie sich abmelden oder Ihr Konto l\xF6schen.\r\n\r\nBitte nehmen
-      Sie sich einen Moment Zeit, um das neue Dokument zu {0} noch einmal durchzulesen,
+      k\xF6nnen Sie sich abmelden oder Ihr Konto l\xF6schen.\n\nBitte nehmen Sie
+      sich einen Moment Zeit, um das neue Dokument zu {0} noch einmal durchzulesen,
       und wenden Sie sich gerne an uns, falls Sie der Meinung sind, dass darin etwas
       nicht stimmt."
     m_Metadata:
@@ -2400,9 +2131,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Hallo!\r\n\r\nAls Teilnehmer am Pilotprojekt haben wir eine kurze
-      Umfrage f\xFCr dich. Deine Antworten helfen uns dabei, die FOODMISSION-Plattform
-      zu verbessern. \r\n\r\nM\xF6chtest du die Umfrage jetzt ausf\xFCllen?"
+    m_Localized: "Hallo!\n\nAls Teilnehmer am Pilotprojekt haben wir eine kurze Umfrage
+      f\xFCr dich. Deine Antworten helfen uns dabei, die FOODMISSION-Plattform zu
+      verbessern. \n\nM\xF6chtest du die Umfrage jetzt ausf\xFCllen?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -2449,10 +2180,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 44130682094477312
     m_Localized: MIKRO-LERNEN
-    m_Metadata:
-      m_Items: []
-  - m_Id: 44134788494254080
-    m_Localized: Quest
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
@@ -2767,10 +2494,6 @@ MonoBehaviour:
     m_Localized: Jamaikanisch
     m_Metadata:
       m_Items: []
-  - m_Id: 48534335161098273
-    m_Localized: Japanisch
-    m_Metadata:
-      m_Items: []
   - m_Id: 48534335161098274
     m_Localized: Kenianisch
     m_Metadata:
@@ -2899,18 +2622,6 @@ MonoBehaviour:
     m_Localized: "Rezept f\xFCr die Community \xF6ffentlich machen"
     m_Metadata:
       m_Items: []
-  - m_Id: 48786163199107086
-    m_Localized: Name der Zutat
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107087
-    m_Localized: "Menge / Ma\xDF"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48786163199107088
-    m_Localized: "Hinzuf\xFCgen"
-    m_Metadata:
-      m_Items: []
   - m_Id: 48786163199107089
     m_Localized: "Du hast noch keine Zutaten hinzugef\xFCgt."
     m_Metadata:
@@ -2961,10 +2672,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 48876441641672709
     m_Localized: "\xC4nderungen speichern"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 48876441641672710
-    m_Localized: Bearbeiten abbrechen
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672711
@@ -3242,10 +2949,6 @@ MonoBehaviour:
     m_Localized: Hinweis zur Vorratskammer
     m_Metadata:
       m_Items: []
-  - m_Id: 49940717584244736
-    m_Localized: Erfolgreich eingetragen!
-    m_Metadata:
-      m_Items: []
   - m_Id: 49940717588439040
     m_Localized: Herausforderung erfolgreich abgeschlossen!
     m_Metadata:
@@ -3275,10 +2978,6 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
-  - m_Id: 50999984831586304
-    m_Localized: Foody anpassen
-    m_Metadata:
-      m_Items: []
   - m_Id: 50999984831586305
     m_Localized: Foody anpassen
     m_Metadata:
@@ -3389,10 +3088,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 51673178689232901
     m_Localized: "K\xE4se"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51673178689232902
-    m_Localized: "N\xFCsse & Samen"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232903
@@ -3625,10 +3320,6 @@ MonoBehaviour:
     m_Localized: Dein Verschwendungsprotokoll
     m_Metadata:
       m_Items: []
-  - m_Id: 51673178689232958
-    m_Localized: Du hast noch keine Verschwendung erfasst
-    m_Metadata:
-      m_Items: []
   - m_Id: 51673178689232959
     m_Localized: "Eintrag l\xF6schen"
     m_Metadata:
@@ -3665,10 +3356,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347395
     m_Localized: die vorherige Quest
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347396
-    m_Localized: Quest anzeigen
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397
