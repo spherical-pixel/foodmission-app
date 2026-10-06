@@ -147,5 +147,43 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_store.GetAppState().hasConfirmedDimensionLevels);
             Assert.AreEqual(0, _store.GetAppState().dimensionLevels.Length);
         }
+
+        [Test]
+        public void Initialize_EnablesContinue()
+        {
+            // StepFlowViewModelBase validates the step inside Initialize, before the rows exist
+            var vm = CreateVm(DimensionLevelsMode.Proposal);
+
+            Assert.IsTrue(vm.CanGoNext, "Continue must be enabled: the levels always have a value");
+
+            vm.Mode = DimensionLevelsMode.Edit;
+            vm.Reload();
+            Assert.IsTrue(vm.CanGoNext);
+        }
+
+        [Test]
+        public async Task EnsureDimensionNamesAsync_PreloadsCatalogueAndRenamesRows()
+        {
+            var dims = new Mock<IDimensionService>();
+            bool loaded = false;
+            dims.Setup(d => d.IsLoaded).Returns(() => loaded);
+            dims.Setup(d => d.PreloadAsync(It.IsAny<string>(), It.IsAny<bool>()))
+                .Callback(() => loaded = true)
+                .ReturnsAsync((new Dimension[0], (ApiErrorResponse)null));
+            dims.Setup(d => d.GetDimension(DimensionCode.Packaging))
+                .Returns(() => loaded ? new Dimension { code = DimensionCode.Packaging, name = "Packaging" } : null);
+            var vm = new DimensionLevelsViewModel(_store, _auth.Object, dims.Object) { Mode = DimensionLevelsMode.Proposal };
+            vm.Initialize();
+            vm.SetLevel(DimensionCode.Packaging, "ADVANCED");
+            int changes = 0;
+            vm.RowsChanged += () => changes++;
+
+            await vm.EnsureDimensionNamesAsync();
+
+            DimensionLevelRow row = vm.Rows.First(r => r.DimensionCode == DimensionCode.Packaging);
+            Assert.AreEqual("Packaging", row.DimensionName);
+            Assert.AreEqual("ADVANCED", row.Level, "Loading names must not reset the user's choice");
+            Assert.AreEqual(1, changes);
+        }
     }
 }

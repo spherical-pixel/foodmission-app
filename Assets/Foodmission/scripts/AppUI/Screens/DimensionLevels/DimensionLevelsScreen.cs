@@ -29,6 +29,7 @@ namespace eu.foodmission.platform
         private VisualElement _rowsContainer;
         private Unity.AppUI.UI.Button _resetButton;
         private readonly Dictionary<string, ActionGroup> _groupsByDimension = new Dictionary<string, ActionGroup>();
+        private readonly Dictionary<string, Unity.AppUI.UI.Text> _namesByDimension = new Dictionary<string, Unity.AppUI.UI.Text>();
         private readonly List<AccessibilityNode> _rowNodes = new List<AccessibilityNode>();
 
         protected override int StepCount => 1;
@@ -70,6 +71,7 @@ namespace eu.foodmission.platform
 
             _viewModel.Reload();
             ApplyMode();
+            _ = _viewModel.EnsureDimensionNamesAsync();
         }
 
         protected override void OnViewModelBound()
@@ -114,6 +116,13 @@ namespace eu.foodmission.platform
             }
 
             BuildRows();
+
+            // Accessibility nodes were created inside base.OnEnter, before the rows existed
+            if (_accessibilityHierarchy != null)
+            {
+                TeardownAccessibilityNodes();
+                SetupAccessibilityNodes();
+            }
         }
 
         protected override void SetupCompanionSlot(VisualElement slot)
@@ -168,6 +177,7 @@ namespace eu.foodmission.platform
 
             _rowsContainer.Clear();
             _groupsByDimension.Clear();
+            _namesByDimension.Clear();
             bool proposal = _viewModel.Mode == DimensionLevelsMode.Proposal;
 
             foreach (DimensionLevelRow row in _viewModel.Rows)
@@ -219,6 +229,7 @@ namespace eu.foodmission.platform
                 }
 
                 _groupsByDimension[dimensionCode] = group;
+                _namesByDimension[dimensionCode] = name;
                 _rowsContainer.Add(card);
             }
 
@@ -237,6 +248,10 @@ namespace eu.foodmission.platform
                 if (_groupsByDimension.TryGetValue(row.DimensionCode, out ActionGroup group))
                 {
                     group.SetSelectionWithoutNotify(new[] { Math.Max(0, ContentLevel.Rank(row.Level)) });
+                }
+                if (_namesByDimension.TryGetValue(row.DimensionCode, out Unity.AppUI.UI.Text name))
+                {
+                    name.text = row.DimensionName;
                 }
             }
             UpdateResetButton();
@@ -279,6 +294,14 @@ namespace eu.foodmission.platform
 
         protected override void TeardownAccessibilityNodes()
         {
+            // Rebuilt after the rows exist (ApplyMode): remove the old nodes so they are not duplicated
+            if (_accessibilityHierarchy != null)
+            {
+                foreach (AccessibilityNode node in _rowNodes)
+                {
+                    _accessibilityHierarchy.RemoveNode(node);
+                }
+            }
             _rowNodes.Clear();
             base.TeardownAccessibilityNodes();
         }

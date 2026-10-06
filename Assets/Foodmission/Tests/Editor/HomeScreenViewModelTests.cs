@@ -1292,5 +1292,62 @@ namespace eu.foodmission.platform.Tests
             failures.Verify(f => f.Acknowledge(failed), Times.Once);
             vm.Dispose();
         }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_NextQuestAboveLevel_IsNotOffered()
+        {
+            bool originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
+            try
+            {
+                var mockGamification = new Mock<IGamificationService>();
+                var mockQuest = new Mock<IQuestService>();
+                var mockDimensions = new Mock<IDimensionService>();
+                mockDimensions.Setup(d => d.GetDimension("HEALTH")).Returns(new Dimension { id = "HEALTH", code = DimensionCode.NutritionValues, name = "Nutrition" });
+
+                // Existing user: completed an ADVANCED quest although their level is BEGINNER
+                var q1 = new Quest { id = "q1", code = "QUEST.HEALTH.ADVANCED.1", title = "A1", dimensionId = "HEALTH", level = "ADVANCED" };
+                var q2 = new Quest { id = "q2", code = "QUEST.HEALTH.ADVANCED.2", title = "A2", dimensionId = "HEALTH", level = "ADVANCED" };
+                mockQuest.Setup(q => q.GetQuestsAsync(null, null, null)).ReturnsAsync((new[] { q1, q2 }, (ApiErrorResponse)null));
+
+                var profile = new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    recentEvents = new[]
+                    {
+                        new UserEvent
+                        {
+                            id = "ev-quest-adv",
+                            eventType = "QUEST_COMPLETED",
+                            timestamp = "2026-09-23T10:05:00Z",
+                            metadata = JObject.FromObject(new { questCode = "QUEST.HEALTH.ADVANCED.1" })
+                        }
+                    }
+                };
+                mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                    .ReturnsAsync((profile, (ApiErrorResponse)null));
+
+                _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123", userSegment = "BEGINNER" });
+                PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+
+                var vm = new HomeScreenViewModel(
+                    _storeService,
+                    _mockAudioService.Object,
+                    questService: mockQuest.Object,
+                    gamificationService: mockGamification.Object,
+                    questProgressionService: new QuestProgressionService { UnlockAllQuests = false },
+                    dimensionService: mockDimensions.Object
+                );
+
+                var result = await vm.CheckPendingGamificationRewardsAsync();
+
+                Assert.AreEqual(1, result.Count);
+                Assert.IsNull(result[0].UnlockedQuest, "A next quest above the user's level must not be offered");
+            }
+            finally
+            {
+                DevUnlocks.All = originalDevUnlocks;
+            }
+        }
     }
 }

@@ -64,6 +64,7 @@ namespace eu.foodmission.platform
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
         private readonly IQuestService _questService;
+        private readonly IDimensionService _dimensionService;
         private readonly IQuizService _quizService;
         private readonly IMissionService _missionService;
         private readonly IChallengeService _challengeService;
@@ -95,13 +96,15 @@ namespace eu.foodmission.platform
             IBadgeService badgeService = null,
             IProgressWheelService progressWheelService = null,
             IMissionFailureService missionFailureService = null,
-            IDailyFoodFactService dailyFoodFactService = null) : base(storeService)
+            IDailyFoodFactService dailyFoodFactService = null,
+            IDimensionService dimensionService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
             _pilotSurveyService = pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
             _catalogService = catalogService ?? App.current?.services?.GetService<ICatalogService>();
             _questService = questService ?? App.current?.services?.GetService<IQuestService>();
+            _dimensionService = dimensionService ?? App.current?.services?.GetService<IDimensionService>();
             _quizService = quizService ?? App.current?.services?.GetService<IQuizService>();
             _missionService = missionService ?? App.current?.services?.GetService<IMissionService>();
             _challengeService = challengeService ?? App.current?.services?.GetService<IChallengeService>();
@@ -757,8 +760,23 @@ namespace eu.foodmission.platform
                 return null;
             }
 
-            return _questProgressionService.GetNextQuest(questId, allQuests) ??
-                   (!string.IsNullOrEmpty(questCode) ? _questProgressionService.GetNextQuest(questCode, allQuests) : null);
+            Quest next = _questProgressionService.GetNextQuest(questId, allQuests) ??
+                         (!string.IsNullOrEmpty(questCode) ? _questProgressionService.GetNextQuest(questCode, allQuests) : null);
+            return UnlessAboveUserLevel(next);
+        }
+
+        /// <summary>
+        /// Null when the quest is above the user's level in its dimension: completing a quest the user started above
+        /// their level must not offer (and open) the next one, which is locked in the Quests list.
+        /// </summary>
+        private Quest UnlessAboveUserLevel(Quest quest)
+        {
+            if (quest == null)
+            {
+                return null;
+            }
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+            return gate.GetLock(gate.DimensionById(quest.dimensionId), quest.level, started: false) == null ? quest : null;
         }
 
         /// <summary>A completed quest stops being the active one: the user picks the next quest (offered after the celebration).</summary>
@@ -1105,7 +1123,7 @@ namespace eu.foodmission.platform
 
                         if (cachedQuests != null && cachedQuests.Length > 0)
                         {
-                            unlockedQuest = _questProgressionService.GetNextQuest(code, cachedQuests);
+                            unlockedQuest = UnlessAboveUserLevel(_questProgressionService.GetNextQuest(code, cachedQuests));
                         }
                     }
 

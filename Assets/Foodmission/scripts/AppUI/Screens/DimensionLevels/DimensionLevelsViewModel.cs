@@ -74,7 +74,48 @@ namespace eu.foodmission.platform
                     ProposedLevel = proposal[i].level
                 });
             }
+
+            // StepFlowViewModelBase validated the step in Initialize, before the rows existed
+            RefreshStepState();
             RowsChanged?.Invoke();
+        }
+
+        /// <summary>Loads the dimension catalogue if needed (new users reach this screen early) and replaces code fallbacks with the localized names.</summary>
+        public async Task EnsureDimensionNamesAsync()
+        {
+            if (_dimensionService == null)
+            {
+                return;
+            }
+
+            if (!_dimensionService.IsLoaded)
+            {
+                try
+                {
+                    await _dimensionService.PreloadAsync(_storeService.GetAppState()?.lang);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[DimensionLevelsViewModel] EnsureDimensionNamesAsync: {ex.Message}");
+                    return;
+                }
+            }
+
+            bool changed = false;
+            foreach (DimensionLevelRow row in _rows)
+            {
+                string name = _dimensionService.GetDimension(row.DimensionCode)?.name;
+                if (!string.IsNullOrEmpty(name) && name != row.DimensionName)
+                {
+                    row.DimensionName = name;
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                RowsChanged?.Invoke();
+            }
         }
 
         public void SetLevel(string dimensionCode, string level)
