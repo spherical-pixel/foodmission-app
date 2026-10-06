@@ -1070,7 +1070,7 @@
     background-size: 256px 256px;
 }
 
-.fm-plain-background .appui-navigation-screen__container {
+.fm-plain-background .appui-navigation-screen {
     background-image: none;
 }
 

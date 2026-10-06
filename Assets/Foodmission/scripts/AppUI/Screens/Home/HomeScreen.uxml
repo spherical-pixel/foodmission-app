@@ -3,12 +3,12 @@
     <Style src="project://database/Assets/Foodmission/AppUI/FMProgressWheel.uss?fileID=7433441132597879392&amp;guid=0cce8fad8612c407c8975a0413072653&amp;type=3#FMProgressWheel"/>
     <ui:VisualElement name="root" data-source-type="eu.foodmission.platform.HomeScreenViewModel, Foodmission" class="fm-root">
         <eu.foodmission.platform.Components.FMNutriView name="nutri-render" class="fm-home-nutri-image" style="margin-bottom: 80px; height: 900px; padding-top: 0; margin-top: -150px;"/>
-        <appui:Heading text="Your nutritional intelligence status" size="S" class="centered-text" style="margin-top: -100px;">
+        <appui:Heading text="Your nutritional intelligence status" size="S" class="centered-text" style="margin-top: -100px; display: none;">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39915502649204736)"/>
             </Bindings>
         </appui:Heading>
-        <ui:VisualElement class="fm-home-status-bars">
+        <ui:VisualElement class="fm-home-status-bars" style="display: flex;">
             <eu.foodmission.platform.Components.FMStatusBar Heading-Emoji="🛒" Heading-Text="Knowledge" Progress-Value="0.75">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39915896439824384)"/>
@@ -30,7 +30,7 @@
                 </Bindings>
             </eu.foodmission.platform.Components.FMStatusBar>
         </ui:VisualElement>
-        <eu.foodmission.platform.Components.FMActiveQuestCard name="active-quest-card" style="display: none;"/>
+        <eu.foodmission.platform.Components.FMActiveQuestCard name="active-quest-card" style="display: flex;"/>
         <ui:VisualElement name="no-active-quest-banner" class="fm-home-no-quest-banner" style="display: none;">
             <appui:Text text="Elige un quest para empezar a aprender y progresar." class="fm-home-no-quest-text">
                 <Bindings>

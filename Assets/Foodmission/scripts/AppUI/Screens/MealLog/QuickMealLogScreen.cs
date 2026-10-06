@@ -47,7 +47,7 @@ namespace eu.foodmission.platform
 
             CacheUIElements();
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            AddDevDayOffsetButton();
+            //AddDevDayOffsetButton();
 #endif
         }
 
