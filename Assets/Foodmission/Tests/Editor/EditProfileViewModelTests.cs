@@ -67,7 +67,6 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(-1, _vm.SelectedShoppingResponsibilityIndex);
             Assert.AreEqual(-1, _vm.SelectedMotivationIndex);
             Assert.AreEqual(-1, _vm.SelectedDailyTimeCommitmentIndex);
-            Assert.AreEqual(-1, _vm.SelectedSegmentIndex);
             Assert.AreEqual(0, _vm.SelectedDietaryPreferenceIndices.Length);
             Assert.AreEqual(-1, _vm.SelectedCountryIndex);
             Assert.AreEqual(-1, _vm.SelectedRegionIndex);
@@ -81,7 +80,6 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(_vm.ActivityLevelOptions);
             Assert.IsNotNull(_vm.MotivationOptions);
             Assert.IsNotNull(_vm.DailyTimeCommitmentOptions);
-            Assert.IsNotNull(_vm.SegmentOptions);
             Assert.IsNotNull(_vm.CountryOptions);
             Assert.IsNotNull(_vm.RegionOptions);
         }
@@ -124,7 +122,6 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, _vm.ShoppingResponsibilityOptions.Count);
             Assert.AreEqual(1, _vm.DietaryPreferenceOptions.Count);
             Assert.AreEqual(1, _vm.MotivationOptions.Count);
-            Assert.AreEqual(1, _vm.SegmentOptions.Count);
             Assert.AreEqual(4, _vm.DailyTimeCommitmentOptions.Count);
             Assert.IsFalse(_vm.IsLoading);
         }
@@ -607,7 +604,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task PrePopulateFromState_PopulatesMotivationDailyTimeAndSegmentIndices()
+        public async Task PrePopulateFromState_PopulatesMotivationAndDailyTimeIndices()
         {
             var catalogData = new CatalogData
             {
@@ -627,19 +624,17 @@ namespace eu.foodmission.platform.Tests
             _storeService.SetAppState(new AppState
             {
                 userMotivation = "HEALTH",
-                userDailyTimeCommitmentMinutes = 10,
-                userSegment = "FAMILY"
+                userDailyTimeCommitmentMinutes = 10
             });
 
             await _vm.PrePopulateFromState();
 
             Assert.AreEqual(0, _vm.SelectedMotivationIndex);
             Assert.AreEqual(1, _vm.SelectedDailyTimeCommitmentIndex); // 10 min -> index 1
-            Assert.AreEqual(0, _vm.SelectedSegmentIndex);
         }
 
         [Test]
-        public async Task SubmitAsync_IncludesMotivationDailyTimeAndSegmentInRequest()
+        public async Task SubmitAsync_IncludesMotivationAndDailyTime_ButNeverSegment()
         {
             var catalogData = new CatalogData
             {
@@ -660,7 +655,9 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectedGenderIndex = 0;
             _vm.SelectedMotivationIndex = 0;
             _vm.SelectedDailyTimeCommitmentIndex = 2; // 15 min
-            _vm.SelectedSegmentIndex = 0;
+
+            // The segment is computed by the onboarding survey; editing the profile must not overwrite it
+            _storeService.SetAppState(new AppState { userSegment = "BEGINNER" });
 
             ProfileUpdateRequest capturedRequest = null;
             _mockAuthService
@@ -671,7 +668,7 @@ namespace eu.foodmission.platform.Tests
             await _vm.SubmitAsync();
 
             Assert.IsNotNull(capturedRequest);
-            Assert.AreEqual("FAMILY", capturedRequest.segment);
+            Assert.IsNull(capturedRequest.segment);
             Assert.IsNotNull(capturedRequest.preferences);
             Assert.AreEqual("HEALTH", capturedRequest.preferences.motivation);
             Assert.AreEqual(15, capturedRequest.preferences.dailyTimeCommitmentMinutes);

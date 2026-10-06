@@ -48,9 +48,6 @@ namespace eu.foodmission.platform
         private IList<string> _dailyTimeCommitmentOptions = new List<string>();
 
         [ObservableProperty]
-        private IList<string> _segmentOptions = new List<string>();
-
-        [ObservableProperty]
         private IList<string> _pushNotificationsOptions = new List<string>
         {
             "@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_YES",
@@ -91,9 +88,6 @@ namespace eu.foodmission.platform
         private int _selectedDailyTimeCommitmentIndex = -1;
 
         [ObservableProperty]
-        private int _selectedSegmentIndex = -1;
-
-        [ObservableProperty]
         private int _selectedPushNotificationsIndex = 0;
 
         [ObservableProperty]
@@ -115,11 +109,6 @@ namespace eu.foodmission.platform
         private readonly INotificationService _notificationService;
 
         /// <summary>
-        /// Segment selection is required for form validity.
-        /// </summary>
-        public bool IsFormValid => _selectedSegmentIndex >= 0;
-
-        /// <summary>
         /// Event to show an error toast.
         /// </summary>
         public event System.Action<string> ShowErrorRequest;
@@ -137,8 +126,7 @@ namespace eu.foodmission.platform
 
             PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(SelectedSegmentIndex) ||
-                    args.PropertyName == nameof(SelectedPushNotificationsIndex) ||
+                if (args.PropertyName == nameof(SelectedPushNotificationsIndex) ||
                     args.PropertyName == nameof(SelectedReminderTimeIndex))
                 {
                     InvalidateValidation();
@@ -148,7 +136,7 @@ namespace eu.foodmission.platform
 
         // ── StepFlow Implementation ───────────────────────────
 
-        protected override int GetStepCount() => 8;
+        protected override int GetStepCount() => 7;
 
         protected override bool ValidateStep(int stepIndex)
         {
@@ -159,19 +147,18 @@ namespace eu.foodmission.platform
         {
             return stepIndex switch
             {
-                5 => _selectedSegmentIndex >= 0,
-                6 => _selectedPushNotificationsIndex >= 0,
-                7 => _selectedReminderTimeIndex >= 0,
+                5 => _selectedPushNotificationsIndex >= 0,
+                6 => _selectedReminderTimeIndex >= 0,
                 _ => true
             };
         }
 
         protected override int GetNextStepIndex(int currentIndex)
         {
-            if (currentIndex == 6 && _selectedPushNotificationsIndex != 0)
+            if (currentIndex == 5 && _selectedPushNotificationsIndex != 0)
             {
-                // Skip Step 7 (reminder time) if Push Notifications is No
-                return 8;
+                // Skip Step 6 (reminder time) if Push Notifications is No
+                return 7;
             }
             return currentIndex + 1;
         }
@@ -183,7 +170,7 @@ namespace eu.foodmission.platform
 
         protected override bool CheckIsLastStep(int currentIndex)
         {
-            if (currentIndex == 6 && _selectedPushNotificationsIndex != 0)
+            if (currentIndex == 5 && _selectedPushNotificationsIndex != 0)
             {
                 return true;
             }
@@ -249,12 +236,6 @@ namespace eu.foodmission.platform
                 }
 
 
-                if (data.onboarding?.userSegments != null && data.onboarding.userSegments.Length > 0)
-                {
-                    SegmentOptions = data.onboarding.userSegments.Select(s => s.label).ToList();
-                }
-
-
                 DailyTimeCommitmentOptions = new List<string>
                 {
                     "5 min",
@@ -292,10 +273,6 @@ namespace eu.foodmission.platform
             if (_catalogData.onboarding?.motivations != null)
             {
                 SelectedMotivationIndex = FindCatalogIndex(_catalogData.onboarding.motivations, state.userMotivation);
-            }
-            if (_catalogData.onboarding?.userSegments != null)
-            {
-                SelectedSegmentIndex = FindCatalogIndex(_catalogData.onboarding.userSegments, state.userSegment);
             }
 
             if (state.userDailyTimeCommitmentMinutes <= 0) SelectedDailyTimeCommitmentIndex = -1;
@@ -387,11 +364,6 @@ namespace eu.foodmission.platform
                     ? _catalogData.onboarding.motivations[_selectedMotivationIndex].code
                     : null;
 
-                string segmentCode = _selectedSegmentIndex >= 0 && _catalogData?.onboarding?.userSegments != null
-                    && _selectedSegmentIndex < _catalogData.onboarding.userSegments.Length
-                    ? _catalogData.onboarding.userSegments[_selectedSegmentIndex].code
-                    : null;
-
                 int dailyTimeMinutes = 0;
                 if (_selectedDailyTimeCommitmentIndex == 0) dailyTimeMinutes = 5;
                 else if (_selectedDailyTimeCommitmentIndex == 1) dailyTimeMinutes = 10;
@@ -426,7 +398,6 @@ namespace eu.foodmission.platform
                     activityLevel = _selectedActivityLevelIndex >= 0 && _catalogData?.activityLevels != null ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 && _catalogData?.educationLevels != null ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
                     annualIncome = _selectedAnnualIncomeIndex >= 0 && _catalogData?.annualIncomeLevels != null ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
-                    segment = segmentCode ?? state.userSegment,
 
                     preferences = new ProfileUpdatePreferences
                     {

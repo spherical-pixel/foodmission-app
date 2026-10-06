@@ -57,10 +57,10 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void StepFlow_Initialization_SetsStepCountEight()
+        public void StepFlow_Initialization_SetsStepCountSeven()
         {
             _vm.Initialize();
-            Assert.AreEqual(8, _vm.StepCount);
+            Assert.AreEqual(7, _vm.StepCount);
             Assert.AreEqual(0, _vm.CurrentStepIndex);
             Assert.IsTrue(_vm.IsFirstStep);
             Assert.IsFalse(_vm.IsLastStep);
@@ -68,78 +68,50 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void IsFormValid_RequiresSelectedSegment()
-        {
-            Assert.AreEqual(-1, _vm.SelectedSegmentIndex);
-            Assert.IsFalse(_vm.IsFormValid);
-
-            _vm.SelectedSegmentIndex = 0;
-            Assert.IsTrue(_vm.IsFormValid);
-
-            _vm.SelectedSegmentIndex = -1;
-            Assert.IsFalse(_vm.IsFormValid);
-        }
-
-        [Test]
-        public async Task StepValidation_Step5RequiresSelectedSegment()
+        public async Task StepValidation_StepsBeforeNotificationsAllowContinuingWithoutSelections()
         {
             _vm.Initialize();
 
-            // Steps 0-4 are valid even without selections
+            // The segment step is gone (the onboarding survey computes it), so no step blocks on an empty selection
             for (int i = 0; i < 5; i++)
             {
                 await _vm.GoToStepAsync(i);
                 Assert.IsTrue(_vm.CanGoNext, $"Step {i} should allow continuing");
             }
-
-            // Step 5 (Segment) requires SelectedSegmentIndex >= 0
-            await _vm.GoToStepAsync(5);
-            Assert.AreEqual(5, _vm.CurrentStepIndex);
-            Assert.IsFalse(_vm.CanGoNext, "Step 5 should not allow continuing without selecting a segment");
-
-            // Selecting a segment enables next/save button
-            _vm.SelectedSegmentIndex = 1;
-            Assert.IsTrue(_vm.CanGoNext, "Step 5 should allow continuing after selecting a segment");
-
-            // Deselecting disables it again
-            _vm.SelectedSegmentIndex = -1;
-            Assert.IsFalse(_vm.CanGoNext, "Step 5 should disable continuing if segment is deselected");
         }
 
         [Test]
-        public async Task StepNavigation_WhenNotificationsEnabled_GoesToStep7()
+        public async Task StepNavigation_WhenNotificationsEnabled_GoesToStep6()
         {
             _vm.Initialize();
-            _vm.SelectedSegmentIndex = 0;
 
-            await _vm.GoToStepAsync(6);
-            Assert.AreEqual(6, _vm.CurrentStepIndex);
+            await _vm.GoToStepAsync(5);
+            Assert.AreEqual(5, _vm.CurrentStepIndex);
 
             // User selects Yes (index 0)
             _vm.SelectedPushNotificationsIndex = 0;
-            Assert.IsFalse(_vm.IsLastStep, "Step 6 is not last step when notifications are enabled");
+            Assert.IsFalse(_vm.IsLastStep, "Step 5 is not last step when notifications are enabled");
 
             await _vm.GoNextAsync();
-            Assert.AreEqual(7, _vm.CurrentStepIndex, "Should navigate to Step 7 (reminder time)");
-            Assert.IsTrue(_vm.IsLastStep, "Step 7 is the last step");
+            Assert.AreEqual(6, _vm.CurrentStepIndex, "Should navigate to Step 6 (reminder time)");
+            Assert.IsTrue(_vm.IsLastStep, "Step 6 is the last step");
         }
 
         [Test]
-        public async Task StepNavigation_WhenNotificationsDisabled_SkipsStep7AndCompletesFlow()
+        public async Task StepNavigation_WhenNotificationsDisabled_SkipsStep6AndCompletesFlow()
         {
             _mockAuthService
                 .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
                 .ReturnsAsync((true, null));
 
             _vm.Initialize();
-            _vm.SelectedSegmentIndex = 0;
 
-            await _vm.GoToStepAsync(6);
-            Assert.AreEqual(6, _vm.CurrentStepIndex);
+            await _vm.GoToStepAsync(5);
+            Assert.AreEqual(5, _vm.CurrentStepIndex);
 
             // User selects No (index 1)
             _vm.SelectedPushNotificationsIndex = 1;
-            Assert.IsTrue(_vm.IsLastStep, "Step 6 becomes the last step when notifications are disabled");
+            Assert.IsTrue(_vm.IsLastStep, "Step 5 becomes the last step when notifications are disabled");
 
             _storeService.DispatchedActionTypes.Clear();
             await _vm.GoNextAsync();
@@ -295,7 +267,7 @@ namespace eu.foodmission.platform.Tests
             Assert.Contains("app/setPushNotifications", _storeService.DispatchedActionTypes);
             Assert.Contains("app/setNotificationPreferredTime", _storeService.DispatchedActionTypes);
             _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req =>
-                req.segment != null
+                req.segment == null
                 && req.preferences != null
                 && req.preferences.onboardingSurvey == null
                 && req.settings != null

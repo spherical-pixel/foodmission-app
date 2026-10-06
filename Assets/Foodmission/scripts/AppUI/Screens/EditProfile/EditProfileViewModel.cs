@@ -92,9 +92,6 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private IList<string> _dailyTimeCommitmentOptions = new List<string>();
 
-        [ObservableProperty]
-        private IList<string> _segmentOptions = new List<string>();
-
 
         // Selected indices for dropdowns (-1 = no selection)
         [ObservableProperty]
@@ -120,9 +117,6 @@ namespace eu.foodmission.platform
 
         [ObservableProperty]
         private int _selectedDailyTimeCommitmentIndex = -1;
-
-        [ObservableProperty]
-        private int _selectedSegmentIndex = -1;
 
         // UI state
         [ObservableProperty]
@@ -163,7 +157,6 @@ namespace eu.foodmission.platform
             _selectedShoppingResponsibilityIndex >= 0 ||
             _selectedMotivationIndex >= 0 ||
             _selectedDailyTimeCommitmentIndex >= 0 ||
-            _selectedSegmentIndex >= 0 ||
             (_selectedDietaryPreferenceIndices != null);
 
         [ObservableProperty]
@@ -428,11 +421,6 @@ namespace eu.foodmission.platform
                     MotivationOptions = data.onboarding.motivations.Select(m => m.label).ToList();
                 }
 
-                if (data.onboarding?.userSegments != null && data.onboarding.userSegments.Length > 0)
-                {
-                    SegmentOptions = data.onboarding.userSegments.Select(s => s.label).ToList();
-                }
-
                 DailyTimeCommitmentOptions = new List<string>
                 {
                     "5 min",
@@ -487,10 +475,6 @@ namespace eu.foodmission.platform
             if (_catalogData.onboarding?.motivations != null)
             {
                 SelectedMotivationIndex = FindCatalogIndex(_catalogData.onboarding.motivations, state.userMotivation);
-            }
-            if (_catalogData.onboarding?.userSegments != null)
-            {
-                SelectedSegmentIndex = FindCatalogIndex(_catalogData.onboarding.userSegments, state.userSegment);
             }
 
             if (state.userDailyTimeCommitmentMinutes <= 0) SelectedDailyTimeCommitmentIndex = -1;
@@ -547,11 +531,6 @@ namespace eu.foodmission.platform
                     ? _catalogData.onboarding.motivations[_selectedMotivationIndex].code
                     : null;
 
-                string segmentCode = _selectedSegmentIndex >= 0 && _catalogData?.onboarding?.userSegments != null
-                    && _selectedSegmentIndex < _catalogData.onboarding.userSegments.Length
-                    ? _catalogData.onboarding.userSegments[_selectedSegmentIndex].code
-                    : null;
-
                 int dailyTimeMinutes = 0;
                 if (_selectedDailyTimeCommitmentIndex == 0) dailyTimeMinutes = 5;
                 else if (_selectedDailyTimeCommitmentIndex == 1) dailyTimeMinutes = 10;
@@ -582,7 +561,6 @@ namespace eu.foodmission.platform
                 bool hasSurvey = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
                 bool hasMotivation = motivationCode != null || !string.IsNullOrEmpty(state.userMotivation);
                 bool hasDailyTime = dailyTimeMinutes > 0 || state.userDailyTimeCommitmentMinutes > 0;
-                bool hasSegment = segmentCode != null || !string.IsNullOrEmpty(state.userSegment);
 
                 var request = new ProfileUpdateRequest
                 {
@@ -590,10 +568,9 @@ namespace eu.foodmission.platform
                     activityLevel = _selectedActivityLevelIndex >= 0 && _catalogData?.activityLevels != null ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 && _catalogData?.educationLevels != null ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
                     annualIncome = _selectedAnnualIncomeIndex >= 0 && _catalogData?.annualIncomeLevels != null ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
-                    segment = segmentCode ?? state.userSegment,
                     yearOfBirth = SelectedYearOfBirthIndex >= 0 ? (int?)int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : null,
 
-                    preferences = (hasShopping || hasDietary || hasSurvey || hasMotivation || hasDailyTime || hasSegment)
+                    preferences = (hasShopping || hasDietary || hasSurvey || hasMotivation || hasDailyTime)
                         ? new ProfileUpdatePreferences
                         {
                             shoppingResponsibility = shoppingResponsibilityCode ?? state.userShoppingResponsibility,

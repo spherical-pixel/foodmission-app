@@ -18,7 +18,7 @@ namespace eu.foodmission.platform
     [Preserve]
     class OnboardingProfileScreen : StepFlowScreenBase<OnboardingProfileViewModel>
     {
-        protected override int StepCount => 8;
+        protected override int StepCount => 7;
 
         protected override string NextButtonLabel => "@UI:TXT_NEXT";
         protected override string PreviousButtonLabel => "@UI:TXT_BACK";
@@ -38,7 +38,6 @@ namespace eu.foodmission.platform
         private FormFieldItemDropDownField _activityLevelDropdown;
         private FormFieldItemDropDownField _shoppingResponsibilityDropdown;
         private FormFieldItemDropDownField _dailyTimeCommitmentDropdown;
-        private FormFieldItemDropDownField _segmentDropdown;
         private FormFieldItemDropDownField _pushNotificationsDropdown;
         private FormFieldItemDropDownField _reminderTimeDropdown;
 
@@ -48,7 +47,18 @@ namespace eu.foodmission.platform
         private ExVisualElement _step4Container;
         private ExVisualElement _step5Container;
         private ExVisualElement _step6Container;
-        private ExVisualElement _step7Container;
+
+        // NUTRI_STEP_5 belonged to the removed segment step: the segment now comes from the onboarding survey.
+        private static readonly string[] k_NutriMessageKeys =
+        {
+            "@UI:ONBOARDING_PROFILE.NUTRI_STEP_0",
+            "@UI:ONBOARDING_PROFILE.NUTRI_STEP_1",
+            "@UI:ONBOARDING_PROFILE.NUTRI_STEP_2",
+            "@UI:ONBOARDING_PROFILE.NUTRI_STEP_3",
+            "@UI:ONBOARDING_PROFILE.NUTRI_STEP_4",
+            "@UI:ONBOARDING_PROFILE.NUTRI_STEP_6",
+            "@UI:ONBOARDING_PROFILE.NUTRI_STEP_7"
+        };
 
         protected override bool IsFixedContent => true;
         protected override bool ApplySafeAreaBottom => false;
@@ -121,13 +131,6 @@ namespace eu.foodmission.platform
                 DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_DAILY_TIME"
             };
 
-            _segmentDropdown = new FormFieldItemDropDownField
-            {
-                name = "segment-dropdown",
-                HeadingText = "@UI:ONBOARDING_PROFILE.LABEL_SEGMENT",
-                DropdownDefaultMessage = "@UI:ONBOARDING_PROFILE.PLACEHOLDER_SEGMENT"
-            };
-
             _pushNotificationsDropdown = new FormFieldItemDropDownField
             {
                 name = "push-notifications-dropdown",
@@ -152,9 +155,8 @@ namespace eu.foodmission.platform
                 2 => BuildStepCard(_step2Container = CreateStepContainer(_genderDropdown, _educationLevelDropdown, _annualIncomeDropdown)),
                 3 => BuildStepCard(_step3Container = CreateStepContainer(_dietaryPreferencesDropdown)),
                 4 => BuildStepCard(_step4Container = CreateStepContainer(_activityLevelDropdown, _shoppingResponsibilityDropdown, _dailyTimeCommitmentDropdown)),
-                5 => BuildStepCard(_step5Container = CreateStepContainer(_segmentDropdown)),
-                6 => BuildStepCard(_step6Container = CreateStepContainer(_pushNotificationsDropdown)),
-                7 => BuildStepCard(_step7Container = CreateStepContainer(_reminderTimeDropdown)),
+                5 => BuildStepCard(_step5Container = CreateStepContainer(_pushNotificationsDropdown)),
+                6 => BuildStepCard(_step6Container = CreateStepContainer(_reminderTimeDropdown)),
                 _ => new VisualElement()
             };
         }
@@ -292,8 +294,10 @@ namespace eu.foodmission.platform
         {
             base.OnStepChanged(stepIndex);
 
-            string message = "@UI:ONBOARDING_PROFILE.NUTRI_STEP_" + stepIndex;
-            UpdateMascotMessage(message);
+            if (stepIndex >= 0 && stepIndex < k_NutriMessageKeys.Length)
+            {
+                UpdateMascotMessage(k_NutriMessageKeys[stepIndex]);
+            }
 
         }
 
@@ -323,7 +327,6 @@ namespace eu.foodmission.platform
             ConfigureDropdown(_activityLevelDropdown, _viewModel.ActivityLevelOptions);
             ConfigureDropdown(_shoppingResponsibilityDropdown, _viewModel.ShoppingResponsibilityOptions);
             ConfigureDropdown(_dailyTimeCommitmentDropdown, _viewModel.DailyTimeCommitmentOptions);
-            ConfigureDropdown(_segmentDropdown, _viewModel.SegmentOptions);
             ConfigureDropdown(_pushNotificationsDropdown, _viewModel.PushNotificationsOptions);
             ConfigureDropdown(_reminderTimeDropdown, _viewModel.ReminderTimeOptions);
         }
@@ -351,7 +354,6 @@ namespace eu.foodmission.platform
             SetDropdownSelection(_activityLevelDropdown, _viewModel.SelectedActivityLevelIndex);
             SetDropdownSelection(_shoppingResponsibilityDropdown, _viewModel.SelectedShoppingResponsibilityIndex);
             SetDropdownSelection(_dailyTimeCommitmentDropdown, _viewModel.SelectedDailyTimeCommitmentIndex);
-            SetDropdownSelection(_segmentDropdown, _viewModel.SelectedSegmentIndex);
             SetDropdownSelection(_pushNotificationsDropdown, _viewModel.SelectedPushNotificationsIndex);
             SetDropdownSelection(_reminderTimeDropdown, _viewModel.SelectedReminderTimeIndex);
             SetDropdownSelectionMulti(_dietaryPreferencesDropdown, _viewModel.SelectedDietaryPreferenceIndices);
@@ -416,13 +418,6 @@ namespace eu.foodmission.platform
             {
                 var val = evt.newValue?.ToArray();
                 _viewModel.SelectedDailyTimeCommitmentIndex = val != null && val.Length > 0 ? val[0] : -1;
-            });
-
-            _segmentDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
-            {
-                var val = evt.newValue?.ToArray();
-                _viewModel.SelectedSegmentIndex = val != null && val.Length > 0 ? val[0] : -1;
-                _viewModel.InvalidateValidation();
             });
 
             _pushNotificationsDropdown?.Dropdown.RegisterValueChangedCallback(evt =>

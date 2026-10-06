@@ -83,12 +83,6 @@
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34039030617202688)"/>
                 </Bindings>
             </fm:FormFieldItemDropDownField>
-            <fm:FormFieldItemDropDownField name="segment-dropdown" dropdown-defaultmessage="Selecciona" Heading-Text="Tipo de perfil">
-                <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34041135683854336)"/>
-                    <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(34040936672518144)"/>
-                </Bindings>
-            </fm:FormFieldItemDropDownField>
             <appui:Spacer spacing="XL"/>
             <fm:FMButton variant="Primary" title="🎯 Mis Objetivos" name="btn-edit-goals" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
                 <Bindings>

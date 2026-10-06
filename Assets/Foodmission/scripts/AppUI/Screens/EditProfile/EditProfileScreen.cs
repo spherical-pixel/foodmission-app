@@ -33,7 +33,6 @@ namespace eu.foodmission.platform
         private FormFieldItemDropDownField _shoppingResponsibilityDropdown;
         private FormFieldItemDropDownField _motivationDropdown;
         private FormFieldItemDropDownField _dailyTimeCommitmentDropdown;
-        private FormFieldItemDropDownField _segmentDropdown;
         private FormFieldItemDropDownField _countryDropdown;
         private FormFieldItemDropDownField _regionDropdown;
         private FormFieldItemDropDownField _yearOfBirthDropdown;
@@ -78,7 +77,6 @@ namespace eu.foodmission.platform
             _shoppingResponsibilityDropdown = contentContainer.Q<FormFieldItemDropDownField>("shopping-responsibility-dropdown");
             _motivationDropdown = contentContainer.Q<FormFieldItemDropDownField>("motivation-dropdown");
             _dailyTimeCommitmentDropdown = contentContainer.Q<FormFieldItemDropDownField>("daily-time-commitment-dropdown");
-            _segmentDropdown = contentContainer.Q<FormFieldItemDropDownField>("segment-dropdown");
             _countryDropdown = contentContainer.Q<FormFieldItemDropDownField>("country");
             _regionDropdown = contentContainer.Q<FormFieldItemDropDownField>("region");
             _yearOfBirthDropdown = contentContainer.Q<FormFieldItemDropDownField>("yearofbirth-dropdown");
@@ -155,11 +153,6 @@ namespace eu.foodmission.platform
             if (_dailyTimeCommitmentDropdown != null)
             {
                 _dailyTimeCommitmentDropdown.Dropdown.RegisterValueChangedCallback(OnDailyTimeCommitmentChanged);
-            }
-
-            if (_segmentDropdown != null)
-            {
-                _segmentDropdown.Dropdown.RegisterValueChangedCallback(OnSegmentChanged);
             }
 
             if (_countryDropdown != null)
@@ -251,11 +244,6 @@ namespace eu.foodmission.platform
                 _dailyTimeCommitmentDropdown.Dropdown.UnregisterValueChangedCallback(OnDailyTimeCommitmentChanged);
             }
 
-            if (_segmentDropdown != null)
-            {
-                _segmentDropdown.Dropdown.UnregisterValueChangedCallback(OnSegmentChanged);
-            }
-
             if (_yearOfBirthDropdown != null)
             {
                 _yearOfBirthDropdown.Dropdown.UnregisterValueChangedCallback(OnYearOfBirthChanged);
@@ -305,7 +293,6 @@ namespace eu.foodmission.platform
             ConfigureDropdown(_shoppingResponsibilityDropdown, _viewModel.ShoppingResponsibilityOptions);
             ConfigureDropdown(_motivationDropdown, _viewModel.MotivationOptions);
             ConfigureDropdown(_dailyTimeCommitmentDropdown, _viewModel.DailyTimeCommitmentOptions);
-            ConfigureDropdown(_segmentDropdown, _viewModel.SegmentOptions);
             ConfigureDropdown(_countryDropdown, _viewModel.CountryOptions);
             ConfigureDropdown(_regionDropdown, _viewModel.RegionOptions);
             ConfigureDropdown(_yearOfBirthDropdown, _viewModel.YearOfBirthOptions);
@@ -333,7 +320,6 @@ namespace eu.foodmission.platform
             SetDropdownSelection(_shoppingResponsibilityDropdown, _viewModel.SelectedShoppingResponsibilityIndex);
             SetDropdownSelection(_motivationDropdown, _viewModel.SelectedMotivationIndex);
             SetDropdownSelection(_dailyTimeCommitmentDropdown, _viewModel.SelectedDailyTimeCommitmentIndex);
-            SetDropdownSelection(_segmentDropdown, _viewModel.SelectedSegmentIndex);
             SetDropdownSelection(_countryDropdown, _viewModel.SelectedCountryIndex);
             SetDropdownSelection(_regionDropdown, _viewModel.SelectedRegionIndex);
             SetDropdownSelection(_yearOfBirthDropdown, _viewModel.SelectedYearOfBirthIndex);
@@ -440,17 +426,6 @@ namespace eu.foodmission.platform
             if (value != null && value.Length > 0)
             {
                 _viewModel.SelectedDailyTimeCommitmentIndex = value[0];
-            }
-            UpdateSubmitButtonState();
-        }
-
-        private void OnSegmentChanged(ChangeEvent<IEnumerable<int>> evt)
-        {
-            if (_viewModel == null) return;
-            var value = evt.newValue?.ToArray();
-            if (value != null && value.Length > 0)
-            {
-                _viewModel.SelectedSegmentIndex = value[0];
             }
             UpdateSubmitButtonState();
         }
