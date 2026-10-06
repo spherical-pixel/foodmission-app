@@ -149,18 +149,9 @@ namespace eu.foodmission.platform
             var root = new VisualElement();
             root.AddToClassList("fm-dimension-levels");
 
-            // The swipe-view step has the viewport's height, so the six dropdowns scroll inside the step
-            var scroll = new ScrollView(ScrollViewMode.Vertical)
-            {
-                verticalScrollerVisibility = ScrollerVisibility.Hidden,
-                horizontalScrollerVisibility = ScrollerVisibility.Hidden
-            };
-            scroll.AddToClassList("fm-dimension-levels__scroll");
-            root.Add(scroll);
-
             _rowsContainer = new VisualElement();
             _rowsContainer.AddToClassList("fm-dimension-levels__rows");
-            scroll.Add(_rowsContainer);
+            root.Add(_rowsContainer);
 
             _resetButton = new Unity.AppUI.UI.Button
             {
