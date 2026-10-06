@@ -10,19 +10,15 @@ namespace eu.foodmission.platform
         private static readonly Regex CodeNumberRegex = new Regex(@"\.(\d+)$", RegexOptions.Compiled);
 
         /// <summary>
-        /// Development switch: when true every quest is reported as unlocked, ignoring the sequential order.
-        /// Defaults to whether the FM_UNLOCK_ALL_QUESTS scripting define is set (Player Settings).
+        /// Development switch: when true every quest is reported as unlocked (sequence and level).
+        /// Defaults to DevUnlocks.All (the FM_UNLOCK_ALL_QUESTS scripting define).
         /// </summary>
-        public bool UnlockAllQuests { get; set; } =
-#if FM_UNLOCK_ALL_QUESTS
-            true;
-#else
-            false;
-#endif
+        public bool UnlockAllQuests { get; set; } = DevUnlocks.All;
 
         public IReadOnlyList<QuestProgressionState> EvaluateProgression(
             IEnumerable<Quest> allQuests,
-            IEnumerable<QuestProgress> userProgress)
+            IEnumerable<QuestProgress> userProgress,
+            Func<string, string> userLevelForDimensionId = null)
         {
             if (allQuests == null) return Array.Empty<QuestProgressionState>();
 
@@ -51,27 +47,54 @@ namespace eu.foodmission.platform
                                   .ThenBy(q => q.code ?? string.Empty)
                                   .ToList();
 
+                int currentDifficulty = -1;
                 Quest previousQuest = null;
-                bool previousWasCompleted = true; // First quest in dimension is always unlocked
+                bool previousWasCompleted = true;
 
-                for (int i = 0; i < sorted.Count; i++)
+                foreach (var q in sorted)
                 {
-                    var q = sorted[i];
+                    int difficulty = GetDifficultyOrder(q);
+                    if (difficulty != currentDifficulty)
+                    {
+                        // The sequential chain restarts at the first quest of each difficulty
+                        currentDifficulty = difficulty;
+                        previousQuest = null;
+                        previousWasCompleted = true;
+                    }
+
                     QuestProgress prog = null;
-                    if (!string.IsNullOrEmpty(q.id) && progressById.TryGetValue(q.id, out var pId)) prog = pId;
-                    else if (!string.IsNullOrEmpty(q.code) && progressByCode.TryGetValue(q.code, out var pCode)) prog = pCode;
+                    if (!string.IsNullOrEmpty(q.id) && progressById.TryGetValue(q.id, out var pId))
+                    {
+                        prog = pId;
+                    }
+                    else if (!string.IsNullOrEmpty(q.code) && progressByCode.TryGetValue(q.code, out var pCode))
+                    {
+                        prog = pCode;
+                    }
 
                     bool isCompleted = prog != null && (prog.completed || prog.progress >= 100f);
                     float progressVal = prog != null ? prog.progress : 0f;
+                    bool started = isCompleted || progressVal > 0f;
 
-                    // Unlocked if it's the first quest or if the previous quest was completed, or if already completed
-                    bool isUnlocked = UnlockAllQuests || (i == 0) || previousWasCompleted || isCompleted;
+                    var reason = ContentLockReason.None;
+                    if (!UnlockAllQuests)
+                    {
+                        string userLevel = userLevelForDimensionId?.Invoke(q.dimensionId);
+                        if (LevelAccess.IsLockedByLevel(q.level, userLevel, started))
+                        {
+                            reason = ContentLockReason.Level;
+                        }
+                        else if (!previousWasCompleted && !started)
+                        {
+                            reason = ContentLockReason.Sequence;
+                        }
+                    }
 
                     result.Add(new QuestProgressionState
                     {
                         Quest = q,
                         IsCompleted = isCompleted,
-                        IsUnlocked = isUnlocked,
+                        LockReason = reason,
                         ProgressPercent = progressVal,
                         PreviousQuest = previousQuest
                     });
@@ -94,10 +117,12 @@ namespace eu.foodmission.platform
 
             if (current == null) return null;
 
+            // The chain is per difficulty: completing the last quest of a difficulty unlocks nothing new
             var dimQuests = allQuests
-                .Where(q => q != null && string.Equals(q.dimensionId, current.dimensionId, StringComparison.OrdinalIgnoreCase))
-                .OrderBy(GetDifficultyOrder)
-                .ThenBy(GetQuestSequenceNumber)
+                .Where(q => q != null
+                            && string.Equals(q.dimensionId, current.dimensionId, StringComparison.OrdinalIgnoreCase)
+                            && GetDifficultyOrder(q) == GetDifficultyOrder(current))
+                .OrderBy(GetQuestSequenceNumber)
                 .ThenBy(q => q.code ?? string.Empty)
                 .ToList();
 
@@ -124,9 +149,10 @@ namespace eu.foodmission.platform
             if (target == null) return null;
 
             var dimQuests = allQuests
-                .Where(q => q != null && string.Equals(q.dimensionId, target.dimensionId, StringComparison.OrdinalIgnoreCase))
-                .OrderBy(GetDifficultyOrder)
-                .ThenBy(GetQuestSequenceNumber)
+                .Where(q => q != null
+                            && string.Equals(q.dimensionId, target.dimensionId, StringComparison.OrdinalIgnoreCase)
+                            && GetDifficultyOrder(q) == GetDifficultyOrder(target))
+                .OrderBy(GetQuestSequenceNumber)
                 .ThenBy(q => q.code ?? string.Empty)
                 .ToList();
 

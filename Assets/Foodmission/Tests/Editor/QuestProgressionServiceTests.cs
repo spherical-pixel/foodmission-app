@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -78,8 +79,64 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(states[1].IsCompleted);
         }
 
+        private static Func<string, string> Levels(string level) => _ => level;
+
         [Test]
-        public void EvaluateProgression_LevelTransition_CompletingLastBeginner_UnlocksIntermediate1()
+        public void EvaluateProgression_ChainRestartsPerDifficulty()
+        {
+            var quests = new List<Quest>
+            {
+                new Quest { id = "q1", code = "QUEST.DIET.BEGINNER.1", dimensionId = "dim1", level = "BEGINNER" },
+                new Quest { id = "q2", code = "QUEST.DIET.BEGINNER.2", dimensionId = "dim1", level = "BEGINNER" },
+                new Quest { id = "q3", code = "QUEST.DIET.INTERMEDIATE.1", dimensionId = "dim1", level = "INTERMEDIATE" },
+                new Quest { id = "q4", code = "QUEST.DIET.INTERMEDIATE.2", dimensionId = "dim1", level = "INTERMEDIATE" }
+            };
+
+            var states = _service.EvaluateProgression(quests, new List<QuestProgress>(), Levels("ADVANCED"));
+
+            Assert.IsTrue(states[0].IsUnlocked, "Beginner 1");
+            Assert.AreEqual(ContentLockReason.Sequence, states[1].LockReason, "Beginner 2 waits for Beginner 1");
+            Assert.IsTrue(states[2].IsUnlocked, "Intermediate 1 is the first of its difficulty");
+            Assert.IsNull(states[2].PreviousQuest);
+            Assert.AreEqual(ContentLockReason.Sequence, states[3].LockReason);
+            Assert.AreEqual("q3", states[3].PreviousQuest?.id);
+        }
+
+        [Test]
+        public void EvaluateProgression_DifficultyAboveUserLevel_IsLockedByLevel()
+        {
+            var quests = new List<Quest>
+            {
+                new Quest { id = "q1", code = "QUEST.DIET.BEGINNER.1", dimensionId = "dim1", level = "BEGINNER" },
+                new Quest { id = "q3", code = "QUEST.DIET.INTERMEDIATE.1", dimensionId = "dim1", level = "INTERMEDIATE" },
+                new Quest { id = "q4", code = "QUEST.DIET.INTERMEDIATE.2", dimensionId = "dim1", level = "INTERMEDIATE" }
+            };
+
+            var states = _service.EvaluateProgression(quests, new List<QuestProgress>(), Levels("BEGINNER"));
+
+            Assert.AreEqual(ContentLockReason.None, states[0].LockReason);
+            Assert.AreEqual(ContentLockReason.Level, states[1].LockReason);
+            Assert.AreEqual(ContentLockReason.Level, states[2].LockReason);
+        }
+
+        [Test]
+        public void EvaluateProgression_StartedQuestAboveLevel_StaysUnlocked()
+        {
+            var quests = new List<Quest>
+            {
+                new Quest { id = "q3", code = "QUEST.DIET.ADVANCED.1", dimensionId = "dim1", level = "ADVANCED" },
+                new Quest { id = "q4", code = "QUEST.DIET.ADVANCED.2", dimensionId = "dim1", level = "ADVANCED" }
+            };
+            var progress = new List<QuestProgress> { new QuestProgress { questId = "q4", progress = 30f } };
+
+            var states = _service.EvaluateProgression(quests, progress, Levels("BEGINNER"));
+
+            Assert.AreEqual(ContentLockReason.Level, states[0].LockReason);
+            Assert.AreEqual(ContentLockReason.None, states[1].LockReason, "Started quests are never locked");
+        }
+
+        [Test]
+        public void GetNextQuest_LastOfDifficulty_ReturnsNull()
         {
             var quests = new List<Quest>
             {
@@ -88,16 +145,36 @@ namespace eu.foodmission.platform.Tests
                 new Quest { id = "q3", code = "QUEST.DIET.INTERMEDIATE.1", dimensionId = "dim1", level = "INTERMEDIATE" }
             };
 
-            var progress = new List<QuestProgress>
+            Assert.AreEqual("q2", _service.GetNextQuest("q1", quests)?.id);
+            Assert.IsNull(_service.GetNextQuest("q2", quests), "Completing the last beginner quest unlocks nothing new");
+            Assert.IsNull(_service.GetPreviousQuest("q3", quests), "First intermediate quest has no predecessor");
+        }
+
+        [Test]
+        public void EvaluateProgression_NoLevelResolver_OnlySequenceLocks()
+        {
+            var quests = new List<Quest>
             {
-                new QuestProgress { questId = "q1", completed = true },
-                new QuestProgress { questId = "q2", completed = true }
+                new Quest { id = "q3", code = "QUEST.DIET.ADVANCED.1", dimensionId = "dim1", level = "ADVANCED" }
             };
 
-            var states = _service.EvaluateProgression(quests, progress);
+            var states = _service.EvaluateProgression(quests, new List<QuestProgress>());
 
-            Assert.IsTrue(states[2].IsUnlocked, "Intermediate 1 should unlock after all Beginner quests complete");
-            Assert.AreEqual("q2", states[2].PreviousQuest?.id);
+            Assert.IsTrue(states[0].IsUnlocked);
+        }
+
+        [Test]
+        public void EvaluateProgression_UnlockAllQuests_IgnoresLevels()
+        {
+            var service = new QuestProgressionService { UnlockAllQuests = true };
+            var quests = new List<Quest>
+            {
+                new Quest { id = "q3", code = "QUEST.DIET.ADVANCED.2", dimensionId = "dim1", level = "ADVANCED" }
+            };
+
+            var states = service.EvaluateProgression(quests, new List<QuestProgress>(), Levels("BEGINNER"));
+
+            Assert.AreEqual(ContentLockReason.None, states[0].LockReason);
         }
 
         [Test]
@@ -115,8 +192,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("q2", next.id);
 
             var nextAfterB2 = _service.GetNextQuest("QUEST.DIET.BEGINNER.2", quests);
-            Assert.IsNotNull(nextAfterB2);
-            Assert.AreEqual("q3", nextAfterB2.id);
+            Assert.IsNull(nextAfterB2, "The chain is per difficulty: the last beginner quest has no next quest");
 
             var nextAfterLast = _service.GetNextQuest("QUEST.DIET.INTERMEDIATE.1", quests);
             Assert.IsNull(nextAfterLast, "Last quest in dimension should return null as next quest");
@@ -140,8 +216,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("q1", prevB2.id);
 
             var prevInt1 = _service.GetPreviousQuest("QUEST.DIET.INTERMEDIATE.1", quests);
-            Assert.IsNotNull(prevInt1);
-            Assert.AreEqual("q2", prevInt1.id);
+            Assert.IsNull(prevInt1, "The first intermediate quest starts its own chain");
         }
 
         [Test]

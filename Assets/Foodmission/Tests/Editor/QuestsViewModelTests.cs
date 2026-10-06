@@ -353,10 +353,18 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Actions.open_quick_meal_log, requestedAction);
         }
 
+        private static Quest[] SameDifficultyChain() => new[]
+        {
+            new Quest { id = "q-1", code = "QUEST.DIET.BEGINNER.1", dimensionId = "dim-1", level = QuestLevel.Beginner, title = "Learn to Log Your Food", available = true },
+            new Quest { id = "q-2", code = "QUEST.DIET.BEGINNER.2", dimensionId = "dim-1", level = QuestLevel.Beginner, title = "Plant-Based Week", available = true },
+            new Quest { id = "q-3", code = "QUEST.DIET.BEGINNER.3", dimensionId = "dim-1", level = QuestLevel.Beginner, title = "Zero UPF Mastery", available = true }
+        };
+
         [Test]
         public void RebuildDisplayGroups_EvaluatesSequentialUnlocking()
         {
-            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+            // The sequential chain is per difficulty, so the three quests share one
+            _vm.SetRawDataForTesting(SameDifficultyChain(), _mockProgress);
 
             var dietGroup = _vm.DisplayGroups.FirstOrDefault(g => g.Dimension?.id == "dim-1");
             Assert.IsNotNull(dietGroup);
@@ -385,7 +393,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void SetStatusFilter_Pending_IncludesBothUnlockedPendingAndLockedQuests()
         {
-            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+            _vm.SetRawDataForTesting(SameDifficultyChain(), _mockProgress);
 
             _vm.SetStatusFilter(QuestFilterStatus.Pending);
 
