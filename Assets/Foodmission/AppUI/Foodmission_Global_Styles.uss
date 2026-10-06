@@ -2529,7 +2529,7 @@
 .fm-dimension-levels__dropdown {
     width: 100%;
     flex-shrink: 0;
-    margin-top: 8px;
+    margin-top: 25px;
 }
 
 .fm-dimension-levels__reset {
