@@ -33,6 +33,9 @@ namespace eu.foodmission.platform
         public bool IsCompleted { get; set; }
         public bool IsFailed { get; set; }
         public float Progress { get; set; }
+        /// <summary>Set when the mission is above the user's level in its dimension (null = can be opened).</summary>
+        public LevelLock LevelLock { get; set; }
+        public bool IsLocked => LevelLock != null;
     }
 
     public class MissionDisplayGroup
@@ -225,6 +228,11 @@ namespace eu.foodmission.platform
             Debug.Log($"[{GetType().Name}] OpenMission clicked: {mission.code} - {mission.title}");
         }
 
+        public void OpenDimensionLevels()
+        {
+            RaiseNavigationRequested(Actions.go_to_dimension_levels, DimensionLevelsNavigation.EditArguments());
+        }
+
         public void OpenGoalsEditor()
         {
             RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_missions));
@@ -249,6 +257,7 @@ namespace eu.foodmission.platform
             }
 
             var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
 
             // Map progress by missionId
             var progressMap = new Dictionary<string, MissionProgress>(StringComparer.OrdinalIgnoreCase);
@@ -292,7 +301,8 @@ namespace eu.foodmission.platform
                     isCompleted = true;
                 }
 
-                if (!goalFilter.ShouldShow(_dimensionService?.GetDimension(m.dimensionId), isCompleted || isFailed || progressVal > 0f || (!string.IsNullOrEmpty(m.id) && progressMap.ContainsKey(m.id))))
+                bool started = isCompleted || isFailed || progressVal > 0f || (!string.IsNullOrEmpty(m.id) && progressMap.ContainsKey(m.id));
+                if (!goalFilter.ShouldShow(_dimensionService?.GetDimension(m.dimensionId), started))
                 {
                     continue;
                 }
@@ -319,7 +329,8 @@ namespace eu.foodmission.platform
                     Mission = m,
                     IsCompleted = isCompleted,
                     IsFailed = isFailed,
-                    Progress = progressVal
+                    Progress = progressVal,
+                    LevelLock = gate.GetLock(gate.DimensionById(m.dimensionId), m.level, started)
                 });
             }
 
@@ -417,6 +428,13 @@ namespace eu.foodmission.platform
             if (a == null && b == null) return 0;
             if (a == null) return 1;
             if (b == null) return -1;
+
+            int lockA = a.IsLocked ? 1 : 0;
+            int lockB = b.IsLocked ? 1 : 0;
+            if (lockA != lockB)
+            {
+                return lockA.CompareTo(lockB);
+            }
 
             int levelA = GetLevelOrder(a.Mission?.level);
             int levelB = GetLevelOrder(b.Mission?.level);

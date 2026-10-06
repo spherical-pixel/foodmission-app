@@ -157,5 +157,15 @@ namespace eu.foodmission.platform.Components
                 _statusText.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "FOODFACT_STATUS_UNREAD");
             }
         }
+
+        /// <summary>Shows the card as locked (content above the user's level). Cards are rebuilt on refresh, so this is one-way.</summary>
+        public void SetLocked(bool isLocked)
+        {
+            if (!isLocked)
+            {
+                return;
+            }
+            ItemLockVisuals.Apply(this, _statusBadge, _statusIcon, _statusText, _arrowIcon);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace eu.foodmission.platform.Tests
         private TestStoreService _storeService;
         private MissionsViewModel _vm;
         private Func<bool> _originalOverride;
+        private bool _originalDevUnlocks;
 
         private Dimension[] _mockDimensions;
         private Mission[] _mockMissions;
@@ -24,6 +25,8 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _originalOverride = FoodProductFlow.UseDirectClientOverride;
+            _originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
             FoodProductFlow.UseDirectClientOverride = () => false;
 
             _mockMissionService = new Mock<IMissionService>();
@@ -132,6 +135,7 @@ namespace eu.foodmission.platform.Tests
         public void TearDown()
         {
             FoodProductFlow.UseDirectClientOverride = _originalOverride;
+            DevUnlocks.All = _originalDevUnlocks;
             _vm?.Dispose();
         }
 
@@ -321,6 +325,67 @@ namespace eu.foodmission.platform.Tests
             MissionDisplayItem item = _vm.DisplayGroups.SelectMany(g => g.Missions).First(m => m.Mission.id == "m-1");
             Assert.IsFalse(item.IsCompleted);
             Assert.IsTrue(item.IsFailed);
+        }
+
+        [Test]
+        public void Missions_AboveUserLevel_AreLockedAndSortedLast()
+        {
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _mockDimensionService.Setup(d => d.GetAllDimensions()).Returns(_mockDimensions);
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER" });
+            var missions = new[]
+            {
+                new Mission { id = "a", code = "M.I1.1", dimensionId = "dim-1", level = MissionLevel.Intermediate },
+                new Mission { id = "b", code = "M.B1.1", dimensionId = "dim-1", level = MissionLevel.Beginner }
+            };
+
+            _vm.SetRawDataForTesting(missions, new MissionProgress[0]);
+
+            var items = _vm.DisplayGroups.First().Missions;
+            Assert.AreEqual("b", items[0].Mission.id);
+            Assert.IsFalse(items[0].IsLocked);
+            Assert.AreEqual("a", items[1].Mission.id);
+            Assert.IsTrue(items[1].IsLocked);
+            Assert.AreEqual("INTERMEDIATE", items[1].LevelLock.ItemLevel);
+            Assert.AreEqual("BEGINNER", items[1].LevelLock.UserLevel);
+        }
+
+        [Test]
+        public void Missions_StartedAboveLevel_StaysUnlocked()
+        {
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _mockDimensionService.Setup(d => d.GetAllDimensions()).Returns(_mockDimensions);
+            var missions = new[] { new Mission { id = "a", code = "M.A1.1", dimensionId = "dim-1", level = MissionLevel.Advanced } };
+            var progress = new[] { new MissionProgress { missionId = "a", progress = 10f } };
+
+            _vm.SetRawDataForTesting(missions, progress);
+
+            Assert.IsFalse(_vm.DisplayGroups.First().Missions[0].IsLocked);
+        }
+
+        [Test]
+        public void Missions_DimensionsNotLoaded_NothingLocked()
+        {
+            _mockDimensionService.Setup(d => d.GetDimension(It.IsAny<string>())).Returns((Dimension)null);
+            _mockDimensionService.Setup(d => d.GetAllDimensions()).Returns(new Dimension[0]);
+            var missions = new[] { new Mission { id = "a", code = "M.A1.1", dimensionId = "dim-1", level = MissionLevel.Advanced } };
+
+            _vm.SetRawDataForTesting(missions, new MissionProgress[0]);
+
+            Assert.IsFalse(_vm.DisplayGroups.SelectMany(g => g.Missions).Single().IsLocked);
+        }
+
+        [Test]
+        public void OpenDimensionLevels_NavigatesInEditMode()
+        {
+            string action = null;
+            Unity.AppUI.Navigation.Argument[] args = null;
+            _vm.NavigationRequested += (a, ar) => { action = a; args = ar; };
+
+            _vm.OpenDimensionLevels();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, action);
+            Assert.AreEqual("edit", args[0].value);
         }
     }
 }

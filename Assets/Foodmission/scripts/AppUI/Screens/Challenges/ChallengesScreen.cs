@@ -273,9 +273,21 @@ namespace eu.foodmission.platform
                             : (cItem.Challenge.code ?? "");
                         challengeCard.SetLevel(cItem.Challenge.level);
                         challengeCard.SetCompleted(cItem.IsCompleted);
+                        challengeCard.SetLocked(cItem.IsLocked);
 
                         var challengeRef = cItem.Challenge;
-                        challengeCard.OnChallengeClicked += () => _viewModel?.OpenChallenge(challengeRef);
+                        LevelLock levelLock = cItem.LevelLock;
+                        challengeCard.OnChallengeClicked += () =>
+                        {
+                            if (levelLock != null)
+                            {
+                                LevelLockedDialog.Show(levelLock, () => _viewModel?.OpenDimensionLevels());
+                            }
+                            else
+                            {
+                                _viewModel?.OpenChallenge(challengeRef);
+                            }
+                        };
 
                         cardsContainer.Add(challengeCard);
                     }

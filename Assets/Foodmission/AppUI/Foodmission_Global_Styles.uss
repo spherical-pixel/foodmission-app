@@ -2532,3 +2532,20 @@
     align-self: center;
     margin-top: 4px;
 }
+
+/* Content above the user's level (missions, challenges, quizzes, food facts) */
+.fm-item--locked {
+    opacity: 0.55;
+}
+
+.fm-item--locked .fm-quiz-status-badge--locked {
+    background-color: var(--appui-backgrounds-300, rgba(255, 255, 255, 0.12));
+}
+
+.fm-item--locked .fm-quiz-status-badge--locked .appui-icon {
+    --unity-image-tint-color: var(--appui-foreground-muted, rgb(156, 163, 175));
+}
+
+.fm-item--locked .fm-quiz-status-badge-text {
+    color: var(--appui-foreground-muted, rgb(156, 163, 175));
+}

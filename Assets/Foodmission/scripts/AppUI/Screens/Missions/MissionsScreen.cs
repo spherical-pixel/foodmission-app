@@ -275,9 +275,21 @@ namespace eu.foodmission.platform
                         missionCard.SetLevel(mItem.Mission.level);
                         missionCard.SetCompleted(mItem.IsCompleted);
                         missionCard.SetFailed(mItem.IsFailed);
+                        missionCard.SetLocked(mItem.IsLocked);
 
                         var missionRef = mItem.Mission;
-                        missionCard.OnMissionClicked += () => _viewModel?.OpenMission(missionRef);
+                        LevelLock levelLock = mItem.LevelLock;
+                        missionCard.OnMissionClicked += () =>
+                        {
+                            if (levelLock != null)
+                            {
+                                LevelLockedDialog.Show(levelLock, () => _viewModel?.OpenDimensionLevels());
+                            }
+                            else
+                            {
+                                _viewModel?.OpenMission(missionRef);
+                            }
+                        };
 
                         cardsContainer.Add(missionCard);
                     }
