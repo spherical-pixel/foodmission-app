@@ -155,6 +155,8 @@ namespace eu.foodmission.platform
         /// <summary>True while a local hide/show change has not reached the server; only then is the list sent and kept over the server value.</summary>
         public bool hiddenProgressWheelsPendingSync;
         public string[] userGoals = new string[0];
+        /// <summary>The user's level per dimension (preferences.dimensionLevels). Missing dimensions fall back to userSegment, then BEGINNER (see DimensionLevels).</summary>
+        public DimensionLevelEntry[] dimensionLevels = new DimensionLevelEntry[0];
 
         // ==================== Temporal data (not persisted) ====================
 
