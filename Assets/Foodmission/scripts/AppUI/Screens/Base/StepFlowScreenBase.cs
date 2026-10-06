@@ -41,6 +41,15 @@ namespace eu.foodmission.platform
         protected virtual string CompleteButtonLabel => "@UI:TXT_DONE";
         protected virtual string[] StepLabels => Array.Empty<string>();
 
+        /// <summary>
+        /// SwipeView items are absolutely positioned at the SwipeView's own height (overflow hidden), so a step taller
+        /// than the body is clipped instead of scrolling. When true, the SwipeView grows to the current step's content
+        /// height and step-body-scroll scrolls it. Step content must keep its natural height (flex-shrink: 0).
+        /// </summary>
+        protected virtual bool GrowWithStepContent => false;
+
+        private readonly Dictionary<int, VisualElement> _stepContents = new Dictionary<int, VisualElement>();
+
         // ── Abstract Methods ────────────────────────────────
         protected abstract int StepCount { get; }
         protected abstract VisualElement CreateStepContent(int stepIndex);
@@ -254,6 +263,12 @@ namespace eu.foodmission.platform
                 if (content != null)
                 {
                     item.Add(content);
+                    if (GrowWithStepContent)
+                    {
+                        int stepIndex = index;
+                        _stepContents[stepIndex] = content;
+                        content.RegisterCallback<GeometryChangedEvent>(_ => FitSwipeViewToStep(stepIndex));
+                    }
                 }
             };
             var indexes = new List<int>(count);
@@ -325,7 +340,26 @@ namespace eu.foodmission.platform
                 _progressBar.CurrentStep = index;
             }
 
+            FitSwipeViewToStep(index);
             OnStepChanged(index);
+        }
+
+        private void FitSwipeViewToStep(int stepIndex)
+        {
+            if (!GrowWithStepContent || _swipeView == null || _viewModel == null || stepIndex != _viewModel.CurrentStepIndex)
+            {
+                return;
+            }
+            if (!_stepContents.TryGetValue(stepIndex, out VisualElement content) || float.IsNaN(content.layout.height))
+            {
+                return;
+            }
+
+            float height = content.layout.height;
+            if (!Mathf.Approximately(_swipeView.resolvedStyle.minHeight.value, height))
+            {
+                _swipeView.style.minHeight = height;
+            }
         }
 
         /// <summary>

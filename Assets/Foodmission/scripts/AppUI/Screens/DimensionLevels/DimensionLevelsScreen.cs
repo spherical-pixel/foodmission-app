@@ -33,6 +33,9 @@ namespace eu.foodmission.platform
 
         protected override int StepCount => 1;
 
+        // Six dropdowns are taller than the body on small phones: let step-body-scroll scroll them
+        protected override bool GrowWithStepContent => true;
+
         protected override string CompleteButtonLabel =>
             _viewModel != null && _viewModel.Mode == DimensionLevelsMode.Proposal ? "@UI:TXT_CONTINUE" : "@UI:SAVE";
 
