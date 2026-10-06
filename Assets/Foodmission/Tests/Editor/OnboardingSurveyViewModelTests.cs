@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -138,11 +139,14 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(_vm.CanGoNext);
 
             string requestedAction = null;
-            _vm.NavigationRequested += (action, args) => { requestedAction = action; };
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
 
             await _vm.GoNextAsync(); // Complete flow
 
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboardingavatar, requestedAction);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "mode" && (string)a.value == "proposal"));
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "false"));
             var appState = _storeService.GetAppState();
             Assert.IsNotNull(appState.userOnboardingSurvey);
             Assert.AreEqual("ZERO_TO_FOUR", appState.userOnboardingSurvey.weeklyMeatConsumption);
@@ -195,7 +199,8 @@ namespace eu.foodmission.platform.Tests
             vm.FromHome = true;
 
             string requestedAction = null;
-            vm.NavigationRequested += (action, args) => requestedAction = action;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
 
             vm.MeatMealsIndex = 0;
             vm.BeefFrequencyIndex = 0;
@@ -206,7 +211,8 @@ namespace eu.foodmission.platform.Tests
             for (int i = 0; i < 6; i++)
                 await vm.GoNextAsync();
 
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "true"));
         }
 
         private static async Task CompleteFlowAsync(OnboardingSurveyViewModel vm)
@@ -234,7 +240,8 @@ namespace eu.foodmission.platform.Tests
             var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
             vm.Initialize();
             string requestedAction = null;
-            vm.NavigationRequested += (action, args) => requestedAction = action;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
 
             await CompleteFlowAsync(vm);
 
@@ -243,7 +250,9 @@ namespace eu.foodmission.platform.Tests
             auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
             Assert.AreEqual("BEGINNER", _storeService.GetAppState().userSegment);
             Assert.IsNull(vm.ErrorDetail);
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboardingavatar, requestedAction);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "mode" && (string)a.value == "proposal"));
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "false"));
         }
 
         [Test]
@@ -260,14 +269,16 @@ namespace eu.foodmission.platform.Tests
             vm.Initialize();
             vm.FromHome = true;
             string requestedAction = null;
-            vm.NavigationRequested += (action, args) => requestedAction = action;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
 
             await CompleteFlowAsync(vm);
 
             auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r =>
                 r.preferences.onboardingSurvey.weeklyMeatConsumption == "ZERO_TO_FOUR")), Times.Once);
             Assert.IsNull(vm.ErrorDetail);
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
+            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "true"));
         }
 
         [Test]
@@ -282,7 +293,8 @@ namespace eu.foodmission.platform.Tests
             var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
             vm.Initialize();
             string requestedAction = null;
-            vm.NavigationRequested += (action, args) => requestedAction = action;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
 
             await CompleteFlowAsync(vm);
 

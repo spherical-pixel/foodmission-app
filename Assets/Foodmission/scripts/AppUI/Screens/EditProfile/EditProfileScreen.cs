@@ -20,6 +20,7 @@ namespace eu.foodmission.platform
     {
         private Unity.AppUI.UI.Button _submitButton;
         private Unity.AppUI.UI.Button _btnEditGoals;
+        private Unity.AppUI.UI.Button _btnEditLevels;
         private Unity.AppUI.UI.Button _btnTerms;
         private Unity.AppUI.UI.Button _btnPrivacy;
         private Unity.AppUI.UI.Button _btnConsent;
@@ -64,6 +65,7 @@ namespace eu.foodmission.platform
         {
             _submitButton = contentContainer.Q<Unity.AppUI.UI.Button>("submit-button");
             _btnEditGoals = contentContainer.Q<Unity.AppUI.UI.Button>("btn-edit-goals");
+            _btnEditLevels = contentContainer.Q<Unity.AppUI.UI.Button>("btn-edit-levels");
             _btnTerms = contentContainer.Q<Unity.AppUI.UI.Button>("btn-terms");
             _btnPrivacy = contentContainer.Q<Unity.AppUI.UI.Button>("btn-privacy");
             _btnConsent = contentContainer.Q<Unity.AppUI.UI.Button>("btn-consent");
@@ -93,6 +95,11 @@ namespace eu.foodmission.platform
             if (_btnEditGoals != null)
             {
                 _btnEditGoals.clicked += OnEditGoalsClicked;
+            }
+
+            if (_btnEditLevels != null)
+            {
+                _btnEditLevels.clicked += OnEditLevelsClicked;
             }
 
             if (_btnTerms != null)
@@ -182,6 +189,11 @@ namespace eu.foodmission.platform
             if (_btnEditGoals != null)
             {
                 _btnEditGoals.clicked -= OnEditGoalsClicked;
+            }
+
+            if (_btnEditLevels != null)
+            {
+                _btnEditLevels.clicked -= OnEditLevelsClicked;
             }
 
             if (_btnTerms != null)
@@ -520,6 +532,11 @@ namespace eu.foodmission.platform
         private void OnEditGoalsClicked()
         {
             _navController?.Navigate(Unity.AppUI.Navigation.Generated.Actions.editprofile_to_onboardinggoals, new Argument("fromEditProfile", "true"));
+        }
+
+        private void OnEditLevelsClicked()
+        {
+            _navController?.Navigate(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, DimensionLevelsNavigation.EditArguments());
         }
 
         private async void OnTermsClicked()

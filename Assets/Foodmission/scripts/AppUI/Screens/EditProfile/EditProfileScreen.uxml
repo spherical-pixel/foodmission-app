@@ -90,6 +90,12 @@
                 </Bindings>
             </fm:FMButton>
             <appui:Spacer spacing="XL"/>
+            <fm:FMButton variant="Primary" title="📶 Mis niveles" name="btn-edit-levels" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="DIMENSION_LEVELS_EDIT_BUTTON"/>
+                </Bindings>
+            </fm:FMButton>
+            <appui:Spacer spacing="XL"/>
             <fm:FMButton variant="Primary" title="📜 Términos y condiciones" name="btn-terms" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="T&amp;C_TITLE"/>

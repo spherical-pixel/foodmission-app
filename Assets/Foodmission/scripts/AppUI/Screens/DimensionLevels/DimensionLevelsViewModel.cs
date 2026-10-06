@@ -52,10 +52,11 @@ namespace eu.foodmission.platform
         public override void Initialize()
         {
             base.Initialize();
-            BuildRows();
+            Reload();
         }
 
-        private void BuildRows()
+        /// <summary>Rebuilds the rows for the current Mode (the screen sets Mode after Initialize).</summary>
+        public void Reload()
         {
             AppState state = _storeService.GetAppState();
             DimensionLevelEntry[] proposal = DimensionLevels.Propose(state?.userSegment);

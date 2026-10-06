@@ -2505,3 +2505,30 @@
     color: var(--appui-foreground-muted);
     margin-bottom: 25px;
 }
+
+/* Per-dimension levels screen (DimensionLevelsScreen) */
+.fm-dimension-levels__rows {
+    padding: 4px 0;
+}
+
+.fm-dimension-levels__row {
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.fm-dimension-levels__name {
+    -unity-font-style: bold;
+    margin-bottom: 8px;
+    white-space: normal;
+}
+
+.fm-dimension-levels__proposed {
+    margin-top: 6px;
+    font-size: var(--appui-font-sizes-body-sm);
+    color: var(--appui-foreground-muted, rgb(156, 163, 175));
+}
+
+.fm-dimension-levels__reset {
+    align-self: center;
+    margin-top: 4px;
+}

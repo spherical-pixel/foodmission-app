@@ -239,15 +239,8 @@ namespace eu.foodmission.platform
 
                 ErrorDetail = null;
 
-                // 4. Complete survey flow & navigate to next screen
-                if (FromHome)
-                {
-                    RaiseNavigationRequested(Actions.go_to_home);
-                }
-                else
-                {
-                    RaiseNavigationRequested(Actions.onboardingprofile_to_onboardingavatar, new Unity.AppUI.Navigation.Argument("fromOnboarding", "true"));
-                }
+                // 4. Show the proposed per-dimension levels; that screen continues to Home or the avatar step
+                RaiseNavigationRequested(Actions.go_to_dimension_levels, DimensionLevelsNavigation.ProposalArguments(FromHome));
             }
             finally
             {
