@@ -4017,6 +4017,44 @@ MonoBehaviour:
     m_Localized: "\U0001F4AC Check-in mit Foody"
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Localized: Deine Stufen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Localized: "Basierend auf deinen Antworten schlagen wir dir diese Stufe pro
+      Bereich vor. Du kannst sie behalten oder selbst w\xE4hlen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Localized: "W\xE4hle deine Stufe pro Bereich. Inhalte \xFCber deiner Stufe
+      bleiben gesperrt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Localized: Vorgeschlagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Localized: Vorschlag wiederherstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Localized: "\U0001F4F6 Meine Stufen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Localized: Dieser Inhalt ist Stufe {0}. Deine Stufe in {1} ist {2}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Localized: "Meine Stufen \xE4ndern"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Localized: "Schlie\xDFen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

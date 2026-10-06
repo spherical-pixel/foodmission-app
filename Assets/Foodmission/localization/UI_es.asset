@@ -4001,6 +4001,44 @@ MonoBehaviour:
     m_Localized: "\U0001F4AC Hacer check-in con Nutri"
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Localized: Tus niveles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Localized: "Seg\xFAn tus respuestas, este es el nivel que te proponemos en
+      cada \xE1rea. Puedes mantenerlo o elegir el tuyo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Localized: "Elige tu nivel en cada \xE1rea. El contenido por encima de tu nivel
+      quedar\xE1 bloqueado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Localized: Propuesto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Localized: Restablecer propuesta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Localized: "\U0001F4F6 Mis niveles"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Localized: Este contenido es de nivel {0}. Tu nivel en {1} es {2}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Localized: Cambiar mis niveles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Localized: Cerrar
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

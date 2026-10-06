@@ -3883,6 +3883,42 @@ MonoBehaviour:
     m_Key: HOME_QUEST_CHECKIN_BUTTON
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Key: DIMENSION_LEVELS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Key: DIMENSION_LEVELS_NUTRI_PROPOSAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Key: DIMENSION_LEVELS_NUTRI_EDIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Key: DIMENSION_LEVELS_PROPOSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Key: DIMENSION_LEVELS_RESET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Key: DIMENSION_LEVELS_EDIT_BUTTON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Key: LEVEL_LOCKED_MSG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Key: LEVEL_LOCKED_CHANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Key: LEVEL_LOCKED_CLOSE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -4016,6 +4016,43 @@ MonoBehaviour:
     m_Localized: "\U0001F4AC Inchecken bij Foody"
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Localized: Jouw niveaus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Localized: Op basis van je antwoorden stellen we dit niveau per gebied voor.
+      Je kunt het houden of zelf kiezen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Localized: Kies je niveau per gebied. Inhoud boven je niveau blijft vergrendeld.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Localized: Voorgesteld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Localized: Voorstel herstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Localized: "\U0001F4F6 Mijn niveaus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Localized: Deze inhoud is van niveau {0}. Jouw niveau in {1} is {2}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Localized: Mijn niveaus wijzigen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Localized: Sluiten
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

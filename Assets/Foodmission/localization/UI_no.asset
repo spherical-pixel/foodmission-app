@@ -4000,6 +4000,44 @@ MonoBehaviour:
     m_Localized: "\U0001F4AC Sjekk inn med Foody"
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Localized: "Dine niv\xE5er"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Localized: "Basert p\xE5 svarene dine foresl\xE5r vi dette niv\xE5et for hvert
+      omr\xE5de. Du kan beholde det eller velge selv."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Localized: "Velg niv\xE5et ditt for hvert omr\xE5de. Innhold over niv\xE5et
+      ditt forblir l\xE5st."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Localized: "Foresl\xE5tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Localized: Gjenopprett forslag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Localized: "\U0001F4F6 Mine niv\xE5er"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Localized: "Dette innholdet er p\xE5 niv\xE5 {0}. Niv\xE5et ditt i {1} er {2}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Localized: "Endre niv\xE5ene mine"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Localized: Lukk
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

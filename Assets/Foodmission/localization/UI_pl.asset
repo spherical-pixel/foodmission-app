@@ -4051,6 +4051,45 @@ MonoBehaviour:
     m_Localized: "\U0001F4AC Zamelduj si\u0119 u Foody"
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Localized: Twoje poziomy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Localized: "Na podstawie Twoich odpowiedzi proponujemy ten poziom w ka\u017Cdym
+      obszarze. Mo\u017Cesz go zachowa\u0107 lub wybra\u0107 w\u0142asny."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Localized: "Wybierz sw\xF3j poziom w ka\u017Cdym obszarze. Tre\u015Bci powy\u017Cej
+      Twojego poziomu pozostan\u0105 zablokowane."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Localized: Proponowany
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Localized: "Przywr\xF3\u0107 propozycj\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Localized: "\U0001F4F6 Moje poziomy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Localized: "Ta tre\u015B\u0107 ma poziom {0}. Tw\xF3j poziom w obszarze {1}
+      to {2}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Localized: "Zmie\u0144 moje poziomy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Localized: Zamknij
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

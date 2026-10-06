@@ -3989,6 +3989,43 @@ MonoBehaviour:
     m_Localized: "\U0001F4AC Check in with Foody"
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Localized: Your levels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Localized: Based on your answers, this is the level we suggest for each area.
+      You can keep it or choose your own.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Localized: Choose your level in each area. Content above your level stays locked.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Localized: Suggested
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Localized: Restore suggestion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Localized: "\U0001F4F6 My levels"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Localized: This content is {0} level. Your level in {1} is {2}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Localized: Change my levels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

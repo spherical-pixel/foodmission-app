@@ -4000,6 +4000,44 @@ MonoBehaviour:
     m_Localized: "\U0001F4AC Javi se Foodyju"
     m_Metadata:
       m_Items: []
+  - m_Id: 53932757066178560
+    m_Localized: Tvoje ravni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979200
+    m_Localized: "Na podlagi tvojih odgovorov ti predlagamo to raven za vsako podro\u010Dje.
+      Lahko jo obdr\u017Ei\u0161 ali izbere\u0161 svojo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979201
+    m_Localized: "Izberi svojo raven za vsako podro\u010Dje. Vsebina nad tvojo ravnjo
+      ostane zaklenjena."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979202
+    m_Localized: Predlagano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979203
+    m_Localized: Obnovi predlog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979204
+    m_Localized: "\U0001F4F6 Moje ravni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979205
+    m_Localized: Ta vsebina je ravni {0}. Tvoja raven v {1} je {2}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757212979206
+    m_Localized: Spremeni moje ravni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53932757217173504
+    m_Localized: Zapri
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
