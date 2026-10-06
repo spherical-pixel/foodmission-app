@@ -475,5 +475,22 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(ContentLockReason.None, _vm.DisplayGroups.SelectMany(g => g.Quests).Single().LockReason);
         }
+
+        [Test]
+        public void DisplayGroups_ShowTheUserLevelOfEachDimension()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "t",
+                lang = "es",
+                userSegment = "BEGINNER",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Advanced) }
+            });
+
+            _vm.SetRawDataForTesting(_mockQuests, _mockProgress);
+
+            var diet = _vm.DisplayGroups.First(g => g.Dimension?.code == DimensionCode.DietChanges);
+            Assert.AreEqual(ContentLevel.Advanced, diet.UserLevel);
+        }
     }
 }

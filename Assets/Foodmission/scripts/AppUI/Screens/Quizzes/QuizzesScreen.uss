@@ -292,3 +292,23 @@
     margin-left: 15px;
     
 }
+
+/* Dimension header: title + "Your level" badge (DimensionLevelBadge) */
+.fm-dim-title-column {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-right: 8px;
+}
+
+.fm-dim-title-column > .fm-quizzes-dim-title {
+    flex-grow: 0;
+    margin-right: 0;
+}
+
+.fm-dim-level-badge {
+    align-self: flex-start;
+    margin-top: 4px;
+    margin-right: 0;
+}

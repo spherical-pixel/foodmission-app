@@ -4053,6 +4053,10 @@ MonoBehaviour:
     m_Localized: Sluiten
     m_Metadata:
       m_Items: []
+  - m_Id: 53959623877582848
+    m_Localized: 'Jouw niveau: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

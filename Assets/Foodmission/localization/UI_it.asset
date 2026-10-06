@@ -4043,6 +4043,10 @@ MonoBehaviour:
     m_Localized: Chiudi
     m_Metadata:
       m_Items: []
+  - m_Id: 53959623877582848
+    m_Localized: 'Il tuo livello: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

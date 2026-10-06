@@ -394,5 +394,22 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, action);
             Assert.AreEqual("edit", args[0].value);
         }
+
+        [Test]
+        public void DisplayGroups_ShowTheUserLevelOfEachDimension()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "t",
+                lang = "es",
+                userSegment = "BEGINNER",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Advanced) }
+            });
+
+            _vm.SetRawDataForTesting(_mockChallenges, _mockProgress);
+
+            var diet = _vm.DisplayGroups.First(g => g.Dimension?.code == DimensionCode.DietChanges);
+            Assert.AreEqual(ContentLevel.Advanced, diet.UserLevel);
+        }
     }
 }

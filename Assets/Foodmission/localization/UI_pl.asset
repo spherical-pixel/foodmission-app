@@ -4090,6 +4090,10 @@ MonoBehaviour:
     m_Localized: Zamknij
     m_Metadata:
       m_Items: []
+  - m_Id: 53959623877582848
+    m_Localized: "Tw\xF3j poziom: {0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

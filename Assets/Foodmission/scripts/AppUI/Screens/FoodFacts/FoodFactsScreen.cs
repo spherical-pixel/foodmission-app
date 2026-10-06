@@ -218,7 +218,7 @@ namespace eu.foodmission.platform
                 dimTitle.AddToClassList("fm-quizzes-dim-title");
                 dimTitle.text = group.Dimension?.name ?? group.Dimension?.code ?? "Dimension";
                 dimTitle.size = TextSize.M;
-                row.Add(dimTitle);
+                row.Add(DimensionLevelBadge.WithTitle(dimTitle, group.UserLevel));
 
                 var progressBadge = new VisualElement();
                 progressBadge.AddToClassList("fm-quizzes-dim-progress-badge");

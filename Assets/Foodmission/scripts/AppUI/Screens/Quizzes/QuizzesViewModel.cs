@@ -47,6 +47,8 @@ namespace eu.foodmission.platform
     public class QuizDisplayGroup
     {
         public Dimension Dimension { get; set; }
+        /// <summary>The user's level in this dimension (null for the fallback group without a dimension).</summary>
+        public string UserLevel { get; set; }
         public int TotalCount { get; set; }
         public int CompletedCount { get; set; }
         public bool IsExpanded { get; set; } = false;
@@ -551,6 +553,7 @@ namespace eu.foodmission.platform
                         groups.Add(new QuizDisplayGroup
                         {
                             Dimension = dim,
+                            UserLevel = gate.UserLevel(dim),
                             TotalCount = dimTotal,
                             CompletedCount = dimCompleted,
                             IsExpanded = isExpanded,

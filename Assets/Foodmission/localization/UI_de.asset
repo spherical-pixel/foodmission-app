@@ -4055,6 +4055,10 @@ MonoBehaviour:
     m_Localized: "Schlie\xDFen"
     m_Metadata:
       m_Items: []
+  - m_Id: 53959623877582848
+    m_Localized: 'Deine Stufe: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
