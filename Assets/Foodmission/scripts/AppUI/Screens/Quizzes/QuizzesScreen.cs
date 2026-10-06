@@ -304,9 +304,21 @@ namespace eu.foodmission.platform
                         quizCard.Text = qItem.Quiz.code ?? "";
                         quizCard.SetLevel(qItem.Quiz.level);
                         quizCard.SetCompleted(qItem.IsCompleted);
+                        quizCard.SetLocked(qItem.IsLocked);
 
                         var quizRef = qItem.Quiz;
-                        quizCard.OnQuizClicked += () => _viewModel?.OpenQuiz(quizRef);
+                        LevelLock levelLock = qItem.LevelLock;
+                        quizCard.OnQuizClicked += () =>
+                        {
+                            if (levelLock != null)
+                            {
+                                LevelLockedDialog.Show(levelLock, () => _viewModel?.OpenDimensionLevels());
+                            }
+                            else
+                            {
+                                _viewModel?.OpenQuiz(quizRef);
+                            }
+                        };
 
                         cardsContainer.Add(quizCard);
                     }

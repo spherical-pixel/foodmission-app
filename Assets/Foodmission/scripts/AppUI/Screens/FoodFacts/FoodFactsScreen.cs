@@ -295,9 +295,21 @@ namespace eu.foodmission.platform
                         factCard.Text = fItem.FoodFact.code ?? "";
                         factCard.SetLevel(fItem.FoodFact.level);
                         factCard.SetCompleted(fItem.IsCompleted);
+                        factCard.SetLocked(fItem.IsLocked);
 
                         var factRef = fItem.FoodFact;
-                        factCard.OnFoodFactClicked += () => _viewModel?.OpenFoodFact(factRef);
+                        LevelLock levelLock = fItem.LevelLock;
+                        factCard.OnFoodFactClicked += () =>
+                        {
+                            if (levelLock != null)
+                            {
+                                LevelLockedDialog.Show(levelLock, () => _viewModel?.OpenDimensionLevels());
+                            }
+                            else
+                            {
+                                _viewModel?.OpenFoodFact(factRef);
+                            }
+                        };
 
                         cardsContainer.Add(factCard);
                     }

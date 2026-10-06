@@ -17,6 +17,7 @@ namespace eu.foodmission.platform.Tests
         private TestStoreService _storeService;
         private QuestsViewModel _vm;
         private Func<bool> _originalOverride;
+        private bool _originalDevUnlocks;
 
         private Dimension[] _mockDimensions;
         private Quest[] _mockQuests;
@@ -26,6 +27,8 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _originalOverride = FoodProductFlow.UseDirectClientOverride;
+            _originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
             FoodProductFlow.UseDirectClientOverride = () => false;
 
             _mockQuestService = new Mock<IQuestService>();
@@ -130,6 +133,7 @@ namespace eu.foodmission.platform.Tests
         public void TearDown()
         {
             FoodProductFlow.UseDirectClientOverride = _originalOverride;
+            DevUnlocks.All = _originalDevUnlocks;
             _vm?.Dispose();
         }
 
@@ -438,6 +442,38 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.AreEquivalent(new[] { "q-1", "q-2", "q-4" }, ids);
             Assert.AreEqual(3, _vm.TotalQuestsCount);
             Assert.IsTrue(_vm.HasGoalHiddenContent);
+        }
+
+        [Test]
+        public void Quests_AboveLevel_HaveLevelLockAndGoLast()
+        {
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER" });
+            var quests = new[]
+            {
+                new Quest { id = "qi", code = "QUEST.DIET.INTERMEDIATE.1", dimensionId = "dim-1", level = "INTERMEDIATE" },
+                new Quest { id = "qb", code = "QUEST.DIET.BEGINNER.1", dimensionId = "dim-1", level = "BEGINNER" }
+            };
+
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _vm.SetRawDataForTesting(quests, new QuestProgress[0]);
+
+            var items = _vm.DisplayGroups.SelectMany(g => g.Quests).ToList();
+            Assert.AreEqual("qb", items[0].Quest.id);
+            Assert.AreEqual(ContentLockReason.None, items[0].LockReason);
+            Assert.AreEqual(ContentLockReason.Level, items[1].LockReason);
+            Assert.AreEqual("BEGINNER", items[1].LevelLock.UserLevel);
+        }
+
+        [Test]
+        public void ActiveQuestAboveLevel_IsNotLocked()
+        {
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER", userCurrentQuestId = "qa" });
+            var quests = new[] { new Quest { id = "qa", code = "QUEST.DIET.ADVANCED.1", dimensionId = "dim-1", level = "ADVANCED" } };
+
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _vm.SetRawDataForTesting(quests, new QuestProgress[0]);
+
+            Assert.AreEqual(ContentLockReason.None, _vm.DisplayGroups.SelectMany(g => g.Quests).Single().LockReason);
         }
     }
 }

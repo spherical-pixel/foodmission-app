@@ -33,6 +33,9 @@ namespace eu.foodmission.platform
         public Quiz Quiz { get; set; }
         public bool IsCompleted { get; set; }
         public bool? IsCorrect { get; set; }
+        /// <summary>Set when the quiz is above the user's level in its dimension (null = can be opened).</summary>
+        public LevelLock LevelLock { get; set; }
+        public bool IsLocked => LevelLock != null;
     }
 
     public class QuizTopicGroup
@@ -261,8 +264,13 @@ namespace eu.foodmission.platform
 
                 if (quiz != null)
                 {
-                    OpenQuiz(quiz);
-                    return;
+                    var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+                    if (GetQuizLock(quiz, gate, BuildProgressMap()) == null)
+                    {
+                        OpenQuiz(quiz);
+                        return;
+                    }
+                    Debug.Log($"[{GetType().Name}] OpenRandomQuizAsync: server quiz {quiz.code} is above the user's level, picking locally.");
                 }
 
                 // 404 — all quizzes completed, fallback to client-side random
@@ -288,16 +296,8 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            var progressMap = new Dictionary<string, QuizProgress>(StringComparer.OrdinalIgnoreCase);
-            if (_rawProgress != null)
-            {
-                foreach (var p in _rawProgress)
-                {
-                    if (p == null) continue;
-                    if (!string.IsNullOrEmpty(p.quizId)) progressMap[p.quizId] = p;
-                    if (!string.IsNullOrEmpty(p.quizCode)) progressMap[p.quizCode] = p;
-                }
-            }
+            var progressMap = BuildProgressMap();
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
 
             var matchingLevelQuizzes = new List<Quiz>();
             var pendingQuizzes = new List<Quiz>();
@@ -310,6 +310,11 @@ namespace eu.foodmission.platform
                 {
                     if (!string.Equals(q.level, _selectedLevel, StringComparison.OrdinalIgnoreCase))
                         continue;
+                }
+
+                if (GetQuizLock(q, gate, progressMap) != null)
+                {
+                    continue;
                 }
 
                 matchingLevelQuizzes.Add(q);
@@ -339,6 +344,43 @@ namespace eu.foodmission.platform
             OpenQuiz(selectedQuiz);
         }
 
+        public void OpenDimensionLevels()
+        {
+            RaiseNavigationRequested(Actions.go_to_dimension_levels, DimensionLevelsNavigation.EditArguments());
+        }
+
+        private LevelLock GetQuizLock(Quiz quiz, LevelGate gate, Dictionary<string, QuizProgress> progressMap)
+        {
+            bool started = (!string.IsNullOrEmpty(quiz.id) && progressMap.ContainsKey(quiz.id))
+                           || (!string.IsNullOrEmpty(quiz.code) && progressMap.ContainsKey(quiz.code));
+            return gate.GetLock(gate.DimensionForTopic(quiz.topicId), quiz.level, started);
+        }
+
+        private Dictionary<string, QuizProgress> BuildProgressMap()
+        {
+            var map = new Dictionary<string, QuizProgress>(StringComparer.OrdinalIgnoreCase);
+            if (_rawProgress == null)
+            {
+                return map;
+            }
+            foreach (var p in _rawProgress)
+            {
+                if (p == null)
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(p.quizId))
+                {
+                    map[p.quizId] = p;
+                }
+                if (!string.IsNullOrEmpty(p.quizCode))
+                {
+                    map[p.quizCode] = p;
+                }
+            }
+            return map;
+        }
+
         public void OpenGoalsEditor()
         {
             RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_quizzes));
@@ -365,17 +407,8 @@ namespace eu.foodmission.platform
             var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
 
             // Map progress by quizId and quizCode
-            var progressMap = new Dictionary<string, QuizProgress>(StringComparer.OrdinalIgnoreCase);
-            if (_rawProgress != null)
-            {
-                foreach (var p in _rawProgress)
-                {
-                    if (!string.IsNullOrEmpty(p.quizId))
-                        progressMap[p.quizId] = p;
-                    if (!string.IsNullOrEmpty(p.quizCode))
-                        progressMap[p.quizCode] = p;
-                }
-            }
+            var progressMap = BuildProgressMap();
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
 
             // Filter items
             var displayItems = new List<QuizDisplayItem>();
@@ -429,7 +462,8 @@ namespace eu.foodmission.platform
                 {
                     Quiz = q,
                     IsCompleted = isCompleted,
-                    IsCorrect = isCorrect
+                    IsCorrect = isCorrect,
+                    LevelLock = GetQuizLock(q, gate, progressMap)
                 });
             }
 
@@ -453,7 +487,10 @@ namespace eu.foodmission.platform
             // Sort quizzes within each topic by code ascending
             foreach (var list in itemsByTopicId.Values)
             {
-                list.Sort((a, b) => string.Compare(a.Quiz?.code, b.Quiz?.code, StringComparison.OrdinalIgnoreCase));
+                // Quizzes above the user's level go last
+                list.Sort((a, b) => a.IsLocked != b.IsLocked
+                    ? (a.IsLocked ? 1 : -1)
+                    : string.Compare(a.Quiz?.code, b.Quiz?.code, StringComparison.OrdinalIgnoreCase));
             }
 
             // Build hierarchical display groups using IDimensionService

@@ -33,6 +33,9 @@ namespace eu.foodmission.platform
         public Quest Quest { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsLocked { get; set; }
+        public ContentLockReason LockReason { get; set; }
+        /// <summary>Set when the quest is above the user's level in its dimension.</summary>
+        public LevelLock LevelLock { get; set; }
         public string PreviousQuestTitle { get; set; }
         public float Progress { get; set; }
     }
@@ -291,6 +294,11 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Actions.open_quest, args.ToArray());
         }
 
+        public void OpenDimensionLevels()
+        {
+            RaiseNavigationRequested(Actions.go_to_dimension_levels, DimensionLevelsNavigation.EditArguments());
+        }
+
         public void OpenGoalsEditor()
         {
             RaiseNavigationRequested(Actions.go_to_onboarding_goals, GoalContentFilter.EditGoalsArguments(Actions.go_to_quests));
@@ -327,8 +335,10 @@ namespace eu.foodmission.platform
             var goalFilter = GoalContentFilter.FromGoals(appState?.userGoals);
             string currentQuestId = appState?.userCurrentQuestId;
 
-            // Evaluate progression for all quests
-            var progressionStates = _questProgressionService?.EvaluateProgression(_rawQuests, _rawProgress);
+            // Evaluate progression for all quests (sequence per difficulty + the user's level per dimension)
+            var gate = new LevelGate(appState, _dimensionService);
+            var progressionStates = _questProgressionService?.EvaluateProgression(_rawQuests, _rawProgress,
+                dimensionId => gate.UserLevel(gate.DimensionById(dimensionId)));
             var stateById = new Dictionary<string, QuestProgressionState>(StringComparer.OrdinalIgnoreCase);
             var stateByCode = new Dictionary<string, QuestProgressionState>(StringComparer.OrdinalIgnoreCase);
             if (progressionStates != null)
@@ -361,13 +371,22 @@ namespace eu.foodmission.platform
                 else if (!string.IsNullOrEmpty(q.code) && stateByCode.TryGetValue(q.code, out var stCode)) progState = stCode;
 
                 bool isCompleted = progState?.IsCompleted ?? false;
-                bool isLocked = progState?.IsLocked ?? false;
                 float progressVal = progState?.ProgressPercent ?? 0f;
                 string prevTitle = progState?.PreviousQuest?.GetDisplayName();
 
                 bool isActive = !string.IsNullOrEmpty(currentQuestId) &&
                                 (string.Equals(currentQuestId, q.id, StringComparison.OrdinalIgnoreCase) ||
                                  string.Equals(currentQuestId, q.code, StringComparison.OrdinalIgnoreCase));
+
+                ContentLockReason lockReason = progState?.LockReason ?? ContentLockReason.None;
+                if (isActive)
+                {
+                    // The active quest is started even at 0%: never lock it
+                    lockReason = ContentLockReason.None;
+                }
+                LevelLock levelLock = lockReason == ContentLockReason.Level
+                    ? gate.GetLock(gate.DimensionById(q.dimensionId), q.level, started: false)
+                    : null;
                 if (!goalFilter.ShouldShow(_dimensionService?.GetDimension(q.dimensionId), isCompleted || isActive || progressVal > 0f))
                 {
                     continue;
@@ -394,7 +413,9 @@ namespace eu.foodmission.platform
                 {
                     Quest = q,
                     IsCompleted = isCompleted,
-                    IsLocked = isLocked,
+                    IsLocked = lockReason != ContentLockReason.None,
+                    LockReason = lockReason,
+                    LevelLock = levelLock,
                     PreviousQuestTitle = prevTitle,
                     Progress = progressVal
                 });
@@ -507,6 +528,14 @@ namespace eu.foodmission.platform
             if (a == null && b == null) return 0;
             if (a == null) return 1;
             if (b == null) return -1;
+
+            // Quests above the user's level go last; sequence-locked ones keep their place in the chain
+            int lockA = a.LockReason == ContentLockReason.Level ? 1 : 0;
+            int lockB = b.LockReason == ContentLockReason.Level ? 1 : 0;
+            if (lockA != lockB)
+            {
+                return lockA.CompareTo(lockB);
+            }
 
             int levelA = GetLevelOrder(a.Quest?.level);
             int levelB = GetLevelOrder(b.Quest?.level);

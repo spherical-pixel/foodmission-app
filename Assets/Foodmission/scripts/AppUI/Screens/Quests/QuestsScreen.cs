@@ -306,10 +306,15 @@ namespace eu.foodmission.platform
                         var questRef = qItem.Quest;
                         bool isLocked = qItem.IsLocked;
                         string prevTitle = qItem.PreviousQuestTitle;
+                        LevelLock levelLock = qItem.LevelLock;
 
                         questCard.OnQuestClicked += () =>
                         {
-                            if (isLocked)
+                            if (levelLock != null)
+                            {
+                                LevelLockedDialog.Show(levelLock, () => _viewModel?.OpenDimensionLevels());
+                            }
+                            else if (isLocked)
                             {
                                 string prevName = !string.IsNullOrEmpty(prevTitle)
                                     ? prevTitle

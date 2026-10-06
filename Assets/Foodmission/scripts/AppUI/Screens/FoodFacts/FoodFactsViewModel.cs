@@ -32,6 +32,9 @@ namespace eu.foodmission.platform
     {
         public FoodFact FoodFact { get; set; }
         public bool IsCompleted { get; set; }
+        /// <summary>Set when the fact is above the user's level in its dimension (null = can be opened).</summary>
+        public LevelLock LevelLock { get; set; }
+        public bool IsLocked => LevelLock != null;
     }
 
     public class FoodFactTopicGroup
@@ -254,6 +257,7 @@ namespace eu.foodmission.platform
             }
 
             var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
             var matchingLevelFacts = new List<FoodFact>();
             var pendingFacts = new List<FoodFact>();
 
@@ -284,6 +288,11 @@ namespace eu.foodmission.platform
                     continue;
                 }
 
+                if (gate.GetLock(gate.DimensionForTopic(f.topicId), f.level, isCompleted) != null)
+                {
+                    continue;
+                }
+
                 matchingLevelFacts.Add(f);
 
                 if (!isCompleted)
@@ -299,6 +308,11 @@ namespace eu.foodmission.platform
             FoodFact selectedFact = candidatePool[randomIndex];
 
             OpenFoodFact(selectedFact);
+        }
+
+        public void OpenDimensionLevels()
+        {
+            RaiseNavigationRequested(Actions.go_to_dimension_levels, DimensionLevelsNavigation.EditArguments());
         }
 
         public void OpenGoalsEditor()
@@ -337,6 +351,7 @@ namespace eu.foodmission.platform
                 }
             }
 
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
             var displayItems = new List<FoodFactDisplayItem>();
             int totalMatchingLevel = 0;
             int totalCompletedMatchingLevel = 0;
@@ -379,7 +394,8 @@ namespace eu.foodmission.platform
                 displayItems.Add(new FoodFactDisplayItem
                 {
                     FoodFact = f,
-                    IsCompleted = isCompleted
+                    IsCompleted = isCompleted,
+                    LevelLock = gate.GetLock(gate.DimensionForTopic(f.topicId), f.level, isCompleted)
                 });
             }
 
@@ -403,7 +419,10 @@ namespace eu.foodmission.platform
             // Sort facts within each topic by code ascending
             foreach (var list in itemsByTopicId.Values)
             {
-                list.Sort((a, b) => string.Compare(a.FoodFact?.code, b.FoodFact?.code, StringComparison.OrdinalIgnoreCase));
+                // Facts above the user's level go last
+                list.Sort((a, b) => a.IsLocked != b.IsLocked
+                    ? (a.IsLocked ? 1 : -1)
+                    : string.Compare(a.FoodFact?.code, b.FoodFact?.code, StringComparison.OrdinalIgnoreCase));
             }
 
             // Build hierarchical display groups using IDimensionService

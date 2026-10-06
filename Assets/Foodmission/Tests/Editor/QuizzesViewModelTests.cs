@@ -19,6 +19,7 @@ namespace eu.foodmission.platform.Tests
         private TestStoreService _storeService;
         private QuizzesViewModel _vm;
         private Func<bool> _originalOverride;
+        private bool _originalDevUnlocks;
 
         private Dimension[] _mockDimensions;
         private Quiz[] _mockQuizzes;
@@ -28,6 +29,8 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _originalOverride = FoodProductFlow.UseDirectClientOverride;
+            _originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
             FoodProductFlow.UseDirectClientOverride = () => false;
 
             _mockQuizService = new Mock<IQuizService>();
@@ -132,6 +135,7 @@ namespace eu.foodmission.platform.Tests
         public void TearDown()
         {
             FoodProductFlow.UseDirectClientOverride = _originalOverride;
+            DevUnlocks.All = _originalDevUnlocks;
             _vm?.Dispose();
             _storeService?.Dispose();
         }
@@ -530,6 +534,61 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(4, _vm.TotalQuizzesCount);
             Assert.IsFalse(_vm.HasGoalHiddenContent);
+        }
+
+        [Test]
+        public void Quizzes_AboveLevel_AreLockedAndSortedLastInTopic()
+        {
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(new Dimension { id = "dim-1", code = DimensionCode.DietChanges, name = "Diet" });
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER" });
+            var quizzes = new[]
+            {
+                new Quiz { id = "a", code = "A", topicId = "top-1", level = "ADVANCED" },
+                new Quiz { id = "b", code = "B", topicId = "top-1", level = "BEGINNER" }
+            };
+
+            _vm.SetRawDataForTesting(quizzes, new QuizProgress[0]);
+
+            var items = _vm.DisplayGroups.SelectMany(g => g.Topics).SelectMany(t => t.Quizzes).ToList();
+            Assert.AreEqual("b", items[0].Quiz.id);
+            Assert.IsTrue(items[1].IsLocked);
+        }
+
+        [Test]
+        public void RandomQuizFallback_NeverPicksLockedQuiz()
+        {
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(new Dimension { id = "dim-1", code = DimensionCode.DietChanges, name = "Diet" });
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER" });
+            _vm.SetRawDataForTesting(new[]
+            {
+                new Quiz { id = "a", code = "A", topicId = "top-1", level = "ADVANCED" },
+                new Quiz { id = "b", code = "B", topicId = "top-1", level = "BEGINNER" }
+            }, new QuizProgress[0]);
+            var opened = new System.Collections.Generic.List<string>();
+            _vm.NavigationRequested += (a, args) => opened.Add((string)args.First(x => x.name == "id").value);
+
+            for (int i = 0; i < 20; i++)
+            {
+                _vm.OpenRandomQuizFallback();
+            }
+
+            CollectionAssert.DoesNotContain(opened, "a");
+        }
+
+        [Test]
+        public async Task RandomQuiz_ServerReturnsLockedQuiz_FallsBackToUnlocked()
+        {
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(new Dimension { id = "dim-1", code = DimensionCode.DietChanges, name = "Diet" });
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER" });
+            var locked = new Quiz { id = "a", code = "A", topicId = "top-1", level = "ADVANCED" };
+            _vm.SetRawDataForTesting(new[] { locked, new Quiz { id = "b", code = "B", topicId = "top-1", level = "BEGINNER" } }, new QuizProgress[0]);
+            _mockQuizService.Setup(s => s.GetRandomQuizAsync(It.IsAny<QuizFilterParams>(), It.IsAny<string>())).ReturnsAsync((locked, (ApiErrorResponse)null));
+            string openedId = null;
+            _vm.NavigationRequested += (a, args) => openedId = (string)args.First(x => x.name == "id").value;
+
+            await _vm.OpenRandomQuizAsync();
+
+            Assert.AreEqual("b", openedId);
         }
     }
 }

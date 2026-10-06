@@ -19,6 +19,7 @@ namespace eu.foodmission.platform.Tests
         private TestStoreService _storeService;
         private FoodFactsViewModel _vm;
         private Func<bool> _originalOverride;
+        private bool _originalDevUnlocks;
 
         private Dimension[] _mockDimensions;
         private FoodFact[] _mockFacts;
@@ -27,6 +28,8 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _originalOverride = FoodProductFlow.UseDirectClientOverride;
+            _originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
             FoodProductFlow.UseDirectClientOverride = () => false;
 
             _mockFoodFactService = new Mock<IFoodFactService>();
@@ -121,6 +124,7 @@ namespace eu.foodmission.platform.Tests
         public void TearDown()
         {
             FoodProductFlow.UseDirectClientOverride = _originalOverride;
+            DevUnlocks.All = _originalDevUnlocks;
             _vm?.Dispose();
         }
 
@@ -435,6 +439,47 @@ namespace eu.foodmission.platform.Tests
 
             // Must select the only completed beginner fact
             Assert.AreEqual("FF1.1.2", requestedCode);
+        }
+
+        [Test]
+        public void FoodFacts_AboveLevel_AreLockedAndSortedLastInTopic()
+        {
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(new Dimension { id = "dim-1", code = DimensionCode.DietChanges, name = "Diet" });
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER" });
+            var facts = new[]
+            {
+                new FoodFact { id = "a", code = "A", topicId = "top-1", level = "ADVANCED" },
+                new FoodFact { id = "b", code = "B", topicId = "top-1", level = "BEGINNER" }
+            };
+
+            _vm.SetRawDataForTesting(facts, new FoodFactProgressResponse[0]);
+
+            var items = _vm.DisplayGroups.SelectMany(g => g.Topics).SelectMany(t => t.Facts).ToList();
+            Assert.AreEqual("b", items[0].FoodFact.id);
+            Assert.IsFalse(items[0].IsLocked);
+            Assert.IsTrue(items[1].IsLocked);
+        }
+
+        [Test]
+        public void RandomFact_NeverPicksLockedFact()
+        {
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(new Dimension { id = "dim-1", code = DimensionCode.DietChanges, name = "Diet" });
+            _storeService.SetAppState(new AppState { accessToken = "t", lang = "es", userSegment = "BEGINNER" });
+            _vm.SetRawDataForTesting(new[]
+            {
+                new FoodFact { id = "a", code = "A", topicId = "top-1", level = "ADVANCED" },
+                new FoodFact { id = "b", code = "B", topicId = "top-1", level = "BEGINNER" }
+            }, new FoodFactProgressResponse[0]);
+            var opened = new List<string>();
+            _vm.NavigationRequested += (a, args) => opened.Add((string)args.First(x => x.name == "id").value);
+
+            for (int i = 0; i < 20; i++)
+            {
+                _vm.OpenRandomFact();
+            }
+
+            Assert.AreEqual(20, opened.Count);
+            CollectionAssert.DoesNotContain(opened, "a");
         }
     }
 }
