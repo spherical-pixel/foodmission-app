@@ -119,6 +119,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<QuickSearchViewModel>();
             builder.services.AddTransient<TestSurveyViewModel>();
             builder.services.AddTransient<OnboardingGoalsViewModel>();
+            builder.services.AddTransient<DimensionLevelsViewModel>();
             builder.services.AddTransient<OnboardingSurveyViewModel>();
             builder.services.AddTransient<PilotSurveyViewModel>();
             builder.services.AddTransient<RecipeBookViewModel>();
