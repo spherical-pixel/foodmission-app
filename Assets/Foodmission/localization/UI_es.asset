@@ -4043,6 +4043,34 @@ MonoBehaviour:
     m_Localized: 'Tu nivel: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Localized: "\xBFTerminar m\xE1s tarde?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Localized: "Tu perfil quedar\xE1 incompleto por ahora. Te lo recordar\xE9 m\xE1s
+      adelante en Inicio para que puedas completarlo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Localized: "A\xFAn no has elegido tus objetivos. Te lo recordar\xE9 m\xE1s
+      adelante en Inicio para que puedas establecerlos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Localized: "Tus respuestas a esta encuesta no se guardar\xE1n. Te lo recordar\xE9
+      m\xE1s adelante en Inicio para que puedas completarla."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Localized: "Tu encuesta ya est\xE1 guardada y mantendremos los niveles propuestos.
+      Puedes cambiarlos cuando quieras desde Editar perfil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Localized: "Terminar m\xE1s tarde"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

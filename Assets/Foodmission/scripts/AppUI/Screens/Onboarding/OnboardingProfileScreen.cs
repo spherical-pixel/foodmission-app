@@ -61,6 +61,7 @@ namespace eu.foodmission.platform
         };
 
         protected override bool IsFixedContent => true;
+        protected override bool ShowCloseButton => true;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
         protected override bool ApplySafeAreaRight => false;
@@ -432,6 +433,19 @@ namespace eu.foodmission.platform
                 var val = evt.newValue?.ToArray();
                 _viewModel.SelectedReminderTimeIndex = val != null && val.Length > 0 ? val[0] : -1;
                 _viewModel.InvalidateValidation();
+            });
+        }
+
+        protected override void OnCloseRequested()
+        {
+            if (_viewModel == null || _viewModel.IsSubmitting)
+            {
+                return;
+            }
+            OnboardingExitDialog.Show(this, OnboardingExitDialog.ProfileMessage, () =>
+            {
+                ResetNutriToIdle();
+                _ = _viewModel.CloseAsync();
             });
         }
 

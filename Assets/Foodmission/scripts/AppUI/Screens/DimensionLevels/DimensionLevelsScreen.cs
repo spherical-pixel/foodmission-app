@@ -42,6 +42,25 @@ namespace eu.foodmission.platform
         // Decided in the constructor, before the mode is known: hidden again in Proposal mode (see ApplyMode)
         protected override bool ShowCloseButton => true;
 
+        /// <summary>Edit goes straight back; the onboarding proposal confirms first, since leaving skips the rest of the onboarding.</summary>
+        protected override void OnCloseRequested()
+        {
+            if (_viewModel == null || _viewModel.IsSubmitting)
+            {
+                return;
+            }
+            if (_viewModel.Mode != DimensionLevelsMode.Proposal)
+            {
+                _viewModel.Close();
+                return;
+            }
+            OnboardingExitDialog.Show(this, OnboardingExitDialog.LevelsMessage, () =>
+            {
+                ResetNutriToIdle();
+                _viewModel.Close();
+            });
+        }
+
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
@@ -97,12 +116,6 @@ namespace eu.foodmission.platform
         private void ApplyMode()
         {
             bool proposal = _viewModel.Mode == DimensionLevelsMode.Proposal;
-
-            VisualElement closeButton = contentContainer.Q<VisualElement>("btn-close");
-            if (closeButton != null)
-            {
-                closeButton.style.display = proposal ? DisplayStyle.None : DisplayStyle.Flex;
-            }
 
             FMButton nextButton = contentContainer.Q<FMButton>("btn-next");
             if (nextButton != null)

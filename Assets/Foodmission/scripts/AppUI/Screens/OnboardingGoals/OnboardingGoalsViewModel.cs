@@ -245,7 +245,15 @@ namespace eu.foodmission.platform
                 }
                 else if (FromHome)
                 {
-                    RaiseNavigationRequested(Actions.go_to_home);
+                    // Opened from Home's reminder: chain the survey if it's still pending, as the onboarding would
+                    if (IsSurveyPending())
+                    {
+                        RaiseNavigationRequested(Actions.onboardinggoals_to_onboardingsurvey, new Argument("fromHome", "true"));
+                    }
+                    else
+                    {
+                        RaiseNavigationRequested(Actions.go_to_home);
+                    }
                 }
                 else if (FromEditProfile)
                 {
@@ -260,6 +268,23 @@ namespace eu.foodmission.platform
             {
                 IsSubmitting = false;
             }
+        }
+
+        /// <summary>Opened by the onboarding or Home's reminder (not Edit Profile or a content list): the ✕ asks before leaving.</summary>
+        public bool IsOnboardingContext => string.IsNullOrEmpty(ReturnAction) && !FromEditProfile;
+
+        /// <summary>✕: onboarding/Home go to Home with the goals still pending; other entry points go back.</summary>
+        public void Close()
+        {
+            RaiseNavigationRequested(IsOnboardingContext ? Actions.go_to_home : "popBackStack");
+        }
+
+        private bool IsSurveyPending()
+        {
+            AppState state = _storeService?.GetAppState();
+            return state != null
+                && state.hasCompletedExtendedProfile
+                && (state.userOnboardingSurvey == null || !state.userOnboardingSurvey.HasAnswers());
         }
     }
 }

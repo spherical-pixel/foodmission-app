@@ -4057,6 +4057,34 @@ MonoBehaviour:
     m_Localized: 'Jouw niveau: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Localized: Later afmaken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Localized: Je profiel blijft voorlopig onvolledig. Ik herinner je er later
+      op het startscherm aan, zodat je het kunt afmaken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Localized: Je hebt je doelen nog niet gekozen. Ik herinner je er later op het
+      startscherm aan, zodat je ze kunt instellen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Localized: "Je antwoorden op deze enqu\xEAte worden niet opgeslagen. Ik herinner
+      je er later op het startscherm aan, zodat je hem kunt invullen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Localized: "Je enqu\xEAte is al opgeslagen en we houden de voorgestelde niveaus
+      aan. Je kunt ze altijd wijzigen via Profiel bewerken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Localized: Later afmaken
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

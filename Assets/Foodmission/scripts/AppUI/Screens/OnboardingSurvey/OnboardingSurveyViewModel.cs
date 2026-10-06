@@ -247,5 +247,11 @@ namespace eu.foodmission.platform
                 IsSubmitting = false;
             }
         }
+
+        /// <summary>✕: leaves for Home without saving; the survey stays pending (Home reminds it next session).</summary>
+        public void Close()
+        {
+            RaiseNavigationRequested(Actions.go_to_home);
+        }
     }
 }

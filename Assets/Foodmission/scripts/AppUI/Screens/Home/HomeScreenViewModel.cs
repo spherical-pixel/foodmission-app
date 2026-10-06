@@ -208,16 +208,17 @@ namespace eu.foodmission.platform
                 return PendingOnboardingType.Profile;
             }
 
-            bool surveyAnswered = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
-            if (state.hasCompletedExtendedProfile && !surveyAnswered)
-            {
-                return PendingOnboardingType.Survey;
-            }
-
+            // Same order as the onboarding flow: profile → goals → survey
             bool goalsSet = state.userGoals != null && state.userGoals.Length > 0;
             if (!goalsSet)
             {
                 return PendingOnboardingType.Goals;
+            }
+
+            bool surveyAnswered = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
+            if (!surveyAnswered)
+            {
+                return PendingOnboardingType.Survey;
             }
 
             return PendingOnboardingType.None;

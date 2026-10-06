@@ -120,6 +120,21 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void Close_Proposal_GoesHome_Edit_PopsBack()
+        {
+            var proposal = CreateVm(DimensionLevelsMode.Proposal);
+            string action = null;
+            proposal.NavigationRequested += (a, args) => action = a;
+            proposal.Close();
+            Assert.AreEqual(Actions.go_to_home, action);
+
+            var edit = CreateVm(DimensionLevelsMode.Edit);
+            edit.NavigationRequested += (a, args) => action = a;
+            edit.Close();
+            Assert.AreEqual("popBackStack", action);
+        }
+
+        [Test]
         public async Task Save_Edit_PopsBack()
         {
             var vm = CreateVm(DimensionLevelsMode.Edit);

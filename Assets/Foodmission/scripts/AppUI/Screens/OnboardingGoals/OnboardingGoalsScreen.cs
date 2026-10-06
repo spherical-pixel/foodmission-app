@@ -18,6 +18,7 @@ namespace eu.foodmission.platform
         protected override string NextButtonLabel => "@UI:TXT_NEXT";
         protected override string PreviousButtonLabel => "@UI:TXT_BACK";
         protected override string CompleteButtonLabel => "@UI:TXT_DONE";
+        protected override bool ShowCloseButton => true;
 
         private ExVisualElement _messageCard;
         private Unity.AppUI.UI.Text _messageText;
@@ -59,6 +60,25 @@ namespace eu.foodmission.platform
                     : _viewModel.ErrorDetail.message;
                 UpdateMascotMessage(errorMsg);
             }
+        }
+
+        protected override void OnCloseRequested()
+        {
+            if (_viewModel == null || _viewModel.IsSubmitting)
+            {
+                return;
+            }
+            if (!_viewModel.IsOnboardingContext)
+            {
+                ResetNutriToIdle();
+                _viewModel.Close();
+                return;
+            }
+            OnboardingExitDialog.Show(this, OnboardingExitDialog.GoalsMessage, () =>
+            {
+                ResetNutriToIdle();
+                _viewModel.Close();
+            });
         }
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)

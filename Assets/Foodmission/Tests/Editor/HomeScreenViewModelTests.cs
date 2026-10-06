@@ -557,18 +557,32 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void GetPendingOnboardingType_WhenProfileCompletedAndSurveyNotAnswered_ReturnsSurvey()
+        public void GetPendingOnboardingType_WhenProfileAndGoalsDoneAndSurveyNotAnswered_ReturnsSurvey()
         {
             _storeService.SetAppState(new AppState
             {
                 hasCompletedExtendedProfile = true,
                 hasSkippedExtendedProfile = false,
-                userOnboardingSurvey = new OnboardingSurveyData()
+                userOnboardingSurvey = new OnboardingSurveyData(),
+                userGoals = new[] { TopicCode.ReducingMeatConsumption }
             });
 
             var result = _vm.GetPendingOnboardingType();
 
             Assert.AreEqual(PendingOnboardingType.Survey, result);
+        }
+
+        [Test]
+        public void GetPendingOnboardingType_WhenGoalsAndSurveyPending_ReturnsGoalsFirst()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = true,
+                userOnboardingSurvey = new OnboardingSurveyData(),
+                userGoals = new string[0]
+            });
+
+            Assert.AreEqual(PendingOnboardingType.Goals, _vm.GetPendingOnboardingType());
         }
 
         [Test]

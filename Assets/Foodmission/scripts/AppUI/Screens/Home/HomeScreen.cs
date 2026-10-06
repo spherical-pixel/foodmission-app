@@ -28,6 +28,12 @@ namespace eu.foodmission.platform
             _hasDeferredNotificationsThisSession = false;
             _hasDeferredPilotSurveyThisSession = false;
         }
+
+        /// <summary>The user closed an onboarding step: don't remind them again until the next session.</summary>
+        public static void DeferOnboardingReminder()
+        {
+            _hasDeferredOnboardingThisSession = true;
+        }
         private LinearProgress _healthProgress;
         private LinearProgress _sustainabilityProgress;
         private LinearProgress _knowledgeProgress;

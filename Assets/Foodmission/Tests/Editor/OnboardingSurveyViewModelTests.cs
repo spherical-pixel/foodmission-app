@@ -303,5 +303,18 @@ namespace eu.foodmission.platform.Tests
             auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
             Assert.AreEqual("", _storeService.GetAppState().userSegment ?? "");
         }
+
+        [Test]
+        public void Close_GoesHomeWithoutSaving()
+        {
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+            _storeService.DispatchedActionTypes.Clear();
+
+            _vm.Close();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
+            CollectionAssert.DoesNotContain(_storeService.DispatchedActionTypes, "app/setOnboardingSurvey");
+        }
     }
 }

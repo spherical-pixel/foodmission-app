@@ -197,6 +197,55 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task CompleteFlow_WhenFromHomeAndSurveyPending_ChainsTheSurveyFromHome()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = true,
+                userOnboardingSurvey = new OnboardingSurveyData()
+            });
+            Unity.AppUI.Navigation.Argument[] navArgs = null;
+            _vm.NavigationRequested += (action, args) => navArgs = args;
+            _vm.Initialize();
+            _vm.FromHome = true;
+
+            for (int i = 0; i < 7; i++)
+            {
+                await _vm.GoNextAsync();
+            }
+
+            Assert.AreEqual(Actions.onboardinggoals_to_onboardingsurvey, _lastNavigatedAction);
+            Assert.IsTrue(navArgs.Any(a => a.name == "fromHome" && a.value?.ToString() == "true"));
+        }
+
+        [Test]
+        public void Close_FromOnboardingOrHome_GoesHome()
+        {
+            Assert.IsTrue(_vm.IsOnboardingContext);
+            _vm.Close();
+            Assert.AreEqual(Actions.go_to_home, _lastNavigatedAction);
+
+            _vm.FromHome = true;
+            _vm.Close();
+            Assert.AreEqual(Actions.go_to_home, _lastNavigatedAction);
+        }
+
+        [Test]
+        public void Close_FromEditProfileOrContentList_PopsBack()
+        {
+            _vm.FromEditProfile = true;
+            Assert.IsFalse(_vm.IsOnboardingContext);
+            _vm.Close();
+            Assert.AreEqual("popBackStack", _lastNavigatedAction);
+
+            _vm.FromEditProfile = false;
+            _vm.ReturnAction = Actions.go_to_quests;
+            Assert.IsFalse(_vm.IsOnboardingContext);
+            _vm.Close();
+            Assert.AreEqual("popBackStack", _lastNavigatedAction);
+        }
+
+        [Test]
         public async Task CompleteFlow_WhenApiFails_SetsErrorDetailAndDoesNotNavigate()
         {
             _authServiceMock

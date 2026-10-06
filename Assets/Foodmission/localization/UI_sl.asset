@@ -4042,6 +4042,34 @@ MonoBehaviour:
     m_Localized: 'Tvoja raven: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Localized: "Dokon\u010Dati pozneje?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Localized: "Tvoj profil bo za zdaj ostal nedokon\u010Dan. Kasneje te bom opomnil
+      na za\u010Detnem zaslonu, da ga bo\u0161 lahko dokon\u010Dal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Localized: "Svojih ciljev \u0161e nisi izbral. Kasneje te bom opomnil na za\u010Detnem
+      zaslonu, da jih bo\u0161 lahko nastavil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Localized: "Tvoji odgovori v tej anketi ne bodo shranjeni. Kasneje te bom opomnil
+      na za\u010Detnem zaslonu, da jo bo\u0161 lahko izpolnil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Localized: "Tvoja anketa je \u017Ee shranjena in ohranili bomo predlagane ravni.
+      Kadar koli jih lahko spremeni\u0161 v Uredi profil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Localized: "Dokon\u010Daj pozneje"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

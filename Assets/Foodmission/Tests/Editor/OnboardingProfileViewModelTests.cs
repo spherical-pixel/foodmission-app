@@ -231,6 +231,37 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task CloseAsync_MarksProfileSkippedAndGoesHome()
+        {
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+            string action = null;
+            _vm.NavigationRequested += (a, args) => action = a;
+            _storeService.DispatchedActionTypes.Clear();
+
+            await _vm.CloseAsync();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, action);
+            Assert.Contains("app/setSkippedExtendedProfile", _storeService.DispatchedActionTypes);
+            Assert.IsFalse(_vm.IsSubmitting);
+        }
+
+        [Test]
+        public async Task SkipAsync_ContinuesToGoals()
+        {
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+            string action = null;
+            _vm.NavigationRequested += (a, args) => action = a;
+
+            await _vm.SkipAsync();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboarding_goals, action);
+        }
+
+        [Test]
         public async Task SubmitAsync_OnSuccess_DispatchesSetExtendedProfile()
         {
             var catalogData = new CatalogData

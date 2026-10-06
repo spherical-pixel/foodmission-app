@@ -204,6 +204,15 @@ namespace eu.foodmission.platform
             }
         }
 
+        /// <summary>
+        /// ✕: Edit goes back; the proposal leaves for Home without saving (unsaved levels resolve to the
+        /// survey's segment, which is exactly the proposal).
+        /// </summary>
+        public void Close()
+        {
+            RaiseNavigationRequested(Mode == DimensionLevelsMode.Edit ? "popBackStack" : Actions.go_to_home);
+        }
+
         // ── StepFlow: a single step whose completion saves ──
 
         protected override int GetStepCount() => 1;

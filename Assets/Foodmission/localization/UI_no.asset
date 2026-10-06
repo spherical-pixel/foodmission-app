@@ -4042,6 +4042,34 @@ MonoBehaviour:
     m_Localized: "Ditt niv\xE5: {0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Localized: "Fullf\xF8re senere?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Localized: "Profilen din forblir ufullstendig inntil videre. Jeg minner deg
+      p\xE5 det senere p\xE5 startskjermen, s\xE5 du kan fullf\xF8re den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Localized: "Du har ikke valgt m\xE5lene dine enn\xE5. Jeg minner deg p\xE5
+      det senere p\xE5 startskjermen, s\xE5 du kan angi dem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Localized: "Svarene dine i denne unders\xF8kelsen blir ikke lagret. Jeg minner
+      deg p\xE5 det senere p\xE5 startskjermen, s\xE5 du kan fullf\xF8re den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Localized: "Unders\xF8kelsen din er allerede lagret, og vi beholder de foresl\xE5tte
+      niv\xE5ene. Du kan endre dem n\xE5r som helst under Rediger profil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Localized: "Fullf\xF8r senere"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

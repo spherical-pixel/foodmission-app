@@ -3923,6 +3923,30 @@ MonoBehaviour:
     m_Key: DIMENSION_LEVEL_YOURS
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Key: ONBOARDING_CLOSE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Key: ONBOARDING_CLOSE_PROFILE_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Key: ONBOARDING_CLOSE_GOALS_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Key: ONBOARDING_CLOSE_SURVEY_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Key: ONBOARDING_CLOSE_LEVELS_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Key: ONBOARDING_CLOSE_CONFIRM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

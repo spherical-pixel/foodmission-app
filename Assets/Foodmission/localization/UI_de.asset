@@ -4059,6 +4059,35 @@ MonoBehaviour:
     m_Localized: 'Deine Stufe: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Localized: "Sp\xE4ter fertigstellen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Localized: "Dein Profil bleibt vorerst unvollst\xE4ndig. Ich erinnere dich
+      sp\xE4ter auf dem Startbildschirm daran, damit du es vervollst\xE4ndigen kannst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Localized: "Du hast deine Ziele noch nicht ausgew\xE4hlt. Ich erinnere dich
+      sp\xE4ter auf dem Startbildschirm daran, damit du sie festlegen kannst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Localized: "Deine Antworten in dieser Umfrage werden nicht gespeichert. Ich
+      erinnere dich sp\xE4ter auf dem Startbildschirm daran, damit du sie ausf\xFCllen
+      kannst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Localized: "Deine Umfrage ist bereits gespeichert und wir behalten die vorgeschlagenen
+      Stufen bei. Du kannst sie jederzeit unter Profil bearbeiten \xE4ndern."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Localized: "Sp\xE4ter fertigstellen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -323,6 +323,19 @@ namespace eu.foodmission.platform
 
         public async Task SkipAsync()
         {
+            await MarkProfileSkippedAsync();
+            NavigateNextScreen();
+        }
+
+        /// <summary>✕: leaves the onboarding for Home; the profile stays pending (Home reminds it next session).</summary>
+        public async Task CloseAsync()
+        {
+            await MarkProfileSkippedAsync();
+            RaiseNavigationRequested(Actions.go_to_home);
+        }
+
+        private async Task MarkProfileSkippedAsync()
+        {
             IsSubmitting = true;
             try
             {
@@ -338,13 +351,12 @@ namespace eu.foodmission.platform
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"[OnboardingProfileViewModel] SkipAsync profile update error: {ex.Message}");
+                Debug.LogWarning($"[OnboardingProfileViewModel] MarkProfileSkippedAsync profile update error: {ex.Message}");
             }
             finally
             {
                 _storeService.store.Dispatch(AppActions.setSkippedExtendedProfile.Invoke());
                 IsSubmitting = false;
-                NavigateNextScreen();
             }
         }
 

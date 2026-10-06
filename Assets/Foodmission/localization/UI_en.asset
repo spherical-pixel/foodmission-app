@@ -4030,6 +4030,34 @@ MonoBehaviour:
     m_Localized: 'Your level: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Localized: Finish later?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Localized: Your profile will stay incomplete for now. I'll remind you later
+      on the home screen so you can finish it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Localized: You haven't chosen your goals yet. I'll remind you later on the
+      home screen so you can set them.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Localized: Your answers to this survey won't be saved. I'll remind you later
+      on the home screen so you can complete it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Localized: Your survey is already saved and we'll keep the proposed levels.
+      You can change them anytime from Edit profile.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Localized: Finish later
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

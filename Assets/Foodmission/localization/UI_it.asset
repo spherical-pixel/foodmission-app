@@ -4047,6 +4047,34 @@ MonoBehaviour:
     m_Localized: 'Il tuo livello: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389350858752
+    m_Localized: "Finire pi\xF9 tardi?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247360
+    m_Localized: "Per ora il tuo profilo rester\xE0 incompleto. Te lo ricorder\xF2
+      pi\xF9 avanti nella schermata Home cos\xEC potrai completarlo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247361
+    m_Localized: "Non hai ancora scelto i tuoi obiettivi. Te lo ricorder\xF2 pi\xF9
+      avanti nella schermata Home cos\xEC potrai impostarli."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247362
+    m_Localized: "Le tue risposte a questo questionario non verranno salvate. Te
+      lo ricorder\xF2 pi\xF9 avanti nella schermata Home cos\xEC potrai completarlo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247363
+    m_Localized: "Il tuo questionario \xE8 gi\xE0 salvato e manterremo i livelli
+      proposti. Puoi cambiarli quando vuoi da Modifica profilo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247364
+    m_Localized: "Pi\xF9 tardi"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
