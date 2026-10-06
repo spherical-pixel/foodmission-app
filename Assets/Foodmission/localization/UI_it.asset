@@ -1890,11 +1890,6 @@ MonoBehaviour:
       che si adattino alla tua vita di tutti i giorni.
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Localized: Scegli l'opzione che meglio descrive le tue abitudini alimentari
-      sostenibili e salutari.
-    m_Metadata:
-      m_Items: []
   - m_Id: 34037819398676480
     m_Localized: Motivazione principale
     m_Metadata:
@@ -1953,14 +1948,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Localized: Seleziona la durata stimata
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Localized: Profilo delle abitudini sostenibili
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Localized: Seleziona il tipo
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

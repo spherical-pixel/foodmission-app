@@ -1839,10 +1839,6 @@ MonoBehaviour:
     m_Key: ONBOARDING_PROFILE.NUTRI_STEP_4
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Key: ONBOARDING_PROFILE.NUTRI_STEP_5
-    m_Metadata:
-      m_Items: []
   - m_Id: 34037819398676480
     m_Key: ONBOARDING_PROFILE.LABEL_MOTIVATION
     m_Metadata:
@@ -1901,14 +1897,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Key: ONBOARDING_PROFILE.PLACEHOLDER_DAILY_TIME
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Key: ONBOARDING_PROFILE.LABEL_SEGMENT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Key: ONBOARDING_PROFILE.PLACEHOLDER_SEGMENT
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

@@ -1882,11 +1882,6 @@ MonoBehaviour:
       passer inn i hverdagen din."
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Localized: "Velg det alternativet som best beskriver dine b\xE6rekraftige og
-      sunne spisevaner."
-    m_Metadata:
-      m_Items: []
   - m_Id: 34037819398676480
     m_Localized: Hovedmotivasjon
     m_Metadata:
@@ -1945,14 +1940,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Localized: Velg forventet tid
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Localized: "Profil for b\xE6rekraftige vaner"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Localized: Velg type
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

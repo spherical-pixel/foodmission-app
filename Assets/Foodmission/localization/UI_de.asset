@@ -1891,11 +1891,6 @@ MonoBehaviour:
       Ratschl\xE4ge geben, die zu Ihrem Alltag passen."
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Localized: "W\xE4hlen Sie die Option aus, die Ihre nachhaltigen und gesunden
-      Ern\xE4hrungsgewohnheiten am besten beschreibt."
-    m_Metadata:
-      m_Items: []
   - m_Id: 34037819398676480
     m_Localized: Hauptmotivation
     m_Metadata:
@@ -1954,14 +1949,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Localized: "Gesch\xE4tzte Zeit ausw\xE4hlen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Localized: Profil zu nachhaltigen Gewohnheiten
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Localized: "W\xE4hlen Sie Ihren Typ aus"
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

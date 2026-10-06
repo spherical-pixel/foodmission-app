@@ -1862,11 +1862,6 @@ MonoBehaviour:
       la investigaci\xF3n del piloto del proyecto."
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Localized: "Elige la opci\xF3n que mejor describe tus h\xE1bitos de alimentaci\xF3n
-      sostenible y saludable."
-    m_Metadata:
-      m_Items: []
   - m_Id: 34027969428054016
     m_Localized: "Conocer tus h\xE1bitos diarios nos permite darte consejos que se
       adapten a tu ritmo de vida real."
@@ -1952,14 +1947,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Localized: Selecciona tiempo estimado
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Localized: Perfil de habitos sostenibles
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Localized: Selecciona tu tipo
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

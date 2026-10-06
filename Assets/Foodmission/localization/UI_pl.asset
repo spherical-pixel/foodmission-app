@@ -1904,11 +1904,6 @@ MonoBehaviour:
       Ci porad, kt\xF3re idealnie wpisuj\u0105 si\u0119 w Twoje codzienne \u017Cycie."
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Localized: "Wybierz opcj\u0119, kt\xF3ra najlepiej opisuje Twoje nawyki \u017Cywieniowe
-      zgodne z zasadami zr\xF3wnowa\u017Conego rozwoju i zdrowego od\u017Cywiania."
-    m_Metadata:
-      m_Items: []
   - m_Id: 34037819398676480
     m_Localized: "G\u0142\xF3wna motywacja"
     m_Metadata:
@@ -1968,14 +1963,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Localized: Wybierz szacowany czas
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Localized: "Profil nawyk\xF3w sprzyjaj\u0105cych zr\xF3wnowa\u017Conemu rozwojowi"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Localized: Wybierz typ
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

@@ -1894,11 +1894,6 @@ MonoBehaviour:
       geven dat aansluit bij uw dagelijkse leven.
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Localized: Kies de optie die het beste aansluit bij jouw duurzame en gezonde
-      eetgewoonten.
-    m_Metadata:
-      m_Items: []
   - m_Id: 34037819398676480
     m_Localized: Belangrijkste drijfveer
     m_Metadata:
@@ -1957,14 +1952,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Localized: Selecteer geschatte tijd
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Localized: Profiel van duurzame gewoonten
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Localized: Kies het type
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

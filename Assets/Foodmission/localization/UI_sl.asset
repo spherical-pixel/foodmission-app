@@ -1883,11 +1883,6 @@ MonoBehaviour:
       nasvete, ki se prilegajo va\u0161emu vsakdanjemu \u017Eivljenju."
     m_Metadata:
       m_Items: []
-  - m_Id: 34032508952633344
-    m_Localized: "Izberite mo\u017Enost, ki najbolje opisuje va\u0161e trajnostne
-      in zdrave prehranjevalne navade."
-    m_Metadata:
-      m_Items: []
   - m_Id: 34037819398676480
     m_Localized: Glavni motiv
     m_Metadata:
@@ -1946,14 +1941,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34040837200404480
     m_Localized: "Izberite predviden \u010Das"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34040936672518144
-    m_Localized: Profil trajnostnih navad
-    m_Metadata:
-      m_Items: []
-  - m_Id: 34041135683854336
-    m_Localized: Izberite vrsto
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928

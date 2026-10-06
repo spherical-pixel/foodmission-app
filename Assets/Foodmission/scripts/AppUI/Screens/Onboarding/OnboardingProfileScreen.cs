@@ -48,7 +48,7 @@ namespace eu.foodmission.platform
         private ExVisualElement _step5Container;
         private ExVisualElement _step6Container;
 
-        // NUTRI_STEP_5 belonged to the removed segment step: the segment now comes from the onboarding survey.
+        // There is no NUTRI_STEP_5: that step (segment) was removed, the segment now comes from the onboarding survey.
         private static readonly string[] k_NutriMessageKeys =
         {
             "@UI:ONBOARDING_PROFILE.NUTRI_STEP_0",
