@@ -209,18 +209,14 @@ namespace eu.foodmission.platform
                         _viewModel?.SetLevel(dimensionCode, ContentLevel.All[index]);
                     }
                 });
-                card.Add(dropdown);
 
                 if (proposal)
                 {
-                    var proposed = new Unity.AppUI.UI.Text
-                    {
-                        text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DIMENSION_LEVELS_PROPOSED")
-                               + ": " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEGMENT_" + row.ProposedLevel)
-                    };
-                    proposed.AddToClassList("fm-dimension-levels__proposed");
-                    card.Add(proposed);
+                    // The field's own help-text slot (reserved space under the dropdown), so nothing overlaps
+                    dropdown.HelpTextText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DIMENSION_LEVELS_PROPOSED")
+                        + ": " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEGMENT_" + row.ProposedLevel);
                 }
+                card.Add(dropdown);
 
                 _dropdownsByDimension[dimensionCode] = dropdown;
             }

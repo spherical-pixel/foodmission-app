@@ -2507,24 +2507,24 @@
 }
 
 /* Per-dimension levels screen (DimensionLevelsScreen) */
+.fm-dimension-levels {
+    width: 100%;
+    padding: 16px;
+}
+
 .fm-dimension-levels__rows {
-    padding: 4px 0;
+    width: 100%;
 }
 
 .fm-dimension-levels__card {
-    padding: 12px;
+    width: 100%;
+    padding: 12px 16px;
     margin-bottom: 12px;
 }
 
 .fm-dimension-levels__dropdown {
+    width: 100%;
     margin-top: 8px;
-}
-
-.fm-dimension-levels__proposed {
-    margin-top: 2px;
-    margin-left: 4px;
-    font-size: var(--appui-font-sizes-body-sm);
-    color: var(--appui-foreground-muted, rgb(156, 163, 175));
 }
 
 .fm-dimension-levels__reset {
