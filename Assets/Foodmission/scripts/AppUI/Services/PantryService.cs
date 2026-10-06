@@ -152,10 +152,6 @@ namespace eu.foodmission.platform
                 return (null, null);
             }
 
-            string effectiveExpiryDate = !string.IsNullOrEmpty(expiryDate)
-                ? expiryDate
-                : DateTime.UtcNow.AddDays(30).ToString("yyyy-MM-dd");
-
             AddPantryItemRequest body = new()
             {
                 foodProductId = string.IsNullOrEmpty(foodProductId) ? null : foodProductId,
@@ -164,7 +160,8 @@ namespace eu.foodmission.platform
                 unit = unit ?? UnitCodes.Default,
                 notes = notes,
                 location = string.IsNullOrEmpty(location) ? null : location,
-                expiryDate = effectiveExpiryDate
+                // Omitted unless the user picked one: the backend then derives it from shelf-life data (UTC).
+                expiryDate = string.IsNullOrEmpty(expiryDate) ? null : expiryDate
             };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items";
@@ -220,7 +217,7 @@ namespace eu.foodmission.platform
                 unit = unit,
                 notes = notes,
                 location = string.IsNullOrEmpty(location) ? null : location,
-                expiryDate = expiryDate
+                expiryDate = string.IsNullOrEmpty(expiryDate) ? null : expiryDate
             };
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry/{Uri.EscapeDataString(pantryId)}/items/{Uri.EscapeDataString(itemId)}";

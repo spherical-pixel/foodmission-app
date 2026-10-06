@@ -28,6 +28,7 @@ namespace eu.foodmission.platform
         private static Dropdown _unitDropdown;
         private static UnitChoiceSnapshot _unitChoices = UnitChoiceSnapshot.From(UnitCatalog.Current);
         private static DateField _expiryDateField;
+        private static bool _expiryDateTouched;
         private static VisualElement _quickDateRow;
         private static Unity.AppUI.UI.TextArea _notesField;
         private static Unity.AppUI.UI.Button _btnSave;
@@ -156,6 +157,8 @@ namespace eu.foodmission.platform
                 _btnDelete.clicked -= OnDeleteClicked;
             }
 
+            _expiryDateField?.UnregisterValueChangedCallback(OnExpiryDateChanged);
+
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
@@ -214,6 +217,9 @@ namespace eu.foodmission.platform
             {
                 _btnDelete.clicked += OnDeleteClicked;
             }
+
+            _expiryDateTouched = false;
+            _expiryDateField?.RegisterValueChangedCallback(OnExpiryDateChanged);
         }
 
         private static void PopulateUI()
@@ -249,6 +255,7 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
+                    // Display-only suggestion: not saved unless the user changes it (see OnSaveClicked).
                     _expiryDateField.SetValueWithoutNotify(new Date(DateTime.Now.Date.AddDays(30)));
                 }
             }
@@ -300,6 +307,11 @@ namespace eu.foodmission.platform
             }
         }
 
+        private static void OnExpiryDateChanged(ChangeEvent<Date> evt)
+        {
+            _expiryDateTouched = true;
+        }
+
         private static async void OnSaveClicked()
         {
             if (_viewModel == null) return;
@@ -323,7 +335,8 @@ namespace eu.foodmission.platform
 
                 _viewModel.Location = "";
 
-                if (_expiryDateField != null)
+                // Items without an expiry keep it empty unless the user picks one.
+                if (_expiryDateField != null && (_expiryDateTouched || !string.IsNullOrEmpty(_viewModel.ExpiryDate)))
                 {
                     var dateValue = _expiryDateField.value;
                     _viewModel.ExpiryDate = ((DateTime)dateValue).ToString("yyyy-MM-dd");
