@@ -1416,6 +1416,7 @@ namespace eu.foodmission.platform
             foreach (ProgressWheel wheel in ProgressWheelSection.CustomizableWheels(model.All))
             {
                 var toggle = new Unity.AppUI.UI.Toggle { label = ProgressWheelText.Name(wheel) };
+                toggle.AddToClassList("fm-wheels-customize__toggle");
                 toggle.SetValueWithoutNotify(!hidden.Contains(wheel.kind));
                 toggle.RegisterValueChangedCallback(_ => UpdateLocks());
                 toggles[wheel.kind] = toggle;

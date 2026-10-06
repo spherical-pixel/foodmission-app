@@ -1755,6 +1755,22 @@
     align-self: center;
 }
 
+/* Toggle (switch): the theme's enlarged sizing/spacing tokens leave ~25px of inner
+   track for a 35px thumb, squashing it into an oval. Re-proportion it locally. */
+.appui-toggle {
+    --appui-toggle__box-width-md: 72px;
+    --appui-toggle__box-height-md: var(--appui-sizing-250);
+    --appui-toggle__box-border-radius-md: 21px;
+    --appui-toggle__checkmark-size-md: 31px;
+    --appui-toggle__box-gap: 3px;
+    --appui-alias-control-border-width: 2px;
+}
+
+/* Rows of the "Visible wheels" customize dialog (HomeScreen). */
+.fm-wheels-customize__toggle {
+    margin-bottom: var(--appui-spacing-100);
+}
+
 .fm-groups-item {
     overflow: hidden;
     align-content: flex-start;
