@@ -28,8 +28,7 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Text _messageText;
         private VisualElement _rowsContainer;
         private Unity.AppUI.UI.Button _resetButton;
-        private readonly Dictionary<string, ActionGroup> _groupsByDimension = new Dictionary<string, ActionGroup>();
-        private readonly Dictionary<string, Unity.AppUI.UI.Text> _namesByDimension = new Dictionary<string, Unity.AppUI.UI.Text>();
+        private readonly Dictionary<string, FormFieldItemDropDownField> _dropdownsByDimension = new Dictionary<string, FormFieldItemDropDownField>();
         private readonly List<AccessibilityNode> _rowNodes = new List<AccessibilityNode>();
 
         protected override int StepCount => 1;
@@ -176,46 +175,41 @@ namespace eu.foodmission.platform
             }
 
             _rowsContainer.Clear();
-            _groupsByDimension.Clear();
-            _namesByDimension.Clear();
+            _dropdownsByDimension.Clear();
             bool proposal = _viewModel.Mode == DimensionLevelsMode.Proposal;
+
+            // One card with a dropdown per dimension, like the onboarding profile steps
+            var card = new ExVisualElement();
+            card.AddToClassList("box-background");
+            card.AddToClassList("fm-shadow-wrapper");
+            card.AddToClassList("fm-dimension-levels__card");
 
             foreach (DimensionLevelRow row in _viewModel.Rows)
             {
-                var card = new ExVisualElement();
-                card.AddToClassList("box-background");
-                card.AddToClassList("fm-shadow-wrapper");
-                card.AddToClassList("fm-dimension-levels__row");
-
-                var name = new Unity.AppUI.UI.Text { text = row.DimensionName };
-                name.AddToClassList("fm-dimension-levels__name");
-                card.Add(name);
-
-                var group = new ActionGroup
+                var dropdown = new FormFieldItemDropDownField
                 {
-                    selectionType = SelectionType.Single,
-                    allowNoSelection = false,
-                    compact = true,
-                    justified = true
+                    name = "level-dropdown-" + row.DimensionCode.ToLowerInvariant(),
+                    HeadingText = row.DimensionName
                 };
-                group.AddToClassList("fm-missions-action-group");
-                group.AddToClassList("fm-dimension-levels__group");
-                for (int i = 0; i < ContentLevel.All.Length; i++)
+                dropdown.AddToClassList("fm-dimension-levels__dropdown");
+                dropdown.Dropdown.sourceItems = k_LevelLabels;
+                dropdown.Dropdown.bindItem = (item, index) =>
                 {
-                    group.Add(new ActionButton { label = k_LevelLabels[i] });
-                }
-                group.SetSelectionWithoutNotify(new[] { Math.Max(0, ContentLevel.Rank(row.Level)) });
+                    item.label = k_LevelLabels[index];
+                    item.icon = null;
+                };
+                dropdown.Dropdown.SetValueWithoutNotify(new[] { Math.Max(0, ContentLevel.Rank(row.Level)) });
 
                 string dimensionCode = row.DimensionCode;
-                group.selectionChanged += indices =>
+                dropdown.Dropdown.RegisterValueChangedCallback(evt =>
                 {
-                    int index = indices?.FirstOrDefault() ?? -1;
+                    int index = evt.newValue?.FirstOrDefault() ?? -1;
                     if (index >= 0 && index < ContentLevel.All.Length)
                     {
                         _viewModel?.SetLevel(dimensionCode, ContentLevel.All[index]);
                     }
-                };
-                card.Add(group);
+                });
+                card.Add(dropdown);
 
                 if (proposal)
                 {
@@ -228,11 +222,10 @@ namespace eu.foodmission.platform
                     card.Add(proposed);
                 }
 
-                _groupsByDimension[dimensionCode] = group;
-                _namesByDimension[dimensionCode] = name;
-                _rowsContainer.Add(card);
+                _dropdownsByDimension[dimensionCode] = dropdown;
             }
 
+            _rowsContainer.Add(card);
             UpdateResetButton();
         }
 
@@ -245,13 +238,10 @@ namespace eu.foodmission.platform
 
             foreach (DimensionLevelRow row in _viewModel.Rows)
             {
-                if (_groupsByDimension.TryGetValue(row.DimensionCode, out ActionGroup group))
+                if (_dropdownsByDimension.TryGetValue(row.DimensionCode, out FormFieldItemDropDownField dropdown))
                 {
-                    group.SetSelectionWithoutNotify(new[] { Math.Max(0, ContentLevel.Rank(row.Level)) });
-                }
-                if (_namesByDimension.TryGetValue(row.DimensionCode, out Unity.AppUI.UI.Text name))
-                {
-                    name.text = row.DimensionName;
+                    dropdown.Dropdown.SetValueWithoutNotify(new[] { Math.Max(0, ContentLevel.Rank(row.Level)) });
+                    dropdown.HeadingText = row.DimensionName;
                 }
             }
             UpdateResetButton();
@@ -284,9 +274,9 @@ namespace eu.foodmission.platform
                 AccessibilityNode node = _accessibilityHierarchy.AddNode(row.DimensionName);
                 node.role = AccessibilityRole.StaticText;
                 node.value = LevelLabel(row.Level);
-                if (_groupsByDimension.TryGetValue(row.DimensionCode, out ActionGroup group))
+                if (_dropdownsByDimension.TryGetValue(row.DimensionCode, out FormFieldItemDropDownField dropdown))
                 {
-                    node.frameGetter = MakeElementFrameGetter(group);
+                    node.frameGetter = MakeElementFrameGetter(dropdown);
                 }
                 _rowNodes.Add(node);
             }

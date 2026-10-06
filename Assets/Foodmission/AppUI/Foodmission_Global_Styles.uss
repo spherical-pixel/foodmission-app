@@ -2511,19 +2511,18 @@
     padding: 4px 0;
 }
 
-.fm-dimension-levels__row {
+.fm-dimension-levels__card {
     padding: 12px;
     margin-bottom: 12px;
 }
 
-.fm-dimension-levels__name {
-    -unity-font-style: bold;
-    margin-bottom: 8px;
-    white-space: normal;
+.fm-dimension-levels__dropdown {
+    margin-top: 8px;
 }
 
 .fm-dimension-levels__proposed {
-    margin-top: 6px;
+    margin-top: 2px;
+    margin-left: 4px;
     font-size: var(--appui-font-sizes-body-sm);
     color: var(--appui-foreground-muted, rgb(156, 163, 175));
 }
