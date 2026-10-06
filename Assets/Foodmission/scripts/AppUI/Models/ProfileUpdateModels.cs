@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace eu.foodmission.platform
@@ -158,6 +159,9 @@ namespace eu.foodmission.platform
 
         [JsonProperty("goals", NullValueHandling = NullValueHandling.Ignore)]
         public string[] goals;
+
+        [JsonProperty("dimensionLevels", NullValueHandling = NullValueHandling.Ignore)]
+        public Dictionary<string, string> dimensionLevels;
     }
 
     /// <summary>

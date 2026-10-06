@@ -38,6 +38,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<string> setUserSegment = "app/setUserSegment";
         public static readonly ActionCreator<ProgressWheel[]> setProgressWheels = "app/setProgressWheels";
         public static readonly ActionCreator<string[]> setHiddenProgressWheels = "app/setHiddenProgressWheels";
+        public static readonly ActionCreator<DimensionLevelEntry[]> setDimensionLevels = "app/setDimensionLevels";
         public static readonly ActionCreator<string[]> markHiddenProgressWheelsSynced = "app/markHiddenProgressWheelsSynced";
 
         public readonly struct WalletPayload
@@ -172,6 +173,7 @@ namespace eu.foodmission.platform
             public readonly PilotSurveyCycleState pilotSurveyCycleState;
             public readonly bool pilotConsentAccepted;
             public readonly string[] goals;
+            public readonly DimensionLevelEntry[] dimensionLevels;
 
             public ProfilePayload(int yearOfBirth,
                 string country, string region, string zip, string gender,
@@ -193,7 +195,8 @@ namespace eu.foodmission.platform
                 string onboardingProfileSkippedAt = null,
                 PilotSurveyCycleState pilotSurveyCycleState = null,
                 bool pilotConsentAccepted = false,
-                string[] goals = null)
+                string[] goals = null,
+                DimensionLevelEntry[] dimensionLevels = null)
             {
                 this.yearOfBirth = yearOfBirth;
                 this.country = country;
@@ -221,6 +224,7 @@ namespace eu.foodmission.platform
                 this.pilotSurveyCycleState = pilotSurveyCycleState;
                 this.pilotConsentAccepted = pilotConsentAccepted;
                 this.goals = goals;
+                this.dimensionLevels = dimensionLevels;
             }
         }
     }
@@ -367,6 +371,8 @@ namespace eu.foodmission.platform
             newState.hiddenProgressWheels = new string[0];
             newState.hiddenProgressWheelsPendingSync = false;
             newState.userGoals = new string[0];
+            newState.dimensionLevels = new DimensionLevelEntry[0];
+            newState.hasConfirmedDimensionLevels = false;
 
             // Clear temporal data
             newState.isAuthenticating = false;
@@ -572,6 +578,12 @@ namespace eu.foodmission.platform
                 newState.userGoals = (string[])action.payload.goals.Clone();
             }
 
+            if (action.payload.dimensionLevels != null && action.payload.dimensionLevels.Length > 0)
+            {
+                newState.dimensionLevels = Array.ConvertAll(action.payload.dimensionLevels, e => e?.Copy());
+                newState.hasConfirmedDimensionLevels = true;
+            }
+
             return newState;
         }
 
@@ -622,6 +634,14 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.userGoals = action.payload != null ? (string[])action.payload.Clone() : new string[0];
+            return newState;
+        }
+
+        public static AppState SetDimensionLevelsReducer(AppState state, IAction<DimensionLevelEntry[]> action)
+        {
+            var newState = state.Copy();
+            newState.dimensionLevels = action.payload != null ? Array.ConvertAll(action.payload, e => e?.Copy()) : new DimensionLevelEntry[0];
+            newState.hasConfirmedDimensionLevels = true;
             return newState;
         }
 

@@ -481,7 +481,8 @@ namespace eu.foodmission.platform
                 onboardingProfileSkippedAt: profile.preferences?.onboardingProfileSkippedAt,
                 pilotSurveyCycleState: profile.preferences?.pilotSurveyCycleState,
                 pilotConsentAccepted: profile.preferences?.pilotConsentAccepted ?? false,
-                goals: profile.preferences?.goals
+                goals: profile.preferences?.goals,
+                dimensionLevels: DimensionLevels.FromMap(profile.preferences?.dimensionLevels)
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
             _ = App.current?.services?.GetService<INutriService>()?.SyncLoadoutAsync();

@@ -163,5 +163,31 @@ namespace eu.foodmission.platform.Tests
             copy.userGoals[0] = "MODIFIED";
             Assert.AreEqual("REDUCING_MEAT_CONSUMPTION", state.userGoals[0]);
         }
+
+        [Test]
+        public void Copy_ClonesDimensionLevels()
+        {
+            var state = new AppState
+            {
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Beginner) },
+                hasConfirmedDimensionLevels = true
+            };
+
+            AppState copy = state.Copy();
+            copy.dimensionLevels[0].level = ContentLevel.Advanced;
+
+            Assert.AreEqual(ContentLevel.Beginner, state.dimensionLevels[0].level);
+            Assert.IsTrue(copy.hasConfirmedDimensionLevels);
+        }
+
+        [Test]
+        public void JsonUtility_RoundTripsDimensionLevels()
+        {
+            var state = new AppState { dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.FoodWaste, ContentLevel.Intermediate) } };
+
+            AppState restored = UnityEngine.JsonUtility.FromJson<AppState>(UnityEngine.JsonUtility.ToJson(state));
+
+            Assert.AreEqual(ContentLevel.Intermediate, DimensionLevels.GetLevel(restored, DimensionCode.FoodWaste));
+        }
     }
 }

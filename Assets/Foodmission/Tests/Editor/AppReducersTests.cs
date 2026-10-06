@@ -226,5 +226,53 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(newState.userGoals);
             Assert.AreEqual(0, newState.userGoals.Length);
         }
+
+        [Test]
+        public void SetDimensionLevelsReducer_StoresCopyAndMarksConfirmed()
+        {
+            var payload = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Advanced) };
+
+            var newState = AppReducers.SetDimensionLevelsReducer(m_InitialState, AppActions.setDimensionLevels.Invoke(payload));
+            payload[0].level = ContentLevel.Beginner;
+
+            Assert.AreEqual(1, newState.dimensionLevels.Length);
+            Assert.AreEqual(ContentLevel.Advanced, newState.dimensionLevels[0].level);
+            Assert.IsTrue(newState.hasConfirmedDimensionLevels);
+        }
+
+        [Test]
+        public void LogoutReducer_ClearsDimensionLevels()
+        {
+            m_InitialState.dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.FoodWaste, ContentLevel.Advanced) };
+            m_InitialState.hasConfirmedDimensionLevels = true;
+
+            var newState = AppReducers.LogoutReducer(m_InitialState, AppActions.logout.Invoke());
+
+            Assert.AreEqual(0, newState.dimensionLevels.Length);
+            Assert.IsFalse(newState.hasConfirmedDimensionLevels);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithServerLevels_SetsThemAndConfirmed()
+        {
+            var payload = new AppActions.ProfilePayload(1990, "ES", "", "", "", "", "", "",
+                dimensionLevels: new[] { new DimensionLevelEntry(DimensionCode.Packaging, ContentLevel.Intermediate) });
+
+            var newState = AppReducers.ProfileSyncedReducer(m_InitialState, AppActions.profileSynced.Invoke(payload));
+
+            Assert.AreEqual(ContentLevel.Intermediate, DimensionLevels.GetLevel(newState, DimensionCode.Packaging));
+            Assert.IsTrue(newState.hasConfirmedDimensionLevels);
+        }
+
+        [Test]
+        public void ProfileSyncedReducer_WithoutServerLevels_KeepsLocalLevels()
+        {
+            m_InitialState.dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.Packaging, ContentLevel.Advanced) };
+            var payload = new AppActions.ProfilePayload(1990, "ES", "", "", "", "", "", "");
+
+            var newState = AppReducers.ProfileSyncedReducer(m_InitialState, AppActions.profileSynced.Invoke(payload));
+
+            Assert.AreEqual(ContentLevel.Advanced, DimensionLevels.GetLevel(newState, DimensionCode.Packaging));
+        }
     }
 }

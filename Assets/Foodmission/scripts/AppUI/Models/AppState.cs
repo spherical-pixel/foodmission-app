@@ -157,6 +157,8 @@ namespace eu.foodmission.platform
         public string[] userGoals = new string[0];
         /// <summary>The user's level per dimension (preferences.dimensionLevels). Missing dimensions fall back to userSegment, then BEGINNER (see DimensionLevels).</summary>
         public DimensionLevelEntry[] dimensionLevels = new DimensionLevelEntry[0];
+        /// <summary>True once the levels were saved from DimensionLevelsScreen, or the server already had them.</summary>
+        public bool hasConfirmedDimensionLevels = false;
 
         // ==================== Temporal data (not persisted) ====================
 
@@ -235,6 +237,8 @@ namespace eu.foodmission.platform
                 hiddenProgressWheels = this.hiddenProgressWheels != null ? (string[])this.hiddenProgressWheels.Clone() : new string[0],
                 hiddenProgressWheelsPendingSync = this.hiddenProgressWheelsPendingSync,
                 userGoals = this.userGoals != null ? (string[])this.userGoals.Clone() : new string[0],
+                dimensionLevels = this.dimensionLevels != null ? Array.ConvertAll(this.dimensionLevels, e => e?.Copy()) : new DimensionLevelEntry[0],
+                hasConfirmedDimensionLevels = this.hasConfirmedDimensionLevels,
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
                 foodInfoAddRequest = this.foodInfoAddRequest
