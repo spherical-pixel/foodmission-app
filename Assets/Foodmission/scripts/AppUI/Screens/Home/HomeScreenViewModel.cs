@@ -59,6 +59,7 @@ namespace eu.foodmission.platform
         private readonly ILegalService _legalService;
         private readonly IPilotSurveyService _pilotSurveyService;
         private readonly IMissionNudgeService _missionNudgeService;
+        private readonly IMissionLastDayService _missionLastDayService;
         private readonly IMissionFailureService _missionFailureService;
         private readonly IDailyFoodFactService _dailyFoodFactService;
         private readonly IAuthService _authService;
@@ -97,7 +98,8 @@ namespace eu.foodmission.platform
             IProgressWheelService progressWheelService = null,
             IMissionFailureService missionFailureService = null,
             IDailyFoodFactService dailyFoodFactService = null,
-            IDimensionService dimensionService = null) : base(storeService)
+            IDimensionService dimensionService = null,
+            IMissionLastDayService missionLastDayService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -112,6 +114,7 @@ namespace eu.foodmission.platform
             _gamificationService = gamificationService ?? App.current?.services?.GetService<IGamificationService>();
             _questProgressionService = questProgressionService ?? App.current?.services?.GetService<IQuestProgressionService>() ?? new QuestProgressionService();
             _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
+            _missionLastDayService = missionLastDayService ?? App.current?.services?.GetService<IMissionLastDayService>();
             _missionFailureService = missionFailureService ?? App.current?.services?.GetService<IMissionFailureService>();
             _dailyFoodFactService = dailyFoodFactService ?? App.current?.services?.GetService<IDailyFoodFactService>();
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
@@ -310,6 +313,29 @@ namespace eu.foodmission.platform
             return _missionNudgeService != null
                 ? _missionNudgeService.GetNudgeAsync()
                 : System.Threading.Tasks.Task.FromResult<MissionNudge>(null);
+        }
+
+        public System.Threading.Tasks.Task<MissionDeadlines.LastDay> CheckMissionLastDayAsync()
+        {
+            return _missionLastDayService != null
+                ? _missionLastDayService.GetTodayAsync()
+                : System.Threading.Tasks.Task.FromResult<MissionDeadlines.LastDay>(null);
+        }
+
+        public void MarkMissionLastDayShown()
+        {
+            _missionLastDayService?.MarkShown();
+        }
+
+        public bool IsMissionLastDayShownToday => _missionLastDayService?.ShownToday ?? false;
+
+        /// <summary>Reschedules the last-day notifications from the current missions (progress, preferred time).</summary>
+        public void SyncMissionLastDayReminders()
+        {
+            if (_missionLastDayService != null)
+            {
+                _ = _missionLastDayService.SyncRemindersAsync();
+            }
         }
 
         /// <summary>Code of today's food fact for the active quest, or null.</summary>

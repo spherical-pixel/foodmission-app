@@ -4081,6 +4081,30 @@ MonoBehaviour:
       adatti a te.
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: Ultimo giorno della tua missione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "Oggi \xE8 l'ultimo giorno per raccontare a Nutri di \u201C{0}\u201D.
+      Non perdere i tuoi progressi!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: "Oggi \xE8 l'ultimo giorno per raccontare a Nutri di {0} delle tue
+      missioni. Non perdere i tuoi progressi!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "Oggi \xE8 l'ultimo giorno di \u201C{0}\u201D. Raccontami cosa hai
+      fatto, cos\xEC conta!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: "Oggi \xE8 l'ultimo giorno di {0} delle tue missioni. Raccontami
+      cosa hai fatto, cos\xEC conta!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

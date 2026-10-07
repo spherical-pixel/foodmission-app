@@ -162,6 +162,7 @@ namespace eu.foodmission.platform
             }
 
             viewModel.RecordPilotHomeEntry();
+            viewModel.SyncMissionLastDayReminders();
             var host = new PromptHost(this, viewModel, ++_promptGeneration);
             var whatsNew = App.current?.services?.GetService<IWhatsNewService>();
             var coordinator = new HomePromptCoordinator(HomePrompts.Create(viewModel, new HomePromptRunState(), whatsNew), new RewardCelebrationGate());

@@ -4076,6 +4076,30 @@ MonoBehaviour:
       passer for deg."
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: Siste dag av oppdraget ditt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "I dag er siste dag for \xE5 fortelle Nutri om \xAB{0}\xBB. Ikke
+      mist fremgangen din!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: "I dag er siste dag for \xE5 fortelle Nutri om {0} av oppdragene
+      dine. Ikke mist fremgangen din!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "I dag er siste dag av \xAB{0}\xBB. Fortell meg hva du har gjort,
+      s\xE5 det teller!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: "I dag er siste dag av {0} av oppdragene dine. Fortell meg hva du
+      har gjort, s\xE5 det teller!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

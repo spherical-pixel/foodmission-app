@@ -4091,6 +4091,30 @@ MonoBehaviour:
       die bij je passen."
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: Laatste dag van je missie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "Vandaag is de laatste dag om Nutri te vertellen over \u201C{0}\u201D.
+      Verlies je voortgang niet!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: Vandaag is de laatste dag om Nutri te vertellen over {0} van je
+      missies. Verlies je voortgang niet!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "Vandaag is de laatste dag van \u201C{0}\u201D. Vertel me wat je
+      hebt gedaan, zodat het meetelt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: Vandaag is de laatste dag van {0} van je missies. Vertel me wat
+      je hebt gedaan, zodat het meetelt!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

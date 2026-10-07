@@ -18,6 +18,7 @@ namespace eu.foodmission.platform
                 new OnboardingReminderPrompt(viewModel),
                 new NotificationsPrompt(viewModel),
                 new PilotSurveyPrompt(viewModel),
+                new MissionLastDayPrompt(viewModel),
                 new MissionNudgePrompt(viewModel),
                 new DailyFoodFactPrompt(viewModel)
             };

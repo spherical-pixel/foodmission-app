@@ -4063,6 +4063,30 @@ MonoBehaviour:
       survey. It only takes a minute and helps me set goals that fit you.
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: Last day of your mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "Today is the last day to tell Nutri about \u201C{0}\u201D. Don't
+      lose your progress!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: Today is the last day to tell Nutri about {0} of your missions.
+      Don't lose your progress!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "Today is the last day of \u201C{0}\u201D. Tell me what you did
+      so it counts!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: Today is the last day of {0} of your missions. Tell me what you
+      did so it counts!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

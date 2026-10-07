@@ -94,6 +94,7 @@ namespace eu.foodmission.platform.Tests
         public void NotificationRoutingService_ResolveNavigationAction_MapsKnownActions()
         {
             Assert.AreEqual(Actions.go_to_pantry, NotificationRoutingService.ResolveNavigationAction("go_to_pantry"));
+            Assert.AreEqual(Actions.open_mission_checkin, NotificationRoutingService.ResolveNavigationAction("open_mission_checkin"), "last-day mission reminder");
             Assert.AreEqual(Actions.go_to_pantry, NotificationRoutingService.ResolveNavigationAction("pantry"));
             Assert.AreEqual(Actions.go_to_meallog, NotificationRoutingService.ResolveNavigationAction("go_to_meallog"));
             Assert.AreEqual(Actions.go_to_meallog, NotificationRoutingService.ResolveNavigationAction("meal_log"));

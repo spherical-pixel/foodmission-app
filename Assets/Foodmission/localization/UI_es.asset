@@ -4077,6 +4077,30 @@ MonoBehaviour:
       objetivos a tu medida."
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: "\xDAltimo d\xEDa de tu misi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "Hoy es el \xFAltimo d\xEDa para contarle a Nutri sobre \xAB{0}\xBB.
+      \xA1No pierdas tu progreso!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: "Hoy es el \xFAltimo d\xEDa para contarle a Nutri sobre {0} de tus
+      misiones. \xA1No pierdas tu progreso!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "Hoy es el \xFAltimo d\xEDa de \xAB{0}\xBB. \xA1Cu\xE9ntame lo que
+      has hecho para que cuente!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: "Hoy es el \xFAltimo d\xEDa de {0} de tus misiones. \xA1Cu\xE9ntame
+      lo que has hecho para que cuente!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

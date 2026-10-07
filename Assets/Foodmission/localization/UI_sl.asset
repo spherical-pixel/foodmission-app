@@ -4076,6 +4076,30 @@ MonoBehaviour:
       navadah. Vzame le minuto in mi pomaga postaviti cilje, ki ti ustrezajo."
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: Zadnji dan tvoje misije
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "Danes je zadnji dan, da Nutriju pove\u0161 o \xBB{0}\xAB. Ne izgubi
+      svojega napredka!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: "Danes je zadnji dan, da Nutriju pove\u0161 o svojih misijah ({0}).
+      Ne izgubi svojega napredka!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "Danes je zadnji dan misije \xBB{0}\xAB. Povej mi, kaj si naredil,
+      da bo \u0161telo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: "Danes je zadnji dan tvojih misij ({0}). Povej mi, kaj si naredil,
+      da bo \u0161telo!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

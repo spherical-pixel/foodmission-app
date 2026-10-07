@@ -3951,6 +3951,26 @@ MonoBehaviour:
     m_Key: QUEST_SURVEY_REQUIRED_MSG
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Key: MISSION_LAST_DAY_NOTIFICATION_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Key: MISSION_LAST_DAY_NOTIFICATION_BODY_ONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Key: MISSION_LAST_DAY_NOTIFICATION_BODY_MANY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Key: MISSION_LAST_DAY_MESSAGE_ONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Key: MISSION_LAST_DAY_MESSAGE_MANY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

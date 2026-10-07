@@ -21,6 +21,11 @@ namespace eu.foodmission.platform
 
         public async Task<IHomePromptInstance> CheckAsync()
         {
+            if (_viewModel.IsMissionLastDayShownToday)
+            {
+                // Nutri already asked for today's report (last day): one mission reminder per day
+                return null;
+            }
             MissionNudge nudge = await _viewModel.CheckMissionNudgeAsync();
             return nudge == null ? null : new Instance(_viewModel, nudge);
         }

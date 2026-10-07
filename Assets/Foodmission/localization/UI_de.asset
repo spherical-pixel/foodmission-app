@@ -4094,6 +4094,30 @@ MonoBehaviour:
       dich zu setzen."
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: Letzter Tag deiner Mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "Heute ist der letzte Tag, um Nutri von \u201E{0}\u201C zu erz\xE4hlen.
+      Verliere deinen Fortschritt nicht!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: "Heute ist der letzte Tag, um Nutri von {0} deiner Missionen zu
+      erz\xE4hlen. Verliere deinen Fortschritt nicht!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "Heute ist der letzte Tag von \u201E{0}\u201C. Erz\xE4hl mir, was
+      du gemacht hast, damit es z\xE4hlt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: "Heute ist der letzte Tag von {0} deiner Missionen. Erz\xE4hl mir,
+      was du gemacht hast, damit es z\xE4hlt!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

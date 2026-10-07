@@ -4131,6 +4131,30 @@ MonoBehaviour:
       i pomo\u017Ce mi ustali\u0107 cele dopasowane do Ciebie."
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247366
+    m_Localized: "Ostatni dzie\u0144 Twojej misji"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247367
+    m_Localized: "Dzi\u015B jest ostatni dzie\u0144, \u017Ceby opowiedzie\u0107 Nutri
+      o \u201E{0}\u201D. Nie stra\u0107 swoich post\u0119p\xF3w!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247368
+    m_Localized: "Dzi\u015B jest ostatni dzie\u0144, \u017Ceby opowiedzie\u0107 Nutri
+      o Twoich misjach ({0}). Nie stra\u0107 swoich post\u0119p\xF3w!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247369
+    m_Localized: "Dzi\u015B jest ostatni dzie\u0144 misji \u201E{0}\u201D. Powiedz
+      mi, co zrobi\u0142e\u015B, \u017Ceby si\u0119 liczy\u0142o!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247370
+    m_Localized: "Dzi\u015B jest ostatni dzie\u0144 Twoich misji ({0}). Powiedz mi,
+      co zrobi\u0142e\u015B, \u017Ceby si\u0119 liczy\u0142o!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

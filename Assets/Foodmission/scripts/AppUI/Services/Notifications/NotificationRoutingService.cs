@@ -112,6 +112,9 @@ namespace eu.foodmission.platform
                 case "home":
                     return Actions.go_to_home;
 
+                case MissionLastDayService.NotificationAction:
+                    return Actions.open_mission_checkin;
+
                 default:
                     return null;
             }
