@@ -24,7 +24,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void MealDays_CoverMissionWindow_AndSkipFullyLoggedDays()
         {
-            var inputs = Inputs(M("M.A1.3", Now.AddDays(-2)));
+            var inputs = Inputs(M("M.A1.3", Now.Date.AddDays(-2)));
             inputs.LoggedMealTypes[Now.Date.AddDays(-1)] = new HashSet<string> { "BREAKFAST", "LUNCH", "DINNER" };
 
             var plan = CheckInPlanner.Plan(inputs);
@@ -35,7 +35,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void MealDay_OpenTypes_AreTheUnloggedOnes()
         {
-            var inputs = Inputs(M("M.A1.3", Now.AddDays(-1)));
+            var inputs = Inputs(M("M.A1.3", Now.Date.AddDays(-1)));
             inputs.LoggedMealTypes[Now.Date.AddDays(-1)] = new HashSet<string> { "LUNCH" };
 
             var day = CheckInPlanner.Plan(inputs).MealDays.First();
@@ -48,7 +48,7 @@ namespace eu.foodmission.platform.Tests
         public void MealQuestions_AreTheUnionOfActiveMealMissions_PerDayWindow()
         {
             // A1.3 legumes since 2 days ago; B1.4 protein swaps since today
-            var plan = CheckInPlanner.Plan(Inputs(M("M.A1.3", Now.AddDays(-2)), M("M.B1.4", Now)));
+            var plan = CheckInPlanner.Plan(Inputs(M("M.A1.3", Now.Date.AddDays(-2)), M("M.B1.4", Now.Date)));
 
             var older = plan.MealDays.Single(d => d.Day == Now.Date.AddDays(-2));
             CollectionAssert.AreEqual(new[] { ClientEventTypes.MealLegumeConsumed }, older.Questions.Select(q => q.EventType).ToArray());
@@ -62,7 +62,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void MealQuestions_AreDeduplicated()
         {
-            var plan = CheckInPlanner.Plan(Inputs(M("M.A1.1", Now), M("M.B1.3", Now)));
+            var plan = CheckInPlanner.Plan(Inputs(M("M.A1.1", Now.Date), M("M.B1.3", Now.Date)));
 
             Assert.AreEqual(1, plan.MealDays.Single().Questions.Count(q => q.EventType == ClientEventTypes.MealMeatConsumed));
         }
@@ -70,12 +70,48 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void BreakfastOnlyFlag_AppliesOnlyToBreakfast_UnlessAnotherMissionNeedsItAnywhere()
         {
-            var breakfastOnly = CheckInPlanner.Plan(Inputs(M("M.A6.2", Now))).MealDays.Single();
+            var breakfastOnly = CheckInPlanner.Plan(Inputs(M("M.A6.2", Now.Date))).MealDays.Single();
             var q = breakfastOnly.Questions.Single();
             Assert.AreEqual("BREAKFAST", q.OnlyMealType);
             Assert.AreEqual(0, breakfastOnly.QuestionsFor("LUNCH").Count);
             Assert.AreEqual(1, breakfastOnly.QuestionsFor("BREAKFAST").Count);
             Assert.AreEqual("EVENTS_HIGH_FIBRE", q.LabelKey);
+            CollectionAssert.AreEqual(new[] { "BREAKFAST" }, breakfastOnly.OpenMealTypes.ToArray(), "meals with nothing to ask aren't offered");
+        }
+
+        [Test]
+        public void MealDays_StartDay_OffersOnlyMealsDatedAfterTheStart()
+        {
+            // Rules ignore events before startedAt: a 13:00 lunch can't count for a mission started at 14:00
+            var plan = CheckInPlanner.Plan(Inputs(M("M.A1.3", Now.Date.AddDays(-1).AddHours(14))));
+
+            CheckInMealDay startDay = plan.MealDays.Single(d => d.Day == Now.Date.AddDays(-1));
+            CollectionAssert.AreEqual(new[] { "SNACK", "DINNER" }, startDay.OpenMealTypes.ToArray());
+            Assert.AreEqual(0, startDay.QuestionsFor("LUNCH").Count);
+            Assert.AreEqual(1, startDay.QuestionsFor("DINNER").Count);
+        }
+
+        [Test]
+        public void MealDays_StartDay_KeepsQuestionsOfMissionsStartedEarlier()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(M("M.A1.3", Now.Date.AddDays(-1).AddHours(14)), M("M.B1.4", Now.Date.AddDays(-3))));
+
+            CheckInMealDay day = plan.MealDays.Single(d => d.Day == Now.Date.AddDays(-1));
+            Assert.AreEqual(CheckInMealTypes.All.Length, day.OpenMealTypes.Count);
+            Assert.IsFalse(day.QuestionsFor("LUNCH").Any(q => q.EventType == ClientEventTypes.MealLegumeConsumed), "A1.3 had not started at lunch");
+            Assert.IsTrue(day.QuestionsFor("LUNCH").All(q => q.IsSwap));
+            Assert.IsTrue(day.QuestionsFor("DINNER").Any(q => q.EventType == ClientEventTypes.MealLegumeConsumed));
+        }
+
+        [Test]
+        public void MealDays_StartedAfterTheLastMeal_OffersNothingThatDay()
+        {
+            var inputs = Inputs(M("M.A1.3", Now.Date.AddDays(-1).AddHours(21)));
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            Assert.IsFalse(plan.MealDays.Any(d => d.Day == Now.Date.AddDays(-1)));
+            Assert.AreEqual(0, plan.PendingPastDays(Now));
         }
 
         [Test]
@@ -117,7 +153,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void PendingPastDays_CountsPastDaysWithoutAnyLog_OrWithOpenDayEvents()
         {
-            var inputs = Inputs(M("M.A1.3", Now.AddDays(-3)), M("M.A5.4", Now.AddDays(-1)));
+            var inputs = Inputs(M("M.A1.3", Now.Date.AddDays(-3)), M("M.A5.4", Now.AddDays(-1)));
             inputs.LoggedMealTypes[Now.Date.AddDays(-3)] = new HashSet<string> { "LUNCH" }; // partially logged: not "missing"
             inputs.CoveredEventDays[ClientEventTypes.FoodWasteFifoOrganized] = new HashSet<DateTime>();
 
@@ -130,7 +166,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void MealDays_Today_OffersMealTypesFromTwoHoursBeforeTheirTypicalHour()
         {
-            var inputs = Inputs(M("M.A1.3", Now.AddDays(-1)));
+            var inputs = Inputs(M("M.A1.3", Now.Date.AddDays(-1)));
             inputs.NowLocal = Now.Date.AddHours(10);
 
             var plan = CheckInPlanner.Plan(inputs);

@@ -43,15 +43,18 @@ namespace eu.foodmission.platform
         public bool IsSwap => EventType.StartsWith("SWAP_", StringComparison.Ordinal);
         /// <summary>Meal type this question is restricted to (e.g. BREAKFAST), null = any meal.</summary>
         public string OnlyMealType { get; }
+        /// <summary>Meal types it is asked for on its day: <see cref="OnlyMealType"/>, minus meals dated before the missions started.</summary>
+        public IReadOnlyCollection<string> MealTypes { get; }
 
-        public CheckInMealQuestion(string eventType, string onlyMealType)
+        public CheckInMealQuestion(string eventType, string onlyMealType, IReadOnlyCollection<string> mealTypes = null)
         {
             EventType = eventType;
             LabelKey = MealFlagLabels.KeyFor(eventType);
             OnlyMealType = onlyMealType;
+            MealTypes = mealTypes ?? (onlyMealType != null ? new[] { onlyMealType } : CheckInMealTypes.All);
         }
 
-        public bool AppliesTo(string mealType) => OnlyMealType == null || OnlyMealType == mealType;
+        public bool AppliesTo(string mealType) => MealTypes.Contains(mealType);
     }
 
     public sealed class CheckInMealDay

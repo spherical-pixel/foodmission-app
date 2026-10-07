@@ -35,7 +35,7 @@ namespace eu.foodmission.platform.Tests
             SetQuest("M.A1.3", "M.A5.4", "M.B2.1", "M.A2.1");
             _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
             {
-                new MissionProgress { missionCode = "M.A1.3", missionTitle = "Legumes", progress = 20, startedAt = Now.AddDays(-1).ToUniversalTime() },
+                new MissionProgress { missionCode = "M.A1.3", missionTitle = "Legumes", progress = 20, startedAt = Now.Date.AddDays(-1).ToUniversalTime() },
                 new MissionProgress { missionCode = "M.A5.4", missionTitle = "FIFO", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() },
                 new MissionProgress { missionCode = "M.B2.1", missionTitle = "Origin", progress = 100, completed = true }
             }, (ApiErrorResponse)null));
@@ -134,7 +134,7 @@ namespace eu.foodmission.platform.Tests
         {
             _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
             {
-                new MissionProgress { missionCode = "M.A1.3", missionTitle = "Legumes", progress = 20, status = ProgressStatus.Failed, startedAt = Now.AddDays(-1).ToUniversalTime() },
+                new MissionProgress { missionCode = "M.A1.3", missionTitle = "Legumes", progress = 20, status = ProgressStatus.Failed, startedAt = Now.Date.AddDays(-1).ToUniversalTime() },
                 new MissionProgress { missionCode = "M.A5.4", missionTitle = "FIFO", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() }
             }, (ApiErrorResponse)null));
 

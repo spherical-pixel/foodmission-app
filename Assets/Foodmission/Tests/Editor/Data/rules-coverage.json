@@ -27,15 +27,22 @@
         "counters": {
           "meatMeals": {
             "event": "MEAL_MEAT_CONSUMED",
-            "distinctBy": "metadata.mealId"
+            "distinctBy": "metadata.mealLogId"
+          },
+          "loggedDays": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket"
           }
         },
         "target": "meatMeals <= 3",
         "fail": "meatMeals > 3",
         "resolveAt": "window_end",
-        "progress": "max(0, min(1 - (meatMeals / 4), 1))",
+        "progress": "meatMeals > 3 ? 0 : min(loggedDays / 7, 1)",
         "notes": [
-          "Goal is \"remain below four meat meals\", so at most 3 meat meals in the window"
+          "Goal is \"remain below four meat meals\", so at most 3 meat meals in the window",
+          "Fails at once on the 4th meat meal; completes at the end of the week (resolveAt window_end)",
+          "Progress is days with a logged meal / 7 while under the limit; logging on every day is not required to complete",
+          "Counts meal logs (metadata.mealLogId), so a saved meal eaten twice counts twice"
         ]
       }
     },
@@ -50,18 +57,21 @@
         "counters": {
           "plantProteinMeals": {
             "event": "MEAL_LEGUME_CONSUMED",
-            "distinctBy": "metadata.mealId"
+            "distinctBy": "metadata.mealLogId"
           },
           "meatMeals": {
             "event": "MEAL_MEAT_CONSUMED",
-            "distinctBy": "metadata.mealId"
+            "distinctBy": "metadata.mealLogId"
           }
         },
         "target": "plantProteinMeals > meatMeals && (plantProteinMeals + meatMeals) >= 5",
+        "resolveAt": "window_end",
         "progress": "min(plantProteinMeals / max(plantProteinMeals + meatMeals, 1), 1)",
         "notes": [
           "Proxy for non-meat protein majority using currently available event types",
-          "May need additional non-meat protein events beyond legumes"
+          "May need additional non-meat protein events beyond legumes",
+          "The majority is judged over the whole week (resolveAt window_end): it completes or fails at the end, since later meat meals can still tip it",
+          "Counts meal logs (metadata.mealLogId), so a saved meal eaten twice counts twice"
         ]
       }
     },
@@ -523,7 +533,7 @@
         "notes": [
           "Every day of the week: counts distinct days with a high-fibre breakfast",
           "Client contract: metadata.mealType set to BREAKFAST (same values as meal log typeOfMeal)",
-          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+          "metadata.dayBucket is server-set from the event time; meal-log events are dated at the meal, so it is the meal's UTC day"
         ]
       }
     },
@@ -550,12 +560,14 @@
           }
         },
         "target": "loggedDays >= 7 && sugarFreeMeals >= meals",
+        "resolveAt": "window_end",
         "progress": "min(loggedDays / 7, 1) * min(sugarFreeMeals / max(meals, 1), 1)",
         "notes": [
           "Throughout the week: a meal logged on each of the 7 days, and every logged meal flagged NUTRITION_ADDED_SUGAR_AVOIDED (no product with added sugar among its first three ingredients)",
           "Per meal log: the flag is sent as a meal log flag, so one unflagged meal on any day blocks completion",
           "Both meal counters use metadata.mealLogId, set on MEAL_LOGGED and on every meal flag event, so a retried log counts once",
-          "Cannot verify that every meal of the day was logged; self-attested"
+          "Cannot verify that every meal of the day was logged; self-attested",
+          "Completes or fails at the end of the week (resolveAt window_end), once every meal of the last day is in; no early fail, because MEAL_LOGGED is recorded before the meal's flag events"
         ]
       }
     },
@@ -631,32 +643,40 @@
     },
     {
       "code": "M.B1.3",
-      "shape": "composite_threshold",
+      "shape": "bounded_max_with_fail",
       "rule": {
         "window": {
-          "type": "rolling_lookback",
+          "type": "since_start",
           "days": 7
         },
         "counters": {
           "currentMeatMeals": {
             "event": "MEAL_MEAT_CONSUMED",
-            "distinctBy": "metadata.mealId"
+            "distinctBy": "metadata.mealLogId"
           },
           "previousMeatMeals": {
             "event": "MEAL_MEAT_CONSUMED",
-            "distinctBy": "metadata.mealId",
+            "distinctBy": "metadata.mealLogId",
             "window": {
-              "type": "rolling_lookback",
-              "days": 7,
-              "offsetDays": 7
+              "type": "before_start",
+              "days": 7
             }
+          },
+          "loggedDays": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket"
           }
         },
         "target": "previousMeatMeals >= 1 && currentMeatMeals <= previousMeatMeals - 1",
-        "progress": "previousMeatMeals > 0 ? clamp((previousMeatMeals - currentMeatMeals) / previousMeatMeals, 0, 1) : 0",
+        "fail": "previousMeatMeals >= 1 && currentMeatMeals >= previousMeatMeals",
+        "resolveAt": "window_end",
+        "progress": "previousMeatMeals >= 1 && currentMeatMeals < previousMeatMeals ? min(loggedDays / 7, 1) : 0",
         "notes": [
-          "Compares the current 7-day meat-meal count against the previous 7 days",
-          "Needs counter-specific windows so the baseline week is evaluated separately"
+          "Progress is days with a logged meal / 7 while below last week's count; 0 when there is no previous-week baseline",
+          "Compares the meat meals in the 7 days after starting against the 7 days before starting (before_start counter window)",
+          "Fails at once when the current week reaches the previous week's count; completes at the end of the week",
+          "A user with no meat meals in the previous week cannot eat one fewer, so the mission fails at the deadline",
+          "Counts meal logs (metadata.mealLogId), so a saved meal eaten twice counts twice"
         ]
       }
     },
@@ -1190,7 +1210,7 @@
         "progress": "min(proteinDays / 7, 1)",
         "notes": [
           "Every day of the week: counts distinct days with at least one protein-rich meal",
-          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+          "metadata.dayBucket is server-set from the event time; meal-log events are dated at the meal, so it is the meal's UTC day"
         ]
       }
     },
@@ -1212,7 +1232,7 @@
         "progress": "min(fruitVegDays / 7, 1)",
         "notes": [
           "Every day of the week: counts distinct days with at least one extra fruit/vegetable serving",
-          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+          "metadata.dayBucket is server-set from the event time; meal-log events are dated at the meal, so it is the meal's UTC day"
         ]
       }
     },
@@ -1254,7 +1274,7 @@
         "progress": "min(wholegrainDays / 7, 1)",
         "notes": [
           "Every day of the week: counts distinct days with at least one whole-grain choice",
-          "metadata.dayBucket is server-set (UTC day the event was recorded, not the meal day)"
+          "metadata.dayBucket is server-set from the event time; meal-log events are dated at the meal, so it is the meal's UTC day"
         ]
       }
     },
@@ -1360,12 +1380,14 @@
           }
         },
         "target": "(loggedDays - meatDays) >= 2",
+        "resolveAt": "window_end",
         "progress": "clamp((loggedDays - meatDays) / 2, 0, 1)",
         "notes": [
           "Meat-free day = a day with at least one logged meal and no MEAL_MEAT_CONSUMED meal",
           "Meat days are a subset of logged days, so loggedDays - meatDays counts meat-free days",
           "Both counters use metadata.mealDayBucket (the meal log day), set on MEAL_LOGGED and on every meal flag/swap event",
-          "Cannot verify that every meal of the day was logged; one logged meat-free meal is enough for that day to count"
+          "Cannot verify that every meal of the day was logged; one logged meat-free meal is enough for that day to count",
+          "Completes at the end of the week (resolveAt window_end): a day only stays meat-free once no more meat meals can be logged for it"
         ]
       }
     },
@@ -1900,12 +1922,14 @@
           }
         },
         "target": "loggedDays >= 7 && saltFreeMeals >= meals",
+        "resolveAt": "window_end",
         "progress": "min(loggedDays / 7, 1) * min(saltFreeMeals / max(meals, 1), 1)",
         "notes": [
           "Throughout the week: a meal logged on each of the 7 days, and every logged meal flagged NUTRITION_SALT_FREE_TABLE (no salt added at the table)",
           "Per meal log: the flag is sent as a meal log flag, so one unflagged meal on any day blocks completion",
           "Both meal counters use metadata.mealLogId, set on MEAL_LOGGED and on every meal flag event, so a retried log counts once",
-          "Cannot verify that every meal of the day was logged; self-attested"
+          "Cannot verify that every meal of the day was logged; self-attested",
+          "Completes or fails at the end of the week (resolveAt window_end), once every meal of the last day is in; no early fail, because MEAL_LOGGED is recorded before the meal's flag events"
         ]
       }
     },

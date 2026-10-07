@@ -12,6 +12,7 @@ namespace eu.foodmission.platform
             public string EventType;
             public string OnlyMealType;
             public int Order;
+            public DateTime? Start;
         }
 
         public static CheckInPlan Plan(CheckInInputs inputs)
@@ -47,7 +48,7 @@ namespace eu.foodmission.platform
                                         list = new List<MealContribution>();
                                         mealByDay[day] = list;
                                     }
-                                    list.Add(new MealContribution { EventType = eventType, OnlyMealType = step.FixedMealType, Order = eventOrder });
+                                    list.Add(new MealContribution { EventType = eventType, OnlyMealType = step.FixedMealType, Order = eventOrder, Start = mission.StartLocal });
                                 }
                             }
                             break;
@@ -94,16 +95,18 @@ namespace eu.foodmission.platform
                         EventType = g.Key,
                         Order = g.Min(c => c.Order),
                         // Restricted only if every contributing mission restricts it to the same meal type
-                        Only = g.All(c => c.OnlyMealType != null) && g.Select(c => c.OnlyMealType).Distinct().Count() == 1 ? g.First().OnlyMealType : null
+                        Only = g.All(c => c.OnlyMealType != null) && g.Select(c => c.OnlyMealType).Distinct().Count() == 1 ? g.First().OnlyMealType : null,
+                        MealTypes = CheckInMealTypes.All.Where(t => g.Any(c => Counts(c, entry.Key, t, inputs.NowLocal))).ToArray()
                     })
+                    .Where(q => q.MealTypes.Length > 0)
                     .OrderBy(q => q.EventType.StartsWith("SWAP_", StringComparison.Ordinal) ? 1 : 0)
                     .ThenBy(q => q.Order)
-                    .Select(q => new CheckInMealQuestion(q.EventType, q.Only))
+                    .Select(q => new CheckInMealQuestion(q.EventType, q.Only, q.MealTypes))
                     .ToList();
 
                 bool isToday = entry.Key == inputs.NowLocal.Date;
                 string[] open = CheckInMealTypes.All
-                    .Where(t => !logged.Contains(t) && (!isToday || MissionReportDays.IsOfferedToday(t, inputs.NowLocal)))
+                    .Where(t => !logged.Contains(t) && (!isToday || MissionReportDays.IsOfferedToday(t, inputs.NowLocal)) && questions.Any(q => q.AppliesTo(t)))
                     .ToArray();
                 if (open.Length == 0)
                 {
@@ -125,5 +128,13 @@ namespace eu.foodmission.platform
 
             return new CheckInPlan(mealDays, openDayEvents, missionSteps);
         }
+
+        /// <summary>
+        /// Whether a meal of this type on this day would count for the contributing mission: right meal type, and
+        /// dated (<see cref="MissionReportDays.TimestampFor"/>) at or after the mission start, since rules ignore earlier events.
+        /// </summary>
+        private static bool Counts(MealContribution contribution, DateTime day, string mealType, DateTime nowLocal) =>
+            (contribution.OnlyMealType == null || contribution.OnlyMealType == mealType) &&
+            (!contribution.Start.HasValue || MissionReportDays.TimestampFor(day, mealType, nowLocal) >= contribution.Start.Value);
     }
 }

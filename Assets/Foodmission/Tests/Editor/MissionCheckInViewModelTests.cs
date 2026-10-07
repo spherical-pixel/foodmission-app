@@ -71,7 +71,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task LoadAsync_StepsAreMealDaysThenDayEventsThenMissionStepsThenSummary()
         {
-            await LoadAsync(null, CheckInPlannerTests.M("M.A1.3", Now.AddDays(-1)), CheckInPlannerTests.M("M.A5.4", Now), CheckInPlannerTests.M("M.B2.1"));
+            await LoadAsync(null, CheckInPlannerTests.M("M.A1.3", Now.Date.AddDays(-1)), CheckInPlannerTests.M("M.A5.4", Now), CheckInPlannerTests.M("M.B2.1"));
 
             Assert.AreEqual(2 + 1 + 1 + 1, _vm.StepCount);
             CollectionAssert.AreEqual(
@@ -84,7 +84,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task ToggleMealEvent_RequiresChosenMeal_AndMeatFlagsAreExclusive()
         {
-            await LoadAsync(null, CheckInPlannerTests.M("M.B1.1", Now));
+            await LoadAsync(null, CheckInPlannerTests.M("M.B1.1", Now.Date));
 
             _vm.ToggleMealEvent(0, "LUNCH", ClientEventTypes.MealMeatFree);
             Assert.IsFalse(_vm.Answers.MealDays[0].Meals.ContainsKey("LUNCH"), "meal not chosen yet");
@@ -99,7 +99,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task ToggleMeal_OnlyOpenTypes()
         {
-            var inputs = CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A1.3", Now));
+            var inputs = CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A1.3", Now.Date));
             inputs.LoggedMealTypes[Now.Date] = new HashSet<string> { "LUNCH" };
             _checkIn.Setup(c => c.LoadPlanAsync(null)).ReturnsAsync((CheckInPlanner.Plan(inputs), (ApiErrorResponse)null));
             await _vm.LoadAsync(null);
@@ -174,7 +174,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task Complete_SendsGroupedItems_AndRaisesOutcome()
         {
-            await LoadAsync(null, CheckInPlannerTests.M("M.A1.3", Now), CheckInPlannerTests.M("M.B2.1"));
+            await LoadAsync(null, CheckInPlannerTests.M("M.A1.3", Now.Date), CheckInPlannerTests.M("M.B2.1"));
             _vm.ToggleMeal(0, "DINNER");
             _vm.ToggleMealEvent(0, "DINNER", ClientEventTypes.MealLegumeConsumed);
             _vm.SetCount(1, 1);
@@ -263,7 +263,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task BuildSummary_HasOneLinePerStepWithSomethingToSend()
         {
-            await LoadAsync(null, CheckInPlannerTests.M("M.A1.3", Now), CheckInPlannerTests.M("M.B2.1"));
+            await LoadAsync(null, CheckInPlannerTests.M("M.A1.3", Now.Date), CheckInPlannerTests.M("M.B2.1"));
             _vm.ToggleMeal(0, "LUNCH");
             _vm.ToggleMealEvent(0, "LUNCH", ClientEventTypes.MealLegumeConsumed);
 

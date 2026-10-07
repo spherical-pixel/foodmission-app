@@ -24,16 +24,6 @@ namespace eu.foodmission.platform.Tests
             public readonly HashSet<string> Fields = new();
         }
 
-        /// <summary>
-        /// Counters the app can't satisfy for past days with backend (v0.3.1): they count distinct server
-        /// dayBucket (creation day), so back-dated meal logs land on today. Agreed with the user on 2026-10-01.
-        /// Remove an entry when backend switches that rule to mealDayBucket (the test fails to remind you).
-        /// </summary>
-        private static readonly string[] KnownServerDayBucketGaps =
-        {
-            "M.A6.2.highFibreBreakfastDays", "M.B5.5.foodSavingDays", "M.B6.1.proteinDays", "M.B6.2.fruitVegDays", "M.B6.4.wholegrainDays"
-        };
-
         private static JObject LoadRules()
         {
             string path = Path.Combine(Application.dataPath, "Foodmission/Tests/Editor/Data/rules-coverage.json");
@@ -76,7 +66,8 @@ namespace eu.foodmission.platform.Tests
         private static Signature MealSignature(string eventType, string fixedMealType)
         {
             var s = new Signature { EventType = eventType };
-            s.Fields.UnionWith(new[] { "mealLogId", "mealId", "mealType", "mealDayBucket" });
+            // Backend dates meal-log events at the meal, so their dayBucket is the meal day too
+            s.Fields.UnionWith(new[] { "mealLogId", "mealId", "mealType", "mealDayBucket", "dayBucket" });
             if (fixedMealType != null)
             {
                 s.Metadata["mealType"] = fixedMealType;
@@ -177,10 +168,7 @@ namespace eu.foodmission.platform.Tests
                 }
             }
 
-            var unexpected = failures.Except(KnownServerDayBucketGaps).ToList();
-            var fixedGaps = KnownServerDayBucketGaps.Except(failures).ToList();
-            Assert.IsEmpty(unexpected, "Counters not producible by the catalog:\n" + string.Join("\n", unexpected));
-            Assert.IsEmpty(fixedGaps, "Backend fixed these dayBucket gaps, remove them from KnownServerDayBucketGaps:\n" + string.Join("\n", fixedGaps));
+            Assert.IsEmpty(failures, "Counters not producible by the catalog:\n" + string.Join("\n", failures));
         }
 
         [Test]
