@@ -47,6 +47,7 @@ namespace eu.foodmission.platform
 
             UnityWebRequestAsyncOperation op = req.SendWebRequest();
             while (!op.isDone) await Task.Yield();
+            UserProgressWrites.Record();
 
             if (req.result != UnityWebRequest.Result.Success)
             {
@@ -135,6 +136,7 @@ namespace eu.foodmission.platform
 
             UnityWebRequestAsyncOperation op = req.SendWebRequest();
             while (!op.isDone) await Task.Yield();
+            UserProgressWrites.Record();
 
             if (req.result != UnityWebRequest.Result.Success)
             {
@@ -161,6 +163,7 @@ namespace eu.foodmission.platform
 
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
             while (!op.isDone) await Task.Yield();
+            UserProgressWrites.Record();
 
             if (request.result != UnityWebRequest.Result.Success)
             {

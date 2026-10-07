@@ -34,6 +34,66 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task GetUserProgressListAsync_ConcurrentCalls_ShareOneRequest()
+        {
+            int calls = 0;
+            var pending = new TaskCompletionSource<(MissionProgress[], ApiErrorResponse)>();
+            _service.FetchProgressList = _ => { calls++; return pending.Task; };
+
+            var first = _service.GetUserProgressListAsync();
+            var second = _service.GetUserProgressListAsync();
+            pending.SetResult((new[] { new MissionProgress { missionCode = "M.A1.1" } }, null));
+
+            Assert.AreEqual("M.A1.1", (await first).Result[0].missionCode);
+            Assert.AreEqual("M.A1.1", (await second).Result[0].missionCode);
+            Assert.AreEqual(1, calls);
+        }
+
+        [Test]
+        public async Task GetUserProgressListAsync_ReusesAResultForAFewSeconds()
+        {
+            // Home's prompts ask one after another; the backend allows 5 requests/s per route
+            int calls = 0;
+            DateTime now = new DateTime(2026, 10, 7, 12, 0, 0, DateTimeKind.Utc);
+            _service.Clock = () => now;
+            _service.FetchProgressList = _ => { calls++; return Task.FromResult((new MissionProgress[0], (ApiErrorResponse)null)); };
+
+            await _service.GetUserProgressListAsync();
+            await _service.GetUserProgressListAsync();
+            Assert.AreEqual(1, calls);
+
+            now = now.Add(MissionService.ProgressReuseWindow);
+            await _service.GetUserProgressListAsync();
+            Assert.AreEqual(2, calls);
+        }
+
+        [Test]
+        public async Task GetUserProgressListAsync_AfterTheUserRecordsSomething_FetchesAgain()
+        {
+            int calls = 0;
+            _service.Clock = () => new DateTime(2026, 10, 7, 12, 0, 0, DateTimeKind.Utc);
+            _service.FetchProgressList = _ => { calls++; return Task.FromResult((new MissionProgress[0], (ApiErrorResponse)null)); };
+
+            await _service.GetUserProgressListAsync();
+            UserProgressWrites.Record();
+            await _service.GetUserProgressListAsync();
+
+            Assert.AreEqual(2, calls);
+        }
+
+        [Test]
+        public async Task GetUserProgressListAsync_DoesNotKeepErrors()
+        {
+            int calls = 0;
+            _service.FetchProgressList = _ => { calls++; return Task.FromResult(((MissionProgress[])null, new ApiErrorResponse { statusCode = 429 })); };
+
+            await _service.GetUserProgressListAsync();
+            await _service.GetUserProgressListAsync();
+
+            Assert.AreEqual(2, calls);
+        }
+
+        [Test]
         public async Task GetMissionAsync_OnEmptyCodeOrId_ReturnsNull()
         {
             var (result, error) = await _service.GetMissionAsync("");

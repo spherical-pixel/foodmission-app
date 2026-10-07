@@ -63,6 +63,10 @@ namespace eu.foodmission.platform
 
             UnityWebRequestAsyncOperation op = req.SendWebRequest();
             while (!op.isDone) await Task.Yield();
+            if (request.eventType != ClientEventTypes.AppSessionOpened && request.eventType != ClientEventTypes.AppSessionEnded)
+            {
+                UserProgressWrites.Record();
+            }
 
             if (req.result != UnityWebRequest.Result.Success)
             {

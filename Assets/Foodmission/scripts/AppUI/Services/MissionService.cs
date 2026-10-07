@@ -12,11 +12,21 @@ namespace eu.foodmission.platform
         private static readonly System.Collections.Generic.Dictionary<string, string> s_MissionIdToCodeMap = new System.Collections.Generic.Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private static readonly object s_MissionCacheLock = new object();
 
+        /// <summary>How long a progress list is reused while the user records nothing: covers Home's prompts asking one after another.</summary>
+        public static readonly TimeSpan ProgressReuseWindow = TimeSpan.FromSeconds(5);
+
         private readonly IStoreService _storeService;
+        private (string Key, long WritesVersion, DateTime FetchedAt, MissionProgress[] List)? _progressCache;
+        private (string Key, Task<(MissionProgress[], ApiErrorResponse)> Request)? _progressRequest;
+
+        /// <summary>Loads the user's mission progress list (auth header, language) from the backend; replaceable in tests.</summary>
+        public Func<string, Task<(MissionProgress[] Result, ApiErrorResponse Error)>> FetchProgressList { get; set; }
+        public Func<DateTime> Clock { get; set; } = () => DateTime.UtcNow;
 
         public MissionService(IStoreService storeService)
         {
             _storeService = storeService;
+            FetchProgressList = FetchProgressListAsync;
         }
 
         public string GetCachedCode(string missionId)
@@ -196,6 +206,49 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = "Authentication required" });
 
             string effectiveLang = ResolveLang(lang);
+            string key = auth + "|" + effectiveLang;
+            if (_progressCache is { } cached && cached.Key == key && cached.WritesVersion == UserProgressWrites.Version &&
+                Clock() - cached.FetchedAt < ProgressReuseWindow)
+            {
+                return (cached.List, null);
+            }
+
+            // Concurrent callers share one request: the backend throttles bursts on the same route (429)
+            Task<(MissionProgress[], ApiErrorResponse)> request;
+            if (_progressRequest is { } inFlight && inFlight.Key == key)
+            {
+                request = inFlight.Request;
+            }
+            else
+            {
+                request = FetchProgressList(effectiveLang);
+                _progressRequest = (key, request);
+            }
+
+            long writesVersion = UserProgressWrites.Version;
+            (MissionProgress[] Result, ApiErrorResponse Error) result;
+            try
+            {
+                result = await request;
+            }
+            finally
+            {
+                if (_progressRequest is { } current && current.Request == request)
+                {
+                    _progressRequest = null;
+                }
+            }
+
+            if (result.Error == null && result.Result != null && writesVersion == UserProgressWrites.Version)
+            {
+                _progressCache = (key, writesVersion, Clock(), result.Result);
+            }
+            return result;
+        }
+
+        private async Task<(MissionProgress[] Result, ApiErrorResponse Error)> FetchProgressListAsync(string effectiveLang)
+        {
+            string auth = AuthHeader;
             string url = $"{ApiConfig.BaseUrl}/api/v1/missions/progress?lang={Uri.EscapeDataString(effectiveLang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
@@ -330,6 +383,7 @@ namespace eu.foodmission.platform
             {
                 await Task.Yield();
             }
+            UserProgressWrites.Record();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
