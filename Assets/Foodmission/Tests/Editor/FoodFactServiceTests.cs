@@ -123,30 +123,42 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task GetUserProgressListAsync_WhenUnauthenticated_ReturnsFallbackFromLocalStorage()
+        public async Task GetUserProgressListAsync_WhenUnauthenticated_ReturnsOnlyAnError()
         {
+            // The read list is per user and lives in the backend: a device-wide copy leaked one account's reads into another
             _storeService.SetAppState(new AppState { accessToken = null });
-            _localStorageService.SetValue("fm_read_food_facts", new System.Collections.Generic.List<string> { "FF1.1.1", "FF1.1.2" });
 
             var (result, error) = await _service.GetUserProgressListAsync();
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Length);
-            Assert.IsTrue(System.Array.Exists(result, p => p.foodFactCode == "FF1.1.1"));
-            Assert.IsTrue(System.Array.Exists(result, p => p.foodFactCode == "FF1.1.2"));
+            Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
 
         [Test]
-        public async Task GetUserProgressListAsync_OnNetworkFailure_FallsBackToLocalStorage()
+        public async Task GetUserProgressListAsync_OnFailure_NeverReturnsReadsKeptOnTheDevice()
         {
-            _localStorageService.SetValue("fm_read_food_facts", new System.Collections.Generic.List<string> { "FACT_CACHED_1" });
+            _storeService.SetAppState(new AppState { accessToken = null });
+            _localStorageService.SetValue("fm_read_food_facts", new System.Collections.Generic.List<string> { "FACT_OTHER_ACCOUNT" });
+            var service = new FoodFactService(_storeService, _localStorageService);
 
-            var (result, error) = await _service.GetUserProgressListAsync();
+            var (result, error) = await service.GetUserProgressListAsync();
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Length);
-            Assert.AreEqual("FACT_CACHED_1", result[0].foodFactCode);
+            Assert.IsTrue(result == null || !System.Array.Exists(result, p => p.foodFactCode == "FACT_OTHER_ACCOUNT"));
+            Assert.IsNull(_localStorageService.GetValue<System.Collections.Generic.List<string>>("fm_read_food_facts"), "legacy device-wide list is removed");
+        }
+
+        [Test]
+        public async Task GetUserProgressListAsync_WithoutServerList_UsesOnlyTheSignedInUsersReads()
+        {
+            // The backend has no GET /food-facts/progress yet: reads recorded on this device stand in, per user
+            _storeService.SetAppState(new AppState { accessToken = "test-jwt-token", tokenType = "Bearer", userId = "u2" });
+            _localStorageService.SetValue(FoodFactService.ReadFactsKey("u1"), new System.Collections.Generic.List<string> { "FACT_OF_U1" });
+            _localStorageService.SetValue(FoodFactService.ReadFactsKey("u2"), new System.Collections.Generic.List<string> { "FACT_OF_U2" });
+
+            var (result, _) = await _service.GetUserProgressListAsync();
+
+            Assert.IsTrue(System.Array.Exists(result, p => p.foodFactCode == "FACT_OF_U2"));
+            Assert.IsFalse(System.Array.Exists(result, p => p.foodFactCode == "FACT_OF_U1"));
         }
     }
 }

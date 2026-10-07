@@ -12,7 +12,15 @@ namespace eu.foodmission.platform
 {
     public class FoodFactService : IFoodFactService
     {
-        private const string LocalReadFactsKey = "fm_read_food_facts";
+        /// <summary>Device-wide read list from before: not per user, so it leaked reads between accounts. Removed on start.</summary>
+        private const string LegacyReadFactsKey = "fm_read_food_facts";
+        private const string ReadFactsKeyPrefix = "fm_read_food_facts_";
+
+        /// <summary>
+        /// Facts the user read on this device. Stands in while the backend has no GET /food-facts/progress
+        /// (only POST :codeOrId/read). Per user: never shown to another account.
+        /// </summary>
+        public static string ReadFactsKey(string userId) => ReadFactsKeyPrefix + userId;
 
         private readonly IStoreService _storeService;
         private readonly ILocalStorageService _localStorageService;
@@ -21,6 +29,14 @@ namespace eu.foodmission.platform
         {
             _storeService = storeService;
             _localStorageService = localStorageService ?? App.current?.services?.GetService<ILocalStorageService>();
+            try
+            {
+                _localStorageService?.DeleteValue(LegacyReadFactsKey);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Failed to remove legacy read facts: {ex.Message}");
+            }
         }
 
         private string AuthHeader
@@ -216,7 +232,7 @@ namespace eu.foodmission.platform
                 var progress = JsonConvert.DeserializeObject<FoodFactProgressResponse>(raw);
                 if (progress != null)
                 {
-                    SaveLocalReadFact(codeOrId, progress.foodFactCode, progress.foodFactId);
+                    SaveLocalReadFacts(new[] { codeOrId, progress.foodFactCode, progress.foodFactId });
                 }
                 return (progress, null);
             }
@@ -232,7 +248,7 @@ namespace eu.foodmission.platform
             string auth = AuthHeader;
             if (string.IsNullOrEmpty(auth))
             {
-                return (GetLocalProgressFallback(), new ApiErrorResponse { message = "Authentication required" });
+                return (null, new ApiErrorResponse { message = "Authentication required" });
             }
 
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-facts/progress";
@@ -249,68 +265,64 @@ namespace eu.foodmission.platform
                 try
                 {
                     string raw = request.downloadHandler.text;
-                    var list = JsonConvert.DeserializeObject<FoodFactProgressResponse[]>(raw);
-                    if (list != null)
-                    {
-                        foreach (var item in list)
-                        {
-                            SaveLocalReadFact(item.foodFactCode, item.foodFactCode, item.foodFactId);
-                        }
-                        return (list, null);
-                    }
+                    var list = JsonConvert.DeserializeObject<FoodFactProgressResponse[]>(raw) ?? Array.Empty<FoodFactProgressResponse>();
+                    SaveLocalReadFacts(list.SelectMany(p => new[] { p.foodFactCode, p.foodFactId }));
+                    return (list, null);
                 }
                 catch (Exception ex)
                 {
                     Debug.LogWarning($"[{GetType().Name}] Failed to parse FoodFactProgress list: {ex.Message}");
                 }
             }
+            else
+            {
+                // Expected 404 until the backend adds the route; a warning, not an error
+                ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetUserProgressListAsync", false);
+            }
 
-            // Fallback to local storage (e.g. while endpoint is being added by backend partners)
-            return (GetLocalProgressFallback(), null);
+            return (GetLocalReadFacts().Select(c => new FoodFactProgressResponse { foodFactCode = c, foodFactId = c }).ToArray(), null);
         }
 
-        private HashSet<string> GetLocalReadFactCodes()
+        private string CurrentUserId => _storeService?.GetAppState()?.userId;
+
+        private HashSet<string> GetLocalReadFacts()
         {
+            var set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (string.IsNullOrEmpty(CurrentUserId))
+            {
+                return set;
+            }
             try
             {
-                var list = _localStorageService?.GetValue<List<string>>(LocalReadFactsKey);
+                List<string> list = _localStorageService?.GetValue<List<string>>(ReadFactsKey(CurrentUserId));
                 if (list != null)
                 {
-                    return new HashSet<string>(list, StringComparer.OrdinalIgnoreCase);
+                    set.UnionWith(list);
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogWarning($"[{GetType().Name}] Failed to read local read facts: {ex.Message}");
             }
-            return new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            return set;
         }
 
-        private void SaveLocalReadFact(string codeOrId, string code, string id)
+        private void SaveLocalReadFacts(IEnumerable<string> codesOrIds)
         {
+            if (string.IsNullOrEmpty(CurrentUserId))
+            {
+                return;
+            }
             try
             {
-                var set = GetLocalReadFactCodes();
-                if (!string.IsNullOrEmpty(codeOrId)) set.Add(codeOrId);
-                if (!string.IsNullOrEmpty(code)) set.Add(code);
-                if (!string.IsNullOrEmpty(id)) set.Add(id);
-                _localStorageService?.SetValue(LocalReadFactsKey, set.ToList());
+                HashSet<string> set = GetLocalReadFacts();
+                set.UnionWith(codesOrIds.Where(c => !string.IsNullOrEmpty(c)));
+                _localStorageService?.SetValue(ReadFactsKey(CurrentUserId), set.ToList());
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"[{GetType().Name}] Failed to save local read fact: {ex.Message}");
+                Debug.LogWarning($"[{GetType().Name}] Failed to save local read facts: {ex.Message}");
             }
-        }
-
-        private FoodFactProgressResponse[] GetLocalProgressFallback()
-        {
-            var codes = GetLocalReadFactCodes();
-            return codes.Select(c => new FoodFactProgressResponse
-            {
-                foodFactCode = c,
-                foodFactId = c,
-                readAt = DateTime.UtcNow.ToString("o")
-            }).ToArray();
         }
     }
 }

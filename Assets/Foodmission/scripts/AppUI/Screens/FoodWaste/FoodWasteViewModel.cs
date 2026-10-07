@@ -285,9 +285,12 @@ namespace eu.foodmission.platform
             return result;
         }
 
-        private static string CacheKey(DateTime monthStart)
+        private string CacheKey(DateTime monthStart) => CacheKeyFor(_storeService?.GetAppState()?.userId, monthStart);
+
+        /// <summary>Per user and month: another account on the device must never see this user's waste.</summary>
+        public static string CacheKeyFor(string userId, DateTime monthStart)
         {
-            return CacheKeyPrefix + monthStart.ToString("yyyy-MM", CultureInfo.InvariantCulture);
+            return CacheKeyPrefix + (userId ?? "") + "_" + monthStart.ToString("yyyy-MM", CultureInfo.InvariantCulture);
         }
 
         private void SaveCache(DateTime monthStart)

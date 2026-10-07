@@ -108,7 +108,7 @@ namespace eu.foodmission.platform
                         new PromptChoice("@UI:DELETE_ACCOUNT", ButtonVariant.Destructive));
                     if (choice == LogOut)
                     {
-                        App.current?.services?.GetService<IStoreService>()?.store.Dispatch(AppActions.logout.Invoke());
+                        App.current?.services?.GetService<IAuthService>()?.Logout();
                         host.NavigateToAuth();
                         return HomePromptResult.Navigated;
                     }
@@ -143,7 +143,7 @@ namespace eu.foodmission.platform
                         var (success, error) = await authService.DeleteAccountAsync();
                         if (success)
                         {
-                            App.current?.services?.GetService<IStoreService>()?.store.Dispatch(AppActions.logout.Invoke());
+                            authService.Logout();
                             host.NavigateToAuth();
                             result.TrySetResult(true);
                         }

@@ -598,8 +598,8 @@ namespace eu.foodmission.platform
                     var (success, error) = await _viewModel.DeleteAccountAsync();
                     if (success)
                     {
-                        var storeService = App.current?.services?.GetService<IStoreService>();
-                        storeService?.store.Dispatch(AppActions.logout.Invoke());
+                        // Full logout (token, timers, per-user caches), not just the store action
+                        App.current?.services?.GetService<IAuthService>()?.Logout();
                         _navController?.Navigate(Actions.go_to_auth);
                     }
                     else

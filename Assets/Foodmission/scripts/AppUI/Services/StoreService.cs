@@ -1,4 +1,5 @@
 using System;
+using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
 using UnityEngine;
 
@@ -21,6 +22,10 @@ namespace eu.foodmission.platform
 
         // localStorage key
         public const string APP_STATE_KEY = "app_state";
+        /// <summary>Last user signed in on this device: another user signing in means the local caches are not theirs.</summary>
+        public const string LastUserKey = "last_user_id";
+
+        private string _currentUserId;
 
         public IStore<AppState> store { get; }
 
@@ -101,6 +106,8 @@ namespace eu.foodmission.platform
             store = StoreFactory.CreateStore(reducer, persistedAppState);
 #endif
 
+            _currentUserId = store.GetState()?.userId ?? "";
+
             // Subscribe to AppState changes for auto-save
             _appStateSubscription = store.Subscribe(
                 state => state,
@@ -129,7 +136,42 @@ namespace eu.foodmission.platform
         /// </summary>
         private void OnAppStateChanged(AppState state)
         {
+            ClearUserDataWhenUserChanges(state?.userId ?? "");
             SaveAppState();
+        }
+
+        /// <summary>
+        /// Device caches belong to one user. Here, not only in AuthService.Logout, so every path that ends a session
+        /// (logout dispatched directly, session expired, app killed mid-logout) wipes them.
+        /// </summary>
+        private void ClearUserDataWhenUserChanges(string userId)
+        {
+            if (userId == _currentUserId)
+            {
+                return;
+            }
+
+            try
+            {
+                string lastUser = _localStorageService.GetValue<string>(LastUserKey);
+                bool sessionEnded = !string.IsNullOrEmpty(_currentUserId);
+                bool anotherUserSignedIn = !string.IsNullOrEmpty(userId) && userId != lastUser;
+                if (sessionEnded || anotherUserSignedIn)
+                {
+                    UserLocalData.Clear(_localStorageService);
+                    // Scheduled reminders (pantry expiry, daily meal) were built from the previous user's data
+                    App.current?.services?.GetService<INotificationService>()?.CancelAllNotifications();
+                }
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    _localStorageService.SetValue(LastUserKey, userId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[StoreService] Clearing user data failed: {ex.Message}");
+            }
+            _currentUserId = userId;
         }
 
         // ==================== IStoreService Implementation ====================

@@ -85,9 +85,9 @@ namespace eu.foodmission.platform.Tests
             return (monthStart.ToUniversalTime().ToString("o"), monthStart.AddMonths(1).AddSeconds(-1).ToUniversalTime().ToString("o"));
         }
 
-        private static string CacheKey(DateTime monthStart)
+        private string CacheKey(DateTime monthStart)
         {
-            return "foodwaste_cache_" + monthStart.ToString("yyyy-MM");
+            return FoodWasteViewModel.CacheKeyFor(_storeService.GetAppState()?.userId, monthStart);
         }
 
         private PantryItem Item(string id, string name)
