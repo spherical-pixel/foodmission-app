@@ -4070,6 +4070,12 @@ MonoBehaviour:
     m_Localized: "Fullf\xF8r senere"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Localized: "F\xF8r du starter et oppdrag, m\xE5 du fylle ut unders\xF8kelsen
+      om spisevaner. Det tar bare et minutt og hjelper meg \xE5 sette m\xE5l som
+      passer for deg."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

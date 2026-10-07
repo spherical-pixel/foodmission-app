@@ -4125,6 +4125,12 @@ MonoBehaviour:
     m_Localized: "Doko\u0144cz p\xF3\u017Aniej"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Localized: "Zanim zaczniesz zadanie, musisz wype\u0142ni\u0107 ankiet\u0119
+      dotycz\u0105c\u0105 nawyk\xF3w \u017Cywieniowych. Zajmie to tylko minut\u0119
+      i pomo\u017Ce mi ustali\u0107 cele dopasowane do Ciebie."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

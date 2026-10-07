@@ -3947,6 +3947,10 @@ MonoBehaviour:
     m_Key: ONBOARDING_CLOSE_CONFIRM
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Key: QUEST_SURVEY_REQUIRED_MSG
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

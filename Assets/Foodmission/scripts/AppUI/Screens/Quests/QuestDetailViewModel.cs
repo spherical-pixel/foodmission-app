@@ -593,9 +593,20 @@ namespace eu.foodmission.platform
         /// <summary>A completed quest can't be started again (and the active one is already started).</summary>
         public bool CanStartQuest => _quest != null && !IsCompleted && !IsCurrentQuest;
 
+        /// <summary>
+        /// Quests wait for the onboarding survey: some mission rules use its answers as the user's baseline
+        /// (e.g. M.B1.3 compares against weekly meat meals). Users can leave the onboarding and finish it later.
+        /// </summary>
+        public bool NeedsOnboardingSurvey => !(_storeService?.GetAppState()?.userOnboardingSurvey?.HasAnswers() ?? false);
+
+        public void NavigateToOnboardingSurvey()
+        {
+            RaiseNavigationRequested(Actions.onboardingprofile_to_onboarding_survey, new Argument("fromHome", "true"));
+        }
+
         public async Task<bool> StartQuestAsync()
         {
-            if (!CanStartQuest) return false;
+            if (!CanStartQuest || NeedsOnboardingSurvey) return false;
             string targetId = !string.IsNullOrEmpty(_quest.id) ? _quest.id : _quest.code;
             if (string.IsNullOrEmpty(targetId)) return false;
             if (_isStartingQuest) return false;

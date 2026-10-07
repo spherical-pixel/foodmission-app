@@ -4085,6 +4085,12 @@ MonoBehaviour:
     m_Localized: Later afmaken
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Localized: "Voordat je aan een missie begint, moet je eerst de enqu\xEAte over
+      eetgewoonten invullen. Het duurt maar een minuutje en helpt me doelen te kiezen
+      die bij je passen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

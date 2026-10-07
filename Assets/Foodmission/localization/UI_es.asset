@@ -4071,6 +4071,12 @@ MonoBehaviour:
     m_Localized: "Terminar m\xE1s tarde"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Localized: "Antes de empezar un quest, necesito que completes la encuesta de
+      h\xE1bitos alimentarios. Solo te llevar\xE1 un minuto y me ayuda a ponerte
+      objetivos a tu medida."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

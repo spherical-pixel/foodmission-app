@@ -4071,6 +4071,11 @@ MonoBehaviour:
     m_Localized: "Dokon\u010Daj pozneje"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Localized: "Preden za\u010Dne\u0161 nalogo, mora\u0161 izpolniti anketo o prehranjevalnih
+      navadah. Vzame le minuto in mi pomaga postaviti cilje, ki ti ustrezajo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

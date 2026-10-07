@@ -60,7 +60,11 @@ namespace eu.foodmission.platform
 
                     _audioService?.PlaySfx(SfxType.PositiveButton);
 
-                    if (_viewModel.HasOtherActiveQuest)
+                    if (_viewModel.NeedsOnboardingSurvey)
+                    {
+                        ShowSurveyRequired();
+                    }
+                    else if (_viewModel.HasOtherActiveQuest)
                     {
                         ShowChangeQuestConfirmation();
                     }
@@ -316,6 +320,26 @@ namespace eu.foodmission.platform
                 _btnStartQuest.SetEnabled(!_viewModel.IsStartingQuest);
                 _btnStartQuest.variant = ButtonVariant.Accent;
             }
+        }
+
+        /// <summary>Nutri asks for the onboarding survey before any quest starts (see QuestDetailViewModel.NeedsOnboardingSurvey).</summary>
+        private void ShowSurveyRequired()
+        {
+            NutriMessageDialog.Show(
+                message: LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUEST_SURVEY_REQUIRED_MSG"),
+                actions: new[]
+                {
+                    new FMDialogAction(LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY"), () =>
+                    {
+                        _audioService?.PlaySfx(SfxType.PositiveButton);
+                        _viewModel?.NavigateToOnboardingSurvey();
+                    }, ButtonVariant.Accent),
+                    new FMDialogAction(LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "LATER"), () =>
+                    {
+                        _audioService?.PlaySfx(SfxType.NegativeButton);
+                    }, ButtonVariant.Default)
+                }
+            );
         }
 
         private void ShowChangeQuestConfirmation()

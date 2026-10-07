@@ -44,7 +44,8 @@ namespace eu.foodmission.platform.Tests
             {
                 accessToken = "test-token",
                 tokenType = "Bearer",
-                lang = "es"
+                lang = "es",
+                userOnboardingSurvey = new OnboardingSurveyData { weeklyMeatConsumption = "FIVE_TO_NINE" }
             });
 
             _mockDimension = new Dimension
@@ -526,6 +527,29 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(factActivity);
             Assert.IsTrue(factActivity.IsCompleted);
             Assert.AreEqual(100f, factActivity.Progress);
+        }
+
+        [Test]
+        public async Task StartQuestAsync_WithoutOnboardingSurvey_DoesNotStartTheQuest()
+        {
+            // Some mission rules use the survey as baseline (M.B1.3), so quests wait for it
+            _storeService.SetAppState(new AppState { accessToken = "test-token", tokenType = "Bearer" });
+            var mockAuthService = new Mock<IAuthService>();
+            var vm = new QuestDetailViewModel(
+                _storeService,
+                _mockQuestService.Object,
+                _mockDimensionService.Object,
+                _mockQuizService.Object,
+                _mockMissionService.Object,
+                _mockChallengeService.Object,
+                authService: mockAuthService.Object
+            );
+            vm.SetQuestForTesting(_mockQuest, _mockProgress);
+
+            Assert.IsTrue(vm.NeedsOnboardingSurvey);
+            Assert.IsFalse(await vm.StartQuestAsync());
+            mockAuthService.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            Assert.IsFalse(vm.IsCurrentQuest);
         }
 
         [Test]

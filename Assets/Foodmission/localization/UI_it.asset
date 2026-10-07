@@ -4075,6 +4075,12 @@ MonoBehaviour:
     m_Localized: "Pi\xF9 tardi"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Localized: Prima di iniziare una missione, devi completare il questionario
+      sulle abitudini alimentari. Ci vuole solo un minuto e mi aiuta a fissare obiettivi
+      adatti a te.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

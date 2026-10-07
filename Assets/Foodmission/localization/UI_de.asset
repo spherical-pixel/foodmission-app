@@ -4088,6 +4088,12 @@ MonoBehaviour:
     m_Localized: "Sp\xE4ter fertigstellen"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247365
+    m_Localized: "Bevor du eine Quest startest, musst du die Umfrage zu deinen Essgewohnheiten
+      ausf\xFCllen. Das dauert nur eine Minute und hilft mir, passende Ziele f\xFCr
+      dich zu setzen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
