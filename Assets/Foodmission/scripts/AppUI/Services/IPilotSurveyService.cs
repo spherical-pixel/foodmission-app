@@ -26,6 +26,12 @@ namespace eu.foodmission.platform
         void RecordDailyUsage();
 
         /// <summary>
+        /// Call on every Home entry: counts today as an active day and retries a cycle sync that failed.
+        /// Pilot countries only.
+        /// </summary>
+        void OnHomeEntered();
+
+        /// <summary>
         /// Returns the number of distinct active days recorded in the current survey cycle.
         /// </summary>
         int GetActiveDaysCountInCurrentCycle();

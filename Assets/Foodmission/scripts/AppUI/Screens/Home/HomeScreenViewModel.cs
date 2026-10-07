@@ -289,6 +289,12 @@ namespace eu.foodmission.platform
             return await _pilotSurveyService.GetPendingPilotSurveyAsync();
         }
 
+        /// <summary>Counts today as an active survey day and retries a failed cycle sync. Call on every Home entry.</summary>
+        public void RecordPilotHomeEntry()
+        {
+            _pilotSurveyService?.OnHomeEntered();
+        }
+
         public void PostponePilotSurvey(string slug)
         {
             _pilotSurveyService?.PostponeSurvey(slug);
@@ -307,6 +313,16 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>Code of today's food fact for the active quest, or null.</summary>
+        public void MarkNudgeShown(MissionNudge nudge)
+        {
+            _missionNudgeService?.MarkShown(nudge);
+        }
+
+        public void MarkDailyFoodFactShown(string code)
+        {
+            _dailyFoodFactService?.MarkShown(code);
+        }
+
         public System.Threading.Tasks.Task<string> CheckDailyFoodFactAsync()
         {
             return _dailyFoodFactService != null
@@ -719,27 +735,27 @@ namespace eu.foodmission.platform
                 var celebratedQuests = LoadCelebratedQuests(state.userId);
                 bool alreadyCelebrated = celebratedQuests.Contains(questId) ||
                                          (!string.IsNullOrEmpty(progress.questCode) && celebratedQuests.Contains(progress.questCode));
-                PendingRewardCelebration celebration = null;
-                if (!alreadyCelebrated)
+                if (alreadyCelebrated)
                 {
-                    string code = !string.IsNullOrEmpty(progress.questCode) ? progress.questCode : questId;
-                    celebration = new PendingRewardCelebration
-                    {
-                        Reward = new ContentReward
-                        {
-                            xp = progress.reward?.xp ?? 100,
-                            points = progress.reward?.points
-                        },
-                        ContextTitle = "@UI:QUEST_REWARD_TITLE",
-                        Code = code,
-                        IsQuest = true,
-                        UnlockedQuest = await FindNextQuestAsync(questId, progress.questCode)
-                    };
-                    MarkQuestCelebrated(state.userId, questId, progress.questCode);
+                    // Nothing to show: just stop treating the completed quest as the active one
+                    await ClearCurrentQuestIfAsync(questId, progress.questCode);
+                    return null;
                 }
 
-                await ClearCurrentQuestIfAsync(questId, progress.questCode);
-                return celebration;
+                string code = !string.IsNullOrEmpty(progress.questCode) ? progress.questCode : questId;
+                return new PendingRewardCelebration
+                {
+                    Reward = new ContentReward
+                    {
+                        xp = progress.reward?.xp ?? 100,
+                        points = progress.reward?.points
+                    },
+                    ContextTitle = "@UI:QUEST_REWARD_TITLE",
+                    Code = code,
+                    QuestId = questId,
+                    IsQuest = true,
+                    UnlockedQuest = await FindNextQuestAsync(questId, progress.questCode)
+                };
             }
             catch (System.Exception ex)
             {
@@ -813,6 +829,55 @@ namespace eu.foodmission.platform
 
         private static string CelebratedQuestsKey(string userId) => $"celebrated_quest_ids_{userId}";
 
+        private static string CelebratedEventsKey(string userId) => $"celebrated_gamif_ids_{userId}";
+
+        private static void MarkEventCelebrated(string userId, string eventId)
+        {
+            var ids = PlayerPrefs.GetString(CelebratedEventsKey(userId), "")
+                .Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+            if (!ids.Contains(eventId))
+            {
+                ids.Add(eventId);
+            }
+            PlayerPrefs.SetString(CelebratedEventsKey(userId), string.Join(",", ids.Skip(System.Math.Max(0, ids.Count - 50))));
+            PlayerPrefs.Save();
+        }
+
+        /// <summary>
+        /// Call when a celebration is shown: only then is it remembered as celebrated (and a completed current quest
+        /// cleared), so leaving Home before it shows never loses it.
+        /// </summary>
+        public async System.Threading.Tasks.Task MarkCelebrationShownAsync(PendingRewardCelebration celebration)
+        {
+            string userId = _storeService?.GetAppState()?.userId;
+            if (celebration == null || string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
+
+            try
+            {
+                if (!string.IsNullOrEmpty(celebration.EventId))
+                {
+                    MarkEventCelebrated(userId, celebration.EventId);
+                }
+                if (celebration.IsBadge && !string.IsNullOrEmpty(celebration.Code))
+                {
+                    _badgeTracker.MarkCelebrated(userId, new[] { celebration.Code });
+                }
+                if (celebration.IsQuest)
+                {
+                    MarkQuestCelebrated(userId, celebration.QuestId, celebration.Code);
+                    await ClearCurrentQuestIfAsync(celebration.QuestId, celebration.Code);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] MarkCelebrationShownAsync error: {ex.Message}");
+            }
+        }
+
         private static System.Collections.Generic.HashSet<string> LoadCelebratedQuests(string userId) =>
             new System.Collections.Generic.HashSet<string>(
                 PlayerPrefs.GetString(CelebratedQuestsKey(userId), "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries),
@@ -836,7 +901,7 @@ namespace eu.foodmission.platform
         /// <summary>
         /// Badges earned since the last check, as celebrations. The backend grants badges asynchronously and
         /// has no inbox, so this diffs profile.badges against BadgeCelebrationTracker. Codes are marked
-        /// celebrated only once their celebrations are built; a failed /badges/me leaves them for the next check.
+        /// celebrated when shown (MarkCelebrationShownAsync); a failed /badges/me leaves them for the next check.
         /// </summary>
         private async System.Threading.Tasks.Task<System.Collections.Generic.List<PendingRewardCelebration>> CollectBadgeCelebrationsAsync(
             string userId, GamificationProfileResponse profile)
@@ -898,7 +963,6 @@ namespace eu.foodmission.platform
                 });
             }
 
-            _badgeTracker.MarkCelebrated(userId, newCodes);
             return results;
         }
 
@@ -958,7 +1022,7 @@ namespace eu.foodmission.platform
 
                 string userId = state.userId;
                 string cursorKey = CelebrationCursorKey(userId);
-                string celebratedKey = $"celebrated_gamif_ids_{userId}";
+                string celebratedKey = CelebratedEventsKey(userId);
 
                 string lastSeenTs = PlayerPrefs.GetString(cursorKey, "");
                 string celebratedIdsRaw = PlayerPrefs.GetString(celebratedKey, "");
@@ -1128,13 +1192,7 @@ namespace eu.foodmission.platform
                         }
                     }
 
-                    celebratedIds.Add(evt.id);
-                    if (isQuest)
-                    {
-                        string questId = evt.metadata?["questId"]?.ToString();
-                        MarkQuestCelebrated(userId, questId, code);
-                        await ClearCurrentQuestIfAsync(questId, code);
-                    }
+                    string eventQuestId = isQuest ? evt.metadata?["questId"]?.ToString() : null;
 
                     var reward = new ContentReward
                     {
@@ -1156,16 +1214,12 @@ namespace eu.foodmission.platform
                         Reward = reward,
                         ContextTitle = contextTitle,
                         EventId = evt.id,
+                        QuestId = eventQuestId,
                         Code = code,
                         IsQuest = isQuest,
                         UnlockedQuest = unlockedQuest
                     });
                 }
-
-                // Persist celebrated IDs (limit to last 50)
-                var trimmedCelebrated = celebratedIds.TakeLast(50);
-                PlayerPrefs.SetString(celebratedKey, string.Join(",", trimmedCelebrated));
-                PlayerPrefs.Save();
 
                 // Order so individual activities are presented first, and quest completion last
                 // Individual activities first, then quest completion, then badges (earned as a consequence of both)
@@ -1188,6 +1242,7 @@ namespace eu.foodmission.platform
         public ContentReward Reward { get; set; }
         public string ContextTitle { get; set; }
         public string EventId { get; set; }
+        public string QuestId { get; set; }
         public string Code { get; set; }
         public bool IsQuest { get; set; }
         public bool IsBadge { get; set; }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace eu.foodmission.platform.Components
@@ -10,6 +11,12 @@ namespace eu.foodmission.platform.Components
     {
         private readonly Queue<T> _pending = new Queue<T>();
         private bool _isShowing;
+
+        /// <summary>True when nothing is showing or waiting.</summary>
+        public bool IsIdle => !_isShowing;
+
+        /// <summary>Raised when the last celebration closes and nothing else is waiting.</summary>
+        public event Action Idle;
 
         /// <summary>True when the celebration can be shown now; false when it was queued.</summary>
         public bool TryBegin(T celebration)
@@ -35,6 +42,7 @@ namespace eu.foodmission.platform.Components
 
             _isShowing = false;
             next = default;
+            Idle?.Invoke();
             return false;
         }
     }

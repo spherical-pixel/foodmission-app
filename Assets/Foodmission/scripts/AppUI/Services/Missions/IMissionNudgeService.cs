@@ -37,8 +37,14 @@ namespace eu.foodmission.platform
 
     public interface IMissionNudgeService
     {
-        /// <summary>Missing-days or stalled-mission nudge for Home, or null. Never throws.</summary>
+        /// <summary>
+        /// Missing-days or stalled-mission nudge for Home, or null. Never throws.
+        /// Does not start the cooldown: call MarkShown once shown.
+        /// </summary>
         Task<MissionNudge> GetNudgeAsync();
+
+        /// <summary>The nudge was shown: starts its 24 h cooldown. Call only once it is on screen.</summary>
+        void MarkShown(MissionNudge nudge);
 
         /// <summary>Forgets the current user's nudge state. Call on logout.</summary>
         void Reset();

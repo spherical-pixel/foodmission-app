@@ -47,6 +47,16 @@ namespace eu.foodmission.platform.Components
         // One celebration at a time: rewards earned together (e.g. a food fact and the challenge it completes) queue up
         private static readonly CelebrationQueue<PendingCelebration> s_Celebrations = new CelebrationQueue<PendingCelebration>();
 
+        /// <summary>True when no celebration is showing or queued (Home waits for this before its own prompts).</summary>
+        public static bool IsIdle => s_Celebrations.IsIdle;
+
+        /// <summary>Raised when the last queued celebration closes.</summary>
+        public static event Action Idle
+        {
+            add => s_Celebrations.Idle += value;
+            remove => s_Celebrations.Idle -= value;
+        }
+
         private sealed class PendingCelebration
         {
             public List<RewardPresentationItem> Items;

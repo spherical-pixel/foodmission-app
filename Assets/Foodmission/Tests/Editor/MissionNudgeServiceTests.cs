@@ -114,10 +114,14 @@ namespace eu.foodmission.platform.Tests
             _pendingDays = 2;
             SetProgress(P("M.B2.1", 0, _now.AddDays(-3)), P("M.B3.2", 100, completed: true));
             await SeeQuestDaysAgo(5);
-            Assert.AreEqual(MissionNudgeKind.MissingDays, (await _service.GetNudgeAsync()).Kind);
+            MissionNudge missing = await _service.GetNudgeAsync();
+            Assert.AreEqual(MissionNudgeKind.MissingDays, missing.Kind);
+            _service.MarkShown(missing);
 
             _now = _now.AddHours(1);
-            Assert.AreEqual(MissionNudgeKind.StalledMission, (await _service.GetNudgeAsync()).Kind);
+            MissionNudge stalled = await _service.GetNudgeAsync();
+            Assert.AreEqual(MissionNudgeKind.StalledMission, stalled.Kind);
+            _service.MarkShown(stalled);
 
             _now = _now.AddHours(1);
             Assert.IsNull(await _service.GetNudgeAsync(), "both on cooldown");
@@ -219,6 +223,27 @@ namespace eu.foodmission.platform.Tests
             _quests.Setup(q => q.GetQuestAsync("q1", null)).ThrowsAsync(new Exception("boom"));
 
             UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Error, new System.Text.RegularExpressions.Regex("MissionNudgeService"));
+            Assert.IsNull(await _service.GetNudgeAsync());
+        }
+
+        [Test]
+        public async Task GetNudge_NotShown_IsOfferedAgainOnTheNextCheck()
+        {
+            SetProgress(P("M.B2.1", 0, _now.AddDays(-3)), P("M.B3.2", 100, completed: true));
+            Assert.IsNotNull(await _service.GetNudgeAsync());
+
+            // The user left Home before the nudge was shown: no cooldown, no 30-min throttle
+            _now = _now.AddMinutes(1);
+            Assert.IsNotNull(await _service.GetNudgeAsync());
+        }
+
+        [Test]
+        public async Task MarkShown_StartsTheCooldown()
+        {
+            SetProgress(P("M.B2.1", 0, _now.AddDays(-3)), P("M.B3.2", 100, completed: true));
+            _service.MarkShown(await _service.GetNudgeAsync());
+
+            _now = _now.AddHours(1);
             Assert.IsNull(await _service.GetNudgeAsync());
         }
 

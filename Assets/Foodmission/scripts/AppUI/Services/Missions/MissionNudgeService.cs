@@ -70,10 +70,13 @@ namespace eu.foodmission.platform
                 {
                     return null;
                 }
-                states[LastCheckKey] = new MissionNudgeState { FirstSeenAtUtc = now, LastChangeAtUtc = now };
-
                 MissionNudge nudge = await GetMissingDaysNudgeAsync(state.userCurrentQuestId, states, now)
                     ?? await GetStalledMissionNudgeAsync(state.userCurrentQuestId, states, now);
+                if (nudge == null)
+                {
+                    // Throttle only empty checks: a nudge found but not shown yet is evaluated again next time
+                    states[LastCheckKey] = new MissionNudgeState { FirstSeenAtUtc = now, LastChangeAtUtc = now };
+                }
 
                 Save(state.userId, states);
                 return nudge;
@@ -84,6 +87,31 @@ namespace eu.foodmission.platform
                 return null;
             }
         }
+
+        public void MarkShown(MissionNudge nudge)
+        {
+            string userId = _storeService?.GetAppState()?.userId;
+            if (nudge == null || string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
+
+            try
+            {
+                Dictionary<string, MissionNudgeState> states = Load(userId);
+                DateTime now = UtcNow();
+                MarkNudged(states, CooldownKeyOf(nudge), now);
+                states[LastCheckKey] = new MissionNudgeState { FirstSeenAtUtc = now, LastChangeAtUtc = now };
+                Save(userId, states);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[MissionNudgeService] MarkShown failed: {ex.Message}");
+            }
+        }
+
+        private static string CooldownKeyOf(MissionNudge nudge) =>
+            nudge.Kind == MissionNudgeKind.MissingDays ? MissingDaysKey : nudge.MissionCode;
 
         public void Reset()
         {
@@ -122,7 +150,6 @@ namespace eu.foodmission.platform
                 return null;
             }
 
-            MarkNudged(states, MissingDaysKey, now);
             return MissionNudge.ForMissingDays(days);
         }
 
@@ -208,7 +235,6 @@ namespace eu.foodmission.platform
                 return null;
             }
 
-            MarkNudged(states, bestCode, now);
             byCode.TryGetValue(bestCode, out MissionProgress best);
             string title = !string.IsNullOrEmpty(best?.missionTitle) ? best.missionTitle : bestCode;
             return MissionNudge.ForStalledMission(bestCode, title, MissionInteractionCatalog.Get(bestCode).AutoModules.FirstOrDefault());

@@ -512,10 +512,42 @@ namespace eu.foodmission.platform.Tests
             var firstResult = await vm.CheckPendingGamificationRewardsAsync();
             Assert.IsNotNull(firstResult);
             Assert.AreEqual(1, firstResult.Count);
+            await vm.MarkCelebrationShownAsync(firstResult[0]);
 
             // Second call -> ID is in celebratedIds, must return null (no duplicate!)
             var secondResult = await vm.CheckPendingGamificationRewardsAsync();
             Assert.IsNull(secondResult);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_NotMarkedUntilShown_IsReturnedAgain()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-mission-left",
+                        eventType = "MISSION_COMPLETED",
+                        timestamp = "2026-09-23T10:05:00Z",
+                        metadata = JObject.FromObject(new { missionCode = "M.1" })
+                    }
+                }
+            }, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, gamificationService: mockGamification.Object);
+
+            Assert.IsNotNull(await vm.CheckPendingGamificationRewardsAsync());
+            // The user left Home before the celebration was shown: it must come back
+            var again = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.IsNotNull(again);
+            Assert.AreEqual("ev-mission-left", again[0].EventId);
+            Assert.AreEqual("", PlayerPrefs.GetString("celebrated_gamif_ids_test-user", ""));
         }
 
         [Test]
@@ -834,6 +866,23 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void MarkNudgeShown_And_MarkDailyFoodFactShown_ForwardToServices()
+        {
+            var nudge = MissionNudge.ForMissingDays(3);
+            var nudges = new Mock<IMissionNudgeService>();
+            var facts = new Mock<IDailyFoodFactService>();
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                missionNudgeService: nudges.Object, dailyFoodFactService: facts.Object);
+
+            vm.MarkNudgeShown(nudge);
+            vm.MarkDailyFoodFactShown("FF1");
+
+            nudges.Verify(s => s.MarkShown(nudge), Times.Once);
+            facts.Verify(s => s.MarkShown("FF1"), Times.Once);
+            vm.Dispose();
+        }
+
+        [Test]
         public void OpenCheckIn_And_OpenMissionModule_Navigate()
         {
             string action = null;
@@ -901,7 +950,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task CheckPendingGamificationRewardsAsync_QuestCompletedForCurrentQuest_ClearsCurrentQuest()
+        public async Task CheckPendingGamificationRewardsAsync_QuestCompletedForCurrentQuest_ClearsCurrentQuestWhenShown()
         {
             var mockGamification = new Mock<IGamificationService>();
             var mockQuests = new Mock<IQuestService>();
@@ -918,7 +967,12 @@ namespace eu.foodmission.platform.Tests
             PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-10-01T16:05:04.760Z");
             var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, questService: mockQuests.Object, gamificationService: mockGamification.Object, authService: mockAuth.Object);
 
-            await vm.CheckPendingGamificationRewardsAsync();
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+            Assert.AreEqual("q1", _storeService.GetAppState().userCurrentQuestId, "nothing changes until the celebration is shown");
+            mockAuth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            Assert.AreEqual("q1", result[0].QuestId);
+
+            await vm.MarkCelebrationShownAsync(result[0]);
 
             Assert.IsTrue(string.IsNullOrEmpty(_storeService.GetAppState().userCurrentQuestId));
             mockAuth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.clearCurrentQuest)), Times.Once);
@@ -949,6 +1003,10 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(celebration.IsQuest);
             Assert.AreEqual(30, celebration.Reward.xp);
             Assert.AreEqual("q2", celebration.UnlockedQuest?.id);
+            Assert.AreEqual("q1", _storeService.GetAppState().userCurrentQuestId, "cleared only when shown");
+
+            await vm.MarkCelebrationShownAsync(celebration);
+
             Assert.IsTrue(string.IsNullOrEmpty(_storeService.GetAppState().userCurrentQuestId));
             mockAuth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.clearCurrentQuest)), Times.Once);
 
@@ -1106,6 +1164,33 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("@UI:MISSION_REWARD_TITLE", result[0].ContextTitle);
             Assert.IsTrue(result[1].IsBadge);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_NewBadge_NotMarkedUntilShown()
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    badges = new[] { "CHEF" },
+                    recentEvents = new UserEvent[0],
+                    recentWalletEntries = new WalletEntry[0]
+                }, (ApiErrorResponse)null));
+            var badges = new Mock<IBadgeService>();
+            badges.Setup(b => b.GetMyBadgesAsync())
+                .ReturnsAsync((BadgesResponse(new UserBadge { code = "CHEF", name = "Chef", earned = true }), (ApiErrorResponse)null));
+            PlayerPrefs.SetString("celebrated_badges_test-user", "");
+            var vm = CreateVmWithBadges(gamification, badges);
+
+            var first = await vm.CheckPendingGamificationRewardsAsync();
+            var second = await vm.CheckPendingGamificationRewardsAsync();
+            Assert.AreEqual("CHEF", second?[0].Code, "not shown yet: still pending");
+
+            await vm.MarkCelebrationShownAsync(first[0]);
+
+            Assert.IsNull(await vm.CheckPendingGamificationRewardsAsync());
         }
 
         [Test]

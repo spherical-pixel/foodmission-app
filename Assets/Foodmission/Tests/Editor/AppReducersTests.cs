@@ -253,6 +253,19 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void LogoutReducer_ClearsPilotSurveyState()
+        {
+            // The next user on this device must not inherit (and merge) the previous user's survey cycle or consent
+            m_InitialState.pilotSurveyCycleState = new PilotSurveyCycleState { currentCycle = 2 };
+            m_InitialState.pilotConsentAccepted = true;
+
+            var newState = AppReducers.LogoutReducer(m_InitialState, AppActions.logout.Invoke());
+
+            Assert.IsNull(newState.pilotSurveyCycleState);
+            Assert.IsFalse(newState.pilotConsentAccepted);
+        }
+
+        [Test]
         public void ProfileSyncedReducer_WithServerLevels_SetsThemAndConfirmed()
         {
             var payload = new AppActions.ProfilePayload(1990, "ES", "", "", "", "", "", "",

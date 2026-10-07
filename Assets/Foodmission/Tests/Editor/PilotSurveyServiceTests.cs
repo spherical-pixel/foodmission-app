@@ -12,6 +12,7 @@ namespace eu.foodmission.platform.Tests
         private TestStoreService _storeService;
         private TestLocalStorageService _localStorageService;
         private Mock<ISurveyService> _mockSurveyService;
+        private Mock<IAuthService> _auth;
         private PilotSurveyService _service;
 
         [SetUp]
@@ -22,7 +23,9 @@ namespace eu.foodmission.platform.Tests
             {
                 userId = "test-user-123",
                 userCountry = "de",
-                lang = "de"
+                lang = "de",
+                accessToken = "token",
+                userAutoAddToPantry = true
             });
             _localStorageService = new TestLocalStorageService();
             _mockSurveyService = new Mock<ISurveyService>();
@@ -41,7 +44,10 @@ namespace eu.foodmission.platform.Tests
                         }
                     }, null));
 
-            _service = new PilotSurveyService(_mockSurveyService.Object, _storeService, _localStorageService);
+            _auth = new Mock<IAuthService>();
+            _auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((true, (ApiErrorResponse)null));
+
+            _service = new PilotSurveyService(_mockSurveyService.Object, _storeService, _localStorageService, _auth.Object);
         }
 
         private static string DaysAgo(int days)
@@ -129,7 +135,6 @@ namespace eu.foodmission.platform.Tests
 
             // Simulate 2 active dates in cycle state
             var state = _service.GetCurrentCycleState();
-            // GetPendingPilotSurveyAsync records today's usage, so "today" is one of the two days.
             state.activeDatesInCycle = new List<string> { DaysAgo(1), DaysAgo(0) };
             state.cycleStartDate = DaysAgo(1);
             _localStorageService.SetValue<string>("pilot_cycle_state_test-user-123", Newtonsoft.Json.JsonConvert.SerializeObject(state));
@@ -140,18 +145,23 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task GetPendingPilotSurveyAsync_WhenPostponed_ReturnsNullForCurrentSession()
+        public async Task GetPendingPilotSurveyAsync_WhenPostponed_ReturnsNullUntilTomorrow()
         {
+            DateTime now = new DateTime(2026, 10, 10, 20, 0, 0, DateTimeKind.Local);
+            _service.NowLocal = () => now;
             await _service.AcceptPilotConsentAsync();
-
             var state = _service.GetCurrentCycleState();
             state.activeDatesInCycle = new List<string> { DaysAgo(1), DaysAgo(0) };
             _localStorageService.SetValue<string>("pilot_cycle_state_test-user-123", Newtonsoft.Json.JsonConvert.SerializeObject(state));
 
             _service.PostponeSurvey("second-use");
+            Assert.IsNull(await _service.GetPendingPilotSurveyAsync(), "later today");
 
-            var survey = await _service.GetPendingPilotSurveyAsync();
-            Assert.IsNull(survey);
+            var restarted = new PilotSurveyService(_mockSurveyService.Object, _storeService, _localStorageService, _auth.Object) { NowLocal = () => now };
+            Assert.IsNull(await restarted.GetPendingPilotSurveyAsync(), "survives an app restart");
+
+            restarted.NowLocal = () => now.AddDays(1).Date.AddHours(8);
+            Assert.AreEqual("second-use", (await restarted.GetPendingPilotSurveyAsync())?.slug, "offered again tomorrow");
         }
 
         [Test]
@@ -258,6 +268,118 @@ namespace eu.foodmission.platform.Tests
         {
             _service.RecordDailyUsage();
             Assert.IsTrue(_storeService.DispatchedActionTypes.Contains("app/setPilotCycleState"));
+        }
+
+        [Test]
+        public void CycleSync_KeepsAutoAddToPantry()
+        {
+            _service.RecordDailyUsage(); // creates the default cycle and records today: one or more PATCHes
+
+            _auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.preferences != null && r.preferences.pilotSurveyCycleState != null)), Times.AtLeastOnce);
+            _auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.preferences == null || !r.preferences.autoAddToPantry)), Times.Never);
+        }
+
+        [Test]
+        public void CycleSync_Failed_IsRetriedOnTheNextHomeEntry()
+        {
+            _auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((false, new ApiErrorResponse { message = "offline" }));
+            _service.RecordDailyUsage();
+            Assert.AreEqual("true", _localStorageService.GetValue<string>(PilotSurveyService.PendingSyncKeyFor("test-user-123"), ""));
+
+            int calls = 0;
+            _auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback(() => calls++)
+                .ReturnsAsync((true, (ApiErrorResponse)null));
+            _service.OnHomeEntered(); // same day: no new usage, but the pending sync is sent
+
+            Assert.AreEqual(1, calls);
+            Assert.AreEqual("", _localStorageService.GetValue<string>(PilotSurveyService.PendingSyncKeyFor("test-user-123"), ""));
+        }
+
+        [Test]
+        public async Task GetPendingPilotSurveyAsync_DoesNotRecordUsage()
+        {
+            await _service.AcceptPilotConsentAsync();
+
+            await _service.GetPendingPilotSurveyAsync();
+
+            Assert.AreEqual(0, _service.GetActiveDaysCountInCurrentCycle());
+        }
+
+        [Test]
+        public async Task OnHomeEntered_RecordsToday()
+        {
+            await _service.AcceptPilotConsentAsync();
+
+            _service.OnHomeEntered();
+
+            Assert.AreEqual(1, _service.GetActiveDaysCountInCurrentCycle());
+        }
+
+        [Test]
+        public void OnHomeEntered_WithoutPilotConsent_DoesNotCountTheDay()
+        {
+            // Days before consent would make several surveys due at once when the user finally accepts
+            _service.OnHomeEntered();
+
+            Assert.AreEqual(0, _service.GetActiveDaysCountInCurrentCycle());
+        }
+
+        [Test]
+        public void Merge_SameCycle_UnionsDaysAndSurveys()
+        {
+            var local = new PilotSurveyCycleState
+            {
+                currentCycle = 1,
+                cycleStartDate = "2026-10-03",
+                activeDatesInCycle = new List<string> { "2026-10-03", "2026-10-05" },
+                completedSlugsInCycle = new List<string> { "second-use" }
+            };
+            var server = new PilotSurveyCycleState
+            {
+                currentCycle = 1,
+                cycleStartDate = "2026-10-01",
+                activeDatesInCycle = new List<string> { "2026-10-01", "2026-10-05" },
+                completedSlugsInCycle = new List<string> { "third-use" },
+                skippedSlugsInCycle = new List<string> { "fourth-use" },
+                postponedUntil = new List<PostponedSurvey> { new PostponedSurvey { slug = "fifth-use", day = "2026-10-06" } }
+            };
+
+            PilotSurveyCycleState merged = PilotSurveyService.Merge(local, server);
+
+            Assert.AreEqual("2026-10-01", merged.cycleStartDate);
+            CollectionAssert.AreEqual(new[] { "2026-10-01", "2026-10-03", "2026-10-05" }, merged.activeDatesInCycle);
+            CollectionAssert.AreEquivalent(new[] { "second-use", "third-use" }, merged.completedSlugsInCycle);
+            CollectionAssert.AreEquivalent(new[] { "fourth-use" }, merged.skippedSlugsInCycle);
+            Assert.AreEqual("2026-10-06", merged.postponedUntil.Find(p => p.slug == "fifth-use")?.day);
+        }
+
+        [Test]
+        public void Merge_HigherCycleWins()
+        {
+            var local = new PilotSurveyCycleState { currentCycle = 1, completedSlugsInCycle = new List<string> { "second-use" } };
+            var server = new PilotSurveyCycleState { currentCycle = 2, cycleStartDate = "2026-11-01" };
+
+            Assert.AreEqual(2, PilotSurveyService.Merge(local, server).currentCycle);
+            Assert.AreEqual(0, PilotSurveyService.Merge(local, server).completedSlugsInCycle.Count);
+            Assert.AreEqual(2, PilotSurveyService.Merge(server, local).currentCycle);
+        }
+
+        [Test]
+        public async Task GetPendingPilotSurveyAsync_SurveyAnsweredOnAnotherDevice_IsNotOfferedAgain()
+        {
+            await _service.AcceptPilotConsentAsync();
+            var local = _service.GetCurrentCycleState();
+            local.activeDatesInCycle = new List<string> { DaysAgo(1), DaysAgo(0) };
+            _localStorageService.SetValue<string>("pilot_cycle_state_test-user-123", Newtonsoft.Json.JsonConvert.SerializeObject(local));
+            // Login on this device restored the server copy, where second-use was answered on another device
+            var server = local.Copy();
+            server.completedSlugsInCycle.Add("second-use");
+            _storeService.store.Dispatch(AppActions.setPilotCycleState.Invoke(server));
+
+            var survey = await _service.GetPendingPilotSurveyAsync();
+
+            Assert.AreNotEqual("second-use", survey?.slug);
         }
     }
 }

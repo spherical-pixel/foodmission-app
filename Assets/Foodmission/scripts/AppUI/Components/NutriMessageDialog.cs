@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
@@ -13,6 +14,7 @@ namespace eu.foodmission.platform.Components
     {
         private static VisualTreeAsset _template;
         private static bool _templateLoading;
+        private static readonly List<Action<VisualTreeAsset>> s_PendingTemplateCallbacks = new List<Action<VisualTreeAsset>>();
         private static NutriSfxType s_LastTalkSfx = NutriSfxType.None;
         private static IVisualElementScheduledItem s_SpeechSchedule;
 
@@ -26,6 +28,8 @@ namespace eu.foodmission.platform.Components
                 return;
             }
 
+            // Every caller waiting for the first load is answered, not only the first one
+            s_PendingTemplateCallbacks.Add(onLoaded);
             if (_templateLoading)
             {
                 return;
@@ -38,12 +42,17 @@ namespace eu.foodmission.platform.Components
                 if (operation.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
                 {
                     _template = operation.Result;
-                    onLoaded?.Invoke(_template);
                 }
                 else
                 {
                     Debug.LogError($"[NutriMessageDialog] Failed to load template at {_addressablePath}");
-                    onLoaded?.Invoke(null);
+                }
+
+                var callbacks = new List<Action<VisualTreeAsset>>(s_PendingTemplateCallbacks);
+                s_PendingTemplateCallbacks.Clear();
+                foreach (Action<VisualTreeAsset> callback in callbacks)
+                {
+                    callback?.Invoke(_template);
                 }
             };
         }
@@ -60,6 +69,24 @@ namespace eu.foodmission.platform.Components
             RenderTexture nutriTexture,
             params FMDialogAction[] actions)
         {
+            ShowInternal(message, nutriTexture, actions, null);
+        }
+
+        /// <summary>
+        /// Like <see cref="Show(string, FMDialogAction[])"/>, and <paramref name="onDismissed"/> runs once after the dialog
+        /// closes by any path (button, back, outside tap), or at once when it can't be shown.
+        /// </summary>
+        public static void ShowAndNotify(string message, Action onDismissed, params FMDialogAction[] actions)
+        {
+            ShowInternal(message, null, actions, onDismissed);
+        }
+
+        private static void ShowInternal(
+            string message,
+            RenderTexture nutriTexture,
+            FMDialogAction[] actions,
+            Action onDismissed)
+        {
             if (actions == null || actions.Length == 0)
             {
                 throw new ArgumentException("Show requires at least one action.", nameof(actions));
@@ -71,19 +98,30 @@ namespace eu.foodmission.platform.Components
                 {
                     if (template != null)
                     {
-                        Show(message, nutriTexture, actions);
+                        ShowInternal(message, nutriTexture, actions, onDismissed);
+                    }
+                    else
+                    {
+                        onDismissed?.Invoke();
                     }
                 });
                 return;
             }
 
-            BuildAndShow(message, nutriTexture, actions);
+            if (App.current?.rootVisualElement == null)
+            {
+                onDismissed?.Invoke();
+                return;
+            }
+
+            BuildAndShow(message, nutriTexture, actions, onDismissed);
         }
 
         private static void BuildAndShow(
             string message,
             RenderTexture nutriTexture,
-            FMDialogAction[] actions)
+            FMDialogAction[] actions,
+            Action onDismissed)
         {
             var nutriService = App.current?.services?.GetService<INutriService>();
             var audioService = App.current?.services?.GetService<IAudioService>();
@@ -235,6 +273,9 @@ namespace eu.foodmission.platform.Components
                         nutriService.SetActive(false);
                     }
                 }
+
+                // After the pressed button's callback: buttons run it before dismissing
+                onDismissed?.Invoke();
             };
             modal.Show();
 
