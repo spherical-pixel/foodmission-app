@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Unity.AppUI.Core;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
@@ -18,21 +17,15 @@ namespace eu.foodmission.platform
     [Preserve]
     class HomeScreen : NavigationScreenBase<HomeScreenViewModel>
     {
-        private static bool _hasDeferredOnboardingThisSession = false;
-        private static bool _hasDeferredNotificationsThisSession = false;
-        private static bool _hasDeferredPilotSurveyThisSession = false;
-
         public static void ResetSessionDeferredFlags()
         {
-            _hasDeferredOnboardingThisSession = false;
-            _hasDeferredNotificationsThisSession = false;
-            _hasDeferredPilotSurveyThisSession = false;
+            HomePromptSession.Reset();
         }
 
         /// <summary>The user closed an onboarding step: don't remind them again until the next session.</summary>
         public static void DeferOnboardingReminder()
         {
-            _hasDeferredOnboardingThisSession = true;
+            HomePromptSession.OnboardingDeferred = true;
         }
         private LinearProgress _healthProgress;
         private LinearProgress _sustainabilityProgress;
@@ -75,8 +68,8 @@ namespace eu.foodmission.platform
         private readonly System.Collections.Generic.List<AccessibilityNode> _wheelNodes = new System.Collections.Generic.List<AccessibilityNode>();
         private AccessibilityNode _wheelsCustomizeNode;
         private string _wheelNodesKey;
-        private bool _isDisplayingCelebrationQueue;
-        private Quest _questToOfferAfterCelebrations;
+        // Each Home visit runs its prompts once; a new visit (or leaving Home) ends the previous run
+        private int _promptGeneration;
 
         public HomeScreen()
         {
@@ -135,482 +128,44 @@ namespace eu.foodmission.platform
             RenderProgressWheels();
             _viewModel?.RefreshProgressWheels();
 
-            EvaluateNextPendingHomePromptAsync();
+            StartPromptRun();
         }
 
-        private async void EvaluateNextPendingHomePromptAsync()
+        private sealed class PromptHost : IHomePromptHost
         {
-            if (_viewModel == null) return;
+            private readonly HomeScreen _screen;
+            private readonly HomeScreenViewModel _viewModel;
+            private readonly int _generation;
 
-            // 1. Consentimiento legal obligatorio (máxima prioridad)
-            if (await CheckPendingLegalConsentAsync()) return;
+            public PromptHost(HomeScreen screen, HomeScreenViewModel viewModel, int generation)
+            {
+                _screen = screen;
+                _viewModel = viewModel;
+                _generation = generation;
+            }
 
-            // 2. Consentimiento piloto obligatorio
-            if (await CheckPendingPilotConsentAsync()) return;
+            public bool IsActive => _screen._promptGeneration == _generation && _screen._viewModel == _viewModel && _screen.panel != null;
 
-            // 3. Recompensas de gamificación (si hay celebración con avatar/partículas, no abrir más ventanas)
-            if (await CheckPendingGamificationRewardsAsync()) return;
+            public VisualElement DialogAnchor => _screen;
 
-            // 3b. Misiones fallidas: Nutri lo cuenta una vez y ofrece reiniciarlas
-            if (await CheckFailedMissionsAsync()) return;
+            public void RefreshActiveQuestWidget() => _screen.RefreshActiveQuestWidget();
 
-            // 4. Novedades de la versión (What's New)
-            if (await CheckWhatsNewAsync()) return;
-
-            // 5. Recordatorio de Onboarding (perfil o encuesta inicial)
-            if (CheckPendingProfileReminder()) return;
-
-            // 6. Solicitud de notificaciones push
-            if (CheckPendingNotificationPrompt()) return;
-
-            // 7. Encuesta periódica del piloto
-            if (await CheckPendingPilotSurveyAsync()) return;
-
-            // 8. Días sin contar o misión activa sin avances: Nutri propone el check-in
-            if (await CheckMissionNudgeAsync()) return;
-
-            // 9. Quest activa y nada más pendiente: food fact del día
-            if (await CheckDailyFoodFactAsync()) return;
+            public void NavigateToAuth() => _screen._navController?.Navigate(Actions.go_to_auth);
         }
 
-        private async Task<bool> CheckDailyFoodFactAsync()
+        private void StartPromptRun()
         {
             HomeScreenViewModel viewModel = _viewModel;
             if (viewModel == null)
-            {
-                return false;
-            }
-
-            string code = await viewModel.CheckDailyFoodFactAsync();
-            // The user may have left Home while loading: never navigate away from another screen
-            if (string.IsNullOrEmpty(code) || _viewModel != viewModel || panel == null)
-            {
-                return false;
-            }
-
-            viewModel.OpenFoodFact(code);
-            return true;
-        }
-
-        private async Task<bool> CheckPendingLegalConsentAsync()
-        {
-            if (_viewModel == null) return false;
-            var status = await _viewModel.CheckPendingLegalConsentAsync();
-            if (status != null && status.mustAccept && status.documents != null)
-            {
-                foreach (var doc in status.documents)
-                {
-                    if (!doc.accepted)
-                    {
-                        _ = ShowPendingLegalConsent(doc);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        private async Task<bool> ShowPendingLegalConsent(PendingLegalConsent pendingLegalConsent)
-        {
-            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
-
-            LegalDocument legalDocument = await _viewModel.GetLegalDocumentAsync(pendingLegalConsent.docType);
-
-            string title = !string.IsNullOrEmpty(legalDocument?.title) ? legalDocument.title : (legalDocument.docType == LegalDocType.TermsOfService ? "@UI:T&C_TITLE" : "@UI:PRIVACY_POLICY_TITLE");
-            string content = legalDocument?.content ?? "";
-
-
-            NutriMessageDialog.Show(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NEW_LEGAL_DOC", new object[] { title }),
-                new FMDialogAction("@UI:MENU_VIEW", () =>
-                {
-                    FMDialog.ShowScrollableMD(
-                        this,
-                        title,
-                        content,
-                        onAccept: async () =>
-                        {
-                            await AcceptPendingLegalConsent(pendingLegalConsent);
-                            taskCompletionSource.TrySetResult(true);
-                        }, onCancel: () =>
-                        {
-                            FMDialog.ShowInfo(this, "@UI:MESSAGE_TITLE_WARNING", LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOT_ACCP_LEGAL_WARNING", new object[] { title }), new FMDialogAction[]
-                                {
-                                    new FMDialogAction("@UI:TXT_REVIEW_DOCUMENT", async () =>
-                                    {
-                                        bool result = await ShowPendingLegalConsent(pendingLegalConsent);
-                                        taskCompletionSource.TrySetResult(result);
-                                    },ButtonVariant.Accent),
-                                    new FMDialogAction("@UI:LOG_OUT", () =>
-                                    {
-                                        Unity.AppUI.MVVM.App.current?.services?.GetService<IStoreService>().store.Dispatch(AppActions.logout.Invoke());
-                                        _navController.Navigate(Actions.go_to_auth);
-                                        taskCompletionSource.TrySetResult(false);
-                                    },ButtonVariant.Accent),
-                                    new FMDialogAction("@UI:DELETE_ACCOUNT", () =>
-                                    {
-                                        DeleteAccount(() =>
-                                        {
-                                            taskCompletionSource.TrySetResult(false);
-                                        }, async () =>
-                                        {
-                                            bool result = await ShowPendingLegalConsent(pendingLegalConsent);
-                                            taskCompletionSource.TrySetResult(result);
-
-                                        });
-
-                                    },ButtonVariant.Destructive)
-                                }
-                            );
-                        }
-                    );
-
-                }, ButtonVariant.Accent)
-            );
-
-            return await taskCompletionSource.Task;
-        }
-
-        private async Task AcceptPendingLegalConsent(PendingLegalConsent pendingLegalConsent)
-        {
-            await _viewModel.AcceptLegalConsentAsync(pendingLegalConsent.documentKey);
-        }
-
-        private void DeleteAccount(Action onDeleted, Action onCanceled)
-        {
-            FMDialog.ShowAlert(
-                    App.current?.rootVisualElement,
-                    "@UI:DELETE_ACCOUNT_TITLE",
-                    "@UI:DELETE_ACCOUNT_MESSAGE",
-                    AlertSemantic.Destructive,
-                    "@UI:TXT_ACCEPT", onOk: async () =>
-                    {
-                        var authService = App.current?.services?.GetService<IAuthService>();
-                        if (authService == null)
-                        {
-                            return;
-                        }
-
-                        var (success, error) = await authService.DeleteAccountAsync();
-                        if (success)
-                        {
-                            onDeleted.Invoke();
-                            var storeService = App.current?.services?.GetService<IStoreService>();
-                            storeService?.store.Dispatch(AppActions.logout.Invoke());
-                            _navController.Navigate(Actions.go_to_auth);
-                        }
-                        else
-                        {
-                            Debug.LogError($"[FoodmissionVisualController] Delete account failed: {error}");
-                            onCanceled.Invoke();
-                        }
-                    },
-                    "@UI:TXT_CANCEL", onKo: () =>
-                    {
-                        onCanceled.Invoke();
-                    }
-                );
-        }
-
-        private bool CheckPendingNotificationPrompt()
-        {
-            if (_viewModel == null || _hasDeferredNotificationsThisSession || !_viewModel.ShouldPromptForNotifications())
-            {
-                return false;
-            }
-
-            NutriMessageDialog.Show(
-                message: "@UI:ONBOARDING_PROFILE.NUTRI_STEP_6",
-                actions: new[]
-                {
-                    new FMDialogAction("@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_YES", async () =>
-                    {
-                        await _viewModel.AcceptNotificationsAsync();
-                    }, ButtonVariant.Accent),
-                    new FMDialogAction("@UI:ONBOARDING_PROFILE.NOTIFICATIONS_OPT_NO", () =>
-                    {
-                        _hasDeferredNotificationsThisSession = true;
-                        _viewModel.DeclineNotifications();
-                    }, ButtonVariant.Default)
-                }
-            );
-
-            return true;
-        }
-
-        private async Task<bool> CheckPendingPilotConsentAsync()
-        {
-            if (_viewModel == null) return false;
-            if (!_viewModel.IsUserInPilotCountry()) return false;
-
-            bool hasConsent = await _viewModel.HasAcceptedPilotConsentAsync();
-            if (hasConsent) return false;
-
-            var (content, error) = await _viewModel.GetPilotConsentFormAsync();
-            if (string.IsNullOrEmpty(content)) return false;
-
-            FMDialog.ShowScrollableMD(
-                this,
-                "@UI:PILOT_CONSENT_TITLE",
-                content,
-                onAccept: async () =>
-                {
-                    await _viewModel.AcceptPilotConsentAsync();
-                },
-                onCancel: () =>
-                {
-                    FMDialog.ShowInfo(
-                        this,
-                        "@UI:MESSAGE_TITLE_WARNING",
-                        "@UI:NOT_ACCP_LEGAL_WARNING",
-                        new FMDialogAction[]
-                        {
-                            new FMDialogAction("@UI:TXT_REVIEW_DOCUMENT", () =>
-                            {
-                                _ = CheckPendingPilotConsentAsync();
-                            }, ButtonVariant.Accent),
-                            new FMDialogAction("@UI:TXT_CANCEL", () => { }, ButtonVariant.Default)
-                        }
-                    );
-                }
-            );
-
-            return true;
-        }
-
-        private async Task<bool> CheckFailedMissionsAsync()
-        {
-            HomeScreenViewModel viewModel = _viewModel;
-            if (viewModel == null)
-            {
-                return false;
-            }
-
-            var failures = await viewModel.CheckFailedMissionsAsync();
-            // The user may have left Home while loading: never show it over another screen
-            if (failures == null || failures.Count == 0 || _viewModel != viewModel || panel == null)
-            {
-                return false;
-            }
-
-            ShowFailedMissionQueue(viewModel, new System.Collections.Generic.Queue<MissionProgress>(failures));
-            return true;
-        }
-
-        private void ShowFailedMissionQueue(HomeScreenViewModel viewModel, System.Collections.Generic.Queue<MissionProgress> queue)
-        {
-            if (queue.Count == 0 || _viewModel != viewModel || panel == null)
             {
                 return;
             }
 
-            MissionProgress failed = queue.Dequeue();
-            string title = !string.IsNullOrEmpty(failed.missionTitle) ? failed.missionTitle : failed.missionCode;
-            string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_FAILED_NOTICE", new object[] { title });
-
-            void Next() => schedule.Execute(() => ShowFailedMissionQueue(viewModel, queue)).StartingIn(250);
-
-            NutriMessageDialog.Show(message: message, actions: new[]
-            {
-                new FMDialogAction("@UI:MISSION_BTN_RESTART", () => _ = RestartFailedMissionAsync(viewModel, failed, Next), ButtonVariant.Accent),
-                new FMDialogAction("@UI:CHALLENGE_BTN_LATER", () =>
-                {
-                    viewModel.AcknowledgeFailedMission(failed);
-                    Next();
-                }, ButtonVariant.Default)
-            });
-        }
-
-        private async Task RestartFailedMissionAsync(HomeScreenViewModel viewModel, MissionProgress failed, Action next)
-        {
-            try
-            {
-                ApiErrorResponse error = await viewModel.RestartFailedMissionAsync(failed);
-                // The user may have left Home during the request: never show anything over another screen
-                if (_viewModel != viewModel || panel == null)
-                {
-                    return;
-                }
-
-                _ = viewModel.LoadActiveQuestAsync();
-                RefreshActiveQuestWidget();
-                if (error != null)
-                {
-                    // The next queued notice waits until the error is closed
-                    FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), error, onOk: next);
-                    return;
-                }
-                next();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[HomeScreen] RestartFailedMissionAsync error: {ex.Message}");
-            }
-        }
-
-        private async Task<bool> CheckMissionNudgeAsync()
-        {
-            HomeScreenViewModel viewModel = _viewModel;
-            if (viewModel == null)
-            {
-                return false;
-            }
-
-            MissionNudge nudge = await viewModel.CheckMissionNudgeAsync();
-            // The user may have left Home while the nudge was loading: never show it over another screen
-            if (nudge == null || _viewModel != viewModel || panel == null)
-            {
-                return false;
-            }
-
-            var actions = new System.Collections.Generic.List<FMDialogAction>();
-            string message;
-            if (nudge.Kind == MissionNudgeKind.MissingDays)
-            {
-                message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MISSING_DAYS", new object[] { nudge.MissingDays });
-                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => viewModel.OpenCheckIn(), ButtonVariant.Accent));
-            }
-            else
-            {
-                message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MESSAGE", new object[] { nudge.MissionTitle });
-                if (nudge.AutoModule != null)
-                {
-                    actions.Add(new FMDialogAction("@UI:" + nudge.AutoModule.ButtonKey, () => viewModel.OpenMissionModule(nudge.AutoModule), ButtonVariant.Accent));
-                }
-                actions.Add(new FMDialogAction("@UI:MISSION_BTN_TELL_NUTRI", () => viewModel.OpenCheckIn(nudge.MissionCode),
-                    nudge.AutoModule != null ? ButtonVariant.Default : ButtonVariant.Accent));
-            }
-            actions.Add(new FMDialogAction("@UI:MISSION_NUDGE_NOT_NOW", () => { }, ButtonVariant.Default));
-
-            NutriMessageDialog.Show(message: message, actions: actions.ToArray());
-            return true;
-        }
-
-        private async Task<bool> CheckPendingPilotSurveyAsync()
-        {
-            if (_viewModel == null || _hasDeferredPilotSurveyThisSession) return false;
-
-            var survey = await _viewModel.CheckPendingPilotSurveyAsync();
-            if (survey != null)
-            {
-                NutriMessageDialog.Show(
-                    message: "@UI:NEW_SURVEY_MESSAGE",
-                    actions: new[]
-                    {
-                        new FMDialogAction("@UI:NEW_SURVEY_ANSWER_NOW", () =>
-                        {
-                            _viewModel.NavigateToPilotSurvey(survey.slug ?? survey.id);
-                        }, ButtonVariant.Accent),
-                        new FMDialogAction("@UI:NEW_SURVEY_LATER", () =>
-                        {
-                            _hasDeferredPilotSurveyThisSession = true;
-                            _viewModel.PostponePilotSurvey(survey.slug);
-                        }, ButtonVariant.Default),
-                        new FMDialogAction("@UI:NEW_SURVEY_DECLINE", () =>
-                        {
-                            _hasDeferredPilotSurveyThisSession = true;
-                            _viewModel.SkipPilotSurvey(survey.slug);
-                        }, ButtonVariant.Default)
-                    }
-                );
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private async Task<bool> CheckPendingGamificationRewardsAsync()
-        {
-            if (_viewModel == null || _isDisplayingCelebrationQueue) return false;
-
-            var rewards = await _viewModel.CheckPendingGamificationRewardsAsync();
-            if (rewards == null || rewards.Count == 0)
-            {
-                // Safety net: the active quest is already completed but its QUEST_COMPLETED was never celebrated
-                string questBefore = _viewModel?.GetCurrentQuestIdFromStore();
-                PendingRewardCelebration completedQuest = _viewModel != null ? await _viewModel.CheckCompletedActiveQuestAsync() : null;
-                if (completedQuest != null)
-                {
-                    rewards = new System.Collections.Generic.List<PendingRewardCelebration> { completedQuest };
-                }
-                else if (_viewModel != null && !string.IsNullOrEmpty(questBefore) && string.IsNullOrEmpty(_viewModel.GetCurrentQuestIdFromStore()))
-                {
-                    // The completed quest was cleared (it had been celebrated already): show the "no active quest" widget
-                    _ = _viewModel.LoadActiveQuestAsync();
-                    RefreshActiveQuestWidget();
-                }
-            }
-
-            if (_viewModel != null && rewards != null && rewards.Count > 0)
-            {
-                ShowCelebrationQueue(new System.Collections.Generic.Queue<PendingRewardCelebration>(rewards));
-                return true;
-            }
-
-            return false;
-        }
-
-        private void ShowCelebrationQueue(System.Collections.Generic.Queue<PendingRewardCelebration> queue)
-        {
-            if (queue == null || queue.Count == 0)
-            {
-                FinishCelebrationQueue();
-                return;
-            }
-
-            _isDisplayingCelebrationQueue = true;
-            var item = queue.Dequeue();
-            if (item.UnlockedQuest != null)
-            {
-                _questToOfferAfterCelebrations = item.UnlockedQuest;
-            }
-
-            RewardPresentationItem unlockedQuestCard = null;
-            if (item.UnlockedQuest != null)
-            {
-                string questTitle = item.UnlockedQuest.GetDisplayName();
-
-                unlockedQuestCard = new RewardPresentationItem
-                {
-                    Type = RewardType.QuestUnlocked,
-                    Title = "@UI:QUEST_UNLOCKED_TITLE",
-                    Subtitle = questTitle,
-                    IconEmoji = "🔓",
-                    RawId = item.UnlockedQuest.code ?? item.UnlockedQuest.id
-                };
-            }
-
-            RewardCelebrationDialog.Show(
-                item.Reward,
-                contextTitle: item.ContextTitle,
-                extraItem: unlockedQuestCard,
-                onDismiss: () =>
-                {
-                    if (queue.Count > 0)
-                    {
-                        schedule.Execute(() => ShowCelebrationQueue(queue)).StartingIn(250);
-                    }
-                    else
-                    {
-                        FinishCelebrationQueue();
-                    }
-                }
-            );
-        }
-
-        /// <summary>After the celebrations, a completed quest leads to the next one (its detail has the "Start" button).</summary>
-        private void FinishCelebrationQueue()
-        {
-            _isDisplayingCelebrationQueue = false;
-            _ = _viewModel?.LoadActiveQuestAsync();
-            RefreshActiveQuestWidget();
-
-            Quest next = _questToOfferAfterCelebrations;
-            _questToOfferAfterCelebrations = null;
-            if (next != null)
-            {
-                _viewModel?.OpenQuest(next);
-            }
+            viewModel.RecordPilotHomeEntry();
+            var host = new PromptHost(this, viewModel, ++_promptGeneration);
+            var whatsNew = App.current?.services?.GetService<IWhatsNewService>();
+            var coordinator = new HomePromptCoordinator(HomePrompts.Create(viewModel, new HomePromptRunState(), whatsNew), new RewardCelebrationGate());
+            _ = coordinator.RunAsync(host);
         }
 
         private void SetupRewardDebugButton()
@@ -933,7 +488,13 @@ namespace eu.foodmission.platform
             };
             btnCheck.clicked += () =>
             {
-                CheckPendingPilotSurveyAsync();
+                HomeScreenViewModel viewModel = _viewModel;
+                if (viewModel == null)
+                {
+                    return;
+                }
+                var host = new PromptHost(this, viewModel, ++_promptGeneration);
+                _ = new HomePromptCoordinator(new IHomePrompt[] { new PilotSurveyPrompt(viewModel) }, new RewardCelebrationGate()).RunAsync(host);
             };
             btnRow.Add(btnCheck);
 
@@ -952,66 +513,6 @@ namespace eu.foodmission.platform
 
             debugCard.Add(btnRow);
             root.Add(debugCard);
-        }
-
-        private bool CheckPendingProfileReminder()
-        {
-            if (_viewModel == null || _hasDeferredOnboardingThisSession) return false;
-
-            var pendingType = _viewModel.GetPendingOnboardingType();
-            if (pendingType == PendingOnboardingType.None) return false;
-
-            string messageKey = pendingType switch
-            {
-                PendingOnboardingType.Profile => "ONBOARDING_REMINDER_PROFILE_MSG",
-                PendingOnboardingType.Survey => "ONBOARDING_REMINDER_SURVEY_MSG",
-                PendingOnboardingType.Goals => "ONBOARDING_REMINDER_GOALS_MSG",
-                _ => "ONBOARDING_REMINDER_PROFILE_MSG"
-            };
-
-            string actionKey = pendingType switch
-            {
-                PendingOnboardingType.Profile => "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE",
-                PendingOnboardingType.Survey => "ONBOARDING_REMINDER_BTN_COMPLETE_SURVEY",
-                PendingOnboardingType.Goals => "ONBOARDING_REMINDER_BTN_COMPLETE_GOALS",
-                _ => "ONBOARDING_REMINDER_BTN_COMPLETE_PROFILE"
-            };
-
-            NutriMessageDialog.Show(
-                message: LocalizationSettings.StringDatabase.GetLocalizedString("UI", messageKey),
-                actions: new[]
-                {
-                    new FMDialogAction(
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", actionKey),
-                        () =>
-                        {
-                            if (pendingType == PendingOnboardingType.Profile)
-                            {
-                                _viewModel.NavigateToOnboardingProfile();
-                            }
-                            else if (pendingType == PendingOnboardingType.Survey)
-                            {
-                                _viewModel.NavigateToOnboardingSurvey();
-                            }
-                            else
-                            {
-                                _viewModel.NavigateToOnboardingGoals();
-                            }
-                        },
-                        ButtonVariant.Accent
-                    ),
-                    new FMDialogAction(
-                        LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LATER"),
-                        () =>
-                        {
-                            _hasDeferredOnboardingThisSession = true;
-                        },
-                        ButtonVariant.Default
-                    )
-                }
-            );
-
-            return true;
         }
 
         private void RegisterEvents()
@@ -1199,52 +700,9 @@ namespace eu.foodmission.platform
             if (_caloriesLeftLabel != null) _caloriesLeftLabel.text = _viewModel.CaloriesLeft.ToString();
         }
 
-        private async Task<bool> CheckWhatsNewAsync()
-        {
-            try
-            {
-                var whatsNewService = App.current?.services?.GetService<IWhatsNewService>();
-                if (whatsNewService == null) return false;
-
-                var (shouldShow, notes) = await whatsNewService.CheckShouldShowAsync();
-                if (shouldShow)
-                {
-                    ShowWhatsNewModal(notes);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[HomeScreen] What's New check failed: {ex.Message}");
-            }
-            return false;
-        }
-
-        private void ShowWhatsNewModal(string releaseNotes)
-        {
-            FMDialog.ShowInfo(
-                contentContainer,
-                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "txtWhatsNew", new object[] { Application.version }),
-                releaseNotes ?? "No release notes available.",
-                new[] { new FMDialogAction("@UI:txtGotIt", MarkWhatsNewSeen, ButtonVariant.Accent) });
-        }
-
-        private async void MarkWhatsNewSeen()
-        {
-            try
-            {
-                var whatsNewService = App.current?.services?.GetService<IWhatsNewService>();
-                if (whatsNewService != null)
-                    await whatsNewService.MarkAsSeenAsync();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[HomeScreen] Failed to mark What's New as seen: {ex.Message}");
-            }
-        }
-
         protected override void OnViewModelUnbinding()
         {
+            _promptGeneration++; // ends the running prompt run
             UnregisterEvents();
 
             _healthProgress = null;

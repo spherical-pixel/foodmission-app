@@ -20,7 +20,8 @@ namespace eu.foodmission.platform.Components
             string okLabel = "@UI:TXT_OK",
             Action onOk = null,
             string koLabel = null,
-            Action onKo = null
+            Action onKo = null,
+            Action onDismissed = null
             )
         {
             var dialog = new AlertDialog
@@ -42,6 +43,10 @@ namespace eu.foodmission.platform.Components
                 dialog.cancelButton.variant = ButtonVariant.Accent;
             }
             var modal = Modal.Build(anchor, dialog);
+            if (onDismissed != null)
+            {
+                modal.dismissed += (_, _) => onDismissed.Invoke();
+            }
             NotifyScreenReaderOfDialog(modal, title, message);
             modal.Show();
         }
@@ -178,7 +183,8 @@ namespace eu.foodmission.platform.Components
             Action onAccept = null,
             Action onCancel = null,
             string acceptLabel = "@UI:TXT_ACCEPT",
-            string cancelLabel = "@UI:TXT_BACK")
+            string cancelLabel = "@UI:TXT_BACK",
+            Action onDismissed = null)
         {
             // Use AlertDialog so SetPrimaryAction and SetCancelAction are available.
             // The scrollable text content is added directly to the dialog's contentContainer.
@@ -304,6 +310,11 @@ namespace eu.foodmission.platform.Components
                 };
             }
 
+            if (onDismissed != null)
+            {
+                modal.dismissed += (_, _) => onDismissed.Invoke();
+            }
+
             NotifyScreenReaderOfDialog(modal, title, contentMD);
             modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
             modal.Show();
@@ -316,14 +327,15 @@ namespace eu.foodmission.platform.Components
             string okLabel = "@UI:TXT_OK",
             Action onOk = null,
             string koLabel = null,
-            Action onKo = null)
+            Action onKo = null,
+            Action onDismissed = null)
         {
             string message = error?.message ?? "Unknown error";
             string traceInfo = !string.IsNullOrEmpty(error?.traceId)
                 ? $"\n\nTrace ID: {error.traceId}"
                 : "";
 
-            ShowAlert(anchor, title, $"{message}{traceInfo}", AlertSemantic.Error, okLabel, onOk, koLabel, onKo);
+            ShowAlert(anchor, title, $"{message}{traceInfo}", AlertSemantic.Error, okLabel, onOk, koLabel, onKo, onDismissed);
         }
 
         public static void ShowCustom(
@@ -391,7 +403,8 @@ namespace eu.foodmission.platform.Components
             VisualElement anchor,
             string title,
             string body,
-            FMDialogAction[] actions)
+            FMDialogAction[] actions,
+            Action onDismissed = null)
         {
             if (actions == null || actions.Length == 0)
             {
@@ -451,6 +464,10 @@ namespace eu.foodmission.platform.Components
 
             modal = Modal.Build(anchor, root);
             modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
+            if (onDismissed != null)
+            {
+                modal.dismissed += (_, _) => onDismissed.Invoke();
+            }
 
             // var modalContent = modal.view.contentContainer;
             // modalContent.style.width = Length.Percent(widthPercent);

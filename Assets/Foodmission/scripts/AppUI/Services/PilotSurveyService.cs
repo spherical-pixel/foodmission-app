@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Unity.AppUI.MVVM;
@@ -34,7 +35,9 @@ namespace eu.foodmission.platform
             new PilotSurveyRule("end", minActiveDaysInCycle: 11, minDaysSinceCycleStart: 30, isEndSurvey: true)
         };
 
-        private readonly HashSet<string> _postponedThisSession = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        public Func<DateTime> NowLocal { get; set; } = () => DateTime.Now;
+
+        private string TodayLocal => NowLocal().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
         public PilotSurveyService(
             ISurveyService surveyService,
@@ -83,6 +86,20 @@ namespace eu.foodmission.platform
                 {
                     state.activeDatesInCycle = state.activeDatesInCycle.ConvertAll(d => ShiftDay(d, days));
                 }
+                if (!string.IsNullOrEmpty(state.lastSurveyDay))
+                {
+                    state.lastSurveyDay = ShiftDay(state.lastSurveyDay, days);
+                }
+                if (state.postponedUntil != null)
+                {
+                    foreach (PostponedSurvey p in state.postponedUntil)
+                    {
+                        if (p != null)
+                        {
+                            p.day = ShiftDay(p.day, days);
+                        }
+                    }
+                }
                 return JsonConvert.SerializeObject(state);
             }
             catch (JsonException)
@@ -124,26 +141,31 @@ namespace eu.foodmission.platform
 
         public Task<bool> HasAcceptedPilotConsentAsync()
         {
+            return Task.FromResult(HasAcceptedPilotConsent());
+        }
+
+        private bool HasAcceptedPilotConsent()
+        {
             if (DebugBypassEligibility)
-                return Task.FromResult(true);
+                return true;
 
             if (!IsPilotCountry())
-                return Task.FromResult(false);
+                return false;
 
             string consentVal = _localStorageService.GetValue<string>(ConsentStorageKey, "");
             if (bool.TryParse(consentVal, out bool accepted) && accepted)
             {
-                return Task.FromResult(true);
+                return true;
             }
 
             AppState s = _storeService?.GetAppState();
             if (s != null && s.pilotConsentAccepted)
             {
                 _localStorageService.SetValue<string>(ConsentStorageKey, "true");
-                return Task.FromResult(true);
+                return true;
             }
 
-            return Task.FromResult(false);
+            return false;
         }
 
         public Task<bool> AcceptPilotConsentAsync()
@@ -159,19 +181,13 @@ namespace eu.foodmission.platform
 
         public PilotSurveyCycleState GetCurrentCycleState()
         {
+            PilotSurveyCycleState local = null;
             string raw = _localStorageService.GetValue<string>(CycleStorageKey, "");
             if (!string.IsNullOrEmpty(raw))
             {
                 try
                 {
-                    var state = JsonConvert.DeserializeObject<PilotSurveyCycleState>(raw);
-                    if (state != null)
-                    {
-                        state.activeDatesInCycle ??= new List<string>();
-                        state.completedSlugsInCycle ??= new List<string>();
-                        state.skippedSlugsInCycle ??= new List<string>();
-                        return state;
-                    }
+                    local = JsonConvert.DeserializeObject<PilotSurveyCycleState>(raw);
                 }
                 catch (Exception ex)
                 {
@@ -179,30 +195,88 @@ namespace eu.foodmission.platform
                 }
             }
 
-            // Fallback: Check if state was restored from server preferences into AppState
-            AppState s = _storeService?.GetAppState();
-            if (s?.pilotSurveyCycleState != null)
+            // AppState holds the server copy restored on login (and every local save)
+            PilotSurveyCycleState server = _storeService?.GetAppState()?.pilotSurveyCycleState;
+            PilotSurveyCycleState merged = Merge(local, server);
+            if (merged == null)
             {
-                var state = s.pilotSurveyCycleState.Copy();
-                state.activeDatesInCycle ??= new List<string>();
-                state.completedSlugsInCycle ??= new List<string>();
-                state.skippedSlugsInCycle ??= new List<string>();
-                _localStorageService.SetValue<string>(CycleStorageKey, JsonConvert.SerializeObject(state));
-                return state;
+                // Default initial state
+                merged = Normalize(new PilotSurveyCycleState
+                {
+                    currentCycle = 1,
+                    cycleStartDate = DateTime.UtcNow.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)
+                });
+                SaveCycleState(merged);
+                return merged;
             }
 
-            // Default initial state
-            var newState = new PilotSurveyCycleState
+            string mergedJson = JsonConvert.SerializeObject(merged);
+            if (server == null || mergedJson != JsonConvert.SerializeObject(Normalize(server.Copy())))
             {
-                currentCycle = 1,
-                cycleStartDate = DateTime.UtcNow.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-                activeDatesInCycle = new List<string>(),
-                completedSlugsInCycle = new List<string>(),
-                skippedSlugsInCycle = new List<string>()
-            };
+                // The server (or AppState) is behind: store and sync the merge
+                SaveCycleState(merged);
+            }
+            else if (raw != mergedJson)
+            {
+                _localStorageService.SetValue<string>(CycleStorageKey, mergedJson);
+            }
+            return merged;
+        }
 
-            SaveCycleState(newState);
-            return newState;
+        private static string LatestDay(string a, string b)
+        {
+            return string.CompareOrdinal(a ?? "", b ?? "") >= 0 ? (a ?? "") : (b ?? "");
+        }
+
+        private static PilotSurveyCycleState Normalize(PilotSurveyCycleState state)
+        {
+            state.activeDatesInCycle ??= new List<string>();
+            state.completedSlugsInCycle ??= new List<string>();
+            state.skippedSlugsInCycle ??= new List<string>();
+            state.postponedUntil ??= new List<PostponedSurvey>();
+            state.lastSurveyDay ??= "";
+            return state;
+        }
+
+        /// <summary>
+        /// Combines this device's cycle with the server's (restored on login), so no device repeats or loses surveys:
+        /// a higher cycle wins outright; within the same cycle days and answered/skipped surveys are united.
+        /// </summary>
+        public static PilotSurveyCycleState Merge(PilotSurveyCycleState local, PilotSurveyCycleState server)
+        {
+            if (local == null)
+            {
+                return server == null ? null : Normalize(server.Copy());
+            }
+            if (server == null)
+            {
+                return Normalize(local.Copy());
+            }
+            string lastSurveyDay = LatestDay(local.lastSurveyDay, server.lastSurveyDay);
+            if (local.currentCycle != server.currentCycle)
+            {
+                PilotSurveyCycleState winner = Normalize((local.currentCycle > server.currentCycle ? local : server).Copy());
+                winner.lastSurveyDay = lastSurveyDay;
+                return winner;
+            }
+
+            PilotSurveyCycleState a = Normalize(local.Copy());
+            PilotSurveyCycleState b = Normalize(server.Copy());
+            return new PilotSurveyCycleState
+            {
+                currentCycle = a.currentCycle,
+                lastSurveyDay = lastSurveyDay,
+                cycleStartDate = new[] { a.cycleStartDate, b.cycleStartDate }
+                    .Where(d => !string.IsNullOrEmpty(d)).OrderBy(d => d, StringComparer.Ordinal).FirstOrDefault() ?? "",
+                activeDatesInCycle = a.activeDatesInCycle.Union(b.activeDatesInCycle).OrderBy(d => d, StringComparer.Ordinal).ToList(),
+                completedSlugsInCycle = a.completedSlugsInCycle.Union(b.completedSlugsInCycle).ToList(),
+                skippedSlugsInCycle = a.skippedSlugsInCycle.Union(b.skippedSlugsInCycle).ToList(),
+                postponedUntil = a.postponedUntil.Concat(b.postponedUntil)
+                    .Where(p => p != null && !string.IsNullOrEmpty(p.slug))
+                    .GroupBy(p => p.slug)
+                    .Select(g => new PostponedSurvey { slug = g.Key, day = g.Select(p => p.day ?? "").OrderBy(d => d, StringComparer.Ordinal).Last() })
+                    .ToList()
+            };
         }
 
         private void SaveCycleState(PilotSurveyCycleState state)
@@ -220,6 +294,7 @@ namespace eu.foodmission.platform
 
         private async void SyncToPreferencesAsync(PilotSurveyCycleState state, bool consent)
         {
+            string pendingKey = PendingSyncKeyFor(CurrentUserId);
             try
             {
                 var auth = _authService ?? App.current?.services?.GetService<IAuthService>();
@@ -234,16 +309,51 @@ namespace eu.foodmission.platform
                     preferences = new ProfileUpdatePreferences
                     {
                         pilotSurveyCycleState = state,
-                        pilotConsentAccepted = consent
+                        pilotConsentAccepted = consent,
+                        // Non-nullable bool, always serialized: without this the PATCH turns it off
+                        autoAddToPantry = appState.userAutoAddToPantry
                     }
                 };
 
-                await auth.UpdateProfileAsync(req);
-                //Debug.Log($"[{GetType().Name}] Synced pilot survey cycle state to user preferences on server");
+                var (success, error) = await auth.UpdateProfileAsync(req);
+                if (success)
+                {
+                    _localStorageService.DeleteValue(pendingKey);
+                }
+                else
+                {
+                    _localStorageService.SetValue<string>(pendingKey, "true");
+                    Debug.LogWarning($"[{GetType().Name}] Pilot cycle sync failed, will retry on the next Home entry: {error?.message}");
+                }
             }
             catch (Exception ex)
             {
+                _localStorageService.SetValue<string>(pendingKey, "true");
                 Debug.LogWarning($"[{GetType().Name}] Could not sync pilot survey cycle state to preferences: {ex.Message}");
+            }
+        }
+
+        /// <summary>Local flag set when the last cycle PATCH failed; cleared when one succeeds.</summary>
+        public static string PendingSyncKeyFor(string userId) => $"pilot_cycle_pending_sync_{userId}";
+
+        public void OnHomeEntered()
+        {
+            if (!IsPilotCountry())
+            {
+                return;
+            }
+
+            bool pending = _localStorageService.GetValue<string>(PendingSyncKeyFor(CurrentUserId), "") == "true";
+            int before = GetActiveDaysCountInCurrentCycle();
+            // Days before the pilot consent don't count: they would make several surveys due at once on accepting
+            if (HasAcceptedPilotConsent())
+            {
+                RecordDailyUsage();
+            }
+            if (pending && GetActiveDaysCountInCurrentCycle() == before)
+            {
+                // RecordDailyUsage saved (and synced) nothing today: send the state that failed before
+                SaveCycleState(GetCurrentCycleState());
             }
         }
 
@@ -298,8 +408,8 @@ namespace eu.foodmission.platform
             state.activeDatesInCycle.Add(today);
             state.completedSlugsInCycle.Clear();
             state.skippedSlugsInCycle.Clear();
+            state.postponedUntil.Clear();
 
-            _postponedThisSession.Clear();
             SaveCycleState(state);
             Debug.Log($"[{GetType().Name}] Advanced to Survey Cycle {state.currentCycle}");
         }
@@ -308,13 +418,20 @@ namespace eu.foodmission.platform
         {
             _localStorageService.DeleteValue(CycleStorageKey);
             _localStorageService.DeleteValue(ConsentStorageKey);
-            _postponedThisSession.Clear();
+            // Otherwise the next read would merge the AppState copy back in
+            _storeService?.store?.Dispatch(AppActions.setPilotCycleState.Invoke(null));
         }
 
         public void PostponeSurvey(string slug)
         {
             if (string.IsNullOrEmpty(slug)) return;
-            _postponedThisSession.Add(slug);
+
+            var state = GetCurrentCycleState();
+            string tomorrow = NowLocal().Date.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            state.postponedUntil.RemoveAll(p => p == null || p.slug == slug);
+            state.postponedUntil.Add(new PostponedSurvey { slug = slug, day = tomorrow });
+            state.lastSurveyDay = TodayLocal;
+            SaveCycleState(state);
         }
 
         public void SkipSurvey(string slug)
@@ -325,8 +442,9 @@ namespace eu.foodmission.platform
             if (!state.skippedSlugsInCycle.Contains(slug))
             {
                 state.skippedSlugsInCycle.Add(slug);
-                SaveCycleState(state);
             }
+            state.lastSurveyDay = TodayLocal;
+            SaveCycleState(state);
 
             CheckAndAdvanceCycleIfCompleted(state);
         }
@@ -339,8 +457,9 @@ namespace eu.foodmission.platform
             if (!state.completedSlugsInCycle.Contains(slug))
             {
                 state.completedSlugsInCycle.Add(slug);
-                SaveCycleState(state);
             }
+            state.lastSurveyDay = TodayLocal;
+            SaveCycleState(state);
 
             CheckAndAdvanceCycleIfCompleted(state);
             return true;
@@ -392,60 +511,53 @@ namespace eu.foodmission.platform
                 return null;
             }
 
-            RecordDailyUsage();
-
             var state = GetCurrentCycleState();
             int activeDays = state.activeDatesInCycle.Count;
             int daysSinceStart = GetDaysSinceCurrentCycleStart();
 
-            //Debug.Log($"[{GetType().Name}] 📊 Estado del Ciclo {state.currentCycle}: Días activos={activeDays}, Días transcurridos={daysSinceStart}, Completadas=[{string.Join(", ", state.completedSlugsInCycle)}], Saltadas=[{string.Join(", ", state.skippedSlugsInCycle)}], PospuestasSesion=[{string.Join(", ", _postponedThisSession)}]");
+            //Debug.Log($"[{GetType().Name}] 📊 Estado del Ciclo {state.currentCycle}: Días activos={activeDays}, Días transcurridos={daysSinceStart}, Completadas=[{string.Join(", ", state.completedSlugsInCycle)}], Saltadas=[{string.Join(", ", state.skippedSlugsInCycle)}]");
+
+            // Never two surveys the same day: answering, declining or postponing one closes the day
+            if (state.lastSurveyDay == TodayLocal)
+            {
+                return null;
+            }
 
             foreach (var rule in s_Rules)
             {
-                if (state.completedSlugsInCycle.Contains(rule.Slug))
+                if (state.completedSlugsInCycle.Contains(rule.Slug) || state.skippedSlugsInCycle.Contains(rule.Slug))
                 {
-                    //Debug.Log($"[{GetType().Name}] ⏭️ Regla '{rule.Slug}' ignorada: ya completada en ciclo.");
                     continue;
                 }
 
-                if (state.skippedSlugsInCycle.Contains(rule.Slug))
+                // The first pending survey of the cycle: every later one waits for it to be answered or declined
+                if (IsPostponed(state, rule.Slug))
                 {
-                    //Debug.Log($"[{GetType().Name}] ⏭️ Regla '{rule.Slug}' ignorada: saltada en ciclo.");
-                    continue;
-                }
-
-                if (_postponedThisSession.Contains(rule.Slug))
-                {
-                    //Debug.Log($"[{GetType().Name}] ⏭️ Regla '{rule.Slug}' ignorada: pospuesta en sesión actual.");
-                    continue;
+                    return null;
                 }
 
                 bool daysOk = activeDays >= rule.MinActiveDaysInCycle;
                 bool elapsedOk = daysSinceStart >= rule.MinDaysSinceCycleStart;
-
-                if (daysOk && elapsedOk)
-                {
-                    //Debug.Log($"[{GetType().Name}] ✅ Regla coincidente '{rule.Slug}' (mín días: {rule.MinActiveDaysInCycle}, mín transcurridos: {rule.MinDaysSinceCycleStart}). Solicitando encuesta al backend...");
-
-                    var (survey, error) = await _surveyService.GetSurveyBySlugAsync(rule.Slug, lang);
-                    if (survey != null && survey.questions != null && survey.questions.Length > 0)
-                    {
-                        //Debug.Log($"[{GetType().Name}] 🎉 Encuesta '{rule.Slug}' cargada con éxito ({survey.questions.Length} preguntas, id: {survey.id}).");
-                        return survey;
-                    }
-                    else if (error != null)
-                    {
-                        Debug.LogWarning($"[{GetType().Name}] ⚠️ Error del backend al obtener survey '{rule.Slug}': {error.message} (status: {error.statusCode})");
-                    }
-                    else if (survey != null && (survey.questions == null || survey.questions.Length == 0))
-                    {
-                        Debug.LogWarning($"[{GetType().Name}] ⚠️ La encuesta '{rule.Slug}' existe en el backend pero no tiene preguntas.");
-                    }
-                }
-                else
+                if (!daysOk || !elapsedOk)
                 {
                     Debug.Log($"[{GetType().Name}] ⏳ Regla '{rule.Slug}' aún no cumple requisitos: (Días activos: {activeDays}/{rule.MinActiveDaysInCycle}, Días transcurridos: {daysSinceStart}/{rule.MinDaysSinceCycleStart})");
+                    return null;
                 }
+
+                var (survey, error) = await _surveyService.GetSurveyBySlugAsync(rule.Slug, lang);
+                if (survey != null && survey.questions != null && survey.questions.Length > 0)
+                {
+                    return survey;
+                }
+                if (error != null)
+                {
+                    // Try again later: skipping ahead on a network error would break the order
+                    Debug.LogWarning($"[{GetType().Name}] ⚠️ Error del backend al obtener survey '{rule.Slug}': {error.message} (status: {error.statusCode})");
+                    return null;
+                }
+
+                // Missing on the backend (or without questions): it can never be answered, so it doesn't block the next one
+                Debug.LogWarning($"[{GetType().Name}] ⚠️ La encuesta '{rule.Slug}' no existe en el backend o no tiene preguntas.");
             }
 
             Debug.Log($"[{GetType().Name}] ℹ️ No hay encuestas pendientes para los criterios actuales.");
@@ -467,9 +579,15 @@ namespace eu.foodmission.platform
                 }
             }
 
-            _postponedThisSession.Clear();
+            state.lastSurveyDay = "";
             SaveCycleState(state);
             Debug.Log($"[{GetType().Name}] [DEBUG] Set activeDays={activeDaysCount}, daysSinceStart={daysSinceStart}, startDate={state.cycleStartDate}");
+        }
+
+        private bool IsPostponed(PilotSurveyCycleState state, string slug)
+        {
+            string today = TodayLocal;
+            return state.postponedUntil.Any(p => p != null && p.slug == slug && string.CompareOrdinal(today, p.day ?? "") < 0);
         }
 
         public void SetDebugUserCountry(string countryCode)
@@ -483,7 +601,8 @@ namespace eu.foodmission.platform
             var state = GetCurrentCycleState();
             state.completedSlugsInCycle.Clear();
             state.skippedSlugsInCycle.Clear();
-            _postponedThisSession.Clear();
+            state.postponedUntil.Clear();
+            state.lastSurveyDay = "";
             SaveCycleState(state);
             Debug.Log($"[{GetType().Name}] [DEBUG] Reset completed/skipped surveys in Cycle {state.currentCycle}");
         }

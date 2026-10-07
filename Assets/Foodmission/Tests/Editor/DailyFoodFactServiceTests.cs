@@ -81,11 +81,14 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task OncePerDay()
+        public async Task OncePerDay_OnceShown()
         {
             SetQuest(Fact("FF1", 1), Fact("FF2", 2));
 
             Assert.AreEqual("FF1", await _service.GetFactToShowAsync());
+            Assert.AreEqual("FF1", await _service.GetFactToShowAsync(), "not shown yet: offered again");
+
+            _service.MarkShown("FF1");
             Assert.IsNull(await _service.GetFactToShowAsync(), "Second Home entry on the same day");
 
             _now = _now.AddDays(1);
@@ -135,6 +138,8 @@ namespace eu.foodmission.platform.Tests
         {
             SetQuest(Fact("FF1", 1));
             Assert.AreEqual("FF1", await _service.GetFactToShowAsync());
+            _service.MarkShown("FF1");
+            Assert.IsNull(await _service.GetFactToShowAsync());
 
             _service.Reset();
 

@@ -71,7 +71,6 @@ namespace eu.foodmission.platform
                     return null;
                 }
 
-                _storage?.SetValue(StorageKey(state.userId), today);
                 return code;
             }
             catch (Exception ex)
@@ -79,6 +78,16 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[DailyFoodFactService] GetFactToShowAsync failed: {ex.Message}");
                 return null;
             }
+        }
+
+        public void MarkShown(string code)
+        {
+            string userId = _storeService?.GetAppState()?.userId;
+            if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
+            _storage?.SetValue(StorageKey(userId), NowLocal().ToString(DayFormat, CultureInfo.InvariantCulture));
         }
 
         public void Reset()

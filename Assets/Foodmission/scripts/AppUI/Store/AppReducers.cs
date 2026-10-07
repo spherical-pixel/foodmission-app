@@ -361,6 +361,9 @@ namespace eu.foodmission.platform
             newState.userCurrentQuestId = "";
             newState.userLastShoppingListId = "";
             newState.userAutoAddToPantry = false;
+            // Per user: the merge in PilotSurveyService would hand them to the next user on this device
+            newState.pilotSurveyCycleState = null;
+            newState.pilotConsentAccepted = false;
             newState.userAvatarConfig = null;
             newState.userHasAvatar = false;
             newState.userXp = 0;
