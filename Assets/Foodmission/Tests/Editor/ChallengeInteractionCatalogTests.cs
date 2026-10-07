@@ -40,8 +40,8 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(90, AllBackendCodes.Length);
             var interactions = AllBackendCodes.Select(ChallengeInteractionCatalog.Get).ToList();
 
-            Assert.AreEqual(26, interactions.Count(i => i.Type == ChallengeInteractionType.Confirm));
-            Assert.AreEqual(62, interactions.Count(i => i.Type == ChallengeInteractionType.ConfirmWithModule));
+            Assert.AreEqual(55, interactions.Count(i => i.Type == ChallengeInteractionType.Confirm));
+            Assert.AreEqual(33, interactions.Count(i => i.Type == ChallengeInteractionType.ConfirmWithModule));
             Assert.AreEqual(2, interactions.Count(i => i.Type == ChallengeInteractionType.Comparator));
             Assert.AreEqual(35, interactions.Count(i => i.AutoCompletes));
             Assert.IsTrue(ChallengeInteractionCatalog.Entries.Keys.All(k => AllBackendCodes.Contains(k)), "Catalog has codes unknown to the backend");
@@ -80,12 +80,11 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Get_JudgementChallenge_HasModuleButStaysManual()
+        public void Get_ModuleThatCannotCompleteIt_IsPlainConfirm()
         {
-            var interaction = ChallengeInteractionCatalog.Get("CH.B2.4");
-
-            Assert.AreEqual(ChallengeInteractionType.ConfirmWithModule, interaction.Type);
-            Assert.IsFalse(interaction.AutoCompletes);
+            Assert.AreSame(ChallengeInteraction.Confirm, ChallengeInteractionCatalog.Get("CH.B1.2")); // pantry
+            Assert.AreSame(ChallengeInteraction.Confirm, ChallengeInteractionCatalog.Get("CH.B2.4")); // search
+            Assert.AreSame(ChallengeInteraction.Confirm, ChallengeInteractionCatalog.Get("CH.I5.1")); // waste log
         }
 
         [Test]
@@ -94,17 +93,16 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_foodwaste, ChallengeInteractionCatalog.Get("CH.B5.3").ModuleAction);
             Assert.IsTrue(ChallengeInteractionCatalog.Get("CH.B5.3").AutoCompletes);
             Assert.AreEqual(3, ChallengeInteractionCatalog.Get("CH.B5.3").RequiredCount);
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_foodwaste, ChallengeInteractionCatalog.Get("CH.I5.1").ModuleAction);
-            Assert.IsFalse(ChallengeInteractionCatalog.Get("CH.I5.1").AutoCompletes);
         }
 
         [Test]
-        public void Entries_WithModule_AlwaysHaveButtonKey()
+        public void Entries_WithModule_AlwaysHaveButtonKeyAndAutoComplete()
         {
             foreach (var pair in ChallengeInteractionCatalog.Entries)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(pair.Value.ModuleAction), pair.Key);
                 Assert.IsFalse(string.IsNullOrEmpty(pair.Value.ModuleButtonKey), pair.Key);
+                Assert.IsTrue(pair.Value.AutoCompletes, pair.Key);
             }
         }
     }
