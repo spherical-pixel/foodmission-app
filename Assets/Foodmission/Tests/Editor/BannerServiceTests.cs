@@ -39,6 +39,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void BannerAddresses_WithAnIdMissingFromTheCatalog_ReturnDefaultAddress()
+        {
+            // A raw id is never an Addressables key: asking for it logs InvalidKeyException before falling back
+            const string unknownId = "73213c26-5bd1-4b9d-b03f-7ca53ebb6c29";
+            Assert.AreEqual("dimensions/default", _bannerService.GetTopicBannerAddress(unknownId));
+            Assert.AreEqual("dimensions/default", _bannerService.GetDimensionBannerAddress(unknownId));
+            Assert.AreEqual("topics/reducing_meat_consumption", _bannerService.GetTopicBannerAddress("REDUCING_MEAT_CONSUMPTION"));
+        }
+
+        [Test]
         public void GetDimensionBannerAddress_WithEmptyOrNull_ReturnsDefaultAddress()
         {
             Assert.AreEqual("dimensions/default", _bannerService.GetDimensionBannerAddress(null));

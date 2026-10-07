@@ -28,7 +28,8 @@ namespace eu.foodmission.platform
                 return GetDefaultBannerAddress();
 
             Dimension dim = _dimensionService?.GetDimension(dimensionCodeOrId);
-            string dimCode = dim?.code ?? dimensionCodeOrId;
+            // An id the catalog doesn't know (not loaded yet) is never an Addressables key
+            string dimCode = dim?.code ?? (Guid.TryParse(dimensionCodeOrId, out _) ? null : dimensionCodeOrId);
 
             if (string.IsNullOrEmpty(dimCode))
                 return GetDefaultBannerAddress();
@@ -42,7 +43,8 @@ namespace eu.foodmission.platform
                 return GetDefaultBannerAddress();
 
             Topic topic = _dimensionService?.GetTopic(topicCodeOrId);
-            string topicCode = topic?.code ?? topicCodeOrId;
+            // An id the catalog doesn't know (not loaded yet) is never an Addressables key
+            string topicCode = topic?.code ?? (Guid.TryParse(topicCodeOrId, out _) ? null : topicCodeOrId);
 
             if (string.IsNullOrEmpty(topicCode))
                 return GetDefaultBannerAddress();

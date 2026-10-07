@@ -26,14 +26,17 @@ namespace eu.foodmission.platform
 
         private IQuizService _quizService;
         private readonly IShareService _shareService;
+        private readonly IDimensionService _dimensionService;
 
 
 
 
-        public QuizScreenViewModel(IStoreService storeService, IAvatarService avatarService, IQuizService quizService, IShareService shareService = null) : base(storeService)
+        public QuizScreenViewModel(IStoreService storeService, IAvatarService avatarService, IQuizService quizService, IShareService shareService = null,
+            IDimensionService dimensionService = null) : base(storeService)
         {
             _quizService = quizService;
             _shareService = shareService ?? App.current?.services?.GetService<IShareService>();
+            _dimensionService = dimensionService ?? App.current?.services?.GetService<IDimensionService>();
             //_storeService = storeService;
 
         }
@@ -43,7 +46,10 @@ namespace eu.foodmission.platform
             if (_quizService != null)
             {
                 IsLoading = true;
-                (Quiz result, ApiErrorResponse error) = await _quizService.GetQuizAsync(codeOrId);
+                var quizTask = _quizService.GetQuizAsync(codeOrId);
+                // The topic banner resolves the quiz's topicId through the dimension catalog
+                await DimensionCatalog.EnsureLoadedAsync(_dimensionService);
+                (Quiz result, ApiErrorResponse error) = await quizTask;
 
                 if (error != null)
                 {

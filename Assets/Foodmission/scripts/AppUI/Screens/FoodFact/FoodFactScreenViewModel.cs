@@ -23,16 +23,19 @@ namespace eu.foodmission.platform
         private readonly IFoodFactService _foodFactService;
         private readonly IChallengeSessionService _challengeSession;
         private readonly IShareService _shareService;
+        private readonly IDimensionService _dimensionService;
 
         public FoodFactScreenViewModel(
             IStoreService storeService,
             IFoodFactService foodFactService,
             IChallengeSessionService challengeSession = null,
-            IShareService shareService = null) : base(storeService)
+            IShareService shareService = null,
+            IDimensionService dimensionService = null) : base(storeService)
         {
             _foodFactService = foodFactService;
             _challengeSession = challengeSession ?? App.current?.services?.GetService<IChallengeSessionService>();
             _shareService = shareService ?? App.current?.services?.GetService<IShareService>();
+            _dimensionService = dimensionService ?? App.current?.services?.GetService<IDimensionService>();
         }
 
         public async Task LoadFoodFactDataByCodeOrId(string codeOrId)
@@ -45,7 +48,10 @@ namespace eu.foodmission.platform
                 IsLoading = true;
                 ErrorDetail = null;
 
-                var (result, error) = await _foodFactService.GetFoodFactAsync(codeOrId);
+                var factTask = _foodFactService.GetFoodFactAsync(codeOrId);
+                // The topic banner resolves the fact's topicId through the dimension catalog
+                await DimensionCatalog.EnsureLoadedAsync(_dimensionService);
+                var (result, error) = await factTask;
 
                 if (error != null)
                 {

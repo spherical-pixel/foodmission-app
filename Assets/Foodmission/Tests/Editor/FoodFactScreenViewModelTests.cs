@@ -43,6 +43,26 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task LoadFoodFact_WaitsForTheTopicCatalog_SoTheBannerResolvesItsTopic()
+        {
+            // The banner looks the topic up by id in DimensionService; before the catalog loads it falls back to the raw id
+            var dimensions = new Mock<IDimensionService>();
+            var catalog = new TaskCompletionSource<(Dimension[], ApiErrorResponse)>();
+            dimensions.Setup(d => d.PreloadAsync(null, false)).Returns(catalog.Task);
+            _mockFoodFactService.Setup(s => s.GetFoodFactAsync("FF1.1.1", null))
+                .ReturnsAsync((new FoodFact { code = "FF1.1.1", topicId = "t1" }, (ApiErrorResponse)null));
+            using var vm = new FoodFactScreenViewModel(_storeService, _mockFoodFactService.Object, dimensionService: dimensions.Object);
+
+            Task load = vm.LoadFoodFactDataByCodeOrId("FF1.1.1");
+            Assert.IsNull(vm.FoodFactData);
+
+            catalog.SetResult((new Dimension[0], new ApiErrorResponse { statusCode = 429 }));
+            await load;
+
+            Assert.AreEqual("FF1.1.1", vm.FoodFactData.code, "a failed catalog load still shows the fact (default banner)");
+        }
+
+        [Test]
         public void InitialState_ShouldHaveDefaultValues()
         {
             Assert.IsFalse(_vm.IsLoading);

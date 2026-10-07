@@ -46,6 +46,26 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task LoadQuiz_WaitsForTheTopicCatalog_SoTheBannerResolvesItsTopic()
+        {
+            var dimensions = new Mock<IDimensionService>();
+            var catalog = new TaskCompletionSource<(Dimension[], ApiErrorResponse)>();
+            dimensions.Setup(d => d.PreloadAsync(null, false)).Returns(catalog.Task);
+            _mockQuizService.Setup(s => s.GetQuizAsync("Q.B1.1", null))
+                .ReturnsAsync((new Quiz { code = "Q.B1.1", topicId = "t1" }, (ApiErrorResponse)null));
+            var vm = new QuizScreenViewModel(_storeService, _mockAvatarService.Object, _mockQuizService.Object, dimensionService: dimensions.Object);
+
+            Task load = vm.LoadQuizDataByCodeOrId("Q.B1.1");
+            Assert.IsNull(vm.QuizData);
+
+            catalog.SetResult((new Dimension[0], null));
+            await load;
+
+            Assert.AreEqual("Q.B1.1", vm.QuizData.code);
+            vm.Dispose();
+        }
+
+        [Test]
         public void InitialState_ShouldHaveDefaultValues()
         {
             Assert.IsFalse(_vm.IsLoading);
