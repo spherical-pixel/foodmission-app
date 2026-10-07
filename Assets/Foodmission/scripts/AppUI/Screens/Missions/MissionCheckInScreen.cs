@@ -219,7 +219,8 @@ namespace eu.foodmission.platform
                     FitSwipeViewToStep(stepIndex);
                 }
             });
-            if (stepIndex == 0)
+            // Only meals can also be logged elsewhere in the app (quick meal log); every other answer goes through Nutri
+            if (stepIndex == 0 && _viewModel != null && _viewModel.KindOf(stepIndex) == CheckInStepKind.MealDay)
             {
                 var hint = new Text { text = L("MISSION_REPORT_INTRO") };
                 hint.AddToClassList("fm-mission-report-hint");
