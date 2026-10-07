@@ -67,6 +67,17 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, plan.MealDays.Single().Questions.Count(q => q.EventType == ClientEventTypes.MealMeatConsumed));
         }
 
+        [TestCase("M.A1.1")]
+        [TestCase("M.B1.3")]
+        public void MeatCountingMissions_AskMeatFreeAndMeat(string code)
+        {
+            // Only "had meat?" left users unsure what an unchecked meal meant
+            var day = CheckInPlanner.Plan(Inputs(M(code, Now.Date))).MealDays.Single();
+
+            CollectionAssert.AreEquivalent(new[] { ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed },
+                day.Questions.Select(q => q.EventType).ToArray());
+        }
+
         [Test]
         public void BreakfastOnlyFlag_AppliesOnlyToBreakfast_UnlessAnotherMissionNeedsItAnywhere()
         {

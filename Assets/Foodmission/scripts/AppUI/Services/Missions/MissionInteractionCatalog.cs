@@ -40,7 +40,7 @@ namespace eu.foodmission.platform
         private static readonly Dictionary<string, MissionInteraction> s_Entries = new(StringComparer.OrdinalIgnoreCase)
         {
             // A1 — Diet (advanced)
-            { "M.A1.1", Auto(Meals(ClientEventTypes.MealMeatConsumed, 7)) },
+            { "M.A1.1", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, false, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
             { "M.A1.2", Auto(MealChoice("MISSION_Q_MEAL_PROTEIN", 10, false, ClientEventTypes.MealLegumeConsumed, ClientEventTypes.MealMeatConsumed)) },
             { "M.A1.3", Auto(Meals(ClientEventTypes.MealLegumeConsumed, 5)) },
             { "M.A1.4", Auto(Meals(ClientEventTypes.MealAlternativeStaple, 5)) },
@@ -83,7 +83,7 @@ namespace eu.foodmission.platform
             // B1 — Diet (beginner)
             { "M.B1.1", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, true, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
             { "M.B1.2", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, true, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
-            { "M.B1.3", Auto(Meals(ClientEventTypes.MealMeatConsumed, 7)) },
+            { "M.B1.3", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, false, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
             { "M.B1.4", Auto(SwapMeals(2, ProteinSwaps)) },
             { "M.B1.5", Auto(SwapMeals(2, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes)) },
             // B2 — Product choices (beginner)
