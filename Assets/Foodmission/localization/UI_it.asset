@@ -4105,6 +4105,18 @@ MonoBehaviour:
       cosa hai fatto, cos\xEC conta!"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247371
+    m_Localized: "Iniziata {0} \xB7 Termina {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247372
+    m_Localized: Giorno {0} di {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247373
+    m_Localized: Ultimo giorno
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

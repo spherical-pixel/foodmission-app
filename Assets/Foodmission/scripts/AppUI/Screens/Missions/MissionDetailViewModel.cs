@@ -72,6 +72,18 @@ namespace eu.foodmission.platform
             }
         }
 
+        public Func<DateTime> Clock { get; set; } = () => DateTime.Now;
+
+        public DateTime? StartLocal => MissionProgress?.startedAt?.ToLocalTime();
+        public DateTime? DeadlineLocal => StartLocal.HasValue ? MissionDeadlines.DeadlineLocal(StartLocal.Value) : (DateTime?)null;
+        /// <summary>Start, end and current day of the 7-day window: only while the user can still act on it.</summary>
+        public bool ShowsSchedule => CanAct && StartLocal.HasValue;
+        /// <summary>1–7, counted from the start time (not calendar days) so the window always has 7.</summary>
+        public int ScheduleDay => StartLocal.HasValue
+            ? Math.Clamp((int)Math.Floor((Clock() - StartLocal.Value).TotalDays) + 1, 1, MissionDeadlines.WindowDays)
+            : 0;
+        public bool IsLastDay => ScheduleDay == MissionDeadlines.WindowDays;
+
         public bool IsFailed => MissionProgressState.IsFailed(MissionProgress);
         public int ProgressPercent => IsFailed ? 0 : (int)Math.Clamp(MissionProgress?.progress ?? 0f, 0f, 100f);
         public bool IsCompleted => MissionProgressState.IsCompleted(MissionProgress);
@@ -240,6 +252,7 @@ namespace eu.foodmission.platform
             OnPropertyChanged(nameof(ShowsNotCurrentQuest));
             OnPropertyChanged(nameof(AutoModules));
             OnPropertyChanged(nameof(LevelKey));
+            OnPropertyChanged(nameof(ShowsSchedule));
         }
     }
 }

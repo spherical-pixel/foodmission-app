@@ -3971,6 +3971,18 @@ MonoBehaviour:
     m_Key: MISSION_LAST_DAY_MESSAGE_MANY
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247371
+    m_Key: MISSION_SCHEDULE_DATES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247372
+    m_Key: MISSION_SCHEDULE_DAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247373
+    m_Key: MISSION_SCHEDULE_LAST_DAY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

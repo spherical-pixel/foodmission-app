@@ -4087,6 +4087,18 @@ MonoBehaviour:
       did so it counts!
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247371
+    m_Localized: "Started {0} \xB7 Ends {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247372
+    m_Localized: Day {0} of {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247373
+    m_Localized: Last day
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

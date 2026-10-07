@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
@@ -31,6 +33,9 @@ namespace eu.foodmission.platform
         private Text _status;
         private Text _autoHint;
         private Text _progressLabel;
+        private VisualElement _schedule;
+        private Text _scheduleDates;
+        private Text _scheduleDay;
         private VisualElement _progressFill;
         private VisualElement _card;
         private VisualElement _actions;
@@ -74,6 +79,9 @@ namespace eu.foodmission.platform
             _status = contentContainer.Q<Text>("mission-status");
             _autoHint = contentContainer.Q<Text>("mission-auto-hint");
             _progressLabel = contentContainer.Q<Text>("mission-progress-label");
+            _schedule = contentContainer.Q<VisualElement>("mission-schedule");
+            _scheduleDates = contentContainer.Q<Text>("mission-schedule-dates");
+            _scheduleDay = contentContainer.Q<Text>("mission-schedule-day");
             _progressFill = contentContainer.Q<VisualElement>("mission-progress-fill");
             _actions = contentContainer.Q<VisualElement>("mission-actions");
             _autoModules = contentContainer.Q<VisualElement>("mission-auto-modules");
@@ -267,6 +275,8 @@ namespace eu.foodmission.platform
                 _levelBadge.EnableInClassList("hidden", levelKey == null);
             }
 
+            RenderSchedule();
+
             int pct = _viewModel.ProgressPercent;
             if (_progressLabel != null)
             {
@@ -372,6 +382,32 @@ namespace eu.foodmission.platform
 
             FMDialog.ShowApiError(this, Localize("ERROR_TITLE"), _viewModel.ErrorDetail);
             _viewModel.ErrorDetail = null;
+        }
+
+        private void RenderSchedule()
+        {
+            bool shows = _viewModel.ShowsSchedule;
+            _schedule?.EnableInClassList("hidden", !shows);
+            if (!shows)
+            {
+                return;
+            }
+
+            CultureInfo culture = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentCulture;
+            DateTime start = _viewModel.StartLocal.Value;
+            DateTime end = _viewModel.DeadlineLocal.Value;
+            if (_scheduleDates != null)
+            {
+                string startText = start.ToString("ddd d MMM", culture);
+                string endText = end.ToString("ddd d MMM", culture) + ", " + end.ToString("t", culture);
+                _scheduleDates.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_SCHEDULE_DATES", new object[] { startText, endText });
+            }
+            if (_scheduleDay != null)
+            {
+                _scheduleDay.text = _viewModel.IsLastDay
+                    ? Localize("MISSION_SCHEDULE_LAST_DAY")
+                    : LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_SCHEDULE_DAY", new object[] { _viewModel.ScheduleDay, MissionDeadlines.WindowDays });
+            }
         }
 
         private static string Localize(string key)

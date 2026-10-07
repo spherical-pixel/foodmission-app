@@ -4115,6 +4115,18 @@ MonoBehaviour:
       je hebt gedaan, zodat het meetelt!
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247371
+    m_Localized: "Gestart {0} \xB7 Eindigt {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247372
+    m_Localized: Dag {0} van {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247373
+    m_Localized: Laatste dag
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

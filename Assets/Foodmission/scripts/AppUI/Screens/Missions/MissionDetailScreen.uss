@@ -200,3 +200,24 @@
 .fm-mission-module-list > .fm-mission-btn {
     margin-bottom: 12px;
 }
+
+/* Start, end and current day of the mission's 7-day window, above the progress bar */
+.fm-mission-schedule {
+    align-items: center;
+    margin: 6px 15px 0 15px;
+}
+
+.fm-mission-schedule-dates {
+    white-space: normal;
+    -unity-text-align: middle-center;
+    color: var(--appui-foregrounds-50);
+    width: 100%;
+}
+
+.fm-mission-schedule-day {
+    -unity-font-style: bold;
+    margin-top: 2px;
+    -unity-text-align: middle-center;
+    color: var(--appui-foregrounds-50);
+    width: 100%;
+}

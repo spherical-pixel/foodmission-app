@@ -4118,6 +4118,18 @@ MonoBehaviour:
       was du gemacht hast, damit es z\xE4hlt!"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247371
+    m_Localized: "Gestartet {0} \xB7 Endet {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247372
+    m_Localized: Tag {0} von {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247373
+    m_Localized: Letzter Tag
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

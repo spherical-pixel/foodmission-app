@@ -52,11 +52,53 @@ namespace eu.foodmission.platform.Tests
             _vm?.Dispose();
         }
 
-        private Task LoadAsync(string code, float progress = 0f, bool completed = false, string status = null)
+        private Task LoadAsync(string code, float progress = 0f, bool completed = false, string status = null, DateTime? startedLocal = null)
         {
             _missions.Setup(m => m.GetMissionAsync(code, null)).ReturnsAsync((new Mission { id = "id", code = code, title = "T", level = "BEGINNER" }, (ApiErrorResponse)null));
-            _missions.Setup(m => m.GetMissionProgressAsync(code, null)).ReturnsAsync((new MissionProgress { missionCode = code, progress = progress, completed = completed, status = status }, (ApiErrorResponse)null));
+            _missions.Setup(m => m.GetMissionProgressAsync(code, null)).ReturnsAsync((new MissionProgress
+            {
+                missionCode = code, progress = progress, completed = completed, status = status, startedAt = startedLocal?.ToUniversalTime()
+            }, (ApiErrorResponse)null));
             return _vm.LoadMissionAsync(code);
+        }
+
+        // Monday 15:00 local: the 7-day window ends next Monday 15:00
+        private static readonly DateTime Started = new DateTime(2026, 10, 5, 15, 0, 0, DateTimeKind.Local);
+
+        [Test]
+        public async Task Schedule_ActiveMission_ShowsStartEndAndDay()
+        {
+            _vm.Clock = () => Started.AddDays(1).AddHours(19); // Wednesday 10:00
+            await LoadAsync("M.B1.4", 40f, startedLocal: Started);
+
+            Assert.IsTrue(_vm.ShowsSchedule);
+            Assert.AreEqual(Started, _vm.StartLocal);
+            Assert.AreEqual(Started.AddDays(7), _vm.DeadlineLocal);
+            Assert.AreEqual(2, _vm.ScheduleDay, "days count from the start time, so the window has 7 of them");
+            Assert.IsFalse(_vm.IsLastDay);
+        }
+
+        [Test]
+        public async Task Schedule_DayBounds()
+        {
+            await LoadAsync("M.B1.4", startedLocal: Started);
+
+            _vm.Clock = () => Started;
+            Assert.AreEqual(1, _vm.ScheduleDay);
+
+            _vm.Clock = () => Started.AddDays(6).AddHours(1);
+            Assert.AreEqual(7, _vm.ScheduleDay);
+            Assert.IsTrue(_vm.IsLastDay);
+        }
+
+        [Test]
+        public async Task Schedule_HiddenWhenNotStartedOrResolved()
+        {
+            await LoadAsync("M.B1.4");
+            Assert.IsFalse(_vm.ShowsSchedule, "not started");
+
+            await LoadAsync("M.B1.4", 100f, completed: true, startedLocal: Started);
+            Assert.IsFalse(_vm.ShowsSchedule, "completed");
         }
 
         [Test]

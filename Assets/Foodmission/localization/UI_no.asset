@@ -4100,6 +4100,18 @@ MonoBehaviour:
       har gjort, s\xE5 det teller!"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247371
+    m_Localized: "Startet {0} \xB7 Slutter {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247372
+    m_Localized: Dag {0} av {1}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247373
+    m_Localized: Siste dag
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

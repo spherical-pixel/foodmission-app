@@ -4101,6 +4101,18 @@ MonoBehaviour:
       lo que has hecho para que cuente!"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247371
+    m_Localized: "Empez\xF3 {0} \xB7 Termina {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247372
+    m_Localized: "D\xEDa {0} de {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247373
+    m_Localized: "\xDAltimo d\xEDa"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
