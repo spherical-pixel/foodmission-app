@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -9,11 +10,21 @@ namespace eu.foodmission.platform
 {
     public class QuestService : IQuestService
     {
+        /// <summary>How long a fetched quest is reused: it is catalog content, and Home asks for it from several prompts at once.</summary>
+        public static readonly TimeSpan CacheDuration = TimeSpan.FromSeconds(60);
+
         private readonly IStoreService _storeService;
+        private readonly Dictionary<string, (DateTime FetchedAt, Quest Quest)> _questCache = new Dictionary<string, (DateTime, Quest)>();
+        private readonly Dictionary<string, Task<(Quest, ApiErrorResponse)>> _questRequests = new Dictionary<string, Task<(Quest, ApiErrorResponse)>>();
+
+        /// <summary>Loads one quest (code or id, language) from the backend; replaceable in tests.</summary>
+        public Func<string, string, Task<(Quest Result, ApiErrorResponse Error)>> Fetch { get; set; }
+        public Func<DateTime> Clock { get; set; } = () => DateTime.UtcNow;
 
         public QuestService(IStoreService storeService)
         {
             _storeService = storeService;
+            Fetch = FetchQuestAsync;
         }
 
         private string AuthHeader
@@ -88,6 +99,41 @@ namespace eu.foodmission.platform
                 return (null, null);
 
             string effectiveLang = ResolveLang(lang);
+            string key = codeOrId + "|" + effectiveLang;
+            if (_questCache.TryGetValue(key, out var cached) && Clock() - cached.FetchedAt < CacheDuration)
+            {
+                return (cached.Quest, null);
+            }
+
+            // Concurrent callers share one request: the backend throttles bursts on the same route (429)
+            if (!_questRequests.TryGetValue(key, out Task<(Quest, ApiErrorResponse)> request))
+            {
+                request = Fetch(codeOrId, effectiveLang);
+                _questRequests[key] = request;
+            }
+
+            (Quest Result, ApiErrorResponse Error) result;
+            try
+            {
+                result = await request;
+            }
+            finally
+            {
+                if (_questRequests.TryGetValue(key, out var current) && current == request)
+                {
+                    _questRequests.Remove(key);
+                }
+            }
+
+            if (result.Error == null && result.Result != null)
+            {
+                _questCache[key] = (Clock(), result.Result);
+            }
+            return result;
+        }
+
+        private async Task<(Quest Result, ApiErrorResponse Error)> FetchQuestAsync(string codeOrId, string effectiveLang)
+        {
             string url = $"{ApiConfig.BaseUrl}/api/v1/quests/{Uri.EscapeDataString(codeOrId)}?lang={Uri.EscapeDataString(effectiveLang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
