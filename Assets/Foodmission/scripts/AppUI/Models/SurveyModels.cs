@@ -158,6 +158,7 @@ namespace eu.foodmission.platform
         public List<string> completedSlugsInCycle = new List<string>();
         public List<string> skippedSlugsInCycle = new List<string>();
         public List<PostponedSurvey> postponedUntil = new List<PostponedSurvey>();
+        public string lastSurveyDay = ""; // local "YYYY-MM-DD" of the last survey answered, skipped or postponed: one a day
 
         public PilotSurveyCycleState Copy()
         {
@@ -168,6 +169,7 @@ namespace eu.foodmission.platform
                 activeDatesInCycle = this.activeDatesInCycle != null ? new List<string>(this.activeDatesInCycle) : new List<string>(),
                 completedSlugsInCycle = this.completedSlugsInCycle != null ? new List<string>(this.completedSlugsInCycle) : new List<string>(),
                 skippedSlugsInCycle = this.skippedSlugsInCycle != null ? new List<string>(this.skippedSlugsInCycle) : new List<string>(),
+                lastSurveyDay = this.lastSurveyDay ?? "",
                 postponedUntil = this.postponedUntil != null
                     ? this.postponedUntil.Where(p => p != null).Select(p => new PostponedSurvey { slug = p.slug, day = p.day }).ToList()
                     : new List<PostponedSurvey>()

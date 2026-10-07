@@ -86,6 +86,10 @@ namespace eu.foodmission.platform
                 {
                     state.activeDatesInCycle = state.activeDatesInCycle.ConvertAll(d => ShiftDay(d, days));
                 }
+                if (!string.IsNullOrEmpty(state.lastSurveyDay))
+                {
+                    state.lastSurveyDay = ShiftDay(state.lastSurveyDay, days);
+                }
                 if (state.postponedUntil != null)
                 {
                     foreach (PostponedSurvey p in state.postponedUntil)
@@ -219,12 +223,18 @@ namespace eu.foodmission.platform
             return merged;
         }
 
+        private static string LatestDay(string a, string b)
+        {
+            return string.CompareOrdinal(a ?? "", b ?? "") >= 0 ? (a ?? "") : (b ?? "");
+        }
+
         private static PilotSurveyCycleState Normalize(PilotSurveyCycleState state)
         {
             state.activeDatesInCycle ??= new List<string>();
             state.completedSlugsInCycle ??= new List<string>();
             state.skippedSlugsInCycle ??= new List<string>();
             state.postponedUntil ??= new List<PostponedSurvey>();
+            state.lastSurveyDay ??= "";
             return state;
         }
 
@@ -242,9 +252,12 @@ namespace eu.foodmission.platform
             {
                 return Normalize(local.Copy());
             }
+            string lastSurveyDay = LatestDay(local.lastSurveyDay, server.lastSurveyDay);
             if (local.currentCycle != server.currentCycle)
             {
-                return Normalize((local.currentCycle > server.currentCycle ? local : server).Copy());
+                PilotSurveyCycleState winner = Normalize((local.currentCycle > server.currentCycle ? local : server).Copy());
+                winner.lastSurveyDay = lastSurveyDay;
+                return winner;
             }
 
             PilotSurveyCycleState a = Normalize(local.Copy());
@@ -252,6 +265,7 @@ namespace eu.foodmission.platform
             return new PilotSurveyCycleState
             {
                 currentCycle = a.currentCycle,
+                lastSurveyDay = lastSurveyDay,
                 cycleStartDate = new[] { a.cycleStartDate, b.cycleStartDate }
                     .Where(d => !string.IsNullOrEmpty(d)).OrderBy(d => d, StringComparer.Ordinal).FirstOrDefault() ?? "",
                 activeDatesInCycle = a.activeDatesInCycle.Union(b.activeDatesInCycle).OrderBy(d => d, StringComparer.Ordinal).ToList(),
@@ -416,6 +430,7 @@ namespace eu.foodmission.platform
             string tomorrow = NowLocal().Date.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             state.postponedUntil.RemoveAll(p => p == null || p.slug == slug);
             state.postponedUntil.Add(new PostponedSurvey { slug = slug, day = tomorrow });
+            state.lastSurveyDay = TodayLocal;
             SaveCycleState(state);
         }
 
@@ -427,8 +442,9 @@ namespace eu.foodmission.platform
             if (!state.skippedSlugsInCycle.Contains(slug))
             {
                 state.skippedSlugsInCycle.Add(slug);
-                SaveCycleState(state);
             }
+            state.lastSurveyDay = TodayLocal;
+            SaveCycleState(state);
 
             CheckAndAdvanceCycleIfCompleted(state);
         }
@@ -441,8 +457,9 @@ namespace eu.foodmission.platform
             if (!state.completedSlugsInCycle.Contains(slug))
             {
                 state.completedSlugsInCycle.Add(slug);
-                SaveCycleState(state);
             }
+            state.lastSurveyDay = TodayLocal;
+            SaveCycleState(state);
 
             CheckAndAdvanceCycleIfCompleted(state);
             return true;
@@ -500,51 +517,47 @@ namespace eu.foodmission.platform
 
             //Debug.Log($"[{GetType().Name}] 📊 Estado del Ciclo {state.currentCycle}: Días activos={activeDays}, Días transcurridos={daysSinceStart}, Completadas=[{string.Join(", ", state.completedSlugsInCycle)}], Saltadas=[{string.Join(", ", state.skippedSlugsInCycle)}]");
 
+            // Never two surveys the same day: answering, declining or postponing one closes the day
+            if (state.lastSurveyDay == TodayLocal)
+            {
+                return null;
+            }
+
             foreach (var rule in s_Rules)
             {
-                if (state.completedSlugsInCycle.Contains(rule.Slug))
+                if (state.completedSlugsInCycle.Contains(rule.Slug) || state.skippedSlugsInCycle.Contains(rule.Slug))
                 {
-                    //Debug.Log($"[{GetType().Name}] ⏭️ Regla '{rule.Slug}' ignorada: ya completada en ciclo.");
                     continue;
                 }
 
-                if (state.skippedSlugsInCycle.Contains(rule.Slug))
-                {
-                    //Debug.Log($"[{GetType().Name}] ⏭️ Regla '{rule.Slug}' ignorada: saltada en ciclo.");
-                    continue;
-                }
-
+                // The first pending survey of the cycle: every later one waits for it to be answered or declined
                 if (IsPostponed(state, rule.Slug))
                 {
-                    continue;
+                    return null;
                 }
 
                 bool daysOk = activeDays >= rule.MinActiveDaysInCycle;
                 bool elapsedOk = daysSinceStart >= rule.MinDaysSinceCycleStart;
-
-                if (daysOk && elapsedOk)
-                {
-                    //Debug.Log($"[{GetType().Name}] ✅ Regla coincidente '{rule.Slug}' (mín días: {rule.MinActiveDaysInCycle}, mín transcurridos: {rule.MinDaysSinceCycleStart}). Solicitando encuesta al backend...");
-
-                    var (survey, error) = await _surveyService.GetSurveyBySlugAsync(rule.Slug, lang);
-                    if (survey != null && survey.questions != null && survey.questions.Length > 0)
-                    {
-                        //Debug.Log($"[{GetType().Name}] 🎉 Encuesta '{rule.Slug}' cargada con éxito ({survey.questions.Length} preguntas, id: {survey.id}).");
-                        return survey;
-                    }
-                    else if (error != null)
-                    {
-                        Debug.LogWarning($"[{GetType().Name}] ⚠️ Error del backend al obtener survey '{rule.Slug}': {error.message} (status: {error.statusCode})");
-                    }
-                    else if (survey != null && (survey.questions == null || survey.questions.Length == 0))
-                    {
-                        Debug.LogWarning($"[{GetType().Name}] ⚠️ La encuesta '{rule.Slug}' existe en el backend pero no tiene preguntas.");
-                    }
-                }
-                else
+                if (!daysOk || !elapsedOk)
                 {
                     Debug.Log($"[{GetType().Name}] ⏳ Regla '{rule.Slug}' aún no cumple requisitos: (Días activos: {activeDays}/{rule.MinActiveDaysInCycle}, Días transcurridos: {daysSinceStart}/{rule.MinDaysSinceCycleStart})");
+                    return null;
                 }
+
+                var (survey, error) = await _surveyService.GetSurveyBySlugAsync(rule.Slug, lang);
+                if (survey != null && survey.questions != null && survey.questions.Length > 0)
+                {
+                    return survey;
+                }
+                if (error != null)
+                {
+                    // Try again later: skipping ahead on a network error would break the order
+                    Debug.LogWarning($"[{GetType().Name}] ⚠️ Error del backend al obtener survey '{rule.Slug}': {error.message} (status: {error.statusCode})");
+                    return null;
+                }
+
+                // Missing on the backend (or without questions): it can never be answered, so it doesn't block the next one
+                Debug.LogWarning($"[{GetType().Name}] ⚠️ La encuesta '{rule.Slug}' no existe en el backend o no tiene preguntas.");
             }
 
             Debug.Log($"[{GetType().Name}] ℹ️ No hay encuestas pendientes para los criterios actuales.");
@@ -566,6 +579,7 @@ namespace eu.foodmission.platform
                 }
             }
 
+            state.lastSurveyDay = "";
             SaveCycleState(state);
             Debug.Log($"[{GetType().Name}] [DEBUG] Set activeDays={activeDaysCount}, daysSinceStart={daysSinceStart}, startDate={state.cycleStartDate}");
         }
@@ -588,6 +602,7 @@ namespace eu.foodmission.platform
             state.completedSlugsInCycle.Clear();
             state.skippedSlugsInCycle.Clear();
             state.postponedUntil.Clear();
+            state.lastSurveyDay = "";
             SaveCycleState(state);
             Debug.Log($"[{GetType().Name}] [DEBUG] Reset completed/skipped surveys in Cycle {state.currentCycle}");
         }

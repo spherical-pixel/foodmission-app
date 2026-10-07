@@ -105,6 +105,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void PilotCycle_ShiftsLastSurveyDay()
+        {
+            string json = JsonConvert.SerializeObject(new PilotSurveyCycleState { cycleStartDate = "2026-10-01", lastSurveyDay = "2026-10-08" });
+
+            var shifted = JsonConvert.DeserializeObject<PilotSurveyCycleState>(PilotSurveyService.ShiftStoredDates(json, 7));
+
+            Assert.AreEqual("2026-10-01", shifted.lastSurveyDay);
+        }
+
+        [Test]
         public void PilotCycle_ShiftsPostponedDays()
         {
             string json = JsonConvert.SerializeObject(new PilotSurveyCycleState

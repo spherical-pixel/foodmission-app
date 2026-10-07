@@ -164,20 +164,82 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("second-use", (await restarted.GetPendingPilotSurveyAsync())?.slug, "offered again tomorrow");
         }
 
-        [Test]
-        public async Task GetPendingPilotSurveyAsync_WhenSkipped_EvaluatesNextRule()
+        private void SetActiveDays(int count)
         {
-            await _service.AcceptPilotConsentAsync();
-
             var state = _service.GetCurrentCycleState();
-            state.activeDatesInCycle = new List<string> { DaysAgo(2), DaysAgo(1), DaysAgo(0) }; // 3 days
+            state.activeDatesInCycle = new List<string>();
+            for (int i = count - 1; i >= 0; i--)
+            {
+                state.activeDatesInCycle.Add(DaysAgo(i));
+            }
             _localStorageService.SetValue<string>("pilot_cycle_state_test-user-123", Newtonsoft.Json.JsonConvert.SerializeObject(state));
+        }
+
+        [Test]
+        public async Task GetPendingPilotSurveyAsync_WhenSkipped_NextOneComesTomorrow()
+        {
+            DateTime now = new DateTime(2026, 10, 10, 10, 0, 0, DateTimeKind.Local);
+            _service.NowLocal = () => now;
+            await _service.AcceptPilotConsentAsync();
+            SetActiveDays(3);
 
             _service.SkipSurvey("second-use");
+            Assert.IsNull(await _service.GetPendingPilotSurveyAsync(), "one survey a day: declining counts");
 
-            var survey = await _service.GetPendingPilotSurveyAsync();
-            Assert.IsNotNull(survey);
-            Assert.AreEqual("third-use", survey.slug);
+            now = now.AddDays(1);
+            Assert.AreEqual("third-use", (await _service.GetPendingPilotSurveyAsync())?.slug);
+        }
+
+        [Test]
+        public async Task GetPendingPilotSurveyAsync_WhenPostponed_LaterSurveysWaitForIt()
+        {
+            DateTime now = new DateTime(2026, 10, 10, 10, 0, 0, DateTimeKind.Local);
+            _service.NowLocal = () => now;
+            await _service.AcceptPilotConsentAsync();
+            SetActiveDays(3); // second-use and third-use are both due
+
+            _service.PostponeSurvey("second-use");
+            Assert.IsNull(await _service.GetPendingPilotSurveyAsync(), "third-use must not jump ahead of the postponed one");
+
+            now = now.AddDays(1);
+            Assert.AreEqual("second-use", (await _service.GetPendingPilotSurveyAsync())?.slug);
+        }
+
+        [Test]
+        public async Task GetPendingPilotSurveyAsync_CompletedToday_NextOneComesTomorrow()
+        {
+            DateTime now = new DateTime(2026, 10, 10, 10, 0, 0, DateTimeKind.Local);
+            _service.NowLocal = () => now;
+            await _service.AcceptPilotConsentAsync();
+            SetActiveDays(3);
+
+            await _service.MarkSurveyCompletedAsync("second-use", "id-second-use");
+            Assert.IsNull(await _service.GetPendingPilotSurveyAsync(), "never two surveys the same day");
+
+            now = now.AddDays(1);
+            Assert.AreEqual("third-use", (await _service.GetPendingPilotSurveyAsync())?.slug);
+        }
+
+        [Test]
+        public async Task GetPendingPilotSurveyAsync_SurveyMissingOnBackend_DoesNotBlockTheNextOne()
+        {
+            await _service.AcceptPilotConsentAsync();
+            SetActiveDays(3);
+            _mockSurveyService.Setup(s => s.GetSurveyBySlugAsync("second-use", It.IsAny<string>()))
+                .ReturnsAsync(((SurveyDto)null, (ApiErrorResponse)null));
+
+            Assert.AreEqual("third-use", (await _service.GetPendingPilotSurveyAsync())?.slug);
+        }
+
+        [Test]
+        public async Task GetPendingPilotSurveyAsync_BackendError_OffersNothingForNow()
+        {
+            await _service.AcceptPilotConsentAsync();
+            SetActiveDays(3);
+            _mockSurveyService.Setup(s => s.GetSurveyBySlugAsync("second-use", It.IsAny<string>()))
+                .ReturnsAsync(((SurveyDto)null, new ApiErrorResponse { message = "offline", statusCode = 503 }));
+
+            Assert.IsNull(await _service.GetPendingPilotSurveyAsync(), "a network error must not skip ahead in the order");
         }
 
         [Test]
@@ -380,6 +442,16 @@ namespace eu.foodmission.platform.Tests
             var survey = await _service.GetPendingPilotSurveyAsync();
 
             Assert.AreNotEqual("second-use", survey?.slug);
+        }
+
+        [Test]
+        public void Merge_KeepsTheLatestSurveyDay()
+        {
+            var local = new PilotSurveyCycleState { currentCycle = 1, lastSurveyDay = "2026-10-09" };
+            var server = new PilotSurveyCycleState { currentCycle = 1, lastSurveyDay = "2026-10-10" };
+
+            Assert.AreEqual("2026-10-10", PilotSurveyService.Merge(local, server).lastSurveyDay);
+            Assert.AreEqual("2026-10-10", PilotSurveyService.Merge(server, local).lastSurveyDay);
         }
     }
 }
