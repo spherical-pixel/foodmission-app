@@ -14,14 +14,16 @@ namespace eu.foodmission.platform.Editor
 {
     /// <summary>
     /// Simulates the passing of days for the logged-in user: runs _desarrollo/local-env/advance-day.sh on the local
-    /// backend and moves the dates the app keeps on the device by the same amount (check-in nudge, survey cycle,
-    /// acknowledged failures, celebration cursor). Works in and out of Play Mode; in Play Mode re-enter Home.
+    /// backend (moves the user's history, then re-scores their missions like the hourly rules cron) and moves the dates
+    /// the app keeps on the device by the same amount (check-in nudge, survey cycle, acknowledged failures, celebration
+    /// cursor). Works in and out of Play Mode; in Play Mode re-enter Home.
     /// </summary>
     public static class DevTimeTravelMenu
     {
         private const string ScriptRelativePath = "_desarrollo/local-env/advance-day.sh";
         private const string LocalEnvironmentName = "Local";
-        private const int ScriptTimeoutMs = 60000;
+        // The rules re-score boots the Nest app context (a few seconds)
+        private const int ScriptTimeoutMs = 120000;
 
         [MenuItem("Foodmission/Dev/Advance 1 day")]
         private static void Advance1() => Advance(1);
@@ -65,7 +67,7 @@ namespace eu.foodmission.platform.Editor
                 }
 
                 List<string> shifted = ShiftLocalDates(storage, state.userId, days);
-                string backend = string.Join("\n", output.Split('\n').Where(l => l.StartsWith("UPDATE", StringComparison.Ordinal) || l.StartsWith("User:", StringComparison.Ordinal)));
+                string backend = string.Join("\n", output.Split('\n').Where(l => l.StartsWith("UPDATE", StringComparison.Ordinal) || l.StartsWith("User:", StringComparison.Ordinal) || l.StartsWith("Rules:", StringComparison.Ordinal)));
                 string local = shifted.Count > 0 ? string.Join("\n", shifted) : "(no local state to shift)";
                 Debug.Log($"[DevTimeTravelMenu] Advanced {days} day(s) for {state.userEmail}\n{backend}\nLocal: {string.Join(", ", shifted)}");
                 Show($"Advanced {days} day(s) for {state.userEmail}.\n\nBackend:\n{backend}\n\nLocal:\n{local}\n\nIn Play Mode, leave Home and enter it again.");
