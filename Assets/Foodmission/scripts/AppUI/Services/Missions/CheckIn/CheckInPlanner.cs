@@ -28,6 +28,11 @@ namespace eu.foodmission.platform
                 {
                     continue;
                 }
+                // Past its deadline nothing counts any more (the backend fails it within the hour)
+                if (mission.StartLocal.HasValue && inputs.NowLocal >= MissionDeadlines.DeadlineLocal(mission.StartLocal.Value))
+                {
+                    continue;
+                }
 
                 IReadOnlyList<DateTime> window = MissionReportDays.Allowed(mission.StartLocal, inputs.NowLocal);
                 foreach (MissionReportStep step in mission.Interaction.Steps)

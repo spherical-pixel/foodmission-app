@@ -126,6 +126,19 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void MissionsPastTheirDeadline_AreNotOffered()
+        {
+            // Ended at 15:00 today; the backend fails it within the hour, and nothing reported now would count
+            var inputs = Inputs(M("M.A1.3", Now.Date.AddDays(-7).AddHours(15)), M("M.A5.4", Now.Date.AddDays(-7).AddHours(15)));
+            inputs.NowLocal = Now.Date.AddHours(18);
+
+            Assert.IsTrue(CheckInPlanner.Plan(inputs).IsEmpty);
+
+            inputs.NowLocal = Now.Date.AddHours(14);
+            Assert.IsFalse(CheckInPlanner.Plan(inputs).IsEmpty, "still inside the window");
+        }
+
+        [Test]
         public void DayEvents_ExcludeCoveredDays_AndRespectMissionStart()
         {
             var inputs = Inputs(M("M.A5.4", Now.AddDays(-3)));
