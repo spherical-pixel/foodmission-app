@@ -530,6 +530,29 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task StartQuestAsync_OnSuccess_GoesHome()
+        {
+            var mockAuthService = new Mock<IAuthService>();
+            mockAuthService.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((true, (ApiErrorResponse)null));
+            var vm = new QuestDetailViewModel(
+                _storeService,
+                _mockQuestService.Object,
+                _mockDimensionService.Object,
+                _mockQuizService.Object,
+                _mockMissionService.Object,
+                _mockChallengeService.Object,
+                authService: mockAuthService.Object
+            );
+            vm.SetQuestForTesting(_mockQuest, _mockProgress);
+            string route = null;
+            vm.NavigationRequested += (r, _) => route = r;
+
+            Assert.IsTrue(await vm.StartQuestAsync());
+
+            Assert.AreEqual(Actions.go_to_home, route);
+        }
+
+        [Test]
         public async Task StartQuestAsync_WithoutOnboardingSurvey_DoesNotStartTheQuest()
         {
             // Some mission rules use the survey as baseline (M.B1.3), so quests wait for it
@@ -546,8 +569,12 @@ namespace eu.foodmission.platform.Tests
             );
             vm.SetQuestForTesting(_mockQuest, _mockProgress);
 
+            string route = null;
+            vm.NavigationRequested += (r, _) => route = r;
+
             Assert.IsTrue(vm.NeedsOnboardingSurvey);
             Assert.IsFalse(await vm.StartQuestAsync());
+            Assert.IsNull(route);
             mockAuthService.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
             Assert.IsFalse(vm.IsCurrentQuest);
         }

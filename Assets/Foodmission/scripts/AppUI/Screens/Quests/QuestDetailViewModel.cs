@@ -629,7 +629,8 @@ namespace eu.foodmission.platform
 
                 _storeService?.store?.Dispatch(AppActions.setCurrentQuest.Invoke(targetId));
                 IsCurrentQuest = true;
-                await LoadQuestAsync(_quest.code ?? _quest.id);
+                // The new quest is played from Home (no need to reload this screen)
+                RaiseNavigationRequested(Actions.go_to_home);
                 return true;
             }
             catch (Exception ex)
