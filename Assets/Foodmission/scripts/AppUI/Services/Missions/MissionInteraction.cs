@@ -104,15 +104,12 @@ namespace eu.foodmission.platform
             MissionInteractionStatus.PendingRule,
             MissionInteractionType.Report,
             Array.Empty<MissionModuleLink>(),
-            Array.Empty<MissionModuleLink>(),
             Array.Empty<MissionReportStep>());
 
         public MissionInteractionStatus Status { get; }
         public MissionInteractionType Type { get; }
-        /// <summary>Modules that emit the expected events by themselves.</summary>
+        /// <summary>Modules that emit the expected events by themselves. Modules that only help (search, pantry…) aren't linked.</summary>
         public IReadOnlyList<MissionModuleLink> AutoModules { get; }
-        /// <summary>Modules that help with the task but do not emit events.</summary>
-        public IReadOnlyList<MissionModuleLink> HelperModules { get; }
         public IReadOnlyList<MissionReportStep> Steps { get; }
 
         public bool CanReport => Status == MissionInteractionStatus.Available && Steps.Count > 0;
@@ -121,13 +118,11 @@ namespace eu.foodmission.platform
             MissionInteractionStatus status,
             MissionInteractionType type,
             IReadOnlyList<MissionModuleLink> autoModules,
-            IReadOnlyList<MissionModuleLink> helperModules,
             IReadOnlyList<MissionReportStep> steps)
         {
             Status = status;
             Type = type;
             AutoModules = autoModules ?? Array.Empty<MissionModuleLink>();
-            HelperModules = helperModules ?? Array.Empty<MissionModuleLink>();
             Steps = steps ?? Array.Empty<MissionReportStep>();
         }
     }

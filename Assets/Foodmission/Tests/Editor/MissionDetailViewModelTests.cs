@@ -80,7 +80,7 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(_vm.IsCurrentQuestMission);
             Assert.IsFalse(_vm.CanAct);
             Assert.IsTrue(_vm.ShowsNotCurrentQuest);
-            Assert.AreEqual(0, _vm.HelperModules.Count);
+            Assert.AreEqual(0, _vm.AutoModules.Count);
         }
 
         [Test]

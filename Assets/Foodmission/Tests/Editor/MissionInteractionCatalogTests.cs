@@ -58,6 +58,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void Missions_OnlyLinkModulesThatCountAutomatically()
+        {
+            // Search, pantry or waste screens record nothing a mission rule counts: a button there would only be a shortcut
+            foreach (string code in AllMissionCodes)
+            {
+                CollectionAssert.IsSubsetOf(MissionInteractionCatalog.Get(code).AutoModules, new[] { MissionInteractionCatalog.QuickMealLog }, code);
+            }
+        }
+
+        [Test]
         public void AvailableEntries_HaveSteps_AndPendingHaveNone()
         {
             foreach (string code in AllMissionCodes)

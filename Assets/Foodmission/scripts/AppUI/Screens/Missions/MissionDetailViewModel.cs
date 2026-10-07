@@ -83,7 +83,6 @@ namespace eu.foodmission.platform
         /// <summary>Only when the backend reports a status (pr-402+): older backends have no restart endpoint.</summary>
         public bool CanRestartActive => CanAct && !string.IsNullOrEmpty(MissionProgress?.status);
         public IReadOnlyList<MissionModuleLink> AutoModules => CanAct ? Interaction.AutoModules : NoModules;
-        public IReadOnlyList<MissionModuleLink> HelperModules => CanAct ? Interaction.HelperModules : NoModules;
         /// <summary>UI.csv key for the level badge (shared with challenges); null when unknown.</summary>
         public string LevelKey => string.IsNullOrEmpty(Mission?.level) ? null : $"CHALLENGE_LEVEL_{Mission.level.Trim().ToUpperInvariant()}";
 
@@ -240,7 +239,6 @@ namespace eu.foodmission.platform
             OnPropertyChanged(nameof(CanAct));
             OnPropertyChanged(nameof(ShowsNotCurrentQuest));
             OnPropertyChanged(nameof(AutoModules));
-            OnPropertyChanged(nameof(HelperModules));
             OnPropertyChanged(nameof(LevelKey));
         }
     }

@@ -14,9 +14,6 @@ namespace eu.foodmission.platform
     public static class MissionInteractionCatalog
     {
         public static readonly MissionModuleLink QuickMealLog = new MissionModuleLink(Actions.open_quick_meal_log, "MISSION_BTN_QUICK_MEAL_LOG");
-        private static readonly MissionModuleLink Search = new MissionModuleLink(Actions.go_to_quicksearch, "CHALLENGE_BTN_OPEN_SEARCH");
-        private static readonly MissionModuleLink Pantry = new MissionModuleLink(Actions.go_to_pantry, "CHALLENGE_BTN_OPEN_PANTRY");
-        private static readonly MissionModuleLink Waste = new MissionModuleLink(Actions.go_to_foodwaste, "CHALLENGE_BTN_OPEN_WASTE");
 
         private const string ProductId = "productId";
 
@@ -49,34 +46,34 @@ namespace eu.foodmission.platform
             { "M.A1.4", Auto(Meals(ClientEventTypes.MealAlternativeStaple, 5)) },
             { "M.A1.5", Auto(Meals(ClientEventTypes.MealSustainablePlate, 10)) },
             // A2 — Product choices (advanced)
-            { "M.A2.1", Pending(Search) },
-            { "M.A2.2", Pending(Search) },
-            { "M.A2.3", Helped(Search, Products(ClientEventTypes.ShoppingMulticriteriaPurchase, 3)) },
+            { "M.A2.1", Pending() },
+            { "M.A2.2", Pending() },
+            { "M.A2.3", Manual(Products(ClientEventTypes.ShoppingMulticriteriaPurchase, 3)) },
             { "M.A2.4", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 4)) },
-            { "M.A2.5", Pending(Search) },
+            { "M.A2.5", Pending() },
             // A3 — Processing (advanced)
-            { "M.A3.1", Helped(Search, Products(ClientEventTypes.ProcessingNovaScoreCompared, 3, Meta("comparedWith", "GREEN_SCORE"))) },
-            { "M.A3.2", Helped(Search, Products(ClientEventTypes.ProcessingAllScoresCompared, 3)) },
-            { "M.A3.3", Helped(Search,
+            { "M.A3.1", Manual(Products(ClientEventTypes.ProcessingNovaScoreCompared, 3, Meta("comparedWith", "GREEN_SCORE"))) },
+            { "M.A3.2", Manual(Products(ClientEventTypes.ProcessingAllScoresCompared, 3)) },
+            { "M.A3.3", Manual(
                 Products(ClientEventTypes.ProcessingNovaChecked, 3),
                 Products(ClientEventTypes.ProcessingIngredientsReviewed, 3),
                 Products(ClientEventTypes.ShoppingPackagingInfoChecked, 3)) },
-            { "M.A3.4", Helped(Search, Products(ClientEventTypes.ProcessingIndicatorsCompared, 3)) },
-            { "M.A3.5", Helped(Search, ProductChoice("MISSION_Q_PRODUCT_CHECKS", 5,
+            { "M.A3.4", Manual(Products(ClientEventTypes.ProcessingIndicatorsCompared, 3)) },
+            { "M.A3.5", Manual(ProductChoice("MISSION_Q_PRODUCT_CHECKS", 5,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked,
                 ClientEventTypes.ProcessingProductionMethodChecked, ClientEventTypes.ProcessingIndicatorsCompared)) },
             // A4 — Packaging (advanced)
-            { "M.A4.1", Pending(Search) },
+            { "M.A4.1", Pending() },
             { "M.A4.2", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 5)) },
-            { "M.A4.3", Pending(Search) },
-            { "M.A4.4", Helped(Search, Products(ClientEventTypes.PackagingSmartObserved, 2)) },
-            { "M.A4.5", Helped(Search, Products(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
+            { "M.A4.3", Pending() },
+            { "M.A4.4", Manual(Products(ClientEventTypes.PackagingSmartObserved, 2)) },
+            { "M.A4.5", Manual(Products(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
             // A5 — Food waste (advanced)
             { "M.A5.1", Auto(Meals(ClientEventTypes.FoodWasteHalfPlateSaved, 7)) },
             { "M.A5.2", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 7)) },
             { "M.A5.3", Auto(Meals(ClientEventTypes.FoodWasteExpiredConsumed, 4)) },
-            { "M.A5.4", Helped(Pantry, Days(ClientEventTypes.FoodWasteFifoOrganized, 3)) },
-            { "M.A5.5", Helped(Pantry, Confirm(ClientEventTypes.FoodWasteMealPlanned), Confirm(ClientEventTypes.FoodWasteFridgePantryChecked)) },
+            { "M.A5.4", Manual(Days(ClientEventTypes.FoodWasteFifoOrganized, 3)) },
+            { "M.A5.5", Manual(Confirm(ClientEventTypes.FoodWasteMealPlanned), Confirm(ClientEventTypes.FoodWasteFridgePantryChecked)) },
             // A6 — Nutrition (advanced)
             { "M.A6.1", Pending() },
             { "M.A6.2", Auto(DailyMeals(ClientEventTypes.NutritionHighFibreMeal, "BREAKFAST")) },
@@ -90,29 +87,29 @@ namespace eu.foodmission.platform
             { "M.B1.4", Auto(SwapMeals(2, ProteinSwaps)) },
             { "M.B1.5", Auto(SwapMeals(2, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes)) },
             // B2 — Product choices (beginner)
-            { "M.B2.1", Helped(Search, Products(ClientEventTypes.ShoppingOriginChecked, 5)) },
+            { "M.B2.1", Manual(Products(ClientEventTypes.ShoppingOriginChecked, 5)) },
             { "M.B2.2", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 5)) },
-            { "M.B2.3", Helped(Search, Times(ClientEventTypes.ShoppingCertificationChosen, 3)) },
+            { "M.B2.3", Manual(Times(ClientEventTypes.ShoppingCertificationChosen, 3)) },
             { "M.B2.4", Auto(Meals(ClientEventTypes.MealLocalProduce, 3)) },
-            { "M.B2.5", Helped(Search, Products(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
+            { "M.B2.5", Manual(Products(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
             // B3 — Processing (beginner)
-            { "M.B3.1", Helped(Search, Products(ClientEventTypes.ProcessingProductionMethodChecked, 5)) },
-            { "M.B3.2", Helped(Search, Products(ClientEventTypes.ProcessingNovaChecked, 3)) },
-            { "M.B3.3", Helped(Search, Products(ClientEventTypes.ProcessingIngredientsReviewed, 5)) },
-            { "M.B3.4", Helped(Search, Products(ClientEventTypes.ProcessingGreenscoreChecked, 5)) },
+            { "M.B3.1", Manual(Products(ClientEventTypes.ProcessingProductionMethodChecked, 5)) },
+            { "M.B3.2", Manual(Products(ClientEventTypes.ProcessingNovaChecked, 3)) },
+            { "M.B3.3", Manual(Products(ClientEventTypes.ProcessingIngredientsReviewed, 5)) },
+            { "M.B3.4", Manual(Products(ClientEventTypes.ProcessingGreenscoreChecked, 5)) },
             { "M.B3.5", Auto(SwapMeals(2, ProcessingSwaps)) },
             // B4 — Packaging (beginner)
-            { "M.B4.1", Helped(Search, Products(ClientEventTypes.PackagingMaterialObserved, 5)) },
-            { "M.B4.2", Helped(Search, Products(ClientEventTypes.PackagingRecyclingLabelRead, 10)) },
-            { "M.B4.3", Helped(Search, Products(ClientEventTypes.PackagingMaterialObserved, 10)) },
+            { "M.B4.1", Manual(Products(ClientEventTypes.PackagingMaterialObserved, 5)) },
+            { "M.B4.2", Manual(Products(ClientEventTypes.PackagingRecyclingLabelRead, 10)) },
+            { "M.B4.3", Manual(Products(ClientEventTypes.PackagingMaterialObserved, 10)) },
             { "M.B4.4", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 5)) },
-            { "M.B4.5", Helped(Search, ProductChoice("MISSION_Q_PACKAGING_CHECKS", 10,
+            { "M.B4.5", Manual(ProductChoice("MISSION_Q_PACKAGING_CHECKS", 10,
                 ClientEventTypes.PackagingMaterialObserved, ClientEventTypes.PackagingRecyclingLabelRead, ClientEventTypes.PackagingReusableSpotChosen)) },
             // B5 — Food waste (beginner)
             { "M.B5.1", Auto(Meals(ClientEventTypes.FoodWasteHalfPlateSaved, 5)) },
             { "M.B5.2", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 3)) },
             { "M.B5.3", Auto(Meals(ClientEventTypes.FoodWasteExpiredConsumed, 1)) },
-            { "M.B5.4", Helped(Search, Products(ClientEventTypes.FoodWasteStorageInstructionsRead, 5)) },
+            { "M.B5.4", Manual(Products(ClientEventTypes.FoodWasteStorageInstructionsRead, 5)) },
             { "M.B5.5", Auto(MealChoice("MISSION_Q_FOOD_SAVING", 4, true,
                 ClientEventTypes.FoodWasteHalfPlateSaved, ClientEventTypes.FoodWasteFullPlateSaved, ClientEventTypes.FoodWasteExpiredConsumed)) },
             // B6 — Nutrition (beginner)
@@ -132,30 +129,30 @@ namespace eu.foodmission.platform
             { "M.I2.1", Auto(Meals(ClientEventTypes.MealLocalProduce, 3)) },
             { "M.I2.2", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 8)) },
             { "M.I2.3", Auto(Meals(ClientEventTypes.MealCertifiedProduct, 3)) },
-            { "M.I2.4", Pending(Search) },
-            { "M.I2.5", Helped(Search, Times(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
+            { "M.I2.4", Pending() },
+            { "M.I2.5", Manual(Times(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
             // I3 — Processing (intermediate)
-            { "M.I3.1", Helped(Search, ProductChoice("MISSION_Q_PRODUCT_CHECKS", 5,
+            { "M.I3.1", Manual(ProductChoice("MISSION_Q_PRODUCT_CHECKS", 5,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked, ClientEventTypes.ProcessingIngredientsReviewed)) },
-            { "M.I3.2", Helped(Search, Confirm(ClientEventTypes.ProcessingNovaCategoryCompared)) },
+            { "M.I3.2", Manual(Confirm(ClientEventTypes.ProcessingNovaCategoryCompared)) },
             { "M.I3.3", Auto(SwapMeals(4, ProcessingSwaps)) },
-            { "M.I3.4", Helped(Search, Products(ClientEventTypes.ProcessingNovaScoreCompared, 4)) },
-            { "M.I3.5", Helped(Search, ProductChoice("MISSION_Q_PRODUCT_CHECKS", 6,
+            { "M.I3.4", Manual(Products(ClientEventTypes.ProcessingNovaScoreCompared, 4)) },
+            { "M.I3.5", Manual(ProductChoice("MISSION_Q_PRODUCT_CHECKS", 6,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked, ClientEventTypes.ProcessingProductionMethodChecked)) },
             // I4 — Packaging (intermediate)
-            { "M.I4.1", Helped(Search, Products(ClientEventTypes.ShoppingPackagingInfoChecked, 3)) },
-            { "M.I4.2", Helped(Search, Products(ClientEventTypes.PackagingRecyclabilityEvaluated, 10)) },
+            { "M.I4.1", Manual(Products(ClientEventTypes.ShoppingPackagingInfoChecked, 3)) },
+            { "M.I4.2", Manual(Products(ClientEventTypes.PackagingRecyclabilityEvaluated, 10)) },
             { "M.I4.3", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 2)) },
-            { "M.I4.4", Helped(Search, Confirm(ClientEventTypes.PackagingComparisonMade)) },
-            { "M.I4.5", Helped(Search, ProductChoice("MISSION_Q_PACKAGING_CHECKS", 4,
+            { "M.I4.4", Manual(Confirm(ClientEventTypes.PackagingComparisonMade)) },
+            { "M.I4.5", Manual(ProductChoice("MISSION_Q_PACKAGING_CHECKS", 4,
                 ClientEventTypes.PackagingReusableSpotChosen, ClientEventTypes.PackagingRecyclabilityEvaluated)) },
             // I5 — Food waste (intermediate)
-            { "M.I5.1", Helped(Pantry, Confirm(ClientEventTypes.FoodWasteMealPlanned)) },
+            { "M.I5.1", Manual(Confirm(ClientEventTypes.FoodWasteMealPlanned)) },
             { "M.I5.2", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 3)) },
-            { "M.I5.3", AutoWith(Pantry,
+            { "M.I5.3", Auto(
                 Confirm(ClientEventTypes.FoodWasteFridgePantryChecked),
                 MealChoice("MISSION_Q_FOOD_RESCUE", 3, false, ClientEventTypes.FoodWasteExpiredConsumed, ClientEventTypes.FoodWasteFullPlateSaved)) },
-            { "M.I5.4", Pending(Waste) },
+            { "M.I5.4", Pending() },
             { "M.I5.5", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 3)) },
             // I6 — Nutrition (intermediate)
             { "M.I6.1", Auto(Meals(ClientEventTypes.SwapProcessedMeatToLegumes, 2)) },
@@ -182,20 +179,13 @@ namespace eu.foodmission.platform
         // ── Interaction factories ─────────────────────────────
 
         private static MissionInteraction Auto(params MissionReportStep[] steps) =>
-            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, new[] { QuickMealLog }, NoModules, steps);
-
-        private static MissionInteraction AutoWith(MissionModuleLink helper, params MissionReportStep[] steps) =>
-            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, new[] { QuickMealLog }, new[] { helper }, steps);
-
-        private static MissionInteraction Helped(MissionModuleLink helper, params MissionReportStep[] steps) =>
-            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, NoModules, new[] { helper }, steps);
+            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, new[] { QuickMealLog }, steps);
 
         private static MissionInteraction Manual(params MissionReportStep[] steps) =>
-            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, NoModules, NoModules, steps);
+            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, NoModules, steps);
 
-        private static MissionInteraction Pending(MissionModuleLink helper = null) =>
-            new MissionInteraction(MissionInteractionStatus.PendingRule, MissionInteractionType.Report, NoModules,
-                helper == null ? NoModules : new[] { helper }, Array.Empty<MissionReportStep>());
+        private static MissionInteraction Pending() =>
+            new MissionInteraction(MissionInteractionStatus.PendingRule, MissionInteractionType.Report, NoModules, Array.Empty<MissionReportStep>());
 
         // ── Step factories ────────────────────────────────────
 

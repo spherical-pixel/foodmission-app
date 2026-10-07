@@ -14,7 +14,7 @@ using MainraGames;
 
 namespace eu.foodmission.platform
 {
-    /// <summary>Nutri mission detail (spec §3.7): automatic modules, helper modules and "Tell Nutri" (check-in for this mission).</summary>
+    /// <summary>Nutri mission detail (spec §3.7): automatic modules and "Tell Nutri" (check-in for this mission).</summary>
     [Preserve]
     public class MissionDetailScreen : NavigationScreenBase<MissionDetailViewModel>
     {
@@ -35,7 +35,6 @@ namespace eu.foodmission.platform
         private VisualElement _card;
         private VisualElement _actions;
         private VisualElement _autoModules;
-        private VisualElement _helperModules;
         private VisualElement _completedBox;
         private VisualElement _failedBox;
         private Text _failedText;
@@ -78,7 +77,6 @@ namespace eu.foodmission.platform
             _progressFill = contentContainer.Q<VisualElement>("mission-progress-fill");
             _actions = contentContainer.Q<VisualElement>("mission-actions");
             _autoModules = contentContainer.Q<VisualElement>("mission-auto-modules");
-            _helperModules = contentContainer.Q<VisualElement>("mission-helper-modules");
             _completedBox = contentContainer.Q<VisualElement>("mission-completed-box");
             _btnTellNutri = contentContainer.Q<FMButton>("btn-tell-nutri");
             _btnLater = contentContainer.Q<FMButton>("btn-later");
@@ -300,7 +298,6 @@ namespace eu.foodmission.platform
 
             _autoHint?.EnableInClassList("hidden", _viewModel.AutoModules.Count == 0);
             RebuildModuleButtons(_autoModules, _viewModel.AutoModules, ButtonVariant.Accent);
-            RebuildModuleButtons(_helperModules, _viewModel.HelperModules, ButtonVariant.Default);
         }
 
         private void RebuildModuleButtons(VisualElement container, IReadOnlyList<MissionModuleLink> modules, ButtonVariant variant)

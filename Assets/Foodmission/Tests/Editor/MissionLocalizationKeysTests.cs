@@ -39,7 +39,7 @@ namespace eu.foodmission.platform.Tests
             };
             foreach (MissionInteraction interaction in MissionInteractionCatalog.Entries.Values)
             {
-                foreach (MissionModuleLink module in interaction.AutoModules.Concat(interaction.HelperModules))
+                foreach (MissionModuleLink module in interaction.AutoModules)
                 {
                     needed.Add(module.ButtonKey);
                 }
