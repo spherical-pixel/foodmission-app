@@ -90,17 +90,45 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Build_DayPicker_SendsOnlyToday()
+        public void Build_DayPicker_SendsOneEventPerDay_DatedAtLocalNoon()
         {
-            // Backend (v0.3.1) has no occurredAt: past days can't be dated, so they are dropped
             var answer = new MissionStepAnswer();
             answer.Days.Add(Now.Date.AddDays(-1));
             answer.Days.Add(Now.Date);
 
             var items = Build("M.A5.4", answer);
 
-            Assert.AreEqual(1, items.Count);
-            Assert.AreEqual(ClientEventTypes.FoodWasteFifoOrganized, items[0].Event.eventType);
+            Assert.AreEqual(2, items.Count);
+            Assert.IsTrue(items.All(i => i.Event.eventType == ClientEventTypes.FoodWasteFifoOrganized));
+            CollectionAssert.AreEqual(
+                new[] { Now.Date.AddDays(-1).AddHours(12).ToUniversalTime().ToString("o"), Now.Date.AddHours(12).ToUniversalTime().ToString("o") },
+                items.Select(i => i.Event.createdAt).ToArray());
+        }
+
+        [Test]
+        public void Build_DayPicker_NeverDatesBeforeMissionStartOrAfterNow()
+        {
+            // Backend rules ignore events before the mission's startedAt
+            DateTime start = Now.Date.AddDays(-2).AddHours(14);
+            DateTime morning = Now.Date.AddHours(10);
+            var answer = new MissionStepAnswer();
+            answer.Days.Add(start.Date);
+            answer.Days.Add(morning.Date);
+
+            var items = MissionReportBuilder.Build("M.A5.4", MissionInteractionCatalog.Get("M.A5.4").Steps, new[] { answer }, "r1", start, morning);
+
+            CollectionAssert.AreEqual(
+                new[] { start.ToUniversalTime().ToString("o"), morning.ToUniversalTime().ToString("o") },
+                items.Select(i => i.Event.createdAt).ToArray());
+        }
+
+        [Test]
+        public void Build_CountSteps_AreNotBackdated()
+        {
+            var items = Build("M.B2.1", new MissionStepAnswer { Count = 2 });
+
+            Assert.IsTrue(items.All(i => i.Event.createdAt == null));
+            StringAssert.DoesNotContain("createdAt", System.Text.Encoding.UTF8.GetString(items[0].Event.ToJsonBody()));
         }
 
         [Test]
@@ -109,11 +137,12 @@ namespace eu.foodmission.platform.Tests
             var answer = new MissionStepAnswer();
             answer.Days.Add(Now.Date.AddDays(-10));
             answer.Days.Add(Now.Date.AddDays(1));
+            answer.Days.Add(Now.Date.AddDays(-4));
             answer.Days.Add(Now.Date.AddDays(-3));
 
             var items = MissionReportBuilder.Build("M.A5.4", MissionInteractionCatalog.Get("M.A5.4").Steps, new[] { answer }, "r1", Now.AddDays(-3), Now);
 
-            Assert.AreEqual(0, items.Count);
+            Assert.AreEqual(1, items.Count, "only the mission start day is inside the window");
         }
 
         [Test]

@@ -71,8 +71,8 @@ namespace eu.foodmission.platform.Tests
             // A1.3 since yesterday: yesterday (lunch logged → other types open) and today
             CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-1), Now.Date }, plan.MealDays.Select(d => d.Day).ToArray());
             Assert.IsFalse(plan.MealDays[0].OpenMealTypes.Contains("LUNCH"));
-            // A5.4: today only (no occurredAt in backend (v0.3.1))
-            CollectionAssert.AreEqual(new[] { Now.Date }, plan.DayEvents.Single().OpenDays);
+            // A5.4 since 2 days ago, -2 already recorded
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-1), Now.Date }, plan.DayEvents.Single().OpenDays);
             // B2.1 completed, A2.1 pending rule → no mission steps
             Assert.AreEqual(0, plan.MissionSteps.Count);
         }

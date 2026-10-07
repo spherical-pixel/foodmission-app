@@ -51,5 +51,19 @@ namespace eu.foodmission.platform
             DateTime moment = day.Date.AddHours(TypicalHour(mealType));
             return moment > nowLocal ? nowLocal : moment;
         }
+
+        /// <summary>
+        /// Local moment a day event is dated at: noon (same UTC date as the local day in Europe), never before the
+        /// mission start (rules ignore earlier events) nor after now.
+        /// </summary>
+        public static DateTime EventTimestampFor(DateTime day, DateTime? missionStartLocal, DateTime nowLocal)
+        {
+            DateTime moment = day.Date.AddHours(12);
+            if (missionStartLocal.HasValue && missionStartLocal.Value.Date == day.Date && moment < missionStartLocal.Value)
+            {
+                moment = missionStartLocal.Value;
+            }
+            return moment > nowLocal ? nowLocal : moment;
+        }
     }
 }

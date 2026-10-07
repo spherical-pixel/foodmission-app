@@ -17,7 +17,7 @@ namespace eu.foodmission.platform
         public static CheckInPlan Plan(CheckInInputs inputs)
         {
             var mealByDay = new SortedDictionary<DateTime, List<MealContribution>>();
-            var dayEvents = new List<(string Code, MissionReportStep Step, SortedSet<DateTime> Days)>();
+            var dayEvents = new List<(string Code, MissionReportStep Step, SortedSet<DateTime> Days, DateTime? Start)>();
             var missionSteps = new List<CheckInMissionStep>();
             int order = 0;
 
@@ -53,16 +53,20 @@ namespace eu.foodmission.platform
                             break;
 
                         case MissionStepType.DayPicker:
-                            // No occurredAt in backend (v0.3.1): only today can be recorded
-                            IEnumerable<DateTime> eventDays = window.Where(d => d == inputs.NowLocal.Date);
                             var existing = dayEvents.FindIndex(d => d.Step.EventType == step.EventType);
                             if (existing >= 0)
                             {
-                                dayEvents[existing].Days.UnionWith(eventDays);
+                                dayEvents[existing].Days.UnionWith(window);
+                                // Latest start: an event dated on that day must count for every mission sharing it
+                                DateTime? start = dayEvents[existing].Start;
+                                if (mission.StartLocal.HasValue && (!start.HasValue || mission.StartLocal.Value > start.Value))
+                                {
+                                    dayEvents[existing] = (dayEvents[existing].Code, step, dayEvents[existing].Days, mission.StartLocal);
+                                }
                             }
                             else
                             {
-                                dayEvents.Add((mission.Code, step, new SortedSet<DateTime>(eventDays)));
+                                dayEvents.Add((mission.Code, step, new SortedSet<DateTime>(window), mission.StartLocal));
                             }
                             break;
 
@@ -109,13 +113,13 @@ namespace eu.foodmission.platform
             }
 
             var openDayEvents = new List<CheckInDayEvent>();
-            foreach (var (code, step, days) in dayEvents)
+            foreach (var (code, step, days, start) in dayEvents)
             {
                 inputs.CoveredEventDays.TryGetValue(step.EventType, out HashSet<DateTime> covered);
                 List<DateTime> open = days.Where(d => covered == null || !covered.Contains(d)).ToList();
                 if (open.Count > 0)
                 {
-                    openDayEvents.Add(new CheckInDayEvent(code, step, open));
+                    openDayEvents.Add(new CheckInDayEvent(code, step, open, start));
                 }
             }
 

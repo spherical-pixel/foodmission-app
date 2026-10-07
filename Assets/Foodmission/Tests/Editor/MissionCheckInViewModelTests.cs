@@ -250,8 +250,8 @@ namespace eu.foodmission.platform.Tests
             await LoadAsync(null, CheckInPlannerTests.M("M.A5.4"));
 
             _vm.ToggleEventDay(0, Now.Date.AddDays(1));
-            _vm.ToggleEventDay(0, Now.Date.AddDays(-1));
-            Assert.AreEqual(0, _vm.Answers.DayEvents[0].Count, "only today is open");
+            _vm.ToggleEventDay(0, Now.Date.AddDays(-7));
+            Assert.AreEqual(0, _vm.Answers.DayEvents[0].Count, "future and out-of-window days are not open");
 
             _vm.ToggleEventDay(0, Now.Date);
             Assert.AreEqual(1, _vm.Answers.DayEvents[0].Count);

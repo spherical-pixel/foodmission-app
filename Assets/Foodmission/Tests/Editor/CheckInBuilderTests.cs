@@ -92,12 +92,26 @@ namespace eu.foodmission.platform.Tests
         {
             var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A5.4", Now.AddDays(-2))));
             var answers = CheckInAnswers.For(plan);
-            answers.DayEvents[0].Add(Now.Date.AddDays(-1));
-            answers.DayEvents[0].Add(Now.Date.AddDays(-2));
+            answers.DayEvents[0].Add(Now.Date.AddDays(-3));
+            answers.DayEvents[0].Add(Now.Date.AddDays(1));
             Assert.AreEqual(0, CheckInBuilder.Build(plan, answers, "r1", Now).Count);
 
-            answers.DayEvents[0].Add(Now.Date);
+            answers.DayEvents[0].Add(Now.Date.AddDays(-1));
             Assert.AreEqual(1, CheckInBuilder.Build(plan, answers, "r1", Now).Count);
+        }
+
+        [Test]
+        public void Build_DayEvent_OnMissionStartDay_IsDatedAtTheStart()
+        {
+            // Started at 18:00, after the noon a past day is dated at
+            DateTime start = Now.AddDays(-2);
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A5.4", start)));
+            var answers = CheckInAnswers.For(plan);
+            answers.DayEvents[0].Add(start.Date);
+
+            var item = CheckInBuilder.Build(plan, answers, "r1", Now).Single();
+
+            Assert.AreEqual(start.ToUniversalTime().ToString("o"), item.Event.createdAt);
         }
 
         [Test]

@@ -46,7 +46,7 @@ namespace eu.foodmission.platform
                 CheckInDayEvent dayEvent = plan.DayEvents[i];
                 var answer = new MissionStepAnswer();
                 answer.Days.AddRange(answers.DayEvents[i].Where(d => dayEvent.OpenDays.Contains(d.Date)).Select(d => d.Date));
-                items.AddRange(MissionReportBuilder.Build(dayEvent.MissionCode, new[] { dayEvent.Step }, new[] { answer }, reportId, null, nowLocal, items.Count));
+                items.AddRange(MissionReportBuilder.Build(dayEvent.MissionCode, new[] { dayEvent.Step }, new[] { answer }, reportId, dayEvent.StartLocal, nowLocal, items.Count));
             }
 
             for (int i = 0; i < plan.MissionSteps.Count && i < answers.MissionSteps.Count; i++)

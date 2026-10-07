@@ -217,7 +217,7 @@ namespace eu.foodmission.platform
         private static MissionReportStep Confirm(string eventType) =>
             new MissionReportStep(MissionStepType.YesNo, Q(eventType), eventType, null, NoMetadata, null, 1, false, null);
 
-        /// <summary>One event per picked day. Backend (v0.3.1) has no occurredAt, so only today is offered.</summary>
+        /// <summary>One event per picked day, dated on that day (createdAt).</summary>
         private static MissionReportStep Days(string eventType, int max) =>
             new MissionReportStep(MissionStepType.DayPicker, QDays(eventType), eventType, null, NoMetadata, null, max, false, null);
 

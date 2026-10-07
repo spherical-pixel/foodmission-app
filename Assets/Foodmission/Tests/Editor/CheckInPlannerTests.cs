@@ -88,11 +88,12 @@ namespace eu.foodmission.platform.Tests
 
             var de = plan.DayEvents.Single();
             Assert.AreEqual("M.A5.4", de.MissionCode);
-            CollectionAssert.AreEqual(new[] { Now.Date }, de.OpenDays, "no occurredAt in backend (v0.3.1): today only");
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-3), Now.Date.AddDays(-1), Now.Date }, de.OpenDays);
+            Assert.AreEqual(Now.AddDays(-3), de.StartLocal);
             Assert.AreEqual(0, plan.MealDays.Count);
 
-            inputs.CoveredEventDays[ClientEventTypes.FoodWasteFifoOrganized].Add(Now.Date);
-            Assert.AreEqual(0, CheckInPlanner.Plan(inputs).DayEvents.Count, "today already recorded");
+            inputs.CoveredEventDays[ClientEventTypes.FoodWasteFifoOrganized].UnionWith(new[] { Now.Date.AddDays(-3), Now.Date.AddDays(-1), Now.Date });
+            Assert.AreEqual(0, CheckInPlanner.Plan(inputs).DayEvents.Count, "every day already recorded");
         }
 
         [Test]
@@ -122,7 +123,7 @@ namespace eu.foodmission.platform.Tests
 
             var plan = CheckInPlanner.Plan(inputs);
 
-            // -2 and -1 have no meals. FIFO is today-only. Today never counts.
+            // -2 and -1 have no meals; FIFO is open on -1 too. Today never counts.
             Assert.AreEqual(2, plan.PendingPastDays(Now));
         }
 

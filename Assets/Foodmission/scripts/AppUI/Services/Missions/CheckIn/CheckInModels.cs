@@ -77,12 +77,15 @@ namespace eu.foodmission.platform
         public string MissionCode { get; }
         public MissionReportStep Step { get; }
         public IReadOnlyList<DateTime> OpenDays { get; }
+        /// <summary>Mission start: events dated before it don't count.</summary>
+        public DateTime? StartLocal { get; }
 
-        public CheckInDayEvent(string missionCode, MissionReportStep step, IReadOnlyList<DateTime> openDays)
+        public CheckInDayEvent(string missionCode, MissionReportStep step, IReadOnlyList<DateTime> openDays, DateTime? startLocal = null)
         {
             MissionCode = missionCode;
             Step = step;
             OpenDays = openDays;
+            StartLocal = startLocal;
         }
     }
 

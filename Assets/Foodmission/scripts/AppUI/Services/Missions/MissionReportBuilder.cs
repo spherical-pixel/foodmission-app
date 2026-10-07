@@ -53,10 +53,10 @@ namespace eu.foodmission.platform
                         break;
 
                     case MissionStepType.DayPicker:
-                        // No occurredAt in backend (v0.3.1): an event can only be recorded for today
-                        if (step.MaxCount > 0 && allowedDays.Contains(nowLocal.Date) && answer.Days.Any(d => d.Date == nowLocal.Date))
+                        foreach (DateTime day in answer.Days.Select(d => d.Date).Where(allowedDays.Contains).Distinct().OrderBy(d => d).Take(step.MaxCount))
                         {
-                            AddEvent(items, indexOffset, missionCode, reportId, step.EventType, step, null);
+                            DateTime moment = MissionReportDays.EventTimestampFor(day, missionStartLocal, nowLocal);
+                            AddEvent(items, indexOffset, missionCode, reportId, step.EventType, step, null, moment.ToUniversalTime().ToString("o"));
                         }
                         break;
 
@@ -90,7 +90,8 @@ namespace eu.foodmission.platform
             string reportId,
             string eventType,
             MissionReportStep step,
-            IReadOnlyDictionary<string, object> optionMetadata)
+            IReadOnlyDictionary<string, object> optionMetadata,
+            string createdAt = null)
         {
             int index = indexOffset + items.Count;
             var metadata = new Dictionary<string, object>
@@ -118,7 +119,8 @@ namespace eu.foodmission.platform
             {
                 eventType = eventType,
                 metadata = metadata,
-                idempotencyKey = $"mission-report:{reportId}:{index}"
+                idempotencyKey = $"mission-report:{reportId}:{index}",
+                createdAt = createdAt
             }));
         }
     }

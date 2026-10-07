@@ -126,6 +126,10 @@ namespace eu.foodmission.platform
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string idempotencyKey;
 
+        /// <summary>When the event happened (ISO 8601 UTC); null = now. Also sets the server dayBucket.</summary>
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string createdAt;
+
         public byte[] ToJsonBody()
         {
             string json = JsonConvert.SerializeObject(this, Formatting.None, new JsonSerializerSettings
