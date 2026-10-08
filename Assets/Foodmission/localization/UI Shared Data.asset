@@ -3999,6 +3999,18 @@ MonoBehaviour:
     m_Key: DIMENSION_COMPLETED_SUBTITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247378
+    m_Key: MEAL_LOG_REVIEW_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Key: MEAL_LOG_REVIEW_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Key: MEAL_LOG_REVIEW_CONFIRM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

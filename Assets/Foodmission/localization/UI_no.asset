@@ -4125,7 +4125,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Du har fullf\xF8rt alle oppdragene i {0}. Utforsk andre omr\xE5der for \xE5 komme videre."
+    m_Localized: "Du har fullf\xF8rt alle oppdragene i {0}. Utforsk andre omr\xE5der
+      for \xE5 komme videre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247378
+    m_Localized: "Se over m\xE5ltidet ditt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Localized: "Kryss av det som gjelder for dette m\xE5ltidet. Det hjelper oppdragene
+      dine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Localized: "Registrer m\xE5ltid"
     m_Metadata:
       m_Items: []
   references:

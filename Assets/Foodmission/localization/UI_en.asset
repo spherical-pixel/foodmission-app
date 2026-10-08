@@ -4108,11 +4108,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247376
-    m_Localized: "All quests completed!"
+    m_Localized: All quests completed!
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "You've completed every quest in {0}. Explore other areas to keep progressing."
+    m_Localized: You've completed every quest in {0}. Explore other areas to keep
+      progressing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247378
+    m_Localized: Review your meal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Localized: Mark what applies to this meal. It helps your missions.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Localized: Log meal
     m_Metadata:
       m_Items: []
   references:

@@ -77,6 +77,18 @@
                     </appui:ExVisualElement>
                 </appui:ExVisualElement>
             </appui:ExVisualElement>
+            <appui:ExVisualElement name="step-4" class="fm-ml-step">
+                <fm:FMButton name="btn-back-step-4" title="Back" leading-icon="fm-arrow-left" quiet="true" size="M" class="fm-ml-back-inline fm-button-align-left fm-button-list">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25395959562231808)"/>
+                    </Bindings>
+                </fm:FMButton>
+                <appui:Heading name="step-4-heading" text="@UI:MEAL_LOG_REVIEW_TITLE" size="M" primary="false" class="fm-ml-step-heading fm-heading-white"/>
+                <appui:Text name="step-4-hint" text="@UI:MEAL_LOG_REVIEW_HINT" class="fm-ml-review-hint"/>
+                <fm:FormFieldItemCheckbox name="review-only-missions" text="@UI:EVENTS_ONLY_MY_MISSIONS" class="fm-quick-meal-only-missions fm-quick-meal-only-missions--hidden"/>
+                <ui:VisualElement name="review-facts" class="fm-ml-review-facts"/>
+                <fm:FMButton name="btn-confirm-log" title="@UI:MEAL_LOG_REVIEW_CONFIRM" variant="Accent" trailing-icon="upload-simple" class="fm-ml-log-btn fm-button fm-button-align-left"/>
+            </appui:ExVisualElement>
         </appui:ExVisualElement>
         <appui:ExVisualElement name="logged-meals-zone" class="fm-ml-logged-zone">
             <ui:VisualElement name="heading-meals-row" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">

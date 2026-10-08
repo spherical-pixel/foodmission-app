@@ -4125,7 +4125,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Vse naloge na podro\u010Dju {0} so zaklju\u010Dene. Razi\u0161\u010Di druga podro\u010Dja in napreduj naprej."
+    m_Localized: "Vse naloge na podro\u010Dju {0} so zaklju\u010Dene. Razi\u0161\u010Di
+      druga podro\u010Dja in napreduj naprej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247378
+    m_Localized: Preglej svoj obrok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Localized: "Ozna\u010Di, kar velja za ta obrok. Pomaga pri tvojih misijah."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Localized: "Zabele\u017Ei obrok"
     m_Metadata:
       m_Items: []
   references:

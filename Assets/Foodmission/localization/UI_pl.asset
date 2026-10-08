@@ -4180,7 +4180,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Uko\u0144czono wszystkie zadania w obszarze {0}. Odkryj inne obszary, aby robi\u0107 dalsze post\u0119py."
+    m_Localized: "Uko\u0144czono wszystkie zadania w obszarze {0}. Odkryj inne obszary,
+      aby robi\u0107 dalsze post\u0119py."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247378
+    m_Localized: "Sprawd\u017A sw\xF3j posi\u0142ek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Localized: "Zaznacz, co dotyczy tego posi\u0142ku. To pomaga w Twoich misjach."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Localized: "Zapisz posi\u0142ek"
     m_Metadata:
       m_Items: []
   references:

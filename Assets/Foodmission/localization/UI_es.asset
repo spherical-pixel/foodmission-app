@@ -4126,7 +4126,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Has completado todas las quests de {0}. Explora otras \xE1reas para seguir avanzando."
+    m_Localized: "Has completado todas las quests de {0}. Explora otras \xE1reas
+      para seguir avanzando."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247378
+    m_Localized: Revisa tu comida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Localized: Marca lo que se aplique a esta comida. Ayuda a tus misiones.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Localized: Registrar comida
     m_Metadata:
       m_Items: []
   references:
