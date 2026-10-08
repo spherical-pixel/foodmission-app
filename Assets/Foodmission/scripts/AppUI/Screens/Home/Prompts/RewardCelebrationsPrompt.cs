@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 using eu.foodmission.platform.Components;
 
+using UnityEngine.Localization.Settings;
+
 namespace eu.foodmission.platform
 {
     /// <summary>Completed missions/quests and new badges, one celebration after another; each is marked when shown.</summary>
@@ -67,11 +69,10 @@ namespace eu.foodmission.platform
 
                     PendingRewardCelebration item = _rewards[i];
                     var closed = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                    RewardCelebrationDialog.Show(
-                        item.Reward,
-                        contextTitle: item.ContextTitle,
-                        onDismiss: () => closed.TrySetResult(true),
-                        extraItem: UnlockedQuestCard(item.UnlockedQuest));
+                    List<RewardPresentationItem> queue = RewardCelebrationDialog.BuildPresentationQueue(item.Reward, item.ContextTitle);
+                    AddIfAny(queue, LevelUpCard(item.LevelUp));
+                    AddIfAny(queue, UnlockedQuestCard(item.UnlockedQuest));
+                    RewardCelebrationDialog.Show(queue, item.ContextTitle, () => closed.TrySetResult(true));
                     await _viewModel.MarkCelebrationShownAsync(item);
                     if (item.UnlockedQuest != null)
                     {
@@ -91,6 +92,33 @@ namespace eu.foodmission.platform
                     host.RefreshActiveQuestWidget();
                 }
                 return HomePromptResult.Dismissed;
+            }
+
+            private static void AddIfAny(List<RewardPresentationItem> queue, RewardPresentationItem item)
+            {
+                if (item != null)
+                {
+                    queue.Add(item);
+                }
+            }
+
+            private static RewardPresentationItem LevelUpCard(DimensionLevelUp levelUp)
+            {
+                if (levelUp == null)
+                {
+                    return null;
+                }
+
+                string level = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEGMENT_" + levelUp.Level);
+                return new RewardPresentationItem
+                {
+                    Type = RewardType.LevelUp,
+                    Title = "@UI:DIMENSION_LEVEL_UP_TITLE",
+                    Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DIMENSION_LEVEL_UP_SUBTITLE",
+                        new object[] { levelUp.DimensionName, level }),
+                    IconEmoji = "🌟",
+                    RawId = levelUp.Level
+                };
             }
 
             private static RewardPresentationItem UnlockedQuestCard(Quest quest)

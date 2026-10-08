@@ -1448,5 +1448,114 @@ namespace eu.foodmission.platform.Tests
                 DevUnlocks.All = originalDevUnlocks;
             }
         }
+
+        // ── Level up after the last quest of the user's level (2026-10-08) ─────────────────
+
+        private static Quest[] LevelUpQuests() => new[]
+        {
+            new Quest { id = "b1", code = "QUEST.DIET.BEGINNER.1", dimensionId = "DIM", level = QuestLevel.Beginner },
+            new Quest { id = "b2", code = "QUEST.DIET.BEGINNER.2", dimensionId = "DIM", level = QuestLevel.Beginner },
+            new Quest { id = "i1", code = "QUEST.DIET.INTERMEDIATE.1", dimensionId = "DIM", level = QuestLevel.Intermediate, title = "Intermediate 1" },
+            new Quest { id = "i2", code = "QUEST.DIET.INTERMEDIATE.2", dimensionId = "DIM", level = QuestLevel.Intermediate }
+        };
+
+        private HomeScreenViewModel CreateLevelUpVm(Mock<IAuthService> auth, params QuestProgress[] progress)
+        {
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            {
+                userId = "test-user",
+                recentEvents = new[]
+                {
+                    new UserEvent
+                    {
+                        id = "ev-b2",
+                        eventType = "QUEST_COMPLETED",
+                        timestamp = "2026-10-08T10:05:00Z",
+                        metadata = JObject.FromObject(new { questId = "b2", questCode = "QUEST.DIET.BEGINNER.2" })
+                    }
+                }
+            }, (ApiErrorResponse)null));
+            var quests = new Mock<IQuestService>();
+            quests.Setup(q => q.GetQuestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((LevelUpQuests(), (ApiErrorResponse)null));
+            quests.Setup(q => q.GetQuestProgressAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(((QuestProgress)null, (ApiErrorResponse)null));
+            quests.Setup(q => q.GetUserProgressListAsync(It.IsAny<string>())).ReturnsAsync((progress, (ApiErrorResponse)null));
+            var dimensions = new Mock<IDimensionService>();
+            dimensions.Setup(d => d.GetDimension("DIM")).Returns(new Dimension { id = "DIM", code = DimensionCode.DietChanges, name = "Diet" });
+            auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((true, (ApiErrorResponse)null));
+
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123", userSegment = "BEGINNER", userAutoAddToPantry = true });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-10-08T10:00:00Z");
+            return new HomeScreenViewModel(_storeService, _mockAudioService.Object,
+                questService: quests.Object,
+                gamificationService: gamification.Object,
+                questProgressionService: new QuestProgressionService { UnlockAllQuests = false },
+                authService: auth.Object,
+                dimensionService: dimensions.Object);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_LastQuestOfUserLevel_LevelsUpAndOffersFirstQuestOfNewLevel()
+        {
+            bool originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
+            try
+            {
+                var auth = new Mock<IAuthService>();
+                var vm = CreateLevelUpVm(auth, new QuestProgress { questId = "b1", completed = true });
+
+                var result = await vm.CheckPendingGamificationRewardsAsync();
+
+                Assert.AreEqual(1, result.Count);
+                Assert.AreEqual(QuestLevel.Intermediate, result[0].LevelUp?.Level);
+                Assert.AreEqual(DimensionCode.DietChanges, result[0].LevelUp.DimensionCode);
+                Assert.AreEqual("Diet", result[0].LevelUp.DimensionName);
+                Assert.AreEqual("i1", result[0].UnlockedQuest?.id, "the first quest of the new level is offered although it is above the current level");
+                Assert.AreEqual(ContentLevel.Beginner, DimensionLevels.GetLevel(_storeService.GetAppState(), DimensionCode.DietChanges), "applied only when shown");
+
+                await vm.MarkCelebrationShownAsync(result[0]);
+
+                AppState state = _storeService.GetAppState();
+                Assert.AreEqual(ContentLevel.Intermediate, DimensionLevels.GetLevel(state, DimensionCode.DietChanges));
+                Assert.AreEqual(ContentLevel.Beginner, DimensionLevels.GetLevel(state, DimensionCode.NutritionValues), "other dimensions keep their level");
+                auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r =>
+                    r.preferences != null &&
+                    r.preferences.autoAddToPantry &&
+                    r.preferences.dimensionLevels[DimensionCode.DietChanges] == ContentLevel.Intermediate &&
+                    r.preferences.dimensionLevels[DimensionCode.NutritionValues] == ContentLevel.Beginner)), Times.Once);
+
+                // Shown again (e.g. a retried celebration): never applied twice
+                await vm.MarkCelebrationShownAsync(result[0]);
+                auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.preferences != null)), Times.Once);
+                vm.Dispose();
+            }
+            finally
+            {
+                DevUnlocks.All = originalDevUnlocks;
+            }
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_LastQuestButAnotherOfTheLevelPending_NoLevelUp()
+        {
+            bool originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
+            try
+            {
+                var auth = new Mock<IAuthService>();
+                var vm = CreateLevelUpVm(auth, new QuestProgress { questId = "b1", completed = false, progress = 50f });
+
+                var result = await vm.CheckPendingGamificationRewardsAsync();
+
+                Assert.AreEqual(1, result.Count);
+                Assert.IsNull(result[0].LevelUp);
+                Assert.IsNull(result[0].UnlockedQuest);
+                vm.Dispose();
+            }
+            finally
+            {
+                DevUnlocks.All = originalDevUnlocks;
+            }
+        }
     }
 }

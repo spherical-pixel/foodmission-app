@@ -4112,6 +4112,14 @@ MonoBehaviour:
     m_Localized: Siste dag
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247374
+    m_Localized: "Nytt niv\xE5!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247375
+    m_Localized: "{0}: du er n\xE5 {1}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

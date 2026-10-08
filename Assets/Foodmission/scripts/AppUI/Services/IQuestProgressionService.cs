@@ -30,5 +30,14 @@ namespace eu.foodmission.platform
         Quest GetNextQuest(string currentQuestCodeOrId, IEnumerable<Quest> allQuests);
 
         Quest GetPreviousQuest(string questCodeOrId, IEnumerable<Quest> allQuests);
+
+        /// <summary>First quest of the level in the dimension (lowest sequence number), or null when it has none.</summary>
+        Quest GetFirstQuest(string dimensionId, string level, IEnumerable<Quest> allQuests);
+
+        /// <summary>
+        /// The level the user reaches by completing the quest: the next level when the quest is of the user's level and every
+        /// quest of that level in its dimension is completed (the quest itself counts as completed); null otherwise.
+        /// </summary>
+        string GetLevelReached(Quest completedQuest, string userLevel, IEnumerable<Quest> allQuests, IEnumerable<QuestProgress> userProgress);
     }
 }

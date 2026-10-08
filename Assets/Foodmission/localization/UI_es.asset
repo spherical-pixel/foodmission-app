@@ -4113,6 +4113,14 @@ MonoBehaviour:
     m_Localized: "\xDAltimo d\xEDa"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247374
+    m_Localized: "\xA1Subes de nivel!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247375
+    m_Localized: '{0}: ahora eres {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

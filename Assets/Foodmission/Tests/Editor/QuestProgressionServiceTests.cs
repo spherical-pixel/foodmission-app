@@ -249,5 +249,65 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(d2_b1_state.IsCompleted);
             Assert.IsTrue(d2_b2_state.IsLocked, "Dim2 second quest should be locked");
         }
+
+        // ── Level up after the last quest of a level (2026-10-08) ─────────────────
+
+        private static List<Quest> LevelQuests() => new List<Quest>
+        {
+            new Quest { id = "b2", code = "QUEST.DIET.BEGINNER.2", dimensionId = "dim1", level = "BEGINNER" },
+            new Quest { id = "b1", code = "QUEST.DIET.BEGINNER.1", dimensionId = "dim1", level = "BEGINNER" },
+            new Quest { id = "i2", code = "QUEST.DIET.INTERMEDIATE.2", dimensionId = "dim1", level = "INTERMEDIATE" },
+            new Quest { id = "i1", code = "QUEST.DIET.INTERMEDIATE.1", dimensionId = "dim1", level = "INTERMEDIATE" },
+            new Quest { id = "a1", code = "QUEST.DIET.ADVANCED.1", dimensionId = "dim1", level = "ADVANCED" },
+            new Quest { id = "x1", code = "QUEST.OTHER.BEGINNER.1", dimensionId = "dim2", level = "BEGINNER" }
+        };
+
+        [Test]
+        public void GetFirstQuest_ReturnsLowestSequenceOfTheLevelInTheDimension()
+        {
+            Assert.AreEqual("i1", _service.GetFirstQuest("dim1", "INTERMEDIATE", LevelQuests())?.id);
+            Assert.AreEqual("b1", _service.GetFirstQuest("dim1", "BEGINNER", LevelQuests())?.id);
+            Assert.IsNull(_service.GetFirstQuest("dim2", "ADVANCED", LevelQuests()));
+            Assert.IsNull(_service.GetFirstQuest("dim1", "EXPERT", LevelQuests()));
+        }
+
+        [Test]
+        public void GetLevelReached_AllQuestsOfTheUserLevelCompleted_ReturnsNextLevel()
+        {
+            var quests = LevelQuests();
+            // b2 just completed: the progress list may not report it yet
+            var progress = new List<QuestProgress> { new QuestProgress { questId = "b1", completed = true } };
+
+            Assert.AreEqual("INTERMEDIATE", _service.GetLevelReached(quests[0], "BEGINNER", quests, progress));
+        }
+
+        [Test]
+        public void GetLevelReached_IntermediateCompleted_ReturnsAdvanced_AndAdvancedIsTheTop()
+        {
+            var quests = LevelQuests();
+            var progress = new List<QuestProgress> { new QuestProgress { questCode = "QUEST.DIET.INTERMEDIATE.1", progress = 100f } };
+
+            Assert.AreEqual("ADVANCED", _service.GetLevelReached(quests[2], "INTERMEDIATE", quests, progress));
+            Assert.IsNull(_service.GetLevelReached(quests[4], "ADVANCED", quests, progress));
+        }
+
+        [Test]
+        public void GetLevelReached_AnotherQuestOfTheLevelNotCompleted_ReturnsNull()
+        {
+            var quests = LevelQuests();
+            var progress = new List<QuestProgress> { new QuestProgress { questId = "b1", completed = false, progress = 40f } };
+
+            Assert.IsNull(_service.GetLevelReached(quests[0], "BEGINNER", quests, progress));
+        }
+
+        [Test]
+        public void GetLevelReached_QuestNotOfTheUserLevel_ReturnsNull()
+        {
+            var quests = LevelQuests();
+            var progress = new List<QuestProgress> { new QuestProgress { questId = "b1", completed = true } };
+
+            Assert.IsNull(_service.GetLevelReached(quests[0], "INTERMEDIATE", quests, progress), "a user already above the level stays where they are");
+            Assert.IsNull(_service.GetLevelReached(quests[0], null, quests, progress));
+        }
     }
 }

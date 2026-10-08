@@ -21,7 +21,8 @@ namespace eu.foodmission.platform.Components
         AvatarItem,
         PetItem,
         Collectible,
-        QuestUnlocked
+        QuestUnlocked,
+        LevelUp
     }
 
     public class RewardPresentationItem
@@ -342,7 +343,7 @@ namespace eu.foodmission.platform.Components
 
             // Audio & Mascot Feedback
             var audioService = App.current?.services?.GetService<IAudioService>();
-            var sfx = queue.Any(q => q.Type == RewardType.Badge || q.Type == RewardType.QuestUnlocked) ? SfxType.WinBadge : SfxType.MissionCompleted;
+            var sfx = queue.Any(q => q.Type == RewardType.Badge || q.Type == RewardType.QuestUnlocked || q.Type == RewardType.LevelUp) ? SfxType.WinBadge : SfxType.MissionCompleted;
             audioService?.PlaySfx(sfx);
 
             var avatarService = App.current?.services?.GetService<IAvatarService>();
@@ -412,7 +413,7 @@ namespace eu.foodmission.platform.Components
                 // Audio feedback for subsequent steps
                 if (index > 0)
                 {
-                    var stepSfx = (item.Type == RewardType.Badge || item.Type == RewardType.QuestUnlocked) ? SfxType.WinBadge : SfxType.MissionCompleted;
+                    var stepSfx = (item.Type == RewardType.Badge || item.Type == RewardType.QuestUnlocked || item.Type == RewardType.LevelUp) ? SfxType.WinBadge : SfxType.MissionCompleted;
                     audioService?.PlaySfx(stepSfx);
                 }
 
@@ -488,6 +489,7 @@ namespace eu.foodmission.platform.Components
                 RewardType.PetItem => BuildPetItemContent(item),
                 RewardType.Collectible => BuildCollectibleContent(item),
                 RewardType.QuestUnlocked => BuildQuestUnlockedContent(item),
+                RewardType.LevelUp => BuildLevelUpContent(item),
                 _ => BuildDefaultContent(item)
             };
         }
@@ -915,6 +917,31 @@ namespace eu.foodmission.platform.Components
             container.Add(iconCircle);
 
             var title = new Text { text = item?.Title ?? "@UI:QUEST_UNLOCKED_TITLE" };
+            title.AddToClassList("fm-reward-title");
+            container.Add(title);
+
+            var subtitle = new Text { text = item?.Subtitle ?? "" };
+            subtitle.AddToClassList("fm-reward-subtitle");
+            container.Add(subtitle);
+
+            return container;
+        }
+
+        /// <summary>
+        /// Visual content builder for a level up in a dimension.
+        /// </summary>
+        public static VisualElement BuildLevelUpContent(RewardPresentationItem item)
+        {
+            var container = CreateContentContainer("fm-reward-content--level-up");
+
+            var iconCircle = new VisualElement();
+            iconCircle.AddToClassList("fm-reward-icon-circle");
+            var iconText = new Text { text = item?.IconEmoji ?? "🌟" };
+            iconText.AddToClassList("fm-reward-icon-emoji");
+            iconCircle.Add(iconText);
+            container.Add(iconCircle);
+
+            var title = new Text { text = item?.Title ?? "@UI:DIMENSION_LEVEL_UP_TITLE" };
             title.AddToClassList("fm-reward-title");
             container.Add(title);
 

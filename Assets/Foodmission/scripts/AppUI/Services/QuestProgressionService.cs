@@ -168,6 +168,55 @@ namespace eu.foodmission.platform
             return null;
         }
 
+        public Quest GetFirstQuest(string dimensionId, string level, IEnumerable<Quest> allQuests)
+        {
+            if (allQuests == null || !ContentLevel.IsValid(level)) return null;
+
+            int difficulty = ContentLevel.Rank(level) + 1;
+            return allQuests
+                .Where(q => q != null
+                            && string.Equals(q.dimensionId, dimensionId, StringComparison.OrdinalIgnoreCase)
+                            && GetDifficultyOrder(q) == difficulty)
+                .OrderBy(GetQuestSequenceNumber)
+                .ThenBy(q => q.code ?? string.Empty)
+                .FirstOrDefault();
+        }
+
+        public string GetLevelReached(Quest completedQuest, string userLevel, IEnumerable<Quest> allQuests, IEnumerable<QuestProgress> userProgress)
+        {
+            int rank = ContentLevel.Rank(userLevel);
+            if (completedQuest == null || allQuests == null || rank < 0 || rank >= ContentLevel.All.Length - 1)
+            {
+                return null;
+            }
+            if (GetDifficultyOrder(completedQuest) != rank + 1)
+            {
+                return null;
+            }
+
+            var sameLevel = allQuests
+                .Where(q => q != null
+                            && string.Equals(q.dimensionId, completedQuest.dimensionId, StringComparison.OrdinalIgnoreCase)
+                            && GetDifficultyOrder(q) == rank + 1)
+                .ToList();
+
+            foreach (QuestProgressionState state in EvaluateProgression(sameLevel, userProgress))
+            {
+                if (!state.IsCompleted && !IsSameQuest(state.Quest, completedQuest))
+                {
+                    return null;
+                }
+            }
+
+            return ContentLevel.All[rank + 1];
+        }
+
+        private static bool IsSameQuest(Quest a, Quest b)
+        {
+            return (!string.IsNullOrEmpty(a.id) && string.Equals(a.id, b.id, StringComparison.OrdinalIgnoreCase)) ||
+                   (!string.IsNullOrEmpty(a.code) && string.Equals(a.code, b.code, StringComparison.OrdinalIgnoreCase));
+        }
+
         private static int GetDifficultyOrder(Quest q)
         {
             if (q == null || string.IsNullOrEmpty(q.level)) return 1;

@@ -4099,6 +4099,14 @@ MonoBehaviour:
     m_Localized: Last day
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247374
+    m_Localized: Level up!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247375
+    m_Localized: '{0}: you are now {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

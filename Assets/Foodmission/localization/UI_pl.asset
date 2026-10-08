@@ -4167,6 +4167,14 @@ MonoBehaviour:
     m_Localized: "Ostatni dzie\u0144"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247374
+    m_Localized: Nowy poziom!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247375
+    m_Localized: "{0}: Tw\xF3j poziom to teraz {1}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

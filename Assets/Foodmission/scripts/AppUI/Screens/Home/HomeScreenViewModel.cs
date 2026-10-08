@@ -769,7 +769,7 @@ namespace eu.foodmission.platform
                 }
 
                 string code = !string.IsNullOrEmpty(progress.questCode) ? progress.questCode : questId;
-                return new PendingRewardCelebration
+                var celebration = new PendingRewardCelebration
                 {
                     Reward = new ContentReward
                     {
@@ -779,9 +779,14 @@ namespace eu.foodmission.platform
                     ContextTitle = "@UI:QUEST_REWARD_TITLE",
                     Code = code,
                     QuestId = questId,
-                    IsQuest = true,
-                    UnlockedQuest = await FindNextQuestAsync(questId, progress.questCode)
+                    IsQuest = true
                 };
+                if (_questProgressionService != null)
+                {
+                    var (allQuests, _) = await _questService.GetQuestsAsync();
+                    await ResolveQuestFollowUpAsync(celebration, allQuests);
+                }
+                return celebration;
             }
             catch (System.Exception ex)
             {
@@ -790,22 +795,110 @@ namespace eu.foodmission.platform
             }
         }
 
-        private async System.Threading.Tasks.Task<Quest> FindNextQuestAsync(string questId, string questCode)
+        /// <summary>
+        /// What follows a completed quest: the next quest of its level or, when it was the last quest of the user's level in
+        /// its dimension and all of them are completed, the level up and the first quest of the new level.
+        /// </summary>
+        private async System.Threading.Tasks.Task ResolveQuestFollowUpAsync(PendingRewardCelebration celebration, Quest[] allQuests)
         {
-            if (_questService == null || _questProgressionService == null)
+            if (allQuests == null || allQuests.Length == 0 || _questProgressionService == null)
+            {
+                return;
+            }
+
+            Quest completed = FindQuest(allQuests, celebration.QuestId) ?? FindQuest(allQuests, celebration.Code);
+            if (completed == null)
+            {
+                return;
+            }
+
+            Quest next = _questProgressionService.GetNextQuest(!string.IsNullOrEmpty(completed.id) ? completed.id : completed.code, allQuests);
+            if (next != null)
+            {
+                celebration.UnlockedQuest = UnlessAboveUserLevel(next);
+                return;
+            }
+
+            celebration.LevelUp = await FindLevelUpAsync(completed, allQuests);
+            if (celebration.LevelUp != null)
+            {
+                // Not filtered by level: it is the new level, applied when the celebration is shown
+                celebration.UnlockedQuest = _questProgressionService.GetFirstQuest(completed.dimensionId, celebration.LevelUp.Level, allQuests);
+            }
+        }
+
+        private async System.Threading.Tasks.Task<DimensionLevelUp> FindLevelUpAsync(Quest completed, Quest[] allQuests)
+        {
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+            Dimension dimension = gate.DimensionById(completed.dimensionId);
+            string userLevel = gate.UserLevel(dimension);
+            if (userLevel == null || ContentLevel.Normalize(completed.level) != userLevel || _questService == null)
             {
                 return null;
             }
 
-            var (allQuests, _) = await _questService.GetQuestsAsync();
-            if (allQuests == null || allQuests.Length == 0)
+            var (progress, error) = await _questService.GetUserProgressListAsync();
+            if (error != null || progress == null)
             {
+                Debug.LogWarning($"[{GetType().Name}] Quest progress unavailable, no level up checked: {error?.message}");
                 return null;
             }
 
-            Quest next = _questProgressionService.GetNextQuest(questId, allQuests) ??
-                         (!string.IsNullOrEmpty(questCode) ? _questProgressionService.GetNextQuest(questCode, allQuests) : null);
-            return UnlessAboveUserLevel(next);
+            string level = _questProgressionService.GetLevelReached(completed, userLevel, allQuests, progress);
+            return level == null ? null : new DimensionLevelUp
+            {
+                DimensionCode = dimension.code,
+                DimensionName = !string.IsNullOrEmpty(dimension.name) ? dimension.name : dimension.code,
+                Level = level
+            };
+        }
+
+        private static Quest FindQuest(Quest[] quests, string codeOrId)
+        {
+            if (string.IsNullOrEmpty(codeOrId))
+            {
+                return null;
+            }
+            return quests.FirstOrDefault(q => q != null &&
+                                              (string.Equals(q.id, codeOrId, System.StringComparison.OrdinalIgnoreCase) ||
+                                               string.Equals(q.code, codeOrId, System.StringComparison.OrdinalIgnoreCase)));
+        }
+
+        /// <summary>Raises the dimension's level (never lowers it) and saves it in preferences.dimensionLevels.</summary>
+        private async System.Threading.Tasks.Task ApplyLevelUpAsync(DimensionLevelUp levelUp)
+        {
+            AppState state = _storeService?.GetAppState();
+            if (state == null || ContentLevel.Rank(DimensionLevels.GetLevel(state, levelUp.DimensionCode)) >= ContentLevel.Rank(levelUp.Level))
+            {
+                return;
+            }
+
+            DimensionLevelEntry[] entries = DimensionLevels.Resolve(state);
+            foreach (DimensionLevelEntry entry in entries)
+            {
+                if (string.Equals(entry.dimensionCode, levelUp.DimensionCode, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    entry.level = levelUp.Level;
+                }
+            }
+
+            if (_authService != null)
+            {
+                var (success, error) = await _authService.UpdateProfileAsync(new ProfileUpdateRequest
+                {
+                    preferences = new ProfileUpdatePreferences
+                    {
+                        dimensionLevels = DimensionLevels.ToMap(entries),
+                        // Non-nullable bool: always serialized, so send the user's value back
+                        autoAddToPantry = state.userAutoAddToPantry
+                    }
+                });
+                if (!success)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Saving the level up failed: {error?.message}");
+                }
+            }
+            _storeService.store?.Dispatch(AppActions.setDimensionLevels.Invoke(entries));
         }
 
         /// <summary>
@@ -896,6 +989,10 @@ namespace eu.foodmission.platform
                 {
                     MarkQuestCelebrated(userId, celebration.QuestId, celebration.Code);
                     await ClearCurrentQuestIfAsync(celebration.QuestId, celebration.Code);
+                }
+                if (celebration.LevelUp != null)
+                {
+                    await ApplyLevelUpAsync(celebration.LevelUp);
                 }
             }
             catch (System.Exception ex)
@@ -1202,22 +1299,6 @@ namespace eu.foodmission.platform
                         }
                     }
 
-                    // Resolve next quest unlocked in sequence for quests
-                    Quest unlockedQuest = null;
-                    if (isQuest && !string.IsNullOrEmpty(code) && _questService != null && _questProgressionService != null)
-                    {
-                        if (cachedQuests == null)
-                        {
-                            var (allQuests, _) = await _questService.GetQuestsAsync();
-                            cachedQuests = allQuests;
-                        }
-
-                        if (cachedQuests != null && cachedQuests.Length > 0)
-                        {
-                            unlockedQuest = UnlessAboveUserLevel(_questProgressionService.GetNextQuest(code, cachedQuests));
-                        }
-                    }
-
                     string eventQuestId = isQuest ? evt.metadata?["questId"]?.ToString() : null;
 
                     var reward = new ContentReward
@@ -1235,16 +1316,28 @@ namespace eu.foodmission.platform
                         ? "@UI:QUEST_REWARD_TITLE"
                         : "@UI:MISSION_REWARD_TITLE";
 
-                    results.Add(new PendingRewardCelebration
+                    var celebration = new PendingRewardCelebration
                     {
                         Reward = reward,
                         ContextTitle = contextTitle,
                         EventId = evt.id,
                         QuestId = eventQuestId,
                         Code = code,
-                        IsQuest = isQuest,
-                        UnlockedQuest = unlockedQuest
-                    });
+                        IsQuest = isQuest
+                    };
+
+                    // The next quest unlocked in sequence, or the level up when it was the last one of the user's level
+                    if (isQuest && !string.IsNullOrEmpty(code) && _questService != null && _questProgressionService != null)
+                    {
+                        if (cachedQuests == null)
+                        {
+                            var (allQuests, _) = await _questService.GetQuestsAsync();
+                            cachedQuests = allQuests;
+                        }
+                        await ResolveQuestFollowUpAsync(celebration, cachedQuests);
+                    }
+
+                    results.Add(celebration);
                 }
 
                 // Order so individual activities are presented first, and quest completion last
@@ -1273,5 +1366,15 @@ namespace eu.foodmission.platform
         public bool IsQuest { get; set; }
         public bool IsBadge { get; set; }
         public Quest UnlockedQuest { get; set; }
+        /// <summary>Set when the quest completed the user's level in its dimension; applied when the celebration is shown.</summary>
+        public DimensionLevelUp LevelUp { get; set; }
+    }
+
+    public class DimensionLevelUp
+    {
+        public string DimensionCode { get; set; }
+        public string DimensionName { get; set; }
+        /// <summary>The new level (ContentLevel).</summary>
+        public string Level { get; set; }
     }
 }
