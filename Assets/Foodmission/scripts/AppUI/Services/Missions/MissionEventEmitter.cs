@@ -8,6 +8,11 @@ namespace eu.foodmission.platform
 {
     public class MissionEventEmitter : IMissionEventEmitter
     {
+        // Backend throttler allows 5 requests/s per route; a check-in can send many events at once.
+        private const int MinRequestSpacingMs = 250;
+        private const int MaxThrottleRetries = 2;
+        private const int ThrottleBackoffMs = 1000;
+
         private readonly IEventService _eventService;
         private readonly IMealLogService _mealLogService;
 
@@ -17,6 +22,9 @@ namespace eu.foodmission.platform
             _mealLogService = mealLogService;
         }
 
+        // Tests replace it to avoid real waits.
+        public Func<int, Task> Delay { get; set; } = ms => Task.Delay(ms);
+
         public async Task<MissionReportSendResult> SendAsync(IReadOnlyList<PendingReportItem> items)
         {
             if (items == null)
@@ -24,6 +32,7 @@ namespace eu.foodmission.platform
                 return MissionReportSendResult.Ok;
             }
 
+            bool first = true;
             foreach (PendingReportItem item in items)
             {
                 if (item == null || item.Sent)
@@ -31,16 +40,30 @@ namespace eu.foodmission.platform
                     continue;
                 }
 
-                ApiErrorResponse error;
+                ApiErrorResponse error = null;
                 try
                 {
-                    if (item.Event != null)
+                    for (int attempt = 0; ; attempt++)
                     {
-                        (_, error) = await _eventService.RecordClientEventAsync(item.Event);
-                    }
-                    else
-                    {
-                        (_, error) = await _mealLogService.CreateAsync(item.MealLog);
+                        if (!first)
+                        {
+                            await Delay(attempt == 0 ? MinRequestSpacingMs : ThrottleBackoffMs * attempt);
+                        }
+                        first = false;
+
+                        if (item.Event != null)
+                        {
+                            (_, error) = await _eventService.RecordClientEventAsync(item.Event);
+                        }
+                        else
+                        {
+                            (_, error) = await _mealLogService.CreateAsync(item.MealLog);
+                        }
+
+                        if (!IsThrottled(error) || attempt >= MaxThrottleRetries)
+                        {
+                            break;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -58,6 +81,12 @@ namespace eu.foodmission.platform
             }
 
             return MissionReportSendResult.Ok;
+        }
+
+        private static bool IsThrottled(ApiErrorResponse error)
+        {
+            return error != null
+                && (error.statusCode == 429 || string.Equals(error.error, "ThrottlerException", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

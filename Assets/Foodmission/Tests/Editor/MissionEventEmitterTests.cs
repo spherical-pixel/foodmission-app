@@ -12,6 +12,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IEventService> _events;
         private Mock<IMealLogService> _mealLogs;
         private MissionEventEmitter _emitter;
+        private List<int> _delays;
 
         [SetUp]
         public void SetUp()
@@ -22,7 +23,13 @@ namespace eu.foodmission.platform.Tests
                 .ReturnsAsync((new UserEvent(), (ApiErrorResponse)null));
             _mealLogs.Setup(m => m.CreateAsync(It.IsAny<CreateMealLogRequest>()))
                 .ReturnsAsync((new MealLog(), (ApiErrorResponse)null));
+            _delays = new List<int>();
             _emitter = new MissionEventEmitter(_events.Object, _mealLogs.Object);
+            _emitter.Delay = ms =>
+            {
+                _delays.Add(ms);
+                return Task.CompletedTask;
+            };
         }
 
         private static List<PendingReportItem> Items(int events, int meals)
@@ -90,6 +97,62 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(result.Success);
             Assert.AreEqual("boom", result.Error.message);
             Assert.IsFalse(items[0].Sent);
+        }
+
+        [Test]
+        public async Task SendAsync_SpacesRequestsAfterTheFirst()
+        {
+            var items = Items(3, 1);
+
+            await _emitter.SendAsync(items);
+
+            CollectionAssert.AreEqual(new[] { 250, 250, 250 }, _delays);
+        }
+
+        [Test]
+        public async Task SendAsync_WhenThrottled_RetriesWithBackoff()
+        {
+            var items = Items(1, 0);
+            var throttled = new ApiErrorResponse { statusCode = 429, error = "ThrottlerException" };
+            _events.SetupSequence(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()))
+                .ReturnsAsync(((UserEvent)null, throttled))
+                .ReturnsAsync(((UserEvent)null, throttled))
+                .ReturnsAsync((new UserEvent(), (ApiErrorResponse)null));
+
+            var result = await _emitter.SendAsync(items);
+
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(items[0].Sent);
+            CollectionAssert.AreEqual(new[] { 1000, 2000 }, _delays);
+        }
+
+        [Test]
+        public async Task SendAsync_WhenStillThrottledAfterRetries_FailsAndKeepsItemPending()
+        {
+            var items = Items(2, 0);
+            var throttled = new ApiErrorResponse { statusCode = 429, error = "ThrottlerException" };
+            _events.Setup(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()))
+                .ReturnsAsync(((UserEvent)null, throttled));
+
+            var result = await _emitter.SendAsync(items);
+
+            Assert.IsFalse(result.Success);
+            Assert.AreSame(throttled, result.Error);
+            Assert.IsFalse(items[0].Sent);
+            _events.Verify(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()), Times.Exactly(3));
+        }
+
+        [Test]
+        public async Task SendAsync_NonThrottleError_DoesNotRetry()
+        {
+            var items = Items(1, 0);
+            _events.Setup(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()))
+                .ReturnsAsync(((UserEvent)null, new ApiErrorResponse { statusCode = 400 }));
+
+            var result = await _emitter.SendAsync(items);
+
+            Assert.IsFalse(result.Success);
+            _events.Verify(e => e.RecordClientEventAsync(It.IsAny<CreateClientEventRequest>()), Times.Once);
         }
 
         [Test]
