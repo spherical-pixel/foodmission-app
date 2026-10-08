@@ -177,3 +177,13 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+.fm-ml-review-hint {
+    color: var(--appui-foregrounds-50);
+    white-space: normal;
+    margin-bottom: 12px;
+}
+
+.fm-ml-review-facts {
+    margin-bottom: 16px;
+}

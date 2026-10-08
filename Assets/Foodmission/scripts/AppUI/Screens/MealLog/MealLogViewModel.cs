@@ -18,7 +18,8 @@ namespace eu.foodmission.platform
         SelectingTypeOfMeal,
         SelectingSource,
         SelectingDishes,
-        Saving
+        Saving,
+        ReviewingFacts
     }
 
     [ObservableObject]
@@ -35,6 +36,8 @@ namespace eu.foodmission.platform
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
         private readonly IPantryService _pantryService;
         private readonly INotificationService _notificationService;
+        private readonly IQuestService _questService;
+        private readonly IAuthService _authService;
         private IDisposable _langSubscription;
 
         [ObservableProperty] private List<MealLog> m_LastTenLogs = new();
@@ -89,6 +92,15 @@ namespace eu.foodmission.platform
 
         [ObservableProperty] private MealLog m_EditingMealLog;
 
+        /// <summary>Flags/swaps shown in the review step (filtered when <see cref="OnlyMissionFacts"/>).</summary>
+        [ObservableProperty] private List<QuickMealSection> _factSections = new();
+
+        private List<QuickMealSection> _allFactSections = new();
+        private HashSet<string> _missionFactEvents = new(StringComparer.Ordinal);
+
+        public bool OnlyMissionFacts { get; private set; }
+        public bool HasMissionFacts => _missionFactEvents.Count > 0;
+
         public MealLogViewModel(
             IStoreService storeService,
             IMealLogService mealLogService,
@@ -101,7 +113,9 @@ namespace eu.foodmission.platform
             ILocalStorageService localStorage,
             IOpenFoodFactsClientService openFoodFactsClientService,
             IPantryService pantryService = null,
-            INotificationService notificationService = null)
+            INotificationService notificationService = null,
+            IQuestService questService = null,
+            IAuthService authService = null)
             : base(storeService)
         {
             _mealLogService = mealLogService;
@@ -115,6 +129,8 @@ namespace eu.foodmission.platform
             _openFoodFactsClientService = openFoodFactsClientService;
             _pantryService = pantryService;
             _notificationService = notificationService;
+            _questService = questService;
+            _authService = authService;
 
             _langSubscription = _store.Subscribe(
                 state => state.lang,
@@ -634,6 +650,12 @@ namespace eu.foodmission.platform
 
         public async Task<bool> SaveAsync()
         {
+            // A second tap while a save is in flight would log the meal (and its flags/swaps) twice
+            if (IsSaving)
+            {
+                return false;
+            }
+
             if (IsEditing)
             {
                 return await SaveEditAsync();
@@ -781,6 +803,7 @@ namespace eu.foodmission.platform
                     mealFromPantry = MealFromPantry,
                     eatenOut = EatenOut
                 };
+                ApplyChosenFacts(logRequest);
 
                 var (_, logErr) = await _mealLogService.CreateAsync(logRequest);
                 if (logErr != null)
@@ -789,6 +812,8 @@ namespace eu.foodmission.platform
                     IsSaving = false;
                     return false;
                 }
+
+                await RefreshGamificationAsync();
 
                 if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
                 {
@@ -1036,8 +1061,10 @@ namespace eu.foodmission.platform
 
         public async Task<bool> ConfirmUpdateAndSaveAsync()
         {
-            if (SelectedMealPreset == null)
+            if (SelectedMealPreset == null || IsSaving)
+            {
                 return false;
+            }
 
             IsSaving = true;
             ErrorMessage = "";
@@ -1088,6 +1115,7 @@ namespace eu.foodmission.platform
                         mealFromPantry = MealFromPantry,
                         eatenOut = EatenOut
                     };
+                    ApplyChosenFacts(logRequest);
 
                     var (_, logErr) = await _mealLogService.CreateAsync(logRequest);
                     if (logErr != null)
@@ -1096,6 +1124,8 @@ namespace eu.foodmission.platform
                         IsSaving = false;
                         return false;
                     }
+
+                    await RefreshGamificationAsync();
                 }
 
                 if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
@@ -1436,6 +1466,7 @@ namespace eu.foodmission.platform
             ErrorMessage = "";
             IsEditing = false;
             EditingMealLog = null;
+            ClearFacts();
             CurrentStep = MealLogStep.SelectingTypeOfMeal;
         }
 
@@ -1562,6 +1593,138 @@ namespace eu.foodmission.platform
                 case MealLogStep.SelectingDishes:
                     CurrentStep = MealLogStep.SelectingSource;
                     break;
+                case MealLogStep.ReviewingFacts:
+                    CurrentStep = MealLogStep.SelectingDishes;
+                    break;
+            }
+        }
+
+        // ── Review step: flags and swaps ─────────────────────
+
+        /// <summary>
+        /// Opens the review step with every flag/swap unmarked. Nothing is sent until the user confirms.
+        /// When the backend proposes flags/swaps for the meal, apply them here with MealFacts.ApplySelections.
+        /// </summary>
+        public async Task<bool> GoToReviewAsync()
+        {
+            if (SelectedItems == null || SelectedItems.Count == 0)
+            {
+                ErrorMessage = "@UI:ERROR_NO_ITEMS_SELECTED";
+                return false;
+            }
+
+            ErrorMessage = "";
+            ClearFacts();
+            _allFactSections = MealFacts.BuildStandardSections();
+            FactSections = _allFactSections;
+            CurrentStep = MealLogStep.ReviewingFacts;
+
+            _missionFactEvents = await LoadMissionFactEventsAsync();
+            ApplyFactFilter();
+            return true;
+        }
+
+        private async Task<HashSet<string>> LoadMissionFactEventsAsync()
+        {
+            string questId = _storeService?.GetAppState()?.userCurrentQuestId;
+            if (string.IsNullOrEmpty(questId) || _questService == null)
+            {
+                return new HashSet<string>(StringComparer.Ordinal);
+            }
+
+            try
+            {
+                var (quest, error) = await _questService.GetQuestAsync(questId);
+                if (error != null || quest == null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Could not load the current quest for the review filter: {error?.message}");
+                    return new HashSet<string>(StringComparer.Ordinal);
+                }
+                return MealFacts.MissionMealEvents((quest.items ?? Array.Empty<QuestItem>())
+                    .Where(i => i != null && string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
+                    .Select(i => i.contentCode));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] LoadMissionFactEventsAsync failed: {ex.Message}");
+                return new HashSet<string>(StringComparer.Ordinal);
+            }
+        }
+
+        public void SetOnlyMissionFacts(bool value)
+        {
+            OnlyMissionFacts = value;
+            ApplyFactFilter();
+        }
+
+        private void ApplyFactFilter()
+        {
+            FactSections = OnlyMissionFacts ? MealFacts.FilterByMissionEvents(_allFactSections, _missionFactEvents) : _allFactSections;
+            OnPropertyChanged(nameof(HasMissionFacts));
+        }
+
+        public void ToggleFactSection(string sectionId)
+        {
+            QuickMealSection section = FactSections?.FirstOrDefault(s => s.Id == sectionId);
+            if (section == null)
+            {
+                return;
+            }
+            section.IsExpanded = !section.IsExpanded;
+            FactSections = new List<QuickMealSection>(FactSections);
+        }
+
+        public void ToggleFact(string id)
+        {
+            var all = MealFacts.AllItems(_allFactSections).ToList();
+            QuickMealCheckItem target = all.FirstOrDefault(i => i.Id == id);
+            if (target == null)
+            {
+                return;
+            }
+            MealFacts.Toggle(target, all);
+            FactSections = new List<QuickMealSection>(FactSections);
+        }
+
+        public void SelectFactSwap(string id, string swapOption)
+        {
+            QuickMealCheckItem target = MealFacts.AllItems(_allFactSections).FirstOrDefault(i => i.Id == id);
+            if (target == null)
+            {
+                return;
+            }
+            MealFacts.SelectSwap(target, swapOption);
+            FactSections = new List<QuickMealSection>(FactSections);
+        }
+
+        private void ClearFacts()
+        {
+            _allFactSections = new List<QuickMealSection>();
+            _missionFactEvents = new HashSet<string>(StringComparer.Ordinal);
+            OnlyMissionFacts = false;
+            FactSections = _allFactSections;
+        }
+
+        private void ApplyChosenFacts(CreateMealLogRequest request)
+        {
+            var (flags, swaps) = MealFacts.Build(MealFacts.AllItems(_allFactSections));
+            request.flags = flags.Length > 0 ? flags : null;
+            request.swaps = swaps.Length > 0 ? swaps : null;
+        }
+
+        private async Task RefreshGamificationAsync()
+        {
+            if (_authService == null)
+            {
+                return;
+            }
+            try
+            {
+                await _authService.GetGamificationProfileAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Failed to sync gamification after meal log: {ex.Message}");
             }
         }
 

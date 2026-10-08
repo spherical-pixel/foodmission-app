@@ -195,21 +195,21 @@ namespace eu.foodmission.platform
                     {
                         ActiveQuestTitle = quest.GetDisplayName();
                         ActiveQuestCode = quest.code ?? "";
-                        _missionEvents = MissionMealEvents((quest.items ?? Array.Empty<QuestItem>())
+                        _missionEvents = MealFacts.MissionMealEvents((quest.items ?? Array.Empty<QuestItem>())
                             .Where(i => i != null && string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
                             .Select(i => i.contentCode));
                     }
                 }
 
                 Questions = GetDefaultQuestions();
-                _allSections = BuildStandardSections();
+                _allSections = MealFacts.BuildStandardSections();
                 ApplySectionFilter();
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] LoadActiveQuestQuestionsAsync error: {ex.Message}");
                 Questions = GetDefaultQuestions();
-                _allSections = BuildStandardSections();
+                _allSections = MealFacts.BuildStandardSections();
                 ApplySectionFilter();
             }
             finally
@@ -217,216 +217,6 @@ namespace eu.foodmission.platform
                 IsLoading = false;
             }
         }
-
-        private List<QuickMealSection> BuildStandardSections()
-        {
-            var sections = new List<QuickMealSection>();
-
-            // 1. Hábitos y Plato Sostenible (expandido por defecto)
-            var dietItems = new List<QuickMealCheckItem>
-            {
-                new QuickMealCheckItem
-                {
-                    Id = "q_meat_free",
-                    Icon = "🥗",
-                    Prompt = "@UI:EVENTS_MEAT_FREE",
-                    EventType = ClientEventTypes.MealMeatFree
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_legumes",
-                    Icon = "🫘",
-                    Prompt = "@UI:EVENTS_LEGUMES_CONSUMED",
-                    EventType = ClientEventTypes.MealLegumeConsumed
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_vegan",
-                    Icon = "🌿",
-                    Prompt = "@UI:EVENTS_VEGAN_MEAL",
-                    EventType = ClientEventTypes.MealVegan
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_sustainable_plate",
-                    Icon = "🍽️",
-                    Prompt = "@UI:EVENTS_SUSTAINABLE_PLATE",
-                    EventType = ClientEventTypes.MealSustainablePlate
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_ancient_grain",
-                    Icon = "🌾",
-                    Prompt = "@UI:EVENTS_ANCIENT_GRAIN",
-                    EventType = ClientEventTypes.MealAncientGrain
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_alternative_staple",
-                    Icon = "🥔",
-                    Prompt = "@UI:EVENTS_ALTERNATIVE_STAPLE",
-                    EventType = ClientEventTypes.MealAlternativeStaple
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_meat_consumed",
-                    Icon = "🥩",
-                    Prompt = "@UI:EVENTS_MEAT_CONSUMED",
-                    EventType = ClientEventTypes.MealMeatConsumed
-                }
-            };
-            sections.Add(new QuickMealSection
-            {
-                Id = "sec_diet",
-                Title = "@UI:EVENTS_SECTIONS_DIET",
-                Icon = "🌱",
-                IsExpanded = false,
-                Items = dietItems
-            });
-
-            // 2. Sustituciones (Swaps)
-            var swapOptions = new[]
-            {
-                ClientEventTypes.SwapBeefToLegumes,
-                ClientEventTypes.SwapBeefToChicken,
-                ClientEventTypes.SwapBeefToPork,
-                ClientEventTypes.SwapPorkToLegumes,
-                ClientEventTypes.SwapPorkToChicken,
-                ClientEventTypes.SwapChickenToLegumes,
-                ClientEventTypes.SwapProcessedMeatToLegumes,
-                ClientEventTypes.SwapReadyMealToHomecooked,
-                ClientEventTypes.SwapSugaryDrinkToWater,
-                ClientEventTypes.SwapSnackToFruitNuts,
-                ClientEventTypes.SwapSugaryCerealToOats
-            };
-
-            var swapItems = swapOptions.Select(swap => new QuickMealCheckItem
-            {
-                Id = $"q_{swap.ToLowerInvariant()}",
-                Icon = "🔄",
-                Prompt = SwapLocalization.GetSwapLocalizationTag(swap) ?? SwapLocalization.GetSwapDisplayName(swap),
-                EventType = swap,
-                IsChecked = false
-            }).ToList();
-
-            sections.Add(new QuickMealSection
-            {
-                Id = "sec_swaps",
-                Title = "@UI:EVENTS_SECTIONS_SWAPS",
-                Icon = "🔄",
-                IsExpanded = false,
-                Items = swapItems
-            });
-
-            // 4. Nutrición y Salud
-            var nutritionItems = new List<QuickMealCheckItem>
-            {
-                new QuickMealCheckItem
-                {
-                    Id = "q_fruit_veg",
-                    Icon = "🥦",
-                    Prompt = "@UI:EVENTS_FRUIT_VEG_SERVING",
-                    EventType = ClientEventTypes.NutritionFruitVegServingAdded
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_wholegrain",
-                    Icon = "🍞",
-                    Prompt = "@UI:EVENTS_WHOLEGRAIN",
-                    EventType = ClientEventTypes.NutritionWholegrainChosen
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_high_fibre",
-                    Icon = "🌾",
-                    Prompt = "@UI:EVENTS_HIGH_FIBRE",
-                    EventType = ClientEventTypes.NutritionHighFibreMeal
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_salt_free",
-                    Icon = "🧂",
-                    Prompt = "@UI:EVENTS_SALT_FREE",
-                    EventType = ClientEventTypes.NutritionSaltFreeTable
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_healthy_fat",
-                    Icon = "🥑",
-                    Prompt = "@UI:EVENTS_HEALTHY_FAT",
-                    EventType = ClientEventTypes.NutritionHealthyFatChosen
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_added_sugar_avoided",
-                    Icon = "🍬",
-                    Prompt = "@UI:EVENTS_ADDED_SUGAR_AVOIDED",
-                    EventType = ClientEventTypes.NutritionAddedSugarAvoided
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_protein_included",
-                    Icon = "🍳",
-                    Prompt = "@UI:" + MealFlagLabels.KeyFor(ClientEventTypes.NutritionProteinIncluded),
-                    EventType = ClientEventTypes.NutritionProteinIncluded
-                },
-                new QuickMealCheckItem
-                {
-                    Id = "q_rainbow",
-                    Icon = "🌈",
-                    Prompt = "@UI:" + MealFlagLabels.KeyFor(ClientEventTypes.NutritionRainbowColoursLogged),
-                    EventType = ClientEventTypes.NutritionRainbowColoursLogged
-                }
-            };
-            // 3. Origen y temporada
-            sections.Add(new QuickMealSection
-            {
-                Id = "sec_origin",
-                Title = "@UI:EVENTS_SECTIONS_ORIGIN",
-                Icon = "🌍",
-                IsExpanded = false,
-                Items = new List<QuickMealCheckItem>
-                {
-                    FlagItem("q_seasonal", "🍂", ClientEventTypes.MealSeasonalProduce),
-                    FlagItem("q_local", "📍", ClientEventTypes.MealLocalProduce),
-                    FlagItem("q_certified", "🏷️", ClientEventTypes.MealCertifiedProduct)
-                }
-            });
-
-            // 5. Desperdicio
-            sections.Add(new QuickMealSection
-            {
-                Id = "sec_waste",
-                Title = "@UI:EVENTS_SECTIONS_WASTE",
-                Icon = "♻️",
-                IsExpanded = false,
-                Items = new List<QuickMealCheckItem>
-                {
-                    FlagItem("q_half_plate", "🍽️", ClientEventTypes.FoodWasteHalfPlateSaved),
-                    FlagItem("q_leftovers", "♻️", ClientEventTypes.FoodWasteFullPlateSaved),
-                    FlagItem("q_expired", "📅", ClientEventTypes.FoodWasteExpiredConsumed)
-                }
-            });
-
-            sections.Add(new QuickMealSection
-            {
-                Id = "sec_nutrition",
-                Title = "@UI:EVENTS_SECTIONS_NUTRITION",
-                Icon = "🥗",
-                IsExpanded = false,
-                Items = nutritionItems
-            });
-
-            return sections;
-        }
-
-        private static QuickMealCheckItem FlagItem(string id, string icon, string eventType) => new QuickMealCheckItem
-        {
-            Id = id,
-            Icon = icon,
-            Prompt = "@UI:" + MealFlagLabels.KeyFor(eventType),
-            EventType = eventType
-        };
 
         // ── "Only my missions" filter ─────────────────────────
 
@@ -447,48 +237,8 @@ namespace eu.foodmission.platform
 
         private void ApplySectionFilter()
         {
-            if (!OnlyMissionItems || _missionEvents.Count == 0)
-            {
-                Sections = _allSections;
-            }
-            else
-            {
-                // Filtered sections share the item instances, so checks survive toggling the filter
-                Sections = _allSections
-                    .Select(s => new QuickMealSection
-                    {
-                        Id = s.Id,
-                        Title = s.Title,
-                        Icon = s.Icon,
-                        IsExpanded = true,
-                        Items = s.Items.Where(i => _missionEvents.Contains(i.EventType ?? string.Empty)).ToList()
-                    })
-                    .Where(s => s.Items.Count > 0)
-                    .ToList();
-            }
+            Sections = OnlyMissionItems ? MealFacts.FilterByMissionEvents(_allSections, _missionEvents) : _allSections;
             OnPropertyChanged(nameof(HasMissionItems));
-        }
-
-        private static HashSet<string> MissionMealEvents(IEnumerable<string> missionCodes)
-        {
-            var events = new HashSet<string>(StringComparer.Ordinal);
-            foreach (string code in missionCodes)
-            {
-                foreach (MissionReportStep step in MissionInteractionCatalog.Get(code).Steps.Where(s => s.Type == MissionStepType.MealReport))
-                {
-                    if (step.EventType != null)
-                    {
-                        events.Add(step.EventType);
-                    }
-                    events.UnionWith(step.Options.Select(o => o.EventType));
-                }
-            }
-            // Meat-reduction missions count meat portions, but a meat-free meal is the answer that helps them
-            if (events.Contains(ClientEventTypes.MealMeatConsumed))
-            {
-                events.Add(ClientEventTypes.MealMeatFree);
-            }
-            return events;
         }
 
         private List<QuickMealCheckItem> GetDefaultQuestions()
@@ -548,58 +298,13 @@ namespace eu.foodmission.platform
             {
                 target = Questions.FirstOrDefault(q => q.Id == id);
             }
-            if (target == null) return;
-
-            target.IsChecked = !target.IsChecked;
-            if (target.IsChecked && target.QuestionType == DirectQuestionType.SwapSelector &&
-                target.SwapOptions != null && target.SwapOptions.Length > 0 && string.IsNullOrEmpty(target.SelectedSwapOption))
+            if (target == null)
             {
-                target.SelectedSwapOption = target.SwapOptions[0];
-                target.EventType = target.SwapOptions[0];
-            }
-            else if (!target.IsChecked && target.QuestionType == DirectQuestionType.SwapSelector)
-            {
-                target.SelectedSwapOption = null;
-                target.EventType = null;
+                return;
             }
 
-            if (!string.IsNullOrEmpty(target.EventType))
-            {
-                SyncItemsByEventType(target.EventType, target.IsChecked, target.Id);
-            }
-
-            if (target.IsChecked)
-            {
-                ApplyMeatExclusionRules(target);
-            }
-
+            MealFacts.Toggle(target, GetAllItems().ToList());
             NotifySectionsChanged();
-        }
-
-        private void ApplyMeatExclusionRules(QuickMealCheckItem target)
-        {
-            if (target == null) return;
-
-            if (IsMeatFreeItem(target))
-            {
-                foreach (var item in GetAllItems())
-                {
-                    if (IsMeatConsumedItem(item))
-                    {
-                        item.IsChecked = false;
-                    }
-                }
-            }
-            else if (IsMeatConsumedItem(target))
-            {
-                foreach (var item in GetAllItems())
-                {
-                    if (IsMeatFreeItem(item))
-                    {
-                        item.IsChecked = false;
-                    }
-                }
-            }
         }
 
         private IEnumerable<QuickMealCheckItem> GetAllItems()
@@ -625,23 +330,6 @@ namespace eu.foodmission.platform
             }
         }
 
-        private static bool IsMeatFreeItem(QuickMealCheckItem item)
-        {
-            if (item == null) return false;
-            return item.EventType == ClientEventTypes.MealMeatFree ||
-                   item.EventType == ClientEventTypes.MealVegan ||
-                   item.Id == "q_meat_free" ||
-                   item.Id == "q_plant_based" ||
-                   item.Id == "q_vegan";
-        }
-
-        private static bool IsMeatConsumedItem(QuickMealCheckItem item)
-        {
-            if (item == null) return false;
-            return item.EventType == ClientEventTypes.MealMeatConsumed ||
-                   item.Id == "q_meat_consumed";
-        }
-
         public void SelectSwapForQuestion(string id, string swapOption)
         {
             QuickMealCheckItem target = null;
@@ -657,53 +345,13 @@ namespace eu.foodmission.platform
             {
                 target = Questions.FirstOrDefault(q => q.Id == id);
             }
-            if (target == null || string.IsNullOrEmpty(swapOption)) return;
-
-            if (target.SelectedSwapOption == swapOption && target.IsChecked)
+            if (target == null || string.IsNullOrEmpty(swapOption))
             {
-                target.SelectedSwapOption = null;
-                target.EventType = null;
-                target.IsChecked = false;
-            }
-            else
-            {
-                target.SelectedSwapOption = swapOption;
-                target.EventType = swapOption;
-                target.IsChecked = true;
+                return;
             }
 
+            MealFacts.SelectSwap(target, swapOption);
             NotifySectionsChanged();
-        }
-
-        private void SyncItemsByEventType(string eventType, bool isChecked, string sourceId)
-        {
-            if (string.IsNullOrEmpty(eventType)) return;
-
-            if (DataSections.Count > 0)
-            {
-                foreach (var sec in DataSections)
-                {
-                    if (sec.Items == null) continue;
-                    foreach (var it in sec.Items)
-                    {
-                        if (it.Id != sourceId && it.EventType == eventType)
-                        {
-                            it.IsChecked = isChecked;
-                        }
-                    }
-                }
-            }
-
-            if (Questions != null)
-            {
-                foreach (var it in Questions)
-                {
-                    if (it.Id != sourceId && it.EventType == eventType)
-                    {
-                        it.IsChecked = isChecked;
-                    }
-                }
-            }
         }
 
         private void NotifySectionsChanged()
@@ -754,9 +402,6 @@ namespace eu.foodmission.platform
 
         private void ApplySelectionsFromLog(MealLog log)
         {
-            var flagsSet = new HashSet<string>(log.flags ?? Array.Empty<string>());
-            var swapsSet = new HashSet<string>(log.swaps ?? Array.Empty<string>());
-
             var allItems = new List<QuickMealCheckItem>();
             if (DataSections.Count > 0)
             {
@@ -770,46 +415,7 @@ namespace eu.foodmission.platform
                 allItems.AddRange(Questions);
             }
 
-            foreach (var item in allItems)
-            {
-                if (item == null) continue;
-
-                // Check flags
-                if (!string.IsNullOrEmpty(item.EventType) && flagsSet.Contains(item.EventType))
-                {
-                    item.IsChecked = true;
-                }
-
-                // Check swaps
-                if (swapsSet.Count > 0)
-                {
-                    if (!string.IsNullOrEmpty(item.EventType) && swapsSet.Contains(item.EventType))
-                    {
-                        item.IsChecked = true;
-                        item.SelectedSwapOption = item.EventType;
-                    }
-                    else if (item.SwapOptions != null && item.SwapOptions.Length > 0)
-                    {
-                        foreach (var opt in item.SwapOptions)
-                        {
-                            if (swapsSet.Contains(opt))
-                            {
-                                item.IsChecked = true;
-                                item.SelectedSwapOption = opt;
-                                item.EventType = opt;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Mutual exclusion sanity check
-            if (flagsSet.Contains(ClientEventTypes.MealVegan) || flagsSet.Contains(ClientEventTypes.MealMeatFree))
-            {
-                var meatConsumed = allItems.FirstOrDefault(i => i.EventType == ClientEventTypes.MealMeatConsumed);
-                if (meatConsumed != null) meatConsumed.IsChecked = false;
-            }
+            MealFacts.ApplySelections(allItems, log.flags, log.swaps);
 
             if (Sections != null && Sections.Count > 0)
             {
@@ -865,40 +471,9 @@ namespace eu.foodmission.platform
                     allChecked.AddRange(Questions.Where(q => q.IsChecked));
                 }
 
-                var flags = new List<string>();
-                var swaps = new List<string>();
-
-                foreach (var q in allChecked)
-                {
-                    string ev = q.EventType;
-                    if (!string.IsNullOrEmpty(q.SelectedSwapOption))
-                    {
-                        ev = q.SelectedSwapOption;
-                    }
-
-                    if (string.IsNullOrEmpty(ev)) continue;
-
-                    if (ev.StartsWith("SWAP_"))
-                    {
-                        if (!swaps.Contains(ev))
-                        {
-                            swaps.Add(ev);
-                        }
-                    }
-                    else if (ev != ClientEventTypes.MealLogged)
-                    {
-                        if (!flags.Contains(ev))
-                        {
-                            flags.Add(ev);
-                        }
-                    }
-                }
-
-                // Exclusion rule: MEAL_MEAT_CONSUMED cannot be combined with MEAL_MEAT_FREE or MEAL_VEGAN
-                if (flags.Contains(ClientEventTypes.MealVegan) || flags.Contains(ClientEventTypes.MealMeatFree))
-                {
-                    flags.Remove(ClientEventTypes.MealMeatConsumed);
-                }
+                var (flagArray, swapArray) = MealFacts.Build(allChecked);
+                var flags = flagArray.ToList();
+                var swaps = swapArray.ToList();
 
                 // Selection check: require at least one flag or swap
                 if (flags.Count == 0 && swaps.Count == 0)

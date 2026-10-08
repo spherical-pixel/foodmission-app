@@ -38,6 +38,11 @@ namespace eu.foodmission.platform
         private VisualElement _step2Buttons;
         private VisualElement _btnBackStep2;
         private VisualElement _btnBackStep3;
+        private VisualElement _step4;
+        private VisualElement _btnBackStep4;
+        private FormFieldItemCheckbox _reviewOnlyMissions;
+        private FMMealFactsPicker _factsPicker;
+        private FMButton _btnConfirmLog;
         private Unity.AppUI.UI.Checkbox _chkSavePreset;
         private VisualElement _presetResults;
         private FMButton _btnLoadPreset;
@@ -55,6 +60,7 @@ namespace eu.foodmission.platform
         private FMArrowStepper _dayStepper;
         private readonly List<DateTime> _stepperDates = new();
         private AccessibilityNode _logButtonNode;
+        private AccessibilityNode _confirmButtonNode;
         private VisualElement _editModeBanner;
         private Unity.AppUI.UI.Text _editModeTitle;
         private FMButton _btnCancelEdit;
@@ -76,6 +82,16 @@ namespace eu.foodmission.platform
             _step2Buttons = contentContainer.Q<VisualElement>("step-2-buttons");
             _btnBackStep2 = contentContainer.Q<VisualElement>("btn-back-step-2");
             _btnBackStep3 = contentContainer.Q<VisualElement>("btn-back-step-3");
+            _step4 = contentContainer.Q<VisualElement>("step-4");
+            _btnBackStep4 = contentContainer.Q<VisualElement>("btn-back-step-4");
+            _reviewOnlyMissions = contentContainer.Q<FormFieldItemCheckbox>("review-only-missions");
+            _btnConfirmLog = contentContainer.Q<FMButton>("btn-confirm-log");
+            VisualElement reviewFacts = contentContainer.Q<VisualElement>("review-facts");
+            if (reviewFacts != null)
+            {
+                _factsPicker = new FMMealFactsPicker();
+                reviewFacts.Add(_factsPicker);
+            }
             _chkSavePreset = contentContainer.Q<Unity.AppUI.UI.Checkbox>("chk-save-preset");
             _presetResults = contentContainer.Q<VisualElement>("preset-results");
             _btnLoadPreset = contentContainer.Q<FMButton>("btn-load-preset");
@@ -182,6 +198,18 @@ namespace eu.foodmission.platform
             _btnLogSelected.clicked += OnLogSelectedClicked;
             _btnBackStep2?.RegisterCallback<ClickEvent>(OnBackClicked);
             _btnBackStep3?.RegisterCallback<ClickEvent>(OnBackClicked);
+            _btnBackStep4?.RegisterCallback<ClickEvent>(OnBackClicked);
+            if (_btnConfirmLog != null)
+            {
+                _btnConfirmLog.clicked += OnConfirmLogClicked;
+            }
+            _reviewOnlyMissions?.RegisterCallback<ChangeEvent<CheckboxState>>(OnReviewOnlyMissionsChanged);
+            if (_factsPicker != null)
+            {
+                _factsPicker.SectionToggled += OnFactSectionToggled;
+                _factsPicker.ItemToggled += OnFactToggled;
+                _factsPicker.SwapSelected += OnFactSwapSelected;
+            }
             _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             _viewModel.OnConfirmUpdateRequired += OnConfirmUpdateRequired;
@@ -278,6 +306,18 @@ namespace eu.foodmission.platform
             _btnLogSelected.clicked -= OnLogSelectedClicked;
             _btnBackStep2?.UnregisterCallback<ClickEvent>(OnBackClicked);
             _btnBackStep3?.UnregisterCallback<ClickEvent>(OnBackClicked);
+            _btnBackStep4?.UnregisterCallback<ClickEvent>(OnBackClicked);
+            if (_btnConfirmLog != null)
+            {
+                _btnConfirmLog.clicked -= OnConfirmLogClicked;
+            }
+            _reviewOnlyMissions?.UnregisterCallback<ChangeEvent<CheckboxState>>(OnReviewOnlyMissionsChanged);
+            if (_factsPicker != null)
+            {
+                _factsPicker.SectionToggled -= OnFactSectionToggled;
+                _factsPicker.ItemToggled -= OnFactToggled;
+                _factsPicker.SwapSelected -= OnFactSwapSelected;
+            }
 
             _viewModel.OnConfirmUpdateRequired -= OnConfirmUpdateRequired;
 
@@ -381,11 +421,13 @@ namespace eu.foodmission.platform
             if (_accessibilityHierarchy == null) return;
 
             _logButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnLogSelected, "Log selected dishes");
+            _confirmButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnConfirmLog, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_REVIEW_CONFIRM"));
         }
 
         protected override void TeardownAccessibilityNodes()
         {
             _logButtonNode = null;
+            _confirmButtonNode = null;
             base.TeardownAccessibilityNodes();
         }
 
@@ -422,6 +464,10 @@ namespace eu.foodmission.platform
                         UpdateStepVisibility();
                         if (_viewModel.CurrentStep == MealLogStep.SelectingSource)
                             RebuildSourceButtons();
+                        break;
+                    case nameof(_viewModel.FactSections):
+                    case nameof(_viewModel.HasMissionFacts):
+                        RebuildFacts();
                         break;
                     case nameof(_viewModel.TypeOfMealOptions):
                         RebuildTypeButtons();
@@ -492,13 +538,20 @@ namespace eu.foodmission.platform
             bool step1 = _viewModel.CurrentStep == MealLogStep.SelectingTypeOfMeal;
             bool step2 = _viewModel.CurrentStep == MealLogStep.SelectingSource;
             bool step3 = _viewModel.CurrentStep == MealLogStep.SelectingDishes || _viewModel.CurrentStep == MealLogStep.Saving;
+            bool step4 = _viewModel.CurrentStep == MealLogStep.ReviewingFacts;
 
             _step1?.EnableInClassList("visible", step1);
             _step2?.EnableInClassList("visible", step2);
             _step3?.EnableInClassList("visible", step3);
+            _step4?.EnableInClassList("visible", step4);
 
             _btnBackStep2?.EnableInClassList("visible", step2);
             _btnBackStep3?.EnableInClassList("visible", step3);
+            _btnBackStep4?.EnableInClassList("visible", step4);
+            if (step4)
+            {
+                RebuildFacts();
+            }
 
             _loggedMealsZone?.EnableInClassList("visible", step1 && !_viewModel.IsEditing);
 
@@ -929,7 +982,57 @@ namespace eu.foodmission.platform
         }
 
 
-        private void OnLogSelectedClicked()
+        private async void OnLogSelectedClicked()
+        {
+            if (_viewModel.IsEditing)
+            {
+                ConfirmAndSave();
+                return;
+            }
+
+            if (_reviewOnlyMissions != null)
+            {
+                _reviewOnlyMissions.CheckboxValue = CheckboxState.Unchecked;
+            }
+            await _viewModel.GoToReviewAsync();
+        }
+
+        private void OnConfirmLogClicked()
+        {
+            ConfirmAndSave();
+        }
+
+        private void OnReviewOnlyMissionsChanged(ChangeEvent<CheckboxState> evt)
+        {
+            _viewModel?.SetOnlyMissionFacts(evt.newValue == CheckboxState.Checked);
+        }
+
+        private void OnFactSectionToggled(string id)
+        {
+            _viewModel?.ToggleFactSection(id);
+        }
+
+        private void OnFactToggled(string id)
+        {
+            _viewModel?.ToggleFact(id);
+        }
+
+        private void OnFactSwapSelected(string id, string option)
+        {
+            _viewModel?.SelectFactSwap(id, option);
+        }
+
+        private void RebuildFacts()
+        {
+            if (_viewModel == null)
+            {
+                return;
+            }
+            _factsPicker?.SetContent(_viewModel.FactSections);
+            _reviewOnlyMissions?.EnableInClassList("fm-quick-meal-only-missions--hidden", !_viewModel.HasMissionFacts);
+        }
+
+        private void ConfirmAndSave()
         {
             if (_viewModel.SaveAsPreset)
             {

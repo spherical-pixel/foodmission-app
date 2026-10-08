@@ -4136,11 +4136,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247376
-    m_Localized: "Alle quests voltooid!"
+    m_Localized: Alle quests voltooid!
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Je hebt alle quests van {0} voltooid. Ontdek andere gebieden om verder te gaan."
+    m_Localized: Je hebt alle quests van {0} voltooid. Ontdek andere gebieden om
+      verder te gaan.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247378
+    m_Localized: Bekijk je maaltijd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Localized: Vink aan wat bij deze maaltijd hoort. Het helpt je missies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Localized: Maaltijd registreren
     m_Metadata:
       m_Items: []
   references:

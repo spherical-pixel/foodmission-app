@@ -4126,11 +4126,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247376
-    m_Localized: "Tutte le quest completate!"
+    m_Localized: Tutte le quest completate!
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Hai completato tutte le quest di {0}. Esplora altre aree per continuare a progredire."
+    m_Localized: Hai completato tutte le quest di {0}. Esplora altre aree per continuare
+      a progredire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247378
+    m_Localized: Rivedi il tuo pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247379
+    m_Localized: "Segna ci\xF2 che vale per questo pasto. Aiuta le tue missioni."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247380
+    m_Localized: Registra pasto
     m_Metadata:
       m_Items: []
   references:
