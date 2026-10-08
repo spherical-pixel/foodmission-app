@@ -160,21 +160,14 @@ namespace eu.foodmission.platform.Components
                     value = q.IsChecked ? CheckboxState.Checked : CheckboxState.Unchecked
                 };
                 checkbox.AddToClassList("fm-quick-meal-checkbox");
-                checkbox.RegisterValueChangedCallback(_ =>
-                {
-                    PlayClick();
-                    ItemToggled?.Invoke(capturedId);
-                });
+                // Visual only: a tap on the box toggled it and then hit the rebuilt card again,
+                // undoing the change. The header is the single toggle path.
+                checkbox.pickingMode = PickingMode.Ignore;
+                checkbox.Query<VisualElement>().ForEach(e => e.pickingMode = PickingMode.Ignore);
                 header.Add(checkbox);
 
-                header.RegisterCallback<ClickEvent>(evt =>
+                header.RegisterCallback<ClickEvent>(_ =>
                 {
-                    if (evt.target is Unity.AppUI.UI.Checkbox ||
-                        (evt.target is VisualElement ve && ve.GetFirstAncestorOfType<Unity.AppUI.UI.Checkbox>() != null))
-                    {
-                        return;
-                    }
-
                     PlayClick();
                     ItemToggled?.Invoke(capturedId);
                 });

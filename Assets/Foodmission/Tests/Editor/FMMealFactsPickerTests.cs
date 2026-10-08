@@ -29,6 +29,22 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void SetContent_CheckboxIgnoresPointer_SoTheCardIsTheOnlyTogglePath()
+        {
+            var picker = new FMMealFactsPicker();
+
+            picker.SetContent(MealFacts.BuildStandardSections());
+
+            var checkboxes = picker.Query<Unity.AppUI.UI.Checkbox>().ToList();
+            Assert.IsNotEmpty(checkboxes);
+            foreach (var checkbox in checkboxes)
+            {
+                Assert.AreEqual(PickingMode.Ignore, checkbox.pickingMode);
+                Assert.IsTrue(checkbox.Query<VisualElement>().ToList().All(e => e.pickingMode == PickingMode.Ignore));
+            }
+        }
+
+        [Test]
         public void SetContent_WithoutSections_RendersFallbackCards_AndReplacesPreviousContent()
         {
             var picker = new FMMealFactsPicker();
