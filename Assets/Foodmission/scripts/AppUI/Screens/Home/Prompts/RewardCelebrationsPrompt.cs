@@ -72,6 +72,7 @@ namespace eu.foodmission.platform
                     List<RewardPresentationItem> queue = RewardCelebrationDialog.BuildPresentationQueue(item.Reward, item.ContextTitle);
                     AddIfAny(queue, LevelUpCard(item.LevelUp));
                     AddIfAny(queue, UnlockedQuestCard(item.UnlockedQuest));
+                    AddIfAny(queue, DimensionCompletedCard(item.CompletedDimensionName));
                     RewardCelebrationDialog.Show(queue, item.ContextTitle, () => closed.TrySetResult(true));
                     await _viewModel.MarkCelebrationShownAsync(item);
                     if (item.UnlockedQuest != null)
@@ -118,6 +119,24 @@ namespace eu.foodmission.platform
                         new object[] { levelUp.DimensionName, level }),
                     IconEmoji = "🌟",
                     RawId = levelUp.Level
+                };
+            }
+
+            private static RewardPresentationItem DimensionCompletedCard(string dimensionName)
+            {
+                if (string.IsNullOrEmpty(dimensionName))
+                {
+                    return null;
+                }
+
+                return new RewardPresentationItem
+                {
+                    Type = RewardType.DimensionCompleted,
+                    Title = "@UI:DIMENSION_COMPLETED_TITLE",
+                    Subtitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DIMENSION_COMPLETED_SUBTITLE",
+                        new object[] { dimensionName }),
+                    IconEmoji = "🏆",
+                    RawId = dimensionName
                 };
             }
 

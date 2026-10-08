@@ -4135,6 +4135,14 @@ MonoBehaviour:
     m_Localized: '{0}: je bent nu {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247376
+    m_Localized: "Alle quests voltooid!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247377
+    m_Localized: "Je hebt alle quests van {0} voltooid. Ontdek andere gebieden om verder te gaan."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

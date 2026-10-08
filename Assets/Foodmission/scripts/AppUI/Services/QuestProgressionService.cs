@@ -211,6 +211,21 @@ namespace eu.foodmission.platform
             return ContentLevel.All[rank + 1];
         }
 
+        public bool IsDimensionCompleted(Quest completedQuest, IEnumerable<Quest> allQuests, IEnumerable<QuestProgress> userProgress)
+        {
+            if (completedQuest == null || allQuests == null)
+            {
+                return false;
+            }
+
+            var dimension = allQuests
+                .Where(q => q != null && string.Equals(q.dimensionId, completedQuest.dimensionId, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            return EvaluateProgression(dimension, userProgress)
+                .All(state => state.IsCompleted || IsSameQuest(state.Quest, completedQuest));
+        }
+
         private static bool IsSameQuest(Quest a, Quest b)
         {
             return (!string.IsNullOrEmpty(a.id) && string.Equals(a.id, b.id, StringComparison.OrdinalIgnoreCase)) ||

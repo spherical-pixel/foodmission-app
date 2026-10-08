@@ -3991,6 +3991,14 @@ MonoBehaviour:
     m_Key: DIMENSION_LEVEL_UP_SUBTITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247376
+    m_Key: DIMENSION_COMPLETED_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247377
+    m_Key: DIMENSION_COMPLETED_SUBTITLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

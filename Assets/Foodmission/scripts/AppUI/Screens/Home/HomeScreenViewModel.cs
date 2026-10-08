@@ -797,7 +797,8 @@ namespace eu.foodmission.platform
 
         /// <summary>
         /// What follows a completed quest: the next quest of its level or, when it was the last quest of the user's level in
-        /// its dimension and all of them are completed, the level up and the first quest of the new level.
+        /// its dimension and all of them are completed, the level up and the first quest of the new level. When nothing is
+        /// left to offer and every quest of the dimension is completed, the dimension is celebrated as completed.
         /// </summary>
         private async System.Threading.Tasks.Task ResolveQuestFollowUpAsync(PendingRewardCelebration celebration, Quest[] allQuests)
         {
@@ -819,28 +820,39 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            celebration.LevelUp = await FindLevelUpAsync(completed, allQuests);
-            if (celebration.LevelUp != null)
+            if (_questService == null)
             {
-                // Not filtered by level: it is the new level, applied when the celebration is shown
-                celebration.UnlockedQuest = _questProgressionService.GetFirstQuest(completed.dimensionId, celebration.LevelUp.Level, allQuests);
-            }
-        }
-
-        private async System.Threading.Tasks.Task<DimensionLevelUp> FindLevelUpAsync(Quest completed, Quest[] allQuests)
-        {
-            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
-            Dimension dimension = gate.DimensionById(completed.dimensionId);
-            string userLevel = gate.UserLevel(dimension);
-            if (userLevel == null || ContentLevel.Normalize(completed.level) != userLevel || _questService == null)
-            {
-                return null;
+                return;
             }
 
             var (progress, error) = await _questService.GetUserProgressListAsync();
             if (error != null || progress == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] Quest progress unavailable, no level up checked: {error?.message}");
+                return;
+            }
+
+            var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+            Dimension dimension = gate.DimensionById(completed.dimensionId);
+            celebration.LevelUp = FindLevelUp(completed, allQuests, progress, gate, dimension);
+            if (celebration.LevelUp != null)
+            {
+                // Not filtered by level: it is the new level, applied when the celebration is shown
+                celebration.UnlockedQuest = _questProgressionService.GetFirstQuest(completed.dimensionId, celebration.LevelUp.Level, allQuests);
+            }
+
+            // Unknown dimension (catalog not loaded): no card rather than an id as its name
+            if (celebration.UnlockedQuest == null && _questProgressionService.IsDimensionCompleted(completed, allQuests, progress))
+            {
+                celebration.CompletedDimensionName = DimensionDisplayName(dimension);
+            }
+        }
+
+        private DimensionLevelUp FindLevelUp(Quest completed, Quest[] allQuests, QuestProgress[] progress, LevelGate gate, Dimension dimension)
+        {
+            string userLevel = gate.UserLevel(dimension);
+            if (userLevel == null || ContentLevel.Normalize(completed.level) != userLevel)
+            {
                 return null;
             }
 
@@ -848,9 +860,18 @@ namespace eu.foodmission.platform
             return level == null ? null : new DimensionLevelUp
             {
                 DimensionCode = dimension.code,
-                DimensionName = !string.IsNullOrEmpty(dimension.name) ? dimension.name : dimension.code,
+                DimensionName = DimensionDisplayName(dimension),
                 Level = level
             };
+        }
+
+        private static string DimensionDisplayName(Dimension dimension)
+        {
+            if (dimension == null)
+            {
+                return null;
+            }
+            return !string.IsNullOrEmpty(dimension.name) ? dimension.name : dimension.code;
         }
 
         private static Quest FindQuest(Quest[] quests, string codeOrId)
@@ -1368,6 +1389,8 @@ namespace eu.foodmission.platform
         public Quest UnlockedQuest { get; set; }
         /// <summary>Set when the quest completed the user's level in its dimension; applied when the celebration is shown.</summary>
         public DimensionLevelUp LevelUp { get; set; }
+        /// <summary>Set when the quest was the last one left in its dimension (every level) and no other quest is offered.</summary>
+        public string CompletedDimensionName { get; set; }
     }
 
     public class DimensionLevelUp

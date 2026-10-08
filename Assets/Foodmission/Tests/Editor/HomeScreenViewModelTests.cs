@@ -1511,6 +1511,7 @@ namespace eu.foodmission.platform.Tests
                 Assert.AreEqual(DimensionCode.DietChanges, result[0].LevelUp.DimensionCode);
                 Assert.AreEqual("Diet", result[0].LevelUp.DimensionName);
                 Assert.AreEqual("i1", result[0].UnlockedQuest?.id, "the first quest of the new level is offered although it is above the current level");
+                Assert.IsNull(result[0].CompletedDimensionName, "a quest is still offered");
                 Assert.AreEqual(ContentLevel.Beginner, DimensionLevels.GetLevel(_storeService.GetAppState(), DimensionCode.DietChanges), "applied only when shown");
 
                 await vm.MarkCelebrationShownAsync(result[0]);
@@ -1550,6 +1551,65 @@ namespace eu.foodmission.platform.Tests
                 Assert.AreEqual(1, result.Count);
                 Assert.IsNull(result[0].LevelUp);
                 Assert.IsNull(result[0].UnlockedQuest);
+                Assert.IsNull(result[0].CompletedDimensionName);
+                vm.Dispose();
+            }
+            finally
+            {
+                DevUnlocks.All = originalDevUnlocks;
+            }
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_LastQuestOfTheDimension_CelebratesTheDimensionCompleted()
+        {
+            bool originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
+            try
+            {
+                var auth = new Mock<IAuthService>();
+                var vm = CreateLevelUpVm(auth,
+                    new QuestProgress { questId = "b1", completed = true },
+                    new QuestProgress { questId = "i1", completed = true },
+                    new QuestProgress { questId = "i2", completed = true });
+                // Already at the top level: no level up and nothing left to offer
+                AppState state = _storeService.GetAppState();
+                state.userSegment = "ADVANCED";
+                _storeService.SetAppState(state);
+
+                var result = await vm.CheckPendingGamificationRewardsAsync();
+
+                Assert.AreEqual(1, result.Count);
+                Assert.IsNull(result[0].LevelUp);
+                Assert.IsNull(result[0].UnlockedQuest);
+                Assert.AreEqual("Diet", result[0].CompletedDimensionName);
+                vm.Dispose();
+            }
+            finally
+            {
+                DevUnlocks.All = originalDevUnlocks;
+            }
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_LastQuestOfALevelWithOthersPending_NoDimensionCompleted()
+        {
+            bool originalDevUnlocks = DevUnlocks.All;
+            DevUnlocks.All = false;
+            try
+            {
+                var auth = new Mock<IAuthService>();
+                var vm = CreateLevelUpVm(auth,
+                    new QuestProgress { questId = "b1", completed = true },
+                    new QuestProgress { questId = "i1", completed = true });
+                AppState state = _storeService.GetAppState();
+                state.userSegment = "ADVANCED";
+                _storeService.SetAppState(state);
+
+                var result = await vm.CheckPendingGamificationRewardsAsync();
+
+                Assert.AreEqual(1, result.Count);
+                Assert.IsNull(result[0].CompletedDimensionName, "i2 is still pending");
                 vm.Dispose();
             }
             finally

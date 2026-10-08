@@ -4121,6 +4121,14 @@ MonoBehaviour:
     m_Localized: '{0}: ahora eres {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247376
+    m_Localized: "\xA1Todas las quests completadas!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247377
+    m_Localized: "Has completado todas las quests de {0}. Explora otras \xE1reas para seguir avanzando."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

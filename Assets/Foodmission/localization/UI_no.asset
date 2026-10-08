@@ -4120,6 +4120,14 @@ MonoBehaviour:
     m_Localized: "{0}: du er n\xE5 {1}"
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247376
+    m_Localized: "Alle oppdrag fullf\xF8rt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247377
+    m_Localized: "Du har fullf\xF8rt alle oppdragene i {0}. Utforsk andre omr\xE5der for \xE5 komme videre."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

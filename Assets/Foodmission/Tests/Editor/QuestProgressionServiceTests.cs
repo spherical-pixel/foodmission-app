@@ -309,5 +309,36 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(_service.GetLevelReached(quests[0], "INTERMEDIATE", quests, progress), "a user already above the level stays where they are");
             Assert.IsNull(_service.GetLevelReached(quests[0], null, quests, progress));
         }
+
+        [Test]
+        public void IsDimensionCompleted_EveryQuestOfTheDimensionCompleted_ReturnsTrue()
+        {
+            var quests = LevelQuests();
+            // a1 just completed: the progress list may not report it yet; dim2 doesn't count
+            var progress = new List<QuestProgress>
+            {
+                new QuestProgress { questId = "b1", completed = true },
+                new QuestProgress { questId = "b2", completed = true },
+                new QuestProgress { questCode = "QUEST.DIET.INTERMEDIATE.1", progress = 100f },
+                new QuestProgress { questId = "i2", completed = true }
+            };
+
+            Assert.IsTrue(_service.IsDimensionCompleted(quests[4], quests, progress));
+        }
+
+        [Test]
+        public void IsDimensionCompleted_AQuestOfAnotherLevelPending_ReturnsFalse()
+        {
+            var quests = LevelQuests();
+            var progress = new List<QuestProgress>
+            {
+                new QuestProgress { questId = "b2", completed = true },
+                new QuestProgress { questId = "i1", completed = true },
+                new QuestProgress { questId = "i2", completed = true }
+            };
+
+            Assert.IsFalse(_service.IsDimensionCompleted(quests[4], quests, progress), "b1 is still pending");
+            Assert.IsFalse(_service.IsDimensionCompleted(null, quests, progress));
+        }
     }
 }

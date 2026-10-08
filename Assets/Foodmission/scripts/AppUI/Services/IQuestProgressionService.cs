@@ -39,5 +39,8 @@ namespace eu.foodmission.platform
         /// quest of that level in its dimension is completed (the quest itself counts as completed); null otherwise.
         /// </summary>
         string GetLevelReached(Quest completedQuest, string userLevel, IEnumerable<Quest> allQuests, IEnumerable<QuestProgress> userProgress);
+
+        /// <summary>True when every quest of the quest's dimension, of any level, is completed (the quest itself counts as completed).</summary>
+        bool IsDimensionCompleted(Quest completedQuest, IEnumerable<Quest> allQuests, IEnumerable<QuestProgress> userProgress);
     }
 }

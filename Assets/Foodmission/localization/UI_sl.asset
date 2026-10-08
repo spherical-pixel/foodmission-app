@@ -4120,6 +4120,14 @@ MonoBehaviour:
     m_Localized: '{0}: zdaj si {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 53972389359247376
+    m_Localized: "Vse naloge zaklju\u010Dene!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53972389359247377
+    m_Localized: "Vse naloge na podro\u010Dju {0} so zaklju\u010Dene. Razi\u0161\u010Di druga podro\u010Dja in napreduj naprej."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
