@@ -1147,29 +1147,6 @@ MonoBehaviour:
       personalizadas."
     m_Metadata:
       m_Items: []
-  - m_Id: 25709899143962624
-    m_Localized: "\xBFCu\xE1ntas comidas que contengan carne sueles tomar cada semana?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710060687581184
-    m_Localized: "\xBFCon qu\xE9 frecuencia comes carne de vacuno?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710112776642560
-    m_Localized: "\xBFCon qu\xE9 frecuencia tiras comida que a\xFAn se puede comer?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710126802395136
-    m_Localized: "\xBFCon qu\xE9 frecuencia consumes alimentos ultraprocesados, como
-      aperitivos envasados, bebidas azucaradas, platos preparados o productos c\xE1rnicos
-      procesados?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710140115116032
-    m_Localized: "\xBFCon qu\xE9 frecuencia utilizas envases reutilizables o compras
-      productos recargables?"
-    m_Metadata:
-      m_Items: []
   - m_Id: 25970700069101568
     m_Localized: "CATEGOR\xCDAS"
     m_Metadata:
@@ -4071,12 +4048,6 @@ MonoBehaviour:
     m_Localized: "Terminar m\xE1s tarde"
     m_Metadata:
       m_Items: []
-  - m_Id: 53972389359247365
-    m_Localized: "Antes de empezar un quest, necesito que completes la encuesta de
-      h\xE1bitos alimentarios. Solo te llevar\xE1 un minuto y me ayuda a ponerte
-      objetivos a tu medida."
-    m_Metadata:
-      m_Items: []
   - m_Id: 53972389359247366
     m_Localized: "\xDAltimo d\xEDa de tu misi\xF3n"
     m_Metadata:
@@ -4140,6 +4111,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 53972389359247380
     m_Localized: Registrar comida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56156153275473920
+    m_Localized: Reintentar
     m_Metadata:
       m_Items: []
   references:

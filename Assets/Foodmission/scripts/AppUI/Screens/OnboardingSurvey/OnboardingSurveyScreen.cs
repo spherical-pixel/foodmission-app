@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using System.Linq;
 using eu.foodmission.platform.Components;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
@@ -11,8 +13,8 @@ namespace eu.foodmission.platform
     [Preserve]
     public class OnboardingSurveyScreen : StepFlowScreenBase<OnboardingSurveyViewModel>
     {
-        protected override int StepCount => 6;
-
+        // The ViewModel's StepCount (welcome + one per backend question) takes over once the questions load
+        protected override int StepCount => 1;
 
         protected override string NextButtonLabel => "@UI:TXT_NEXT";
         protected override string PreviousButtonLabel => "@UI:TXT_BACK";
@@ -22,12 +24,6 @@ namespace eu.foodmission.platform
         private ExVisualElement _messageCard;
         private Unity.AppUI.UI.Text _messageText;
         private FMNutriView _nutriView;
-
-        private ExVisualElement _meatContainer;
-        private ExVisualElement _beefContainer;
-        private ExVisualElement _foodWasteContainer;
-        private ExVisualElement _ultraProcessedContainer;
-        private ExVisualElement _reusableContainer;
 
         protected override void OnViewModelBound()
         {
@@ -39,12 +35,32 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void OnViewModelPropertyChangedInternal(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        protected override void OnViewModelUnbinding()
         {
-            if (e.PropertyName == nameof(_viewModel.MeatMealsOptions))
+            if (_viewModel != null)
             {
-                PopulateAllQuestionOptions();
+                _viewModel.PropertyChanged -= OnViewModelPropertyChangedInternal;
             }
+            base.OnViewModelUnbinding();
+        }
+
+        private void OnViewModelPropertyChangedInternal(object sender, PropertyChangedEventArgs e)
+        {
+            // Questions arrived (or were reloaded in another language) while a question step is shown
+            if (e.PropertyName == nameof(StepFlowViewModelBase.StepCount) && _viewModel != null)
+            {
+                OnStepChanged(_viewModel.CurrentStepIndex);
+            }
+        }
+
+        // The questions did not load: retry instead of leaving a welcome step that cannot continue
+        protected override Action OnApiErrorRetry()
+        {
+            if (_viewModel == null || _viewModel.HasQuestions)
+            {
+                return null;
+            }
+            return () => _ = _viewModel.LoadQuestionsAsync();
         }
 
         protected override void OnCloseRequested()
@@ -60,42 +76,46 @@ namespace eu.foodmission.platform
             });
         }
 
-        public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
+        public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
+            // base.OnEnter calls Initialize, which loads the questions
             base.OnEnter(controller, destination, args);
 
-            if (_viewModel != null)
+            if (_viewModel != null && args != null)
             {
-                if (args != null)
+                foreach (var arg in args)
                 {
-                    foreach (var arg in args)
+                    if (arg.name == "fromHome" && arg.value?.ToString() == "true")
                     {
-                        if (arg.name == "fromHome" && arg.value?.ToString() == "true")
-                        {
-                            _viewModel.FromHome = true;
-                        }
+                        _viewModel.FromHome = true;
                     }
                 }
-
-                await _viewModel.LoadCatalogOptionsAsync();
-                PopulateAllQuestionOptions();
             }
         }
 
         protected override VisualElement CreateStepContent(int stepIndex)
         {
-            return stepIndex switch
+            if (stepIndex == 0)
             {
-                0 => BuildWelcomeStep(),
-                1 => BuildCardStep(_meatContainer = CreateQuestionStepContainer()),
-                2 => BuildCardStep(_beefContainer = CreateQuestionStepContainer()),
-                3 => BuildCardStep(_foodWasteContainer = CreateQuestionStepContainer()),
-                4 => BuildCardStep(_ultraProcessedContainer = CreateQuestionStepContainer()),
-                5 => BuildCardStep(_reusableContainer = CreateQuestionStepContainer()),
-                _ => new VisualElement()
-            };
-        }
+                return BuildWelcomeStep();
+            }
 
+            OnboardingSurveyQuestion question = _viewModel?.QuestionForStep(stepIndex);
+            if (question == null)
+            {
+                return new VisualElement();
+            }
+
+            ExVisualElement container = CreateQuestionStepContainer();
+            // label ?? value: an option the backend sent without a label still shows something tappable
+            string[] labels = question.options.Select(o => o.label ?? o.value).ToArray();
+            int selected = Array.FindIndex(question.options, o => o.value == _viewModel.GetAnswer(question.field));
+            PopulateSingleChoiceOptions(container, labels, selected, index =>
+            {
+                _viewModel.SetAnswer(question.field, index >= 0 ? question.options[index].value : null);
+            });
+            return BuildCardStep(container);
+        }
         private ExVisualElement CreateQuestionStepContainer()
         {
             var container = new ExVisualElement();
@@ -124,41 +144,6 @@ namespace eu.foodmission.platform
                 root.Add(element);
             }
             return root;
-        }
-
-        private void PopulateAllQuestionOptions()
-        {
-            if (_viewModel == null) return;
-
-            PopulateSingleChoiceOptions(_meatContainer, _viewModel.MeatMealsOptions, _viewModel.MeatMealsIndex, idx =>
-            {
-                _viewModel.MeatMealsIndex = idx;
-                _viewModel.InvalidateValidation();
-            });
-
-            PopulateSingleChoiceOptions(_beefContainer, _viewModel.BeefFrequencyOptions, _viewModel.BeefFrequencyIndex, idx =>
-            {
-                _viewModel.BeefFrequencyIndex = idx;
-                _viewModel.InvalidateValidation();
-            });
-
-            PopulateSingleChoiceOptions(_foodWasteContainer, _viewModel.FoodWasteFrequencyOptions, _viewModel.FoodWasteFrequencyIndex, idx =>
-            {
-                _viewModel.FoodWasteFrequencyIndex = idx;
-                _viewModel.InvalidateValidation();
-            });
-
-            PopulateSingleChoiceOptions(_ultraProcessedContainer, _viewModel.UltraProcessedFrequencyOptions, _viewModel.UltraProcessedFrequencyIndex, idx =>
-            {
-                _viewModel.UltraProcessedFrequencyIndex = idx;
-                _viewModel.InvalidateValidation();
-            });
-
-            PopulateSingleChoiceOptions(_reusableContainer, _viewModel.ReusableContainersFrequencyOptions, _viewModel.ReusableContainersFrequencyIndex, idx =>
-            {
-                _viewModel.ReusableContainersFrequencyIndex = idx;
-                _viewModel.InvalidateValidation();
-            });
         }
 
         private void PopulateSingleChoiceOptions(ExVisualElement container, string[] options, int currentSelectedIndex, Action<int> onOptionSelected)
@@ -286,18 +271,7 @@ namespace eu.foodmission.platform
         {
             base.OnStepChanged(stepIndex);
 
-            string message = stepIndex switch
-            {
-                0 => "@UI:txtOnboardSurvey_Step_0",
-                1 => "@UI:txtOnboardSurvey_Step_1",
-                2 => "@UI:txtOnboardSurvey_Step_2",
-                3 => "@UI:txtOnboardSurvey_Step_3",
-                4 => "@UI:txtOnboardSurvey_Step_4",
-                5 => "@UI:txtOnboardSurvey_Step_5",
-                _ => ""
-            };
-
-            UpdateMascotMessage(message);
+            UpdateMascotMessage(stepIndex == 0 ? "@UI:txtOnboardSurvey_Step_0" : _viewModel?.QuestionForStep(stepIndex)?.text);
         }
 
         private VisualElement BuildWelcomeStep()

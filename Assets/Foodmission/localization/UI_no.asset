@@ -1142,27 +1142,6 @@ MonoBehaviour:
       valg, slik at Nutri kan skreddersy anbefalinger til deg."
     m_Metadata:
       m_Items: []
-  - m_Id: 25709899143962624
-    m_Localized: "Hvor mange m\xE5ltider med kj\xF8tt spiser du vanligvis hver uke?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710060687581184
-    m_Localized: Hvor ofte spiser du biff?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710112776642560
-    m_Localized: Hvor ofte kaster du mat som fortsatt er spiselig?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710126802395136
-    m_Localized: "Hvor ofte spiser du ultraprosesserte matvarer som ferdigpakkede
-      snacks, sukkerholdige drikker, ferdigretter eller bearbeidede kj\xF8ttprodukter?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710140115116032
-    m_Localized: "Hvor ofte bruker du gjenbrukbare beholdere eller kj\xF8per p\xE5fyllingsprodukter?"
-    m_Metadata:
-      m_Items: []
   - m_Id: 25970700069101568
     m_Localized: KATEGORIER
     m_Metadata:
@@ -4070,12 +4049,6 @@ MonoBehaviour:
     m_Localized: "Fullf\xF8r senere"
     m_Metadata:
       m_Items: []
-  - m_Id: 53972389359247365
-    m_Localized: "F\xF8r du starter et oppdrag, m\xE5 du fylle ut unders\xF8kelsen
-      om spisevaner. Det tar bare et minutt og hjelper meg \xE5 sette m\xE5l som
-      passer for deg."
-    m_Metadata:
-      m_Items: []
   - m_Id: 53972389359247366
     m_Localized: Siste dag av oppdraget ditt
     m_Metadata:
@@ -4140,6 +4113,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 53972389359247380
     m_Localized: "Registrer m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56156153275473920
+    m_Localized: "Pr\xF8v igjen"
     m_Metadata:
       m_Items: []
   references:

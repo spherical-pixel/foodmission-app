@@ -18,7 +18,7 @@ namespace eu.foodmission.platform.Tests
         public void SetUp()
         {
             _store = new TestStoreService();
-            _store.SetAppState(new AppState { userSegment = "INTERMEDIATE", userAutoAddToPantry = true });
+            _store.SetAppState(new AppState { dimensionLevels = DimensionCode.All.Select(c => new DimensionLevelEntry(c, "INTERMEDIATE")).ToArray(), userAutoAddToPantry = true });
             _auth = new Mock<IAuthService>();
             _auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
                  .Callback<ProfileUpdateRequest>(r => _captured = r)
@@ -35,7 +35,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Proposal_StartsWithSegmentForEveryDimension()
+        public void Proposal_StartsWithStoredBackendLevels()
         {
             var vm = CreateVm(DimensionLevelsMode.Proposal);
 
@@ -50,7 +50,6 @@ namespace eu.foodmission.platform.Tests
         {
             _store.SetAppState(new AppState
             {
-                userSegment = "BEGINNER",
                 dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.Packaging, "ADVANCED") }
             });
 
@@ -84,22 +83,35 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task Save_SendsOnlyLevelsAndKeepsAutoAddToPantry()
+        public async Task Save_SendsOnlyChangedLevelsAtRoot_AndNothingElse()
         {
             var vm = CreateVm(DimensionLevelsMode.Proposal);
-            vm.SetLevel(DimensionCode.FoodWaste, "ADVANCED");
+            vm.SetLevel(DimensionCode.FoodWaste, "BEGINNER");
 
             await vm.SaveAsync();
 
             Assert.IsNotNull(_captured);
-            Assert.AreEqual(6, _captured.preferences.dimensionLevels.Count);
-            Assert.AreEqual("ADVANCED", _captured.preferences.dimensionLevels[DimensionCode.FoodWaste]);
-            Assert.IsTrue(_captured.preferences.autoAddToPantry, "autoAddToPantry is a non-nullable bool and must keep the user's value");
-            Assert.IsNull(_captured.preferences.goals);
-            Assert.IsNull(_captured.preferences.onboardingSurvey);
+            Assert.AreEqual(1, _captured.dimensionLevels.Length, "unchanged rows are not sent, so a stale proposal never overwrites the backend");
+            Assert.AreEqual(DimensionCode.FoodWaste, _captured.dimensionLevels[0].dimensionCode);
+            Assert.AreEqual("BEGINNER", _captured.dimensionLevels[0].level);
+            Assert.IsNull(_captured.preferences, "no preferences: autoAddToPantry (non-nullable) must not be sent and reset");
             Assert.IsNull(_captured.segment);
-            Assert.AreEqual("ADVANCED", DimensionLevels.GetLevel(_store.GetAppState(), DimensionCode.FoodWaste));
-            Assert.IsTrue(_store.GetAppState().hasConfirmedDimensionLevels);
+            Assert.AreEqual("BEGINNER", DimensionLevels.GetLevel(_store.GetAppState(), DimensionCode.FoodWaste));
+        }
+
+        [Test]
+        public async Task Save_NothingChanged_SkipsPatch_AndStillContinues()
+        {
+            // e.g. the level refresh after the survey failed and the proposal shows stale levels: accepting must not lower the backend's scoring
+            var vm = CreateVm(DimensionLevelsMode.Proposal);
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            await vm.SaveAsync();
+
+            _auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            Assert.IsNotNull(action);
+            Assert.IsNull(vm.ErrorDetail);
         }
 
         [Test]
@@ -152,6 +164,7 @@ namespace eu.foodmission.platform.Tests
             var error = new ApiErrorResponse { statusCode = 500, message = "boom" };
             _auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((false, error));
             var vm = CreateVm(DimensionLevelsMode.Proposal);
+            vm.SetLevel(DimensionCode.FoodWaste, "ADVANCED");
             string action = null;
             vm.NavigationRequested += (a, args) => action = a;
 
@@ -159,8 +172,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreSame(error, vm.ErrorDetail);
             Assert.IsNull(action);
-            Assert.IsFalse(_store.GetAppState().hasConfirmedDimensionLevels);
-            Assert.AreEqual(0, _store.GetAppState().dimensionLevels.Length);
+            Assert.AreEqual("INTERMEDIATE", DimensionLevels.GetLevel(_store.GetAppState(), DimensionCode.FoodWaste), "the stored (backend) level is kept");
         }
 
         [Test]

@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+
+using UnityEngine;
 
 namespace eu.foodmission.platform
 {
-    /// <summary>Reads, proposes and converts the user's per-dimension levels.</summary>
+    /// <summary>Reads, refreshes and sanitizes the user's per-dimension levels (owned by the backend).</summary>
     public static class DimensionLevels
     {
-        /// <summary>Stored level for the dimension, else the global segment, else BEGINNER. Never null.</summary>
+        /// <summary>Stored level for the dimension, else BEGINNER. Never null.</summary>
         public static string GetLevel(AppState state, string dimensionCode)
         {
             if (state?.dimensionLevels != null && !string.IsNullOrEmpty(dimensionCode))
@@ -23,7 +26,7 @@ namespace eu.foodmission.platform
                 }
             }
 
-            return ContentLevel.Normalize(state?.userSegment) ?? ContentLevel.Beginner;
+            return ContentLevel.Beginner;
         }
 
         /// <summary>The effective level of every dimension, in DimensionCode.All order.</summary>
@@ -32,55 +35,52 @@ namespace eu.foodmission.platform
             return DimensionCode.All.Select(code => new DimensionLevelEntry(code, GetLevel(state, code))).ToArray();
         }
 
-        /// <summary>
-        /// Proposal shown after the onboarding survey. Today the backend only scores one global segment, so every
-        /// dimension gets it; when the backend returns one level per dimension, only this method changes.
-        /// </summary>
-        public static DimensionLevelEntry[] Propose(string segment)
+        /// <summary>Known dimensions with valid levels, in DimensionCode.All order (the last entry wins on duplicates).</summary>
+        public static DimensionLevelEntry[] Sanitize(IEnumerable<DimensionLevelEntry> entries)
         {
-            string level = ContentLevel.Normalize(segment) ?? ContentLevel.Beginner;
-            return DimensionCode.All.Select(code => new DimensionLevelEntry(code, level)).ToArray();
-        }
-
-        /// <summary>Entries from the backend map, keeping only known dimensions with valid levels.</summary>
-        public static DimensionLevelEntry[] FromMap(IDictionary<string, string> map)
-        {
-            if (map == null)
-            {
-                return new DimensionLevelEntry[0];
-            }
-
-            var entries = new List<DimensionLevelEntry>();
-            foreach (string code in DimensionCode.All)
-            {
-                foreach (KeyValuePair<string, string> pair in map)
-                {
-                    if (string.Equals(pair.Key, code, StringComparison.OrdinalIgnoreCase) && ContentLevel.IsValid(pair.Value))
-                    {
-                        entries.Add(new DimensionLevelEntry(code, ContentLevel.Normalize(pair.Value)));
-                        break;
-                    }
-                }
-            }
-            return entries.ToArray();
-        }
-
-        public static Dictionary<string, string> ToMap(IEnumerable<DimensionLevelEntry> entries)
-        {
-            var map = new Dictionary<string, string>();
-            if (entries == null)
-            {
-                return map;
-            }
-
-            foreach (DimensionLevelEntry entry in entries)
+            var byCode = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (DimensionLevelEntry entry in entries ?? Enumerable.Empty<DimensionLevelEntry>())
             {
                 if (entry != null && !string.IsNullOrEmpty(entry.dimensionCode) && ContentLevel.IsValid(entry.level))
                 {
-                    map[entry.dimensionCode] = ContentLevel.Normalize(entry.level);
+                    byCode[entry.dimensionCode] = ContentLevel.Normalize(entry.level);
                 }
             }
-            return map;
+
+            return DimensionCode.All
+                .Where(code => byCode.ContainsKey(code))
+                .Select(code => new DimensionLevelEntry(code, byCode[code]))
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Reloads the levels from the backend into AppState. On error (or without a service) the stored levels are kept,
+        /// so a failed request never resets the user to BEGINNER.
+        /// </summary>
+        public static async Task<bool> RefreshAsync(IGamificationService gamification, IStoreService store)
+        {
+            if (gamification == null || store?.store == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                var (levels, error) = await gamification.GetDimensionLevelsAsync();
+                if (error != null || levels == null)
+                {
+                    Debug.LogWarning($"[DimensionLevels] Could not refresh levels: {error?.statusCode} {error?.message}");
+                    return false;
+                }
+
+                store.store.Dispatch(AppActions.setDimensionLevels.Invoke(Sanitize(levels)));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[DimensionLevels] RefreshAsync failed: {ex.Message}");
+                return false;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace eu.foodmission.platform
@@ -211,42 +210,6 @@ namespace eu.foodmission.platform
     }
 
     /// <summary>
-    /// Reads a JSON object of string values into a dictionary. Anything else (array, string, number) becomes null
-    /// and non-string values are skipped, so a malformed server value never breaks the whole profile.
-    /// </summary>
-    public class LenientStringMapConverter : Newtonsoft.Json.JsonConverter
-    {
-        public override bool CanConvert(System.Type objectType)
-        {
-            return objectType == typeof(Dictionary<string, string>);
-        }
-
-        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
-        {
-            Newtonsoft.Json.Linq.JToken token = Newtonsoft.Json.Linq.JToken.Load(reader);
-            if (token.Type != Newtonsoft.Json.Linq.JTokenType.Object)
-            {
-                return null;
-            }
-
-            var map = new Dictionary<string, string>();
-            foreach (Newtonsoft.Json.Linq.JProperty property in ((Newtonsoft.Json.Linq.JObject)token).Properties())
-            {
-                if (property.Value.Type == Newtonsoft.Json.Linq.JTokenType.String)
-                {
-                    map[property.Name] = (string)property.Value;
-                }
-            }
-            return map;
-        }
-
-        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
-        {
-            serializer.Serialize(writer, value);
-        }
-    }
-
-    /// <summary>
     /// Nested preferences object returned by GET /api/v1/auth/profile.
     /// Mirrors the free-form JSON stored in the users.preferences column.
     /// </summary>
@@ -274,8 +237,5 @@ namespace eu.foodmission.platform
         public PilotSurveyCycleState pilotSurveyCycleState;
         public bool pilotConsentAccepted;
         public string[] goals;
-        /// <summary>preferences.dimensionLevels: { "DIET_CHANGES": "BEGINNER", … }. Malformed values are read as null (see LenientStringMapConverter).</summary>
-        [Newtonsoft.Json.JsonConverter(typeof(LenientStringMapConverter))]
-        public Dictionary<string, string> dimensionLevels;
     }
 }

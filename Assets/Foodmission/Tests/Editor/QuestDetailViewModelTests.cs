@@ -45,7 +45,7 @@ namespace eu.foodmission.platform.Tests
                 accessToken = "test-token",
                 tokenType = "Bearer",
                 lang = "es",
-                userOnboardingSurvey = new OnboardingSurveyData { weeklyMeatConsumption = "FIVE_TO_NINE" }
+                userOnboardingSurvey = OnboardingSurveyData.Of(("weeklyMeatConsumption", "FIVE_TO_NINE"))
             });
 
             _mockDimension = new Dimension
@@ -553,11 +553,12 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task StartQuestAsync_WithoutOnboardingSurvey_DoesNotStartTheQuest()
+        public async Task StartQuestAsync_WithoutOnboardingSurvey_StartsTheQuest()
         {
-            // Some mission rules use the survey as baseline (M.B1.3), so quests wait for it
+            // Everyone starts at BEGINNER: the survey is optional and no longer blocks quests (2026-10-12)
             _storeService.SetAppState(new AppState { accessToken = "test-token", tokenType = "Bearer" });
             var mockAuthService = new Mock<IAuthService>();
+            mockAuthService.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((true, (ApiErrorResponse)null));
             var vm = new QuestDetailViewModel(
                 _storeService,
                 _mockQuestService.Object,
@@ -569,14 +570,8 @@ namespace eu.foodmission.platform.Tests
             );
             vm.SetQuestForTesting(_mockQuest, _mockProgress);
 
-            string route = null;
-            vm.NavigationRequested += (r, _) => route = r;
-
-            Assert.IsTrue(vm.NeedsOnboardingSurvey);
-            Assert.IsFalse(await vm.StartQuestAsync());
-            Assert.IsNull(route);
-            mockAuthService.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
-            Assert.IsFalse(vm.IsCurrentQuest);
+            Assert.IsTrue(await vm.StartQuestAsync());
+            mockAuthService.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Once);
         }
 
         [Test]

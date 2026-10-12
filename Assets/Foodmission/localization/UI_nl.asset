@@ -1147,28 +1147,6 @@ MonoBehaviour:
       duurzame keuzes, zodat Nutri aanbevelingen op maat voor je kan doen."
     m_Metadata:
       m_Items: []
-  - m_Id: 25709899143962624
-    m_Localized: Hoeveel maaltijden met vlees eet je doorgaans per week?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710060687581184
-    m_Localized: Hoe vaak eet je rundvlees?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710112776642560
-    m_Localized: Hoe vaak gooi je nog eetbaar voedsel weg?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710126802395136
-    m_Localized: Hoe vaak eet of drinkt u ultraverwerkte voedingsmiddelen, zoals
-      verpakte snacks, suikerrijke dranken, kant-en-klaarmaaltijden of verwerkte
-      vleesproducten?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710140115116032
-    m_Localized: Hoe vaak gebruik je herbruikbare verpakkingen of koop je navulproducten?
-    m_Metadata:
-      m_Items: []
   - m_Id: 25970700069101568
     m_Localized: "CATEGORIE\xCBN"
     m_Metadata:
@@ -4085,12 +4063,6 @@ MonoBehaviour:
     m_Localized: Later afmaken
     m_Metadata:
       m_Items: []
-  - m_Id: 53972389359247365
-    m_Localized: "Voordat je aan een missie begint, moet je eerst de enqu\xEAte over
-      eetgewoonten invullen. Het duurt maar een minuutje en helpt me doelen te kiezen
-      die bij je passen."
-    m_Metadata:
-      m_Items: []
   - m_Id: 53972389359247366
     m_Localized: Laatste dag van je missie
     m_Metadata:
@@ -4154,6 +4126,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 53972389359247380
     m_Localized: Maaltijd registreren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56156153275473920
+    m_Localized: Opnieuw proberen
     m_Metadata:
       m_Items: []
   references:

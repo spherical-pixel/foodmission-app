@@ -453,7 +453,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void DispatchProfileSynced(ProfileResponse profile)
+        private void DispatchProfileSynced(ProfileResponse profile, bool refreshDimensionLevels = true)
         {
             var payload = new AppActions.ProfilePayload(
                 yearOfBirth: profile.yearOfBirth,
@@ -481,12 +481,15 @@ namespace eu.foodmission.platform
                 onboardingProfileSkippedAt: profile.preferences?.onboardingProfileSkippedAt,
                 pilotSurveyCycleState: profile.preferences?.pilotSurveyCycleState,
                 pilotConsentAccepted: profile.preferences?.pilotConsentAccepted ?? false,
-                goals: profile.preferences?.goals,
-                dimensionLevels: DimensionLevels.FromMap(profile.preferences?.dimensionLevels)
+                goals: profile.preferences?.goals
             );
             _storeService.store.Dispatch(AppActions.profileSynced.Invoke(payload));
             _ = App.current?.services?.GetService<INutriService>()?.SyncLoadoutAsync();
             _ = SyncGamificationAsync();
+            if (refreshDimensionLevels)
+            {
+                _ = DimensionLevels.RefreshAsync(App.current?.services?.GetService<IGamificationService>(), _storeService);
+            }
         }
 
         public static ProfileUpdateRequest BuildSettingsRequest(AppState state)
@@ -743,7 +746,8 @@ namespace eu.foodmission.platform
                 ProfileResponse profile = await FetchProfileAsync(state.accessToken);
                 if (profile != null)
                 {
-                    DispatchProfileSynced(profile);
+                    // Levels saved here are dispatched by their own screen; no need to reload them on every PATCH
+                    DispatchProfileSynced(profile, refreshDimensionLevels: false);
                 }
                 else
                 {

@@ -69,7 +69,7 @@ namespace eu.foodmission.platform.Tests
                 refreshToken = "refresh-token",
                 hasCompletedOnboarding = true,
                 hasCompletedExtendedProfile = true,
-                userOnboardingSurvey = new OnboardingSurveyData { weeklyMeatConsumption = "FIVE_TO_NINE" },
+                userOnboardingSurvey = OnboardingSurveyData.Of(("weeklyMeatConsumption", "FIVE_TO_NINE")),
                 userMotivation = "PLANETARY_IMPACT",
                 userSegment = "BEGINNER",
                 theme = "dark",
@@ -237,19 +237,16 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(1, newState.dimensionLevels.Length);
             Assert.AreEqual(ContentLevel.Advanced, newState.dimensionLevels[0].level);
-            Assert.IsTrue(newState.hasConfirmedDimensionLevels);
         }
 
         [Test]
         public void LogoutReducer_ClearsDimensionLevels()
         {
             m_InitialState.dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.FoodWaste, ContentLevel.Advanced) };
-            m_InitialState.hasConfirmedDimensionLevels = true;
 
             var newState = AppReducers.LogoutReducer(m_InitialState, AppActions.logout.Invoke());
 
             Assert.AreEqual(0, newState.dimensionLevels.Length);
-            Assert.IsFalse(newState.hasConfirmedDimensionLevels);
         }
 
         [Test]
@@ -263,18 +260,6 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNull(newState.pilotSurveyCycleState);
             Assert.IsFalse(newState.pilotConsentAccepted);
-        }
-
-        [Test]
-        public void ProfileSyncedReducer_WithServerLevels_SetsThemAndConfirmed()
-        {
-            var payload = new AppActions.ProfilePayload(1990, "ES", "", "", "", "", "", "",
-                dimensionLevels: new[] { new DimensionLevelEntry(DimensionCode.Packaging, ContentLevel.Intermediate) });
-
-            var newState = AppReducers.ProfileSyncedReducer(m_InitialState, AppActions.profileSynced.Invoke(payload));
-
-            Assert.AreEqual(ContentLevel.Intermediate, DimensionLevels.GetLevel(newState, DimensionCode.Packaging));
-            Assert.IsTrue(newState.hasConfirmedDimensionLevels);
         }
 
         [Test]

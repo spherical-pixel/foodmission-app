@@ -14,9 +14,19 @@ namespace eu.foodmission.platform.Tests
         [TestCase(0, 0, true, false, ProgressWheelSectionState.Loading)]
         [TestCase(0, 0, false, true, ProgressWheelSectionState.Hidden)]
         [TestCase(4, 2, true, true, ProgressWheelSectionState.Grid)]
-        public void ResolveState(int total, int visible, bool loading, bool surveyComplete, ProgressWheelSectionState expected)
+        public void ResolveState(int total, int visible, bool loading, bool surveyAnswered, ProgressWheelSectionState expected)
         {
-            Assert.AreEqual(expected, ProgressWheelSection.ResolveState(total, visible, loading, surveyComplete));
+            Assert.AreEqual(expected, ProgressWheelSection.ResolveState(total, visible, loading, surveyAnswered));
+        }
+
+        [Test]
+        public void Build_AnyAnswer_HidesTheSurveyCta()
+        {
+            // Every question is optional: one answer (of any backend field) means the survey was done
+            var state = new AppState { userOnboardingSurvey = OnboardingSurveyData.Of(("usesLeftovers", "OFTEN")) };
+
+            Assert.AreEqual(ProgressWheelSectionState.Hidden, ProgressWheelSection.Build(state, false).State);
+            Assert.AreEqual(ProgressWheelSectionState.SurveyCta, ProgressWheelSection.Build(new AppState(), false).State);
         }
 
         [Test]

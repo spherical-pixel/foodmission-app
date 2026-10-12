@@ -1,18 +1,23 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Unity.AppUI.MVVM;
-using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
+
 using UnityEngine;
 
 namespace eu.foodmission.platform
 {
+    /// <summary>Onboarding survey: a welcome step plus one optional step per question served by the backend.</summary>
     [ObservableObject]
     public partial class OnboardingSurveyViewModel : StepFlowViewModelBase
     {
         private readonly IAuthService _authService;
-        private readonly ICatalogService _catalogService;
         private readonly IGamificationService _gamificationService;
+        private readonly OnboardingSurveyData _answers = new OnboardingSurveyData();
+        private OnboardingSurveyQuestion[] _questions = new OnboardingSurveyQuestion[0];
+        private int _loadRequest;
 
         [ObservableProperty]
         private bool m_IsSubmitting;
@@ -20,36 +25,18 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private bool _isLoading;
 
+        [ObservableProperty]
+        private bool m_FromHome = false;
 
+        public IReadOnlyList<OnboardingSurveyQuestion> Questions => _questions;
 
-        public string[] MeatMealsOptions { get; private set; } = System.Array.Empty<string>();
-        public string[] MeatMealsCodes { get; private set; } = System.Array.Empty<string>();
+        /// <summary>False until the questions load; the load error dialog then offers a retry.</summary>
+        public bool HasQuestions => _questions.Length > 0;
 
-        public string[] BeefFrequencyOptions { get; private set; } = System.Array.Empty<string>();
-        public string[] BeefFrequencyCodes { get; private set; } = System.Array.Empty<string>();
-
-        public string[] FoodWasteFrequencyOptions { get; private set; } = System.Array.Empty<string>();
-        public string[] FoodWasteFrequencyCodes { get; private set; } = System.Array.Empty<string>();
-
-        public string[] UltraProcessedFrequencyOptions { get; private set; } = System.Array.Empty<string>();
-        public string[] UltraProcessedFrequencyCodes { get; private set; } = System.Array.Empty<string>();
-
-        public string[] ReusableContainersFrequencyOptions { get; private set; } = System.Array.Empty<string>();
-        public string[] ReusableContainersFrequencyCodes { get; private set; } = System.Array.Empty<string>();
-
-        // Step States (-1 means no option selected)
-        [ObservableProperty] private int m_MeatMealsIndex = -1;
-        [ObservableProperty] private int m_BeefFrequencyIndex = -1;
-        [ObservableProperty] private int m_FoodWasteFrequencyIndex = -1;
-        [ObservableProperty] private int m_UltraProcessedFrequencyIndex = -1;
-        [ObservableProperty] private int m_ReusableContainersFrequencyIndex = -1;
-        [ObservableProperty] private bool m_FromHome = false;
-
-        public OnboardingSurveyViewModel(IStoreService storeService, ICatalogService catalogService, IAuthService authService = null, IGamificationService gamificationService = null) : base(storeService)
+        public OnboardingSurveyViewModel(IStoreService storeService, IGamificationService gamificationService, IAuthService authService = null) : base(storeService)
         {
-            _catalogService = catalogService;
-            _authService = authService;
             _gamificationService = gamificationService;
+            _authService = authService;
 
             _storeSubscription = _store.Subscribe(
                 state => state.lang,
@@ -59,145 +46,104 @@ namespace eu.foodmission.platform
 
         private async void OnLanguageChanged(string newLang)
         {
-            if (string.IsNullOrEmpty(newLang)) return;
-            await LoadCatalogOptionsAsync();
+            if (string.IsNullOrEmpty(newLang))
+            {
+                return;
+            }
+            await LoadQuestionsAsync();
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _ = LoadCatalogOptionsAsync();
+            _ = LoadQuestionsAsync();
         }
 
-        public async Task LoadCatalogOptionsAsync()
+        /// <summary>Loads (or reloads, e.g. after a language change) the questions; answers are kept by field.</summary>
+        public async Task LoadQuestionsAsync()
         {
-            if (_catalogService == null)
+            if (_gamificationService == null)
             {
-                Debug.LogWarning("[OnboardingSurveyViewModel] _catalogService is null!");
+                Debug.LogWarning("[OnboardingSurveyViewModel] _gamificationService is null!");
                 return;
             }
 
+            // A slower response (e.g. for the previous language) must not replace a newer one
+            int request = ++_loadRequest;
             IsLoading = true;
             try
             {
-                string lang = _storeService.GetAppState().lang ?? "en";
-
-                var meatTask = _catalogService.GetWeeklyMeatRangesAsync(lang);
-                var beefTask = _catalogService.GetWeeklyBeefFrequenciesAsync(lang);
-                var wasteTask = _catalogService.GetWeeklyFoodWasteRangesAsync(lang);
-                var upfTask = _catalogService.GetWeeklyUpfRangesAsync(lang);
-                var reusableTask = _catalogService.GetWeeklyReusableRangesAsync(lang);
-
-                await Task.WhenAll(meatTask, beefTask, wasteTask, upfTask, reusableTask);
-
-                var (meatItems, _) = meatTask.Result;
-                if (meatItems != null && meatItems.Length > 0)
+                var (questions, error) = await _gamificationService.GetOnboardingSurveyAsync();
+                if (request != _loadRequest)
                 {
-                    MeatMealsCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(meatItems, x => x.code));
-                    MeatMealsOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(meatItems, x => x.label));
+                    return;
+                }
+                if (error != null)
+                {
+                    ErrorDetail = error;
+                    return;
                 }
 
-                var (beefItems, _) = beefTask.Result;
-                if (beefItems != null && beefItems.Length > 0)
-                {
-                    BeefFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(beefItems, x => x.code));
-                    BeefFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(beefItems, x => x.label));
-                }
-
-                var (wasteItems, _) = wasteTask.Result;
-                if (wasteItems != null && wasteItems.Length > 0)
-                {
-                    FoodWasteFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(wasteItems, x => x.code));
-                    FoodWasteFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(wasteItems, x => x.label));
-                }
-
-                var (upfItems, _) = upfTask.Result;
-                if (upfItems != null && upfItems.Length > 0)
-                {
-                    UltraProcessedFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(upfItems, x => x.code));
-                    UltraProcessedFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(upfItems, x => x.label));
-                }
-
-                var (reusableItems, _) = reusableTask.Result;
-                if (reusableItems != null && reusableItems.Length > 0)
-                {
-                    ReusableContainersFrequencyCodes = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(reusableItems, x => x.code));
-                    ReusableContainersFrequencyOptions = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(reusableItems, x => x.label));
-                }
-
-                Debug.Log($"[OnboardingSurveyViewModel] Catalog options loaded in parallel! Meat count: {MeatMealsOptions.Length}, Beef count: {BeefFrequencyOptions.Length}");
-                OnPropertyChanged(nameof(MeatMealsOptions));
-                InvalidateValidation();
+                _questions = questions ?? new OnboardingSurveyQuestion[0];
+                StepCount = GetStepCount();
+                CurrentStepIndex = Math.Min(CurrentStepIndex, StepCount - 1);
+                RequestRebuildSteps();
+                RefreshStepState();
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"[OnboardingSurveyViewModel] LoadCatalogOptionsAsync exception: {ex.Message}");
+                Debug.LogError($"[OnboardingSurveyViewModel] LoadQuestionsAsync exception: {ex.Message}");
             }
             finally
             {
-                IsLoading = false;
+                if (request == _loadRequest)
+                {
+                    IsLoading = false;
+                }
             }
         }
 
-        protected override int GetStepCount() => 6;
-
-        protected override string GetStepTitle(int stepIndex)
+        public OnboardingSurveyQuestion QuestionForStep(int stepIndex)
         {
-            return "";
+            int index = stepIndex - 1;
+            return index >= 0 && index < _questions.Length ? _questions[index] : null;
         }
 
-        protected override bool ValidateStep(int stepIndex)
-        {
-            return stepIndex switch
-            {
-                0 => true,
-                1 => MeatMealsIndex >= 0 && MeatMealsIndex < MeatMealsOptions.Length,
-                2 => BeefFrequencyIndex >= 0 && BeefFrequencyIndex < BeefFrequencyOptions.Length,
-                3 => FoodWasteFrequencyIndex >= 0 && FoodWasteFrequencyIndex < FoodWasteFrequencyOptions.Length,
-                4 => UltraProcessedFrequencyIndex >= 0 && UltraProcessedFrequencyIndex < UltraProcessedFrequencyOptions.Length,
-                5 => ReusableContainersFrequencyIndex >= 0 && ReusableContainersFrequencyIndex < ReusableContainersFrequencyOptions.Length,
-                _ => false
-            };
-        }
+        public string GetAnswer(string field) => _answers.Get(field);
 
-        protected override Task OnStepEnteredAsync(int stepIndex)
-        {
-            Debug.Log($"[OnboardingSurvey] Entered Step {stepIndex}");
-            return Task.CompletedTask;
-        }
+        /// <summary>Null clears the answer (every question is optional).</summary>
+        public void SetAnswer(string field, string value) => _answers.Set(field, value);
 
-        protected override Task OnStepExitingAsync(int stepIndex)
-        {
-            Debug.Log($"[OnboardingSurvey] Exiting Step {stepIndex}");
-            return Task.CompletedTask;
-        }
+        protected override int GetStepCount() => 1 + _questions.Length;
+
+        protected override string GetStepTitle(int stepIndex) => "";
+
+        // Welcome needs the questions (never submit a survey the user never saw); questions can be skipped
+        protected override bool ValidateStep(int stepIndex) => stepIndex == 0 ? _questions.Length > 0 : stepIndex < StepCount;
+
+        protected override Task OnStepEnteredAsync(int stepIndex) => Task.CompletedTask;
+
+        protected override Task OnStepExitingAsync(int stepIndex) => Task.CompletedTask;
 
         protected override async Task OnFlowCompletedAsync()
         {
-            if (IsSubmitting) return;
+            if (IsSubmitting)
+            {
+                return;
+            }
             IsSubmitting = true;
 
             try
             {
-                Debug.Log($"[OnboardingSurvey] Survey Completed! MeatMeals: {MeatMealsIndex}, BeefFreq: {BeefFrequencyIndex}, FoodWaste: {FoodWasteFrequencyIndex}, UltraProcessed: {UltraProcessedFrequencyIndex}, Reusable: {ReusableContainersFrequencyIndex}");
+                var surveyData = OnboardingSurveyData.FromMap(_answers.ToMap());
 
-                var surveyData = new OnboardingSurveyData
-                {
-                    weeklyMeatConsumption = MeatMealsIndex >= 0 && MeatMealsIndex < MeatMealsCodes.Length ? MeatMealsCodes[MeatMealsIndex] : null,
-                    weeklyBeefConsumption = BeefFrequencyIndex >= 0 && BeefFrequencyIndex < BeefFrequencyCodes.Length ? BeefFrequencyCodes[BeefFrequencyIndex] : null,
-                    weeklyFoodWaste = FoodWasteFrequencyIndex >= 0 && FoodWasteFrequencyIndex < FoodWasteFrequencyCodes.Length ? FoodWasteFrequencyCodes[FoodWasteFrequencyIndex] : null,
-                    weeklyUpfConsumption = UltraProcessedFrequencyIndex >= 0 && UltraProcessedFrequencyIndex < UltraProcessedFrequencyCodes.Length ? UltraProcessedFrequencyCodes[UltraProcessedFrequencyIndex] : null,
-                    weeklyReusableOrRefill = ReusableContainersFrequencyIndex >= 0 && ReusableContainersFrequencyIndex < ReusableContainersFrequencyCodes.Length ? ReusableContainersFrequencyCodes[ReusableContainersFrequencyIndex] : null
-                };
-
-                // 1. Dispatch survey answers to Redux store (persisted in PlayerPrefs/LocalStorage)
+                // 1. Persist the answers locally
                 _storeService.store.Dispatch(AppActions.setOnboardingSurvey.Invoke(surveyData));
 
-                // 2. First submission: the backend scores the answers into a segment and creates the
-                //    wallet + progress wheels. 409 means onboarding was already applied (e.g. retaking the
-                //    survey from Home), so the answers are only updated via PATCH below.
+                // 2. First submission scores every dimension and sets the levels. 409 = already onboarded
+                //    (retake from Home): the answers are only updated via PATCH below, levels are not rescored.
                 bool needsPatch = true;
-                if (_gamificationService != null && surveyData.IsComplete())
+                if (_gamificationService != null)
                 {
                     var (result, submitError) = await _gamificationService.SubmitOnboardingSurveyAsync(surveyData);
                     if (submitError == null)
@@ -237,9 +183,12 @@ namespace eu.foodmission.platform
                     }
                 }
 
+                // 4. The backend scored the levels: load them for the proposal screen
+                await DimensionLevels.RefreshAsync(_gamificationService, _storeService);
+
                 ErrorDetail = null;
 
-                // 4. Show the proposed per-dimension levels; that screen continues to Home or the avatar step
+                // 5. Show the proposed per-dimension levels; that screen continues to Home or the avatar step
                 RaiseNavigationRequested(Actions.go_to_dimension_levels, DimensionLevelsNavigation.ProposalArguments(FromHome));
             }
             finally

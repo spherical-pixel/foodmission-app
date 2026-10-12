@@ -249,39 +249,81 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void OnboardingSurveyData_IsComplete_RequiresAllFiveAnswers()
+        public void OnboardingSurveyData_SerializesAsFlatObjectOfAnswers()
         {
-            var data = new OnboardingSurveyData
-            {
-                weeklyMeatConsumption = "ZERO_TO_FOUR",
-                weeklyBeefConsumption = "NEVER",
-                weeklyFoodWaste = "ZERO",
-                weeklyUpfConsumption = "ZERO_TO_THREE",
-            };
-            Assert.IsFalse(data.IsComplete());
-
-            data.weeklyReusableOrRefill = "TEN_PLUS";
-            Assert.IsTrue(data.IsComplete());
-        }
-
-        [Test]
-        public void OnboardingSurveyData_Serializes_OnlyBackendFields()
-        {
-            var data = new OnboardingSurveyData
-            {
-                weeklyMeatConsumption = "ZERO_TO_FOUR",
-                weeklyBeefConsumption = "NEVER",
-                weeklyFoodWaste = "ZERO",
-                weeklyUpfConsumption = "ZERO_TO_THREE",
-                weeklyReusableOrRefill = "TEN_PLUS",
-            };
+            var data = OnboardingSurveyData.Of(("weeklyMeatConsumption", "ZERO_TO_FOUR"), ("usesLeftovers", "OFTEN"));
 
             var json = Newtonsoft.Json.Linq.JObject.Parse(JsonConvert.SerializeObject(data));
 
-            // POST /users/me/gamification/onboarding-survey uses forbidNonWhitelisted: no extra keys allowed.
-            CollectionAssert.AreEquivalent(
-                new[] { "weeklyMeatConsumption", "weeklyBeefConsumption", "weeklyFoodWaste", "weeklyUpfConsumption", "weeklyReusableOrRefill" },
-                System.Linq.Enumerable.Select(json.Properties(), p => p.Name));
+            // POST onboarding-survey uses forbidNonWhitelisted: only the answered backend fields, nothing else
+            CollectionAssert.AreEquivalent(new[] { "weeklyMeatConsumption", "usesLeftovers" }, System.Linq.Enumerable.Select(json.Properties(), p => p.Name));
+            Assert.AreEqual("OFTEN", (string)json["usesLeftovers"]);
+        }
+
+        [Test]
+        public void OnboardingSurveyData_EmptySerializesAsEmptyObject()
+        {
+            Assert.AreEqual("{}", JsonConvert.SerializeObject(new OnboardingSurveyData()));
+        }
+
+        [Test]
+        public void OnboardingSurveyData_Deserialize_SkipsNullsAndNonStrings()
+        {
+            const string json = "{\"weeklyMeatConsumption\":\"FIVE_TO_NINE\",\"usesLeftovers\":null,\"weird\":3,\"obj\":{\"a\":1}}";
+
+            var data = JsonConvert.DeserializeObject<OnboardingSurveyData>(json);
+
+            Assert.AreEqual(1, data.Count);
+            Assert.AreEqual("FIVE_TO_NINE", data.Get("weeklyMeatConsumption"));
+            Assert.IsNull(data.Get("usesLeftovers"));
+        }
+
+        [TestCase("null")]
+        [TestCase("[]")]
+        [TestCase("\"x\"")]
+        public void ProfileResponse_MalformedOnboardingSurvey_LoadsWithoutAnswers(string value)
+        {
+            string json = "{\"id\":\"u1\",\"preferences\":{\"motivation\":\"HEALTH\",\"onboardingSurvey\":" + value + "}}";
+
+            ProfileResponse profile = JsonConvert.DeserializeObject<ProfileResponse>(json);
+
+            Assert.AreEqual("HEALTH", profile.preferences.motivation);
+            Assert.IsFalse(profile.preferences.onboardingSurvey?.HasAnswers() ?? false);
+        }
+
+        [Test]
+        public void ProfileResponse_AllNullOnboardingSurvey_HasNoAnswers()
+        {
+            const string json = "{\"preferences\":{\"onboardingSurvey\":{\"weeklyMeatConsumption\":null,\"usesLeftovers\":null}}}";
+
+            ProfileResponse profile = JsonConvert.DeserializeObject<ProfileResponse>(json);
+
+            Assert.IsFalse(profile.preferences.onboardingSurvey.HasAnswers());
+        }
+
+        [Test]
+        public void OnboardingSurveyData_Set_ReplacesAndRemoves()
+        {
+            var data = new OnboardingSurveyData();
+            data.Set("usesLeftovers", "OFTEN");
+            data.Set("usesLeftovers", "ALWAYS");
+            Assert.AreEqual(1, data.Count);
+            Assert.AreEqual("ALWAYS", data.Get("usesLeftovers"));
+
+            data.Set("usesLeftovers", null);
+            Assert.AreEqual(0, data.Count);
+            Assert.IsFalse(data.HasAnswers());
+        }
+
+        [Test]
+        public void OnboardingSurveyData_SurvivesJsonUtilityRoundTrip()
+        {
+            // AppState is persisted with JsonUtility
+            var state = new AppState { userOnboardingSurvey = OnboardingSurveyData.Of(("weeklyFoodWaste", "ZERO")) };
+
+            AppState restored = UnityEngine.JsonUtility.FromJson<AppState>(UnityEngine.JsonUtility.ToJson(state));
+
+            Assert.AreEqual("ZERO", restored.userOnboardingSurvey.Get("weeklyFoodWaste"));
         }
 
         [Test]

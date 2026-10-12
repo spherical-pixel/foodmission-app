@@ -169,15 +169,13 @@ namespace eu.foodmission.platform.Tests
         {
             var state = new AppState
             {
-                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Beginner) },
-                hasConfirmedDimensionLevels = true
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Beginner) }
             };
 
             AppState copy = state.Copy();
             copy.dimensionLevels[0].level = ContentLevel.Advanced;
 
             Assert.AreEqual(ContentLevel.Beginner, state.dimensionLevels[0].level);
-            Assert.IsTrue(copy.hasConfirmedDimensionLevels);
         }
 
         [Test]

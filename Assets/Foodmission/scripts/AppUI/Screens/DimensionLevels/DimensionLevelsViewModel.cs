@@ -55,23 +55,20 @@ namespace eu.foodmission.platform
             Reload();
         }
 
-        /// <summary>Rebuilds the rows for the current Mode (the screen sets Mode after Initialize).</summary>
+        /// <summary>Rebuilds the rows from the stored backend levels (in proposal mode they are the survey's scoring).</summary>
         public void Reload()
         {
-            AppState state = _storeService.GetAppState();
-            DimensionLevelEntry[] proposal = DimensionLevels.Propose(state?.userSegment);
-            DimensionLevelEntry[] current = Mode == DimensionLevelsMode.Proposal ? proposal : DimensionLevels.Resolve(state);
+            DimensionLevelEntry[] current = DimensionLevels.Resolve(_storeService.GetAppState());
 
             _rows.Clear();
-            for (int i = 0; i < DimensionCode.All.Length; i++)
+            foreach (DimensionLevelEntry entry in current)
             {
-                string code = DimensionCode.All[i];
                 _rows.Add(new DimensionLevelRow
                 {
-                    DimensionCode = code,
-                    DimensionName = _dimensionService?.GetDimension(code)?.name ?? code,
-                    Level = current[i].level,
-                    ProposedLevel = proposal[i].level
+                    DimensionCode = entry.dimensionCode,
+                    DimensionName = _dimensionService?.GetDimension(entry.dimensionCode)?.name ?? entry.dimensionCode,
+                    Level = entry.level,
+                    ProposedLevel = entry.level
                 });
             }
 
@@ -152,19 +149,15 @@ namespace eu.foodmission.platform
             try
             {
                 DimensionLevelEntry[] entries = _rows.Select(r => new DimensionLevelEntry(r.DimensionCode, r.Level)).ToArray();
-                AppState state = _storeService.GetAppState();
+                // Only what the user changed: unchanged rows keep the backend's value, so a stale proposal (e.g. the
+                // level refresh after the survey failed) never lowers the levels the backend just scored
+                DimensionLevelEntry[] changed = _rows.Where(r => r.Level != r.ProposedLevel)
+                    .Select(r => new DimensionLevelEntry(r.DimensionCode, r.Level)).ToArray();
 
-                if (_authService != null)
+                if (_authService != null && changed.Length > 0)
                 {
-                    var request = new ProfileUpdateRequest
-                    {
-                        preferences = new ProfileUpdatePreferences
-                        {
-                            dimensionLevels = DimensionLevels.ToMap(entries),
-                            // Non-nullable bool: always serialized, so send the user's value back
-                            autoAddToPantry = state.userAutoAddToPantry
-                        }
-                    };
+                    // Root dimensionLevels only: no preferences object, so autoAddToPantry is not sent (and not reset)
+                    var request = new ProfileUpdateRequest { dimensionLevels = changed };
 
                     var (success, error) = await _authService.UpdateProfileAsync(request);
                     if (!success)
@@ -204,10 +197,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        /// <summary>
-        /// ✕: Edit goes back; the proposal leaves for Home without saving (unsaved levels resolve to the
-        /// survey's segment, which is exactly the proposal).
-        /// </summary>
+        /// <summary>✕: Edit goes back; the proposal leaves for Home without saving (the backend keeps the levels the survey scored).</summary>
         public void Close()
         {
             RaiseNavigationRequested(Mode == DimensionLevelsMode.Edit ? "popBackStack" : Actions.go_to_home);

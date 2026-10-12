@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace eu.foodmission.platform
@@ -51,6 +50,10 @@ namespace eu.foodmission.platform
 
         [JsonProperty("currentQuestId", NullValueHandling = NullValueHandling.Ignore)]
         public string currentQuestId;
+
+        /// <summary>Root `dimensionLevels` of PATCH /users/me: sets the listed levels (any level, up or down).</summary>
+        [JsonProperty("dimensionLevels", NullValueHandling = NullValueHandling.Ignore)]
+        public DimensionLevelEntry[] dimensionLevels;
 
         /// <summary>Sends <c>"currentQuestId": null</c> (nulls are otherwise omitted) to leave the user without an active quest.</summary>
         [JsonIgnore]
@@ -159,84 +162,5 @@ namespace eu.foodmission.platform
 
         [JsonProperty("goals", NullValueHandling = NullValueHandling.Ignore)]
         public string[] goals;
-
-        [JsonProperty("dimensionLevels", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, string> dimensionLevels;
-    }
-
-    /// <summary>
-    /// Survey answers payload stored in preferences using language-agnostic enum codes.
-    /// Key names match NestJS ONBOARDING_BASELINE_FIELDS contract.
-    /// </summary>
-    [Serializable]
-    public class OnboardingSurveyData
-    {
-        [JsonProperty("weeklyMeatConsumption", NullValueHandling = NullValueHandling.Ignore)]
-        public string weeklyMeatConsumption;
-
-        [JsonProperty("weeklyBeefConsumption", NullValueHandling = NullValueHandling.Ignore)]
-        public string weeklyBeefConsumption;
-
-        [JsonProperty("weeklyFoodWaste", NullValueHandling = NullValueHandling.Ignore)]
-        public string weeklyFoodWaste;
-
-        [JsonProperty("weeklyUpfConsumption", NullValueHandling = NullValueHandling.Ignore)]
-        public string weeklyUpfConsumption;
-
-        [JsonProperty("weeklyReusableOrRefill", NullValueHandling = NullValueHandling.Ignore)]
-        public string weeklyReusableOrRefill;
-
-        [JsonIgnore]
-        public string meatMeals
-        {
-            get => weeklyMeatConsumption;
-            set => weeklyMeatConsumption = value;
-        }
-
-        [JsonIgnore]
-        public string beefFrequency
-        {
-            get => weeklyBeefConsumption;
-            set => weeklyBeefConsumption = value;
-        }
-
-        [JsonIgnore]
-        public string foodWasteFrequency
-        {
-            get => weeklyFoodWaste;
-            set => weeklyFoodWaste = value;
-        }
-
-        [JsonIgnore]
-        public string ultraProcessedFrequency
-        {
-            get => weeklyUpfConsumption;
-            set => weeklyUpfConsumption = value;
-        }
-
-        [JsonIgnore]
-        public string reusableContainersFrequency
-        {
-            get => weeklyReusableOrRefill;
-            set => weeklyReusableOrRefill = value;
-        }
-
-        public bool IsComplete()
-        {
-            return !string.IsNullOrEmpty(weeklyMeatConsumption)
-                && !string.IsNullOrEmpty(weeklyBeefConsumption)
-                && !string.IsNullOrEmpty(weeklyFoodWaste)
-                && !string.IsNullOrEmpty(weeklyUpfConsumption)
-                && !string.IsNullOrEmpty(weeklyReusableOrRefill);
-        }
-
-        public bool HasAnswers()
-        {
-            return !string.IsNullOrEmpty(weeklyMeatConsumption)
-                || !string.IsNullOrEmpty(weeklyBeefConsumption)
-                || !string.IsNullOrEmpty(weeklyFoodWaste)
-                || !string.IsNullOrEmpty(weeklyUpfConsumption)
-                || !string.IsNullOrEmpty(weeklyReusableOrRefill);
-        }
     }
 }
