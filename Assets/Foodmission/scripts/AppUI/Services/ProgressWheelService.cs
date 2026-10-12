@@ -12,7 +12,6 @@ namespace eu.foodmission.platform
         private readonly IStoreService _storeService;
         private readonly IGamificationService _gamificationService;
         private readonly IAuthService _authService;
-        private readonly HashSet<string> _recoveryAttemptedUsers = new HashSet<string>();
         private Task _inFlight;
         private string _inFlightUserId;
         private int _activeRequests;
@@ -69,25 +68,6 @@ namespace eu.foodmission.platform
                     return;
                 }
 
-                if ((wheels == null || wheels.Length == 0) && ShouldRecover(state))
-                {
-                    _recoveryAttemptedUsers.Add(state.userId ?? "");
-                    var (result, submitError) = await _gamificationService.SubmitOnboardingSurveyAsync(state.userOnboardingSurvey);
-                    if (!IsSameSession(userId))
-                    {
-                        return;
-                    }
-                    if (submitError == null && result != null)
-                    {
-                        _storeService.store.Dispatch(AppActions.setUserSegment.Invoke(result.segment));
-                        wheels = result.progressWheels;
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[{nameof(ProgressWheelService)}] Survey re-submission failed: {submitError?.statusCode} {submitError?.message}");
-                    }
-                }
-
                 _storeService.store.Dispatch(AppActions.setProgressWheels.Invoke(wheels ?? new ProgressWheel[0]));
             }
             catch (Exception ex)
@@ -98,13 +78,6 @@ namespace eu.foodmission.platform
             {
                 SetLoading(false);
             }
-        }
-
-        private bool ShouldRecover(AppState state)
-        {
-            return state.userOnboardingSurvey != null
-                && state.userOnboardingSurvey.IsComplete()
-                && !_recoveryAttemptedUsers.Contains(state.userId ?? "");
         }
 
         public async Task SetHiddenAsync(IReadOnlyCollection<string> hiddenKinds)

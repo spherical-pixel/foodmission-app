@@ -60,6 +60,9 @@ namespace eu.foodmission.platform
         /// <summary>Action for the API error dialog's OK button (null = just close it).</summary>
         protected virtual Action OnApiErrorDismissed() => null;
 
+        /// <summary>Non-null turns the API error dialog into Retry (this action) / Cancel (OnApiErrorDismissed).</summary>
+        protected virtual Action OnApiErrorRetry() => null;
+
         /// <summary>Shows a ✕ (top right) that leaves the flow from any step. Off by default; each flow opts in.</summary>
         protected virtual bool ShowCloseButton => false;
 
@@ -321,7 +324,16 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.ErrorDetail):
                     if (_viewModel.ErrorDetail != null)
                     {
-                        FMDialog.ShowApiError(this, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE"), _viewModel.ErrorDetail, onOk: OnApiErrorDismissed());
+                        string errorTitle = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ERROR_TITLE");
+                        Action retry = OnApiErrorRetry();
+                        if (retry != null)
+                        {
+                            FMDialog.ShowApiError(this, errorTitle, _viewModel.ErrorDetail, okLabel: "@UI:TXT_RETRY", onOk: retry, koLabel: "@UI:TXT_CANCEL", onKo: OnApiErrorDismissed() ?? (() => { }));
+                        }
+                        else
+                        {
+                            FMDialog.ShowApiError(this, errorTitle, _viewModel.ErrorDetail, onOk: OnApiErrorDismissed());
+                        }
                         _viewModel.ErrorDetail = null;
                     }
                     break;

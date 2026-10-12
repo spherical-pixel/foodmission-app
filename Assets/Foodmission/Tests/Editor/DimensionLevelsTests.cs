@@ -1,6 +1,10 @@
-using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -8,27 +12,23 @@ namespace eu.foodmission.platform.Tests
     public class DimensionLevelsTests
     {
         [Test]
-        public void GetLevel_PrefersStoredLevel_ThenSegment_ThenBeginner()
+        public void GetLevel_StoredLevel_ElseBeginner_SegmentIgnored()
         {
             var state = new AppState
             {
-                userSegment = "INTERMEDIATE",
-                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, "ADVANCED") }
+                userSegment = "ADVANCED",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, "INTERMEDIATE") }
             };
 
-            Assert.AreEqual("ADVANCED", DimensionLevels.GetLevel(state, DimensionCode.DietChanges));
-            Assert.AreEqual("INTERMEDIATE", DimensionLevels.GetLevel(state, DimensionCode.FoodWaste));
-            Assert.AreEqual("BEGINNER", DimensionLevels.GetLevel(new AppState(), DimensionCode.FoodWaste));
+            Assert.AreEqual("INTERMEDIATE", DimensionLevels.GetLevel(state, DimensionCode.DietChanges));
+            Assert.AreEqual("BEGINNER", DimensionLevels.GetLevel(state, DimensionCode.FoodWaste));
+            Assert.AreEqual("BEGINNER", DimensionLevels.GetLevel(null, DimensionCode.FoodWaste));
         }
 
         [Test]
         public void GetLevel_InvalidStoredLevel_IsIgnored()
         {
-            var state = new AppState
-            {
-                userSegment = "",
-                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, "EXPERT"), null }
-            };
+            var state = new AppState { dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, "EXPERT"), null } };
 
             Assert.AreEqual("BEGINNER", DimensionLevels.GetLevel(state, DimensionCode.DietChanges));
         }
@@ -36,53 +36,61 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void Resolve_ReturnsSixEntriesInCatalogueOrder()
         {
-            DimensionLevelEntry[] resolved = DimensionLevels.Resolve(new AppState { userSegment = "ADVANCED" });
+            DimensionLevelEntry[] resolved = DimensionLevels.Resolve(new AppState
+            {
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.Packaging, "ADVANCED") }
+            });
 
             CollectionAssert.AreEqual(DimensionCode.All, resolved.Select(e => e.dimensionCode).ToArray());
-            Assert.IsTrue(resolved.All(e => e.level == "ADVANCED"));
-        }
-
-        [TestCase("INTERMEDIATE", "INTERMEDIATE")]
-        [TestCase("advanced", "ADVANCED")]
-        [TestCase("", "BEGINNER")]
-        [TestCase(null, "BEGINNER")]
-        [TestCase("FAMILY", "BEGINNER")]
-        public void Propose_UsesSegmentForEveryDimension(string segment, string expected)
-        {
-            DimensionLevelEntry[] proposal = DimensionLevels.Propose(segment);
-
-            Assert.AreEqual(DimensionCode.All.Length, proposal.Length);
-            Assert.IsTrue(proposal.All(e => e.level == expected));
+            Assert.AreEqual("ADVANCED", resolved.First(e => e.dimensionCode == DimensionCode.Packaging).level);
+            Assert.AreEqual(5, resolved.Count(e => e.level == "BEGINNER"));
         }
 
         [Test]
-        public void FromMap_KeepsOnlyKnownDimensionsAndValidLevels()
+        public void Sanitize_KeepsKnownCodesAndValidLevels_InCatalogueOrder()
         {
-            var map = new Dictionary<string, string>
+            DimensionLevelEntry[] entries = DimensionLevels.Sanitize(new[]
             {
-                { DimensionCode.DietChanges, "intermediate" },
-                { "UNKNOWN_DIMENSION", "ADVANCED" },
-                { DimensionCode.FoodWaste, "EXPERT" }
-            };
+                new DimensionLevelEntry(DimensionCode.FoodWaste, "advanced"),
+                new DimensionLevelEntry("UNKNOWN", "ADVANCED"),
+                new DimensionLevelEntry(DimensionCode.DietChanges, "EXPERT"),
+                null,
+                new DimensionLevelEntry(DimensionCode.DietChanges, "INTERMEDIATE")
+            });
 
-            DimensionLevelEntry[] entries = DimensionLevels.FromMap(map);
-
-            Assert.AreEqual(1, entries.Length);
-            Assert.AreEqual(DimensionCode.DietChanges, entries[0].dimensionCode);
+            CollectionAssert.AreEqual(new[] { DimensionCode.DietChanges, DimensionCode.FoodWaste }, entries.Select(e => e.dimensionCode).ToArray());
             Assert.AreEqual("INTERMEDIATE", entries[0].level);
-            Assert.AreEqual(0, DimensionLevels.FromMap(null).Length);
+            Assert.AreEqual("ADVANCED", entries[1].level);
+            Assert.AreEqual(0, DimensionLevels.Sanitize(null).Length);
         }
 
         [Test]
-        public void ToMap_RoundTripsWithFromMap()
+        public async Task RefreshAsync_Success_StoresBackendLevels()
         {
-            DimensionLevelEntry[] proposal = DimensionLevels.Propose("ADVANCED");
+            var store = new TestStoreService();
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetDimensionLevelsAsync()).ReturnsAsync((new[] { new DimensionLevelEntry(DimensionCode.Packaging, "INTERMEDIATE") }, (ApiErrorResponse)null));
 
-            Dictionary<string, string> map = DimensionLevels.ToMap(proposal);
+            Assert.IsTrue(await DimensionLevels.RefreshAsync(gamification.Object, store));
 
-            Assert.AreEqual(6, map.Count);
-            Assert.AreEqual("ADVANCED", map[DimensionCode.Packaging]);
-            Assert.AreEqual(6, DimensionLevels.FromMap(map).Length);
+            Assert.AreEqual("INTERMEDIATE", DimensionLevels.GetLevel(store.GetAppState(), DimensionCode.Packaging));
+            store.Dispose();
+        }
+
+        [Test]
+        public async Task RefreshAsync_ErrorOrNullService_KeepsStoredLevels()
+        {
+            var store = new TestStoreService();
+            store.SetAppState(new AppState { dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.Packaging, "ADVANCED") } });
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetDimensionLevelsAsync()).ReturnsAsync(((DimensionLevelEntry[])null, new ApiErrorResponse { statusCode = 500 }));
+            LogAssert.Expect(LogType.Warning, new Regex("Could not refresh levels"));
+
+            Assert.IsFalse(await DimensionLevels.RefreshAsync(gamification.Object, store));
+            Assert.IsFalse(await DimensionLevels.RefreshAsync(null, store));
+
+            Assert.AreEqual("ADVANCED", DimensionLevels.GetLevel(store.GetAppState(), DimensionCode.Packaging));
+            store.Dispose();
         }
     }
 }

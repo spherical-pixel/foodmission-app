@@ -1145,27 +1145,6 @@ MonoBehaviour:
       can tailor recommendations for you.'
     m_Metadata:
       m_Items: []
-  - m_Id: 25709899143962624
-    m_Localized: How many meals containing meat do you typically eat each week?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710060687581184
-    m_Localized: How often do you consume beef?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710112776642560
-    m_Localized: How often do you throw away edible food?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710126802395136
-    m_Localized: How often do you consume ultra-processed foods such as packaged
-      snacks, sugary drinks, ready meals, or processed meat products?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710140115116032
-    m_Localized: How often do you use reusable containers or purchase refill products?
-    m_Metadata:
-      m_Items: []
   - m_Id: 25970700069101568
     m_Localized: CATEGORIES
     m_Metadata:
@@ -4058,11 +4037,6 @@ MonoBehaviour:
     m_Localized: Finish later
     m_Metadata:
       m_Items: []
-  - m_Id: 53972389359247365
-    m_Localized: Before you start a quest, I need you to complete the eating habits
-      survey. It only takes a minute and helps me set goals that fit you.
-    m_Metadata:
-      m_Items: []
   - m_Id: 53972389359247366
     m_Localized: Last day of your mission
     m_Metadata:
@@ -4126,6 +4100,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 53972389359247380
     m_Localized: Log meal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56156153275473920
+    m_Localized: Retry
     m_Metadata:
       m_Items: []
   references:

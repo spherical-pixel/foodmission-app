@@ -23,7 +23,7 @@ namespace eu.foodmission.platform
     {
         public const string LargeScale = "large";
 
-        public static ProgressWheelSectionState ResolveState(int total, int visible, bool isLoading, bool surveyComplete)
+        public static ProgressWheelSectionState ResolveState(int total, int visible, bool isLoading, bool surveyAnswered)
         {
             if (total > 0)
             {
@@ -33,7 +33,7 @@ namespace eu.foodmission.platform
             {
                 return ProgressWheelSectionState.Loading;
             }
-            return surveyComplete ? ProgressWheelSectionState.Hidden : ProgressWheelSectionState.SurveyCta;
+            return surveyAnswered ? ProgressWheelSectionState.Hidden : ProgressWheelSectionState.SurveyCta;
         }
 
         public static ProgressWheelSectionModel Build(AppState state, bool isLoading)
@@ -41,11 +41,11 @@ namespace eu.foodmission.platform
             ProgressWheel[] all = state?.progressWheels?.Where(w => w != null).ToArray() ?? new ProgressWheel[0];
             string[] hidden = state?.hiddenProgressWheels ?? new string[0];
             IReadOnlyList<ProgressWheel> visible = ProgressWheelService.GetVisible(all, hidden);
-            bool surveyComplete = state?.userOnboardingSurvey != null && state.userOnboardingSurvey.IsComplete();
+            bool surveyAnswered = state?.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
 
             return new ProgressWheelSectionModel
             {
-                State = ResolveState(all.Length, visible.Count, isLoading, surveyComplete),
+                State = ResolveState(all.Length, visible.Count, isLoading, surveyAnswered),
                 Visible = visible,
                 All = all,
                 Hidden = hidden,
@@ -81,7 +81,7 @@ namespace eu.foodmission.platform
             }
             sb.Append('#').Append(string.Join(",", state.hiddenProgressWheels ?? new string[0]));
             sb.Append('#').Append(state.userSegment).Append('#').Append(state.lang).Append('#').Append(state.scale);
-            sb.Append('#').Append(state.userOnboardingSurvey != null && state.userOnboardingSurvey.IsComplete());
+            sb.Append('#').Append(state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers());
             return sb.ToString();
         }
 

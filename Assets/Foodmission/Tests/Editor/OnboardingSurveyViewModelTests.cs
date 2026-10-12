@@ -9,312 +9,299 @@ namespace eu.foodmission.platform.Tests
     public class OnboardingSurveyViewModelTests
     {
         private TestStoreService _storeService;
-        private Mock<ICatalogService> _catalogServiceMock;
-        private OnboardingSurveyViewModel _vm;
+        private Mock<IGamificationService> _gamification;
+        private Mock<IAuthService> _auth;
+
+        private static OnboardingSurveyQuestion Q(string field, params string[] values) => new OnboardingSurveyQuestion
+        {
+            field = field,
+            text = field + "?",
+            options = values.Select(v => new OnboardingSurveyOption { value = v, label = v.ToLowerInvariant() }).ToArray()
+        };
+
+        private static readonly OnboardingSurveyQuestion[] ThreeQuestions =
+        {
+            Q("weeklyMeatConsumption", "ZERO_TO_FOUR", "FIVE_TO_NINE"),
+            Q("usesLeftovers", "NEVER", "OFTEN"),
+            Q("wholeGrainFrequency", "NEVER", "DAILY")
+        };
 
         [SetUp]
         public void SetUp()
         {
             _storeService = new TestStoreService();
-            _catalogServiceMock = new Mock<ICatalogService>();
-
-            _catalogServiceMock.Setup(c => c.GetWeeklyMeatRangesAsync(It.IsAny<string>()))
-                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO_TO_FOUR", label = "0-4" }, new CatalogItem { code = "FIVE_TO_NINE", label = "5-9" }, new CatalogItem { code = "TEN_TO_FOURTEEN", label = "10-14" }, new CatalogItem { code = "FIFTEEN_PLUS", label = "15+" } }, null));
-
-            _catalogServiceMock.Setup(c => c.GetWeeklyBeefFrequenciesAsync(It.IsAny<string>()))
-                .ReturnsAsync((new[] { new CatalogItem { code = "NEVER", label = "Never" }, new CatalogItem { code = "LESS_THAN_ONCE_PER_WEEK", label = "<1" }, new CatalogItem { code = "ONE_TO_TWO_TIMES_PER_WEEK", label = "1-2" }, new CatalogItem { code = "THREE_PLUS_TIMES_PER_WEEK", label = "3+" } }, null));
-
-            _catalogServiceMock.Setup(c => c.GetWeeklyFoodWasteRangesAsync(It.IsAny<string>()))
-                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO", label = "0" }, new CatalogItem { code = "ONE_TO_TWO", label = "1-2" }, new CatalogItem { code = "THREE_TO_FOUR", label = "3-4" }, new CatalogItem { code = "FIVE_PLUS", label = "5+" } }, null));
-
-            _catalogServiceMock.Setup(c => c.GetWeeklyUpfRangesAsync(It.IsAny<string>()))
-                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO_TO_THREE", label = "0-3" }, new CatalogItem { code = "FOUR_TO_NINE", label = "4-9" }, new CatalogItem { code = "TEN_TO_FOURTEEN", label = "10-14" }, new CatalogItem { code = "FIFTEEN_PLUS", label = "15+" } }, null));
-
-            _catalogServiceMock.Setup(c => c.GetWeeklyReusableRangesAsync(It.IsAny<string>()))
-                .ReturnsAsync((new[] { new CatalogItem { code = "ZERO_TO_TWO", label = "0-2" }, new CatalogItem { code = "THREE_TO_SIX", label = "3-6" }, new CatalogItem { code = "SEVEN_TO_NINE", label = "7-9" }, new CatalogItem { code = "TEN_PLUS", label = "10+" } }, null));
-
-            _vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object);
-            _vm.Initialize();
+            _storeService.SetAppState(new AppState { lang = "es", accessToken = "t" });
+            _gamification = new Mock<IGamificationService>();
+            _gamification.Setup(g => g.GetOnboardingSurveyAsync()).ReturnsAsync((ThreeQuestions, (ApiErrorResponse)null));
+            _gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
+                .ReturnsAsync((new OnboardingSurveyResult { segment = "BEGINNER", progressWheels = new ProgressWheel[0] }, (ApiErrorResponse)null));
+            _auth = new Mock<IAuthService>();
+            _auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((true, (ApiErrorResponse)null));
         }
 
         [TearDown]
         public void TearDown()
         {
-            _vm?.Dispose();
             _storeService?.Dispose();
         }
 
-        [Test]
-        public async System.Threading.Tasks.Task LoadCatalogOptionsAsync_WhileRequestsPending_IsLoading()
+        private OnboardingSurveyViewModel CreateVm()
         {
-            var pending = new System.Threading.Tasks.TaskCompletionSource<(CatalogItem[] Result, ApiErrorResponse Error)>();
-            _catalogServiceMock.Setup(c => c.GetWeeklyMeatRangesAsync(It.IsAny<string>())).Returns(pending.Task);
-
-            Assert.IsFalse(_vm.IsLoading);
-            var load = _vm.LoadCatalogOptionsAsync();
-            Assert.IsTrue(_vm.IsLoading);
-
-            pending.SetResult((new CatalogItem[0], null));
-            await load;
-            Assert.IsFalse(_vm.IsLoading);
-        }
-
-        [Test]
-        public void Initialize_SetsStepCountAndInitialState()
-        {
-            Assert.AreEqual(6, _vm.StepCount);
-            Assert.AreEqual(0, _vm.CurrentStepIndex);
-            Assert.IsTrue(_vm.IsFirstStep);
-            Assert.IsFalse(_vm.IsLastStep);
-            Assert.IsFalse(_vm.CanGoPrevious);
-            Assert.IsTrue(_vm.CanGoNext); // Step 0 (Welcome) is valid by default
-            /*Assert.AreEqual("Welcome", _vm.StepTitle);*/
-        }
-
-        [Test]
-        public async Task Step1_MeatMeals_RequiresSelection()
-        {
-            await _vm.GoNextAsync(); // Move to Step 1 (Meat Meals)
-            Assert.AreEqual(1, _vm.CurrentStepIndex);
-            Assert.IsFalse(_vm.CanGoNext); // Initially false because no option is selected (-1)
-
-            _vm.MeatMealsIndex = 0; // Select "0–4 meals per week"
-            _vm.InvalidateValidation();
-            Assert.IsTrue(_vm.CanGoNext);
-        }
-
-        [Test]
-        public async Task Step2_BeefFrequency_RequiresSelection()
-        {
-            _vm.MeatMealsIndex = 1;
-            _vm.InvalidateValidation();
-            await _vm.GoNextAsync(); // Move to Step 1
-            await _vm.GoNextAsync(); // Move to Step 2 (Beef Frequency)
-
-            Assert.AreEqual(2, _vm.CurrentStepIndex);
-            Assert.IsFalse(_vm.CanGoNext);
-
-            _vm.BeefFrequencyIndex = 2; // Select "1–2 times per week"
-            _vm.InvalidateValidation();
-            Assert.IsTrue(_vm.CanGoNext);
-        }
-
-        [Test]
-        public async Task FullFlow_NavigatesThroughAllStepsAndCompletes()
-        {
-            // Step 0: Welcome
-            Assert.AreEqual(0, _vm.CurrentStepIndex);
-            Assert.IsTrue(_vm.CanGoNext);
-            await _vm.GoNextAsync();
-
-            // Step 1: Meat Meals
-            Assert.AreEqual(1, _vm.CurrentStepIndex);
-            _vm.MeatMealsIndex = 0;
-            _vm.InvalidateValidation();
-            await _vm.GoNextAsync();
-
-            // Step 2: Beef Frequency
-            Assert.AreEqual(2, _vm.CurrentStepIndex);
-            _vm.BeefFrequencyIndex = 1;
-            _vm.InvalidateValidation();
-            await _vm.GoNextAsync();
-
-            // Step 3: Food Waste
-            Assert.AreEqual(3, _vm.CurrentStepIndex);
-            _vm.FoodWasteFrequencyIndex = 0;
-            _vm.InvalidateValidation();
-            await _vm.GoNextAsync();
-
-            // Step 4: Ultra Processed
-            Assert.AreEqual(4, _vm.CurrentStepIndex);
-            _vm.UltraProcessedFrequencyIndex = 2;
-            _vm.InvalidateValidation();
-            await _vm.GoNextAsync();
-
-            // Step 5: Reusable Containers (Last Step)
-            Assert.AreEqual(5, _vm.CurrentStepIndex);
-            Assert.IsTrue(_vm.IsLastStep);
-            _vm.ReusableContainersFrequencyIndex = 3;
-            _vm.InvalidateValidation();
-            Assert.IsTrue(_vm.CanGoNext);
-
-            string requestedAction = null;
-            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
-            _vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
-
-            await _vm.GoNextAsync(); // Complete flow
-
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
-            Assert.IsTrue(requestedArgs.Any(a => a.name == "mode" && (string)a.value == "proposal"));
-            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "false"));
-            var appState = _storeService.GetAppState();
-            Assert.IsNotNull(appState.userOnboardingSurvey);
-            Assert.AreEqual("ZERO_TO_FOUR", appState.userOnboardingSurvey.weeklyMeatConsumption);
-            Assert.AreEqual("LESS_THAN_ONCE_PER_WEEK", appState.userOnboardingSurvey.weeklyBeefConsumption);
-            Assert.AreEqual("ZERO", appState.userOnboardingSurvey.weeklyFoodWaste);
-            Assert.AreEqual("TEN_TO_FOURTEEN", appState.userOnboardingSurvey.weeklyUpfConsumption);
-            Assert.AreEqual("TEN_PLUS", appState.userOnboardingSurvey.weeklyReusableOrRefill);
-            Assert.AreEqual("ZERO_TO_FOUR", appState.userOnboardingSurvey.meatMeals);
-            Assert.AreEqual("LESS_THAN_ONCE_PER_WEEK", appState.userOnboardingSurvey.beefFrequency);
-        }
-
-        [Test]
-        public async Task FullFlow_UpdateProfileFails_SetsErrorDetail()
-        {
-            var mockAuthService = new Moq.Mock<IAuthService>();
-            var expectedError = new ApiErrorResponse { statusCode = 500, error = "SERVER_ERROR", message = "Server error occurred" };
-            mockAuthService.Setup(a => a.UpdateProfileAsync(Moq.It.IsAny<ProfileUpdateRequest>()))
-                .Returns(Task.FromResult((false, expectedError)));
-
-            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, mockAuthService.Object);
+            var vm = new OnboardingSurveyViewModel(_storeService, _gamification.Object, _auth.Object);
             vm.Initialize();
-
-            // Set selections for all steps
-            vm.MeatMealsIndex = 0;
-            vm.BeefFrequencyIndex = 0;
-            vm.FoodWasteFrequencyIndex = 0;
-            vm.UltraProcessedFrequencyIndex = 0;
-            vm.ReusableContainersFrequencyIndex = 0;
-
-            // Navigate through all 6 steps (0→1→2→3→4→5→complete)
-            for (int i = 0; i < 6; i++)
-                await vm.GoNextAsync();
-
-            // Log warning is expected when UpdateProfileAsync returns false
-            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Warning, "[OnboardingSurveyViewModel] Failed to sync survey data with server via PATCH");
-
-            Assert.IsNotNull(vm.ErrorDetail);
-            Assert.AreEqual("Server error occurred", vm.ErrorDetail.message);
+            return vm;
         }
 
-        [Test]
-        public async Task FullFlow_WhenFromHomeIsTrue_NavigatesToHome()
+        private static async Task GoToEndAsync(OnboardingSurveyViewModel vm)
         {
-            var mockAuthService = new Mock<IAuthService>();
-            mockAuthService.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
-                .ReturnsAsync((true, (ApiErrorResponse)null));
-
-            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, mockAuthService.Object);
-            vm.Initialize();
-            vm.FromHome = true;
-
-            string requestedAction = null;
-            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
-            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
-
-            vm.MeatMealsIndex = 0;
-            vm.BeefFrequencyIndex = 0;
-            vm.FoodWasteFrequencyIndex = 0;
-            vm.UltraProcessedFrequencyIndex = 0;
-            vm.ReusableContainersFrequencyIndex = 0;
-
-            for (int i = 0; i < 6; i++)
-                await vm.GoNextAsync();
-
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
-            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "true"));
-        }
-
-        private static async Task CompleteFlowAsync(OnboardingSurveyViewModel vm)
-        {
-            vm.MeatMealsIndex = 0;
-            vm.BeefFrequencyIndex = 0;
-            vm.FoodWasteFrequencyIndex = 0;
-            vm.UltraProcessedFrequencyIndex = 0;
-            vm.ReusableContainersFrequencyIndex = 0;
-
-            for (int i = 0; i < 6; i++)
+            while (!vm.IsLastStep)
             {
                 await vm.GoNextAsync();
             }
+            await vm.GoNextAsync();
         }
 
         [Test]
-        public async Task FullFlow_SubmitSurveySucceeds_StoresSegmentAndSkipsPatch()
+        public void Initialize_OneStepPerBackendQuestionPlusWelcome()
         {
-            var auth = new Mock<IAuthService>();
-            var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
-                .ReturnsAsync((new OnboardingSurveyResult { segment = "BEGINNER", progressWheels = new ProgressWheel[0] }, (ApiErrorResponse)null));
+            var vm = CreateVm();
 
-            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
-            vm.Initialize();
-            string requestedAction = null;
-            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
-            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
+            Assert.AreEqual(4, vm.StepCount);
+            Assert.AreEqual(3, vm.Questions.Count);
+            Assert.IsNull(vm.QuestionForStep(0));
+            Assert.AreEqual("usesLeftovers", vm.QuestionForStep(2).field);
+            Assert.IsTrue(vm.CanGoNext);
+            vm.Dispose();
+        }
 
-            await CompleteFlowAsync(vm);
+        [Test]
+        public async Task LoadQuestionsAsync_WhileRequestPending_IsLoading()
+        {
+            var pending = new TaskCompletionSource<(OnboardingSurveyQuestion[] Result, ApiErrorResponse Error)>();
+            _gamification.Setup(g => g.GetOnboardingSurveyAsync()).Returns(pending.Task);
+            var vm = new OnboardingSurveyViewModel(_storeService, _gamification.Object, _auth.Object);
 
-            gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.Is<OnboardingSurveyData>(d =>
-                d.weeklyMeatConsumption == "ZERO_TO_FOUR" && d.weeklyReusableOrRefill == "ZERO_TO_TWO")), Times.Once);
-            auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            var load = vm.LoadQuestionsAsync();
+            Assert.IsTrue(vm.IsLoading);
+            pending.SetResult((ThreeQuestions, null));
+            await load;
+
+            Assert.IsFalse(vm.IsLoading);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task QuestionSteps_CanBeSkipped()
+        {
+            var vm = CreateVm();
+            await vm.GoNextAsync();
+
+            Assert.AreEqual(1, vm.CurrentStepIndex);
+            Assert.IsTrue(vm.CanGoNext, "every question is optional");
+            vm.Dispose();
+        }
+
+        [Test]
+        public void LoadFails_ShowsErrorAndNeverAllowsSubmittingAnUnseenSurvey()
+        {
+            var error = new ApiErrorResponse { statusCode = 500, message = "down" };
+            _gamification.Setup(g => g.GetOnboardingSurveyAsync()).ReturnsAsync(((OnboardingSurveyQuestion[])null, error));
+
+            var vm = CreateVm();
+
+            Assert.AreSame(error, vm.ErrorDetail);
+            Assert.AreEqual(1, vm.StepCount);
+            Assert.IsFalse(vm.CanGoNext);
+            _gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()), Times.Never);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task LoadFails_ThenRetry_LoadsTheQuestions()
+        {
+            _gamification.Setup(g => g.GetOnboardingSurveyAsync())
+                .ReturnsAsync(((OnboardingSurveyQuestion[])null, new ApiErrorResponse { statusCode = 500 }));
+            var vm = CreateVm();
+            Assert.IsFalse(vm.HasQuestions, "nothing loaded: the error dialog offers a retry");
+
+            _gamification.Setup(g => g.GetOnboardingSurveyAsync()).ReturnsAsync((ThreeQuestions, (ApiErrorResponse)null));
+            await vm.LoadQuestionsAsync();
+
+            Assert.IsTrue(vm.HasQuestions);
+            Assert.AreEqual(4, vm.StepCount);
+            Assert.IsTrue(vm.CanGoNext);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task OverlappingLoads_TheLatestRequestWins()
+        {
+            var older = new TaskCompletionSource<(OnboardingSurveyQuestion[] Result, ApiErrorResponse Error)>();
+            var newer = new TaskCompletionSource<(OnboardingSurveyQuestion[] Result, ApiErrorResponse Error)>();
+            _gamification.SetupSequence(g => g.GetOnboardingSurveyAsync()).Returns(older.Task).Returns(newer.Task);
+            var vm = new OnboardingSurveyViewModel(_storeService, _gamification.Object, _auth.Object);
+
+            var first = vm.LoadQuestionsAsync();
+            var second = vm.LoadQuestionsAsync();
+            newer.SetResult((ThreeQuestions, null));
+            await second;
+            older.SetResult((new[] { Q("usesLeftovers", "NEVER") }, null));
+            await first;
+
+            Assert.AreEqual(3, vm.Questions.Count, "a slower response for the previous language must not replace the new one");
+            Assert.AreEqual(4, vm.StepCount);
+            Assert.IsFalse(vm.IsLoading);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Reload_WithFewerQuestions_KeepsTheCurrentStepInRange()
+        {
+            var vm = CreateVm();
+            await vm.GoToStepAsync(3);
+            _gamification.Setup(g => g.GetOnboardingSurveyAsync())
+                .ReturnsAsync((new[] { Q("usesLeftovers", "NEVER") }, (ApiErrorResponse)null));
+
+            await vm.LoadQuestionsAsync();
+
+            Assert.AreEqual(2, vm.StepCount);
+            Assert.AreEqual(1, vm.CurrentStepIndex);
+            Assert.IsTrue(vm.IsLastStep);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task LanguageChange_ReloadsQuestions_AndKeepsAnswers()
+        {
+            var vm = CreateVm();
+            vm.SetAnswer("usesLeftovers", "OFTEN");
+            _gamification.Invocations.Clear();
+
+            // Dispatch, not SetAppState: TestStoreService.SetAppState rebuilds the store and drops the VM's subscription
+            _storeService.store.Dispatch(AppActions.setLanguage.Invoke("en"));
+            await Task.Yield();
+
+            _gamification.Verify(g => g.GetOnboardingSurveyAsync(), Times.AtLeastOnce);
+            Assert.AreEqual("OFTEN", vm.GetAnswer("usesLeftovers"));
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Complete_SubmitsOnlyAnsweredFields_StoresSegment_AndGoesToLevelsProposal()
+        {
+            var vm = CreateVm();
+            vm.SetAnswer("weeklyMeatConsumption", "FIVE_TO_NINE");
+            vm.SetAnswer("wholeGrainFrequency", "DAILY");
+            string action = null;
+            Unity.AppUI.Navigation.Argument[] args = null;
+            vm.NavigationRequested += (a, ar) => { action = a; args = ar; };
+
+            await GoToEndAsync(vm);
+
+            _gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.Is<OnboardingSurveyData>(d =>
+                d.Count == 2 && d.Get("weeklyMeatConsumption") == "FIVE_TO_NINE" && d.Get("wholeGrainFrequency") == "DAILY")), Times.Once);
+            _auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
             Assert.AreEqual("BEGINNER", _storeService.GetAppState().userSegment);
-            Assert.IsNull(vm.ErrorDetail);
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
-            Assert.IsTrue(requestedArgs.Any(a => a.name == "mode" && (string)a.value == "proposal"));
-            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "false"));
+            Assert.AreEqual("DAILY", _storeService.GetAppState().userOnboardingSurvey.Get("wholeGrainFrequency"));
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, action);
+            Assert.IsTrue(args.Any(a => a.name == "mode" && (string)a.value == "proposal"));
+            Assert.IsTrue(args.Any(a => a.name == "fromHome" && (string)a.value == "false"));
+            vm.Dispose();
         }
 
         [Test]
-        public async Task FullFlow_SurveyAlreadySubmitted_FallsBackToPatch()
+        public async Task Complete_RefreshesBackendLevelsBeforeTheProposal()
         {
-            var auth = new Mock<IAuthService>();
-            auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
-                .ReturnsAsync((true, (ApiErrorResponse)null));
-            var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
-                .ReturnsAsync(((OnboardingSurveyResult)null, new ApiErrorResponse { statusCode = 409, message = "Onboarding survey already submitted" }));
+            _gamification.Setup(g => g.GetDimensionLevelsAsync()).ReturnsAsync((new[] { new DimensionLevelEntry(DimensionCode.FoodWaste, "ADVANCED") }, (ApiErrorResponse)null));
+            var vm = CreateVm();
+            string levelWhenNavigating = null;
+            vm.NavigationRequested += (a, _) => levelWhenNavigating = DimensionLevels.GetLevel(_storeService.GetAppState(), DimensionCode.FoodWaste);
 
-            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
-            vm.Initialize();
+            await GoToEndAsync(vm);
+
+            Assert.AreEqual("ADVANCED", levelWhenNavigating);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Complete_NothingAnswered_StillSubmits()
+        {
+            var vm = CreateVm();
+
+            await GoToEndAsync(vm);
+
+            _gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.Is<OnboardingSurveyData>(d => d.Count == 0)), Times.Once);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Complete_AlreadySubmitted_FallsBackToPatch()
+        {
+            _gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
+                .ReturnsAsync(((OnboardingSurveyResult)null, new ApiErrorResponse { statusCode = 409 }));
+            var vm = CreateVm();
             vm.FromHome = true;
-            string requestedAction = null;
-            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
-            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
+            vm.SetAnswer("usesLeftovers", "OFTEN");
+            string action = null;
+            Unity.AppUI.Navigation.Argument[] args = null;
+            vm.NavigationRequested += (a, ar) => { action = a; args = ar; };
 
-            await CompleteFlowAsync(vm);
+            await GoToEndAsync(vm);
 
-            auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r =>
-                r.preferences.onboardingSurvey.weeklyMeatConsumption == "ZERO_TO_FOUR")), Times.Once);
+            _auth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.preferences.onboardingSurvey.Get("usesLeftovers") == "OFTEN")), Times.Once);
             Assert.IsNull(vm.ErrorDetail);
-            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, requestedAction);
-            Assert.IsTrue(requestedArgs.Any(a => a.name == "fromHome" && (string)a.value == "true"));
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_dimension_levels, action);
+            Assert.IsTrue(args.Any(a => a.name == "fromHome" && (string)a.value == "true"));
+            vm.Dispose();
         }
 
         [Test]
-        public async Task FullFlow_SubmitSurveyFails_SetsErrorDetailAndStays()
+        public async Task Complete_SubmitFails_SetsErrorAndStays()
         {
-            var auth = new Mock<IAuthService>();
-            var gamification = new Mock<IGamificationService>();
-            var expectedError = new ApiErrorResponse { statusCode = 500, error = "SERVER_ERROR", message = "Server error occurred" };
-            gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
-                .ReturnsAsync(((OnboardingSurveyResult)null, expectedError));
+            var error = new ApiErrorResponse { statusCode = 500, message = "Server error occurred" };
+            _gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
+                .ReturnsAsync(((OnboardingSurveyResult)null, error));
+            var vm = CreateVm();
+            string action = null;
+            vm.NavigationRequested += (a, _) => action = a;
 
-            var vm = new OnboardingSurveyViewModel(_storeService, _catalogServiceMock.Object, auth.Object, gamification.Object);
-            vm.Initialize();
-            string requestedAction = null;
-            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
-            vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
+            await GoToEndAsync(vm);
 
-            await CompleteFlowAsync(vm);
+            Assert.AreSame(error, vm.ErrorDetail);
+            Assert.IsNull(action);
+            _auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
+            vm.Dispose();
+        }
 
-            Assert.AreSame(expectedError, vm.ErrorDetail);
-            Assert.IsNull(requestedAction);
-            auth.Verify(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()), Times.Never);
-            Assert.AreEqual("", _storeService.GetAppState().userSegment ?? "");
+        [Test]
+        public async Task Complete_PatchFails_SetsErrorDetail()
+        {
+            _gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
+                .ReturnsAsync(((OnboardingSurveyResult)null, new ApiErrorResponse { statusCode = 409 }));
+            var error = new ApiErrorResponse { statusCode = 500, message = "Server error occurred" };
+            _auth.Setup(a => a.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>())).ReturnsAsync((false, error));
+            var vm = CreateVm();
+
+            UnityEngine.TestTools.LogAssert.Expect(UnityEngine.LogType.Warning, "[OnboardingSurveyViewModel] Failed to sync survey data with server via PATCH");
+            await GoToEndAsync(vm);
+
+            Assert.AreEqual("Server error occurred", vm.ErrorDetail.message);
+            vm.Dispose();
         }
 
         [Test]
         public void Close_GoesHomeWithoutSaving()
         {
+            var vm = CreateVm();
             string requestedAction = null;
-            _vm.NavigationRequested += (action, args) => requestedAction = action;
+            vm.NavigationRequested += (action, args) => requestedAction = action;
             _storeService.DispatchedActionTypes.Clear();
 
-            _vm.Close();
+            vm.Close();
 
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_home, requestedAction);
             CollectionAssert.DoesNotContain(_storeService.DispatchedActionTypes, "app/setOnboardingSurvey");
+            vm.Dispose();
         }
     }
 }

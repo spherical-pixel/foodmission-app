@@ -1149,29 +1149,6 @@ MonoBehaviour:
       i consigli per te.'
     m_Metadata:
       m_Items: []
-  - m_Id: 25709899143962624
-    m_Localized: Quanti pasti a base di carne consumi in genere ogni settimana?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710060687581184
-    m_Localized: Con quale frequenza mangi carne di manzo?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710112776642560
-    m_Localized: Con quale frequenza butti via del cibo ancora commestibile?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710126802395136
-    m_Localized: Con quale frequenza consumi alimenti ultra-trasformati come snack
-      confezionati, bevande zuccherate, piatti pronti o prodotti a base di carne
-      lavorata?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710140115116032
-    m_Localized: Con quale frequenza utilizzi contenitori riutilizzabili o acquisti
-      prodotti ricaricabili?
-    m_Metadata:
-      m_Items: []
   - m_Id: 25970700069101568
     m_Localized: CATEGORIE
     m_Metadata:
@@ -4075,12 +4052,6 @@ MonoBehaviour:
     m_Localized: "Pi\xF9 tardi"
     m_Metadata:
       m_Items: []
-  - m_Id: 53972389359247365
-    m_Localized: Prima di iniziare una missione, devi completare il questionario
-      sulle abitudini alimentari. Ci vuole solo un minuto e mi aiuta a fissare obiettivi
-      adatti a te.
-    m_Metadata:
-      m_Items: []
   - m_Id: 53972389359247366
     m_Localized: Ultimo giorno della tua missione
     m_Metadata:
@@ -4144,6 +4115,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 53972389359247380
     m_Localized: Registra pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56156153275473920
+    m_Localized: Riprova
     m_Metadata:
       m_Items: []
   references:

@@ -114,14 +114,12 @@ namespace eu.foodmission.platform.Tests
             {
                 preferences = new ProfileUpdatePreferences
                 {
-                    onboardingSurvey = new OnboardingSurveyData
-                    {
-                        weeklyMeatConsumption = "ZERO_TO_FOUR",
-                        weeklyBeefConsumption = "LESS_THAN_ONCE_PER_WEEK",
-                        weeklyFoodWaste = "ZERO",
-                        weeklyUpfConsumption = "TEN_TO_FOURTEEN",
-                        weeklyReusableOrRefill = "TEN_PLUS"
-                    }
+                    onboardingSurvey = OnboardingSurveyData.Of(
+                        ("weeklyMeatConsumption", "ZERO_TO_FOUR"),
+                        ("weeklyBeefConsumption", "LESS_THAN_ONCE_PER_WEEK"),
+                        ("weeklyFoodWaste", "ZERO"),
+                        ("weeklyUpfConsumption", "TEN_TO_FOURTEEN"),
+                        ("weeklyReusableOrRefill", "TEN_PLUS"))
                 }
             };
 
@@ -132,8 +130,6 @@ namespace eu.foodmission.platform.Tests
             StringAssert.Contains("\"weeklyFoodWaste\":\"ZERO\"", json);
             StringAssert.Contains("\"weeklyUpfConsumption\":\"TEN_TO_FOURTEEN\"", json);
             StringAssert.Contains("\"weeklyReusableOrRefill\":\"TEN_PLUS\"", json);
-            StringAssert.DoesNotContain("meatMeals", json);
-            StringAssert.DoesNotContain("foodWasteFrequency", json);
         }
 
         [Test]
@@ -142,7 +138,7 @@ namespace eu.foodmission.platform.Tests
             var emptySurvey = new OnboardingSurveyData();
             Assert.IsFalse(emptySurvey.HasAnswers());
 
-            var populatedSurvey = new OnboardingSurveyData { weeklyMeatConsumption = "ZERO_TO_FOUR" };
+            var populatedSurvey = OnboardingSurveyData.Of(("weeklyMeatConsumption", "ZERO_TO_FOUR"));
             Assert.IsTrue(populatedSurvey.HasAnswers());
         }
 

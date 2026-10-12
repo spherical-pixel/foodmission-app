@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -129,6 +131,70 @@ namespace eu.foodmission.platform
         public static string BuildOnboardingSurveyUrl(string baseUrl)
             => $"{baseUrl}/api/v1/users/me/gamification/onboarding-survey";
 
+        public async Task<(OnboardingSurveyQuestion[] Result, ApiErrorResponse Error)> GetOnboardingSurveyAsync()
+        {
+            using UnityWebRequest request = UnityWebRequest.Get(BuildOnboardingSurveyUrl(ApiConfig.BaseUrl));
+            if (!string.IsNullOrEmpty(AuthHeader))
+            {
+                request.SetRequestHeader("Authorization", AuthHeader);
+            }
+            request.SetRequestHeader("Accept", "application/json");
+            string lang = _storeService?.GetAppState()?.lang;
+            if (!string.IsNullOrEmpty(lang))
+            {
+                request.SetRequestHeader("Accept-Language", lang);
+            }
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetOnboardingSurveyAsync"));
+            }
+
+            try
+            {
+                return (ParseOnboardingSurvey(request.downloadHandler.text), null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize OnboardingSurveyResponse: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
+
+        /// <summary>Questions with a field and at least one option with a value, in backend order.</summary>
+        public static OnboardingSurveyQuestion[] ParseOnboardingSurvey(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                return new OnboardingSurveyQuestion[0];
+            }
+
+            var response = JsonConvert.DeserializeObject<OnboardingSurveyResponse>(json);
+            var questions = new List<OnboardingSurveyQuestion>();
+            foreach (OnboardingSurveyQuestion question in response?.questions ?? new OnboardingSurveyQuestion[0])
+            {
+                if (question == null || string.IsNullOrEmpty(question.field))
+                {
+                    continue;
+                }
+
+                question.options = (question.options ?? new OnboardingSurveyOption[0])
+                    .Where(o => o != null && !string.IsNullOrEmpty(o.value))
+                    .ToArray();
+                if (question.options.Length > 0)
+                {
+                    questions.Add(question);
+                }
+            }
+            return questions.ToArray();
+        }
+
         public async Task<(OnboardingSurveyResult Result, ApiErrorResponse Error)> SubmitOnboardingSurveyAsync(OnboardingSurveyData answers)
         {
             string url = BuildOnboardingSurveyUrl(ApiConfig.BaseUrl);
@@ -167,6 +233,48 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[{GetType().Name}] Failed to deserialize OnboardingSurveyResult: {ex.Message}");
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
+        }
+
+        public static string BuildDimensionsUrl(string baseUrl)
+            => $"{baseUrl}/api/v1/users/me/gamification/dimensions";
+
+        public async Task<(DimensionLevelEntry[] Result, ApiErrorResponse Error)> GetDimensionLevelsAsync()
+        {
+            using UnityWebRequest request = UnityWebRequest.Get(BuildDimensionsUrl(ApiConfig.BaseUrl));
+            if (!string.IsNullOrEmpty(AuthHeader))
+            {
+                request.SetRequestHeader("Authorization", AuthHeader);
+            }
+            request.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetDimensionLevelsAsync"));
+            }
+
+            try
+            {
+                return (ParseDimensionLevels(request.downloadHandler.text), null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize dimension levels: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
+
+        /// <summary>`[{ dimensionCode, level, … }]`: the JSON keys match DimensionLevelEntry; quests and names are ignored.</summary>
+        public static DimensionLevelEntry[] ParseDimensionLevels(string json)
+        {
+            return string.IsNullOrEmpty(json)
+                ? new DimensionLevelEntry[0]
+                : JsonConvert.DeserializeObject<DimensionLevelEntry[]>(json) ?? new DimensionLevelEntry[0];
         }
 
         public static string BuildProgressWheelsUrl(string baseUrl)

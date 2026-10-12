@@ -77,6 +77,26 @@ namespace eu.foodmission.platform
         public ProgressWheel[] progressWheels;
     }
 
+    /// <summary>GET /users/me/gamification/onboarding-survey. Texts are localized by the backend (Accept-Language).</summary>
+    public class OnboardingSurveyResponse
+    {
+        public OnboardingSurveyQuestion[] questions;
+    }
+
+    public class OnboardingSurveyQuestion
+    {
+        /// <summary>Answer key for POST onboarding-survey / preferences.onboardingSurvey.</summary>
+        public string field;
+        public string text;
+        public OnboardingSurveyOption[] options;
+    }
+
+    public class OnboardingSurveyOption
+    {
+        public string value;
+        public string label;
+    }
+
     [Serializable]
     public class ProgressIndicator
     {

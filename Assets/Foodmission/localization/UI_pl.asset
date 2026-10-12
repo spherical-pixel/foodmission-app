@@ -1153,31 +1153,6 @@ MonoBehaviour:
       specjalnie dla Ciebie."
     m_Metadata:
       m_Items: []
-  - m_Id: 25709899143962624
-    m_Localized: "Ile posi\u0142k\xF3w zawieraj\u0105cych mi\u0119so zazwyczaj spo\u017Cywasz
-      w ci\u0105gu tygodnia?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710060687581184
-    m_Localized: "Jak cz\u0119sto jesz wo\u0142owin\u0119?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710112776642560
-    m_Localized: "Jak cz\u0119sto wyrzucasz jedzenie, kt\xF3re nadaje si\u0119 jeszcze
-      do spo\u017Cycia?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710126802395136
-    m_Localized: "Jak cz\u0119sto spo\u017Cywasz \u017Cywno\u015B\u0107 wysoko przetworzon\u0105,
-      tak\u0105 jak pakowane przek\u0105ski, s\u0142odkie napoje, dania gotowe czy
-      przetworzone produkty mi\u0119sne?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 25710140115116032
-    m_Localized: "Jak cz\u0119sto korzystasz z pojemnik\xF3w wielokrotnego u\u017Cytku
-      lub kupujesz produkty do ponownego nape\u0142niania?"
-    m_Metadata:
-      m_Items: []
   - m_Id: 25970700069101568
     m_Localized: KATEGORIE
     m_Metadata:
@@ -4125,12 +4100,6 @@ MonoBehaviour:
     m_Localized: "Doko\u0144cz p\xF3\u017Aniej"
     m_Metadata:
       m_Items: []
-  - m_Id: 53972389359247365
-    m_Localized: "Zanim zaczniesz zadanie, musisz wype\u0142ni\u0107 ankiet\u0119
-      dotycz\u0105c\u0105 nawyk\xF3w \u017Cywieniowych. Zajmie to tylko minut\u0119
-      i pomo\u017Ce mi ustali\u0107 cele dopasowane do Ciebie."
-    m_Metadata:
-      m_Items: []
   - m_Id: 53972389359247366
     m_Localized: "Ostatni dzie\u0144 Twojej misji"
     m_Metadata:
@@ -4194,6 +4163,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 53972389359247380
     m_Localized: "Zapisz posi\u0142ek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56156153275473920
+    m_Localized: "Spr\xF3buj ponownie"
     m_Metadata:
       m_Items: []
   references:

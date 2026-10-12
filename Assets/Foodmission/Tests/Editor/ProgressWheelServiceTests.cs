@@ -14,15 +14,6 @@ namespace eu.foodmission.platform.Tests
         private Mock<IAuthService> _auth;
         private ProgressWheelService _service;
 
-        private static readonly OnboardingSurveyData CompleteSurvey = new OnboardingSurveyData
-        {
-            weeklyMeatConsumption = "ZERO_TO_FOUR",
-            weeklyBeefConsumption = "NEVER",
-            weeklyFoodWaste = "ZERO",
-            weeklyUpfConsumption = "ZERO_TO_THREE",
-            weeklyReusableOrRefill = "TEN_PLUS",
-        };
-
         private static ProgressWheel Wheel(string kind) => new ProgressWheel { kind = kind, stage = 1 };
 
         [SetUp]
@@ -67,67 +58,15 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task Refresh_EmptyWithCompleteSurvey_RecoversOnce()
+        public async Task Refresh_EmptyWheels_NeverResubmitsTheSurvey()
         {
-            _store.store.Dispatch(AppActions.setOnboardingSurvey.Invoke(CompleteSurvey));
-            // After the re-submission the backend has a segment, so the next GET returns the wheels.
-            _gamification.SetupSequence(g => g.GetProgressWheelsAsync())
-                .ReturnsAsync((new ProgressWheel[0], (ApiErrorResponse)null))
-                .ReturnsAsync((new[] { Wheel("CO2_REDUCTION") }, (ApiErrorResponse)null));
-            _gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
-                .ReturnsAsync((new OnboardingSurveyResult { segment = "BEGINNER", progressWheels = new[] { Wheel("CO2_REDUCTION") } }, (ApiErrorResponse)null));
-
-            await _service.RefreshAsync();
-            await _service.RefreshAsync();
-
-            _gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.Is<OnboardingSurveyData>(d => d.weeklyMeatConsumption == "ZERO_TO_FOUR")), Times.Once);
-            Assert.AreEqual("BEGINNER", _store.GetAppState().userSegment);
-            Assert.AreEqual(1, _store.GetAppState().progressWheels.Length);
-        }
-
-        [Test]
-        public async Task Refresh_EmptyWithIncompleteSurvey_DoesNotSubmit()
-        {
-            _gamification.Setup(g => g.GetProgressWheelsAsync())
-                .ReturnsAsync((new ProgressWheel[0], (ApiErrorResponse)null));
+            _store.store.Dispatch(AppActions.setOnboardingSurvey.Invoke(OnboardingSurveyData.Of(("weeklyMeatConsumption", "ZERO_TO_FOUR"))));
+            _gamification.Setup(g => g.GetProgressWheelsAsync()).ReturnsAsync((new ProgressWheel[0], (ApiErrorResponse)null));
 
             await _service.RefreshAsync();
 
             _gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()), Times.Never);
             Assert.AreEqual(0, _store.GetAppState().progressWheels.Length);
-        }
-
-        [Test]
-        public async Task Refresh_RecoveryFails_NotRetriedInSession()
-        {
-            _store.store.Dispatch(AppActions.setOnboardingSurvey.Invoke(CompleteSurvey));
-            _gamification.Setup(g => g.GetProgressWheelsAsync())
-                .ReturnsAsync((new ProgressWheel[0], (ApiErrorResponse)null));
-            _gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
-                .ReturnsAsync(((OnboardingSurveyResult)null, new ApiErrorResponse { statusCode = 500 }));
-
-            await _service.RefreshAsync();
-            await _service.RefreshAsync();
-
-            _gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()), Times.Once);
-        }
-
-        [Test]
-        public async Task Refresh_RecoveryFlagIsPerUser()
-        {
-            _store.store.Dispatch(AppActions.setOnboardingSurvey.Invoke(CompleteSurvey));
-            _gamification.Setup(g => g.GetProgressWheelsAsync())
-                .ReturnsAsync((new ProgressWheel[0], (ApiErrorResponse)null));
-            _gamification.Setup(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()))
-                .ReturnsAsync(((OnboardingSurveyResult)null, new ApiErrorResponse { statusCode = 500 }));
-
-            await _service.RefreshAsync();
-            AppState other = _store.GetAppState().Copy();
-            other.userId = "u2";
-            _store.SetAppState(other);
-            await _service.RefreshAsync();
-
-            _gamification.Verify(g => g.SubmitOnboardingSurveyAsync(It.IsAny<OnboardingSurveyData>()), Times.Exactly(2));
         }
 
         [Test]
