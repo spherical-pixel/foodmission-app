@@ -796,11 +796,11 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// What follows a completed quest: the next quest of its level or, when it was the last quest of the user's level in
-        /// its dimension and all of them are completed, the level up and the first quest of the new level. When nothing is
-        /// left to offer and every quest of the dimension is completed, the dimension is celebrated as completed.
+        /// What follows a completed quest: the next quest of its level. When it was the last one, the backend's
+        /// DIMENSION_LEVEL_UP (celebrated on its own) offers the first quest of the new level; when every quest of the
+        /// dimension is completed, the dimension is celebrated as completed.
         /// </summary>
-        private async System.Threading.Tasks.Task ResolveQuestFollowUpAsync(PendingRewardCelebration celebration, Quest[] allQuests, UserEvent[] recentEvents = null)
+        private async System.Threading.Tasks.Task ResolveQuestFollowUpAsync(PendingRewardCelebration celebration, Quest[] allQuests)
         {
             if (allQuests == null || allQuests.Length == 0 || _questProgressionService == null)
             {
@@ -832,59 +832,47 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            // The backend raised the level when the quest completed: refresh the stored levels (gate, locks, "Tu nivel")
-            await DimensionLevels.RefreshAsync(_gamificationService, _storeService);
-
             var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
             Dimension dimension = gate.DimensionById(completed.dimensionId);
-            celebration.LevelUp = FindLevelUp(completed, dimension, recentEvents);
-            if (celebration.LevelUp != null)
-            {
-                // Not filtered by level: it is the new level, applied when the celebration is shown
-                celebration.UnlockedQuest = _questProgressionService.GetFirstQuest(completed.dimensionId, celebration.LevelUp.Level, allQuests);
-            }
 
             // Unknown dimension (catalog not loaded): no card rather than an id as its name
-            if (celebration.UnlockedQuest == null && _questProgressionService.IsDimensionCompleted(completed, allQuests, progress))
+            if (_questProgressionService.IsDimensionCompleted(completed, allQuests, progress))
             {
                 celebration.CompletedDimensionName = DimensionDisplayName(dimension);
             }
         }
 
         /// <summary>
-        /// The backend's DIMENSION_LEVEL_UP for the quest's dimension that started at the quest's level (the event is recorded
-        /// when the quest completes the level). Without the event there is no level up: a user who set a higher level by hand
-        /// and finishes a lower-level quest has not levelled up.
+        /// The celebration of a backend DIMENSION_LEVEL_UP event (metadata { dimensionCode, from, to }): the level card and the
+        /// first quest of the new level. Null for an unknown dimension or level, so it is retried once the catalog is loaded.
         /// </summary>
-        private static DimensionLevelUp FindLevelUp(Quest completed, Dimension dimension, UserEvent[] recentEvents)
+        private PendingRewardCelebration BuildLevelUpCelebration(UserEvent evt, Quest[] allQuests)
         {
-            string questLevel = ContentLevel.Normalize(completed?.level);
-            if (dimension == null || questLevel == null || recentEvents == null)
+            string code = evt.metadata?["dimensionCode"]?.ToString();
+            string level = ContentLevel.Normalize(evt.metadata?["to"]?.ToString());
+            Dimension dimension = !string.IsNullOrEmpty(code) ? _dimensionService?.GetDimension(code) : null;
+            if (dimension == null || level == null)
             {
                 return null;
             }
 
-            foreach (UserEvent evt in recentEvents)
+            var celebration = new PendingRewardCelebration
             {
-                if (evt?.eventType != "DIMENSION_LEVEL_UP" || evt.metadata == null)
+                ContextTitle = "@UI:DIMENSION_LEVEL_UP_TITLE",
+                EventId = evt.id,
+                LevelUp = new DimensionLevelUp
                 {
-                    continue;
+                    DimensionCode = dimension.code,
+                    DimensionName = DimensionDisplayName(dimension),
+                    Level = level
                 }
-
-                string to = ContentLevel.Normalize(evt.metadata["to"]?.ToString());
-                if (to != null
-                    && string.Equals(evt.metadata["dimensionCode"]?.ToString(), dimension.code, System.StringComparison.OrdinalIgnoreCase)
-                    && ContentLevel.Normalize(evt.metadata["from"]?.ToString()) == questLevel)
-                {
-                    return new DimensionLevelUp
-                    {
-                        DimensionCode = dimension.code,
-                        DimensionName = DimensionDisplayName(dimension),
-                        Level = to
-                    };
-                }
+            };
+            if (allQuests != null && _questProgressionService != null)
+            {
+                // Not filtered by the stored level: it is the new level, even if the refresh failed
+                celebration.UnlockedQuest = _questProgressionService.GetFirstQuest(dimension.id, level, allQuests);
             }
-            return null;
+            return celebration;
         }
 
         private static string DimensionDisplayName(Dimension dimension)
@@ -953,6 +941,8 @@ namespace eu.foodmission.platform
         }
 
         private static string CelebratedQuestsKey(string userId) => $"celebrated_quest_ids_{userId}";
+
+        private const string LevelUpEventType = "DIMENSION_LEVEL_UP";
 
         private static string CelebratedEventsKey(string userId) => $"celebrated_gamif_ids_{userId}";
 
@@ -1186,10 +1176,10 @@ namespace eu.foodmission.platform
                 System.DateTime lastSeenDate;
                 bool hasValidDate = System.DateTime.TryParse(lastSeenTs, out lastSeenDate);
 
-                // Filter events strictly to MISSION_COMPLETED and QUEST_COMPLETED
+                // Completed missions and quests, and the level ups the backend applied when a quest completed a level
                 var candidateEvents = profile.recentEvents?
                     .Where(e => !string.IsNullOrEmpty(e.id) && !celebratedIds.Contains(e.id))
-                    .Where(e => e.eventType == "MISSION_COMPLETED" || e.eventType == "QUEST_COMPLETED")
+                    .Where(e => e.eventType == "MISSION_COMPLETED" || e.eventType == "QUEST_COMPLETED" || e.eventType == LevelUpEventType)
                     .Where(e =>
                     {
                         if (string.IsNullOrEmpty(e.timestamp)) return false;
@@ -1218,8 +1208,29 @@ namespace eu.foodmission.platform
                 var results = new System.Collections.Generic.List<PendingRewardCelebration>();
                 Quest[] cachedQuests = null;
 
+                if (candidateEvents.Any(e => e.eventType == LevelUpEventType))
+                {
+                    // The backend already raised the level: refresh the stored levels (gate, locks, "Tu nivel")
+                    await DimensionLevels.RefreshAsync(_gamificationService, _storeService);
+                }
+
                 foreach (var evt in candidateEvents)
                 {
+                    if (evt.eventType == LevelUpEventType)
+                    {
+                        if (cachedQuests == null && _questService != null)
+                        {
+                            var (allQuests, _) = await _questService.GetQuestsAsync();
+                            cachedQuests = allQuests;
+                        }
+                        PendingRewardCelebration levelUp = BuildLevelUpCelebration(evt, cachedQuests);
+                        if (levelUp != null)
+                        {
+                            results.Add(levelUp);
+                        }
+                        continue;
+                    }
+
                     bool isMission = evt.eventType == "MISSION_COMPLETED";
                     bool isQuest = evt.eventType == "QUEST_COMPLETED";
 
@@ -1336,15 +1347,19 @@ namespace eu.foodmission.platform
                             var (allQuests, _) = await _questService.GetQuestsAsync();
                             cachedQuests = allQuests;
                         }
-                        await ResolveQuestFollowUpAsync(celebration, cachedQuests, profile.recentEvents);
+                        await ResolveQuestFollowUpAsync(celebration, cachedQuests);
                     }
 
                     results.Add(celebration);
                 }
 
-                // Order so individual activities are presented first, and quest completion last
-                // Individual activities first, then quest completion, then badges (earned as a consequence of both)
-                return results.OrderBy(r => r.IsQuest ? 1 : 0).Concat(badgeCelebrations).ToList();
+                // Individual activities first, then quest completion, then the level up it caused, then badges
+                if (results.Count == 0)
+                {
+                    PlayerPrefs.Save();
+                    return badgeCelebrations.Count > 0 ? badgeCelebrations : null;
+                }
+                return results.OrderBy(r => r.LevelUp != null ? 2 : r.IsQuest ? 1 : 0).Concat(badgeCelebrations).ToList();
             }
             catch (System.Exception ex)
             {
