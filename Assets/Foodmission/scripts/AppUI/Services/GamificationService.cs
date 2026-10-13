@@ -315,8 +315,12 @@ namespace eu.foodmission.platform
         public static string BuildKnowledgeProgressUrl(string baseUrl)
             => $"{baseUrl}/api/v1/users/me/gamification/knowledge-progress";
 
-        public static string BuildKnowledgeBarUrl(string baseUrl, string kind)
-            => $"{BuildKnowledgeProgressUrl(baseUrl)}/{UnityWebRequest.EscapeURL(kind ?? "")}";
+        /// <summary>The backend translates item titles only from ?lang= (Accept-Language is ignored).</summary>
+        public static string BuildKnowledgeBarUrl(string baseUrl, string kind, string lang)
+        {
+            string url = $"{BuildKnowledgeProgressUrl(baseUrl)}/{UnityWebRequest.EscapeURL(kind ?? "")}";
+            return string.IsNullOrEmpty(lang) ? url : $"{url}?lang={Uri.EscapeDataString(lang)}";
+        }
 
         public static KnowledgeProgress[] ParseKnowledgeProgress(string json)
         {
@@ -350,7 +354,7 @@ namespace eu.foodmission.platform
 
         public async Task<(KnowledgeProgress Result, ApiErrorResponse Error)> GetKnowledgeBarAsync(string kind)
         {
-            var (json, error) = await GetLocalizedJsonAsync(BuildKnowledgeBarUrl(ApiConfig.BaseUrl, kind), nameof(GetKnowledgeBarAsync));
+            var (json, error) = await GetLocalizedJsonAsync(BuildKnowledgeBarUrl(ApiConfig.BaseUrl, kind, _storeService?.GetAppState()?.lang), nameof(GetKnowledgeBarAsync));
             if (error != null)
             {
                 return (null, error);

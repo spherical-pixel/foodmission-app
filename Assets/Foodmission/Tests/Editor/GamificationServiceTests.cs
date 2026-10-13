@@ -158,7 +158,15 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("https://api.test/api/v1/users/me/gamification/knowledge-progress",
                 GamificationService.BuildKnowledgeProgressUrl("https://api.test"));
             Assert.AreEqual("https://api.test/api/v1/users/me/gamification/knowledge-progress/FOOD_WASTE",
-                GamificationService.BuildKnowledgeBarUrl("https://api.test", KnowledgeKind.FoodWaste));
+                GamificationService.BuildKnowledgeBarUrl("https://api.test", KnowledgeKind.FoodWaste, null));
+        }
+
+        [Test]
+        public void BuildKnowledgeBarUrl_SendsLangAsQuery()
+        {
+            // The backend translates item titles only from ?lang= (it ignores Accept-Language)
+            Assert.AreEqual("https://api.test/api/v1/users/me/gamification/knowledge-progress/HEALTH?lang=es",
+                GamificationService.BuildKnowledgeBarUrl("https://api.test", KnowledgeKind.Health, "es"));
         }
 
         [Test]
