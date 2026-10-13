@@ -4130,6 +4130,10 @@ MonoBehaviour:
     m_Localized: No items yet.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Your knowledge progress:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

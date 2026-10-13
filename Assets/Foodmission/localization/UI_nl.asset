@@ -4156,6 +4156,10 @@ MonoBehaviour:
     m_Localized: Nog geen items.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Jouw kennisvoortgang:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

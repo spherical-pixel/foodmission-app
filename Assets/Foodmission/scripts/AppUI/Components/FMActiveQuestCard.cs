@@ -41,7 +41,7 @@ namespace eu.foodmission.platform.Components
         }
 
         /* ========= INTERNAL UI ELEMENTS ========= */
-        private readonly Unity.AppUI.UI.Text _headingText;
+        private readonly Heading _headingText;
         private readonly VisualElement _cardContainer;
         private readonly Unity.AppUI.UI.Text _questTitleText;
         private readonly ScrollView _timelineContainer;
@@ -68,8 +68,8 @@ namespace eu.foodmission.platform.Components
             AddToClassList("fm-active-quest-wrapper");
 
             // Section Heading ("Active Quests")
-            _headingText = new Unity.AppUI.UI.Text();
-            _headingText.AddToClassList("fm-active-quest-heading");
+            _headingText = new Heading { size = HeadingSize.S };
+            _headingText.AddToClassList("fm-home-section-title");
             _headingText.text = "@UI:ACTIVE_QUESTS";
             Add(_headingText);
 

@@ -4159,6 +4159,10 @@ MonoBehaviour:
     m_Localized: "Noch keine Eintr\xE4ge."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Dein Wissensfortschritt:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

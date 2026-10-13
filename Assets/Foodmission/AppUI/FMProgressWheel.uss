@@ -14,11 +14,15 @@
     margin-bottom: 16px;
 }
 
+/* Colour/weight from .fm-home-section-title */
 .fm-wheels-section__title {
-    color: var(--appui-foregrounds-100);
-    -unity-font-style: bold;
     flex-shrink: 0;
     flex-grow: 1;
+}
+
+/* The header row already spaces the title from the grid */
+.fm-wheels-section__header .fm-home-section-title {
+    margin-bottom: 0;
 }
 
 .fm-wheels-section__message {

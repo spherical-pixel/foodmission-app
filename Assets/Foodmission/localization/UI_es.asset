@@ -4141,6 +4141,10 @@ MonoBehaviour:
     m_Localized: "A\xFAn no hay elementos."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Tu progreso de conocimiento:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

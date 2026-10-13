@@ -4192,6 +4192,10 @@ MonoBehaviour:
     m_Localized: "Brak element\xF3w."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: "Twoje post\u0119py w wiedzy:"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

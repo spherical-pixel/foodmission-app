@@ -4142,6 +4142,10 @@ MonoBehaviour:
     m_Localized: "Ingen elementer enn\xE5."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Din kunnskapsfremgang:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
