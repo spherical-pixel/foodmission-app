@@ -300,7 +300,7 @@ namespace eu.foodmission.platform
                         if (fItem?.FoodFact == null) continue;
 
                         var factCard = new FMItemFoodFact();
-                        factCard.Text = fItem.FoodFact.code ?? "";
+                        factCard.Text = !string.IsNullOrEmpty(fItem.FoodFact.title) ? fItem.FoodFact.title : fItem.FoodFact.code ?? "";
                         factCard.SetLevel(fItem.FoodFact.level);
                         factCard.SetCompleted(fItem.IsCompleted);
                         factCard.SetLocked(fItem.IsLocked);

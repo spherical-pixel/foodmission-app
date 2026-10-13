@@ -22,6 +22,7 @@ namespace eu.foodmission.platform.Tests
                 ""id"": ""fact-uuid-123"",
                 ""code"": ""FF1.1.1"",
                 ""topicId"": ""topic-uuid-456"",
+                ""title"": ""Less Red Meat, Lower Impact"",
                 ""body"": ""Eating less red meat reduces environmental impact."",
                 ""source"": ""Mazac et al. (2022)"",
                 ""level"": ""BEGINNER"",
@@ -37,6 +38,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("fact-uuid-123", fact.id);
             Assert.AreEqual("FF1.1.1", fact.code);
             Assert.AreEqual("topic-uuid-456", fact.topicId);
+            Assert.AreEqual("Less Red Meat, Lower Impact", fact.title);
             Assert.AreEqual("Eating less red meat reduces environmental impact.", fact.body);
             Assert.AreEqual("Mazac et al. (2022)", fact.source);
             Assert.AreEqual("BEGINNER", fact.level);

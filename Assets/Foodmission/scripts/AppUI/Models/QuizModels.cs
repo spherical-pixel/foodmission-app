@@ -38,6 +38,7 @@ namespace eu.foodmission.platform
         public string id;
         public string code;
         public string topicId;
+        public string title;
         public string question;
         public string explanation;
         public string source;
@@ -56,6 +57,7 @@ namespace eu.foodmission.platform
         public string userId;
         public string quizId;
         public string quizCode;
+        public string title;
         public string question;
         public string selectedOptionId;
         public bool? isCorrect;

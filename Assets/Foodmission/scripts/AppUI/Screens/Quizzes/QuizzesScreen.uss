@@ -187,6 +187,10 @@
     -unity-font-style: bold;
     color: var(--appui-foregrounds-50);
     flex-grow:1;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-right: 8px;
+    white-space: normal;
 }
 
 .fm-quiz-item-badges {

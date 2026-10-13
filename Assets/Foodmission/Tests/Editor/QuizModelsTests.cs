@@ -33,6 +33,7 @@ namespace eu.foodmission.platform.Tests
                 ""id"": ""quiz-uuid-123"",
                 ""code"": ""Q1.1.1"",
                 ""topicId"": ""topic-uuid-456"",
+                ""title"": ""Greener Dinners"",
                 ""question"": ""What is the main driver of food-related emissions?"",
                 ""explanation"": ""Livestock production generates significant GHG emissions."",
                 ""source"": ""EU Food Waste Report 2024"",
@@ -53,6 +54,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("quiz-uuid-123", quiz.id);
             Assert.AreEqual("Q1.1.1", quiz.code);
             Assert.AreEqual("topic-uuid-456", quiz.topicId);
+            Assert.AreEqual("Greener Dinners", quiz.title);
             Assert.AreEqual("What is the main driver of food-related emissions?", quiz.question);
             Assert.AreEqual("Livestock production generates significant GHG emissions.", quiz.explanation);
             Assert.AreEqual("EU Food Waste Report 2024", quiz.source);
@@ -77,6 +79,7 @@ namespace eu.foodmission.platform.Tests
                 ""userId"": ""user-1"",
                 ""quizId"": ""quiz-1"",
                 ""quizCode"": ""Q1.1.1"",
+                ""title"": ""Sample Title"",
                 ""question"": ""Sample Question?"",
                 ""selectedOptionId"": null,
                 ""isCorrect"": null,
@@ -88,6 +91,7 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(prog1);
             Assert.AreEqual("prog-1", prog1.id);
             Assert.AreEqual("user-1", prog1.userId);
+            Assert.AreEqual("Sample Title", prog1.title);
             Assert.AreEqual("quiz-1", prog1.quizId);
             Assert.AreEqual("Q1.1.1", prog1.quizCode);
             Assert.IsNull(prog1.selectedOptionId);
