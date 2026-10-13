@@ -4119,6 +4119,14 @@ MonoBehaviour:
     m_Localized: "Pr\xF8v igjen"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243307511808
+    m_Localized: "Vis tidligere niv\xE5er ({0})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203584
+    m_Localized: "Skjul tidligere niv\xE5er"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4118,6 +4118,14 @@ MonoBehaviour:
     m_Localized: Poskusi znova
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243307511808
+    m_Localized: "Prika\u017Ei prej\u0161nje ravni ({0})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203584
+    m_Localized: "Skrij prej\u0161nje ravni"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

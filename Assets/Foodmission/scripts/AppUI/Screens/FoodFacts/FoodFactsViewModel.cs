@@ -30,6 +30,8 @@ namespace eu.foodmission.platform
 
     public class FoodFactDisplayItem
     {
+        /// <summary>Below the user's level in its dimension and not in progress: hidden behind "show previous levels".</summary>
+        public bool IsPreviousLevel { get; set; }
         public FoodFact FoodFact { get; set; }
         public bool IsCompleted { get; set; }
         /// <summary>Set when the fact is above the user's level in its dimension (null = can be opened).</summary>
@@ -51,6 +53,9 @@ namespace eu.foodmission.platform
         public int TotalCount { get; set; }
         public int CompletedCount { get; set; }
         public bool IsExpanded { get; set; } = false;
+        /// <summary>Items below the user's level in this dimension (hidden unless ShowsPreviousLevels); 0 = no row.</summary>
+        public int PreviousLevelsCount { get; set; }
+        public bool ShowsPreviousLevels { get; set; }
         public List<FoodFactTopicGroup> Topics { get; set; } = new List<FoodFactTopicGroup>();
     }
 
@@ -87,6 +92,7 @@ namespace eu.foodmission.platform
         private readonly IFoodFactService _foodFactService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private readonly HashSet<string> _shownPreviousLevelDimensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         private FoodFact[] _rawFacts = Array.Empty<FoodFact>();
         private FoodFactProgressResponse[] _rawProgress = Array.Empty<FoodFactProgressResponse>();
@@ -195,6 +201,13 @@ namespace eu.foodmission.platform
                 SelectedStatus = status;
                 RebuildDisplayGroups();
             }
+        }
+
+        /// <summary>Shows or hides the content below the user's level in the dimension.</summary>
+        public void TogglePreviousLevels(string dimensionCodeOrId)
+        {
+            PreviousLevels.Toggle(_shownPreviousLevelDimensions, dimensionCodeOrId);
+            RebuildDisplayGroups();
         }
 
         public void ToggleDimensionExpanded(string dimensionCodeOrId)
@@ -354,6 +367,8 @@ namespace eu.foodmission.platform
             }
 
             var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+            // Previous levels are hidden only with the "All" level filter: a chosen level is shown as asked
+            bool hidePreviousLevels = string.Equals(_selectedLevel, FoodFactFilterLevel.All, StringComparison.OrdinalIgnoreCase);
             var displayItems = new List<FoodFactDisplayItem>();
             int totalMatchingLevel = 0;
             int totalCompletedMatchingLevel = 0;
@@ -397,7 +412,8 @@ namespace eu.foodmission.platform
                 {
                     FoodFact = f,
                     IsCompleted = isCompleted,
-                    LevelLock = gate.GetLock(gate.DimensionForTopic(f.topicId), f.level, isCompleted)
+                    LevelLock = gate.GetLock(gate.DimensionForTopic(f.topicId), f.level, isCompleted),
+                    IsPreviousLevel = hidePreviousLevels && gate.IsPreviousLevel(gate.DimensionForTopic(f.topicId), f.level, inProgress: false)
                 });
             }
 
@@ -440,6 +456,8 @@ namespace eu.foodmission.platform
                     var topicGroups = new List<FoodFactTopicGroup>();
                     int dimTotal = 0;
                     int dimCompleted = 0;
+                    int previousLevelsCount = 0;
+                    bool showsPreviousLevels = PreviousLevels.IsShown(_shownPreviousLevelDimensions, dim);
 
                     var dimTopics = _dimensionService.GetTopicsForDimension(dim.code) ?? dim.topics;
                     if (dimTopics != null)
@@ -460,11 +478,17 @@ namespace eu.foodmission.platform
 
                             if (topicFacts != null && topicFacts.Count > 0)
                             {
-                                topicGroups.Add(new FoodFactTopicGroup
+                                // Counted in full (dimension progress); a topic left without visible items is not listed
+                                var visible = PreviousLevels.Visible(topicFacts, it => it.IsPreviousLevel, showsPreviousLevels, out int topicPrevious);
+                                previousLevelsCount += topicPrevious;
+                                if (visible.Count > 0)
                                 {
-                                    Topic = topic,
-                                    Facts = topicFacts
-                                });
+                                    topicGroups.Add(new FoodFactTopicGroup
+                                    {
+                                        Topic = topic,
+                                        Facts = visible
+                                    });
+                                }
 
                                 foreach (var factItem in topicFacts)
                                 {
@@ -476,7 +500,7 @@ namespace eu.foodmission.platform
                         }
                     }
 
-                    if (topicGroups.Count > 0)
+                    if (topicGroups.Count > 0 || previousLevelsCount > 0)
                     {
                         bool isExpanded = _expandedDimensionCodes.Contains(dim.code) ||
                                           (!string.IsNullOrEmpty(dim.id) && _expandedDimensionCodes.Contains(dim.id));
@@ -488,6 +512,8 @@ namespace eu.foodmission.platform
                             TotalCount = dimTotal,
                             CompletedCount = dimCompleted,
                             IsExpanded = isExpanded,
+                            PreviousLevelsCount = previousLevelsCount,
+                            ShowsPreviousLevels = showsPreviousLevels,
                             Topics = topicGroups
                         });
                     }

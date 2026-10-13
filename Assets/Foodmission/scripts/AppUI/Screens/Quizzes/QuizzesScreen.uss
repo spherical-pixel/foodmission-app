@@ -312,3 +312,9 @@
     margin-top: 4px;
     margin-right: 0;
 }
+
+/* "Show previous levels (N)" at the top of a dimension (PreviousLevelsRow) */
+.fm-previous-levels-row {
+    align-self: flex-start;
+    margin-bottom: 8px;
+}

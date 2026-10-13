@@ -498,5 +498,47 @@ namespace eu.foodmission.platform.Tests
             var diet = _vm.DisplayGroups.First(g => g.Dimension?.code == DimensionCode.DietChanges);
             Assert.AreEqual(ContentLevel.Advanced, diet.UserLevel);
         }
+
+        // ── Previous levels hidden (2026-10-12) ─────────────────
+
+        [Test]
+        public void PreviousLevels_HiddenPerDimensionAcrossTopics_ExplicitFilterShowsThem()
+        {
+            var diet = _mockDimensions[0];
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(diet);
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-2")).Returns(diet);
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "t",
+                lang = "es",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Intermediate) }
+            });
+            var facts = new[]
+            {
+                new FoodFact { id = "b-read", code = "FF1.1.1", topicId = "top-1", level = "BEGINNER" },
+                new FoodFact { id = "b-new", code = "FF1.2.1", topicId = "top-2", level = "BEGINNER" },
+                new FoodFact { id = "i-1", code = "FF1.1.2", topicId = "top-1", level = "INTERMEDIATE" }
+            };
+            var progress = new[] { new FoodFactProgressResponse { foodFactCode = "FF1.1.1" } };
+
+            _vm.SetRawDataForTesting(facts, progress);
+
+            FoodFactDisplayGroup group = _vm.DisplayGroups.Single(g => g.Dimension.code == DimensionCode.DietChanges);
+            CollectionAssert.AreEqual(new[] { "i-1" }, group.Topics.SelectMany(t => t.Facts).Select(f => f.FoodFact.id).ToArray());
+            Assert.AreEqual(2, group.PreviousLevelsCount);
+            Assert.AreEqual(3, group.TotalCount);
+            Assert.AreEqual(1, group.CompletedCount);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            group = _vm.DisplayGroups.Single(g => g.Dimension.code == DimensionCode.DietChanges);
+            Assert.AreEqual(3, group.Topics.SelectMany(t => t.Facts).Count());
+            Assert.IsTrue(group.ShowsPreviousLevels);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            _vm.SetLevelFilter("BEGINNER");
+            group = _vm.DisplayGroups.Single(g => g.Dimension.code == DimensionCode.DietChanges);
+            Assert.AreEqual(2, group.Topics.SelectMany(t => t.Facts).Count());
+            Assert.AreEqual(0, group.PreviousLevelsCount);
+        }
     }
 }

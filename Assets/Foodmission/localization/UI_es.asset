@@ -4117,6 +4117,14 @@ MonoBehaviour:
     m_Localized: Reintentar
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243307511808
+    m_Localized: Ver niveles anteriores ({0})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203584
+    m_Localized: Ocultar niveles anteriores
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

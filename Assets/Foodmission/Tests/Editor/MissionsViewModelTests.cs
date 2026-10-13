@@ -404,5 +404,92 @@ namespace eu.foodmission.platform.Tests
             var diet = _vm.DisplayGroups.First(g => g.Dimension?.code == DimensionCode.DietChanges);
             Assert.AreEqual(ContentLevel.Advanced, diet.UserLevel);
         }
+
+        // ── Previous levels hidden (2026-10-12) ─────────────────
+
+        private Mission[] PreviousLevelMissions() => new[]
+        {
+            new Mission { id = "b-new", code = "M.B1.1", dimensionId = "dim-1", level = MissionLevel.Beginner },
+            new Mission { id = "b-run", code = "M.B1.2", dimensionId = "dim-1", level = MissionLevel.Beginner },
+            new Mission { id = "i-done", code = "M.I1.1", dimensionId = "dim-1", level = MissionLevel.Intermediate },
+            new Mission { id = "a-1", code = "M.A1.1", dimensionId = "dim-1", level = MissionLevel.Advanced }
+        };
+
+        private static MissionProgress[] PreviousLevelProgress() => new[]
+        {
+            new MissionProgress { missionId = "b-run", progress = 30f },
+            new MissionProgress { missionId = "i-done", progress = 100f, completed = true, status = ProgressStatus.Completed }
+        };
+
+        private void SetDietLevel(string level)
+        {
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _mockDimensionService.Setup(d => d.GetAllDimensions()).Returns(_mockDimensions);
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "t",
+                lang = "es",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, level) }
+            });
+        }
+
+        [Test]
+        public void PreviousLevels_HiddenByDefault_InProgressKept_AndStillCounted()
+        {
+            SetDietLevel(ContentLevel.Advanced);
+
+            _vm.SetRawDataForTesting(PreviousLevelMissions(), PreviousLevelProgress());
+
+            MissionDisplayGroup diet = _vm.DisplayGroups.Single();
+            CollectionAssert.AreEqual(new[] { "b-run", "a-1" }, diet.Missions.Select(m => m.Mission.id).ToArray());
+            Assert.AreEqual(2, diet.PreviousLevelsCount);
+            Assert.IsFalse(diet.ShowsPreviousLevels);
+            Assert.AreEqual(4, diet.TotalCount, "the dimension progress counts everything");
+            Assert.AreEqual(1, diet.CompletedCount);
+        }
+
+        [Test]
+        public void TogglePreviousLevels_ShowsThemAndHidesThemAgain()
+        {
+            SetDietLevel(ContentLevel.Advanced);
+            _vm.SetRawDataForTesting(PreviousLevelMissions(), PreviousLevelProgress());
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+
+            MissionDisplayGroup diet = _vm.DisplayGroups.Single();
+            Assert.AreEqual(4, diet.Missions.Count);
+            Assert.IsTrue(diet.ShowsPreviousLevels);
+            Assert.AreEqual(2, diet.PreviousLevelsCount);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+
+            Assert.AreEqual(2, _vm.DisplayGroups.Single().Missions.Count);
+        }
+
+        [Test]
+        public void PreviousLevels_ExplicitLevelFilter_ShowsThatLevel()
+        {
+            SetDietLevel(ContentLevel.Advanced);
+            _vm.SetRawDataForTesting(PreviousLevelMissions(), PreviousLevelProgress());
+
+            _vm.SetLevelFilter(MissionLevel.Beginner);
+
+            MissionDisplayGroup diet = _vm.DisplayGroups.Single();
+            CollectionAssert.AreEquivalent(new[] { "b-new", "b-run" }, diet.Missions.Select(m => m.Mission.id).ToArray());
+            Assert.AreEqual(0, diet.PreviousLevelsCount);
+        }
+
+        [Test]
+        public void PreviousLevels_OnlyPreviousContent_KeepsTheGroupWithItsRow()
+        {
+            SetDietLevel(ContentLevel.Advanced);
+            var missions = new[] { new Mission { id = "b-new", code = "M.B1.1", dimensionId = "dim-1", level = MissionLevel.Beginner } };
+
+            _vm.SetRawDataForTesting(missions, new MissionProgress[0]);
+
+            MissionDisplayGroup diet = _vm.DisplayGroups.Single();
+            Assert.AreEqual(0, diet.Missions.Count);
+            Assert.AreEqual(1, diet.PreviousLevelsCount);
+        }
     }
 }

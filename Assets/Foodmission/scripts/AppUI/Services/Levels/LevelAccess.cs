@@ -37,5 +37,22 @@ namespace eu.foodmission.platform
             }
             return itemRank > userRank;
         }
+
+        /// <summary>Content below the user's level is hidden in the lists unless it is in progress. Unknown values are shown.</summary>
+        public static bool IsBelowUserLevel(string itemLevel, string userLevel, bool inProgress)
+        {
+            if (inProgress)
+            {
+                return false;
+            }
+
+            int itemRank = ContentLevel.Rank(itemLevel);
+            int userRank = ContentLevel.Rank(userLevel);
+            if (itemRank < 0 || userRank < 0)
+            {
+                return false;
+            }
+            return itemRank < userRank;
+        }
     }
 }

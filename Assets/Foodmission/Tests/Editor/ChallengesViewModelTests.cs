@@ -411,5 +411,42 @@ namespace eu.foodmission.platform.Tests
             var diet = _vm.DisplayGroups.First(g => g.Dimension?.code == DimensionCode.DietChanges);
             Assert.AreEqual(ContentLevel.Advanced, diet.UserLevel);
         }
+
+        // ── Previous levels hidden (2026-10-12) ─────────────────
+
+        [Test]
+        public void PreviousLevels_HiddenUntilShown_InProgressKept_ExplicitFilterShowsThem()
+        {
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _mockDimensionService.Setup(d => d.GetAllDimensions()).Returns(_mockDimensions);
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "t",
+                lang = "es",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Intermediate) }
+            });
+            var challenges = new[]
+            {
+                new Challenge { id = "b-new", code = "C.B1.1", dimensionId = "dim-1", level = ChallengeLevel.Beginner },
+                new Challenge { id = "b-run", code = "C.B1.2", dimensionId = "dim-1", level = ChallengeLevel.Beginner },
+                new Challenge { id = "i-1", code = "C.I1.1", dimensionId = "dim-1", level = ChallengeLevel.Intermediate }
+            };
+            var progress = new[] { new ChallengeProgress { challengeId = "b-run", progress = 40f } };
+
+            _vm.SetRawDataForTesting(challenges, progress);
+
+            ChallengeDisplayGroup diet = _vm.DisplayGroups.Single();
+            CollectionAssert.AreEquivalent(new[] { "b-run", "i-1" }, diet.Challenges.Select(c => c.Challenge.id).ToArray());
+            Assert.AreEqual(1, diet.PreviousLevelsCount);
+            Assert.AreEqual(3, diet.TotalCount);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            Assert.AreEqual(3, _vm.DisplayGroups.Single().Challenges.Count);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            _vm.SetLevelFilter(ChallengeLevel.Beginner);
+            Assert.AreEqual(2, _vm.DisplayGroups.Single().Challenges.Count);
+            Assert.AreEqual(0, _vm.DisplayGroups.Single().PreviousLevelsCount);
+        }
     }
 }

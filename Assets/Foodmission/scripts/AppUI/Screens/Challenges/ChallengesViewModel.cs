@@ -30,6 +30,8 @@ namespace eu.foodmission.platform
 
     public class ChallengeDisplayItem
     {
+        /// <summary>Below the user's level in its dimension and not in progress: hidden behind "show previous levels".</summary>
+        public bool IsPreviousLevel { get; set; }
         public Challenge Challenge { get; set; }
         public bool IsCompleted { get; set; }
         public float Progress { get; set; }
@@ -46,6 +48,9 @@ namespace eu.foodmission.platform
         public int TotalCount { get; set; }
         public int CompletedCount { get; set; }
         public bool IsExpanded { get; set; } = false;
+        /// <summary>Items below the user's level in this dimension (hidden unless ShowsPreviousLevels); 0 = no row.</summary>
+        public int PreviousLevelsCount { get; set; }
+        public bool ShowsPreviousLevels { get; set; }
         public List<ChallengeDisplayItem> Challenges { get; set; } = new List<ChallengeDisplayItem>();
     }
 
@@ -82,6 +87,7 @@ namespace eu.foodmission.platform
         private readonly IChallengeService _challengeService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private readonly HashSet<string> _shownPreviousLevelDimensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         private Challenge[] _rawChallenges = Array.Empty<Challenge>();
         private ChallengeProgress[] _rawProgress = Array.Empty<ChallengeProgress>();
@@ -195,6 +201,13 @@ namespace eu.foodmission.platform
             }
         }
 
+        /// <summary>Shows or hides the content below the user's level in the dimension.</summary>
+        public void TogglePreviousLevels(string dimensionCodeOrId)
+        {
+            PreviousLevels.Toggle(_shownPreviousLevelDimensions, dimensionCodeOrId);
+            RebuildDisplayGroups();
+        }
+
         public void ToggleDimensionExpanded(string dimensionCodeOrId)
         {
             if (string.IsNullOrEmpty(dimensionCodeOrId)) return;
@@ -263,6 +276,8 @@ namespace eu.foodmission.platform
 
             var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
             var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+            // Previous levels are hidden only with the "All" level filter: a chosen level is shown as asked
+            bool hidePreviousLevels = string.Equals(_selectedLevel, ChallengeFilterLevel.All, StringComparison.OrdinalIgnoreCase);
 
             // Map progress by challengeId
             var progressMap = new Dictionary<string, ChallengeProgress>(StringComparer.OrdinalIgnoreCase);
@@ -332,7 +347,8 @@ namespace eu.foodmission.platform
                     Challenge = ch,
                     IsCompleted = isCompleted,
                     Progress = progressVal,
-                    LevelLock = gate.GetLock(gate.DimensionById(ch.dimensionId), ch.level, started)
+                    LevelLock = gate.GetLock(gate.DimensionById(ch.dimensionId), ch.level, started),
+                    IsPreviousLevel = hidePreviousLevels && gate.IsPreviousLevel(gate.DimensionById(ch.dimensionId), ch.level, started && !isCompleted)
                 });
             }
 
@@ -384,6 +400,8 @@ namespace eu.foodmission.platform
 
                     bool isExpanded = _expandedDimensionCodes.Contains(dim.code) ||
                                       (!string.IsNullOrEmpty(dim.id) && _expandedDimensionCodes.Contains(dim.id));
+                    bool showsPreviousLevels = PreviousLevels.IsShown(_shownPreviousLevelDimensions, dim);
+                    int previousLevelsCount = dimItems.Count(it => it.IsPreviousLevel);
 
                     groups.Add(new ChallengeDisplayGroup
                     {
@@ -392,7 +410,9 @@ namespace eu.foodmission.platform
                         TotalCount = dimTotal,
                         CompletedCount = dimCompleted,
                         IsExpanded = isExpanded,
-                        Challenges = dimItems
+                        PreviousLevelsCount = previousLevelsCount,
+                        ShowsPreviousLevels = showsPreviousLevels,
+                        Challenges = PreviousLevels.Visible(dimItems, it => it.IsPreviousLevel, showsPreviousLevels, out _)
                     });
                 }
             }
