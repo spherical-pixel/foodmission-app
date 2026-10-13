@@ -116,6 +116,47 @@ namespace eu.foodmission.platform
         public bool finished;
     }
 
+    /// <summary>Item status values of GET /users/me/gamification/current-quest (ProgressStatus).</summary>
+    public static class CurrentQuestItemStatus
+    {
+        public const string NotStarted = "NOT_STARTED";
+        public const string InProgress = "IN_PROGRESS";
+        public const string Completed = "COMPLETED";
+        /// <summary>Missions/challenges that failed; quizzes answered wrong.</summary>
+        public const string Failed = "FAILED";
+    }
+
+    /// <summary>
+    /// GET /users/me/gamification/current-quest: the user's current quest with the status of each item
+    /// (micro-learnings excluded). Texts come in the requested ?lang= when translated.
+    /// </summary>
+    public class CurrentQuest
+    {
+        public string questId;
+        public string questCode;
+        public string name;
+        public string description;
+        public string dimensionCode;
+        public string level;
+        public float progress;
+        public bool completed;
+        public int finishedItems;
+        public int totalItems;
+        public CurrentQuestItem[] items;
+    }
+
+    public class CurrentQuestItem
+    {
+        public string contentType;
+        public string contentCode;
+        public string title;
+        public bool finished;
+        public string status;
+        /// <summary>Partial progress 0–100 for missions/challenges; 0 or 100 otherwise.</summary>
+        public float progress;
+        public int sortOrder;
+    }
+
     /// <summary>Response of POST /users/me/gamification/onboarding-survey.</summary>
     [Serializable]
     public class OnboardingSurveyResult

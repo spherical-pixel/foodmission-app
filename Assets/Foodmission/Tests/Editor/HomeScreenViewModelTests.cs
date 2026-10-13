@@ -123,43 +123,26 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task LoadActiveQuestAsync_WithValidQuest_LoadsTitleAndActivityStates()
+        public async Task LoadActiveQuestAsync_UsesCurrentQuestEndpoint_Only()
         {
             var mockQuestService = new Mock<IQuestService>();
-            var quest = new Quest
-            {
-                id = "quest-1",
-                code = "HEALTHY_BREAKFAST",
-                title = "Healthy Breakfast",
-                items = new[]
-                {
-                    new QuestItem { id = "item-1", contentType = QuestContentType.Quiz },
-                    new QuestItem { id = "item-2", contentType = QuestContentType.FoodFact },
-                    new QuestItem { id = "item-3", contentType = QuestContentType.Mission },
-                    new QuestItem { id = "item-4", contentType = QuestContentType.Challenge }
-                }
-            };
-            var progress = new QuestProgress
+            var mockGamification = new Mock<IGamificationService>();
+            mockGamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync((new CurrentQuest
             {
                 questId = "quest-1",
-                progress = 50f,
-                completed = false
-            };
-
-            mockQuestService.Setup(q => q.GetQuestAsync("quest-1", It.IsAny<string>()))
-                .ReturnsAsync((quest, (ApiErrorResponse)null));
-            mockQuestService.Setup(q => q.GetQuestProgressAsync("quest-1", It.IsAny<string>()))
-                .ReturnsAsync((progress, (ApiErrorResponse)null));
-
+                questCode = "HEALTHY_BREAKFAST",
+                name = "Healthy Breakfast",
+                items = new[]
+                {
+                    new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = "M1", status = CurrentQuestItemStatus.InProgress, sortOrder = 3 },
+                    new CurrentQuestItem { contentType = QuestContentType.Quiz, contentCode = "Q1", status = CurrentQuestItemStatus.Completed, sortOrder = 1 },
+                    new CurrentQuestItem { contentType = QuestContentType.FoodFact, contentCode = "FF1.1.1", status = CurrentQuestItemStatus.Completed, sortOrder = 2 },
+                },
+            }, (ApiErrorResponse)null));
             _storeService.SetAppState(new AppState { userCurrentQuestId = "quest-1" });
 
-            var vm = new HomeScreenViewModel(
-                _storeService,
-                _mockAudioService.Object,
-                _mockNotificationService.Object,
-                _mockLegalService.Object,
-                questService: mockQuestService.Object
-            );
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                questService: mockQuestService.Object, gamificationService: mockGamification.Object);
 
             await vm.LoadActiveQuestAsync();
 
@@ -167,73 +150,44 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("Healthy Breakfast", vm.CurrentQuestTitle);
             Assert.AreEqual("HEALTHY_BREAKFAST", vm.CurrentQuestCode);
             Assert.AreEqual("quest-1", vm.CurrentQuestId);
-            Assert.AreEqual(4, vm.CurrentQuestActivityStates.Length);
-            // 50% of 4 items = 2 items completed
-            Assert.IsTrue(vm.CurrentQuestActivityStates[0]);
-            Assert.IsTrue(vm.CurrentQuestActivityStates[1]);
-            Assert.IsFalse(vm.CurrentQuestActivityStates[2]);
-            Assert.IsFalse(vm.CurrentQuestActivityStates[3]);
+            CollectionAssert.AreEqual(new[] { true, true, false }, vm.CurrentQuestActivityStates);
+            mockQuestService.Verify(q => q.GetQuestAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+            mockQuestService.Verify(q => q.GetQuestProgressAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+            vm.Dispose();
         }
 
         [Test]
-        public async Task LoadActiveQuestAsync_WithReadFoodFact_MarksFoodFactActivityStateCompleted()
+        public async Task LoadActiveQuestAsync_NoCurrentQuestOnServer_HasNoActiveQuest()
         {
-            var mockQuestService = new Mock<IQuestService>();
-            var mockFoodFactService = new Mock<IFoodFactService>();
+            // e.g. the stored quest was removed from the catalog
+            var mockGamification = new Mock<IGamificationService>();
+            mockGamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync(((CurrentQuest)null, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "quest-gone" });
 
-            var quest = new Quest
-            {
-                id = "quest-1",
-                code = "HEALTHY_BREAKFAST",
-                title = "Healthy Breakfast",
-                items = new[]
-                {
-                    new QuestItem { id = "item-1", contentType = QuestContentType.Quiz, contentCode = "Q1" },
-                    new QuestItem { id = "item-2", contentType = QuestContentType.FoodFact, contentCode = "FF1.1.1" },
-                    new QuestItem { id = "item-3", contentType = QuestContentType.Mission, contentCode = "M1" }
-                }
-            };
-            var progress = new QuestProgress
-            {
-                questId = "quest-1",
-                progress = 0f,
-                completed = false
-            };
-
-            mockQuestService.Setup(q => q.GetQuestAsync("quest-1", It.IsAny<string>()))
-                .ReturnsAsync((quest, (ApiErrorResponse)null));
-            mockQuestService.Setup(q => q.GetQuestProgressAsync("quest-1", It.IsAny<string>()))
-                .ReturnsAsync((progress, (ApiErrorResponse)null));
-
-            var foodFactProgress = new[]
-            {
-                new FoodFactProgressResponse
-                {
-                    foodFactCode = "FF1.1.1",
-                    readAt = "2026-09-17T10:00:00Z"
-                }
-            };
-            mockFoodFactService.Setup(s => s.GetUserProgressListAsync())
-                .ReturnsAsync((foodFactProgress, (ApiErrorResponse)null));
-
-            _storeService.SetAppState(new AppState { userCurrentQuestId = "quest-1" });
-
-            var vm = new HomeScreenViewModel(
-                _storeService,
-                _mockAudioService.Object,
-                _mockNotificationService.Object,
-                _mockLegalService.Object,
-                questService: mockQuestService.Object,
-                foodFactService: mockFoodFactService.Object
-            );
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                questService: new Mock<IQuestService>().Object, gamificationService: mockGamification.Object);
 
             await vm.LoadActiveQuestAsync();
 
-            Assert.IsTrue(vm.HasActiveQuest);
-            Assert.AreEqual(3, vm.CurrentQuestActivityStates.Length);
-            Assert.IsFalse(vm.CurrentQuestActivityStates[0]); // Quiz pending
-            Assert.IsTrue(vm.CurrentQuestActivityStates[1]);  // Food fact read -> true!
-            Assert.IsFalse(vm.CurrentQuestActivityStates[2]); // Mission pending
+            Assert.IsFalse(vm.HasActiveQuest);
+            Assert.IsEmpty(vm.CurrentQuestActivityStates);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task LoadActiveQuestAsync_Error_HasNoActiveQuest()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            mockGamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync(((CurrentQuest)null, new ApiErrorResponse { statusCode = 500 }));
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "quest-1" });
+
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                questService: new Mock<IQuestService>().Object, gamificationService: mockGamification.Object);
+
+            await vm.LoadActiveQuestAsync();
+
+            Assert.IsFalse(vm.HasActiveQuest);
+            vm.Dispose();
         }
 
         [Test]

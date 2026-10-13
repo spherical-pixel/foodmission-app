@@ -227,5 +227,50 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+    
+        [Test]
+        public void BuildCurrentQuestUrl_SendsLangAsQuery()
+        {
+            Assert.AreEqual("https://api.test/api/v1/users/me/gamification/current-quest?lang=es",
+                GamificationService.BuildCurrentQuestUrl("https://api.test", "es"));
+            Assert.AreEqual("https://api.test/api/v1/users/me/gamification/current-quest",
+                GamificationService.BuildCurrentQuestUrl("https://api.test", null));
+        }
+
+        [Test]
+        public void ParseCurrentQuest_ReadsQuestAndItems()
+        {
+            const string json = "{\"questId\":\"q-1\",\"questCode\":\"QUEST.X\",\"name\":\"N\",\"description\":null,\"progress\":50," +
+                                "\"completed\":false,\"finishedItems\":1,\"totalItems\":2,\"dimensionCode\":\"DIET_CHANGES\",\"level\":\"BEGINNER\"," +
+                                "\"items\":[{\"contentType\":\"MISSION\",\"contentCode\":\"M1\",\"title\":\"T\",\"finished\":false," +
+                                "\"status\":\"IN_PROGRESS\",\"progress\":40,\"sortOrder\":2}]}";
+
+            CurrentQuest quest = GamificationService.ParseCurrentQuest(json);
+
+            Assert.AreEqual("q-1", quest.questId);
+            Assert.AreEqual(50f, quest.progress);
+            Assert.AreEqual("DIET_CHANGES", quest.dimensionCode);
+            Assert.AreEqual(CurrentQuestItemStatus.InProgress, quest.items[0].status);
+            Assert.AreEqual(40f, quest.items[0].progress);
+            Assert.AreEqual(2, quest.items[0].sortOrder);
+        }
+
+        [TestCase("")]
+        [TestCase("null")]
+        [TestCase("  ")]
+        public void ParseCurrentQuest_NoQuest_ReturnsNull(string json)
+        {
+            Assert.IsNull(GamificationService.ParseCurrentQuest(json));
+        }
+
+        [Test]
+        public async Task GetCurrentQuestAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.ignoreFailingMessages = true;
+            var (result, error) = await _service.GetCurrentQuestAsync();
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
     }
 }

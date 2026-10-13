@@ -18,6 +18,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IMissionService> _mockMissionService;
         private Mock<IChallengeService> _mockChallengeService;
         private Mock<IFoodFactService> _mockFoodFactService;
+        private Mock<IGamificationService> _mockGamification;
         private TestStoreService _storeService;
         private QuestDetailViewModel _vm;
         private Func<bool> _originalOverride;
@@ -38,6 +39,7 @@ namespace eu.foodmission.platform.Tests
             _mockMissionService = new Mock<IMissionService>();
             _mockChallengeService = new Mock<IChallengeService>();
             _mockFoodFactService = new Mock<IFoodFactService>();
+            _mockGamification = new Mock<IGamificationService>();
 
             _storeService = new TestStoreService();
             _storeService.SetAppState(new AppState
@@ -121,7 +123,8 @@ namespace eu.foodmission.platform.Tests
                 _mockQuizService.Object,
                 _mockMissionService.Object,
                 _mockChallengeService.Object,
-                foodFactService: _mockFoodFactService.Object);
+                foodFactService: _mockFoodFactService.Object,
+                gamificationService: _mockGamification.Object);
         }
 
         [TearDown]
@@ -671,6 +674,60 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(item.IsFailed);
             Assert.IsFalse(item.ProgressLabel?.EndsWith("%") ?? false, "a failed mission shows the failed tag, not a percent");
             Assert.AreEqual(0, _vm.CompletedActivitiesCount);
+        }
+    
+        [Test]
+        public async Task LoadQuestAsync_CurrentQuest_UsesCurrentQuestEndpoint_Only()
+        {
+            AppState state = _storeService.GetAppState();
+            state.userCurrentQuestId = "q-100";
+            _storeService.SetAppState(state);
+            _mockDimensionService.Setup(s => s.GetDimension("DIET_CHANGES")).Returns(_mockDimension);
+            _mockGamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync((new CurrentQuest
+            {
+                questId = "q-100",
+                questCode = "QUEST.DIET.1",
+                name = "Healthy diet",
+                description = "Desc",
+                dimensionCode = "DIET_CHANGES",
+                level = "BEGINNER",
+                progress = 25f,
+                items = new[]
+                {
+                    new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = "M1", title = "Mission 1", status = CurrentQuestItemStatus.Failed, progress = 30f, sortOrder = 2 },
+                    new CurrentQuestItem { contentType = QuestContentType.Quiz, contentCode = "Q1", title = "Quiz 1", status = CurrentQuestItemStatus.Completed, progress = 100f, sortOrder = 1 },
+                    new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = "M2", title = "Mission 2", status = CurrentQuestItemStatus.InProgress, progress = 40f, sortOrder = 3 },
+                },
+            }, (ApiErrorResponse)null));
+
+            await _vm.LoadQuestAsync("q-100");
+
+            Assert.AreEqual("QUEST.DIET.1", _vm.QuestCode);
+            Assert.AreEqual("Healthy diet", _vm.QuestTitle);
+            Assert.AreEqual("DIET_CHANGES", _vm.DimensionCode);
+            Assert.AreEqual(3, _vm.TotalActivitiesCount);
+            Assert.AreEqual(1, _vm.CompletedActivitiesCount);
+            Assert.AreEqual("Quiz 1", _vm.Activities[0].Title);
+            Assert.IsTrue(_vm.Activities[0].IsCompleted);
+            Assert.IsTrue(_vm.Activities[1].IsFailed);
+            Assert.AreEqual("40%", _vm.Activities[2].ProgressLabel);
+            _mockQuestService.Verify(s => s.GetQuestAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+            _mockMissionService.Verify(s => s.GetUserProgressListAsync(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task LoadQuestAsync_OtherQuest_KeepsQuestEndpoints()
+        {
+            AppState state = _storeService.GetAppState();
+            state.userCurrentQuestId = "another-quest";
+            _storeService.SetAppState(state);
+            _mockQuestService.Setup(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()))
+                .ReturnsAsync((_mockQuest, null));
+
+            await _vm.LoadQuestAsync("QUEST.DIET.1");
+
+            _mockGamification.Verify(g => g.GetCurrentQuestAsync(), Times.Never);
+            _mockQuestService.Verify(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()), Times.Once);
         }
     }
 }

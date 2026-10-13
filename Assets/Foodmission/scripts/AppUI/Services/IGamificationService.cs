@@ -28,5 +28,8 @@ namespace eu.foodmission.platform
 
         /// <summary>GET /users/me/gamification/knowledge-progress/{kind}: one bar with all its finished and open items.</summary>
         Task<(KnowledgeProgress Result, ApiErrorResponse Error)> GetKnowledgeBarAsync(string kind);
+
+        /// <summary>GET /users/me/gamification/current-quest?lang=: the current quest with each item's status; null result when there is none.</summary>
+        Task<(CurrentQuest Result, ApiErrorResponse Error)> GetCurrentQuestAsync();
     }
 }
