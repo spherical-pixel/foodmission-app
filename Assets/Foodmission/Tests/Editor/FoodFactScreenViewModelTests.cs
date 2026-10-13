@@ -202,7 +202,7 @@ namespace eu.foodmission.platform.Tests
         private static string Ui(string key) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
 
         [Test]
-        public async Task ShareAsync_WithLoadedFact_SharesBodySourceAndFooterWithoutImage()
+        public async Task ShareAsync_WithLoadedFact_SharesTitleBodySourceAndFooterWithoutImage()
         {
             var share = new Mock<IShareService>();
             ShareContent sent = null;
@@ -210,13 +210,14 @@ namespace eu.foodmission.platform.Tests
                 .Callback<ShareContent>(c => sent = c)
                 .ReturnsAsync(true);
             var vm = new FoodFactScreenViewModel(_storeService, _mockFoodFactService.Object, null, share.Object);
-            vm.FoodFactData = new FoodFact { code = "FF1", body = "Body", source = "OMS (2023)." };
+            vm.FoodFactData = new FoodFact { code = "FF1", title = "Fact title", body = "Body", source = "OMS (2023)." };
 
             bool result = await vm.ShareAsync();
 
             Assert.IsTrue(result);
             Assert.IsNotNull(sent);
-            Assert.AreEqual(ShareTextBuilder.Build("Body", "OMS (2023).", Ui("SHARE_FOOTER")), sent.Text);
+            Assert.AreEqual(ShareTextBuilder.Build("Fact title", "Body", "OMS (2023).", Ui("SHARE_FOOTER")), sent.Text);
+            StringAssert.StartsWith("Fact title\n\nBody", sent.Text);
             Assert.AreEqual(Ui("SHARE_SUBJECT_FOOD_FACT"), sent.Subject);
             Assert.IsNull(sent.Image);
             vm.Dispose();

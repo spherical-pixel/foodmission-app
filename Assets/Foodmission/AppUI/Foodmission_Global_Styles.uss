@@ -1908,6 +1908,18 @@
     color: var(--appui-foregrounds-50);
 }
 
+.fm-learning-title {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    white-space: normal;
+    flex-shrink: 0;
+    margin-bottom: 8px;
+}
+
+.fm-learning-title--hidden {
+    display: none;
+}
+
 .fm-quiz-question {
     -unity-font-style: bold;
     -unity-text-align: middle-left;

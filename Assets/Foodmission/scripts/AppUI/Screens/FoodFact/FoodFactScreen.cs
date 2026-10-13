@@ -33,6 +33,7 @@ namespace eu.foodmission.platform
         private AccessibilityNode _btShareNode;
         private VisualElement _factCard;
         private Image _imageTopic;
+        private Heading _textTitle;
         private Text _textBody;
         private FMSourceItemView _sourceItemView;
 
@@ -117,6 +118,7 @@ namespace eu.foodmission.platform
             _factCard?.AddToClassList("fm-foodfact-card--hidden");
 
             _imageTopic = contentContainer.Q<Image>("image-topic");
+            _textTitle = contentContainer.Q<Heading>("text-title");
             _textBody = contentContainer.Q<Text>("text-body");
 
             _sourceItemView = contentContainer.Q<FMSourceItemView>("source-item-view");
@@ -323,6 +325,12 @@ namespace eu.foodmission.platform
         {
             var fact = _viewModel?.FoodFactData;
             if (fact == null) return;
+
+            if (_textTitle != null)
+            {
+                _textTitle.text = fact.title ?? "";
+                _textTitle.EnableInClassList("fm-learning-title--hidden", string.IsNullOrEmpty(fact.title));
+            }
 
             if (_textBody != null)
             {

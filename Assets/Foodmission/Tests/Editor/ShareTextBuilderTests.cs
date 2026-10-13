@@ -16,6 +16,27 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void Build_WithTitle_PutsTitleFirst()
+        {
+            string text = ShareTextBuilder.Build("Legumbres y fibra", "Las legumbres son ricas en fibra.", "OMS (2023).", Footer);
+
+            Assert.AreEqual("Legumbres y fibra\n\nLas legumbres son ricas en fibra.\n\nOMS (2023).\n\n" + Footer, text);
+        }
+
+        [Test]
+        public void Build_EmptyTitle_SkipsTitleBlock()
+        {
+            Assert.AreEqual("Body\n\n" + Footer, ShareTextBuilder.Build(null, "Body", null, Footer));
+            Assert.AreEqual("Body\n\n" + Footer, ShareTextBuilder.Build("  ", "Body", null, Footer));
+        }
+
+        [Test]
+        public void Build_TitleWithoutBody_ReturnsEmpty()
+        {
+            Assert.AreEqual("", ShareTextBuilder.Build("Title", null, "Src", Footer));
+        }
+
+        [Test]
         public void Build_WithoutSource_SkipsSourceBlock()
         {
             Assert.AreEqual("Body\n\n" + Footer, ShareTextBuilder.Build("Body", null, Footer));

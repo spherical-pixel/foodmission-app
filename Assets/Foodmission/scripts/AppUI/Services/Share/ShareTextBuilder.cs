@@ -4,18 +4,28 @@ using System.Linq;
 namespace eu.foodmission.platform
 {
     /// <summary>
-    /// Composes the shared text: body, source and footer separated by blank lines. Empty parts are skipped.
+    /// Composes the shared text: title, body, source and footer separated by blank lines. Empty parts are skipped.
     /// </summary>
     public static class ShareTextBuilder
     {
         public static string Build(string body, string source, string footer)
+        {
+            return Build(null, body, source, footer);
+        }
+
+        public static string Build(string title, string body, string source, string footer)
         {
             if (string.IsNullOrWhiteSpace(body))
             {
                 return "";
             }
 
-            var parts = new List<string> { body.Trim() };
+            var parts = new List<string>();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                parts.Add(title.Trim());
+            }
+            parts.Add(body.Trim());
             string formattedSource = FormatSource(source);
             if (formattedSource.Length > 0)
             {

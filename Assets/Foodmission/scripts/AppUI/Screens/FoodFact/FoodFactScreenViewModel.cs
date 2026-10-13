@@ -81,7 +81,7 @@ namespace eu.foodmission.platform
             string footer = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_FOOTER");
             return _shareService.ShareAsync(new ShareContent
             {
-                Text = ShareTextBuilder.Build(FoodFactData.body, FoodFactData.source, footer),
+                Text = ShareTextBuilder.Build(FoodFactData.title, FoodFactData.body, FoodFactData.source, footer),
                 Subject = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHARE_SUBJECT_FOOD_FACT"),
                 Image = image
             });
