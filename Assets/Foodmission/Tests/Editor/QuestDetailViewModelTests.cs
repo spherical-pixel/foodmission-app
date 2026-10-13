@@ -389,7 +389,7 @@ namespace eu.foodmission.platform.Tests
             };
             Assert.AreEqual(Prefix(QuestContentType.Mission) + ": Protein Every Day", item2.TimelineDisplayLabel);
 
-            // 3. Quiz: "{QUIZ}: contentCode"
+            // 3. Quiz without title label: "{QUIZ}: contentCode"
             var item3 = new QuestActivityDisplayItem
             {
                 Title = "QUIZ_1",
@@ -397,13 +397,26 @@ namespace eu.foodmission.platform.Tests
             };
             Assert.AreEqual(Prefix(QuestContentType.Quiz) + ": QUIZ_1", item3.TimelineDisplayLabel);
 
-            // 4. Food fact: "{FOOD_FACT}: contentCode"
+            // 4. Food fact without title label: "{FOOD_FACT}: contentCode"
             var item4 = new QuestActivityDisplayItem
             {
                 Title = "FACT_1",
                 Item = new QuestItem { contentType = QuestContentType.FoodFact, label = null, contentCode = "FACT_1" }
             };
             Assert.AreEqual(Prefix(QuestContentType.FoodFact) + ": FACT_1", item4.TimelineDisplayLabel);
+
+            // 5. Quiz and food fact labels are backend titles: "{TYPE}: label"
+            var item5 = new QuestActivityDisplayItem
+            {
+                Item = new QuestItem { contentType = QuestContentType.Quiz, label = "Greener Dinners", contentCode = "QUIZ_1" }
+            };
+            Assert.AreEqual(Prefix(QuestContentType.Quiz) + ": Greener Dinners", item5.TimelineDisplayLabel);
+
+            var item6 = new QuestActivityDisplayItem
+            {
+                Item = new QuestItem { contentType = QuestContentType.FoodFact, label = "Less Red Meat, Lower Impact", contentCode = "FACT_1" }
+            };
+            Assert.AreEqual(Prefix(QuestContentType.FoodFact) + ": Less Red Meat, Lower Impact", item6.TimelineDisplayLabel);
         }
 
         [Test]

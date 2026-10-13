@@ -35,17 +35,13 @@ namespace eu.foodmission.platform
 
                 string prefix = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ACTIVITY_" + Item.contentType);
                 string text;
-                if (Item.contentType == QuestContentType.Quiz || Item.contentType == QuestContentType.FoodFact)
-                {
-                    text = Item.contentCode;
-                }
-                else if (Item.contentType == QuestContentType.Mission || Item.contentType == QuestContentType.Challenge)
+                if (Item.contentType == QuestContentType.Mission || Item.contentType == QuestContentType.Challenge)
                 {
                     text = Item.label;
                 }
                 else
                 {
-                    text = Item.label ?? Item.contentCode;
+                    text = !string.IsNullOrEmpty(Item.label) ? Item.label : Item.contentCode;
                 }
 
                 // Backend labels sometimes already carry the type ("Challenge: ..."); don't prefix twice.

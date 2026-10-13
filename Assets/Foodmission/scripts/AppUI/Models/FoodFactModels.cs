@@ -18,6 +18,7 @@ namespace eu.foodmission.platform
         public string id;
         public string code;
         public string topicId;
+        public string title;
         public string body;
         public string source;
         public string level;

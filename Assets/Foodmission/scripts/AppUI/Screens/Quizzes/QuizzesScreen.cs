@@ -309,7 +309,7 @@ namespace eu.foodmission.platform
                         if (qItem?.Quiz == null) continue;
 
                         var quizCard = new FMItemQuiz();
-                        quizCard.Text = qItem.Quiz.code ?? "";
+                        quizCard.Text = !string.IsNullOrEmpty(qItem.Quiz.title) ? qItem.Quiz.title : qItem.Quiz.code ?? "";
                         quizCard.SetLevel(qItem.Quiz.level);
                         quizCard.SetCompleted(qItem.IsCompleted);
                         quizCard.SetLocked(qItem.IsLocked);
