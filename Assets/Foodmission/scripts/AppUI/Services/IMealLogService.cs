@@ -14,5 +14,6 @@ namespace eu.foodmission.platform
         Task<(MealLog Result, ApiErrorResponse Error)> GetLogAsync(string id);
         Task<(MealLog Result, ApiErrorResponse Error)> UpdateLogAsync(string id, UpdateMealLogRequest request);
         Task<(bool Success, ApiErrorResponse Error)> DeleteLogAsync(string id);
+        Task<(MealLog Result, ApiErrorResponse Error)> ConfirmAsync(string id, MealLogFactsRequest facts);
     }
 }

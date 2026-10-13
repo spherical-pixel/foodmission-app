@@ -19,6 +19,11 @@ namespace eu.foodmission.platform
         public Meal meal;
         public string[] flags;
         public string[] swaps;
+        // DRAFT (staged for review, counts toward nothing) or CONFIRMED
+        public string status;
+        // Flags the backend derived from the meal items; on a draft, its proposals
+        public string[] derivedFlags;
+        public string confirmedAt;
 
         // Client-only markers (never from API)
         public bool isProduct;
@@ -58,6 +63,10 @@ namespace eu.foodmission.platform
         [JsonProperty("eatenOut")]
         public bool eatenOut;
 
+        // Stage the log for review: the backend stores it as DRAFT with the flags it derives from the meal
+        [JsonProperty("draft", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? draft;
+
         public byte[] ToJsonBody()
         {
             string json = JsonConvert.SerializeObject(this, new JsonSerializerSettings
@@ -65,6 +74,30 @@ namespace eu.foodmission.platform
                 NullValueHandling = NullValueHandling.Ignore
             });
             return Encoding.UTF8.GetBytes(json);
+        }
+    }
+
+    public static class MealLogStatus
+    {
+        public const string Draft = "DRAFT";
+        public const string Confirmed = "CONFIRMED";
+    }
+
+    /// <summary>
+    /// Body of POST /meal-logs/:id/confirm. The lists replace the draft's: send them always (an empty
+    /// array too), because a missing list keeps the draft's flags, including proposals the user unmarked.
+    /// </summary>
+    public class MealLogFactsRequest
+    {
+        [JsonProperty("flags")]
+        public string[] flags = Array.Empty<string>();
+
+        [JsonProperty("swaps")]
+        public string[] swaps = Array.Empty<string>();
+
+        public byte[] ToJsonBody()
+        {
+            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this));
         }
     }
 

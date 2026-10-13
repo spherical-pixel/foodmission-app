@@ -98,6 +98,10 @@ namespace eu.foodmission.platform
         private List<QuickMealSection> _allFactSections = new();
         private HashSet<string> _missionFactEvents = new(StringComparer.Ordinal);
 
+        // The staged log under review and, when it was created for it, its meal (deleted on discard)
+        private MealLog _draftLog;
+        private string _draftMealId;
+
         public bool OnlyMissionFacts { get; private set; }
         public bool HasMissionFacts => _missionFactEvents.Count > 0;
 
@@ -162,6 +166,7 @@ namespace eu.foodmission.platform
             UnityEngine.Localization.Settings.LocalizationSettings.SelectedLocaleChanged -= OnSelectedLocaleChanged;
             _langSubscription?.Dispose();
             _langSubscription = null;
+            _ = DiscardDraftAsync();
             base.OnDispose();
         }
 
@@ -795,39 +800,7 @@ namespace eu.foodmission.platform
                     }
                 }
 
-                var logRequest = new CreateMealLogRequest
-                {
-                    mealId = mealId,
-                    typeOfMeal = SelectedTypeOfMeal.code,
-                    timestamp = timestamp,
-                    mealFromPantry = MealFromPantry,
-                    eatenOut = EatenOut
-                };
-                ApplyChosenFacts(logRequest);
-
-                var (_, logErr) = await _mealLogService.CreateAsync(logRequest);
-                if (logErr != null)
-                {
-                    ErrorDetail = logErr;
-                    IsSaving = false;
-                    return false;
-                }
-
-                await RefreshGamificationAsync();
-
-                if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
-                {
-                    var snapshotToDeduct = SelectedItems.ToList();
-                    await DeductPantryItemsAsync(snapshotToDeduct);
-                }
-
-                ErrorDetail = null;
-                SelectedItems = new List<MealLogItem>();
-                _originalItemsSnapshot = new List<MealLogItem>();
-                ResetToStep1();
-                await LoadTodayAsync();
-                IsSaving = false;
-                return true;
+                return await StageDraftAsync(mealId, createdMeal, timestamp);
             }
             catch (Exception ex)
             {
@@ -1107,25 +1080,8 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
-                    var logRequest = new CreateMealLogRequest
-                    {
-                        mealId = mealId,
-                        typeOfMeal = SelectedTypeOfMeal.code,
-                        timestamp = timestamp,
-                        mealFromPantry = MealFromPantry,
-                        eatenOut = EatenOut
-                    };
-                    ApplyChosenFacts(logRequest);
-
-                    var (_, logErr) = await _mealLogService.CreateAsync(logRequest);
-                    if (logErr != null)
-                    {
-                        ErrorDetail = logErr;
-                        IsSaving = false;
-                        return false;
-                    }
-
-                    await RefreshGamificationAsync();
+                    _pendingPresetName = null;
+                    return await StageDraftAsync(mealId, false, timestamp);
                 }
 
                 if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
@@ -1453,6 +1409,7 @@ namespace eu.foodmission.platform
 
         public void ResetToStep1()
         {
+            _ = DiscardDraftAsync();
             MealContainerName = "";
             SaveAsPreset = false;
             SelectedMealPreset = null;
@@ -1595,6 +1552,7 @@ namespace eu.foodmission.platform
                     break;
                 case MealLogStep.ReviewingFacts:
                     CurrentStep = MealLogStep.SelectingDishes;
+                    _ = DiscardDraftAsync();
                     break;
             }
         }
@@ -1602,26 +1560,156 @@ namespace eu.foodmission.platform
         // ── Review step: flags and swaps ─────────────────────
 
         /// <summary>
-        /// Opens the review step with every flag/swap unmarked. Nothing is sent until the user confirms.
-        /// When the backend proposes flags/swaps for the meal, apply them here with MealFacts.ApplySelections.
+        /// Stores the log as a DRAFT so the backend proposes the flags implied by the meal's items, then
+        /// opens the review step with those proposals marked. Nothing counts until ConfirmLogAsync.
         /// </summary>
-        public async Task<bool> GoToReviewAsync()
+        private async Task<bool> StageDraftAsync(string mealId, bool createdMeal, string timestamp)
         {
-            if (SelectedItems == null || SelectedItems.Count == 0)
+            var (draft, logErr) = await _mealLogService.CreateAsync(new CreateMealLogRequest
             {
-                ErrorMessage = "@UI:ERROR_NO_ITEMS_SELECTED";
+                mealId = mealId,
+                typeOfMeal = SelectedTypeOfMeal.code,
+                timestamp = timestamp,
+                mealFromPantry = MealFromPantry,
+                eatenOut = EatenOut,
+                draft = true
+            });
+            if (logErr != null || draft == null)
+            {
+                ErrorDetail = logErr;
+                if (createdMeal)
+                {
+                    await DeleteMealQuietlyAsync(mealId);
+                }
+                IsSaving = false;
                 return false;
             }
 
+            _draftLog = draft;
+            _draftMealId = createdMeal ? mealId : null;
+            ErrorDetail = null;
+            IsSaving = false;
+            await OpenReviewAsync(draft);
+            return true;
+        }
+
+        private async Task OpenReviewAsync(MealLog draft)
+        {
             ErrorMessage = "";
             ClearFacts();
             _allFactSections = MealFacts.BuildStandardSections();
+            MealFacts.ApplySelections(MealFacts.AllItems(_allFactSections).ToList(), draft?.flags, draft?.swaps);
             FactSections = _allFactSections;
             CurrentStep = MealLogStep.ReviewingFacts;
 
             _missionFactEvents = await LoadMissionFactEventsAsync();
             ApplyFactFilter();
-            return true;
+        }
+
+        /// <summary>
+        /// Submits the draft with the flags/swaps as reviewed. The lists replace the draft's, so proposals
+        /// the user unmarked are dropped. On an error the user stays on the review step with the marks.
+        /// </summary>
+        public async Task<bool> ConfirmLogAsync()
+        {
+            if (IsSaving || _draftLog == null)
+            {
+                return false;
+            }
+
+            IsSaving = true;
+            ErrorMessage = "";
+
+            try
+            {
+                var (flags, swaps) = MealFacts.Build(MealFacts.AllItems(_allFactSections));
+                var (_, err) = await _mealLogService.ConfirmAsync(_draftLog.id, new MealLogFactsRequest
+                {
+                    flags = flags,
+                    swaps = swaps
+                });
+                if (err != null)
+                {
+                    ErrorDetail = err;
+                    IsSaving = false;
+                    return false;
+                }
+
+                _draftLog = null;
+                _draftMealId = null;
+                await RefreshGamificationAsync();
+
+                if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
+                {
+                    var snapshotToDeduct = SelectedItems.ToList();
+                    await DeductPantryItemsAsync(snapshotToDeduct);
+                }
+
+                ErrorDetail = null;
+                SelectedItems = new List<MealLogItem>();
+                _originalItemsSnapshot = new List<MealLogItem>();
+                ResetToStep1();
+                await LoadTodayAsync();
+                IsSaving = false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] ConfirmLogAsync failed: {ex.Message}");
+                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_ERROR_SAVE");
+                IsSaving = false;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Drops the pending draft (leaving the review step): the draft log and, when it was created for
+        /// this log, its meal. Best-effort; the backend also removes drafts left for 7 days.
+        /// </summary>
+        private async Task DiscardDraftAsync()
+        {
+            MealLog draft = _draftLog;
+            string mealId = _draftMealId;
+            _draftLog = null;
+            _draftMealId = null;
+            if (draft == null)
+            {
+                return;
+            }
+
+            try
+            {
+                var (_, err) = await _mealLogService.DeleteLogAsync(draft.id);
+                if (err != null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Could not delete draft meal log {draft.id}: {err.message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] DiscardDraftAsync failed: {ex.Message}");
+            }
+
+            if (!string.IsNullOrEmpty(mealId))
+            {
+                await DeleteMealQuietlyAsync(mealId);
+            }
+        }
+
+        private async Task DeleteMealQuietlyAsync(string mealId)
+        {
+            try
+            {
+                var (_, err) = await _mealService.DeleteMealAsync(mealId);
+                if (err != null)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Could not delete meal {mealId}: {err.message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] DeleteMealQuietlyAsync failed: {ex.Message}");
+            }
         }
 
         private async Task<HashSet<string>> LoadMissionFactEventsAsync()
@@ -1703,13 +1791,6 @@ namespace eu.foodmission.platform
             _missionFactEvents = new HashSet<string>(StringComparer.Ordinal);
             OnlyMissionFacts = false;
             FactSections = _allFactSections;
-        }
-
-        private void ApplyChosenFacts(CreateMealLogRequest request)
-        {
-            var (flags, swaps) = MealFacts.Build(MealFacts.AllItems(_allFactSections));
-            request.flags = flags.Length > 0 ? flags : null;
-            request.swaps = swaps.Length > 0 ? swaps : null;
         }
 
         private async Task RefreshGamificationAsync()
