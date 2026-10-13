@@ -529,177 +529,34 @@ namespace eu.foodmission.platform
             _pilotSurveyService?.ResetCycleSurveysOnly();
         }
 
+        /// <summary>
+        /// The active quest card from GET current-quest: one call with the quest and each item's status
+        /// (no per-type progress lists). No current quest on the server, or an error, hides the card.
+        /// </summary>
         public async System.Threading.Tasks.Task LoadActiveQuestAsync()
         {
             AppState state = _storeService?.GetAppState();
             string questId = state?.userCurrentQuestId;
 
-            if (string.IsNullOrEmpty(questId) || _questService == null)
+            if (string.IsNullOrEmpty(questId) || _gamificationService == null)
             {
-                HasActiveQuest = false;
-                CurrentQuestTitle = "";
-                CurrentQuestCode = "";
-                CurrentQuestId = "";
-                CurrentQuestActivityStates = System.Array.Empty<bool>();
+                ClearActiveQuest();
                 return;
             }
 
             try
             {
-                var (quest, error) = await _questService.GetQuestAsync(questId);
+                var (quest, error) = await _gamificationService.GetCurrentQuestAsync();
                 if (error != null || quest == null)
                 {
-                    HasActiveQuest = false;
+                    ClearActiveQuest();
                     return;
                 }
 
-                CurrentQuestTitle = quest.GetDisplayName();
-                CurrentQuestCode = quest.code ?? "";
-                CurrentQuestId = quest.id ?? questId;
-
-                var items = quest.items != null ? quest.items.OrderBy(it => it.sortOrder).ToArray() : System.Array.Empty<QuestItem>();
-                int totalItems = items.Length;
-                if (totalItems > 0)
-                {
-                    var progressTask = _questService.GetQuestProgressAsync(questId);
-                    var quizProgressTask = _quizService != null ? _quizService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(QuizProgress[], ApiErrorResponse)>((null, null));
-                    var missionProgressTask = _missionService != null ? _missionService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(MissionProgress[], ApiErrorResponse)>((null, null));
-                    var challengeProgressTask = _challengeService != null ? _challengeService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(ChallengeProgress[], ApiErrorResponse)>((null, null));
-                    var foodFactProgressTask = _foodFactService != null ? _foodFactService.GetUserProgressListAsync() : System.Threading.Tasks.Task.FromResult<(FoodFactProgressResponse[], ApiErrorResponse)>((null, null));
-
-                    await System.Threading.Tasks.Task.WhenAll(progressTask, quizProgressTask, missionProgressTask, challengeProgressTask, foodFactProgressTask);
-
-                    var (progress, _) = await progressTask;
-                    var (quizProgress, _) = await quizProgressTask;
-                    var (missionProgress, _) = await missionProgressTask;
-                    var (challengeProgress, _) = await challengeProgressTask;
-                    var (foodFactProgress, _) = await foodFactProgressTask;
-
-                    float progressPct = progress != null ? progress.progress : 0f;
-                    bool isQuestCompleted = progress != null && (progress.completed || progressPct >= 100f);
-
-                    var completedQuizCodes = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
-                    if (quizProgress != null)
-                    {
-                        foreach (var qp in quizProgress)
-                        {
-                            if (qp == null) continue;
-                            if (qp.completed && (qp.isCorrect == null || qp.isCorrect == true))
-                            {
-                                if (!string.IsNullOrEmpty(qp.quizId)) completedQuizCodes.Add(qp.quizId);
-                                if (!string.IsNullOrEmpty(qp.quizCode)) completedQuizCodes.Add(qp.quizCode);
-                            }
-                        }
-                    }
-
-                    var completedMissionCodes = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
-                    if (missionProgress != null)
-                    {
-                        foreach (var mp in missionProgress)
-                        {
-                            if (mp == null) continue;
-                            if (MissionProgressState.IsCompleted(mp))
-                            {
-                                if (!string.IsNullOrEmpty(mp.missionId))
-                                {
-                                    completedMissionCodes.Add(mp.missionId);
-                                    string code = _missionService?.GetCachedCode(mp.missionId);
-                                    if (!string.IsNullOrEmpty(code)) completedMissionCodes.Add(code);
-                                }
-                                if (!string.IsNullOrEmpty(mp.missionCode)) completedMissionCodes.Add(mp.missionCode);
-                                if (!string.IsNullOrEmpty(mp.missionTitle)) completedMissionCodes.Add(mp.missionTitle);
-                            }
-                        }
-                    }
-
-                    var completedChallengeCodes = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
-                    if (challengeProgress != null)
-                    {
-                        foreach (var cp in challengeProgress)
-                        {
-                            if (cp == null) continue;
-                            if (cp.completed || cp.progress >= 100f)
-                            {
-                                if (!string.IsNullOrEmpty(cp.challengeId))
-                                {
-                                    completedChallengeCodes.Add(cp.challengeId);
-                                    string code = _challengeService?.GetCachedCode(cp.challengeId);
-                                    if (!string.IsNullOrEmpty(code)) completedChallengeCodes.Add(code);
-                                }
-                                if (!string.IsNullOrEmpty(cp.challengeCode)) completedChallengeCodes.Add(cp.challengeCode);
-                                if (!string.IsNullOrEmpty(cp.challengeTitle)) completedChallengeCodes.Add(cp.challengeTitle);
-                            }
-                        }
-                    }
-
-                    var completedFoodFactCodes = new System.Collections.Generic.HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
-                    if (foodFactProgress != null)
-                    {
-                        foreach (var fp in foodFactProgress)
-                        {
-                            if (fp == null) continue;
-                            if (!string.IsNullOrEmpty(fp.foodFactId)) completedFoodFactCodes.Add(fp.foodFactId);
-                            if (!string.IsNullOrEmpty(fp.foodFactCode)) completedFoodFactCodes.Add(fp.foodFactCode);
-                        }
-                    }
-
-                    bool hasAnySubProgress = completedQuizCodes.Count > 0 ||
-                                             completedMissionCodes.Count > 0 ||
-                                             completedChallengeCodes.Count > 0 ||
-                                             completedFoodFactCodes.Count > 0;
-                    var states = new bool[totalItems];
-
-                    if (isQuestCompleted)
-                    {
-                        for (int i = 0; i < totalItems; i++) states[i] = true;
-                    }
-                    else if (hasAnySubProgress)
-                    {
-                        for (int i = 0; i < totalItems; i++)
-                        {
-                            var it = items[i];
-                            if (it == null) continue;
-
-                            bool isItemCompleted = false;
-                            string cType = it.contentType ?? string.Empty;
-                            string code = it.contentCode ?? string.Empty;
-
-                            if (string.Equals(cType, QuestContentType.Quiz, System.StringComparison.OrdinalIgnoreCase))
-                            {
-                                isItemCompleted = completedQuizCodes.Contains(code);
-                            }
-                            else if (string.Equals(cType, QuestContentType.FoodFact, System.StringComparison.OrdinalIgnoreCase))
-                            {
-                                isItemCompleted = completedFoodFactCodes.Contains(code);
-                            }
-                            else if (string.Equals(cType, QuestContentType.Mission, System.StringComparison.OrdinalIgnoreCase))
-                            {
-                                isItemCompleted = completedMissionCodes.Contains(code) ||
-                                                  (!string.IsNullOrEmpty(it.label) && completedMissionCodes.Contains(it.label));
-                            }
-                            else if (string.Equals(cType, "CHALLENGE", System.StringComparison.OrdinalIgnoreCase) ||
-                                     string.Equals(cType, QuestContentType.Challenge, System.StringComparison.OrdinalIgnoreCase))
-                            {
-                                isItemCompleted = completedChallengeCodes.Contains(code) ||
-                                                  (!string.IsNullOrEmpty(it.label) && completedChallengeCodes.Contains(it.label));
-                            }
-
-                            states[i] = isItemCompleted;
-                        }
-                    }
-                    else
-                    {
-                        int completedCount = Mathf.Clamp(Mathf.RoundToInt((progressPct / 100f) * totalItems), 0, totalItems);
-                        for (int i = 0; i < completedCount; i++) states[i] = true;
-                    }
-
-                    CurrentQuestActivityStates = states;
-                }
-                else
-                {
-                    CurrentQuestActivityStates = System.Array.Empty<bool>();
-                }
-
+                CurrentQuestTitle = quest.name ?? quest.questCode ?? "";
+                CurrentQuestCode = quest.questCode ?? "";
+                CurrentQuestId = quest.questId ?? questId;
+                CurrentQuestActivityStates = CurrentQuestView.TimelineStates(quest);
                 HasActiveQuest = true;
             }
             catch (System.Exception ex)
@@ -707,6 +564,15 @@ namespace eu.foodmission.platform
                 Debug.LogWarning($"[{GetType().Name}] LoadActiveQuestAsync exception: {ex.Message}");
                 HasActiveQuest = false;
             }
+        }
+
+        private void ClearActiveQuest()
+        {
+            HasActiveQuest = false;
+            CurrentQuestTitle = "";
+            CurrentQuestCode = "";
+            CurrentQuestId = "";
+            CurrentQuestActivityStates = System.Array.Empty<bool>();
         }
 
         public void OpenCurrentQuest()

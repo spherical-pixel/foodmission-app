@@ -76,18 +76,24 @@ namespace eu.foodmission.platform
         {
             base.OnEnter(controller, destination, args);
 
-            string questCodeOrId = null;
+            // Prefer the id: the view model recognises the user's current quest by id (userCurrentQuestId)
+            string questCode = null;
+            string questId = null;
             if (args != null)
             {
                 foreach (var a in args)
                 {
-                    if (a.name == "code" || a.name == "id")
+                    if (a.name == "id" && !string.IsNullOrEmpty(a.value))
                     {
-                        questCodeOrId = a.value;
-                        break;
+                        questId = a.value;
+                    }
+                    else if (a.name == "code" && !string.IsNullOrEmpty(a.value))
+                    {
+                        questCode = a.value;
                     }
                 }
             }
+            string questCodeOrId = questId ?? questCode;
 
             if (!string.IsNullOrEmpty(questCodeOrId))
             {

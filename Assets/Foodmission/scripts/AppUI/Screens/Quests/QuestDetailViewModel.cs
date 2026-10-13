@@ -131,6 +131,8 @@ namespace eu.foodmission.platform
         public Quest Quest => _quest;
         public QuestProgress QuestProgress => _questProgress;
 
+        private readonly IGamificationService _gamificationService;
+
         public QuestDetailViewModel(
             IStoreService storeService,
             IQuestService questService,
@@ -139,8 +141,10 @@ namespace eu.foodmission.platform
             IMissionService missionService = null,
             IChallengeService challengeService = null,
             IAuthService authService = null,
-            IFoodFactService foodFactService = null) : base(storeService)
+            IFoodFactService foodFactService = null,
+            IGamificationService gamificationService = null) : base(storeService)
         {
+            _gamificationService = gamificationService ?? App.current?.services?.GetService<IGamificationService>();
             _questService = questService;
             _dimensionService = dimensionService;
             _quizService = quizService;
@@ -190,6 +194,11 @@ namespace eu.foodmission.platform
                 if (_dimensionService != null && (!_dimensionService.IsLoaded || forceRefresh))
                 {
                     await _dimensionService.PreloadAsync(force: forceRefresh);
+                }
+
+                if (await TryLoadCurrentQuestAsync(codeOrId))
+                {
+                    return;
                 }
 
                 Task<(Quest Result, ApiErrorResponse Error)> questTask =
@@ -245,10 +254,11 @@ namespace eu.foodmission.platform
                 PopulateFromQuest(
                     _quest,
                     _questProgress,
-                    quizProgressResp.Result,
-                    missionProgressResp.Result,
-                    challengeProgressResp.Result,
-                    foodFactProgressResp.Result);
+                    BuildStatusLookup(
+                        quizProgressResp.Result,
+                        missionProgressResp.Result,
+                        challengeProgressResp.Result,
+                        foodFactProgressResp.Result));
             }
             catch (Exception ex)
             {
@@ -271,62 +281,46 @@ namespace eu.foodmission.platform
         {
             _quest = quest;
             _questProgress = progress;
-            PopulateFromQuest(quest, progress, quizProgress, missionProgress, challengeProgress, foodFactProgress);
+            PopulateFromQuest(quest, progress, BuildStatusLookup(quizProgress, missionProgress, challengeProgress, foodFactProgress));
         }
 
-        private void PopulateFromQuest(
-            Quest quest,
-            QuestProgress progress,
+        /// <summary>
+        /// The user's current quest comes from GET current-quest: one call with the quest and every item's
+        /// status. Returns false (load the usual way) for other quests, or when the server has no current quest.
+        /// </summary>
+        private async Task<bool> TryLoadCurrentQuestAsync(string codeOrId)
+        {
+            string currentQuestId = _storeService?.GetAppState()?.userCurrentQuestId;
+            if (_gamificationService == null || string.IsNullOrEmpty(currentQuestId) || codeOrId != currentQuestId)
+            {
+                return false;
+            }
+
+            var (current, error) = await _gamificationService.GetCurrentQuestAsync();
+            if (error != null)
+            {
+                ErrorDetail = error;
+                ErrorMessage = error.message;
+                return true;
+            }
+            if (current == null || current.questId != codeOrId)
+            {
+                return false;
+            }
+
+            _quest = CurrentQuestView.ToQuest(current);
+            _questProgress = new QuestProgress { questId = current.questId, progress = current.progress, completed = current.completed };
+            PopulateFromQuest(_quest, _questProgress, CurrentQuestView.StatusLookup(current));
+            return true;
+        }
+
+        /// <summary>Item status from the per-type progress lists (quests other than the current one).</summary>
+        private Func<QuestItem, QuestItemStatus> BuildStatusLookup(
             QuizProgress[] quizProgress,
             MissionProgress[] missionProgress,
             ChallengeProgress[] challengeProgress,
-            FoodFactProgressResponse[] foodFactProgress = null)
+            FoodFactProgressResponse[] foodFactProgress)
         {
-            if (quest == null)
-            {
-                QuestCode = string.Empty;
-                QuestTitle = string.Empty;
-                QuestDescription = string.Empty;
-                QuestLevel = eu.foodmission.platform.QuestLevel.Beginner;
-                DimensionCode = string.Empty;
-                DimensionName = string.Empty;
-                ProgressPercent = 0f;
-                IsCompleted = false;
-                TotalActivitiesCount = 0;
-                CompletedActivitiesCount = 0;
-                Activities = new List<QuestActivityDisplayItem>();
-                return;
-            }
-
-            QuestCode = quest.code ?? string.Empty;
-            QuestTitle = quest.GetDisplayName();
-            QuestDescription = quest.description ?? string.Empty;
-            QuestLevel = quest.level ?? eu.foodmission.platform.QuestLevel.Beginner;
-
-            UpdateCurrentQuestStatus(_storeService?.GetAppState()?.userCurrentQuestId);
-
-            // Resolve dimension
-            var dim = _dimensionService?.GetDimension(quest.dimensionId);
-            DimensionCode = dim?.code ?? quest.dimensionId ?? string.Empty;
-            DimensionName = dim?.name ?? DimensionCode;
-
-            // Overall Quest progress
-            bool questIsCompleted = progress != null && (progress.completed || progress.progress >= 100f);
-            float overallProgress = progress != null ? progress.progress : 0f;
-
-            if (progress?.reward != null &&
-                ((progress.reward.xp.HasValue && progress.reward.xp.Value > 0) ||
-                 (progress.reward.points.HasValue && progress.reward.points.Value > 0) ||
-                 !string.IsNullOrEmpty(progress.reward.badgeId)))
-            {
-                EarnedReward = progress.reward;
-                _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(progress.reward.xp ?? 0, progress.reward.points ?? 0)));
-            }
-            else
-            {
-                EarnedReward = null;
-            }
-
             // Map sub-activity progress
             var completedQuizCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             if (quizProgress != null)
@@ -404,6 +398,93 @@ namespace eu.foodmission.platform
                 }
             }
 
+            return it =>
+            {
+                if (it == null)
+                {
+                    return default;
+                }
+                string cType = it.contentType ?? string.Empty;
+                string code = it.contentCode ?? string.Empty;
+                bool isMission = string.Equals(cType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase);
+
+                bool completed = false;
+                if (string.Equals(cType, QuestContentType.Quiz, StringComparison.OrdinalIgnoreCase))
+                {
+                    completed = completedQuizCodes.Contains(code);
+                }
+                else if (string.Equals(cType, QuestContentType.FoodFact, StringComparison.OrdinalIgnoreCase))
+                {
+                    completed = completedFoodFactCodes.Contains(code);
+                }
+                else if (isMission)
+                {
+                    completed = completedMissionCodes.Contains(code) ||
+                                (!string.IsNullOrEmpty(it.label) && completedMissionCodes.Contains(it.label));
+                }
+                else if (string.Equals(cType, QuestContentType.Challenge, StringComparison.OrdinalIgnoreCase))
+                {
+                    completed = completedChallengeCodes.Contains(code) ||
+                                (!string.IsNullOrEmpty(it.label) && completedChallengeCodes.Contains(it.label));
+                }
+
+                missionPercentByCode.TryGetValue(code, out float percent);
+                return new QuestItemStatus
+                {
+                    Completed = completed,
+                    Failed = isMission && failedMissionCodes.Contains(code),
+                    MissionPercent = isMission ? percent : 0f,
+                };
+            };
+        }
+
+        private void PopulateFromQuest(Quest quest, QuestProgress progress, Func<QuestItem, QuestItemStatus> statusOf)
+        {
+            if (quest == null)
+            {
+                QuestCode = string.Empty;
+                QuestTitle = string.Empty;
+                QuestDescription = string.Empty;
+                QuestLevel = eu.foodmission.platform.QuestLevel.Beginner;
+                DimensionCode = string.Empty;
+                DimensionName = string.Empty;
+                ProgressPercent = 0f;
+                IsCompleted = false;
+                TotalActivitiesCount = 0;
+                CompletedActivitiesCount = 0;
+                Activities = new List<QuestActivityDisplayItem>();
+                return;
+            }
+
+            QuestCode = quest.code ?? string.Empty;
+            QuestTitle = quest.GetDisplayName();
+            QuestDescription = quest.description ?? string.Empty;
+            QuestLevel = quest.level ?? eu.foodmission.platform.QuestLevel.Beginner;
+
+            UpdateCurrentQuestStatus(_storeService?.GetAppState()?.userCurrentQuestId);
+
+            // Resolve dimension
+            var dim = _dimensionService?.GetDimension(quest.dimensionId);
+            DimensionCode = dim?.code ?? quest.dimensionId ?? string.Empty;
+            DimensionName = dim?.name ?? DimensionCode;
+
+            // Overall Quest progress
+            bool questIsCompleted = progress != null && (progress.completed || progress.progress >= 100f);
+            float overallProgress = progress != null ? progress.progress : 0f;
+
+            if (progress?.reward != null &&
+                ((progress.reward.xp.HasValue && progress.reward.xp.Value > 0) ||
+                 (progress.reward.points.HasValue && progress.reward.points.Value > 0) ||
+                 !string.IsNullOrEmpty(progress.reward.badgeId)))
+            {
+                EarnedReward = progress.reward;
+                _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(progress.reward.xp ?? 0, progress.reward.points ?? 0)));
+            }
+            else
+            {
+                EarnedReward = null;
+            }
+
             var items = quest.items != null ? quest.items.OrderBy(it => it.sortOrder).ToArray() : Array.Empty<QuestItem>();
             var activityItems = new List<QuestActivityDisplayItem>();
             int completedCount = 0;
@@ -413,33 +494,8 @@ namespace eu.foodmission.platform
                 var it = items[i];
                 if (it == null) continue;
 
-                bool isItemCompleted = questIsCompleted;
-
-                if (!isItemCompleted)
-                {
-                    string cType = it.contentType ?? string.Empty;
-                    string code = it.contentCode ?? string.Empty;
-
-                    if (string.Equals(cType, QuestContentType.Quiz, StringComparison.OrdinalIgnoreCase))
-                    {
-                        isItemCompleted = completedQuizCodes.Contains(code);
-                    }
-                    else if (string.Equals(cType, QuestContentType.FoodFact, StringComparison.OrdinalIgnoreCase))
-                    {
-                        isItemCompleted = completedFoodFactCodes.Contains(code);
-                    }
-                    else if (string.Equals(cType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
-                    {
-                        isItemCompleted = completedMissionCodes.Contains(code) ||
-                                          (!string.IsNullOrEmpty(it.label) && completedMissionCodes.Contains(it.label));
-                    }
-                    else if (string.Equals(cType, "CHALLENGE", StringComparison.OrdinalIgnoreCase) ||
-                             string.Equals(cType, QuestContentType.Challenge, StringComparison.OrdinalIgnoreCase))
-                    {
-                        isItemCompleted = completedChallengeCodes.Contains(code) ||
-                                          (!string.IsNullOrEmpty(it.label) && completedChallengeCodes.Contains(it.label));
-                    }
-                }
+                QuestItemStatus status = statusOf != null ? statusOf(it) : default;
+                bool isItemCompleted = questIsCompleted || status.Completed;
 
                 if (isItemCompleted)
                 {
@@ -452,9 +508,7 @@ namespace eu.foodmission.platform
                     ? (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_COMPLETED"))
                     : (LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "QUIZ_STATUS_PENDING"));
 
-                bool isItemFailed = !isItemCompleted
-                    && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase)
-                    && failedMissionCodes.Contains(it.contentCode ?? string.Empty);
+                bool isItemFailed = !isItemCompleted && status.Failed;
 
                 string progressLabel = null;
                 if (isItemFailed)
@@ -463,8 +517,7 @@ namespace eu.foodmission.platform
                 }
                 else if (!isItemCompleted && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
                 {
-                    missionPercentByCode.TryGetValue(it.contentCode ?? string.Empty, out float percent);
-                    progressLabel = $"{(int)Math.Clamp(percent, 0f, 100f)}%";
+                    progressLabel = $"{(int)Math.Clamp(status.MissionPercent, 0f, 100f)}%";
                 }
 
                 activityItems.Add(new QuestActivityDisplayItem

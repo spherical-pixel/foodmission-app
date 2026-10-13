@@ -370,6 +370,36 @@ namespace eu.foodmission.platform
             }
         }
 
+        public static string BuildCurrentQuestUrl(string baseUrl, string lang)
+        {
+            string url = $"{baseUrl}/api/v1/users/me/gamification/current-quest";
+            return string.IsNullOrEmpty(lang) ? url : $"{url}?lang={Uri.EscapeDataString(lang)}";
+        }
+
+        /// <summary>The backend answers with an empty/null body when the user has no current quest.</summary>
+        public static CurrentQuest ParseCurrentQuest(string json)
+        {
+            return string.IsNullOrWhiteSpace(json) ? null : JsonConvert.DeserializeObject<CurrentQuest>(json);
+        }
+
+        public async Task<(CurrentQuest Result, ApiErrorResponse Error)> GetCurrentQuestAsync()
+        {
+            var (json, error) = await GetLocalizedJsonAsync(BuildCurrentQuestUrl(ApiConfig.BaseUrl, _storeService?.GetAppState()?.lang), nameof(GetCurrentQuestAsync));
+            if (error != null)
+            {
+                return (null, error);
+            }
+            try
+            {
+                return (ParseCurrentQuest(json), null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize CurrentQuest: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
+
         /// <summary>Authenticated GET with Accept-Language = app language (the backend localizes titles when it can).</summary>
         private async Task<(string Json, ApiErrorResponse Error)> GetLocalizedJsonAsync(string url, string caller)
         {
