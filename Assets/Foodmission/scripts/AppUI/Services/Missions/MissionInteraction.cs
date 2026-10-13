@@ -108,6 +108,15 @@ namespace eu.foodmission.platform
         /// <summary>ProductChecklist / DayChecklist: the chips and what makes an item count. Null for other types.</summary>
         public ChecklistSpec Checklist { get; }
 
+        /// <summary>
+        /// Each report sends new synthetic ids (or plain occasions), so telling the same thing in two check-ins counts it twice:
+        /// the check-in reminds the user to count only what is new. Days, yes/no and distinct values (protein sources) are safe.
+        /// </summary>
+        public bool AddsUpAcrossReports =>
+            Type == MissionStepType.Count ||
+            Type == MissionStepType.ProductChecklist ||
+            (Type == MissionStepType.OptionPicker && !string.IsNullOrEmpty(DistinctField));
+
         public MissionReportStep(
             MissionStepType type,
             string promptKey,

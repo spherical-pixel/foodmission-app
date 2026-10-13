@@ -3374,9 +3374,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: Quanti alimenti vegetali diversi hai mangiato questa settimana?
+    m_Localized: "Quanti alimenti vegetali diversi hai mangiato? Ogni tipo conta
+      una volta, anche se l'hai mangiato pi\xF9 volte: mele, lenticchie, basilico
+      e avena sono quattro. Contano frutta, verdura, legumi, erbe aromatiche, frutta
+      secca, semi e cereali integrali."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 52041725676347412
     m_Localized: In quanti prodotti hai controllato da dove provengono?
     m_Metadata:
@@ -4271,6 +4275,11 @@ MonoBehaviour:
     m_Localized: '{0} di {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "Conta solo ci\xF2 che non hai ancora detto a {global.PET_NAME}."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
   references:
     version: 2
     RefIds:
@@ -4296,3 +4305,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

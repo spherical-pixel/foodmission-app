@@ -3368,9 +3368,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: Hvor mange forskjellige plantebaserte matvarer spiste du denne uken?
+    m_Localized: "Hvor mange forskjellige plantematvarer har du spist? Hver type
+      teller \xE9n gang, uansett hvor ofte du spiste den: epler, linser, basilikum
+      og havre er fire. Frukt, gr\xF8nnsaker, belgfrukter, urter, n\xF8tter, fr\xF8
+      og fullkorn teller alle."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690410
   - m_Id: 52041725676347412
     m_Localized: For hvor mange produkter sjekket du hvor de kommer fra?
     m_Metadata:
@@ -4270,6 +4274,11 @@ MonoBehaviour:
     m_Localized: '{0} av {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "Tell bare det du ikke har fortalt {global.PET_NAME} enn\xE5."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
   references:
     version: 2
     RefIds:
@@ -4295,3 +4304,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

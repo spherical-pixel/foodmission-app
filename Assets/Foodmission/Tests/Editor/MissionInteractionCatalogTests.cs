@@ -227,5 +227,21 @@ namespace eu.foodmission.platform.Tests
             var missing = keys.Distinct().Where(k => !csv.Contains("\"" + k + "\",")).ToList();
             Assert.IsEmpty(missing, string.Join(", ", missing));
         }
+
+        [TestCase("M.B2.1", true)]   // Count with synthetic productIds
+        [TestCase("M.B2.3", true)]   // Count of occasions
+        [TestCase("M.A3.5", true)]   // OptionPicker per product
+        [TestCase("M.A2.1", true)]   // ProductChecklist
+        [TestCase("M.A6.5", true)]   // Count of plant foods
+        [TestCase("M.I1.5", false)]  // protein sources: the rule counts distinct sources
+        [TestCase("M.I5.1", false)]  // YesNo: one is enough
+        [TestCase("M.A5.4", false)]  // DayPicker: covered days aren't offered again
+        [TestCase("M.A6.1", false)]  // DayChecklist: recorded colours are locked
+        public void AddsUpAcrossReports_OnlyForStepsThatWouldCountRepeatsTwice(string code, bool expected)
+        {
+            var step = MissionInteractionCatalog.Get(code).Steps.First(s => s.Type != MissionStepType.MealReport);
+
+            Assert.AreEqual(expected, step.AddsUpAcrossReports, code);
+        }
     }
 }

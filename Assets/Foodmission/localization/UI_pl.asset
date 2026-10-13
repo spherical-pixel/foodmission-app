@@ -3409,10 +3409,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: "Ile r\xF3\u017Cnych produkt\xF3w ro\u015Blinnych zjad\u0142e\u015B
-      w tym tygodniu?"
+    m_Localized: "Ile r\xF3\u017Cnych produkt\xF3w ro\u015Blinnych zjad\u0142e\u015B?
+      Ka\u017Cdy rodzaj liczy si\u0119 raz, niezale\u017Cnie od tego, ile razy go
+      jad\u0142e\u015B: jab\u0142ka, soczewica, bazylia i owies to cztery. Licz\u0105
+      si\u0119 owoce, warzywa, ro\u015Bliny str\u0105czkowe, zio\u0142a, orzechy,
+      nasiona i produkty pe\u0142noziarniste."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690411
   - m_Id: 52041725676347412
     m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, sk\u0105d pochodz\u0105?"
     m_Metadata:
@@ -4321,6 +4325,11 @@ MonoBehaviour:
     m_Localized: '{0} z {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "Licz tylko to, czego jeszcze nie zg\u0142osi\u0142e\u015B."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
   references:
     version: 2
     RefIds:
@@ -4346,3 +4355,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

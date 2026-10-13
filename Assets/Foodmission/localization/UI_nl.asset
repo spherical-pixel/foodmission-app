@@ -3386,9 +3386,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: Hoeveel verschillende plantaardige voedingsmiddelen at je deze week?
+    m_Localized: "Hoeveel verschillende plantaardige voedingsmiddelen heb je gegeten?
+      Elke soort telt \xE9\xE9n keer, hoe vaak je hem ook at: appels, linzen, basilicum
+      en havermout zijn er vier. Fruit, groenten, peulvruchten, kruiden, noten, zaden
+      en volkoren granen tellen allemaal mee."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 52041725676347412
     m_Localized: Bij hoeveel producten keek je waar ze vandaan komen?
     m_Metadata:
@@ -4283,6 +4287,11 @@ MonoBehaviour:
     m_Localized: '{0} van {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: Tel alleen wat je {global.PET_NAME} nog niet hebt verteld.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
   references:
     version: 2
     RefIds:
@@ -4308,3 +4317,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

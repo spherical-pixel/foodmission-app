@@ -4139,6 +4139,10 @@ MonoBehaviour:
     m_Key: MISSION_CHECKLIST_PROGRESS
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203622
+    m_Key: MISSION_CHECKIN_ONLY_NEW
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

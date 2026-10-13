@@ -3384,10 +3384,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: Wie viele verschiedene pflanzliche Lebensmittel hast du diese Woche
-      gegessen?
+    m_Localized: "Wie viele verschiedene pflanzliche Lebensmittel hast du gegessen?
+      Jede Sorte z\xE4hlt einmal, egal wie oft du sie gegessen hast: \xC4pfel, Linsen,
+      Basilikum und Haferflocken sind vier. Obst, Gem\xFCse, H\xFClsenfr\xFCchte,
+      Kr\xE4uter, N\xFCsse, Samen und Vollkorngetreide z\xE4hlen alle."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 52041725676347412
     m_Localized: "Bei wie vielen Produkten hast du gepr\xFCft, woher sie kommen?"
     m_Metadata:
@@ -4287,6 +4290,11 @@ MonoBehaviour:
     m_Localized: '{0} von {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "Z\xE4hle nur, was du {global.PET_NAME} noch nicht erz\xE4hlt hast."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
   references:
     version: 2
     RefIds:
@@ -4312,3 +4320,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

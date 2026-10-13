@@ -3371,9 +3371,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: "Koliko razli\u010Dnih rastlinskih \u017Eivil si pojedel ta teden?"
+    m_Localized: "Koliko razli\u010Dnih rastlinskih \u017Eivil si pojedel? Vsaka
+      vrsta \u0161teje enkrat, ne glede na to, kolikokrat si jo jedel: jabolka, le\u010Da,
+      bazilika in oves so \u0161tiri. \u0160tejejo sadje, zelenjava, stro\u010Dnice,
+      zeli\u0161\u010Da, ore\u0161ki, semena in polnozrnata \u017Eita."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 52041725676347412
     m_Localized: Pri koliko izdelkih si preveril, od kod prihajajo?
     m_Metadata:
@@ -4268,6 +4272,11 @@ MonoBehaviour:
     m_Localized: '{0} od {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "\u0160tej samo tisto, \u010Desar \u0161e nisi sporo\u010Dil."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
   references:
     version: 2
     RefIds:
@@ -4293,3 +4302,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

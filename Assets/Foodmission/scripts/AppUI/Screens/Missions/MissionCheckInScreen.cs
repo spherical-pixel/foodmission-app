@@ -350,6 +350,13 @@ namespace eu.foodmission.platform
             missionTitle.AddToClassList("fm-mission-report-meal-title");
             body.Add(missionTitle);
 
+            if (missionStep.Step.AddsUpAcrossReports)
+            {
+                var onlyNew = new Text { text = L("MISSION_CHECKIN_ONLY_NEW") };
+                onlyNew.AddToClassList("fm-mission-report-meal-hint");
+                body.Add(onlyNew);
+            }
+
             MissionReportStep step = missionStep.Step;
             switch (step.Type)
             {
@@ -409,11 +416,13 @@ namespace eu.foodmission.platform
                 for (int o = 0; o < spec.Options.Count; o++)
                 {
                     int optionIndex = o;
-                    row.Add(Chip(L(spec.Options[o].LabelKey), selected.Contains(o), () =>
+                    FMButton chip = Chip(L(spec.Options[o].LabelKey), selected.Contains(o), () =>
                     {
                         _viewModel.ToggleProductOption(stepIndex, productIndex, optionIndex);
                         RenderStepLater(stepIndex);
-                    }));
+                    });
+                    AddValueClass(chip, spec, o);
+                    row.Add(chip);
                 }
                 item.Add(row);
 
@@ -457,6 +466,7 @@ namespace eu.foodmission.platform
                 VisualElement item = ChecklistItem(DayLabel(day), null);
                 var row = new VisualElement();
                 row.AddToClassList("fm-mission-report-row");
+                row.AddToClassList("fm-mission-checklist-grid");
                 for (int o = 0; o < spec.Options.Count; o++)
                 {
                     int optionIndex = o;
@@ -465,6 +475,7 @@ namespace eu.foodmission.platform
                         _viewModel.ToggleDayValue(stepIndex, capturedDay, optionIndex);
                         RenderStepLater(stepIndex);
                     });
+                    AddValueClass(chip, spec, o);
                     if (_viewModel.IsRecordedValue(stepIndex, day, o))
                     {
                         chip.SetEnabled(false);
@@ -477,6 +488,16 @@ namespace eu.foodmission.platform
                 bool counts = ChecklistRule.Counts(spec, selected);
                 item.Add(ChecklistStatus(counts, counts ? null : LF("MISSION_CHECKLIST_PROGRESS", selected.Count, spec.MinDistinct)));
                 body.Add(item);
+            }
+        }
+
+        /// <summary>Array options get a class per value (e.g. --value-green), so USS can paint colour chips in their colour.</summary>
+        private static void AddValueClass(FMButton chip, ChecklistSpec spec, int option)
+        {
+            string value = spec.ValueOf(option);
+            if (value != null)
+            {
+                chip.AddToClassList("fm-mission-report-chip--value-" + value.ToLowerInvariant().Replace('_', '-'));
             }
         }
 
