@@ -21,11 +21,11 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void NothingRemembered_ExpandsFirstWithOpenItems()
+        public void NothingRemembered_AllCollapsed()
         {
             var sections = KnowledgeBarSections.Build(Items);
 
-            CollectionAssert.AreEqual(new[] { 0 }, KnowledgeBarExpansion.ExpandedIndices(KnowledgeKind.Health, sections).ToArray());
+            Assert.AreEqual(0, KnowledgeBarExpansion.ExpandedIndices(KnowledgeKind.Health, sections).Count());
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace eu.foodmission.platform.Tests
             var sections = KnowledgeBarSections.Build(Items);
             KnowledgeBarExpansion.Remember(KnowledgeKind.Health, QuestContentType.Quiz, true);
 
-            CollectionAssert.AreEqual(new[] { 0 }, KnowledgeBarExpansion.ExpandedIndices(KnowledgeKind.FoodWaste, sections).ToArray());
+            Assert.AreEqual(0, KnowledgeBarExpansion.ExpandedIndices(KnowledgeKind.FoodWaste, sections).Count());
         }
     }
 }

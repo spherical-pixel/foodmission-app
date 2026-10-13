@@ -93,22 +93,6 @@ namespace eu.foodmission.platform
             return result;
         }
 
-        /// <summary>Section to open on entry: the first with open items, else the first; -1 when there are none.</summary>
-        public static int FirstExpandedIndex(IReadOnlyList<KnowledgeBarSection> sections)
-        {
-            if (sections == null || sections.Count == 0)
-            {
-                return -1;
-            }
-            for (int i = 0; i < sections.Count; i++)
-            {
-                if (sections[i].Finished < sections[i].Total)
-                {
-                    return i;
-                }
-            }
-            return 0;
-        }
     }
 
     /// <summary>
@@ -140,23 +124,22 @@ namespace eu.foodmission.platform
             }
         }
 
-        /// <summary>Sections to expand: the remembered ones, or the first with open items when nothing was remembered for the kind.</summary>
+        /// <summary>Sections to expand: the ones the user left open for this bar; none by default.</summary>
         public static IEnumerable<int> ExpandedIndices(string kind, IReadOnlyList<KnowledgeBarSection> sections)
         {
-            if (kind != null && s_ExpandedByKind.TryGetValue(kind, out HashSet<string> expandedTypes))
+            var indices = new List<int>();
+            if (kind == null || sections == null || !s_ExpandedByKind.TryGetValue(kind, out HashSet<string> expandedTypes))
             {
-                var indices = new List<int>();
-                for (int i = 0; i < sections.Count; i++)
-                {
-                    if (expandedTypes.Contains(sections[i].ContentType))
-                    {
-                        indices.Add(i);
-                    }
-                }
                 return indices;
             }
-            int first = KnowledgeBarSections.FirstExpandedIndex(sections);
-            return first >= 0 ? new[] { first } : Array.Empty<int>();
+            for (int i = 0; i < sections.Count; i++)
+            {
+                if (expandedTypes.Contains(sections[i].ContentType))
+                {
+                    indices.Add(i);
+                }
+            }
+            return indices;
         }
 
         public static void Clear()

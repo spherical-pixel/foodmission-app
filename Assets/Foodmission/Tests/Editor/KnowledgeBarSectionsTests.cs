@@ -79,20 +79,6 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void FirstExpandedIndex_FirstSectionWithOpenRows()
-        {
-            var sections = KnowledgeBarSections.Build(new[]
-            {
-                Item(QuestContentType.Mission, "M1", true),
-                Item(QuestContentType.Quiz, "Q1", false),
-            });
-
-            Assert.AreEqual(1, KnowledgeBarSections.FirstExpandedIndex(sections));
-            Assert.AreEqual(0, KnowledgeBarSections.FirstExpandedIndex(KnowledgeBarSections.Build(new[] { Item(QuestContentType.Mission, "M1", true) })));
-            Assert.AreEqual(-1, KnowledgeBarSections.FirstExpandedIndex(KnowledgeBarSections.Build(null)));
-        }
-
-        [Test]
         public void KnowledgeBarText_KeysForEveryKind()
         {
             foreach (string kind in KnowledgeKind.All)
