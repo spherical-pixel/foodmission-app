@@ -4168,6 +4168,125 @@ MonoBehaviour:
       Materialien und wie gut sie das Lebensmittel sch\xFCtzt)?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Herkunft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Zertifizierung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: "Saisonalit\xE4t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Regionale Herstellung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: EU-Bio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (nachhaltige Fischerei)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (verantwortungsvolle Aquakultur)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: EU Ecolabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Anderes Siegel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: "Gr\xFCn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Rot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Orange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Gelb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Lila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: "Wei\xDF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "Bei welchen Produkten hast du die Herkunft und mindestens noch
+      etwas anderes gepr\xFCft?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: "Bei welchen Produkten hast du mindestens drei Aspekte ber\xFCcksichtigt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: Bei welchen Produkten hast du mindestens zwei Nachhaltigkeitsinformationen
+      gefunden?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: "Bei welchen Produkten hast du das Verpackungsmaterial gepr\xFCft
+      und was nach dem Gebrauch damit passiert?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: Welche Nachhaltigkeitssiegel trug das Produkt?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: "Welche Farben von Obst und Gem\xFCse hast du an jedem Tag gegessen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Produkt {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: "Produkt hinzuf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: "Z\xE4hlt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Markiere noch {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Muss enthalten: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} von {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

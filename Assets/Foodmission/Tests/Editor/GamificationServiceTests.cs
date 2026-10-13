@@ -272,5 +272,23 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+
+        [Test]
+        public void RecentEventsUrl_FiltersByEventTypes()
+        {
+            string url = GamificationService.RecentEventsUrl("https://api", new[] { "FOOD_WASTE_FIFO_ORGANIZED", "NUTRITION_RAINBOW_COLOURS_LOGGED" }, 100);
+
+            Assert.AreEqual("https://api/api/v1/users/me/gamification?eventsLimit=100&walletEntriesLimit=1&eventTypes=FOOD_WASTE_FIFO_ORGANIZED%2CNUTRITION_RAINBOW_COLOURS_LOGGED", url);
+        }
+
+        [Test]
+        public async Task GetRecentEventsAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.ignoreFailingMessages = true;
+            var (result, error) = await _service.GetRecentEventsAsync(new[] { "FOOD_WASTE_FIFO_ORGANIZED" }, 10);
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
     }
 }

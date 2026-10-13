@@ -4201,6 +4201,126 @@ MonoBehaviour:
       materia\u0142y i to, jak dobrze chroni \u017Cywno\u015B\u0107)?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Pochodzenie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certyfikat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: "Sezonowo\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Produkcja lokalna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: Ekologiczny UE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: "MSC (zr\xF3wnowa\u017Cone rybo\u0142\xF3wstwo)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (odpowiedzialna akwakultura)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: Ekoznak UE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Inny znak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Zielony
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Czerwony
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: "Pomara\u0144czowy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: "\u017B\xF3\u0142ty"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Fioletowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: "Bia\u0142y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "W kt\xF3rych produktach sprawdzi\u0142e\u015B pochodzenie i co
+      najmniej jedn\u0105 inn\u0105 rzecz?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: "W kt\xF3rych produktach wzi\u0105\u0142e\u015B pod uwag\u0119 co
+      najmniej trzy aspekty?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "W kt\xF3rych produktach znalaz\u0142e\u015B co najmniej dwie informacje
+      o zr\xF3wnowa\u017Conym rozwoju?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: "W kt\xF3rych produktach sprawdzi\u0142e\u015B materia\u0142 opakowania
+      i co si\u0119 z nim dzieje po u\u017Cyciu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: "Jakie znaki zr\xF3wnowa\u017Conego rozwoju mia\u0142 produkt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: "Jakie kolory owoc\xF3w i warzyw jad\u0142e\u015B ka\u017Cdego dnia?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Produkt {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Dodaj produkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: "Liczy si\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Zaznacz jeszcze {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: "Musi obejmowa\u0107: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} z {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

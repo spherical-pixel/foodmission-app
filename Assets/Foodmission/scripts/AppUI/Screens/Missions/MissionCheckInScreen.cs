@@ -377,7 +377,153 @@ namespace eu.foodmission.platform
                         body.Add(optionRow);
                     }
                     break;
+                case MissionStepType.ProductChecklist:
+                    RenderProductChecklist(stepIndex, step, answer, body);
+                    break;
+                case MissionStepType.DayChecklist:
+                    RenderDayChecklist(stepIndex, missionStep, answer, body);
+                    break;
             }
+        }
+
+        private void RenderProductChecklist(int stepIndex, MissionReportStep step, MissionStepAnswer answer, VisualElement body)
+        {
+            ChecklistSpec spec = step.Checklist;
+            int counting = answer.Products.Count(p => ChecklistRule.Counts(spec, p));
+            var progress = new Text { text = LF("MISSION_CHECKLIST_PROGRESS", counting, step.MaxCount) };
+            progress.AddToClassList("fm-mission-checklist-progress");
+            body.Add(progress);
+
+            for (int p = 0; p < answer.Products.Count; p++)
+            {
+                int productIndex = p;
+                HashSet<int> selected = answer.Products[p];
+                VisualElement item = ChecklistItem(LF("MISSION_CHECKLIST_PRODUCT", p + 1), () =>
+                {
+                    _viewModel.RemoveProduct(stepIndex, productIndex);
+                    RenderStepLater(stepIndex);
+                });
+
+                var row = new VisualElement();
+                row.AddToClassList("fm-mission-report-row");
+                for (int o = 0; o < spec.Options.Count; o++)
+                {
+                    int optionIndex = o;
+                    row.Add(Chip(L(spec.Options[o].LabelKey), selected.Contains(o), () =>
+                    {
+                        _viewModel.ToggleProductOption(stepIndex, productIndex, optionIndex);
+                        RenderStepLater(stepIndex);
+                    }));
+                }
+                item.Add(row);
+
+                if (selected.Count > 0)
+                {
+                    item.Add(ChecklistStatus(ChecklistRule.Counts(spec, selected), ProductMissingText(spec, selected)));
+                }
+                body.Add(item);
+            }
+
+            var add = new FMButton
+            {
+                title = L("MISSION_CHECKLIST_ADD_PRODUCT"),
+                leadingIcon = "plus",
+                variant = ButtonVariant.Default,
+                size = Size.S
+            };
+            add.AddToClassList("fm-mission-checklist-add");
+            add.SetEnabled(answer.Products.Count < step.MaxCount);
+            add.clicked += () =>
+            {
+                _viewModel.AddProduct(stepIndex);
+                RenderStepLater(stepIndex);
+            };
+            body.Add(add);
+        }
+
+        private void RenderDayChecklist(int stepIndex, CheckInMissionStep missionStep, MissionStepAnswer answer, VisualElement body)
+        {
+            ChecklistSpec spec = missionStep.Step.Checklist;
+            // Newest first: today and yesterday are what people remember
+            foreach (DateTime day in missionStep.OpenDays.Reverse())
+            {
+                DateTime capturedDay = day;
+                var selected = new HashSet<int>(ChecklistRule.IndexesOf(spec, missionStep.RecordedValuesFor(day)));
+                if (answer.DayValues.TryGetValue(day, out HashSet<int> added))
+                {
+                    selected.UnionWith(added);
+                }
+
+                VisualElement item = ChecklistItem(DayLabel(day), null);
+                var row = new VisualElement();
+                row.AddToClassList("fm-mission-report-row");
+                for (int o = 0; o < spec.Options.Count; o++)
+                {
+                    int optionIndex = o;
+                    FMButton chip = Chip(L(spec.Options[o].LabelKey), selected.Contains(o), () =>
+                    {
+                        _viewModel.ToggleDayValue(stepIndex, capturedDay, optionIndex);
+                        RenderStepLater(stepIndex);
+                    });
+                    if (_viewModel.IsRecordedValue(stepIndex, day, o))
+                    {
+                        chip.SetEnabled(false);
+                        chip.AddToClassList("fm-mission-report-chip--locked");
+                    }
+                    row.Add(chip);
+                }
+                item.Add(row);
+
+                bool counts = ChecklistRule.Counts(spec, selected);
+                item.Add(ChecklistStatus(counts, counts ? null : LF("MISSION_CHECKLIST_PROGRESS", selected.Count, spec.MinDistinct)));
+                body.Add(item);
+            }
+        }
+
+        private VisualElement ChecklistItem(string title, Action onRemove)
+        {
+            var item = new VisualElement();
+            item.AddToClassList("fm-mission-checklist-item");
+
+            var header = new VisualElement();
+            header.AddToClassList("fm-mission-checklist-item__header");
+            var label = new Text { text = title };
+            label.AddToClassList("fm-mission-checklist-item__title");
+            header.Add(label);
+            if (onRemove != null)
+            {
+                var remove = new IconButton { icon = "x", quiet = true, size = Size.S };
+                remove.AddToClassList("fm-mission-checklist-item__remove");
+                remove.clicked += onRemove;
+                header.Add(remove);
+            }
+            item.Add(header);
+            return item;
+        }
+
+        private Text ChecklistStatus(bool counts, string missingText)
+        {
+            var status = new Text { text = counts ? L("MISSION_CHECKLIST_COUNTS") : missingText };
+            status.AddToClassList("fm-mission-checklist-item__status");
+            status.EnableInClassList("fm-mission-checklist-item__status--counts", counts);
+            status.EnableInClassList("fm-mission-checklist-item__status--missing", !counts);
+            return status;
+        }
+
+        private string ProductMissingText(ChecklistSpec spec, IReadOnlyCollection<int> selected)
+        {
+            var parts = new List<string>();
+            int more = ChecklistRule.MissingCount(spec, selected);
+            if (more > 0)
+            {
+                parts.Add(LF("MISSION_CHECKLIST_NEED_MORE", more));
+            }
+            IReadOnlyList<int> required = ChecklistRule.MissingRequired(spec, selected);
+            if (required.Count > 0)
+            {
+                parts.Add(LF("MISSION_CHECKLIST_NEED_REQUIRED", string.Join(", ", required.Select(r => L(spec.Options[r].LabelKey)))));
+            }
+            return string.Join(" · ", parts);
         }
 
         private void RenderSummary(int stepIndex)

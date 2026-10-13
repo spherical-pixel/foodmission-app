@@ -24,6 +24,8 @@ namespace eu.foodmission.platform.Tests
             public readonly HashSet<string> Fields = new();
             /// <summary>Fields whose value other events can share (a meal log's id, a day), so rule groupBy can join them.</summary>
             public readonly HashSet<string> SharedFields = new();
+            /// <summary>Array metadata the catalog may send (field → values), e.g. colours.</summary>
+            public readonly Dictionary<string, string[]> Arrays = new();
         }
 
         private static JObject LoadRules()
@@ -116,9 +118,35 @@ namespace eu.foodmission.platform.Tests
                             list.Add(MealSignature(flag, step.MealTypes));
                         }
                         break;
+                    case MissionStepType.ProductChecklist:
+                    case MissionStepType.DayChecklist:
+                        list.AddRange(ChecklistSignatures(step));
+                        break;
                 }
             }
             return list;
+        }
+
+        /// <summary>
+        /// Checklist items share their key: every event of one product carries the same productId, and every event of
+        /// one day lands in the same dayBucket.
+        /// </summary>
+        private static IEnumerable<Signature> ChecklistSignatures(MissionReportStep step)
+        {
+            ChecklistSpec spec = step.Checklist;
+            string key = step.Type == MissionStepType.ProductChecklist ? "productId" : "dayBucket";
+            IEnumerable<string> eventTypes = spec.IsArray ? new[] { step.EventType } : spec.Options.Select(o => o.EventType);
+            foreach (string eventType in eventTypes)
+            {
+                var s = new Signature { EventType = eventType };
+                s.Fields.Add(key);
+                s.SharedFields.Add(key);
+                if (spec.IsArray)
+                {
+                    s.Arrays[spec.ArrayField] = Enumerable.Range(0, spec.Options.Count).Select(spec.ValueOf).ToArray();
+                }
+                yield return s;
+            }
         }
 
         private static bool Satisfies(Signature s, JObject counter)
@@ -168,15 +196,26 @@ namespace eu.foodmission.platform.Tests
         private static bool SatisfiesGroup(List<Signature> signatures, JObject counter)
         {
             var groupBy = (JObject)counter["groupBy"];
-            if (groupBy["of"] != null)
-            {
-                return false;
-            }
-
             string key = StripMetadata((string)groupBy["key"]);
             int minDistinct = (int)groupBy["minDistinct"];
-            var require = groupBy["require"] is JArray r ? r.Select(t => (string)t).ToArray() : Array.Empty<string>();
             var matching = signatures.Where(s => Satisfies(s, counter)).ToList();
+
+            if (groupBy["of"] != null)
+            {
+                // Values of one array field joined across the item's events, limited to the allowed values
+                string of = StripMetadata((string)groupBy["of"]);
+                var allowed = groupBy["values"] is JArray v ? new HashSet<string>(v.Select(t => ((string)t).ToUpperInvariant())) : null;
+                var values = matching
+                    .Where(s => s.SharedFields.Contains(key) && s.Arrays.ContainsKey(of))
+                    .SelectMany(s => s.Arrays[of])
+                    .Select(x => x.ToUpperInvariant())
+                    .Where(x => allowed == null || allowed.Contains(x))
+                    .Distinct()
+                    .Count();
+                return values >= minDistinct;
+            }
+
+            var require = groupBy["require"] is JArray r ? r.Select(t => (string)t).ToArray() : Array.Empty<string>();
 
             var shared = matching.Where(s => s.SharedFields.Contains(key)).Select(s => s.EventType).Distinct().ToList();
             if (shared.Count >= minDistinct && require.All(shared.Contains))
@@ -186,9 +225,6 @@ namespace eu.foodmission.platform.Tests
 
             return minDistinct <= 1 && matching.Any(s => require.All(t => t == s.EventType));
         }
-
-        private static bool UsesGroupBy(JObject mission) =>
-            mission["rule"]?["counters"] is JObject counters && counters.Properties().Any(c => c.Value["groupBy"] != null);
 
         [Test]
         public void EveryRuleCounter_IsProducibleByTheCatalog()
@@ -203,11 +239,6 @@ namespace eu.foodmission.platform.Tests
                 }
 
                 MissionInteraction interaction = MissionInteractionCatalog.Get(code);
-                // Grouped reports (several facts about one product or day) aren't in the check-in yet
-                if (interaction.Status == MissionInteractionStatus.PendingRule && UsesGroupBy(mission))
-                {
-                    continue;
-                }
                 if (!interaction.CanReport)
                 {
                     failures.Add($"{code}: has a rule but cannot be reported");
@@ -232,16 +263,11 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void PendingRuleEntries_AreUndecidedOrAwaitGroupedReports()
+        public void UndecidedRules_MatchPendingRuleEntries()
         {
-            var awaiting = Missions()
-                .Where(m => (string)m["shape"] == "undecided" || UsesGroupBy(m))
-                .Select(m => (string)m["code"])
-                .ToArray();
             var undecided = Missions().Where(m => (string)m["shape"] == "undecided").Select(m => (string)m["code"]).ToArray();
 
-            CollectionAssert.IsSubsetOf(undecided, MissionInteractionCatalogTests.PendingRuleCodes);
-            CollectionAssert.IsSubsetOf(MissionInteractionCatalogTests.PendingRuleCodes, awaiting);
+            CollectionAssert.AreEquivalent(MissionInteractionCatalogTests.PendingRuleCodes, undecided);
         }
 
         [Test]

@@ -31,7 +31,7 @@ namespace eu.foodmission.platform.Tests
             _missions = new Mock<IMissionService>();
             _checkIn = new Mock<ICheckInService>();
             _checkIn.Setup(c => c.LoadPlanAsync(null)).ReturnsAsync(() => (PlanWithPendingDays(_pendingDays), (ApiErrorResponse)null));
-            SetQuest("M.B2.1", "M.B3.2", "M.A2.1");
+            SetQuest("M.B2.1", "M.B3.2", "M.Z9.9");
             SetProgress();
             _service = new MissionNudgeService(_store, _quests.Object, _missions.Object, _storage, _checkIn.Object)
             {
@@ -177,8 +177,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task GetNudge_IgnoresCompletedAndPendingRuleMissions()
         {
-            SetQuest("M.B2.1", "M.A2.1");
-            SetProgress(P("M.B2.1", 100, _now.AddDays(-5), completed: true), P("M.A2.1", 0, _now.AddDays(-5)));
+            SetQuest("M.B2.1", "M.Z9.9");
+            SetProgress(P("M.B2.1", 100, _now.AddDays(-5), completed: true), P("M.Z9.9", 0, _now.AddDays(-5)));
 
             Assert.IsNull(await _service.GetNudgeAsync());
         }

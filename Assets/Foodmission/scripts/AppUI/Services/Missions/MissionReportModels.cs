@@ -10,6 +10,10 @@ namespace eu.foodmission.platform
         public bool Confirmed;
         public readonly List<DateTime> Days = new List<DateTime>();
         public readonly Dictionary<int, int> OptionCounts = new Dictionary<int, int>();
+        /// <summary>ProductChecklist: checked option indexes of each product.</summary>
+        public readonly List<HashSet<int>> Products = new List<HashSet<int>>();
+        /// <summary>DayChecklist: day → option indexes checked in this check-in (already recorded values excluded).</summary>
+        public readonly Dictionary<DateTime, HashSet<int>> DayValues = new Dictionary<DateTime, HashSet<int>>();
     }
 
     /// <summary>One request of a manual report. Exactly one of Event / MealLog is set.</summary>

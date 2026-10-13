@@ -195,7 +195,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void PendingRuleAndUnknownMissions_AreIgnored_AndEmptyPlanIsEmpty()
         {
-            var plan = CheckInPlanner.Plan(Inputs(M("M.A2.1"), M("M.Z9.9")));
+            var plan = CheckInPlanner.Plan(Inputs(M("M.Z9.9"), M("M.Z9.9")));
 
             Assert.IsTrue(plan.IsEmpty);
             Assert.AreEqual(0, plan.StepCount);
@@ -239,6 +239,73 @@ namespace eu.foodmission.platform.Tests
             inputs.LoggedMealTypes[Now.Date] = new HashSet<string> { "BREAKFAST" };
 
             Assert.IsFalse(CheckInPlanner.Plan(inputs).MealDays.Any(d => d.Day == Now.Date));
+        }
+
+        private static void Record(CheckInInputs inputs, DateTime day, params string[] colours)
+        {
+            if (!inputs.RecordedValues.TryGetValue(ClientEventTypes.NutritionRainbowColoursLogged, out var byDay))
+            {
+                byDay = new Dictionary<DateTime, HashSet<string>>();
+                inputs.RecordedValues[ClientEventTypes.NutritionRainbowColoursLogged] = byDay;
+            }
+            byDay[day] = new HashSet<string>(colours);
+        }
+
+        [Test]
+        public void DayChecklist_OpenDaysAreWindowDays_WithRecordedValues()
+        {
+            var inputs = Inputs(M("M.A6.1", Now.Date.AddDays(-2)));
+            Record(inputs, Now.Date.AddDays(-1), "GREEN", "RED");
+
+            var step = CheckInPlanner.Plan(inputs).MissionSteps.Single();
+
+            Assert.AreEqual(MissionStepType.DayChecklist, step.Step.Type);
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-2), Now.Date.AddDays(-1), Now.Date }, step.OpenDays.ToArray());
+            CollectionAssert.AreEquivalent(new[] { "GREEN", "RED" }, step.RecordedValuesFor(Now.Date.AddDays(-1)).ToArray());
+            Assert.AreEqual(0, step.RecordedValuesFor(Now.Date).Count);
+            Assert.AreEqual(Now.Date.AddDays(-2), step.StartLocal);
+        }
+
+        [Test]
+        public void DayChecklist_DaysAlreadyCounting_AreNotOpen()
+        {
+            var inputs = Inputs(M("M.A6.1", Now.Date.AddDays(-1)));
+            Record(inputs, Now.Date.AddDays(-1), "GREEN", "RED", "ORANGE", "YELLOW", "PURPLE");
+
+            var step = CheckInPlanner.Plan(inputs).MissionSteps.Single();
+
+            CollectionAssert.AreEqual(new[] { Now.Date }, step.OpenDays.ToArray());
+        }
+
+        [Test]
+        public void DayChecklist_NoOpenDay_StepIsSkipped()
+        {
+            var inputs = Inputs(M("M.A6.1", Now.Date));
+            Record(inputs, Now.Date, "GREEN", "RED", "ORANGE", "YELLOW", "PURPLE", "WHITE");
+
+            Assert.IsTrue(CheckInPlanner.Plan(inputs).IsEmpty);
+        }
+
+        [Test]
+        public void PendingPastDays_CountsDayChecklistDaysWithNothingRecorded()
+        {
+            var inputs = Inputs(M("M.A6.1", Now.Date.AddDays(-2)));
+            Record(inputs, Now.Date.AddDays(-1), "GREEN");
+
+            // -2 has nothing; -1 has something (not "untold"); today doesn't count as past
+            Assert.AreEqual(1, CheckInPlanner.Plan(inputs).PendingPastDays(Now));
+        }
+
+        [Test]
+        public void ProductChecklist_IsMissionStep_AndAnswersStartWithOneEmptyProduct()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(M("M.A2.1", Now.Date)));
+
+            Assert.AreEqual(MissionStepType.ProductChecklist, plan.MissionSteps.Single().Step.Type);
+            Assert.AreEqual(0, plan.MissionSteps.Single().OpenDays.Count);
+            var answers = CheckInAnswers.For(plan);
+            Assert.AreEqual(1, answers.MissionSteps.Single().Products.Count);
+            Assert.AreEqual(0, answers.MissionSteps.Single().Products[0].Count);
         }
     }
 }

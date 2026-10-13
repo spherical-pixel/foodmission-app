@@ -4151,6 +4151,123 @@ MonoBehaviour:
       in kako dobro \u0161\u010Diti \u017Eivilo)?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Poreklo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certifikat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Sezonskost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Lokalna pridelava
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: "Ekolo\u0161ko EU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (trajnostni ribolov)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (odgovorno ribogojstvo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: Znak EU za okolje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Drug znak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Zelena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: "Rde\u010Da"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: "Oran\u017Ena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Rumena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: "Vijoli\u010Dna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Bela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "Pri katerih izdelkih si preveril poreklo in vsaj \u0161e eno stvar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: "Pri katerih izdelkih si upo\u0161teval vsaj tri vidike?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "Pri katerih izdelkih si na\u0161el vsaj dve informaciji o trajnosti?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: "Pri katerih izdelkih si preveril material embala\u017Ee in kaj
+      se z njo zgodi po uporabi?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: Katere znake trajnosti je imel izdelek?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Katere barve sadja in zelenjave si jedel vsak dan?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Izdelek {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Dodaj izdelek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: "\u0160teje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: "Ozna\u010Di \u0161e {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: "Mora vklju\u010Devati: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} od {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

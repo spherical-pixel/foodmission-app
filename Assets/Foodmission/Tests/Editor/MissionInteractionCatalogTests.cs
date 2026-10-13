@@ -1,8 +1,12 @@
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using NUnit.Framework;
 
 using Unity.AppUI.Navigation.Generated;
+
+using UnityEngine;
 
 namespace eu.foodmission.platform.Tests
 {
@@ -22,10 +26,7 @@ namespace eu.foodmission.platform.Tests
             "M.I5.1", "M.I5.2", "M.I5.3", "M.I5.4", "M.I5.5", "M.I6.1", "M.I6.2", "M.I6.3", "M.I6.4", "M.I6.5"
         };
 
-        internal static readonly string[] PendingRuleCodes =
-        {
-            "M.A2.1", "M.A2.2", "M.A2.5", "M.A4.1", "M.A6.1", "M.I2.4"
-        };
+        internal static readonly string[] PendingRuleCodes = { };
 
         [Test]
         public void Get_UnknownCode_ReturnsUnknownPendingRule()
@@ -102,6 +103,24 @@ namespace eu.foodmission.platform.Tests
                             Assert.IsTrue(step.EventType != null || step.Options.Count > 0, $"{code} meal step needs a flag or swap");
                             Assert.IsTrue(step.Options.All(o => o.IsSwap) || step.Options.All(o => !o.IsSwap), $"{code} meal options must be all swaps or all flags");
                             break;
+                        case MissionStepType.ProductChecklist:
+                        case MissionStepType.DayChecklist:
+                            var spec = step.Checklist;
+                            Assert.IsNotNull(spec, code);
+                            Assert.Greater(spec.Options.Count, 0, code);
+                            Assert.That(spec.MinDistinct, Is.InRange(1, spec.Options.Count), code);
+                            Assert.IsTrue(spec.Required.All(r => r >= 0 && r < spec.Options.Count), code);
+                            if (spec.IsArray)
+                            {
+                                Assert.IsFalse(string.IsNullOrEmpty(step.EventType), $"{code} array checklist needs its event");
+                                Assert.IsTrue(Enumerable.Range(0, spec.Options.Count).All(i => spec.ValueOf(i) != null), $"{code} array options need values");
+                            }
+                            else
+                            {
+                                Assert.IsTrue(spec.Options.All(o => !string.IsNullOrEmpty(o.EventType)), $"{code} chips need event types");
+                            }
+                            Assert.IsTrue(step.Type == MissionStepType.ProductChecklist || spec.IsArray, $"{code} day checklists send arrays");
+                            break;
                         default:
                             Assert.IsFalse(string.IsNullOrEmpty(step.EventType), code);
                             break;
@@ -126,6 +145,46 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void OriginPlusOne_IsProductChecklistWithOriginRequired()
+        {
+            var step = MissionInteractionCatalog.Get("M.A2.1").Steps.Single();
+
+            Assert.AreEqual(MissionStepType.ProductChecklist, step.Type);
+            Assert.AreEqual(3, step.MaxCount);
+            Assert.AreEqual(2, step.Checklist.MinDistinct);
+            Assert.AreEqual(ClientEventTypes.ShoppingOriginChecked, step.Checklist.Options[step.Checklist.Required.Single()].EventType);
+            Assert.IsNull(step.DistinctField, "the builder sets one productId per product");
+            Assert.AreEqual(0, MissionInteractionCatalog.Get("M.A2.1").AutoModules.Count);
+        }
+
+        [Test]
+        public void DoubleLabel_SendsLabelsArray()
+        {
+            var step = MissionInteractionCatalog.Get("M.A2.2").Steps.Single();
+
+            Assert.AreEqual(MissionStepType.ProductChecklist, step.Type);
+            Assert.AreEqual(ClientEventTypes.ShoppingDoubleLabelChosen, step.EventType);
+            Assert.AreEqual("labels", step.Checklist.ArrayField);
+            Assert.AreEqual(1, step.MaxCount);
+            CollectionAssert.AreEqual(new[] { "EU_ORGANIC", "FAIRTRADE", "RAINFOREST_ALLIANCE", "MSC", "ASC", "EU_ECOLABEL", "OTHER" },
+                Enumerable.Range(0, step.Checklist.Options.Count).Select(step.Checklist.ValueOf).ToArray());
+            Assert.AreEqual("MISSION_OPT_LABEL_EU_ORGANIC", step.Checklist.Options[0].LabelKey);
+        }
+
+        [Test]
+        public void Rainbow_IsDayChecklistOfSixColoursNeedingFive()
+        {
+            var step = MissionInteractionCatalog.Get("M.A6.1").Steps.Single();
+
+            Assert.AreEqual(MissionStepType.DayChecklist, step.Type);
+            Assert.AreEqual(ClientEventTypes.NutritionRainbowColoursLogged, step.EventType);
+            Assert.AreEqual("colours", step.Checklist.ArrayField);
+            Assert.AreEqual(5, step.Checklist.MinDistinct);
+            Assert.AreEqual(7, step.MaxCount);
+            Assert.AreEqual("MISSION_QD_RAINBOW_COLOURS", step.PromptKey);
+        }
+
+        [Test]
         public void HighFibreBreakfast_IsOnePerDayBreakfastMealReport()
         {
             var step = MissionInteractionCatalog.Get("M.A6.2").Steps.Single();
@@ -145,6 +204,28 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(MissionStepType.Count, step.Type);
             Assert.AreEqual("productId", step.DistinctField);
             Assert.AreEqual("GREEN_SCORE", step.FixedMetadata["comparedWith"]);
+        }
+
+        [Test]
+        public void ChecklistTexts_ExistInUiCsv()
+        {
+            string csv = File.ReadAllText(Path.Combine(Application.dataPath, "Foodmission/localization/CSV/UI.csv"));
+            var keys = new List<string>
+            {
+                "MISSION_CHECKLIST_PRODUCT", "MISSION_CHECKLIST_ADD_PRODUCT", "MISSION_CHECKLIST_COUNTS",
+                "MISSION_CHECKLIST_NEED_MORE", "MISSION_CHECKLIST_NEED_REQUIRED", "MISSION_CHECKLIST_PROGRESS"
+            };
+            foreach (string code in AllMissionCodes)
+            {
+                foreach (var step in MissionInteractionCatalog.Get(code).Steps.Where(s => s.Checklist != null))
+                {
+                    keys.Add(step.PromptKey);
+                    keys.AddRange(step.Checklist.Options.Select(o => o.LabelKey));
+                }
+            }
+
+            var missing = keys.Distinct().Where(k => !csv.Contains("\"" + k + "\",")).ToList();
+            Assert.IsEmpty(missing, string.Join(", ", missing));
         }
     }
 }

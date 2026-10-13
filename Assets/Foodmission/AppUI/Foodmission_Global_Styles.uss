@@ -2504,6 +2504,55 @@
     white-space: normal;
 }
 
+/* Checklist steps (product / day cards with chips) */
+.fm-mission-checklist-progress {
+    align-self: flex-end;
+    color: var(--appui-foregrounds-100);
+    margin-bottom: 8px;
+}
+
+.fm-mission-checklist-item {
+    background-color: var(--fm-surface-bg-transparent-50);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.fm-mission-checklist-item__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.fm-mission-checklist-item__title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-100);
+}
+
+.fm-mission-checklist-item__status {
+    white-space: normal;
+    margin: 0 4px;
+}
+
+.fm-mission-checklist-item__status--counts {
+    color: var(--appui-positive-100);
+}
+
+.fm-mission-checklist-item__status--missing {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: italic;
+}
+
+.fm-mission-checklist-add {
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
+.fm-mission-report-chip--locked {
+    opacity: 0.6;
+}
+
 /* Development-only meal date offset (Quick Meal Log) */
 .fm-quick-meal-dev-offset {
     align-self: flex-start;

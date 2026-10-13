@@ -33,7 +33,7 @@ namespace eu.foodmission.platform.Tests
             _missions = new Mock<IMissionService>();
             _notifications = new Mock<INotificationService>();
 
-            var items = new[] { "M.A1.1", "M.B1.3", "M.A2.1", "M.A1.3" }
+            var items = new[] { "M.A1.1", "M.B1.3", "M.Z9.9", "M.A1.3" }
                 .Select(c => new QuestItem { contentType = QuestContentType.Mission, contentCode = c }).ToArray();
             _quests.Setup(q => q.GetQuestAsync("q1", null)).ReturnsAsync((new Quest { id = "q1", items = items }, (ApiErrorResponse)null));
             _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
@@ -41,7 +41,7 @@ namespace eu.foodmission.platform.Tests
                 new MissionProgress { missionCode = "M.A1.1", missionTitle = "Green zone", startedAt = Start.ToUniversalTime() },
                 new MissionProgress { missionCode = "M.B1.3", missionTitle = "One fewer", startedAt = Start.ToUniversalTime() },
                 // No rule: nothing ends
-                new MissionProgress { missionCode = "M.A2.1", missionTitle = "Pending rule", startedAt = Start.ToUniversalTime() },
+                new MissionProgress { missionCode = "M.Z9.9", missionTitle = "Pending rule", startedAt = Start.ToUniversalTime() },
                 new MissionProgress { missionCode = "M.A1.3", missionTitle = "Done", completed = true, startedAt = Start.ToUniversalTime() }
             }, (ApiErrorResponse)null));
 

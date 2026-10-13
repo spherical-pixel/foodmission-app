@@ -4150,6 +4150,123 @@ MonoBehaviour:
       y lo bien que protege el alimento)?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Origen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: "Certificaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Temporada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: "Producci\xF3n local"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: "Ecol\xF3gico UE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (pesca sostenible)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (acuicultura responsable)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: "Etiqueta ecol\xF3gica UE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Otro sello
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Verde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Rojo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Naranja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Amarillo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Morado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Blanco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "\xBFEn qu\xE9 productos miraste el origen y al menos otra cosa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: "\xBFEn qu\xE9 productos tuviste en cuenta al menos tres aspectos?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "\xBFEn qu\xE9 productos encontraste al menos dos datos de sostenibilidad?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: "\xBFEn qu\xE9 productos miraste el material del envase y qu\xE9
+      pasa con \xE9l despu\xE9s de usarlo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: "\xBFQu\xE9 sellos de sostenibilidad llevaba el producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: "\xBFQu\xE9 colores de fruta y verdura comiste cada d\xEDa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Producto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: "A\xF1adir producto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Cuenta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: "Marca {0} m\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Tiene que incluir: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} de {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

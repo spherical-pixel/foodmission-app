@@ -114,14 +114,22 @@ namespace eu.foodmission.platform
                     }
                 }
 
-                if (inputs.Missions.Any(m => HasStep(m, MissionStepType.DayPicker)))
+                List<MissionReportStep> daySteps = inputs.Missions
+                    .SelectMany(m => m.Interaction.Steps)
+                    .Where(s => (s.Type == MissionStepType.DayPicker || s.Type == MissionStepType.DayChecklist) && !string.IsNullOrEmpty(s.EventType))
+                    .ToList();
+                if (daySteps.Count > 0)
                 {
-                    var (profile, profileError) = await _gamificationService.GetGamificationProfileAsync(EventsLimit, 1);
-                    if (profileError != null)
+                    string[] eventTypes = daySteps.Select(s => s.EventType).Distinct(StringComparer.Ordinal).ToArray();
+                    var (events, eventsError) = await LoadRecentEventsAsync(eventTypes);
+                    if (eventsError != null)
                     {
-                        return (null, profileError);
+                        return (null, eventsError);
                     }
-                    foreach (UserEvent userEvent in profile?.recentEvents ?? Array.Empty<UserEvent>())
+                    var arrayFields = daySteps.Where(s => s.Type == MissionStepType.DayChecklist)
+                        .GroupBy(s => s.EventType)
+                        .ToDictionary(g => g.Key, g => g.First().Checklist.ArrayField, StringComparer.Ordinal);
+                    foreach (UserEvent userEvent in events ?? Array.Empty<UserEvent>())
                     {
                         DateTime? day = ReadDayBucket(userEvent?.metadata);
                         if (userEvent == null || string.IsNullOrEmpty(userEvent.eventType) || !day.HasValue)
@@ -134,6 +142,21 @@ namespace eu.foodmission.platform
                             inputs.CoveredEventDays[userEvent.eventType] = days;
                         }
                         days.Add(day.Value);
+
+                        if (arrayFields.TryGetValue(userEvent.eventType, out string arrayField) && userEvent.metadata[arrayField] is JArray values)
+                        {
+                            if (!inputs.RecordedValues.TryGetValue(userEvent.eventType, out Dictionary<DateTime, HashSet<string>> byDay))
+                            {
+                                byDay = new Dictionary<DateTime, HashSet<string>>();
+                                inputs.RecordedValues[userEvent.eventType] = byDay;
+                            }
+                            if (!byDay.TryGetValue(day.Value, out HashSet<string> recorded))
+                            {
+                                recorded = new HashSet<string>(StringComparer.Ordinal);
+                                byDay[day.Value] = recorded;
+                            }
+                            recorded.UnionWith(values.Where(t => t.Type == JTokenType.String).Select(t => ((string)t).ToUpperInvariant()));
+                        }
                     }
                 }
 
@@ -144,6 +167,28 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[CheckInService] LoadPlanAsync failed: {ex.Message}");
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
+        }
+
+        /// <summary>
+        /// Recent events of these types. Backends without the eventTypes filter (#419) answer 400 to the unknown query
+        /// parameter: then the latest events are fetched unfiltered and filtered here.
+        /// </summary>
+        private async Task<(UserEvent[] Events, ApiErrorResponse Error)> LoadRecentEventsAsync(string[] eventTypes)
+        {
+            var (events, error) = await _gamificationService.GetRecentEventsAsync(eventTypes, EventsLimit);
+            if (error == null || error.statusCode != 400)
+            {
+                return (events, error);
+            }
+
+            Debug.LogWarning("[CheckInService] eventTypes filter not supported by the backend, loading unfiltered recent events");
+            var (profile, profileError) = await _gamificationService.GetGamificationProfileAsync(EventsLimit, 1);
+            if (profileError != null)
+            {
+                return (null, profileError);
+            }
+            var wanted = new HashSet<string>(eventTypes, StringComparer.Ordinal);
+            return ((profile?.recentEvents ?? Array.Empty<UserEvent>()).Where(e => e != null && wanted.Contains(e.eventType)).ToArray(), null);
         }
 
         /// <summary>Server dayBucket (UTC date "yyyy-MM-dd"); Newtonsoft may hand it over as a Date token.</summary>

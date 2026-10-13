@@ -21,7 +21,9 @@ namespace eu.foodmission.platform
         OptionPicker,
         MealReport,
         DayPicker,
-        YesNo
+        YesNo,
+        ProductChecklist,
+        DayChecklist
     }
 
     /// <summary>Navigation action (Actions.*) plus the UI.csv key of its button.</summary>
@@ -55,6 +57,36 @@ namespace eu.foodmission.platform
         }
     }
 
+    /// <summary>
+    /// Chips per item (a product or a day) for rules that group facts by item (backend groupBy):
+    /// the item counts once <see cref="MinDistinct"/> options, including every <see cref="Required"/> one, are checked.
+    /// </summary>
+    public sealed class ChecklistSpec
+    {
+        /// <summary>Option metadata key holding the value sent in <see cref="ArrayField"/>.</summary>
+        public const string ValueKey = "value";
+
+        public IReadOnlyList<MissionStepOption> Options { get; }
+        /// <summary>Null: one event per checked option (option event type). Otherwise one event whose metadata[ArrayField] holds the checked values.</summary>
+        public string ArrayField { get; }
+        public int MinDistinct { get; }
+        /// <summary>Option indexes every counted item must include.</summary>
+        public IReadOnlyList<int> Required { get; }
+
+        public bool IsArray => ArrayField != null;
+
+        public ChecklistSpec(IReadOnlyList<MissionStepOption> options, string arrayField, int minDistinct, IReadOnlyList<int> required)
+        {
+            Options = options ?? Array.Empty<MissionStepOption>();
+            ArrayField = arrayField;
+            MinDistinct = minDistinct;
+            Required = required ?? Array.Empty<int>();
+        }
+
+        public string ValueOf(int option) =>
+            option >= 0 && option < Options.Count && Options[option].Metadata.TryGetValue(ValueKey, out object value) ? value as string : null;
+    }
+
     /// <summary>One question Nutri asks in the manual report (spec §3.2).</summary>
     public sealed class MissionReportStep
     {
@@ -73,6 +105,8 @@ namespace eu.foodmission.platform
         public bool OnePerDay { get; }
         /// <summary>MealReport: meal types that count (e.g. BREAKFAST, or the main meals), empty = any meal.</summary>
         public IReadOnlyList<string> MealTypes { get; }
+        /// <summary>ProductChecklist / DayChecklist: the chips and what makes an item count. Null for other types.</summary>
+        public ChecklistSpec Checklist { get; }
 
         public MissionReportStep(
             MissionStepType type,
@@ -83,7 +117,8 @@ namespace eu.foodmission.platform
             IReadOnlyList<MissionStepOption> options,
             int maxCount,
             bool onePerDay,
-            IReadOnlyList<string> mealTypes)
+            IReadOnlyList<string> mealTypes,
+            ChecklistSpec checklist = null)
         {
             Type = type;
             PromptKey = promptKey;
@@ -94,6 +129,7 @@ namespace eu.foodmission.platform
             MaxCount = maxCount;
             OnePerDay = onePerDay;
             MealTypes = mealTypes ?? Array.Empty<string>();
+            Checklist = checklist;
         }
     }
 

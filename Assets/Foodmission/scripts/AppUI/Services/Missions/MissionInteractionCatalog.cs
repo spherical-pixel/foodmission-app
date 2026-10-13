@@ -37,6 +37,16 @@ namespace eu.foodmission.platform
             "LEGUMES", "DAIRY", "EGGS", "FISH", "NUTS", "SEEDS", "TOFU", "LEAN_MEAT"
         };
 
+        private static readonly string[] SustainabilityLabels =
+        {
+            "EU_ORGANIC", "FAIRTRADE", "RAINFOREST_ALLIANCE", "MSC", "ASC", "EU_ECOLABEL", "OTHER"
+        };
+
+        private static readonly string[] RainbowColours =
+        {
+            "GREEN", "RED", "ORANGE", "YELLOW", "PURPLE", "WHITE"
+        };
+
         private static readonly Dictionary<string, MissionInteraction> s_Entries = new(StringComparer.OrdinalIgnoreCase)
         {
             // A1 — Diet (advanced)
@@ -46,11 +56,17 @@ namespace eu.foodmission.platform
             { "M.A1.4", Auto(Meals(ClientEventTypes.MealAlternativeStaple, 5)) },
             { "M.A1.5", Auto(Meals(ClientEventTypes.MealSustainablePlate, 10)) },
             // A2 — Product choices (advanced)
-            { "M.A2.1", Pending() },
-            { "M.A2.2", Pending() },
+            { "M.A2.1", Manual(ProductFacts("MISSION_Q_ORIGIN_PLUS_ONE", 3, 2,
+                new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ShoppingCertificationChosen,
+                    ClientEventTypes.ProcessingProductionMethodChecked, ClientEventTypes.ShoppingSeasonalChosen },
+                ClientEventTypes.ShoppingOriginChecked)) },
+            { "M.A2.2", Manual(ProductValues("MISSION_Q_DOUBLE_LABEL", 1, ClientEventTypes.ShoppingDoubleLabelChosen, "labels",
+                "MISSION_OPT_LABEL_", 2, SustainabilityLabels)) },
             { "M.A2.3", Manual(Products(ClientEventTypes.ShoppingMulticriteriaPurchase, 3)) },
             { "M.A2.4", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 4)) },
-            { "M.A2.5", Pending() },
+            { "M.A2.5", Manual(ProductFacts("MISSION_Q_THREE_ASPECTS", 4, 3,
+                new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ProcessingProductionMethodChecked,
+                    ClientEventTypes.ShoppingCertificationChosen, ClientEventTypes.ShoppingSeasonalChosen })) },
             // A3 — Processing (advanced)
             { "M.A3.1", Manual(Products(ClientEventTypes.ProcessingNovaScoreCompared, 3, Meta("comparedWith", "GREEN_SCORE"))) },
             { "M.A3.2", Manual(Products(ClientEventTypes.ProcessingAllScoresCompared, 3)) },
@@ -63,7 +79,10 @@ namespace eu.foodmission.platform
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked,
                 ClientEventTypes.ProcessingProductionMethodChecked, ClientEventTypes.ProcessingIndicatorsCompared)) },
             // A4 — Packaging (advanced)
-            { "M.A4.1", Pending() },
+            { "M.A4.1", Manual(ProductFacts("MISSION_Q_PACKAGING_END_OF_LIFE", 3, 2,
+                new[] { ClientEventTypes.PackagingMaterialObserved, ClientEventTypes.PackagingRecyclingLabelRead,
+                    ClientEventTypes.PackagingRecyclabilityEvaluated },
+                ClientEventTypes.PackagingMaterialObserved)) },
             { "M.A4.2", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 5)) },
             { "M.A4.3", Manual(Products(ClientEventTypes.PackagingTradeOffReflected, 5)) },
             { "M.A4.4", Manual(Products(ClientEventTypes.PackagingSmartObserved, 2)) },
@@ -75,7 +94,8 @@ namespace eu.foodmission.platform
             { "M.A5.4", Manual(Days(ClientEventTypes.FoodWasteFifoOrganized, 3)) },
             { "M.A5.5", Manual(Confirm(ClientEventTypes.FoodWasteMealPlanned), Confirm(ClientEventTypes.FoodWasteFridgePantryChecked)) },
             // A6 — Nutrition (advanced)
-            { "M.A6.1", Pending() },
+            { "M.A6.1", Manual(DayValues("MISSION_QD_RAINBOW_COLOURS", ClientEventTypes.NutritionRainbowColoursLogged, "colours",
+                "MISSION_OPT_COLOUR_", 5, RainbowColours)) },
             { "M.A6.2", Auto(DailyMeals(ClientEventTypes.NutritionHighFibreMeal, "BREAKFAST")) },
             { "M.A6.3", Auto(DailyMeals(ClientEventTypes.NutritionAddedSugarAvoided)) },
             { "M.A6.4", Auto(MainMealChoice("MISSION_Q_NUTRIENT_DENSE_MEALS", 21,
@@ -131,7 +151,9 @@ namespace eu.foodmission.platform
             { "M.I2.1", Auto(Meals(ClientEventTypes.MealLocalProduce, 3)) },
             { "M.I2.2", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 8)) },
             { "M.I2.3", Auto(Meals(ClientEventTypes.MealCertifiedProduct, 3)) },
-            { "M.I2.4", Pending() },
+            { "M.I2.4", Manual(ProductFacts("MISSION_Q_TWO_FACTS", 5, 2,
+                new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ShoppingCertificationChosen,
+                    ClientEventTypes.ShoppingSeasonalChosen, ClientEventTypes.ShoppingLocalChosen })) },
             { "M.I2.5", Manual(Times(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
             // I3 — Processing (intermediate)
             { "M.I3.1", Manual(ProductChoice("MISSION_Q_PRODUCT_CHECKS", 5,
@@ -186,9 +208,6 @@ namespace eu.foodmission.platform
         private static MissionInteraction Manual(params MissionReportStep[] steps) =>
             new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, NoModules, steps);
 
-        private static MissionInteraction Pending() =>
-            new MissionInteraction(MissionInteractionStatus.PendingRule, MissionInteractionType.Report, NoModules, Array.Empty<MissionReportStep>());
-
         // ── Step factories ────────────────────────────────────
 
         private static string Q(string eventType) => "MISSION_Q_" + eventType;
@@ -240,6 +259,24 @@ namespace eu.foodmission.platform
             new MissionReportStep(MissionStepType.OptionPicker, "MISSION_Q_PROTEIN_SOURCES", null, null, NoMetadata,
                 ProteinSources.Select(s => new MissionStepOption("MISSION_OPT_PROTEIN_" + s, ClientEventTypes.NutritionProteinVarietyLogged, Meta("proteinSource", s))).ToArray(),
                 1, false, null);
+
+        /// <summary>Up to <paramref name="maxProducts"/> products, each with one event per checked fact (they share its productId).</summary>
+        private static MissionReportStep ProductFacts(string promptKey, int maxProducts, int minDistinct, string[] eventTypes, params string[] required) =>
+            new MissionReportStep(MissionStepType.ProductChecklist, promptKey, null, null, NoMetadata, null, maxProducts, false, null,
+                new ChecklistSpec(eventTypes.Select(Option).ToArray(), null, minDistinct, required.Select(r => Array.IndexOf(eventTypes, r)).ToArray()));
+
+        /// <summary>Up to <paramref name="maxProducts"/> products, each sent as one event with the checked values in <paramref name="arrayField"/>.</summary>
+        private static MissionReportStep ProductValues(string promptKey, int maxProducts, string eventType, string arrayField, string labelPrefix, int minDistinct, params string[] values) =>
+            new MissionReportStep(MissionStepType.ProductChecklist, promptKey, eventType, null, NoMetadata, null, maxProducts, false, null,
+                new ChecklistSpec(values.Select(v => ValueOption(labelPrefix, v)).ToArray(), arrayField, minDistinct, null));
+
+        /// <summary>One event per day with the values newly checked for that day; the backend merges a day's events.</summary>
+        private static MissionReportStep DayValues(string promptKey, string eventType, string arrayField, string labelPrefix, int minDistinct, params string[] values) =>
+            new MissionReportStep(MissionStepType.DayChecklist, promptKey, eventType, null, NoMetadata, null, MissionReportDays.WindowDays, true, null,
+                new ChecklistSpec(values.Select(v => ValueOption(labelPrefix, v)).ToArray(), arrayField, minDistinct, null));
+
+        private static MissionStepOption ValueOption(string labelPrefix, string value) =>
+            new MissionStepOption(labelPrefix + value, null, Meta(ChecklistSpec.ValueKey, value));
 
         private static MissionStepOption Option(string eventType) =>
             new MissionStepOption(eventType.StartsWith("SWAP_", StringComparison.Ordinal) ? eventType : "MISSION_OPT_" + eventType, eventType, NoMetadata);

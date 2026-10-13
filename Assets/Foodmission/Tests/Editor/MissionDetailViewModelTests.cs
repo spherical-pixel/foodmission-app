@@ -39,7 +39,7 @@ namespace eu.foodmission.platform.Tests
                 items = new[]
                 {
                     new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B1.4" },
-                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.A2.1" }
+                    new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.Z9.8" }
                 }
             }, (ApiErrorResponse)null));
             _vm = new MissionDetailViewModel(_store, _missions.Object, _dimensions.Object, _quests.Object, _failures.Object);
@@ -128,7 +128,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task Load_PendingRule_IsNotAvailable()
         {
-            await LoadAsync("M.A2.1");
+            await LoadAsync("M.Z9.8");
 
             Assert.IsTrue(_vm.IsPendingRule);
             Assert.IsFalse(_vm.CanAct);

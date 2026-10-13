@@ -4151,6 +4151,125 @@ MonoBehaviour:
       materialer og hvor godt den beskytter maten)?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Opprinnelse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Sertifisering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Sesong
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Lokal produksjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: "EU-\xF8kologisk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: "MSC (b\xE6rekraftig fiske)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (ansvarlig havbruk)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: EU Ecolabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Annen merking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: "Gr\xF8nn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: "R\xF8d"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Oransje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Gul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Lilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Hvit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "Hvilke produkter sjekket du opprinnelsen og minst \xE9n ting til
+      for?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: Hvilke produkter vurderte du minst tre sider ved?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "Hvilke produkter fant du minst to opplysninger om b\xE6rekraft
+      for?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: Hvilke produkter sjekket du emballasjematerialet for, og hva som
+      skjer med det etter bruk?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: "Hvilke b\xE6rekraftsmerker hadde produktet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: "Hvilke farger frukt og gr\xF8nnsaker spiste du hver dag?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Produkt {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Legg til produkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Teller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Merk {0} til
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: "M\xE5 inkludere: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} av {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

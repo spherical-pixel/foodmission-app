@@ -4139,6 +4139,125 @@ MonoBehaviour:
       and how well it protects the food)?
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Origin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certification
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Seasonality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Local production
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: EU organic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (sustainable fishing)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (responsible aquaculture)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: EU Ecolabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Other label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Orange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: White
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: For which products did you check the origin and at least one more
+      thing?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: For which products did you consider at least three aspects?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: For which products did you find at least two pieces of sustainability
+      information?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: For which products did you check the packaging material and what
+      happens to it after use?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: Which sustainability labels did the product carry?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Which colours of fruit and vegetables did you eat each day?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Product {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Add product
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Counts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Mark {0} more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Must include: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} of {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

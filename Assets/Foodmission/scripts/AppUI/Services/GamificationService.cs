@@ -95,9 +95,20 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> GetGamificationProfileAsync(int eventsLimit = 20, int walletEntriesLimit = 20)
+        public Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> GetGamificationProfileAsync(int eventsLimit = 20, int walletEntriesLimit = 20) =>
+            FetchProfileAsync($"{ApiConfig.BaseUrl}/api/v1/users/me/gamification?eventsLimit={eventsLimit}&walletEntriesLimit={walletEntriesLimit}", nameof(GetGamificationProfileAsync));
+
+        public async Task<(UserEvent[] Result, ApiErrorResponse Error)> GetRecentEventsAsync(IReadOnlyCollection<string> eventTypes, int limit)
         {
-            string url = $"{ApiConfig.BaseUrl}/api/v1/users/me/gamification?eventsLimit={eventsLimit}&walletEntriesLimit={walletEntriesLimit}";
+            var (profile, error) = await FetchProfileAsync(RecentEventsUrl(ApiConfig.BaseUrl, eventTypes, limit), nameof(GetRecentEventsAsync));
+            return error != null ? (null, error) : (profile?.recentEvents ?? Array.Empty<UserEvent>(), null);
+        }
+
+        public static string RecentEventsUrl(string baseUrl, IReadOnlyCollection<string> eventTypes, int limit) =>
+            $"{baseUrl}/api/v1/users/me/gamification?eventsLimit={limit}&walletEntriesLimit=1&eventTypes={Uri.EscapeDataString(string.Join(",", eventTypes))}";
+
+        private async Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> FetchProfileAsync(string url, string caller)
+        {
             using UnityWebRequest request = UnityWebRequest.Get(url);
 
             if (!string.IsNullOrEmpty(AuthHeader))
@@ -108,18 +119,18 @@ namespace eu.foodmission.platform
 
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
             while (!op.isDone)
+            {
                 await Task.Yield();
+            }
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetGamificationProfileAsync"));
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] {caller}"));
             }
 
             try
             {
-                string raw = request.downloadHandler.text;
-                var profile = JsonConvert.DeserializeObject<GamificationProfileResponse>(raw);
-                return (profile, null);
+                return (JsonConvert.DeserializeObject<GamificationProfileResponse>(request.downloadHandler.text), null);
             }
             catch (Exception ex)
             {

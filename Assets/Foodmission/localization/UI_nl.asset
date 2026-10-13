@@ -4165,6 +4165,124 @@ MonoBehaviour:
       en hoe goed die het voedsel beschermt)?
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Herkomst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certificering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Seizoensgebondenheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Lokale productie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: EU-biologisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (duurzame visserij)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (verantwoorde aquacultuur)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: EU Ecolabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Ander label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Groen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Rood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Oranje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Geel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Paars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Wit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "Bij welke producten heb je de herkomst en nog minstens \xE9\xE9n
+      ander punt gecontroleerd?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: Bij welke producten heb je minstens drie aspecten bekeken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: Bij welke producten vond je minstens twee stukjes duurzaamheidsinformatie?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: Bij welke producten heb je het verpakkingsmateriaal bekeken en wat
+      er na gebruik mee gebeurt?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: Welke duurzaamheidslabels had het product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Welke kleuren groente en fruit heb je elke dag gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Product {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Product toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Telt mee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Markeer er nog {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Moet bevatten: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} van {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

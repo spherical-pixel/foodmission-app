@@ -76,8 +76,27 @@ namespace eu.foodmission.platform
                             }
                             break;
 
+                        case MissionStepType.DayChecklist:
+                            inputs.RecordedValues.TryGetValue(step.EventType, out Dictionary<DateTime, HashSet<string>> recordedByDay);
+                            var recorded = new Dictionary<DateTime, HashSet<string>>();
+                            foreach (DateTime day in window)
+                            {
+                                if (recordedByDay != null && recordedByDay.TryGetValue(day, out HashSet<string> values) && values.Count > 0)
+                                {
+                                    recorded[day] = values;
+                                }
+                            }
+                            List<DateTime> openDays = window
+                                .Where(d => !ChecklistRule.Counts(step.Checklist, ChecklistRule.IndexesOf(step.Checklist, recorded.TryGetValue(d, out HashSet<string> v) ? v : null)))
+                                .ToList();
+                            if (openDays.Count > 0)
+                            {
+                                missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step, mission.StartLocal, openDays, recorded));
+                            }
+                            break;
+
                         default:
-                            missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step));
+                            missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step, mission.StartLocal));
                             break;
                     }
                 }

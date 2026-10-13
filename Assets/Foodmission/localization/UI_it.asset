@@ -4154,6 +4154,123 @@ MonoBehaviour:
       e quanto protegge l'alimento)?
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Origine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certificazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: "Stagionalit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Produzione locale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: Biologico UE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (pesca sostenibile)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (acquacoltura responsabile)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: Ecolabel UE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Altro marchio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Verde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Rosso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Arancione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Giallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Viola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Bianco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: Per quali prodotti hai controllato l'origine e almeno un altro aspetto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: Per quali prodotti hai considerato almeno tre aspetti?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "Per quali prodotti hai trovato almeno due informazioni sulla sostenibilit\xE0?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: Per quali prodotti hai controllato il materiale della confezione
+      e cosa succede dopo l'uso?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: "Quali marchi di sostenibilit\xE0 aveva il prodotto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Quali colori di frutta e verdura hai mangiato ogni giorno?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Prodotto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Aggiungi prodotto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Conta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Segnane altri {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Deve includere: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} di {1}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
