@@ -182,7 +182,7 @@ namespace eu.foodmission.platform.Tests
         private static string Ui(string key) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
 
         [Test]
-        public async Task ShareAsync_WithLoadedQuiz_SharesExplanationSourceAndFooter()
+        public async Task ShareAsync_WithLoadedQuiz_SharesTitleExplanationSourceAndFooter()
         {
             var share = new Mock<IShareService>();
             ShareContent sent = null;
@@ -190,12 +190,12 @@ namespace eu.foodmission.platform.Tests
                 .Callback<ShareContent>(c => sent = c)
                 .ReturnsAsync(true);
             var vm = new QuizScreenViewModel(_storeService, _mockAvatarService.Object, _mockQuizService.Object, share.Object);
-            vm.QuizData = new Quiz { id = "q1", explanation = "Explanation", source = "Estudio en [Nature Food](https://doi.org/x)." };
+            vm.QuizData = new Quiz { id = "q1", title = "Greener Dinners", explanation = "Explanation", source = "Estudio en [Nature Food](https://doi.org/x)." };
 
             bool result = await vm.ShareAsync();
 
             Assert.IsTrue(result);
-            Assert.AreEqual(ShareTextBuilder.Build("Explanation", "Estudio en [Nature Food](https://doi.org/x).", Ui("SHARE_FOOTER")), sent.Text);
+            Assert.AreEqual(ShareTextBuilder.Build("Greener Dinners", "Explanation", "Estudio en [Nature Food](https://doi.org/x).", Ui("SHARE_FOOTER")), sent.Text);
             StringAssert.DoesNotContain("](", sent.Text);
             Assert.AreEqual(Ui("SHARE_SUBJECT_QUIZ"), sent.Subject);
             Assert.IsNull(sent.Image);

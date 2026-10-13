@@ -14,6 +14,7 @@
                 <ui:VisualElement name="NutriViewContainer" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0;">
                     <fm:FMNutriView style="top: 0; left: 0; right: 0; scale: 0.5 0.5 0.5; margin-top: -570px; height: 900px;"/>
                 </ui:VisualElement>
+                <appui:Heading name="text-title" size="M" class="fm-learning-title fm-learning-title--hidden"/>
                 <appui:Text name="text-question" class="fm-quiz-question"/>
                 <ui:VisualElement name="Responses" style="flex-grow: 1;">
                     <fm:FMResponseQuiz name="response-1"/>
@@ -24,6 +25,7 @@
             </appui:ExVisualElement>
             <appui:ExVisualElement name="explanation-card" class="box-background fm-shadow-wrapper fm-quiz-explanation-card">
                 <ui:Image name="image-topic" class="fm-quiz-topic-image"/>
+                <appui:Heading name="text-explanation-title" size="M" class="fm-learning-title fm-learning-title--hidden"/>
                 <appui:Text name="text-explanation"/>
                 <fm:FMSourceItemView name="source-item-view"/>
                 <ui:VisualElement name="actions-row" class="fm-share-row">

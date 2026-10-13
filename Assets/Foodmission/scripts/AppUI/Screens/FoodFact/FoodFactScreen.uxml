@@ -7,6 +7,7 @@
             <fm:FMNutriView class="fm-home-nutri-image" style="margin-top: -200px;"/>
             <appui:ExVisualElement name="fact-card" class="box-background fm-shadow-wrapper fm-foodfact-card">
                 <ui:Image name="image-topic" class="fm-quiz-topic-image"/>
+                <appui:Heading name="text-title" size="M" class="fm-learning-title fm-learning-title--hidden"/>
                 <appui:Text name="text-body" size="L" class="fm-foodfact-body"/>
                 <fm:FMSourceItemView name="source-item-view"/>
                 <ui:VisualElement name="actions-row" class="fm-share-row">

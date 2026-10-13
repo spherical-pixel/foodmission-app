@@ -40,6 +40,8 @@ namespace eu.foodmission.platform
         private AccessibilityNode _btContinueNode;
         private AccessibilityNode _btShareNode;
 
+        private Heading _titleText;
+        private Heading _explanationTitleText;
         private Text _questionText;
         private VisualElement _mainQuestionCard;
         private VisualElement _explanationCard;
@@ -143,6 +145,8 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            SetTitle(_titleText, _viewModel.QuizData.title);
+            SetTitle(_explanationTitleText, _viewModel.QuizData.title);
             _questionText.text = _viewModel.QuizData.question;
 
             _response1.style.display = DisplayStyle.None;
@@ -256,6 +260,8 @@ namespace eu.foodmission.platform
             _btContinue = contentContainer.Q<FMButton>("bt-continue");
             _btShare = contentContainer.Q<IconButton>("bt-share");
 
+            _titleText = contentContainer.Q<Heading>("text-title");
+            _explanationTitleText = contentContainer.Q<Heading>("text-explanation-title");
             _questionText = contentContainer.Q<Text>("text-question");
             _mainQuestionCard = contentContainer.Q<VisualElement>("main-question-card");
             _mainQuestionCard.AddToClassList("fm-quiz-main-card--hidden");
@@ -557,6 +563,17 @@ namespace eu.foodmission.platform
         }
 
         // Invokes the handler directly: App UI buttons do not react to NavigationSubmitEvent.
+        private static void SetTitle(Heading heading, string title)
+        {
+            if (heading == null)
+            {
+                return;
+            }
+
+            heading.text = title ?? "";
+            heading.EnableInClassList("fm-learning-title--hidden", string.IsNullOrEmpty(title));
+        }
+
         private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label, Action onInvoke)
         {
             if (button == null)
