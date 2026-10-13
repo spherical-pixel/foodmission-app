@@ -4163,6 +4163,11 @@ MonoBehaviour:
     m_Localized: 'Dein Wissensfortschritt:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: "Bei wie vielen Produkten hast du die Verpackung abgewogen (Gr\xF6\xDFe,
+      Materialien und wie gut sie das Lebensmittel sch\xFCtzt)?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

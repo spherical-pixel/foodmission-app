@@ -24,7 +24,7 @@ namespace eu.foodmission.platform.Tests
 
         internal static readonly string[] PendingRuleCodes =
         {
-            "M.A2.1", "M.A2.2", "M.A2.5", "M.A4.1", "M.A4.3", "M.A6.1", "M.A6.4", "M.I2.4", "M.I5.4", "M.I6.2"
+            "M.A2.1", "M.A2.2", "M.A2.5", "M.A4.1", "M.A6.1", "M.I2.4"
         };
 
         [Test]
@@ -54,7 +54,7 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.AreEquivalent(PendingRuleCodes, pending);
 
             int auto = AllMissionCodes.Count(c => MissionInteractionCatalog.Get(c).AutoModules.Count > 0);
-            Assert.AreEqual(42, auto);
+            Assert.AreEqual(45, auto);
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(MissionStepType.MealReport, step.Type);
             Assert.IsTrue(step.OnePerDay);
-            Assert.AreEqual("BREAKFAST", step.FixedMealType);
+            CollectionAssert.AreEqual(new[] { "BREAKFAST" }, step.MealTypes.ToArray());
             Assert.AreEqual(ClientEventTypes.NutritionHighFibreMeal, step.EventType);
             Assert.AreEqual("MISSION_QD_NUTRITION_HIGH_FIBRE_MEAL", step.PromptKey);
         }

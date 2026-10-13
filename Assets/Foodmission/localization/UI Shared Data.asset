@@ -4019,6 +4019,10 @@ MonoBehaviour:
     m_Key: KNOWLEDGE_BARS_TITLE
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Key: MISSION_Q_PACKAGING_TRADE_OFF_REFLECTED
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

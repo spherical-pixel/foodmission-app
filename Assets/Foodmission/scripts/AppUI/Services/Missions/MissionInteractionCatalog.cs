@@ -65,7 +65,7 @@ namespace eu.foodmission.platform
             // A4 — Packaging (advanced)
             { "M.A4.1", Pending() },
             { "M.A4.2", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 5)) },
-            { "M.A4.3", Pending() },
+            { "M.A4.3", Manual(Products(ClientEventTypes.PackagingTradeOffReflected, 5)) },
             { "M.A4.4", Manual(Products(ClientEventTypes.PackagingSmartObserved, 2)) },
             { "M.A4.5", Manual(Products(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
             // A5 — Food waste (advanced)
@@ -78,7 +78,9 @@ namespace eu.foodmission.platform
             { "M.A6.1", Pending() },
             { "M.A6.2", Auto(DailyMeals(ClientEventTypes.NutritionHighFibreMeal, "BREAKFAST")) },
             { "M.A6.3", Auto(DailyMeals(ClientEventTypes.NutritionAddedSugarAvoided)) },
-            { "M.A6.4", Pending() },
+            { "M.A6.4", Auto(MainMealChoice("MISSION_Q_NUTRIENT_DENSE_MEALS", 21,
+                ClientEventTypes.NutritionProteinIncluded, ClientEventTypes.NutritionHighFibreMeal,
+                ClientEventTypes.NutritionFruitVegServingAdded, ClientEventTypes.NutritionHealthyFatChosen)) },
             { "M.A6.5", Manual(Products(ClientEventTypes.NutritionPlantDiversityCount, 20, null, "genericFoodId")) },
             // B1 — Diet (beginner)
             { "M.B1.1", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, true, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
@@ -152,11 +154,11 @@ namespace eu.foodmission.platform
             { "M.I5.3", Auto(
                 Confirm(ClientEventTypes.FoodWasteFridgePantryChecked),
                 MealChoice("MISSION_Q_FOOD_RESCUE", 3, false, ClientEventTypes.FoodWasteExpiredConsumed, ClientEventTypes.FoodWasteFullPlateSaved)) },
-            { "M.I5.4", Pending() },
+            { "M.I5.4", Auto(Meals(ClientEventTypes.FoodWasteHalfPlateSaved, 3)) },
             { "M.I5.5", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 3)) },
             // I6 — Nutrition (intermediate)
             { "M.I6.1", Auto(Meals(ClientEventTypes.SwapProcessedMeatToLegumes, 2)) },
-            { "M.I6.2", Pending() },
+            { "M.I6.2", Auto(Meals(ClientEventTypes.NutritionHighFibreMeal, 21, CheckInMealTypes.Main)) },
             { "M.I6.3", Auto(DailyMeals(ClientEventTypes.NutritionSaltFreeTable)) },
             { "M.I6.4", Auto(Meals(ClientEventTypes.NutritionHealthyFatChosen, 5)) },
             { "M.I6.5", Manual(ProteinSourceChoice()) },
@@ -211,17 +213,21 @@ namespace eu.foodmission.platform
         private static MissionReportStep Days(string eventType, int max) =>
             new MissionReportStep(MissionStepType.DayPicker, QDays(eventType), eventType, null, NoMetadata, null, max, false, null);
 
-        /// <summary>N quick meal logs with a fixed flag or swap.</summary>
-        private static MissionReportStep Meals(string flag, int max) =>
-            new MissionReportStep(MissionStepType.MealReport, Q(flag), flag, null, NoMetadata, null, max, false, null);
+        /// <summary>N quick meal logs with a fixed flag or swap, only on these meal types (none = any meal).</summary>
+        private static MissionReportStep Meals(string flag, int max, params string[] mealTypes) =>
+            new MissionReportStep(MissionStepType.MealReport, Q(flag), flag, null, NoMetadata, null, max, false, mealTypes);
 
         /// <summary>One quick meal log per day (up to 7) with a fixed flag; rules count by mealDayBucket.</summary>
-        private static MissionReportStep DailyMeals(string flag, string fixedMealType = null) =>
-            new MissionReportStep(MissionStepType.MealReport, QDays(flag), flag, null, NoMetadata, null, 7, true, fixedMealType);
+        private static MissionReportStep DailyMeals(string flag, params string[] mealTypes) =>
+            new MissionReportStep(MissionStepType.MealReport, QDays(flag), flag, null, NoMetadata, null, 7, true, mealTypes);
 
         /// <summary>Quick meal logs whose flag is chosen per meal.</summary>
         private static MissionReportStep MealChoice(string promptKey, int max, bool onePerDay, params string[] flags) =>
             new MissionReportStep(MissionStepType.MealReport, promptKey, null, null, NoMetadata, flags.Select(Option).ToArray(), max, onePerDay, null);
+
+        /// <summary>Main meals (breakfast, lunch, dinner) whose flags are chosen per meal; flags of one meal share its meal log.</summary>
+        private static MissionReportStep MainMealChoice(string promptKey, int max, params string[] flags) =>
+            new MissionReportStep(MissionStepType.MealReport, promptKey, null, null, NoMetadata, flags.Select(Option).ToArray(), max, false, CheckInMealTypes.Main);
 
         /// <summary>Quick meal logs whose swap is chosen per meal (a meal log may carry only swaps).</summary>
         private static MissionReportStep SwapMeals(int maxMeals, params string[] swaps) =>

@@ -90,6 +90,33 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.AreEqual(new[] { "BREAKFAST" }, breakfastOnly.OpenMealTypes.ToArray(), "meals with nothing to ask aren't offered");
         }
 
+        [TestCase("M.I6.2", 1)]
+        [TestCase("M.A6.4", 4)]
+        public void MainMealFlags_AreAskedForMainMealsOnly(string code, int flags)
+        {
+            // Rules count breakfast, lunch and dinner only: a flagged snack would be wasted
+            var day = CheckInPlanner.Plan(Inputs(M(code, Now.Date))).MealDays.Single();
+
+            Assert.AreEqual(flags, day.Questions.Count);
+            foreach (CheckInMealQuestion q in day.Questions)
+            {
+                Assert.IsNull(q.OnlyMealType);
+                CollectionAssert.AreEquivalent(CheckInMealTypes.Main, q.MealTypes.ToArray());
+            }
+            Assert.AreEqual(0, day.QuestionsFor("SNACK").Count);
+        }
+
+        [Test]
+        public void MainMealFlag_SharedWithAnAnyMealMission_IsAskedForEveryMeal()
+        {
+            // M.I6.4 (healthy fat, any meal) and M.A6.4 (main meals) ask the same flag
+            var day = CheckInPlanner.Plan(Inputs(M("M.A6.4", Now.Date), M("M.I6.4", Now.Date))).MealDays.Single();
+
+            var fat = day.Questions.Single(q => q.EventType == ClientEventTypes.NutritionHealthyFatChosen);
+            CollectionAssert.AreEquivalent(CheckInMealTypes.All, fat.MealTypes.ToArray());
+            Assert.AreEqual(1, day.QuestionsFor("SNACK").Count);
+        }
+
         [Test]
         public void MealDays_StartDay_OffersOnlyMealsDatedAfterTheStart()
         {

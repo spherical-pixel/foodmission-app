@@ -71,8 +71,8 @@ namespace eu.foodmission.platform
         public int MaxCount { get; }
         /// <summary>MealReport: at most one meal per day (rules counted by mealDayBucket).</summary>
         public bool OnePerDay { get; }
-        /// <summary>MealReport: meal type forced for every meal (e.g. BREAKFAST), null = user picks.</summary>
-        public string FixedMealType { get; }
+        /// <summary>MealReport: meal types that count (e.g. BREAKFAST, or the main meals), empty = any meal.</summary>
+        public IReadOnlyList<string> MealTypes { get; }
 
         public MissionReportStep(
             MissionStepType type,
@@ -83,7 +83,7 @@ namespace eu.foodmission.platform
             IReadOnlyList<MissionStepOption> options,
             int maxCount,
             bool onePerDay,
-            string fixedMealType)
+            IReadOnlyList<string> mealTypes)
         {
             Type = type;
             PromptKey = promptKey;
@@ -93,7 +93,7 @@ namespace eu.foodmission.platform
             Options = options ?? Array.Empty<MissionStepOption>();
             MaxCount = maxCount;
             OnePerDay = onePerDay;
-            FixedMealType = fixedMealType;
+            MealTypes = mealTypes ?? Array.Empty<string>();
         }
     }
 

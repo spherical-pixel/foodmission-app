@@ -4134,6 +4134,11 @@ MonoBehaviour:
     m_Localized: 'Your knowledge progress:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: For how many products did you weigh up the packaging (size, materials
+      and how well it protects the food)?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

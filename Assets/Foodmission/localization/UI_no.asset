@@ -4146,6 +4146,11 @@ MonoBehaviour:
     m_Localized: 'Din kunnskapsfremgang:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: "For hvor mange produkter vurderte du emballasjen (st\xF8rrelse,
+      materialer og hvor godt den beskytter maten)?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

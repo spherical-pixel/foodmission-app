@@ -4196,6 +4196,11 @@ MonoBehaviour:
     m_Localized: "Twoje post\u0119py w wiedzy:"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: "W ilu produktach przeanalizowa\u0142e\u015B opakowanie (rozmiar,
+      materia\u0142y i to, jak dobrze chroni \u017Cywno\u015B\u0107)?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

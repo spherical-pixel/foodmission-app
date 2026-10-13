@@ -4149,6 +4149,11 @@ MonoBehaviour:
     m_Localized: 'I tuoi progressi nella conoscenza:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: Per quanti prodotti hai valutato la confezione (dimensioni, materiali
+      e quanto protegge l'alimento)?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

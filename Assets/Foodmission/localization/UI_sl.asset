@@ -4146,6 +4146,11 @@ MonoBehaviour:
     m_Localized: 'Tvoj napredek v znanju:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: "Pri koliko izdelkih si pretehtal embala\u017Eo (velikost, materiali
+      in kako dobro \u0161\u010Diti \u017Eivilo)?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

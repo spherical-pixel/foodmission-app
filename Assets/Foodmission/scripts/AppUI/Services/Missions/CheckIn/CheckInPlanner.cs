@@ -10,7 +10,7 @@ namespace eu.foodmission.platform
         private sealed class MealContribution
         {
             public string EventType;
-            public string OnlyMealType;
+            public IReadOnlyList<string> MealTypes;
             public int Order;
             public DateTime? Start;
         }
@@ -53,7 +53,7 @@ namespace eu.foodmission.platform
                                         list = new List<MealContribution>();
                                         mealByDay[day] = list;
                                     }
-                                    list.Add(new MealContribution { EventType = eventType, OnlyMealType = step.FixedMealType, Order = eventOrder, Start = mission.StartLocal });
+                                    list.Add(new MealContribution { EventType = eventType, MealTypes = step.MealTypes, Order = eventOrder, Start = mission.StartLocal });
                                 }
                             }
                             break;
@@ -100,7 +100,7 @@ namespace eu.foodmission.platform
                         EventType = g.Key,
                         Order = g.Min(c => c.Order),
                         // Restricted only if every contributing mission restricts it to the same meal type
-                        Only = g.All(c => c.OnlyMealType != null) && g.Select(c => c.OnlyMealType).Distinct().Count() == 1 ? g.First().OnlyMealType : null,
+                        Only = g.All(c => c.MealTypes.Count == 1) && g.Select(c => c.MealTypes[0]).Distinct().Count() == 1 ? g.First().MealTypes[0] : null,
                         MealTypes = CheckInMealTypes.All.Where(t => g.Any(c => Counts(c, entry.Key, t, inputs.NowLocal))).ToArray()
                     })
                     .Where(q => q.MealTypes.Length > 0)
@@ -139,7 +139,7 @@ namespace eu.foodmission.platform
         /// dated (<see cref="MissionReportDays.TimestampFor"/>) at or after the mission start, since rules ignore earlier events.
         /// </summary>
         private static bool Counts(MealContribution contribution, DateTime day, string mealType, DateTime nowLocal) =>
-            (contribution.OnlyMealType == null || contribution.OnlyMealType == mealType) &&
+            (contribution.MealTypes.Count == 0 || contribution.MealTypes.Contains(mealType)) &&
             (!contribution.Start.HasValue || MissionReportDays.TimestampFor(day, mealType, nowLocal) >= contribution.Start.Value);
     }
 }
