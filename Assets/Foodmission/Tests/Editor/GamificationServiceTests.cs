@@ -151,5 +151,73 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+    
+        [Test]
+        public void BuildKnowledgeProgressUrls_TargetGamificationRoutes()
+        {
+            Assert.AreEqual("https://api.test/api/v1/users/me/gamification/knowledge-progress",
+                GamificationService.BuildKnowledgeProgressUrl("https://api.test"));
+            Assert.AreEqual("https://api.test/api/v1/users/me/gamification/knowledge-progress/FOOD_WASTE",
+                GamificationService.BuildKnowledgeBarUrl("https://api.test", KnowledgeKind.FoodWaste));
+        }
+
+        [Test]
+        public void ParseKnowledgeProgress_ReadsBarsWithoutItems()
+        {
+            const string json = "[{\"kind\":\"HEALTH\",\"finishedItems\":3,\"totalItems\":40,\"percentComplete\":7.5}," +
+                                "{\"kind\":\"FOOD_WASTE\",\"finishedItems\":0,\"totalItems\":12,\"percentComplete\":0}]";
+
+            KnowledgeProgress[] bars = GamificationService.ParseKnowledgeProgress(json);
+
+            Assert.AreEqual(2, bars.Length);
+            Assert.AreEqual(KnowledgeKind.Health, bars[0].kind);
+            Assert.AreEqual(3, bars[0].finishedItems);
+            Assert.AreEqual(40, bars[0].totalItems);
+            Assert.AreEqual(7.5f, bars[0].percentComplete);
+            Assert.IsNull(bars[0].items);
+        }
+
+        [Test]
+        public void ParseKnowledgeBar_ReadsItems()
+        {
+            const string json = "{\"kind\":\"HEALTH\",\"finishedItems\":1,\"totalItems\":2,\"percentComplete\":50," +
+                                "\"items\":[{\"contentType\":\"QUIZ\",\"contentCode\":\"Q1\",\"title\":\"Sugar?\",\"finished\":true}," +
+                                "{\"contentType\":\"MISSION\",\"contentCode\":\"M.B1.1\",\"title\":\"\",\"finished\":false}]}";
+
+            KnowledgeProgress bar = GamificationService.ParseKnowledgeBar(json);
+
+            Assert.AreEqual(2, bar.items.Length);
+            Assert.AreEqual(QuestContentType.Quiz, bar.items[0].contentType);
+            Assert.AreEqual("Q1", bar.items[0].contentCode);
+            Assert.IsTrue(bar.items[0].finished);
+            Assert.IsFalse(bar.items[1].finished);
+        }
+
+        [Test]
+        public void ParseKnowledge_EmptyJson_ReturnsEmpty()
+        {
+            Assert.AreEqual(0, GamificationService.ParseKnowledgeProgress("").Length);
+            Assert.IsNull(GamificationService.ParseKnowledgeBar(""));
+        }
+
+        [Test]
+        public async Task GetKnowledgeProgressAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.ignoreFailingMessages = true;
+            var (result, error) = await _service.GetKnowledgeProgressAsync();
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
+        public async Task GetKnowledgeBarAsync_OnNetworkFailure_ReturnsErrorAndNullResult()
+        {
+            LogAssert.ignoreFailingMessages = true;
+            var (result, error) = await _service.GetKnowledgeBarAsync(KnowledgeKind.Health);
+
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
     }
 }

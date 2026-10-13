@@ -3713,14 +3713,6 @@ MonoBehaviour:
     m_Localized: "Todas las ruedas est\xE1n ocultas."
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: Responde una breve encuesta para empezar a seguir tu impacto.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: Empezar encuesta
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0} %'
     m_Metadata:
@@ -4123,6 +4115,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: Ocultar niveles anteriores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: '{0} de {1} completados'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Retos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: completado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: pendiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: "A\xFAn no hay elementos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Tu progreso de conocimiento:'
     m_Metadata:
       m_Items: []
   references:

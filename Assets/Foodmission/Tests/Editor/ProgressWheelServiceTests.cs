@@ -148,5 +148,28 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, _store.GetAppState().progressWheels.Length);
             Assert.AreEqual("WATER_SAVINGS", _store.GetAppState().progressWheels[0].kind);
         }
+    
+        [Test]
+        public async Task Refresh_PromotedProfile_UpdatesStoredSegment()
+        {
+            _store.store.Dispatch(AppActions.setUserSegment.Invoke("BEGINNER"));
+            _gamification.Setup(g => g.GetProgressWheelsAsync())
+                .ReturnsAsync((new[] { new ProgressWheel { kind = "CO2_REDUCTION", profile = "INTERMEDIATE" } }, (ApiErrorResponse)null));
+
+            await _service.RefreshAsync();
+
+            Assert.AreEqual("INTERMEDIATE", _store.GetAppState().userSegment);
+        }
+
+        [Test]
+        public async Task Refresh_NoStoredSegment_NeverSetsOne()
+        {
+            _gamification.Setup(g => g.GetProgressWheelsAsync())
+                .ReturnsAsync((new[] { new ProgressWheel { kind = "CO2_REDUCTION", profile = "BEGINNER" } }, (ApiErrorResponse)null));
+
+            await _service.RefreshAsync();
+
+            Assert.IsTrue(string.IsNullOrEmpty(_store.GetAppState().userSegment));
+        }
     }
 }

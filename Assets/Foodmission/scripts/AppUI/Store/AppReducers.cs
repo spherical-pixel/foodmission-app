@@ -37,6 +37,7 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<string[]> setBadges = "app/setBadges";
         public static readonly ActionCreator<string> setUserSegment = "app/setUserSegment";
         public static readonly ActionCreator<ProgressWheel[]> setProgressWheels = "app/setProgressWheels";
+        public static readonly ActionCreator<KnowledgeProgress[]> setKnowledgeProgress = "app/setKnowledgeProgress";
         public static readonly ActionCreator<string[]> setHiddenProgressWheels = "app/setHiddenProgressWheels";
         public static readonly ActionCreator<DimensionLevelEntry[]> setDimensionLevels = "app/setDimensionLevels";
         public static readonly ActionCreator<string[]> markHiddenProgressWheelsSynced = "app/markHiddenProgressWheelsSynced";
@@ -370,6 +371,7 @@ namespace eu.foodmission.platform
             newState.progressWheels = new ProgressWheel[0];
             newState.hiddenProgressWheels = new string[0];
             newState.hiddenProgressWheelsPendingSync = false;
+            newState.knowledgeProgress = new KnowledgeProgress[0];
             newState.userGoals = new string[0];
             newState.dimensionLevels = new DimensionLevelEntry[0];
 
@@ -679,6 +681,13 @@ namespace eu.foodmission.platform
         {
             var newState = state.Copy();
             newState.progressWheels = action.payload != null ? Array.ConvertAll(action.payload, w => w?.Copy()) : new ProgressWheel[0];
+            return newState;
+        }
+
+        public static AppState SetKnowledgeProgressReducer(AppState state, IAction<KnowledgeProgress[]> action)
+        {
+            var newState = state.Copy();
+            newState.knowledgeProgress = action.payload != null ? Array.ConvertAll(action.payload, k => k?.Copy()) : new KnowledgeProgress[0];
             return newState;
         }
 

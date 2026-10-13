@@ -1,7 +1,10 @@
 
+using System;
+
 using Unity.AppUI.UI;
-using UnityEngine.UIElements;
 using Unity.Properties;
+
+using UnityEngine.UIElements;
 
 
 namespace eu.foodmission.platform.Components
@@ -58,6 +61,9 @@ namespace eu.foodmission.platform.Components
         }
 
 
+        /// <summary>Raised when the bar is tapped (Home opens the bar's detail).</summary>
+        public event Action clicked;
+
         /* ========= INTERNAL ELEMENTS ========= */
         protected Unity.AppUI.UI.Heading _headingIcon;
         protected Unity.AppUI.UI.Heading _headingText;
@@ -93,6 +99,9 @@ namespace eu.foodmission.platform.Components
 
 
             Add(_linearProgress);
+
+            AddToClassList("fm-status-row--clickable");
+            this.AddManipulator(new UnityEngine.UIElements.Clickable(() => clicked?.Invoke()));
         }
 
 

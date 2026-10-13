@@ -10,7 +10,7 @@ namespace eu.foodmission.platform
         bool IsLoading { get; }
         event Action LoadingChanged;
 
-        /// <summary>Fetches the wheels; when none exist and the onboarding survey is stored, re-submits it once per user and session.</summary>
+        /// <summary>Fetches the wheels (always the four, BEGINNER before the survey) and keeps userSegment in step with their profile.</summary>
         Task RefreshAsync();
 
         /// <summary>Stores the hidden kinds locally and syncs them as settings.hiddenProgressWheels.</summary>

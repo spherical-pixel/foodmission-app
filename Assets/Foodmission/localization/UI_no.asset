@@ -3713,15 +3713,6 @@ MonoBehaviour:
     m_Localized: Alle hjulene er skjult.
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: "Svar p\xE5 en kort unders\xF8kelse for \xE5 f\xF8lge med p\xE5
-      din innvirkning."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: "Start unders\xF8kelsen"
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0} %'
     m_Metadata:
@@ -4125,6 +4116,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: "Skjul tidligere niv\xE5er"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: "{0} av {1} fullf\xF8rt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Utfordringer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: "fullf\xF8rt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: "gjenst\xE5r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: "Ingen elementer enn\xE5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Din kunnskapsfremgang:'
     m_Metadata:
       m_Items: []
   references:

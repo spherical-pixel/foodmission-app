@@ -3716,14 +3716,6 @@ MonoBehaviour:
     m_Localized: Tutte le ruote sono nascoste.
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: Rispondi a un breve sondaggio per iniziare a monitorare il tuo impatto.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: Inizia il sondaggio
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0}%'
     m_Metadata:
@@ -4127,6 +4119,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: Nascondi livelli precedenti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: '{0} di {1} completati'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Sfide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: completato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: in sospeso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: Ancora nessun elemento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'I tuoi progressi nella conoscenza:'
     m_Metadata:
       m_Items: []
   references:

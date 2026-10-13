@@ -1381,6 +1381,8 @@ MonoBehaviour:
   - {fileID: 7429980358298452540}
   - {fileID: 5054142847031374515}
   - {fileID: -1741816292427579952}
+  - {fileID: 1581165950026053526}
+  - {fileID: 2688167473367792649}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1675,6 +1677,39 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &1581165950026053526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: KnowledgeBarDetail
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 350, y: 3950}
+  m_Guid: 133bb7fc4ad743158f48f55b4bafc103
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: '@UI:KNOWLEDGE'
+  m_TemplateSettings:
+    rid: 685283817655151546
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 685283817655151546
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.KnowledgeBarDetailScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &1995307887428131888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1828,6 +1863,33 @@ MonoBehaviour:
         m_ShowBackButton: 1
         m_ShowDrawer: 1
         m_ShowNavigationRail: 0
+--- !u!114 &2688167473367792649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: open_knowledge_bar
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 350, y: 4070}
+  m_Guid: 631525d9-18b9-4c27-b8c5-e207b16c4e71
+  m_Destination: {fileID: 1581165950026053526}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &2695106299898621552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2923,6 +2985,7 @@ MonoBehaviour:
   - {fileID: 535277622299341194}
   - {fileID: 7429980358298452540}
   - {fileID: -1741816292427579952}
+  - {fileID: 2688167473367792649}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955

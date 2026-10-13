@@ -53,6 +53,7 @@ namespace eu.foodmission.platform
             TemplateAddresses.MissionsScreen,
             TemplateAddresses.QuestsScreen,
             TemplateAddresses.QuestDetailScreen,
+            TemplateAddresses.KnowledgeBarDetailScreen,
             TemplateAddresses.MissionDetailScreen,
             TemplateAddresses.ChallengeDetailScreen,
             TemplateAddresses.QuickMealLogScreen,

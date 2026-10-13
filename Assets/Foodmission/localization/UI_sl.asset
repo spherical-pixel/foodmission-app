@@ -3715,14 +3715,6 @@ MonoBehaviour:
     m_Localized: Vsa kolesa so skrita.
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: "Izpolni kratko anketo in za\u010Dni spremljati svoj vpliv."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: "Za\u010Dni anketo"
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0} %'
     m_Metadata:
@@ -4124,6 +4116,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: "Skrij prej\u0161nje ravni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: "{0} od {1} kon\u010Danih"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Izzivi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: "kon\u010Dano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: v teku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: "\u0160e ni elementov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Tvoj napredek v znanju:'
     m_Metadata:
       m_Items: []
   references:

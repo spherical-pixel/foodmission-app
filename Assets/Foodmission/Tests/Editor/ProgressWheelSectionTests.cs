@@ -7,26 +7,33 @@ namespace eu.foodmission.platform.Tests
     [TestFixture]
     public class ProgressWheelSectionTests
     {
-        [TestCase(4, 4, false, true, ProgressWheelSectionState.Grid)]
-        [TestCase(4, 0, false, true, ProgressWheelSectionState.AllHidden)]
-        [TestCase(0, 0, true, true, ProgressWheelSectionState.Loading)]
-        [TestCase(0, 0, false, false, ProgressWheelSectionState.SurveyCta)]
-        [TestCase(0, 0, true, false, ProgressWheelSectionState.Loading)]
-        [TestCase(0, 0, false, true, ProgressWheelSectionState.Hidden)]
-        [TestCase(4, 2, true, true, ProgressWheelSectionState.Grid)]
-        public void ResolveState(int total, int visible, bool loading, bool surveyAnswered, ProgressWheelSectionState expected)
+        [TestCase(4, 4, false, ProgressWheelSectionState.Grid)]
+        [TestCase(4, 0, false, ProgressWheelSectionState.AllHidden)]
+        [TestCase(0, 0, true, ProgressWheelSectionState.Loading)]
+        [TestCase(0, 0, false, ProgressWheelSectionState.Hidden)]
+        [TestCase(4, 2, true, ProgressWheelSectionState.Grid)]
+        public void ResolveState(int total, int visible, bool loading, ProgressWheelSectionState expected)
         {
-            Assert.AreEqual(expected, ProgressWheelSection.ResolveState(total, visible, loading, surveyAnswered));
+            Assert.AreEqual(expected, ProgressWheelSection.ResolveState(total, visible, loading));
         }
 
         [Test]
-        public void Build_AnyAnswer_HidesTheSurveyCta()
+        public void Build_NoWheels_IsHidden_EvenWithoutSurvey()
         {
-            // Every question is optional: one answer (of any backend field) means the survey was done
-            var state = new AppState { userOnboardingSurvey = OnboardingSurveyData.Of(("usesLeftovers", "OFTEN")) };
+            Assert.AreEqual(ProgressWheelSectionState.Hidden, ProgressWheelSection.Build(new AppState(), false).State);
+        }
 
-            Assert.AreEqual(ProgressWheelSectionState.Hidden, ProgressWheelSection.Build(state, false).State);
-            Assert.AreEqual(ProgressWheelSectionState.SurveyCta, ProgressWheelSection.Build(new AppState(), false).State);
+        [Test]
+        public void Build_SegmentComesFromTheWheels()
+        {
+            var state = new AppState
+            {
+                userSegment = "BEGINNER",
+                progressWheels = new[] { new ProgressWheel { kind = "CO2_REDUCTION", profile = "INTERMEDIATE" } },
+            };
+
+            Assert.AreEqual("INTERMEDIATE", ProgressWheelSection.Build(state, false).Segment);
+            Assert.AreEqual("", ProgressWheelSection.Build(new AppState { userSegment = "ADVANCED" }, false).Segment);
         }
 
         [Test]
@@ -35,8 +42,11 @@ namespace eu.foodmission.platform.Tests
             var state = new AppState
             {
                 scale = "large",
-                userSegment = "BEGINNER",
-                progressWheels = new[] { new ProgressWheel { kind = "CO2_REDUCTION" }, new ProgressWheel { kind = "WATER_SAVINGS" } },
+                progressWheels = new[]
+                {
+                    new ProgressWheel { kind = "CO2_REDUCTION", profile = "BEGINNER" },
+                    new ProgressWheel { kind = "WATER_SAVINGS", profile = "BEGINNER" },
+                },
                 hiddenProgressWheels = new[] { "WATER_SAVINGS" },
             };
 
@@ -71,13 +81,12 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Signature_ChangesWithHiddenSegmentLangAndScale()
+        public void Signature_ChangesWithHiddenLangAndScale()
         {
             var a = new AppState();
             string baseSig = ProgressWheelSection.Signature(a);
 
             Assert.AreNotEqual(baseSig, ProgressWheelSection.Signature(new AppState { hiddenProgressWheels = new[] { "X" } }));
-            Assert.AreNotEqual(baseSig, ProgressWheelSection.Signature(new AppState { userSegment = "ADVANCED" }));
             Assert.AreNotEqual(baseSig, ProgressWheelSection.Signature(new AppState { lang = "de" }));
             Assert.AreNotEqual(baseSig, ProgressWheelSection.Signature(new AppState { scale = "large" }));
         }

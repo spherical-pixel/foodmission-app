@@ -22,5 +22,11 @@ namespace eu.foodmission.platform
 
         /// <summary>GET /users/me/gamification/progress-wheels — created at BEGINNER before the survey.</summary>
         Task<(ProgressWheel[] Result, ApiErrorResponse Error)> GetProgressWheelsAsync();
+
+        /// <summary>GET /users/me/gamification/knowledge-progress: the three knowledge bars, without items.</summary>
+        Task<(KnowledgeProgress[] Result, ApiErrorResponse Error)> GetKnowledgeProgressAsync();
+
+        /// <summary>GET /users/me/gamification/knowledge-progress/{kind}: one bar with all its finished and open items.</summary>
+        Task<(KnowledgeProgress Result, ApiErrorResponse Error)> GetKnowledgeBarAsync(string kind);
     }
 }

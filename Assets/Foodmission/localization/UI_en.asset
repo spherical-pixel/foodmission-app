@@ -3703,14 +3703,6 @@ MonoBehaviour:
     m_Localized: All the wheels are hidden.
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: Answer a short survey to start tracking your impact.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: Start survey
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0}%'
     m_Metadata:
@@ -4112,6 +4104,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: Hide previous levels
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: '{0} of {1} completed'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Challenges
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: pending
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: No items yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203591
+    m_Localized: 'Your knowledge progress:'
     m_Metadata:
       m_Items: []
   references:
