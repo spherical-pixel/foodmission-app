@@ -209,7 +209,8 @@ namespace eu.foodmission.platform
 
             foreach (var group in groups)
             {
-                if (group == null || group.Quests == null || group.Quests.Count == 0)
+                // A dimension whose content is all below the user's level still shows its "previous levels" row
+                if (group == null || ((group.Quests == null || group.Quests.Count == 0) && group.PreviousLevelsCount == 0))
                     continue;
 
                 var dimBox = new VisualElement();
@@ -280,6 +281,13 @@ namespace eu.foodmission.platform
 
                 var cardsContainer = new VisualElement();
                 cardsContainer.AddToClassList("fm-quizzes-cards-container");
+
+                VisualElement previousLevelsRow = PreviousLevelsRow.Create(group.PreviousLevelsCount, group.ShowsPreviousLevels,
+                    () => _viewModel?.TogglePreviousLevels(dimCode));
+                if (previousLevelsRow != null)
+                {
+                    cardsContainer.Add(previousLevelsRow);
+                }
 
                 if (group.Quests != null)
                 {

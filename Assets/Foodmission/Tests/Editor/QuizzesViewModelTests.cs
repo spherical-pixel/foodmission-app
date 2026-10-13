@@ -607,5 +607,68 @@ namespace eu.foodmission.platform.Tests
             var diet = _vm.DisplayGroups.First(g => g.Dimension?.code == DimensionCode.DietChanges);
             Assert.AreEqual(ContentLevel.Advanced, diet.UserLevel);
         }
+
+        // ── Previous levels hidden (2026-10-12) ─────────────────
+
+        [Test]
+        public void PreviousLevels_HiddenPerDimensionAcrossTopics_WrongAnswersKept_ExplicitFilterShowsThem()
+        {
+            var diet = _mockDimensions[0];
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(diet);
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-2")).Returns(diet);
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "t",
+                lang = "es",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Advanced) }
+            });
+            var quizzes = new[]
+            {
+                new Quiz { id = "b-new", code = "Q1.1.1", topicId = "top-1", level = "BEGINNER" },
+                new Quiz { id = "b-wrong", code = "Q1.1.2", topicId = "top-1", level = "BEGINNER" },
+                new Quiz { id = "i-new", code = "Q1.2.1", topicId = "top-2", level = "INTERMEDIATE" },
+                new Quiz { id = "a-1", code = "Q1.1.3", topicId = "top-1", level = "ADVANCED" }
+            };
+            var progress = new[] { new QuizProgress { quizId = "b-wrong", quizCode = "Q1.1.2", completed = true, isCorrect = false } };
+
+            _vm.SetRawDataForTesting(quizzes, progress);
+
+            QuizDisplayGroup group = _vm.DisplayGroups.Single(g => g.Dimension.code == DimensionCode.DietChanges);
+            CollectionAssert.AreEquivalent(new[] { "b-wrong", "a-1" }, group.Topics.SelectMany(t => t.Quizzes).Select(q => q.Quiz.id).ToArray(),
+                "a wrong answer can be retried, so it stays");
+            Assert.AreEqual(1, group.Topics.Count, "a topic left without visible quizzes is not listed");
+            Assert.AreEqual(2, group.PreviousLevelsCount);
+            Assert.AreEqual(4, group.TotalCount);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            group = _vm.DisplayGroups.Single(g => g.Dimension.code == DimensionCode.DietChanges);
+            Assert.AreEqual(4, group.Topics.SelectMany(t => t.Quizzes).Count());
+            Assert.AreEqual(2, group.Topics.Count);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            _vm.SetLevelFilter("BEGINNER");
+            group = _vm.DisplayGroups.Single(g => g.Dimension.code == DimensionCode.DietChanges);
+            Assert.AreEqual(2, group.Topics.SelectMany(t => t.Quizzes).Count());
+            Assert.AreEqual(0, group.PreviousLevelsCount);
+        }
+
+        [Test]
+        public void PreviousLevels_DimensionWithOnlyPreviousQuizzes_KeepsTheGroup()
+        {
+            var diet = _mockDimensions[0];
+            _mockDimensionService.Setup(d => d.GetDimensionForTopic("top-1")).Returns(diet);
+            _storeService.SetAppState(new AppState
+            {
+                accessToken = "t",
+                lang = "es",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Advanced) }
+            });
+
+            _vm.SetRawDataForTesting(new[] { new Quiz { id = "b-new", code = "Q1.1.1", topicId = "top-1", level = "BEGINNER" } }, new QuizProgress[0]);
+
+            QuizDisplayGroup group = _vm.DisplayGroups.Single(g => g.Dimension.code == DimensionCode.DietChanges);
+            Assert.AreEqual(0, group.Topics.Count);
+            Assert.AreEqual(1, group.PreviousLevelsCount);
+        }
     }
 }

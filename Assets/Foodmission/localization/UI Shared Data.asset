@@ -3991,6 +3991,14 @@ MonoBehaviour:
     m_Key: TXT_RETRY
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243307511808
+    m_Key: LEVELS_SHOW_PREVIOUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203584
+    m_Key: LEVELS_HIDE_PREVIOUS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

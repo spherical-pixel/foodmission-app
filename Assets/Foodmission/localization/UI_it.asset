@@ -4121,6 +4121,14 @@ MonoBehaviour:
     m_Localized: Riprova
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243307511808
+    m_Localized: Mostra livelli precedenti ({0})
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203584
+    m_Localized: Nascondi livelli precedenti
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

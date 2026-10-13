@@ -30,6 +30,8 @@ namespace eu.foodmission.platform
 
     public class QuizDisplayItem
     {
+        /// <summary>Below the user's level in its dimension and not in progress: hidden behind "show previous levels".</summary>
+        public bool IsPreviousLevel { get; set; }
         public Quiz Quiz { get; set; }
         public bool IsCompleted { get; set; }
         public bool? IsCorrect { get; set; }
@@ -52,6 +54,9 @@ namespace eu.foodmission.platform
         public int TotalCount { get; set; }
         public int CompletedCount { get; set; }
         public bool IsExpanded { get; set; } = false;
+        /// <summary>Items below the user's level in this dimension (hidden unless ShowsPreviousLevels); 0 = no row.</summary>
+        public int PreviousLevelsCount { get; set; }
+        public bool ShowsPreviousLevels { get; set; }
         public List<QuizTopicGroup> Topics { get; set; } = new List<QuizTopicGroup>();
     }
 
@@ -88,6 +93,7 @@ namespace eu.foodmission.platform
         private readonly IQuizService _quizService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private readonly HashSet<string> _shownPreviousLevelDimensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         private Quiz[] _rawQuizzes = Array.Empty<Quiz>();
         private QuizProgress[] _rawProgress = Array.Empty<QuizProgress>();
@@ -197,6 +203,13 @@ namespace eu.foodmission.platform
                 SelectedStatus = status;
                 RebuildDisplayGroups();
             }
+        }
+
+        /// <summary>Shows or hides the content below the user's level in the dimension.</summary>
+        public void TogglePreviousLevels(string dimensionCodeOrId)
+        {
+            PreviousLevels.Toggle(_shownPreviousLevelDimensions, dimensionCodeOrId);
+            RebuildDisplayGroups();
         }
 
         public void ToggleDimensionExpanded(string dimensionCodeOrId)
@@ -411,6 +424,8 @@ namespace eu.foodmission.platform
             // Map progress by quizId and quizCode
             var progressMap = BuildProgressMap();
             var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+            // Previous levels are hidden only with the "All" level filter: a chosen level is shown as asked
+            bool hidePreviousLevels = string.Equals(_selectedLevel, QuizFilterLevel.All, StringComparison.OrdinalIgnoreCase);
 
             // Filter items
             var displayItems = new List<QuizDisplayItem>();
@@ -465,7 +480,8 @@ namespace eu.foodmission.platform
                     Quiz = q,
                     IsCompleted = isCompleted,
                     IsCorrect = isCorrect,
-                    LevelLock = GetQuizLock(q, gate, progressMap)
+                    LevelLock = GetQuizLock(q, gate, progressMap),
+                    IsPreviousLevel = hidePreviousLevels && gate.IsPreviousLevel(gate.DimensionForTopic(q.topicId), q.level, isCorrect.HasValue && !isCompleted)
                 });
             }
 
@@ -508,6 +524,8 @@ namespace eu.foodmission.platform
                     var topicGroups = new List<QuizTopicGroup>();
                     int dimTotal = 0;
                     int dimCompleted = 0;
+                    int previousLevelsCount = 0;
+                    bool showsPreviousLevels = PreviousLevels.IsShown(_shownPreviousLevelDimensions, dim);
 
                     var dimTopics = _dimensionService.GetTopicsForDimension(dim.code) ?? dim.topics;
                     if (dimTopics != null)
@@ -529,11 +547,17 @@ namespace eu.foodmission.platform
 
                             if (topicQuizzes != null && topicQuizzes.Count > 0)
                             {
-                                topicGroups.Add(new QuizTopicGroup
+                                // Counted in full (dimension progress); a topic left without visible items is not listed
+                                var visible = PreviousLevels.Visible(topicQuizzes, it => it.IsPreviousLevel, showsPreviousLevels, out int topicPrevious);
+                                previousLevelsCount += topicPrevious;
+                                if (visible.Count > 0)
                                 {
-                                    Topic = topic,
-                                    Quizzes = topicQuizzes
-                                });
+                                    topicGroups.Add(new QuizTopicGroup
+                                    {
+                                        Topic = topic,
+                                        Quizzes = visible
+                                    });
+                                }
 
                                 foreach (var qItem in topicQuizzes)
                                 {
@@ -545,7 +569,7 @@ namespace eu.foodmission.platform
                         }
                     }
 
-                    if (topicGroups.Count > 0)
+                    if (topicGroups.Count > 0 || previousLevelsCount > 0)
                     {
                         bool isExpanded = _expandedDimensionCodes.Contains(dim.code) ||
                                           (!string.IsNullOrEmpty(dim.id) && _expandedDimensionCodes.Contains(dim.id));
@@ -557,6 +581,8 @@ namespace eu.foodmission.platform
                             TotalCount = dimTotal,
                             CompletedCount = dimCompleted,
                             IsExpanded = isExpanded,
+                            PreviousLevelsCount = previousLevelsCount,
+                            ShowsPreviousLevels = showsPreviousLevels,
                             Topics = topicGroups
                         });
                     }

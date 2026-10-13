@@ -492,5 +492,40 @@ namespace eu.foodmission.platform.Tests
             var diet = _vm.DisplayGroups.First(g => g.Dimension?.code == DimensionCode.DietChanges);
             Assert.AreEqual(ContentLevel.Advanced, diet.UserLevel);
         }
+
+        // ── Previous levels hidden (2026-10-12) ─────────────────
+
+        [Test]
+        public void PreviousLevels_HiddenUntilShown_ActiveQuestKept_ExplicitFilterShowsThem()
+        {
+            _mockDimensionService.Setup(d => d.GetDimension("dim-1")).Returns(_mockDimensions[0]);
+            _storeService.SetAppState(new AppState
+            {
+                userCurrentQuestId = "b2",
+                dimensionLevels = new[] { new DimensionLevelEntry(DimensionCode.DietChanges, ContentLevel.Advanced) }
+            });
+            var quests = new[]
+            {
+                new Quest { id = "b1", code = "QUEST.DIET.BEGINNER.1", dimensionId = "dim-1", level = QuestLevel.Beginner, available = true },
+                new Quest { id = "b2", code = "QUEST.DIET.BEGINNER.2", dimensionId = "dim-1", level = QuestLevel.Beginner, available = true },
+                new Quest { id = "a1", code = "QUEST.DIET.ADVANCED.1", dimensionId = "dim-1", level = QuestLevel.Advanced, available = true }
+            };
+
+            _vm.SetRawDataForTesting(quests, new QuestProgress[0]);
+
+            QuestDisplayGroup diet = _vm.DisplayGroups.Single();
+            CollectionAssert.AreEquivalent(new[] { "b2", "a1" }, diet.Quests.Select(q => q.Quest.id).ToArray(), "the active quest stays");
+            Assert.AreEqual(1, diet.PreviousLevelsCount);
+            Assert.AreEqual(3, diet.TotalCount);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            Assert.AreEqual(3, _vm.DisplayGroups.Single().Quests.Count);
+            Assert.IsTrue(_vm.DisplayGroups.Single().ShowsPreviousLevels);
+
+            _vm.TogglePreviousLevels(DimensionCode.DietChanges);
+            _vm.SetLevelFilter(QuestLevel.Beginner);
+            Assert.AreEqual(2, _vm.DisplayGroups.Single().Quests.Count);
+            Assert.AreEqual(0, _vm.DisplayGroups.Single().PreviousLevelsCount);
+        }
     }
 }

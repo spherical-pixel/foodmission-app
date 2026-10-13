@@ -29,6 +29,8 @@ namespace eu.foodmission.platform
 
     public class MissionDisplayItem
     {
+        /// <summary>Below the user's level in its dimension and not in progress: hidden behind "show previous levels".</summary>
+        public bool IsPreviousLevel { get; set; }
         public Mission Mission { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsFailed { get; set; }
@@ -46,6 +48,9 @@ namespace eu.foodmission.platform
         public int TotalCount { get; set; }
         public int CompletedCount { get; set; }
         public bool IsExpanded { get; set; } = false;
+        /// <summary>Items below the user's level in this dimension (hidden unless ShowsPreviousLevels); 0 = no row.</summary>
+        public int PreviousLevelsCount { get; set; }
+        public bool ShowsPreviousLevels { get; set; }
         public List<MissionDisplayItem> Missions { get; set; } = new List<MissionDisplayItem>();
     }
 
@@ -82,6 +87,7 @@ namespace eu.foodmission.platform
         private readonly IMissionService _missionService;
         private readonly IDimensionService _dimensionService;
         private readonly HashSet<string> _expandedDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private readonly HashSet<string> _shownPreviousLevelDimensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         private Mission[] _rawMissions = Array.Empty<Mission>();
         private MissionProgress[] _rawProgress = Array.Empty<MissionProgress>();
@@ -195,6 +201,13 @@ namespace eu.foodmission.platform
             }
         }
 
+        /// <summary>Shows or hides the content below the user's level in the dimension.</summary>
+        public void TogglePreviousLevels(string dimensionCodeOrId)
+        {
+            PreviousLevels.Toggle(_shownPreviousLevelDimensions, dimensionCodeOrId);
+            RebuildDisplayGroups();
+        }
+
         public void ToggleDimensionExpanded(string dimensionCodeOrId)
         {
             if (string.IsNullOrEmpty(dimensionCodeOrId)) return;
@@ -260,6 +273,8 @@ namespace eu.foodmission.platform
 
             var goalFilter = GoalContentFilter.FromGoals(_storeService?.GetAppState()?.userGoals);
             var gate = new LevelGate(_storeService?.GetAppState(), _dimensionService);
+            // Previous levels are hidden only with the "All" level filter: a chosen level is shown as asked
+            bool hidePreviousLevels = string.Equals(_selectedLevel, MissionFilterLevel.All, StringComparison.OrdinalIgnoreCase);
 
             // Map progress by missionId
             var progressMap = new Dictionary<string, MissionProgress>(StringComparer.OrdinalIgnoreCase);
@@ -332,7 +347,8 @@ namespace eu.foodmission.platform
                     IsCompleted = isCompleted,
                     IsFailed = isFailed,
                     Progress = progressVal,
-                    LevelLock = gate.GetLock(gate.DimensionById(m.dimensionId), m.level, started)
+                    LevelLock = gate.GetLock(gate.DimensionById(m.dimensionId), m.level, started),
+                    IsPreviousLevel = hidePreviousLevels && gate.IsPreviousLevel(gate.DimensionById(m.dimensionId), m.level, started && !isCompleted && !isFailed)
                 });
             }
 
@@ -384,6 +400,8 @@ namespace eu.foodmission.platform
 
                     bool isExpanded = _expandedDimensionCodes.Contains(dim.code) ||
                                       (!string.IsNullOrEmpty(dim.id) && _expandedDimensionCodes.Contains(dim.id));
+                    bool showsPreviousLevels = PreviousLevels.IsShown(_shownPreviousLevelDimensions, dim);
+                    int previousLevelsCount = dimItems.Count(it => it.IsPreviousLevel);
 
                     groups.Add(new MissionDisplayGroup
                     {
@@ -392,7 +410,9 @@ namespace eu.foodmission.platform
                         TotalCount = dimTotal,
                         CompletedCount = dimCompleted,
                         IsExpanded = isExpanded,
-                        Missions = dimItems
+                        PreviousLevelsCount = previousLevelsCount,
+                        ShowsPreviousLevels = showsPreviousLevels,
+                        Missions = PreviousLevels.Visible(dimItems, it => it.IsPreviousLevel, showsPreviousLevels, out _)
                     });
                 }
             }

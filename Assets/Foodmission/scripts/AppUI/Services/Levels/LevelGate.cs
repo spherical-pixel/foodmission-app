@@ -54,5 +54,15 @@ namespace eu.foodmission.platform
                 DimensionName = dimension.name
             };
         }
+
+        /// <summary>True when the item is below the user's level in its dimension and not in progress (hidden in the lists).</summary>
+        public bool IsPreviousLevel(Dimension dimension, string itemLevel, bool inProgress)
+        {
+            if (DevUnlocks.All)
+            {
+                return false;
+            }
+            return LevelAccess.IsBelowUserLevel(itemLevel, UserLevel(dimension), inProgress);
+        }
     }
 }
