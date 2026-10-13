@@ -1736,5 +1736,69 @@ namespace eu.foodmission.platform.Tests
                 DevUnlocks.All = originalDevUnlocks;
             }
         }
+    
+        [Test]
+        public void KnowledgeBars_FollowTheStore()
+        {
+            _storeService.store.Dispatch(AppActions.setKnowledgeProgress.Invoke(new[]
+            {
+                new KnowledgeProgress { kind = KnowledgeKind.Health, percentComplete = 50f },
+                new KnowledgeProgress { kind = KnowledgeKind.FoodChoices, percentComplete = 25f },
+                new KnowledgeProgress { kind = KnowledgeKind.FoodWaste, percentComplete = 10f },
+            }));
+
+            Assert.AreEqual(0.5f, _vm.HealthProgress, 0.0001f);
+            Assert.AreEqual(0.25f, _vm.FoodChoicesProgress, 0.0001f);
+            Assert.AreEqual(0.1f, _vm.FoodWasteProgress, 0.0001f);
+        }
+
+        [Test]
+        public void KnowledgeBars_StartAtZeroWithoutCache()
+        {
+            Assert.AreEqual(0f, _vm.HealthProgress);
+            Assert.AreEqual(0f, _vm.FoodChoicesProgress);
+            Assert.AreEqual(0f, _vm.FoodWasteProgress);
+        }
+
+        [Test]
+        public void RefreshKnowledgeProgress_CallsService()
+        {
+            var knowledge = new Mock<IKnowledgeProgressService>();
+            knowledge.Setup(k => k.RefreshAsync()).Returns(System.Threading.Tasks.Task.CompletedTask);
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, _mockNotificationService.Object, _mockLegalService.Object,
+                knowledgeProgressService: knowledge.Object);
+
+            vm.RefreshKnowledgeProgress();
+
+            knowledge.Verify(k => k.RefreshAsync(), Times.Once);
+            vm.Dispose();
+        }
+
+        [Test]
+        public void OpenKnowledgeBar_NavigatesWithKind()
+        {
+            string action = null;
+            Unity.AppUI.Navigation.Argument[] args = null;
+            _vm.NavigationRequested += (a, ar) => { action = a; args = ar; };
+
+            _vm.OpenKnowledgeBar(KnowledgeKind.FoodWaste);
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_knowledge_bar, action);
+            Assert.AreEqual("kind", args[0].name);
+            Assert.AreEqual(KnowledgeKind.FoodWaste, args[0].value);
+        }
+    
+        [Test]
+        public void KnowledgeBarPercent_FollowsTheStore()
+        {
+            Assert.AreEqual(0, _vm.KnowledgeBarPercent(KnowledgeKind.Health));
+
+            _storeService.store.Dispatch(AppActions.setKnowledgeProgress.Invoke(new[]
+            {
+                new KnowledgeProgress { kind = KnowledgeKind.Health, percentComplete = 34.6f },
+            }));
+
+            Assert.AreEqual(35, _vm.KnowledgeBarPercent(KnowledgeKind.Health));
+        }
     }
 }

@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="KnowledgeBarDetailScreen.uss"/>
+    <ui:VisualElement name="root" class="fm-root fm-kb-root">
+        <ui:VisualElement name="header" class="fm-kb-header">
+            <appui:Heading name="bar-emoji" text="" size="L" class="fm-kb-emoji"/>
+            <appui:Heading name="bar-title" text="" size="M" class="fm-kb-title"/>
+            <appui:LinearProgress name="bar-progress" variant="Determinate" size="M" class="fm-kb-progress"/>
+            <appui:Text name="bar-count" text="" size="M" class="fm-kb-count"/>
+        </ui:VisualElement>
+        <appui:Text name="bar-empty" text="@UI:KNOWLEDGE_BAR_EMPTY" size="M" class="fm-kb-empty fm-kb--hidden"/>
+        <ui:VisualElement name="bar-error" class="fm-kb-error fm-kb--hidden">
+            <eu.foodmission.platform.Components.FMButton name="btn-retry" title="@UI:TXT_RETRY" variant="Accent" size="M" class="fm-button"/>
+        </ui:VisualElement>
+        <appui:Accordion name="sections" class="fm-kb-sections"/>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
+    </ui:VisualElement>
+</ui:UXML>

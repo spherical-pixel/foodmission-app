@@ -69,6 +69,53 @@ namespace eu.foodmission.platform
         }
     }
 
+    /// <summary>Knowledge bar kinds from GET /users/me/gamification/knowledge-progress, in Home display order.</summary>
+    public static class KnowledgeKind
+    {
+        public const string Health = "HEALTH";
+        public const string FoodChoices = "FOOD_CHOICES";
+        public const string FoodWaste = "FOOD_WASTE";
+
+        public static readonly string[] All = { Health, FoodChoices, FoodWaste };
+
+        public static bool IsKnown(string kind)
+        {
+            return kind != null && Array.IndexOf(All, kind) >= 0;
+        }
+    }
+
+    /// <summary>
+    /// One knowledge bar: share of tagged items (missions, challenges, quizzes answered correctly, food facts read)
+    /// finished across every quest. <see cref="items"/> only comes from GET knowledge-progress/{kind}.
+    /// </summary>
+    [Serializable]
+    public class KnowledgeProgress
+    {
+        public string kind;
+        public int finishedItems;
+        public int totalItems;
+        public float percentComplete;
+        public KnowledgeItem[] items;
+
+        public KnowledgeProgress Copy()
+        {
+            var copy = (KnowledgeProgress)MemberwiseClone();
+            copy.items = items != null ? (KnowledgeItem[])items.Clone() : null;
+            return copy;
+        }
+    }
+
+    [Serializable]
+    public class KnowledgeItem
+    {
+        /// <summary>QuestContentType: MISSION, CHALLENGE, QUIZ or FOOD_FACT.</summary>
+        public string contentType;
+        public string contentCode;
+        /// <summary>Backend text (English until the backend localizes it).</summary>
+        public string title;
+        public bool finished;
+    }
+
     /// <summary>Response of POST /users/me/gamification/onboarding-survey.</summary>
     [Serializable]
     public class OnboardingSurveyResult

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
 using Unity.AppUI.Core;
@@ -27,9 +28,9 @@ namespace eu.foodmission.platform
         {
             HomePromptSession.OnboardingDeferred = true;
         }
-        private LinearProgress _healthProgress;
-        private LinearProgress _sustainabilityProgress;
-        private LinearProgress _knowledgeProgress;
+        private FMStatusBar _barHealth;
+        private FMStatusBar _barFoodChoices;
+        private FMStatusBar _barFoodWaste;
         private CircularProgress _caloriesCircular;
         private Label _caloriesConsumedLabel;
         private Label _caloriesLeftLabel;
@@ -40,9 +41,7 @@ namespace eu.foodmission.platform
         private static readonly string[] k_PeriodChoices = { "@UI:TODAY", "@UI:WEEK", "@UI:MONTH" };
         private static readonly string[] k_ScopeChoices = { "@UI:ME", "@UI:GROUP" };
 
-        private AccessibilityNode _healthProgressNode;
-        private AccessibilityNode _sustainabilityProgressNode;
-        private AccessibilityNode _knowledgeProgressNode;
+        private readonly List<AccessibilityNode> _knowledgeBarNodes = new List<AccessibilityNode>();
         private AccessibilityNode _caloriesNode;
 
         protected override bool ApplySafeAreaBottom => false;
@@ -63,7 +62,6 @@ namespace eu.foodmission.platform
         private FMProgressWheelGrid _wheelsGrid;
         private VisualElement _wheelsMessage;
         private Text _wheelsMessageText;
-        private FMButton _btnWheelsSurvey;
         private CircularProgress _wheelsLoading;
         private readonly System.Collections.Generic.List<AccessibilityNode> _wheelNodes = new System.Collections.Generic.List<AccessibilityNode>();
         private AccessibilityNode _wheelsCustomizeNode;
@@ -91,9 +89,9 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
-            _healthProgress = contentContainer.Q<LinearProgress>("health-progress");
-            _sustainabilityProgress = contentContainer.Q<LinearProgress>("sustainability-progress");
-            _knowledgeProgress = contentContainer.Q<LinearProgress>("knowledge-progress");
+            _barHealth = contentContainer.Q<FMStatusBar>("bar-health");
+            _barFoodChoices = contentContainer.Q<FMStatusBar>("bar-food-choices");
+            _barFoodWaste = contentContainer.Q<FMStatusBar>("bar-food-waste");
             _caloriesCircular = contentContainer.Q<CircularProgress>("calories-circular");
             _caloriesConsumedLabel = contentContainer.Q<Label>("calories-consumed");
             _caloriesLeftLabel = contentContainer.Q<Label>("calories-left");
@@ -112,7 +110,6 @@ namespace eu.foodmission.platform
             _wheelsGrid = contentContainer.Q<FMProgressWheelGrid>("wheels-grid");
             _wheelsMessage = contentContainer.Q<VisualElement>("wheels-message");
             _wheelsMessageText = contentContainer.Q<Text>("wheels-message-text");
-            _btnWheelsSurvey = contentContainer.Q<FMButton>("btn-wheels-survey");
             _wheelsLoading = contentContainer.Q<CircularProgress>("wheels-loading");
         }
 
@@ -127,6 +124,7 @@ namespace eu.foodmission.platform
             _ = _viewModel?.LoadActiveQuestAsync();
             RenderProgressWheels();
             _viewModel?.RefreshProgressWheels();
+            _viewModel?.RefreshKnowledgeProgress();
 
             StartPromptRun();
         }
@@ -525,21 +523,82 @@ namespace eu.foodmission.platform
                 _activeQuestCard.CheckInClicked += OnActiveQuestCheckInClicked;
             }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked += OnChooseQuestClicked;
+            if (_barHealth != null)
+            {
+                _barHealth.clicked += OnHealthBarClicked;
+            }
+            if (_barFoodChoices != null)
+            {
+                _barFoodChoices.clicked += OnFoodChoicesBarClicked;
+            }
+            if (_barFoodWaste != null)
+            {
+                _barFoodWaste.clicked += OnFoodWasteBarClicked;
+            }
             if (_nutriView != null) _nutriView.OnClick = () => _navController?.Navigate(Actions.go_to_nutri_editor);
             if (_viewModel != null) _viewModel.PropertyChanged += OnViewModelPropertyChanged;
             if (_btnWheelsCustomize != null)
             {
                 _btnWheelsCustomize.clicked += OnWheelsCustomizeClicked;
             }
-            if (_btnWheelsSurvey != null)
-            {
-                _btnWheelsSurvey.clicked += OnWheelsSurveyClicked;
-            }
             if (_viewModel != null)
             {
                 _viewModel.ProgressWheelsChanged += RenderProgressWheels;
             }
         }
+
+        /// <summary>
+        /// Screen-reader nodes for the three bars, labelled from the localized bar name and the VM value
+        /// (the FMStatusBar texts are still the UXML defaults until bindings run).
+        /// </summary>
+        private void AddKnowledgeBarNodes()
+        {
+            if (_accessibilityHierarchy == null || _viewModel == null)
+            {
+                return;
+            }
+            foreach ((FMStatusBar bar, string kind) in new[]
+            {
+                (_barFoodChoices, KnowledgeKind.FoodChoices),
+                (_barFoodWaste, KnowledgeKind.FoodWaste),
+                (_barHealth, KnowledgeKind.Health),
+            })
+            {
+                if (bar == null)
+                {
+                    continue;
+                }
+                string name = LocalizationSettings.StringDatabase.GetLocalizedString("UI", KnowledgeBarText.NameKey(kind));
+                AccessibilityNode node = _accessibilityHierarchy.AddNode($"{name}, {_viewModel.KnowledgeBarPercent(kind)}%");
+                node.role = AccessibilityRole.Button;
+                node.frameGetter = MakeElementFrameGetter(bar);
+                string target = kind;
+                node.invoked += () =>
+                {
+                    _viewModel?.OpenKnowledgeBar(target);
+                    return true;
+                };
+                _knowledgeBarNodes.Add(node);
+            }
+        }
+
+        private void RefreshKnowledgeBarNodes()
+        {
+            if (_accessibilityHierarchy == null)
+            {
+                return;
+            }
+            foreach (AccessibilityNode node in _knowledgeBarNodes)
+            {
+                _accessibilityHierarchy.RemoveNode(node);
+            }
+            _knowledgeBarNodes.Clear();
+            AddKnowledgeBarNodes();
+        }
+
+        private void OnHealthBarClicked() => _viewModel?.OpenKnowledgeBar(KnowledgeKind.Health);
+        private void OnFoodChoicesBarClicked() => _viewModel?.OpenKnowledgeBar(KnowledgeKind.FoodChoices);
+        private void OnFoodWasteBarClicked() => _viewModel?.OpenKnowledgeBar(KnowledgeKind.FoodWaste);
 
         private void UnregisterEvents()
         {
@@ -550,15 +609,23 @@ namespace eu.foodmission.platform
                 _activeQuestCard.CheckInClicked -= OnActiveQuestCheckInClicked;
             }
             if (_btnChooseQuest != null) _btnChooseQuest.clicked -= OnChooseQuestClicked;
+            if (_barHealth != null)
+            {
+                _barHealth.clicked -= OnHealthBarClicked;
+            }
+            if (_barFoodChoices != null)
+            {
+                _barFoodChoices.clicked -= OnFoodChoicesBarClicked;
+            }
+            if (_barFoodWaste != null)
+            {
+                _barFoodWaste.clicked -= OnFoodWasteBarClicked;
+            }
             if (_nutriView != null) _nutriView.OnClick = null;
             if (_viewModel != null) _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             if (_btnWheelsCustomize != null)
             {
                 _btnWheelsCustomize.clicked -= OnWheelsCustomizeClicked;
-            }
-            if (_btnWheelsSurvey != null)
-            {
-                _btnWheelsSurvey.clicked -= OnWheelsSurveyClicked;
             }
             if (_viewModel != null)
             {
@@ -593,6 +660,12 @@ namespace eu.foodmission.platform
                 e.PropertyName == nameof(_viewModel.CurrentQuestActivityStates))
             {
                 RefreshActiveQuestWidget();
+            }
+            else if (e.PropertyName == nameof(_viewModel.HealthProgress) ||
+                     e.PropertyName == nameof(_viewModel.FoodChoicesProgress) ||
+                     e.PropertyName == nameof(_viewModel.FoodWasteProgress))
+            {
+                RefreshKnowledgeBarNodes();
             }
         }
 
@@ -687,10 +760,6 @@ namespace eu.foodmission.platform
         {
             if (_viewModel == null) return;
 
-            if (_healthProgress != null) _healthProgress.value = _viewModel.HealthProgress;
-            if (_sustainabilityProgress != null) _sustainabilityProgress.value = _viewModel.SustainabilityProgress;
-            if (_knowledgeProgress != null) _knowledgeProgress.value = _viewModel.KnowledgeProgress;
-
             int total = _viewModel.CaloriesConsumed + _viewModel.CaloriesLeft;
             if (_caloriesCircular != null)
             {
@@ -706,9 +775,9 @@ namespace eu.foodmission.platform
             _promptGeneration++; // ends the running prompt run
             UnregisterEvents();
 
-            _healthProgress = null;
-            _sustainabilityProgress = null;
-            _knowledgeProgress = null;
+            _barHealth = null;
+            _barFoodChoices = null;
+            _barFoodWaste = null;
             _caloriesCircular = null;
             _caloriesConsumedLabel = null;
             _caloriesLeftLabel = null;
@@ -726,7 +795,6 @@ namespace eu.foodmission.platform
             _wheelsGrid = null;
             _wheelsMessage = null;
             _wheelsMessageText = null;
-            _btnWheelsSurvey = null;
             _wheelsLoading = null;
 
             base.OnViewModelUnbinding();
@@ -746,29 +814,7 @@ namespace eu.foodmission.platform
             _periodStepper?.CreateAccessibilityNode(h, "Time period");
             _scopeStepper?.CreateAccessibilityNode(h, "Scope");
 
-            if (_healthProgress != null)
-            {
-                _healthProgressNode = h.AddNode("Health progress");
-                _healthProgressNode.role = AccessibilityRole.StaticText;
-                _healthProgressNode.value = $"{_viewModel?.HealthProgress * 100:F0}%";
-                _healthProgressNode.frameGetter = MakeElementFrameGetter(_healthProgress);
-            }
-
-            if (_sustainabilityProgress != null)
-            {
-                _sustainabilityProgressNode = h.AddNode("Sustainability progress");
-                _sustainabilityProgressNode.role = AccessibilityRole.StaticText;
-                _sustainabilityProgressNode.value = $"{_viewModel?.SustainabilityProgress * 100:F0}%";
-                _sustainabilityProgressNode.frameGetter = MakeElementFrameGetter(_sustainabilityProgress);
-            }
-
-            if (_knowledgeProgress != null)
-            {
-                _knowledgeProgressNode = h.AddNode("Knowledge progress");
-                _knowledgeProgressNode.role = AccessibilityRole.StaticText;
-                _knowledgeProgressNode.value = $"{_viewModel?.KnowledgeProgress * 100:F0}%";
-                _knowledgeProgressNode.frameGetter = MakeElementFrameGetter(_knowledgeProgress);
-            }
+            AddKnowledgeBarNodes();
 
             if (_caloriesCircular != null)
             {
@@ -785,9 +831,7 @@ namespace eu.foodmission.platform
 
         protected override void TeardownAccessibilityNodes()
         {
-            _healthProgressNode = null;
-            _sustainabilityProgressNode = null;
-            _knowledgeProgressNode = null;
+            _knowledgeBarNodes.Clear();
             _caloriesNode = null;
             _wheelNodes.Clear();
             _wheelsCustomizeNode = null;
@@ -829,22 +873,16 @@ namespace eu.foodmission.platform
                 _wheelsGrid.SetWheels(showGrid ? model.Visible : System.Array.Empty<ProgressWheel>());
             }
 
-            bool showMessage = model.State == ProgressWheelSectionState.AllHidden || model.State == ProgressWheelSectionState.SurveyCta;
+            bool showMessage = model.State == ProgressWheelSectionState.AllHidden;
             _wheelsMessage?.EnableInClassList("fm-wheels-section__part--hidden", !showMessage);
             if (_wheelsMessageText != null && showMessage)
             {
-                _wheelsMessageText.text = ProgressWheelText.Localize(model.State == ProgressWheelSectionState.SurveyCta ? "WHEELS_SURVEY_CTA_TEXT" : "WHEELS_ALL_HIDDEN");
+                _wheelsMessageText.text = ProgressWheelText.Localize("WHEELS_ALL_HIDDEN");
             }
-            _btnWheelsSurvey?.EnableInClassList("fm-wheels-section__part--hidden", model.State != ProgressWheelSectionState.SurveyCta);
 
             _wheelsLoading?.EnableInClassList("fm-wheels-section__part--hidden", model.State != ProgressWheelSectionState.Loading);
 
             RefreshWheelAccessibilityNodes();
-        }
-
-        private void OnWheelsSurveyClicked()
-        {
-            _viewModel?.NavigateToOnboardingSurvey();
         }
 
         private void OnWheelsCustomizeClicked()

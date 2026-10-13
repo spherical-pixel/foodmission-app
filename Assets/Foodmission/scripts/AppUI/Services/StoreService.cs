@@ -82,6 +82,7 @@ namespace eu.foodmission.platform
                 .AddCase(AppActions.setBadges, AppReducers.SetBadgesReducer)
                 .AddCase(AppActions.setUserSegment, AppReducers.SetUserSegmentReducer)
                 .AddCase(AppActions.setProgressWheels, AppReducers.SetProgressWheelsReducer)
+                .AddCase(AppActions.setKnowledgeProgress, AppReducers.SetKnowledgeProgressReducer)
                 .AddCase(AppActions.setHiddenProgressWheels, AppReducers.SetHiddenProgressWheelsReducer)
                 .AddCase(AppActions.markHiddenProgressWheelsSynced, AppReducers.MarkHiddenProgressWheelsSyncedReducer)
                 // Food Info

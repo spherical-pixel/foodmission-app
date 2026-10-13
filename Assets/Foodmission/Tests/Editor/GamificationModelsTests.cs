@@ -335,5 +335,27 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(12.5f, wheels[0].percentComplete);
             Assert.AreEqual("WATER_SAVINGS", wheels[1].kind);
         }
+    
+        [Test]
+        public void KnowledgeKind_AllInDisplayOrder_AndIsKnown()
+        {
+            CollectionAssert.AreEqual(new[] { "HEALTH", "FOOD_CHOICES", "FOOD_WASTE" }, KnowledgeKind.All);
+            Assert.IsTrue(KnowledgeKind.IsKnown("FOOD_CHOICES"));
+            Assert.IsFalse(KnowledgeKind.IsKnown("FOOD_AND_WASTE"));
+            Assert.IsFalse(KnowledgeKind.IsKnown(null));
+        }
+
+        [Test]
+        public void KnowledgeProgress_Copy_IsIndependent()
+        {
+            var original = new KnowledgeProgress { kind = "HEALTH", finishedItems = 1, items = new[] { new KnowledgeItem { contentCode = "Q1" } } };
+
+            KnowledgeProgress copy = original.Copy();
+            copy.finishedItems = 9;
+            copy.items[0] = null;
+
+            Assert.AreEqual(1, original.finishedItems);
+            Assert.IsNotNull(original.items[0]);
+        }
     }
 }

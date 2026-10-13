@@ -640,6 +640,10 @@
     margin-bottom: 8px;
 }
 
+.fm-status-row--clickable {
+    cursor: link;
+}
+
 .fm-status-icon {
     font-size: 20px;
     width: 28px;

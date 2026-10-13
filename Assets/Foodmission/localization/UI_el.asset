@@ -4539,17 +4539,6 @@ MonoBehaviour:
       \u03B5\u03AF\u03BD\u03B1\u03B9 \u03BA\u03C1\u03C5\u03BC\u03BC\u03AD\u03BD\u03BF\u03B9."
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: "\u0391\u03C0\u03AC\u03BD\u03C4\u03B7\u03C3\u03B5 \u03C3\u03B5 \u03BC\u03B9\u03B1
-      \u03C3\u03CD\u03BD\u03C4\u03BF\u03BC\u03B7 \u03AD\u03C1\u03B5\u03C5\u03BD\u03B1
-      \u03B3\u03B9\u03B1 \u03BD\u03B1 \u03C0\u03B1\u03C1\u03B1\u03BA\u03BF\u03BB\u03BF\u03C5\u03B8\u03B5\u03AF\u03C2
-      \u03C4\u03BF\u03BD \u03B1\u03BD\u03C4\u03AF\u03BA\u03C4\u03C5\u03C0\u03CC \u03C3\u03BF\u03C5."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: "\u0388\u03BD\u03B1\u03C1\u03BE\u03B7 \u03AD\u03C1\u03B5\u03C5\u03BD\u03B1\u03C2"
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0}%'
     m_Metadata:
@@ -5067,6 +5056,31 @@ MonoBehaviour:
   - m_Id: 56190243387203584
     m_Localized: "\u0391\u03C0\u03CC\u03BA\u03C1\u03C5\u03C8\u03B7 \u03C0\u03C1\u03BF\u03B7\u03B3\u03BF\u03CD\u03BC\u03B5\u03BD\u03C9\u03BD
       \u03B5\u03C0\u03B9\u03C0\u03AD\u03B4\u03C9\u03BD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: "{0} \u03B1\u03C0\u03CC {1} \u03BF\u03BB\u03BF\u03BA\u03BB\u03B7\u03C1\u03CE\u03B8\u03B7\u03BA\u03B1\u03BD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: "\u03A0\u03C1\u03BF\u03BA\u03BB\u03AE\u03C3\u03B5\u03B9\u03C2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: "\u03BF\u03BB\u03BF\u03BA\u03BB\u03B7\u03C1\u03CE\u03B8\u03B7\u03BA\u03B5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: "\u03B5\u03BA\u03BA\u03C1\u03B5\u03BC\u03B5\u03AF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: "\u0394\u03B5\u03BD \u03C5\u03C0\u03AC\u03C1\u03C7\u03BF\u03C5\u03BD
+      \u03B1\u03BA\u03CC\u03BC\u03B7 \u03C3\u03C4\u03BF\u03B9\u03C7\u03B5\u03AF\u03B1."
     m_Metadata:
       m_Items: []
   references:

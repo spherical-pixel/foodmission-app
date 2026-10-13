@@ -3729,14 +3729,6 @@ MonoBehaviour:
     m_Localized: Alle wielen zijn verborgen.
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: Beantwoord een korte vragenlijst om je impact te gaan volgen.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: Vragenlijst starten
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0}%'
     m_Metadata:
@@ -4138,6 +4130,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: Vorige niveaus verbergen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: '{0} van {1} voltooid'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Uitdagingen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: voltooid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: in afwachting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: Nog geen items.
     m_Metadata:
       m_Items: []
   references:

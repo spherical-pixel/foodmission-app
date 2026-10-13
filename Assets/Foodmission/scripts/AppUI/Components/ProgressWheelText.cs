@@ -24,7 +24,7 @@ namespace eu.foodmission.platform.Components
         private static readonly string[] s_SectionKeys =
         {
             "WHEELS_SECTION_TITLE", "WHEELS_SECTION_HEADER", "WHEELS_CUSTOMIZE", "WHEELS_CUSTOMIZE_TITLE",
-            "WHEELS_ALL_HIDDEN", "WHEELS_SURVEY_CTA_TEXT", "WHEELS_SURVEY_CTA_BUTTON",
+            "WHEELS_ALL_HIDDEN",
             "WHEEL_PERCENT", "WHEEL_STAGE", "WHEEL_VALUE", "WHEEL_TARGET", "WHEEL_TOTAL",
         };
 

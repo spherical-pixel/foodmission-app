@@ -3759,15 +3759,6 @@ MonoBehaviour:
     m_Localized: "Wszystkie ko\u0142a s\u0105 ukryte."
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: "Wype\u0142nij kr\xF3tk\u0105 ankiet\u0119, aby \u015Bledzi\u0107
-      sw\xF3j wp\u0142yw."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: "Rozpocznij ankiet\u0119"
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0}%'
     m_Metadata:
@@ -4175,6 +4166,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: Ukryj poprzednie poziomy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: "{0} z {1} uko\u0144czono"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Wyzwania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: "uko\u0144czone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: do zrobienia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: "Brak element\xF3w."
     m_Metadata:
       m_Items: []
   references:

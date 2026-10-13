@@ -359,6 +359,10 @@ MonoBehaviour:
     m_Key: TXT_OK
     m_Metadata:
       m_Items: []
+  - m_Id: 56156153275473920
+    m_Key: TXT_RETRY
+    m_Metadata:
+      m_Items: []
   - m_Id: 25354482861727744
     m_Key: ALERT_ERROR_TITLE
     m_Metadata:
@@ -3603,14 +3607,6 @@ MonoBehaviour:
     m_Key: WHEELS_ALL_HIDDEN
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Key: WHEELS_SURVEY_CTA_TEXT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Key: WHEELS_SURVEY_CTA_BUTTON
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Key: WHEEL_PERCENT
     m_Metadata:
@@ -3927,6 +3923,14 @@ MonoBehaviour:
     m_Key: ONBOARDING_CLOSE_CONFIRM
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243307511808
+    m_Key: LEVELS_SHOW_PREVIOUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203584
+    m_Key: LEVELS_HIDE_PREVIOUS
+    m_Metadata:
+      m_Items: []
   - m_Id: 53972389359247366
     m_Key: MISSION_LAST_DAY_NOTIFICATION_TITLE
     m_Metadata:
@@ -3987,16 +3991,28 @@ MonoBehaviour:
     m_Key: MEAL_LOG_REVIEW_CONFIRM
     m_Metadata:
       m_Items: []
-  - m_Id: 56156153275473920
-    m_Key: TXT_RETRY
+  - m_Id: 56190243387203585
+    m_Key: KNOWLEDGE_BAR_COMPLETED
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243307511808
-    m_Key: LEVELS_SHOW_PREVIOUS
+  - m_Id: 56190243387203586
+    m_Key: KNOWLEDGE_SECTION_CHALLENGES
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203584
-    m_Key: LEVELS_HIDE_PREVIOUS
+  - m_Id: 56190243387203587
+    m_Key: KNOWLEDGE_SECTION_COUNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Key: KNOWLEDGE_ITEM_COMPLETED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Key: KNOWLEDGE_ITEM_PENDING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Key: KNOWLEDGE_BAR_EMPTY
     m_Metadata:
       m_Items: []
   m_Metadata:

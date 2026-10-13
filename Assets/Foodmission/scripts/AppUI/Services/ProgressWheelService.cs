@@ -69,6 +69,15 @@ namespace eu.foodmission.platform
                 }
 
                 _storeService.store.Dispatch(AppActions.setProgressWheels.Invoke(wheels ?? new ProgressWheel[0]));
+
+                // The backend promotes the segment when a wheel completes stage 5; keep the stored one in step.
+                // Never set one for a user without it: a stored segment marks onboarding as done.
+                string profile = ProgressWheelSection.SegmentOf(wheels);
+                string stored = _storeService.GetAppState()?.userSegment;
+                if (!string.IsNullOrEmpty(stored) && !string.IsNullOrEmpty(profile) && profile != stored)
+                {
+                    _storeService.store.Dispatch(AppActions.setUserSegment.Invoke(profile));
+                }
             }
             catch (Exception ex)
             {

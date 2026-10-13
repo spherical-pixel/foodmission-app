@@ -6,7 +6,7 @@ using System.Text;
 
 namespace eu.foodmission.platform
 {
-    public enum ProgressWheelSectionState { Hidden, Loading, Grid, AllHidden, SurveyCta }
+    public enum ProgressWheelSectionState { Hidden, Loading, Grid, AllHidden }
 
     public sealed class ProgressWheelSectionModel
     {
@@ -23,17 +23,20 @@ namespace eu.foodmission.platform
     {
         public const string LargeScale = "large";
 
-        public static ProgressWheelSectionState ResolveState(int total, int visible, bool isLoading, bool surveyAnswered)
+        /// <summary>The backend always returns the four wheels (BEGINNER before the survey), so no wheels means not loaded yet.</summary>
+        public static ProgressWheelSectionState ResolveState(int total, int visible, bool isLoading)
         {
             if (total > 0)
             {
                 return visible > 0 ? ProgressWheelSectionState.Grid : ProgressWheelSectionState.AllHidden;
             }
-            if (isLoading)
-            {
-                return ProgressWheelSectionState.Loading;
-            }
-            return surveyAnswered ? ProgressWheelSectionState.Hidden : ProgressWheelSectionState.SurveyCta;
+            return isLoading ? ProgressWheelSectionState.Loading : ProgressWheelSectionState.Hidden;
+        }
+
+        /// <summary>The segment the wheels run at (backend `profile`): BEGINNER before the survey, updated after a stage-5 promotion.</summary>
+        public static string SegmentOf(IEnumerable<ProgressWheel> wheels)
+        {
+            return wheels?.FirstOrDefault(w => w != null && !string.IsNullOrEmpty(w.profile))?.profile ?? "";
         }
 
         public static ProgressWheelSectionModel Build(AppState state, bool isLoading)
@@ -41,15 +44,14 @@ namespace eu.foodmission.platform
             ProgressWheel[] all = state?.progressWheels?.Where(w => w != null).ToArray() ?? new ProgressWheel[0];
             string[] hidden = state?.hiddenProgressWheels ?? new string[0];
             IReadOnlyList<ProgressWheel> visible = ProgressWheelService.GetVisible(all, hidden);
-            bool surveyAnswered = state?.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
 
             return new ProgressWheelSectionModel
             {
-                State = ResolveState(all.Length, visible.Count, isLoading, surveyAnswered),
+                State = ResolveState(all.Length, visible.Count, isLoading),
                 Visible = visible,
                 All = all,
                 Hidden = hidden,
-                Segment = state?.userSegment ?? "",
+                Segment = SegmentOf(all),
                 ForceSingleColumn = string.Equals(state?.scale, LargeScale, StringComparison.Ordinal),
             };
         }
@@ -80,8 +82,7 @@ namespace eu.foodmission.platform
                   .Append(w.label).Append('|').Append(w.unit).Append('|').Append(w.stageTitle).Append(';');
             }
             sb.Append('#').Append(string.Join(",", state.hiddenProgressWheels ?? new string[0]));
-            sb.Append('#').Append(state.userSegment).Append('#').Append(state.lang).Append('#').Append(state.scale);
-            sb.Append('#').Append(state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers());
+            sb.Append('#').Append(state.lang).Append('#').Append(state.scale);
             return sb.ToString();
         }
 

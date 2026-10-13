@@ -272,5 +272,18 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(ContentLevel.Advanced, DimensionLevels.GetLevel(newState, DimensionCode.Packaging));
         }
+    
+        [Test]
+        public void SetKnowledgeProgress_StoresCopy_AndLogoutClears()
+        {
+            var bars = new[] { new KnowledgeProgress { kind = KnowledgeKind.Health, finishedItems = 2 } };
+
+            AppState state = AppReducers.SetKnowledgeProgressReducer(m_InitialState, AppActions.setKnowledgeProgress.Invoke(bars));
+            bars[0].finishedItems = 99;
+
+            Assert.AreEqual(2, state.knowledgeProgress[0].finishedItems);
+            Assert.AreEqual(2, state.Copy().knowledgeProgress[0].finishedItems);
+            Assert.AreEqual(0, AppReducers.LogoutReducer(state, AppActions.logout.Invoke()).knowledgeProgress.Length);
+        }
     }
 }

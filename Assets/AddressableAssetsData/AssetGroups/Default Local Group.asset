@@ -190,6 +190,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b432c799d2a334c25a9fb8e9d3fd2bc1
+    m_Address: Foodmission/AppUI/Templates/KnowledgeBarDetailScreen.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b75cc1ba4e92d444284e8ec904412ca3
     m_Address: Foodmission/AppUI/Templates/ForgotPasswordScreen.uxml
     m_ReadOnly: 0

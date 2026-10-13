@@ -311,5 +311,87 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
         }
+
+        public static string BuildKnowledgeProgressUrl(string baseUrl)
+            => $"{baseUrl}/api/v1/users/me/gamification/knowledge-progress";
+
+        public static string BuildKnowledgeBarUrl(string baseUrl, string kind)
+            => $"{BuildKnowledgeProgressUrl(baseUrl)}/{UnityWebRequest.EscapeURL(kind ?? "")}";
+
+        public static KnowledgeProgress[] ParseKnowledgeProgress(string json)
+        {
+            return string.IsNullOrEmpty(json)
+                ? new KnowledgeProgress[0]
+                : JsonConvert.DeserializeObject<KnowledgeProgress[]>(json) ?? new KnowledgeProgress[0];
+        }
+
+        public static KnowledgeProgress ParseKnowledgeBar(string json)
+        {
+            return string.IsNullOrEmpty(json) ? null : JsonConvert.DeserializeObject<KnowledgeProgress>(json);
+        }
+
+        public async Task<(KnowledgeProgress[] Result, ApiErrorResponse Error)> GetKnowledgeProgressAsync()
+        {
+            var (json, error) = await GetLocalizedJsonAsync(BuildKnowledgeProgressUrl(ApiConfig.BaseUrl), nameof(GetKnowledgeProgressAsync));
+            if (error != null)
+            {
+                return (null, error);
+            }
+            try
+            {
+                return (ParseKnowledgeProgress(json), null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize KnowledgeProgress[]: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
+
+        public async Task<(KnowledgeProgress Result, ApiErrorResponse Error)> GetKnowledgeBarAsync(string kind)
+        {
+            var (json, error) = await GetLocalizedJsonAsync(BuildKnowledgeBarUrl(ApiConfig.BaseUrl, kind), nameof(GetKnowledgeBarAsync));
+            if (error != null)
+            {
+                return (null, error);
+            }
+            try
+            {
+                return (ParseKnowledgeBar(json), null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] Failed to deserialize KnowledgeProgress: {ex.Message}");
+                return (null, new ApiErrorResponse { message = ex.Message });
+            }
+        }
+
+        /// <summary>Authenticated GET with Accept-Language = app language (the backend localizes titles when it can).</summary>
+        private async Task<(string Json, ApiErrorResponse Error)> GetLocalizedJsonAsync(string url, string caller)
+        {
+            using UnityWebRequest request = UnityWebRequest.Get(url);
+            if (!string.IsNullOrEmpty(AuthHeader))
+            {
+                request.SetRequestHeader("Authorization", AuthHeader);
+            }
+            request.SetRequestHeader("Accept", "application/json");
+            string lang = _storeService?.GetAppState()?.lang;
+            if (!string.IsNullOrEmpty(lang))
+            {
+                request.SetRequestHeader("Accept-Language", lang);
+            }
+
+            UnityWebRequestAsyncOperation op = request.SendWebRequest();
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] {caller}", logAsError: false));
+            }
+            return (request.downloadHandler.text, null);
+        }
     }
 }

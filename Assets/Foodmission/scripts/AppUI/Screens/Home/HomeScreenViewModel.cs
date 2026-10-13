@@ -26,13 +26,13 @@ namespace eu.foodmission.platform
         private UserScope _selectedUserScope = UserScope.ME;
 
         [ObservableProperty]
-        private float _healthProgress = 0.65f;
+        private float _healthProgress;
 
         [ObservableProperty]
-        private float _sustainabilityProgress = 0.42f;
+        private float _foodChoicesProgress;
 
         [ObservableProperty]
-        private float _knowledgeProgress = 0.78f;
+        private float _foodWasteProgress;
 
         [ObservableProperty]
         private int _caloriesConsumed = 1850;
@@ -76,6 +76,8 @@ namespace eu.foodmission.platform
         private readonly IQuestProgressionService _questProgressionService;
         private readonly IProgressWheelService _progressWheelService;
         private IDisposableSubscription _wheelsSubscription;
+        private readonly IKnowledgeProgressService _knowledgeProgressService;
+        private IDisposableSubscription _knowledgeSubscription;
         private bool _isCheckingRewards;
 
         public HomeScreenViewModel(
@@ -99,7 +101,8 @@ namespace eu.foodmission.platform
             IMissionFailureService missionFailureService = null,
             IDailyFoodFactService dailyFoodFactService = null,
             IDimensionService dimensionService = null,
-            IMissionLastDayService missionLastDayService = null) : base(storeService)
+            IMissionLastDayService missionLastDayService = null,
+            IKnowledgeProgressService knowledgeProgressService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -120,6 +123,7 @@ namespace eu.foodmission.platform
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
             _badgeService = badgeService ?? App.current?.services?.GetService<IBadgeService>();
             _progressWheelService = progressWheelService ?? App.current?.services?.GetService<IProgressWheelService>();
+            _knowledgeProgressService = knowledgeProgressService ?? App.current?.services?.GetService<IKnowledgeProgressService>();
             if (_progressWheelService != null)
             {
                 _progressWheelService.LoadingChanged += OnProgressWheelsLoadingChanged;
@@ -136,7 +140,9 @@ namespace eu.foodmission.platform
                     OnUserStateChanged
                 );
                 _wheelsSubscription = _store.Subscribe(ProgressWheelSection.Signature, _ => ProgressWheelsChanged?.Invoke());
+                _knowledgeSubscription = _store.Subscribe(KnowledgeBars.Signature, _ => ApplyKnowledgeBars(_storeService.GetAppState()));
             }
+            ApplyKnowledgeBars(state);
 
             _ = LoadActiveQuestAsync();
         }
@@ -257,10 +263,40 @@ namespace eu.foodmission.platform
             ProgressWheelsChanged?.Invoke();
         }
 
+        private void ApplyKnowledgeBars(AppState state)
+        {
+            HealthProgress = KnowledgeBars.Value(state, KnowledgeKind.Health);
+            FoodChoicesProgress = KnowledgeBars.Value(state, KnowledgeKind.FoodChoices);
+            FoodWasteProgress = KnowledgeBars.Value(state, KnowledgeKind.FoodWaste);
+        }
+
+        /// <summary>Bar value as a whole percentage, for screen-reader labels.</summary>
+        public int KnowledgeBarPercent(string kind)
+        {
+            return Mathf.RoundToInt(KnowledgeBars.Value(_storeService?.GetAppState(), kind) * 100f);
+        }
+
+        public void RefreshKnowledgeProgress()
+        {
+            if (_knowledgeProgressService != null)
+            {
+                _ = _knowledgeProgressService.RefreshAsync();
+            }
+        }
+
+        public void OpenKnowledgeBar(string kind)
+        {
+            RaiseNavigationRequested(
+                Unity.AppUI.Navigation.Generated.Actions.open_knowledge_bar,
+                new Unity.AppUI.Navigation.Argument("kind", kind));
+        }
+
         protected override void OnDispose()
         {
             _wheelsSubscription?.Dispose();
             _wheelsSubscription = null;
+            _knowledgeSubscription?.Dispose();
+            _knowledgeSubscription = null;
             if (_progressWheelService != null)
             {
                 _progressWheelService.LoadingChanged -= OnProgressWheelsLoadingChanged;

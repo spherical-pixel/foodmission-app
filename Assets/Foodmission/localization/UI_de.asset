@@ -3730,14 +3730,6 @@ MonoBehaviour:
     m_Localized: "Alle R\xE4der sind ausgeblendet."
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347495
-    m_Localized: Beantworte eine kurze Umfrage, um deine Wirkung zu verfolgen.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347496
-    m_Localized: Umfrage starten
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347497
     m_Localized: '{0:0} %'
     m_Metadata:
@@ -4141,6 +4133,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203584
     m_Localized: "Fr\xFChere Stufen ausblenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203585
+    m_Localized: '{0} von {1} abgeschlossen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203586
+    m_Localized: Challenges
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203587
+    m_Localized: '{0} / {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203588
+    m_Localized: abgeschlossen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203589
+    m_Localized: offen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203590
+    m_Localized: "Noch keine Eintr\xE4ge."
     m_Metadata:
       m_Items: []
   references:
