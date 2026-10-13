@@ -46,6 +46,7 @@ namespace eu.foodmission.platform.Components
         private Unity.AppUI.UI.Button _removeButton;
         private Unity.AppUI.UI.Text _mealName;
         private VisualElement _itemsContainer;
+        private VisualElement _factsContainer;
         private Unity.AppUI.UI.Text _badge;
 
         public Unity.AppUI.UI.Button EditButton => _editButton;
@@ -103,6 +104,12 @@ namespace eu.foodmission.platform.Components
             _itemsContainer.AddToClassList("fm-meal-card-items");
             this.Add(_itemsContainer);
 
+            // Flags/swaps of a detailed log, below its items (a quick log shows them in the items block)
+            _factsContainer = new VisualElement();
+            _factsContainer.AddToClassList("fm-meal-card-items");
+            _factsContainer.AddToClassList("fm-meal-card-facts");
+            this.Add(_factsContainer);
+
             _badge = new Unity.AppUI.UI.Text();
             _badge.AddToClassList("fm-ml-card-badge");
             this.Add(_badge);
@@ -142,9 +149,13 @@ namespace eu.foodmission.platform.Components
                 }
 
                 _itemsContainer.Clear();
+                _factsContainer.Clear();
 
                 MealItemDetail[] items = _mealLogData.meal?.items;
-                if (items != null && items.Length > 0)
+                bool hasItems = items != null && items.Length > 0;
+                bool hasFacts = (_mealLogData.flags != null && _mealLogData.flags.Length > 0) ||
+                                (_mealLogData.swaps != null && _mealLogData.swaps.Length > 0);
+                if (hasItems)
                 {
                     foreach (MealItemDetail item in items)
                     {
@@ -173,38 +184,10 @@ namespace eu.foodmission.platform.Components
 
                         _itemsContainer.Add(row);
                     }
-                    _itemsContainer.style.display = DisplayStyle.Flex;
                 }
-                else if ((_mealLogData.flags != null && _mealLogData.flags.Length > 0) ||
-                         (_mealLogData.swaps != null && _mealLogData.swaps.Length > 0))
+                else if (hasFacts)
                 {
-                    if (_mealLogData.flags != null)
-                    {
-                        foreach (string flag in _mealLogData.flags)
-                        {
-                            VisualElement row = new VisualElement();
-                            row.AddToClassList("fm-meal-card-item-row");
-                            Unity.AppUI.UI.Text nameLabel = new Unity.AppUI.UI.Text();
-                            nameLabel.AddToClassList("fm-meal-card-item-name");
-                            nameLabel.text = $"• {MealLogHelpers.GetDisplayNameForFlag(flag)}";
-                            row.Add(nameLabel);
-                            _itemsContainer.Add(row);
-                        }
-                    }
-                    if (_mealLogData.swaps != null)
-                    {
-                        foreach (string swap in _mealLogData.swaps)
-                        {
-                            VisualElement row = new VisualElement();
-                            row.AddToClassList("fm-meal-card-item-row");
-                            Unity.AppUI.UI.Text nameLabel = new Unity.AppUI.UI.Text();
-                            nameLabel.AddToClassList("fm-meal-card-item-name");
-                            nameLabel.text = $"• {SwapLocalization.GetSwapDisplayName(swap)}";
-                            row.Add(nameLabel);
-                            _itemsContainer.Add(row);
-                        }
-                    }
-                    _itemsContainer.style.display = DisplayStyle.Flex;
+                    AddFactRows(_itemsContainer);
                 }
                 else
                 {
@@ -212,8 +195,15 @@ namespace eu.foodmission.platform.Components
                     emptyLabel.AddToClassList("fm-meal-card-item-empty");
                     emptyLabel.text = "@UI:txtNO_ITEMS_SPECIFIED";
                     _itemsContainer.Add(emptyLabel);
-                    _itemsContainer.style.display = DisplayStyle.Flex;
                 }
+                _itemsContainer.style.display = DisplayStyle.Flex;
+
+                bool showFactsBlock = hasItems && hasFacts;
+                if (showFactsBlock)
+                {
+                    AddFactRows(_factsContainer);
+                }
+                _factsContainer.EnableInClassList("fm-meal-card-facts--hidden", !showFactsBlock);
 
                 _badge.RemoveFromClassList("fm-ml-card-badge--pantry");
                 _badge.RemoveFromClassList("fm-ml-card-badge--out");
@@ -233,6 +223,35 @@ namespace eu.foodmission.platform.Components
                     _badge.text = "";
                 }
             }
+        }
+
+        private void AddFactRows(VisualElement container)
+        {
+            if (_mealLogData.flags != null)
+            {
+                foreach (string flag in _mealLogData.flags)
+                {
+                    container.Add(CreateFactRow(MealLogHelpers.GetDisplayNameForFlag(flag)));
+                }
+            }
+            if (_mealLogData.swaps != null)
+            {
+                foreach (string swap in _mealLogData.swaps)
+                {
+                    container.Add(CreateFactRow(SwapLocalization.GetSwapDisplayName(swap)));
+                }
+            }
+        }
+
+        private static VisualElement CreateFactRow(string text)
+        {
+            VisualElement row = new VisualElement();
+            row.AddToClassList("fm-meal-card-item-row");
+            Unity.AppUI.UI.Text nameLabel = new Unity.AppUI.UI.Text();
+            nameLabel.AddToClassList("fm-meal-card-item-name");
+            nameLabel.text = $"• {text}";
+            row.Add(nameLabel);
+            return row;
         }
     }
 }

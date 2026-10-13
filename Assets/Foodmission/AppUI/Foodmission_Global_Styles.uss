@@ -1437,6 +1437,14 @@
     font-size: var(--appui-font-sizes-body-md);
 }
 
+.fm-meal-card-facts {
+    margin-top: 0;
+}
+
+.fm-meal-card-facts--hidden {
+    display: none;
+}
+
 .fm-meal-card-item-empty {
     color: var(--appui-foregrounds-300);
     font-size: var(--appui-font-sizes-body-sm);
