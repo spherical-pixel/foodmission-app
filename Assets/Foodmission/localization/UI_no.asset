@@ -4334,6 +4334,26 @@ MonoBehaviour:
     m_Localized: 'Dette vises ikke her: sjekk emballasjen.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Localized: '{0} %'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Localized: Send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Localized: Alternativene med ramme vises i opplysningene om dette produktet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Localized: Du har allerede telt {0} fra produkter.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Localized: Finn et produkt
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4187,6 +4187,26 @@ MonoBehaviour:
     m_Key: CHALLENGE_PRODUCT_NOT_HERE
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Key: MISSION_PRODUCT_PROGRESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Key: MISSION_PRODUCT_SEND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Key: MISSION_PRODUCT_SUGGESTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Key: MISSION_CHECKIN_FROM_PRODUCTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Key: MISSION_BTN_FIND_PRODUCT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

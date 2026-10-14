@@ -4320,6 +4320,26 @@ MonoBehaviour:
     m_Localized: 'This isn''t shown here: check the packaging.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Localized: '{0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Localized: Send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Localized: Outlined options appear in this product's details.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Localized: You already counted {0} from products.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Localized: Find a product
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

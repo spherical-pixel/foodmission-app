@@ -326,5 +326,48 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, answers.MissionSteps.Single().Products.Count);
             Assert.AreEqual(0, answers.MissionSteps.Single().Products[0].Count);
         }
+
+        private static CheckInProductReport Report(string type, string id, DateTime at, string[] values = null, string metaKey = null, string metaValue = null) =>
+            new CheckInProductReport(type, id, at, values, metaKey == null ? null : new Dictionary<string, string> { { metaKey, metaValue } });
+
+        [Test]
+        public void ProductStep_CountsRealIdsFromProducts_AfterTheStart()
+        {
+            var inputs = Inputs(M("M.B2.1", Now.Date.AddDays(-2)));
+            inputs.ProductReports.Add(Report(ClientEventTypes.ShoppingOriginChecked, "p-1", Now.Date.AddDays(-1)));
+            inputs.ProductReports.Add(Report(ClientEventTypes.ShoppingOriginChecked, "p-2", Now.Date.AddDays(-3))); // before the start
+            // Reported before and again after the start: counts
+            inputs.ProductReports.Add(Report(ClientEventTypes.ShoppingOriginChecked, "p-3", Now.Date.AddDays(-3)));
+            inputs.ProductReports.Add(Report(ClientEventTypes.ShoppingOriginChecked, "p-3", Now.Date.AddDays(-1)));
+
+            CheckInMissionStep step = CheckInPlanner.Plan(inputs).MissionSteps.Single(s => s.MissionCode == "M.B2.1");
+
+            Assert.AreEqual(2, step.FromProducts);
+        }
+
+        [Test]
+        public void ChecklistStep_CountsOnlyProductsThatMeetTheRule()
+        {
+            var inputs = Inputs(M("M.A2.1", Now.Date.AddDays(-2))); // origin required + 2 of 4
+            inputs.ProductReports.Add(Report(ClientEventTypes.ShoppingOriginChecked, "p-1", Now.Date.AddDays(-1)));
+            inputs.ProductReports.Add(Report(ClientEventTypes.ShoppingOriginChecked, "p-2", Now.Date.AddDays(-1)));
+            inputs.ProductReports.Add(Report(ClientEventTypes.ShoppingCertificationChosen, "p-2", Now.Date.AddDays(-1)));
+
+            CheckInMissionStep step = CheckInPlanner.Plan(inputs).MissionSteps.Single(s => s.MissionCode == "M.A2.1");
+
+            Assert.AreEqual(1, step.FromProducts, "p-1 has only origin");
+        }
+
+        [Test]
+        public void ProductStep_WithFixedMetadata_CountsOnlyMatchingReports()
+        {
+            var inputs = Inputs(M("M.A3.1", Now.Date.AddDays(-2))); // NOVA score compared with GREEN_SCORE
+            inputs.ProductReports.Add(Report(ClientEventTypes.ProcessingNovaScoreCompared, "p-1", Now.Date.AddDays(-1), null, "comparedWith", "GREEN_SCORE"));
+            inputs.ProductReports.Add(Report(ClientEventTypes.ProcessingNovaScoreCompared, "p-2", Now.Date.AddDays(-1)));
+
+            CheckInMissionStep step = CheckInPlanner.Plan(inputs).MissionSteps.Single(s => s.MissionCode == "M.A3.1");
+
+            Assert.AreEqual(1, step.FromProducts);
+        }
     }
 }

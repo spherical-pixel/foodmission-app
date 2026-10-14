@@ -536,3 +536,14 @@
     border-radius: 8px;
     background-color: rgba(128, 128, 128, 0.15);
 }
+
+/* ── PRODUCT MISSION CARDS (FoodInfoOverlay) ─────────────── */
+
+.fm-fi-mission-card {
+    border-color: var(--appui-accent-50);
+}
+
+.fm-fi-mission-chip--suggested {
+    border-color: var(--appui-accent-100);
+    border-width: 2px;
+}

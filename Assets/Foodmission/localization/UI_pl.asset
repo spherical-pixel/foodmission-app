@@ -4387,6 +4387,26 @@ MonoBehaviour:
     m_Localized: "Tego tu nie ma: sprawd\u017A opakowanie."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Localized: '{0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Localized: "Wy\u015Blij"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Localized: "Opcje z obramowaniem s\u0105 widoczne w danych tego produktu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Localized: "Policzy\u0142e\u015B ju\u017C {0} z produkt\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Localized: "Znajd\u017A produkt"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -14,6 +14,8 @@ namespace eu.foodmission.platform
     public static class MissionInteractionCatalog
     {
         public static readonly MissionModuleLink QuickMealLog = new MissionModuleLink(Actions.open_quick_meal_log, "MISSION_BTN_QUICK_MEAL_LOG");
+        /// <summary>Product missions can be reported from the product detail: the search finds the product to open.</summary>
+        public static readonly MissionModuleLink FindProduct = new MissionModuleLink(Actions.go_to_quicksearch, "MISSION_BTN_FIND_PRODUCT");
 
         private const string ProductId = "productId";
 
@@ -210,7 +212,8 @@ namespace eu.foodmission.platform
             new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, new[] { QuickMealLog }, steps);
 
         private static MissionInteraction Manual(params MissionReportStep[] steps) =>
-            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, NoModules, steps);
+            new MissionInteraction(MissionInteractionStatus.Available, MissionInteractionType.Report, NoModules, steps,
+                steps.Any(s => ProductMissionPlanner.IdFieldOf(s) != null) ? new[] { FindProduct } : NoModules);
 
         // ── Step factories ────────────────────────────────────
 

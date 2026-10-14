@@ -36,7 +36,29 @@ namespace eu.foodmission.platform
         /// <summary>Event type → local day → upper-cased array values already recorded that day (DayChecklist steps).</summary>
         public readonly Dictionary<string, Dictionary<DateTime, HashSet<string>>> RecordedValues =
             new Dictionary<string, Dictionary<DateTime, HashSet<string>>>(StringComparer.Ordinal);
+        /// <summary>Events reported from the product detail (real food ids), for the "already counted" hint.</summary>
+        public readonly List<CheckInProductReport> ProductReports = new List<CheckInProductReport>();
         public DateTime NowLocal;
+    }
+
+    /// <summary>One product-detail event: its food, time, array values and string metadata (to match fixed metadata).</summary>
+    public sealed class CheckInProductReport
+    {
+        public string EventType { get; }
+        public string Id { get; }
+        public DateTime AtLocal { get; }
+        public IReadOnlyCollection<string> Values { get; }
+        public IReadOnlyDictionary<string, string> Metadata { get; }
+
+        public CheckInProductReport(string eventType, string id, DateTime atLocal, IReadOnlyCollection<string> values = null,
+            IReadOnlyDictionary<string, string> metadata = null)
+        {
+            EventType = eventType;
+            Id = id;
+            AtLocal = atLocal;
+            Values = values ?? Array.Empty<string>();
+            Metadata = metadata ?? new Dictionary<string, string>();
+        }
     }
 
     public sealed class CheckInMealQuestion
@@ -112,10 +134,13 @@ namespace eu.foodmission.platform
         public IReadOnlyList<DateTime> OpenDays { get; }
         /// <summary>DayChecklist: values already recorded per day (shown locked).</summary>
         public IReadOnlyDictionary<DateTime, HashSet<string>> RecordedValues { get; }
+        /// <summary>Product steps: foods already reported from the product detail since the mission started.</summary>
+        public int FromProducts { get; }
 
         public CheckInMissionStep(string missionCode, string missionTitle, MissionReportStep step, DateTime? startLocal = null,
-            IReadOnlyList<DateTime> openDays = null, IReadOnlyDictionary<DateTime, HashSet<string>> recordedValues = null)
+            IReadOnlyList<DateTime> openDays = null, IReadOnlyDictionary<DateTime, HashSet<string>> recordedValues = null, int fromProducts = 0)
         {
+            FromProducts = fromProducts;
             MissionCode = missionCode;
             MissionTitle = missionTitle;
             Step = step;

@@ -165,6 +165,8 @@ namespace eu.foodmission.platform
         public MissionInteractionType Type { get; }
         /// <summary>Modules that emit the expected events by themselves. Modules that only help (search, pantry…) aren't linked.</summary>
         public IReadOnlyList<MissionModuleLink> AutoModules { get; }
+        /// <summary>Modules that help report (e.g. search → product detail mission cards) without emitting events by themselves.</summary>
+        public IReadOnlyList<MissionModuleLink> HelperModules { get; }
         public IReadOnlyList<MissionReportStep> Steps { get; }
 
         public bool CanReport => Status == MissionInteractionStatus.Available && Steps.Count > 0;
@@ -173,11 +175,13 @@ namespace eu.foodmission.platform
             MissionInteractionStatus status,
             MissionInteractionType type,
             IReadOnlyList<MissionModuleLink> autoModules,
-            IReadOnlyList<MissionReportStep> steps)
+            IReadOnlyList<MissionReportStep> steps,
+            IReadOnlyList<MissionModuleLink> helperModules = null)
         {
             Status = status;
             Type = type;
             AutoModules = autoModules ?? Array.Empty<MissionModuleLink>();
+            HelperModules = helperModules ?? Array.Empty<MissionModuleLink>();
             Steps = steps ?? Array.Empty<MissionReportStep>();
         }
     }

@@ -307,7 +307,7 @@ namespace eu.foodmission.platform
             }
 
             _autoHint?.EnableInClassList("hidden", _viewModel.AutoModules.Count == 0);
-            RebuildModuleButtons(_autoModules, _viewModel.AutoModules, ButtonVariant.Accent);
+            RebuildModuleButtons(_autoModules, _viewModel.ModuleButtons, ButtonVariant.Accent);
         }
 
         private void RebuildModuleButtons(VisualElement container, IReadOnlyList<MissionModuleLink> modules, ButtonVariant variant)

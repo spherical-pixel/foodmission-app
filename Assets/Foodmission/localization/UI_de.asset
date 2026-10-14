@@ -4352,6 +4352,26 @@ MonoBehaviour:
     m_Localized: 'Das steht hier nicht: schau auf die Verpackung.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Localized: '{0} %'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Localized: Senden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Localized: Umrandete Optionen stehen in den Angaben zu diesem Produkt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Localized: "Du hast schon {0} \xFCber Produkte gez\xE4hlt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Localized: Produkt suchen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

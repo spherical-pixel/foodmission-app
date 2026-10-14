@@ -56,12 +56,15 @@ namespace eu.foodmission.platform.Tests
 
             int auto = AllMissionCodes.Count(c => MissionInteractionCatalog.Get(c).AutoModules.Count > 0);
             Assert.AreEqual(45, auto);
+            int findProduct = AllMissionCodes.Count(c => MissionInteractionCatalog.Get(c).HelperModules.Contains(MissionInteractionCatalog.FindProduct));
+            Assert.AreEqual(32, findProduct);
         }
 
         [Test]
         public void Missions_OnlyLinkModulesThatCountAutomatically()
         {
-            // Search, pantry or waste screens record nothing a mission rule counts: a button there would only be a shortcut
+            // Search, pantry or waste screens record nothing a mission rule counts by themselves: a button there is a helper
+            // (FindProduct leads to the product detail's mission cards), never an auto module
             foreach (string code in AllMissionCodes)
             {
                 CollectionAssert.IsSubsetOf(MissionInteractionCatalog.Get(code).AutoModules, new[] { MissionInteractionCatalog.QuickMealLog }, code);
@@ -257,6 +260,15 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(itemKey, spec.ItemLabelKey, code);
             Assert.AreEqual(addKey, spec.AddLabelKey, code);
+        }
+
+        [Test]
+        public void ProductMissions_OfferFindProduct_OtherManualMissionsDoNot()
+        {
+            CollectionAssert.Contains(MissionInteractionCatalog.Get("M.B2.1").HelperModules.ToList(), MissionInteractionCatalog.FindProduct);
+            CollectionAssert.Contains(MissionInteractionCatalog.Get("M.A2.1").HelperModules.ToList(), MissionInteractionCatalog.FindProduct);
+            CollectionAssert.DoesNotContain(MissionInteractionCatalog.Get("M.A5.5").HelperModules.ToList(), MissionInteractionCatalog.FindProduct);
+            CollectionAssert.DoesNotContain(MissionInteractionCatalog.Get("M.A1.3").HelperModules.ToList(), MissionInteractionCatalog.FindProduct);
         }
     }
 }

@@ -42,48 +42,15 @@ namespace eu.foodmission.platform
         {
             try
             {
-                string questId = _storeService?.GetAppState()?.userCurrentQuestId;
-                if (string.IsNullOrEmpty(questId))
+                var (missions, _, missionsError) = await LoadActiveMissionsAsync(_storeService, _questService, _missionService, onlyMissionCode);
+                if (missionsError != null)
                 {
-                    return (CheckInPlan.Empty, null);
-                }
-
-                var (quest, questError) = await _questService.GetQuestAsync(questId);
-                if (questError != null)
-                {
-                    return (null, questError);
-                }
-
-                List<string> codes = (quest?.items ?? Array.Empty<QuestItem>())
-                    .Where(i => i != null && string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(i.contentCode))
-                    .Select(i => i.contentCode)
-                    .Where(c => onlyMissionCode == null || string.Equals(c, onlyMissionCode, StringComparison.OrdinalIgnoreCase))
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToList();
-                if (codes.Count == 0)
-                {
-                    return (CheckInPlan.Empty, null);
-                }
-
-                var (progressList, progressError) = await _missionService.GetUserProgressListAsync();
-                if (progressError != null)
-                {
-                    return (null, progressError);
+                    return (null, missionsError);
                 }
 
                 DateTime now = Clock();
                 var inputs = new CheckInInputs { NowLocal = now };
-                foreach (string code in codes)
-                {
-                    MissionInteraction interaction = MissionInteractionCatalog.Get(code);
-                    MissionProgress progress = progressList?.FirstOrDefault(p => string.Equals(p?.missionCode, code, StringComparison.OrdinalIgnoreCase));
-                    if (!interaction.CanReport || MissionProgressState.IsResolved(progress))
-                    {
-                        continue;
-                    }
-                    string title = !string.IsNullOrEmpty(progress?.missionTitle) ? progress.missionTitle : code;
-                    inputs.Missions.Add(new CheckInMission(code, title, interaction, progress?.startedAt?.ToLocalTime()));
-                }
+                inputs.Missions.AddRange(missions);
 
                 if (inputs.Missions.Count == 0)
                 {
@@ -118,10 +85,29 @@ namespace eu.foodmission.platform
                     .SelectMany(m => m.Interaction.Steps)
                     .Where(s => (s.Type == MissionStepType.DayPicker || s.Type == MissionStepType.DayChecklist) && !string.IsNullOrEmpty(s.EventType))
                     .ToList();
+                // Product steps: foods already reported from the product detail (real ids) are counted in the check-in
+                string[] productTypes = inputs.Missions
+                    .SelectMany(m => m.Interaction.Steps)
+                    .SelectMany(ProductMissionPlanner.EventTypesOf)
+                    .Distinct(StringComparer.Ordinal)
+                    .ToArray();
+                if (productTypes.Length > 0)
+                {
+                    // Own call, failures ignored: it only feeds a hint, and its (many) events must not push day events out of the limit
+                    var (productEvents, productError) = await LoadRecentEventsAsync(_gamificationService, productTypes, EventsLimit);
+                    if (productError != null)
+                    {
+                        Debug.LogWarning($"[CheckInService] Product reports not loaded: {productError.message}");
+                    }
+                    else
+                    {
+                        RecordProductReports(inputs, productEvents, productTypes);
+                    }
+                }
                 if (daySteps.Count > 0)
                 {
                     string[] eventTypes = daySteps.Select(s => s.EventType).Distinct(StringComparer.Ordinal).ToArray();
-                    var (events, eventsError) = await LoadRecentEventsAsync(eventTypes);
+                    var (events, eventsError) = await LoadRecentEventsAsync(_gamificationService, eventTypes, EventsLimit);
                     if (eventsError != null)
                     {
                         return (null, eventsError);
@@ -170,19 +156,76 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
+        /// Missions of the active quest the user can still report: known to the catalog and not resolved. Shared with the
+        /// product detail (ProductMissionService) so both ask about the same missions.
+        /// </summary>
+        public static async Task<(List<CheckInMission> Missions, Dictionary<string, MissionProgress> Progress, ApiErrorResponse Error)>
+            LoadActiveMissionsAsync(IStoreService store, IQuestService quests, IMissionService missions, string onlyMissionCode = null)
+        {
+            var active = new List<CheckInMission>();
+            var progressByCode = new Dictionary<string, MissionProgress>(StringComparer.OrdinalIgnoreCase);
+            string questId = store?.GetAppState()?.userCurrentQuestId;
+            if (string.IsNullOrEmpty(questId))
+            {
+                return (active, progressByCode, null);
+            }
+
+            var (quest, questError) = await quests.GetQuestAsync(questId);
+            if (questError != null)
+            {
+                return (null, null, questError);
+            }
+
+            List<string> codes = (quest?.items ?? Array.Empty<QuestItem>())
+                .Where(i => i != null && string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(i.contentCode))
+                .Select(i => i.contentCode)
+                .Where(c => onlyMissionCode == null || string.Equals(c, onlyMissionCode, StringComparison.OrdinalIgnoreCase))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+            if (codes.Count == 0)
+            {
+                return (active, progressByCode, null);
+            }
+
+            var (progressList, progressError) = await missions.GetUserProgressListAsync();
+            if (progressError != null)
+            {
+                return (null, null, progressError);
+            }
+
+            foreach (string code in codes)
+            {
+                MissionInteraction interaction = MissionInteractionCatalog.Get(code);
+                MissionProgress progress = progressList?.FirstOrDefault(p => string.Equals(p?.missionCode, code, StringComparison.OrdinalIgnoreCase));
+                if (!interaction.CanReport || MissionProgressState.IsResolved(progress))
+                {
+                    continue;
+                }
+                string title = !string.IsNullOrEmpty(progress?.missionTitle) ? progress.missionTitle : code;
+                active.Add(new CheckInMission(code, title, interaction, progress?.startedAt?.ToLocalTime()));
+                if (progress != null)
+                {
+                    progressByCode[code] = progress;
+                }
+            }
+            return (active, progressByCode, null);
+        }
+
+        /// <summary>
         /// Recent events of these types. Backends without the eventTypes filter (#419) answer 400 to the unknown query
         /// parameter: then the latest events are fetched unfiltered and filtered here.
         /// </summary>
-        private async Task<(UserEvent[] Events, ApiErrorResponse Error)> LoadRecentEventsAsync(string[] eventTypes)
+        public static async Task<(UserEvent[] Events, ApiErrorResponse Error)> LoadRecentEventsAsync(
+            IGamificationService gamification, string[] eventTypes, int limit)
         {
-            var (events, error) = await _gamificationService.GetRecentEventsAsync(eventTypes, EventsLimit);
+            var (events, error) = await gamification.GetRecentEventsAsync(eventTypes, limit);
             if (error == null || error.statusCode != 400)
             {
                 return (events, error);
             }
 
             Debug.LogWarning("[CheckInService] eventTypes filter not supported by the backend, loading unfiltered recent events");
-            var (profile, profileError) = await _gamificationService.GetGamificationProfileAsync(EventsLimit, 1);
+            var (profile, profileError) = await gamification.GetGamificationProfileAsync(limit, 1);
             if (profileError != null)
             {
                 return (null, profileError);
@@ -206,6 +249,53 @@ namespace eu.foodmission.platform
             return DateTime.TryParseExact(token.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime day)
                 ? day
                 : (DateTime?)null;
+        }
+
+        private static void RecordProductReports(CheckInInputs inputs, UserEvent[] events, string[] productTypes)
+        {
+            var wanted = new HashSet<string>(productTypes, StringComparer.Ordinal);
+            foreach (UserEvent userEvent in events ?? Array.Empty<UserEvent>())
+            {
+                if (userEvent?.metadata == null || !wanted.Contains(userEvent.eventType) || !TryParseLocalTime(userEvent.timestamp, out DateTime at))
+                {
+                    continue;
+                }
+                string id = ReadString(userEvent.metadata, ProductMissionPlanner.ProductIdField) ?? ReadString(userEvent.metadata, ProductMissionPlanner.GenericFoodIdField);
+                // Check-in products are anonymous (manual-…): only real foods come from the product detail
+                if (string.IsNullOrEmpty(id) || id.StartsWith("manual-", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+                var values = new List<string>();
+                var metadata = new Dictionary<string, string>(StringComparer.Ordinal);
+                foreach (JProperty property in userEvent.metadata.Properties())
+                {
+                    if (property.Value is JArray array)
+                    {
+                        values.AddRange(array.Where(t => t.Type == JTokenType.String).Select(t => ((string)t).ToUpperInvariant()));
+                    }
+                    else if (property.Value.Type == JTokenType.String)
+                    {
+                        metadata[property.Name] = (string)property.Value;
+                    }
+                }
+                inputs.ProductReports.Add(new CheckInProductReport(userEvent.eventType, id, at, values, metadata));
+            }
+        }
+
+        private static string ReadString(JObject metadata, string field) =>
+            metadata[field]?.Type == JTokenType.String ? (string)metadata[field] : null;
+
+        private static bool TryParseLocalTime(string timestamp, out DateTime local)
+        {
+            local = default;
+            if (string.IsNullOrEmpty(timestamp) ||
+                !DateTime.TryParse(timestamp, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out DateTime utc))
+            {
+                return false;
+            }
+            local = DateTime.SpecifyKind(utc, DateTimeKind.Utc).ToLocalTime();
+            return true;
         }
 
         private static bool HasStep(CheckInMission mission, MissionStepType type) =>

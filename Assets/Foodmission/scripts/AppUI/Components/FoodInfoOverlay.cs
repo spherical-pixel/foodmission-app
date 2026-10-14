@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 using UnityEngine;
@@ -62,6 +64,14 @@ namespace eu.foodmission.platform
         private static bool _isReporting;
         // Bumped on every Show: a report still in flight from a previous overlay must not touch this one
         private static int _overlayGeneration;
+
+        // Product mission cards (spec 2026-10-14-mission-product-report-design.md)
+        private static IProductMissionService _productMissions;
+        private static IReadOnlyList<ProductMissionCard> _missionCards = Array.Empty<ProductMissionCard>();
+        private static readonly Dictionary<ProductMissionCard, HashSet<int>> _missionSelections = new Dictionary<ProductMissionCard, HashSet<int>>();
+        private static VisualElement _missionContainer;
+        private static bool _missionsRequested;
+        private static ProductMissionCard _sendingCard;
         private static VisualElement _challengeCard;
         private static Text _challengeTitle;
         private static Text _challengeProgress;
@@ -221,6 +231,12 @@ namespace eu.foodmission.platform
             _isReporting = false;
             _overlayGeneration++;
             BuildChallengeCard();
+            _productMissions = App.current?.services?.GetService<IProductMissionService>();
+            _missionCards = Array.Empty<ProductMissionCard>();
+            _missionSelections.Clear();
+            _missionsRequested = false;
+            _sendingCard = null;
+            BuildMissionContainer();
             if (_challengeSession != null)
             {
                 _challengeSession.SessionChanged += OnChallengeSessionChanged;
@@ -268,6 +284,12 @@ namespace eu.foodmission.platform
             _challengeButton = null;
             _reportItemKey = null;
             _isReporting = false;
+            _productMissions = null;
+            _missionCards = Array.Empty<ProductMissionCard>();
+            _missionSelections.Clear();
+            _missionContainer = null;
+            _missionsRequested = false;
+            _sendingCard = null;
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
@@ -423,6 +445,11 @@ namespace eu.foodmission.platform
             }
             RefreshStaticFocus();
             UpdateChallengeCard();
+            // Only when the load ends: IsLoading is still false right after Show, before LoadAsync starts
+            if (e.PropertyName == nameof(FoodInfoViewModel.IsLoading))
+            {
+                RequestMissionCards();
+            }
         }
 
         // ── Update helpers (must stay in sync with FoodInfoScreen.uxml structure) ──
@@ -737,7 +764,8 @@ namespace eu.foodmission.platform
             _reportItemKey != null;
 
         private static ProductFocus CurrentFocus =>
-            IsChallengeCardActive ? _challengeSession.ActiveInteraction.ProductFocus : ProductFocus.None;
+            (IsChallengeCardActive ? _challengeSession.ActiveInteraction.ProductFocus : ProductFocus.None) |
+            _missionCards.Aggregate(ProductFocus.None, (focus, card) => focus | card.Focus);
 
         private static string L(string key) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
 
@@ -845,12 +873,244 @@ namespace eu.foodmission.platform
         private static void OnChallengeSessionChanged()
         {
             // Rows are rebuilt so highlights follow the session (it may end while the detail is open)
+            RefreshRowFocus();
+            UpdateChallengeCard();
+        }
+
+        private static void RefreshRowFocus()
+        {
             UpdateTrafficLights();
             UpdateMacroCards();
             UpdateNutritionDetail();
             UpdateMetaRows();
             RefreshStaticFocus();
-            UpdateChallengeCard();
+        }
+
+        // ── Product mission cards ─────────────────────────────────────
+
+        private static void BuildMissionContainer()
+        {
+            if (_actionContainer?.parent == null)
+            {
+                return;
+            }
+            _missionContainer = new VisualElement();
+            _missionContainer.AddToClassList("fm-fi-mission-cards");
+            VisualElement parent = _actionContainer.parent;
+            parent.Insert(parent.IndexOf(_actionContainer), _missionContainer);
+        }
+
+        /// <summary>Once per overlay, after the food loaded: suggestions need what the detail shows.</summary>
+        private static void RequestMissionCards()
+        {
+            if (_missionsRequested || _productMissions == null || _viewModel == null || _viewModel.IsLoading || string.IsNullOrEmpty(_overlayFoodId))
+            {
+                return;
+            }
+            _missionsRequested = true;
+            _ = LoadMissionCardsAsync(_viewModel.FoodType, _overlayFoodId, _viewModel.AvailableFocusKeys());
+        }
+
+        private static async Task LoadMissionCardsAsync(FoodInfoType type, string foodId, IReadOnlyCollection<string> availableKeys)
+        {
+            int generation = _overlayGeneration;
+            IProductMissionService service = _productMissions;
+            try
+            {
+                var (cards, error) = await service.LoadAsync(type, foodId, availableKeys);
+                if (generation != _overlayGeneration)
+                {
+                    return;
+                }
+                if (error != null)
+                {
+                    // The detail works without the cards: no dialog
+                    Debug.LogWarning($"[FoodInfoOverlay] Mission cards not loaded: {error.message}");
+                    return;
+                }
+                _missionCards = cards ?? Array.Empty<ProductMissionCard>();
+                RenderMissionCards();
+                RefreshRowFocus();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodInfoOverlay] LoadMissionCardsAsync failed: {ex.Message}");
+            }
+        }
+
+        private static void RenderMissionCards()
+        {
+            if (_missionContainer == null)
+            {
+                return;
+            }
+            _missionContainer.Clear();
+            foreach (ProductMissionCard card in _missionCards)
+            {
+                _missionContainer.Add(BuildMissionCard(card));
+            }
+        }
+
+        private static HashSet<int> SelectionOf(ProductMissionCard card)
+        {
+            if (!_missionSelections.TryGetValue(card, out HashSet<int> selected))
+            {
+                selected = new HashSet<int>();
+                _missionSelections[card] = selected;
+            }
+            return selected;
+        }
+
+        private static VisualElement BuildMissionCard(ProductMissionCard card)
+        {
+            var root = new VisualElement();
+            root.AddToClassList("fm-fi-challenge-card");
+            root.AddToClassList("fm-fi-mission-card");
+
+            var header = new VisualElement();
+            header.AddToClassList("fm-fi-challenge-card__header");
+            var title = new Text { text = card.MissionTitle };
+            title.AddToClassList("fm-fi-challenge-card__title");
+            var progress = new Text { text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_PRODUCT_PROGRESS", new object[] { Mathf.RoundToInt(card.ProgressPercent) }) };
+            progress.AddToClassList("fm-fi-challenge-card__progress");
+            header.Add(title);
+            header.Add(progress);
+            root.Add(header);
+
+            var prompt = new Text { text = L(card.Step.PromptKey) };
+            prompt.AddToClassList("fm-fi-challenge-card__task");
+            root.Add(prompt);
+
+            bool sending = _sendingCard == card;
+            if (card.Kind == ProductMissionCardKind.Single)
+            {
+                var button = new FMButton
+                {
+                    variant = ButtonVariant.Accent,
+                    title = L(card.AllSent ? "CHALLENGE_PRODUCT_COUNTED" : "CHALLENGE_PRODUCT_DONE"),
+                    leadingIcon = card.AllSent ? "check" : string.Empty
+                };
+                button.AddToClassList("fm-button");
+                button.AddToClassList("fm-fi-challenge-card__button");
+                button.SetEnabled(!card.AllSent && !sending);
+                button.clicked += () => _ = SendMissionAsync(card, new[] { 0 });
+                root.Add(button);
+                return root;
+            }
+
+            HashSet<int> selected = SelectionOf(card);
+            var row = new VisualElement();
+            row.AddToClassList("fm-mission-report-row");
+            for (int i = 0; i < card.Options.Count; i++)
+            {
+                int option = i;
+                bool locked = card.Locked.Contains(option);
+                FMButton chip = MissionChips.Chip(L(card.Options[option].LabelKey), locked || selected.Contains(option), () =>
+                {
+                    if (!SelectionOf(card).Remove(option))
+                    {
+                        SelectionOf(card).Add(option);
+                    }
+                    // Re-render on the next frame: rebuilding inside the click handler would destroy the clicked chip
+                    _missionContainer?.schedule.Execute(RenderMissionCards);
+                });
+                chip.SetEnabled(!locked && !sending);
+                chip.EnableInClassList("fm-fi-mission-chip--suggested", card.Suggested.Contains(option));
+                row.Add(chip);
+            }
+            root.Add(row);
+
+            if (card.Suggested.Count > 0)
+            {
+                var suggested = new Text { text = L("MISSION_PRODUCT_SUGGESTED") };
+                suggested.AddToClassList("fm-fi-challenge-card__note");
+                root.Add(suggested);
+            }
+
+            if (card.AllSent)
+            {
+                var counted = new Text { text = L("CHALLENGE_PRODUCT_COUNTED") };
+                counted.AddToClassList("fm-mission-checklist-item__status");
+                counted.AddToClassList("fm-mission-checklist-item__status--counts");
+                root.Add(counted);
+                return root;
+            }
+
+            if (card.Kind == ProductMissionCardKind.Checklist)
+            {
+                root.Add(ChecklistStatus(card, card.Locked.Concat(selected).Distinct().ToList()));
+            }
+
+            var send = new FMButton { variant = ButtonVariant.Accent, title = L("MISSION_PRODUCT_SEND") };
+            send.AddToClassList("fm-button");
+            send.AddToClassList("fm-fi-challenge-card__button");
+            send.SetEnabled(!sending && ProductMissionService.CanSend(card, selected));
+            send.clicked += () => _ = SendMissionAsync(card, SelectionOf(card).ToList());
+            root.Add(send);
+            return root;
+        }
+
+        private static Text ChecklistStatus(ProductMissionCard card, IReadOnlyCollection<int> chosen)
+        {
+            ChecklistSpec spec = card.Step.Checklist;
+            bool counts = ChecklistRule.Counts(spec, chosen);
+            var parts = new List<string>();
+            int more = ChecklistRule.MissingCount(spec, chosen);
+            if (more > 0)
+            {
+                parts.Add(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_CHECKLIST_NEED_MORE", new object[] { more }));
+            }
+            IReadOnlyList<int> required = ChecklistRule.MissingRequired(spec, chosen);
+            if (required.Count > 0)
+            {
+                parts.Add(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_CHECKLIST_NEED_REQUIRED",
+                    new object[] { string.Join(", ", required.Select(r => L(spec.Options[r].LabelKey))) }));
+            }
+            var status = new Text { text = counts ? L("MISSION_CHECKLIST_COUNTS") : string.Join(" · ", parts) };
+            status.AddToClassList("fm-mission-checklist-item__status");
+            status.EnableInClassList("fm-mission-checklist-item__status--counts", counts);
+            status.EnableInClassList("fm-mission-checklist-item__status--missing", !counts);
+            return status;
+        }
+
+        private static async Task SendMissionAsync(ProductMissionCard card, IReadOnlyCollection<int> selected)
+        {
+            if (_sendingCard != null || _productMissions == null)
+            {
+                return;
+            }
+            int generation = _overlayGeneration;
+            IProductMissionService service = _productMissions;
+            _sendingCard = card;
+            RenderMissionCards();
+            MissionReportSendResult result = null;
+            try
+            {
+                result = await service.SendAsync(card, selected);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodInfoOverlay] Mission report failed: {ex.Message}");
+            }
+            if (generation != _overlayGeneration)
+            {
+                return;
+            }
+            _sendingCard = null;
+            if (result == null || !result.Success)
+            {
+                if (_overlay != null)
+                {
+                    FMDialog.ShowApiError(_overlay, L("ERROR_TITLE"), result?.Error ?? new ApiErrorResponse());
+                }
+            }
+            else
+            {
+                _missionCards = service.Replan();
+                _missionSelections.Clear();
+            }
+            RenderMissionCards();
+            RefreshRowFocus();
         }
 
         private static void ApplyFocus(VisualElement element, string key)
