@@ -114,7 +114,7 @@ namespace eu.foodmission.platform
                 .OrderBy(view =>
                 {
                     if (string.IsNullOrEmpty(view.Item?.expiryDate)) return DateTime.MaxValue;
-                    if (DateTime.TryParse(view.Item.expiryDate, out DateTime dt)) return dt.Date;
+                    if (PantryItem.TryParseExpiryDate(view.Item.expiryDate, out DateTime dt)) return dt.Date;
                     return DateTime.MaxValue;
                 })
                 .ThenBy(view => view.DisplayName)
@@ -137,7 +137,7 @@ namespace eu.foodmission.platform
                 .Where(e =>
                 {
                     if (string.IsNullOrEmpty(e?.expiryDate)) return false;
-                    return DateTime.TryParse(e.expiryDate, out DateTime exp) && exp.Date < today;
+                    return PantryItem.TryParseExpiryDate(e.expiryDate, out DateTime exp) && exp.Date < today;
                 })
                 .ToArray();
             ExpiredItemCount = ExpiredItems.Length;

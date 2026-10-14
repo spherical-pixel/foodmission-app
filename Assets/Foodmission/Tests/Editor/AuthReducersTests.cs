@@ -81,6 +81,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void LogoutReducer_ResetsNotificationPreferredTime()
+        {
+            var state = new AppState { notificationPreferredTime = "21:30" };
+
+            var newState = AppReducers.LogoutReducer(state, AppActions.logout.Invoke());
+
+            Assert.AreEqual(new AppState().notificationPreferredTime, newState.notificationPreferredTime);
+        }
+
+        [Test]
         public void LogoutReducer_ClearsAllUserData()
         {
             // Arrange

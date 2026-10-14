@@ -1,3 +1,5 @@
+using System;
+
 using NUnit.Framework;
 using UnityEngine;
 
@@ -78,6 +80,42 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(wrapper.items);
             Assert.AreEqual(1, wrapper.items.Length);
             Assert.AreEqual("f-1", wrapper.items[0].foodProductId);
+        }
+
+        [TestCase("2026-05-30")]
+        [TestCase("2026-05-30T00:00:00.000Z")]
+        public void TryParseExpiryDate_CalendarDate_KeepsTheDayInAnyTimeZone(string value)
+        {
+            // Midnight UTC is the day the user picked; converting to local made it the day before west of UTC
+            Assert.IsTrue(PantryItem.TryParseExpiryDate(value, out DateTime date));
+
+            Assert.AreEqual(new DateTime(2026, 5, 30), date);
+        }
+
+        [Test]
+        public void TryParseExpiryDate_TimestampWithTime_UsesLocalDay()
+        {
+            var utc = new DateTime(2026, 5, 30, 23, 30, 0, DateTimeKind.Utc);
+
+            Assert.IsTrue(PantryItem.TryParseExpiryDate(utc.ToString("o"), out DateTime date));
+
+            Assert.AreEqual(utc.ToLocalTime().Date, date);
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("not a date")]
+        public void TryParseExpiryDate_Invalid_ReturnsFalse(string value)
+        {
+            Assert.IsFalse(PantryItem.TryParseExpiryDate(value, out _));
+        }
+
+        [Test]
+        public void ExpiryDateTime_UsesCalendarDay()
+        {
+            var item = new PantryItem { expiryDate = "2026-05-30T00:00:00.000Z" };
+
+            Assert.AreEqual(new DateTime(2026, 5, 30), item.ExpiryDateTime);
         }
     }
 }

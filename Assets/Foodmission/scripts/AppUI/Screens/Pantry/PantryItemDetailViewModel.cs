@@ -158,7 +158,7 @@ namespace eu.foodmission.platform
                 if (_notificationService != null && _notificationService.AreNotificationsEnabled())
                 {
                     _notificationService.CancelPantryReminder(_itemId);
-                    if (!string.IsNullOrEmpty(ExpiryDate) && System.DateTime.TryParse(ExpiryDate, out System.DateTime newExpDate))
+                    if (!string.IsNullOrEmpty(ExpiryDate) && PantryItem.TryParseExpiryDate(ExpiryDate, out System.DateTime newExpDate))
                     {
                         _notificationService.SchedulePantryExpiryReminder(_itemId, ItemView?.DisplayName ?? "Item", newExpDate);
                     }

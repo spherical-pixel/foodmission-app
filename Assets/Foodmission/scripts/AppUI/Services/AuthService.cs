@@ -685,11 +685,7 @@ namespace eu.foodmission.platform
                 _ = eventService.TrackSessionEndAsync();
             }
 
-            string refreshToken = _storeService.GetAppState().refreshToken;
-            if (!string.IsNullOrEmpty(refreshToken))
-            {
-                _ = RevokeTokenAsync(refreshToken);
-            }
+            _ = EndServerSessionAsync(_storeService.GetAppState());
 
             _refreshTimerCts?.Cancel();
             _refreshTimerCts?.Dispose();
@@ -718,6 +714,61 @@ namespace eu.foodmission.platform
             HomeScreen.ResetSessionDeferredFlags();
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log($"[{GetType().Name}] User logged out and session state fully cleaned");
+        }
+
+        /// <summary>
+        /// Detaches this device from the user's profile, then revokes the refresh token (in that order: the PATCH needs
+        /// the session that the revocation ends). Otherwise the server keeps pushing this user's notifications to the device.
+        /// </summary>
+        private async Task EndServerSessionAsync(AppState signedOutState)
+        {
+            if (!string.IsNullOrEmpty(signedOutState.accessToken) &&
+                !string.IsNullOrEmpty(signedOutState.devicePushRegistration?.token))
+            {
+                await UnregisterPushDeviceAsync(signedOutState);
+            }
+
+            if (!string.IsNullOrEmpty(signedOutState.refreshToken))
+            {
+                await RevokeTokenAsync(signedOutState.refreshToken);
+            }
+        }
+
+        private async Task UnregisterPushDeviceAsync(AppState signedOutState)
+        {
+            try
+            {
+                ProfileUpdateRequest settingsRequest = BuildSettingsRequest(signedOutState);
+                DevicePushRegistration detached = signedOutState.devicePushRegistration.Copy();
+                detached.token = "";
+                detached.registeredAt = "";
+                detached.notificationsEnabled = false;
+                settingsRequest.settings.devicePushRegistration = detached;
+
+                using UnityWebRequest request = new UnityWebRequest($"{ApiConfig.BaseUrl}/api/v1/users/me", "PATCH")
+                {
+                    uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(settingsRequest.ToJson())) { contentType = "application/json" },
+                    downloadHandler = new DownloadHandlerBuffer()
+                };
+                request.SetRequestHeader("Accept", "application/json");
+                request.SetRequestHeader("Authorization", $"{signedOutState.tokenType} {signedOutState.accessToken}");
+
+                // Not through ApiErrorHelper: a 401 here must not start session recovery for a session already closed
+                await request.SendAsync(refreshToken: false);
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log($"[{GetType().Name}] Push device detached from the signed-out profile");
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Push device detach failed: {request.responseCode} {request.error}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Push device detach exception: {ex.Message}");
+            }
         }
 
         private async Task RevokeTokenAsync(string token)

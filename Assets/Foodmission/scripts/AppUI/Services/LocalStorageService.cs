@@ -1,5 +1,8 @@
 using System;
+using System.Globalization;
+
 using Newtonsoft.Json;
+
 using UnityEngine;
 
 namespace eu.foodmission.platform
@@ -82,7 +85,8 @@ namespace eu.foodmission.platform
                 // For primitive types, convert directly
                 if (typeof(T).IsPrimitive || typeof(T) == typeof(string))
                 {
-                    json = value.ToString();
+                    // Invariant so a value saved under one device locale ("1,5") still parses under another
+                    json = Convert.ToString(value, CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -171,15 +175,15 @@ namespace eu.foodmission.platform
                 if (type == typeof(string))
                     return (T)(object)value;
                 if (type == typeof(int))
-                    return (T)(object)int.Parse(value);
+                    return (T)(object)int.Parse(value, CultureInfo.InvariantCulture);
                 if (type == typeof(float))
-                    return (T)(object)float.Parse(value);
+                    return (T)(object)float.Parse(value, CultureInfo.InvariantCulture);
                 if (type == typeof(bool))
                     return (T)(object)bool.Parse(value);
                 if (type == typeof(long))
-                    return (T)(object)long.Parse(value);
+                    return (T)(object)long.Parse(value, CultureInfo.InvariantCulture);
                 if (type == typeof(double))
-                    return (T)(object)double.Parse(value);
+                    return (T)(object)double.Parse(value, CultureInfo.InvariantCulture);
 
                 return defaultValue;
             }
