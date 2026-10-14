@@ -175,7 +175,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            _session?.Begin(Challenge.code, Interaction);
+            _session?.Begin(Challenge.code, Interaction, Challenge.title, Challenge.task);
 
             var args = new List<Argument>();
             if (Interaction.Type == ChallengeInteractionType.Comparator)

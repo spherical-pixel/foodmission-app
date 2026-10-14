@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Moq;
@@ -314,6 +315,45 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual("unknown", vm.NutritionGrade);
             Assert.AreEqual("UNKNOWN", vm.EcoScoreGrade);
+        }
+
+        [Test]
+        public async Task Rows_CarryTheirLocalizationKey_ForChallengeFocus()
+        {
+            var detail = new GenericFoodDetail
+            {
+                id = Guid.NewGuid().ToString(), foodName = "Test", foodGroup = "Fruits",
+                energyKcal = 50f, proteins = 1f, fat = 0.5f, carbohydrates = 10f, vitaminC = 10f, iron = 2f
+            };
+            _genericFoodServiceMock.Setup(x => x.GetGenericFoodDetailAsync(detail.id)).ReturnsAsync((detail, null));
+
+            var vm = CreateViewModel();
+            await vm.LoadAsync(FoodInfoType.Generic, detail.id, "none");
+
+            CollectionAssert.Contains(vm.MacroCards.Select(r => r.Key).ToList(), "NUTR_PROTEINS");
+            CollectionAssert.Contains(vm.NutritionDetail.SelectMany(g => g.Rows).Select(r => r.Key).ToList(), "NUTR_VITAMIN_C");
+            Assert.IsTrue(vm.MetaRows.All(r => r.Key != null && r.Key.StartsWith("META_")));
+        }
+
+        [Test]
+        public async Task AvailableFocusKeys_ListsRowsWithValues_BadgesAndIngredients()
+        {
+            var detail = new FoodProductDetail
+            {
+                id = Guid.NewGuid().ToString(), name = "Test", novaGroup = 4, nutritionGrade = "c",
+                ingredientsText = "Water, sugar", origins = "Spain"
+            };
+            _foodProductServiceMock.Setup(x => x.GetFoodProductDetailAsync(detail.id)).ReturnsAsync((detail, null));
+
+            var vm = CreateViewModel();
+            await vm.LoadAsync(FoodInfoType.Product, detail.id, "none");
+            var keys = vm.AvailableFocusKeys();
+
+            CollectionAssert.Contains(keys, ProductFocusMap.NovaKey);
+            CollectionAssert.Contains(keys, ProductFocusMap.NutriScoreKey);
+            CollectionAssert.Contains(keys, ProductFocusMap.IngredientsKey);
+            CollectionAssert.Contains(keys, "META_ORIGINS");
+            CollectionAssert.DoesNotContain(keys, ProductFocusMap.EcoScoreKey);
         }
     }
 }

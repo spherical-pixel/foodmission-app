@@ -4318,6 +4318,22 @@ MonoBehaviour:
       Ozna\u010Di vse, kar je vseboval."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: Pogledal sem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: "\u0160teto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} od {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: "Tega tu ni: poglej embala\u017Eo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

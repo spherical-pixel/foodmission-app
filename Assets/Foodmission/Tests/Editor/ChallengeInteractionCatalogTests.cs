@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 using NUnit.Framework;
@@ -103,6 +104,40 @@ namespace eu.foodmission.platform.Tests
                 Assert.IsFalse(string.IsNullOrEmpty(pair.Value.ModuleAction), pair.Key);
                 Assert.IsFalse(string.IsNullOrEmpty(pair.Value.ModuleButtonKey), pair.Key);
                 Assert.IsTrue(pair.Value.AutoCompletes, pair.Key);
+            }
+        }
+
+        [Test]
+        public void EveryProductChallenge_DeclaresItsFocusExplicitly()
+        {
+            var expected = new Dictionary<string, ProductFocus>
+            {
+                { "CH.B6.2", ProductFocus.Sugar }, { "CH.I6.2", ProductFocus.Sugar },
+                { "CH.B6.4", ProductFocus.Salt },
+                { "CH.I1.2", ProductFocus.Protein | ProductFocus.Nutrients }, { "CH.I6.5", ProductFocus.Protein | ProductFocus.Nutrients },
+                { "CH.I6.3", ProductFocus.Fat },
+                { "CH.I6.4", ProductFocus.Fibre | ProductFocus.Nutrients },
+                { "CH.A6.3", ProductFocus.Nutrients }, { "CH.A6.5", ProductFocus.Nutrients },
+                { "CH.A3.2", ProductFocus.Nova | ProductFocus.Ingredients }, { "CH.B3.2", ProductFocus.Nova | ProductFocus.Ingredients },
+                { "CH.I3.1", ProductFocus.Nova | ProductFocus.Ingredients },
+                { "CH.B3.1", ProductFocus.Ingredients }, { "CH.I6.1", ProductFocus.Ingredients },
+                { "CH.I3.5", ProductFocus.Scores }, { "CH.A3.1", ProductFocus.Scores },
+                { "CH.B2.2", ProductFocus.Origin }, { "CH.I2.1", ProductFocus.Origin }, { "CH.I2.3", ProductFocus.Origin },
+                { "CH.B2.5", ProductFocus.Origin },
+                { "CH.B2.1", ProductFocus.Origin | ProductFocus.Ingredients | ProductFocus.Nutrients },
+                { "CH.I2.2", ProductFocus.Labels }, { "CH.B3.3", ProductFocus.Labels },
+                { "CH.A2.5", ProductFocus.None }, { "CH.A3.3", ProductFocus.None }, { "CH.I3.2", ProductFocus.None },
+            };
+
+            var productChallenges = ChallengeInteractionCatalog.Entries
+                .Where(e => e.Value.Trigger == ChallengeCompletionTrigger.ProductViewed)
+                .Select(e => e.Key)
+                .OrderBy(k => k)
+                .ToList();
+            CollectionAssert.AreEquivalent(expected.Keys.OrderBy(k => k).ToList(), productChallenges, "every product challenge needs a row here");
+            foreach (KeyValuePair<string, ProductFocus> row in expected)
+            {
+                Assert.AreEqual(row.Value, ChallengeInteractionCatalog.Get(row.Key).ProductFocus, row.Key);
             }
         }
     }

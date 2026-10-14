@@ -260,7 +260,7 @@ namespace eu.foodmission.platform.Tests
             var challengeSession = new Mock<IChallengeSessionService>();
             challengeSession
                 .Setup(x => x.ReportAsync(It.IsAny<ChallengeCompletionTrigger>(), It.IsAny<string>()))
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(ChallengeReportResult.Counted);
             var vm = new PantryViewModel(
                 _storeService,
                 _mockPantryService.Object,

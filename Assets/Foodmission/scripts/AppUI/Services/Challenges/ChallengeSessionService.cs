@@ -14,15 +14,25 @@ namespace eu.foodmission.platform
         private bool _isCompleting;
 
         public event Action<string, ContentReward> AutoCompleted;
+        public event Action SessionChanged;
 
         public string ActiveChallengeCode { get; private set; }
+        public ChallengeInteraction ActiveInteraction => _interaction;
+        public string ActiveChallengeTitle { get; private set; }
+        public string ActiveChallengeTask { get; private set; }
+        public int ReportedCount => _reportedItems.Count;
+        public ApiErrorResponse LastError { get; private set; }
+        public bool IsCompletionPending => _interaction != null && _reportedItems.Count >= Math.Max(1, _interaction.RequiredCount);
 
         public ChallengeSessionService(IChallengeCompletionService completion)
         {
             _completion = completion;
         }
 
-        public void Begin(string challengeCode, ChallengeInteraction interaction)
+        public bool HasReported(string itemKey) =>
+            !string.IsNullOrEmpty(itemKey) && _reportedItems.Contains(itemKey.Trim());
+
+        public void Begin(string challengeCode, ChallengeInteraction interaction, string title = null, string task = null)
         {
             Cancel();
             if (string.IsNullOrWhiteSpace(challengeCode) || interaction == null || !interaction.AutoCompletes ||
@@ -32,33 +42,47 @@ namespace eu.foodmission.platform
             }
 
             ActiveChallengeCode = challengeCode.Trim();
+            ActiveChallengeTitle = title;
+            ActiveChallengeTask = task;
             _interaction = interaction;
+            SessionChanged?.Invoke();
         }
 
         public void Cancel()
         {
+            bool wasActive = ActiveChallengeCode != null;
             ActiveChallengeCode = null;
+            ActiveChallengeTitle = null;
+            ActiveChallengeTask = null;
+            LastError = null;
             _interaction = null;
             _reportedItems.Clear();
+            if (wasActive)
+            {
+                SessionChanged?.Invoke();
+            }
         }
 
-        public async Task ReportAsync(ChallengeCompletionTrigger trigger, string itemKey)
+        public async Task<ChallengeReportResult> ReportAsync(ChallengeCompletionTrigger trigger, string itemKey)
         {
             if (ActiveChallengeCode == null || _interaction == null || trigger != _interaction.Trigger || string.IsNullOrEmpty(itemKey))
             {
-                return;
+                return ChallengeReportResult.Ignored;
             }
 
             if (trigger == ChallengeCompletionTrigger.FoodFactRead &&
                 !string.Equals(itemKey.Trim(), _interaction.FoodFactCode, StringComparison.OrdinalIgnoreCase))
             {
-                return;
+                return ChallengeReportResult.Ignored;
             }
 
-            _reportedItems.Add(itemKey.Trim());
+            if (_reportedItems.Add(itemKey.Trim()))
+            {
+                SessionChanged?.Invoke();
+            }
             if (_reportedItems.Count < Math.Max(1, _interaction.RequiredCount) || _isCompleting)
             {
-                return;
+                return ChallengeReportResult.Counted;
             }
 
             string code = ActiveChallengeCode;
@@ -69,7 +93,8 @@ namespace eu.foodmission.platform
                 if (!result.Success)
                 {
                     Debug.LogWarning($"[ChallengeSessionService] Auto-completion of {code} failed; session kept for retry");
-                    return;
+                    LastError = result.Error;
+                    return ChallengeReportResult.Failed;
                 }
 
                 if (string.Equals(ActiveChallengeCode, code, StringComparison.OrdinalIgnoreCase))
@@ -77,10 +102,13 @@ namespace eu.foodmission.platform
                     Cancel();
                 }
                 AutoCompleted?.Invoke(code, result.Reward);
+                return ChallengeReportResult.Completed;
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[ChallengeSessionService] ReportAsync failed for {code}: {ex.Message}");
+                LastError = new ApiErrorResponse { message = ex.Message };
+                return ChallengeReportResult.Failed;
             }
             finally
             {

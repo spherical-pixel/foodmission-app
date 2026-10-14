@@ -4171,6 +4171,22 @@ MonoBehaviour:
     m_Key: MISSION_HINT_NUTRIENT_DENSE_MEALS
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Key: CHALLENGE_PRODUCT_DONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Key: CHALLENGE_PRODUCT_COUNTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Key: CHALLENGE_PRODUCT_PROGRESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Key: CHALLENGE_PRODUCT_NOT_HERE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -4,13 +4,14 @@ namespace eu.foodmission.platform
 {
     public enum FoodInfoType { Product, Generic }
 
-    public record NutritionRow(string Label, float? Value, string Unit);
+    /// <summary>Key: the UI.csv key of the label, used to highlight the row for a challenge (see ProductFocusMap).</summary>
+    public record NutritionRow(string Label, float? Value, string Unit, string Key = null);
 
     public record NutritionGroup(string Title, List<NutritionRow> Rows);
 
-    public record TrafficLight(string Label, string Level);
+    public record TrafficLight(string Label, string Level, string Key = null);
 
-    public record MetaRow(string Label, string Value);
+    public record MetaRow(string Label, string Value, string Key = null);
 
     public record DietaryFlags(bool? Vegan, bool? Vegetarian, bool? PalmOilFree);
 

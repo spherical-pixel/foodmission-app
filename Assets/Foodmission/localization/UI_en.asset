@@ -4304,6 +4304,22 @@ MonoBehaviour:
       food, fresh vegetables or salad, and a healthy fat. Tick all the ones it had.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: I've looked at it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: Counted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} of {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: 'This isn''t shown here: check the packaging.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -130,7 +130,7 @@ namespace eu.foodmission.platform.Tests
 
             _vm.OpenHelperModule();
 
-            _session.Verify(s => s.Begin("CH.B2.2", ChallengeInteractionCatalog.Get("CH.B2.2")), Times.Once);
+            _session.Verify(s => s.Begin("CH.B2.2", ChallengeInteractionCatalog.Get("CH.B2.2"), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             Assert.AreEqual(Actions.go_to_quicksearch, _navAction);
         }
 

@@ -4371,6 +4371,22 @@ MonoBehaviour:
       warzyw lub sa\u0142atki oraz zdrowego t\u0142uszczu. Zaznacz wszystko, co zawiera\u0142."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: "Sprawdzi\u0142em"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: Policzone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} z {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: "Tego tu nie ma: sprawd\u017A opakowanie."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
