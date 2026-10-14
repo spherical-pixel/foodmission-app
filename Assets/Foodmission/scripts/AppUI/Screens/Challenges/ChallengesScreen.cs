@@ -69,7 +69,7 @@ namespace eu.foodmission.platform
 
             _emptyStateText = contentContainer.Q<Unity.AppUI.UI.Text>("empty-state");
             _groupsContainer = contentContainer.Q<VisualElement>("groups-container");
-            // After the groups, inside the scroll view
+            // After the groups, inside the list container
             if (_goalsHint == null && _groupsContainer?.parent != null)
             {
                 _goalsHint = new FMGoalsFilterHint();

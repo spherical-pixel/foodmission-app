@@ -27,8 +27,8 @@
     display: none;
 }
 
-.fm-missions-scroll {
-    flex-grow: 1;
+.fm-missions-list {
+    flex-shrink: 0;
 }
 
 .fm-missions-groups-container {

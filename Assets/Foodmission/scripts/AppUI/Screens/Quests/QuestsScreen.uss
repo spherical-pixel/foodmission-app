@@ -27,8 +27,8 @@
     display: none;
 }
 
-.fm-quests-scroll {
-    flex-grow: 1;
+.fm-quests-list {
+    flex-shrink: 0;
 }
 
 .fm-quests-groups-container {

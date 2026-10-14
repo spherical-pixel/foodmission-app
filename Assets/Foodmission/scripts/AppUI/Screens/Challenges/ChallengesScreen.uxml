@@ -66,9 +66,9 @@
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41655488905994240)"/>
                 </Bindings>
             </appui:Text>
-            <ui:ScrollView name="scroll-view" mode="Vertical" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fm-challenges-scroll">
+            <ui:VisualElement name="list-container" class="fm-challenges-list">
                 <ui:VisualElement name="groups-container" class="fm-challenges-groups-container"/>
-            </ui:ScrollView>
+            </ui:VisualElement>
             <ui:VisualElement class="fm-bottom-nav-padding"/>
         </ui:VisualElement>
     </ui:VisualElement>

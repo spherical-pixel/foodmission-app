@@ -32,8 +32,8 @@
     display: none;
 }
 
-.fm-foodfacts-scroll {
-    flex-grow: 1;
+.fm-foodfacts-list {
+    flex-shrink: 0;
 }
 
 .fm-foodfacts-groups-container {
