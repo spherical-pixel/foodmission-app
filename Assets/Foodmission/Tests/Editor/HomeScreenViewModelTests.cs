@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Moq;
@@ -227,7 +228,7 @@ namespace eu.foodmission.platform.Tests
 
             var result = await vm.CheckPendingGamificationRewardsAsync();
             Assert.IsNull(result);
-            mockGamification.Verify(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+            mockGamification.Verify(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()), Times.Never);
         }
 
         [Test]
@@ -242,7 +243,7 @@ namespace eu.foodmission.platform.Tests
                     new UserEvent { id = "ev-1", eventType = "MISSION_COMPLETED", timestamp = "2026-09-23T10:00:00Z" }
                 }
             };
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((profile, (ApiErrorResponse)null));
 
             _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
@@ -259,6 +260,23 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             string savedCursor = PlayerPrefs.GetString("last_seen_gamif_ts_test-user", "");
             Assert.AreEqual("2026-09-23T10:00:00Z", savedCursor);
+        }
+
+        [Test]
+        public async Task CheckPendingGamificationRewardsAsync_RequestsOnlyCelebrationEvents()
+        {
+            // A meal log or a check-in records many events: unfiltered, a completion could fall out of the latest 30
+            var mockGamification = new Mock<IGamificationService>();
+            IReadOnlyCollection<string> requested = null;
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
+                .Callback<int, int, IReadOnlyCollection<string>>((_, _, types) => requested = types)
+                .ReturnsAsync((new GamificationProfileResponse { userId = "test-user", recentEvents = new UserEvent[0] }, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, gamificationService: mockGamification.Object);
+            await vm.CheckPendingGamificationRewardsAsync();
+
+            CollectionAssert.AreEquivalent(new[] { "MISSION_COMPLETED", "QUEST_COMPLETED", "DIMENSION_LEVEL_UP" }, requested);
         }
 
         [Test]
@@ -297,7 +315,7 @@ namespace eu.foodmission.platform.Tests
                 }
             };
 
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((profile, (ApiErrorResponse)null));
 
             _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
@@ -356,7 +374,7 @@ namespace eu.foodmission.platform.Tests
                 }
             };
 
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((profile, (ApiErrorResponse)null));
 
             _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
@@ -406,7 +424,7 @@ namespace eu.foodmission.platform.Tests
                 }
             };
 
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((profile, (ApiErrorResponse)null));
 
             _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
@@ -450,7 +468,7 @@ namespace eu.foodmission.platform.Tests
                 }
             };
 
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((profile, (ApiErrorResponse)null));
 
             _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
@@ -477,7 +495,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_NotMarkedUntilShown_IsReturnedAgain()
         {
             var mockGamification = new Mock<IGamificationService>();
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>())).ReturnsAsync((new GamificationProfileResponse
             {
                 userId = "test-user",
                 recentEvents = new[]
@@ -723,7 +741,7 @@ namespace eu.foodmission.platform.Tests
                 }
             };
 
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((profile, (ApiErrorResponse)null));
 
             _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
@@ -775,7 +793,7 @@ namespace eu.foodmission.platform.Tests
                 }
             };
 
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((profile, (ApiErrorResponse)null));
 
             _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
@@ -867,7 +885,7 @@ namespace eu.foodmission.platform.Tests
         {
             var mockGamification = new Mock<IGamificationService>();
             var mockQuests = new Mock<IQuestService>();
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>())).ReturnsAsync((new GamificationProfileResponse
             {
                 userId = "test-user",
                 recentEvents = new[]
@@ -900,7 +918,7 @@ namespace eu.foodmission.platform.Tests
             var mockGamification = new Mock<IGamificationService>();
             var mockQuests = new Mock<IQuestService>();
             var mockAuth = new Mock<IAuthService>();
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>())).ReturnsAsync((new GamificationProfileResponse
             {
                 userId = "test-user",
                 recentEvents = new[] { QuestCompletedEvent("ev-quest", "q1", "2026-10-01T16:06:05.533Z") }
@@ -956,7 +974,7 @@ namespace eu.foodmission.platform.Tests
             mockAuth.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(r => r.clearCurrentQuest)), Times.Once);
 
             // The QUEST_COMPLETED event showing up later must not celebrate the same quest again
-            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>())).ReturnsAsync((new GamificationProfileResponse
             {
                 userId = "test-user",
                 recentEvents = new[] { QuestCompletedEvent("ev-quest", "q1", "2026-10-01T16:06:05.533Z") }
@@ -1010,7 +1028,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_WhenNewBadge_ReturnsBadgeCelebrationWithWalletReward()
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1049,7 +1067,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_WhenNewBadgeWithoutWallet_HasNoXpFallback()
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1076,7 +1094,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_WhenMissionAndBadge_OrdersBadgeLast()
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1115,7 +1133,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_NewBadge_NotMarkedUntilShown()
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1142,7 +1160,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_WhenBadgeAlreadyCelebrated_ReturnsNull()
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1165,7 +1183,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_WhenBadgeDetailsFail_DoesNotMarkCelebrated()
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1191,7 +1209,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CheckPendingGamificationRewardsAsync_FirstRun_CelebratesOnlyRecentBadge()
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1222,7 +1240,7 @@ namespace eu.foodmission.platform.Tests
             // No last_seen_gamif_ts yet: the mission/quest cursor is established and returns early,
             // but badge detection is independent of that cursor.
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                 .ReturnsAsync((new GamificationProfileResponse
                 {
                     userId = "test-user",
@@ -1368,7 +1386,7 @@ namespace eu.foodmission.platform.Tests
                         }
                     }
                 };
-                mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()))
+                mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
                     .ReturnsAsync((profile, (ApiErrorResponse)null));
 
                 _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123", userSegment = "BEGINNER" });
@@ -1417,7 +1435,7 @@ namespace eu.foodmission.platform.Tests
         private HomeScreenViewModel CreateLevelUpVm(Mock<IAuthService> auth, DimensionLevelEntry[] backendLevels, UserEvent levelUpEvent, params QuestProgress[] progress)
         {
             var gamification = new Mock<IGamificationService>();
-            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((new GamificationProfileResponse
+            gamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>())).ReturnsAsync((new GamificationProfileResponse
             {
                 userId = "test-user",
                 recentEvents = new[]

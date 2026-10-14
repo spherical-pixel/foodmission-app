@@ -290,5 +290,38 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(result);
             Assert.IsNotNull(error);
         }
+
+        [Test]
+        public void ProfileUrl_WithEventTypes_AddsTheFilter()
+        {
+            string url = GamificationService.ProfileUrl("http://api", 30, 30, new[] { "MISSION_COMPLETED", "QUEST_COMPLETED" });
+
+            StringAssert.Contains("eventsLimit=30", url);
+            StringAssert.Contains("walletEntriesLimit=30", url);
+            StringAssert.Contains("eventTypes=MISSION_COMPLETED%2CQUEST_COMPLETED", url);
+            StringAssert.DoesNotContain("eventTypes", GamificationService.ProfileUrl("http://api", 30, 30, null));
+        }
+
+        [Test]
+        public void KeepEventsOfTypes_FiltersEventsAndKeepsTheRest()
+        {
+            // Fallback for backends without #419: the unfiltered profile is filtered here, wallet untouched
+            var profile = new GamificationProfileResponse
+            {
+                userId = "u1",
+                wallet = new WalletBalance { xp = 10 },
+                recentEvents = new[]
+                {
+                    new UserEvent { id = "1", eventType = "MEAL_LOGGED" },
+                    new UserEvent { id = "2", eventType = "MISSION_COMPLETED" },
+                    null
+                }
+            };
+
+            GamificationProfileResponse filtered = GamificationService.KeepEventsOfTypes(profile, new[] { "MISSION_COMPLETED" }, 30);
+
+            Assert.AreEqual(new[] { "2" }, System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Select(filtered.recentEvents, e => e.id)));
+            Assert.AreEqual(10, filtered.wallet.xp);
+        }
     }
 }
