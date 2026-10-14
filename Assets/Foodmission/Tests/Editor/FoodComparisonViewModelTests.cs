@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
@@ -296,19 +297,21 @@ namespace eu.foodmission.platform.Tests
             var lists = new[] { new ShoppingList { id = "list-1", title = "Mi compra" } };
             _mockShoppingListService.Setup(s => s.GetListsAsync()).ReturnsAsync((lists, null));
 
-            var items = new[] { new ShoppingListItem { id = "item-1", genericFoodId = "gf-throttle-1", genericFood = null } };
+            // Unique id per run: the view model remembers fetched ids in a static set that survives runs without a domain reload
+            string genericFoodId = "gf-throttle-" + Guid.NewGuid().ToString("N");
+            var items = new[] { new ShoppingListItem { id = "item-1", genericFoodId = genericFoodId, genericFood = null } };
             _mockShoppingListService.Setup(s => s.GetItemsAsync("list-1")).ReturnsAsync((items, null));
 
-            mockGenericFoodService.SetupSequence(s => s.GetGenericFoodByIdAsync("gf-throttle-1"))
+            mockGenericFoodService.SetupSequence(s => s.GetGenericFoodByIdAsync(genericFoodId))
                 .ReturnsAsync(((GenericFood)null, new ApiErrorResponse { statusCode = 429, error = "ThrottlerException" }))
-                .ReturnsAsync((new GenericFood { id = "gf-throttle-1", foodName = "Lentils", foodGroupSlug = "legumes" }, (ApiErrorResponse)null));
+                .ReturnsAsync((new GenericFood { id = genericFoodId, foodName = "Lentils", foodGroupSlug = "legumes" }, (ApiErrorResponse)null));
 
             _mockCalculator.Setup(c => c.IsProtein(It.IsAny<GenericFood>())).Returns(false);
 
             await vm.LoadComparisonDataAsync(challengeCode: "CH.B1.1", mode: "proteins", source: "shopping_list");
 
             Assert.AreEqual("Lentils", items[0].genericFood?.foodName);
-            mockGenericFoodService.Verify(s => s.GetGenericFoodByIdAsync("gf-throttle-1"), Times.Exactly(2));
+            mockGenericFoodService.Verify(s => s.GetGenericFoodByIdAsync(genericFoodId), Times.Exactly(2));
         }
 
         [Test]
@@ -588,11 +591,13 @@ namespace eu.foodmission.platform.Tests
             var lists = new[] { new ShoppingList { id = "list-1", title = "Mi compra" } };
             _mockShoppingListService.Setup(s => s.GetListsAsync()).ReturnsAsync((lists, null));
 
-            var fishSticks = new FoodProduct { id = "prod-local-3", name = "Bâtonnets Colin d'Alaska MSC", barcode = "throttle-test-3599741003311" };
+            // Unique barcode per run: OFF snapshots are cached in a static dictionary that survives runs without a domain reload
+            string barcode = "throttle-test-" + Guid.NewGuid().ToString("N");
+            var fishSticks = new FoodProduct { id = "prod-local-3", name = "Bâtonnets Colin d'Alaska MSC", barcode = barcode };
             var items = new[] { new ShoppingListItem { id = "p-1", foodProductId = "prod-local-3", foodProduct = fishSticks } };
             _mockShoppingListService.Setup(s => s.GetItemsAsync("list-1")).ReturnsAsync((items, null));
 
-            mockFoodProductService.SetupSequence(s => s.FindByBarcodeAsync("throttle-test-3599741003311", true))
+            mockFoodProductService.SetupSequence(s => s.FindByBarcodeAsync(barcode, true))
                 .ReturnsAsync(((FoodProduct)null, new ApiErrorResponse { statusCode = 429, error = "ThrottlerException" }))
                 .ReturnsAsync((new FoodProduct { categories = new[] { "en:seafood", "en:fishes-and-their-products" } }, (ApiErrorResponse)null));
 
@@ -601,7 +606,7 @@ namespace eu.foodmission.platform.Tests
             await vm.LoadComparisonDataAsync(challengeCode: "CH.B1.1", mode: "proteins", source: "shopping_list");
 
             CollectionAssert.AreEqual(new[] { "en:seafood", "en:fishes-and-their-products" }, fishSticks.categories);
-            mockFoodProductService.Verify(s => s.FindByBarcodeAsync("throttle-test-3599741003311", true), Times.Exactly(2));
+            mockFoodProductService.Verify(s => s.FindByBarcodeAsync(barcode, true), Times.Exactly(2));
         }
 
         [Test]
