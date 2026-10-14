@@ -63,9 +63,9 @@
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1;">
             <appui:Text name="empty-state" text="No missions found matching the selected filters." class="fm-missions-empty" style="display: none;"/>
-            <ui:ScrollView name="scroll-view" mode="Vertical" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fm-missions-scroll">
+            <ui:VisualElement name="list-container" class="fm-missions-list">
                 <ui:VisualElement name="groups-container" class="fm-missions-groups-container"/>
-            </ui:ScrollView>
+            </ui:VisualElement>
             <ui:VisualElement class="fm-bottom-nav-padding"/>
         </ui:VisualElement>
     </ui:VisualElement>

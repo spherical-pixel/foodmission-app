@@ -27,8 +27,8 @@
     display: none;
 }
 
-.fm-challenges-scroll {
-    flex-grow: 1;
+.fm-challenges-list {
+    flex-shrink: 0;
 }
 
 .fm-challenges-groups-container {
