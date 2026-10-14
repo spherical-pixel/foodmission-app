@@ -9,6 +9,10 @@ namespace eu.foodmission.platform
         Task<(UserEarnedRewardsResponse Result, ApiErrorResponse Error)> GetEarnedRewardsAsync();
         Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> GetGamificationProfileAsync(int eventsLimit = 20, int walletEntriesLimit = 20);
 
+        /// <summary>Profile whose recentEvents are only of these types (backend #419; older backends are filtered in the app).</summary>
+        Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> GetGamificationProfileAsync(int eventsLimit, int walletEntriesLimit,
+            IReadOnlyCollection<string> eventTypes);
+
         /// <summary>GET /users/me/gamification filtered by event types (backend #419): the latest <paramref name="limit"/> events of those types.</summary>
         Task<(UserEvent[] Result, ApiErrorResponse Error)> GetRecentEventsAsync(IReadOnlyCollection<string> eventTypes, int limit);
 

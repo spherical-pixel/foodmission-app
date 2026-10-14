@@ -845,6 +845,7 @@ namespace eu.foodmission.platform
         private static string CelebratedQuestsKey(string userId) => $"celebrated_quest_ids_{userId}";
 
         private const string LevelUpEventType = "DIMENSION_LEVEL_UP";
+        private static readonly string[] CelebrationEventTypes = { "MISSION_COMPLETED", "QUEST_COMPLETED", LevelUpEventType };
 
         private static string CelebratedEventsKey(string userId) => $"celebrated_gamif_ids_{userId}";
 
@@ -1047,7 +1048,8 @@ namespace eu.foodmission.platform
                     celebratedIdsRaw.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries)
                 );
 
-                var (profile, err) = await _gamificationService.GetGamificationProfileAsync(30, 30);
+                // Only celebration events: a meal log or check-in records many others that would push completions out of the 30
+                var (profile, err) = await _gamificationService.GetGamificationProfileAsync(30, 30, CelebrationEventTypes);
                 if (profile == null || err != null)
                     return null;
 

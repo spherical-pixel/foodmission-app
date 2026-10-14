@@ -95,8 +95,47 @@ namespace eu.foodmission.platform
             }
         }
 
+        // Backend maximum for eventsLimit (GamificationProfileQueryDto @Max(100))
+        private const int MaxEventsLimit = 100;
+
         public Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> GetGamificationProfileAsync(int eventsLimit = 20, int walletEntriesLimit = 20) =>
-            FetchProfileAsync($"{ApiConfig.BaseUrl}/api/v1/users/me/gamification?eventsLimit={eventsLimit}&walletEntriesLimit={walletEntriesLimit}", nameof(GetGamificationProfileAsync));
+            FetchProfileAsync(ProfileUrl(ApiConfig.BaseUrl, eventsLimit, walletEntriesLimit, null), nameof(GetGamificationProfileAsync));
+
+        public async Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> GetGamificationProfileAsync(int eventsLimit, int walletEntriesLimit,
+            IReadOnlyCollection<string> eventTypes)
+        {
+            var (profile, error) = await FetchProfileAsync(ProfileUrl(ApiConfig.BaseUrl, eventsLimit, walletEntriesLimit, eventTypes), nameof(GetGamificationProfileAsync));
+            if (error == null || error.statusCode != 400 || eventTypes == null || eventTypes.Count == 0)
+            {
+                return (profile, error);
+            }
+
+            // Backends without the eventTypes filter (#419) answer 400 to the unknown parameter: filter the latest events here
+            Debug.LogWarning($"[{GetType().Name}] eventTypes filter not supported by the backend, filtering recent events locally");
+            var (unfiltered, unfilteredError) = await FetchProfileAsync(ProfileUrl(ApiConfig.BaseUrl, MaxEventsLimit, walletEntriesLimit, null), nameof(GetGamificationProfileAsync));
+            return unfilteredError != null ? (null, unfilteredError) : (KeepEventsOfTypes(unfiltered, eventTypes, eventsLimit), null);
+        }
+
+        public static string ProfileUrl(string baseUrl, int eventsLimit, int walletEntriesLimit, IReadOnlyCollection<string> eventTypes)
+        {
+            string url = $"{baseUrl}/api/v1/users/me/gamification?eventsLimit={eventsLimit}&walletEntriesLimit={walletEntriesLimit}";
+            return eventTypes == null || eventTypes.Count == 0 ? url : $"{url}&eventTypes={Uri.EscapeDataString(string.Join(",", eventTypes))}";
+        }
+
+        /// <summary>Keeps only events of these types (at most <paramref name="limit"/>); wallet, badges and the rest stay as they are.</summary>
+        public static GamificationProfileResponse KeepEventsOfTypes(GamificationProfileResponse profile, IReadOnlyCollection<string> eventTypes, int limit)
+        {
+            if (profile == null)
+            {
+                return null;
+            }
+            var wanted = new HashSet<string>(eventTypes ?? Array.Empty<string>(), StringComparer.Ordinal);
+            profile.recentEvents = (profile.recentEvents ?? Array.Empty<UserEvent>())
+                .Where(e => e != null && wanted.Contains(e.eventType))
+                .Take(limit)
+                .ToArray();
+            return profile;
+        }
 
         public async Task<(UserEvent[] Result, ApiErrorResponse Error)> GetRecentEventsAsync(IReadOnlyCollection<string> eventTypes, int limit)
         {
@@ -105,7 +144,7 @@ namespace eu.foodmission.platform
         }
 
         public static string RecentEventsUrl(string baseUrl, IReadOnlyCollection<string> eventTypes, int limit) =>
-            $"{baseUrl}/api/v1/users/me/gamification?eventsLimit={limit}&walletEntriesLimit=1&eventTypes={Uri.EscapeDataString(string.Join(",", eventTypes))}";
+            ProfileUrl(baseUrl, limit, 1, eventTypes);
 
         private async Task<(GamificationProfileResponse Result, ApiErrorResponse Error)> FetchProfileAsync(string url, string caller)
         {
