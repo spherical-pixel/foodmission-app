@@ -101,7 +101,8 @@ namespace eu.foodmission.platform
                             break;
 
                         default:
-                            missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step, mission.StartLocal));
+                            missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step, mission.StartLocal,
+                                fromProducts: FromProducts(inputs, step, mission.StartLocal)));
                             break;
                     }
                 }
@@ -169,6 +170,34 @@ namespace eu.foodmission.platform
         /// Whether a meal of this type on this day would count for the contributing mission: right meal type, and
         /// dated (<see cref="MissionReportDays.TimestampFor"/>) at or after the mission start, since rules ignore earlier events.
         /// </summary>
+        /// <summary>
+        /// Foods reported from the product detail since the mission started that count for this step: matching its fixed
+        /// metadata and, for checklists, satisfying the rule with what was reported for that food.
+        /// </summary>
+        private static int FromProducts(CheckInInputs inputs, MissionReportStep step, DateTime? startLocal)
+        {
+            var types = new HashSet<string>(ProductMissionPlanner.EventTypesOf(step), StringComparer.Ordinal);
+            IEnumerable<IGrouping<string, CheckInProductReport>> byFood = inputs.ProductReports
+                .Where(r => types.Contains(r.EventType) && (!startLocal.HasValue || r.AtLocal >= startLocal.Value) && MatchesFixedMetadata(step, r))
+                .GroupBy(r => r.Id, StringComparer.Ordinal);
+            if (step.Type != MissionStepType.ProductChecklist)
+            {
+                return byFood.Count();
+            }
+
+            ChecklistSpec spec = step.Checklist;
+            return byFood.Count(food =>
+            {
+                IEnumerable<int> chosen = spec.IsArray
+                    ? ChecklistRule.IndexesOf(spec, food.SelectMany(r => r.Values))
+                    : food.Select(r => spec.Options.ToList().FindIndex(o => o.EventType == r.EventType)).Where(i => i >= 0);
+                return ChecklistRule.Counts(spec, chosen.Distinct().ToList());
+            });
+        }
+
+        private static bool MatchesFixedMetadata(MissionReportStep step, CheckInProductReport report) =>
+            step.FixedMetadata.All(kv => report.Metadata.TryGetValue(kv.Key, out string value) && string.Equals(value, kv.Value?.ToString(), StringComparison.Ordinal));
+
         private static bool Counts(MealContribution contribution, DateTime day, string mealType, DateTime nowLocal) =>
             (contribution.MealTypes.Count == 0 || contribution.MealTypes.Contains(mealType)) &&
             (!contribution.Start.HasValue || MissionReportDays.TimestampFor(day, mealType, nowLocal) >= contribution.Start.Value);

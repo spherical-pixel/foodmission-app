@@ -206,5 +206,75 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(error);
             CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-1), Now.Date }, plan.DayEvents.Single().OpenDays);
         }
+
+        [Test]
+        public async Task LoadActiveMissions_SkipsResolvedAndUnknownMissions_AndKeepsProgress()
+        {
+            var (missions, progress, error) = await CheckInService.LoadActiveMissionsAsync(_store, _quests.Object, _missions.Object);
+
+            Assert.IsNull(error);
+            CollectionAssert.AreEquivalent(new[] { "M.A1.3", "M.A5.4" }, missions.Select(m => m.Code).ToArray());
+            Assert.AreEqual(20, progress["M.A1.3"].progress);
+        }
+
+        [Test]
+        public async Task LoadPlan_CountsRealProductReports_IgnoringCheckInProducts()
+        {
+            SetQuest("M.B2.5");
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.B2.5", missionTitle = "Packaging", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+            string at = Now.AddDays(-1).ToUniversalTime().ToString("o");
+            _gamification.Setup(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), CheckInService.EventsLimit))
+                .ReturnsAsync(() => (_recentEvents, (ApiErrorResponse)null));
+            _recentEvents = new[]
+            {
+                new UserEvent { eventType = ClientEventTypes.ShoppingPackagingInfoChecked, timestamp = at, metadata = JObject.Parse("{\"productId\":\"p-1\"}") },
+                new UserEvent { eventType = ClientEventTypes.ShoppingPackagingInfoChecked, timestamp = at, metadata = JObject.Parse("{\"productId\":\"manual-r1-0\"}") }
+            };
+
+            var (plan, error) = await _service.LoadPlanAsync();
+
+            Assert.IsNull(error);
+            Assert.AreEqual(1, plan.MissionSteps.Single(s => s.MissionCode == "M.B2.5").FromProducts);
+        }
+
+        [Test]
+        public async Task LoadPlan_ProductEventsFailure_KeepsThePlan()
+        {
+            // "Already counted from products" is only a hint: failing to load it must not block the check-in
+            SetQuest("M.B2.5");
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.B2.5", missionTitle = "Packaging", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+            _gamification.Setup(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), CheckInService.EventsLimit))
+                .ReturnsAsync(((UserEvent[])null, new ApiErrorResponse { statusCode = 500, message = "down" }));
+
+            var (plan, error) = await _service.LoadPlanAsync();
+
+            Assert.IsNull(error);
+            Assert.AreEqual(0, plan.MissionSteps.Single(s => s.MissionCode == "M.B2.5").FromProducts);
+        }
+
+        [Test]
+        public async Task LoadPlan_DayEvents_AreLoadedApartFromProductEvents()
+        {
+            SetQuest("M.A5.4", "M.B2.5");
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.A5.4", missionTitle = "FIFO", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() },
+                new MissionProgress { missionCode = "M.B2.5", missionTitle = "Packaging", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+            var calls = new List<string[]>();
+            _gamification.Setup(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), CheckInService.EventsLimit))
+                .Callback<IReadOnlyCollection<string>, int>((types, _) => calls.Add(types.ToArray()))
+                .ReturnsAsync(() => (_recentEvents, (ApiErrorResponse)null));
+
+            await _service.LoadPlanAsync();
+
+            Assert.IsTrue(calls.Any(c => c.SequenceEqual(new[] { ClientEventTypes.FoodWasteFifoOrganized })), "day types alone, as before");
+        }
     }
 }

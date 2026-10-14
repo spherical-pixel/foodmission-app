@@ -4336,6 +4336,26 @@ MonoBehaviour:
     m_Localized: 'Qui non compare: guarda la confezione.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Localized: '{0}%'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Localized: Invia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Localized: Le opzioni evidenziate compaiono nella scheda di questo prodotto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Localized: "Ne hai gi\xE0 contati {0} dai prodotti."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Localized: Cerca un prodotto
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

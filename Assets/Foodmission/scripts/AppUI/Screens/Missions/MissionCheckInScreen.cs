@@ -364,6 +364,12 @@ namespace eu.foodmission.platform
                 onlyNew.AddToClassList("fm-mission-report-meal-hint");
                 body.Add(onlyNew);
             }
+            if (missionStep.FromProducts > 0)
+            {
+                var fromProducts = new Text { text = LF("MISSION_CHECKIN_FROM_PRODUCTS", missionStep.FromProducts) };
+                fromProducts.AddToClassList("fm-mission-report-meal-hint");
+                body.Add(fromProducts);
+            }
 
             MissionReportStep step = missionStep.Step;
             switch (step.Type)
@@ -581,21 +587,7 @@ namespace eu.foodmission.platform
 
         // ── Controls ──────────────────────────────────────────
 
-        private static FMButton Chip(string title, bool selected, Action onClick)
-        {
-            // The UI font has no "✓" glyph: mark selection with App UI's check icon
-            var chip = new FMButton
-            {
-                title = title,
-                leadingIcon = selected ? "check" : string.Empty,
-                variant = selected ? ButtonVariant.Accent : ButtonVariant.Default,
-                size = Size.S
-            };
-            chip.AddToClassList("fm-mission-report-chip");
-            chip.EnableInClassList("fm-mission-report-chip--selected", selected);
-            chip.clicked += onClick;
-            return chip;
-        }
+        private static FMButton Chip(string title, bool selected, Action onClick) => MissionChips.Chip(title, selected, onClick);
 
         private static FMArrowStepper Stepper(int value, int max, Action<int> onChanged)
         {

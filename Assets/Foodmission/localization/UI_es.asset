@@ -4333,6 +4333,26 @@ MonoBehaviour:
     m_Localized: "Este dato no aparece aqu\xED: m\xEDralo en el envase."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Localized: '{0} %'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Localized: Enviar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Localized: Las opciones con borde aparecen en la ficha de este producto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Localized: Ya contaste {0} desde los productos.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Localized: Buscar un producto
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

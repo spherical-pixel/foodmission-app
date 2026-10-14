@@ -99,6 +99,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void MissionProductReportKeys_ExistInUiCsv()
+        {
+            HashSet<string> keys = UiKeys();
+            foreach (string key in new[] { "MISSION_PRODUCT_PROGRESS", "MISSION_PRODUCT_SEND", "MISSION_PRODUCT_SUGGESTED", "MISSION_CHECKIN_FROM_PRODUCTS", "MISSION_BTN_FIND_PRODUCT" })
+            {
+                Assert.IsTrue(keys.Contains(key), $"Missing UI.csv key {key}");
+            }
+        }
+
+        [Test]
         public void MissionFailureKeys_ExistInUiCsv()
         {
             HashSet<string> keys = UiKeys();

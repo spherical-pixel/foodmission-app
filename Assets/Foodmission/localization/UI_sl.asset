@@ -4334,6 +4334,26 @@ MonoBehaviour:
     m_Localized: "Tega tu ni: poglej embala\u017Eo."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203634
+    m_Localized: '{0} %'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203635
+    m_Localized: "Po\u0161lji"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203636
+    m_Localized: "Obrobljene mo\u017Enosti so navedene v podatkih tega izdelka."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203637
+    m_Localized: "Prek izdelkov si jih \u017Ee \u0161tel {0}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203638
+    m_Localized: "Poi\u0161\u010Di izdelek"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
