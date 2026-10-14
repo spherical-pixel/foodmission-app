@@ -162,6 +162,9 @@ namespace eu.foodmission.platform
                 OnScaleChanged
             );
 
+            // "@UI:" texts with Smart entries ({global.PET_NAME}) need our resolver: App UI shows their key otherwise
+            SmartLangContext.Attach(_panel);
+
             // Apply the initial locale from state
             ApplyLocaleFromState();
 
@@ -193,6 +196,7 @@ namespace eu.foodmission.platform
         private void OnShuttingDown()
         {
             App.shuttingDown -= OnShuttingDown;
+            SmartLangContext.Detach();
 
             var eventService = services?.GetService<IEventService>();
             if (eventService != null)
