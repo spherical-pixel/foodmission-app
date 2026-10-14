@@ -52,6 +52,10 @@ namespace eu.foodmission.platform.Tests
                 .ReturnsAsync((new PantryItem[0], (ApiErrorResponse)null));
             _mockMealItemService.Setup(x => x.GetByMealIdAsync(It.IsAny<string>()))
                 .ReturnsAsync((new MealItemDetail[0], (ApiErrorResponse)null));
+            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "draft-1", status = MealLogStatus.Draft }, (ApiErrorResponse)null));
+            _mockMealLogService.Setup(x => x.ConfirmAsync(It.IsAny<string>(), It.IsAny<MealLogFactsRequest>()))
+                .ReturnsAsync((new MealLog { id = "draft-1", status = MealLogStatus.Confirmed }, (ApiErrorResponse)null));
 
             _storeService = new TestStoreService();
             _vm = new MealLogViewModel(
@@ -878,7 +882,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SaveAsync_MealFromPantryFalse_DoesNotTouchPantry()
+        public async Task ConfirmLogAsync_MealFromPantryFalse_DoesNotTouchPantry()
         {
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
             _vm.SelectTypeOfMeal(0);
@@ -892,14 +896,15 @@ namespace eu.foodmission.platform.Tests
             _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
                 .ReturnsAsync((new MealLog { id = "log-1" }, null));
 
-            bool result = await _vm.SaveAsync();
+            Assert.IsTrue(await _vm.SaveAsync());
+            bool result = await _vm.ConfirmLogAsync();
 
             Assert.IsTrue(result);
             _mockPantryService.Verify(x => x.GetItemsAsync(), Times.Never);
         }
 
         [Test]
-        public async Task SaveAsync_MealFromPantryTrue_DeductsQuantityWhenUnitsMatch()
+        public async Task ConfirmLogAsync_MealFromPantryTrue_DeductsQuantityWhenUnitsMatch()
         {
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
             _vm.SelectTypeOfMeal(0);
@@ -927,7 +932,8 @@ namespace eu.foodmission.platform.Tests
             _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
                 .ReturnsAsync((new MealLog { id = "log-1" }, null));
 
-            bool result = await _vm.SaveAsync();
+            Assert.IsTrue(await _vm.SaveAsync());
+            bool result = await _vm.ConfirmLogAsync();
 
             Assert.IsTrue(result);
             _mockPantryService.Verify(x => x.GetItemsAsync(), Times.Once);
@@ -935,7 +941,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SaveAsync_MealFromPantryTrue_DeletesEarliestExpiringOnUnitMismatch()
+        public async Task ConfirmLogAsync_MealFromPantryTrue_DeletesEarliestExpiringOnUnitMismatch()
         {
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
             _vm.SelectTypeOfMeal(0);
@@ -957,7 +963,8 @@ namespace eu.foodmission.platform.Tests
             _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
                 .ReturnsAsync((new MealLog { id = "log-1" }, null));
 
-            bool result = await _vm.SaveAsync();
+            Assert.IsTrue(await _vm.SaveAsync());
+            bool result = await _vm.ConfirmLogAsync();
 
             Assert.IsTrue(result);
             _mockPantryService.Verify(x => x.DeleteItemAsync("pantry-2"), Times.Once);
@@ -1121,97 +1128,166 @@ namespace eu.foodmission.platform.Tests
 
         private QuickMealCheckItem Fact(string id) => MealFacts.AllItems(_vm.FactSections).First(i => i.Id == id);
 
-        [Test]
-        public async Task GoToReviewAsync_WithItems_OpensReviewWithNothingChecked()
+        private void DraftProposes(params string[] flags)
         {
-            CreateVmWithQuest();
-            PrepareNewMealWithOneItem();
-
-            Assert.IsTrue(await _vm.GoToReviewAsync());
-
-            Assert.AreEqual(MealLogStep.ReviewingFacts, _vm.CurrentStep);
-            Assert.IsNotEmpty(_vm.FactSections);
-            Assert.IsTrue(MealFacts.AllItems(_vm.FactSections).All(i => !i.IsChecked));
-            _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
-            _mockMealService.Verify(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()), Times.Never);
+            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "draft-1", status = MealLogStatus.Draft, flags = flags, derivedFlags = flags }, null));
         }
 
         [Test]
-        public async Task GoToReviewAsync_WithoutItems_StaysOnDishesWithError()
+        public async Task SaveAsync_StagesDraftAndOpensReviewWithProposalsMarked()
         {
             CreateVmWithQuest();
+            PrepareNewMealWithOneItem();
+            DraftProposes(ClientEventTypes.MealLegumeConsumed);
+
+            Assert.IsTrue(await _vm.SaveAsync());
+
+            _mockMealLogService.Verify(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.mealId == "new-meal" && r.draft == true && r.flags == null && r.swaps == null)), Times.Once);
+            Assert.AreEqual(MealLogStep.ReviewingFacts, _vm.CurrentStep);
+            Assert.IsTrue(Fact("q_legumes").IsChecked);
+            Assert.AreEqual(1, MealFacts.AllItems(_vm.FactSections).Count(i => i.IsChecked));
+            _mockMealLogService.Verify(x => x.ConfirmAsync(It.IsAny<string>(), It.IsAny<MealLogFactsRequest>()), Times.Never);
+            _mockAuthService.Verify(a => a.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public async Task SaveAsync_WithoutItems_StaysOnDishesWithError()
+        {
+            CreateVmWithQuest();
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
             _vm.SetSource(true, false);
 
-            Assert.IsFalse(await _vm.GoToReviewAsync());
+            Assert.IsFalse(await _vm.SaveAsync());
 
             Assert.AreEqual(MealLogStep.SelectingDishes, _vm.CurrentStep);
             Assert.AreEqual("@UI:ERROR_NO_ITEMS_SELECTED", _vm.ErrorMessage);
+            _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
         }
 
         [Test]
-        public async Task GoBack_FromReview_ReturnsToDishesKeepingItems()
+        public async Task SaveAsync_WhenDraftFails_DeletesCreatedMealAndStaysOnDishes()
         {
             CreateVmWithQuest();
             PrepareNewMealWithOneItem();
-            await _vm.GoToReviewAsync();
+            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync(((MealLog)null, new ApiErrorResponse { statusCode = 500, message = "boom" }));
+            _mockMealService.Setup(x => x.DeleteMealAsync("new-meal")).ReturnsAsync((true, null));
+
+            Assert.IsFalse(await _vm.SaveAsync());
+
+            Assert.AreEqual(MealLogStep.SelectingDishes, _vm.CurrentStep);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            _mockMealService.Verify(x => x.DeleteMealAsync("new-meal"), Times.Once);
+        }
+
+        [Test]
+        public async Task GoBack_FromReview_DeletesDraftAndCreatedMealKeepingItems()
+        {
+            CreateVmWithQuest();
+            PrepareNewMealWithOneItem();
+            _mockMealLogService.Setup(x => x.DeleteLogAsync("draft-1")).ReturnsAsync((true, null));
+            _mockMealService.Setup(x => x.DeleteMealAsync("new-meal")).ReturnsAsync((true, null));
+            await _vm.SaveAsync();
 
             _vm.GoBack();
 
             Assert.AreEqual(MealLogStep.SelectingDishes, _vm.CurrentStep);
             Assert.AreEqual(1, _vm.SelectedItems.Count);
+            _mockMealLogService.Verify(x => x.DeleteLogAsync("draft-1"), Times.Once);
+            _mockMealService.Verify(x => x.DeleteMealAsync("new-meal"), Times.Once);
         }
 
         [Test]
-        public async Task GoToReviewAsync_AgainAfterBack_ClearsPreviousMarks()
+        public async Task GoBack_FromReviewOfUnchangedPreset_KeepsThePreset()
         {
             CreateVmWithQuest();
-            PrepareNewMealWithOneItem();
-            await _vm.GoToReviewAsync();
-            _vm.ToggleFact("q_legumes");
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(true, false);
+            var detail = new MealItemDetail
+            {
+                id = "i1",
+                foodProductId = "fp-1",
+                quantity = 2,
+                unit = "G",
+                itemType = "food_product",
+                foodProduct = new MealItemFoodProduct { id = "fp-1", name = "Item1" },
+            };
+            _mockMealItemService.Setup(x => x.GetByMealIdAsync("existing-meal")).ReturnsAsync((new[] { detail }, null));
+            await _vm.SelectMealPreset(new Meal { id = "existing-meal", name = "Test meal" });
+            _mockMealLogService.Setup(x => x.DeleteLogAsync("draft-1")).ReturnsAsync((true, null));
+            await _vm.SaveAsync();
+
             _vm.GoBack();
 
-            await _vm.GoToReviewAsync();
+            _mockMealLogService.Verify(x => x.DeleteLogAsync("draft-1"), Times.Once);
+            _mockMealService.Verify(x => x.DeleteMealAsync(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task SaveAsync_AgainAfterBack_ShowsOnlyTheNewProposals()
+        {
+            CreateVmWithQuest();
+            PrepareNewMealWithOneItem();
+            await _vm.SaveAsync();
+            _vm.ToggleFact("q_legumes");
+            _vm.GoBack();
+            DraftProposes(ClientEventTypes.MealVegan);
+
+            await _vm.SaveAsync();
 
             Assert.IsFalse(Fact("q_legumes").IsChecked);
+            Assert.IsTrue(MealFacts.AllItems(_vm.FactSections).Single(i => i.IsChecked).EventType == ClientEventTypes.MealVegan);
         }
 
         [Test]
-        public async Task SaveAsync_AfterReview_SendsChosenFlagsAndSwaps()
+        public async Task ConfirmLogAsync_SendsReviewedFlagsAndSwaps()
         {
             CreateVmWithQuest();
             PrepareNewMealWithOneItem();
-            await _vm.GoToReviewAsync();
+            DraftProposes(ClientEventTypes.MealLegumeConsumed);
+            await _vm.SaveAsync();
             _vm.ToggleFact("q_legumes");
             _vm.ToggleFact($"q_{ClientEventTypes.SwapBeefToLegumes.ToLowerInvariant()}");
-            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
-                .ReturnsAsync((new MealLog { id = "log-1" }, null));
 
-            Assert.IsTrue(await _vm.SaveAsync());
+            Assert.IsTrue(await _vm.ConfirmLogAsync());
 
-            _mockMealLogService.Verify(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r =>
-                r.mealId == "new-meal" &&
-                r.flags.SequenceEqual(new[] { ClientEventTypes.MealLegumeConsumed }) &&
+            _mockMealLogService.Verify(x => x.ConfirmAsync("draft-1", It.Is<MealLogFactsRequest>(r =>
+                r.flags.Length == 0 &&
                 r.swaps.SequenceEqual(new[] { ClientEventTypes.SwapBeefToLegumes }))), Times.Once);
             Assert.IsEmpty(_vm.FactSections);
+            Assert.AreEqual(MealLogStep.SelectingTypeOfMeal, _vm.CurrentStep);
             _mockAuthService.Verify(a => a.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+            _mockMealLogService.Verify(x => x.DeleteLogAsync(It.IsAny<string>()), Times.Never);
+            _mockMealService.Verify(x => x.DeleteMealAsync(It.IsAny<string>()), Times.Never);
         }
 
         [Test]
-        public async Task SaveAsync_AfterReviewWithNothingChecked_SendsNullFlagsAndSwaps()
+        public async Task ConfirmLogAsync_WithNothingChecked_SendsEmptyListsNotNull()
         {
             CreateVmWithQuest();
             PrepareNewMealWithOneItem();
-            await _vm.GoToReviewAsync();
-            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
-                .ReturnsAsync((new MealLog { id = "log-1" }, null));
+            await _vm.SaveAsync();
 
-            Assert.IsTrue(await _vm.SaveAsync());
+            Assert.IsTrue(await _vm.ConfirmLogAsync());
 
-            _mockMealLogService.Verify(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r => r.flags == null && r.swaps == null)), Times.Once);
+            _mockMealLogService.Verify(x => x.ConfirmAsync("draft-1", It.Is<MealLogFactsRequest>(r =>
+                r.flags != null && r.flags.Length == 0 && r.swaps != null && r.swaps.Length == 0)), Times.Once);
         }
 
         [Test]
-        public async Task SaveAsync_SendsMarksHiddenByTheMissionFilter()
+        public void MealLogFactsRequest_SerializesEmptyListsSoProposalsAreDropped()
+        {
+            string json = System.Text.Encoding.UTF8.GetString(new MealLogFactsRequest().ToJsonBody());
+
+            Assert.AreEqual("{\"flags\":[],\"swaps\":[]}", json);
+        }
+
+        [Test]
+        public async Task ConfirmLogAsync_SendsMarksHiddenByTheMissionFilter()
         {
             CreateVmWithQuest();
             _storeService.SetAppState(new AppState { userCurrentQuestId = "q1" });
@@ -1221,22 +1297,20 @@ namespace eu.foodmission.platform.Tests
                 items = new[] { new QuestItem { id = "i1", contentType = QuestContentType.Mission, contentCode = "M.A1.3" } }
             }, (ApiErrorResponse)null));
             PrepareNewMealWithOneItem();
-            await _vm.GoToReviewAsync();
+            await _vm.SaveAsync();
             Assert.IsTrue(_vm.HasMissionFacts);
             _vm.ToggleFact("q_salt_free");
             _vm.SetOnlyMissionFacts(true);
             Assert.IsFalse(MealFacts.AllItems(_vm.FactSections).Any(i => i.Id == "q_salt_free"));
-            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
-                .ReturnsAsync((new MealLog { id = "log-1" }, null));
 
-            Assert.IsTrue(await _vm.SaveAsync());
+            Assert.IsTrue(await _vm.ConfirmLogAsync());
 
-            _mockMealLogService.Verify(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+            _mockMealLogService.Verify(x => x.ConfirmAsync("draft-1", It.Is<MealLogFactsRequest>(r =>
                 r.flags.Contains(ClientEventTypes.NutritionSaltFreeTable))), Times.Once);
         }
 
         [Test]
-        public async Task GoToReviewAsync_WhenQuestLoadFails_StillOpensWithoutMissionFilter()
+        public async Task SaveAsync_WhenQuestLoadFails_StillOpensReviewWithoutMissionFilter()
         {
             CreateVmWithQuest();
             _storeService.SetAppState(new AppState { userCurrentQuestId = "q1" });
@@ -1244,30 +1318,42 @@ namespace eu.foodmission.platform.Tests
                 .ReturnsAsync(((Quest)null, new ApiErrorResponse { statusCode = 500, message = "boom" }));
             PrepareNewMealWithOneItem();
 
-            Assert.IsTrue(await _vm.GoToReviewAsync());
+            Assert.IsTrue(await _vm.SaveAsync());
 
             Assert.AreEqual(MealLogStep.ReviewingFacts, _vm.CurrentStep);
             Assert.IsFalse(_vm.HasMissionFacts);
         }
 
         [Test]
-        public async Task SaveAsync_WhenLogFails_KeepsReviewAndMarks()
+        public async Task ConfirmLogAsync_WhenConfirmFails_KeepsReviewAndMarks()
         {
             CreateVmWithQuest();
             PrepareNewMealWithOneItem();
-            await _vm.GoToReviewAsync();
+            await _vm.SaveAsync();
             _vm.ToggleFact("q_legumes");
-            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+            _mockMealLogService.Setup(x => x.ConfirmAsync(It.IsAny<string>(), It.IsAny<MealLogFactsRequest>()))
                 .ReturnsAsync(((MealLog)null, new ApiErrorResponse { statusCode = 500, message = "boom" }));
 
-            Assert.IsFalse(await _vm.SaveAsync());
+            Assert.IsFalse(await _vm.ConfirmLogAsync());
 
             Assert.AreEqual(MealLogStep.ReviewingFacts, _vm.CurrentStep);
             Assert.IsTrue(Fact("q_legumes").IsChecked);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            _mockMealLogService.Verify(x => x.DeleteLogAsync(It.IsAny<string>()), Times.Never);
         }
 
         [Test]
-        public async Task ConfirmUpdateAndSaveAsync_AfterReview_SendsChosenFlags()
+        public async Task ConfirmLogAsync_WithoutDraft_DoesNothing()
+        {
+            CreateVmWithQuest();
+
+            Assert.IsFalse(await _vm.ConfirmLogAsync());
+
+            _mockMealLogService.Verify(x => x.ConfirmAsync(It.IsAny<string>(), It.IsAny<MealLogFactsRequest>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ConfirmUpdateAndSaveAsync_StagesDraftForThePresetThenConfirms()
         {
             CreateVmWithQuest();
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "DINNER", label = "Dinner" } };
@@ -1287,15 +1373,16 @@ namespace eu.foodmission.platform.Tests
             _vm.SelectedItems[0].quantity = 3f;
             _mockMealItemService.Setup(x => x.UpdateAsync("existing-meal", "item-1", It.IsAny<CreateMealItemRequest>()))
                 .ReturnsAsync((new MealItem { id = "item-1" }, null));
-            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
-                .ReturnsAsync((new MealLog { id = "log-1" }, null));
-            await _vm.GoToReviewAsync();
-            _vm.ToggleFact("q_local");
 
             Assert.IsTrue(await _vm.ConfirmUpdateAndSaveAsync());
+            Assert.AreEqual(MealLogStep.ReviewingFacts, _vm.CurrentStep);
+            _vm.ToggleFact("q_local");
+            Assert.IsTrue(await _vm.ConfirmLogAsync());
 
             _mockMealLogService.Verify(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r =>
-                r.mealId == "existing-meal" && r.flags.SequenceEqual(new[] { ClientEventTypes.MealLocalProduce }))), Times.Once);
+                r.mealId == "existing-meal" && r.draft == true)), Times.Once);
+            _mockMealLogService.Verify(x => x.ConfirmAsync("draft-1", It.Is<MealLogFactsRequest>(r =>
+                r.flags.SequenceEqual(new[] { ClientEventTypes.MealLocalProduce }))), Times.Once);
         }
 
         [Test]
@@ -1306,8 +1393,6 @@ namespace eu.foodmission.platform.Tests
             _vm.LoadForEdit(new MealLog { id = "log-1", typeOfMeal = "LUNCH", mealId = "meal-1", meal = new Meal { id = "meal-1", name = "Lunch" } });
             _vm.SelectedItems = new System.Collections.Generic.List<MealLogItem> { new MealLogItem { foodProductId = "fp-1", name = "Pasta", isProduct = true } };
             _vm.MealContainerName = "Lunch renamed";
-            await _vm.GoToReviewAsync();
-            _vm.ToggleFact("q_legumes");
             _mockMealItemService.Setup(x => x.CreateAsync(It.IsAny<string>(), It.IsAny<CreateMealItemRequest>()))
                 .ReturnsAsync((new MealItem { id = "mi" }, null));
             _mockMealService.Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
@@ -1322,19 +1407,17 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SaveAsync_WhileAlreadySaving_DoesNotLogTwice()
+        public async Task SaveAsync_WhileAlreadySaving_DoesNotStageTwice()
         {
             CreateVmWithQuest();
             PrepareNewMealWithOneItem();
-            await _vm.GoToReviewAsync();
-            _vm.ToggleFact("q_legumes");
             var pendingLog = new TaskCompletionSource<(MealLog, ApiErrorResponse)>();
             _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
                 .Returns(pendingLog.Task);
 
             Task<bool> first = _vm.SaveAsync();
             Task<bool> second = _vm.SaveAsync();
-            pendingLog.SetResult((new MealLog { id = "log-1" }, null));
+            pendingLog.SetResult((new MealLog { id = "draft-1" }, null));
 
             Assert.IsTrue(await first);
             Assert.IsFalse(await second);
@@ -1343,7 +1426,26 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task ConfirmUpdateAndSaveAsync_WhileAlreadySaving_DoesNotLogTwice()
+        public async Task ConfirmLogAsync_WhileAlreadyConfirming_DoesNotConfirmTwice()
+        {
+            CreateVmWithQuest();
+            PrepareNewMealWithOneItem();
+            await _vm.SaveAsync();
+            var pending = new TaskCompletionSource<(MealLog, ApiErrorResponse)>();
+            _mockMealLogService.Setup(x => x.ConfirmAsync(It.IsAny<string>(), It.IsAny<MealLogFactsRequest>()))
+                .Returns(pending.Task);
+
+            Task<bool> first = _vm.ConfirmLogAsync();
+            Task<bool> second = _vm.ConfirmLogAsync();
+            pending.SetResult((new MealLog { id = "draft-1" }, null));
+
+            Assert.IsTrue(await first);
+            Assert.IsFalse(await second);
+            _mockMealLogService.Verify(x => x.ConfirmAsync(It.IsAny<string>(), It.IsAny<MealLogFactsRequest>()), Times.Once);
+        }
+
+        [Test]
+        public async Task ConfirmUpdateAndSaveAsync_WhileAlreadySaving_DoesNotStageTwice()
         {
             CreateVmWithQuest();
             _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "DINNER", label = "Dinner" } };

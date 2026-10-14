@@ -982,24 +982,32 @@ namespace eu.foodmission.platform
         }
 
 
-        private async void OnLogSelectedClicked()
+        private void OnLogSelectedClicked()
         {
-            if (_viewModel.IsEditing)
-            {
-                ConfirmAndSave();
-                return;
-            }
-
-            if (_reviewOnlyMissions != null)
+            // In create mode saving stages a draft and opens the review step (step 4)
+            if (!_viewModel.IsEditing && _reviewOnlyMissions != null)
             {
                 _reviewOnlyMissions.CheckboxValue = CheckboxState.Unchecked;
             }
-            await _viewModel.GoToReviewAsync();
+            ConfirmAndSave();
         }
 
-        private void OnConfirmLogClicked()
+        private async void OnConfirmLogClicked()
         {
-            ConfirmAndSave();
+            try
+            {
+                // The screen can be unbound while the request is in flight
+                if (await _viewModel.ConfirmLogAsync() && _viewModel != null)
+                {
+                    RebuildMealCards();
+                    UpdateStepVisibility();
+                    UpdateEditModeUI();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] OnConfirmLogClicked failed: {ex.Message}");
+            }
         }
 
         private void OnReviewOnlyMissionsChanged(ChangeEvent<CheckboxState> evt)

@@ -172,5 +172,35 @@ namespace eu.foodmission.platform
 
             return (true, null);
         }
+
+        public async Task<(MealLog Result, ApiErrorResponse Error)> ConfirmAsync(string id, MealLogFactsRequest facts)
+        {
+            if (string.IsNullOrEmpty(id) || facts == null) return (null, null);
+
+            byte[] body = facts.ToJsonBody();
+            string url = $"{ApiConfig.BaseUrl}/api/v1/meal-logs/{Uri.EscapeDataString(id)}/confirm";
+            Debug.Log($"[{GetType().Name}] ConfirmAsync calling: {url} body={Encoding.UTF8.GetString(body)}");
+
+            using UnityWebRequest req = new UnityWebRequest(url, "POST")
+            {
+                uploadHandler = new UploadHandlerRaw(body) { contentType = "application/json" },
+                downloadHandler = new DownloadHandlerBuffer()
+            };
+            req.SetRequestHeader("Authorization", AuthHeader);
+            req.SetRequestHeader("Accept", "application/json");
+
+            UnityWebRequestAsyncOperation op = req.SendWebRequest();
+            while (!op.isDone) await Task.Yield();
+            UserProgressWrites.Record();
+
+            if (req.result != UnityWebRequest.Result.Success)
+            {
+                return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] ConfirmAsync {id}"));
+            }
+
+            string raw = req.downloadHandler.text;
+            Debug.Log($"[{GetType().Name}] ConfirmAsync response: {raw}");
+            return (JsonConvert.DeserializeObject<MealLog>(raw), null);
+        }
     }
 }
