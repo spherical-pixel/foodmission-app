@@ -1145,10 +1145,11 @@ MonoBehaviour:
 
       Questo breve sondaggio ci aiuta
       a capire le tue abitudini alimentari, la tua consapevolezza riguardo allo spreco
-      alimentare e le tue scelte sostenibili, in modo che Nutri possa personalizzare
-      i consigli per te.'
+      alimentare e le tue scelte sostenibili, in modo che {global.PET_NAME} possa
+      personalizzare i consigli per te.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 25970700069101568
     m_Localized: CATEGORIE
     m_Metadata:
@@ -2937,9 +2938,10 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 50999984831586305
-    m_Localized: Personalizza Foody
+    m_Localized: Personalizza {global.PET_NAME}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 50999984835780608
     m_Localized: Antenne
     m_Metadata:
@@ -3202,9 +3204,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232939
-    m_Localized: "Nutri lo segner\xE0 come completato quando lo farai nell'app."
+    m_Localized: "{global.PET_NAME} lo segner\xE0 come completato quando lo farai
+      nell'app."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 51673178689232940
     m_Localized: "\u2705 SFIDA COMPLETATA"
     m_Metadata:
@@ -3597,9 +3601,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347465
-    m_Localized: "\U0001F4AC Raccontalo a Nutri"
+    m_Localized: "\U0001F4AC Raccontalo a {global.PET_NAME}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 52041725676347466
     m_Localized: "\U0001F37D\uFE0F Registralo nel mio diario dei pasti"
     m_Metadata:
@@ -3974,9 +3979,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347559
-    m_Localized: "\U0001F4AC Check-in con Foody"
+    m_Localized: "\U0001F4AC Check-in con {global.PET_NAME}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 53932757066178560
     m_Localized: I tuoi livelli
     m_Metadata:
@@ -4053,15 +4059,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247367
-    m_Localized: "Oggi \xE8 l'ultimo giorno per raccontare a Nutri di \u201C{0}\u201D.
-      Non perdere i tuoi progressi!"
+    m_Localized: "Oggi \xE8 l'ultimo giorno per raccontare a {global.PET_NAME} di
+      \u201C{0}\u201D. Non perdere i tuoi progressi!"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 53972389359247368
-    m_Localized: "Oggi \xE8 l'ultimo giorno per raccontare a Nutri di {0} delle tue
-      missioni. Non perdere i tuoi progressi!"
+    m_Localized: "Oggi \xE8 l'ultimo giorno per raccontare a {global.PET_NAME} di
+      {0} delle tue missioni. Non perdere i tuoi progressi!"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 53972389359247369
     m_Localized: "Oggi \xE8 l'ultimo giorno di \u201C{0}\u201D. Raccontami cosa hai
       fatto, cos\xEC conta!"
@@ -4383,3 +4391,10 @@ MonoBehaviour:
         - id: 52041725676347399
         - id: 52041725676347411
         - id: 56190243387203622
+        - id: 51673178689232939
+        - id: 50999984831586305
+        - id: 52041725676347559
+        - id: 52041725676347465
+        - id: 53972389359247367
+        - id: 53972389359247368
+        - id: 25709632411394048

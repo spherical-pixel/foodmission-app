@@ -1144,9 +1144,11 @@ MonoBehaviour:
   - m_Id: 25709632411394048
     m_Localized: "Welkom bij Foodmission!\nDeze korte enqu\xEAte helpt ons inzicht
       te krijgen in je eetgewoonten, je bewustzijn rond voedselverspilling en je
-      duurzame keuzes, zodat Nutri aanbevelingen op maat voor je kan doen."
+      duurzame keuzes, zodat {global.PET_NAME} aanbevelingen op maat voor je kan
+      doen."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 25970700069101568
     m_Localized: "CATEGORIE\xCBN"
     m_Metadata:
@@ -2947,9 +2949,10 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 50999984831586305
-    m_Localized: Personaliseer Foody
+    m_Localized: Personaliseer {global.PET_NAME}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 50999984835780608
     m_Localized: Antennes
     m_Metadata:
@@ -3213,9 +3216,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232939
-    m_Localized: Nutri markeert het als voltooid zodra je het in de app doet.
+    m_Localized: '{global.PET_NAME} markeert het als voltooid zodra je het in de
+      app doet.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 51673178689232940
     m_Localized: "\u2705 UITDAGING VOLTOOID"
     m_Metadata:
@@ -3611,9 +3616,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347465
-    m_Localized: "\U0001F4AC Vertel het Nutri"
+    m_Localized: "\U0001F4AC Vertel het {global.PET_NAME}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 52041725676347466
     m_Localized: "\U0001F37D\uFE0F Noteer het in mijn maaltijddagboek"
     m_Metadata:
@@ -3987,9 +3993,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347559
-    m_Localized: "\U0001F4AC Inchecken bij Foody"
+    m_Localized: "\U0001F4AC Inchecken bij {global.PET_NAME}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 53932757066178560
     m_Localized: Jouw niveaus
     m_Metadata:
@@ -4064,15 +4071,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247367
-    m_Localized: "Vandaag is de laatste dag om Nutri te vertellen over \u201C{0}\u201D.
-      Verlies je voortgang niet!"
+    m_Localized: "Vandaag is de laatste dag om {global.PET_NAME} te vertellen over
+      \u201C{0}\u201D. Verlies je voortgang niet!"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 53972389359247368
-    m_Localized: Vandaag is de laatste dag om Nutri te vertellen over {0} van je
-      missies. Verlies je voortgang niet!
+    m_Localized: Vandaag is de laatste dag om {global.PET_NAME} te vertellen over
+      {0} van je missies. Verlies je voortgang niet!
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 53972389359247369
     m_Localized: "Vandaag is de laatste dag van \u201C{0}\u201D. Vertel me wat je
       hebt gedaan, zodat het meetelt!"
@@ -4395,3 +4404,10 @@ MonoBehaviour:
         - id: 52041725676347399
         - id: 52041725676347411
         - id: 56190243387203622
+        - id: 51673178689232939
+        - id: 50999984831586305
+        - id: 52041725676347559
+        - id: 52041725676347465
+        - id: 53972389359247367
+        - id: 53972389359247368
+        - id: 25709632411394048
