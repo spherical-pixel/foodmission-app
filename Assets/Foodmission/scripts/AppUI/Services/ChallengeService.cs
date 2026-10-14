@@ -101,8 +101,7 @@ namespace eu.foodmission.platform
             }
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -141,8 +140,7 @@ namespace eu.foodmission.platform
             }
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -176,8 +174,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", auth);
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -229,8 +226,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", auth);
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -283,8 +279,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", auth);
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {

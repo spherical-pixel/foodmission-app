@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 using UnityEngine;
 
@@ -30,10 +31,29 @@ namespace eu.foodmission.platform
         {
             get
             {
-                if (string.IsNullOrEmpty(expiryDate)) return null;
-                if (DateTime.TryParse(expiryDate, out DateTime result)) return result;
+                if (TryParseExpiryDate(expiryDate, out DateTime result)) return result;
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Calendar day an item expires. Dates the user picks are stored as midnight UTC ("2026-05-30T00:00:00.000Z") and
+        /// mean that day everywhere, so they aren't shifted to local time (west of UTC it became the day before);
+        /// computed dates (purchase + shelf life) carry a time and are read in local time.
+        /// </summary>
+        public static bool TryParseExpiryDate(string value, out DateTime date)
+        {
+            date = default;
+            if (string.IsNullOrEmpty(value) ||
+                !DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out DateTime utc))
+            {
+                return false;
+            }
+
+            date = utc.TimeOfDay == TimeSpan.Zero
+                ? DateTime.SpecifyKind(utc.Date, DateTimeKind.Unspecified)
+                : DateTime.SpecifyKind(utc.ToLocalTime().Date, DateTimeKind.Unspecified);
+            return true;
         }
 
         public FoodProduct foodProduct;     // populated by backend $include

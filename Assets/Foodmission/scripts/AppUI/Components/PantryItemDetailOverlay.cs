@@ -249,7 +249,7 @@ namespace eu.foodmission.platform
 
             if (_expiryDateField != null)
             {
-                if (DateTime.TryParse(_viewModel.ExpiryDate, out DateTime dt))
+                if (PantryItem.TryParseExpiryDate(_viewModel.ExpiryDate, out DateTime dt))
                 {
                     _expiryDateField.SetValueWithoutNotify(new Date(dt));
                 }

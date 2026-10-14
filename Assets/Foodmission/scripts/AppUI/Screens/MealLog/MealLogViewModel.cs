@@ -1253,8 +1253,9 @@ namespace eu.foodmission.platform
                 try
                 {
                     string currentLang = _storeService.GetAppState().lang ?? "en";
-                    string cacheKey = $"meal_logs_cache_{currentLang}";
+                    string cacheKey = UserLocalData.MealLogsCacheKey(currentLang);
                     _localStorage.SetValue(cacheKey, _allLogs);
+                    UserLocalData.Track(_localStorage, cacheKey);
                 }
                 catch (Exception ex)
                 {
@@ -1267,7 +1268,7 @@ namespace eu.foodmission.platform
         {
             SelectedDate = DateTime.Today;
             string currentLang = _storeService.GetAppState().lang ?? "en";
-            string cacheKey = $"meal_logs_cache_{currentLang}";
+            string cacheKey = UserLocalData.MealLogsCacheKey(currentLang);
 
             bool isLanguageChange = _currentCacheLang != currentLang;
             _currentCacheLang = currentLang;

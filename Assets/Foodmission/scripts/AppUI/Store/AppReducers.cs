@@ -387,16 +387,10 @@ namespace eu.foodmission.platform
             newState.soundVolume = 100;
             newState.musicVolume = 100;
             newState.pushNotificationsEnabled = false;
+            newState.notificationPreferredTime = new AppState().notificationPreferredTime;
             newState.backgroundPattern = true;
 
-            // Clear saved local avatar render files & PlayerPrefs keys
-            PlayerPrefs.DeleteKey("avatar_config");
-            PlayerPrefs.DeleteKey("has_avatar");
-            PlayerPrefs.Save();
-
-            var avatarService = App.current?.services?.GetService<IAvatarService>();
-            avatarService?.ClearFaceTexture();
-
+            // Reducers stay pure: device-side cleanup (avatar files and prefs, caches, notifications) lives in AuthService.Logout
             return newState;
         }
 

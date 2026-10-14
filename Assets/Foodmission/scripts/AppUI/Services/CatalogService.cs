@@ -71,11 +71,7 @@ namespace eu.foodmission.platform
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -127,9 +123,7 @@ namespace eu.foodmission.platform
                 }
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                    await Task.Yield();
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                     return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] Get{endpoint}"));
@@ -228,11 +222,7 @@ namespace eu.foodmission.platform
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -264,9 +254,7 @@ namespace eu.foodmission.platform
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                    await Task.Yield();
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                     return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] Get{endpoint}"));
@@ -301,9 +289,7 @@ namespace eu.foodmission.platform
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                    await Task.Yield();
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -370,9 +356,7 @@ namespace eu.foodmission.platform
                 using UnityWebRequest request = UnityWebRequest.Get(url);
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                    await Task.Yield();
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {

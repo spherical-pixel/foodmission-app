@@ -357,7 +357,7 @@ namespace eu.foodmission.platform
             // 2. Schedule or update valid items
             foreach (var view in activeItems)
             {
-                if (!string.IsNullOrEmpty(view.Item.expiryDate) && DateTime.TryParse(view.Item.expiryDate, out DateTime expDate))
+                if (!string.IsNullOrEmpty(view.Item.expiryDate) && PantryItem.TryParseExpiryDate(view.Item.expiryDate, out DateTime expDate))
                 {
                     string displayName = !string.IsNullOrEmpty(view.DisplayName)
                         ? view.DisplayName
@@ -403,7 +403,7 @@ namespace eu.foodmission.platform
             // 2. Schedule or update valid items
             foreach (var item in activeItems)
             {
-                if (!string.IsNullOrEmpty(item.expiryDate) && DateTime.TryParse(item.expiryDate, out DateTime expDate))
+                if (!string.IsNullOrEmpty(item.expiryDate) && PantryItem.TryParseExpiryDate(item.expiryDate, out DateTime expDate))
                 {
                     string displayName = item.foodProduct?.name ?? item.genericFood?.foodName ?? "Producto";
                     SchedulePantryExpiryReminder(item.id, displayName, expDate);

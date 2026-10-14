@@ -249,5 +249,24 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual("second", _service.GetValue<string>(KEY));
         }
+
+        [Test]
+        public void Float_SavedUnderCommaLocale_ReadsBackUnderDotLocale()
+        {
+            // A value written while the device used "es-ES" must survive a switch to "en-US"
+            var previous = System.Threading.Thread.CurrentThread.CurrentCulture;
+            try
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("es-ES");
+                _service.SetValue(KEY, 1.5f);
+
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+                Assert.AreEqual(1.5f, _service.GetValue<float>(KEY));
+            }
+            finally
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = previous;
+            }
+        }
     }
 }

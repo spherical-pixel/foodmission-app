@@ -17,14 +17,53 @@ namespace eu.foodmission.platform
 
         private readonly IStoreService _storeService;
         private System.Threading.CancellationTokenSource _refreshTimerCts;
-        private readonly System.Threading.SemaphoreSlim _refreshLock = new System.Threading.SemaphoreSlim(1, 1);
+
+        // Callers arriving while a refresh/check is running share it: parallel refreshes would spend the same refresh token
+        private Task<RefreshOutcome> _refreshInFlight;
+        private Task<bool> _checkSessionInFlight;
+        // Refresh token left in the store by the last EndSession: further 401s of that same ended session are ignored
+        private string _endedSessionRefreshToken;
+
+        private const int RefreshRetrySeconds = 30;
+        // An access token this close to expiry is renewed before a request is sent
+        private const int TokenRefreshMarginSeconds = 60;
+
+        private enum RefreshOutcome
+        {
+            Success,
+            // The auth server turned the refresh token down: the session is over
+            Rejected,
+            // No network, timeout or server error: says nothing about the session
+            Unreachable
+        }
 
         public AuthService(IStoreService storeService)
         {
             _storeService = storeService;
         }
 
-        public async Task<bool> CheckSessionAsync()
+        /// <summary>
+        /// True when an auth response proves the session is gone (Keycloak answers invalid_grant with 400).
+        /// Anything else (no network, 5xx, timeouts) must not end the session.
+        /// </summary>
+        public static bool IsSessionRejected(long responseCode)
+        {
+            return responseCode == 400 || responseCode == 401 || responseCode == 403;
+        }
+
+        /// <summary>
+        /// False only when the session is known to be invalid. When the backend can't be reached the stored session is kept.
+        /// </summary>
+        public Task<bool> CheckSessionAsync()
+        {
+            if (_checkSessionInFlight == null || _checkSessionInFlight.IsCompleted)
+            {
+                _checkSessionInFlight = CheckSessionCoreAsync();
+            }
+            return _checkSessionInFlight;
+        }
+
+        private async Task<bool> CheckSessionCoreAsync()
         {
             AppState state = _storeService.GetAppState();
 
@@ -46,7 +85,7 @@ namespace eu.foodmission.platform
                 }
 
                 Debug.Log($"[{GetType().Name}] Access token expired — attempting refresh");
-                return await RefreshAsync();
+                return await RefreshShared() != RefreshOutcome.Rejected;
             }
 
             // Verify token
@@ -57,18 +96,15 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
+
+                int remaining = (int)(state.tokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+                int refreshRemaining = state.refreshTokenExpiresAt > 0
+                    ? (int)(state.refreshTokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+                    : 0;
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
-                    int remaining = (int)(state.tokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds());
-                    int refreshRemaining = state.refreshTokenExpiresAt > 0
-                        ? (int)(state.refreshTokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-                        : 0;
                     ScheduleProactiveRefresh(remaining, refreshRemaining);
 #if UNITY_EDITOR
                     // TODO: Remove this log or change to Debug after testing
@@ -87,60 +123,113 @@ namespace eu.foodmission.platform
                 if (request.responseCode == 401)
                 {
                     Debug.LogWarning($"[{GetType().Name}] CheckSessionAsync token-info returned 401 — attempting refresh");
-                    return await RefreshAsync();
+                    return await RefreshShared() != RefreshOutcome.Rejected;
                 }
 
-                return false;
+                if (IsSessionRejected(request.responseCode))
+                {
+                    return false;
+                }
+
+                // Offline or server trouble: keep the session and let the timer refresh it once the backend is back
+                Debug.LogWarning($"[{GetType().Name}] CheckSessionAsync could not verify the session ({request.responseCode} {request.error}) — keeping it");
+                ScheduleProactiveRefresh(remaining, refreshRemaining);
+                return true;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                Debug.LogWarning($"[{GetType().Name}] CheckSessionAsync exception: {ex.Message} — keeping the session");
+                return true;
             }
         }
 
         /// <summary>
         /// De-duplicated handler for 401 Unauthorized errors returned by API requests.
-        /// Attempts automatic token refresh; if refresh fails, logs out and raises OnSessionExpired.
+        /// Attempts automatic token refresh; if the auth server rejects it, logs out and raises OnSessionExpired once.
         /// </summary>
         public async Task<bool> HandleUnauthorizedAsync()
         {
-            await _refreshLock.WaitAsync();
-            try
+            Debug.LogWarning($"[{GetType().Name}] HTTP 401 Unauthorized detected — attempting session recovery");
+            RefreshOutcome outcome = await RefreshShared();
+
+            switch (outcome)
             {
-                Debug.LogWarning($"[{GetType().Name}] HTTP 401 Unauthorized detected — attempting session recovery");
-                bool success = await RefreshAsync();
-                if (success)
-                {
+                case RefreshOutcome.Success:
                     Debug.Log($"[{GetType().Name}] Session recovered successfully via token refresh");
                     return true;
-                }
-                else
-                {
-                    Debug.LogWarning($"[{GetType().Name}] Session recovery failed — logging out and triggering OnSessionExpired");
-                    Logout();
-                    OnSessionExpired?.Invoke();
+                case RefreshOutcome.Unreachable:
+                    Debug.LogWarning($"[{GetType().Name}] Session recovery could not reach the auth server — keeping the session");
                     return false;
-                }
-            }
-            finally
-            {
-                _refreshLock.Release();
+                default:
+                    EndSession();
+                    return false;
             }
         }
 
+        public async Task<string> EnsureFreshTokenAsync()
+        {
+            AppState state = _storeService.GetAppState();
+            if (string.IsNullOrEmpty(state.accessToken))
+            {
+                return null;
+            }
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (state.tokenExpiresAt - now <= TokenRefreshMarginSeconds && !string.IsNullOrEmpty(state.refreshToken))
+            {
+                // A rejected refresh surfaces as the request's 401, handled by ApiErrorHelper
+                await RefreshShared();
+                state = _storeService.GetAppState();
+                if (string.IsNullOrEmpty(state.accessToken))
+                {
+                    return null;
+                }
+            }
+
+            string tokenType = string.IsNullOrEmpty(state.tokenType) ? "Bearer" : state.tokenType;
+            return $"{tokenType} {state.accessToken}";
+        }
+
         /// <summary>
-        /// Exchanges the stored refresh token for a new access token.
+        /// Exchanges the stored refresh token for new tokens.
         /// Dispatches tokenRefreshed on success and schedules the proactive timer.
-        /// Returns false without throwing if the refresh token is missing or the request fails.
         /// </summary>
         public async Task<bool> RefreshAsync()
+        {
+            return await RefreshShared() == RefreshOutcome.Success;
+        }
+
+        private Task<RefreshOutcome> RefreshShared()
+        {
+            if (_refreshInFlight == null || _refreshInFlight.IsCompleted)
+            {
+                _refreshInFlight = RefreshCoreAsync();
+            }
+            return _refreshInFlight;
+        }
+
+        // Every caller of a rejected refresh lands here: only the first one logs out and raises OnSessionExpired
+        private void EndSession()
+        {
+            if (_endedSessionRefreshToken != null && _endedSessionRefreshToken == (_storeService.GetAppState().refreshToken ?? ""))
+            {
+                return;
+            }
+
+            Debug.LogWarning($"[{GetType().Name}] Refresh token rejected — logging out and triggering OnSessionExpired");
+            Logout();
+            _endedSessionRefreshToken = _storeService.GetAppState().refreshToken ?? "";
+            OnSessionExpired?.Invoke();
+        }
+
+        private async Task<RefreshOutcome> RefreshCoreAsync()
         {
             AppState state = _storeService.GetAppState();
 
             if (string.IsNullOrEmpty(state.refreshToken))
             {
                 Debug.LogWarning($"[{GetType().Name}] RefreshAsync — no refresh token stored");
-                return false;
+                return RefreshOutcome.Rejected;
             }
 
             try
@@ -156,16 +245,14 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
                     Debug.LogWarning($"[{GetType().Name}] RefreshAsync failed: {request.responseCode} {request.error}");
-                    return false;
+                    return request.result == UnityWebRequest.Result.ProtocolError && IsSessionRejected(request.responseCode)
+                        ? RefreshOutcome.Rejected
+                        : RefreshOutcome.Unreachable;
                 }
 
                 RefreshResponse response = JsonUtility.FromJson<RefreshResponse>(request.downloadHandler.text);
@@ -173,7 +260,7 @@ namespace eu.foodmission.platform
                 if (response == null || string.IsNullOrEmpty(response.access_token))
                 {
                     Debug.LogWarning($"[{GetType().Name}] RefreshAsync — invalid response body");
-                    return false;
+                    return RefreshOutcome.Unreachable;
                 }
 
                 long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -193,12 +280,12 @@ namespace eu.foodmission.platform
 
                 ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
                 Debug.Log($"[{GetType().Name}] Token refreshed successfully. Access Token lifespan: {response.expires_in}s ({response.expires_in / 60f:F1} min), Refresh Token lifespan: {response.refresh_expires_in}s ({response.refresh_expires_in / 60f:F1} min)");
-                return true;
+                return RefreshOutcome.Success;
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] RefreshAsync exception: {ex.Message}");
-                return false;
+                return RefreshOutcome.Unreachable;
             }
         }
 
@@ -214,30 +301,43 @@ namespace eu.foodmission.platform
                 effectiveExpiry = Math.Min(accessExpiresInSeconds, refreshExpiresInSeconds);
             }
 
+            ScheduleRefreshIn(Math.Max(effectiveExpiry - 60, 10));
+        }
+
+        private void ScheduleRefreshIn(int delaySeconds)
+        {
             _refreshTimerCts?.Cancel();
             _refreshTimerCts?.Dispose();
             _refreshTimerCts = new System.Threading.CancellationTokenSource();
-            _ = ProactiveRefreshLoop(effectiveExpiry, _refreshTimerCts.Token);
+            _ = ProactiveRefreshLoop(delaySeconds, _refreshTimerCts.Token);
         }
 
-        private async Task ProactiveRefreshLoop(int expiresInSeconds, System.Threading.CancellationToken token)
+        private async Task ProactiveRefreshLoop(int delaySeconds, System.Threading.CancellationToken token)
         {
             try
             {
-                int delayMs = Math.Max(expiresInSeconds - 60, 10) * 1000;
-                await Task.Delay(delayMs, token);
+                await Task.Delay(delaySeconds * 1000, token);
 
                 if (token.IsCancellationRequested)
                 {
                     return;
                 }
 
-                bool success = await RefreshAsync();
-                if (!success)
+                RefreshOutcome outcome = await RefreshShared();
+
+                if (token.IsCancellationRequested)
                 {
-                    Debug.LogWarning($"[{GetType().Name}] Proactive refresh failed — logging out");
-                    Logout();
-                    OnSessionExpired?.Invoke();
+                    return;
+                }
+
+                if (outcome == RefreshOutcome.Unreachable)
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Proactive refresh could not reach the auth server — retrying in {RefreshRetrySeconds}s");
+                    ScheduleRefreshIn(RefreshRetrySeconds);
+                }
+                else if (outcome == RefreshOutcome.Rejected)
+                {
+                    EndSession();
                 }
             }
             catch (OperationCanceledException) { }
@@ -267,11 +367,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -391,11 +487,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -556,11 +648,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -597,11 +685,7 @@ namespace eu.foodmission.platform
                 _ = eventService.TrackSessionEndAsync();
             }
 
-            string refreshToken = _storeService.GetAppState().refreshToken;
-            if (!string.IsNullOrEmpty(refreshToken))
-            {
-                _ = RevokeTokenAsync(refreshToken);
-            }
+            _ = EndServerSessionAsync(_storeService.GetAppState());
 
             _refreshTimerCts?.Cancel();
             _refreshTimerCts?.Dispose();
@@ -620,6 +704,9 @@ namespace eu.foodmission.platform
             App.current?.services?.GetService<IChallengeSessionService>()?.Cancel();
             App.current?.services?.GetService<IChallengeCompletionService>()?.Reset();
 
+            // Scheduled local notifications (pantry expiry, nudges) belong to this user
+            App.current?.services?.GetService<INotificationService>()?.CancelAllNotifications();
+
             // Nudge state is per user
             App.current?.services?.GetService<IMissionNudgeService>()?.Reset();
             App.current?.services?.GetService<IDailyFoodFactService>()?.Reset();
@@ -627,6 +714,61 @@ namespace eu.foodmission.platform
             HomeScreen.ResetSessionDeferredFlags();
             _storeService.store.Dispatch(AppActions.logout.Invoke());
             Debug.Log($"[{GetType().Name}] User logged out and session state fully cleaned");
+        }
+
+        /// <summary>
+        /// Detaches this device from the user's profile, then revokes the refresh token (in that order: the PATCH needs
+        /// the session that the revocation ends). Otherwise the server keeps pushing this user's notifications to the device.
+        /// </summary>
+        private async Task EndServerSessionAsync(AppState signedOutState)
+        {
+            if (!string.IsNullOrEmpty(signedOutState.accessToken) &&
+                !string.IsNullOrEmpty(signedOutState.devicePushRegistration?.token))
+            {
+                await UnregisterPushDeviceAsync(signedOutState);
+            }
+
+            if (!string.IsNullOrEmpty(signedOutState.refreshToken))
+            {
+                await RevokeTokenAsync(signedOutState.refreshToken);
+            }
+        }
+
+        private async Task UnregisterPushDeviceAsync(AppState signedOutState)
+        {
+            try
+            {
+                ProfileUpdateRequest settingsRequest = BuildSettingsRequest(signedOutState);
+                DevicePushRegistration detached = signedOutState.devicePushRegistration.Copy();
+                detached.token = "";
+                detached.registeredAt = "";
+                detached.notificationsEnabled = false;
+                settingsRequest.settings.devicePushRegistration = detached;
+
+                using UnityWebRequest request = new UnityWebRequest($"{ApiConfig.BaseUrl}/api/v1/users/me", "PATCH")
+                {
+                    uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(settingsRequest.ToJson())) { contentType = "application/json" },
+                    downloadHandler = new DownloadHandlerBuffer()
+                };
+                request.SetRequestHeader("Accept", "application/json");
+                request.SetRequestHeader("Authorization", $"{signedOutState.tokenType} {signedOutState.accessToken}");
+
+                // Not through ApiErrorHelper: a 401 here must not start session recovery for a session already closed
+                await request.SendAsync(refreshToken: false);
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log($"[{GetType().Name}] Push device detached from the signed-out profile");
+                }
+                else
+                {
+                    Debug.LogWarning($"[{GetType().Name}] Push device detach failed: {request.responseCode} {request.error}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[{GetType().Name}] Push device detach exception: {ex.Message}");
+            }
         }
 
         private async Task RevokeTokenAsync(string token)
@@ -644,11 +786,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -685,11 +823,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 Debug.Log($"[AuthService] Password reset response: code={request.responseCode}, result={request.result}");
 
@@ -785,11 +919,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Accept", "application/json");
                 request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -825,11 +955,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -868,11 +994,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -950,11 +1072,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Authorization", $"{tokenType} {accessToken}");
 
-            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-            while (!operation.isDone)
-            {
-                await Task.Yield();
-            }
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {

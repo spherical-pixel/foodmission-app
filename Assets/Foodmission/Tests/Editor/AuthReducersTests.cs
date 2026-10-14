@@ -81,6 +81,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void LogoutReducer_ResetsNotificationPreferredTime()
+        {
+            var state = new AppState { notificationPreferredTime = "21:30" };
+
+            var newState = AppReducers.LogoutReducer(state, AppActions.logout.Invoke());
+
+            Assert.AreEqual(new AppState().notificationPreferredTime, newState.notificationPreferredTime);
+        }
+
+        [Test]
         public void LogoutReducer_ClearsAllUserData()
         {
             // Arrange
@@ -236,6 +246,101 @@ namespace eu.foodmission.platform.Tests
             storeService.Dispose();
             Assert.IsFalse(result);
             Assert.IsTrue(sessionExpiredFired);
+        }
+
+        [Test]
+        public async Task AuthService_HandleUnauthorizedAsync_RepeatedAfterSessionEnded_FiresOnSessionExpiredOnce()
+        {
+            // Several screens getting 401 one after another must not log out and navigate to login more than once
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var localStorageService = new LocalStorageService();
+            var storeService = new StoreService(localStorageService);
+            var authService = new AuthService(storeService);
+
+            int sessionExpiredCount = 0;
+            authService.OnSessionExpired += () => sessionExpiredCount++;
+
+            await authService.HandleUnauthorizedAsync();
+            await authService.HandleUnauthorizedAsync();
+            await authService.HandleUnauthorizedAsync();
+
+            storeService.Dispose();
+            Assert.AreEqual(1, sessionExpiredCount);
+        }
+
+        [Test]
+        public async Task AuthService_CheckSessionAsync_WithoutAccessToken_ReturnsFalse()
+        {
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var localStorageService = new LocalStorageService();
+            var storeService = new StoreService(localStorageService);
+            var authService = new AuthService(storeService);
+
+            var result = await authService.CheckSessionAsync();
+
+            storeService.Dispose();
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task AuthService_EnsureFreshTokenAsync_SignedOut_ReturnsNull()
+        {
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var storeService = new StoreService(new LocalStorageService());
+            var authService = new AuthService(storeService);
+
+            var header = await authService.EnsureFreshTokenAsync();
+
+            storeService.Dispose();
+            Assert.IsNull(header);
+        }
+
+        [Test]
+        public async Task AuthService_EnsureFreshTokenAsync_ValidToken_ReturnsCurrentHeader()
+        {
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var storeService = new StoreService(new LocalStorageService());
+            int expiresAt = (int)(System.DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 3600);
+            storeService.store.Dispatch(AppActions.tokenRefreshed.Invoke(
+                new AppActions.TokenRefreshPayload("access-1", "Bearer", expiresAt, "refresh-1")));
+            var authService = new AuthService(storeService);
+
+            var header = await authService.EnsureFreshTokenAsync();
+
+            storeService.Dispose();
+            Assert.AreEqual("Bearer access-1", header);
+        }
+
+        [Test]
+        public async Task AuthService_EnsureFreshTokenAsync_ExpiringWithoutRefreshToken_KeepsCurrentHeader()
+        {
+            // Nothing to refresh with: the request goes out as is and a 401 is handled by ApiErrorHelper
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var storeService = new StoreService(new LocalStorageService());
+            int expiresAt = (int)(System.DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 10);
+            storeService.store.Dispatch(AppActions.tokenRefreshed.Invoke(
+                new AppActions.TokenRefreshPayload("access-1", "", expiresAt, "")));
+            var authService = new AuthService(storeService);
+
+            var header = await authService.EnsureFreshTokenAsync();
+
+            storeService.Dispose();
+            Assert.AreEqual("Bearer access-1", header);
+        }
+
+        [TestCase(400, true)]
+        [TestCase(401, true)]
+        [TestCase(403, true)]
+        [TestCase(0, false)]
+        [TestCase(404, false)]
+        [TestCase(408, false)]
+        [TestCase(500, false)]
+        [TestCase(502, false)]
+        [TestCase(503, false)]
+        public void AuthService_IsSessionRejected_OnlyForAuthErrors(long responseCode, bool expected)
+        {
+            // No network (0), timeouts and server errors must never log the user out
+            Assert.AreEqual(expected, AuthService.IsSessionRejected(responseCode));
         }
 
         [Test]

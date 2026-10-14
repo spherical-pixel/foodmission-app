@@ -267,7 +267,7 @@ namespace eu.foodmission.platform
             DateTime today = DateTime.UtcNow.Date;
             foreach (ExpiredPantryItem e in expired)
             {
-                if (string.IsNullOrEmpty(e?.expiryDate) || !DateTime.TryParse(e.expiryDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime exp))
+                if (string.IsNullOrEmpty(e?.expiryDate) || !PantryItem.TryParseExpiryDate(e.expiryDate, out DateTime exp))
                 {
                     continue;
                 }

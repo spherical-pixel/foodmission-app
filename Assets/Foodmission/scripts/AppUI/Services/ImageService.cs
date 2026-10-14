@@ -29,9 +29,7 @@ namespace eu.foodmission.platform
             {
                 using UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
                 request.SetRequestHeader("User-Agent", OpenFoodFactsUserAgent.Build());
-                UnityWebRequestAsyncOperation op = request.SendWebRequest();
-                while (!op.isDone)
-                    await Task.Yield();
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {

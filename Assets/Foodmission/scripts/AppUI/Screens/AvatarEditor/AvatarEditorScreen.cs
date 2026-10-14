@@ -1,5 +1,7 @@
 
 using System;
+using System.Threading.Tasks;
+
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
@@ -189,11 +191,14 @@ namespace eu.foodmission.platform
                 _btExit.style.display = _isFromOnboarding ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
-        protected override async void OnViewModelUnbinding()
+        // Must stay synchronous: OnExit disposes the view model right after this returns, so anything after an await
+        // ran on a null _viewModel (the cameras were never switched off)
+        protected override void OnViewModelUnbinding()
         {
             if (!_isFromOnboarding && _viewModel != null)
             {
-                await _viewModel.SaveAvatarAsync(true);
+                // The face capture switches the avatar camera on and off by itself, so the save can outlive the screen
+                _ = SaveAvatarOnLeaveAsync(_viewModel);
             }
 
             _viewModel?.AvatarService.SetFullBodyCameraActive(false);
@@ -202,6 +207,18 @@ namespace eu.foodmission.platform
             CloseSelectorItemAvatar(false);
             UnregisterManualEvents();
             base.OnViewModelUnbinding();
+        }
+
+        private static async Task SaveAvatarOnLeaveAsync(AvatarEditorViewModel viewModel)
+        {
+            try
+            {
+                await viewModel.SaveAvatarAsync(true);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[AvatarEditorScreen] Failed to save the avatar on leave: {ex.Message}");
+            }
         }
 
         // --------------------------------------------------------------------
