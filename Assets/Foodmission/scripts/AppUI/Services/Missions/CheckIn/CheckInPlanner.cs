@@ -10,9 +10,10 @@ namespace eu.foodmission.platform
         private sealed class MealContribution
         {
             public string EventType;
-            public string OnlyMealType;
+            public IReadOnlyList<string> MealTypes;
             public int Order;
             public DateTime? Start;
+            public string HintKey;
         }
 
         public static CheckInPlan Plan(CheckInInputs inputs)
@@ -53,7 +54,11 @@ namespace eu.foodmission.platform
                                         list = new List<MealContribution>();
                                         mealByDay[day] = list;
                                     }
-                                    list.Add(new MealContribution { EventType = eventType, OnlyMealType = step.FixedMealType, Order = eventOrder, Start = mission.StartLocal });
+                                    list.Add(new MealContribution
+                                    {
+                                        EventType = eventType, MealTypes = step.MealTypes, Order = eventOrder, Start = mission.StartLocal,
+                                        HintKey = MealStepHints.KeyFor(step)
+                                    });
                                 }
                             }
                             break;
@@ -76,8 +81,27 @@ namespace eu.foodmission.platform
                             }
                             break;
 
+                        case MissionStepType.DayChecklist:
+                            inputs.RecordedValues.TryGetValue(step.EventType, out Dictionary<DateTime, HashSet<string>> recordedByDay);
+                            var recorded = new Dictionary<DateTime, HashSet<string>>();
+                            foreach (DateTime day in window)
+                            {
+                                if (recordedByDay != null && recordedByDay.TryGetValue(day, out HashSet<string> values) && values.Count > 0)
+                                {
+                                    recorded[day] = values;
+                                }
+                            }
+                            List<DateTime> openDays = window
+                                .Where(d => !ChecklistRule.Counts(step.Checklist, ChecklistRule.IndexesOf(step.Checklist, recorded.TryGetValue(d, out HashSet<string> v) ? v : null)))
+                                .ToList();
+                            if (openDays.Count > 0)
+                            {
+                                missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step, mission.StartLocal, openDays, recorded));
+                            }
+                            break;
+
                         default:
-                            missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step));
+                            missionSteps.Add(new CheckInMissionStep(mission.Code, mission.Title, step, mission.StartLocal));
                             break;
                     }
                 }
@@ -100,7 +124,7 @@ namespace eu.foodmission.platform
                         EventType = g.Key,
                         Order = g.Min(c => c.Order),
                         // Restricted only if every contributing mission restricts it to the same meal type
-                        Only = g.All(c => c.OnlyMealType != null) && g.Select(c => c.OnlyMealType).Distinct().Count() == 1 ? g.First().OnlyMealType : null,
+                        Only = g.All(c => c.MealTypes.Count == 1) && g.Select(c => c.MealTypes[0]).Distinct().Count() == 1 ? g.First().MealTypes[0] : null,
                         MealTypes = CheckInMealTypes.All.Where(t => g.Any(c => Counts(c, entry.Key, t, inputs.NowLocal))).ToArray()
                     })
                     .Where(q => q.MealTypes.Length > 0)
@@ -117,7 +141,14 @@ namespace eu.foodmission.platform
                 {
                     continue;
                 }
-                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions));
+                // Only missions still asked on one of the open meals that day
+                string[] hints = entry.Value
+                    .Where(c => c.HintKey != null && open.Any(t => Counts(c, entry.Key, t, inputs.NowLocal)))
+                    .OrderBy(c => c.Order)
+                    .Select(c => c.HintKey)
+                    .Distinct()
+                    .ToArray();
+                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions, hints));
             }
 
             var openDayEvents = new List<CheckInDayEvent>();
@@ -139,7 +170,7 @@ namespace eu.foodmission.platform
         /// dated (<see cref="MissionReportDays.TimestampFor"/>) at or after the mission start, since rules ignore earlier events.
         /// </summary>
         private static bool Counts(MealContribution contribution, DateTime day, string mealType, DateTime nowLocal) =>
-            (contribution.OnlyMealType == null || contribution.OnlyMealType == mealType) &&
+            (contribution.MealTypes.Count == 0 || contribution.MealTypes.Contains(mealType)) &&
             (!contribution.Start.HasValue || MissionReportDays.TimestampFor(day, mealType, nowLocal) >= contribution.Start.Value);
     }
 }

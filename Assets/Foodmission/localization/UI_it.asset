@@ -3374,9 +3374,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: Quanti alimenti vegetali diversi hai mangiato questa settimana?
+    m_Localized: "Quanti alimenti vegetali diversi hai mangiato? Ogni tipo conta
+      una volta, anche se l'hai mangiato pi\xF9 volte: mele, lenticchie, basilico
+      e avena sono quattro. Contano frutta, verdura, legumi, erbe aromatiche, frutta
+      secca, semi e cereali integrali."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690409
   - m_Id: 52041725676347412
     m_Localized: In quanti prodotti hai controllato da dove provengono?
     m_Metadata:
@@ -4149,6 +4153,173 @@ MonoBehaviour:
     m_Localized: 'I tuoi progressi nella conoscenza:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: "Per quanti prodotti ti sei chiesto se la confezione valesse la
+      pena? Guarda dimensioni, materiali e se protegge il cibo dal deterioramento:
+      a volte una confezione che evita lo spreco di cibo \xE8 meglio di nessuna confezione."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Origine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certificazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: "Stagionalit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Produzione locale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: Biologico UE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (pesca sostenibile)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (acquacoltura responsabile)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: Ecolabel UE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Altro marchio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Verde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Rosso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Arancione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Giallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Viola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Bianco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: Per quali pasti hai scelto i prodotti guardando l'origine e almeno
+      un altro aspetto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: "In quanti acquisti hai fatto attenzione ad almeno tre di questi
+      aspetti: origine, stagionalit\xE0, metodo di produzione o certificazione? Aggiungi
+      ogni acquisto e segna cosa hai controllato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "Per quanti prodotti hai letto l'etichetta e trovato almeno due
+      di queste informazioni: da dove viene, un marchio di sostenibilit\xE0 o una
+      certificazione, se \xE8 di stagione o se \xE8 prodotto vicino a te? Aggiungi
+      ogni prodotto e segna cosa hai trovato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: In quali acquisti hai controllato il materiale della confezione
+      e cosa succede dopo l'uso?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: "Hai scelto un prodotto con almeno due marchi di sostenibilit\xE0
+      diversi? Segna i marchi che aveva, per esempio Biologico UE e Fairtrade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Quali colori di frutta e verdura hai mangiato ogni giorno?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Prodotto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Aggiungi prodotto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Conta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Segnane altri {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Deve includere: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} di {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "Conta solo ci\xF2 che non hai ancora detto a {global.PET_NAME}."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
+  - m_Id: 56190243387203623
+    m_Localized: Pasto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: Aggiungi pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Acquisto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Aggiungi acquisto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Inizia ogni pasto con una porzione pi\xF9 piccola e aggiungine
+      solo se ne hai bisogno. Segnalalo quando cos\xEC hai evitato di sprecare cibo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: 'Contalo quando il pasto aveva almeno un alimento ricco di fibre:
+      verdura, frutta, legumi, frutta secca, semi o cereali integrali.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: 'Ogni pasto principale deve avere almeno 3 di questi 4: proteine,
+      un alimento ricco di fibre, verdura fresca o insalata e un grasso sano. Segna
+      tutti quelli che aveva.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4174,3 +4345,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

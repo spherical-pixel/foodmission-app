@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Text;
+
 using NUnit.Framework;
 using UnityEngine;
 
@@ -78,6 +81,20 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("app", userEvent.source);
             Assert.AreEqual("2026-08-04T07:00:00Z", userEvent.timestamp);
             Assert.IsTrue(string.IsNullOrEmpty(userEvent.groupId));
+        }
+
+        [Test]
+        public void CreateClientEventRequest_StringArrayMetadata_SerializesAsJsonArray()
+        {
+            var request = new CreateClientEventRequest
+            {
+                eventType = ClientEventTypes.NutritionRainbowColoursLogged,
+                metadata = new Dictionary<string, object> { { "colours", new[] { "GREEN", "RED" } } }
+            };
+
+            string json = Encoding.UTF8.GetString(request.ToJsonBody());
+
+            StringAssert.Contains("\"colours\":[\"GREEN\",\"RED\"]", json);
         }
     }
 }

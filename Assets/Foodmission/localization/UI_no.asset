@@ -3368,9 +3368,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: Hvor mange forskjellige plantebaserte matvarer spiste du denne uken?
+    m_Localized: "Hvor mange forskjellige plantematvarer har du spist? Hver type
+      teller \xE9n gang, uansett hvor ofte du spiste den: epler, linser, basilikum
+      og havre er fire. Frukt, gr\xF8nnsaker, belgfrukter, urter, n\xF8tter, fr\xF8
+      og fullkorn teller alle."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690410
   - m_Id: 52041725676347412
     m_Localized: For hvor mange produkter sjekket du hvor de kommer fra?
     m_Metadata:
@@ -4146,6 +4150,174 @@ MonoBehaviour:
     m_Localized: 'Din kunnskapsfremgang:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: "For hvor mange produkter tenkte du over om emballasjen var verdt
+      det? Se p\xE5 st\xF8rrelsen, materialene og om den beskytter maten mot \xE5
+      bli d\xE5rlig: noen ganger er emballasje som hindrer matsvinn bedre enn ingen
+      emballasje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Opprinnelse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Sertifisering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Sesong
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Lokal produksjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: "EU-\xF8kologisk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: "MSC (b\xE6rekraftig fiske)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (ansvarlig havbruk)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: EU Ecolabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Annen merking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: "Gr\xF8nn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: "R\xF8d"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Oransje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Gul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Lilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Hvit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "Til hvilke m\xE5ltider valgte du produkter ut fra opprinnelse og
+      minst \xE9n ting til?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: "Ved hvor mange kj\xF8p s\xE5 du p\xE5 minst tre av disse: opprinnelse,
+      sesong, produksjonsmetode eller sertifisering? Legg til hvert kj\xF8p og kryss
+      av for det du sjekket."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "For hvor mange produkter leste du etiketten og fant minst to av
+      disse: hvor det kommer fra, et b\xE6rekraftsmerke eller en sertifisering, om
+      det er i sesong, eller om det er produsert i n\xE6rheten av deg? Legg til hvert
+      produkt og kryss av for det du fant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: "Ved hvilke kj\xF8p sjekket du emballasjematerialet og hva som skjer
+      med det etter bruk?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: "Valgte du et produkt med minst to ulike b\xE6rekraftsmerker? Merk
+      av merkene det hadde, for eksempel EU-\xF8kologisk og Fairtrade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: "Hvilke farger frukt og gr\xF8nnsaker spiste du hver dag?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Produkt {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Legg til produkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Teller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Merk {0} til
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: "M\xE5 inkludere: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} av {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "Tell bare det du ikke har fortalt {global.PET_NAME} enn\xE5."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 56190243387203623
+    m_Localized: "M\xE5ltid {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: "Legg til m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: "Kj\xF8p {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: "Legg til kj\xF8p"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Start hvert m\xE5ltid med en mindre porsjon og forsyn deg bare
+      mer hvis du trenger det. Kryss av n\xE5r du slik unngikk \xE5 kaste mat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Tell det med n\xE5r m\xE5ltidet hadde minst \xE9n fiberrik matvare:
+      gr\xF8nnsaker, frukt, belgfrukter, n\xF8tter, fr\xF8 eller fullkorn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: "Hvert hovedm\xE5ltid trenger minst 3 av disse 4: protein, en fiberrik
+      matvare, ferske gr\xF8nnsaker eller salat og et sunt fett. Kryss av for alt
+      det hadde."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4171,3 +4343,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

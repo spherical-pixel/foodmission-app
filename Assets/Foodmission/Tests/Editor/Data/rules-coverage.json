@@ -140,11 +140,65 @@
     },
     {
       "code": "M.A2.1",
-      "shape": "undecided"
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "originPlusOneProducts": {
+            "anyOf": [
+              "SHOPPING_ORIGIN_CHECKED",
+              "SHOPPING_CERTIFICATION_CHOSEN",
+              "PROCESSING_PRODUCTION_METHOD_CHECKED",
+              "SHOPPING_SEASONAL_CHOSEN"
+            ],
+            "groupBy": {
+              "key": "metadata.productId",
+              "minDistinct": 2,
+              "require": [
+                "SHOPPING_ORIGIN_CHECKED"
+              ]
+            }
+          }
+        },
+        "target": "originPlusOneProducts >= 3",
+        "progress": "min(originPlusOneProducts / 3, 1)",
+        "notes": [
+          "Counts products whose country of origin was checked together with at least one more indicator (certification, production method, seasonality)",
+          "The goal says \"products for at least 3 meals\"; counted per product, the closest item the events identify",
+          "Client must send metadata.productId on every event; events without it are ignored"
+        ]
+      }
     },
     {
       "code": "M.A2.2",
-      "shape": "undecided"
+      "shape": "one_shot_event",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "doubleLabelProducts": {
+            "event": "SHOPPING_DOUBLE_LABEL_CHOSEN",
+            "groupBy": {
+              "key": "metadata.productId",
+              "of": "metadata.labels",
+              "minDistinct": 2
+            }
+          }
+        },
+        "target": "doubleLabelProducts >= 1",
+        "progress": "min(doubleLabelProducts, 1)",
+        "notes": [
+          "One product carrying at least two different sustainability labels, with what each label represents recorded",
+          "Client contract: SHOPPING_DOUBLE_LABEL_CHOSEN via POST /events with metadata.productId and metadata.labels, an array naming each label (e.g. EU_ORGANIC, FAIRTRADE); the labels may also be sent over several events for the same product",
+          "The engine checks there are two different labels on the same product; the explanation of each label is self-attested",
+          "Dedicated event, so SHOPPING_CERTIFICATION_CHOSEN lookups in other missions do not complete it; quest 2.14 holds only this mission"
+        ]
+      }
     },
     {
       "code": "M.A2.3",
@@ -194,7 +248,35 @@
     },
     {
       "code": "M.A2.5",
-      "shape": "undecided"
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "informedPurchases": {
+            "anyOf": [
+              "SHOPPING_ORIGIN_CHECKED",
+              "PROCESSING_PRODUCTION_METHOD_CHECKED",
+              "SHOPPING_CERTIFICATION_CHOSEN",
+              "SHOPPING_SEASONAL_CHOSEN"
+            ],
+            "groupBy": {
+              "key": "metadata.productId",
+              "minDistinct": 3
+            }
+          }
+        },
+        "target": "informedPurchases >= 4",
+        "progress": "min(informedPurchases / 4, 1)",
+        "notes": [
+          "Counts food choices where at least three aspects were considered: origin, production method, certification, seasonality",
+          "No event for travel distance yet, so three of these four are needed (stricter than the goal's three of five)",
+          "Client must send metadata.productId on every event; events without it are ignored",
+          "Cannot verify a purchase was made; self-attested"
+        ]
+      }
     },
     {
       "code": "M.A3.1",
@@ -326,7 +408,36 @@
     },
     {
       "code": "M.A4.1",
-      "shape": "undecided"
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "packagingDecisions": {
+            "anyOf": [
+              "PACKAGING_MATERIAL_OBSERVED",
+              "PACKAGING_RECYCLING_LABEL_READ",
+              "PACKAGING_RECYCLABILITY_EVALUATED"
+            ],
+            "groupBy": {
+              "key": "metadata.productId",
+              "minDistinct": 2,
+              "require": [
+                "PACKAGING_MATERIAL_OBSERVED"
+              ]
+            }
+          }
+        },
+        "target": "packagingDecisions >= 3",
+        "progress": "min(packagingDecisions / 3, 1)",
+        "notes": [
+          "Counts purchases where the packaging material was observed and an end-of-life option was considered (recycling label read or recyclability evaluated)",
+          "Client must send metadata.productId on every event; events without it are ignored",
+          "Reuse information has no event of its own; recycling label and recyclability cover end of life"
+        ]
+      }
     },
     {
       "code": "M.A4.2",
@@ -351,7 +462,27 @@
     },
     {
       "code": "M.A4.3",
-      "shape": "undecided"
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "tradeOffProducts": {
+            "event": "PACKAGING_TRADE_OFF_REFLECTED",
+            "distinctBy": "metadata.productId"
+          }
+        },
+        "target": "tradeOffProducts >= 5",
+        "progress": "min(tradeOffProducts / 5, 1)",
+        "notes": [
+          "Counts distinct products whose packaging trade-offs (size, materials, protective function) were reflected on",
+          "Client contract: one event per product after the size/material/protection checklist, with metadata.productId; events without it are each counted separately",
+          "Dedicated event, so it does not overlap with M.A4.1 (PACKAGING_MATERIAL_OBSERVED) in quest 4.5",
+          "Self-attested; the reflection itself cannot be checked"
+        ]
+      }
     },
     {
       "code": "M.A4.4",
@@ -509,7 +640,41 @@
     },
     {
       "code": "M.A6.1",
-      "shape": "undecided"
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "rainbowDays": {
+            "event": "NUTRITION_RAINBOW_COLOURS_LOGGED",
+            "groupBy": {
+              "key": "metadata.dayBucket",
+              "of": "metadata.colours",
+              "values": [
+                "GREEN",
+                "RED",
+                "ORANGE",
+                "YELLOW",
+                "PURPLE",
+                "WHITE"
+              ],
+              "minDistinct": 5
+            }
+          }
+        },
+        "target": "rainbowDays >= 7",
+        "progress": "min(rainbowDays / 7, 1)",
+        "notes": [
+          "Every day of the week: counts days with fruit and vegetables of at least five different colours",
+          "Client contract: send NUTRITION_RAINBOW_COLOURS_LOGGED via POST /events with metadata.colours, an array of GREEN, RED, ORANGE, YELLOW, PURPLE, WHITE (case-insensitive); several events per day are merged and repeated colours count once",
+          "Other values are ignored; the meal-log flag of the same name carries no colours and adds nothing here",
+          "metadata.dayBucket is server-set from the event time (UTC day); clients can backdate with createdAt",
+          "A missed day is not failed at once; the mission fails when the week ends",
+          "Self-attested; the server cannot check what was eaten"
+        ]
+      }
     },
     {
       "code": "M.A6.2",
@@ -573,7 +738,66 @@
     },
     {
       "code": "M.A6.4",
-      "shape": "undecided"
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "mainMealDays": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket",
+            "where": {
+              "metadata.body.typeOfMeal": [
+                "BREAKFAST",
+                "LUNCH",
+                "DINNER"
+              ]
+            }
+          },
+          "mainMeals": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealLogId",
+            "where": {
+              "metadata.body.typeOfMeal": [
+                "BREAKFAST",
+                "LUNCH",
+                "DINNER"
+              ]
+            }
+          },
+          "nutrientDenseMeals": {
+            "anyOf": [
+              "NUTRITION_PROTEIN_INCLUDED",
+              "NUTRITION_HIGH_FIBRE_MEAL",
+              "NUTRITION_FRUIT_VEG_SERVING_ADDED",
+              "NUTRITION_HEALTHY_FAT_CHOSEN"
+            ],
+            "where": {
+              "metadata.mealType": [
+                "BREAKFAST",
+                "LUNCH",
+                "DINNER"
+              ]
+            },
+            "groupBy": {
+              "key": "metadata.mealLogId",
+              "minDistinct": 3
+            }
+          }
+        },
+        "target": "mainMealDays >= 7 && nutrientDenseMeals >= mainMeals",
+        "resolveAt": "window_end",
+        "progress": "min(mainMealDays / 7, 1) * min(nutrientDenseMeals / max(mainMeals, 1), 1)",
+        "notes": [
+          "Throughout the week: a main meal (breakfast, lunch, dinner) logged on each of the 7 days, and every logged main meal flagged with at least three of protein, fibre-rich food, fruit/vegetable, healthy fat",
+          "Per meal log: flags are grouped by metadata.mealLogId, so the three components must be on the same meal",
+          "Main meals need typeOfMeal on the meal log; logs without it, snacks and drinks are not counted",
+          "Cannot verify that every main meal was logged; self-attested",
+          "Completes or fails at the end of the week (resolveAt window_end), like M.A6.3, because MEAL_LOGGED is recorded before the meal's flag events"
+        ]
+      }
     },
     {
       "code": "M.A6.5",
@@ -839,7 +1063,7 @@
         "progress": "min(packagingInfoChecks / 5, 1)",
         "notes": [
           "Counts distinct products where sustainability-related information on the packaging was looked for",
-          "Deliberately excludes SHOPPING_ORIGIN_CHECKED and SHOPPING_CERTIFICATION_CHOSEN to avoid overlap with M.B2.1/M.B2.3 in the same quests",
+          "Only SHOPPING_PACKAGING_INFO_CHECKED: origin and certification lookups have their own missions (M.B2.1, M.B2.3), so they are not counted here",
           "Client must send metadata.productId; events without it are each counted separately",
           "Cannot verify the product was actually consumed this week; self-attested"
         ]
@@ -1455,7 +1679,7 @@
         "notes": [
           "Counts the measurable part of the goal: 3 logged meals with locally produced products",
           "Origin tracking is implied by flagging a product as local; no separate threshold is given in the goal",
-          "Deliberately excludes SHOPPING_ORIGIN_CHECKED, which M.I2.4 (same quest) is likely to count",
+          "Excludes SHOPPING_ORIGIN_CHECKED: the goal is about meals with local products; origin lookups are counted by M.B2.1 and M.I2.4",
           "Same rule as M.B2.4 at a different level; they never share a quest",
           "Locality is self-attested; not checked against product origin data"
         ]
@@ -1503,14 +1727,41 @@
         "notes": [
           "Direct mapping from mission goal: 3 logged meals using certified products",
           "Reported as a MEAL_CERTIFIED_PRODUCT flag on POST /meal-logs; distinct by meal log so each logged meal counts once",
-          "Deliberately excludes SHOPPING_CERTIFICATION_CHOSEN: the goal is about meals eaten, not purchases, and M.I2.4 (same quest) may count certification lookups",
+          "Excludes SHOPPING_CERTIFICATION_CHOSEN: the goal is about meals eaten, not purchases",
           "Certification is self-attested; not checked against product label data"
         ]
       }
     },
     {
       "code": "M.I2.4",
-      "shape": "undecided"
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "informedProducts": {
+            "anyOf": [
+              "SHOPPING_ORIGIN_CHECKED",
+              "SHOPPING_CERTIFICATION_CHOSEN",
+              "SHOPPING_SEASONAL_CHOSEN",
+              "SHOPPING_LOCAL_CHOSEN"
+            ],
+            "groupBy": {
+              "key": "metadata.productId",
+              "minDistinct": 2
+            }
+          }
+        },
+        "target": "informedProducts >= 5",
+        "progress": "min(informedProducts / 5, 1)",
+        "notes": [
+          "Counts products with at least two different pieces of sustainability information (origin, certification, seasonality, local production)",
+          "Client must send metadata.productId on every event; events without it are ignored, so facts about one product are matched up",
+          "Cannot verify the product was actually consumed; self-attested"
+        ]
+      }
     },
     {
       "code": "M.I2.5",
@@ -1530,7 +1781,7 @@
         "notes": [
           "Counts occasions where a product was selected after examining environmental information on its package",
           "No distinctBy: the goal counts occasions, not distinct products",
-          "Keep SHOPPING_PACKAGING_INFO_CHECKED out of M.I2.4 (same quests) to avoid overlap"
+          "Same event as M.B2.5 (counted per product there); they never share a quest"
         ]
       }
     },
@@ -1581,7 +1832,7 @@
           "Direct mapping: one NOVA comparison across at least three products of the same food category",
           "One event per completed comparison, metadata { category, productIds }",
           "The engine cannot check productIds length or that the NOVA classes differ; the client must only emit once >= 3 same-category products are compared",
-          "Deliberately excludes PROCESSING_INDICATORS_COMPARED (multiple indicators on one product), which M.I3.4 (same quest) is likely to count"
+          "Excludes PROCESSING_INDICATORS_COMPARED (multiple indicators on one product): the goal compares NOVA classes across products"
         ]
       }
     },
@@ -1773,7 +2024,7 @@
         "progress": "min(circularPackagingFound / 4, 1)",
         "notes": [
           "Counts four distinct products whose packaging was identified as reusable, refillable or recyclable",
-          "Overlap accepted for now: shares events with M.I4.2 and M.I4.3 in the same quest",
+          "Overlap accepted for now: shares events with M.I4.3 in the same quest",
           "PACKAGING_RECYCLABILITY_EVALUATED also fires when packaging is judged hard to recycle; the rule cannot tell the outcome apart",
           "Client must send metadata.productId; events without it are each counted separately"
         ]
@@ -1852,7 +2103,25 @@
     },
     {
       "code": "M.I5.4",
-      "shape": "undecided"
+      "shape": "count_at_least",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "halfPlateSaves": {
+            "event": "FOOD_WASTE_HALF_PLATE_SAVED"
+          }
+        },
+        "target": "halfPlateSaves >= 3",
+        "progress": "min(halfPlateSaves / 3, 1)",
+        "notes": [
+          "Direct mapping: counts logged Half Plate Saved actions",
+          "No distinctBy: the goal counts actions, not distinct meals",
+          "Same event as M.B5.1 and M.A5.1 with a different target; they never share a quest (5.8 holds only this mission)"
+        ]
+      }
     },
     {
       "code": "M.I5.5",
@@ -1897,7 +2166,58 @@
     },
     {
       "code": "M.I6.2",
-      "shape": "undecided"
+      "shape": "composite_threshold",
+      "rule": {
+        "window": {
+          "type": "since_start",
+          "days": 7
+        },
+        "counters": {
+          "mainMealDays": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealDayBucket",
+            "where": {
+              "metadata.body.typeOfMeal": [
+                "BREAKFAST",
+                "LUNCH",
+                "DINNER"
+              ]
+            }
+          },
+          "mainMeals": {
+            "event": "MEAL_LOGGED",
+            "distinctBy": "metadata.mealLogId",
+            "where": {
+              "metadata.body.typeOfMeal": [
+                "BREAKFAST",
+                "LUNCH",
+                "DINNER"
+              ]
+            }
+          },
+          "fibreMainMeals": {
+            "event": "NUTRITION_HIGH_FIBRE_MEAL",
+            "distinctBy": "metadata.mealLogId",
+            "where": {
+              "metadata.mealType": [
+                "BREAKFAST",
+                "LUNCH",
+                "DINNER"
+              ]
+            }
+          }
+        },
+        "target": "mainMealDays >= 7 && fibreMainMeals >= mainMeals",
+        "resolveAt": "window_end",
+        "progress": "min(mainMealDays / 7, 1) * min(fibreMainMeals / max(mainMeals, 1), 1)",
+        "notes": [
+          "Throughout the week: a main meal (breakfast, lunch, dinner) logged on each of the 7 days, and every logged main meal flagged NUTRITION_HIGH_FIBRE_MEAL",
+          "Main meals need typeOfMeal on the meal log; logs without it, snacks and drinks are not counted",
+          "Both meal counters use metadata.mealLogId, so a retried log counts once",
+          "Cannot verify that every main meal was logged; self-attested",
+          "Completes or fails at the end of the week (resolveAt window_end), like M.A6.3"
+        ]
+      }
     },
     {
       "code": "M.I6.3",

@@ -3386,9 +3386,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: Hoeveel verschillende plantaardige voedingsmiddelen at je deze week?
+    m_Localized: "Hoeveel verschillende plantaardige voedingsmiddelen heb je gegeten?
+      Elke soort telt \xE9\xE9n keer, hoe vaak je hem ook at: appels, linzen, basilicum
+      en havermout zijn er vier. Fruit, groenten, peulvruchten, kruiden, noten, zaden
+      en volkoren granen tellen allemaal mee."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 52041725676347412
     m_Localized: Bij hoeveel producten keek je waar ze vandaan komen?
     m_Metadata:
@@ -4160,6 +4164,174 @@ MonoBehaviour:
     m_Localized: 'Jouw kennisvoortgang:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: 'Bij hoeveel producten heb je nagedacht of de verpakking de moeite
+      waard was? Let op het formaat, de materialen en of ze het voedsel tegen bederf
+      beschermt: soms is een verpakking die voedselverspilling voorkomt beter dan
+      helemaal geen verpakking.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Herkomst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certificering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Seizoensgebondenheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Lokale productie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: EU-biologisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (duurzame visserij)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (verantwoorde aquacultuur)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: EU Ecolabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Ander label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Groen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Rood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Oranje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Geel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Paars
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Wit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "Voor welke maaltijden koos je producten op basis van hun herkomst
+      en nog minstens \xE9\xE9n ander punt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: 'Bij hoeveel aankopen heb je op minstens drie van deze dingen gelet:
+      herkomst, seizoen, productiemethode of certificering? Voeg elke aankoop toe
+      en vink aan waar je op lette.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: 'Bij hoeveel producten heb je het etiket gelezen en minstens twee
+      van deze dingen gevonden: waar het vandaan komt, een duurzaamheidskeurmerk
+      of certificering, of het van het seizoen is, of dat het dicht bij jou is geproduceerd?
+      Voeg elk product toe en vink aan wat je vond.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: Bij welke aankopen heb je het verpakkingsmateriaal bekeken en wat
+      er na gebruik mee gebeurt?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: Heb je een product gekozen met minstens twee verschillende duurzaamheidslabels?
+      Markeer de labels die erop stonden, bijvoorbeeld EU-biologisch en Fairtrade.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Welke kleuren groente en fruit heb je elke dag gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Product {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Product toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Telt mee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Markeer er nog {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Moet bevatten: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} van {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: Tel alleen wat je {global.PET_NAME} nog niet hebt verteld.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 56190243387203623
+    m_Localized: Maaltijd {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: Maaltijd toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Aankoop {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Aankoop toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: Begin elke maaltijd met een kleinere portie en neem alleen meer
+      als je het nodig hebt. Vink het aan als je zo voedselverspilling hebt voorkomen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Tel het mee als de maaltijd minstens \xE9\xE9n vezelrijk voedingsmiddel
+      had: groenten, fruit, peulvruchten, noten, zaden of volkoren granen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: 'Elke hoofdmaaltijd heeft minstens 3 van deze 4 nodig: eiwit, een
+      vezelrijk voedingsmiddel, verse groenten of salade en een gezond vet. Vink
+      alles aan wat erin zat.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4185,3 +4357,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

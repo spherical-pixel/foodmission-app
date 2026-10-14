@@ -8,6 +8,7 @@ namespace eu.foodmission.platform
     public static class MissionReportBuilder
     {
         public const string ReportedVia = "manual_nutri";
+        public const string ProductIdField = "productId";
 
         public static List<PendingReportItem> Build(
             string missionCode,
@@ -73,6 +74,49 @@ namespace eu.foodmission.platform
                             {
                                 AddEvent(items, indexOffset, missionCode, reportId, option.EventType, step, option.Metadata);
                             }
+                        }
+                        break;
+
+                    case MissionStepType.ProductChecklist:
+                        for (int p = 0; p < answer.Products.Count && p < step.MaxCount; p++)
+                        {
+                            HashSet<int> selected = answer.Products[p];
+                            if (!ChecklistRule.Counts(step.Checklist, selected))
+                            {
+                                continue;
+                            }
+                            // One id per product, so the backend groups its facts (rule groupBy productId)
+                            string productId = $"manual-{reportId}-p{indexOffset + items.Count}";
+                            if (step.Checklist.IsArray)
+                            {
+                                AddEvent(items, indexOffset, missionCode, reportId, step.EventType, step, new Dictionary<string, object>
+                                {
+                                    { ProductIdField, productId },
+                                    { step.Checklist.ArrayField, ChecklistRule.ValuesOf(step.Checklist, selected) }
+                                });
+                            }
+                            else
+                            {
+                                foreach (int option in selected.Where(o => o >= 0 && o < step.Checklist.Options.Count).OrderBy(o => o))
+                                {
+                                    AddEvent(items, indexOffset, missionCode, reportId, step.Checklist.Options[option].EventType, step,
+                                        new Dictionary<string, object> { { ProductIdField, productId } });
+                                }
+                            }
+                        }
+                        break;
+
+                    case MissionStepType.DayChecklist:
+                        foreach (KeyValuePair<DateTime, HashSet<int>> day in answer.DayValues.Where(d => allowedDays.Contains(d.Key.Date)).OrderBy(d => d.Key))
+                        {
+                            string[] values = ChecklistRule.ValuesOf(step.Checklist, day.Value);
+                            if (values.Length == 0)
+                            {
+                                continue;
+                            }
+                            DateTime moment = MissionReportDays.EventTimestampFor(day.Key.Date, missionStartLocal, nowLocal);
+                            AddEvent(items, indexOffset, missionCode, reportId, step.EventType, step,
+                                new Dictionary<string, object> { { step.Checklist.ArrayField, values } }, moment.ToUniversalTime().ToString("o"));
                         }
                         break;
 

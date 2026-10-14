@@ -349,5 +349,98 @@ namespace eu.foodmission.platform.Tests
             await LoadAsync(null, CheckInPlannerTests.M("M.A5.4"));
             Assert.IsFalse(_vm.LoadFailed);
         }
+
+        private int MissionStepIndex() => Enumerable.Range(0, _vm.StepCount).First(i => _vm.KindOf(i) == CheckInStepKind.MissionStep);
+
+        [Test]
+        public async Task ProductChecklist_AddToggleRemove_BuildsOnlyCountingProducts()
+        {
+            await LoadAsync("M.A2.1", CheckInPlannerTests.M("M.A2.1", Now.Date));
+            int step = MissionStepIndex();
+
+            _vm.ToggleProductOption(step, 0, 0); // origin
+            _vm.ToggleProductOption(step, 0, 1); // certification
+            _vm.AddProduct(step);
+            _vm.ToggleProductOption(step, 1, 1); // certification only: doesn't count
+            _vm.AddProduct(step);
+            _vm.AddProduct(step); // max 3: ignored
+
+            Assert.AreEqual(3, _vm.Answers.MissionSteps[0].Products.Count);
+            Assert.AreEqual(1, _vm.BuildSummary().Single().Count, "one product counts");
+            Assert.IsTrue(_vm.HasUnsentAnswers);
+        }
+
+        [Test]
+        public async Task RemoveProduct_RenumbersAndSendsOnlyRemaining()
+        {
+            await LoadAsync("M.A2.1", CheckInPlannerTests.M("M.A2.1", Now.Date));
+            int step = MissionStepIndex();
+            _vm.AddProduct(step);
+            _vm.ToggleProductOption(step, 1, 0);
+            _vm.ToggleProductOption(step, 1, 3);
+
+            _vm.RemoveProduct(step, 0);
+            await CompleteAsync();
+
+            var sent = _sent.Single();
+            Assert.AreEqual(2, sent.Count);
+            Assert.IsTrue(sent.All(i => (string)((Dictionary<string, object>)i.Event.metadata)[MissionReportBuilder.ProductIdField] == "manual-" + sent[0].Event.idempotencyKey.Split(':')[1] + "-p0"));
+        }
+
+        [Test]
+        public async Task ToggleDayValue_RecordedValue_IsIgnored()
+        {
+            var inputs = CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A6.1", Now.Date.AddDays(-1)));
+            inputs.RecordedValues[ClientEventTypes.NutritionRainbowColoursLogged] = new Dictionary<DateTime, HashSet<string>>
+            {
+                { Now.Date.AddDays(-1), new HashSet<string> { "GREEN" } }
+            };
+            _checkIn.Setup(c => c.LoadPlanAsync("M.A6.1")).ReturnsAsync((CheckInPlanner.Plan(inputs), (ApiErrorResponse)null));
+            await _vm.LoadAsync("M.A6.1");
+            int step = MissionStepIndex();
+
+            Assert.IsTrue(_vm.IsRecordedValue(step, Now.Date.AddDays(-1), 0));
+            _vm.ToggleDayValue(step, Now.Date.AddDays(-1), 0); // GREEN already recorded
+            _vm.ToggleDayValue(step, Now.Date.AddDays(-1), 1); // RED
+            _vm.ToggleDayValue(step, Now.Date.AddDays(-5), 2); // outside the window
+
+            var dayValues = _vm.Answers.MissionSteps[0].DayValues;
+            CollectionAssert.AreEquivalent(new[] { Now.Date.AddDays(-1) }, dayValues.Keys.ToArray());
+            CollectionAssert.AreEquivalent(new[] { 1 }, dayValues[Now.Date.AddDays(-1)].ToArray());
+            Assert.AreEqual(1, _vm.BuildSummary().Single().Count, "one day with new colours");
+        }
+
+        [Test]
+        public async Task ToggleDayValue_Twice_RemovesTheDay()
+        {
+            await LoadAsync("M.A6.1", CheckInPlannerTests.M("M.A6.1", Now.Date));
+            int step = MissionStepIndex();
+
+            _vm.ToggleDayValue(step, Now.Date, 0);
+            _vm.ToggleDayValue(step, Now.Date, 0);
+
+            Assert.AreEqual(0, _vm.Answers.MissionSteps[0].DayValues.Count);
+            Assert.IsFalse(_vm.HasUnsentAnswers);
+        }
+
+        [Test]
+        public async Task ChecklistMutators_AfterPartialSend_AreIgnored()
+        {
+            await LoadAsync("M.A2.1", CheckInPlannerTests.M("M.A2.1", Now.Date));
+            int step = MissionStepIndex();
+            _vm.ToggleProductOption(step, 0, 0);
+            _vm.ToggleProductOption(step, 0, 1);
+            _emitter.Setup(e => e.SendAsync(It.IsAny<IReadOnlyList<PendingReportItem>>()))
+                .Callback<IReadOnlyList<PendingReportItem>>(items => items[0].Sent = true)
+                .ReturnsAsync(MissionReportSendResult.Fail(new ApiErrorResponse { message = "x" }));
+            await CompleteAsync();
+
+            _vm.AddProduct(step);
+            _vm.ToggleProductOption(step, 0, 2);
+            _vm.RemoveProduct(step, 0);
+
+            Assert.AreEqual(1, _vm.Answers.MissionSteps[0].Products.Count);
+            CollectionAssert.AreEquivalent(new[] { 0, 1 }, _vm.Answers.MissionSteps[0].Products[0].ToArray());
+        }
     }
 }

@@ -3371,9 +3371,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: "Koliko razli\u010Dnih rastlinskih \u017Eivil si pojedel ta teden?"
+    m_Localized: "Koliko razli\u010Dnih rastlinskih \u017Eivil si pojedel? Vsaka
+      vrsta \u0161teje enkrat, ne glede na to, kolikokrat si jo jedel: jabolka, le\u010Da,
+      bazilika in oves so \u0161tiri. \u0160tejejo sadje, zelenjava, stro\u010Dnice,
+      zeli\u0161\u010Da, ore\u0161ki, semena in polnozrnata \u017Eita."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690412
   - m_Id: 52041725676347412
     m_Localized: Pri koliko izdelkih si preveril, od kod prihajajo?
     m_Metadata:
@@ -4146,6 +4150,174 @@ MonoBehaviour:
     m_Localized: 'Tvoj napredek v znanju:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: "Pri koliko izdelkih si razmislil, ali se njihova embala\u017Ea
+      spla\u010Da? Bodi pozoren na velikost, materiale in ali hrano \u0161\u010Diti
+      pred kvarjenjem: v\u010Dasih je embala\u017Ea, ki prepre\u010Duje zavr\u017Eek
+      hrane, bolj\u0161a kot nobena embala\u017Ea."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Poreklo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certifikat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Sezonskost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Lokalna pridelava
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: "Ekolo\u0161ko EU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (trajnostni ribolov)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (odgovorno ribogojstvo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: Znak EU za okolje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Drug znak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Zelena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: "Rde\u010Da"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: "Oran\u017Ena"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Rumena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: "Vijoli\u010Dna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: Bela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: "Za katere obroke si izbral izdelke glede na poreklo in vsaj \u0161e
+      eno stvar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: "Pri koliko nakupih si bil pozoren na vsaj tri od teh stvari: poreklo,
+      sezonskost, na\u010Din pridelave ali certifikat? Dodaj vsak nakup in ozna\u010Di,
+      kaj si preveril."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: "Pri koliko izdelkih si prebral etiketo in na\u0161el vsaj dve od
+      teh informacij: od kod prihaja, znak trajnosti ali certifikat, ali je sezonski
+      ali je pridelan blizu tebe? Dodaj vsak izdelek in ozna\u010Di, kaj si na\u0161el."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: "Pri katerih nakupih si preveril material embala\u017Ee in kaj se
+      z njo zgodi po uporabi?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: "Si izbral izdelek z vsaj dvema razli\u010Dnima znakoma trajnosti?
+      Ozna\u010Di znake, ki jih je imel, na primer Ekolo\u0161ko EU in Fairtrade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Katere barve sadja in zelenjave si jedel vsak dan?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Izdelek {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Dodaj izdelek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: "\u0160teje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: "Ozna\u010Di \u0161e {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: "Mora vklju\u010Devati: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} od {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: "\u0160tej samo tisto, \u010Desar \u0161e nisi sporo\u010Dil."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 56190243387203623
+    m_Localized: Obrok {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: Dodaj obrok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Nakup {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Dodaj nakup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Vsak obrok za\u010Dni z manj\u0161o porcijo in si dodaj le, \u010De
+      jo potrebuje\u0161. Ozna\u010Di, ko si tako prepre\u010Dil, da bi hrano zavrgel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Upo\u0161tevaj ga, ko je obrok vseboval vsaj eno \u017Eivilo, bogato
+      z vlaknino: zelenjavo, sadje, stro\u010Dnice, ore\u0161\u010Dke, semena ali
+      polnozrnata \u017Eita."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: "Vsak glavni obrok potrebuje vsaj 3 od teh 4: beljakovine, \u017Eivilo,
+      bogato z vlaknino, sve\u017Eo zelenjavo ali solato in zdravo ma\u0161\u010Dobo.
+      Ozna\u010Di vse, kar je vseboval."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4171,3 +4343,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

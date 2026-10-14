@@ -157,7 +157,7 @@ namespace eu.foodmission.platform
                         lines.Add(new CheckInSummaryLine(CheckInStepKind.DayEvent, Plan.DayEvents[index].Step.PromptKey, null, count));
                         break;
                     case CheckInStepKind.MissionStep:
-                        lines.Add(new CheckInSummaryLine(CheckInStepKind.MissionStep, Plan.MissionSteps[index].Step.PromptKey, null, count));
+                        lines.Add(new CheckInSummaryLine(CheckInStepKind.MissionStep, Plan.MissionSteps[index].Step.PromptKey, null, ChecklistItems(index) ?? count));
                         break;
                 }
             }
@@ -262,6 +262,84 @@ namespace eu.foodmission.platform
                 answer.OptionCounts[optionIndex] = clamped;
             }
             Changed();
+        }
+
+        public void AddProduct(int stepIndex)
+        {
+            if (TryMissionStep(stepIndex, MissionStepType.ProductChecklist, out MissionReportStep step, out MissionStepAnswer answer) &&
+                answer.Products.Count < step.MaxCount)
+            {
+                answer.Products.Add(new HashSet<int>());
+                Changed();
+            }
+        }
+
+        public void RemoveProduct(int stepIndex, int product)
+        {
+            if (TryMissionStep(stepIndex, MissionStepType.ProductChecklist, out _, out MissionStepAnswer answer) &&
+                product >= 0 && product < answer.Products.Count)
+            {
+                answer.Products.RemoveAt(product);
+                Changed();
+            }
+        }
+
+        public void ToggleProductOption(int stepIndex, int product, int option)
+        {
+            if (!TryMissionStep(stepIndex, MissionStepType.ProductChecklist, out MissionReportStep step, out MissionStepAnswer answer) ||
+                product < 0 || product >= answer.Products.Count || option < 0 || option >= step.Checklist.Options.Count)
+            {
+                return;
+            }
+
+            HashSet<int> selected = answer.Products[product];
+            if (!selected.Remove(option))
+            {
+                selected.Add(option);
+            }
+            Changed();
+        }
+
+        public void ToggleDayValue(int stepIndex, DateTime day, int option)
+        {
+            if (!TryMissionStep(stepIndex, MissionStepType.DayChecklist, out MissionReportStep step, out MissionStepAnswer answer) ||
+                option < 0 || option >= step.Checklist.Options.Count)
+            {
+                return;
+            }
+
+            CheckInMissionStep missionStep = Plan.MissionSteps[ItemIndexOf(stepIndex)];
+            if (!missionStep.OpenDays.Contains(day.Date) || IsRecordedValue(stepIndex, day, option))
+            {
+                return;
+            }
+
+            if (!answer.DayValues.TryGetValue(day.Date, out HashSet<int> values))
+            {
+                values = new HashSet<int>();
+                answer.DayValues[day.Date] = values;
+            }
+            if (!values.Remove(option))
+            {
+                values.Add(option);
+            }
+            if (values.Count == 0)
+            {
+                answer.DayValues.Remove(day.Date);
+            }
+            Changed();
+        }
+
+        /// <summary>DayChecklist: the option was already recorded that day (shown locked).</summary>
+        public bool IsRecordedValue(int stepIndex, DateTime day, int option)
+        {
+            if (KindOf(stepIndex) != CheckInStepKind.MissionStep)
+            {
+                return false;
+            }
+            CheckInMissionStep missionStep = Plan.MissionSteps[ItemIndexOf(stepIndex)];
+            ChecklistSpec spec = missionStep.Step.Checklist;
+            return spec != null && ChecklistRule.IndexesOf(spec, missionStep.RecordedValuesFor(day)).Contains(option);
         }
 
         // ── StepFlow ──────────────────────────────────────────
@@ -384,6 +462,19 @@ namespace eu.foodmission.platform
                     break;
             }
             return CheckInBuilder.Build(onePlan, oneAnswers, _reportId, _planNowLocal);
+        }
+
+        /// <summary>Checklist steps are summarised by item (products that count, days with new values); null for other steps.</summary>
+        private int? ChecklistItems(int index)
+        {
+            CheckInMissionStep missionStep = Plan.MissionSteps[index];
+            MissionStepAnswer answer = Answers.MissionSteps[index];
+            return missionStep.Step.Type switch
+            {
+                MissionStepType.ProductChecklist => answer.Products.Take(missionStep.Step.MaxCount).Count(p => ChecklistRule.Counts(missionStep.Step.Checklist, p)),
+                MissionStepType.DayChecklist => answer.DayValues.Count(d => d.Value.Count > 0 && missionStep.OpenDays.Contains(d.Key)),
+                _ => (int?)null
+            };
         }
 
         private string PromptKeyFor(int stepIndex) => KindOf(stepIndex) switch

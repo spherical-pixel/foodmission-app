@@ -33,6 +33,9 @@ namespace eu.foodmission.platform
         public readonly Dictionary<DateTime, HashSet<string>> LoggedMealTypes = new Dictionary<DateTime, HashSet<string>>();
         /// <summary>Event type → days (dayBucket) already recorded, from recentEvents.</summary>
         public readonly Dictionary<string, HashSet<DateTime>> CoveredEventDays = new Dictionary<string, HashSet<DateTime>>(StringComparer.Ordinal);
+        /// <summary>Event type → local day → upper-cased array values already recorded that day (DayChecklist steps).</summary>
+        public readonly Dictionary<string, Dictionary<DateTime, HashSet<string>>> RecordedValues =
+            new Dictionary<string, Dictionary<DateTime, HashSet<string>>>(StringComparer.Ordinal);
         public DateTime NowLocal;
     }
 
@@ -63,13 +66,17 @@ namespace eu.foodmission.platform
         public bool HasAnyLog { get; }
         public IReadOnlyList<string> OpenMealTypes { get; }
         public IReadOnlyList<CheckInMealQuestion> Questions { get; }
+        /// <summary>UI.csv keys of what the missions asked that day want (see <see cref="MealStepHints"/>).</summary>
+        public IReadOnlyList<string> HintKeys { get; }
 
-        public CheckInMealDay(DateTime day, bool hasAnyLog, IReadOnlyList<string> openMealTypes, IReadOnlyList<CheckInMealQuestion> questions)
+        public CheckInMealDay(DateTime day, bool hasAnyLog, IReadOnlyList<string> openMealTypes, IReadOnlyList<CheckInMealQuestion> questions,
+            IReadOnlyList<string> hintKeys = null)
         {
             Day = day;
             HasAnyLog = hasAnyLog;
             OpenMealTypes = openMealTypes;
             Questions = questions;
+            HintKeys = hintKeys ?? Array.Empty<string>();
         }
 
         public IReadOnlyList<CheckInMealQuestion> QuestionsFor(string mealType) => Questions.Where(q => q.AppliesTo(mealType)).ToList();
@@ -94,16 +101,31 @@ namespace eu.foodmission.platform
 
     public sealed class CheckInMissionStep
     {
+        private static readonly IReadOnlyCollection<string> NoValues = Array.Empty<string>();
+
         public string MissionCode { get; }
         public string MissionTitle { get; }
         public MissionReportStep Step { get; }
+        /// <summary>Mission start: day events are never dated before it.</summary>
+        public DateTime? StartLocal { get; }
+        /// <summary>DayChecklist: days of the window that don't count yet, oldest first. Empty for other steps.</summary>
+        public IReadOnlyList<DateTime> OpenDays { get; }
+        /// <summary>DayChecklist: values already recorded per day (shown locked).</summary>
+        public IReadOnlyDictionary<DateTime, HashSet<string>> RecordedValues { get; }
 
-        public CheckInMissionStep(string missionCode, string missionTitle, MissionReportStep step)
+        public CheckInMissionStep(string missionCode, string missionTitle, MissionReportStep step, DateTime? startLocal = null,
+            IReadOnlyList<DateTime> openDays = null, IReadOnlyDictionary<DateTime, HashSet<string>> recordedValues = null)
         {
             MissionCode = missionCode;
             MissionTitle = missionTitle;
             Step = step;
+            StartLocal = startLocal;
+            OpenDays = openDays ?? Array.Empty<DateTime>();
+            RecordedValues = recordedValues ?? new Dictionary<DateTime, HashSet<string>>();
         }
+
+        public IReadOnlyCollection<string> RecordedValuesFor(DateTime day) =>
+            RecordedValues.TryGetValue(day.Date, out HashSet<string> values) ? values : NoValues;
     }
 
     public sealed class CheckInPlan
@@ -134,6 +156,8 @@ namespace eu.foodmission.platform
             DateTime first = notBeforeLocal?.Date ?? DateTime.MinValue;
             return MealDays.Where(d => !d.HasAnyLog && d.Questions.Count > 0).Select(d => d.Day)
                 .Concat(DayEvents.SelectMany(e => e.OpenDays))
+                .Concat(MissionSteps.Where(s => s.Step.Type == MissionStepType.DayChecklist)
+                    .SelectMany(s => s.OpenDays.Where(d => s.RecordedValuesFor(d).Count == 0)))
                 .Where(d => d < today && d >= first)
                 .Distinct()
                 .Count();
@@ -163,9 +187,15 @@ namespace eu.foodmission.platform
             {
                 answers.DayEvents.Add(new HashSet<DateTime>());
             }
-            foreach (CheckInMissionStep _ in plan.MissionSteps)
+            foreach (CheckInMissionStep missionStep in plan.MissionSteps)
             {
-                answers.MissionSteps.Add(new MissionStepAnswer());
+                var answer = new MissionStepAnswer();
+                // A product checklist opens with one product ready to fill
+                if (missionStep.Step.Type == MissionStepType.ProductChecklist)
+                {
+                    answer.Products.Add(new HashSet<int>());
+                }
+                answers.MissionSteps.Add(answer);
             }
             return answers;
         }

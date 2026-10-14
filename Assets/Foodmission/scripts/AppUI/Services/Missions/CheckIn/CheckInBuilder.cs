@@ -52,7 +52,7 @@ namespace eu.foodmission.platform
             for (int i = 0; i < plan.MissionSteps.Count && i < answers.MissionSteps.Count; i++)
             {
                 CheckInMissionStep missionStep = plan.MissionSteps[i];
-                items.AddRange(MissionReportBuilder.Build(missionStep.MissionCode, new[] { missionStep.Step }, new[] { answers.MissionSteps[i] }, reportId, null, nowLocal, items.Count));
+                items.AddRange(MissionReportBuilder.Build(missionStep.MissionCode, new[] { missionStep.Step }, new[] { answers.MissionSteps[i] }, reportId, missionStep.StartLocal, nowLocal, items.Count));
             }
 
             return items;

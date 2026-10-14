@@ -68,6 +68,27 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void MealStepHints_ExistInUiCsv()
+        {
+            HashSet<string> keys = UiKeys();
+            int hints = 0;
+            foreach (MissionInteraction interaction in MissionInteractionCatalog.Entries.Values)
+            {
+                foreach (MissionReportStep step in interaction.Steps)
+                {
+                    string hint = MealStepHints.KeyFor(step);
+                    if (hint != null)
+                    {
+                        hints++;
+                        Assert.IsTrue(keys.Contains(hint), $"Missing UI.csv key {hint}");
+                    }
+                }
+            }
+            Assert.Greater(hints, 0);
+            Assert.IsNull(MealStepHints.KeyFor(null));
+        }
+
+        [Test]
         public void MissionFailureKeys_ExistInUiCsv()
         {
             HashSet<string> keys = UiKeys();

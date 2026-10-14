@@ -3363,9 +3363,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: How many different plant foods did you eat this week?
+    m_Localized: 'How many different plant foods did you eat? Each kind counts once,
+      however often you ate it: apples, lentils, basil and oats are four. Fruit,
+      vegetables, pulses, herbs, nuts, seeds and whole grains all count.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690406
   - m_Id: 52041725676347412
     m_Localized: In how many products did you check where they come from?
     m_Metadata:
@@ -4134,6 +4137,173 @@ MonoBehaviour:
     m_Localized: 'Your knowledge progress:'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203592
+    m_Localized: 'For how many products did you stop to think whether the packaging
+      was worth it? Look at its size, its materials and whether it protects the food
+      from spoiling: sometimes packaging that stops food going to waste is better
+      than no packaging at all.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203593
+    m_Localized: Origin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203594
+    m_Localized: Certification
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203595
+    m_Localized: Seasonality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203596
+    m_Localized: Local production
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203597
+    m_Localized: EU organic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203598
+    m_Localized: Fairtrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203599
+    m_Localized: Rainforest Alliance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203600
+    m_Localized: MSC (sustainable fishing)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203601
+    m_Localized: ASC (responsible aquaculture)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203602
+    m_Localized: EU Ecolabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203603
+    m_Localized: Other label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203604
+    m_Localized: Green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203605
+    m_Localized: Red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203606
+    m_Localized: Orange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203607
+    m_Localized: Yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203608
+    m_Localized: Purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203609
+    m_Localized: White
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203610
+    m_Localized: For which meals did you choose products looking at their origin
+      and at least one more thing?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203611
+    m_Localized: 'In how many purchases did you check at least three of these: origin,
+      seasonality, production method or certification? Add each purchase and tick
+      what you looked at.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203612
+    m_Localized: 'For how many products did you read the label and find at least
+      two of these: where it comes from, a sustainability seal or certification,
+      whether it is in season, or whether it was produced near you? Add each product
+      and tick what you found.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203613
+    m_Localized: For which purchases did you check the packaging material and what
+      happens to it after use?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203614
+    m_Localized: Did you choose a product with at least two different sustainability
+      labels? Mark the labels it carried, for example EU organic and Fairtrade.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203615
+    m_Localized: Which colours of fruit and vegetables did you eat each day?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203616
+    m_Localized: Product {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203617
+    m_Localized: Add product
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203618
+    m_Localized: Counts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203619
+    m_Localized: Mark {0} more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203620
+    m_Localized: 'Must include: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203621
+    m_Localized: '{0} of {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203622
+    m_Localized: Count only what you haven't told {global.PET_NAME} yet.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 56190243387203623
+    m_Localized: Meal {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: Add meal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Purchase {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Add purchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: Start each meal with a smaller serving and only add more if you
+      need it. Tick it when this saved food from going to waste.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: 'Count it when the meal had at least one fibre-rich food: vegetables,
+      fruit, pulses, nuts, seeds or whole grains.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: 'Each main meal needs at least 3 of these 4: protein, a fibre-rich
+      food, fresh vegetables or salad, and a healthy fat. Tick all the ones it had.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4159,3 +4329,5 @@ MonoBehaviour:
         - id: 51673178689232925
         - id: 52041725676347393
         - id: 52041725676347399
+        - id: 52041725676347411
+        - id: 56190243387203622

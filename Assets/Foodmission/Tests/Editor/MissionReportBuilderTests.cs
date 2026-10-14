@@ -179,5 +179,78 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, Build("M.I3.2", new MissionStepAnswer { Confirmed = true }).Count);
             Assert.AreEqual(0, Build("M.I3.2", new MissionStepAnswer { Confirmed = false }).Count);
         }
+
+        private static MissionStepAnswer Products(params int[][] products)
+        {
+            var answer = new MissionStepAnswer();
+            foreach (int[] p in products)
+            {
+                answer.Products.Add(new HashSet<int>(p));
+            }
+            return answer;
+        }
+
+        [Test]
+        public void ProductChecklist_SharesOneProductIdPerProduct_AndSkipsIncomplete()
+        {
+            // M.A2.1 options: 0 origin, 1 certification, 2 production method, 3 seasonal; origin required, min 2
+            var items = Build("M.A2.1", Products(new[] { 0, 1 }, new[] { 1, 2 }, new[] { 0, 3 }));
+
+            CollectionAssert.AreEqual(
+                new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ShoppingCertificationChosen, ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ShoppingSeasonalChosen },
+                items.Select(i => i.Event.eventType).ToArray(), "product 2 has no origin: not sent");
+            CollectionAssert.AreEqual(new[] { "manual-r1-p0", "manual-r1-p0", "manual-r1-p2", "manual-r1-p2" }, items.Select(i => Meta(i)[MissionReportBuilder.ProductIdField]).ToArray());
+            CollectionAssert.AreEqual(new[] { "mission-report:r1:0", "mission-report:r1:1", "mission-report:r1:2", "mission-report:r1:3" }, items.Select(i => i.Event.idempotencyKey).ToArray());
+            Assert.IsNull(items[0].Event.createdAt, "product facts are not back-dated");
+        }
+
+        [Test]
+        public void ProductChecklist_ArrayMode_SendsOneEventWithLabels()
+        {
+            var items = Build("M.A2.2", Products(new[] { 3, 0 }));
+
+            var item = items.Single();
+            Assert.AreEqual(ClientEventTypes.ShoppingDoubleLabelChosen, item.Event.eventType);
+            CollectionAssert.AreEqual(new[] { "EU_ORGANIC", "MSC" }, (string[])Meta(item)["labels"]);
+            Assert.AreEqual("manual-r1-p0", Meta(item)[MissionReportBuilder.ProductIdField]);
+        }
+
+        [Test]
+        public void ProductChecklist_MoreProductsThanMax_SendsOnlyMax()
+        {
+            var items = Build("M.A2.2", Products(new[] { 0, 1 }, new[] { 2, 3 }));
+
+            Assert.AreEqual(1, items.Count);
+        }
+
+        [Test]
+        public void DayChecklist_SendsNewColoursPerDayAtNoon()
+        {
+            var answer = new MissionStepAnswer();
+            answer.DayValues[Now.Date.AddDays(-1)] = new HashSet<int> { 1, 0 };
+            answer.DayValues[Now.Date.AddDays(-2)] = new HashSet<int>();
+            answer.DayValues[Now.Date.AddDays(-9)] = new HashSet<int> { 2 };
+
+            var items = MissionReportBuilder.Build("M.A6.1", MissionInteractionCatalog.Get("M.A6.1").Steps, new[] { answer }, "r1", null, Now);
+
+            var item = items.Single();
+            Assert.AreEqual(ClientEventTypes.NutritionRainbowColoursLogged, item.Event.eventType);
+            CollectionAssert.AreEqual(new[] { "GREEN", "RED" }, (string[])Meta(item)["colours"]);
+            Assert.AreEqual(Now.Date.AddDays(-1).AddHours(12).ToUniversalTime().ToString("o"), item.Event.createdAt);
+            Assert.IsFalse(Meta(item).ContainsKey(MissionReportBuilder.ProductIdField));
+        }
+
+        [Test]
+        public void DayChecklist_StartDay_DatedAtStart()
+        {
+            DateTime start = Now.Date.AddHours(14);
+            var answer = new MissionStepAnswer();
+            answer.DayValues[Now.Date] = new HashSet<int> { 0 };
+            DateTime now = Now.Date.AddHours(15);
+
+            var items = MissionReportBuilder.Build("M.A6.1", MissionInteractionCatalog.Get("M.A6.1").Steps, new[] { answer }, "r1", start, now);
+
+            Assert.AreEqual(start.ToUniversalTime().ToString("o"), items.Single().Event.createdAt);
+        }
     }
 }

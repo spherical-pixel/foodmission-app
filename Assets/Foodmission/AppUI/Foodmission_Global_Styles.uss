@@ -2504,6 +2504,151 @@
     white-space: normal;
 }
 
+/* Checklist steps (product / day cards with chips) */
+.fm-mission-checklist-progress {
+    align-self: flex-end;
+    color: var(--appui-foregrounds-100);
+    margin-bottom: 8px;
+}
+
+.fm-mission-checklist-item {
+    background-color: var(--fm-surface-bg-transparent-50);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.fm-mission-checklist-item__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.fm-mission-checklist-item__title {
+    -unity-font-style: bold;
+    color: var(--appui-foregrounds-100);
+    width: 100%;
+    /* App UI Text doesn't shrink: at full width it pushed the ✕ out of the card, onto the neighbouring step */
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.fm-mission-checklist-item__status {
+    white-space: normal;
+    margin: 0 4px;
+}
+
+.fm-mission-checklist-item__status--counts {
+    color: var(--appui-positive-100);
+}
+
+.fm-mission-checklist-item__status--missing {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: italic;
+}
+
+.fm-mission-checklist-add {
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
+.fm-mission-report-chip--locked {
+    opacity: 0.6;
+}
+
+/* Day checklist chips in equal columns: the six colours sit in two rows of three */
+.fm-mission-checklist-grid > .fm-mission-report-chip {
+    flex-basis: 28%;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* Rainbow colour chips (M.A6.1): tinted when unchecked, filled when checked; fixed colours, same in both themes */
+.fm-mission-report-chip.appui-button.fm-mission-report-chip--value-green {
+    background-color: rgba(46, 158, 79, 0.25);
+    border-color: rgb(46, 158, 79);
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-green {
+    background-color: rgb(46, 158, 79);
+    color: #FFFFFF;
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-green .appui-icon {
+    --unity-image-tint-color: #FFFFFF;
+}
+
+.fm-mission-report-chip.appui-button.fm-mission-report-chip--value-red {
+    background-color: rgba(214, 59, 59, 0.25);
+    border-color: rgb(214, 59, 59);
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-red {
+    background-color: rgb(214, 59, 59);
+    color: #FFFFFF;
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-red .appui-icon {
+    --unity-image-tint-color: #FFFFFF;
+}
+
+.fm-mission-report-chip.appui-button.fm-mission-report-chip--value-orange {
+    background-color: rgba(240, 138, 36, 0.25);
+    border-color: rgb(240, 138, 36);
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-orange {
+    background-color: rgb(240, 138, 36);
+    color: #FFFFFF;
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-orange .appui-icon {
+    --unity-image-tint-color: #FFFFFF;
+}
+
+.fm-mission-report-chip.appui-button.fm-mission-report-chip--value-yellow {
+    background-color: rgba(245, 200, 58, 0.25);
+    border-color: rgb(245, 200, 58);
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-yellow {
+    background-color: rgb(245, 200, 58);
+    color: #1F2A27;
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-yellow .appui-icon {
+    --unity-image-tint-color: #1F2A27;
+}
+
+.fm-mission-report-chip.appui-button.fm-mission-report-chip--value-purple {
+    background-color: rgba(126, 79, 179, 0.25);
+    border-color: rgb(126, 79, 179);
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-purple {
+    background-color: rgb(126, 79, 179);
+    color: #FFFFFF;
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-purple .appui-icon {
+    --unity-image-tint-color: #FFFFFF;
+}
+
+.fm-mission-report-chip.appui-button.fm-mission-report-chip--value-white {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: rgb(158, 158, 158);
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-white {
+    background-color: rgb(255, 255, 255);
+    color: #1F2A27;
+}
+
+.fm-mission-report-chip.fm-mission-report-chip--selected.fm-mission-report-chip--value-white .appui-icon {
+    --unity-image-tint-color: #1F2A27;
+}
+
 /* Development-only meal date offset (Quick Meal Log) */
 .fm-quick-meal-dev-offset {
     align-self: flex-start;

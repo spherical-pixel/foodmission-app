@@ -22,6 +22,10 @@ namespace eu.foodmission.platform.Tests
             public string EventType;
             public readonly Dictionary<string, object> Metadata = new();
             public readonly HashSet<string> Fields = new();
+            /// <summary>Fields whose value other events can share (a meal log's id, a day), so rule groupBy can join them.</summary>
+            public readonly HashSet<string> SharedFields = new();
+            /// <summary>Array metadata the catalog may send (field → values), e.g. colours.</summary>
+            public readonly Dictionary<string, string[]> Arrays = new();
         }
 
         private static JObject LoadRules()
@@ -59,18 +63,24 @@ namespace eu.foodmission.platform.Tests
             if (providesDay)
             {
                 s.Fields.Add("dayBucket");
+                s.SharedFields.Add("dayBucket");
             }
             return s;
         }
 
-        private static Signature MealSignature(string eventType, string fixedMealType)
+        private static Signature MealSignature(string eventType, IReadOnlyList<string> mealTypes)
         {
             var s = new Signature { EventType = eventType };
-            // Backend dates meal-log events at the meal, so their dayBucket is the meal day too
-            s.Fields.UnionWith(new[] { "mealLogId", "mealId", "mealType", "mealDayBucket", "dayBucket" });
-            if (fixedMealType != null)
+            // Backend dates meal-log events at the meal, so their dayBucket is the meal day too.
+            // The check-in sends every flag of one meal in a single meal log, so they share its ids.
+            string[] fields = { "mealLogId", "mealId", "mealType", "mealDayBucket", "dayBucket", "body.typeOfMeal" };
+            s.Fields.UnionWith(fields);
+            s.SharedFields.UnionWith(fields);
+            if (mealTypes.Count > 0)
             {
-                s.Metadata["mealType"] = fixedMealType;
+                // MEAL_LOGGED carries it as body.typeOfMeal, flag events as mealType
+                s.Metadata["mealType"] = mealTypes.ToArray();
+                s.Metadata["body.typeOfMeal"] = mealTypes.ToArray();
             }
             return s;
         }
@@ -105,12 +115,38 @@ namespace eu.foodmission.platform.Tests
                         flags.Add(ClientEventTypes.MealLogged);
                         foreach (string flag in flags)
                         {
-                            list.Add(MealSignature(flag, step.FixedMealType));
+                            list.Add(MealSignature(flag, step.MealTypes));
                         }
+                        break;
+                    case MissionStepType.ProductChecklist:
+                    case MissionStepType.DayChecklist:
+                        list.AddRange(ChecklistSignatures(step));
                         break;
                 }
             }
             return list;
+        }
+
+        /// <summary>
+        /// Checklist items share their key: every event of one product carries the same productId, and every event of
+        /// one day lands in the same dayBucket.
+        /// </summary>
+        private static IEnumerable<Signature> ChecklistSignatures(MissionReportStep step)
+        {
+            ChecklistSpec spec = step.Checklist;
+            string key = step.Type == MissionStepType.ProductChecklist ? "productId" : "dayBucket";
+            IEnumerable<string> eventTypes = spec.IsArray ? new[] { step.EventType } : spec.Options.Select(o => o.EventType);
+            foreach (string eventType in eventTypes)
+            {
+                var s = new Signature { EventType = eventType };
+                s.Fields.Add(key);
+                s.SharedFields.Add(key);
+                if (spec.IsArray)
+                {
+                    s.Arrays[spec.ArrayField] = Enumerable.Range(0, spec.Options.Count).Select(spec.ValueOf).ToArray();
+                }
+                yield return s;
+            }
         }
 
         private static bool Satisfies(Signature s, JObject counter)
@@ -128,7 +164,16 @@ namespace eu.foodmission.platform.Tests
                 foreach (var prop in where.Properties())
                 {
                     string key = StripMetadata(prop.Name);
-                    if (!s.Metadata.TryGetValue(key, out object value) || !string.Equals(value?.ToString(), prop.Value.ToString(), StringComparison.Ordinal))
+                    // An array means "any of these": every value the catalog may send must be one of them
+                    var expected = prop.Value is JArray options
+                        ? options.Select(o => o.ToString()).ToArray()
+                        : new[] { prop.Value.ToString() };
+                    if (!s.Metadata.TryGetValue(key, out object value))
+                    {
+                        return false;
+                    }
+                    var sent = value is string[] many ? many : new[] { value?.ToString() };
+                    if (!sent.All(expected.Contains))
                     {
                         return false;
                     }
@@ -136,7 +181,49 @@ namespace eu.foodmission.platform.Tests
             }
 
             string distinctBy = (string)counter["distinctBy"];
-            return string.IsNullOrEmpty(distinctBy) || s.Fields.Contains(StripMetadata(distinctBy));
+            if (!string.IsNullOrEmpty(distinctBy) && !s.Fields.Contains(StripMetadata(distinctBy)))
+            {
+                return false;
+            }
+
+            return !(counter["groupBy"] is JObject groupBy) || s.Fields.Contains(StripMetadata((string)groupBy["key"]));
+        }
+
+        /// <summary>
+        /// groupBy without "of": some item (same key value) must collect minDistinct event types, including every "require".
+        /// Only signatures whose key can be shared (meal log, day) can join; a synthetic productId is unique per event.
+        /// </summary>
+        private static bool SatisfiesGroup(List<Signature> signatures, JObject counter)
+        {
+            var groupBy = (JObject)counter["groupBy"];
+            string key = StripMetadata((string)groupBy["key"]);
+            int minDistinct = (int)groupBy["minDistinct"];
+            var matching = signatures.Where(s => Satisfies(s, counter)).ToList();
+
+            if (groupBy["of"] != null)
+            {
+                // Values of one array field joined across the item's events, limited to the allowed values
+                string of = StripMetadata((string)groupBy["of"]);
+                var allowed = groupBy["values"] is JArray v ? new HashSet<string>(v.Select(t => ((string)t).ToUpperInvariant())) : null;
+                var values = matching
+                    .Where(s => s.SharedFields.Contains(key) && s.Arrays.ContainsKey(of))
+                    .SelectMany(s => s.Arrays[of])
+                    .Select(x => x.ToUpperInvariant())
+                    .Where(x => allowed == null || allowed.Contains(x))
+                    .Distinct()
+                    .Count();
+                return values >= minDistinct;
+            }
+
+            var require = groupBy["require"] is JArray r ? r.Select(t => (string)t).ToArray() : Array.Empty<string>();
+
+            var shared = matching.Where(s => s.SharedFields.Contains(key)).Select(s => s.EventType).Distinct().ToList();
+            if (shared.Count >= minDistinct && require.All(shared.Contains))
+            {
+                return true;
+            }
+
+            return minDistinct <= 1 && matching.Any(s => require.All(t => t == s.EventType));
         }
 
         [Test]
@@ -161,7 +248,11 @@ namespace eu.foodmission.platform.Tests
                 List<Signature> signatures = Signatures(interaction);
                 foreach (var counter in ((JObject)mission["rule"]["counters"]).Properties())
                 {
-                    if (!signatures.Any(s => Satisfies(s, (JObject)counter.Value)))
+                    var rule = (JObject)counter.Value;
+                    bool producible = rule["groupBy"] != null
+                        ? SatisfiesGroup(signatures, rule)
+                        : signatures.Any(s => Satisfies(s, rule));
+                    if (!producible)
                     {
                         failures.Add($"{code}.{counter.Name}");
                     }

@@ -168,5 +168,19 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(CheckInBuilder.CanSendMeal(plan.MealDays[0], "LUNCH", answers.MealDays[0].Meals["LUNCH"]));
             Assert.IsTrue(CheckInBuilder.CanSendMeal(plan.MealDays[0], "LUNCH", new HashSet<string> { ClientEventTypes.MealLegumeConsumed }));
         }
+
+        [Test]
+        public void Build_DayChecklist_UsesMissionStart()
+        {
+            DateTime now = CheckInPlannerTests.Now;
+            DateTime start = now.Date.AddHours(14);
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A6.1", start)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MissionSteps[0].DayValues[now.Date] = new HashSet<int> { 0 };
+
+            var items = CheckInBuilder.Build(plan, answers, "r1", now);
+
+            Assert.AreEqual(start.ToUniversalTime().ToString("o"), items.Single().Event.createdAt);
+        }
     }
 }

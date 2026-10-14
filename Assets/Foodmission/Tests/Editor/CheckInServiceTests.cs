@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +22,8 @@ namespace eu.foodmission.platform.Tests
         private CheckInService _service;
         private string _dateFrom;
         private string _dateTo;
+        private string[] _requestedTypes;
+        private UserEvent[] _recentEvents;
 
         [SetUp]
         public void SetUp()
@@ -32,7 +35,7 @@ namespace eu.foodmission.platform.Tests
             _mealLogs = new Mock<IMealLogService>();
             _gamification = new Mock<IGamificationService>();
 
-            SetQuest("M.A1.3", "M.A5.4", "M.B2.1", "M.A2.1");
+            SetQuest("M.A1.3", "M.A5.4", "M.B2.1", "M.Z9.9");
             _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
             {
                 new MissionProgress { missionCode = "M.A1.3", missionTitle = "Legumes", progress = 20, startedAt = Now.Date.AddDays(-1).ToUniversalTime() },
@@ -45,13 +48,14 @@ namespace eu.foodmission.platform.Tests
                 {
                     new MealLog { typeOfMeal = "LUNCH", timestamp = Now.Date.AddDays(-1).AddHours(13).ToUniversalTime().ToString("o") }
                 } }, (ApiErrorResponse)null));
-            _gamification.Setup(g => g.GetGamificationProfileAsync(CheckInService.EventsLimit, 1)).ReturnsAsync((new GamificationProfileResponse
+            _requestedTypes = null;
+            _recentEvents = new[]
             {
-                recentEvents = new[]
-                {
-                    new UserEvent { eventType = ClientEventTypes.FoodWasteFifoOrganized, metadata = JObject.Parse("{\"dayBucket\":\"" + Now.Date.AddDays(-2).ToString("yyyy-MM-dd") + "\"}") }
-                }
-            }, (ApiErrorResponse)null));
+                new UserEvent { eventType = ClientEventTypes.FoodWasteFifoOrganized, metadata = JObject.Parse("{\"dayBucket\":\"" + Now.Date.AddDays(-2).ToString("yyyy-MM-dd") + "\"}") }
+            };
+            _gamification.Setup(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), CheckInService.EventsLimit))
+                .Callback<IReadOnlyCollection<string>, int>((types, _) => _requestedTypes = types.ToArray())
+                .ReturnsAsync(() => (_recentEvents, (ApiErrorResponse)null));
 
             _service = new CheckInService(_store, _quests.Object, _missions.Object, _mealLogs.Object, _gamification.Object) { Clock = () => Now };
         }
@@ -111,7 +115,7 @@ namespace eu.foodmission.platform.Tests
         public async Task LoadPlan_ApiError_IsReturned()
         {
             var apiError = new ApiErrorResponse { message = "x" };
-            _gamification.Setup(g => g.GetGamificationProfileAsync(CheckInService.EventsLimit, 1)).ReturnsAsync(((GamificationProfileResponse)null, apiError));
+            _gamification.Setup(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), CheckInService.EventsLimit)).ReturnsAsync(((UserEvent[])null, apiError));
 
             var (plan, error) = await _service.LoadPlanAsync();
 
@@ -143,6 +147,64 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(error);
             Assert.AreEqual(0, plan.MealDays.Count, "the failed meal mission asks nothing");
             Assert.AreEqual(1, plan.DayEvents.Count);
+        }
+
+        [Test]
+        public async Task LoadPlan_AsksRecentEventsOnlyForDayStepTypes()
+        {
+            SetQuest("M.A5.4", "M.A6.1", "M.B2.1");
+
+            await _service.LoadPlanAsync();
+
+            CollectionAssert.AreEquivalent(new[] { ClientEventTypes.FoodWasteFifoOrganized, ClientEventTypes.NutritionRainbowColoursLogged }, _requestedTypes);
+        }
+
+        [Test]
+        public async Task LoadPlan_NoDayStep_SkipsRecentEvents()
+        {
+            SetQuest("M.A1.3");
+
+            await _service.LoadPlanAsync();
+
+            _gamification.Verify(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public async Task LoadPlan_RecordedValues_UpperCasedAndNonArraysIgnored()
+        {
+            SetQuest("M.A6.1");
+            string day = Now.Date.AddDays(-1).ToString("yyyy-MM-dd");
+            _recentEvents = new[]
+            {
+                new UserEvent { eventType = ClientEventTypes.NutritionRainbowColoursLogged, metadata = JObject.Parse("{\"dayBucket\":\"" + day + "\",\"colours\":[\"green\",\"Red\"]}") },
+                new UserEvent { eventType = ClientEventTypes.NutritionRainbowColoursLogged, metadata = JObject.Parse("{\"dayBucket\":\"" + day + "\",\"colours\":\"ORANGE\"}") }
+            };
+
+            var (plan, _) = await _service.LoadPlanAsync();
+
+            var step = plan.MissionSteps.Single();
+            CollectionAssert.AreEquivalent(new[] { "GREEN", "RED" }, step.RecordedValuesFor(Now.Date.AddDays(-1)).ToArray());
+        }
+
+        [Test]
+        public async Task LoadPlan_BackendWithoutEventTypeFilter_FallsBackToUnfilteredEvents()
+        {
+            // Backends before #419 reject the eventTypes query parameter with a 400
+            _gamification.Setup(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), CheckInService.EventsLimit))
+                .ReturnsAsync(((UserEvent[])null, new ApiErrorResponse { statusCode = 400, message = "property eventTypes should not exist" }));
+            _gamification.Setup(g => g.GetGamificationProfileAsync(CheckInService.EventsLimit, 1)).ReturnsAsync((new GamificationProfileResponse
+            {
+                recentEvents = new[]
+                {
+                    new UserEvent { eventType = ClientEventTypes.FoodWasteFifoOrganized, metadata = JObject.Parse("{\"dayBucket\":\"" + Now.Date.AddDays(-2).ToString("yyyy-MM-dd") + "\"}") },
+                    new UserEvent { eventType = ClientEventTypes.MealLogged, metadata = JObject.Parse("{\"dayBucket\":\"" + Now.Date.AddDays(-1).ToString("yyyy-MM-dd") + "\"}") }
+                }
+            }, (ApiErrorResponse)null));
+
+            var (plan, error) = await _service.LoadPlanAsync();
+
+            Assert.IsNull(error);
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-1), Now.Date }, plan.DayEvents.Single().OpenDays);
         }
     }
 }
