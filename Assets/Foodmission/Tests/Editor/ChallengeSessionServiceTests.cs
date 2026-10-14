@@ -128,5 +128,91 @@ namespace eu.foodmission.platform.Tests
 
             _completion.Verify(c => c.CompleteAsync(It.IsAny<string>()), Times.Never);
         }
+
+        [Test]
+        public void Begin_KeepsTitleAndTask_AndRaisesSessionChanged()
+        {
+            int changes = 0;
+            _session.SessionChanged += () => changes++;
+
+            _session.Begin("CH.B6.2", ChallengeInteractionCatalog.Get("CH.B6.2"), "Sugar Detective", "Compare two foods");
+
+            Assert.AreEqual("Sugar Detective", _session.ActiveChallengeTitle);
+            Assert.AreEqual("Compare two foods", _session.ActiveChallengeTask);
+            Assert.AreSame(ChallengeInteractionCatalog.Get("CH.B6.2"), _session.ActiveInteraction);
+            Assert.AreEqual(0, _session.ReportedCount);
+            Assert.GreaterOrEqual(changes, 1);
+        }
+
+        [Test]
+        public async Task ReportAsync_ReturnsCountedThenCompleted_AndTracksReportedProducts()
+        {
+            _session.Begin("CH.B6.2", ChallengeInteractionCatalog.Get("CH.B6.2")); // ProductViewed x2
+
+            Assert.AreEqual(ChallengeReportResult.Counted, await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:1"));
+            Assert.IsTrue(_session.HasReported("Product:1"));
+            Assert.IsFalse(_session.HasReported("Product:2"));
+            Assert.AreEqual(1, _session.ReportedCount);
+
+            Assert.AreEqual(ChallengeReportResult.Completed, await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:2"));
+            Assert.IsNull(_session.ActiveInteraction);
+            Assert.AreEqual(0, _session.ReportedCount);
+        }
+
+        [Test]
+        public async Task ReportAsync_WhenCompletionFails_ReturnsFailed_AndSameProductRetries()
+        {
+            var error = new ApiErrorResponse { message = "down" };
+            _completion.SetupSequence(c => c.CompleteAsync("CH.B2.1"))
+                .ReturnsAsync(new ChallengeCompletionResult { Success = false, Error = error })
+                .ReturnsAsync(new ChallengeCompletionResult { Success = true });
+            _session.Begin("CH.B2.1", ChallengeInteractionCatalog.Get("CH.B2.1")); // ProductViewed x1
+
+            Assert.AreEqual(ChallengeReportResult.Failed, await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:1"));
+            Assert.AreSame(error, _session.LastError);
+            Assert.IsTrue(_session.HasReported("Product:1"));
+
+            Assert.AreEqual(ChallengeReportResult.Completed, await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:1"));
+        }
+
+        [Test]
+        public async Task ReportAsync_WithoutSessionOrOtherTrigger_ReturnsIgnored()
+        {
+            Assert.AreEqual(ChallengeReportResult.Ignored, await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:1"));
+
+            _session.Begin("CH.B2.1", ChallengeInteractionCatalog.Get("CH.B2.1"));
+            Assert.AreEqual(ChallengeReportResult.Ignored, await _session.ReportAsync(ChallengeCompletionTrigger.RecipeViewed, "r-1"));
+        }
+
+        [Test]
+        public async Task IsCompletionPending_StaysTrueAfterAFailedCompletion_SoTheProductCanRetryLater()
+        {
+            _completion.Setup(c => c.CompleteAsync("CH.B6.2"))
+                .ReturnsAsync(new ChallengeCompletionResult { Success = false, Error = new ApiErrorResponse { message = "down" } });
+            _session.Begin("CH.B6.2", ChallengeInteractionCatalog.Get("CH.B6.2")); // ProductViewed x2
+
+            await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:1");
+            Assert.IsFalse(_session.IsCompletionPending, "one of two: nothing to retry yet");
+
+            await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:2");
+            Assert.IsTrue(_session.IsCompletionPending, "count reached but not completed");
+
+            _session.Cancel();
+            Assert.IsFalse(_session.IsCompletionPending);
+        }
+
+        [Test]
+        public async Task SessionChanged_IsRaisedOnReportAndCancel()
+        {
+            _session.Begin("CH.B6.2", ChallengeInteractionCatalog.Get("CH.B6.2"));
+            int changes = 0;
+            _session.SessionChanged += () => changes++;
+
+            await _session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, "Product:1");
+            Assert.AreEqual(1, changes);
+
+            _session.Cancel();
+            Assert.AreEqual(2, changes);
+        }
     }
 }

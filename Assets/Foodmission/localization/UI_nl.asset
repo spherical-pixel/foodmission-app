@@ -4332,6 +4332,22 @@ MonoBehaviour:
       alles aan wat erin zat.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: Ik heb het bekeken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: Geteld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} van {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: 'Dit staat hier niet: kijk op de verpakking.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

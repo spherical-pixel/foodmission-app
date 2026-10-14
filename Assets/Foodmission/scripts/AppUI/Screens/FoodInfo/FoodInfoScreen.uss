@@ -477,3 +477,62 @@
 .fm-fi-scroll-bottom-padding {
     height: 16px;
 }
+
+/* ── PRODUCT CHALLENGE CARD (FoodInfoOverlay) ────────────── */
+
+.fm-fi-challenge-card {
+    margin: 16px 16px 0 16px;
+    padding: 35px;
+    border-radius: 16px;
+    border-width: 2px;
+    border-color: var(--appui-accent-100);
+    background-color: var(--fm-surface-bg-transparent-50);
+}
+
+.fm-fi-challenge-card--hidden {
+    display: none;
+}
+
+.fm-fi-challenge-card__header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.fm-fi-challenge-card__title {
+    -unity-font-style: bold;
+    flex-shrink: 1;
+    white-space: normal;
+    width: 100%;
+}
+
+.fm-fi-challenge-card__progress {
+    color: var(--appui-foregrounds-50);
+    margin-left: 8px;
+}
+
+.fm-fi-challenge-card__task {
+    white-space: normal;
+    margin-bottom: 8px;
+}
+
+.fm-fi-challenge-card__note {
+    white-space: normal;
+    -unity-font-style: italic;
+    color: var(--appui-foregrounds-50);
+    margin-bottom: 8px;
+}
+
+.fm-fi-challenge-card__button {
+    width: 100%;
+    margin-top: 4px;
+}
+
+/* What the running product challenge asks the user to look at */
+.fm-fi--focus {
+    border-width: 2px;
+    border-color: var(--appui-accent-100);
+    border-radius: 8px;
+    background-color: rgba(128, 128, 128, 0.15);
+}

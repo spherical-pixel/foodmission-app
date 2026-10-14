@@ -37,6 +37,8 @@ namespace eu.foodmission.platform
         public string FoodFactCode { get; }
         /// <summary>"mode" argument passed to FoodComparisonScreen.</summary>
         public string ComparisonMode { get; }
+        /// <summary>What the product detail highlights for ProductViewed challenges.</summary>
+        public ProductFocus ProductFocus { get; }
 
         public bool AutoCompletes => Trigger != ChallengeCompletionTrigger.Manual;
 
@@ -47,7 +49,8 @@ namespace eu.foodmission.platform
             ChallengeCompletionTrigger trigger,
             int requiredCount,
             string foodFactCode,
-            string comparisonMode)
+            string comparisonMode,
+            ProductFocus productFocus = ProductFocus.None)
         {
             Type = type;
             ModuleAction = moduleAction;
@@ -56,6 +59,7 @@ namespace eu.foodmission.platform
             RequiredCount = requiredCount;
             FoodFactCode = foodFactCode;
             ComparisonMode = comparisonMode;
+            ProductFocus = productFocus;
         }
     }
 }

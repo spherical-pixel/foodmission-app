@@ -4320,6 +4320,22 @@ MonoBehaviour:
       tutti quelli che aveva.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: L'ho guardato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: Contato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} di {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: 'Qui non compare: guarda la confezione.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

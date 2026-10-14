@@ -4318,6 +4318,22 @@ MonoBehaviour:
       det hadde."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: "Jeg har sett p\xE5 det"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: Telt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} av {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: 'Dette vises ikke her: sjekk emballasjen.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

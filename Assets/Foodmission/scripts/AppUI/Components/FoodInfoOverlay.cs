@@ -56,6 +56,19 @@ namespace eu.foodmission.platform
         private static VisualElement _descriptionSection;
         private static Text _descriptionBody;
 
+        // Product challenge report card (spec 2026-10-14-challenge-product-report-design.md)
+        private static IChallengeSessionService _challengeSession;
+        private static string _reportItemKey;
+        private static bool _isReporting;
+        // Bumped on every Show: a report still in flight from a previous overlay must not touch this one
+        private static int _overlayGeneration;
+        private static VisualElement _challengeCard;
+        private static Text _challengeTitle;
+        private static Text _challengeProgress;
+        private static Text _challengeTask;
+        private static Text _challengeNote;
+        private static FMButton _challengeButton;
+
         private static string _overlayFoodId;
         private static string _overlayFoodData;
 
@@ -82,12 +95,6 @@ namespace eu.foodmission.platform
             Action onActionCompleted = null)
         {
             Dismiss();
-
-            if (!string.IsNullOrEmpty(foodId))
-            {
-                _ = App.current?.services?.GetService<IChallengeSessionService>()
-                    ?.ReportAsync(ChallengeCompletionTrigger.ProductViewed, $"{foodType}:{foodId}");
-            }
 
             var root = anchor?.panel?.visualTree;
             if (root == null)
@@ -208,6 +215,17 @@ namespace eu.foodmission.platform
             if (_btnAddToPantry != null) _btnAddToPantry.clicked += OnAddToPantryClicked;
             if (_btnAddToMealLog != null) _btnAddToMealLog.clicked += OnAddToMealLogClicked;
 
+            // ── Product challenge card (counts this product only when the user confirms) ──
+            _challengeSession = App.current?.services?.GetService<IChallengeSessionService>();
+            _reportItemKey = string.IsNullOrEmpty(foodId) ? null : $"{foodType}:{foodId}";
+            _isReporting = false;
+            _overlayGeneration++;
+            BuildChallengeCard();
+            if (_challengeSession != null)
+            {
+                _challengeSession.SessionChanged += OnChallengeSessionChanged;
+            }
+
             // ── Add to Panel ──────────────────────────────────────────────
             container.Add(_overlay);
 
@@ -233,6 +251,23 @@ namespace eu.foodmission.platform
         public static void Dismiss()
         {
             _onActionCompleted = null;
+            if (_challengeSession != null)
+            {
+                _challengeSession.SessionChanged -= OnChallengeSessionChanged;
+                _challengeSession = null;
+            }
+            if (_challengeButton != null)
+            {
+                _challengeButton.clicked -= OnChallengeReportClicked;
+            }
+            _challengeCard = null;
+            _challengeTitle = null;
+            _challengeProgress = null;
+            _challengeTask = null;
+            _challengeNote = null;
+            _challengeButton = null;
+            _reportItemKey = null;
+            _isReporting = false;
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
@@ -386,6 +421,8 @@ namespace eu.foodmission.platform
                     UpdateMetaRows();
                     break;
             }
+            RefreshStaticFocus();
+            UpdateChallengeCard();
         }
 
         // ── Update helpers (must stay in sync with FoodInfoScreen.uxml structure) ──
@@ -410,6 +447,8 @@ namespace eu.foodmission.platform
             UpdateMetaRows();
             UpdateSectionVisibility();
             UpdateLoadingState();
+            RefreshStaticFocus();
+            UpdateChallengeCard();
             _ = LoadImageAsync(_viewModel.ImageUrl);
         }
 
@@ -569,6 +608,7 @@ namespace eu.foodmission.platform
                 label.AddToClassList("fm-fi-traffic-dot__label");
                 pill.Add(label);
                 _trafficLights.Add(pill);
+                ApplyFocus(pill, light.Key);
             }
         }
 
@@ -581,6 +621,7 @@ namespace eu.foodmission.platform
                 var macroCard = new NutritionMacroCard();
                 macroCard.SetData(card.Label, card.Value, card.Unit);
                 _macroCards.Add(macroCard);
+                ApplyFocus(macroCard, card.Key);
             }
         }
 
@@ -613,6 +654,7 @@ namespace eu.foodmission.platform
                     if (globalRowIndex % 2 != 0)
                         detailRow.AddToClassList("fm-fi-nutrition-row--odd");
                     _nutritionDetailTable.Add(detailRow);
+                    ApplyFocus(detailRow, row.Key);
                     globalRowIndex++;
                 }
             }
@@ -682,8 +724,168 @@ namespace eu.foodmission.platform
                 rowContainer.Add(labelEl);
                 rowContainer.Add(valueEl);
                 _metaBody.Add(rowContainer);
+                ApplyFocus(rowContainer, row.Key);
                 rowIndex++;
             }
+        }
+
+        // ── Product challenge card and highlight ─────────────────────────
+
+        private static bool IsChallengeCardActive =>
+            _challengeSession?.ActiveInteraction != null &&
+            _challengeSession.ActiveInteraction.Trigger == ChallengeCompletionTrigger.ProductViewed &&
+            _reportItemKey != null;
+
+        private static ProductFocus CurrentFocus =>
+            IsChallengeCardActive ? _challengeSession.ActiveInteraction.ProductFocus : ProductFocus.None;
+
+        private static string L(string key) => LocalizationSettings.StringDatabase.GetLocalizedString("UI", key);
+
+        private static void BuildChallengeCard()
+        {
+            if (_actionContainer?.parent == null)
+            {
+                return;
+            }
+            _challengeCard = new VisualElement();
+            _challengeCard.AddToClassList("fm-fi-challenge-card");
+
+            var header = new VisualElement();
+            header.AddToClassList("fm-fi-challenge-card__header");
+            _challengeTitle = new Text();
+            _challengeTitle.AddToClassList("fm-fi-challenge-card__title");
+            _challengeProgress = new Text();
+            _challengeProgress.AddToClassList("fm-fi-challenge-card__progress");
+            header.Add(_challengeTitle);
+            header.Add(_challengeProgress);
+            _challengeCard.Add(header);
+
+            _challengeTask = new Text();
+            _challengeTask.AddToClassList("fm-fi-challenge-card__task");
+            _challengeCard.Add(_challengeTask);
+
+            _challengeNote = new Text { text = L("CHALLENGE_PRODUCT_NOT_HERE") };
+            _challengeNote.AddToClassList("fm-fi-challenge-card__note");
+            _challengeCard.Add(_challengeNote);
+
+            _challengeButton = new FMButton { variant = ButtonVariant.Accent };
+            _challengeButton.AddToClassList("fm-button");
+            _challengeButton.AddToClassList("fm-fi-challenge-card__button");
+            _challengeButton.clicked += OnChallengeReportClicked;
+            _challengeCard.Add(_challengeButton);
+
+            VisualElement parent = _actionContainer.parent;
+            parent.Insert(parent.IndexOf(_actionContainer), _challengeCard);
+        }
+
+        private static void UpdateChallengeCard()
+        {
+            if (_challengeCard == null)
+            {
+                return;
+            }
+            bool show = IsChallengeCardActive;
+            _challengeCard.EnableInClassList("fm-fi-challenge-card--hidden", !show);
+            if (!show)
+            {
+                return;
+            }
+
+            ChallengeInteraction interaction = _challengeSession.ActiveInteraction;
+            int required = Math.Max(1, interaction.RequiredCount);
+            int reported = Math.Min(_challengeSession.ReportedCount, required);
+            _challengeTitle.text = _challengeSession.ActiveChallengeTitle ?? string.Empty;
+            _challengeProgress.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CHALLENGE_PRODUCT_PROGRESS", new object[] { reported, required });
+            _challengeTask.text = _challengeSession.ActiveChallengeTask ?? string.Empty;
+            _challengeTask.EnableInClassList("fm-fi-challenge-card--hidden", string.IsNullOrEmpty(_challengeTask.text));
+
+            // Not before the data arrives: rows would look missing while loading
+            bool loaded = _viewModel != null && !_viewModel.IsLoading;
+            bool missing = loaded && !ProductFocusMap.HasAny(interaction.ProductFocus, _viewModel.AvailableFocusKeys());
+            _challengeNote.EnableInClassList("fm-fi-challenge-card--hidden", !missing);
+
+            // Pending (sending or failed): the product stays reportable so the completion can be retried, even after reopening
+            bool counted = _challengeSession.HasReported(_reportItemKey) && !_challengeSession.IsCompletionPending;
+            _challengeButton.title = L(counted ? "CHALLENGE_PRODUCT_COUNTED" : "CHALLENGE_PRODUCT_DONE");
+            _challengeButton.leadingIcon = counted ? "check" : string.Empty;
+            _challengeButton.SetEnabled(loaded && !counted && !_isReporting);
+        }
+
+        private static async void OnChallengeReportClicked()
+        {
+            if (_isReporting || _challengeSession == null || _reportItemKey == null)
+            {
+                return;
+            }
+            IChallengeSessionService session = _challengeSession;
+            int generation = _overlayGeneration;
+            _isReporting = true;
+            UpdateChallengeCard();
+            ChallengeReportResult result = ChallengeReportResult.Ignored;
+            try
+            {
+                result = await session.ReportAsync(ChallengeCompletionTrigger.ProductViewed, _reportItemKey);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodInfoOverlay] Challenge report failed: {ex.Message}");
+            }
+            if (generation != _overlayGeneration)
+            {
+                return;
+            }
+            _isReporting = false;
+            if (result == ChallengeReportResult.Failed && _overlay != null)
+            {
+                FMDialog.ShowApiError(_overlay, L("ERROR_TITLE"), session.LastError);
+            }
+            UpdateChallengeCard();
+        }
+
+        private static void OnChallengeSessionChanged()
+        {
+            // Rows are rebuilt so highlights follow the session (it may end while the detail is open)
+            UpdateTrafficLights();
+            UpdateMacroCards();
+            UpdateNutritionDetail();
+            UpdateMetaRows();
+            RefreshStaticFocus();
+            UpdateChallengeCard();
+        }
+
+        private static void ApplyFocus(VisualElement element, string key)
+        {
+            if (element == null)
+            {
+                return;
+            }
+            bool focused = ProductFocusMap.Matches(CurrentFocus, key);
+            element.EnableInClassList("fm-fi--focus", focused);
+            if (!focused)
+            {
+                return;
+            }
+            // Open the accordion that holds it, so the user sees what the challenge is about
+            for (VisualElement parent = element.parent; parent != null; parent = parent.parent)
+            {
+                if (parent is AccordionItem item)
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+
+        private static void RefreshStaticFocus()
+        {
+            if (_overlay == null)
+            {
+                return;
+            }
+            ApplyFocus(_overlay.Q<VisualElement>("nova-pill"), ProductFocusMap.NovaKey);
+            ApplyFocus(_overlay.Q<VisualElement>("nutriscore-pill"), ProductFocusMap.NutriScoreKey);
+            ApplyFocus(_overlay.Q<VisualElement>("eco-pill"), ProductFocusMap.EcoScoreKey);
+            ApplyFocus(_ingredientsBody, ProductFocusMap.IngredientsKey);
         }
 
         private static void UpdateLoadingState()

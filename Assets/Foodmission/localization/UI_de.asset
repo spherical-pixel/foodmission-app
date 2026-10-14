@@ -4336,6 +4336,22 @@ MonoBehaviour:
       Fett. Hake alles ab, was sie enthielt."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: Hab ich angeschaut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: "Gez\xE4hlt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} von {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: 'Das steht hier nicht: schau auf die Verpackung.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

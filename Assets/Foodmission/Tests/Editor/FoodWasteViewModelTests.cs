@@ -45,7 +45,7 @@ namespace eu.foodmission.platform.Tests
 
             _mockChallengeSession
                 .Setup(x => x.ReportAsync(It.IsAny<ChallengeCompletionTrigger>(), It.IsAny<string>()))
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(ChallengeReportResult.Counted);
 
             SetupHistory(1, Page(1, 1));
             SetupPantry();

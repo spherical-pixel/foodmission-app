@@ -16,39 +16,39 @@ namespace eu.foodmission.platform
         {
             { "CH.A1.4", FoodFact("FF1.2.8") },
             { "CH.A1.5", Compare("CHALLENGE_BTN_COMPARE_FOODS", "proteins") },
-            { "CH.A2.5", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.A3.1", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.A3.2", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.A3.3", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.A6.3", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.A6.5", Search(ChallengeCompletionTrigger.ProductViewed, 3) },
+            { "CH.A2.5", Search(1, ProductFocus.None) },
+            { "CH.A3.1", Search(1, ProductFocus.Scores) },
+            { "CH.A3.2", Search(1, ProductFocus.Nova | ProductFocus.Ingredients) },
+            { "CH.A3.3", Search(1, ProductFocus.None) },
+            { "CH.A6.3", Search(1, ProductFocus.Nutrients) },
+            { "CH.A6.5", Search(3, ProductFocus.Nutrients) },
             { "CH.B1.1", Compare("CHALLENGE_BTN_COMPARE_PROTEINS", "proteins") },
             { "CH.B1.3", FoodFact("FF1.2.2") },
-            { "CH.B2.1", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.B2.2", Search(ChallengeCompletionTrigger.ProductViewed, 3) },
-            { "CH.B2.5", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.B3.1", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.B3.2", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.B3.3", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
+            { "CH.B2.1", Search(1, ProductFocus.Origin | ProductFocus.Ingredients | ProductFocus.Nutrients) },
+            { "CH.B2.2", Search(3, ProductFocus.Origin) },
+            { "CH.B2.5", Search(1, ProductFocus.Origin) },
+            { "CH.B3.1", Search(1, ProductFocus.Ingredients) },
+            { "CH.B3.2", Search(1, ProductFocus.Nova | ProductFocus.Ingredients) },
+            { "CH.B3.3", Search(1, ProductFocus.Labels) },
             { "CH.B5.3", LogWaste(3) },
-            { "CH.B6.2", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
-            { "CH.B6.4", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.I1.2", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
+            { "CH.B6.2", Search(2, ProductFocus.Sugar) },
+            { "CH.B6.4", Search(1, ProductFocus.Salt) },
+            { "CH.I1.2", Search(2, ProductFocus.Protein | ProductFocus.Nutrients) },
             { "CH.I1.3", FoodFact("FF1.3.1") },
             { "CH.I1.5", Recipes(ChallengeCompletionTrigger.RecipeViewed) },
-            { "CH.I2.1", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.I2.2", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
-            { "CH.I2.3", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
-            { "CH.I3.1", Search(ChallengeCompletionTrigger.ProductViewed, 3) },
-            { "CH.I3.2", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.I3.5", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
+            { "CH.I2.1", Search(1, ProductFocus.Origin) },
+            { "CH.I2.2", Search(2, ProductFocus.Labels) },
+            { "CH.I2.3", Search(2, ProductFocus.Origin) },
+            { "CH.I3.1", Search(3, ProductFocus.Nova | ProductFocus.Ingredients) },
+            { "CH.I3.2", Search(1, ProductFocus.None) },
+            { "CH.I3.5", Search(2, ProductFocus.Scores) },
             { "CH.I5.3", FoodFact("FF5.2.8") },
             { "CH.I5.5", LogWaste(1) },
-            { "CH.I6.1", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.I6.2", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
-            { "CH.I6.3", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
-            { "CH.I6.4", Search(ChallengeCompletionTrigger.ProductViewed, 1) },
-            { "CH.I6.5", Search(ChallengeCompletionTrigger.ProductViewed, 2) },
+            { "CH.I6.1", Search(1, ProductFocus.Ingredients) },
+            { "CH.I6.2", Search(2, ProductFocus.Sugar) },
+            { "CH.I6.3", Search(2, ProductFocus.Fat) },
+            { "CH.I6.4", Search(1, ProductFocus.Fibre | ProductFocus.Nutrients) },
+            { "CH.I6.5", Search(2, ProductFocus.Protein | ProductFocus.Nutrients) },
         };
 
         public static IReadOnlyDictionary<string, ChallengeInteraction> Entries => s_Entries;
@@ -67,15 +67,17 @@ namespace eu.foodmission.platform
 
         // Only challenges the module completes get a button: a shortcut that completes nothing just confuses
         private static ChallengeInteraction Module(string action, string buttonKey,
-            ChallengeCompletionTrigger trigger, int requiredCount, string foodFactCode = null)
+            ChallengeCompletionTrigger trigger, int requiredCount, string foodFactCode = null, ProductFocus focus = ProductFocus.None)
         {
             return new ChallengeInteraction(ChallengeInteractionType.ConfirmWithModule, action, buttonKey,
-                trigger, requiredCount, foodFactCode, null);
+                trigger, requiredCount, foodFactCode, null, focus);
         }
 
-        private static ChallengeInteraction Search(ChallengeCompletionTrigger trigger, int requiredCount)
+        // Counts a product only when the user confirms it on the product detail card, which highlights the focus
+        private static ChallengeInteraction Search(int requiredCount, ProductFocus focus)
         {
-            return Module(Actions.go_to_quicksearch, "CHALLENGE_BTN_OPEN_SEARCH", trigger, requiredCount);
+            return Module(Actions.go_to_quicksearch, "CHALLENGE_BTN_OPEN_SEARCH", ChallengeCompletionTrigger.ProductViewed,
+                requiredCount, null, focus);
         }
 
         private static ChallengeInteraction Recipes(ChallengeCompletionTrigger trigger)

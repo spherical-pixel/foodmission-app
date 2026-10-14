@@ -4317,6 +4317,22 @@ MonoBehaviour:
       todas las que llevaba."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203630
+    m_Localized: Lo he mirado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203631
+    m_Localized: Contado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203632
+    m_Localized: '{0} de {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203633
+    m_Localized: "Este dato no aparece aqu\xED: m\xEDralo en el envase."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

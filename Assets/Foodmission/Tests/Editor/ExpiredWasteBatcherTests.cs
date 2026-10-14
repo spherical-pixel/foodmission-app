@@ -25,7 +25,7 @@ namespace eu.foodmission.platform.Tests
             _mockChallengeSession = new Mock<IChallengeSessionService>();
             _mockChallengeSession
                 .Setup(x => x.ReportAsync(It.IsAny<ChallengeCompletionTrigger>(), It.IsAny<string>()))
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(ChallengeReportResult.Counted);
             _batcher = new ExpiredWasteBatcher(_mockPantryService.Object, _mockNotificationService.Object, _mockChallengeSession.Object);
         }
 
