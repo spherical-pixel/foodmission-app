@@ -184,14 +184,6 @@ namespace eu.foodmission.platform
             }
         }
 
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            if (hasFocus)
-            {
-                CheckSessionOnResume();
-            }
-        }
-
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus)
@@ -204,6 +196,8 @@ namespace eu.foodmission.platform
             }
             else
             {
+                // Resume is only checked here: OnApplicationFocus also fires on launch and after every native dialog
+                // (permissions, share sheet, camera), which ran duplicate checks and session-start events
                 CheckSessionOnResume();
             }
         }
@@ -220,6 +214,12 @@ namespace eu.foodmission.platform
                     bool valid = await authService.CheckSessionAsync();
                     if (!valid)
                     {
+                        // A 401 handler sharing the same rejected refresh may have ended the session already
+                        if (string.IsNullOrEmpty(storeService.GetAppState().accessToken))
+                        {
+                            return;
+                        }
+
                         Debug.LogWarning($"[{GetType().Name}] Session invalid on app resume — navigating to login");
                         authService.Logout();
                         HandleSessionExpired();

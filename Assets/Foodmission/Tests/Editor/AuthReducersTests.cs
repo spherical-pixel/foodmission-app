@@ -239,6 +239,55 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task AuthService_HandleUnauthorizedAsync_RepeatedAfterSessionEnded_FiresOnSessionExpiredOnce()
+        {
+            // Several screens getting 401 one after another must not log out and navigate to login more than once
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var localStorageService = new LocalStorageService();
+            var storeService = new StoreService(localStorageService);
+            var authService = new AuthService(storeService);
+
+            int sessionExpiredCount = 0;
+            authService.OnSessionExpired += () => sessionExpiredCount++;
+
+            await authService.HandleUnauthorizedAsync();
+            await authService.HandleUnauthorizedAsync();
+            await authService.HandleUnauthorizedAsync();
+
+            storeService.Dispose();
+            Assert.AreEqual(1, sessionExpiredCount);
+        }
+
+        [Test]
+        public async Task AuthService_CheckSessionAsync_WithoutAccessToken_ReturnsFalse()
+        {
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var localStorageService = new LocalStorageService();
+            var storeService = new StoreService(localStorageService);
+            var authService = new AuthService(storeService);
+
+            var result = await authService.CheckSessionAsync();
+
+            storeService.Dispose();
+            Assert.IsFalse(result);
+        }
+
+        [TestCase(400, true)]
+        [TestCase(401, true)]
+        [TestCase(403, true)]
+        [TestCase(0, false)]
+        [TestCase(404, false)]
+        [TestCase(408, false)]
+        [TestCase(500, false)]
+        [TestCase(502, false)]
+        [TestCase(503, false)]
+        public void AuthService_IsSessionRejected_OnlyForAuthErrors(long responseCode, bool expected)
+        {
+            // No network (0), timeouts and server errors must never log the user out
+            Assert.AreEqual(expected, AuthService.IsSessionRejected(responseCode));
+        }
+
+        [Test]
         public void AppState_Copy_IncludesFont()
         {
             var state = new AppState { font = "open-sans" };
