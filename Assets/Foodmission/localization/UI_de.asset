@@ -1144,9 +1144,10 @@ MonoBehaviour:
     m_Localized: "Willkommen bei Foodmission!\nDiese kurze Umfrage hilft uns dabei,
       Ihre Ern\xE4hrungsgewohnheiten, Ihr Bewusstsein f\xFCr Lebensmittelverschwendung
       und Ihre Entscheidungen im Hinblick auf Nachhaltigkeit besser zu verstehen,
-      damit Nutri Ihnen ma\xDFgeschneiderte Empfehlungen geben kann."
+      damit {global.PET_NAME} Ihnen ma\xDFgeschneiderte Empfehlungen geben kann."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 25970700069101568
     m_Localized: KATEGORIEN
     m_Metadata:
@@ -2944,9 +2945,10 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690407
   - m_Id: 50999984831586305
-    m_Localized: Foody anpassen
+    m_Localized: '{global.PET_NAME} anpassen'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 50999984835780608
     m_Localized: Antennen
     m_Metadata:
@@ -3210,9 +3212,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232939
-    m_Localized: Nutri markiert es als erledigt, sobald du es in der App machst.
+    m_Localized: '{global.PET_NAME} markiert es als erledigt, sobald du es in der
+      App machst.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 51673178689232940
     m_Localized: "\u2705 HERAUSFORDERUNG ABGESCHLOSSEN"
     m_Metadata:
@@ -3610,9 +3614,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347465
-    m_Localized: "\U0001F4AC Nutri erz\xE4hlen"
+    m_Localized: "\U0001F4AC {global.PET_NAME} erz\xE4hlen"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 52041725676347466
     m_Localized: "\U0001F37D\uFE0F In meinem Ern\xE4hrungstagebuch eintragen"
     m_Metadata:
@@ -3987,9 +3992,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347559
-    m_Localized: "\U0001F4AC Check-in mit Foody"
+    m_Localized: "\U0001F4AC Check-in mit {global.PET_NAME}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 53932757066178560
     m_Localized: Deine Stufen
     m_Metadata:
@@ -4066,15 +4072,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247367
-    m_Localized: "Heute ist der letzte Tag, um Nutri von \u201E{0}\u201C zu erz\xE4hlen.
-      Verliere deinen Fortschritt nicht!"
+    m_Localized: "Heute ist der letzte Tag, um {global.PET_NAME} von \u201E{0}\u201C
+      zu erz\xE4hlen. Verliere deinen Fortschritt nicht!"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 53972389359247368
-    m_Localized: "Heute ist der letzte Tag, um Nutri von {0} deiner Missionen zu
-      erz\xE4hlen. Verliere deinen Fortschritt nicht!"
+    m_Localized: "Heute ist der letzte Tag, um {global.PET_NAME} von {0} deiner Missionen
+      zu erz\xE4hlen. Verliere deinen Fortschritt nicht!"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690407
   - m_Id: 53972389359247369
     m_Localized: "Heute ist der letzte Tag von \u201E{0}\u201C. Erz\xE4hl mir, was
       du gemacht hast, damit es z\xE4hlt!"
@@ -4399,3 +4407,10 @@ MonoBehaviour:
         - id: 52041725676347399
         - id: 52041725676347411
         - id: 56190243387203622
+        - id: 51673178689232939
+        - id: 50999984831586305
+        - id: 52041725676347559
+        - id: 52041725676347465
+        - id: 53972389359247367
+        - id: 53972389359247368
+        - id: 25709632411394048
