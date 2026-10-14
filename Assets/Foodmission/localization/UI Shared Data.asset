@@ -4143,6 +4143,34 @@ MonoBehaviour:
     m_Key: MISSION_CHECKIN_ONLY_NEW
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203623
+    m_Key: MISSION_CHECKLIST_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Key: MISSION_CHECKLIST_ADD_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Key: MISSION_CHECKLIST_PURCHASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Key: MISSION_CHECKLIST_ADD_PURCHASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Key: MISSION_HINT_HALF_PLATE_SAVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Key: MISSION_HINT_HIGH_FIBRE_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Key: MISSION_HINT_NUTRIENT_DENSE_MEALS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

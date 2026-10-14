@@ -4165,8 +4165,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: Bij hoeveel producten heb je de verpakking afgewogen (formaat, materialen
-      en hoe goed die het voedsel beschermt)?
+    m_Localized: 'Bij hoeveel producten heb je nagedacht of de verpakking de moeite
+      waard was? Let op het formaat, de materialen en of ze het voedsel tegen bederf
+      beschermt: soms is een verpakking die voedselverspilling voorkomt beter dan
+      helemaal geen verpakking.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4238,25 +4240,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "Bij welke producten heb je de herkomst en nog minstens \xE9\xE9n
-      ander punt gecontroleerd?"
+    m_Localized: "Voor welke maaltijden koos je producten op basis van hun herkomst
+      en nog minstens \xE9\xE9n ander punt?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: Bij welke producten heb je minstens drie aspecten bekeken?
+    m_Localized: 'Bij hoeveel aankopen heb je op minstens drie van deze dingen gelet:
+      herkomst, seizoen, productiemethode of certificering? Voeg elke aankoop toe
+      en vink aan waar je op lette.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: Bij welke producten vond je minstens twee stukjes duurzaamheidsinformatie?
+    m_Localized: 'Bij hoeveel producten heb je het etiket gelezen en minstens twee
+      van deze dingen gevonden: waar het vandaan komt, een duurzaamheidskeurmerk
+      of certificering, of het van het seizoen is, of dat het dicht bij jou is geproduceerd?
+      Voeg elk product toe en vink aan wat je vond.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: Bij welke producten heb je het verpakkingsmateriaal bekeken en wat
+    m_Localized: Bij welke aankopen heb je het verpakkingsmateriaal bekeken en wat
       er na gebruik mee gebeurt?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: Welke duurzaamheidslabels had het product?
+    m_Localized: Heb je een product gekozen met minstens twee verschillende duurzaamheidslabels?
+      Markeer de labels die erop stonden, bijvoorbeeld EU-biologisch en Fairtrade.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
@@ -4292,6 +4300,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
+  - m_Id: 56190243387203623
+    m_Localized: Maaltijd {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: Maaltijd toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Aankoop {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Aankoop toevoegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: Begin elke maaltijd met een kleinere portie en neem alleen meer
+      als je het nodig hebt. Vink het aan als je zo voedselverspilling hebt voorkomen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Tel het mee als de maaltijd minstens \xE9\xE9n vezelrijk voedingsmiddel
+      had: groenten, fruit, peulvruchten, noten, zaden of volkoren granen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: 'Elke hoofdmaaltijd heeft minstens 3 van deze 4 nodig: eiwit, een
+      vezelrijk voedingsmiddel, verse groenten of salade en een gezond vet. Vink
+      alles aan wat erin zat.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4201,8 +4201,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: "W ilu produktach przeanalizowa\u0142e\u015B opakowanie (rozmiar,
-      materia\u0142y i to, jak dobrze chroni \u017Cywno\u015B\u0107)?"
+    m_Localized: "Przy ilu produktach zastanowi\u0142e\u015B si\u0119, czy ich opakowanie
+      ma sens? Zwr\xF3\u0107 uwag\u0119 na rozmiar, materia\u0142y i to, czy chroni
+      \u017Cywno\u015B\u0107 przed zepsuciem: czasem opakowanie, kt\xF3re zapobiega
+      marnowaniu \u017Cywno\u015Bci, jest lepsze ni\u017C brak opakowania."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4274,27 +4276,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "W kt\xF3rych produktach sprawdzi\u0142e\u015B pochodzenie i co
-      najmniej jedn\u0105 inn\u0105 rzecz?"
+    m_Localized: "Do kt\xF3rych posi\u0142k\xF3w wybra\u0142e\u015B produkty, patrz\u0105c
+      na ich pochodzenie i co najmniej jedn\u0105 inn\u0105 rzecz?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: "W kt\xF3rych produktach wzi\u0105\u0142e\u015B pod uwag\u0119 co
-      najmniej trzy aspekty?"
+    m_Localized: "Przy ilu zakupach zwr\xF3ci\u0142e\u015B uwag\u0119 na co najmniej
+      trzy z tych rzeczy: pochodzenie, sezonowo\u015B\u0107, metod\u0119 produkcji
+      lub certyfikat? Dodaj ka\u017Cdy zakup i zaznacz, na co patrzy\u0142e\u015B."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: "W kt\xF3rych produktach znalaz\u0142e\u015B co najmniej dwie informacje
-      o zr\xF3wnowa\u017Conym rozwoju?"
+    m_Localized: "Na ilu produktach przeczyta\u0142e\u015B etykiet\u0119 i znalaz\u0142e\u015B
+      co najmniej dwie z tych informacji: sk\u0105d pochodzi, znak zr\xF3wnowa\u017Conego
+      rozwoju lub certyfikat, czy jest sezonowy albo czy zosta\u0142 wyprodukowany
+      blisko ciebie? Dodaj ka\u017Cdy produkt i zaznacz, co znalaz\u0142e\u015B."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "W kt\xF3rych produktach sprawdzi\u0142e\u015B materia\u0142 opakowania
+    m_Localized: "Przy kt\xF3rych zakupach sprawdzi\u0142e\u015B materia\u0142 opakowania
       i co si\u0119 z nim dzieje po u\u017Cyciu?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: "Jakie znaki zr\xF3wnowa\u017Conego rozwoju mia\u0142 produkt?"
+    m_Localized: "Czy wybra\u0142e\u015B produkt z co najmniej dwoma r\xF3\u017Cnymi
+      znakami zr\xF3wnowa\u017Conego rozwoju? Zaznacz znaki, kt\xF3re mia\u0142,
+      na przyk\u0142ad Ekologiczny UE i Fairtrade."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
@@ -4330,6 +4337,40 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
+  - m_Id: 56190243387203623
+    m_Localized: "Posi\u0142ek {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: "Dodaj posi\u0142ek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Zakup {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Dodaj zakup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Zaczynaj ka\u017Cdy posi\u0142ek od mniejszej porcji i dok\u0142adaj
+      tylko wtedy, gdy potrzebujesz. Zaznacz to, gdy w ten spos\xF3b unikn\u0105\u0142e\u015B
+      wyrzucania jedzenia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Zaznacz, gdy posi\u0142ek zawiera\u0142 co najmniej jeden produkt
+      bogaty w b\u0142onnik: warzywa, owoce, ro\u015Bliny str\u0105czkowe, orzechy,
+      nasiona lub produkty pe\u0142noziarniste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: "Ka\u017Cdy g\u0142\xF3wny posi\u0142ek potrzebuje co najmniej 3
+      z tych 4: bia\u0142ka, produktu bogatego w b\u0142onnik, \u015Bwie\u017Cych
+      warzyw lub sa\u0142atki oraz zdrowego t\u0142uszczu. Zaznacz wszystko, co zawiera\u0142."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

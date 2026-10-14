@@ -221,6 +221,8 @@ namespace eu.foodmission.platform.Tests
                 {
                     keys.Add(step.PromptKey);
                     keys.AddRange(step.Checklist.Options.Select(o => o.LabelKey));
+                    keys.Add(step.Checklist.ItemLabelKey);
+                    keys.Add(step.Checklist.AddLabelKey);
                 }
             }
 
@@ -242,6 +244,19 @@ namespace eu.foodmission.platform.Tests
             var step = MissionInteractionCatalog.Get(code).Steps.First(s => s.Type != MissionStepType.MealReport);
 
             Assert.AreEqual(expected, step.AddsUpAcrossReports, code);
+        }
+
+        [TestCase("M.A2.1", "MISSION_CHECKLIST_MEAL", "MISSION_CHECKLIST_ADD_MEAL")]
+        [TestCase("M.A2.5", "MISSION_CHECKLIST_PURCHASE", "MISSION_CHECKLIST_ADD_PURCHASE")]
+        [TestCase("M.A4.1", "MISSION_CHECKLIST_PURCHASE", "MISSION_CHECKLIST_ADD_PURCHASE")]
+        [TestCase("M.I2.4", "MISSION_CHECKLIST_PRODUCT", "MISSION_CHECKLIST_ADD_PRODUCT")]
+        [TestCase("M.A2.2", "MISSION_CHECKLIST_PRODUCT", "MISSION_CHECKLIST_ADD_PRODUCT")]
+        public void ProductChecklist_NamesItemsLikeTheMissionGoal(string code, string itemKey, string addKey)
+        {
+            var spec = MissionInteractionCatalog.Get(code).Steps.Single().Checklist;
+
+            Assert.AreEqual(itemKey, spec.ItemLabelKey, code);
+            Assert.AreEqual(addKey, spec.AddLabelKey, code);
         }
     }
 }

@@ -4150,8 +4150,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: "\xBFEn cu\xE1ntos productos sopesaste el envase (tama\xF1o, materiales
-      y lo bien que protege el alimento)?"
+    m_Localized: "\xBFEn cu\xE1ntos productos te paraste a pensar si su envase compensaba?
+      F\xEDjate en el tama\xF1o, el material y si protege el alimento para que no
+      se estropee: a veces un envase que evita tirar comida es mejor que no llevar
+      envase."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4223,24 +4225,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "\xBFEn qu\xE9 productos miraste el origen y al menos otra cosa?"
+    m_Localized: "\xBFPara qu\xE9 comidas elegiste productos mirando el origen y
+      al menos otra cosa?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: "\xBFEn qu\xE9 productos tuviste en cuenta al menos tres aspectos?"
+    m_Localized: "\xBFEn cu\xE1ntas compras te fijaste en al menos tres de estas
+      cosas: origen, temporada, m\xE9todo de producci\xF3n o certificaci\xF3n? A\xF1ade
+      cada compra y marca lo que miraste."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: "\xBFEn qu\xE9 productos encontraste al menos dos datos de sostenibilidad?"
+    m_Localized: "\xBFEn cu\xE1ntos productos le\xEDste la etiqueta y encontraste
+      al menos dos de estos datos: de d\xF3nde viene, un sello o certificaci\xF3n
+      de sostenibilidad, si es de temporada o si se produce cerca de ti? A\xF1ade
+      cada producto y marca lo que encontraste."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "\xBFEn qu\xE9 productos miraste el material del envase y qu\xE9
-      pasa con \xE9l despu\xE9s de usarlo?"
+    m_Localized: "\xBFEn qu\xE9 compras miraste el material del envase y qu\xE9 pasa
+      con \xE9l despu\xE9s de usarlo?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: "\xBFQu\xE9 sellos de sostenibilidad llevaba el producto?"
+    m_Localized: "\xBFElegiste alg\xFAn producto con al menos dos sellos de sostenibilidad
+      distintos? Marca los sellos que llevaba, por ejemplo Ecol\xF3gico UE y Fairtrade."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
@@ -4276,6 +4285,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
+  - m_Id: 56190243387203623
+    m_Localized: Comida {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: "A\xF1adir comida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Compra {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: "A\xF1adir compra"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Empieza cada comida con una raci\xF3n peque\xF1a y repite solo
+      si te hace falta. M\xE1rcalo cuando as\xED hayas evitado tirar comida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Cu\xE9ntala si la comida llevaba al menos un alimento rico en fibra:
+      verduras, fruta, legumbres, frutos secos, semillas o cereales integrales."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: "Cada comida principal debe llevar al menos 3 de estas 4: prote\xEDna,
+      un alimento rico en fibra, verdura fresca o ensalada y grasa saludable. Marca
+      todas las que llevaba."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4154,8 +4154,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: Per quanti prodotti hai valutato la confezione (dimensioni, materiali
-      e quanto protegge l'alimento)?
+    m_Localized: "Per quanti prodotti ti sei chiesto se la confezione valesse la
+      pena? Guarda dimensioni, materiali e se protegge il cibo dal deterioramento:
+      a volte una confezione che evita lo spreco di cibo \xE8 meglio di nessuna confezione."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4227,24 +4228,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: Per quali prodotti hai controllato l'origine e almeno un altro aspetto?
+    m_Localized: Per quali pasti hai scelto i prodotti guardando l'origine e almeno
+      un altro aspetto?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: Per quali prodotti hai considerato almeno tre aspetti?
+    m_Localized: "In quanti acquisti hai fatto attenzione ad almeno tre di questi
+      aspetti: origine, stagionalit\xE0, metodo di produzione o certificazione? Aggiungi
+      ogni acquisto e segna cosa hai controllato."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: "Per quali prodotti hai trovato almeno due informazioni sulla sostenibilit\xE0?"
+    m_Localized: "Per quanti prodotti hai letto l'etichetta e trovato almeno due
+      di queste informazioni: da dove viene, un marchio di sostenibilit\xE0 o una
+      certificazione, se \xE8 di stagione o se \xE8 prodotto vicino a te? Aggiungi
+      ogni prodotto e segna cosa hai trovato."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: Per quali prodotti hai controllato il materiale della confezione
+    m_Localized: In quali acquisti hai controllato il materiale della confezione
       e cosa succede dopo l'uso?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: "Quali marchi di sostenibilit\xE0 aveva il prodotto?"
+    m_Localized: "Hai scelto un prodotto con almeno due marchi di sostenibilit\xE0
+      diversi? Segna i marchi che aveva, per esempio Biologico UE e Fairtrade."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
@@ -4280,6 +4288,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
+  - m_Id: 56190243387203623
+    m_Localized: Pasto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: Aggiungi pasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Acquisto {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Aggiungi acquisto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Inizia ogni pasto con una porzione pi\xF9 piccola e aggiungine
+      solo se ne hai bisogno. Segnalalo quando cos\xEC hai evitato di sprecare cibo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: 'Contalo quando il pasto aveva almeno un alimento ricco di fibre:
+      verdura, frutta, legumi, frutta secca, semi o cereali integrali.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: 'Ogni pasto principale deve avere almeno 3 di questi 4: proteine,
+      un alimento ricco di fibre, verdura fresca o insalata e un grasso sano. Segna
+      tutti quelli che aveva.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

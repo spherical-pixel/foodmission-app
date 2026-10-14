@@ -2529,6 +2529,9 @@
     -unity-font-style: bold;
     color: var(--appui-foregrounds-100);
     width: 100%;
+    /* App UI Text doesn't shrink: at full width it pushed the ✕ out of the card, onto the neighbouring step */
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .fm-mission-checklist-item__status {

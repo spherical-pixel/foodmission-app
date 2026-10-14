@@ -4167,8 +4167,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: "Bei wie vielen Produkten hast du die Verpackung abgewogen (Gr\xF6\xDFe,
-      Materialien und wie gut sie das Lebensmittel sch\xFCtzt)?"
+    m_Localized: "Bei wie vielen Produkten hast du \xFCberlegt, ob sich die Verpackung
+      lohnt? Achte auf Gr\xF6\xDFe, Materialien und ob sie das Lebensmittel vor dem
+      Verderben sch\xFCtzt: Manchmal ist eine Verpackung, die Lebensmittelverschwendung
+      verhindert, besser als gar keine."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4240,26 +4242,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "Bei welchen Produkten hast du die Herkunft und mindestens noch
-      etwas anderes gepr\xFCft?"
+    m_Localized: "F\xFCr welche Mahlzeiten hast du Produkte nach ihrer Herkunft und
+      mindestens einem weiteren Merkmal ausgew\xE4hlt?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: "Bei welchen Produkten hast du mindestens drei Aspekte ber\xFCcksichtigt?"
+    m_Localized: "Bei wie vielen Eink\xE4ufen hast du auf mindestens drei dieser
+      Dinge geachtet: Herkunft, Saison, Produktionsmethode oder Zertifizierung? F\xFCge
+      jeden Einkauf hinzu und hake ab, worauf du geachtet hast."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: Bei welchen Produkten hast du mindestens zwei Nachhaltigkeitsinformationen
-      gefunden?
+    m_Localized: "Bei wie vielen Produkten hast du das Etikett gelesen und mindestens
+      zwei dieser Dinge gefunden: woher es kommt, ein Nachhaltigkeitssiegel oder
+      eine Zertifizierung, ob es Saison hat oder ob es in deiner N\xE4he hergestellt
+      wurde? F\xFCge jedes Produkt hinzu und hake ab, was du gefunden hast."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "Bei welchen Produkten hast du das Verpackungsmaterial gepr\xFCft
+    m_Localized: "Bei welchen Eink\xE4ufen hast du das Verpackungsmaterial gepr\xFCft
       und was nach dem Gebrauch damit passiert?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: Welche Nachhaltigkeitssiegel trug das Produkt?
+    m_Localized: "Hast du ein Produkt mit mindestens zwei verschiedenen Nachhaltigkeitssiegeln
+      gew\xE4hlt? Markiere die Siegel, die es trug, zum Beispiel EU-Bio und Fairtrade."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
@@ -4295,6 +4302,40 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
+  - m_Id: 56190243387203623
+    m_Localized: Mahlzeit {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: "Mahlzeit hinzuf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Einkauf {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: "Einkauf hinzuf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: Beginne jede Mahlzeit mit einer kleineren Portion und nimm nur nach,
+      wenn du es brauchst. Hake es ab, wenn du so Lebensmittelverschwendung vermieden
+      hast.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Z\xE4hl es, wenn die Mahlzeit mindestens ein ballaststoffreiches
+      Lebensmittel hatte: Gem\xFCse, Obst, H\xFClsenfr\xFCchte, N\xFCsse, Samen oder
+      Vollkorn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: "Jede Hauptmahlzeit braucht mindestens 3 dieser 4: Eiwei\xDF, ein
+      ballaststoffreiches Lebensmittel, frisches Gem\xFCse oder Salat und ein gesundes
+      Fett. Hake alles ab, was sie enthielt."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -66,13 +66,17 @@ namespace eu.foodmission.platform
         public bool HasAnyLog { get; }
         public IReadOnlyList<string> OpenMealTypes { get; }
         public IReadOnlyList<CheckInMealQuestion> Questions { get; }
+        /// <summary>UI.csv keys of what the missions asked that day want (see <see cref="MealStepHints"/>).</summary>
+        public IReadOnlyList<string> HintKeys { get; }
 
-        public CheckInMealDay(DateTime day, bool hasAnyLog, IReadOnlyList<string> openMealTypes, IReadOnlyList<CheckInMealQuestion> questions)
+        public CheckInMealDay(DateTime day, bool hasAnyLog, IReadOnlyList<string> openMealTypes, IReadOnlyList<CheckInMealQuestion> questions,
+            IReadOnlyList<string> hintKeys = null)
         {
             Day = day;
             HasAnyLog = hasAnyLog;
             OpenMealTypes = openMealTypes;
             Questions = questions;
+            HintKeys = hintKeys ?? Array.Empty<string>();
         }
 
         public IReadOnlyList<CheckInMealQuestion> QuestionsFor(string mealType) => Questions.Where(q => q.AppliesTo(mealType)).ToList();

@@ -4151,8 +4151,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: "Pri koliko izdelkih si pretehtal embala\u017Eo (velikost, materiali
-      in kako dobro \u0161\u010Diti \u017Eivilo)?"
+    m_Localized: "Pri koliko izdelkih si razmislil, ali se njihova embala\u017Ea
+      spla\u010Da? Bodi pozoren na velikost, materiale in ali hrano \u0161\u010Diti
+      pred kvarjenjem: v\u010Dasih je embala\u017Ea, ki prepre\u010Duje zavr\u017Eek
+      hrane, bolj\u0161a kot nobena embala\u017Ea."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4224,24 +4226,30 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "Pri katerih izdelkih si preveril poreklo in vsaj \u0161e eno stvar?"
+    m_Localized: "Za katere obroke si izbral izdelke glede na poreklo in vsaj \u0161e
+      eno stvar?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: "Pri katerih izdelkih si upo\u0161teval vsaj tri vidike?"
+    m_Localized: "Pri koliko nakupih si bil pozoren na vsaj tri od teh stvari: poreklo,
+      sezonskost, na\u010Din pridelave ali certifikat? Dodaj vsak nakup in ozna\u010Di,
+      kaj si preveril."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: "Pri katerih izdelkih si na\u0161el vsaj dve informaciji o trajnosti?"
+    m_Localized: "Pri koliko izdelkih si prebral etiketo in na\u0161el vsaj dve od
+      teh informacij: od kod prihaja, znak trajnosti ali certifikat, ali je sezonski
+      ali je pridelan blizu tebe? Dodaj vsak izdelek in ozna\u010Di, kaj si na\u0161el."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "Pri katerih izdelkih si preveril material embala\u017Ee in kaj
-      se z njo zgodi po uporabi?"
+    m_Localized: "Pri katerih nakupih si preveril material embala\u017Ee in kaj se
+      z njo zgodi po uporabi?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: Katere znake trajnosti je imel izdelek?
+    m_Localized: "Si izbral izdelek z vsaj dvema razli\u010Dnima znakoma trajnosti?
+      Ozna\u010Di znake, ki jih je imel, na primer Ekolo\u0161ko EU in Fairtrade."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
@@ -4277,6 +4285,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
+  - m_Id: 56190243387203623
+    m_Localized: Obrok {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: Dodaj obrok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: Nakup {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: Dodaj nakup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Vsak obrok za\u010Dni z manj\u0161o porcijo in si dodaj le, \u010De
+      jo potrebuje\u0161. Ozna\u010Di, ko si tako prepre\u010Dil, da bi hrano zavrgel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Upo\u0161tevaj ga, ko je obrok vseboval vsaj eno \u017Eivilo, bogato
+      z vlaknino: zelenjavo, sadje, stro\u010Dnice, ore\u0161\u010Dke, semena ali
+      polnozrnata \u017Eita."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: "Vsak glavni obrok potrebuje vsaj 3 od teh 4: beljakovine, \u017Eivilo,
+      bogato z vlaknino, sve\u017Eo zelenjavo ali solato in zdravo ma\u0161\u010Dobo.
+      Ozna\u010Di vse, kar je vseboval."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

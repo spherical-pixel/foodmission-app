@@ -13,6 +13,7 @@ namespace eu.foodmission.platform
             public IReadOnlyList<string> MealTypes;
             public int Order;
             public DateTime? Start;
+            public string HintKey;
         }
 
         public static CheckInPlan Plan(CheckInInputs inputs)
@@ -53,7 +54,11 @@ namespace eu.foodmission.platform
                                         list = new List<MealContribution>();
                                         mealByDay[day] = list;
                                     }
-                                    list.Add(new MealContribution { EventType = eventType, MealTypes = step.MealTypes, Order = eventOrder, Start = mission.StartLocal });
+                                    list.Add(new MealContribution
+                                    {
+                                        EventType = eventType, MealTypes = step.MealTypes, Order = eventOrder, Start = mission.StartLocal,
+                                        HintKey = MealStepHints.KeyFor(step)
+                                    });
                                 }
                             }
                             break;
@@ -136,7 +141,14 @@ namespace eu.foodmission.platform
                 {
                     continue;
                 }
-                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions));
+                // Only missions still asked on one of the open meals that day
+                string[] hints = entry.Value
+                    .Where(c => c.HintKey != null && open.Any(t => Counts(c, entry.Key, t, inputs.NowLocal)))
+                    .OrderBy(c => c.Order)
+                    .Select(c => c.HintKey)
+                    .Distinct()
+                    .ToArray();
+                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions, hints));
             }
 
             var openDayEvents = new List<CheckInDayEvent>();

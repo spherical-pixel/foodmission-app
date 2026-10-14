@@ -294,6 +294,14 @@ namespace eu.foodmission.platform
             }
             body.Add(mealRow);
 
+            // Once per day, not under every meal: says what to look for before a meal is picked
+            foreach (string hintKey in day.HintKeys)
+            {
+                var hint = new Text { text = L(hintKey) };
+                hint.AddToClassList("fm-mission-report-meal-hint");
+                body.Add(hint);
+            }
+
             foreach (string mealType in CheckInMealTypes.All)
             {
                 if (!answer.Meals.TryGetValue(mealType, out HashSet<string> checkedEvents))
@@ -405,7 +413,7 @@ namespace eu.foodmission.platform
             {
                 int productIndex = p;
                 HashSet<int> selected = answer.Products[p];
-                VisualElement item = ChecklistItem(LF("MISSION_CHECKLIST_PRODUCT", p + 1), () =>
+                VisualElement item = ChecklistItem(LF(spec.ItemLabelKey, p + 1), () =>
                 {
                     _viewModel.RemoveProduct(stepIndex, productIndex);
                     RenderStepLater(stepIndex);
@@ -435,7 +443,7 @@ namespace eu.foodmission.platform
 
             var add = new FMButton
             {
-                title = L("MISSION_CHECKLIST_ADD_PRODUCT"),
+                title = L(spec.AddLabelKey),
                 leadingIcon = "plus",
                 variant = ButtonVariant.Default,
                 size = Size.S

@@ -17,6 +17,10 @@ namespace eu.foodmission.platform
 
         private const string ProductId = "productId";
 
+        // What one checklist item is in the mission goal (card title and add button); null = product
+        private const string Meal = "MEAL";
+        private const string Purchase = "PURCHASE";
+
         private static readonly IReadOnlyDictionary<string, object> NoMetadata = new Dictionary<string, object>();
         private static readonly MissionModuleLink[] NoModules = Array.Empty<MissionModuleLink>();
 
@@ -56,7 +60,7 @@ namespace eu.foodmission.platform
             { "M.A1.4", Auto(Meals(ClientEventTypes.MealAlternativeStaple, 5)) },
             { "M.A1.5", Auto(Meals(ClientEventTypes.MealSustainablePlate, 10)) },
             // A2 — Product choices (advanced)
-            { "M.A2.1", Manual(ProductFacts("MISSION_Q_ORIGIN_PLUS_ONE", 3, 2,
+            { "M.A2.1", Manual(ProductFacts("MISSION_Q_ORIGIN_PLUS_ONE", Meal, 3, 2,
                 new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ShoppingCertificationChosen,
                     ClientEventTypes.ProcessingProductionMethodChecked, ClientEventTypes.ShoppingSeasonalChosen },
                 ClientEventTypes.ShoppingOriginChecked)) },
@@ -64,7 +68,7 @@ namespace eu.foodmission.platform
                 "MISSION_OPT_LABEL_", 2, SustainabilityLabels)) },
             { "M.A2.3", Manual(Products(ClientEventTypes.ShoppingMulticriteriaPurchase, 3)) },
             { "M.A2.4", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 4)) },
-            { "M.A2.5", Manual(ProductFacts("MISSION_Q_THREE_ASPECTS", 4, 3,
+            { "M.A2.5", Manual(ProductFacts("MISSION_Q_THREE_ASPECTS", Purchase, 4, 3,
                 new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ProcessingProductionMethodChecked,
                     ClientEventTypes.ShoppingCertificationChosen, ClientEventTypes.ShoppingSeasonalChosen })) },
             // A3 — Processing (advanced)
@@ -79,7 +83,7 @@ namespace eu.foodmission.platform
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked,
                 ClientEventTypes.ProcessingProductionMethodChecked, ClientEventTypes.ProcessingIndicatorsCompared)) },
             // A4 — Packaging (advanced)
-            { "M.A4.1", Manual(ProductFacts("MISSION_Q_PACKAGING_END_OF_LIFE", 3, 2,
+            { "M.A4.1", Manual(ProductFacts("MISSION_Q_PACKAGING_END_OF_LIFE", Purchase, 3, 2,
                 new[] { ClientEventTypes.PackagingMaterialObserved, ClientEventTypes.PackagingRecyclingLabelRead,
                     ClientEventTypes.PackagingRecyclabilityEvaluated },
                 ClientEventTypes.PackagingMaterialObserved)) },
@@ -151,7 +155,7 @@ namespace eu.foodmission.platform
             { "M.I2.1", Auto(Meals(ClientEventTypes.MealLocalProduce, 3)) },
             { "M.I2.2", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 8)) },
             { "M.I2.3", Auto(Meals(ClientEventTypes.MealCertifiedProduct, 3)) },
-            { "M.I2.4", Manual(ProductFacts("MISSION_Q_TWO_FACTS", 5, 2,
+            { "M.I2.4", Manual(ProductFacts("MISSION_Q_TWO_FACTS", null, 5, 2,
                 new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ShoppingCertificationChosen,
                     ClientEventTypes.ShoppingSeasonalChosen, ClientEventTypes.ShoppingLocalChosen })) },
             { "M.I2.5", Manual(Times(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
@@ -261,9 +265,9 @@ namespace eu.foodmission.platform
                 1, false, null);
 
         /// <summary>Up to <paramref name="maxProducts"/> products, each with one event per checked fact (they share its productId).</summary>
-        private static MissionReportStep ProductFacts(string promptKey, int maxProducts, int minDistinct, string[] eventTypes, params string[] required) =>
+        private static MissionReportStep ProductFacts(string promptKey, string item, int maxProducts, int minDistinct, string[] eventTypes, params string[] required) =>
             new MissionReportStep(MissionStepType.ProductChecklist, promptKey, null, null, NoMetadata, null, maxProducts, false, null,
-                new ChecklistSpec(eventTypes.Select(Option).ToArray(), null, minDistinct, required.Select(r => Array.IndexOf(eventTypes, r)).ToArray()));
+                new ChecklistSpec(eventTypes.Select(Option).ToArray(), null, minDistinct, required.Select(r => Array.IndexOf(eventTypes, r)).ToArray(), item));
 
         /// <summary>Up to <paramref name="maxProducts"/> products, each sent as one event with the checked values in <paramref name="arrayField"/>.</summary>
         private static MissionReportStep ProductValues(string promptKey, int maxProducts, string eventType, string arrayField, string labelPrefix, int minDistinct, params string[] values) =>

@@ -67,6 +67,25 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, plan.MealDays.Single().Questions.Count(q => q.EventType == ClientEventTypes.MealMeatConsumed));
         }
 
+        [Test]
+        public void MealDay_Hints_ComeFromTheMissionsAskedThatDay()
+        {
+            // M.A6.4 asks the fibre flag too: the fibre-only hint of M.I6.2 must not show for it alone
+            var onlyDense = CheckInPlanner.Plan(Inputs(M("M.A6.4", Now.Date))).MealDays.Single();
+            CollectionAssert.AreEqual(new[] { "MISSION_HINT_NUTRIENT_DENSE_MEALS" }, onlyDense.HintKeys);
+
+            var plan = CheckInPlanner.Plan(Inputs(M("M.I6.2", Now.Date.AddDays(-1)), M("M.A6.4", Now.Date)));
+            CollectionAssert.AreEqual(new[] { "MISSION_HINT_HIGH_FIBRE_MEAL" }, plan.MealDays.Single(d => d.Day == Now.Date.AddDays(-1)).HintKeys);
+            CollectionAssert.AreEqual(new[] { "MISSION_HINT_HIGH_FIBRE_MEAL", "MISSION_HINT_NUTRIENT_DENSE_MEALS" },
+                plan.MealDays.Single(d => d.Day == Now.Date).HintKeys);
+        }
+
+        [Test]
+        public void MealDay_Hints_AreEmptyForMissionsWithoutOne()
+        {
+            Assert.IsEmpty(CheckInPlanner.Plan(Inputs(M("M.A1.3", Now.Date))).MealDays.Single().HintKeys);
+        }
+
         [TestCase("M.A1.1")]
         [TestCase("M.B1.3")]
         public void MeatCountingMissions_AskMeatFreeAndMeat(string code)

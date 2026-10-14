@@ -66,6 +66,8 @@ namespace eu.foodmission.platform
         /// <summary>Option metadata key holding the value sent in <see cref="ArrayField"/>.</summary>
         public const string ValueKey = "value";
 
+        private const string DefaultItem = "PRODUCT";
+
         public IReadOnlyList<MissionStepOption> Options { get; }
         /// <summary>Null: one event per checked option (option event type). Otherwise one event whose metadata[ArrayField] holds the checked values.</summary>
         public string ArrayField { get; }
@@ -73,14 +75,22 @@ namespace eu.foodmission.platform
         /// <summary>Option indexes every counted item must include.</summary>
         public IReadOnlyList<int> Required { get; }
 
+        /// <summary>ProductChecklist card title ("Product {0}", "Meal {0}"…), named like the mission goal.</summary>
+        public string ItemLabelKey { get; }
+        /// <summary>ProductChecklist add button ("Add product", "Add meal"…).</summary>
+        public string AddLabelKey { get; }
+
         public bool IsArray => ArrayField != null;
 
-        public ChecklistSpec(IReadOnlyList<MissionStepOption> options, string arrayField, int minDistinct, IReadOnlyList<int> required)
+        /// <param name="item">What one item is in the mission goal: PRODUCT (default), MEAL or PURCHASE.</param>
+        public ChecklistSpec(IReadOnlyList<MissionStepOption> options, string arrayField, int minDistinct, IReadOnlyList<int> required, string item = null)
         {
             Options = options ?? Array.Empty<MissionStepOption>();
             ArrayField = arrayField;
             MinDistinct = minDistinct;
             Required = required ?? Array.Empty<int>();
+            ItemLabelKey = "MISSION_CHECKLIST_" + (item ?? DefaultItem);
+            AddLabelKey = "MISSION_CHECKLIST_ADD_" + (item ?? DefaultItem);
         }
 
         public string ValueOf(int option) =>

@@ -4151,8 +4151,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: "For hvor mange produkter vurderte du emballasjen (st\xF8rrelse,
-      materialer og hvor godt den beskytter maten)?"
+    m_Localized: "For hvor mange produkter tenkte du over om emballasjen var verdt
+      det? Se p\xE5 st\xF8rrelsen, materialene og om den beskytter maten mot \xE5
+      bli d\xE5rlig: noen ganger er emballasje som hindrer matsvinn bedre enn ingen
+      emballasje."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4224,26 +4226,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "Hvilke produkter sjekket du opprinnelsen og minst \xE9n ting til
-      for?"
+    m_Localized: "Til hvilke m\xE5ltider valgte du produkter ut fra opprinnelse og
+      minst \xE9n ting til?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: Hvilke produkter vurderte du minst tre sider ved?
+    m_Localized: "Ved hvor mange kj\xF8p s\xE5 du p\xE5 minst tre av disse: opprinnelse,
+      sesong, produksjonsmetode eller sertifisering? Legg til hvert kj\xF8p og kryss
+      av for det du sjekket."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: "Hvilke produkter fant du minst to opplysninger om b\xE6rekraft
-      for?"
+    m_Localized: "For hvor mange produkter leste du etiketten og fant minst to av
+      disse: hvor det kommer fra, et b\xE6rekraftsmerke eller en sertifisering, om
+      det er i sesong, eller om det er produsert i n\xE6rheten av deg? Legg til hvert
+      produkt og kryss av for det du fant."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: Hvilke produkter sjekket du emballasjematerialet for, og hva som
-      skjer med det etter bruk?
+    m_Localized: "Ved hvilke kj\xF8p sjekket du emballasjematerialet og hva som skjer
+      med det etter bruk?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: "Hvilke b\xE6rekraftsmerker hadde produktet?"
+    m_Localized: "Valgte du et produkt med minst to ulike b\xE6rekraftsmerker? Merk
+      av merkene det hadde, for eksempel EU-\xF8kologisk og Fairtrade."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
@@ -4279,6 +4286,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4008881209995690410
+  - m_Id: 56190243387203623
+    m_Localized: "M\xE5ltid {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203624
+    m_Localized: "Legg til m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203625
+    m_Localized: "Kj\xF8p {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203626
+    m_Localized: "Legg til kj\xF8p"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203627
+    m_Localized: "Start hvert m\xE5ltid med en mindre porsjon og forsyn deg bare
+      mer hvis du trenger det. Kryss av n\xE5r du slik unngikk \xE5 kaste mat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203628
+    m_Localized: "Tell det med n\xE5r m\xE5ltidet hadde minst \xE9n fiberrik matvare:
+      gr\xF8nnsaker, frukt, belgfrukter, n\xF8tter, fr\xF8 eller fullkorn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203629
+    m_Localized: "Hvert hovedm\xE5ltid trenger minst 3 av disse 4: protein, en fiberrik
+      matvare, ferske gr\xF8nnsaker eller salat og et sunt fett. Kryss av for alt
+      det hadde."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
