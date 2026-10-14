@@ -93,9 +93,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetRecipesAsync"));
@@ -115,9 +113,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetRecipeAsync {id}"));
@@ -154,9 +150,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetMyRecipesAsync"));
@@ -184,9 +178,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", AuthHeader);
 
             Debug.Log($"[{GetType().Name}] CreateRecipeAsync sending request to {url}: {jsonBody}");
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             Debug.Log($"[{GetType().Name}] CreateRecipeAsync result={request.result}, code={request.responseCode}, body={request.downloadHandler?.text}");
             if (request.result != UnityWebRequest.Result.Success)
@@ -216,9 +208,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", AuthHeader);
 
             Debug.Log($"[{GetType().Name}] UpdateRecipeAsync sending request to {url}: {jsonBody}");
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             Debug.Log($"[{GetType().Name}] UpdateRecipeAsync result={request.result}, code={request.responseCode}, body={request.downloadHandler?.text}");
             if (request.result != UnityWebRequest.Result.Success)
@@ -238,9 +228,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Authorization", AuthHeader);
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
                 return (false, ApiErrorHelper.Parse(request, $"[{GetType().Name}] DeleteRecipeAsync {id}"));
@@ -260,9 +248,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Authorization", AuthHeader);
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetRecommendationsAsync"));
@@ -313,11 +299,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Authorization", AuthHeader);
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone)
-            {
-                await Task.Yield();
-            }
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {

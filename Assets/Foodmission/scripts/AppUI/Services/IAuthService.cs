@@ -9,6 +9,11 @@ namespace eu.foodmission.platform
         Task<bool> CheckSessionAsync();
         Task<bool> RefreshAsync();
         Task<bool> HandleUnauthorizedAsync();
+        /// <summary>
+        /// Refreshes the access token when it expires within a minute and returns the Authorization header to send
+        /// (null when nobody is signed in).
+        /// </summary>
+        Task<string> EnsureFreshTokenAsync();
         Task<(bool success, string userId, string error)> LoginAsync(string username, string password);
         Task<(bool success, string userId, string error)> RegisterAsync(
             string username,

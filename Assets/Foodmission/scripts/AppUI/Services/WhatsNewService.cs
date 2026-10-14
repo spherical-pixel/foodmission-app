@@ -80,10 +80,7 @@ namespace eu.foodmission.platform
         private static async Task<string> DownloadAsync(string url)
         {
             using UnityWebRequest request = UnityWebRequest.Get(url);
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-
-            while (!op.isDone)
-                await Task.Yield();
+            await request.SendAsync();
 
             return request.result == UnityWebRequest.Result.Success ? request.downloadHandler.text : null;
         }

@@ -61,8 +61,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Authorization", authHeader);
             req.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
             if (request.eventType != ClientEventTypes.AppSessionOpened && request.eventType != ClientEventTypes.AppSessionEnded)
             {
                 UserProgressWrites.Record();

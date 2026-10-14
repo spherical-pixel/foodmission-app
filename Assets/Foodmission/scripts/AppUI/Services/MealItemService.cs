@@ -39,8 +39,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Accept", "application/json");
             req.SetRequestHeader("Accept-Language", lang);
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
 
             if (req.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] GetByMealIdAsync"));
@@ -66,8 +65,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Authorization", AuthHeader);
             req.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
 
             if (req.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] CreateAsync"));
@@ -91,8 +89,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Authorization", AuthHeader);
             req.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
 
             if (req.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(req, $"[{GetType().Name}] UpdateAsync"));
@@ -114,8 +111,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Authorization", AuthHeader);
             req.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
 
             if (req.result != UnityWebRequest.Result.Success)
                 return (false, ApiErrorHelper.Parse(req, $"[{GetType().Name}] DeleteAsync"));

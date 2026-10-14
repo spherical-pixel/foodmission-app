@@ -45,8 +45,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Authorization", AuthHeader);
             req.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
             UserProgressWrites.Record();
 
             if (req.result != UnityWebRequest.Result.Success)
@@ -84,8 +83,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Accept-Language", lang);
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -107,8 +105,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
@@ -134,8 +131,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Authorization", AuthHeader);
             req.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
             UserProgressWrites.Record();
 
             if (req.result != UnityWebRequest.Result.Success)
@@ -161,8 +157,7 @@ namespace eu.foodmission.platform
             };
             request.SetRequestHeader("Authorization", AuthHeader);
 
-            UnityWebRequestAsyncOperation op = request.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await request.SendAsync();
             UserProgressWrites.Record();
 
             if (request.result != UnityWebRequest.Result.Success)
@@ -189,8 +184,7 @@ namespace eu.foodmission.platform
             req.SetRequestHeader("Authorization", AuthHeader);
             req.SetRequestHeader("Accept", "application/json");
 
-            UnityWebRequestAsyncOperation op = req.SendWebRequest();
-            while (!op.isDone) await Task.Yield();
+            await req.SendAsync();
             UserProgressWrites.Record();
 
             if (req.result != UnityWebRequest.Result.Success)

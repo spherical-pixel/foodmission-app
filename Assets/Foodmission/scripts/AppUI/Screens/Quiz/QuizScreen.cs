@@ -670,7 +670,7 @@ namespace eu.foodmission.platform
             TrackLoadingOverlay(() => _viewModel.IsLoading, nameof(QuizScreenViewModel.IsLoading));
         }
 
-        protected override async void OnViewModelUnbinding()
+        protected override void OnViewModelUnbinding()
         {
             UnregisterManualEvents();
             base.OnViewModelUnbinding();

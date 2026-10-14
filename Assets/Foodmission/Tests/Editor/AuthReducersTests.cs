@@ -272,6 +272,52 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(result);
         }
 
+        [Test]
+        public async Task AuthService_EnsureFreshTokenAsync_SignedOut_ReturnsNull()
+        {
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var storeService = new StoreService(new LocalStorageService());
+            var authService = new AuthService(storeService);
+
+            var header = await authService.EnsureFreshTokenAsync();
+
+            storeService.Dispose();
+            Assert.IsNull(header);
+        }
+
+        [Test]
+        public async Task AuthService_EnsureFreshTokenAsync_ValidToken_ReturnsCurrentHeader()
+        {
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var storeService = new StoreService(new LocalStorageService());
+            int expiresAt = (int)(System.DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 3600);
+            storeService.store.Dispatch(AppActions.tokenRefreshed.Invoke(
+                new AppActions.TokenRefreshPayload("access-1", "Bearer", expiresAt, "refresh-1")));
+            var authService = new AuthService(storeService);
+
+            var header = await authService.EnsureFreshTokenAsync();
+
+            storeService.Dispose();
+            Assert.AreEqual("Bearer access-1", header);
+        }
+
+        [Test]
+        public async Task AuthService_EnsureFreshTokenAsync_ExpiringWithoutRefreshToken_KeepsCurrentHeader()
+        {
+            // Nothing to refresh with: the request goes out as is and a 401 is handled by ApiErrorHelper
+            UnityEngine.PlayerPrefs.DeleteAll();
+            var storeService = new StoreService(new LocalStorageService());
+            int expiresAt = (int)(System.DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 10);
+            storeService.store.Dispatch(AppActions.tokenRefreshed.Invoke(
+                new AppActions.TokenRefreshPayload("access-1", "", expiresAt, "")));
+            var authService = new AuthService(storeService);
+
+            var header = await authService.EnsureFreshTokenAsync();
+
+            storeService.Dispose();
+            Assert.AreEqual("Bearer access-1", header);
+        }
+
         [TestCase(400, true)]
         [TestCase(401, true)]
         [TestCase(403, true)]

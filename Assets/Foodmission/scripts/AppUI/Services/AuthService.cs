@@ -25,6 +25,8 @@ namespace eu.foodmission.platform
         private string _endedSessionRefreshToken;
 
         private const int RefreshRetrySeconds = 30;
+        // An access token this close to expiry is renewed before a request is sent
+        private const int TokenRefreshMarginSeconds = 60;
 
         private enum RefreshOutcome
         {
@@ -94,11 +96,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 int remaining = (int)(state.tokenExpiresAt - DateTimeOffset.UtcNow.ToUnixTimeSeconds());
                 int refreshRemaining = state.refreshTokenExpiresAt > 0
@@ -168,6 +166,30 @@ namespace eu.foodmission.platform
             }
         }
 
+        public async Task<string> EnsureFreshTokenAsync()
+        {
+            AppState state = _storeService.GetAppState();
+            if (string.IsNullOrEmpty(state.accessToken))
+            {
+                return null;
+            }
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (state.tokenExpiresAt - now <= TokenRefreshMarginSeconds && !string.IsNullOrEmpty(state.refreshToken))
+            {
+                // A rejected refresh surfaces as the request's 401, handled by ApiErrorHelper
+                await RefreshShared();
+                state = _storeService.GetAppState();
+                if (string.IsNullOrEmpty(state.accessToken))
+                {
+                    return null;
+                }
+            }
+
+            string tokenType = string.IsNullOrEmpty(state.tokenType) ? "Bearer" : state.tokenType;
+            return $"{tokenType} {state.accessToken}";
+        }
+
         /// <summary>
         /// Exchanges the stored refresh token for new tokens.
         /// Dispatches tokenRefreshed on success and schedules the proactive timer.
@@ -223,11 +245,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -349,11 +367,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -473,11 +487,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
@@ -638,11 +648,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -729,11 +735,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -770,11 +772,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Content-Type", "application/json");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 Debug.Log($"[AuthService] Password reset response: code={request.responseCode}, result={request.result}");
 
@@ -870,11 +868,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Accept", "application/json");
                 request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -910,11 +904,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -953,11 +943,7 @@ namespace eu.foodmission.platform
                 request.SetRequestHeader("Authorization", $"Bearer {state.accessToken}");
                 request.SetRequestHeader("Accept", "application/json");
 
-                UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+                await request.SendAsync();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
@@ -1035,11 +1021,7 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Authorization", $"{tokenType} {accessToken}");
 
-            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-            while (!operation.isDone)
-            {
-                await Task.Yield();
-            }
+            await request.SendAsync();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
