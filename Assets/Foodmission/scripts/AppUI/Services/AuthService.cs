@@ -527,6 +527,9 @@ namespace eu.foodmission.platform
                 if (loginResult.success)
                 {
                     Debug.Log($"[{GetType().Name}] Auto-login successful after registration");
+                    // A new account has no language/settings on the backend, so login kept the ones chosen
+                    // before registering (AppearanceSettingsDialog); store them
+                    _ = SyncSettingsAsync();
                     return (true, loginResult.userId, null);
                 }
                 else

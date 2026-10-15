@@ -26,11 +26,14 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Button _forgotButton;
         private FormFieldItemTextField _usernameField;
         private FormFieldItemPassword _passwordField;
+        private VisualElement _appearanceBar;
+        private IconButton _appearanceButton;
 
         // Accessibility node references for cleanup
         private AccessibilityNode _loginButtonNode;
         private AccessibilityNode _registerButtonNode;
         private AccessibilityNode _forgotButtonNode;
+        private AccessibilityNode _appearanceButtonNode;
 
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaLeft => false;
@@ -57,6 +60,8 @@ namespace eu.foodmission.platform
             _forgotButton = contentContainer.Q<Unity.AppUI.UI.Button>("btForgotPassword");
             _usernameField = contentContainer.Q<FormFieldItemTextField>("username");
             _passwordField = contentContainer.Q<FormFieldItemPassword>("password");
+            _appearanceBar = contentContainer.Q<VisualElement>("appearance-bar");
+            _appearanceButton = contentContainer.Q<IconButton>("btn-appearance");
         }
 
         /// <summary>
@@ -77,6 +82,11 @@ namespace eu.foodmission.platform
             if (_forgotButton != null)
             {
                 _forgotButton.clicked += OnForgotClicked;
+            }
+
+            if (_appearanceButton != null)
+            {
+                _appearanceButton.clicked += OnAppearanceClicked;
             }
         }
 
@@ -99,11 +109,21 @@ namespace eu.foodmission.platform
             {
                 _forgotButton.clicked -= OnForgotClicked;
             }
+
+            if (_appearanceButton != null)
+            {
+                _appearanceButton.clicked -= OnAppearanceClicked;
+            }
         }
 
         protected override void OnViewModelBound()
         {
             base.OnViewModelBound();
+            // The screen ignores the safe area (full-bleed logo), but the gear must stay clear of the notch
+            if (_appearanceBar != null)
+            {
+                _themeService?.ApplySafeAreaPadding(_appearanceBar, true, false, false, true);
+            }
             if (_viewModel != null)
             {
                 _viewModel.ShowErrorRequest += OnShowErrorRequested;
@@ -129,6 +149,8 @@ namespace eu.foodmission.platform
             _forgotButton = null;
             _usernameField = null;
             _passwordField = null;
+            _appearanceBar = null;
+            _appearanceButton = null;
 
             base.OnViewModelUnbinding();
         }
@@ -170,6 +192,7 @@ namespace eu.foodmission.platform
             _loginButtonNode = CreateButtonNode(h, _loginButton, "Sign in");
             _registerButtonNode = CreateButtonNode(h, _registerButton, "Register");
             _forgotButtonNode = CreateButtonNode(h, _forgotButton, "Forgot password");
+            _appearanceButtonNode = CreateButtonNode(h, _appearanceButton, "Display and language settings");
         }
 
         protected override void TeardownAccessibilityNodes()
@@ -177,6 +200,7 @@ namespace eu.foodmission.platform
             _loginButtonNode = null;
             _registerButtonNode = null;
             _forgotButtonNode = null;
+            _appearanceButtonNode = null;
 
             _usernameField?.DestroyAccessibilityNode();
             _passwordField?.DestroyAccessibilityNode();
@@ -184,7 +208,7 @@ namespace eu.foodmission.platform
             base.TeardownAccessibilityNodes();
         }
 
-        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, Unity.AppUI.UI.Button button, string label)
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
         {
             if (button == null) return null;
 
@@ -223,6 +247,11 @@ namespace eu.foodmission.platform
         private void OnRegisterClicked()
         {
             _navController.Navigate(Actions.login_to_register);
+        }
+
+        private void OnAppearanceClicked()
+        {
+            AppearanceSettingsDialog.Show(contentContainer);
         }
 
         private void OnForgotClicked()

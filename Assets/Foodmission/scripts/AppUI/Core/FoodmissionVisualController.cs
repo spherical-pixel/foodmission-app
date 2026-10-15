@@ -932,6 +932,32 @@ namespace eu.foodmission.platform
                 }
             }
 
+            // Appearance settings (language, text size, font, theme) on the screens before login
+            appBar.Q("appbar-appearance-button")?.RemoveFromHierarchy();
+            if (AppearanceSettingsDialog.IsShownInAppBar(destination.name))
+            {
+                var appearanceButton = new IconButton
+                {
+                    name = "appbar-appearance-button",
+                    icon = "gear-six",
+                    quiet = true
+                };
+                appearanceButton.style.marginTop = 0;
+                appearanceButton.style.marginBottom = 0;
+                appearanceButton.style.alignSelf = Align.Center;
+                appearanceButton.clicked += () => AppearanceSettingsDialog.Show(appBar);
+                appearanceButton.quiet = true;
+
+                if (actionContainer != null)
+                {
+                    actionContainer.Add(appearanceButton);
+                }
+                else
+                {
+                    appBar.Add(appearanceButton);
+                }
+            }
+
             var themeService = App.current?.services.GetService<IThemeService>();
             if (themeService != null)
             {
