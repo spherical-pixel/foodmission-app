@@ -196,6 +196,12 @@
     color: var(--fm-color-negative);
 }
 
+.fm-quest-timeline-start {
+    flex-shrink: 0;
+    align-self: center;
+    margin-right: 8px;
+}
+
 
 .hidden {
     display: none;

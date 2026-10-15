@@ -10,6 +10,8 @@ namespace eu.foodmission.platform
         public bool Completed;
         public bool Failed;
         public float MissionPercent;
+        /// <summary>Current-quest mission the user hasn't started (backend #424); never on older backends.</summary>
+        public bool NotStarted;
     }
 
     /// <summary>Pure mapping from GET current-quest to what Home's quest card and the quest detail show.</summary>
@@ -80,8 +82,18 @@ namespace eu.foodmission.platform
                     // A wrong quiz answer stays "not done", as before; only missions show a failed state
                     Failed = isMission && it.status == CurrentQuestItemStatus.Failed,
                     MissionPercent = isMission ? it.progress : 0f,
+                    NotStarted = isMission && IsNotStarted(it),
                 };
             };
+        }
+
+        /// <summary>Same rule as MissionProgressState.IsStarted, for a current-quest item.</summary>
+        private static bool IsNotStarted(CurrentQuestItem it)
+        {
+            return it.StartedAtReported && !it.startedAt.HasValue && it.progress <= 0f &&
+                   it.status != CurrentQuestItemStatus.Completed &&
+                   it.status != CurrentQuestItemStatus.Failed &&
+                   it.status != CurrentQuestItemStatus.InProgress;
         }
 
         private static CurrentQuestItem[] SortedItems(CurrentQuest quest)

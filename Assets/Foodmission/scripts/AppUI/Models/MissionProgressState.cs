@@ -31,5 +31,28 @@ namespace eu.foodmission.platform
         {
             return IsCompleted(progress) || IsFailed(progress);
         }
+
+        /// <summary>
+        /// Whether the user started this attempt. Since backend #424 choosing a quest starts nothing: a mission that is
+        /// not started is NOT_STARTED with progress 0 and no startedAt (or has no row). Started ones are IN_PROGRESS,
+        /// even at 0. Older backends: restarts were NOT_STARTED with a startedAt, and rows without a status (before
+        /// pr-402) started with the quest.
+        /// </summary>
+        public static bool IsStarted(MissionProgress progress)
+        {
+            if (progress == null)
+            {
+                return false;
+            }
+            if (progress.startedAt.HasValue || progress.progress > 0f || IsResolved(progress))
+            {
+                return true;
+            }
+            if (string.Equals(progress.status, ProgressStatus.InProgress, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            return string.IsNullOrEmpty(progress.status);
+        }
     }
 }

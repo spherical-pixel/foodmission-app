@@ -4415,6 +4415,38 @@ MonoBehaviour:
     m_Localized: "Znajd\u017A produkt"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: Rozpocznij
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: "Ta misja jeszcze si\u0119 nie rozpocz\u0119\u0142a. Jej 7 dni zacznie
+      si\u0119, gdy dotkniesz Rozpocznij."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: "Zanim zaczniemy: ile twoich posi\u0142k\xF3w w zesz\u0142ym tygodniu
+      zawiera\u0142o mi\u0119so?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: "Gratulacje! W zesz\u0142ym tygodniu nie jad\u0142e\u015B mi\u0119sa.
+      Twoim celem jest teraz utrzyma\u0107 to przez kolejne 7 dni."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: "Rozpocznij misj\u0119 {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "Czy chcesz teraz rozpocz\u0105\u0107 \u201E{0}\u201D?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "Czy na pewno chcesz rozpocz\u0105\u0107 \u201E{0}\u201D od nowa?\r\nStracisz
+      obecne post\u0119py."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

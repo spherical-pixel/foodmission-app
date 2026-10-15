@@ -844,6 +844,36 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task OnlyMissionItems_IgnoresMissionsNotStarted()
+        {
+            var missions = new Mock<IMissionService>();
+            missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.A1.3", progress = 0, status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow },
+                new MissionProgress { missionCode = "M.B6.5", progress = 0, status = ProgressStatus.NotStarted, startedAt = null }
+            }, (ApiErrorResponse)null));
+            var vm = new QuickMealLogViewModel(_storeService, _mockQuestService.Object, _mockEventService.Object, _mockCatalogService.Object,
+                _mockMealLogService.Object, _mockMealService.Object, missions.Object);
+            _storeService.SetAppState(new AppState { userCurrentQuestId = "q1" });
+            _mockQuestService.Setup(q => q.GetQuestAsync("q1", It.IsAny<string>())).ReturnsAsync((new Quest
+            {
+                id = "q1",
+                items = new[]
+                {
+                    new QuestItem { id = "i1", contentType = QuestContentType.Mission, contentCode = "M.A1.3" },
+                    new QuestItem { id = "i2", contentType = QuestContentType.Mission, contentCode = "M.B6.5" }
+                }
+            }, (ApiErrorResponse)null));
+
+            await vm.LoadActiveQuestQuestionsAsync();
+            vm.SetOnlyMissionItems(true);
+
+            var events = vm.Sections.SelectMany(s => s.Items).Select(i => i.EventType).ToArray();
+            CollectionAssert.AreEquivalent(new[] { ClientEventTypes.MealLegumeConsumed }, events);
+            vm.Dispose();
+        }
+
+        [Test]
         public async Task OnlyMissionItems_FiltersSectionsToCurrentQuestMealMissions()
         {
             _storeService.SetAppState(new AppState { userCurrentQuestId = "q1" });

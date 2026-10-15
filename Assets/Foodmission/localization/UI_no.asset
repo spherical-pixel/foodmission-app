@@ -4362,6 +4362,38 @@ MonoBehaviour:
     m_Localized: Finn et produkt
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: "Dette oppdraget har ikke startet enn\xE5. De 7 dagene begynner
+      n\xE5r du trykker p\xE5 Start."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: "F\xF8r vi starter: hvor mange av m\xE5ltidene dine forrige uke
+      inneholdt kj\xF8tt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: "Gratulerer! Du spiste ikke kj\xF8tt forrige uke. M\xE5let ditt
+      n\xE5 er \xE5 holde det slik de neste 7 dagene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: Start oppdraget {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "Vil du starte \xAB{0}\xBB n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "Er du sikker p\xE5 at du vil starte \xAB{0}\xBB p\xE5 nytt?\r\nDu
+      mister den n\xE5v\xE6rende fremgangen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

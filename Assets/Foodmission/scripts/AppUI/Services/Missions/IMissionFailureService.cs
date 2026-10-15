@@ -11,10 +11,10 @@ namespace eu.foodmission.platform
         /// <summary>Marks this attempt's failure as told (key: code + startedAt).</summary>
         void Acknowledge(MissionProgress progress);
 
-        /// <summary>Acknowledges and restarts a FAILED mission.</summary>
-        Task<(MissionProgress Result, ApiErrorResponse Error)> RestartAsync(MissionProgress failed);
+        /// <summary>Acknowledges and restarts a FAILED mission. previousMeatMeals: M.B1.3's input for the new attempt.</summary>
+        Task<(MissionProgress Result, ApiErrorResponse Error)> RestartAsync(MissionProgress failed, int? previousMeatMeals = null);
 
-        /// <summary>Voluntary restart of an active mission: gives it up, then restarts it.</summary>
-        Task<(MissionProgress Result, ApiErrorResponse Error)> GiveUpAndRestartAsync(string missionCode);
+        /// <summary>Voluntary restart of an active mission: gives it up, then restarts it. previousMeatMeals: M.B1.3's input for the new attempt.</summary>
+        Task<(MissionProgress Result, ApiErrorResponse Error)> GiveUpAndRestartAsync(string missionCode, int? previousMeatMeals = null);
     }
 }

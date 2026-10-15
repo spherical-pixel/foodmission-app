@@ -4348,6 +4348,36 @@ MonoBehaviour:
     m_Localized: Find a product
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: This mission hasn't started yet. Its 7 days begin when you tap Start.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: 'Before we start: how many of your meals last week had meat?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: Congratulations! You didn't eat meat last week. Your goal now is
+      to keep it that way for the next 7 days.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: Start mission {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "Do you want to start \u201C{0}\u201D now?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "Are you sure you want to restart \u201C{0}\u201D?\r\nYou will lose
+      your current progress."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

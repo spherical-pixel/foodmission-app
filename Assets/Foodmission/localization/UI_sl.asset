@@ -4362,6 +4362,38 @@ MonoBehaviour:
     m_Localized: "Poi\u0161\u010Di izdelek"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: "Za\u010Dni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: "Ta misija se \u0161e ni za\u010Dela. Njenih 7 dni se za\u010Dne,
+      ko tapne\u0161 Za\u010Dni."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: "Preden za\u010Dneva: koliko tvojih obrokov prej\u0161nji teden
+      je vsebovalo meso?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: "\u010Cestitke! Prej\u0161nji teden nisi jedel mesa. Tvoj cilj je
+      zdaj, da tako ostane naslednjih 7 dni."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: "Za\u010Dni misijo {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "Ali \u017Eeli\u0161 zdaj za\u010Deti \xBB{0}\xAB?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "Ali res \u017Eeli\u0161 znova za\u010Deti \xBB{0}\xAB?\r\nTrenutni
+      napredek bo izgubljen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -197,7 +197,8 @@ namespace eu.foodmission.platform
             {
                 MissionInteraction interaction = MissionInteractionCatalog.Get(code);
                 MissionProgress progress = progressList?.FirstOrDefault(p => string.Equals(p?.missionCode, code, StringComparison.OrdinalIgnoreCase));
-                if (!interaction.CanReport || MissionProgressState.IsResolved(progress))
+                // Since backend #424 the user starts each mission; rules ignore missions that are not started
+                if (!interaction.CanReport || !MissionProgressState.IsStarted(progress) || MissionProgressState.IsResolved(progress))
                 {
                     continue;
                 }

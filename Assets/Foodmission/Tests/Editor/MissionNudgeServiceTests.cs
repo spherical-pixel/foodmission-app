@@ -83,6 +83,17 @@ namespace eu.foodmission.platform.Tests
             new MissionProgress { missionCode = code, missionTitle = "T " + code, progress = progress, startedAt = startedAt, completed = completed };
 
         [Test]
+        public async Task GetNudge_MissionNotStarted_IsNeverStalled()
+        {
+            _pendingDays = 0;
+            SetQuest("M.B2.1");
+            SetProgress(new MissionProgress { missionCode = "M.B2.1", progress = 0, status = ProgressStatus.NotStarted, startedAt = null });
+            await SeeQuestDaysAgo(5);
+
+            Assert.IsNull(await _service.GetNudgeAsync());
+        }
+
+        [Test]
         public async Task GetNudge_MissingDaysAtThreshold_WinsOverStalledMission()
         {
             _pendingDays = 3;
@@ -130,6 +141,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task GetNudge_FirstSightWithoutStart_DoesNotNudgeUntilTwoDaysPass()
         {
+            // Legacy row (no status, no startedAt): started with the quest. Since #424 a mission without a row is not started
+            SetProgress(P("M.B2.1", 0));
             Assert.IsNull(await _service.GetNudgeAsync());
 
             _now = _now.AddDays(2).AddMinutes(1);

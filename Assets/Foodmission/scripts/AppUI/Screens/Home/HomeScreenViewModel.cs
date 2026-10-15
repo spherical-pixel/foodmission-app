@@ -61,6 +61,7 @@ namespace eu.foodmission.platform
         private readonly IMissionNudgeService _missionNudgeService;
         private readonly IMissionLastDayService _missionLastDayService;
         private readonly IMissionFailureService _missionFailureService;
+        private readonly IMissionInputsService _missionInputsService;
         private readonly IDailyFoodFactService _dailyFoodFactService;
         private readonly IAuthService _authService;
         private readonly ICatalogService _catalogService;
@@ -102,7 +103,8 @@ namespace eu.foodmission.platform
             IDailyFoodFactService dailyFoodFactService = null,
             IDimensionService dimensionService = null,
             IMissionLastDayService missionLastDayService = null,
-            IKnowledgeProgressService knowledgeProgressService = null) : base(storeService)
+            IKnowledgeProgressService knowledgeProgressService = null,
+            IMissionInputsService missionInputsService = null) : base(storeService)
         {
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -119,6 +121,7 @@ namespace eu.foodmission.platform
             _missionNudgeService = missionNudgeService ?? App.current?.services?.GetService<IMissionNudgeService>();
             _missionLastDayService = missionLastDayService ?? App.current?.services?.GetService<IMissionLastDayService>();
             _missionFailureService = missionFailureService ?? App.current?.services?.GetService<IMissionFailureService>();
+            _missionInputsService = missionInputsService ?? App.current?.services?.GetService<IMissionInputsService>();
             _dailyFoodFactService = dailyFoodFactService ?? App.current?.services?.GetService<IDailyFoodFactService>();
             _authService = authService ?? App.current?.services?.GetService<IAuthService>();
             _badgeService = badgeService ?? App.current?.services?.GetService<IBadgeService>();
@@ -414,15 +417,21 @@ namespace eu.foodmission.platform
             _missionFailureService?.Acknowledge(failed);
         }
 
-        public async System.Threading.Tasks.Task<ApiErrorResponse> RestartFailedMissionAsync(MissionProgress failed)
+        /// <summary>Restarts a failed mission; M.B1.3 sends the meals with meat of last week for the new attempt.</summary>
+        public async System.Threading.Tasks.Task<(MissionProgress Result, ApiErrorResponse Error)> RestartFailedMissionAsync(MissionProgress failed, int? previousMeatMeals = null)
         {
             if (_missionFailureService == null)
             {
-                return null;
+                return (null, null);
             }
 
-            var (_, error) = await _missionFailureService.RestartAsync(failed);
-            return error;
+            return await _missionFailureService.RestartAsync(failed, MissionInputs.For(failed?.missionCode, previousMeatMeals));
+        }
+
+        /// <summary>Initial value of Nutri's "meals with meat last week" question.</summary>
+        public System.Threading.Tasks.Task<int> SuggestPreviousMeatMealsAsync()
+        {
+            return _missionInputsService != null ? _missionInputsService.SuggestPreviousMeatMealsAsync() : System.Threading.Tasks.Task.FromResult(0);
         }
 
         /// <summary>Opens the Nutri check-in; with a code only that mission is asked.</summary>

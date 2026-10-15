@@ -191,6 +191,21 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void BuildProgressUrl_Start()
+        {
+            Assert.AreEqual("https://x/api/v1/missions/by-code/M.B1.3/progress/start?lang=es",
+                MissionService.BuildProgressUrl("https://x", "M.B1.3", "es", "/start"));
+        }
+
+        [Test]
+        public async Task StartMissionProgressAsync_OnEmptyCode_ReturnsError()
+        {
+            var (result, error) = await _service.StartMissionProgressAsync("");
+            Assert.IsNull(result);
+            Assert.IsNotNull(error);
+        }
+
+        [Test]
         public async Task RestartMissionProgressAsync_OnEmptyCode_ReturnsError()
         {
             var (result, error) = await _service.RestartMissionProgressAsync("");

@@ -181,5 +181,62 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("{\"failed\":true}", withFailed);
             StringAssert.DoesNotContain("failed", without);
         }
+
+        [Test]
+        public void IsStarted_NullProgress_IsFalse()
+        {
+            Assert.IsFalse(MissionProgressState.IsStarted(null));
+        }
+
+        [Test]
+        public void IsStarted_NotStartedWithoutStartTime_IsFalse()
+        {
+            var p = new MissionProgress { status = ProgressStatus.NotStarted, progress = 0f, startedAt = null };
+            Assert.IsFalse(MissionProgressState.IsStarted(p));
+        }
+
+        [Test]
+        public void IsStarted_InProgressAtZero_IsTrue()
+        {
+            // Backend #424: a started mission is IN_PROGRESS even at 0
+            var p = new MissionProgress { status = ProgressStatus.InProgress, progress = 0f, startedAt = null };
+            Assert.IsTrue(MissionProgressState.IsStarted(p));
+        }
+
+        [Test]
+        public void IsStarted_LegacyRestartedMission_IsTrue()
+        {
+            // Before #424 a restart returned NOT_STARTED with a new startedAt
+            var p = new MissionProgress { status = ProgressStatus.NotStarted, progress = 0f, startedAt = DateTime.UtcNow };
+            Assert.IsTrue(MissionProgressState.IsStarted(p));
+        }
+
+        [Test]
+        public void IsStarted_ResolvedWithoutStartTime_IsTrue()
+        {
+            Assert.IsTrue(MissionProgressState.IsStarted(new MissionProgress { status = ProgressStatus.Completed }));
+            Assert.IsTrue(MissionProgressState.IsStarted(new MissionProgress { status = ProgressStatus.Failed }));
+        }
+
+        [Test]
+        public void IsStarted_LegacyRowWithoutStatus_IsTrue()
+        {
+            Assert.IsTrue(MissionProgressState.IsStarted(new MissionProgress { progress = 0f }));
+        }
+
+        [Test]
+        public void MissionInputsRequest_PreviousMeatMeals_Json()
+        {
+            Assert.AreEqual("{\"inputs\":{\"previousMeatMeals\":5}}", Encoding.UTF8.GetString(MissionInputsRequest.PreviousMeatMeals(5).ToJsonBody()));
+            Assert.AreEqual("{\"inputs\":{\"previousMeatMeals\":0}}", Encoding.UTF8.GetString(MissionInputsRequest.PreviousMeatMeals(0).ToJsonBody()));
+        }
+
+        [Test]
+        public void MissionProgress_ReadsInputs()
+        {
+            var p = JsonConvert.DeserializeObject<MissionProgress>("{\"missionId\":\"x\",\"status\":\"IN_PROGRESS\",\"inputs\":{\"previousMeatMeals\":4}}");
+            Assert.AreEqual(4, p.inputs["previousMeatMeals"]);
+            Assert.IsNull(JsonConvert.DeserializeObject<MissionProgress>("{\"missionId\":\"x\",\"inputs\":null}").inputs);
+        }
     }
 }

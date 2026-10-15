@@ -238,8 +238,8 @@ namespace eu.foodmission.platform.Tests
         public async Task RestartMission_WhenFailed_RestartsAndUpdatesProgress()
         {
             await LoadAsync("M.B1.4", 0f, status: ProgressStatus.Failed);
-            var restarted = new MissionProgress { missionCode = "M.B1.4", status = ProgressStatus.NotStarted };
-            _failures.Setup(f => f.RestartAsync(It.IsAny<MissionProgress>())).ReturnsAsync((restarted, (ApiErrorResponse)null));
+            var restarted = new MissionProgress { missionCode = "M.B1.4", status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow };
+            _failures.Setup(f => f.RestartAsync(It.IsAny<MissionProgress>(), It.IsAny<int?>())).ReturnsAsync((restarted, (ApiErrorResponse)null));
 
             await _vm.RestartMissionAsync();
 
@@ -252,12 +252,12 @@ namespace eu.foodmission.platform.Tests
         public async Task RestartMission_WhenActive_GivesUpAndRestarts()
         {
             await LoadAsync("M.B1.4", 40f, status: ProgressStatus.InProgress);
-            _failures.Setup(f => f.GiveUpAndRestartAsync("M.B1.4"))
-                .ReturnsAsync((new MissionProgress { missionCode = "M.B1.4", status = ProgressStatus.NotStarted }, (ApiErrorResponse)null));
+            _failures.Setup(f => f.GiveUpAndRestartAsync("M.B1.4", null))
+                .ReturnsAsync((new MissionProgress { missionCode = "M.B1.4", status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow }, (ApiErrorResponse)null));
 
             await _vm.RestartMissionAsync();
 
-            _failures.Verify(f => f.GiveUpAndRestartAsync("M.B1.4"), Times.Once);
+            _failures.Verify(f => f.GiveUpAndRestartAsync("M.B1.4", null), Times.Once);
             Assert.AreEqual(0, _vm.ProgressPercent);
         }
 
@@ -266,7 +266,7 @@ namespace eu.foodmission.platform.Tests
         {
             await LoadAsync("M.B1.4", 40f, status: ProgressStatus.InProgress);
             var error = new ApiErrorResponse { message = "network" };
-            _failures.Setup(f => f.GiveUpAndRestartAsync("M.B1.4")).ReturnsAsync(((MissionProgress)null, error));
+            _failures.Setup(f => f.GiveUpAndRestartAsync("M.B1.4", null)).ReturnsAsync(((MissionProgress)null, error));
             _missions.Setup(m => m.GetMissionProgressAsync("M.B1.4", null))
                 .ReturnsAsync((new MissionProgress { missionCode = "M.B1.4", status = ProgressStatus.Failed }, (ApiErrorResponse)null));
 
@@ -286,6 +286,129 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(_vm.CanAct);
             Assert.IsFalse(_vm.CanRestartActive);
+        }
+
+        [Test]
+        public async Task NotStarted_CanStartButNotAct()
+        {
+            await LoadAsync("M.B1.4", status: ProgressStatus.NotStarted);
+
+            Assert.IsFalse(_vm.IsStarted);
+            Assert.IsTrue(_vm.CanStart);
+            Assert.IsFalse(_vm.CanAct);
+            Assert.IsFalse(_vm.ShowsSchedule);
+            Assert.IsFalse(_vm.CanRestartActive);
+            Assert.AreEqual(0, _vm.ModuleButtons.Count);
+        }
+
+        [Test]
+        public async Task NotStarted_OutsideTheCurrentQuest_CannotStart()
+        {
+            await LoadAsync("M.A1.1", status: ProgressStatus.NotStarted);
+
+            Assert.IsFalse(_vm.CanStart);
+            Assert.IsTrue(_vm.ShowsNotCurrentQuest);
+        }
+
+        [Test]
+        public async Task StartedAtZero_CanAct()
+        {
+            await LoadAsync("M.B1.4", status: ProgressStatus.InProgress, startedLocal: Started);
+
+            Assert.IsTrue(_vm.IsStarted);
+            Assert.IsFalse(_vm.CanStart);
+            Assert.IsTrue(_vm.CanAct);
+        }
+
+        [Test]
+        public async Task StartMissionAsync_Success_UsesTheReturnedProgress()
+        {
+            await LoadAsync("M.B1.4", status: ProgressStatus.NotStarted);
+            var started = new MissionProgress { missionCode = "M.B1.4", status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow };
+            _missions.Setup(m => m.StartMissionProgressAsync("M.B1.4", null, null)).ReturnsAsync((started, (ApiErrorResponse)null));
+
+            Assert.IsTrue(await _vm.StartMissionAsync(5));
+
+            _missions.Verify(m => m.StartMissionProgressAsync("M.B1.4", null, null), Times.Once, "only M.B1.3 sends inputs");
+            Assert.IsTrue(_vm.CanAct);
+            Assert.IsFalse(_vm.CanStart);
+        }
+
+        [Test]
+        public async Task StartMissionAsync_Error_ShowsItAndReloads()
+        {
+            await LoadAsync("M.B1.4", status: ProgressStatus.NotStarted);
+            var error = new ApiErrorResponse { message = "x" };
+            _missions.Setup(m => m.StartMissionProgressAsync("M.B1.4", null, null)).ReturnsAsync(((MissionProgress)null, error));
+
+            Assert.IsFalse(await _vm.StartMissionAsync(null));
+            Assert.AreSame(error, _vm.ErrorDetail);
+            _missions.Verify(m => m.GetMissionProgressAsync("M.B1.4", null), Times.Exactly(2));
+        }
+
+        [Test]
+        public async Task StartMissionAsync_WhileStarting_IsIgnored()
+        {
+            await LoadAsync("M.B1.4", status: ProgressStatus.NotStarted);
+            var pending = new TaskCompletionSource<(MissionProgress, ApiErrorResponse)>();
+            _missions.Setup(m => m.StartMissionProgressAsync("M.B1.4", null, null)).Returns(pending.Task);
+
+            Task<bool> first = _vm.StartMissionAsync(null);
+            bool second = await _vm.StartMissionAsync(null);
+            pending.SetResult((new MissionProgress { status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow }, null));
+            await first;
+
+            Assert.IsFalse(second);
+            _missions.Verify(m => m.StartMissionProgressAsync("M.B1.4", null, null), Times.Once);
+        }
+
+        [Test]
+        public async Task RestartMission_WhenFailed_PassesTheMeatCount()
+        {
+            _quests.Setup(q => q.GetQuestAsync("q1", null)).ReturnsAsync((new Quest
+            {
+                id = "q1",
+                items = new[] { new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B1.3" } }
+            }, (ApiErrorResponse)null));
+            await LoadAsync("M.B1.3", 0f, status: ProgressStatus.Failed);
+            _failures.Setup(f => f.RestartAsync(It.IsAny<MissionProgress>(), 2))
+                .ReturnsAsync((new MissionProgress { missionCode = "M.B1.3", status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow }, (ApiErrorResponse)null));
+
+            await _vm.RestartMissionAsync(2);
+
+            _failures.Verify(f => f.RestartAsync(It.IsAny<MissionProgress>(), 2), Times.Once);
+            Assert.IsTrue(_vm.CanAct);
+        }
+
+        [Test]
+        public async Task ProgressLoadError_DoesNotOfferStart()
+        {
+            _missions.Setup(m => m.GetMissionAsync("M.B1.4", null)).ReturnsAsync((new Mission { id = "id", code = "M.B1.4", title = "T", level = "BEGINNER" }, (ApiErrorResponse)null));
+            _missions.Setup(m => m.GetMissionProgressAsync("M.B1.4", null)).ReturnsAsync(((MissionProgress)null, new ApiErrorResponse { message = "network" }));
+
+            await _vm.LoadMissionAsync("M.B1.4");
+
+            Assert.IsFalse(_vm.CanStart, "unknown progress: the mission may be running");
+            Assert.IsTrue(_vm.CanAct);
+        }
+
+        [Test]
+        public async Task RestartMission_WhenGivingUpFails_ReturnsFalse()
+        {
+            await LoadAsync("M.B1.4", 40f, status: ProgressStatus.InProgress, startedLocal: Started);
+            _failures.Setup(f => f.GiveUpAndRestartAsync("M.B1.4", null)).ReturnsAsync(((MissionProgress)null, new ApiErrorResponse { message = "x" }));
+
+            Assert.IsFalse(await _vm.RestartMissionAsync());
+        }
+
+        [Test]
+        public async Task RestartMission_WhenItWorks_ReturnsTrue()
+        {
+            await LoadAsync("M.B1.4", 0f, status: ProgressStatus.Failed);
+            _failures.Setup(f => f.RestartAsync(It.IsAny<MissionProgress>(), It.IsAny<int?>()))
+                .ReturnsAsync((new MissionProgress { missionCode = "M.B1.4", status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow }, (ApiErrorResponse)null));
+
+            Assert.IsTrue(await _vm.RestartMissionAsync());
         }
     }
 }

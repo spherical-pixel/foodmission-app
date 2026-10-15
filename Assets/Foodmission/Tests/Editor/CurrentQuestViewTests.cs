@@ -1,4 +1,7 @@
+using System;
 using System.Linq;
+
+using Newtonsoft.Json;
 
 using NUnit.Framework;
 
@@ -101,6 +104,41 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(q1.Completed);
             Assert.IsTrue(f1.Completed);
             Assert.IsFalse(unknown.Completed);
+        }
+
+        [Test]
+        public void CurrentQuestItem_StartedAtReported_OnlyWhenTheFieldIsSent()
+        {
+            CurrentQuestItem legacy = JsonConvert.DeserializeObject<CurrentQuestItem>("{\"contentType\":\"MISSION\",\"contentCode\":\"M1\",\"status\":\"NOT_STARTED\"}");
+            CurrentQuestItem notStarted = JsonConvert.DeserializeObject<CurrentQuestItem>("{\"contentType\":\"MISSION\",\"contentCode\":\"M1\",\"status\":\"NOT_STARTED\",\"startedAt\":null}");
+            CurrentQuestItem started = JsonConvert.DeserializeObject<CurrentQuestItem>("{\"contentType\":\"MISSION\",\"contentCode\":\"M1\",\"status\":\"IN_PROGRESS\",\"startedAt\":\"2026-10-15T08:00:00Z\"}");
+
+            Assert.IsFalse(legacy.StartedAtReported);
+            Assert.IsTrue(notStarted.StartedAtReported);
+            Assert.IsNull(notStarted.startedAt);
+            Assert.IsTrue(started.StartedAtReported);
+            Assert.IsNotNull(started.startedAt);
+        }
+
+        [Test]
+        public void StatusLookup_MissionWithoutStartTime_IsNotStarted()
+        {
+            var current = new CurrentQuest
+            {
+                items = new[]
+                {
+                    new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = "M1", status = CurrentQuestItemStatus.NotStarted, startedAt = null },
+                    new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = "M2", status = CurrentQuestItemStatus.InProgress, startedAt = DateTime.UtcNow },
+                    new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = "M3", status = CurrentQuestItemStatus.NotStarted },
+                    new CurrentQuestItem { contentType = QuestContentType.Quiz, contentCode = "Q1", status = CurrentQuestItemStatus.NotStarted, startedAt = null },
+                }
+            };
+            Func<QuestItem, QuestItemStatus> statusOf = CurrentQuestView.StatusLookup(current);
+
+            Assert.IsTrue(statusOf(new QuestItem { contentType = QuestContentType.Mission, contentCode = "M1" }).NotStarted);
+            Assert.IsFalse(statusOf(new QuestItem { contentType = QuestContentType.Mission, contentCode = "M2" }).NotStarted);
+            Assert.IsFalse(statusOf(new QuestItem { contentType = QuestContentType.Mission, contentCode = "M3" }).NotStarted, "backend without #424");
+            Assert.IsFalse(statusOf(new QuestItem { contentType = QuestContentType.Quiz, contentCode = "Q1" }).NotStarted, "only missions");
         }
     }
 }

@@ -33,6 +33,10 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private ApiErrorResponse _errorDetail;
 
+        private bool _isStarting;
+        /// <summary>The progress couldn't be read: the mission may be running, so don't offer Start (nor hide its actions).</summary>
+        private bool _progressUnknown;
+
         private MissionInteraction _interaction = MissionInteraction.Unknown;
         public MissionInteraction Interaction
         {
@@ -88,7 +92,11 @@ namespace eu.foodmission.platform
         public int ProgressPercent => IsFailed ? 0 : (int)Math.Clamp(MissionProgress?.progress ?? 0f, 0f, 100f);
         public bool IsCompleted => MissionProgressState.IsCompleted(MissionProgress);
         public bool IsPendingRule => Mission != null && Interaction.Status == MissionInteractionStatus.PendingRule;
-        public bool CanAct => Mission != null && !IsCompleted && !IsFailed && !IsPendingRule && IsCurrentQuestMission;
+        /// <summary>Since backend #424 choosing the quest starts nothing: the user starts each mission.</summary>
+        public bool IsStarted => _progressUnknown || MissionProgressState.IsStarted(MissionProgress);
+        public bool CanStart => Mission != null && IsCurrentQuestMission && !IsPendingRule && !IsStarted;
+        public bool IsStarting => _isStarting;
+        public bool CanAct => Mission != null && IsStarted && !IsCompleted && !IsFailed && !IsPendingRule && IsCurrentQuestMission;
         public bool ShowsNotCurrentQuest => Mission != null && !IsCompleted && !IsFailed && !IsPendingRule && !IsCurrentQuestMission;
         /// <summary>Rules only run for the current quest, so a failed mission is restarted only from there.</summary>
         public bool CanRestartFailed => Mission != null && IsFailed && IsCurrentQuestMission;
@@ -139,7 +147,8 @@ namespace eu.foodmission.platform
                 Mission = mission;
                 Interaction = MissionInteractionCatalog.Get(mission?.code ?? codeOrId);
 
-                var (progress, _) = await _missionService.GetMissionProgressAsync(mission?.code ?? codeOrId);
+                var (progress, progressError) = await _missionService.GetMissionProgressAsync(mission?.code ?? codeOrId);
+                _progressUnknown = progressError != null;
                 MissionProgress = progress;
 
                 IsCurrentQuestMission = await IsInCurrentQuestAsync(mission?.code ?? codeOrId);
@@ -199,13 +208,65 @@ namespace eu.foodmission.platform
                 string.Equals(i.contentCode, missionCode, StringComparison.OrdinalIgnoreCase)) == true;
         }
 
-        /// <summary>Restarts the failed mission, or gives up and restarts the active one. On error the progress is reloaded.</summary>
-        public async Task RestartMissionAsync()
+        /// <summary>
+        /// Starts the mission; M.B1.3 sends the meals with meat of last week (0 = meat-free week). On error the progress
+        /// is reloaded, since the quest may have changed meanwhile. A second call while one runs is ignored.
+        /// </summary>
+        public async Task<bool> StartMissionAsync(int? previousMeatMeals)
+        {
+            string code = Mission?.code;
+            if (string.IsNullOrEmpty(code) || !CanStart || _isStarting)
+            {
+                return false;
+            }
+
+            _isStarting = true;
+            OnPropertyChanged(nameof(IsStarting));
+            ErrorDetail = null;
+            try
+            {
+                var (started, error) = await _missionService.StartMissionProgressAsync(code, MissionInputs.For(code, previousMeatMeals));
+                if (error != null)
+                {
+                    var (reloaded, _) = await _missionService.GetMissionProgressAsync(code);
+                    if (reloaded != null)
+                    {
+                        MissionProgress = reloaded;
+                    }
+                    ErrorDetail = error;
+                    return false;
+                }
+
+                if (started != null)
+                {
+                    MissionProgress = started;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[MissionDetailViewModel] StartMissionAsync error: {ex.Message}");
+                ErrorDetail = new ApiErrorResponse { message = ex.Message };
+                return false;
+            }
+            finally
+            {
+                _isStarting = false;
+                OnPropertyChanged(nameof(IsStarting));
+                NotifyStateChanged();
+            }
+        }
+
+        /// <summary>
+        /// Restarts the failed mission, or gives up and restarts the active one; M.B1.3 sends the meals with meat of
+        /// last week for the new attempt. On error the progress is reloaded.
+        /// </summary>
+        public async Task<bool> RestartMissionAsync(int? previousMeatMeals = null)
         {
             string code = Mission?.code;
             if (_failureService == null || string.IsNullOrEmpty(code) || (!CanRestartFailed && !CanRestartActive))
             {
-                return;
+                return false;
             }
 
             IsLoading = true;
@@ -213,8 +274,8 @@ namespace eu.foodmission.platform
             try
             {
                 var (result, error) = CanRestartFailed
-                    ? await _failureService.RestartAsync(MissionProgress)
-                    : await _failureService.GiveUpAndRestartAsync(code);
+                    ? await _failureService.RestartAsync(MissionProgress, MissionInputs.For(code, previousMeatMeals))
+                    : await _failureService.GiveUpAndRestartAsync(code, MissionInputs.For(code, previousMeatMeals));
 
                 if (error != null)
                 {
@@ -225,15 +286,17 @@ namespace eu.foodmission.platform
                         MissionProgress = reloaded;
                     }
                     ErrorDetail = error;
-                    return;
+                    return false;
                 }
 
                 MissionProgress = result;
+                return true;
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[MissionDetailViewModel] RestartMissionAsync error: {ex.Message}");
                 ErrorDetail = new ApiErrorResponse { message = ex.Message };
+                return false;
             }
             finally
             {
@@ -250,6 +313,8 @@ namespace eu.foodmission.platform
             OnPropertyChanged(nameof(CanRestartFailed));
             OnPropertyChanged(nameof(CanRestartActive));
             OnPropertyChanged(nameof(IsPendingRule));
+            OnPropertyChanged(nameof(IsStarted));
+            OnPropertyChanged(nameof(CanStart));
             OnPropertyChanged(nameof(CanAct));
             OnPropertyChanged(nameof(ShowsNotCurrentQuest));
             OnPropertyChanged(nameof(AutoModules));

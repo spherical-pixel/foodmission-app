@@ -4377,6 +4377,38 @@ MonoBehaviour:
     m_Localized: Zoek een product
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: Starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: Deze missie is nog niet begonnen. De 7 dagen beginnen wanneer je
+      op Starten tikt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: 'Voordat we beginnen: hoeveel van je maaltijden vorige week bevatten
+      vlees?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: Gefeliciteerd! Je hebt vorige week geen vlees gegeten. Je doel is
+      nu om dat de komende 7 dagen zo te houden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: Missie {0} starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "Wil je \u201C{0}\u201D nu starten?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "Weet je zeker dat je \u201C{0}\u201D opnieuw wilt starten?\r\nJe
+      verliest je huidige voortgang."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

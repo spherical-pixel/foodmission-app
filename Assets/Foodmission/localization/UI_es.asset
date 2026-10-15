@@ -4361,6 +4361,38 @@ MonoBehaviour:
     m_Localized: Buscar un producto
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: Empezar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: "Esta misi\xF3n a\xFAn no ha empezado. Sus 7 d\xEDas comienzan cuando
+      pulses Empezar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: "Antes de empezar: \xBFcu\xE1ntas de tus comidas de la semana pasada
+      llevaban carne?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: "\xA1Enhorabuena! La semana pasada no comiste carne. Ahora tu objetivo
+      es seguir as\xED los pr\xF3ximos 7 d\xEDas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: "Empezar la misi\xF3n {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "\xBFQuieres empezar \xAB{0}\xBB ahora?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "\xBFSeguro que quieres reiniciar \xAB{0}\xBB?\r\nPerder\xE1s el
+      progreso actual."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -121,5 +121,15 @@ namespace eu.foodmission.platform.Tests
                 Assert.IsTrue(keys.Contains(key), $"Missing UI.csv key {key}");
             }
         }
+
+        [Test]
+        public void MissionStartKeys_ExistInUiCsv()
+        {
+            HashSet<string> keys = UiKeys();
+            foreach (string key in new[] { "MISSION_START", "MISSION_NOT_STARTED_HINT", "MISSION_START_MEAT_QUESTION", "MISSION_START_MEAT_NONE", "MISSION_START_A11Y", "MISSION_START_CONFIRM", "MISSION_RESTART_FAILED_CONFIRM", "MISSION_BTN_RESTART", "TXT_OK", "TXT_CANCEL" })
+            {
+                Assert.IsTrue(keys.Contains(key), key + " missing in UI.csv");
+            }
+        }
     }
 }
