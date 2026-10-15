@@ -1330,15 +1330,31 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task RestartFailedMission_PassesTheMeatCount()
+        {
+            var failures = new Mock<IMissionFailureService>();
+            var failed = new MissionProgress { missionCode = "M.B1.3", status = ProgressStatus.Failed };
+            var restarted = new MissionProgress { missionCode = "M.B1.3", status = ProgressStatus.InProgress };
+            failures.Setup(f => f.RestartAsync(failed, 4)).ReturnsAsync((restarted, (ApiErrorResponse)null));
+            var vm = CreateWithFailures(failures.Object);
+
+            var (result, error) = await vm.RestartFailedMissionAsync(failed, 4);
+            Assert.IsNull(error);
+            Assert.AreSame(restarted, result);
+            failures.Verify(f => f.RestartAsync(failed, 4), Times.Once);
+            vm.Dispose();
+        }
+
+        [Test]
         public async Task RestartFailedMission_RestartsThroughService_AndReturnsError()
         {
             var failures = new Mock<IMissionFailureService>();
             var failed = new MissionProgress { missionCode = "M.A1.1", status = ProgressStatus.Failed };
             var error = new ApiErrorResponse { message = "x" };
-            failures.Setup(f => f.RestartAsync(failed)).ReturnsAsync(((MissionProgress)null, error));
+            failures.Setup(f => f.RestartAsync(failed, null)).ReturnsAsync(((MissionProgress)null, error));
             var vm = CreateWithFailures(failures.Object);
 
-            Assert.AreSame(error, await vm.RestartFailedMissionAsync(failed));
+            Assert.AreSame(error, (await vm.RestartFailedMissionAsync(failed)).Error);
             vm.Dispose();
         }
 

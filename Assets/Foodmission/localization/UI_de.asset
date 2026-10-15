@@ -4380,6 +4380,38 @@ MonoBehaviour:
     m_Localized: Produkt suchen
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: Starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: Diese Mission hat noch nicht begonnen. Ihre 7 Tage beginnen, wenn
+      du auf Starten tippst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: 'Bevor wir anfangen: Wie viele deiner Mahlzeiten letzte Woche enthielten
+      Fleisch?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: "Gl\xFCckwunsch! Du hast letzte Woche kein Fleisch gegessen. Dein
+      Ziel ist jetzt, das die n\xE4chsten 7 Tage beizubehalten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: Mission {0} starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "M\xF6chtest du \u201E{0}\u201C jetzt starten?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "M\xF6chtest du \u201E{0}\u201C wirklich neu starten?\r\nDein aktueller
+      Fortschritt geht verloren."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

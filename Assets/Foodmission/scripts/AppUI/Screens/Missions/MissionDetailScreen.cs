@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Threading.Tasks;
 
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
@@ -45,6 +46,10 @@ namespace eu.foodmission.platform
         private Text _failedText;
         private FMButton _btnRestartFailed;
         private FMButton _btnRestartActive;
+        private VisualElement _startBox;
+        private FMButton _btnStartMission;
+        private VisualElement _progressRow;
+        private IMissionInputsService _inputsService;
         private FMButton _btnTellNutri;
         private FMButton _btnLater;
         private FMNutriView _nutriView;
@@ -63,6 +68,7 @@ namespace eu.foodmission.platform
 
             _audioService = App.current?.services?.GetService<IAudioService>();
             _nutriService = App.current?.services?.GetService<INutriService>();
+            _inputsService = App.current?.services?.GetService<IMissionInputsService>();
             CacheUIElements();
         }
 
@@ -92,6 +98,9 @@ namespace eu.foodmission.platform
             _failedText = contentContainer.Q<Text>("mission-failed-text");
             _btnRestartFailed = contentContainer.Q<FMButton>("btn-restart-failed");
             _btnRestartActive = contentContainer.Q<FMButton>("btn-restart-active");
+            _startBox = contentContainer.Q<VisualElement>("mission-start-box");
+            _btnStartMission = contentContainer.Q<FMButton>("btn-start-mission");
+            _progressRow = contentContainer.Q<VisualElement>("mission-progress");
 
             if (_btnTellNutri != null)
             {
@@ -108,6 +117,10 @@ namespace eu.foodmission.platform
             if (_btnRestartActive != null)
             {
                 _btnRestartActive.clicked += OnRestartActiveClicked;
+            }
+            if (_btnStartMission != null)
+            {
+                _btnStartMission.clicked += OnStartMissionClicked;
             }
         }
 
@@ -289,6 +302,9 @@ namespace eu.foodmission.platform
 
             _completedBox?.EnableInClassList("hidden", !_viewModel.IsCompleted);
             _failedBox?.EnableInClassList("hidden", !_viewModel.IsFailed);
+            _startBox?.EnableInClassList("hidden", !_viewModel.CanStart);
+            _btnStartMission?.SetEnabled(!_viewModel.IsStarting);
+            _progressRow?.EnableInClassList("hidden", _viewModel.CanStart);
             // "You can start it again" only where it can be restarted (the current quest)
             _failedText?.EnableInClassList("hidden", !_viewModel.CanRestartFailed);
             _btnRestartFailed?.EnableInClassList("hidden", !_viewModel.CanRestartFailed);
@@ -353,10 +369,49 @@ namespace eu.foodmission.platform
             _navController?.PopBackStack();
         }
 
-        private void OnRestartFailedClicked()
+        private async void OnStartMissionClicked()
+        {
+            if (_viewModel == null || !_viewModel.CanStart || _viewModel.IsStarting)
+            {
+                return;
+            }
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            string code = _viewModel.Mission?.code;
+            try
+            {
+                MissionInputsAnswer answer = await MissionInputsDialog.AskAsync(code, SuggestAsync, "MISSION_START");
+                if (!answer.Proceed || _viewModel == null)
+                {
+                    return;
+                }
+                if (await _viewModel.StartMissionAsync(answer.PreviousMeatMeals) && MissionInputs.SetsMeatFreeGoal(_viewModel?.MissionProgress))
+                {
+                    await MissionInputsDialog.ShowMeatFreeGoalAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"[MissionDetailScreen] Start error: {ex.Message}");
+            }
+        }
+
+        private async void OnRestartFailedClicked()
         {
             _audioService?.PlaySfx(SfxType.PositiveButton);
-            _ = _viewModel?.RestartMissionAsync();
+            try
+            {
+                // M.B1.3's question already asks before restarting
+                string code = _viewModel?.Mission?.code;
+                if (!MissionInputs.AsksPreviousMeatMeals(code) && !await MissionInputsDialog.ConfirmRestartFailedAsync(_viewModel?.Mission?.title ?? code))
+                {
+                    return;
+                }
+                RestartWithInputs();
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"[MissionDetailScreen] Restart confirm error: {ex.Message}");
+            }
         }
 
         private void OnRestartActiveClicked()
@@ -368,9 +423,36 @@ namespace eu.foodmission.platform
                 () =>
                 {
                     _audioService?.PlaySfx(SfxType.PositiveButton);
-                    _ = _viewModel?.RestartMissionAsync();
+                    RestartWithInputs();
                 },
                 confirmLabel: "@UI:MISSION_BTN_RESTART");
+        }
+
+        /// <summary>M.B1.3 asks last week's meals with meat again for the new attempt.</summary>
+        private async void RestartWithInputs()
+        {
+            string code = _viewModel?.Mission?.code;
+            try
+            {
+                MissionInputsAnswer answer = await MissionInputsDialog.AskAsync(code, SuggestAsync, "MISSION_BTN_RESTART");
+                if (!answer.Proceed || _viewModel == null)
+                {
+                    return;
+                }
+                if (await _viewModel.RestartMissionAsync(answer.PreviousMeatMeals) && MissionInputs.SetsMeatFreeGoal(_viewModel?.MissionProgress))
+                {
+                    await MissionInputsDialog.ShowMeatFreeGoalAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"[MissionDetailScreen] Restart error: {ex.Message}");
+            }
+        }
+
+        private Task<int> SuggestAsync()
+        {
+            return _inputsService != null ? _inputsService.SuggestPreviousMeatMealsAsync() : Task.FromResult(0);
         }
 
         private void UpdateApiErrorState()

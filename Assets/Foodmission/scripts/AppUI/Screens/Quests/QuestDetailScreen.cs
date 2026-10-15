@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
 using MainraGames;
 using Unity.AppUI.MVVM;
@@ -31,6 +32,7 @@ namespace eu.foodmission.platform
 
         private IBannerService _bannerService;
         private IAudioService _audioService;
+        private IMissionInputsService _inputsService;
 
         public QuestDetailScreen()
         {
@@ -40,6 +42,7 @@ namespace eu.foodmission.platform
 
             _bannerService = App.current?.services?.GetService<IBannerService>();
             _audioService = App.current?.services?.GetService<IAudioService>();
+            _inputsService = App.current?.services?.GetService<IMissionInputsService>();
 
             CacheUIElements();
         }
@@ -256,6 +259,22 @@ namespace eu.foodmission.platform
                 label.AddToClassList("fm-quest-timeline-label");
                 row.Add(label);
 
+                if (act.CanStart)
+                {
+                    var capturedStart = act;
+                    var startButton = new IconButton { icon = "play", quiet = true, size = Size.L };
+                    startButton.AddToClassList("fm-quest-timeline-start");
+                    startButton.tooltip = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_START_A11Y", new object[] { act.Title });
+                    // The row opens the mission; this button only starts it
+                    startButton.RegisterCallback<ClickEvent>(evt => evt.StopPropagation());
+                    startButton.clicked += () =>
+                    {
+                        _audioService?.PlaySfx(SfxType.PositiveButton);
+                        StartFromTimeline(capturedStart);
+                    };
+                    row.Add(startButton);
+                }
+
                 if (!string.IsNullOrEmpty(act.ProgressLabel))
                 {
                     var percent = new Unity.AppUI.UI.Text();
@@ -286,6 +305,35 @@ namespace eu.foodmission.platform
                 }
 
                 _activitiesContainer.Add(row);
+            }
+        }
+
+        private async void StartFromTimeline(QuestActivityDisplayItem activity)
+        {
+            try
+            {
+                string code = activity.MissionCode;
+                // A tap on a small icon starts a 7-day window: confirm it (M.B1.3's question already asks)
+                if (!MissionInputs.AsksPreviousMeatMeals(code) && !await MissionInputsDialog.ConfirmStartAsync(activity.Title))
+                {
+                    return;
+                }
+                MissionInputsAnswer answer = await MissionInputsDialog.AskAsync(
+                    code,
+                    () => _inputsService != null ? _inputsService.SuggestPreviousMeatMealsAsync() : Task.FromResult(0),
+                    "MISSION_START");
+                if (!answer.Proceed || _viewModel == null)
+                {
+                    return;
+                }
+                if (MissionInputs.SetsMeatFreeGoal(await _viewModel.StartMissionAsync(activity, answer.PreviousMeatMeals)))
+                {
+                    await MissionInputsDialog.ShowMeatFreeGoalAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[QuestDetailScreen] StartFromTimeline error: {ex.Message}");
             }
         }
 

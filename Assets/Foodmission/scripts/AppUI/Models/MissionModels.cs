@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -54,6 +55,8 @@ namespace eu.foodmission.platform
         public ContentReward reward;
         /// <summary>When the current attempt started (set when the quest is selected, or at a restart). Null on rows created before pr-402.</summary>
         public DateTime? startedAt;
+        /// <summary>Numbers the user set when starting (backend #424), e.g. previousMeatMeals for M.B1.3; null if none.</summary>
+        public Dictionary<string, int> inputs;
     }
 
     public class MissionFilterParams
@@ -82,6 +85,28 @@ namespace eu.foodmission.platform
                 NullValueHandling = NullValueHandling.Ignore
             });
             return Encoding.UTF8.GetBytes(json);
+        }
+    }
+
+    /// <summary>
+    /// Body of POST …/progress/start and …/progress/restart for missions whose rule asks for numbers
+    /// (only M.B1.3: previousMeatMeals, 0–21). Other missions take no body: the backend rejects inputs there.
+    /// </summary>
+    public class MissionInputsRequest
+    {
+        public const string PreviousMeatMealsKey = "previousMeatMeals";
+
+        [JsonProperty("inputs")]
+        public Dictionary<string, int> inputs;
+
+        public static MissionInputsRequest PreviousMeatMeals(int count)
+        {
+            return new MissionInputsRequest { inputs = new Dictionary<string, int> { { PreviousMeatMealsKey, count } } };
+        }
+
+        public byte[] ToJsonBody()
+        {
+            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this));
         }
     }
 }

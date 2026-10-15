@@ -4364,6 +4364,38 @@ MonoBehaviour:
     m_Localized: Cerca un prodotto
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Localized: Inizia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Localized: "Questa missione non \xE8 ancora iniziata. I suoi 7 giorni partono
+      quando tocchi Inizia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Localized: 'Prima di iniziare: quanti dei tuoi pasti della settimana scorsa
+      contenevano carne?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Localized: "Congratulazioni! La settimana scorsa non hai mangiato carne. Ora
+      il tuo obiettivo \xE8 continuare cos\xEC per i prossimi 7 giorni."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Localized: Inizia la missione {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Localized: "Vuoi iniziare \xAB{0}\xBB adesso?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Localized: "Vuoi davvero ricominciare \xAB{0}\xBB?\r\nPerderai i progressi
+      attuali."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

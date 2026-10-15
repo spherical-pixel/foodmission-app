@@ -59,7 +59,17 @@ namespace eu.foodmission.platform
 
                     if (choice == Restart)
                     {
-                        await RestartAsync(host, failed);
+                        // M.B1.3 asks last week's meals with meat again for the new attempt
+                        MissionInputsAnswer answer = await MissionInputsDialog.AskAsync(failed.missionCode, _viewModel.SuggestPreviousMeatMealsAsync, "MISSION_BTN_RESTART");
+                        if (answer.Proceed)
+                        {
+                            await RestartAsync(host, failed, answer.PreviousMeatMeals);
+                        }
+                        else
+                        {
+                            // Cancelled the question: told once, like "Later"
+                            _viewModel.AcknowledgeFailedMission(failed);
+                        }
                     }
                     else
                     {
@@ -75,11 +85,11 @@ namespace eu.foodmission.platform
                 return HomePromptResult.Dismissed;
             }
 
-            private async Task RestartAsync(IHomePromptHost host, MissionProgress failed)
+            private async Task RestartAsync(IHomePromptHost host, MissionProgress failed, int? previousMeatMeals)
             {
                 try
                 {
-                    ApiErrorResponse error = await _viewModel.RestartFailedMissionAsync(failed);
+                    var (restarted, error) = await _viewModel.RestartFailedMissionAsync(failed, previousMeatMeals);
                     if (!host.IsActive)
                     {
                         return;
@@ -90,6 +100,10 @@ namespace eu.foodmission.platform
                     if (error != null)
                     {
                         await HomePromptDialogs.ShowApiErrorAsync(host.DialogAnchor, error);
+                    }
+                    else if (MissionInputs.SetsMeatFreeGoal(restarted))
+                    {
+                        await MissionInputsDialog.ShowMeatFreeGoalAsync();
                     }
                 }
                 catch (Exception ex)

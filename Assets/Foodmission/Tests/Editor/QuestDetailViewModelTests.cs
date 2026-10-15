@@ -729,5 +729,88 @@ namespace eu.foodmission.platform.Tests
             _mockGamification.Verify(g => g.GetCurrentQuestAsync(), Times.Never);
             _mockQuestService.Verify(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()), Times.Once);
         }
+
+        private void SetCurrentQuestWithMission(DateTime? startedAt, bool reportStart = true)
+        {
+            AppState state = _storeService.GetAppState();
+            state.userCurrentQuestId = "q-100";
+            _storeService.SetAppState(state);
+            _mockDimensionService.Setup(s => s.GetDimension("DIET_CHANGES")).Returns(_mockDimension);
+            var mission = new CurrentQuestItem
+            {
+                contentType = QuestContentType.Mission, contentCode = "M.B1.3", title = "Less meat",
+                status = startedAt.HasValue ? CurrentQuestItemStatus.InProgress : CurrentQuestItemStatus.NotStarted,
+                progress = 0f, sortOrder = 1
+            };
+            if (reportStart)
+            {
+                mission.startedAt = startedAt;
+            }
+            _mockGamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync((new CurrentQuest
+            {
+                questId = "q-100", questCode = "QUEST.DIET.1", name = "Diet", dimensionCode = "DIET_CHANGES", level = "BEGINNER",
+                items = new[] { mission },
+            }, (ApiErrorResponse)null));
+        }
+
+        [Test]
+        public async Task CurrentQuest_MissionNotStarted_CanStartWithoutPercent()
+        {
+            SetCurrentQuestWithMission(null);
+
+            await _vm.LoadQuestAsync("q-100");
+
+            Assert.IsTrue(_vm.Activities[0].CanStart);
+            Assert.IsNull(_vm.Activities[0].ProgressLabel);
+        }
+
+        [Test]
+        public async Task CurrentQuest_MissionStarted_ShowsPercent()
+        {
+            SetCurrentQuestWithMission(DateTime.UtcNow);
+
+            await _vm.LoadQuestAsync("q-100");
+
+            Assert.IsFalse(_vm.Activities[0].CanStart);
+            Assert.AreEqual("0%", _vm.Activities[0].ProgressLabel);
+        }
+
+        [Test]
+        public async Task CurrentQuest_BackendWithoutStartTimes_NeverOffersStart()
+        {
+            SetCurrentQuestWithMission(null, reportStart: false);
+
+            await _vm.LoadQuestAsync("q-100");
+
+            Assert.IsFalse(_vm.Activities[0].CanStart);
+        }
+
+        [Test]
+        public async Task StartMissionAsync_SendsTheMeatCount_AndReloads()
+        {
+            SetCurrentQuestWithMission(null);
+            await _vm.LoadQuestAsync("q-100");
+            var started = new MissionProgress { missionCode = "M.B1.3", status = ProgressStatus.InProgress, startedAt = DateTime.UtcNow };
+            _mockMissionService.Setup(m => m.StartMissionProgressAsync("M.B1.3", 3, null)).ReturnsAsync((started, (ApiErrorResponse)null));
+
+            Assert.AreSame(started, await _vm.StartMissionAsync(_vm.Activities[0], 3));
+
+            _mockMissionService.Verify(m => m.StartMissionProgressAsync("M.B1.3", 3, null), Times.Once);
+            _mockGamification.Verify(g => g.GetCurrentQuestAsync(), Times.Exactly(2));
+        }
+
+        [Test]
+        public async Task StartMissionAsync_Error_IsKeptAfterTheReload()
+        {
+            SetCurrentQuestWithMission(null);
+            await _vm.LoadQuestAsync("q-100");
+            var error = new ApiErrorResponse { message = "x" };
+            _mockMissionService.Setup(m => m.StartMissionProgressAsync("M.B1.3", null, null)).ReturnsAsync(((MissionProgress)null, error));
+
+            Assert.IsNull(await _vm.StartMissionAsync(_vm.Activities[0], null));
+
+            Assert.AreSame(error, _vm.ErrorDetail);
+            _mockGamification.Verify(g => g.GetCurrentQuestAsync(), Times.Exactly(2));
+        }
     }
 }

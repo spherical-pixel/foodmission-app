@@ -60,6 +60,18 @@ namespace eu.foodmission.platform.Tests
             _service = new CheckInService(_store, _quests.Object, _missions.Object, _mealLogs.Object, _gamification.Object) { Clock = () => Now };
         }
 
+        private void StartMissionToo(string code, DateTime startedLocal)
+        {
+            // Since backend #424 only started missions are active: give the mission a started row
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.A1.3", missionTitle = "Legumes", progress = 20, startedAt = Now.Date.AddDays(-1).ToUniversalTime() },
+                new MissionProgress { missionCode = "M.A5.4", missionTitle = "FIFO", progress = 0, startedAt = Now.AddDays(-2).ToUniversalTime() },
+                new MissionProgress { missionCode = "M.B2.1", missionTitle = "Origin", progress = 100, completed = true },
+                new MissionProgress { missionCode = code, missionTitle = code, progress = 0, status = ProgressStatus.InProgress, startedAt = startedLocal.ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+        }
+
         private void SetQuest(params string[] codes)
         {
             var items = codes.Select(c => new QuestItem { contentType = QuestContentType.Mission, contentCode = c }).ToArray();
@@ -153,6 +165,7 @@ namespace eu.foodmission.platform.Tests
         public async Task LoadPlan_AsksRecentEventsOnlyForDayStepTypes()
         {
             SetQuest("M.A5.4", "M.A6.1", "M.B2.1");
+            StartMissionToo("M.A6.1", Now.Date.AddDays(-3));
 
             await _service.LoadPlanAsync();
 
@@ -173,6 +186,7 @@ namespace eu.foodmission.platform.Tests
         public async Task LoadPlan_RecordedValues_UpperCasedAndNonArraysIgnored()
         {
             SetQuest("M.A6.1");
+            StartMissionToo("M.A6.1", Now.Date.AddDays(-3));
             string day = Now.Date.AddDays(-1).ToString("yyyy-MM-dd");
             _recentEvents = new[]
             {
@@ -215,6 +229,23 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(error);
             CollectionAssert.AreEquivalent(new[] { "M.A1.3", "M.A5.4" }, missions.Select(m => m.Code).ToArray());
             Assert.AreEqual(20, progress["M.A1.3"].progress);
+        }
+
+        [Test]
+        public async Task LoadActiveMissions_SkipsMissionsNotStarted()
+        {
+            SetQuest("M.A1.3", "M.A5.4", "M.B2.1");
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionId = "id-a13", missionCode = "M.A1.3", progress = 0, status = ProgressStatus.InProgress, startedAt = Now.AddDays(-1).ToUniversalTime() },
+                new MissionProgress { missionId = "id-a54", missionCode = "M.A5.4", progress = 0, status = ProgressStatus.NotStarted, startedAt = null }
+                // M.B2.1 has no row: not started
+            }, (ApiErrorResponse)null));
+
+            var (missions, _, error) = await CheckInService.LoadActiveMissionsAsync(_store, _quests.Object, _missions.Object);
+
+            Assert.IsNull(error);
+            CollectionAssert.AreEqual(new[] { "M.A1.3" }, missions.Select(m => m.Code).ToArray());
         }
 
         [Test]

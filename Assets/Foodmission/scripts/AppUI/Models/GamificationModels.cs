@@ -155,6 +155,23 @@ namespace eu.foodmission.platform
         /// <summary>Partial progress 0–100 for missions/challenges; 0 or 100 otherwise.</summary>
         public float progress;
         public int sortOrder;
+
+        private DateTime? _startedAt;
+
+        /// <summary>Missions: when the user started it; null = not started (backend #424).</summary>
+        public DateTime? startedAt
+        {
+            get => _startedAt;
+            set
+            {
+                _startedAt = value;
+                StartedAtReported = true;
+            }
+        }
+
+        /// <summary>False when the backend doesn't send startedAt (before #424, when the quest started every mission).</summary>
+        [JsonIgnore]
+        public bool StartedAtReported { get; private set; }
     }
 
     /// <summary>Response of POST /users/me/gamification/onboarding-survey.</summary>

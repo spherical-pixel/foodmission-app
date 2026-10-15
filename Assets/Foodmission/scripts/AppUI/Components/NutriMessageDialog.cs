@@ -81,11 +81,21 @@ namespace eu.foodmission.platform.Components
             ShowInternal(message, null, actions, onDismissed);
         }
 
+        /// <summary>
+        /// Like <see cref="ShowAndNotify"/>, with <paramref name="content"/> (e.g. a stepper) under the message.
+        /// <paramref name="onDismissed"/> runs once the dialog has closed, so the next dialog can open safely.
+        /// </summary>
+        public static void ShowWithContent(string message, VisualElement content, Action onDismissed, params FMDialogAction[] actions)
+        {
+            ShowInternal(message, null, actions, onDismissed, content);
+        }
+
         private static void ShowInternal(
             string message,
             RenderTexture nutriTexture,
             FMDialogAction[] actions,
-            Action onDismissed)
+            Action onDismissed,
+            VisualElement content = null)
         {
             if (actions == null || actions.Length == 0)
             {
@@ -98,7 +108,7 @@ namespace eu.foodmission.platform.Components
                 {
                     if (template != null)
                     {
-                        ShowInternal(message, nutriTexture, actions, onDismissed);
+                        ShowInternal(message, nutriTexture, actions, onDismissed, content);
                     }
                     else
                     {
@@ -114,14 +124,15 @@ namespace eu.foodmission.platform.Components
                 return;
             }
 
-            BuildAndShow(message, nutriTexture, actions, onDismissed);
+            BuildAndShow(message, nutriTexture, actions, onDismissed, content);
         }
 
         private static void BuildAndShow(
             string message,
             RenderTexture nutriTexture,
             FMDialogAction[] actions,
-            Action onDismissed)
+            Action onDismissed,
+            VisualElement content)
         {
             var nutriService = App.current?.services?.GetService<INutriService>();
             var audioService = App.current?.services?.GetService<IAudioService>();
@@ -176,6 +187,12 @@ namespace eu.foodmission.platform.Components
                     size = TextSize.XL
                 };
                 messageContainer.Add(text);
+
+                if (content != null)
+                {
+                    content.AddToClassList("fm-nutri-dialog-content");
+                    messageContainer.Add(content);
+                }
             }
 
             // Nutri image

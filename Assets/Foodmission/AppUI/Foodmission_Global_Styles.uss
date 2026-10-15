@@ -566,6 +566,12 @@
     transition-timing-function: ease-in, ease-in;
 }
 
+/* Extra content under a Nutri message, e.g. the "meals with meat last week" stepper */
+.fm-nutri-dialog-content {
+    margin-top: 16px;
+    align-self: stretch;
+}
+
 .stepper-heading {
     width: 45%;
     overflow: hidden;

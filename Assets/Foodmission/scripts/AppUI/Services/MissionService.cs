@@ -328,9 +328,19 @@ namespace eu.foodmission.platform
             return SendProgressRequestAsync(codeOrId, lang, null, "PATCH", body, nameof(UpdateMissionProgressAsync));
         }
 
-        public Task<(MissionProgress Result, ApiErrorResponse Error)> RestartMissionProgressAsync(string codeOrId, string lang = null)
+        public Task<(MissionProgress Result, ApiErrorResponse Error)> StartMissionProgressAsync(string codeOrId, int? previousMeatMeals = null, string lang = null)
         {
-            return SendProgressRequestAsync(codeOrId, lang, "/restart", "POST", null, nameof(RestartMissionProgressAsync));
+            return SendProgressRequestAsync(codeOrId, lang, "/start", "POST", InputsBody(previousMeatMeals), nameof(StartMissionProgressAsync));
+        }
+
+        public Task<(MissionProgress Result, ApiErrorResponse Error)> RestartMissionProgressAsync(string codeOrId, int? previousMeatMeals = null, string lang = null)
+        {
+            return SendProgressRequestAsync(codeOrId, lang, "/restart", "POST", InputsBody(previousMeatMeals), nameof(RestartMissionProgressAsync));
+        }
+
+        private static byte[] InputsBody(int? previousMeatMeals)
+        {
+            return previousMeatMeals.HasValue ? MissionInputsRequest.PreviousMeatMeals(previousMeatMeals.Value).ToJsonBody() : null;
         }
 
         public Task<(MissionProgress Result, ApiErrorResponse Error)> FailMissionProgressAsync(string codeOrId, string lang = null)

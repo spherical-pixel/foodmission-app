@@ -23,6 +23,9 @@ namespace eu.foodmission.platform
         public string StatusText { get; set; }
         /// <summary>"NN%" for a pending mission, so the quest shows that it is moving; null otherwise.</summary>
         public string ProgressLabel { get; set; }
+        /// <summary>A mission of the current quest that the user hasn't started: the timeline shows a play button.</summary>
+        public bool CanStart { get; set; }
+        public string MissionCode => Item?.contentCode;
 
         public string TimelineDisplayLabel
         {
@@ -510,12 +513,15 @@ namespace eu.foodmission.platform
 
                 bool isItemFailed = !isItemCompleted && status.Failed;
 
+                bool canStart = !isItemCompleted && status.NotStarted && IsCurrentQuest &&
+                                string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase);
+
                 string progressLabel = null;
                 if (isItemFailed)
                 {
                     progressLabel = LocalizationSettings.StringDatabase?.GetLocalizedString("UI", "MISSION_STATUS_FAILED");
                 }
-                else if (!isItemCompleted && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
+                else if (!isItemCompleted && !canStart && string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
                 {
                     progressLabel = $"{(int)Math.Clamp(status.MissionPercent, 0f, 100f)}%";
                 }
@@ -531,7 +537,8 @@ namespace eu.foodmission.platform
                     IsFailed = isItemFailed,
                     Progress = isItemCompleted ? 100f : 0f,
                     StatusText = statusText,
-                    ProgressLabel = progressLabel
+                    ProgressLabel = progressLabel,
+                    CanStart = canStart
                 });
             }
 
@@ -569,6 +576,48 @@ namespace eu.foodmission.platform
         //             return (LocalizationSettings.StringDatabase.GetLocalizedString("UI", "QUEST_CONTENT_ACTIVITY"), "star");
         //     }
         // }
+
+        private bool _isStartingMission;
+
+        /// <summary>
+        /// Starts a mission from the timeline (M.B1.3 with its meat count), then reloads the quest. Returns the started
+        /// progress, or null when nothing was started.
+        /// </summary>
+        public async Task<MissionProgress> StartMissionAsync(QuestActivityDisplayItem activity, int? previousMeatMeals)
+        {
+            if (_missionService == null || activity == null || !activity.CanStart || _isStartingMission)
+            {
+                return null;
+            }
+
+            _isStartingMission = true;
+            try
+            {
+                string code = activity.MissionCode;
+                var (started, error) = await _missionService.StartMissionProgressAsync(code, MissionInputs.For(code, previousMeatMeals));
+                if (!string.IsNullOrEmpty(_lastLoadedCodeOrId))
+                {
+                    await LoadQuestAsync(_lastLoadedCodeOrId);
+                }
+                if (error != null)
+                {
+                    // After the reload, which clears ErrorDetail
+                    ErrorDetail = error;
+                    return null;
+                }
+                return started ?? new MissionProgress { missionCode = code };
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[QuestDetailViewModel] StartMissionAsync error: {ex.Message}");
+                ErrorDetail = new ApiErrorResponse { message = ex.Message };
+                return null;
+            }
+            finally
+            {
+                _isStartingMission = false;
+            }
+        }
 
         public void OpenActivity(QuestActivityDisplayItem activity)
         {

@@ -11,7 +11,7 @@
                 <appui:Text name="mission-schedule-dates" text="" size="S" class="fm-mission-schedule-dates"/>
                 <appui:Text name="mission-schedule-day" text="" size="M" class="fm-mission-schedule-day"/>
             </ui:VisualElement>
-            <ui:VisualElement class="fm-mission-progress-row">
+            <ui:VisualElement name="mission-progress" class="fm-mission-progress-row">
                 <ui:VisualElement class="fm-mission-progress-track">
                     <ui:VisualElement name="mission-progress-fill" class="fm-mission-progress-fill"/>
                 </ui:VisualElement>
@@ -22,6 +22,10 @@
                 <appui:Text name="mission-why-it-matters" text="" size="M" class="fm-mission-why-text"/>
             </ui:VisualElement>
             <appui:Text name="mission-status" text="" size="M" class="fm-mission-status"/>
+            <ui:VisualElement name="mission-start-box" class="fm-mission-start hidden">
+                <appui:Text text="@UI:MISSION_NOT_STARTED_HINT" size="M" class="fm-mission-start-text"/>
+                <fm:FMButton name="btn-start-mission" title="@UI:MISSION_START" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-mission-btn fm-button fm-button-align-left"/>
+            </ui:VisualElement>
             <ui:VisualElement name="mission-actions" class="fm-mission-actions">
                 <appui:Text name="mission-auto-hint" text="@UI:MISSION_HINT_AUTO" size="S" class="fm-mission-hint"/>
                 <ui:VisualElement name="mission-auto-modules" class="fm-mission-module-list"/>

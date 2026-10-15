@@ -195,9 +195,10 @@ namespace eu.foodmission.platform
                     {
                         ActiveQuestTitle = quest.GetDisplayName();
                         ActiveQuestCode = quest.code ?? "";
-                        _missionEvents = MealFacts.MissionMealEvents((quest.items ?? Array.Empty<QuestItem>())
+                        IEnumerable<string> missionCodes = (quest.items ?? Array.Empty<QuestItem>())
                             .Where(i => i != null && string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase))
-                            .Select(i => i.contentCode));
+                            .Select(i => i.contentCode);
+                        _missionEvents = MealFacts.MissionMealEvents(await OpenMissionCodesAsync(missionCodes));
                     }
                 }
 
@@ -228,6 +229,31 @@ namespace eu.foodmission.platform
         /// <summary>Every section, including items the mission filter hides (checks, submit and hydration use these).</summary>
         private List<QuickMealSection> DataSections => OnlyMissionItems ? _allSections : (Sections ?? _allSections);
         public bool HasMissionItems => _missionEvents.Count > 0;
+
+        /// <summary>
+        /// Missions the user started and hasn't finished. Without a mission service, or when the progress can't be read,
+        /// every mission of the quest is kept (the filter only hides questions).
+        /// </summary>
+        private async Task<IEnumerable<string>> OpenMissionCodesAsync(IEnumerable<string> codes)
+        {
+            List<string> all = codes.Where(c => !string.IsNullOrEmpty(c)).ToList();
+            if (_missionService == null)
+            {
+                return all;
+            }
+
+            var (progressList, error) = await _missionService.GetUserProgressListAsync();
+            if (error != null)
+            {
+                return all;
+            }
+
+            return all.Where(code =>
+            {
+                MissionProgress progress = progressList?.FirstOrDefault(p => string.Equals(p?.missionCode, code, StringComparison.OrdinalIgnoreCase));
+                return MissionProgressState.IsStarted(progress) && !MissionProgressState.IsResolved(progress);
+            }).ToList();
+        }
 
         public void SetOnlyMissionItems(bool value)
         {

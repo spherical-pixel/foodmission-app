@@ -90,7 +90,7 @@ namespace eu.foodmission.platform.Tests
         public async Task RestartAsync_AcknowledgesAndRestarts()
         {
             var restarted = new MissionProgress { missionCode = "M.A1.1", status = ProgressStatus.NotStarted, startedAt = Start2 };
-            _missions.Setup(m => m.RestartMissionProgressAsync("M.A1.1", null)).ReturnsAsync((restarted, (ApiErrorResponse)null));
+            _missions.Setup(m => m.RestartMissionProgressAsync("M.A1.1", null, null)).ReturnsAsync((restarted, (ApiErrorResponse)null));
 
             var (result, error) = await _service.RestartAsync(Failed("M.A1.1", Start1));
 
@@ -101,19 +101,42 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task RestartAsync_PassesTheMeatCount()
+        {
+            _missions.Setup(m => m.RestartMissionProgressAsync("M.B1.3", 4, null)).ReturnsAsync((new MissionProgress { missionCode = "M.B1.3" }, (ApiErrorResponse)null));
+
+            var (_, error) = await _service.RestartAsync(Failed("M.B1.3", Start1), 4);
+
+            Assert.IsNull(error);
+            _missions.Verify(m => m.RestartMissionProgressAsync("M.B1.3", 4, null), Times.Once);
+        }
+
+        [Test]
+        public async Task GiveUpAndRestartAsync_PassesTheMeatCount()
+        {
+            _missions.Setup(m => m.FailMissionProgressAsync("M.B1.3", null)).ReturnsAsync((Failed("M.B1.3", Start1), (ApiErrorResponse)null));
+            _missions.Setup(m => m.RestartMissionProgressAsync("M.B1.3", 0, null)).ReturnsAsync((new MissionProgress { missionCode = "M.B1.3" }, (ApiErrorResponse)null));
+
+            var (_, error) = await _service.GiveUpAndRestartAsync("M.B1.3", 0);
+
+            Assert.IsNull(error);
+            _missions.Verify(m => m.RestartMissionProgressAsync("M.B1.3", 0, null), Times.Once);
+        }
+
+        [Test]
         public async Task GiveUpAndRestart_FailsThenRestarts()
         {
             var sequence = new MockSequence();
             _missions.InSequence(sequence).Setup(m => m.FailMissionProgressAsync("M.A1.2", null))
                 .ReturnsAsync((Failed("M.A1.2", Start1), (ApiErrorResponse)null));
-            _missions.InSequence(sequence).Setup(m => m.RestartMissionProgressAsync("M.A1.2", null))
+            _missions.InSequence(sequence).Setup(m => m.RestartMissionProgressAsync("M.A1.2", null, null))
                 .ReturnsAsync((new MissionProgress { missionCode = "M.A1.2", status = ProgressStatus.NotStarted }, (ApiErrorResponse)null));
 
             var (result, error) = await _service.GiveUpAndRestartAsync("M.A1.2");
 
             Assert.IsNull(error);
             Assert.AreEqual(ProgressStatus.NotStarted, result.status);
-            _missions.Verify(m => m.RestartMissionProgressAsync("M.A1.2", null), Times.Once);
+            _missions.Verify(m => m.RestartMissionProgressAsync("M.A1.2", null, null), Times.Once);
         }
 
         [Test]
@@ -126,7 +149,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNull(result);
             Assert.AreSame(failError, error);
-            _missions.Verify(m => m.RestartMissionProgressAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+            _missions.Verify(m => m.RestartMissionProgressAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<string>()), Times.Never);
         }
 
         [Test]
@@ -134,7 +157,7 @@ namespace eu.foodmission.platform.Tests
         {
             _missions.Setup(m => m.FailMissionProgressAsync("M.A1.2", null)).ReturnsAsync((Failed("M.A1.2", Start1), (ApiErrorResponse)null));
             var restartError = new ApiErrorResponse { message = "network" };
-            _missions.Setup(m => m.RestartMissionProgressAsync("M.A1.2", null)).ReturnsAsync(((MissionProgress)null, restartError));
+            _missions.Setup(m => m.RestartMissionProgressAsync("M.A1.2", null, null)).ReturnsAsync(((MissionProgress)null, restartError));
 
             var (result, error) = await _service.GiveUpAndRestartAsync("M.A1.2");
 

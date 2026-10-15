@@ -87,7 +87,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(MissionProgress Result, ApiErrorResponse Error)> RestartAsync(MissionProgress failed)
+        public async Task<(MissionProgress Result, ApiErrorResponse Error)> RestartAsync(MissionProgress failed, int? previousMeatMeals = null)
         {
             if (failed == null || string.IsNullOrEmpty(failed.missionCode))
             {
@@ -95,10 +95,10 @@ namespace eu.foodmission.platform
             }
 
             Acknowledge(failed);
-            return await _missionService.RestartMissionProgressAsync(failed.missionCode);
+            return await _missionService.RestartMissionProgressAsync(failed.missionCode, previousMeatMeals);
         }
 
-        public async Task<(MissionProgress Result, ApiErrorResponse Error)> GiveUpAndRestartAsync(string missionCode)
+        public async Task<(MissionProgress Result, ApiErrorResponse Error)> GiveUpAndRestartAsync(string missionCode, int? previousMeatMeals = null)
         {
             var (failed, failError) = await _missionService.FailMissionProgressAsync(missionCode);
             if (failError != null)
@@ -113,7 +113,7 @@ namespace eu.foodmission.platform
 
             // The user gave it up on purpose: it is not news for the Home notice, even if the restart fails now
             Acknowledge(failed);
-            return await _missionService.RestartMissionProgressAsync(missionCode);
+            return await _missionService.RestartMissionProgressAsync(missionCode, previousMeatMeals);
         }
 
         /// <summary>Local storage key of a user's acknowledged failures.</summary>

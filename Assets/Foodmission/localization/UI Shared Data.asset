@@ -4207,6 +4207,34 @@ MonoBehaviour:
     m_Key: MISSION_BTN_FIND_PRODUCT
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203639
+    m_Key: MISSION_START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203640
+    m_Key: MISSION_NOT_STARTED_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203641
+    m_Key: MISSION_START_MEAT_QUESTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203642
+    m_Key: MISSION_START_MEAT_NONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203643
+    m_Key: MISSION_START_A11Y
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203644
+    m_Key: MISSION_START_CONFIRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203645
+    m_Key: MISSION_RESTART_FAILED_CONFIRM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
