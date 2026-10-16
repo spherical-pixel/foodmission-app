@@ -3333,48 +3333,63 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 52041725676347400
-    m_Localized: Quanti prodotti hai scelto considerando diversi aspetti ambientali?
+    m_Localized: Quanti prodotti hai scelto tenendo conto di due aspetti ambientali
+      diversi? Per esempio, impronta di carbonio e distanza di trasporto, oppure
+      consumo d'acqua e metodo di produzione.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347401
-    m_Localized: In quanti prodotti hai confrontato il gruppo NOVA con un altro punteggio?
+    m_Localized: In quanti prodotti acquistati hai confrontato il gruppo NOVA con
+      il Green-Score o il Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347402
-    m_Localized: In quanti prodotti hai confrontato Nutri-Score, NOVA e Green-Score?
+    m_Localized: In quanti prodotti hai confrontato il gruppo NOVA, il Nutri-Score
+      e il Green-Score? Conta solo quelli che li hanno tutti e tre.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347403
-    m_Localized: In quanti prodotti hai controllato il gruppo NOVA?
+    m_Localized: In quanti prodotti hai controllato il gruppo NOVA? Va da 1 (non
+      trasformato o minimamente trasformato) a 4 (ultra-processato).
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
-    m_Localized: Quante liste di ingredienti hai letto?
+    m_Localized: In quanti prodotti hai letto l'elenco degli ingredienti cercando
+      segni di lavorazione? Molti ingredienti raffinati o additivi di solito indicano
+      un alimento ultra-processato.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
-    m_Localized: In quanti prodotti hai controllato le informazioni sulla confezione?
+    m_Localized: "In quanti acquisti la confezione \xE8 stata uno dei tuoi criteri
+      per decidere? Guarda le sue etichette, le istruzioni per il riciclo, i simboli
+      del materiale o se si pu\xF2 riutilizzare."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347406
-    m_Localized: Quanti prodotti hai confrontato usando indicatori diversi?
+    m_Localized: In quanti prodotti con gruppi NOVA e Green-Score molto diversi hai
+      notato le differenze? Per esempio un prodotto poco lavorato con un Green-Score
+      scarso rispetto a uno ultra-processato con un buon Green-Score.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347407
-    m_Localized: Quante volte hai scelto un'opzione riutilizzabile (borsa, contenitore,
-      sfuso)?
+    m_Localized: Quante volte hai scelto una confezione riutilizzabile o ricaricabile?
+      Per esempio bottiglie con vuoto a rendere, punti di ricarica o acquisti sfusi
+      con il tuo contenitore.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347408
-    m_Localized: Quanti prodotti con confezione intelligente hai trovato?
+    m_Localized: "Quanti prodotti con confezione intelligente hai trovato? Cerca
+      indicatori di freschezza, codici QR, informazioni di tracciabilit\xE0 o controllo
+      della temperatura."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347409
-    m_Localized: Hai pianificato i tuoi pasti per i prossimi giorni?
+    m_Localized: Hai fatto un piano dei pasti prima della spesa principale?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347410
-    m_Localized: Hai controllato frigo e dispensa prima di fare la spesa?
+    m_Localized: Hai controllato frigorifero, congelatore e dispensa prima di andare
+      a fare la spesa?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
@@ -3386,19 +3401,24 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 52041725676347412
-    m_Localized: In quanti prodotti hai controllato da dove provengono?
+    m_Localized: "Per quanti prodotti hai cercato il paese di origine? Di solito
+      \xE8 sull'etichetta o nella scheda del prodotto."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347413
-    m_Localized: "Quante volte hai scelto un prodotto con un marchio di sostenibilit\xE0?"
+    m_Localized: "Quante volte hai scelto un prodotto con un marchio di sostenibilit\xE0?
+      Per esempio biologico, commercio equo o indicazione geografica protetta."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347414
-    m_Localized: In quanti prodotti hai controllato come sono stati prodotti?
+    m_Localized: "Per quanti prodotti hai cercato come sono stati fatti? Per esempio
+      il metodo di coltivazione, il sistema di produzione o un programma di sostenibilit\xE0.
+      Guarda la confezione, la scheda del prodotto o il suo codice QR."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347415
-    m_Localized: In quanti prodotti hai controllato il Green-Score?
+    m_Localized: In quanti prodotti hai controllato il Green-Score? Riassume il loro
+      impatto ambientale, dal migliore al peggiore.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
@@ -3408,40 +3428,50 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
-    m_Localized: Quante etichette di riciclo hai letto?
+    m_Localized: Quante etichette di riciclo hai letto? Cerca i simboli del riciclo,
+      i codici del materiale o le istruzioni per la raccolta differenziata.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347418
-    m_Localized: In quanti prodotti hai letto come conservarli?
+    m_Localized: "Per quanti prodotti hai letto come conservarli una volta aperti?
+      Di solito \xE8 indicato sulla confezione, per esempio \xABuna volta aperto,
+      conservare in frigorifero\xBB."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347419
-    m_Localized: Hai confrontato alimenti di diversi livelli di trasformazione NOVA?
+    m_Localized: Hai confrontato il gruppo NOVA di almeno tre prodotti della stessa
+      categoria, come tre tipi di formaggio?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347420
-    m_Localized: "Per quanti prodotti hai verificato se la confezione \xE8 riciclabile?"
+    m_Localized: Per quante confezioni hai valutato se sono facili o difficili da
+      riciclare, in base alle informazioni che riportano?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347421
-    m_Localized: Hai confrontato la confezione di due prodotti simili?
+    m_Localized: Hai confrontato i materiali della confezione di tre prodotti simili?
+      Per esempio uno yogurt in vetro, in plastica e in cartone.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347422
-    m_Localized: "In quali giorni hai organizzato il cibo secondo il principio \u201Cprimo
-      a entrare, primo a uscire\u201D?"
+    m_Localized: "In quali giorni hai sistemato frigorifero, congelatore o dispensa
+      in modo che ci\xF2 che scade prima stia davanti e venga mangiato per primo?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347423
-    m_Localized: Cosa hai controllato e in quanti prodotti?
+    m_Localized: 'In quanti acquisti hai usato un indicatore di produzione per decidere?
+      Segna quale: gruppo NOVA, Green-Score, metodo di produzione o un confronto
+      tra indicatori.'
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347424
-    m_Localized: Cosa hai notato della confezione e in quanti prodotti?
+    m_Localized: "Cosa hai notato della confezione e in quanti prodotti? Valgono
+      il materiale, le istruzioni per il riciclo o se si pu\xF2 riutilizzare."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347425
-    m_Localized: Quali fonti di proteine hai mangiato questa settimana?
+    m_Localized: 'Quali fonti di proteine hai mangiato questa settimana? Segna tutte
+      quelle diverse: cerca di arrivare a quattro.'
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347426
@@ -4238,8 +4268,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: Per quali pasti hai scelto i prodotti guardando l'origine e almeno
-      un altro aspetto?
+    m_Localized: "Per quali pasti hai scelto i prodotti guardando il paese di origine
+      e almeno un altro dato di sostenibilit\xE0 (certificazione, metodo di produzione
+      o stagionalit\xE0)? Aggiungi ogni pasto e segna cosa hai guardato."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
@@ -4256,8 +4287,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: In quali acquisti hai controllato il materiale della confezione
-      e cosa succede dopo l'uso?
+    m_Localized: "In quali acquisti hai tenuto conto del materiale della confezione
+      e di cosa ne sar\xE0 dopo (riciclarla, riutilizzarla o buttarla)? Aggiungi
+      ogni acquisto e segna cosa hai guardato."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
@@ -4266,7 +4298,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
-    m_Localized: Quali colori di frutta e verdura hai mangiato ogni giorno?
+    m_Localized: Quali colori di frutta e verdura hai mangiato ogni giorno? Cerca
+      di arrivare a cinque colori diversi al giorno.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203616
@@ -4399,7 +4432,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203646
-    m_Localized: Hai letto come conservare questo prodotto?
+    m_Localized: "Hai letto come conservare questo prodotto una volta aperto? Di
+      solito \xE8 indicato sulla confezione, per esempio \xABuna volta aperto, conservare
+      in frigorifero\xBB."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203647
@@ -4414,15 +4449,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649
-    m_Localized: "Hai verificato se la confezione di questo prodotto \xE8 riciclabile?"
+    m_Localized: "In base alle informazioni riportate, hai valutato se la confezione
+      di questo prodotto \xE8 facile o difficile da riciclare?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203650
-    m_Localized: Hai letto l'etichetta di riciclo di questo prodotto?
+    m_Localized: Hai letto l'etichetta di riciclo di questo prodotto? Cerca i simboli
+      del riciclo, i codici del materiale o le istruzioni per la raccolta differenziata.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203651
-    m_Localized: Questo prodotto ha una confezione intelligente?
+    m_Localized: "Questo prodotto ha una confezione intelligente? Cerca indicatori
+      di freschezza, codici QR, informazioni di tracciabilit\xE0 o controllo della
+      temperatura."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203652
@@ -4431,56 +4470,72 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203653
-    m_Localized: Hai confrontato Nutri-Score, NOVA e Green-Score di questo prodotto?
+    m_Localized: Hai confrontato il gruppo NOVA, il Nutri-Score e il Green-Score
+      di questo prodotto?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203654
-    m_Localized: Hai controllato il Green-Score di questo prodotto?
+    m_Localized: Hai controllato il Green-Score di questo prodotto? Riassume il suo
+      impatto ambientale, dal migliore al peggiore.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203655
-    m_Localized: Hai confrontato questo prodotto usando indicatori diversi?
+    m_Localized: Hai confrontato il gruppo NOVA e il Green-Score di questo prodotto
+      con quelli di altri prodotti e notato le differenze?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203656
-    m_Localized: Hai letto l'elenco degli ingredienti di questo prodotto?
+    m_Localized: Hai letto l'elenco degli ingredienti di questo prodotto cercando
+      segni di lavorazione? Molti ingredienti raffinati o additivi di solito indicano
+      un alimento ultra-processato.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203657
-    m_Localized: Hai controllato il gruppo NOVA di questo prodotto?
+    m_Localized: Hai controllato il gruppo NOVA di questo prodotto? Va da 1 (non
+      trasformato o minimamente trasformato) a 4 (ultra-processato).
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203658
-    m_Localized: Hai confrontato il gruppo NOVA di questo prodotto con un altro punteggio?
+    m_Localized: Hai confrontato il gruppo NOVA di questo prodotto con il suo Green-Score
+      o il suo Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203659
-    m_Localized: "Hai controllato come \xE8 stato prodotto questo prodotto?"
+    m_Localized: "Hai cercato come \xE8 stato fatto questo prodotto? Per esempio
+      il metodo di coltivazione, il sistema di produzione o un programma di sostenibilit\xE0."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203660
-    m_Localized: Hai scelto questo prodotto considerando diversi aspetti ambientali?
+    m_Localized: Hai scelto questo prodotto tenendo conto di due aspetti ambientali
+      diversi? Per esempio, impronta di carbonio e distanza di trasporto, oppure
+      consumo d'acqua e metodo di produzione.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203661
-    m_Localized: Hai controllato da dove viene questo prodotto?
+    m_Localized: "Hai cercato il paese di origine di questo prodotto? Di solito \xE8
+      sull'etichetta."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203662
-    m_Localized: Hai controllato le informazioni sulla confezione di questo prodotto?
+    m_Localized: "La confezione \xE8 stata uno dei tuoi criteri per scegliere questo
+      prodotto? Guarda le sue etichette, le istruzioni per il riciclo, i simboli
+      del materiale o se si pu\xF2 riutilizzare."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203663
-    m_Localized: Cosa hai controllato di questo prodotto?
+    m_Localized: Quale indicatore di produzione hai usato per decidere se comprare
+      questo prodotto?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203664
-    m_Localized: Cosa hai notato della confezione di questo prodotto?
+    m_Localized: "Cosa hai notato della confezione di questo prodotto? Valgono il
+      materiale, le istruzioni per il riciclo o se si pu\xF2 riutilizzare."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203665
-    m_Localized: Hai scelto questo prodotto per un pasto guardando l'origine e almeno
-      un altro aspetto? Segna cosa hai guardato.
+    m_Localized: "Hai scelto questo prodotto guardando il paese di origine e almeno
+      un altro dato di sostenibilit\xE0: certificazione, metodo di produzione o stagionalit\xE0?
+      Segna cosa hai guardato."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203666
@@ -4489,8 +4544,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203667
-    m_Localized: Quando hai comprato questo prodotto, hai controllato il materiale
-      della confezione e cosa succede dopo l'uso? Segna cosa hai guardato.
+    m_Localized: "Quando hai comprato questo prodotto, hai tenuto conto del materiale
+      della confezione e di cosa ne sar\xE0 dopo (riciclarla, riutilizzarla o buttarla)?
+      Segna cosa hai guardato."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203668
@@ -4502,6 +4558,106 @@ MonoBehaviour:
   - m_Id: 56190243387203669
     m_Localized: "Quali marchi di sostenibilit\xE0 ha questo prodotto? Segnane almeno
       due, per esempio Biologico UE e Fairtrade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Localized: "In quanti prodotti hai trovato sulla confezione un dato di sostenibilit\xE0?
+      Per esempio il paese di origine, un marchio di certificazione, come \xE8 stato
+      prodotto o coltivato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Localized: "Hai trovato sulla confezione di questo prodotto un dato di sostenibilit\xE0?
+      Per esempio il paese di origine, un marchio di certificazione, come \xE8 stato
+      prodotto o coltivato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Localized: Quante volte hai scelto di proposito un prodotto dopo aver letto
+      le informazioni ambientali sulla confezione?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Localized: In quanti acquisti hai tenuto conto sia del gruppo NOVA sia del
+      Green-Score prima di decidere? Li trovi nella scheda del prodotto o sulla confezione.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Localized: Hai tenuto conto del gruppo NOVA e del Green-Score di questo prodotto
+      prima di decidere?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Localized: "In quanti prodotti hai controllato il gruppo NOVA? \xC8 il primo
+      passo per capire se la loro lavorazione ha vantaggi e svantaggi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Localized: Hai controllato il gruppo NOVA di questo prodotto per valutare i
+      vantaggi e gli svantaggi della sua lavorazione?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Localized: "In quanti di quei prodotti hai letto l'elenco degli ingredienti
+      per vedere cosa aggiunge la lavorazione? Per esempio conservanti che li fanno
+      durare di pi\xF9, oppure zuccheri e additivi aggiunti."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Localized: "Hai letto l'elenco degli ingredienti di questo prodotto per vedere
+      cosa aggiunge la sua lavorazione? Per esempio conservanti che lo fanno durare
+      di pi\xF9, oppure zuccheri e additivi aggiunti."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Localized: In quanti di essi hai controllato anche le informazioni sulla confezione,
+      come la conservazione o la data di scadenza?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Localized: Hai controllato le informazioni sulla confezione di questo prodotto,
+      come la conservazione o la data di scadenza?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Localized: In quanti acquisti il gruppo NOVA, il Green-Score o l'elenco degli
+      ingredienti ti hanno aiutato a decidere? Segna cosa hai guardato.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Localized: Cosa hai guardato di questo prodotto per decidere se comprarlo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Localized: Per quanti alimenti che hai mangiato hai annotato il gruppo NOVA,
+      il Green-Score o il metodo di produzione? Pensa anche se hanno influenzato
+      la tua scelta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Localized: Quali indicatori di produzione hai guardato di questo prodotto?
+      Pensa se hanno influenzato la tua scelta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Localized: Quante volte hai trovato un'opzione di confezione riutilizzabile
+      o ricaricabile? Cerca simboli di ricarica, sistemi di vuoto a rendere, punti
+      di ricarica o confezioni che dicono di essere riutilizzabili.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Localized: "In quanti prodotti hai trovato una confezione che si pu\xF2 riutilizzare,
+      riciclare o ricaricare? Segna cosa hai trovato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Localized: "La confezione di questo prodotto si pu\xF2 riutilizzare, riciclare
+      o ricaricare? Segna cosa hai trovato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Localized: "Hai pianificato tutti i pasti principali della settimana prima
+      della prima spesa, per comprare solo ci\xF2 che avresti usato?"
     m_Metadata:
       m_Items: []
   references:

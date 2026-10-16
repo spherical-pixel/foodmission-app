@@ -3365,51 +3365,65 @@ MonoBehaviour:
       - rid: 4008881209995690411
   - m_Id: 52041725676347400
     m_Localized: "Ile produkt\xF3w wybra\u0142e\u015B, bior\u0105c pod uwag\u0119
-      kilka aspekt\xF3w \u015Brodowiskowych?"
+      dwa r\xF3\u017Cne aspekty \u015Brodowiskowe? Na przyk\u0142ad \u015Blad w\u0119glowy
+      i odleg\u0142o\u015B\u0107 transportu albo zu\u017Cycie wody i metod\u0119
+      produkcji."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347401
-    m_Localized: "W ilu produktach por\xF3wna\u0142e\u015B grup\u0119 NOVA z inn\u0105
-      ocen\u0105?"
+    m_Localized: "W ilu kupionych produktach por\xF3wna\u0142e\u015B grup\u0119 NOVA
+      z Green-Score lub Nutri-Score?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347402
-    m_Localized: "W ilu produktach por\xF3wna\u0142e\u015B Nutri-Score, NOVA i Green-Score?"
+    m_Localized: "W ilu produktach por\xF3wna\u0142e\u015B grup\u0119 NOVA, Nutri-Score
+      i Green-Score? Licz tylko te, kt\xF3re maj\u0105 wszystkie trzy."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347403
-    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B grup\u0119 NOVA?"
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B grup\u0119 NOVA? Ma warto\u015Bci
+      od 1 (nieprzetworzone lub minimalnie przetworzone) do 4 (ultraprzetworzone)."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
-    m_Localized: "Ile list sk\u0142adnik\xF3w przeczyta\u0142e\u015B?"
+    m_Localized: "W ilu produktach przeczyta\u0142e\u015B list\u0119 sk\u0142adnik\xF3w,
+      szukaj\u0105c oznak przetworzenia? Wiele rafinowanych sk\u0142adnik\xF3w lub
+      dodatk\xF3w zwykle wskazuje na \u017Cywno\u015B\u0107 ultraprzetworzon\u0105."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
-    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B informacje o opakowaniu?"
+    m_Localized: "Przy ilu zakupach opakowanie by\u0142o jednym z twoich kryteri\xF3w
+      decyzji? Zwr\xF3\u0107 uwag\u0119 na jego oznaczenia, instrukcje recyklingu,
+      symbole materia\u0142u lub to, czy mo\u017Cna je ponownie u\u017Cy\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347406
-    m_Localized: "Ile produkt\xF3w por\xF3wna\u0142e\u015B, u\u017Cywaj\u0105c r\xF3\u017Cnych
-      wska\u017Anik\xF3w?"
+    m_Localized: "W ilu produktach o bardzo r\xF3\u017Cnych grupach NOVA i Green-Score
+      zwr\xF3ci\u0142e\u015B uwag\u0119 na r\xF3\u017Cnice? Na przyk\u0142ad ma\u0142o
+      przetworzony produkt ze s\u0142abym Green-Score w por\xF3wnaniu z ultraprzetworzonym
+      z dobrym Green-Score."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347407
-    m_Localized: "Ile razy wybra\u0142e\u015B opcj\u0119 wielokrotnego u\u017Cytku
-      (torba, pojemnik, na wag\u0119)?"
+    m_Localized: "Ile razy wybra\u0142e\u015B opakowanie wielokrotnego u\u017Cytku
+      lub do ponownego nape\u0142nienia? Na przyk\u0142ad butelki zwrotne z kaucj\u0105,
+      punkty nape\u0142niania lub zakupy na wag\u0119 do w\u0142asnego pojemnika."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347408
-    m_Localized: "Ile produkt\xF3w z inteligentnym opakowaniem znalaz\u0142e\u015B?"
+    m_Localized: "Ile produkt\xF3w z inteligentnym opakowaniem znalaz\u0142e\u015B?
+      Szukaj wska\u017Anik\xF3w \u015Bwie\u017Co\u015Bci, kod\xF3w QR, informacji
+      o identyfikowalno\u015Bci lub kontroli temperatury."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347409
-    m_Localized: "Czy zaplanowa\u0142e\u015B posi\u0142ki na najbli\u017Csze dni?"
+    m_Localized: "Czy zrobi\u0142e\u015B plan posi\u0142k\xF3w przed g\u0142\xF3wnymi
+      zakupami?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347410
-    m_Localized: "Czy sprawdzi\u0142e\u015B lod\xF3wk\u0119 i spi\u017Carni\u0119
-      przed zakupami?"
+    m_Localized: "Czy sprawdzi\u0142e\u015B lod\xF3wk\u0119, zamra\u017Cark\u0119
+      i spi\u017Carni\u0119 przed p\xF3j\u015Bciem na zakupy?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
@@ -3422,20 +3436,26 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690411
   - m_Id: 52041725676347412
-    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, sk\u0105d pochodz\u0105?"
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B kraj pochodzenia? Zwykle
+      jest na etykiecie lub w informacjach o produkcie."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347413
-    m_Localized: "Ile razy wybra\u0142e\u015B produkt z oznaczeniem zr\xF3wnowa\u017Conego
-      rozwoju?"
+    m_Localized: "Ile razy wybra\u0142e\u015B produkt ze znakiem zr\xF3wnowa\u017Conego
+      rozwoju? Na przyk\u0142ad ekologiczny, sprawiedliwego handlu lub z chronionym
+      oznaczeniem geograficznym."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347414
-    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, jak zosta\u0142y wyprodukowane?"
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, jak zosta\u0142y wytworzone?
+      Na przyk\u0142ad metod\u0119 uprawy, system produkcji lub program zr\xF3wnowa\u017Conego
+      rozwoju. Zajrzyj na opakowanie, do informacji o produkcie lub zeskanuj kod
+      QR."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347415
-    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B Green-Score?"
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B Green-Score? Podsumowuje
+      ich wp\u0142yw na \u015Brodowisko, od najlepszego do najgorszego."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
@@ -3446,42 +3466,52 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
-    m_Localized: "Ile oznacze\u0144 recyklingu przeczyta\u0142e\u015B?"
+    m_Localized: "Ile oznacze\u0144 recyklingu przeczyta\u0142e\u015B? Szukaj symboli
+      recyklingu, kod\xF3w materia\u0142u lub instrukcji segregacji opakowania."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347418
-    m_Localized: "W ilu produktach przeczyta\u0142e\u015B, jak je przechowywa\u0107?"
+    m_Localized: "W ilu produktach przeczyta\u0142e\u015B, jak je przechowywa\u0107
+      po otwarciu? Zwykle jest to na opakowaniu, na przyk\u0142ad \u201Epo otwarciu
+      przechowywa\u0107 w lod\xF3wce\u201D."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347419
-    m_Localized: "Czy por\xF3wna\u0142e\u015B \u017Cywno\u015B\u0107 o r\xF3\u017Cnym
-      stopniu przetworzenia NOVA?"
+    m_Localized: "Czy por\xF3wna\u0142e\u015B grup\u0119 NOVA co najmniej trzech
+      produkt\xF3w z tej samej kategorii, na przyk\u0142ad trzech rodzaj\xF3w sera?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347420
-    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B, czy opakowanie nadaje si\u0119
-      do recyklingu?"
+    m_Localized: "Przy ilu opakowaniach oceni\u0142e\u015B, czy \u0142atwo czy trudno
+      je podda\u0107 recyklingowi, na podstawie podanych na nich informacji?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347421
-    m_Localized: "Czy por\xF3wna\u0142e\u015B opakowania dw\xF3ch podobnych produkt\xF3w?"
+    m_Localized: "Czy por\xF3wna\u0142e\u015B materia\u0142y opakowa\u0144 trzech
+      podobnych produkt\xF3w? Na przyk\u0142ad jogurt w szkle, w plastiku i w kartonie."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347422
-    m_Localized: "W kt\xF3re dni uporz\u0105dkowa\u0142e\u015B \u017Cywno\u015B\u0107
-      wed\u0142ug zasady \u201Epierwsze wesz\u0142o, pierwsze wysz\u0142o\u201D?"
+    m_Localized: "W kt\xF3re dni u\u0142o\u017Cy\u0142e\u015B lod\xF3wk\u0119, zamra\u017Cark\u0119
+      lub spi\u017Carni\u0119 tak, aby to, co najszybciej si\u0119 przeterminuje,
+      by\u0142o z przodu i zosta\u0142o zjedzone jako pierwsze?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347423
-    m_Localized: "Co sprawdzi\u0142e\u015B i w ilu produktach?"
+    m_Localized: "Przy ilu zakupach u\u017Cy\u0142e\u015B wska\u017Anika produkcji,
+      aby podj\u0105\u0107 decyzj\u0119? Zaznacz kt\xF3ry: grupa NOVA, Green-Score,
+      metoda produkcji lub por\xF3wnanie wska\u017Anik\xF3w."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347424
-    m_Localized: "Na co zwr\xF3ci\u0142e\u015B uwag\u0119 w opakowaniu i w ilu produktach?"
+    m_Localized: "Na co zwr\xF3ci\u0142e\u015B uwag\u0119 w opakowaniu i w ilu produktach?
+      Liczy si\u0119 materia\u0142, instrukcje recyklingu lub to, czy mo\u017Cna
+      je ponownie u\u017Cy\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347425
-    m_Localized: "Jakie \u017Ar\xF3d\u0142a bia\u0142ka jad\u0142e\u015B w tym tygodniu?"
+    m_Localized: "Jakie \u017Ar\xF3d\u0142a bia\u0142ka jad\u0142e\u015B w tym tygodniu?
+      Zaznacz wszystkie r\xF3\u017Cne: spr\xF3buj doj\u015B\u0107 do czterech."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347426
@@ -4287,7 +4317,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203610
     m_Localized: "Do kt\xF3rych posi\u0142k\xF3w wybra\u0142e\u015B produkty, patrz\u0105c
-      na ich pochodzenie i co najmniej jedn\u0105 inn\u0105 rzecz?"
+      na kraj pochodzenia i co najmniej jedn\u0105 inn\u0105 informacj\u0119 o zr\xF3wnowa\u017Conym
+      rozwoju (certyfikat, metod\u0119 produkcji lub sezonowo\u015B\u0107)? Dodaj
+      ka\u017Cdy posi\u0142ek i zaznacz, na co patrzy\u0142e\u015B."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
@@ -4304,8 +4336,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "Przy kt\xF3rych zakupach sprawdzi\u0142e\u015B materia\u0142 opakowania
-      i co si\u0119 z nim dzieje po u\u017Cyciu?"
+    m_Localized: "Przy kt\xF3rych zakupach wzi\u0105\u0142e\u015B pod uwag\u0119
+      materia\u0142 opakowania i to, co si\u0119 z nim stanie potem (recykling, ponowne
+      u\u017Cycie lub wyrzucenie)? Dodaj ka\u017Cdy zakup i zaznacz, na co patrzy\u0142e\u015B."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
@@ -4315,7 +4348,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
-    m_Localized: "Jakie kolory owoc\xF3w i warzyw jad\u0142e\u015B ka\u017Cdego dnia?"
+    m_Localized: "Jakie kolory owoc\xF3w i warzyw jad\u0142e\u015B ka\u017Cdego dnia?
+      Spr\xF3buj osi\u0105gn\u0105\u0107 pi\u0119\u0107 r\xF3\u017Cnych kolor\xF3w
+      dziennie."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203616
@@ -4450,7 +4485,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203646
-    m_Localized: "Czy przeczyta\u0142e\u015B, jak przechowywa\u0107 ten produkt?"
+    m_Localized: "Czy przeczyta\u0142e\u015B, jak przechowywa\u0107 ten produkt po
+      otwarciu? Zwykle jest to na opakowaniu, na przyk\u0142ad \u201Epo otwarciu
+      przechowywa\u0107 w lod\xF3wce\u201D."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203647
@@ -4467,16 +4504,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649
-    m_Localized: "Czy sprawdzi\u0142e\u015B, czy opakowanie tego produktu nadaje
-      si\u0119 do recyklingu?"
+    m_Localized: "Czy na podstawie podanych informacji oceni\u0142e\u015B, czy opakowanie
+      tego produktu \u0142atwo czy trudno podda\u0107 recyklingowi?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203650
-    m_Localized: "Czy przeczyta\u0142e\u015B oznaczenie recyklingu tego produktu?"
+    m_Localized: "Czy przeczyta\u0142e\u015B oznaczenie recyklingu tego produktu?
+      Szukaj symboli recyklingu, kod\xF3w materia\u0142u lub instrukcji segregacji
+      opakowania."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203651
-    m_Localized: Czy ten produkt ma inteligentne opakowanie?
+    m_Localized: "Czy ten produkt ma inteligentne opakowanie? Szukaj wska\u017Anik\xF3w
+      \u015Bwie\u017Co\u015Bci, kod\xF3w QR, informacji o identyfikowalno\u015Bci
+      lub kontroli temperatury."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203652
@@ -4486,61 +4527,76 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203653
-    m_Localized: "Czy por\xF3wna\u0142e\u015B Nutri-Score, NOVA i Green-Score tego
-      produktu?"
+    m_Localized: "Czy por\xF3wna\u0142e\u015B grup\u0119 NOVA, Nutri-Score i Green-Score
+      tego produktu?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203654
-    m_Localized: "Czy sprawdzi\u0142e\u015B Green-Score tego produktu?"
+    m_Localized: "Czy sprawdzi\u0142e\u015B Green-Score tego produktu? Podsumowuje
+      jego wp\u0142yw na \u015Brodowisko, od najlepszego do najgorszego."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203655
-    m_Localized: "Czy por\xF3wna\u0142e\u015B ten produkt, u\u017Cywaj\u0105c r\xF3\u017Cnych
-      wska\u017Anik\xF3w?"
+    m_Localized: "Czy por\xF3wna\u0142e\u015B grup\u0119 NOVA i Green-Score tego
+      produktu z innymi produktami i zwr\xF3ci\u0142e\u015B uwag\u0119 na r\xF3\u017Cnice?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203656
-    m_Localized: "Czy przeczyta\u0142e\u015B list\u0119 sk\u0142adnik\xF3w tego produktu?"
+    m_Localized: "Czy przeczyta\u0142e\u015B list\u0119 sk\u0142adnik\xF3w tego produktu,
+      szukaj\u0105c oznak przetworzenia? Wiele rafinowanych sk\u0142adnik\xF3w lub
+      dodatk\xF3w zwykle wskazuje na \u017Cywno\u015B\u0107 ultraprzetworzon\u0105."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203657
-    m_Localized: "Czy sprawdzi\u0142e\u015B grup\u0119 NOVA tego produktu?"
+    m_Localized: "Czy sprawdzi\u0142e\u015B grup\u0119 NOVA tego produktu? Ma warto\u015Bci
+      od 1 (nieprzetworzone lub minimalnie przetworzone) do 4 (ultraprzetworzone)."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203658
-    m_Localized: "Czy por\xF3wna\u0142e\u015B grup\u0119 NOVA tego produktu z inn\u0105
-      ocen\u0105?"
+    m_Localized: "Czy por\xF3wna\u0142e\u015B grup\u0119 NOVA tego produktu z jego
+      Green-Score lub Nutri-Score?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203659
-    m_Localized: "Czy sprawdzi\u0142e\u015B, jak ten produkt zosta\u0142 wyprodukowany?"
+    m_Localized: "Czy sprawdzi\u0142e\u015B, jak ten produkt zosta\u0142 wytworzony?
+      Na przyk\u0142ad metod\u0119 uprawy, system produkcji lub program zr\xF3wnowa\u017Conego
+      rozwoju."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203660
     m_Localized: "Czy wybra\u0142e\u015B ten produkt, bior\u0105c pod uwag\u0119
-      kilka aspekt\xF3w \u015Brodowiskowych?"
+      dwa r\xF3\u017Cne aspekty \u015Brodowiskowe? Na przyk\u0142ad \u015Blad w\u0119glowy
+      i odleg\u0142o\u015B\u0107 transportu albo zu\u017Cycie wody i metod\u0119
+      produkcji."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203661
-    m_Localized: "Czy sprawdzi\u0142e\u015B, sk\u0105d pochodzi ten produkt?"
+    m_Localized: "Czy sprawdzi\u0142e\u015B kraj pochodzenia tego produktu? Zwykle
+      jest na etykiecie."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203662
-    m_Localized: "Czy sprawdzi\u0142e\u015B informacje o opakowaniu tego produktu?"
+    m_Localized: "Czy opakowanie by\u0142o jednym z twoich kryteri\xF3w przy wyborze
+      tego produktu? Zwr\xF3\u0107 uwag\u0119 na jego oznaczenia, instrukcje recyklingu,
+      symbole materia\u0142u lub to, czy mo\u017Cna je ponownie u\u017Cy\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203663
-    m_Localized: "Co sprawdzi\u0142e\u015B w tym produkcie?"
+    m_Localized: "Jakiego wska\u017Anika produkcji u\u017Cy\u0142e\u015B, aby zdecydowa\u0107,
+      czy kupi\u0107 ten produkt?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203664
-    m_Localized: "Na co zwr\xF3ci\u0142e\u015B uwag\u0119 w opakowaniu tego produktu?"
+    m_Localized: "Na co zwr\xF3ci\u0142e\u015B uwag\u0119 w opakowaniu tego produktu?
+      Liczy si\u0119 materia\u0142, instrukcje recyklingu lub to, czy mo\u017Cna
+      je ponownie u\u017Cy\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203665
-    m_Localized: "Czy wybra\u0142e\u015B ten produkt do posi\u0142ku, patrz\u0105c
-      na jego pochodzenie i co najmniej jedn\u0105 inn\u0105 rzecz? Zaznacz, na co
-      patrzy\u0142e\u015B."
+    m_Localized: "Czy wybra\u0142e\u015B ten produkt, patrz\u0105c na kraj pochodzenia
+      i co najmniej jedn\u0105 inn\u0105 informacj\u0119 o zr\xF3wnowa\u017Conym
+      rozwoju: certyfikat, metod\u0119 produkcji lub sezonowo\u015B\u0107? Zaznacz,
+      na co patrzy\u0142e\u015B."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203666
@@ -4550,8 +4606,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203667
-    m_Localized: "Czy kupuj\u0105c ten produkt, sprawdzi\u0142e\u015B materia\u0142
-      opakowania i co si\u0119 z nim dzieje po u\u017Cyciu? Zaznacz, na co patrzy\u0142e\u015B."
+    m_Localized: "Czy kupuj\u0105c ten produkt, wzi\u0105\u0142e\u015B pod uwag\u0119
+      materia\u0142 opakowania i to, co si\u0119 z nim stanie potem (recykling, ponowne
+      u\u017Cycie lub wyrzucenie)? Zaznacz, na co patrzy\u0142e\u015B."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203668
@@ -4563,6 +4620,111 @@ MonoBehaviour:
   - m_Id: 56190243387203669
     m_Localized: "Jakie znaki zr\xF3wnowa\u017Conego rozwoju ma ten produkt? Zaznacz
       co najmniej dwa, na przyk\u0142ad Ekologiczny UE i Fairtrade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Localized: "Na ilu opakowaniach produkt\xF3w znalaz\u0142e\u015B informacj\u0119
+      o zr\xF3wnowa\u017Conym rozwoju? Na przyk\u0142ad kraj pochodzenia, znak certyfikatu,
+      spos\xF3b produkcji lub uprawy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Localized: "Czy znalaz\u0142e\u015B na opakowaniu tego produktu informacj\u0119
+      o zr\xF3wnowa\u017Conym rozwoju? Na przyk\u0142ad kraj pochodzenia, znak certyfikatu,
+      spos\xF3b produkcji lub uprawy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Localized: "Ile razy \u015Bwiadomie wybra\u0142e\u015B produkt po przeczytaniu
+      informacji \u015Brodowiskowych na jego opakowaniu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Localized: "Przy ilu zakupach przed decyzj\u0105 wzi\u0105\u0142e\u015B pod
+      uwag\u0119 zar\xF3wno grup\u0119 NOVA, jak i Green-Score? Znajdziesz je w informacjach
+      o produkcie lub na opakowaniu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Localized: "Czy przed decyzj\u0105 wzi\u0105\u0142e\u015B pod uwag\u0119 grup\u0119
+      NOVA i Green-Score tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Localized: "W ilu produktach sprawdzi\u0142e\u015B grup\u0119 NOVA? To pierwszy
+      krok, aby zobaczy\u0107, czy ich przetworzenie ma zalety i wady."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Localized: "Czy sprawdzi\u0142e\u015B grup\u0119 NOVA tego produktu, aby oceni\u0107
+      zalety i wady jego przetworzenia?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Localized: "W ilu z tych produkt\xF3w przeczyta\u0142e\u015B list\u0119 sk\u0142adnik\xF3w,
+      aby zobaczy\u0107, co wnosi przetworzenie? Na przyk\u0142ad konserwanty, kt\xF3re
+      wyd\u0142u\u017Caj\u0105 trwa\u0142o\u015B\u0107, albo dodany cukier i dodatki."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Localized: "Czy przeczyta\u0142e\u015B list\u0119 sk\u0142adnik\xF3w tego produktu,
+      aby zobaczy\u0107, co wnosi jego przetworzenie? Na przyk\u0142ad konserwanty,
+      kt\xF3re wyd\u0142u\u017Caj\u0105 trwa\u0142o\u015B\u0107, albo dodany cukier
+      i dodatki."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Localized: "W ilu z nich sprawdzi\u0142e\u015B te\u017C informacje na opakowaniu,
+      takie jak spos\xF3b przechowywania czy termin przydatno\u015Bci?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Localized: "Czy sprawdzi\u0142e\u015B informacje na opakowaniu tego produktu,
+      takie jak spos\xF3b przechowywania czy termin przydatno\u015Bci?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Localized: "Przy ilu zakupach grupa NOVA, Green-Score lub lista sk\u0142adnik\xF3w
+      pomog\u0142y ci podj\u0105\u0107 decyzj\u0119? Zaznacz, na co patrzy\u0142e\u015B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Localized: "Na co patrzy\u0142e\u015B w tym produkcie, aby zdecydowa\u0107,
+      czy go kupi\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Localized: "Dla ilu zjedzonych produkt\xF3w zapisa\u0142e\u015B grup\u0119
+      NOVA, Green-Score lub metod\u0119 produkcji? Zastan\xF3w si\u0119 te\u017C,
+      czy wp\u0142yn\u0119\u0142y na tw\xF3j wyb\xF3r."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Localized: "Na jakie wska\u017Aniki produkcji tego produktu patrzy\u0142e\u015B?
+      Zastan\xF3w si\u0119, czy wp\u0142yn\u0119\u0142y na tw\xF3j wyb\xF3r."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Localized: "Ile razy znalaz\u0142e\u015B opakowanie wielokrotnego u\u017Cytku
+      lub do ponownego nape\u0142nienia? Szukaj symboli nape\u0142niania, system\xF3w
+      kaucyjnych, punkt\xF3w nape\u0142niania lub opakowa\u0144 oznaczonych jako
+      wielokrotnego u\u017Cytku."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Localized: "W ilu produktach znalaz\u0142e\u015B opakowanie, kt\xF3re mo\u017Cna
+      ponownie u\u017Cy\u0107, podda\u0107 recyklingowi lub nape\u0142ni\u0107? Zaznacz,
+      co znalaz\u0142e\u015B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Localized: "Czy opakowanie tego produktu mo\u017Cna ponownie u\u017Cy\u0107,
+      podda\u0107 recyklingowi lub nape\u0142ni\u0107? Zaznacz, co znalaz\u0142e\u015B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Localized: "Czy zaplanowa\u0142e\u015B wszystkie g\u0142\xF3wne posi\u0142ki
+      tygodnia przed pierwszymi zakupami, \u017Ceby kupi\u0107 tylko to, co wykorzystasz?"
     m_Metadata:
       m_Items: []
   references:

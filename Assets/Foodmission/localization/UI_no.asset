@@ -3326,49 +3326,60 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 52041725676347400
-    m_Localized: "Hvor mange produkter valgte du ut fra flere milj\xF8hensyn?"
+    m_Localized: "Hvor mange produkter valgte du ut fra to ulike milj\xF8hensyn?
+      For eksempel karbonavtrykk og transportavstand, eller vannforbruk og produksjonsmetode."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347401
-    m_Localized: For hvor mange produkter sammenlignet du NOVA-gruppen med en annen
-      score?
+    m_Localized: "For hvor mange kj\xF8pte produkter sammenlignet du NOVA-gruppen
+      med Green-Score eller Nutri-Score?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347402
-    m_Localized: For hvor mange produkter sammenlignet du Nutri-Score, NOVA og Green-Score?
+    m_Localized: For hvor mange produkter sammenlignet du NOVA-gruppen, Nutri-Score
+      og Green-Score? Tell bare dem som har alle tre.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347403
-    m_Localized: For hvor mange produkter sjekket du NOVA-gruppen?
+    m_Localized: "For hvor mange produkter sjekket du NOVA-gruppen? Den g\xE5r fra
+      1 (ubearbeidet eller minimalt bearbeidet) til 4 (ultrabearbeidet)."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
-    m_Localized: Hvor mange ingredienslister leste du?
+    m_Localized: "For hvor mange produkter leste du ingredienslisten p\xE5 jakt etter
+      tegn p\xE5 bearbeiding? Mange raffinerte ingredienser eller tilsetningsstoffer
+      tyder ofte p\xE5 en ultrabearbeidet matvare."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
-    m_Localized: For hvor mange produkter sjekket du informasjonen om emballasjen?
+    m_Localized: "Ved hvor mange kj\xF8p var emballasjen et av kriteriene dine for
+      \xE5 bestemme deg? Se p\xE5 merkingen, resirkuleringsanvisningene, materialsymbolene
+      eller om den kan gjenbrukes."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347406
-    m_Localized: Hvor mange produkter sammenlignet du ved hjelp av ulike indikatorer?
+    m_Localized: "For hvor mange produkter med sv\xE6rt ulike NOVA-grupper og Green-Score
+      la du merke til forskjellene? For eksempel et lite bearbeidet produkt med d\xE5rlig
+      Green-Score mot et ultrabearbeidet med god Green-Score."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347407
-    m_Localized: "Hvor mange ganger valgte du et gjenbrukbart alternativ (pose, beholder,
-      l\xF8svekt)?"
+    m_Localized: "Hvor mange ganger valgte du gjenbrukbar eller p\xE5fyllbar emballasje?
+      For eksempel panteflasker, p\xE5fyllingsstasjoner eller l\xF8svekt i egen beholder."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347408
-    m_Localized: Hvor mange produkter med smart emballasje fant du?
+    m_Localized: "Hvor mange produkter med smart emballasje fant du? Se etter ferskhetsindikatorer,
+      QR-koder, sporbarhetsinformasjon eller temperaturoverv\xE5king."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347409
-    m_Localized: "Planla du m\xE5ltidene dine for de neste dagene?"
+    m_Localized: "Lagde du en m\xE5ltidsplan f\xF8r den store handleturen?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347410
-    m_Localized: "Sjekket du kj\xF8leskapet og spiskammeret f\xF8r du handlet?"
+    m_Localized: "Sjekket du kj\xF8leskapet, fryseren og skapet f\xF8r du gikk og
+      handlet?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
@@ -3380,19 +3391,24 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 52041725676347412
-    m_Localized: For hvor mange produkter sjekket du hvor de kommer fra?
+    m_Localized: "For hvor mange produkter s\xE5 du etter opprinnelseslandet? Det
+      st\xE5r vanligvis p\xE5 etiketten eller i produktinformasjonen."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347413
-    m_Localized: "Hvor mange ganger valgte du et produkt med b\xE6rekraftsmerke?"
+    m_Localized: "Hvor mange ganger valgte du et produkt med et b\xE6rekraftsmerke?
+      For eksempel \xF8kologisk, Fairtrade eller beskyttet geografisk betegnelse."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347414
-    m_Localized: For hvor mange produkter sjekket du hvordan de ble produsert?
+    m_Localized: "For hvor mange produkter s\xE5 du etter hvordan de ble laget? For
+      eksempel dyrkingsmetode, produksjonssystem eller et b\xE6rekraftsprogram. Se
+      p\xE5 emballasjen, i produktinformasjonen eller QR-koden."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347415
-    m_Localized: For hvor mange produkter sjekket du Green-Score?
+    m_Localized: "For hvor mange produkter sjekket du Green-Score? Den oppsummerer
+      milj\xF8p\xE5virkningen, fra best til d\xE5rligst."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
@@ -3402,40 +3418,50 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
-    m_Localized: Hvor mange resirkuleringsmerker leste du?
+    m_Localized: Hvor mange resirkuleringsmerker leste du? Se etter resirkuleringssymboler,
+      materialkoder eller anvisninger for sortering av emballasjen.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347418
-    m_Localized: For hvor mange produkter leste du hvordan de skal oppbevares?
+    m_Localized: "For hvor mange produkter leste du hvordan de skal oppbevares etter
+      \xE5pning? Det st\xE5r vanligvis p\xE5 emballasjen, for eksempel \xABoppbevares
+      kj\xF8lig etter \xE5pning\xBB."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347419
-    m_Localized: "Sammenlignet du matvarer fra ulike NOVA-bearbeidingsniv\xE5er?"
+    m_Localized: Sammenlignet du NOVA-gruppen til minst tre produkter i samme kategori,
+      for eksempel tre typer ost?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347420
-    m_Localized: For hvor mange produkter sjekket du om emballasjen kan resirkuleres?
+    m_Localized: "For hvor mange emballasjer vurderte du om de er lette eller vanskelige
+      \xE5 resirkulere, ut fra informasjonen p\xE5 dem?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347421
-    m_Localized: Sammenlignet du emballasjen til to lignende produkter?
+    m_Localized: Sammenlignet du emballasjematerialene til tre lignende produkter?
+      For eksempel yoghurt i glass, i plast og i papp.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347422
-    m_Localized: "Hvilke dager organiserte du maten etter \xABf\xF8rst inn, f\xF8rst
-      ut\xBB?"
+    m_Localized: "Hvilke dager ordnet du kj\xF8leskapet, fryseren eller skapet slik
+      at det som g\xE5r ut f\xF8rst st\xE5r foran og blir spist f\xF8rst?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347423
-    m_Localized: Hva sjekket du, og for hvor mange produkter?
+    m_Localized: "Ved hvor mange kj\xF8p brukte du en produksjonsindikator for \xE5
+      bestemme deg? Kryss av for hvilken: NOVA-gruppe, Green-Score, produksjonsmetode
+      eller en sammenligning av indikatorer."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347424
     m_Localized: Hva la du merke til ved emballasjen, og for hvor mange produkter?
+      Materialet, resirkuleringsanvisningene eller om den kan gjenbrukes teller alle.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347425
-    m_Localized: Hvilke proteinkilder spiste du denne uken?
+    m_Localized: "Hvilke proteinkilder spiste du denne uken? Kryss av for alle de
+      ulike: pr\xF8v \xE5 n\xE5 fire."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347426
@@ -4236,8 +4262,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "Til hvilke m\xE5ltider valgte du produkter ut fra opprinnelse og
-      minst \xE9n ting til?"
+    m_Localized: "Til hvilke m\xE5ltider valgte du produkter ut fra opprinnelsesland
+      og minst \xE9n annen b\xE6rekraftsopplysning (sertifisering, produksjonsmetode
+      eller sesong)? Legg til hvert m\xE5ltid og kryss av for det du s\xE5 p\xE5."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
@@ -4254,8 +4281,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "Ved hvilke kj\xF8p sjekket du emballasjematerialet og hva som skjer
-      med det etter bruk?"
+    m_Localized: "Ved hvilke kj\xF8p tok du hensyn til emballasjematerialet og hva
+      som skjer med det etterp\xE5 (resirkulere, gjenbruke eller kaste)? Legg til
+      hvert kj\xF8p og kryss av for det du s\xE5 p\xE5."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
@@ -4264,7 +4292,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
-    m_Localized: "Hvilke farger frukt og gr\xF8nnsaker spiste du hver dag?"
+    m_Localized: "Hvilke farger frukt og gr\xF8nnsaker spiste du hver dag? Pr\xF8v
+      \xE5 n\xE5 fem ulike farger om dagen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203616
@@ -4397,7 +4426,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203646
-    m_Localized: Har du lest hvordan dette produktet skal oppbevares?
+    m_Localized: "Har du lest hvordan dette produktet skal oppbevares etter \xE5pning?
+      Det st\xE5r vanligvis p\xE5 emballasjen, for eksempel \xABoppbevares kj\xF8lig
+      etter \xE5pning\xBB."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203647
@@ -4412,15 +4443,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649
-    m_Localized: Har du sjekket om emballasjen til dette produktet kan resirkuleres?
+    m_Localized: "Har du ut fra informasjonen p\xE5 den vurdert om emballasjen til
+      dette produktet er lett eller vanskelig \xE5 resirkulere?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203650
-    m_Localized: "Har du lest resirkuleringsmerket p\xE5 dette produktet?"
+    m_Localized: "Har du lest resirkuleringsmerket p\xE5 dette produktet? Se etter
+      resirkuleringssymboler, materialkoder eller anvisninger for sortering av emballasjen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203651
-    m_Localized: Har dette produktet smart emballasje?
+    m_Localized: "Har dette produktet smart emballasje? Se etter ferskhetsindikatorer,
+      QR-koder, sporbarhetsinformasjon eller temperaturoverv\xE5king."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203652
@@ -4430,57 +4464,71 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203653
-    m_Localized: Har du sammenlignet Nutri-Score, NOVA og Green-Score for dette produktet?
+    m_Localized: Har du sammenlignet NOVA-gruppen, Nutri-Score og Green-Score for
+      dette produktet?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203654
-    m_Localized: Har du sjekket Green-Score for dette produktet?
+    m_Localized: "Har du sjekket Green-Score for dette produktet? Den oppsummerer
+      milj\xF8p\xE5virkningen, fra best til d\xE5rligst."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203655
-    m_Localized: Har du sammenlignet dette produktet ved hjelp av ulike indikatorer?
+    m_Localized: Har du sammenlignet NOVA-gruppen og Green-Score for dette produktet
+      med andre produkter og lagt merke til forskjellene?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203656
-    m_Localized: Har du lest ingredienslisten til dette produktet?
+    m_Localized: "Har du lest ingredienslisten til dette produktet p\xE5 jakt etter
+      tegn p\xE5 bearbeiding? Mange raffinerte ingredienser eller tilsetningsstoffer
+      tyder ofte p\xE5 en ultrabearbeidet matvare."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203657
-    m_Localized: Har du sjekket NOVA-gruppen til dette produktet?
+    m_Localized: "Har du sjekket NOVA-gruppen til dette produktet? Den g\xE5r fra
+      1 (ubearbeidet eller minimalt bearbeidet) til 4 (ultrabearbeidet)."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203658
-    m_Localized: Har du sammenlignet NOVA-gruppen til dette produktet med en annen
-      poengsum?
+    m_Localized: Har du sammenlignet NOVA-gruppen til dette produktet med Green-Score
+      eller Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203659
-    m_Localized: Har du sjekket hvordan dette produktet er produsert?
+    m_Localized: "Har du sett etter hvordan dette produktet ble laget? For eksempel
+      dyrkingsmetode, produksjonssystem eller et b\xE6rekraftsprogram."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203660
-    m_Localized: "Valgte du dette produktet ut fra flere milj\xF8hensyn?"
+    m_Localized: "Valgte du dette produktet ut fra to ulike milj\xF8hensyn? For eksempel
+      karbonavtrykk og transportavstand, eller vannforbruk og produksjonsmetode."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203661
-    m_Localized: Har du sjekket hvor dette produktet kommer fra?
+    m_Localized: "Har du sett etter opprinnelseslandet til dette produktet? Det st\xE5r
+      vanligvis p\xE5 etiketten."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203662
-    m_Localized: Har du sjekket informasjonen om emballasjen til dette produktet?
+    m_Localized: "Var emballasjen et av kriteriene dine da du valgte dette produktet?
+      Se p\xE5 merkingen, resirkuleringsanvisningene, materialsymbolene eller om
+      den kan gjenbrukes."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203663
-    m_Localized: "Hva har du sjekket p\xE5 dette produktet?"
+    m_Localized: "Hvilken produksjonsindikator brukte du for \xE5 bestemme om du
+      skulle kj\xF8pe dette produktet?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203664
-    m_Localized: Hva la du merke til ved emballasjen til dette produktet?
+    m_Localized: Hva la du merke til ved emballasjen til dette produktet? Materialet,
+      resirkuleringsanvisningene eller om den kan gjenbrukes teller alle.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203665
-    m_Localized: "Valgte du dette produktet til et m\xE5ltid ut fra opprinnelse og
-      minst \xE9n ting til? Kryss av for det du s\xE5 p\xE5."
+    m_Localized: "Valgte du dette produktet ut fra opprinnelsesland og minst \xE9n
+      annen b\xE6rekraftsopplysning: sertifisering, produksjonsmetode eller sesong?
+      Kryss av for det du s\xE5 p\xE5."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203666
@@ -4489,8 +4537,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203667
-    m_Localized: "Sjekket du emballasjematerialet og hva som skjer med det etter
-      bruk da du kj\xF8pte dette produktet? Kryss av for det du s\xE5 p\xE5."
+    m_Localized: "Tok du hensyn til emballasjematerialet og hva som skjer med det
+      etterp\xE5 (resirkulere, gjenbruke eller kaste) da du kj\xF8pte dette produktet?
+      Kryss av for det du s\xE5 p\xE5."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203668
@@ -4502,6 +4551,107 @@ MonoBehaviour:
   - m_Id: 56190243387203669
     m_Localized: "Hvilke b\xE6rekraftsmerker har dette produktet? Kryss av for minst
       to, for eksempel EU-\xF8kologisk og Fairtrade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Localized: "For hvor mange produkter fant du en b\xE6rekraftsopplysning p\xE5
+      emballasjen? For eksempel opprinnelsesland, et sertifiseringsmerke, hvordan
+      det er produsert eller dyrket."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Localized: "Har du funnet en b\xE6rekraftsopplysning p\xE5 emballasjen til
+      dette produktet? For eksempel opprinnelsesland, et sertifiseringsmerke, hvordan
+      det er produsert eller dyrket."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Localized: "Hvor mange ganger valgte du bevisst et produkt etter \xE5 ha lest
+      milj\xF8informasjonen p\xE5 emballasjen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Localized: "Ved hvor mange kj\xF8p tok du hensyn til b\xE5de NOVA-gruppen og
+      Green-Score f\xF8r du bestemte deg? Du finner dem i produktinformasjonen eller
+      p\xE5 emballasjen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Localized: "Har du tatt hensyn til NOVA-gruppen og Green-Score for dette produktet
+      f\xF8r du bestemte deg?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Localized: "For hvor mange produkter sjekket du NOVA-gruppen? Det er f\xF8rste
+      steg for \xE5 se om bearbeidingen har fordeler og ulemper."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Localized: "Har du sjekket NOVA-gruppen til dette produktet for \xE5 veie fordeler
+      og ulemper ved bearbeidingen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Localized: "For hvor mange av disse produktene leste du ingredienslisten for
+      \xE5 se hva bearbeidingen tilf\xF8rer? For eksempel konserveringsmidler som
+      gj\xF8r at de holder seg lenger, eller tilsatt sukker og tilsetningsstoffer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Localized: "Har du lest ingredienslisten til dette produktet for \xE5 se hva
+      bearbeidingen tilf\xF8rer? For eksempel konserveringsmidler som gj\xF8r at
+      det holder seg lenger, eller tilsatt sukker og tilsetningsstoffer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Localized: "For hvor mange av dem sjekket du ogs\xE5 informasjonen p\xE5 emballasjen,
+      som oppbevaring eller holdbarhetsdato?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Localized: "Har du sjekket informasjonen p\xE5 emballasjen til dette produktet,
+      som oppbevaring eller holdbarhetsdato?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Localized: "Ved hvor mange kj\xF8p hjalp NOVA-gruppen, Green-Score eller ingredienslisten
+      deg med \xE5 bestemme deg? Kryss av for det du s\xE5 p\xE5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Localized: "Hva s\xE5 du p\xE5 ved dette produktet for \xE5 bestemme om du
+      skulle kj\xF8pe det?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Localized: "For hvor mange matvarer du spiste noterte du NOVA-gruppen, Green-Score
+      eller produksjonsmetoden? Tenk ogs\xE5 over om de p\xE5virket valget ditt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Localized: "Hvilke produksjonsindikatorer s\xE5 du p\xE5 ved dette produktet?
+      Tenk over om de p\xE5virket valget ditt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Localized: "Hvor mange ganger fant du et alternativ med gjenbrukbar eller p\xE5fyllbar
+      emballasje? Se etter p\xE5fyllingssymboler, pantesystemer, p\xE5fyllingsstasjoner
+      eller emballasje som sier at den kan gjenbrukes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Localized: "For hvor mange produkter fant du emballasje som kan gjenbrukes,
+      resirkuleres eller fylles p\xE5 nytt? Kryss av for det du fant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Localized: "Kan emballasjen til dette produktet gjenbrukes, resirkuleres eller
+      fylles p\xE5 nytt? Kryss av for det du fant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Localized: "Planla du alle hovedm\xE5ltidene for uken f\xF8r den f\xF8rste
+      handleturen, slik at du bare kj\xF8pte det du skulle bruke?"
     m_Metadata:
       m_Items: []
   references:

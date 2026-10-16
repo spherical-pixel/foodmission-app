@@ -3345,49 +3345,61 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 52041725676347400
-    m_Localized: Hoeveel producten koos je op basis van meerdere milieuaspecten?
+    m_Localized: Hoeveel producten koos je met twee verschillende milieuaspecten
+      in gedachten? Bijvoorbeeld CO2-voetafdruk en transportafstand, of waterverbruik
+      en productiemethode.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347401
-    m_Localized: Bij hoeveel producten vergeleek je de NOVA-groep met een andere
-      score?
+    m_Localized: Bij hoeveel gekochte producten vergeleek je de NOVA-groep met de
+      Green-Score of de Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347402
-    m_Localized: Bij hoeveel producten vergeleek je Nutri-Score, NOVA en Green-Score?
+    m_Localized: Bij hoeveel producten vergeleek je de NOVA-groep, de Nutri-Score
+      en de Green-Score? Tel alleen de producten die alle drie hebben.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347403
-    m_Localized: Bij hoeveel producten keek je naar de NOVA-groep?
+    m_Localized: Bij hoeveel producten bekeek je de NOVA-groep? Die loopt van 1 (onbewerkt
+      of minimaal bewerkt) tot 4 (ultrabewerkt).
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
-    m_Localized: "Hoeveel ingredi\xEBntenlijsten heb je gelezen?"
+    m_Localized: "Bij hoeveel producten las je de ingredi\xEBntenlijst op zoek naar
+      tekenen van bewerking? Veel geraffineerde ingredi\xEBnten of additieven wijzen
+      meestal op een ultrabewerkt product."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
-    m_Localized: Bij hoeveel producten bekeek je de verpakkingsinformatie?
+    m_Localized: Bij hoeveel aankopen was de verpakking een van je criteria om te
+      beslissen? Let op de etiketten, de recyclinginstructies, de materiaalsymbolen
+      of of ze herbruikbaar is.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347406
-    m_Localized: Hoeveel producten vergeleek je met verschillende indicatoren?
+    m_Localized: Bij hoeveel producten met heel verschillende NOVA-groepen en Green-Scores
+      lette je op de verschillen? Bijvoorbeeld een weinig bewerkt product met een
+      slechte Green-Score tegenover een ultrabewerkt product met een goede Green-Score.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347407
-    m_Localized: Hoe vaak koos je een herbruikbare optie (tas, bakje, onverpakt)?
+    m_Localized: Hoe vaak koos je herbruikbare of navulbare verpakkingen? Bijvoorbeeld
+      statiegeldflessen, navulpunten of los kopen met je eigen bakje.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347408
-    m_Localized: Hoeveel producten met slimme verpakking heb je gevonden?
+    m_Localized: Hoeveel producten met slimme verpakking heb je gevonden? Let op
+      versheidsindicatoren, QR-codes, traceerbaarheidsinformatie of temperatuurbewaking.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347409
-    m_Localized: Heb je je maaltijden voor de komende dagen gepland?
+    m_Localized: "Heb je een maaltijdplan gemaakt v\xF3\xF3r je grote boodschappen?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347410
-    m_Localized: Heb je je koelkast en voorraadkast gecontroleerd voor het boodschappen
-      doen?
+    m_Localized: Heb je de koelkast, vriezer en voorraadkast gecontroleerd voordat
+      je boodschappen ging doen?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
@@ -3399,19 +3411,24 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 52041725676347412
-    m_Localized: Bij hoeveel producten keek je waar ze vandaan komen?
+    m_Localized: Bij hoeveel producten zocht je het land van herkomst op? Dat staat
+      meestal op het etiket of in de productinformatie.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347413
-    m_Localized: Hoe vaak koos je een product met een duurzaamheidskeurmerk?
+    m_Localized: Hoe vaak koos je een product met een duurzaamheidskeurmerk? Bijvoorbeeld
+      biologisch, fairtrade of beschermde geografische aanduiding.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347414
-    m_Localized: Bij hoeveel producten keek je hoe ze geproduceerd zijn?
+    m_Localized: Bij hoeveel producten zocht je op hoe ze zijn gemaakt? Bijvoorbeeld
+      de teeltmethode, het productiesysteem of een duurzaamheidsprogramma. Kijk op
+      de verpakking, in de productinformatie of via de QR-code.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347415
-    m_Localized: Bij hoeveel producten keek je naar de Green-Score?
+    m_Localized: Bij hoeveel producten bekeek je de Green-Score? Die vat de milieu-impact
+      samen, van best tot slechtst.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
@@ -3421,42 +3438,50 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
-    m_Localized: Hoeveel recyclinglabels heb je gelezen?
+    m_Localized: Hoeveel recyclinglabels heb je gelezen? Let op recyclingsymbolen,
+      materiaalcodes of instructies om de verpakking te scheiden.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347418
-    m_Localized: Bij hoeveel producten las je hoe je ze moet bewaren?
+    m_Localized: "Bij hoeveel producten las je hoe je ze bewaart na opening? Dat
+      staat meestal op de verpakking, bijvoorbeeld \u201Cna opening gekoeld bewaren\u201D."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347419
-    m_Localized: Heb je voedingsmiddelen van verschillende NOVA-bewerkingsniveaus
-      vergeleken?
+    m_Localized: Heb je de NOVA-groep vergeleken van minstens drie producten uit
+      dezelfde categorie, zoals drie soorten kaas?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347420
-    m_Localized: Bij hoeveel producten controleerde je of de verpakking recyclebaar
-      is?
+    m_Localized: Bij hoeveel verpakkingen beoordeelde je of ze makkelijk of moeilijk
+      te recyclen zijn, op basis van de informatie die erop staat?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347421
-    m_Localized: Heb je de verpakking van twee vergelijkbare producten vergeleken?
+    m_Localized: Heb je de verpakkingsmaterialen van drie vergelijkbare producten
+      vergeleken? Bijvoorbeeld yoghurt in glas, in plastic en in karton.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347422
-    m_Localized: "Op welke dagen heb je je eten geordend volgens \u201Ceerst erin,
-      eerst eruit\u201D?"
+    m_Localized: Op welke dagen heb je je koelkast, vriezer of voorraadkast zo ingedeeld
+      dat wat het eerst verloopt vooraan staat en het eerst wordt gegeten?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347423
-    m_Localized: Waar heb je naar gekeken, en bij hoeveel producten?
+    m_Localized: 'Bij hoeveel aankopen gebruikte je een productie-indicator om te
+      beslissen? Vink aan welke: NOVA-groep, Green-Score, productiemethode of een
+      vergelijking van indicatoren.'
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347424
-    m_Localized: Waar lette je op bij de verpakking, en bij hoeveel producten?
+    m_Localized: Waar lette je op bij de verpakking, en bij hoeveel producten? Het
+      materiaal, de recyclinginstructies of of ze herbruikbaar is tellen allemaal
+      mee.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347425
-    m_Localized: Welke eiwitbronnen at je deze week?
+    m_Localized: 'Welke eiwitbronnen at je deze week? Vink alle verschillende aan:
+      probeer er vier te halen.'
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347426
@@ -4251,8 +4276,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "Voor welke maaltijden koos je producten op basis van hun herkomst
-      en nog minstens \xE9\xE9n ander punt?"
+    m_Localized: "Voor welke maaltijden koos je producten op basis van hun land van
+      herkomst en nog minstens \xE9\xE9n ander duurzaamheidsgegeven (certificering,
+      productiemethode of seizoen)? Voeg elke maaltijd toe en vink aan waar je naar
+      keek."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
@@ -4269,8 +4296,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: Bij welke aankopen heb je het verpakkingsmateriaal bekeken en wat
-      er na gebruik mee gebeurt?
+    m_Localized: Bij welke aankopen hield je rekening met het verpakkingsmateriaal
+      en wat er daarna mee gebeurt (recyclen, hergebruiken of weggooien)? Voeg elke
+      aankoop toe en vink aan waar je naar keek.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
@@ -4279,7 +4307,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
-    m_Localized: Welke kleuren groente en fruit heb je elke dag gegeten?
+    m_Localized: Welke kleuren groente en fruit at je elke dag? Probeer vijf verschillende
+      kleuren per dag te halen.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203616
@@ -4412,7 +4441,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203646
-    m_Localized: Heb je gelezen hoe je dit product moet bewaren?
+    m_Localized: "Heb je gelezen hoe je dit product bewaart na opening? Dat staat
+      meestal op de verpakking, bijvoorbeeld \u201Cna opening gekoeld bewaren\u201D."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203647
@@ -4427,16 +4457,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649
-    m_Localized: Heb je gecontroleerd of de verpakking van dit product recyclebaar
-      is?
+    m_Localized: Heb je op basis van de informatie die erop staat beoordeeld of de
+      verpakking van dit product makkelijk of moeilijk te recyclen is?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203650
-    m_Localized: Heb je het recyclinglabel van dit product gelezen?
+    m_Localized: Heb je het recyclinglabel van dit product gelezen? Let op recyclingsymbolen,
+      materiaalcodes of instructies om de verpakking te scheiden.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203651
-    m_Localized: Heeft dit product een slimme verpakking?
+    m_Localized: Heeft dit product een slimme verpakking? Let op versheidsindicatoren,
+      QR-codes, traceerbaarheidsinformatie of temperatuurbewaking.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203652
@@ -4445,56 +4477,72 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203653
-    m_Localized: Heb je de Nutri-Score, NOVA en Green-Score van dit product vergeleken?
+    m_Localized: Heb je de NOVA-groep, de Nutri-Score en de Green-Score van dit product
+      vergeleken?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203654
-    m_Localized: Heb je de Green-Score van dit product bekeken?
+    m_Localized: Heb je de Green-Score van dit product bekeken? Die vat de milieu-impact
+      samen, van best tot slechtst.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203655
-    m_Localized: Heb je dit product vergeleken met verschillende indicatoren?
+    m_Localized: Heb je de NOVA-groep en de Green-Score van dit product vergeleken
+      met die van andere producten en op de verschillen gelet?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203656
-    m_Localized: "Heb je de ingredi\xEBntenlijst van dit product gelezen?"
+    m_Localized: "Heb je de ingredi\xEBntenlijst van dit product gelezen op zoek
+      naar tekenen van bewerking? Veel geraffineerde ingredi\xEBnten of additieven
+      wijzen meestal op een ultrabewerkt product."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203657
-    m_Localized: Heb je de NOVA-groep van dit product bekeken?
+    m_Localized: Heb je de NOVA-groep van dit product bekeken? Die loopt van 1 (onbewerkt
+      of minimaal bewerkt) tot 4 (ultrabewerkt).
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203658
-    m_Localized: Heb je de NOVA-groep van dit product vergeleken met een andere score?
+    m_Localized: Heb je de NOVA-groep van dit product vergeleken met de Green-Score
+      of de Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203659
-    m_Localized: Heb je bekeken hoe dit product is geproduceerd?
+    m_Localized: Heb je opgezocht hoe dit product is gemaakt? Bijvoorbeeld de teeltmethode,
+      het productiesysteem of een duurzaamheidsprogramma.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203660
-    m_Localized: Heb je dit product gekozen op basis van meerdere milieuaspecten?
+    m_Localized: Heb je dit product gekozen met twee verschillende milieuaspecten
+      in gedachten? Bijvoorbeeld CO2-voetafdruk en transportafstand, of waterverbruik
+      en productiemethode.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203661
-    m_Localized: Heb je bekeken waar dit product vandaan komt?
+    m_Localized: Heb je het land van herkomst van dit product opgezocht? Dat staat
+      meestal op het etiket.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203662
-    m_Localized: Heb je de verpakkingsinformatie van dit product bekeken?
+    m_Localized: Was de verpakking een van je criteria om dit product te kiezen?
+      Let op de etiketten, de recyclinginstructies, de materiaalsymbolen of of ze
+      herbruikbaar is.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203663
-    m_Localized: Waar heb je naar gekeken bij dit product?
+    m_Localized: Welke productie-indicator gebruikte je om te beslissen of je dit
+      product zou kopen?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203664
-    m_Localized: Waar heb je op gelet bij de verpakking van dit product?
+    m_Localized: Waar heb je op gelet bij de verpakking van dit product? Het materiaal,
+      de recyclinginstructies of of ze herbruikbaar is tellen allemaal mee.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203665
-    m_Localized: "Heb je dit product voor een maaltijd gekozen op basis van de herkomst
-      en nog minstens \xE9\xE9n ander punt? Vink aan waar je naar keek."
+    m_Localized: "Heb je dit product gekozen op basis van het land van herkomst en
+      nog minstens \xE9\xE9n ander duurzaamheidsgegeven: certificering, productiemethode
+      of seizoen? Vink aan waar je naar keek."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203666
@@ -4503,8 +4551,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203667
-    m_Localized: Heb je bij het kopen van dit product het verpakkingsmateriaal bekeken
-      en wat er na gebruik mee gebeurt? Vink aan waar je naar keek.
+    m_Localized: Hield je bij het kopen van dit product rekening met het verpakkingsmateriaal
+      en wat er daarna mee gebeurt (recyclen, hergebruiken of weggooien)? Vink aan
+      waar je naar keek.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203668
@@ -4516,6 +4565,107 @@ MonoBehaviour:
   - m_Id: 56190243387203669
     m_Localized: Welke duurzaamheidslabels staan op dit product? Vink er minstens
       twee aan, bijvoorbeeld EU-biologisch en Fairtrade.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Localized: Bij hoeveel producten vond je een duurzaamheidsgegeven op de verpakking?
+      Bijvoorbeeld het land van herkomst, een keurmerk, hoe het is geproduceerd of
+      hoe het is geteeld.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Localized: Heb je een duurzaamheidsgegeven gevonden op de verpakking van dit
+      product? Bijvoorbeeld het land van herkomst, een keurmerk, hoe het is geproduceerd
+      of hoe het is geteeld.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Localized: Hoe vaak koos je bewust een product nadat je de milieu-informatie
+      op de verpakking had gelezen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Localized: Bij hoeveel aankopen hield je rekening met zowel de NOVA-groep als
+      de Green-Score voordat je besliste? Je vindt ze in de productinformatie of
+      op de verpakking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Localized: Heb je rekening gehouden met de NOVA-groep en de Green-Score van
+      dit product voordat je besliste?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Localized: Bij hoeveel producten bekeek je de NOVA-groep? Dat is de eerste
+      stap om te zien of de bewerking voor- en nadelen heeft.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Localized: Heb je de NOVA-groep van dit product bekeken om de voor- en nadelen
+      van de bewerking af te wegen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Localized: "Bij hoeveel van die producten las je de ingredi\xEBntenlijst om
+      te zien wat de bewerking toevoegt? Bijvoorbeeld conserveermiddelen die ze langer
+      houdbaar maken, of toegevoegde suikers en additieven."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Localized: "Heb je de ingredi\xEBntenlijst van dit product gelezen om te zien
+      wat de bewerking toevoegt? Bijvoorbeeld conserveermiddelen die het langer houdbaar
+      maken, of toegevoegde suikers en additieven."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Localized: Bij hoeveel daarvan bekeek je ook de informatie op de verpakking,
+      zoals hoe je het bewaart of de houdbaarheidsdatum?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Localized: Heb je de informatie op de verpakking van dit product bekeken, zoals
+      hoe je het bewaart of de houdbaarheidsdatum?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Localized: "Bij hoeveel aankopen hielpen de NOVA-groep, de Green-Score of de
+      ingredi\xEBntenlijst je om te beslissen? Vink aan waar je naar keek."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Localized: Waar heb je naar gekeken bij dit product om te beslissen of je het
+      zou kopen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Localized: "Van hoeveel voedingsmiddelen die je at noteerde je de NOVA-groep,
+      de Green-Score of de productiemethode? Denk ook na of ze je keuze hebben be\xEFnvloed."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Localized: "Naar welke productie-indicatoren heb je gekeken bij dit product?
+      Denk na of ze je keuze hebben be\xEFnvloed."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Localized: Hoe vaak vond je een herbruikbare of navulbare verpakkingsoptie?
+      Let op navulsymbolen, statiegeldsystemen, navulpunten of verpakkingen die aangeven
+      dat ze herbruikbaar zijn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Localized: Bij hoeveel producten vond je een verpakking die je kunt hergebruiken,
+      recyclen of navullen? Vink aan wat je vond.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Localized: Kan de verpakking van dit product worden hergebruikt, gerecycled
+      of nagevuld? Vink aan wat je vond.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Localized: "Heb je alle hoofdmaaltijden van de week gepland v\xF3\xF3r je eerste
+      boodschappen, zodat je alleen kocht wat je ging gebruiken?"
     m_Metadata:
       m_Items: []
   references:

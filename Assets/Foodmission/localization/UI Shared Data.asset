@@ -4331,6 +4331,82 @@ MonoBehaviour:
     m_Key: MISSION_QP_DOUBLE_LABEL
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203670
+    m_Key: MISSION_Q_M_B2_5_SUSTAINABILITY_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Key: MISSION_QP_M_B2_5_SUSTAINABILITY_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Key: MISSION_Q_M_I2_5_CLIMATE_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Key: MISSION_Q_M_A3_1_NOVA_GREEN_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Key: MISSION_QP_M_A3_1_NOVA_GREEN_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Key: MISSION_Q_M_A3_3_NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Key: MISSION_QP_M_A3_3_NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Key: MISSION_Q_M_A3_3_INGREDIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Key: MISSION_QP_M_A3_3_INGREDIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Key: MISSION_Q_M_A3_3_PACKAGING_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Key: MISSION_QP_M_A3_3_PACKAGING_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Key: MISSION_Q_M_I3_1_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Key: MISSION_QP_M_I3_1_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Key: MISSION_Q_M_I3_5_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Key: MISSION_QP_M_I3_5_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Key: MISSION_Q_M_B4_4_REUSABLE_FOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Key: MISSION_Q_M_I4_5_CIRCULAR_PACKAGING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Key: MISSION_QP_M_I4_5_CIRCULAR_PACKAGING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Key: MISSION_Q_M_A5_5_WEEK_PLANNED
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

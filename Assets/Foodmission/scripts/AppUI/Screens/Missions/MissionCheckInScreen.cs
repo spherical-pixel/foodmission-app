@@ -578,7 +578,7 @@ namespace eu.foodmission.platform
             {
                 string text = line.Kind == CheckInStepKind.MealDay
                     ? LF("MISSION_CHECKIN_SUMMARY_MEALS", DayLabel(line.Day.Value), line.Count)
-                    : LF("MISSION_REPORT_SUMMARY_LINE", L(line.PromptKey), line.Count);
+                    : LF("MISSION_REPORT_SUMMARY_LINE", MissionPromptText.Question(L(line.PromptKey)), line.Count);
                 var row = new Text { text = text };
                 row.AddToClassList("fm-mission-report-label");
                 body.Add(row);
