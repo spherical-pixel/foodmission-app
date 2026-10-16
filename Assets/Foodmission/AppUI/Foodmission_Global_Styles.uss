@@ -595,6 +595,11 @@
     -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-body-md);
 }
 
+/* Beats App UI's ".appui-dialog__content .appui-text" (upper-left) when the stepper is inside a dialog */
+.fm-arrow-stepper__row .fm-arrow-stepper__label.appui-text {
+    -unity-text-align: middle-center;
+}
+
 .fm-simple-stepper .appui-button {
     width: var(--appui-sizing-600);
     height: var(--appui-sizing-600);

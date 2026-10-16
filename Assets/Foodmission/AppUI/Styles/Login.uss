@@ -12,3 +12,10 @@
     max-width: 90%;
     align-self: center;
 }
+
+/* Gear that opens AppearanceSettingsDialog (top right; LoginScreen adds the safe area) */
+.login-appearance-bar {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}

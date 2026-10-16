@@ -344,6 +344,17 @@ namespace eu.foodmission.platform.Components
             VisualElement content,
             params FMDialogAction[] actions)
         {
+            ShowCustom(anchor, title, content, null, actions);
+        }
+
+        /// <summary>ShowCustom that also reports when the modal closes (action button or any other dismissal).</summary>
+        public static void ShowCustom(
+            VisualElement anchor,
+            string title,
+            VisualElement content,
+            Action onDismissed,
+            params FMDialogAction[] actions)
+        {
             if (actions == null || actions.Length == 0)
             {
                 throw new ArgumentException("ShowCustom requires at least one action.", nameof(actions));
@@ -385,6 +396,10 @@ namespace eu.foodmission.platform.Components
 
             modal = Modal.Build(anchor, dialog);
             modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
+            if (onDismissed != null)
+            {
+                modal.dismissed += (_, _) => onDismissed.Invoke();
+            }
             NotifyScreenReaderOfDialog(modal, title, "");
             modal.Show();
         }
