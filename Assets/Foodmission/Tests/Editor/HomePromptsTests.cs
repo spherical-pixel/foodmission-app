@@ -45,7 +45,7 @@ namespace eu.foodmission.platform.Tests
                 typeof(LegalConsentPrompt), typeof(PilotConsentPrompt),
                 typeof(RewardCelebrationsPrompt), typeof(FailedMissionsPrompt), typeof(WhatsNewPrompt),
                 typeof(UnlockedQuestPrompt), typeof(OnboardingReminderPrompt), typeof(NotificationsPrompt),
-                typeof(PilotSurveyPrompt), typeof(MissionLastDayPrompt), typeof(MissionNudgePrompt), typeof(DailyFoodFactPrompt)
+                typeof(PilotSurveyPrompt), typeof(MissionLastDayPrompt), typeof(MissionNudgePrompt), typeof(QuestStartReminderPrompt), typeof(DailyFoodFactPrompt)
             }, types);
             vm.Dispose();
         }
@@ -149,6 +149,106 @@ namespace eu.foodmission.platform.Tests
             HomePromptSession.OnboardingDeferred = true;
 
             Assert.IsNull(await new OnboardingReminderPrompt(vm).CheckAsync());
+            vm.Dispose();
+        }
+
+        private static CurrentQuest QuestWithMissions(params CurrentQuestItem[] items) =>
+            new CurrentQuest { questId = "q1", questCode = "QUEST.X", name = "Quest X", items = items };
+
+        private static CurrentQuestItem Mission(string code, string status, System.DateTime? startedAt) =>
+            new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = code, status = status, startedAt = startedAt };
+
+        [Test]
+        public async Task QuestStartReminderPrompt_NoCurrentQuest_RemindsOncePerSession()
+        {
+            var vm = new HomeScreenViewModel(_store, _audio.Object);
+
+            Assert.IsNotNull(await new QuestStartReminderPrompt(vm).CheckAsync());
+
+            HomePromptSession.NoQuestReminded = true;
+            Assert.IsNull(await new QuestStartReminderPrompt(vm).CheckAsync());
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task QuestStartReminderPrompt_StoredQuestGoneOnServer_RemindsToChooseOne()
+        {
+            _store.SetAppState(new AppState { userId = "u1", accessToken = "t", userCurrentQuestId = "q1" });
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync(((CurrentQuest)null, (ApiErrorResponse)null));
+            var vm = new HomeScreenViewModel(_store, _audio.Object, gamificationService: gamification.Object);
+
+            QuestStartReminder reminder = await vm.CheckQuestStartReminderAsync();
+
+            Assert.AreEqual(QuestStartReminderKind.NoQuest, reminder.Kind);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task QuestStartReminderPrompt_MissionsWaitingAndNoneRunning_RemindsOncePerSession()
+        {
+            _store.SetAppState(new AppState { userId = "u1", accessToken = "t", userCurrentQuestId = "q1" });
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync((QuestWithMissions(
+                Mission("M1", CurrentQuestItemStatus.Completed, System.DateTime.UtcNow),
+                Mission("M2", CurrentQuestItemStatus.NotStarted, null)), (ApiErrorResponse)null));
+            var vm = new HomeScreenViewModel(_store, _audio.Object, gamificationService: gamification.Object);
+
+            QuestStartReminder reminder = await vm.CheckQuestStartReminderAsync();
+            Assert.AreEqual(QuestStartReminderKind.MissionsToStart, reminder.Kind);
+            Assert.AreEqual("q1", reminder.Quest.questId);
+            Assert.IsNotNull(await new QuestStartReminderPrompt(vm).CheckAsync());
+
+            HomePromptSession.MissionsToStartReminded = true;
+            Assert.IsNull(await new QuestStartReminderPrompt(vm).CheckAsync());
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task QuestStartReminderPrompt_MissionRunningOrLoadError_IsNotPending()
+        {
+            _store.SetAppState(new AppState { userId = "u1", accessToken = "t", userCurrentQuestId = "q1" });
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync((QuestWithMissions(
+                Mission("M1", CurrentQuestItemStatus.InProgress, System.DateTime.UtcNow),
+                Mission("M2", CurrentQuestItemStatus.NotStarted, null)), (ApiErrorResponse)null));
+            var vm = new HomeScreenViewModel(_store, _audio.Object, gamificationService: gamification.Object);
+
+            Assert.IsNull(await new QuestStartReminderPrompt(vm).CheckAsync());
+
+            gamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync(((CurrentQuest)null, new ApiErrorResponse { statusCode = 500 }));
+            Assert.IsNull(await new QuestStartReminderPrompt(vm).CheckAsync());
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task QuestStartReminderPrompt_FailureToldThisVisit_WaitsForTheNextVisit()
+        {
+            _store.SetAppState(new AppState { userId = "u1", accessToken = "t", userCurrentQuestId = "q1" });
+            var gamification = new Mock<IGamificationService>();
+            gamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync((QuestWithMissions(
+                Mission("M1", CurrentQuestItemStatus.Completed, System.DateTime.UtcNow),
+                Mission("M2", CurrentQuestItemStatus.Failed, System.DateTime.UtcNow)), (ApiErrorResponse)null));
+            var vm = new HomeScreenViewModel(_store, _audio.Object, gamificationService: gamification.Object);
+
+            Assert.IsNull(await new QuestStartReminderPrompt(vm, new HomePromptRunState { FailedMissionsNotified = true }).CheckAsync());
+            Assert.IsNotNull(await new QuestStartReminderPrompt(vm, new HomePromptRunState()).CheckAsync());
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task QuestStartReminderPrompt_BothRemindedThisSession_DoesNotLoadTheQuest()
+        {
+            _store.SetAppState(new AppState { userId = "u1", accessToken = "t", userCurrentQuestId = "q1" });
+            var gamification = new Mock<IGamificationService>();
+            var vm = new HomeScreenViewModel(_store, _audio.Object, gamificationService: gamification.Object);
+            HomePromptSession.NoQuestReminded = true;
+            HomePromptSession.MissionsToStartReminded = true;
+            // The view model loads the quest card on its own
+            gamification.Invocations.Clear();
+
+            Assert.IsNull(await new QuestStartReminderPrompt(vm).CheckAsync());
+            gamification.Verify(g => g.GetCurrentQuestAsync(), Times.Never);
             vm.Dispose();
         }
     }

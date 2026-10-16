@@ -87,6 +87,41 @@ namespace eu.foodmission.platform
             };
         }
 
+        /// <summary>
+        /// Missions of the quest left to (re)start — not started or failed — counted only while none is running
+        /// (started, not completed or failed); 0 otherwise, for a completed quest, or on backends that don't report startedAt.
+        /// </summary>
+        public static int MissionsWaitingToStart(CurrentQuest quest)
+        {
+            if (quest == null || quest.completed)
+            {
+                return 0;
+            }
+
+            int waiting = 0;
+            foreach (CurrentQuestItem it in SortedItems(quest))
+            {
+                if (!string.Equals(it.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) ||
+                    it.status == CurrentQuestItemStatus.Completed)
+                {
+                    continue;
+                }
+                if (it.status == CurrentQuestItemStatus.Failed)
+                {
+                    // Only a restart brings it back
+                    waiting++;
+                    continue;
+                }
+                if (!IsNotStarted(it))
+                {
+                    // A mission is running: nothing to remind
+                    return 0;
+                }
+                waiting++;
+            }
+            return waiting;
+        }
+
         /// <summary>Same rule as MissionProgressState.IsStarted, for a current-quest item.</summary>
         private static bool IsNotStarted(CurrentQuestItem it)
         {

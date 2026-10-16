@@ -395,6 +395,34 @@ namespace eu.foodmission.platform
                 : System.Threading.Tasks.Task.FromResult<string>(null);
         }
 
+        /// <summary>
+        /// What Nutri can remind about the quest: no current quest, or a current quest with missions waiting to start
+        /// and none running. Null when there is nothing to remind or the current quest can't be loaded.
+        /// </summary>
+        public async System.Threading.Tasks.Task<QuestStartReminder> CheckQuestStartReminderAsync()
+        {
+            if (string.IsNullOrEmpty(_storeService?.GetAppState()?.userCurrentQuestId))
+            {
+                return QuestStartReminder.NoQuest();
+            }
+            if (_gamificationService == null)
+            {
+                return null;
+            }
+
+            var (quest, error) = await _gamificationService.GetCurrentQuestAsync();
+            if (error != null)
+            {
+                return null;
+            }
+            if (quest == null)
+            {
+                // The stored quest is gone on the server (Home hides the card too)
+                return QuestStartReminder.NoQuest();
+            }
+            return CurrentQuestView.MissionsWaitingToStart(quest) > 0 ? QuestStartReminder.MissionsToStart(quest) : null;
+        }
+
         public void OpenFoodFact(string code)
         {
             if (string.IsNullOrEmpty(code))

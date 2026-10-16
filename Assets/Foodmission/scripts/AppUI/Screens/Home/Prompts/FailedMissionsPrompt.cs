@@ -16,10 +16,12 @@ namespace eu.foodmission.platform
         private const int GapMs = 250;
 
         private readonly HomeScreenViewModel _viewModel;
+        private readonly HomePromptRunState _run;
 
-        public FailedMissionsPrompt(HomeScreenViewModel viewModel)
+        public FailedMissionsPrompt(HomeScreenViewModel viewModel, HomePromptRunState run = null)
         {
             _viewModel = viewModel;
+            _run = run;
         }
 
         public HomePromptKind Kind => HomePromptKind.Info;
@@ -27,22 +29,28 @@ namespace eu.foodmission.platform
         public async Task<IHomePromptInstance> CheckAsync()
         {
             IReadOnlyList<MissionProgress> failures = await _viewModel.CheckFailedMissionsAsync();
-            return failures == null || failures.Count == 0 ? null : new Instance(_viewModel, failures);
+            return failures == null || failures.Count == 0 ? null : new Instance(_viewModel, failures, _run);
         }
 
         private sealed class Instance : IHomePromptInstance
         {
             private readonly HomeScreenViewModel _viewModel;
             private readonly IReadOnlyList<MissionProgress> _failures;
+            private readonly HomePromptRunState _run;
 
-            public Instance(HomeScreenViewModel viewModel, IReadOnlyList<MissionProgress> failures)
+            public Instance(HomeScreenViewModel viewModel, IReadOnlyList<MissionProgress> failures, HomePromptRunState run)
             {
                 _viewModel = viewModel;
                 _failures = failures;
+                _run = run;
             }
 
             public async Task<HomePromptResult> ShowAsync(IHomePromptHost host)
             {
+                if (_run != null)
+                {
+                    _run.FailedMissionsNotified = true;
+                }
                 for (int i = 0; i < _failures.Count; i++)
                 {
                     if (!host.IsActive)

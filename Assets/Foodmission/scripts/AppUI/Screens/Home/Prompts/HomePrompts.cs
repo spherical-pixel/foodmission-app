@@ -12,7 +12,7 @@ namespace eu.foodmission.platform
                 new LegalConsentPrompt(viewModel),
                 new PilotConsentPrompt(viewModel),
                 new RewardCelebrationsPrompt(viewModel, run),
-                new FailedMissionsPrompt(viewModel),
+                new FailedMissionsPrompt(viewModel, run),
                 new WhatsNewPrompt(whatsNew),
                 new UnlockedQuestPrompt(viewModel, run),
                 new OnboardingReminderPrompt(viewModel),
@@ -20,6 +20,7 @@ namespace eu.foodmission.platform
                 new PilotSurveyPrompt(viewModel),
                 new MissionLastDayPrompt(viewModel),
                 new MissionNudgePrompt(viewModel),
+                new QuestStartReminderPrompt(viewModel, run),
                 new DailyFoodFactPrompt(viewModel)
             };
         }

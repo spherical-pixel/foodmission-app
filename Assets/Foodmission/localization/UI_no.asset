@@ -4654,6 +4654,20 @@ MonoBehaviour:
       handleturen, slik at du bare kj\xF8pte det du skulle bruke?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: "Du har ikke noe oppdrag i gang akkurat n\xE5. Skal vi se p\xE5
+      oppdragene og velge ett?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "Du har fortsatt oppdrag igjen i \xAB{0}\xBB, og ingen er i gang
+      akkurat n\xE5. Skal vi starte ett?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: Se oppdragene
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

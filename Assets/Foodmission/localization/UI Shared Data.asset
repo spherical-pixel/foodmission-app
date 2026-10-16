@@ -4407,6 +4407,18 @@ MonoBehaviour:
     m_Key: MISSION_Q_M_A5_5_WEEK_PLANNED
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Key: HOME_NUDGE_NO_QUEST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Key: HOME_NUDGE_MISSIONS_TO_START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Key: HOME_NUDGE_BTN_SEE_MISSIONS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

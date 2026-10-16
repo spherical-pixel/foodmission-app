@@ -4727,6 +4727,20 @@ MonoBehaviour:
       tygodnia przed pierwszymi zakupami, \u017Ceby kupi\u0107 tylko to, co wykorzystasz?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: "Nie masz teraz \u017Cadnego aktywnego zadania. Przejrzymy zadania
+      i wybierzemy jedno?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "W \u201E{0}\u201D zosta\u0142y ci jeszcze misje, a teraz nie masz
+      \u017Cadnej w toku. Zaczniemy kt\xF3r\u0105\u015B?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: Zobacz misje
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

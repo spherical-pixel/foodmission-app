@@ -4655,6 +4655,20 @@ MonoBehaviour:
       da si kupil samo tisto, kar si nameraval porabiti?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: "Trenutno nima\u0161 nobene naloge v teku. Si ogledava naloge in
+      izbereva eno?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "V \xBB{0}\xAB ti \u0161e ostajajo misije, trenutno pa nobena ni
+      v teku. Bova za\u010Dela eno?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: Poglej misije
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

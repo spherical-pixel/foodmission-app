@@ -73,5 +73,8 @@ namespace eu.foodmission.platform
     {
         /// <summary>Set by the reward celebrations when a quest was completed; opened by UnlockedQuestPrompt.</summary>
         public Quest QuestToOffer;
+
+        /// <summary>FailedMissionsPrompt told a failure this visit: the missions-to-start reminder waits for the next visit.</summary>
+        public bool FailedMissionsNotified;
     }
 }

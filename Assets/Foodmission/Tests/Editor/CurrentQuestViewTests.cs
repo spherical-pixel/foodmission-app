@@ -140,5 +140,69 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(statusOf(new QuestItem { contentType = QuestContentType.Mission, contentCode = "M3" }).NotStarted, "backend without #424");
             Assert.IsFalse(statusOf(new QuestItem { contentType = QuestContentType.Quiz, contentCode = "Q1" }).NotStarted, "only missions");
         }
+
+        private static CurrentQuestItem Mission(string code, string status, DateTime? startedAt, float progress = 0f) =>
+            new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = code, status = status, startedAt = startedAt, progress = progress };
+
+        [Test]
+        public void MissionsWaitingToStart_NoneRunning_CountsTheNotStartedAndFailedOnes()
+        {
+            var quest = new CurrentQuest
+            {
+                items = new[]
+                {
+                    Mission("M1", CurrentQuestItemStatus.NotStarted, null),
+                    Mission("M2", CurrentQuestItemStatus.NotStarted, null),
+                    Mission("M3", CurrentQuestItemStatus.Completed, DateTime.UtcNow, 100f),
+                    Mission("M4", CurrentQuestItemStatus.Failed, DateTime.UtcNow, 20f),
+                    Item(QuestContentType.Quiz, "Q1", CurrentQuestItemStatus.NotStarted, 5),
+                },
+            };
+
+            Assert.AreEqual(3, CurrentQuestView.MissionsWaitingToStart(quest));
+        }
+
+        [Test]
+        public void MissionsWaitingToStart_OnlyAFailedMissionLeft_CountsIt()
+        {
+            var quest = new CurrentQuest
+            {
+                items = new[]
+                {
+                    Mission("M1", CurrentQuestItemStatus.Completed, DateTime.UtcNow, 100f),
+                    Mission("M2", CurrentQuestItemStatus.Failed, DateTime.UtcNow, 30f),
+                },
+            };
+
+            Assert.AreEqual(1, CurrentQuestView.MissionsWaitingToStart(quest));
+        }
+
+        [Test]
+        public void MissionsWaitingToStart_OneRunning_IsZero()
+        {
+            var quest = new CurrentQuest
+            {
+                items = new[]
+                {
+                    Mission("M1", CurrentQuestItemStatus.NotStarted, null),
+                    Mission("M2", CurrentQuestItemStatus.InProgress, DateTime.UtcNow),
+                },
+            };
+
+            Assert.AreEqual(0, CurrentQuestView.MissionsWaitingToStart(quest));
+        }
+
+        [Test]
+        public void MissionsWaitingToStart_NothingToRemind_IsZero()
+        {
+            var allDone = new CurrentQuest { items = new[] { Mission("M1", CurrentQuestItemStatus.Completed, DateTime.UtcNow, 100f) } };
+            var completed = new CurrentQuest { completed = true, items = new[] { Mission("M1", CurrentQuestItemStatus.NotStarted, null) } };
+            var legacy = new CurrentQuest { items = new[] { new CurrentQuestItem { contentType = QuestContentType.Mission, contentCode = "M1", status = CurrentQuestItemStatus.NotStarted } } };
+
+            Assert.AreEqual(0, CurrentQuestView.MissionsWaitingToStart(allDone));
+            Assert.AreEqual(0, CurrentQuestView.MissionsWaitingToStart(completed));
+            Assert.AreEqual(0, CurrentQuestView.MissionsWaitingToStart(legacy), "backend without #424");
+            Assert.AreEqual(0, CurrentQuestView.MissionsWaitingToStart(null));
+        }
     }
 }

@@ -4637,6 +4637,20 @@ MonoBehaviour:
       trip, so you only bought what you were going to use?
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: You don't have any quest going right now. Shall we look at the quests
+      and pick one?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "You still have missions left in \u201C{0}\u201D and none is running
+      right now. Shall we start one?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: See missions
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

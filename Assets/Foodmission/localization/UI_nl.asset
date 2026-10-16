@@ -4668,6 +4668,20 @@ MonoBehaviour:
       boodschappen, zodat je alleen kocht wat je ging gebruiken?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: Je hebt op dit moment geen opdracht lopen. Zullen we de opdrachten
+      bekijken en er een kiezen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "Je hebt nog missies over in \u201C{0}\u201D en er loopt er nu geen.
+      Zullen we er een starten?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: Missies bekijken
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

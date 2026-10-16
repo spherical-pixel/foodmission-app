@@ -4659,6 +4659,20 @@ MonoBehaviour:
       de tu primera compra, para comprar solo lo que ibas a usar?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: "Ahora mismo no tienes ning\xFAn quest en marcha. \xBFEchamos un
+      vistazo a los quests y eliges uno?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "En \xAB{0}\xBB todav\xEDa te quedan misiones y ahora mismo no tienes
+      ninguna en marcha. \xBFEmpezamos una?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: Ver misiones
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

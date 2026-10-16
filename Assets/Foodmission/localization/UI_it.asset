@@ -4660,6 +4660,20 @@ MonoBehaviour:
       della prima spesa, per comprare solo ci\xF2 che avresti usato?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: Al momento non hai nessuna missione in corso. Diamo un'occhiata
+      alle missioni e ne scegliamo una?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "In \xAB{0}\xBB ti restano ancora delle missioni e al momento non
+      ne hai nessuna in corso. Ne iniziamo una?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: Vedi le missioni
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4682,6 +4682,20 @@ MonoBehaviour:
       geplant, damit du nur kaufst, was du auch verwendest?
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203689
+    m_Localized: "Du hast gerade keine Quest am Laufen. Sollen wir uns die Quests
+      ansehen und eine ausw\xE4hlen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203690
+    m_Localized: "In \u201E{0}\u201C hast du noch offene Missionen, aber gerade l\xE4uft
+      keine. Sollen wir eine starten?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203691
+    m_Localized: Missionen ansehen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
