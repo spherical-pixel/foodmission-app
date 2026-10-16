@@ -1,30 +1,73 @@
-v0.0.7 - Changelog
+v0.0.8 - Changelog
 ✨ New Features & Modules
-- Módulo de Recetas: Catálogo de recetas (`RecipeBookScreen`), vista detallada (`RecipeDetailScreen`) y editor progresivo paso a paso (`RecipeEditorScreen`). Integración para enviar ingredientes a la lista de la compra o registrar la receta en las comidas.
-- Búsqueda Rápida (`QuickSearchScreen`): Pantalla unificada de búsqueda global de alimentos (productos, genéricos y escáner de código de barras).
-- Visor Nutricional (`FoodInfoOverlay`): Vista completa de información nutricional para productos y alimentos genéricos (NutriScore, NOVA, EcoScore, alérgenos, ingredientes y semáforos de macros).
-- Gestión de Grupos (`GroupDetailScreen`): Vista detallada de miembros de grupo (`FMItemMember`), asignación de roles `ADMIN`/`VIRTUAL`, edición de grupo y gestión de integrantes.
-- Extensión del Perfil y Onboarding: Refactorización de `OnboardingProfileScreen` a 7 pasos con asistente Nutri, cuestionario 100% dinámico basado en catálogo del backend y edición completa de segmento de usuario/motivaciones en `EditProfileScreen`.
-- Captura de Avatar: Generación automática de foto de perfil 2D desde el avatar 3D (`AvatarService`) para los encabezados de la app.
-- Registro de Eventos (`EventService`): Telemetría de sesiones de usuario (`APP_SESSION_OPENED`, `APP_SESSION_ENDED`, duración en primer plano).
+- Quests: Quest catalog (`QuestsScreen`) and detail with an activity timeline (`QuestDetailScreen`), active quest from `GET current-quest` (`FMActiveQuestCard` on Home), sequential and level-based unlocking, confirmation when switching quests, onboarding survey required before starting, and celebrations when a quest or a whole dimension is completed.
+- Missions: Each mission is started explicitly (`POST …/progress/start`, backend #424) with inputs for M.B1.3 (`previousMeatMeals`), failed missions and restart, start/end date and current day, last-day reminder, and progress percent in the quest timeline.
+- Check-in with Nutri (`MissionCheckInScreen`): Guided mission reporting driven by an interaction catalog (replaces `ActivityEventMapper`), past days via `createdAt` (never before `startedAt`), grouped meal logs, idempotent sending with retries and pacing to avoid 429s; questions explain each mission's goal.
+- Challenges: Challenges list, detail with in-app completion (`ChallengeCompletionService`) and protein footprint comparison (`FoodComparisonScreen`, CH.B1.1). Challenge and product mission cards in `FoodInfoOverlay` to report products explicitly.
+- Knowledge: Knowledge Hub with Quizzes (`QuizScreen`, random quiz, background music) and "Did you know...?" facts (`FoodFactService`, read filter, backend titles), shared through the native share sheet.
+- Gamification: `GamificationService`, wallet/XP in Redux, `RewardCelebrationDialog` with a sequential queue of server-detected rewards, badges (`BadgeService`, `BadgesScreen` in the drawer) and per-dimension level-ups (`DIMENSION_LEVEL_UP`).
+- Goals & Levels: Goals screen, backend-owned per-dimension levels (screen after the survey and in Edit Profile), content locked above the user's level and hidden below it, filtering by goals.
+- Home: Progress wheels ("Your impact") with customization, knowledge bars from the backend, prioritized prompt queue and Nutri reminders (choose a quest, start missions, check in, next "Did you know...?").
+- Surveys: Backend-driven onboarding survey (`GET onboarding-survey`) and pilot surveys (`PilotSurveyScreen`, `FMLikertSlider`) in strict order, never two on the same day.
+- Notifications: Hybrid push (Firebase Messaging) and local notifications, preferred time in onboarding and Settings, pantry expiry reminders and localized texts.
+- Personalization: Nutri editor with accessories, and appearance settings (language, text size, font, theme) from Login and Register.
+- Drawer & Profile: Contact support (feedback@foodmission.eu, prefilled email), share the app, read legal documents and delete account from Edit Profile.
 
-🔊 Audio & Haptics
-- Sistema de Sonido (`AudioService`): Control de volumen para efectos (SFX) y música (BGM) integrado con el AudioMixer de Unity.
-- Feedback Háptico y Clics Globale: Sonidos automáticos al pulsar botones (`FMButton`, `Button`, etc.) y respuesta háptica (vibración).
-- Voces de Nutri: Clips de audio dinámicos para la mascota Nutri durante los diálogos y paso de pantallas.
+🍽️ Meal Log, Pantry & Recipes
+- Quick meal log: New flags (nutrition & health, food waste), swap-only logs, mission filter, review step with backend draft meal logs, and flags/swaps shown on the cards.
+- Meal log: Day selector stepper and card deletion (editing stays disabled for now).
+- Pantry: Deletion with a food waste modal and expired items sync; expiry dates are computed by the backend.
+- Food waste: Redesigned screen with pantry search, expired items and monthly history.
+- Recipes: Star ratings, cuisine and origin filters, TheMealDB categories, reworked ingredients editor, and edit/delete for the owner only.
+- Units: `IUnitCatalog` service with localized labels.
 
 🎨 UI / UX & Enhancements
-- Despensa e Historial de Comidas: Deducción automática de la despensa por fecha de caducidad al registrar comidas y visualización de fechas en presets de comidas con nombres similares.
-- Escáner de Código de Barras Optimizado: Soporte para linterna/torch en iOS (`IOSTorchPlugin`) y Android (`AndroidTorchPlugin`), ROI restringido al 70%x45% y filtro de fotogramas duplicados para eliminar falsos positivos.
-- Diálogos Markdown: Integración del paquete `BrewedInk.MarkdownSupport` para formateo rico en diálogos legales e informativos.
-- Indicadores de Menús No Disponibles: Avisos informativos en secciones aún en desarrollo.
-- Cierre de Sesión Completo: Limpieza total de estado Redux, caché local, credenciales y archivos temporales de avatar al cerrar sesión.
+- `FMLoadingOverlay` on every screen that loads or saves, with owner-aware hiding on exit.
+- Barcode scanner as a full-screen App UI modal.
+- Music system, new icons and avatar animations.
+- DejaVu Sans as global fallback font; reviewed light/dark palette and styles.
+- Lists: scroll with the navigation ScrollView and a bottom spacer so the last item clears the nav bar.
+- Localization: Hardcoded texts moved to the tables, no hardcoded fallbacks, mascot name via `{global.PET_NAME}`, unused keys removed, and Excel export/import for partner review. Remote localization overrides removed.
+- Release notes: One file per version in `version-check/release-notes/`.
 
 🐛 Bug Fixes & Refactor
-- Formulario de Registro: Carga dinámica de formularios de consentimiento de piloto según el país.
-- Cierre de Sesión & Token Refresh: Redirección limpia tras expiración de sesión y refresco automático de tokens en errores 401.
-- Corrección de selects USS (`:first-child`/`:last-child`) mediante clases C# explícitas en `FoodInfo`.
-- Normalización de DTOs del Perfil: Segmento de usuario movido a la raíz de la petición (`ProfileUpdateRequest`) para coincidir con la base de datos.
+- Session: Kept when the backend is unreachable; logout clears each user's data and detaches the push device; pure logout reducer.
+- API: Every request with a timeout and a fresh token (`ApiRequest.SendAsync`).
+- Local cache kept per user; culture-safe storage and expiry dates.
+- 429s on Home: shared quest requests and brief reuse of the progress list.
+- Style, localization and test fixes (EditMode suite green).
+
+🛠️ Dev & Build
+- Dev tools: meal log date offset, advancing days on the local backend and the device together, `FM_UNLOCK_ALL_QUESTS`.
+- Android: Gradle templates, Firebase Messaging and EDM4U.
+
+v0.0.7 - Changelog
+✨ New Features & Modules
+- Recipes Module: Recipe catalog (`RecipeBookScreen`), detail view (`RecipeDetailScreen`) and step-by-step progressive editor (`RecipeEditorScreen`). Ingredients can be sent to the shopping list and recipes logged as meals.
+- Quick Search (`QuickSearchScreen`): Unified global food search screen (products, generic foods and barcode scanner).
+- Nutrition Viewer (`FoodInfoOverlay`): Full nutrition information view for products and generic foods (NutriScore, NOVA, EcoScore, allergens, ingredients and macro traffic lights).
+- Group Management (`GroupDetailScreen`): Detailed view of group members (`FMItemMember`), `ADMIN`/`VIRTUAL` role assignment, group editing and member management.
+- Extended Profile & Onboarding: `OnboardingProfileScreen` refactored into 7 steps with the Nutri assistant, a fully dynamic questionnaire based on the backend catalog, and full editing of user segment/motivations in `EditProfileScreen`.
+- Avatar Capture: Automatic 2D profile picture generated from the 3D avatar (`AvatarService`) for the app headers.
+- Event Logging (`EventService`): User session telemetry (`APP_SESSION_OPENED`, `APP_SESSION_ENDED`, foreground duration).
+
+🔊 Audio & Haptics
+- Sound System (`AudioService`): Volume control for sound effects (SFX) and music (BGM) integrated with Unity's AudioMixer.
+- Haptic Feedback & Global Clicks: Automatic sounds when tapping buttons (`FMButton`, `Button`, etc.) and haptic (vibration) feedback.
+- Nutri Voices: Dynamic audio clips for the Nutri mascot during dialogs and screen transitions.
+
+🎨 UI / UX & Enhancements
+- Pantry & Meal History: Automatic pantry deduction by expiry date when logging meals, and dates shown on meal presets with similar names.
+- Optimized Barcode Scanner: Torch support on iOS (`IOSTorchPlugin`) and Android (`AndroidTorchPlugin`), ROI restricted to 70%x45% and duplicate-frame filtering to remove false positives.
+- Markdown Dialogs: `BrewedInk.MarkdownSupport` package integrated for rich formatting in legal and informational dialogs.
+- Unavailable Menu Indicators: Informational notices in sections still under development.
+- Complete Logout: Full cleanup of Redux state, local cache, credentials and temporary avatar files on logout.
+
+🐛 Bug Fixes & Refactor
+- Registration Form: Pilot consent forms loaded dynamically by country.
+- Logout & Token Refresh: Clean redirect after session expiry and automatic token refresh on 401 errors.
+- Fixed USS selectors (`:first-child`/`:last-child`) with explicit C# classes in `FoodInfo`.
+- Profile DTO Normalization: User segment moved to the request root (`ProfileUpdateRequest`) to match the database.
 
 v0.0.6 - Changelog
 ✨ New Features
