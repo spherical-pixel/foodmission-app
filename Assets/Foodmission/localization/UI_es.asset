@@ -3399,7 +3399,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: "\xBFEn cu\xE1ntos productos te fijaste en el material del envase?"
+    m_Localized: "\xBFEn cu\xE1ntos productos te fijaste en el material del envase?
+      Por ejemplo, vidrio, pl\xE1stico, papel o cart\xF3n, metal, materiales compuestos
+      (como un brik) o envases rellenables."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
@@ -4403,7 +4405,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
-    m_Localized: "\xBFTe has fijado en el material del envase de este producto?"
+    m_Localized: "\xBFTe has fijado en el material del envase de este producto? Por
+      ejemplo, vidrio, pl\xE1stico, papel o cart\xF3n, metal, materiales compuestos
+      (como un brik) o envases rellenables."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649

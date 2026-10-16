@@ -3415,7 +3415,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: Bij hoeveel producten keek je naar het verpakkingsmateriaal?
+    m_Localized: Bij hoeveel producten keek je naar het verpakkingsmateriaal? Bijvoorbeeld
+      glas, plastic, papier of karton, metaal, samengestelde materialen (zoals een
+      drankkarton) of navulbare verpakkingen.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
@@ -4419,7 +4421,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
-    m_Localized: Heb je gekeken naar het verpakkingsmateriaal van dit product?
+    m_Localized: Heb je gekeken naar het verpakkingsmateriaal van dit product? Bijvoorbeeld
+      glas, plastic, papier of karton, metaal, samengestelde materialen (zoals een
+      drankkarton) of navulbare verpakkingen.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649

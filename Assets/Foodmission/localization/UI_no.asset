@@ -3396,7 +3396,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: "For hvor mange produkter s\xE5 du p\xE5 emballasjematerialet?"
+    m_Localized: "For hvor mange produkter s\xE5 du p\xE5 emballasjematerialet? For
+      eksempel glass, plast, papir eller papp, metall, sammensatte materialer (som
+      en drikkekartong) eller p\xE5fyllbar emballasje."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
@@ -4404,7 +4406,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
-    m_Localized: "Har du sett p\xE5 emballasjematerialet til dette produktet?"
+    m_Localized: "Har du sett p\xE5 emballasjematerialet til dette produktet? For
+      eksempel glass, plast, papir eller papp, metall, sammensatte materialer (som
+      en drikkekartong) eller p\xE5fyllbar emballasje."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649

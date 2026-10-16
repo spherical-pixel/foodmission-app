@@ -3402,7 +3402,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: In quanti prodotti hai guardato il materiale della confezione?
+    m_Localized: In quanti prodotti hai guardato il materiale della confezione? Per
+      esempio vetro, plastica, carta o cartone, metallo, materiali compositi (come
+      un cartone per bevande) o confezioni ricaricabili.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
@@ -4406,7 +4408,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
-    m_Localized: Hai guardato il materiale della confezione di questo prodotto?
+    m_Localized: Hai guardato il materiale della confezione di questo prodotto? Per
+      esempio vetro, plastica, carta o cartone, metallo, materiali compositi (come
+      un cartone per bevande) o confezioni ricaricabili.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649

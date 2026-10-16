@@ -3413,7 +3413,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: Bei wie vielen Produkten hast du auf das Verpackungsmaterial geachtet?
+    m_Localized: "Bei wie vielen Produkten hast du auf das Verpackungsmaterial geachtet?
+      Zum Beispiel Glas, Kunststoff, Papier oder Karton, Metall, Verbundmaterialien
+      (wie ein Getr\xE4nkekarton) oder nachf\xFCllbare Verpackungen."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
@@ -4422,7 +4424,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
-    m_Localized: Hast du auf das Verpackungsmaterial dieses Produkts geachtet?
+    m_Localized: "Hast du auf das Verpackungsmaterial dieses Produkts geachtet? Zum
+      Beispiel Glas, Kunststoff, Papier oder Karton, Metall, Verbundmaterialien (wie
+      ein Getr\xE4nkekarton) oder nachf\xFCllbare Verpackungen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649

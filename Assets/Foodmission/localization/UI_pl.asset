@@ -3440,7 +3440,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347416
     m_Localized: "W ilu produktach zwr\xF3ci\u0142e\u015B uwag\u0119 na materia\u0142
-      opakowania?"
+      opakowania? Na przyk\u0142ad szk\u0142o, plastik, papier lub tektura, metal,
+      materia\u0142y wielowarstwowe (jak karton po napojach) lub opakowania wielokrotnego
+      nape\u0142niania."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
@@ -4459,7 +4461,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203648
     m_Localized: "Czy zwr\xF3ci\u0142e\u015B uwag\u0119 na materia\u0142 opakowania
-      tego produktu?"
+      tego produktu? Na przyk\u0142ad szk\u0142o, plastik, papier lub tektura, metal,
+      materia\u0142y wielowarstwowe (jak karton po napojach) lub opakowania wielokrotnego
+      nape\u0142niania."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649

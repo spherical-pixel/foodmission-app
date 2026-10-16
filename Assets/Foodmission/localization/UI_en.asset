@@ -3390,7 +3390,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: In how many products did you look at the packaging material?
+    m_Localized: In how many products did you look at the packaging material? For
+      example glass, plastic, paper or cardboard, metal, composite materials (such
+      as a drink carton) or refillable packaging.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
@@ -4388,7 +4390,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
-    m_Localized: Have you looked at the packaging material of this product?
+    m_Localized: Have you looked at the packaging material of this product? For example
+      glass, plastic, paper or cardboard, metal, composite materials (such as a drink
+      carton) or refillable packaging.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649
