@@ -61,7 +61,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement class="fm-missions-body">
             <appui:Text name="empty-state" text="No missions found matching the selected filters." class="fm-missions-empty" style="display: none;"/>
             <ui:VisualElement name="list-container" class="fm-missions-list">
                 <ui:VisualElement name="groups-container" class="fm-missions-groups-container"/>

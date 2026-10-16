@@ -41,3 +41,13 @@
     flex-direction: column;
     padding-bottom: 24px;
 }
+
+/* Body and bottom spacer keep their height with a long list (flex-shrink defaults to 1), so the last item scrolls clear of the nav bar */
+.fm-foodfacts-body {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.fm-foodfacts-root .fm-bottom-nav-padding {
+    flex-shrink: 0;
+}

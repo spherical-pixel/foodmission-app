@@ -31,6 +31,16 @@
     flex-shrink: 0;
 }
 
+/* Body and bottom spacer keep their height with a long list (flex-shrink defaults to 1), so the last quest scrolls clear of the nav bar */
+.fm-quests-body {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.fm-quests-root .fm-bottom-nav-padding {
+    flex-shrink: 0;
+}
+
 .fm-quests-groups-container {
     display: flex;
     flex-direction: column;

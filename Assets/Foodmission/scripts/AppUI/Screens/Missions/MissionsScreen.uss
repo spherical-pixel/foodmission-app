@@ -118,3 +118,13 @@
     align-self: center;
     margin-left: 12px;
 }
+
+/* Body and bottom spacer keep their height with a long list (flex-shrink defaults to 1), so the last item scrolls clear of the nav bar */
+.fm-missions-body {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.fm-missions-root .fm-bottom-nav-padding {
+    flex-shrink: 0;
+}

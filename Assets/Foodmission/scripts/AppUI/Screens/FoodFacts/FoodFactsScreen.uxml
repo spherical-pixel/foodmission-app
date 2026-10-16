@@ -61,7 +61,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement class="fm-foodfacts-body">
             <appui:Text name="empty-state" text="No food facts found matching the selected filters." class="fm-foodfacts-empty" style="display: none;">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41564040676237312)"/>
