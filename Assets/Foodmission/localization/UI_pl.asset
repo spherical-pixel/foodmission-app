@@ -4447,6 +4447,120 @@ MonoBehaviour:
       obecne post\u0119py."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: "Czy przeczyta\u0142e\u015B, jak przechowywa\u0107 ten produkt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: "Czy jad\u0142e\u015B ten produkt ro\u015Blinny w trakcie misji?
+      Ka\u017Cdy rodzaj liczy si\u0119 raz, niezale\u017Cnie od tego, jak cz\u0119sto
+      go jesz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: "Czy zwr\xF3ci\u0142e\u015B uwag\u0119 na materia\u0142 opakowania
+      tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: "Czy sprawdzi\u0142e\u015B, czy opakowanie tego produktu nadaje
+      si\u0119 do recyklingu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: "Czy przeczyta\u0142e\u015B oznaczenie recyklingu tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: Czy ten produkt ma inteligentne opakowanie?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: "Czy zastanowi\u0142e\u015B si\u0119, czy opakowanie tego produktu
+      ma sens? Zwr\xF3\u0107 uwag\u0119 na rozmiar, materia\u0142y i to, czy chroni
+      \u017Cywno\u015B\u0107 przed zepsuciem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: "Czy por\xF3wna\u0142e\u015B Nutri-Score, NOVA i Green-Score tego
+      produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: "Czy sprawdzi\u0142e\u015B Green-Score tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: "Czy por\xF3wna\u0142e\u015B ten produkt, u\u017Cywaj\u0105c r\xF3\u017Cnych
+      wska\u017Anik\xF3w?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: "Czy przeczyta\u0142e\u015B list\u0119 sk\u0142adnik\xF3w tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: "Czy sprawdzi\u0142e\u015B grup\u0119 NOVA tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: "Czy por\xF3wna\u0142e\u015B grup\u0119 NOVA tego produktu z inn\u0105
+      ocen\u0105?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: "Czy sprawdzi\u0142e\u015B, jak ten produkt zosta\u0142 wyprodukowany?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: "Czy wybra\u0142e\u015B ten produkt, bior\u0105c pod uwag\u0119
+      kilka aspekt\xF3w \u015Brodowiskowych?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: "Czy sprawdzi\u0142e\u015B, sk\u0105d pochodzi ten produkt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: "Czy sprawdzi\u0142e\u015B informacje o opakowaniu tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: "Co sprawdzi\u0142e\u015B w tym produkcie?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: "Na co zwr\xF3ci\u0142e\u015B uwag\u0119 w opakowaniu tego produktu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "Czy wybra\u0142e\u015B ten produkt do posi\u0142ku, patrz\u0105c
+      na jego pochodzenie i co najmniej jedn\u0105 inn\u0105 rzecz? Zaznacz, na co
+      patrzy\u0142e\u015B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: "Na co patrzy\u0142e\u015B, kupuj\u0105c ten produkt: pochodzenie,
+      sezonowo\u015B\u0107, metod\u0119 produkcji czy certyfikat? Zaznacz co najmniej
+      trzy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: "Czy kupuj\u0105c ten produkt, sprawdzi\u0142e\u015B materia\u0142
+      opakowania i co si\u0119 z nim dzieje po u\u017Cyciu? Zaznacz, na co patrzy\u0142e\u015B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "Co znalaz\u0142e\u015B na etykiecie tego produktu: sk\u0105d pochodzi,
+      znak lub certyfikat zr\xF3wnowa\u017Conego rozwoju, czy jest sezonowy, czy
+      zosta\u0142 wyprodukowany blisko ciebie? Zaznacz co najmniej dwa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "Jakie znaki zr\xF3wnowa\u017Conego rozwoju ma ten produkt? Zaznacz
+      co najmniej dwa, na przyk\u0142ad Ekologiczny UE i Fairtrade."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

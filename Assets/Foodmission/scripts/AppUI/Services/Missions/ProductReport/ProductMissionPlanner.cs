@@ -32,6 +32,23 @@ namespace eu.foodmission.platform
         public static ProductFocus FocusOf(string eventType) =>
             eventType != null && s_Focus.TryGetValue(eventType, out ProductFocus focus) ? focus : ProductFocus.None;
 
+        private const string CheckInPromptPrefix = "MISSION_Q_";
+        private const string CardPromptPrefix = "MISSION_QP_";
+
+        /// <summary>
+        /// The card asks about the one product on screen ("Have you checked…?"), not how many like the check-in:
+        /// MISSION_Q_X becomes MISSION_QP_X.
+        /// </summary>
+        public static string CardPromptKeyOf(MissionReportStep step)
+        {
+            string key = step?.PromptKey;
+            if (key == null || !key.StartsWith(CheckInPromptPrefix, StringComparison.Ordinal))
+            {
+                return key;
+            }
+            return CardPromptPrefix + key.Substring(CheckInPromptPrefix.Length);
+        }
+
         /// <summary>Metadata field that identifies the food for this step, null when the step isn't about a product.</summary>
         public static string IdFieldOf(MissionReportStep step)
         {

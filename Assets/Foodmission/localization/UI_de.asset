@@ -4412,6 +4412,114 @@ MonoBehaviour:
       Fortschritt geht verloren."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: Hast du gelesen, wie man dieses Produkt lagert?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: "Hast du dieses pflanzliche Lebensmittel w\xE4hrend der Mission
+      gegessen? Jede Sorte z\xE4hlt einmal, egal wie oft du sie isst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: Hast du auf das Verpackungsmaterial dieses Produkts geachtet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: "Hast du gepr\xFCft, ob die Verpackung dieses Produkts recycelbar
+      ist?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: Hast du die Recycling-Kennzeichnung dieses Produkts gelesen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: Hat dieses Produkt eine intelligente Verpackung?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: "Hast du \xFCberlegt, ob sich die Verpackung dieses Produkts lohnt?
+      Achte auf Gr\xF6\xDFe, Materialien und ob sie das Lebensmittel vor dem Verderben
+      sch\xFCtzt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: Hast du Nutri-Score, NOVA und Green-Score dieses Produkts verglichen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: "Hast du den Green-Score dieses Produkts gepr\xFCft?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: Hast du dieses Produkt anhand verschiedener Indikatoren verglichen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: Hast du die Zutatenliste dieses Produkts gelesen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: "Hast du die NOVA-Gruppe dieses Produkts gepr\xFCft?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: Hast du die NOVA-Gruppe dieses Produkts mit einem anderen Score
+      verglichen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: "Hast du gepr\xFCft, wie dieses Produkt hergestellt wurde?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: "Hast du dieses Produkt nach mehreren Umweltaspekten ausgew\xE4hlt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: "Hast du gepr\xFCft, woher dieses Produkt kommt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: "Hast du die Verpackungsinformationen dieses Produkts gepr\xFCft?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: "Was hast du bei diesem Produkt gepr\xFCft?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: Worauf hast du bei der Verpackung dieses Produkts geachtet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "Hast du dieses Produkt f\xFCr eine Mahlzeit nach seiner Herkunft
+      und mindestens einem weiteren Merkmal ausgew\xE4hlt? Hake ab, worauf du geachtet
+      hast."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: 'Worauf hast du beim Kauf dieses Produkts geachtet: Herkunft, Saison,
+      Produktionsmethode oder Zertifizierung? Hake mindestens drei ab.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: "Hast du beim Kauf dieses Produkts das Verpackungsmaterial gepr\xFCft
+      und was nach dem Gebrauch damit passiert? Hake ab, worauf du geachtet hast."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "Was hast du auf dem Etikett dieses Produkts gefunden: woher es
+      kommt, ein Nachhaltigkeitssiegel oder eine Zertifizierung, ob es Saison hat
+      oder ob es in deiner N\xE4he hergestellt wurde? Hake mindestens zwei ab."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "Welche Nachhaltigkeitssiegel tr\xE4gt dieses Produkt? Hake mindestens
+      zwei ab, zum Beispiel EU-Bio und Fairtrade."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

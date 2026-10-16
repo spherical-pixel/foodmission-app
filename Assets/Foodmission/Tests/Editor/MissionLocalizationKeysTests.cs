@@ -109,6 +109,25 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ProductCardPrompts_ExistInUiCsv()
+        {
+            HashSet<string> keys = UiKeys();
+            var needed = new SortedSet<string>();
+            foreach (MissionInteraction interaction in MissionInteractionCatalog.Entries.Values)
+            {
+                foreach (MissionReportStep step in interaction.Steps.Where(s => ProductMissionPlanner.IdFieldOf(s) != null))
+                {
+                    needed.Add(ProductMissionPlanner.CardPromptKeyOf(step));
+                }
+            }
+
+            Assert.Greater(needed.Count, 0);
+            Assert.IsTrue(needed.All(k => k.StartsWith("MISSION_QP_")), string.Join("\n", needed));
+            var missing = needed.Where(k => !keys.Contains(k)).ToList();
+            Assert.IsEmpty(missing, "Missing UI.csv keys:\n" + string.Join("\n", missing));
+        }
+
+        [Test]
         public void MissionFailureKeys_ExistInUiCsv()
         {
             HashSet<string> keys = UiKeys();

@@ -4394,6 +4394,111 @@ MonoBehaviour:
       napredek bo izgubljen."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: Ali si prebral, kako shranjevati ta izdelek?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: "Ali si med misijo jedel to rastlinsko \u017Eivilo? Vsaka vrsta
+      \u0161teje enkrat, ne glede na to, kako pogosto ga je\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: "Ali si bil pozoren na material embala\u017Ee tega izdelka?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: "Ali si preveril, ali je embala\u017Ea tega izdelka primerna za
+      recikliranje?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: Ali si prebral oznako za recikliranje na tem izdelku?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: "Ali ima ta izdelek pametno embala\u017Eo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: "Ali si razmislil, ali se embala\u017Ea tega izdelka spla\u010Da?
+      Bodi pozoren na velikost, materiale in ali hrano \u0161\u010Diti pred kvarjenjem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: Ali si primerjal Nutri-Score, NOVA in Green-Score tega izdelka?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: Ali si preveril Green-Score tega izdelka?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: "Ali si ta izdelek primerjal z razli\u010Dnimi kazalniki?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: Ali si prebral seznam sestavin tega izdelka?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: Ali si preveril skupino NOVA tega izdelka?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: Ali si skupino NOVA tega izdelka primerjal z drugo oceno?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: Ali si preveril, kako je bil ta izdelek pridelan?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: "Ali si ta izdelek izbral glede na ve\u010D okoljskih vidikov?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: Ali si preveril, od kod prihaja ta izdelek?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: "Ali si preveril podatke o embala\u017Ei tega izdelka?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: Kaj si preveril pri tem izdelku?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: "Na kaj si bil pozoren pri embala\u017Ei tega izdelka?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "Ali si ta izdelek za obrok izbral glede na poreklo in vsaj \u0161e
+      eno stvar? Ozna\u010Di, kaj si pogledal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: "Kaj si pogledal, ko si kupil ta izdelek: poreklo, sezonskost, na\u010Din
+      pridelave ali certifikat? Ozna\u010Di vsaj tri."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: "Ali si ob nakupu tega izdelka preveril material embala\u017Ee in
+      kaj se z njo zgodi po uporabi? Ozna\u010Di, kaj si pogledal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "Kaj si na\u0161el na etiketi tega izdelka: od kod prihaja, znak
+      ali certifikat trajnosti, ali je sezonski ali je bil pridelan blizu tebe? Ozna\u010Di
+      vsaj dve."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "Katere znake trajnosti ima ta izdelek? Ozna\u010Di vsaj dva, na
+      primer Ekolo\u0161ko EU in Fairtrade."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

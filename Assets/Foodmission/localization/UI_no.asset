@@ -4394,6 +4394,112 @@ MonoBehaviour:
       mister den n\xE5v\xE6rende fremgangen."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: Har du lest hvordan dette produktet skal oppbevares?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: "Har du spist denne plantebaserte matvaren i l\xF8pet av oppdraget?
+      Hver type teller \xE9n gang, uansett hvor ofte du spiser den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: "Har du sett p\xE5 emballasjematerialet til dette produktet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: Har du sjekket om emballasjen til dette produktet kan resirkuleres?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: "Har du lest resirkuleringsmerket p\xE5 dette produktet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: Har dette produktet smart emballasje?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: "Har du tenkt over om emballasjen til dette produktet er verdt det?
+      Se p\xE5 st\xF8rrelsen, materialene og om den beskytter maten mot \xE5 bli
+      d\xE5rlig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: Har du sammenlignet Nutri-Score, NOVA og Green-Score for dette produktet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: Har du sjekket Green-Score for dette produktet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: Har du sammenlignet dette produktet ved hjelp av ulike indikatorer?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: Har du lest ingredienslisten til dette produktet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: Har du sjekket NOVA-gruppen til dette produktet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: Har du sammenlignet NOVA-gruppen til dette produktet med en annen
+      poengsum?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: Har du sjekket hvordan dette produktet er produsert?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: "Valgte du dette produktet ut fra flere milj\xF8hensyn?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: Har du sjekket hvor dette produktet kommer fra?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: Har du sjekket informasjonen om emballasjen til dette produktet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: "Hva har du sjekket p\xE5 dette produktet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: Hva la du merke til ved emballasjen til dette produktet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "Valgte du dette produktet til et m\xE5ltid ut fra opprinnelse og
+      minst \xE9n ting til? Kryss av for det du s\xE5 p\xE5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: "Hva s\xE5 du p\xE5 da du kj\xF8pte dette produktet: opprinnelse,
+      sesong, produksjonsmetode eller sertifisering? Kryss av for minst tre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: "Sjekket du emballasjematerialet og hva som skjer med det etter
+      bruk da du kj\xF8pte dette produktet? Kryss av for det du s\xE5 p\xE5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "Hva fant du p\xE5 etiketten til dette produktet: hvor det kommer
+      fra, et b\xE6rekraftsmerke eller en sertifisering, om det er i sesong, eller
+      om det er produsert i n\xE6rheten av deg? Kryss av for minst to."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "Hvilke b\xE6rekraftsmerker har dette produktet? Kryss av for minst
+      to, for eksempel EU-\xF8kologisk og Fairtrade."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

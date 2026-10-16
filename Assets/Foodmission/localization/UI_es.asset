@@ -4393,6 +4393,111 @@ MonoBehaviour:
       progreso actual."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: "\xBFHas le\xEDdo c\xF3mo conservar este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: "\xBFHas comido este alimento vegetal durante la misi\xF3n? Cada
+      tipo cuenta una vez, aunque lo comas varias veces."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: "\xBFTe has fijado en el material del envase de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: "\xBFHas comprobado si el envase de este producto es reciclable?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: "\xBFHas le\xEDdo la etiqueta de reciclaje de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: "\xBFEste producto tiene un envase inteligente?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: "\xBFHas pensado si el envase de este producto compensa? F\xEDjate
+      en el tama\xF1o, el material y si protege el alimento para que no se estropee."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: "\xBFHas comparado el Nutri-Score, el NOVA y el Green-Score de este
+      producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: "\xBFHas mirado el Green-Score de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: "\xBFHas comparado este producto usando distintos indicadores?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: "\xBFHas le\xEDdo la lista de ingredientes de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: "\xBFHas mirado el grupo NOVA de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: "\xBFHas comparado el grupo NOVA de este producto con otra puntuaci\xF3n?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: "\xBFHas mirado c\xF3mo se ha producido este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: "\xBFHas elegido este producto fij\xE1ndote en varios aspectos ambientales?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: "\xBFHas mirado de d\xF3nde viene este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: "\xBFHas revisado la informaci\xF3n del envase de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: "\xBFQu\xE9 has mirado de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: "\xBFEn qu\xE9 te has fijado del envase de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "\xBFHas elegido este producto para una comida mirando su origen
+      y al menos otra cosa? Marca lo que miraste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: "Al comprar este producto, \xBFen qu\xE9 te fijaste: origen, temporada,
+      m\xE9todo de producci\xF3n o certificaci\xF3n? Marca al menos tres."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: "Al comprar este producto, \xBFmiraste el material del envase y
+      qu\xE9 pasa con \xE9l despu\xE9s de usarlo? Marca lo que miraste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "\xBFQu\xE9 has encontrado en la etiqueta de este producto: de d\xF3nde
+      viene, un sello o certificaci\xF3n de sostenibilidad, si es de temporada o
+      si se produce cerca de ti? Marca al menos dos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "\xBFQu\xE9 sellos de sostenibilidad lleva este producto? Marca
+      al menos dos, por ejemplo Ecol\xF3gico UE y Fairtrade."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

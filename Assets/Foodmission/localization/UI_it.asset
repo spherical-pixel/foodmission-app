@@ -4396,6 +4396,110 @@ MonoBehaviour:
       attuali."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: Hai letto come conservare questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: Hai mangiato questo alimento vegetale durante la missione? Ogni
+      tipo conta una volta, per quante volte tu lo mangi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: Hai guardato il materiale della confezione di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: "Hai verificato se la confezione di questo prodotto \xE8 riciclabile?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: Hai letto l'etichetta di riciclo di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: Questo prodotto ha una confezione intelligente?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: Ti sei chiesto se la confezione di questo prodotto valga la pena?
+      Guarda dimensioni, materiali e se protegge il cibo dal deterioramento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: Hai confrontato Nutri-Score, NOVA e Green-Score di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: Hai controllato il Green-Score di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: Hai confrontato questo prodotto usando indicatori diversi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: Hai letto l'elenco degli ingredienti di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: Hai controllato il gruppo NOVA di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: Hai confrontato il gruppo NOVA di questo prodotto con un altro punteggio?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: "Hai controllato come \xE8 stato prodotto questo prodotto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: Hai scelto questo prodotto considerando diversi aspetti ambientali?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: Hai controllato da dove viene questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: Hai controllato le informazioni sulla confezione di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: Cosa hai controllato di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: Cosa hai notato della confezione di questo prodotto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: Hai scelto questo prodotto per un pasto guardando l'origine e almeno
+      un altro aspetto? Segna cosa hai guardato.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: "Cosa hai guardato quando hai comprato questo prodotto: origine,
+      stagionalit\xE0, metodo di produzione o certificazione? Segnane almeno tre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: Quando hai comprato questo prodotto, hai controllato il materiale
+      della confezione e cosa succede dopo l'uso? Segna cosa hai guardato.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "Cosa hai trovato sull'etichetta di questo prodotto: da dove viene,
+      un marchio o una certificazione di sostenibilit\xE0, se \xE8 di stagione o
+      se \xE8 prodotto vicino a te? Segnane almeno due."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "Quali marchi di sostenibilit\xE0 ha questo prodotto? Segnane almeno
+      due, per esempio Biologico UE e Fairtrade."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

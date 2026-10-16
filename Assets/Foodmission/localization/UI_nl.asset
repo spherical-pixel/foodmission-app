@@ -4409,6 +4409,111 @@ MonoBehaviour:
       verliest je huidige voortgang."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: Heb je gelezen hoe je dit product moet bewaren?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: "Heb je dit plantaardige voedingsmiddel tijdens de missie gegeten?
+      Elke soort telt \xE9\xE9n keer, hoe vaak je het ook eet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: Heb je gekeken naar het verpakkingsmateriaal van dit product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: Heb je gecontroleerd of de verpakking van dit product recyclebaar
+      is?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: Heb je het recyclinglabel van dit product gelezen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: Heeft dit product een slimme verpakking?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: Heb je nagedacht of de verpakking van dit product de moeite waard
+      is? Let op het formaat, de materialen en of ze het voedsel tegen bederf beschermt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: Heb je de Nutri-Score, NOVA en Green-Score van dit product vergeleken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: Heb je de Green-Score van dit product bekeken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: Heb je dit product vergeleken met verschillende indicatoren?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: "Heb je de ingredi\xEBntenlijst van dit product gelezen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: Heb je de NOVA-groep van dit product bekeken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: Heb je de NOVA-groep van dit product vergeleken met een andere score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: Heb je bekeken hoe dit product is geproduceerd?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: Heb je dit product gekozen op basis van meerdere milieuaspecten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: Heb je bekeken waar dit product vandaan komt?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: Heb je de verpakkingsinformatie van dit product bekeken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: Waar heb je naar gekeken bij dit product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: Waar heb je op gelet bij de verpakking van dit product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "Heb je dit product voor een maaltijd gekozen op basis van de herkomst
+      en nog minstens \xE9\xE9n ander punt? Vink aan waar je naar keek."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: 'Waar heb je naar gekeken toen je dit product kocht: herkomst, seizoen,
+      productiemethode of certificering? Vink er minstens drie aan.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: Heb je bij het kopen van dit product het verpakkingsmateriaal bekeken
+      en wat er na gebruik mee gebeurt? Vink aan waar je naar keek.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: 'Wat heb je op het etiket van dit product gevonden: waar het vandaan
+      komt, een duurzaamheidskeurmerk of certificering, of het van het seizoen is,
+      of dat het dicht bij jou is geproduceerd? Vink er minstens twee aan.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: Welke duurzaamheidslabels staan op dit product? Vink er minstens
+      twee aan, bijvoorbeeld EU-biologisch en Fairtrade.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

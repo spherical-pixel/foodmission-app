@@ -4378,6 +4378,112 @@ MonoBehaviour:
       your current progress."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: Have you read how to store this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: Have you eaten this plant food during the mission? Each kind counts
+      once, however often you eat it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: Have you looked at the packaging material of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: Have you checked whether the packaging of this product is recyclable?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: Have you read the recycling label of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: Does this product have smart packaging?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: Have you thought about whether the packaging of this product is
+      worth it? Look at its size, its materials and whether it protects the food
+      from spoiling.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: Have you compared the Nutri-Score, NOVA and Green-Score of this
+      product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: Have you checked the Green-Score of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: Have you compared this product using different indicators?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: Have you read the ingredient list of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: Have you checked the NOVA group of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: Have you compared the NOVA group of this product with another score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: Have you checked how this product was produced?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: Did you choose this product looking at several environmental aspects?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: Have you checked where this product comes from?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: Have you checked the packaging information of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: What have you checked on this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: What have you noticed about the packaging of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: Did you choose this product for a meal looking at its origin and
+      at least one more thing? Tick what you looked at.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: 'When buying this product, what did you look at: origin, seasonality,
+      production method or certification? Tick at least three.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: When buying this product, did you check the packaging material and
+      what happens to it after use? Tick what you looked at.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: 'What did you find on the label of this product: where it comes
+      from, a sustainability seal or certification, whether it is in season, or whether
+      it was produced near you? Tick at least two.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: Which sustainability labels does this product carry? Tick at least
+      two, for example EU organic and Fairtrade.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
