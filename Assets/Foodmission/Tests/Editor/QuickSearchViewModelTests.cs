@@ -140,5 +140,79 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("g1", vm.PendingMealLogAdd.FoodId);
             Assert.AreEqual(FoodInfoType.Generic, vm.PendingMealLogAdd.FoodType);
         }
+
+        [Test]
+        public void CheckPendingFoodInfoAddRequest_MealLogOpenFoodFactsProduct_ImportsAndPassesBackendId()
+        {
+            var productId = Guid.NewGuid().ToString();
+            _foodProductServiceMock
+                .Setup(x => x.SearchFoodsByBarcodeAsync("8410000000001"))
+                .ReturnsAsync((new PaginatedFoodProductResponse { data = new FoodProduct[0] }, null));
+            _foodProductServiceMock
+                .Setup(x => x.ImportFromBarcodeAsync("8410000000001"))
+                .ReturnsAsync((new FoodProduct { id = productId, barcode = "8410000000001" }, null));
+
+            var state = _storeService.GetAppState();
+            state.foodInfoAddRequest = new AddToContextRequestedAction
+            {
+                FoodType = FoodInfoType.Product,
+                FoodId = "8410000000001",
+                EntryContext = "mealLog",
+                FoodData = "{\"barcode\":\"8410000000001\",\"name\":\"Galletas\"}"
+            };
+
+            var vm = CreateViewModel();
+            vm.CheckPendingFoodInfoAddRequest();
+
+            Assert.IsNotNull(vm.PendingMealLogAdd);
+            Assert.AreEqual(productId, vm.PendingMealLogAdd.FoodId);
+            Assert.AreEqual(FoodInfoType.Product, vm.PendingMealLogAdd.FoodType);
+        }
+
+        [Test]
+        public void CheckPendingFoodInfoAddRequest_MealLogProductWithBackendId_DoesNotImport()
+        {
+            var productId = Guid.NewGuid().ToString();
+            var state = _storeService.GetAppState();
+            state.foodInfoAddRequest = new AddToContextRequestedAction
+            {
+                FoodType = FoodInfoType.Product,
+                FoodId = productId,
+                EntryContext = "mealLog"
+            };
+
+            var vm = CreateViewModel();
+            vm.CheckPendingFoodInfoAddRequest();
+
+            Assert.IsNotNull(vm.PendingMealLogAdd);
+            Assert.AreEqual(productId, vm.PendingMealLogAdd.FoodId);
+            _foodProductServiceMock.Verify(x => x.ImportFromBarcodeAsync(It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public void CheckPendingFoodInfoAddRequest_MealLogImportFails_ShowsErrorAndDoesNotOpenMealLog()
+        {
+            var importError = new ApiErrorResponse { statusCode = 404, message = "Product not found" };
+            _foodProductServiceMock
+                .Setup(x => x.SearchFoodsByBarcodeAsync("8410000000001"))
+                .ReturnsAsync((new PaginatedFoodProductResponse { data = new FoodProduct[0] }, null));
+            _foodProductServiceMock
+                .Setup(x => x.ImportFromBarcodeAsync("8410000000001"))
+                .ReturnsAsync((null, importError));
+
+            var state = _storeService.GetAppState();
+            state.foodInfoAddRequest = new AddToContextRequestedAction
+            {
+                FoodType = FoodInfoType.Product,
+                FoodId = "8410000000001",
+                EntryContext = "mealLog"
+            };
+
+            var vm = CreateViewModel();
+            vm.CheckPendingFoodInfoAddRequest();
+
+            Assert.IsNull(vm.PendingMealLogAdd);
+            Assert.IsNotNull(vm.ErrorDetail);
+        }
     }
 }

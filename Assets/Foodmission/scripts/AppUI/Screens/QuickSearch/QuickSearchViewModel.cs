@@ -190,15 +190,71 @@ namespace eu.foodmission.platform
             }
             else if (request.EntryContext == "mealLog")
             {
-                string name = ExtractFoodName(request);
+                _ = PrepareMealLogAddAsync(request);
+            }
+        }
+
+        // The meal log needs the backend id: an Open Food Facts result only has its barcode until imported
+        private async Task PrepareMealLogAddAsync(AddToContextRequestedAction request)
+        {
+            try
+            {
+                string foodId = request.FoodId;
+                if (request.FoodType == FoodInfoType.Product)
+                {
+                    var (productId, error) = await ResolveProductIdAsync(request);
+                    if (string.IsNullOrEmpty(productId))
+                    {
+                        ErrorDetail = error ?? new ApiErrorResponse();
+                        return;
+                    }
+                    foodId = productId;
+                }
+
                 PendingMealLogAdd = new QuickMealLogOptions
                 {
                     FoodType = request.FoodType,
-                    FoodId = request.FoodId,
+                    FoodId = foodId,
                     FoodData = request.FoodData,
-                    FoodName = name
+                    FoodName = ExtractFoodName(request)
                 };
             }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[QuickSearchViewModel] PrepareMealLogAddAsync failed: {ex.Message}");
+            }
+        }
+
+        /// <summary>Backend id of the requested product, importing it by barcode when it is not stored yet.</summary>
+        private async Task<(string ProductId, ApiErrorResponse Error)> ResolveProductIdAsync(AddToContextRequestedAction request)
+        {
+            ApiErrorResponse importError = null;
+            if (!string.IsNullOrEmpty(request.FoodData))
+            {
+                var offProduct = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
+                if (offProduct != null && !string.IsNullOrEmpty(offProduct.barcode))
+                {
+                    var (imported, error) = await ImportByBarcodeAsync(offProduct.barcode);
+                    if (imported != null)
+                    {
+                        return (imported.id, null);
+                    }
+                    importError = error;
+                }
+            }
+
+            if (string.IsNullOrEmpty(request.FoodId))
+            {
+                return (null, importError);
+            }
+
+            if (Guid.TryParse(request.FoodId, out _))
+            {
+                return (request.FoodId, null);
+            }
+
+            var (byId, byIdError) = await ImportByBarcodeAsync(request.FoodId);
+            return byId != null ? (byId.id, null) : (null, byIdError ?? importError);
         }
 
         public async Task AddToPantryDirectAsync(AddToContextRequestedAction request)
@@ -213,27 +269,7 @@ namespace eu.foodmission.platform
 
                 if (request.FoodType == FoodInfoType.Product)
                 {
-                    if (!string.IsNullOrEmpty(request.FoodData))
-                    {
-                        var offProduct = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
-                        if (offProduct != null && !string.IsNullOrEmpty(offProduct.barcode))
-                        {
-                            var (impProduct, impErr) = await ImportByBarcodeAsync(offProduct.barcode);
-                            if (impProduct != null) productId = impProduct.id;
-                        }
-                    }
-                    if (string.IsNullOrEmpty(productId) && !string.IsNullOrEmpty(request.FoodId))
-                    {
-                        if (Guid.TryParse(request.FoodId, out _))
-                        {
-                            productId = request.FoodId;
-                        }
-                        else
-                        {
-                            var (impProduct, impErr) = await ImportByBarcodeAsync(request.FoodId);
-                            if (impProduct != null) productId = impProduct.id;
-                        }
-                    }
+                    (productId, _) = await ResolveProductIdAsync(request);
                 }
                 else
                 {
@@ -306,27 +342,7 @@ namespace eu.foodmission.platform
 
                 if (request.FoodType == FoodInfoType.Product)
                 {
-                    if (!string.IsNullOrEmpty(request.FoodData))
-                    {
-                        var offProduct = JsonConvert.DeserializeObject<OpenFoodFactsProduct>(request.FoodData);
-                        if (offProduct != null && !string.IsNullOrEmpty(offProduct.barcode))
-                        {
-                            var (impProduct, impErr) = await ImportByBarcodeAsync(offProduct.barcode);
-                            if (impProduct != null) productId = impProduct.id;
-                        }
-                    }
-                    if (string.IsNullOrEmpty(productId) && !string.IsNullOrEmpty(request.FoodId))
-                    {
-                        if (Guid.TryParse(request.FoodId, out _))
-                        {
-                            productId = request.FoodId;
-                        }
-                        else
-                        {
-                            var (impProduct, impErr) = await ImportByBarcodeAsync(request.FoodId);
-                            if (impProduct != null) productId = impProduct.id;
-                        }
-                    }
+                    (productId, _) = await ResolveProductIdAsync(request);
                 }
                 else
                 {
