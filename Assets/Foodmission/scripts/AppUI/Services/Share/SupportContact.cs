@@ -9,7 +9,7 @@ namespace eu.foodmission.platform
     /// </summary>
     public static class SupportContact
     {
-        public const string Email = "foodmission@devilishgames.com";
+        public const string Email = "feedback@foodmission.eu";
 
         public static string BuildMailtoUrl(string subject, string appVersion, string platform)
         {
