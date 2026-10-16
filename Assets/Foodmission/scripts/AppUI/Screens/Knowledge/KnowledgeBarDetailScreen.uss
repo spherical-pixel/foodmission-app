@@ -1,5 +1,5 @@
 .fm-kb-root {
-    padding: 24px 32px;
+    /* padding: 24px 32px; */
 }
 
 .fm-kb-header {

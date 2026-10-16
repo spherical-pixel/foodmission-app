@@ -643,7 +643,9 @@
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 25px;
-    background-color: var(--fm-surface-bg-transparent);
+    /* background-color: var(--fm-surface-bg-transparent-80); */
+    /* border-width: 5px;
+    border-color: var(--appui-primary-1200); */
     border-radius: 20px;
     padding-top: 25px;
 }
@@ -2164,7 +2166,7 @@
 }
 
 .fm-active-quest-card {
-    background-color: var(--fm-surface-bg-transparent);
+    background-color: var(--fm-surface-bg-transparent-80);
     border-radius: 20px;
     padding: 24px;
     width: 100%;
