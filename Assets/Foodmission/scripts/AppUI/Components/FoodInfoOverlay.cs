@@ -977,7 +977,7 @@ namespace eu.foodmission.platform
             header.Add(progress);
             root.Add(header);
 
-            var prompt = new Text { text = L(card.Step.PromptKey) };
+            var prompt = new Text { text = L(ProductMissionPlanner.CardPromptKeyOf(card.Step)) };
             prompt.AddToClassList("fm-fi-challenge-card__task");
             root.Add(prompt);
 

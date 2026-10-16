@@ -37,6 +37,16 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void CardPrompt_AsksAboutThisProduct()
+        {
+            ProductMissionCard card = ProductMissionPlanner.Plan(Inputs(FoodInfoType.Product, "M.B4.1")).Single();
+
+            Assert.AreEqual("MISSION_Q_PACKAGING_MATERIAL_OBSERVED", card.Step.PromptKey);
+            Assert.AreEqual("MISSION_QP_PACKAGING_MATERIAL_OBSERVED", ProductMissionPlanner.CardPromptKeyOf(card.Step));
+            Assert.IsNull(ProductMissionPlanner.CardPromptKeyOf(null));
+        }
+
+        [Test]
         public void FoodType_SelectsIdField()
         {
             Assert.IsEmpty(ProductMissionPlanner.Plan(Inputs(FoodInfoType.Generic, "M.B2.1")));

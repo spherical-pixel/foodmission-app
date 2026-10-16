@@ -3320,50 +3320,61 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690406
   - m_Id: 52041725676347400
-    m_Localized: How many products did you choose looking at several environmental
-      aspects?
+    m_Localized: How many products did you choose taking two different environmental
+      aspects into account? For example, carbon footprint and transport distance,
+      or water use and production method.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347401
-    m_Localized: In how many products did you compare the NOVA group with another
-      score?
+    m_Localized: In how many purchased products did you compare the NOVA group with
+      the Green-Score or the Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347402
-    m_Localized: In how many products did you compare Nutri-Score, NOVA and Green-Score?
+    m_Localized: In how many products did you compare the NOVA group, the Nutri-Score
+      and the Green-Score? Only count those that have all three.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347403
-    m_Localized: In how many products did you check the NOVA group?
+    m_Localized: In how many products did you check their NOVA group? It goes from
+      1 (unprocessed or minimally processed) to 4 (ultra-processed).
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
-    m_Localized: How many ingredient lists did you read?
+    m_Localized: In how many products did you read the ingredient list looking for
+      signs of processing? Many refined ingredients or additives usually point to
+      an ultra-processed food.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
-    m_Localized: In how many products did you check the packaging information?
+    m_Localized: In how many purchases was the packaging one of your criteria for
+      deciding? Look at its labels, the recycling instructions, the material symbols
+      or whether it can be reused.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347406
-    m_Localized: How many products did you compare using different indicators?
+    m_Localized: In how many products with very different NOVA groups and Green-Scores
+      did you look at the differences? For example, a minimally processed product
+      with a poor Green-Score versus an ultra-processed one with a good Green-Score.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347407
-    m_Localized: How many times did you choose a reusable option (bag, container,
-      bulk)?
+    m_Localized: How many times did you choose reusable or refillable packaging?
+      For example, deposit-return bottles, refill stations or buying loose with your
+      own container.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347408
-    m_Localized: How many products with smart packaging did you find?
+    m_Localized: How many products with smart packaging did you find? Look for freshness
+      indicators, QR codes, traceability information or temperature monitoring.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347409
-    m_Localized: Did you plan your meals for the next few days?
+    m_Localized: Did you make a meal plan before your main shopping trip?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347410
-    m_Localized: Did you check your fridge and pantry before shopping?
+    m_Localized: Did you check the fridge, freezer and cupboard before going shopping?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
@@ -3374,59 +3385,75 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690406
   - m_Id: 52041725676347412
-    m_Localized: In how many products did you check where they come from?
+    m_Localized: For how many products did you look up their country of origin? It
+      is usually on the label or in the product details.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347413
     m_Localized: How many times did you choose a product with a sustainability label?
+      For example, organic, fair trade or protected geographical indication.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347414
-    m_Localized: In how many products did you check how they were produced?
+    m_Localized: In how many products did you look up how they were made? For example,
+      the farming method, the production system or a sustainability programme. Check
+      the packaging, the product details or its QR code.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347415
-    m_Localized: In how many products did you check the Green-Score?
+    m_Localized: In how many products did you check the Green-Score? It sums up their
+      environmental impact, from best to worst.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: In how many products did you look at the packaging material?
+    m_Localized: In how many products did you look at the packaging material? For
+      example glass, plastic, paper or cardboard, metal, composite materials (such
+      as a drink carton) or refillable packaging.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
-    m_Localized: How many recycling labels did you read?
+    m_Localized: How many recycling labels did you read? Look for recycling symbols,
+      material codes or instructions for sorting the packaging.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347418
-    m_Localized: In how many products did you read how to store them?
+    m_Localized: "For how many products did you read how to store them once opened?
+      It is usually on the packaging, for example \u201Conce opened, keep refrigerated\u201D."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347419
-    m_Localized: Did you compare foods from different NOVA processing levels?
+    m_Localized: Did you compare the NOVA group of at least three products from the
+      same category, such as three kinds of cheese?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347420
-    m_Localized: For how many products did you check whether the packaging is recyclable?
+    m_Localized: For how many packages did you judge whether they are easy or hard
+      to recycle, based on the information they carry?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347421
-    m_Localized: Did you compare the packaging of two similar products?
+    m_Localized: Did you compare the packaging materials of three similar products?
+      For example, a yoghurt in glass, in plastic and in cardboard.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347422
-    m_Localized: "Which days did you organise your food \u201Cfirst in, first out\u201D?"
+    m_Localized: On which days did you arrange your fridge, freezer or cupboard so
+      that what expires first is at the front and gets eaten first?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347423
-    m_Localized: What did you check, and in how many products?
+    m_Localized: 'In how many purchases did you use a production indicator to decide?
+      Tick which: NOVA group, Green-Score, production method or a comparison of indicators.'
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347424
     m_Localized: What did you notice about the packaging, and in how many products?
+      The material, the recycling instructions or whether it can be reused all count.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347425
-    m_Localized: Which protein sources did you eat this week?
+    m_Localized: 'Which protein sources did you eat this week? Tick all the different
+      ones: try to reach four.'
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347426
@@ -4221,8 +4248,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: For which meals did you choose products looking at their origin
-      and at least one more thing?
+    m_Localized: For which meals did you choose products looking at their country
+      of origin and at least one more sustainability fact (certification, production
+      method or seasonality)? Add each meal and tick what you looked at.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
@@ -4239,8 +4267,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: For which purchases did you check the packaging material and what
-      happens to it after use?
+    m_Localized: In which purchases did you consider the packaging material and what
+      will happen to it afterwards (recycling, reusing or throwing it away)? Add
+      each purchase and tick what you looked at.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
@@ -4249,7 +4278,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
-    m_Localized: Which colours of fruit and vegetables did you eat each day?
+    m_Localized: Which colours of fruit and vegetables did you eat each day? Try
+      to reach five different colours a day.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203616
@@ -4376,6 +4406,235 @@ MonoBehaviour:
   - m_Id: 56190243387203645
     m_Localized: "Are you sure you want to restart \u201C{0}\u201D?\r\nYou will lose
       your current progress."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: "Have you read how to store this product once opened? It is usually
+      on the packaging, for example \u201Conce opened, keep refrigerated\u201D."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: Have you eaten this plant food during the mission? Each kind counts
+      once, however often you eat it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: Have you looked at the packaging material of this product? For example
+      glass, plastic, paper or cardboard, metal, composite materials (such as a drink
+      carton) or refillable packaging.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: Based on the information it carries, have you judged whether the
+      packaging of this product is easy or hard to recycle?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: Have you read the recycling label of this product? Look for recycling
+      symbols, material codes or instructions for sorting the packaging.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: Does this product have smart packaging? Look for freshness indicators,
+      QR codes, traceability information or temperature monitoring.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: Have you thought about whether the packaging of this product is
+      worth it? Look at its size, its materials and whether it protects the food
+      from spoiling.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: Have you compared the NOVA group, the Nutri-Score and the Green-Score
+      of this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: Have you checked the Green-Score of this product? It sums up its
+      environmental impact, from best to worst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: Have you compared the NOVA group and the Green-Score of this product
+      with those of other products and looked at the differences?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: Have you read the ingredient list of this product looking for signs
+      of processing? Many refined ingredients or additives usually point to an ultra-processed
+      food.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: Have you checked the NOVA group of this product? It goes from 1
+      (unprocessed or minimally processed) to 4 (ultra-processed).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: Have you compared the NOVA group of this product with its Green-Score
+      or its Nutri-Score?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: Have you looked up how this product was made? For example, the farming
+      method, the production system or a sustainability programme.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: Did you choose this product taking two different environmental aspects
+      into account? For example, carbon footprint and transport distance, or water
+      use and production method.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: Have you looked up the country of origin of this product? It is
+      usually on the label.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: Was the packaging one of your criteria for choosing this product?
+      Look at its labels, the recycling instructions, the material symbols or whether
+      it can be reused.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: Which production indicator did you use to decide whether to buy
+      this product?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: What have you noticed about the packaging of this product? The material,
+      the recycling instructions or whether it can be reused all count.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: 'Did you choose this product looking at its country of origin and
+      at least one more sustainability fact: certification, production method or
+      seasonality? Tick what you looked at.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: 'When buying this product, what did you look at: origin, seasonality,
+      production method or certification? Tick at least three.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: When buying this product, did you consider the packaging material
+      and what will happen to it afterwards (recycling, reusing or throwing it away)?
+      Tick what you looked at.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: 'What did you find on the label of this product: where it comes
+      from, a sustainability seal or certification, whether it is in season, or whether
+      it was produced near you? Tick at least two.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: Which sustainability labels does this product carry? Tick at least
+      two, for example EU organic and Fairtrade.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Localized: For how many products did you find a sustainability fact on the
+      packaging? For example, the country of origin, a certification label, how it
+      was produced or how it was farmed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Localized: Have you found a sustainability fact on the packaging of this product?
+      For example, the country of origin, a certification label, how it was produced
+      or how it was farmed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Localized: How many times did you deliberately choose a product after reading
+      the environmental information on its packaging?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Localized: In how many purchases did you take both the NOVA group and the Green-Score
+      into account before deciding? You'll find them in the product details or on
+      the packaging.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Localized: Have you taken the NOVA group and the Green-Score of this product
+      into account before deciding?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Localized: In how many products did you check the NOVA group? It is the first
+      step to see whether their processing has advantages and drawbacks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Localized: Have you checked the NOVA group of this product to weigh up the
+      advantages and drawbacks of its processing?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Localized: In how many of those products did you read the ingredient list to
+      see what processing adds? For example, preservatives that make them last longer,
+      or added sugars and additives.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Localized: Have you read the ingredient list of this product to see what its
+      processing adds? For example, preservatives that make it last longer, or added
+      sugars and additives.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Localized: In how many of them did you also check the packaging information,
+      such as how to store it or the use-by date?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Localized: Have you checked the packaging information of this product, such
+      as how to store it or the use-by date?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Localized: In how many purchases did the NOVA group, the Green-Score or the
+      ingredient list help you decide? Tick what you looked at.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Localized: What did you look at on this product to decide whether to buy it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Localized: For how many foods you ate did you note the NOVA group, the Green-Score
+      or the production method? Also think about whether they influenced what you
+      chose.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Localized: Which production indicators did you look at on this product? Think
+      about whether they influenced your choice.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Localized: How many times did you find a reusable or refillable packaging option?
+      Look for refill symbols, deposit-return systems, refill stations or packaging
+      that says it is reusable.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Localized: In how many products did you find packaging that can be reused,
+      recycled or refilled? Tick what you found.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Localized: Can the packaging of this product be reused, recycled or refilled?
+      Tick what you found.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Localized: Did you plan all the main meals of the week before your first shopping
+      trip, so you only bought what you were going to use?
     m_Metadata:
       m_Items: []
   references:

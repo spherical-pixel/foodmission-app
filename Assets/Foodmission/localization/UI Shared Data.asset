@@ -4235,6 +4235,178 @@ MonoBehaviour:
     m_Key: MISSION_RESTART_FAILED_CONFIRM
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203646
+    m_Key: MISSION_QP_FOOD_WASTE_STORAGE_INSTRUCTIONS_READ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Key: MISSION_QP_NUTRITION_PLANT_DIVERSITY_COUNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Key: MISSION_QP_PACKAGING_MATERIAL_OBSERVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Key: MISSION_QP_PACKAGING_RECYCLABILITY_EVALUATED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Key: MISSION_QP_PACKAGING_RECYCLING_LABEL_READ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Key: MISSION_QP_PACKAGING_SMART_OBSERVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Key: MISSION_QP_PACKAGING_TRADE_OFF_REFLECTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Key: MISSION_QP_PROCESSING_ALL_SCORES_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Key: MISSION_QP_PROCESSING_GREENSCORE_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Key: MISSION_QP_PROCESSING_INDICATORS_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Key: MISSION_QP_PROCESSING_INGREDIENTS_REVIEWED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Key: MISSION_QP_PROCESSING_NOVA_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Key: MISSION_QP_PROCESSING_NOVA_SCORE_COMPARED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Key: MISSION_QP_PROCESSING_PRODUCTION_METHOD_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Key: MISSION_QP_SHOPPING_MULTICRITERIA_PURCHASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Key: MISSION_QP_SHOPPING_ORIGIN_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Key: MISSION_QP_SHOPPING_PACKAGING_INFO_CHECKED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Key: MISSION_QP_PRODUCT_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Key: MISSION_QP_PACKAGING_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Key: MISSION_QP_ORIGIN_PLUS_ONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Key: MISSION_QP_THREE_ASPECTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Key: MISSION_QP_PACKAGING_END_OF_LIFE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Key: MISSION_QP_TWO_FACTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Key: MISSION_QP_DOUBLE_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Key: MISSION_Q_M_B2_5_SUSTAINABILITY_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Key: MISSION_QP_M_B2_5_SUSTAINABILITY_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Key: MISSION_Q_M_I2_5_CLIMATE_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Key: MISSION_Q_M_A3_1_NOVA_GREEN_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Key: MISSION_QP_M_A3_1_NOVA_GREEN_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Key: MISSION_Q_M_A3_3_NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Key: MISSION_QP_M_A3_3_NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Key: MISSION_Q_M_A3_3_INGREDIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Key: MISSION_QP_M_A3_3_INGREDIENTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Key: MISSION_Q_M_A3_3_PACKAGING_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Key: MISSION_QP_M_A3_3_PACKAGING_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Key: MISSION_Q_M_I3_1_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Key: MISSION_QP_M_I3_1_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Key: MISSION_Q_M_I3_5_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Key: MISSION_QP_M_I3_5_PRODUCTION_CHECKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Key: MISSION_Q_M_B4_4_REUSABLE_FOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Key: MISSION_Q_M_I4_5_CIRCULAR_PACKAGING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Key: MISSION_QP_M_I4_5_CIRCULAR_PACKAGING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Key: MISSION_Q_M_A5_5_WEEK_PLANNED
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

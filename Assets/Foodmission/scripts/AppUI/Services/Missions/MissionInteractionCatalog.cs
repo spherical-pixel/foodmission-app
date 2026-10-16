@@ -74,12 +74,13 @@ namespace eu.foodmission.platform
                 new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ProcessingProductionMethodChecked,
                     ClientEventTypes.ShoppingCertificationChosen, ClientEventTypes.ShoppingSeasonalChosen })) },
             // A3 — Processing (advanced)
-            { "M.A3.1", Manual(Products(ClientEventTypes.ProcessingNovaScoreCompared, 3, Meta("comparedWith", "GREEN_SCORE"))) },
+            { "M.A3.1", Manual(Products(ClientEventTypes.ProcessingNovaScoreCompared, 3, Meta("comparedWith", "GREEN_SCORE"),
+                promptKey: "MISSION_Q_M_A3_1_NOVA_GREEN_SCORE")) },
             { "M.A3.2", Manual(Products(ClientEventTypes.ProcessingAllScoresCompared, 3)) },
             { "M.A3.3", Manual(
-                Products(ClientEventTypes.ProcessingNovaChecked, 3),
-                Products(ClientEventTypes.ProcessingIngredientsReviewed, 3),
-                Products(ClientEventTypes.ShoppingPackagingInfoChecked, 3)) },
+                Products(ClientEventTypes.ProcessingNovaChecked, 3, promptKey: "MISSION_Q_M_A3_3_NOVA"),
+                Products(ClientEventTypes.ProcessingIngredientsReviewed, 3, promptKey: "MISSION_Q_M_A3_3_INGREDIENTS"),
+                Products(ClientEventTypes.ShoppingPackagingInfoChecked, 3, promptKey: "MISSION_Q_M_A3_3_PACKAGING_INFO")) },
             { "M.A3.4", Manual(Products(ClientEventTypes.ProcessingIndicatorsCompared, 3)) },
             { "M.A3.5", Manual(ProductChoice("MISSION_Q_PRODUCT_CHECKS", 5,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked,
@@ -98,7 +99,7 @@ namespace eu.foodmission.platform
             { "M.A5.2", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 7)) },
             { "M.A5.3", Auto(Meals(ClientEventTypes.FoodWasteExpiredConsumed, 4)) },
             { "M.A5.4", Manual(Days(ClientEventTypes.FoodWasteFifoOrganized, 3)) },
-            { "M.A5.5", Manual(Confirm(ClientEventTypes.FoodWasteMealPlanned), Confirm(ClientEventTypes.FoodWasteFridgePantryChecked)) },
+            { "M.A5.5", Manual(Confirm(ClientEventTypes.FoodWasteMealPlanned, "MISSION_Q_M_A5_5_WEEK_PLANNED"), Confirm(ClientEventTypes.FoodWasteFridgePantryChecked)) },
             // A6 — Nutrition (advanced)
             { "M.A6.1", Manual(DayValues("MISSION_QD_RAINBOW_COLOURS", ClientEventTypes.NutritionRainbowColoursLogged, "colours",
                 "MISSION_OPT_COLOUR_", 5, RainbowColours)) },
@@ -119,7 +120,7 @@ namespace eu.foodmission.platform
             { "M.B2.2", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 5)) },
             { "M.B2.3", Manual(Times(ClientEventTypes.ShoppingCertificationChosen, 3)) },
             { "M.B2.4", Auto(Meals(ClientEventTypes.MealLocalProduce, 3)) },
-            { "M.B2.5", Manual(Products(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
+            { "M.B2.5", Manual(Products(ClientEventTypes.ShoppingPackagingInfoChecked, 5, promptKey: "MISSION_Q_M_B2_5_SUSTAINABILITY_INFO")) },
             // B3 — Processing (beginner)
             { "M.B3.1", Manual(Products(ClientEventTypes.ProcessingProductionMethodChecked, 5)) },
             { "M.B3.2", Manual(Products(ClientEventTypes.ProcessingNovaChecked, 3)) },
@@ -130,7 +131,7 @@ namespace eu.foodmission.platform
             { "M.B4.1", Manual(Products(ClientEventTypes.PackagingMaterialObserved, 5)) },
             { "M.B4.2", Manual(Products(ClientEventTypes.PackagingRecyclingLabelRead, 10)) },
             { "M.B4.3", Manual(Products(ClientEventTypes.PackagingMaterialObserved, 10)) },
-            { "M.B4.4", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 5)) },
+            { "M.B4.4", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 5, "MISSION_Q_M_B4_4_REUSABLE_FOUND")) },
             { "M.B4.5", Manual(ProductChoice("MISSION_Q_PACKAGING_CHECKS", 10,
                 ClientEventTypes.PackagingMaterialObserved, ClientEventTypes.PackagingRecyclingLabelRead, ClientEventTypes.PackagingReusableSpotChosen)) },
             // B5 — Food waste (beginner)
@@ -160,21 +161,21 @@ namespace eu.foodmission.platform
             { "M.I2.4", Manual(ProductFacts("MISSION_Q_TWO_FACTS", null, 5, 2,
                 new[] { ClientEventTypes.ShoppingOriginChecked, ClientEventTypes.ShoppingCertificationChosen,
                     ClientEventTypes.ShoppingSeasonalChosen, ClientEventTypes.ShoppingLocalChosen })) },
-            { "M.I2.5", Manual(Times(ClientEventTypes.ShoppingPackagingInfoChecked, 5)) },
+            { "M.I2.5", Manual(Times(ClientEventTypes.ShoppingPackagingInfoChecked, 5, "MISSION_Q_M_I2_5_CLIMATE_INFO")) },
             // I3 — Processing (intermediate)
-            { "M.I3.1", Manual(ProductChoice("MISSION_Q_PRODUCT_CHECKS", 5,
+            { "M.I3.1", Manual(ProductChoice("MISSION_Q_M_I3_1_PRODUCTION_CHECKS", 5,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked, ClientEventTypes.ProcessingIngredientsReviewed)) },
             { "M.I3.2", Manual(Confirm(ClientEventTypes.ProcessingNovaCategoryCompared)) },
             { "M.I3.3", Auto(SwapMeals(4, ProcessingSwaps)) },
             { "M.I3.4", Manual(Products(ClientEventTypes.ProcessingNovaScoreCompared, 4)) },
-            { "M.I3.5", Manual(ProductChoice("MISSION_Q_PRODUCT_CHECKS", 6,
+            { "M.I3.5", Manual(ProductChoice("MISSION_Q_M_I3_5_PRODUCTION_CHECKS", 6,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked, ClientEventTypes.ProcessingProductionMethodChecked)) },
             // I4 — Packaging (intermediate)
             { "M.I4.1", Manual(Products(ClientEventTypes.ShoppingPackagingInfoChecked, 3)) },
             { "M.I4.2", Manual(Products(ClientEventTypes.PackagingRecyclabilityEvaluated, 10)) },
             { "M.I4.3", Manual(Times(ClientEventTypes.PackagingReusableSpotChosen, 2)) },
             { "M.I4.4", Manual(Confirm(ClientEventTypes.PackagingComparisonMade)) },
-            { "M.I4.5", Manual(ProductChoice("MISSION_Q_PACKAGING_CHECKS", 4,
+            { "M.I4.5", Manual(ProductChoice("MISSION_Q_M_I4_5_CIRCULAR_PACKAGING", 4,
                 ClientEventTypes.PackagingReusableSpotChosen, ClientEventTypes.PackagingRecyclabilityEvaluated)) },
             // I5 — Food waste (intermediate)
             { "M.I5.1", Manual(Confirm(ClientEventTypes.FoodWasteMealPlanned)) },
@@ -224,16 +225,19 @@ namespace eu.foodmission.platform
         private static IReadOnlyDictionary<string, object> Meta(string key, object value) =>
             new Dictionary<string, object> { { key, value } };
 
+        // promptKey: a question of the mission's own when the event's shared question doesn't explain its goal
+
         /// <summary>N events, each with a distinct synthetic id in <paramref name="distinctField"/>.</summary>
-        private static MissionReportStep Products(string eventType, int max, IReadOnlyDictionary<string, object> fixedMetadata = null, string distinctField = ProductId) =>
-            new MissionReportStep(MissionStepType.Count, Q(eventType), eventType, distinctField, fixedMetadata ?? NoMetadata, null, max, false, null);
+        private static MissionReportStep Products(string eventType, int max, IReadOnlyDictionary<string, object> fixedMetadata = null,
+            string distinctField = ProductId, string promptKey = null) =>
+            new MissionReportStep(MissionStepType.Count, promptKey ?? Q(eventType), eventType, distinctField, fixedMetadata ?? NoMetadata, null, max, false, null);
 
         /// <summary>N events without distinct field.</summary>
-        private static MissionReportStep Times(string eventType, int max) =>
-            new MissionReportStep(MissionStepType.Count, Q(eventType), eventType, null, NoMetadata, null, max, false, null);
+        private static MissionReportStep Times(string eventType, int max, string promptKey = null) =>
+            new MissionReportStep(MissionStepType.Count, promptKey ?? Q(eventType), eventType, null, NoMetadata, null, max, false, null);
 
-        private static MissionReportStep Confirm(string eventType) =>
-            new MissionReportStep(MissionStepType.YesNo, Q(eventType), eventType, null, NoMetadata, null, 1, false, null);
+        private static MissionReportStep Confirm(string eventType, string promptKey = null) =>
+            new MissionReportStep(MissionStepType.YesNo, promptKey ?? Q(eventType), eventType, null, NoMetadata, null, 1, false, null);
 
         /// <summary>One event per picked day, dated on that day (createdAt).</summary>
         private static MissionReportStep Days(string eventType, int max) =>

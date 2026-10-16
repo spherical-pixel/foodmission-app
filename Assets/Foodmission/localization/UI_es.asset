@@ -3329,49 +3329,63 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690413
   - m_Id: 52041725676347400
-    m_Localized: "\xBFCu\xE1ntos productos elegiste fij\xE1ndote en varios aspectos
-      ambientales?"
+    m_Localized: "\xBFCu\xE1ntos productos elegiste teniendo en cuenta dos aspectos
+      ambientales distintos? Por ejemplo, huella de carbono y distancia de transporte,
+      o consumo de agua y m\xE9todo de producci\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347401
-    m_Localized: "\xBFEn cu\xE1ntos productos comparaste el grupo NOVA con otra puntuaci\xF3n?"
+    m_Localized: "\xBFEn cu\xE1ntos productos comprados comparaste el grupo NOVA
+      con el Green-Score o el Nutri-Score?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347402
-    m_Localized: "\xBFEn cu\xE1ntos productos comparaste Nutri-Score, NOVA y Green-Score?"
+    m_Localized: "\xBFEn cu\xE1ntos productos comparaste el grupo NOVA, el Nutri-Score
+      y el Green-Score? Cuenta solo los que tengan los tres."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347403
-    m_Localized: "\xBFEn cu\xE1ntos productos miraste el grupo NOVA?"
+    m_Localized: "\xBFEn cu\xE1ntos productos miraste su grupo NOVA? Va del 1 (sin
+      procesar o m\xEDnimamente procesado) al 4 (ultraprocesado)."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
-    m_Localized: "\xBFCu\xE1ntas listas de ingredientes le\xEDste?"
+    m_Localized: "\xBFEn cu\xE1ntos productos le\xEDste la lista de ingredientes
+      buscando se\xF1ales de procesado? Muchos ingredientes refinados o aditivos
+      suelen indicar un alimento ultraprocesado."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
-    m_Localized: "\xBFEn cu\xE1ntos productos revisaste la informaci\xF3n del envase?"
+    m_Localized: "\xBFEn cu\xE1ntas compras fue el envase uno de tus criterios para
+      decidir? F\xEDjate en sus etiquetas, las instrucciones de reciclaje, los s\xEDmbolos
+      del material o si se puede reutilizar."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347406
-    m_Localized: "\xBFCu\xE1ntos productos comparaste usando distintos indicadores?"
+    m_Localized: "\xBFEn cu\xE1ntos productos con grupos NOVA y Green-Score muy distintos
+      te fijaste en las diferencias? Por ejemplo, uno poco procesado con un Green-Score
+      malo frente a uno ultraprocesado con un Green-Score bueno."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347407
-    m_Localized: "\xBFCu\xE1ntas veces elegiste una opci\xF3n reutilizable (bolsa,
-      envase, a granel)?"
+    m_Localized: "\xBFCu\xE1ntas veces elegiste un envase reutilizable o recargable?
+      Por ejemplo, botellas con dep\xF3sito y devoluci\xF3n, puntos de recarga o
+      compra a granel con tu propio envase."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347408
-    m_Localized: "\xBFCu\xE1ntos productos con envase inteligente encontraste?"
+    m_Localized: "\xBFCu\xE1ntos productos con envase inteligente encontraste? Busca
+      indicadores de frescura, c\xF3digos QR, informaci\xF3n de trazabilidad o control
+      de temperatura."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347409
-    m_Localized: "\xBFPlanificaste tus comidas de los pr\xF3ximos d\xEDas?"
+    m_Localized: "\xBFHiciste un plan de comidas antes de la compra principal?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347410
-    m_Localized: "\xBFRevisaste la nevera y la despensa antes de comprar?"
+    m_Localized: "\xBFRevisaste la nevera, el congelador y la despensa antes de ir
+      a comprar?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
@@ -3383,60 +3397,79 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690413
   - m_Id: 52041725676347412
-    m_Localized: "\xBFEn cu\xE1ntos productos miraste de d\xF3nde vienen?"
+    m_Localized: "\xBFEn cu\xE1ntos productos buscaste su pa\xEDs de origen? Suele
+      aparecer en la etiqueta o en la ficha del producto."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347413
-    m_Localized: "\xBFCu\xE1ntas veces elegiste un producto con sello de sostenibilidad?"
+    m_Localized: "\xBFCu\xE1ntas veces elegiste un producto con un sello de sostenibilidad?
+      Por ejemplo, ecol\xF3gico, comercio justo o indicaci\xF3n geogr\xE1fica protegida."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347414
-    m_Localized: "\xBFEn cu\xE1ntos productos miraste c\xF3mo se produjeron?"
+    m_Localized: "\xBFEn cu\xE1ntos productos buscaste c\xF3mo se elaboraron? Por
+      ejemplo, el m\xE9todo de cultivo, el sistema de producci\xF3n o un programa
+      de sostenibilidad. M\xEDralo en el envase, en la ficha del producto o en su
+      c\xF3digo QR."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347415
-    m_Localized: "\xBFEn cu\xE1ntos productos miraste el Green-Score?"
+    m_Localized: "\xBFEn cu\xE1ntos productos miraste el Green-Score? Resume su impacto
+      ambiental, de mejor a peor."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: "\xBFEn cu\xE1ntos productos te fijaste en el material del envase?"
+    m_Localized: "\xBFEn cu\xE1ntos productos te fijaste en el material del envase?
+      Por ejemplo, vidrio, pl\xE1stico, papel o cart\xF3n, metal, materiales compuestos
+      (como un brik) o envases rellenables."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
-    m_Localized: "\xBFCu\xE1ntas etiquetas de reciclaje le\xEDste?"
+    m_Localized: "\xBFCu\xE1ntas etiquetas de reciclaje le\xEDste? Busca los s\xEDmbolos
+      de reciclaje, los c\xF3digos del material o las instrucciones para separar
+      el envase."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347418
-    m_Localized: "\xBFEn cu\xE1ntos productos le\xEDste c\xF3mo conservarlos?"
+    m_Localized: "\xBFEn cu\xE1ntos productos le\xEDste c\xF3mo conservarlos una
+      vez abiertos? Suele venir en el envase, por ejemplo \xABuna vez abierto, cons\xE9rvese
+      en el frigor\xEDfico\xBB."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347419
-    m_Localized: "\xBFComparaste alimentos de distintos niveles de procesado NOVA?"
+    m_Localized: "\xBFComparaste el grupo NOVA de al menos tres productos de la misma
+      categor\xEDa, como tres tipos de queso?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347420
-    m_Localized: "\xBFEn cu\xE1ntos productos valoraste si el envase es reciclable?"
+    m_Localized: "\xBFEn cu\xE1ntos envases valoraste si son f\xE1ciles o dif\xEDciles
+      de reciclar, seg\xFAn la informaci\xF3n que traen?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347421
-    m_Localized: "\xBFComparaste el envase de dos productos similares?"
+    m_Localized: "\xBFComparaste los materiales del envase de tres productos parecidos?
+      Por ejemplo, un yogur en vidrio, en pl\xE1stico y en cart\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347422
-    m_Localized: "\xBFQu\xE9 d\xEDas has ordenado tus alimentos con \xABlo primero
-      que entra, lo primero que sale\xBB?"
+    m_Localized: "\xBFQu\xE9 d\xEDas ordenaste la nevera, el congelador o la despensa
+      para que lo que caduca antes quede delante y se consuma primero?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347423
-    m_Localized: "\xBFQu\xE9 miraste y en cu\xE1ntos productos?"
+    m_Localized: "\xBFEn cu\xE1ntas compras usaste alg\xFAn indicador de producci\xF3n
+      para decidir? Marca cu\xE1l: grupo NOVA, Green-Score, m\xE9todo de producci\xF3n
+      o una comparaci\xF3n de indicadores."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347424
-    m_Localized: "\xBFEn qu\xE9 te fijaste del envase y en cu\xE1ntos productos?"
+    m_Localized: "\xBFEn qu\xE9 te fijaste del envase y en cu\xE1ntos productos?
+      Vale el material, las instrucciones de reciclaje o si se puede reutilizar."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347425
-    m_Localized: "\xBFQu\xE9 fuentes de prote\xEDna comiste esta semana?"
+    m_Localized: "\xBFQu\xE9 fuentes de prote\xEDna comiste esta semana? Marca todas
+      las distintas: intenta llegar a cuatro."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347426
@@ -4233,8 +4266,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "\xBFPara qu\xE9 comidas elegiste productos mirando el origen y
-      al menos otra cosa?"
+    m_Localized: "\xBFPara qu\xE9 comidas elegiste productos mirando su pa\xEDs de
+      origen y al menos otro dato de sostenibilidad (certificaci\xF3n, m\xE9todo
+      de producci\xF3n o temporada)? A\xF1ade cada comida y marca lo que miraste."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
@@ -4251,8 +4285,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "\xBFEn qu\xE9 compras miraste el material del envase y qu\xE9 pasa
-      con \xE9l despu\xE9s de usarlo?"
+    m_Localized: "\xBFEn qu\xE9 compras tuviste en cuenta el material del envase
+      y qu\xE9 pasar\xE1 con \xE9l al terminar (reciclarlo, reutilizarlo o tirarlo)?
+      A\xF1ade cada compra y marca lo que miraste."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
@@ -4261,7 +4296,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
-    m_Localized: "\xBFQu\xE9 colores de fruta y verdura comiste cada d\xEDa?"
+    m_Localized: "\xBFQu\xE9 colores de fruta y verdura comiste cada d\xEDa? Intenta
+      llegar a cinco colores distintos al d\xEDa."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203616
@@ -4391,6 +4427,236 @@ MonoBehaviour:
   - m_Id: 56190243387203645
     m_Localized: "\xBFSeguro que quieres reiniciar \xAB{0}\xBB?\r\nPerder\xE1s el
       progreso actual."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203646
+    m_Localized: "\xBFHas le\xEDdo c\xF3mo conservar este producto una vez abierto?
+      Suele venir en el envase, por ejemplo \xABuna vez abierto, cons\xE9rvese en
+      el frigor\xEDfico\xBB."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203647
+    m_Localized: "\xBFHas comido este alimento vegetal durante la misi\xF3n? Cada
+      tipo cuenta una vez, aunque lo comas varias veces."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203648
+    m_Localized: "\xBFTe has fijado en el material del envase de este producto? Por
+      ejemplo, vidrio, pl\xE1stico, papel o cart\xF3n, metal, materiales compuestos
+      (como un brik) o envases rellenables."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203649
+    m_Localized: "Seg\xFAn la informaci\xF3n que trae, \xBFhas valorado si el envase
+      de este producto es f\xE1cil o dif\xEDcil de reciclar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203650
+    m_Localized: "\xBFHas le\xEDdo la etiqueta de reciclaje de este producto? Busca
+      los s\xEDmbolos de reciclaje, los c\xF3digos del material o las instrucciones
+      para separar el envase."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203651
+    m_Localized: "\xBFTiene este producto un envase inteligente? Busca indicadores
+      de frescura, c\xF3digos QR, informaci\xF3n de trazabilidad o control de temperatura."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203652
+    m_Localized: "\xBFHas pensado si el envase de este producto compensa? F\xEDjate
+      en el tama\xF1o, el material y si protege el alimento para que no se estropee."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203653
+    m_Localized: "\xBFHas comparado el grupo NOVA, el Nutri-Score y el Green-Score
+      de este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203654
+    m_Localized: "\xBFHas mirado el Green-Score de este producto? Resume su impacto
+      ambiental, de mejor a peor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203655
+    m_Localized: "\xBFHas comparado el grupo NOVA y el Green-Score de este producto
+      con los de otros productos y te has fijado en las diferencias?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203656
+    m_Localized: "\xBFHas le\xEDdo la lista de ingredientes de este producto buscando
+      se\xF1ales de procesado? Muchos ingredientes refinados o aditivos suelen indicar
+      un alimento ultraprocesado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203657
+    m_Localized: "\xBFHas mirado el grupo NOVA de este producto? Va del 1 (sin procesar
+      o m\xEDnimamente procesado) al 4 (ultraprocesado)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203658
+    m_Localized: "\xBFHas comparado el grupo NOVA de este producto con su Green-Score
+      o su Nutri-Score?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203659
+    m_Localized: "\xBFHas buscado c\xF3mo se elabor\xF3 este producto? Por ejemplo,
+      el m\xE9todo de cultivo, el sistema de producci\xF3n o un programa de sostenibilidad."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203660
+    m_Localized: "\xBFHas elegido este producto teniendo en cuenta dos aspectos ambientales
+      distintos? Por ejemplo, huella de carbono y distancia de transporte, o consumo
+      de agua y m\xE9todo de producci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203661
+    m_Localized: "\xBFHas buscado el pa\xEDs de origen de este producto? Suele aparecer
+      en la etiqueta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203662
+    m_Localized: "\xBFHa sido el envase uno de tus criterios para elegir este producto?
+      F\xEDjate en sus etiquetas, las instrucciones de reciclaje, los s\xEDmbolos
+      del material o si se puede reutilizar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203663
+    m_Localized: "\xBFQu\xE9 indicador de producci\xF3n has usado para decidir si
+      comprar este producto?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: "\xBFEn qu\xE9 te has fijado del envase de este producto? Vale el
+      material, las instrucciones de reciclaje o si se puede reutilizar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "\xBFHas elegido este producto mirando su pa\xEDs de origen y al
+      menos otro dato de sostenibilidad: certificaci\xF3n, m\xE9todo de producci\xF3n
+      o temporada? Marca lo que miraste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: "Al comprar este producto, \xBFen qu\xE9 te fijaste: origen, temporada,
+      m\xE9todo de producci\xF3n o certificaci\xF3n? Marca al menos tres."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: "Al comprar este producto, \xBFtuviste en cuenta el material del
+      envase y qu\xE9 pasar\xE1 con \xE9l al terminar (reciclarlo, reutilizarlo o
+      tirarlo)? Marca lo que miraste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "\xBFQu\xE9 has encontrado en la etiqueta de este producto: de d\xF3nde
+      viene, un sello o certificaci\xF3n de sostenibilidad, si es de temporada o
+      si se produce cerca de ti? Marca al menos dos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "\xBFQu\xE9 sellos de sostenibilidad lleva este producto? Marca
+      al menos dos, por ejemplo Ecol\xF3gico UE y Fairtrade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Localized: "\xBFEn cu\xE1ntos productos encontraste en el envase alg\xFAn dato
+      de sostenibilidad? Por ejemplo, el pa\xEDs de origen, un sello de certificaci\xF3n,
+      c\xF3mo se produjo o c\xF3mo se cultiv\xF3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Localized: "\xBFHas encontrado en el envase de este producto alg\xFAn dato
+      de sostenibilidad? Por ejemplo, el pa\xEDs de origen, un sello de certificaci\xF3n,
+      c\xF3mo se produjo o c\xF3mo se cultiv\xF3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Localized: "\xBFCu\xE1ntas veces elegiste un producto a prop\xF3sito despu\xE9s
+      de leer la informaci\xF3n ambiental de su envase?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Localized: "\xBFEn cu\xE1ntas compras tuviste en cuenta tanto el grupo NOVA
+      como el Green-Score antes de decidir? Los encontrar\xE1s en la ficha del producto
+      o en el envase."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Localized: "\xBFHas tenido en cuenta el grupo NOVA y el Green-Score de este
+      producto antes de decidir?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203675
+    m_Localized: "\xBFEn cu\xE1ntos productos miraste el grupo NOVA? Es el primer
+      paso para ver si su procesado tiene ventajas e inconvenientes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203676
+    m_Localized: "\xBFHas mirado el grupo NOVA de este producto para valorar las
+      ventajas e inconvenientes de su procesado?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203677
+    m_Localized: "\xBFEn cu\xE1ntos de esos productos le\xEDste la lista de ingredientes
+      para ver qu\xE9 aporta el procesado? Por ejemplo, conservantes que alargan
+      su vida o az\xFAcares y aditivos a\xF1adidos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203678
+    m_Localized: "\xBFHas le\xEDdo la lista de ingredientes de este producto para
+      ver qu\xE9 aporta su procesado? Por ejemplo, conservantes que alargan su vida
+      o az\xFAcares y aditivos a\xF1adidos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203679
+    m_Localized: "\xBFEn cu\xE1ntos revisaste tambi\xE9n la informaci\xF3n del envase,
+      como el modo de conservaci\xF3n o la fecha de consumo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203680
+    m_Localized: "\xBFHas revisado la informaci\xF3n del envase de este producto,
+      como el modo de conservaci\xF3n o la fecha de consumo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203681
+    m_Localized: "\xBFEn cu\xE1ntas compras te ayudaron a decidir el grupo NOVA,
+      el Green-Score o la lista de ingredientes? Marca qu\xE9 miraste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203682
+    m_Localized: "\xBFQu\xE9 has mirado de este producto para decidir si comprarlo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203683
+    m_Localized: "\xBFDe cu\xE1ntos alimentos que comiste anotaste el grupo NOVA,
+      el Green-Score o el m\xE9todo de producci\xF3n? Piensa tambi\xE9n si influyeron
+      en lo que elegiste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203684
+    m_Localized: "\xBFQu\xE9 indicadores de producci\xF3n has mirado de este producto?
+      Piensa si han influido en tu elecci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203685
+    m_Localized: "\xBFCu\xE1ntas veces encontraste una opci\xF3n de envase reutilizable
+      o recargable? Busca s\xEDmbolos de recarga, sistemas de dep\xF3sito y devoluci\xF3n,
+      puntos de recarga o envases que digan que son reutilizables."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203686
+    m_Localized: "\xBFEn cu\xE1ntos productos encontraste un envase que se pueda
+      reutilizar, reciclar o rellenar? Marca qu\xE9 encontraste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203687
+    m_Localized: "\xBFSe puede reutilizar, reciclar o rellenar el envase de este
+      producto? Marca qu\xE9 has encontrado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203688
+    m_Localized: "\xBFPlanificaste todas las comidas principales de la semana antes
+      de tu primera compra, para comprar solo lo que ibas a usar?"
     m_Metadata:
       m_Items: []
   references:
