@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799c4391928524ee9ac51f00078cc83c, type: 3}
   m_Name: ApiEnvironmentConfig
   m_EditorClassIdentifier: Foodmission::eu.foodmission.platform.ApiEnvironmentConfig
-  m_ActiveIndex: 1
+  m_ActiveIndex: 0
   m_Environments:
   - Name: Staging
     ApiBaseUrl: https://staging.api.foodmission.eu
