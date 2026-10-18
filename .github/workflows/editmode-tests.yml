@@ -29,12 +29,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Hashing Assets/** times out, so key on packages + editor version and save a fresh cache per commit.
       - name: Cache Library
         uses: actions/cache@v4
         with:
           path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          key: Library-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}-${{ github.sha }}
           restore-keys: |
+            Library-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}-
             Library-
 
       - name: Run EditMode tests
@@ -55,4 +57,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: editmode-test-results
-          path: ${{ steps.tests.outputs.artifactsPath }}
+          path: artifacts
+          if-no-files-found: ignore
