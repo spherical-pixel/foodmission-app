@@ -30,8 +30,9 @@ jobs:
         uses: actions/checkout@v4
 
       # Hashing Assets/** times out, so key on packages + editor version and save a fresh cache per commit.
-      - name: Cache Library
-        uses: actions/cache@v4
+      - name: Restore Library
+        id: library
+        uses: actions/cache/restore@v4
         with:
           path: Library
           key: Library-${{ hashFiles('Packages/packages-lock.json', 'ProjectSettings/ProjectVersion.txt') }}-${{ github.sha }}
@@ -51,6 +52,14 @@ jobs:
           customParameters: -assemblyNames Foodmission.Tests.Editor
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: EditMode test results
+
+      # A cold import can leave assets unimported ("infinite import loop"), so keep Library even when tests fail.
+      - name: Save Library
+        if: always() && steps.library.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: Library
+          key: ${{ steps.library.outputs.cache-primary-key }}
 
       - name: Upload test results
         if: always()
