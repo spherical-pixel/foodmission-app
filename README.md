@@ -3,6 +3,7 @@
 [![Unity](https://img.shields.io/badge/Unity-6000.3.12f1-black.svg?style=flat-square&logo=unity)](https://unity.com)
 [![App UI](https://img.shields.io/badge/App%20UI-2.1.12-blue.svg?style=flat-square)](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.1/manual/index.html)
 [![EU Horizon](https://img.shields.io/badge/EU%20Horizon-101181774-blue.svg?style=flat-square)](https://www.foodmission.eu/)
+[![EditMode tests](https://github.com/spherical-pixel/foodmission-app/actions/workflows/editmode-tests.yml/badge.svg?branch=main)](https://github.com/spherical-pixel/foodmission-app/actions/workflows/editmode-tests.yml)
 
 > A gamified citizen science mobile platform promoting healthy and sustainable eating habits, developed as part of the EU Horizon project FOODMISSION (grant 101181774).
 
@@ -151,6 +152,8 @@ Open `Foodmission.slnx` in:
 2. Go to **Window → General → Test Runner**
 3. Select the **EditMode** tab (all tests live in `Foodmission.Tests.Editor`)
 4. Click **Run All**
+
+The same suite runs automatically on GitHub Actions ([GameCI](https://game.ci/)) for every pull request and every push to `main`; results show up as the **EditMode test results** check on the PR. See [`.github/workflows/editmode-tests.yml`](.github/workflows/editmode-tests.yml).
 
 ### Code Conventions
 

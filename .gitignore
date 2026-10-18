@@ -50,3 +50,6 @@ ProjectSettings/Packages/com.unity.probuilder/Settings.json
 # Google EDM4U / Firebase Android Resolver
 Assets/GeneratedLocalRepo/
 Assets/GeneratedLocalRepo.meta
+# Local-only symlink
+/Assets/Foodmission/localization/priv
+/Assets/Foodmission/localization/priv.meta
