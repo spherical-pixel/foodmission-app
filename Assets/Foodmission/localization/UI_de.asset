@@ -4696,6 +4696,34 @@ MonoBehaviour:
     m_Localized: Missionen ansehen
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203692
+    m_Localized: Mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203693
+    m_Localized: Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203694
+    m_Localized: Gruppe bearbeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203695
+    m_Localized: Mitglied bearbeiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203696
+    m_Localized: Mitglied entfernen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203697
+    m_Localized: "M\xF6chtest du {0} wirklich aus der Gruppe entfernen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203698
+    m_Localized: Neues Avatar-Item!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

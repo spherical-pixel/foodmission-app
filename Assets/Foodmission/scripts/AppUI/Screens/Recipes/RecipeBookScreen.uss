@@ -11,7 +11,7 @@
 }
 
 .fm-r-heading {
-    font-size: var(--appui-font-sizes-title-lg);
+    font-size: var(--appui-font-sizes-heading-md);
     -unity-font-style: bold;
     color: var(--appui-foregrounds-50);
 }
@@ -100,7 +100,7 @@
 }
 
 .fm-r-cat-chip--active {
-    background-color: var(--appui-color-primary-500);
+    background-color: var(--appui-accent-100);
     color: white;
 }
 
@@ -120,7 +120,7 @@
     padding: 20px;
     margin-bottom: 16px;
     border-width: 1px;
-    border-color: var(--appui-color-primary-500);
+    border-color: var(--appui-accent-100);
 }
 
 .fm-r-nutri-avatar-slot {
@@ -143,7 +143,7 @@
 }
 
 .fm-r-empty-pantry-title {
-    font-size: var(--appui-font-sizes-title-sm);
+    font-size: var(--appui-font-sizes-body-lg);
     -unity-font-style: bold;
     color: var(--appui-foregrounds-50);
     margin-bottom: 4px;
@@ -187,7 +187,7 @@
 }
 
 .fm-r-empty-title {
-    font-size: var(--appui-font-sizes-title-sm);
+    font-size: var(--appui-font-sizes-body-lg);
     -unity-font-style: bold;
     color: var(--appui-foregrounds-50);
     margin-bottom: 6px;
@@ -216,7 +216,7 @@
     padding: 20px;
     margin-bottom: 16px;
     border-width: 1px;
-    border-color: var(--appui-color-primary-500);
+    border-color: var(--appui-accent-100);
 }
 
 .fm-r-results-header {
@@ -270,7 +270,7 @@
 }
 
 .fm-r-card-title {
-    font-size: var(--appui-font-sizes-title-sm);
+    font-size: var(--appui-font-sizes-body-lg);
     -unity-font-style: bold;
     color: var(--appui-foregrounds-50);
     white-space: normal;

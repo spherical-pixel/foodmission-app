@@ -9,7 +9,7 @@
 }
 
 .fm-og-error {
-    color: var(--appui-color-danger-500);
+    color: var(--fm-color-negative);
     align-self: center;
     margin: 8px 0;
     display: none;

@@ -1363,7 +1363,7 @@
     padding: 12px;
     margin-top: 8px;
     border-width: 1px;
-    border-color: var(--appui-color-accent);
+    border-color: var(--appui-accent-100);
     border-radius: 8px;
     cursor: pointer;
 }
@@ -1423,7 +1423,7 @@
     padding-top: 6px;
     padding-bottom: 6px;
     border-top-width: 1px;
-    border-top-color: var(--appui-foregrounds-10);
+    border-top-color: var(--appui-foregrounds-25);
 }
 
 .fm-meal-card-item-row {
@@ -1459,7 +1459,7 @@
 }
 
 .fm-meal-card-item-empty {
-    color: var(--appui-foregrounds-300);
+    color: var(--appui-foregrounds-200);
     font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: italic;
 }
@@ -1480,7 +1480,7 @@
     padding-right: 16px;
     min-height: 56px;
     border-bottom-width: 1px;
-    border-bottom-color: var(--appui-foregrounds-10);
+    border-bottom-color: var(--appui-foregrounds-25);
     background-color: var(--fm-main-bg);
     color: var(--appui-foregrounds-100);
     flex-shrink: 0;
@@ -1524,7 +1524,7 @@
     padding-right: 16px;
     min-height: 56px;
     border-bottom-width: 1px;
-    border-bottom-color: var(--appui-foregrounds-10);
+    border-bottom-color: var(--appui-foregrounds-25);
     background-color: var(--fm-surface-bg-transparent);
     color: var(--appui-foregrounds-100);
     flex-shrink: 0;
@@ -1571,7 +1571,7 @@
     padding-right: 16px;
     min-height: 56px;
     border-bottom-width: 1px;
-    border-bottom-color: var(--appui-foregrounds-10);
+    border-bottom-color: var(--appui-foregrounds-25);
     background-color: var(--fm-surface-bg-transparent);
     color: var(--appui-foregrounds-100);
     flex-shrink: 0;
@@ -1607,10 +1607,10 @@
     border-bottom-width: 1px;
     border-left-width: 1px;
     border-right-width: 1px;
-    border-top-color: var(--appui-foregrounds-10);
-    border-bottom-color: var(--appui-foregrounds-10);
-    border-left-color: var(--appui-foregrounds-10);
-    border-right-color: var(--appui-foregrounds-10);
+    border-top-color: var(--appui-foregrounds-25);
+    border-bottom-color: var(--appui-foregrounds-25);
+    border-left-color: var(--appui-foregrounds-25);
+    border-right-color: var(--appui-foregrounds-25);
 }
 
 .fm-food-waste-record-overlay__card-header {
@@ -1634,7 +1634,7 @@
 }
 
 .fm-food-waste-record-overlay__error {
-    color: var(--appui-color-danger-500);
+    color: var(--fm-color-negative);
     font-size: var(--appui-font-sizes-body-sm);
     margin-bottom: 12px;
 }
@@ -1658,7 +1658,7 @@
 .fm-food-waste-record-overlay__bottombar {
     background-color: var(--fm-surface-bg);
     border-top-width: 1px;
-    border-top-color: var(--appui-foregrounds-10);
+    border-top-color: var(--appui-foregrounds-25);
     flex-direction: column;
     padding: 70px;
 }
@@ -1725,7 +1725,7 @@
 
 
 .appui-button--icon-only .appui-button__leadingicon {
-    --unity-image-tint-color: var(--appui-foregrounds-100);
+    --unity-image-tint-color: var(--appui-foregrounds-50);
 }
 
 .appui-date-picker-pane .appui-button,
@@ -2689,7 +2689,7 @@
 .fm-goals-hint__text {
     white-space: normal;
     -unity-text-align: middle-center;
-    color: var(--appui-foreground-muted);
+    color: var(--appui-foregrounds-50);
     margin-bottom: 25px;
 }
 

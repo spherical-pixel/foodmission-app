@@ -19,7 +19,7 @@
 }
 
 .fm-grp-error {
-    color: var(--appui-color-danger-500);
+    color: var(--fm-color-negative);
     align-self: center;
     margin-top: 16px;
     display: none;
@@ -48,7 +48,7 @@
 }
 
 .fm-grp-row:active {
-    background-color: var(--fm-color-surface-pressed);
+    background-color: var(--appui-backgrounds-300);
 }
 
 .fm-grp-row-info {

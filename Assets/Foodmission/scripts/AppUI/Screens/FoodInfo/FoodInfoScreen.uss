@@ -68,7 +68,7 @@
 .fm-fi-food-name {
     width: 100%;
     -unity-text-align: middle-center;
-    font-size: var(--appui-font-sizes-title-lg);
+    font-size: var(--appui-font-sizes-heading-md);
     -unity-font-style: bold;
     color: #ffffff;
     white-space: normal;
@@ -116,7 +116,7 @@
     -unity-text-align: middle-center;
     -unity-font-style: bold;
     color: #ffffff;
-    font-size: var(--appui-font-sizes-title-md);
+    font-size: var(--appui-font-sizes-heading-sm);
     margin-bottom: 6px;
     display: flex;
 }
@@ -249,7 +249,7 @@
 }
 
 .fm-fi-macro-card__icon {
-    font-size: var(--appui-font-sizes-title-md);
+    font-size: var(--appui-font-sizes-heading-sm);
     -unity-text-align: middle-center;
     margin-bottom: 6px;
 }
@@ -282,7 +282,7 @@
 }
 
 .fm-fi-section-header {
-    font-size: var(--appui-font-sizes-title-sm);
+    font-size: var(--appui-font-sizes-body-lg);
     -unity-font-style: bold;
     color: #ffffff;
     margin-bottom: 12px;

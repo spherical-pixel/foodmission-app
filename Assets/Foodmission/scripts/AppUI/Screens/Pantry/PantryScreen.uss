@@ -19,7 +19,7 @@
 }
 
 .fm-p-error {
-    color: var(--appui-color-danger-500);
+    color: var(--fm-color-negative);
     align-self: center;
     margin-top: 16px;
     display: none;
@@ -124,8 +124,8 @@
 .fm-p-expired-banner {
     flex-direction: row;
     align-items: center;
-    background-color: var(--appui-color-danger-100);
-    border-radius: 8px;
+    /* background-color: var(--appui-destructive-25); */
+    /* border-radius: 8px; */
     padding: 12px;
     margin: 8px 0;
     display: none;
@@ -138,11 +138,12 @@
 .fm-p-expired-banner-text {
     flex-grow: 1;
     font-size: var(--appui-font-sizes-body-md);
-    color: var(--appui-color-danger-700);
+    color: var(--fm-color-negative);
 }
 
 .fm-p-expired-btn {
-    flex-shrink: 0;
+    flex-shrink: 1;
+    max-width: 30%;
 }
 
 .fm-p-empty {

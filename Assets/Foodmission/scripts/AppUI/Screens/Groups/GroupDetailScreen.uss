@@ -26,7 +26,7 @@
 }
 
 .fm-gd-error {
-    color: var(--appui-color-danger-500);
+    color: var(--fm-color-negative);
     align-self: center;
     margin-top: 16px;
     display: none;
@@ -138,7 +138,7 @@
 }
 
 .fm-gd-member-badge--admin {
-    background-color: var(--appui-color-primary-200);
+    background-color: var(--appui-primary-200);
     color: var(--appui-foregrounds-50);
 }
 
