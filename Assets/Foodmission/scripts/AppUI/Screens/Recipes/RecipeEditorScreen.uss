@@ -5,7 +5,7 @@
 }
 
 .fm-re-title {
-    font-size: var(--appui-font-sizes-title-lg);
+    font-size: var(--appui-font-sizes-heading-md);
     -unity-font-style: bold;
     color: var(--appui-foregrounds-50);
     margin-bottom: 12px;

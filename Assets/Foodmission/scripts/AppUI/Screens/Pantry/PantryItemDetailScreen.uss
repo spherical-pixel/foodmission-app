@@ -26,7 +26,7 @@
 }
 
 .fm-pid-error {
-    color: var(--appui-color-danger-500);
+    color: var(--fm-color-negative);
     align-self: center;
     margin-top: 16px;
     display: none;

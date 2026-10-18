@@ -65,5 +65,5 @@
 }
 
 .fm-fw-expired-label {
-    color: var(--appui-color-danger-700);
+    color: var(--fm-color-negative);
 }

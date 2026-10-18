@@ -4682,6 +4682,34 @@ MonoBehaviour:
     m_Localized: Missies bekijken
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203692
+    m_Localized: Missie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203693
+    m_Localized: Opdracht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203694
+    m_Localized: Groep bewerken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203695
+    m_Localized: Lid bewerken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203696
+    m_Localized: Lid verwijderen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203697
+    m_Localized: Weet je zeker dat je {0} uit de groep wilt verwijderen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203698
+    m_Localized: Nieuw avatar-item!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

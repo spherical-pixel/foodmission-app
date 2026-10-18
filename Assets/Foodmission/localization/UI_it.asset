@@ -4674,6 +4674,34 @@ MonoBehaviour:
     m_Localized: Vedi le missioni
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203692
+    m_Localized: Missione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203693
+    m_Localized: Percorso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203694
+    m_Localized: Modifica gruppo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203695
+    m_Localized: Modifica membro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203696
+    m_Localized: Rimuovi membro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203697
+    m_Localized: Sei sicuro di voler rimuovere {0} dal gruppo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203698
+    m_Localized: Nuovo oggetto per l'avatar!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

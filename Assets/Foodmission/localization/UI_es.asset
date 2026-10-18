@@ -4673,6 +4673,34 @@ MonoBehaviour:
     m_Localized: Ver misiones
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203692
+    m_Localized: "Misi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203693
+    m_Localized: Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203694
+    m_Localized: Editar grupo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203695
+    m_Localized: Editar miembro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203696
+    m_Localized: Eliminar miembro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203697
+    m_Localized: "\xBFSeguro que quieres eliminar a {0} del grupo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203698
+    m_Localized: "\xA1Nuevo objeto para tu avatar!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

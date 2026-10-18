@@ -4669,6 +4669,34 @@ MonoBehaviour:
     m_Localized: Poglej misije
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203692
+    m_Localized: Misija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203693
+    m_Localized: Naloga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203694
+    m_Localized: Uredi skupino
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203695
+    m_Localized: "Uredi \u010Dlana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203696
+    m_Localized: "Odstrani \u010Dlana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203697
+    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite odstraniti {0} iz skupine?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203698
+    m_Localized: Nov predmet za avatar!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

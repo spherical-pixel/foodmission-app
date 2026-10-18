@@ -10,7 +10,9 @@
         "Unity.AppUI",
         "Unity.AppUI.Editor",
         "Unity.AppUI.Navigation",
-        "Unity.Localization"
+        "Unity.Localization",
+        "Unity.Addressables",
+        "Unity.Addressables.Editor"
     ],
     "includePlatforms": [
         "Editor"

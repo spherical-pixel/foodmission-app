@@ -4741,6 +4741,34 @@ MonoBehaviour:
     m_Localized: Zobacz misje
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203692
+    m_Localized: Misja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203693
+    m_Localized: Zadanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203694
+    m_Localized: "Edytuj grup\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203695
+    m_Localized: "Edytuj cz\u0142onka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203696
+    m_Localized: "Usu\u0144 cz\u0142onka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203697
+    m_Localized: "Czy na pewno chcesz usun\u0105\u0107 {0} z grupy?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203698
+    m_Localized: Nowy przedmiot dla awatara!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

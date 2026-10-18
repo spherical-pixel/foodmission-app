@@ -377,7 +377,7 @@ namespace eu.foodmission.platform
 
             var nameField = new Unity.AppUI.UI.TextField
             {
-                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GROUP_NAME"),
+                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GROUP_NAME_LABEL"),
                 value = _viewModel.Group?.name ?? ""
             };
             nameField.style.marginBottom = 8;
@@ -385,7 +385,7 @@ namespace eu.foodmission.platform
 
             var descField = new Unity.AppUI.UI.TextField
             {
-                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GROUP_DESCRIPTION"),
+                placeholder = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "GROUP_DESC_LABEL"),
                 value = _viewModel.Group?.description ?? ""
             };
             container.Add(descField);

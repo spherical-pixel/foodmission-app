@@ -325,7 +325,8 @@ namespace eu.foodmission.platform
                 FMDialog.ShowAlert(
                     contentContainer,
                     "@UI:ENV_CHANGE_TITLE",
-                    "@UI:ENV_LOCAL_URL_REQUIRED"
+                    // Development-only message: never shown in distributed builds, so not localized
+                    "Enter the local server URL before switching to the Local environment."
                 );
                 _localUrlInnerField?.Focus();
                 return;

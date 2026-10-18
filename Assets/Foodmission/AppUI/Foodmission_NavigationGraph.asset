@@ -16,7 +16,7 @@ MonoBehaviour:
   m_Guid: 02b5efce81a9947009ff8de8f8ee32ed
   m_Parent: {fileID: 4520152674340125327}
   m_Actions: []
-  m_Label: OnboardingGroups
+  m_Label: '@UI:ONBOARDING_GROUPS_TITLE'
   m_TemplateSettings:
     rid: 3341417627117944917
   m_Arguments: []
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Guid: 60072675206ac404d9ef499a359fd23a
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: GroupsJoin
+  m_Label: '@UI:JOIN_GROUP'
   m_TemplateSettings:
     rid: 3341417627117944925
   m_Arguments: []
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Guid: a841583886ace4b1d97ce9e04af015ed
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: PantryItemDetail
+  m_Label: '@UI:PANTRY'
   m_TemplateSettings:
     rid: 3341417627117944930
   m_Arguments: []
@@ -903,7 +903,7 @@ MonoBehaviour:
   m_Guid: fc8c141d646da4789923d03826afe89d
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: Pantry
+  m_Label: '@UI:PANTRY'
   m_TemplateSettings:
     rid: 3341417627117944929
   m_Arguments: []
@@ -1507,7 +1507,7 @@ MonoBehaviour:
   m_Guid: dbca76521e92047348a6d66618b3c956
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: Groups
+  m_Label: '@UI:GROUPS_TITLE'
   m_TemplateSettings:
     rid: 3341417627117944923
   m_Arguments: []
@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_Guid: c0a9e712-4215-4678-bf5b-d352ea932822
   m_Parent: {fileID: 6576446744998733474}
   m_Actions: []
-  m_Label: Quest
+  m_Label: '@UI:QUEST'
   m_TemplateSettings:
     rid: 685283817655151546
   m_Arguments: []
@@ -2354,7 +2354,7 @@ MonoBehaviour:
   m_Guid: c0a9e712-4215-4678-bf5b-d352ea942912
   m_Parent: {fileID: 6576446744998733474}
   m_Actions: []
-  m_Label: "Misi\xF3n"
+  m_Label: '@UI:MISSION'
   m_TemplateSettings:
     rid: 685283817655151547
   m_Arguments: []
@@ -2416,7 +2416,7 @@ MonoBehaviour:
   m_Actions:
   - {fileID: 4291847192847192098}
   - {fileID: 673415384649435719}
-  m_Label: Reto Diario
+  m_Label: '@UI:DAILY_CHALLENGE'
   m_TemplateSettings:
     rid: 685283817655151548
   m_Arguments: []
@@ -2598,7 +2598,7 @@ MonoBehaviour:
   m_Guid: ddccdbe4757f34128b366f0b9a4a4421
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: GroupDetail
+  m_Label: '@UI:GROUP'
   m_TemplateSettings:
     rid: 3341417627117944926
   m_Arguments: []
@@ -3290,7 +3290,7 @@ MonoBehaviour:
   m_Guid: 74301a475e4054ad18d4c8cc3ad0e93a
   m_Parent: {fileID: 4583499250303890363}
   m_Actions: []
-  m_Label: GroupsCreate
+  m_Label: '@UI:CREATE_GROUP'
   m_TemplateSettings:
     rid: 3341417627117944924
   m_Arguments: []

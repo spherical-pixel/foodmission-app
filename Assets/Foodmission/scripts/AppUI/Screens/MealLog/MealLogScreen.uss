@@ -109,7 +109,7 @@
 }
 
 .fm-ml-chip-preset {
-    border-color: var(--appui-color-accent);
+    border-color: var(--appui-accent-100);
     border-width: 1px;
 }
 
@@ -151,7 +151,7 @@
 .fm-ml-preset-badge {
     font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: bold;
-    color: var(--appui-accent-800);
+    color: var(--appui-foregrounds-50);
     background-color: var(--appui-accent-100);
     padding: 2px 8px;
     border-radius: 4px;
