@@ -32,6 +32,7 @@ namespace eu.foodmission.platform
 
 
         private bool _shouldRedirect;
+        private NavDestination _destination;
 
         private FMSearchOrCreateField _searchOrCreateField;
         private VisualElement _listsContainer;
@@ -57,6 +58,7 @@ namespace eu.foodmission.platform
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             _shouldRedirect = false;
+            _destination = destination;
             if (args != null)
             {
                 foreach (var arg in args)
@@ -113,14 +115,20 @@ namespace eu.foodmission.platform
 
                 if (lastList != null)
                 {
-                    _navController?.PopBackStack();
+                    // Replace this screen with the detail in a single navigation, so Back from the detail returns
+                    // to the previous screen. PopBackStack() + Navigate() doesn't: the pop is processed later, so
+                    // Navigate pushes this screen again (with fromMenu) and Back would land here and redirect again.
+                    var options = new NavOptions
+                    {
+                        popUpToStrategy = PopupToStrategy.SpecificRoute,
+                        popUpToRoute = _destination,
+                        popUpToInclusive = true
+                    };
                     _navController?.Navigate(
-                        Actions.shopping_list_to_detail,
-                        new[]
-                        {
-                            new Argument("listId", lastList.id),
-                            new Argument("listTitle", lastList.title)
-                        });
+                        Destinations.shoppinglistdetail,
+                        options,
+                        new Argument("listId", lastList.id),
+                        new Argument("listTitle", lastList.title));
                 }
             }
             catch (Exception ex)
