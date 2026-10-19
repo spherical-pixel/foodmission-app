@@ -274,6 +274,7 @@ namespace eu.foodmission.platform.Components
                 quiet = true,
                 tooltip = "Scan barcode"
             };
+            _scanButton.AddToClassList("fm-icon-button--on-main-bg");
             _scanButton.style.minWidth = 36;
             _scanButton.style.minHeight = 36;
             _scanButton.style.marginRight = 4;

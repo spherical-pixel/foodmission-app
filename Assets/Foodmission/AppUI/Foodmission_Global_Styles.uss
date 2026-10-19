@@ -992,8 +992,10 @@
     padding: 25px;
 }
 
+/* Mint text suits the translucent box over the green background. Boxes with an opaque light
+   background set --fm-box-text, because this selector outranks their single-class color rules. */
 .box-background .appui-text {
-    color: var(--appui-primary-1000);
+    color: var(--fm-box-text, var(--appui-primary-1000));
 }
 
 .fm-nutri-card .unity-text-element {
@@ -1624,6 +1626,10 @@
 }
 
 .fm-food-waste-record-overlay__food-name {
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-lg);
+    -unity-font-style: bold;
+    white-space: normal;
     margin-bottom: 4px;
     padding-bottom: 6px;
 }
@@ -1651,12 +1657,12 @@
 
 .fm-food-waste-record-overlay__helper {
     font-size: var(--appui-font-sizes-body-sm);
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
     margin-top: 4px;
 }
 
 .fm-food-waste-record-overlay__bottombar {
-    background-color: var(--fm-surface-bg);
+    background-color: var(--fm-main-bg);
     border-top-width: 1px;
     border-top-color: var(--appui-foregrounds-25);
     flex-direction: column;
@@ -1726,6 +1732,18 @@
 
 .appui-button--icon-only .appui-button__leadingicon {
     --unity-image-tint-color: var(--appui-foregrounds-50);
+}
+
+/* Icon buttons over the green screen background (AppBar, search bar, step flow, settings steppers): foregrounds-50 is that same green in light mode.
+   The class goes on the button itself or on a container of them. */
+.fm-icon-button--on-main-bg.appui-button--icon-only .appui-button__leadingicon,
+.fm-icon-button--on-main-bg .appui-button--icon-only .appui-button__leadingicon {
+    --unity-image-tint-color: var(--appui-foregrounds-100);
+}
+
+/* fm-add-icon.png carries its own colors: never tint it */
+.appui-button--icon-only .appui-button__leadingicon.appui-icon--fm-add-icon--regular {
+    --unity-image-tint-color: rgb(255, 255, 255);
 }
 
 .appui-date-picker-pane .appui-button,

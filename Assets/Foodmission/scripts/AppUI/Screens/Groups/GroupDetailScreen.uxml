@@ -30,7 +30,7 @@
                         <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986012)"/>
                     </Bindings>
                 </appui:Button>
-                <appui:Button name="btn-copy" variant="Quiet" size="S" leading-icon="copy-simple" class="fm-gd-invite-btn"/>
+                <appui:Button name="btn-copy" variant="Quiet" size="S" leading-icon="copy-simple" class="fm-gd-invite-btn fm-icon-button--on-main-bg"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="members-section" class="fm-gd-section" style="flex-grow: 1;">

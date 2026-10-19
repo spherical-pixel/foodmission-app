@@ -97,6 +97,7 @@ namespace eu.foodmission.platform
 
             var backBtn = new IconButton { icon = "arrow-left", quiet = true };
             backBtn.AddToClassList("fm-pantry-item-detail-overlay__back-btn");
+            backBtn.AddToClassList("fm-icon-button--on-main-bg");
             backBtn.clicked += Dismiss;
             appBar.Add(backBtn);
 

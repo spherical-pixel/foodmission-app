@@ -79,7 +79,7 @@
 .fm-fi-food-subtitle {
     width: 100%;
     -unity-text-align: middle-center;
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
     font-size: var(--appui-font-sizes-body-md);
     white-space: normal;
     margin-bottom: 8px;
@@ -123,7 +123,7 @@
 
 .fm-fi-score-pill__label {
     font-size: var(--appui-font-sizes-body-sm);
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
     -unity-text-align: middle-center;
     -unity-font-style: bold;
     letter-spacing: 0.5px;
@@ -207,7 +207,7 @@
 
 .fm-fi-traffic-dot__label {
     font-size: var(--appui-font-sizes-body-sm);
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
     white-space: nowrap;
 }
 
@@ -264,7 +264,7 @@
 }
 
 .fm-fi-macro-card__label {
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
     font-size: var(--appui-font-sizes-body-sm);
     -unity-text-align: middle-center;
     white-space: nowrap;

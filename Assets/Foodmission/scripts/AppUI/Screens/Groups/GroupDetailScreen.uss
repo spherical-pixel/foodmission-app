@@ -84,7 +84,7 @@
 
 .fm-gd-invite-code {
     font-size: var(--appui-font-sizes-body-lg);
-    font-weight: bold;
+    -unity-font-style: bold;
     letter-spacing: 2px;
     flex-grow: 1;
 }
@@ -131,7 +131,7 @@
     margin-left: 8px;
     white-space: nowrap;
     flex-shrink: 0;
-    font-weight: bold;
+    -unity-font-style: bold;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,7 +139,7 @@
 
 .fm-gd-member-badge--admin {
     background-color: var(--appui-primary-200);
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1300);
 }
 
 .fm-gd-member-badge--virtual {

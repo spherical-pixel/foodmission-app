@@ -17,7 +17,7 @@
             </ui:VisualElement>
             <ui:VisualElement class="fm-fw-section-header-row">
                 <appui:Text name="history-title" text="" class="fm-fw-section-title"/>
-                <eu:FMArrowStepper name="month-stepper" cyclic="false" class="fm-fw-month-stepper"/>
+                <eu:FMArrowStepper name="month-stepper" cyclic="false" class="fm-fw-month-stepper fm-icon-button--on-main-bg"/>
             </ui:VisualElement>
             <appui:Text name="empty-state" text="" class="fm-fw-empty"/>
             <ui:ScrollView name="scroll-view" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fm-fw-scroll">
