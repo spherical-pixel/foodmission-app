@@ -100,7 +100,7 @@ namespace eu.foodmission.platform
         public KnowledgeProgress Copy()
         {
             var copy = (KnowledgeProgress)MemberwiseClone();
-            copy.items = items != null ? (KnowledgeItem[])items.Clone() : null;
+            copy.items = items != null ? Array.ConvertAll(items, i => i?.Copy()) : null;
             return copy;
         }
     }
@@ -114,6 +114,11 @@ namespace eu.foodmission.platform
         /// <summary>Backend text (English until the backend localizes it).</summary>
         public string title;
         public bool finished;
+
+        public KnowledgeItem Copy()
+        {
+            return (KnowledgeItem)MemberwiseClone();
+        }
     }
 
     /// <summary>Item status values of GET /users/me/gamification/current-quest (ProgressStatus).</summary>
@@ -214,6 +219,11 @@ namespace eu.foodmission.platform
         public float allTimeTotal;
         public string cycleStartedAt;
         public string lastUpdatedAt;
+
+        public ProgressIndicator Copy()
+        {
+            return (ProgressIndicator)MemberwiseClone();
+        }
     }
 
     [Serializable]

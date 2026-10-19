@@ -10,6 +10,7 @@
         "Unity.AppUI",
         "Unity.AppUI.Editor",
         "Unity.AppUI.Navigation",
+        "Unity.AppUI.MVVM",
         "Unity.Localization",
         "Unity.Addressables",
         "Unity.Addressables.Editor"

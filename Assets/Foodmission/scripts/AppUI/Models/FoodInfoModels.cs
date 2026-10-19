@@ -21,5 +21,10 @@ namespace eu.foodmission.platform
         public string FoodId;
         public string EntryContext;
         public string FoodData;
+
+        public AddToContextRequestedAction Copy()
+        {
+            return (AddToContextRequestedAction)MemberwiseClone();
+        }
     }
 }

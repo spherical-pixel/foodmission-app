@@ -1,0 +1,189 @@
+{
+  "lang": "AppState.lang",
+  "theme": "AppState.theme",
+  "scale": "AppState.scale",
+  "font": "AppState.font",
+  "soundVolume": 217,
+  "musicVolume": 424,
+  "pushNotificationsEnabled": true,
+  "notificationPreferredTime": "AppState.notificationPreferredTime",
+  "devicePushRegistration": {
+    "token": "AppState.devicePushRegistration.token",
+    "platform": "AppState.devicePushRegistration.platform",
+    "deviceModel": "AppState.devicePushRegistration.deviceModel",
+    "appVersion": "AppState.devicePushRegistration.appVersion",
+    "registeredAt": "AppState.devicePushRegistration.registeredAt",
+    "notificationsEnabled": true
+  },
+  "backgroundPattern": false,
+  "hasCompletedOnboarding": true,
+  "hasCompletedExtendedProfile": true,
+  "hasSkippedExtendedProfile": true,
+  "userId": "AppState.userId",
+  "userName": "AppState.userName",
+  "userEmail": "AppState.userEmail",
+  "accessToken": "AppState.accessToken",
+  "tokenType": "AppState.tokenType",
+  "tokenExpiresAt": 35,
+  "refreshToken": "AppState.refreshToken",
+  "refreshTokenExpiresAt": 737,
+  "lastSessionTimestamp": 982,
+  "userYearOfBirth": 161,
+  "userCountry": "AppState.userCountry",
+  "userRegion": "AppState.userRegion",
+  "userZip": "AppState.userZip",
+  "userGender": "AppState.userGender",
+  "userAnnualIncome": "AppState.userAnnualIncome",
+  "userEducationLevel": "AppState.userEducationLevel",
+  "userActivityLevel": "AppState.userActivityLevel",
+  "userDietaryPreference": [
+    "AppState.userDietaryPreference[0]"
+  ],
+  "userShoppingResponsibility": "AppState.userShoppingResponsibility",
+  "userOnboardingSurvey": {
+    "AppState.userOnboardingSurvey.answers[0].field": "AppState.userOnboardingSurvey.answers[0].value"
+  },
+  "userLastShoppingListId": "AppState.userLastShoppingListId",
+  "userAutoAddToPantry": true,
+  "userAvatarConfig": {
+    "hair": {
+      "idPart": 853,
+      "idColor": 415
+    },
+    "eyebrows": {
+      "idPart": 579,
+      "idColor": 235
+    },
+    "eyes": {
+      "idPart": 981,
+      "idColor": 230
+    },
+    "nose": {
+      "idPart": 716,
+      "idColor": 267
+    },
+    "mouth": {
+      "idPart": 548,
+      "idColor": 960
+    },
+    "facialHair": {
+      "idPart": 643,
+      "idColor": 666
+    },
+    "skin": {
+      "idPart": 557,
+      "idColor": 507
+    },
+    "tshirt": {
+      "idPart": 427,
+      "idColor": 132
+    },
+    "trousers": {
+      "idPart": 3,
+      "idColor": 331
+    },
+    "shoes": {
+      "idPart": 818,
+      "idColor": 466
+    }
+  },
+  "userHasAvatar": true,
+  "userMotivation": "AppState.userMotivation",
+  "userDailyTimeCommitmentMinutes": 449,
+  "userSegment": "AppState.userSegment",
+  "userCurrentQuestId": "AppState.userCurrentQuestId",
+  "userXp": 298,
+  "userPoints": 892,
+  "pilotSurveyCycleState": {
+    "currentCycle": 116,
+    "cycleStartDate": "AppState.pilotSurveyCycleState.cycleStartDate",
+    "activeDatesInCycle": [
+      "AppState.pilotSurveyCycleState.activeDatesInCycle[0]"
+    ],
+    "completedSlugsInCycle": [
+      "AppState.pilotSurveyCycleState.completedSlugsInCycle[0]"
+    ],
+    "skippedSlugsInCycle": [
+      "AppState.pilotSurveyCycleState.skippedSlugsInCycle[0]"
+    ],
+    "postponedUntil": [
+      {
+        "slug": "AppState.pilotSurveyCycleState.postponedUntil[0].slug",
+        "day": "AppState.pilotSurveyCycleState.postponedUntil[0].day"
+      }
+    ],
+    "lastSurveyDay": "AppState.pilotSurveyCycleState.lastSurveyDay"
+  },
+  "pilotConsentAccepted": true,
+  "userProgressIndicators": [
+    {
+      "id": "AppState.userProgressIndicators[0].id",
+      "kind": "AppState.userProgressIndicators[0].kind",
+      "precision": "AppState.userProgressIndicators[0].precision",
+      "level": 165,
+      "accumulatedValue": 231.5,
+      "targetValue": 797.5,
+      "allTimeTotal": 767.5,
+      "cycleStartedAt": "AppState.userProgressIndicators[0].cycleStartedAt",
+      "lastUpdatedAt": "AppState.userProgressIndicators[0].lastUpdatedAt"
+    }
+  ],
+  "userBadges": [
+    "AppState.userBadges[0]"
+  ],
+  "progressWheels": [
+    {
+      "id": "AppState.progressWheels[0].id",
+      "kind": "AppState.progressWheels[0].kind",
+      "label": "AppState.progressWheels[0].label",
+      "unit": "AppState.progressWheels[0].unit",
+      "profile": "AppState.progressWheels[0].profile",
+      "stage": 435,
+      "stageTitle": "AppState.progressWheels[0].stageTitle",
+      "sustainabilityTargetPercent": 814.5,
+      "accumulatedValue": 913.5,
+      "targetValue": 675.5,
+      "percentComplete": 10.5,
+      "allTimeTotal": 234.5,
+      "cycleStartedAt": "AppState.progressWheels[0].cycleStartedAt",
+      "lastUpdatedAt": "AppState.progressWheels[0].lastUpdatedAt"
+    }
+  ],
+  "hiddenProgressWheels": [
+    "AppState.hiddenProgressWheels[0]"
+  ],
+  "hiddenProgressWheelsPendingSync": true,
+  "knowledgeProgress": [
+    {
+      "kind": "AppState.knowledgeProgress[0].kind",
+      "finishedItems": 302,
+      "totalItems": 126,
+      "percentComplete": 920.5,
+      "items": [
+        {
+          "contentType": "AppState.knowledgeProgress[0].items[0].contentType",
+          "contentCode": "AppState.knowledgeProgress[0].items[0].contentCode",
+          "title": "AppState.knowledgeProgress[0].items[0].title",
+          "finished": true
+        }
+      ]
+    }
+  ],
+  "userGoals": [
+    "AppState.userGoals[0]"
+  ],
+  "dimensionLevels": [
+    {
+      "dimensionCode": "AppState.dimensionLevels[0].dimensionCode",
+      "level": "AppState.dimensionLevels[0].level"
+    }
+  ],
+  "isAuthenticating": true,
+  "authError": "AppState.authError",
+  "foodInfoAddRequest": {
+    "FoodType": 1,
+    "FoodId": "AppState.foodInfoAddRequest.FoodId",
+    "EntryContext": "AppState.foodInfoAddRequest.EntryContext",
+    "FoodData": "AppState.foodInfoAddRequest.FoodData"
+  }
+}

@@ -218,7 +218,7 @@ namespace eu.foodmission.platform
                 userActivityLevel = this.userActivityLevel,
                 userDietaryPreference = this.userDietaryPreference != null ? (string[])this.userDietaryPreference.Clone() : new string[0],
                 userShoppingResponsibility = this.userShoppingResponsibility,
-                userOnboardingSurvey = this.userOnboardingSurvey,
+                userOnboardingSurvey = this.userOnboardingSurvey?.Copy(),
                 userLastShoppingListId = this.userLastShoppingListId,
                 userAutoAddToPantry = this.userAutoAddToPantry,
                 userAvatarConfig = this.userAvatarConfig?.Copy(),
@@ -231,7 +231,7 @@ namespace eu.foodmission.platform
                 userPoints = this.userPoints,
                 pilotSurveyCycleState = this.pilotSurveyCycleState?.Copy(),
                 pilotConsentAccepted = this.pilotConsentAccepted,
-                userProgressIndicators = this.userProgressIndicators != null ? (ProgressIndicator[])this.userProgressIndicators.Clone() : new ProgressIndicator[0],
+                userProgressIndicators = this.userProgressIndicators != null ? Array.ConvertAll(this.userProgressIndicators, p => p?.Copy()) : new ProgressIndicator[0],
                 userBadges = this.userBadges != null ? (string[])this.userBadges.Clone() : new string[0],
                 progressWheels = this.progressWheels != null ? Array.ConvertAll(this.progressWheels, w => w?.Copy()) : new ProgressWheel[0],
                 hiddenProgressWheels = this.hiddenProgressWheels != null ? (string[])this.hiddenProgressWheels.Clone() : new string[0],
@@ -241,7 +241,7 @@ namespace eu.foodmission.platform
                 dimensionLevels = this.dimensionLevels != null ? Array.ConvertAll(this.dimensionLevels, e => e?.Copy()) : new DimensionLevelEntry[0],
                 isAuthenticating = this.isAuthenticating,
                 authError = this.authError,
-                foodInfoAddRequest = this.foodInfoAddRequest
+                foodInfoAddRequest = this.foodInfoAddRequest?.Copy()
             };
         }
     }
