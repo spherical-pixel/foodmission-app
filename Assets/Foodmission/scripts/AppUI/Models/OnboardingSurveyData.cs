@@ -27,6 +27,16 @@ namespace eu.foodmission.platform
 
         public bool HasAnswers() => Count > 0;
 
+        public OnboardingSurveyData Copy()
+        {
+            return new OnboardingSurveyData
+            {
+                answers = answers != null
+                    ? Array.ConvertAll(answers, a => a == null ? null : new OnboardingSurveyAnswer { field = a.field, value = a.value })
+                    : new OnboardingSurveyAnswer[0]
+            };
+        }
+
         public string Get(string field)
         {
             return Valid().FirstOrDefault(a => a.field == field)?.value;
