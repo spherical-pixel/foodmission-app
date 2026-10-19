@@ -170,18 +170,22 @@ namespace eu.foodmission.platform
             }
         }
     
-        public static string BuildOnboardingSurveyUrl(string baseUrl)
-            => $"{baseUrl}/api/v1/users/me/gamification/onboarding-survey";
+        /// <summary>The backend translates the GET questions only from ?lang= (Accept-Language is ignored).</summary>
+        public static string BuildOnboardingSurveyUrl(string baseUrl, string lang = null)
+        {
+            string url = $"{baseUrl}/api/v1/users/me/gamification/onboarding-survey";
+            return string.IsNullOrEmpty(lang) ? url : $"{url}?lang={Uri.EscapeDataString(lang)}";
+        }
 
         public async Task<(OnboardingSurveyQuestion[] Result, ApiErrorResponse Error)> GetOnboardingSurveyAsync()
         {
-            using UnityWebRequest request = UnityWebRequest.Get(BuildOnboardingSurveyUrl(ApiConfig.BaseUrl));
+            string lang = _storeService?.GetAppState()?.lang;
+            using UnityWebRequest request = UnityWebRequest.Get(BuildOnboardingSurveyUrl(ApiConfig.BaseUrl, lang));
             if (!string.IsNullOrEmpty(AuthHeader))
             {
                 request.SetRequestHeader("Authorization", AuthHeader);
             }
             request.SetRequestHeader("Accept", "application/json");
-            string lang = _storeService?.GetAppState()?.lang;
             if (!string.IsNullOrEmpty(lang))
             {
                 request.SetRequestHeader("Accept-Language", lang);

@@ -73,6 +73,13 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void BuildOnboardingSurveyUrl_WithLang_AddsLangQuery()
+        {
+            Assert.AreEqual("https://api.test/api/v1/users/me/gamification/onboarding-survey?lang=es",
+                GamificationService.BuildOnboardingSurveyUrl("https://api.test", "es"));
+        }
+
+        [Test]
         public void BuildProgressWheelsUrl_TargetsGamificationRoute()
         {
             Assert.AreEqual("https://api.test/api/v1/users/me/gamification/progress-wheels",
