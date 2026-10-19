@@ -657,10 +657,10 @@ namespace eu.foodmission.platform
                 }, ButtonVariant.Accent));
         }
 
+        /// <summary>Stored with the unit code ("1.5 CUPS"), not the label, so the recipe reads right in every language.</summary>
         private static string FormatMeasure(float qty, string unit)
         {
-            string unitDisplay = UnitCatalog.Current.GetLabel(unit);
-            return qty > 0 ? $"{qty} {unitDisplay}".Trim() : unitDisplay;
+            return UnitCatalog.Current.ToStoredMeasure(qty, unit);
         }
 
         private static (float qty, string unit) ParseMeasure(string measure, float? fallbackQty, string fallbackUnit)

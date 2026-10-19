@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Globalization;
 using Unity.AppUI.UI;
 using Unity.AppUI.Navigation;
 using UnityEngine.UIElements;
@@ -503,6 +504,7 @@ namespace eu.foodmission.platform
             }
 
             _ingredientsSection.style.display = DisplayStyle.Flex;
+            CultureInfo culture = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentCulture;
             for (int i = 0; i < r.ingredients.Length; i++)
             {
                 var ing = r.ingredients[i];
@@ -523,7 +525,7 @@ namespace eu.foodmission.platform
 
                 if (!string.IsNullOrEmpty(ing.measure))
                 {
-                    var measureEl = new Text { text = ing.measure };
+                    var measureEl = new Text { text = UnitCatalog.Current.FormatMeasure(ing.measure, culture) };
                     measureEl.AddToClassList("fm-rd-detail-row__value");
                     row.Add(measureEl);
                 }
