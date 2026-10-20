@@ -198,6 +198,7 @@ namespace eu.foodmission.platform.Components
 
         private Mode _currentMode = Mode.Idle;
         private CancellationTokenSource _debounceCts;
+        private string _lastResultsQuery;
         private static List<GenericFood> s_SessionGenericFoodsCache;
 
         public static void ClearSessionCache()
@@ -458,21 +459,27 @@ namespace eu.foodmission.platform.Components
                 }
             }
 
+            // Keep what the user typed: only fold the results away
+            if (!string.IsNullOrWhiteSpace(_textField?.value))
+            {
+                CollapseKeepingText();
+                return;
+            }
+
             ResetToIdle();
         }
 
         private void OnTextFieldFocused(FocusEvent evt)
         {
-            if (_currentMode != Mode.Idle) return;
-
-            string val = _textField.value;
-            if (string.IsNullOrWhiteSpace(val))
-            {
-                _ = ShowGenericFoodsAsync();
-            }
+            ReopenFromIdle();
         }
 
         private void OnTextFieldClicked(ClickEvent evt)
+        {
+            ReopenFromIdle();
+        }
+
+        private void ReopenFromIdle()
         {
             if (_currentMode != Mode.Idle) return;
 
@@ -480,7 +487,46 @@ namespace eu.foodmission.platform.Components
             if (string.IsNullOrWhiteSpace(val))
             {
                 _ = ShowGenericFoodsAsync();
+                return;
             }
+
+            ReopenSearchResults(val);
+        }
+
+        private void CollapseKeepingText()
+        {
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = null;
+            _categoryLoadCts?.Cancel();
+            _categoryLoadCts?.Dispose();
+            _categoryLoadCts = null;
+            _textField.Blur();
+
+            SetMode(Mode.Idle);
+            _resultsContainer.style.display = DisplayStyle.None;
+            _categoryContainer.style.display = DisplayStyle.None;
+            _searchResultsContainer.style.display = DisplayStyle.None;
+            _confirmContainer.style.display = DisplayStyle.None;
+            _paginationContainer.style.display = DisplayStyle.None;
+            _spinner.style.display = DisplayStyle.None;
+        }
+
+        private void ReopenSearchResults(string query)
+        {
+            SetMode(Mode.Searching);
+
+            // Results still match the text: show them again without a new request
+            if (_lastResultsQuery == query && _searchResultsContainer.childCount > 0)
+            {
+                _categoryContainer.style.display = DisplayStyle.None;
+                _confirmContainer.style.display = DisplayStyle.None;
+                _searchResultsContainer.style.display = DisplayStyle.Flex;
+                _resultsContainer.style.display = DisplayStyle.Flex;
+                return;
+            }
+
+            ReRunSearchIfActive();
         }
 
         private async Task ShowGenericFoodsAsync()
@@ -889,6 +935,7 @@ namespace eu.foodmission.platform.Components
                 _searchResultsContainer.Add(noResults);
             }
 
+            _lastResultsQuery = query;
             _resultsContainer.style.display = DisplayStyle.Flex;
             _searchResultsContainer.style.display = DisplayStyle.Flex;
         }
@@ -1095,6 +1142,7 @@ namespace eu.foodmission.platform.Components
             _categoryContainer.Clear();
             _searchResultsContainer.style.display = DisplayStyle.None;
             _searchResultsContainer.Clear();
+            _lastResultsQuery = null;
             _confirmContainer.style.display = DisplayStyle.None;
             _paginationContainer.style.display = DisplayStyle.None;
             _spinner.style.display = DisplayStyle.None;
