@@ -408,7 +408,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: Dnevni izziv
+    m_Localized: Izzivi
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1481,7 +1481,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: Seznam sprememb
+    m_Localized: Zamenjaj seznam
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
@@ -1840,7 +1840,7 @@ MonoBehaviour:
     m_Localized: "Pozdravljeni! Da bi vam lahko prilagodili izku\u0161njo na Foodmissionu
       in vam pomagali dose\u010Di va\u0161e cilje, bi vas radi malo bolje spoznali.
       Ste za to?\n\nProsimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
-      lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
+      lahko prilagodili va\u0161e nasvete, predloge receptov in izzive."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1925,7 +1925,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041809595260928
     m_Localized: "Prosimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
-      lahko prilagodili va\u0161e nasvete, predloge receptov in dnevne izzive."
+      lahko prilagodili va\u0161e nasvete, predloge receptov in izzive."
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -1989,7 +1989,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 37253702120103936
     m_Localized: "Ostani na pravi poti! Vklopi obvestila, da ne bo\u0161 zamudil
-      dnevnih izzivov, bele\u017Eenja obrokov in opozoril o izteku roka uporabe \u017Eivil
+      izzivov, bele\u017Eenja obrokov in opozoril o izteku roka uporabe \u017Eivil
       v shrambi. Ne bomo te motili, po\u0161iljali ti bomo le koristna opozorila."
     m_Metadata:
       m_Items: []
@@ -4697,6 +4697,123 @@ MonoBehaviour:
     m_Localized: Nov predmet za avatar!
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: "\u017Divjo! Sem {global.PET_NAME} in spremljal te bom v FOODMISSION.
+      Skupaj bomo postopoma izbolj\u0161ali, kako jemo, nakupujemo in izkoristimo
+      hrano."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 56190243387203700
+    m_Localized: "Vse se vrti okoli nalog: vsaka ima ve\u010D misij z majhnimi spremembami
+      navad. Izberi nalogo in opravi njene misije, da napreduje\u0161 na vi\u0161jo
+      raven."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Tukaj na doma\u010Di strani vidi\u0161 svoj napredek: vrstice znanja
+      rastejo s kvizi, zanimivostmi, misijami in izzivi, kolesa pa ka\u017Eejo vpliv
+      tvojih obrokov na CO\u2082, energijo, vodo in zemljo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "Kako se premikati: spodaj ima\u0161 vsakodnevna orodja \u2014 dnevnik
+      obrokov, hitro iskanje, seznam nakupov in shrambo. Tapni \u2630 za naloge,
+      misije, izzive, znanje, recepte in \u017Eivilske odpadke. \u010Ce se kdaj izgubi\u0161,
+      tapni ? v vsakem razdelku."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Tukaj bele\u017Ei\u0161, kaj je\u0161. To lahko naredi\u0161 na
+      dva na\u010Dina: s polnim dnevnikom, kamor dodaja\u0161 \u017Eivilo za \u017Eivilom,
+      ali s poenostavljenim, s katerim z nekaj dotiki zabele\u017Ei\u0161 najpomembnej\u0161e
+      o obroku. Ni obvezno \u2014 o obrokih mi lahko pove\u0161 tudi v misijah \u2014
+      a \u010De jih zabele\u017Ei\u0161 tukaj, bodo tvoje misije s temi podatki napredovale
+      same."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: "Poi\u0161\u010Di katero koli \u017Eivilo po imenu ali skeniraj
+      njegovo \u010Drtno kodo in si oglej vse podatke: Nutri-Score, stopnjo predelave,
+      vpliv na okolje in \u0161e ve\u010D. Z njegove strani ga lahko doda\u0161 na
+      seznam nakupov, v shrambo ali v dnevnik obrokov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Nakupe organiziraj v sezname. Izdelke dodaj tako, da jih poi\u0161\u010De\u0161
+      ali skenira\u0161, in jih ozna\u010Di, ko jih kupi\u0161. \u010Ce vklopi\u0161
+      samodejno dodajanje v shrambo, gre vse, kar ozna\u010Di\u0161, neposredno v
+      tvojo shrambo. Z gumbom \xBBZamenjaj seznam\xAB preklopi\u0161 na drug seznam
+      ali ustvari\u0161 novega. Nakupovanje s seznamom ti pomaga, da ne kupi\u0161
+      preve\u010D in manj zavr\u017Ee\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: "Tukaj hrani\u0161 \u017Eivila, ki jih ima\u0161 doma, skupaj z
+      rokom uporabe, da vidi\u0161, kaj porabiti najprej. \u010Ce zabele\u017Ei\u0161
+      obrok z izdelki iz shrambe, se samodejno od\u0161tejejo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: "Naloge so veliki cilji FOODMISSION, razvr\u0161\u010Deni po temah
+      in ravneh. Vsaka naloga ima ve\u010D misij. Izberi eno za za\u010Detek: ko
+      jo opravi\u0161, se odklene naslednja, in ko kon\u010Da\u0161 vse naloge svoje
+      ravni, napreduje\u0161 na vi\u0161jo raven v tej temi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "To so misije tvoje trenutne naloge. Vsaka misija je majhna sprememba
+      navade za nekaj dni. Tapni eno, da jo za\u010Dne\u0161 in vidi\u0161, kaj mora\u0161
+      narediti. Napredujejo same z dnevnikom obrokov, lahko pa mi pove\u0161 z gumbom
+      \xBBPovej prijatelju {global.PET_NAME}\xAB."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 56190243387203709
+    m_Localized: "Izzivi so majhna, hitra dejanja iz tvojih nalog, s katerimi poskusi\u0161
+      nekaj novega. Vsakega ti razlo\u017Eim, in ko ga opravi\u0161, tapni \xBBOpravljeno!\xAB,
+      da dobi\u0161 to\u010Dke. Nekateri te popeljejo do orodja v aplikaciji, ki
+      ti pomaga, da jih opravi\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "U\u010Di se skozi igro: re\u0161uj kvize in odkrivaj zanimivosti
+      v \xBBAli ste vedeli...?\xAB. Vsak, ki ga opravi\u0161, pove\u010Da tvoje vrstice
+      znanja na doma\u010Di strani."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Odkrij trajnostne recepte in shrani svoje v \xBBMoji recepti\xAB.
+      Lahko jih filtrira\u0161, recept zabele\u017Ei\u0161 kot obrok ali z enim dotikom
+      doda\u0161 njegove sestavine na seznam nakupov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: "Bele\u017Ei hrano, ki kon\u010Da v smeteh. Izbere\u0161 jo lahko
+      iz shrambe, \u017Eivila, ki jim je \u017Ee potekel rok, pa so prikazana posebej.
+      Vedeti, kaj in koliko zavr\u017Eemo, je prvi korak k manj zavr\u017Eene hrane."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: "Presko\u010Di"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: Gremo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: "Pomo\u010D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: "\u010Ce tapne\u0161 svoj avatar zgoraj levo, se odpre tvoja osebna
+      plo\u0161\u010Da: tam vidi\u0161 svojo raven in to\u010Dke ter lahko uredi\u0161
+      profil in cilje, prilagodi\u0161 svoj avatar in mene, upravlja\u0161 skupine,
+      si ogleda\u0161 zna\u010Dke, spremeni\u0161 nastavitve ali pi\u0161e\u0161
+      podpori."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4731,3 +4848,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

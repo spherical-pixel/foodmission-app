@@ -413,7 +413,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: "Desaf\xEDo diario"
+    m_Localized: Retos
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1490,7 +1490,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: Cambio de lista
+    m_Localized: Cambiar lista
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
@@ -1849,7 +1849,7 @@ MonoBehaviour:
     m_Localized: "\xA1Hola! Para personalizar tu experiencia en Foodmission y ayudarte
       a alcanzar tus objetivos, nos gustar\xEDa conocerte un poco mejor. \xBFTe apetece?\n\nResponde
       a unas cuantas preguntas opcionales para que podamos personalizar tus consejos,
-      sugerencias de recetas y retos diarios."
+      sugerencias de recetas y retos."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1929,7 +1929,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041809595260928
     m_Localized: Responde a unas breves preguntas opcionales para que podamos personalizar
-      tus consejos, recomendaciones de recetas y retos diarios.
+      tus consejos, recomendaciones de recetas y retos.
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -1991,9 +1991,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 37253702120103936
     m_Localized: "\xA1No pierdas el rumbo! Activa las notificaciones push para no
-      perderte los retos diarios, los registros de comidas y las alertas sobre la
-      fecha de caducidad de los productos de la despensa. No te molestaremos, solo
-      te enviaremos recordatorios \xFAtiles."
+      perderte los retos, los registros de comidas y las alertas sobre la fecha de
+      caducidad de los productos de la despensa. No te molestaremos, solo te enviaremos
+      recordatorios \xFAtiles."
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103937
@@ -2126,7 +2126,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44130442662633472
-    m_Localized: "DESAF\xCDO"
+    m_Localized: RETO
     m_Metadata:
       m_Items: []
   - m_Id: 44130493631815680
@@ -4701,6 +4701,121 @@ MonoBehaviour:
     m_Localized: "\xA1Nuevo objeto para tu avatar!"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: "\xA1Hola! Soy {global.PET_NAME} y te voy a acompa\xF1ar en FOODMISSION.
+      Juntos vamos a mejorar poco a poco c\xF3mo comemos, compramos y aprovechamos
+      los alimentos."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 56190243387203700
+    m_Localized: "Todo gira en torno a las quests: cada una tiene varias misiones
+      con peque\xF1os cambios de h\xE1bitos. Elige una quest y ve completando sus
+      misiones para subir de nivel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Aqu\xED en Inicio ves tu progreso: las barras de conocimiento crecen
+      con quizzes, datos curiosos, misiones y retos, y las ruedas muestran el impacto
+      de tus comidas en CO\u2082, energ\xEDa, agua y suelo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "Para moverte: abajo tienes lo del d\xEDa a d\xEDa \u2014 registro
+      de comidas, b\xFAsqueda r\xE1pida, lista de compras y despensa. Toca \u2630
+      para ir a quests, misiones, retos, conocimiento, recetas y desperdicio. Si
+      alguna vez te pierdes, toca el ? de cada secci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Aqu\xED registras lo que comes. Tienes dos formas: el registro
+      completo, donde a\xF1ades alimento por alimento, y el registro simplificado,
+      para contar en pocos toques lo m\xE1s importante de tu comida. No es obligatorio
+      \u2014tambi\xE9n puedes contarme tus comidas en las misiones\u2014, pero si
+      las registras aqu\xED, tus misiones avanzar\xE1n solas con esos datos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: "Busca cualquier alimento por nombre o escanea su c\xF3digo de barras
+      para ver toda su informaci\xF3n: Nutri-Score, grado de procesamiento, impacto
+      ambiental y m\xE1s. Desde su ficha puedes a\xF1adirlo a tu lista de compras,
+      a tu despensa o a tu registro de comidas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Organiza tu compra en listas. A\xF1ade productos busc\xE1ndolos
+      o escane\xE1ndolos, y m\xE1rcalos cuando los compres. Si activas \xABa\xF1adir
+      autom\xE1ticamente a la despensa\xBB, lo que marques pasar\xE1 directamente
+      a tu despensa. Con \xABCambiar lista\xBB puedes pasar a otra lista o crear
+      una nueva. Comprar con lista ayuda a no comprar de m\xE1s y a desperdiciar
+      menos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: "Aqu\xED guardas los alimentos que tienes en casa con su fecha de
+      caducidad, para que veas qu\xE9 conviene aprovechar primero. Si registras una
+      comida usando productos de la despensa, se descuentan autom\xE1ticamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: "Las quests son los grandes objetivos de FOODMISSION, organizados
+      por temas y niveles. Cada quest tiene varias misiones. Elige una para empezar:
+      al completarla se desbloquea la siguiente y, cuando termines las de tu nivel,
+      subir\xE1s de nivel en ese tema."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "Estas son las misiones de tu quest actual. Cada misi\xF3n es un
+      peque\xF1o cambio de h\xE1bito durante unos d\xEDas. Toca una para empezarla
+      y ver qu\xE9 tienes que hacer. Avanzan solas con tus registros de comidas,
+      o puedes cont\xE1rmelo con \xABCont\xE1rselo a {global.PET_NAME}\xBB."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 56190243387203709
+    m_Localized: "Los retos son acciones peque\xF1as y r\xE1pidas de tus quests para
+      probar algo nuevo. Te explico cada uno y, cuando lo hayas hecho, tocas \xAB\xA1Ya
+      lo he hecho!\xBB para ganar tus puntos. Algunos te llevan a una herramienta
+      de la app que te ayuda a completarlos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "Aprende jugando: responde quizzes y descubre datos curiosos en
+      \xAB\xBFSab\xEDas que...?\xBB. Cada uno que completes hace crecer tus barras
+      de conocimiento en Inicio."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Descubre recetas sostenibles y guarda las tuyas en \xABMis recetas\xBB.
+      Puedes filtrarlas, registrar una receta como comida o a\xF1adir sus ingredientes
+      a tu lista de compras con un toque."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: "Registra los alimentos que acaban en la basura. Puedes elegirlos
+      de tu despensa, y ver\xE1s aparte los que ya han caducado. Saber qu\xE9 y cu\xE1nto
+      tiramos es el primer paso para desperdiciar menos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: Saltar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: "\xA1Vamos!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: Ayuda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: "Y si tocas tu avatar, arriba a la izquierda, se abre tu panel personal:
+      ah\xED ves tu nivel y tus puntos, y puedes editar tu perfil y tus objetivos,
+      personalizar tu avatar y a m\xED, gestionar tus grupos, ver tus insignias,
+      cambiar los ajustes o escribir a soporte."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4735,3 +4850,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

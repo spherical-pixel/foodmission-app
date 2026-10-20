@@ -411,7 +411,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: Dagens utfordring
+    m_Localized: Utfordringer
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1481,7 +1481,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: Endringsliste
+    m_Localized: Bytt liste
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
@@ -1838,8 +1838,7 @@ MonoBehaviour:
     m_Localized: "Hei! For \xE5 tilpasse opplevelsen din p\xE5 Foodmission og hjelpe
       deg med \xE5 n\xE5 m\xE5lene dine, vil vi gjerne bli litt bedre kjent med deg.
       Er du med p\xE5 det?\n\nSvar gjerne p\xE5 noen valgfrie sp\xF8rsm\xE5l, slik
-      at vi kan tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene
-      dine."
+      at vi kan tilpasse tipsene, oppskriftsforslagene og utfordringene dine."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1924,7 +1923,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041809595260928
     m_Localized: "Vennligst svar p\xE5 noen valgfrie sp\xF8rsm\xE5l, slik at vi kan
-      tilpasse tipsene, oppskriftsforslagene og de daglige utfordringene dine."
+      tilpasse tipsene, oppskriftsforslagene og utfordringene dine."
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -1990,7 +1989,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 37253702120103936
     m_Localized: "Hold deg p\xE5 rett spor! Sl\xE5 p\xE5 push-varsler, s\xE5 du ikke
-      g\xE5r glipp av daglige utfordringer, m\xE5ltidslogger og varsler om utl\xF8psdatoer
+      g\xE5r glipp av utfordringer, m\xE5ltidslogger og varsler om utl\xF8psdatoer
       i spiskammeret. Vi skal ikke forstyrre deg \u2013 bare gi deg nyttige p\xE5minnelser."
     m_Metadata:
       m_Items: []
@@ -4696,6 +4695,120 @@ MonoBehaviour:
     m_Localized: Ny avatargjenstand!
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: "Hei! Jeg er {global.PET_NAME}, og jeg f\xF8lger deg i FOODMISSION.
+      Sammen skal vi gradvis forbedre hvordan vi spiser, handler og utnytter maten."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 56190243387203700
+    m_Localized: "Alt dreier seg om oppdrag: hvert oppdrag har flere sm\xE5 utfordringer
+      som endrer vanene dine litt. Velg et oppdrag og fullf\xF8r det for \xE5 g\xE5
+      opp et niv\xE5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Her p\xE5 Hjem ser du fremgangen din: kunnskapslinjene vokser med
+      quizer, matfakta, oppdrag og utfordringer, og hjulene viser hvordan m\xE5ltidene
+      dine p\xE5virker CO\u2082, energi, vann og areal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "Slik finner du frem: nederst har du det du bruker hver dag \u2014
+      m\xE5ltidslogg, hurtigs\xF8k, handleliste og spiskammer. Trykk p\xE5 \u2630
+      for oppdrag, utfordringer, kunnskap, oppskrifter og matsvinn. Hvis du g\xE5r
+      deg vill, trykk p\xE5 ? i hver del."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Her logger du det du spiser. Det kan gj\xF8res p\xE5 to m\xE5ter:
+      den fullstendige loggen, der du legger til matvare for matvare, og den forenklede
+      loggen, der du med noen f\xE5 trykk registrerer det viktigste ved m\xE5ltidet.
+      Det er ikke p\xE5krevd \u2014 du kan ogs\xE5 fortelle meg om m\xE5ltidene dine
+      i oppdragene \u2014 men logger du dem her, g\xE5r oppdragene dine framover
+      av seg selv med disse dataene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: "S\xF8k etter en matvare med navn eller skann strekkoden for \xE5
+      se all informasjon: Nutri-Score, bearbeidingsgrad, milj\xF8p\xE5virkning og
+      mer. Fra siden kan du legge den til i handlelisten, spiskammeret eller m\xE5ltidsloggen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Organiser handlingen i lister. Legg til produkter ved \xE5 s\xF8ke
+      etter eller skanne dem, og kryss dem av n\xE5r du kj\xF8per dem. Sl\xE5r du
+      p\xE5 automatisk tillegg i spiskammeret, havner alt du krysser av rett i spiskammeret
+      ditt. Med \xABBytt liste\xBB g\xE5r du til en annen liste eller lager en ny.
+      \xC5 handle med liste hjelper deg \xE5 unng\xE5 \xE5 kj\xF8pe for mye og kaste
+      mindre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: "Her holder du oversikt over maten du har hjemme med holdbarhetsdato,
+      s\xE5 du ser hva du b\xF8r bruke f\xF8rst. Logger du et m\xE5ltid med produkter
+      fra spiskammeret, trekkes de fra automatisk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: "Oppdragene er de store m\xE5lene i FOODMISSION, ordnet etter tema
+      og niv\xE5. Hvert oppdrag har flere deloppgaver. Velg ett for \xE5 starte:
+      n\xE5r du fullf\xF8rer det, l\xE5ses det neste opp, og n\xE5r du er ferdig
+      med alle p\xE5 ditt niv\xE5, g\xE5r du opp et niv\xE5 i det temaet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "Dette er utfordringene i det n\xE5v\xE6rende oppdraget ditt. Hver
+      av dem er en liten vaneendring over noen dager. Trykk p\xE5 en for \xE5 starte
+      og se hva du skal gj\xF8re. De g\xE5r framover av seg selv med m\xE5ltidsloggen
+      din, eller du kan fortelle meg det med \xABFortell det til {global.PET_NAME}\xBB."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 56190243387203709
+    m_Localized: "Utfordringer er sm\xE5, raske handlinger fra oppdragene dine for
+      \xE5 pr\xF8ve noe nytt. Jeg forklarer hver av dem, og n\xE5r du har gjort det,
+      trykker du p\xE5 \xABJeg har gjort det!\xBB for \xE5 f\xE5 poengene dine. Noen
+      tar deg til et verkt\xF8y i appen som hjelper deg \xE5 fullf\xF8re dem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "L\xE6r mens du leker: svar p\xE5 quizer og oppdag fakta i \xABVisste
+      du at...?\xBB. Hver du fullf\xF8rer, f\xE5r kunnskapslinjene dine p\xE5 Hjem
+      til \xE5 vokse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Oppdag b\xE6rekraftige oppskrifter og lagre dine egne i \xABMine
+      oppskrifter\xBB. Du kan filtrere dem, logge en oppskrift som et m\xE5ltid eller
+      legge ingrediensene i handlelisten med ett trykk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: "Logg maten som havner i s\xF8pla. Du kan velge den fra spiskammeret,
+      og det som allerede har g\xE5tt ut p\xE5 dato, vises for seg. \xC5 vite hva
+      og hvor mye vi kaster, er f\xF8rste steg mot \xE5 kaste mindre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: Hopp over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: Sett i gang!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: Hjelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: "Og trykker du p\xE5 avataren din \xF8verst til venstre, \xE5pnes
+      ditt personlige panel: der ser du niv\xE5et og poengene dine, og du kan redigere
+      profilen og m\xE5lene dine, tilpasse avataren din og meg, administrere gruppene
+      dine, se merkene dine, endre innstillingene eller kontakte support."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4730,3 +4843,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

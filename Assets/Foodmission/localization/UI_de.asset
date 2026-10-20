@@ -411,7 +411,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: "T\xE4gliche Herausforderung"
+    m_Localized: Herausforderungen
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1487,7 +1487,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: "\xC4nderungsliste"
+    m_Localized: Liste wechseln
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
@@ -1846,8 +1846,8 @@ MonoBehaviour:
     m_Localized: "Hallo! Um dein Erlebnis auf Foodmission individuell anzupassen
       und dir dabei zu helfen, deine Ziele zu erreichen, m\xF6chten wir dich gerne
       etwas besser kennenlernen. Hast du Lust dazu?\n\nBitte beantworte ein paar
-      freiwillige Fragen, damit wir unsere Tipps, Rezeptvorschl\xE4ge und t\xE4glichen
-      Herausforderungen individuell auf dich abstimmen k\xF6nnen."
+      freiwillige Fragen, damit wir unsere Tipps, Rezeptvorschl\xE4ge und Herausforderungen
+      individuell auf dich abstimmen k\xF6nnen."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1932,8 +1932,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041809595260928
     m_Localized: "Bitte beantworte ein paar optionale Fragen, damit wir unsere Tipps,
-      Rezeptvorschl\xE4ge und t\xE4glichen Herausforderungen individuell auf dich
-      zuschneiden k\xF6nnen."
+      Rezeptvorschl\xE4ge und Herausforderungen individuell auf dich zuschneiden
+      k\xF6nnen."
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -1999,9 +1999,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 37253702120103936
     m_Localized: "Bleib am Ball! Aktiviere Push-Benachrichtigungen, damit du keine
-      t\xE4glichen Herausforderungen, Ern\xE4hrungsprotokolle und Hinweise auf ablaufende
-      Vorr\xE4te verpasst. Wir werden dich nicht st\xF6ren, sondern dir nur n\xFCtzliche
-      Erinnerungen schicken."
+      Herausforderungen, Ern\xE4hrungsprotokolle und Hinweise auf ablaufende Vorr\xE4te
+      verpasst. Wir werden dich nicht st\xF6ren, sondern dir nur n\xFCtzliche Erinnerungen
+      schicken."
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103937
@@ -4724,6 +4724,126 @@ MonoBehaviour:
     m_Localized: Neues Avatar-Item!
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: Hallo! Ich bin {global.PET_NAME} und begleite dich bei FOODMISSION.
+      Gemeinsam verbessern wir nach und nach, wie wir essen, einkaufen und unsere
+      Lebensmittel nutzen.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 56190243387203700
+    m_Localized: "Alles dreht sich um Quests: Jede Quest hat mehrere Missionen mit
+      kleinen \xC4nderungen deiner Gewohnheiten. W\xE4hle eine Quest und schlie\xDFe
+      ihre Missionen ab, um aufzusteigen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Hier auf der Startseite siehst du deinen Fortschritt: Die Wissensbalken
+      wachsen mit Quizzen, Fakten, Missionen und Herausforderungen, und die R\xE4der
+      zeigen die Wirkung deiner Mahlzeiten auf CO\u2082, Energie, Wasser und Fl\xE4che."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "So findest du dich zurecht: Unten hast du alles f\xFCr jeden Tag
+      \u2014 Essensprotokoll, Schnellsuche, Einkaufsliste und Vorratskammer. Tippe
+      auf \u2630 f\xFCr Quests, Missionen, Herausforderungen, Wissen, Rezepte und
+      Lebensmittelverschwendung. Wenn du nicht weiterwei\xDFt, tippe in jedem Bereich
+      auf das ?."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Hier protokollierst du, was du isst. Daf\xFCr gibt es zwei Wege:
+      das vollst\xE4ndige Protokoll, in dem du jedes Lebensmittel einzeln hinzuf\xFCgst,
+      und das vereinfachte Protokoll, mit dem du mit wenigen Tipps das Wichtigste
+      deiner Mahlzeit festh\xE4ltst. Das ist keine Pflicht \u2014 du kannst mir auch
+      in deinen Missionen von deinen Mahlzeiten erz\xE4hlen \u2014, aber wenn du
+      sie hier eintr\xE4gst, kommen deine Missionen mit diesen Daten von selbst voran."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: "Suche ein Lebensmittel nach Namen oder scanne seinen Barcode, um
+      alle Infos zu sehen: Nutri-Score, Verarbeitungsgrad, Umweltwirkung und mehr.
+      Auf der Produktseite kannst du es zu deiner Einkaufsliste, deiner Vorratskammer
+      oder deinem Essensprotokoll hinzuf\xFCgen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Organisiere deinen Einkauf in Listen. F\xFCge Produkte hinzu, indem
+      du sie suchst oder scannst, und hake sie beim Kaufen ab. Wenn du das automatische
+      Hinzuf\xFCgen zur Vorratskammer aktivierst, landet alles Abgehakte direkt in
+      deiner Vorratskammer. Mit \u201EListe wechseln\u201C wechselst du zu einer
+      anderen Liste oder legst eine neue an. Mit Liste kaufst du nicht zu viel und
+      verschwendest weniger."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: "Hier verwaltest du die Lebensmittel, die du zu Hause hast, mit
+      ihrem Haltbarkeitsdatum, damit du siehst, was du zuerst verbrauchen solltest.
+      Wenn du eine Mahlzeit mit Produkten aus deiner Vorratskammer eintr\xE4gst,
+      werden sie automatisch abgezogen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: "Quests sind die gro\xDFen Ziele von FOODMISSION, geordnet nach
+      Thema und Stufe. Jede Quest hat mehrere Missionen. W\xE4hle eine aus, um zu
+      starten: Schlie\xDFt du sie ab, wird die n\xE4chste freigeschaltet, und wenn
+      du alle Quests deiner Stufe geschafft hast, steigst du in diesem Thema auf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "Das sind die Missionen deiner aktuellen Quest. Jede Mission ist
+      eine kleine Gewohnheits\xE4nderung \xFCber ein paar Tage. Tippe auf eine, um
+      sie zu starten und zu sehen, was zu tun ist. Sie kommen mit deinem Essensprotokoll
+      von selbst voran, oder du erz\xE4hlst es mir mit \u201E{global.PET_NAME} erz\xE4hlen\u201C."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 56190243387203709
+    m_Localized: "Herausforderungen sind kleine, schnelle Aktionen aus deinen Quests,
+      um etwas Neues auszuprobieren. Ich erkl\xE4re dir jede, und wenn du sie gemacht
+      hast, tippst du auf \u201EErledigt!\u201C, um deine Punkte zu bekommen. Manche
+      f\xFChren dich zu einem Werkzeug der App, das dir dabei hilft."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "Lerne spielerisch: Beantworte Quizze und entdecke Fakten in \u201EWusstest
+      du schon...?\u201C. Jedes abgeschlossene l\xE4sst deine Wissensbalken auf der
+      Startseite wachsen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Entdecke nachhaltige Rezepte und speichere deine eigenen unter
+      \u201EMeine Rezepte\u201C. Du kannst sie filtern, ein Rezept als Mahlzeit eintragen
+      oder seine Zutaten mit einem Tipp zu deiner Einkaufsliste hinzuf\xFCgen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: "Trage die Lebensmittel ein, die im M\xFCll landen. Du kannst sie
+      aus deiner Vorratskammer ausw\xE4hlen, und bereits abgelaufene werden separat
+      angezeigt. Zu wissen, was und wie viel wir wegwerfen, ist der erste Schritt,
+      weniger zu verschwenden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: "\xDCberspringen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: Los geht's!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: Hilfe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: "Und wenn du oben links auf deinen Avatar tippst, \xF6ffnet sich
+      dein pers\xF6nliches Men\xFC: Dort siehst du dein Level und deine Punkte und
+      kannst dein Profil und deine Ziele bearbeiten, deinen Avatar und mich anpassen,
+      deine Gruppen verwalten, deine Abzeichen ansehen, die Einstellungen \xE4ndern
+      oder den Support kontaktieren."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4758,3 +4878,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

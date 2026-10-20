@@ -417,7 +417,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: Dagelijkse uitdaging
+    m_Localized: Uitdagingen
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1487,7 +1487,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: Wijzigingslijst
+    m_Localized: Andere lijst
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
@@ -1851,7 +1851,7 @@ MonoBehaviour:
 
 
       Beantwoord dan een paar optionele vragen, zodat we
-      je tips, receptsuggesties en dagelijkse uitdagingen op maat kunnen maken.'
+      je tips, receptsuggesties en uitdagingen op maat kunnen maken.'
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1936,7 +1936,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041809595260928
     m_Localized: Beantwoord alstublieft een paar optionele vragen, zodat we onze
-      tips, receptsuggesties en dagelijkse uitdagingen op u kunnen afstemmen.
+      tips, receptsuggesties en uitdagingen op u kunnen afstemmen.
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -2003,7 +2003,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103936
-    m_Localized: Blijf op koers! Schakel pushmeldingen in, zodat je dagelijkse uitdagingen,
+    m_Localized: Blijf op koers! Schakel pushmeldingen in, zodat je uitdagingen,
       maaltijdverslagen en waarschuwingen over de houdbaarheidsdatum van producten
       in je voorraadkast niet mist. We zullen je niet lastigvallen, alleen nuttige
       herinneringen sturen.
@@ -4710,6 +4710,120 @@ MonoBehaviour:
     m_Localized: Nieuw avatar-item!
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: Hoi! Ik ben {global.PET_NAME} en ik begeleid je bij FOODMISSION.
+      Samen gaan we stap voor stap verbeteren hoe we eten, boodschappen doen en ons
+      voedsel benutten.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 56190243387203700
+    m_Localized: 'Alles draait om opdrachten: elke opdracht heeft meerdere missies
+      met kleine veranderingen in je gewoonten. Kies een opdracht en voltooi de missies
+      om een niveau hoger te komen.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Hier op Home zie je je voortgang: de kennisbalken groeien met quizzen,
+      weetjes, missies en uitdagingen, en de wielen tonen de impact van je maaltijden
+      op CO\u2082, energie, water en land."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "Zo kom je overal: onderaan vind je wat je dagelijks gebruikt \u2014
+      eetdagboek, snel zoeken, boodschappenlijstje en voorraadkast. Tik op \u2630
+      voor opdrachten, missies, uitdagingen, kennis, recepten en voedselverspilling.
+      Raak je de weg kwijt? Tik dan op de ? in elk onderdeel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Hier houd je bij wat je eet. Dat kan op twee manieren: het volledige
+      dagboek, waarin je elk voedingsmiddel toevoegt, en het vereenvoudigde dagboek,
+      om met een paar tikken het belangrijkste van je maaltijd vast te leggen. Het
+      is niet verplicht \u2014 je kunt me ook in je missies over je maaltijden vertellen
+      \u2014 maar als je ze hier bijhoudt, gaan je missies vanzelf vooruit met die
+      gegevens."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: 'Zoek een voedingsmiddel op naam of scan de streepjescode om alle
+      informatie te zien: Nutri-Score, bewerkingsgraad, milieu-impact en meer. Vanaf
+      de productpagina kun je het toevoegen aan je boodschappenlijstje, je voorraadkast
+      of je eetdagboek.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Organiseer je boodschappen in lijstjes. Voeg producten toe door
+      ze te zoeken of te scannen, en vink ze af als je ze koopt. Zet je automatisch
+      toevoegen aan de voorraadkast aan, dan gaat alles wat je afvinkt meteen naar
+      je voorraadkast. Met \u201EAndere lijst\u201D ga je naar een andere lijst of
+      maak je een nieuwe. Met een lijstje koop je niet te veel en verspil je minder."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: Hier bewaar je de voedingsmiddelen die je thuis hebt, met hun houdbaarheidsdatum,
+      zodat je ziet wat je het eerst moet opmaken. Als je een maaltijd bijhoudt met
+      producten uit je voorraadkast, worden ze automatisch afgetrokken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: 'Opdrachten zijn de grote doelen van FOODMISSION, ingedeeld per
+      thema en niveau. Elke opdracht heeft meerdere missies. Kies er een om te beginnen:
+      als je hem voltooit, wordt de volgende ontgrendeld, en als je alle opdrachten
+      van je niveau hebt afgerond, ga je in dat thema een niveau omhoog.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "Dit zijn de missies van je huidige opdracht. Elke missie is een
+      kleine verandering in je gewoonten gedurende een paar dagen. Tik op een missie
+      om te beginnen en te zien wat je moet doen. Ze gaan vanzelf vooruit met je
+      eetdagboek, of je vertelt het me met \u201EVertel het {global.PET_NAME}\u201D."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 56190243387203709
+    m_Localized: "Uitdagingen zijn kleine, snelle acties uit je opdrachten om iets
+      nieuws te proberen. Ik leg ze allemaal uit, en als je het gedaan hebt, tik
+      je op \u201EIk heb het gedaan!\u201D om je punten te verdienen. Sommige brengen
+      je naar een hulpmiddel in de app dat je helpt ze te voltooien."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "Leer spelenderwijs: beantwoord quizzen en ontdek weetjes in \u201EWist
+      je dat...?\u201D. Elke die je voltooit, laat je kennisbalken op Home groeien."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Ontdek duurzame recepten en bewaar je eigen recepten in \u201EMijn
+      recepten\u201D. Je kunt ze filteren, een recept als maaltijd bijhouden of de
+      ingredi\xEBnten met \xE9\xE9n tik aan je boodschappenlijstje toevoegen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: Houd bij welk voedsel in de vuilnisbak belandt. Je kunt het kiezen
+      uit je voorraadkast, en wat al over de datum is, zie je apart. Weten wat en
+      hoeveel we weggooien is de eerste stap om minder te verspillen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: Overslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: Aan de slag!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: Help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: 'En als je linksboven op je avatar tikt, opent je persoonlijke paneel:
+      daar zie je je niveau en punten, en kun je je profiel en doelen bewerken, je
+      avatar en mij aanpassen, je groepen beheren, je badges bekijken, de instellingen
+      wijzigen of contact opnemen met support.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4744,3 +4858,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

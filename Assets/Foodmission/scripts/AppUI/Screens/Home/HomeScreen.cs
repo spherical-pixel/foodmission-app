@@ -163,7 +163,7 @@ namespace eu.foodmission.platform
             viewModel.SyncMissionLastDayReminders();
             var host = new PromptHost(this, viewModel, ++_promptGeneration);
             var whatsNew = App.current?.services?.GetService<IWhatsNewService>();
-            var coordinator = new HomePromptCoordinator(HomePrompts.Create(viewModel, new HomePromptRunState(), whatsNew), new RewardCelebrationGate());
+            var coordinator = new HomePromptCoordinator(HomePrompts.Create(viewModel, new HomePromptRunState(), whatsNew, App.current?.services?.GetService<ITutorialService>()), new RewardCelebrationGate());
             _ = coordinator.RunAsync(host);
         }
 

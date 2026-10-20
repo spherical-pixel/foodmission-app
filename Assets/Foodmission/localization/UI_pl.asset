@@ -412,7 +412,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: Codzienne wyzwanie
+    m_Localized: Wyzwania
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1492,7 +1492,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: Lista zmian
+    m_Localized: "Zmie\u0144 list\u0119"
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
@@ -1856,7 +1856,7 @@ MonoBehaviour:
       do Twoich potrzeb i pom\xF3c Ci osi\u0105gn\u0105\u0107 Twoje cele, chcieliby\u015Bmy
       Ci\u0119 nieco lepiej pozna\u0107. Masz na to ochot\u0119?\n\nOdpowiedz prosz\u0119
       na kilka opcjonalnych pyta\u0144, aby\u015Bmy mogli dostosowa\u0107 do Ciebie
-      porady, propozycje przepis\xF3w i codzienne wyzwania."
+      porady, propozycje przepis\xF3w i wyzwania."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1944,7 +1944,7 @@ MonoBehaviour:
   - m_Id: 34041809595260928
     m_Localized: "Prosimy o udzielenie odpowiedzi na kilka opcjonalnych pyta\u0144,
       aby\u015Bmy mogli dostosowa\u0107 do Ciebie porady, propozycje przepis\xF3w
-      i codzienne wyzwania."
+      i wyzwania."
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -2009,10 +2009,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 37253702120103936
     m_Localized: "Nie tra\u0107 z oczu swoich cel\xF3w! W\u0142\u0105cz powiadomienia
-      push, aby nie przegapi\u0107 codziennych wyzwa\u0144, wpis\xF3w dotycz\u0105cych
-      posi\u0142k\xF3w oraz alert\xF3w o terminach wa\u017Cno\u015Bci produkt\xF3w
-      w spi\u017Carni. Nie b\u0119dziemy Ci przeszkadza\u0107 \u2013 to tylko przydatne
-      przypomnienia."
+      push, aby nie przegapi\u0107 wyzwa\u0144, wpis\xF3w dotycz\u0105cych posi\u0142k\xF3w
+      oraz alert\xF3w o terminach wa\u017Cno\u015Bci produkt\xF3w w spi\u017Carni.
+      Nie b\u0119dziemy Ci przeszkadza\u0107 \u2013 to tylko przydatne przypomnienia."
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103937
@@ -4769,6 +4768,130 @@ MonoBehaviour:
     m_Localized: Nowy przedmiot dla awatara!
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: "Cze\u015B\u0107! Jestem {global.PET_NAME} i b\u0119d\u0119 ci towarzyszy\u0107
+      w FOODMISSION. Razem krok po kroku poprawimy to, jak jemy, robimy zakupy i
+      wykorzystujemy \u017Cywno\u015B\u0107."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
+  - m_Id: 56190243387203700
+    m_Localized: "Wszystko kr\u0119ci si\u0119 wok\xF3\u0142 zada\u0144: ka\u017Cde
+      ma kilka misji z ma\u0142ymi zmianami nawyk\xF3w. Wybierz zadanie i wykonuj
+      jego misje, aby awansowa\u0107 na wy\u017Cszy poziom."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Tutaj, na stronie g\u0142\xF3wnej, widzisz swoje post\u0119py:
+      paski wiedzy rosn\u0105 dzi\u0119ki quizom, ciekawostkom, misjom i wyzwaniom,
+      a ko\u0142a pokazuj\u0105 wp\u0142yw twoich posi\u0142k\xF3w na CO\u2082, energi\u0119,
+      wod\u0119 i grunty."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "Jak si\u0119 porusza\u0107: na dole masz to, czego u\u017Cywasz
+      na co dzie\u0144 \u2014 dziennik posi\u0142k\xF3w, szybkie wyszukiwanie, list\u0119
+      zakup\xF3w i spi\u017Carni\u0119. Dotknij \u2630, aby przej\u015B\u0107 do
+      zada\u0144, misji, wyzwa\u0144, wiedzy, przepis\xF3w i marnotrawstwa \u017Cywno\u015Bci.
+      Je\u015Bli si\u0119 zgubisz, dotknij ? w ka\u017Cdej sekcji."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Tutaj zapisujesz, co jesz. Mo\u017Cesz to zrobi\u0107 na dwa sposoby:
+      w pe\u0142nym dzienniku, dodaj\u0105c produkt po produkcie, albo w uproszczonym,
+      zapisuj\u0105c kilkoma dotkni\u0119ciami najwa\u017Cniejsze cechy posi\u0142ku.
+      Nie jest to obowi\u0105zkowe \u2014 mo\u017Cesz te\u017C opowiedzie\u0107 mi
+      o posi\u0142kach w misjach \u2014 ale je\u015Bli zapiszesz je tutaj, twoje
+      misje b\u0119d\u0105 post\u0119powa\u0107 same na podstawie tych danych."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: "Wyszukaj dowolny produkt po nazwie albo zeskanuj jego kod kreskowy,
+      aby zobaczy\u0107 wszystkie informacje: Nutri-Score, stopie\u0144 przetworzenia,
+      wp\u0142yw na \u015Brodowisko i wi\u0119cej. Z jego karty mo\u017Cesz doda\u0107
+      go do listy zakup\xF3w, spi\u017Carni lub dziennika posi\u0142k\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Organizuj zakupy w listach. Dodawaj produkty, wyszukuj\u0105c je
+      lub skanuj\u0105c, i zaznaczaj je, gdy je kupisz. Je\u015Bli w\u0142\u0105czysz
+      automatyczne dodawanie do spi\u017Carni, wszystko, co zaznaczysz, trafi prosto
+      do twojej spi\u017Carni. Przyciskiem \u201EZmie\u0144 list\u0119\u201D przejdziesz
+      do innej listy albo utworzysz now\u0105. Zakupy z list\u0105 pomagaj\u0105
+      nie kupowa\u0107 za du\u017Co i mniej marnowa\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: "Tutaj przechowujesz produkty, kt\xF3re masz w domu, wraz z dat\u0105
+      wa\u017Cno\u015Bci, aby widzie\u0107, co warto zu\u017Cy\u0107 najpierw. Je\u015Bli
+      zapiszesz posi\u0142ek z produkt\xF3w ze spi\u017Carni, zostan\u0105 one odj\u0119te
+      automatycznie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: "Zadania to g\u0142\xF3wne cele FOODMISSION, uporz\u0105dkowane
+      wed\u0142ug tematu i poziomu. Ka\u017Cde zadanie ma kilka misji. Wybierz jedno,
+      aby zacz\u0105\u0107: po jego uko\u0144czeniu odblokuje si\u0119 kolejne, a
+      gdy uko\u0144czysz wszystkie zadania ze swojego poziomu, awansujesz w tym temacie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "To s\u0105 misje twojego obecnego zadania. Ka\u017Cda misja to
+      ma\u0142a zmiana nawyku przez kilka dni. Dotknij jednej, aby j\u0105 rozpocz\u0105\u0107
+      i zobaczy\u0107, co masz zrobi\u0107. Post\u0119puj\u0105 same dzi\u0119ki
+      twojemu dziennikowi posi\u0142k\xF3w albo mo\u017Cesz mi o tym powiedzie\u0107
+      przyciskiem \u201EPowiedz {global.PET_NAME}\u201D."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
+  - m_Id: 56190243387203709
+    m_Localized: "Wyzwania to ma\u0142e, szybkie dzia\u0142ania z twoich zada\u0144,
+      dzi\u0119ki kt\xF3rym spr\xF3bujesz czego\u015B nowego. Wyja\u015Bniam ka\u017Cde
+      z nich, a gdy je wykonasz, dotknij \u201EZrobione!\u201D, aby zdoby\u0107 punkty.
+      Niekt\xF3re prowadz\u0105 do narz\u0119dzia w aplikacji, kt\xF3re pomaga je
+      uko\u0144czy\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "Ucz si\u0119 przez zabaw\u0119: rozwi\u0105zuj quizy i odkrywaj
+      ciekawostki w \u201ECzy wiesz, \u017Ce...?\u201D. Ka\u017Cdy uko\u0144czony
+      element sprawia, \u017Ce rosn\u0105 twoje paski wiedzy na stronie g\u0142\xF3wnej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Odkrywaj zr\xF3wnowa\u017Cone przepisy i zapisuj w\u0142asne w
+      \u201EMoje przepisy\u201D. Mo\u017Cesz je filtrowa\u0107, zapisa\u0107 przepis
+      jako posi\u0142ek albo jednym dotkni\u0119ciem doda\u0107 jego sk\u0142adniki
+      do listy zakup\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: "Zapisuj \u017Cywno\u015B\u0107, kt\xF3ra trafia do kosza. Mo\u017Cesz
+      wybra\u0107 j\u0105 ze spi\u017Carni, a produkty, kt\xF3rym min\u0119\u0142a
+      data wa\u017Cno\u015Bci, s\u0105 pokazane osobno. Wiedza o tym, co i ile wyrzucamy,
+      to pierwszy krok do mniejszego marnowania."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: "Pomi\u0144"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: Zaczynamy!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: Pomoc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: "A je\u015Bli dotkniesz swojego awatara w lewym g\xF3rnym rogu,
+      otworzy si\u0119 tw\xF3j osobisty panel: zobaczysz tam sw\xF3j poziom i punkty,
+      a tak\u017Ce edytujesz profil i cele, dostosujesz swojego awatara i mnie, zarz\u0105dzisz
+      grupami, obejrzysz odznaki, zmienisz ustawienia lub skontaktujesz si\u0119
+      z pomoc\u0105 techniczn\u0105."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4803,3 +4926,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

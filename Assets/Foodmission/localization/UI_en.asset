@@ -414,7 +414,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: Daily challenge
+    m_Localized: Challenges
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1846,7 +1846,7 @@ MonoBehaviour:
     m_Localized: "Hello! To personalise your experience on Foodmission and help you
       achieve your goals, we\u2019d like to get to know you a bit better. Are you
       up for it?\n\nPlease answer a few optional questions so that we can personalise
-      your tips, recipe suggestions and daily challenges."
+      your tips, recipe suggestions and challenges."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1926,7 +1926,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041809595260928
     m_Localized: Please answer a few optional questions so that we can personalise
-      your tips, recipe suggestions and daily challenges.
+      your tips, recipe suggestions and challenges.
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -1985,9 +1985,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103936
-    m_Localized: Stay on track! Enable push notifications so you don't miss daily
-      challenges, meal logs, and pantry expiry alerts. We will not bother you, just
-      useful reminders.
+    m_Localized: Stay on track! Enable push notifications so you don't miss challenges,
+      meal logs, and pantry expiry alerts. We will not bother you, just useful reminders.
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103937
@@ -4679,6 +4678,118 @@ MonoBehaviour:
     m_Localized: New avatar item!
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: Hi! I'm {global.PET_NAME} and I'll be with you on FOODMISSION. Together
+      we'll gradually improve how we eat, shop and make the most of our food.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 56190243387203700
+    m_Localized: 'Everything revolves around quests: each one has several missions
+      with small changes to your habits. Choose a quest and complete its missions
+      to level up.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Here on Home you can see your progress: the knowledge bars grow
+      with quizzes, food facts, missions and challenges, and the wheels show the
+      impact of your meals on CO\u2082, energy, water and land."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "Getting around: at the bottom you have your everyday tools \u2014
+      meal log, quick search, shopping list and pantry. Tap \u2630 to go to quests,
+      missions, challenges, knowledge, recipes and food waste. If you ever get lost,
+      tap the ? in each section."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Here you log what you eat. There are two ways: the full log, where
+      you add food by food, and the simplified log, to record the key points of your
+      meal in a few taps. It's not required \u2014 you can also tell me about your
+      meals in your missions \u2014 but if you log them here, your missions will
+      progress on their own with that data."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: 'Search for any food by name or scan its barcode to see all its
+      information: Nutri-Score, processing level, environmental impact and more.
+      From its page you can add it to your shopping list, your pantry or your meal
+      log.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Organise your shopping in lists. Add products by searching or scanning
+      them, and tick them off when you buy them. If you turn on \u201CAutomatic add
+      to pantry when checked\u201D, whatever you tick goes straight to your pantry.
+      With \u201CChange list\u201D you can switch to another list or create a new
+      one. Shopping with a list helps you avoid buying too much and waste less."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: Here you keep the food you have at home with its expiry date, so
+      you can see what to use up first. If you log a meal using products from your
+      pantry, they are deducted automatically.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: 'Quests are the big goals of FOODMISSION, organised by topic and
+      level. Each quest has several missions. Choose one to start: completing it
+      unlocks the next one, and when you finish all the quests of your level, you
+      level up in that topic.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "These are the missions of your current quest. Each mission is a
+      small change of habit over a few days. Tap one to start it and see what you
+      have to do. They progress on their own with your meal logs, or you can tell
+      me with \u201CTell {global.PET_NAME}\u201D."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 56190243387203709
+    m_Localized: "Challenges are small, quick actions from your quests to try something
+      new. I explain each one, and when you've done it, tap \u201CI've done it!\u201D
+      to earn your points. Some take you to an app tool that helps you complete them."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "Learn while you play: answer quizzes and discover facts in \u201CDid
+      you know...?\u201D. Each one you complete makes your knowledge bars on Home
+      grow."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Discover sustainable recipes and save your own in \u201CMy recipes\u201D.
+      You can filter them, log a recipe as a meal or add its ingredients to your
+      shopping list in one tap."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: Log the food that ends up in the bin. You can pick it from your
+      pantry, and the items that have already expired are shown separately. Knowing
+      what and how much we throw away is the first step to wasting less.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: Skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: Let's go!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: Help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: 'And if you tap your avatar, at the top left, your personal panel
+      opens: there you can see your level and points, edit your profile and goals,
+      customise your avatar and me, manage your groups, see your badges, change the
+      settings or contact support.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4713,3 +4824,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

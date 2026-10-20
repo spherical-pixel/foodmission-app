@@ -415,7 +415,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
-    m_Localized: Sfida quotidiana
+    m_Localized: Sfide
     m_Metadata:
       m_Items: []
   - m_Id: 39910254861869056
@@ -1488,7 +1488,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: Elenco delle modifiche
+    m_Localized: Cambia lista
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
@@ -1845,7 +1845,7 @@ MonoBehaviour:
     m_Localized: "Ciao! Per personalizzare la tua esperienza su Foodmission e aiutarti
       a raggiungere i tuoi obiettivi, vorremmo conoscerti un po\u2019 meglio. Ti
       va?\n\nRispondi a qualche domanda facoltativa, cos\xEC potremo personalizzare
-      i tuoi consigli, i suggerimenti sulle ricette e le sfide quotidiane."
+      i tuoi consigli, i suggerimenti sulle ricette e le sfide."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1930,8 +1930,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 34041809595260928
     m_Localized: Ti preghiamo di rispondere ad alcune domande facoltative, in modo
-      da poterti offrire consigli personalizzati, suggerimenti sulle ricette e sfide
-      quotidiane.
+      da poterti offrire consigli personalizzati, suggerimenti sulle ricette e sfide.
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
@@ -1995,8 +1994,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 37253702120103936
     m_Localized: 'Rimani in carreggiata! Attiva le notifiche push per non perdere
-      le sfide quotidiane, i registri dei pasti e gli avvisi sulle scadenze dei prodotti
-      in dispensa. Non ti disturberemo: ti invieremo solo promemoria utili.'
+      le sfide, i registri dei pasti e gli avvisi sulle scadenze dei prodotti in
+      dispensa. Non ti disturberemo: ti invieremo solo promemoria utili.'
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103937
@@ -4702,6 +4701,120 @@ MonoBehaviour:
     m_Localized: Nuovo oggetto per l'avatar!
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Localized: "Ciao! Sono {global.PET_NAME} e ti accompagner\xF2 in FOODMISSION.
+      Insieme miglioreremo poco a poco il modo in cui mangiamo, facciamo la spesa
+      e valorizziamo il cibo."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
+  - m_Id: 56190243387203700
+    m_Localized: 'Tutto ruota attorno alle missioni principali: ognuna contiene diverse
+      missioni con piccoli cambiamenti alle tue abitudini. Scegline una e completa
+      le sue missioni per salire di livello.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Localized: "Qui nella Home vedi i tuoi progressi: le barre della conoscenza
+      crescono con quiz, curiosit\xE0, missioni e sfide, e le ruote mostrano l'impatto
+      dei tuoi pasti su CO\u2082, energia, acqua e suolo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Localized: "Per muoverti: in basso hai quello che usi ogni giorno \u2014 registro
+      dei pasti, ricerca rapida, lista della spesa e dispensa. Tocca \u2630 per missioni,
+      sfide, conoscenza, ricette e spreco alimentare. Se ti perdi, tocca il ? in
+      ogni sezione."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Localized: "Qui registri quello che mangi. Puoi farlo in due modi: il registro
+      completo, dove aggiungi un alimento alla volta, e il registro semplificato,
+      per annotare in pochi tocchi gli aspetti principali del pasto. Non \xE8 obbligatorio
+      \u2014 puoi anche raccontarmi i tuoi pasti nelle missioni \u2014 ma se li registri
+      qui, le tue missioni avanzeranno da sole con questi dati."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Localized: 'Cerca un alimento per nome o scansiona il suo codice a barre per
+      vederne tutte le informazioni: Nutri-Score, grado di lavorazione, impatto ambientale
+      e altro. Dalla sua scheda puoi aggiungerlo alla lista della spesa, alla dispensa
+      o al registro dei pasti.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Localized: "Organizza la spesa in liste. Aggiungi i prodotti cercandoli o scansionandoli,
+      e spuntali quando li compri. Se attivi l'aggiunta automatica alla dispensa,
+      ci\xF2 che spunti finisce direttamente nella tua dispensa. Con \xABCambia lista\xBB
+      passi a un'altra lista o ne crei una nuova. Fare la spesa con una lista aiuta
+      a non comprare troppo e a sprecare meno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Localized: "Qui conservi gli alimenti che hai in casa con la loro data di scadenza,
+      cos\xEC vedi cosa consumare per primo. Se registri un pasto usando prodotti
+      della dispensa, vengono scalati automaticamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Localized: 'Le missioni principali sono i grandi obiettivi di FOODMISSION,
+      organizzati per tema e livello. Ognuna contiene diverse missioni. Scegline
+      una per iniziare: completandola si sblocca la successiva e, quando finisci
+      tutte quelle del tuo livello, sali di livello in quel tema.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Localized: "Queste sono le missioni della tua missione principale attuale.
+      Ognuna \xE8 un piccolo cambiamento di abitudine per qualche giorno. Toccane
+      una per iniziarla e vedere cosa devi fare. Avanzano da sole con il registro
+      dei pasti, oppure puoi dirmelo con \xABRaccontalo a {global.PET_NAME}\xBB."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
+  - m_Id: 56190243387203709
+    m_Localized: "Le sfide sono piccole azioni rapide delle tue missioni per provare
+      qualcosa di nuovo. Te le spiego una per una e, quando l'hai fatto, tocca \xABL'ho
+      fatto!\xBB per guadagnare i tuoi punti. Alcune ti portano a uno strumento dell'app
+      che ti aiuta a completarle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Localized: "Impara giocando: rispondi ai quiz e scopri curiosit\xE0 in \xABLo
+      sapevi che...?\xBB. Ognuno che completi fa crescere le barre della conoscenza
+      nella Home."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Localized: "Scopri ricette sostenibili e salva le tue in \xABLe mie ricette\xBB.
+      Puoi filtrarle, registrare una ricetta come pasto o aggiungere i suoi ingredienti
+      alla lista della spesa con un tocco."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Localized: "Registra il cibo che finisce nella spazzatura. Puoi sceglierlo
+      dalla dispensa, e quello gi\xE0 scaduto viene mostrato a parte. Sapere cosa
+      e quanto buttiamo \xE8 il primo passo per sprecare meno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Localized: Salta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Localized: Andiamo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Localized: Aiuto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Localized: "E se tocchi il tuo avatar, in alto a sinistra, si apre il tuo pannello
+      personale: l\xEC vedi il tuo livello e i tuoi punti, e puoi modificare il profilo
+      e gli obiettivi, personalizzare il tuo avatar e me, gestire i tuoi gruppi,
+      vedere i tuoi badge, cambiare le impostazioni o contattare l'assistenza."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4736,3 +4849,5 @@ MonoBehaviour:
         - id: 53972389359247367
         - id: 53972389359247368
         - id: 25709632411394048
+        - id: 56190243387203699
+        - id: 56190243387203708

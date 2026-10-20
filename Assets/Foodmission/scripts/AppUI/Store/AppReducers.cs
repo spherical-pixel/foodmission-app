@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Redux;
@@ -41,6 +42,8 @@ namespace eu.foodmission.platform
         public static readonly ActionCreator<string[]> setHiddenProgressWheels = "app/setHiddenProgressWheels";
         public static readonly ActionCreator<DimensionLevelEntry[]> setDimensionLevels = "app/setDimensionLevels";
         public static readonly ActionCreator<string[]> markHiddenProgressWheelsSynced = "app/markHiddenProgressWheelsSynced";
+        public static readonly ActionCreator<string> markTutorialSeen = "app/markTutorialSeen";
+        public static readonly ActionCreator<string[]> markSeenTutorialsSynced = "app/markSeenTutorialsSynced";
 
         public readonly struct WalletPayload
         {
@@ -371,6 +374,8 @@ namespace eu.foodmission.platform
             newState.progressWheels = new ProgressWheel[0];
             newState.hiddenProgressWheels = new string[0];
             newState.hiddenProgressWheelsPendingSync = false;
+            newState.seenTutorials = new string[0];
+            newState.seenTutorialsPendingSync = false;
             newState.knowledgeProgress = new KnowledgeProgress[0];
             newState.userGoals = new string[0];
             newState.dimensionLevels = new DimensionLevelEntry[0];
@@ -556,6 +561,16 @@ namespace eu.foodmission.platform
                 {
                     newState.hiddenProgressWheels = (string[])s.hiddenProgressWheels.Clone();
                 }
+                if (s.seenTutorials != null)
+                {
+                    // The list only grows, so local and server ids are merged. Another device may have replaced the
+                    // server array (settings merge per key, not inside it): local ids it lacks are sent again on the next sync.
+                    newState.seenTutorials = (state.seenTutorials ?? new string[0]).Union(s.seenTutorials.Where(id => !string.IsNullOrEmpty(id))).ToArray();
+                    if (newState.seenTutorials.Except(s.seenTutorials).Any())
+                    {
+                        newState.seenTutorialsPendingSync = true;
+                    }
+                }
             }
 
             if (action.payload.pilotSurveyCycleState != null)
@@ -702,6 +717,34 @@ namespace eu.foodmission.platform
             if (sent.Length == current.Length && System.Linq.Enumerable.SequenceEqual(sent, current))
             {
                 newState.hiddenProgressWheelsPendingSync = false;
+            }
+            return newState;
+        }
+
+        public static AppState MarkTutorialSeenReducer(AppState state, IAction<string> action)
+        {
+            var newState = state.Copy();
+            string id = action.payload;
+            string[] current = state.seenTutorials ?? new string[0];
+            if (string.IsNullOrEmpty(id) || Array.IndexOf(current, id) >= 0)
+            {
+                return newState;
+            }
+
+            newState.seenTutorials = current.Append(id).ToArray();
+            newState.seenTutorialsPendingSync = true;
+            return newState;
+        }
+
+        /// <summary>Payload = the list the PATCH sent; clears the pending flag only if no tutorial was marked meanwhile.</summary>
+        public static AppState MarkSeenTutorialsSyncedReducer(AppState state, IAction<string[]> action)
+        {
+            var newState = state.Copy();
+            string[] sent = action.payload ?? new string[0];
+            string[] current = state.seenTutorials ?? new string[0];
+            if (sent.SequenceEqual(current))
+            {
+                newState.seenTutorialsPendingSync = false;
             }
             return newState;
         }

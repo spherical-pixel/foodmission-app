@@ -55,6 +55,8 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IImageService, ImageService>();
             builder.services.AddSingleton<IAppUpdateService, AppUpdateService>();
             builder.services.AddSingleton<IWhatsNewService, WhatsNewService>();
+            builder.services.AddSingleton<ITutorialPresenter, NutriTutorialPresenter>();
+            builder.services.AddSingleton<ITutorialService, TutorialService>();
             builder.services.AddSingleton<IAccessibilityService, AccessibilityService>();
             builder.services.AddSingleton<IEventService, EventService>();
             builder.services.AddSingleton<IQuizService, QuizService>();

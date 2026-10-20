@@ -718,5 +718,63 @@ namespace eu.foodmission.platform.Tests
 
             CollectionAssert.AreEqual(new[] { "WATER_SAVINGS" }, newState.hiddenProgressWheels);
         }
+
+        [Test]
+        public void ProfileSynced_UnionsServerAndLocal()
+        {
+            var state = new AppState { seenTutorials = new[] { "home", "pantry" } };
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 1990, country: "ES", region: "", zip: "", gender: "", annualIncome: "",
+                educationLevel: "", activityLevel: "",
+                settings: new UserSettingsDto { seenTutorials = new[] { "pantry", "quests" } });
+
+            var newState = AppReducers.ProfileSyncedReducer(state, AppActions.profileSynced.Invoke(payload));
+
+            CollectionAssert.AreEqual(new[] { "home", "pantry", "quests" }, newState.seenTutorials);
+        }
+
+        [Test]
+        public void ProfileSynced_NullSeenTutorials_KeepsLocal()
+        {
+            var state = new AppState { seenTutorials = new[] { "home" } };
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 1990, country: "ES", region: "", zip: "", gender: "", annualIncome: "",
+                educationLevel: "", activityLevel: "",
+                settings: new UserSettingsDto { theme = "dark", seenTutorials = null });
+
+            var newState = AppReducers.ProfileSyncedReducer(state, AppActions.profileSynced.Invoke(payload));
+
+            CollectionAssert.AreEqual(new[] { "home" }, newState.seenTutorials);
+        }
+
+        [Test]
+        public void ProfileSynced_ServerHasAllLocalIds_KeepsPendingAsIs()
+        {
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 1990, country: "ES", region: "", zip: "", gender: "", annualIncome: "",
+                educationLevel: "", activityLevel: "",
+                settings: new UserSettingsDto { seenTutorials = new[] { "home", "quests" } });
+
+            var pending = AppReducers.ProfileSyncedReducer(new AppState { seenTutorials = new[] { "home" }, seenTutorialsPendingSync = true }, AppActions.profileSynced.Invoke(payload));
+            var notPending = AppReducers.ProfileSyncedReducer(new AppState { seenTutorials = new[] { "home" } }, AppActions.profileSynced.Invoke(payload));
+
+            Assert.IsTrue(pending.seenTutorialsPendingSync);
+            Assert.IsFalse(notPending.seenTutorialsPendingSync);
+        }
+
+        [Test]
+        public void ProfileSynced_LocalIdsMissingOnServer_SetsPending()
+        {
+            // Another device replaced the server array (settings are merged per key): the next sync must send the union back
+            var payload = new AppActions.ProfilePayload(
+                yearOfBirth: 1990, country: "ES", region: "", zip: "", gender: "", annualIncome: "",
+                educationLevel: "", activityLevel: "",
+                settings: new UserSettingsDto { seenTutorials = new[] { "pantry" } });
+
+            var newState = AppReducers.ProfileSyncedReducer(new AppState { seenTutorials = new[] { "home" } }, AppActions.profileSynced.Invoke(payload));
+
+            CollectionAssert.AreEqual(new[] { "home", "pantry" }, newState.seenTutorials);
+            Assert.IsTrue(newState.seenTutorialsPendingSync);
+        }
     }
 }
