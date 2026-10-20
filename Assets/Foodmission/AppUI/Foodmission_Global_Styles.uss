@@ -400,7 +400,7 @@
 
 .fm-notification-card__text {
     font-size: var(--appui-font-sizes-body-md);
-    color: var(--appui-foregrounds-100);
+    color: var(--appui-foregrounds-50);
     white-space: normal;
     -unity-text-align: upper-left;
 }
@@ -456,7 +456,7 @@
     flex-grow: 1;
     font-size: var(--appui-font-sizes-heading-sm);
     -unity-font-style: bold;
-    color: var(--appui-foregrounds-100);
+    color: var(--appui-foregrounds-50);
 }
 
 .fm-notifications-panel__divider {
@@ -1461,7 +1461,7 @@
 }
 
 .fm-meal-card-item-empty {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     font-size: var(--appui-font-sizes-body-sm);
     -unity-font-style: italic;
 }
@@ -2522,8 +2522,9 @@
     color: var(--appui-foregrounds-100);
 }
 
+/* Mint like .box-background: the body is translucent over the green background */
 .fm-mission-report-meal-hint {
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
     -unity-font-style: italic;
     white-space: normal;
     margin: 0 4px 8px 4px;
@@ -2550,8 +2551,9 @@
     margin-bottom: 8px;
 }
 
+/* Light card like the mission detail cards: dark text, and the colour chips keep their own colours */
 .fm-mission-checklist-item {
-    background-color: var(--fm-surface-bg-transparent-50);
+    background-color: var(--fm-surface-bg-transparent-80);
     border-radius: 16px;
     padding: 12px;
     margin-bottom: 12px;
@@ -2566,7 +2568,7 @@
 
 .fm-mission-checklist-item__title {
     -unity-font-style: bold;
-    color: var(--appui-foregrounds-100);
+    color: var(--appui-foregrounds-50);
     width: 100%;
     /* App UI Text doesn't shrink: at full width it pushed the ✕ out of the card, onto the neighbouring step */
     flex-shrink: 1;
@@ -2580,6 +2582,11 @@
 
 .fm-mission-checklist-item__status--counts {
     color: var(--appui-positive-100);
+}
+
+/* positive-100 is too light on the white card */
+.appui--light .fm-mission-checklist-item__status--counts {
+    color: var(--appui-color-green-500);
 }
 
 .fm-mission-checklist-item__status--missing {
@@ -2833,7 +2840,7 @@
 }
 
 .fm-quick-meal-swaps-title {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     -unity-font-style: bold;
     
     margin-bottom: 8px;
@@ -2858,7 +2865,8 @@
 
 .fm-quick-meal-swap-chip--active {
     border-color: var(--appui-primary-800);
-    background-color: var(--appui-primary-100);
+    /* primary-100 is white in dark mode */
+    background-color: var(--appui-primary-300);
 }
 
 .fm-quick-meal-swap-radio {
@@ -2867,7 +2875,8 @@
 
 .fm-quick-meal-swap-chip-text {
     flex-grow: 1;
-    color: var(--appui-foregrounds-50);
+    /* The chip is backgrounds-100, the green screen background in light mode */
+    color: var(--appui-foregrounds-100);
     -unity-font-style: bold;
     white-space: normal;
 }

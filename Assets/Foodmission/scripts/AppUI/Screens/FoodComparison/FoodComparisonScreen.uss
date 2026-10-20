@@ -420,7 +420,7 @@
 }
 
 .fm-fc-feedback-body {
-    color: var(--appui-foregrounds-100);
+    color: var(--appui-foregrounds-50);
     -unity-text-align: middle-center;
     white-space: normal;
     margin-bottom: 16px;
@@ -588,7 +588,7 @@
 }
 
 .fm-fc-metric-sublabel {
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     -unity-text-align: middle-center;
     margin-top: 2px;
 }
