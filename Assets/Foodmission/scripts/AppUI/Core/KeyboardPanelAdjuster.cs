@@ -22,6 +22,15 @@ namespace eu.foodmission.platform
         private System.Threading.CancellationTokenSource _adjustCts;
         private readonly GhostTouchDetector _ghostTouchDetector = new GhostTouchDetector();
 
+        // Panel root that receives the touch events. Not _rootElement: once the panel is translated,
+        // a replayed touch near the bottom of the screen falls below it and only reaches the panel root.
+        private VisualElement _touchRoot;
+
+        // Covers the strip the translated panel leaves empty at the bottom of the screen. Nothing there picks,
+        // so UI Toolkit treats a replayed touch landing in it as a tap outside the panel and blurs the field.
+        // The strip is always below the keyboard top, so only replayed touches can reach it.
+        private VisualElement _bottomGapBlocker;
+
         [SerializeField]
         [Tooltip("Additional margin between focused field and keyboard (in pixels)")]
         private float keyboardMargin = 10f;
@@ -57,9 +66,65 @@ namespace eu.foodmission.platform
             _rootElement.RegisterCallback<FocusInEvent>(OnGlobalFocusIn, TrickleDown.TrickleDown);
 
             // Drop the touches iOS replays on keyboard show/hide (issue #27)
-            _rootElement.RegisterCallback<PointerDownEvent>(OnGlobalPointerDown, TrickleDown.TrickleDown);
-            _rootElement.RegisterCallback<PointerUpEvent>(OnGlobalPointerUp, TrickleDown.TrickleDown);
-            _rootElement.RegisterCallback<MouseDownEvent>(OnGlobalMouseDown, TrickleDown.TrickleDown);
+            if (_rootElement.panel != null)
+            {
+                RegisterTouchCallbacks(_rootElement.panel.visualTree);
+            }
+            else
+            {
+                _rootElement.RegisterCallback<AttachToPanelEvent>(OnRootAttachedToPanel);
+            }
+        }
+
+        private void OnRootAttachedToPanel(AttachToPanelEvent evt)
+        {
+            _rootElement.UnregisterCallback<AttachToPanelEvent>(OnRootAttachedToPanel);
+            RegisterTouchCallbacks(evt.destinationPanel.visualTree);
+        }
+
+        private void RegisterTouchCallbacks(VisualElement touchRoot)
+        {
+            _touchRoot = touchRoot;
+            _touchRoot.RegisterCallback<PointerDownEvent>(OnGlobalPointerDown, TrickleDown.TrickleDown);
+            _touchRoot.RegisterCallback<PointerUpEvent>(OnGlobalPointerUp, TrickleDown.TrickleDown);
+            _touchRoot.RegisterCallback<MouseDownEvent>(OnGlobalMouseDown, TrickleDown.TrickleDown);
+
+            _bottomGapBlocker = new VisualElement
+            {
+                name = "keyboard-bottom-gap-blocker",
+                pickingMode = PickingMode.Position
+            };
+            _bottomGapBlocker.style.position = Position.Absolute;
+            _bottomGapBlocker.style.left = 0;
+            _bottomGapBlocker.style.right = 0;
+            _bottomGapBlocker.style.bottom = 0;
+            _bottomGapBlocker.style.height = 0;
+            _bottomGapBlocker.style.display = DisplayStyle.None;
+            _bottomGapBlocker.RegisterCallback<PointerDownEvent>(SwallowGapEvent);
+            _bottomGapBlocker.RegisterCallback<PointerUpEvent>(SwallowGapEvent);
+            _bottomGapBlocker.RegisterCallback<MouseDownEvent>(SwallowGapEvent);
+            _bottomGapBlocker.RegisterCallback<MouseUpEvent>(SwallowGapEvent);
+            _touchRoot.Add(_bottomGapBlocker);
+        }
+
+        private void SwallowGapEvent(EventBase evt)
+        {
+            _rootElement.panel?.focusController?.IgnoreEvent(evt);
+            evt.StopImmediatePropagation();
+            Debug.Log($"[KeyboardPanelAdjuster] Swallowed touch ({evt.GetType().Name}) below the translated panel f={Time.frameCount}");
+        }
+
+        private void UpdateBottomGapBlocker(float translateY)
+        {
+            if (_bottomGapBlocker == null)
+            {
+                return;
+            }
+
+            float gap = -translateY;
+            _bottomGapBlocker.style.height = Mathf.Max(0f, gap);
+            _bottomGapBlocker.style.display = gap > 0f ? DisplayStyle.Flex : DisplayStyle.None;
+            _bottomGapBlocker.BringToFront();
         }
 
         private void OnDestroy()
@@ -73,10 +138,17 @@ namespace eu.foodmission.platform
             if (_rootElement != null)
             {
                 _rootElement.UnregisterCallback<FocusInEvent>(OnGlobalFocusIn, TrickleDown.TrickleDown);
-                _rootElement.UnregisterCallback<PointerDownEvent>(OnGlobalPointerDown, TrickleDown.TrickleDown);
-                _rootElement.UnregisterCallback<PointerUpEvent>(OnGlobalPointerUp, TrickleDown.TrickleDown);
-                _rootElement.UnregisterCallback<MouseDownEvent>(OnGlobalMouseDown, TrickleDown.TrickleDown);
+                _rootElement.UnregisterCallback<AttachToPanelEvent>(OnRootAttachedToPanel);
             }
+
+            if (_touchRoot != null)
+            {
+                _touchRoot.UnregisterCallback<PointerDownEvent>(OnGlobalPointerDown, TrickleDown.TrickleDown);
+                _touchRoot.UnregisterCallback<PointerUpEvent>(OnGlobalPointerUp, TrickleDown.TrickleDown);
+                _touchRoot.UnregisterCallback<MouseDownEvent>(OnGlobalMouseDown, TrickleDown.TrickleDown);
+            }
+
+            _bottomGapBlocker?.RemoveFromHierarchy();
 
             _adjustCts?.Cancel();
             _adjustCts?.Dispose();
@@ -313,6 +385,7 @@ namespace eu.foodmission.platform
             // Use style.translate instead of obsolete transform.position
             var newTranslate = new Translate(_originalTranslate.x, _originalTranslate.y + offset, _originalTranslate.z);
             _rootElement.style.translate = newTranslate;
+            UpdateBottomGapBlocker(newTranslate.y.value);
             NotifyKeyboardTransition();
         }
 
@@ -325,6 +398,7 @@ namespace eu.foodmission.platform
 
             // Restore original translate
             _rootElement.style.translate = new Translate(_originalTranslate.x, _originalTranslate.y, _originalTranslate.z);
+            UpdateBottomGapBlocker(_originalTranslate.y);
             NotifyKeyboardTransition();
         }
     }
