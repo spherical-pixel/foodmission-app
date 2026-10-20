@@ -195,5 +195,26 @@ namespace eu.foodmission.platform.Tests
             string json = new ProfileUpdateRequest { settings = new UserSettingsDto { theme = "dark" } }.ToJson();
             StringAssert.DoesNotContain("hiddenProgressWheels", json);
         }
+
+        [Test]
+        public void BuildSettingsRequest_Pending_SendsSeenTutorials()
+        {
+            var state = new AppState { seenTutorials = new[] { "home" }, seenTutorialsPendingSync = true };
+
+            string json = AuthService.BuildSettingsRequest(state).ToJson();
+
+            StringAssert.Contains("\"seenTutorials\":[\"home\"]", json);
+        }
+
+        [Test]
+        public void BuildSettingsRequest_NotPending_OmitsSeenTutorials()
+        {
+            // A theme or push-token sync from a device that hasn't loaded the profile must not wipe the server list
+            var state = new AppState { theme = "dark", seenTutorials = new string[0], seenTutorialsPendingSync = false };
+
+            string json = AuthService.BuildSettingsRequest(state).ToJson();
+
+            StringAssert.DoesNotContain("seenTutorials", json);
+        }
     }
 }

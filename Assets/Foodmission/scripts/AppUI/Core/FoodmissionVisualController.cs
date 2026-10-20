@@ -894,6 +894,36 @@ namespace eu.foodmission.platform
             var existingHomeMenuBtn = appBar.Q("home-menu-button");
             existingHomeMenuBtn?.RemoveFromHierarchy();
 
+            // Section tutorial: ? replays it (left of the menu button), and the first visit shows it once
+            appBar.Q("appbar-help-button")?.RemoveFromHierarchy();
+            var tutorials = App.current?.services?.GetService<ITutorialService>();
+            string tutorialId = SectionTutorials.IdForDestination(destination.name);
+            if (tutorials != null && tutorialId != null)
+            {
+                var helpButton = new IconButton
+                {
+                    name = "appbar-help-button",
+                    icon = "question",
+                    quiet = true
+                };
+                helpButton.AddToClassList("fm-icon-button--on-main-bg");
+                helpButton.style.marginTop = 0;
+                helpButton.style.marginBottom = 0;
+                helpButton.style.alignSelf = Align.Center;
+                helpButton.clicked += () => _ = tutorials.ShowAsync(tutorialId);
+
+                if (actionContainer != null)
+                {
+                    actionContainer.Add(helpButton);
+                }
+                else
+                {
+                    appBar.Add(helpButton);
+                }
+
+                _ = tutorials.ShowIfFirstTimeAsync(destination.name, () => navController.currentDestination ? navController.currentDestination.name : null);
+            }
+
             // Determine if the menu button should be shown.
             // By default, show it on all main screens (where the bottom navigation bar is visible).
             bool showMenu = BottomNavBarHelper.IsNavBarVisible(destination.name);

@@ -5,12 +5,13 @@ namespace eu.foodmission.platform
     /// <summary>The Home prompts, in order (the coordinator groups them by kind, keeping this order inside each kind).</summary>
     public static class HomePrompts
     {
-        public static IReadOnlyList<IHomePrompt> Create(HomeScreenViewModel viewModel, HomePromptRunState run, IWhatsNewService whatsNew)
+        public static IReadOnlyList<IHomePrompt> Create(HomeScreenViewModel viewModel, HomePromptRunState run, IWhatsNewService whatsNew, ITutorialService tutorials = null)
         {
             return new IHomePrompt[]
             {
                 new LegalConsentPrompt(viewModel),
                 new PilotConsentPrompt(viewModel),
+                new HomeTutorialPrompt(tutorials),
                 new RewardCelebrationsPrompt(viewModel, run),
                 new FailedMissionsPrompt(viewModel, run),
                 new WhatsNewPrompt(whatsNew),

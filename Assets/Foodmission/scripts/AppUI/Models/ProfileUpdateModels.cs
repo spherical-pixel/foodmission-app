@@ -22,6 +22,8 @@ namespace eu.foodmission.platform
         public DevicePushRegistration devicePushRegistration;
         /// <summary>Progress wheel kinds hidden on Home. Null = not sent (server keeps its value).</summary>
         public string[] hiddenProgressWheels;
+        /// <summary>Section tutorials already shown. Null = not sent (server keeps its value).</summary>
+        public string[] seenTutorials;
     }
 
     /// <summary>

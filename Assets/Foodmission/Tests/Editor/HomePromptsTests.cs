@@ -42,7 +42,7 @@ namespace eu.foodmission.platform.Tests
             }
             CollectionAssert.AreEqual(new[]
             {
-                typeof(LegalConsentPrompt), typeof(PilotConsentPrompt),
+                typeof(LegalConsentPrompt), typeof(PilotConsentPrompt), typeof(HomeTutorialPrompt),
                 typeof(RewardCelebrationsPrompt), typeof(FailedMissionsPrompt), typeof(WhatsNewPrompt),
                 typeof(UnlockedQuestPrompt), typeof(OnboardingReminderPrompt), typeof(NotificationsPrompt),
                 typeof(PilotSurveyPrompt), typeof(MissionLastDayPrompt), typeof(MissionNudgePrompt), typeof(QuestStartReminderPrompt), typeof(DailyFoodFactPrompt)
@@ -250,6 +250,37 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNull(await new QuestStartReminderPrompt(vm).CheckAsync());
             gamification.Verify(g => g.GetCurrentQuestAsync(), Times.Never);
             vm.Dispose();
+        }
+
+        [Test]
+        public async Task HomeTutorialPrompt_NotSeen_ShowsAndContinues()
+        {
+            var tutorials = new Mock<ITutorialService>();
+            tutorials.Setup(t => t.HasSeen(SectionTutorials.Home)).Returns(false);
+            tutorials.Setup(t => t.ShowAsync(SectionTutorials.Home)).Returns(Task.CompletedTask);
+            var prompt = new HomeTutorialPrompt(tutorials.Object);
+
+            IHomePromptInstance instance = await prompt.CheckAsync();
+            HomePromptResult result = await instance.ShowAsync(new Mock<IHomePromptHost>().Object);
+
+            Assert.AreEqual(HomePromptKind.Info, prompt.Kind);
+            Assert.AreEqual(HomePromptResult.Dismissed, result);
+            tutorials.Verify(t => t.ShowAsync(SectionTutorials.Home), Times.Once);
+        }
+
+        [Test]
+        public async Task HomeTutorialPrompt_Seen_ReturnsNull()
+        {
+            var tutorials = new Mock<ITutorialService>();
+            tutorials.Setup(t => t.HasSeen(SectionTutorials.Home)).Returns(true);
+
+            Assert.IsNull(await new HomeTutorialPrompt(tutorials.Object).CheckAsync());
+        }
+
+        [Test]
+        public async Task HomeTutorialPrompt_NoService_ReturnsNull()
+        {
+            Assert.IsNull(await new HomeTutorialPrompt(null).CheckAsync());
         }
     }
 }

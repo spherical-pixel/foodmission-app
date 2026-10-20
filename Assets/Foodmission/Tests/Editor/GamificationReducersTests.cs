@@ -191,5 +191,83 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(_initialState.Copy().hiddenProgressWheelsPendingSync);
             Assert.IsFalse(AppReducers.LogoutReducer(_initialState, AppActions.logout.Invoke()).hiddenProgressWheelsPendingSync);
         }
+
+        [Test]
+        public void MarkTutorialSeen_AddsIdAndSetsPending()
+        {
+            var newState = AppReducers.MarkTutorialSeenReducer(_initialState, AppActions.markTutorialSeen.Invoke("pantry"));
+
+            CollectionAssert.AreEqual(new[] { "pantry" }, newState.seenTutorials);
+            Assert.IsTrue(newState.seenTutorialsPendingSync);
+        }
+
+        [Test]
+        public void MarkTutorialSeen_AlreadySeen_NoDuplicate()
+        {
+            _initialState.seenTutorials = new[] { "pantry" };
+
+            var newState = AppReducers.MarkTutorialSeenReducer(_initialState, AppActions.markTutorialSeen.Invoke("pantry"));
+
+            CollectionAssert.AreEqual(new[] { "pantry" }, newState.seenTutorials);
+        }
+
+        [Test]
+        public void MarkTutorialSeen_NullOrEmpty_NoChange()
+        {
+            var afterNull = AppReducers.MarkTutorialSeenReducer(_initialState, AppActions.markTutorialSeen.Invoke(null));
+            var afterEmpty = AppReducers.MarkTutorialSeenReducer(_initialState, AppActions.markTutorialSeen.Invoke(""));
+
+            Assert.AreEqual(0, afterNull.seenTutorials.Length);
+            Assert.AreEqual(0, afterEmpty.seenTutorials.Length);
+            Assert.IsFalse(afterNull.seenTutorialsPendingSync);
+            Assert.IsFalse(afterEmpty.seenTutorialsPendingSync);
+        }
+
+        [Test]
+        public void MarkSeenTutorialsSynced_SameList_ClearsPending()
+        {
+            _initialState.seenTutorials = new[] { "home", "pantry" };
+            _initialState.seenTutorialsPendingSync = true;
+
+            var newState = AppReducers.MarkSeenTutorialsSyncedReducer(_initialState, AppActions.markSeenTutorialsSynced.Invoke(new[] { "home", "pantry" }));
+
+            Assert.IsFalse(newState.seenTutorialsPendingSync);
+        }
+
+        [Test]
+        public void MarkSeenTutorialsSynced_ListChangedMeanwhile_KeepsPending()
+        {
+            _initialState.seenTutorials = new[] { "home", "pantry" };
+            _initialState.seenTutorialsPendingSync = true;
+
+            var newState = AppReducers.MarkSeenTutorialsSyncedReducer(_initialState, AppActions.markSeenTutorialsSynced.Invoke(new[] { "home" }));
+
+            Assert.IsTrue(newState.seenTutorialsPendingSync);
+        }
+
+        [Test]
+        public void Logout_ClearsSeenTutorials()
+        {
+            _initialState.seenTutorials = new[] { "home" };
+            _initialState.seenTutorialsPendingSync = true;
+
+            var newState = AppReducers.LogoutReducer(_initialState, AppActions.logout.Invoke());
+
+            Assert.AreEqual(0, newState.seenTutorials.Length);
+            Assert.IsFalse(newState.seenTutorialsPendingSync);
+        }
+
+        [Test]
+        public void AppStateCopy_DeepCopiesSeenTutorials()
+        {
+            _initialState.seenTutorials = new[] { "home" };
+            _initialState.seenTutorialsPendingSync = true;
+
+            AppState copy = _initialState.Copy();
+            _initialState.seenTutorials[0] = "X";
+
+            Assert.AreEqual("home", copy.seenTutorials[0]);
+            Assert.IsTrue(copy.seenTutorialsPendingSync);
+        }
     }
 }

@@ -154,6 +154,10 @@ namespace eu.foodmission.platform
         public string[] hiddenProgressWheels = new string[0];
         /// <summary>True while a local hide/show change has not reached the server; only then is the list sent and kept over the server value.</summary>
         public bool hiddenProgressWheelsPendingSync;
+        /// <summary>Section tutorial ids already shown to the user; synced as settings.seenTutorials.</summary>
+        public string[] seenTutorials = new string[0];
+        /// <summary>True while a newly seen tutorial has not reached the server; only then is the list sent.</summary>
+        public bool seenTutorialsPendingSync;
         /// <summary>Last knowledge bars from GET …/gamification/knowledge-progress (cache shown on Home before refreshing; no items).</summary>
         public KnowledgeProgress[] knowledgeProgress = new KnowledgeProgress[0];
         public string[] userGoals = new string[0];
@@ -236,6 +240,8 @@ namespace eu.foodmission.platform
                 progressWheels = this.progressWheels != null ? Array.ConvertAll(this.progressWheels, w => w?.Copy()) : new ProgressWheel[0],
                 hiddenProgressWheels = this.hiddenProgressWheels != null ? (string[])this.hiddenProgressWheels.Clone() : new string[0],
                 hiddenProgressWheelsPendingSync = this.hiddenProgressWheelsPendingSync,
+                seenTutorials = this.seenTutorials != null ? (string[])this.seenTutorials.Clone() : new string[0],
+                seenTutorialsPendingSync = this.seenTutorialsPendingSync,
                 knowledgeProgress = this.knowledgeProgress != null ? Array.ConvertAll(this.knowledgeProgress, k => k?.Copy()) : new KnowledgeProgress[0],
                 userGoals = this.userGoals != null ? (string[])this.userGoals.Clone() : new string[0],
                 dimensionLevels = this.dimensionLevels != null ? Array.ConvertAll(this.dimensionLevels, e => e?.Copy()) : new DimensionLevelEntry[0],

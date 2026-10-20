@@ -4447,6 +4447,78 @@ MonoBehaviour:
     m_Key: REWARD_AVATAR_ITEM
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203699
+    m_Key: TUTORIAL_HOME_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203700
+    m_Key: TUTORIAL_HOME_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203701
+    m_Key: TUTORIAL_HOME_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203702
+    m_Key: TUTORIAL_HOME_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203716
+    m_Key: TUTORIAL_HOME_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203703
+    m_Key: TUTORIAL_MEAL_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203704
+    m_Key: TUTORIAL_QUICK_SEARCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203705
+    m_Key: TUTORIAL_SHOPPING_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203706
+    m_Key: TUTORIAL_PANTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203707
+    m_Key: TUTORIAL_QUESTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203708
+    m_Key: TUTORIAL_MISSIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203709
+    m_Key: TUTORIAL_CHALLENGES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203710
+    m_Key: TUTORIAL_KNOWLEDGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203711
+    m_Key: TUTORIAL_RECIPES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203712
+    m_Key: TUTORIAL_FOOD_WASTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203713
+    m_Key: TUTORIAL_SKIP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203714
+    m_Key: TUTORIAL_START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203715
+    m_Key: TUTORIAL_HELP
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

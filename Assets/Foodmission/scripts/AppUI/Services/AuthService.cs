@@ -605,7 +605,9 @@ namespace eu.foodmission.platform
                     backgroundPattern = state.backgroundPattern,
                     devicePushRegistration = state.devicePushRegistration,
                     // Only a pending local change is sent, so other settings syncs don't overwrite a list chosen on another device.
-                    hiddenProgressWheels = state.hiddenProgressWheelsPendingSync ? (state.hiddenProgressWheels ?? new string[0]) : null
+                    hiddenProgressWheels = state.hiddenProgressWheelsPendingSync ? (state.hiddenProgressWheels ?? new string[0]) : null,
+                    // Same rule: a sync from a device that hasn't loaded the profile must not replace the server list
+                    seenTutorials = state.seenTutorialsPendingSync ? (state.seenTutorials ?? new string[0]) : null
                 }
             };
         }
@@ -628,9 +630,16 @@ namespace eu.foodmission.platform
                 {
                     Debug.LogWarning($"[{GetType().Name}] SyncSettingsAsync — PATCH failed");
                 }
-                else if (request.settings?.hiddenProgressWheels != null)
+                else
                 {
-                    _storeService.store.Dispatch(AppActions.markHiddenProgressWheelsSynced.Invoke(request.settings.hiddenProgressWheels));
+                    if (request.settings?.hiddenProgressWheels != null)
+                    {
+                        _storeService.store.Dispatch(AppActions.markHiddenProgressWheelsSynced.Invoke(request.settings.hiddenProgressWheels));
+                    }
+                    if (request.settings?.seenTutorials != null)
+                    {
+                        _storeService.store.Dispatch(AppActions.markSeenTutorialsSynced.Invoke(request.settings.seenTutorials));
+                    }
                 }
             }
             catch (Exception ex)
