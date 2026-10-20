@@ -20,6 +20,7 @@ namespace eu.foodmission.platform
         private VisualElement _lastFocusedElement;
         private bool _isKeyboardVisible;
         private System.Threading.CancellationTokenSource _adjustCts;
+        private readonly GhostTouchDetector _ghostTouchDetector = new GhostTouchDetector();
 
         [SerializeField]
         [Tooltip("Additional margin between focused field and keyboard (in pixels)")]
@@ -54,6 +55,11 @@ namespace eu.foodmission.platform
 
             // Register for focus events globally
             _rootElement.RegisterCallback<FocusInEvent>(OnGlobalFocusIn, TrickleDown.TrickleDown);
+
+            // Drop the touches iOS replays on keyboard show/hide (issue #27)
+            _rootElement.RegisterCallback<PointerDownEvent>(OnGlobalPointerDown, TrickleDown.TrickleDown);
+            _rootElement.RegisterCallback<PointerUpEvent>(OnGlobalPointerUp, TrickleDown.TrickleDown);
+            _rootElement.RegisterCallback<MouseDownEvent>(OnGlobalMouseDown, TrickleDown.TrickleDown);
         }
 
         private void OnDestroy()
@@ -67,6 +73,9 @@ namespace eu.foodmission.platform
             if (_rootElement != null)
             {
                 _rootElement.UnregisterCallback<FocusInEvent>(OnGlobalFocusIn, TrickleDown.TrickleDown);
+                _rootElement.UnregisterCallback<PointerDownEvent>(OnGlobalPointerDown, TrickleDown.TrickleDown);
+                _rootElement.UnregisterCallback<PointerUpEvent>(OnGlobalPointerUp, TrickleDown.TrickleDown);
+                _rootElement.UnregisterCallback<MouseDownEvent>(OnGlobalMouseDown, TrickleDown.TrickleDown);
             }
 
             _adjustCts?.Cancel();
@@ -90,6 +99,39 @@ namespace eu.foodmission.platform
                     _ = AdjustForKeyboardAsync(height);
                 }
             }
+        }
+
+        private void OnGlobalPointerDown(PointerDownEvent evt)
+        {
+            if (_ghostTouchDetector.ShouldIgnorePointerDown(evt.position, Time.realtimeSinceStartup, Time.frameCount))
+            {
+                IgnoreGhostEvent(evt);
+            }
+        }
+
+        private void OnGlobalPointerUp(PointerUpEvent evt)
+        {
+            _ghostTouchDetector.RecordPointerUp(evt.position);
+        }
+
+        private void OnGlobalMouseDown(MouseDownEvent evt)
+        {
+            if (_ghostTouchDetector.ShouldIgnoreMouseDown(evt.mousePosition, Time.realtimeSinceStartup, Time.frameCount))
+            {
+                IgnoreGhostEvent(evt);
+            }
+        }
+
+        private void IgnoreGhostEvent(EventBase evt)
+        {
+            _rootElement.panel?.focusController?.IgnoreEvent(evt);
+            evt.StopImmediatePropagation();
+            Debug.Log($"[KeyboardPanelAdjuster] Ignored replayed touch ({evt.GetType().Name}) after keyboard transition f={Time.frameCount}");
+        }
+
+        private void NotifyKeyboardTransition()
+        {
+            _ghostTouchDetector.NotifyKeyboardTransition(Time.realtimeSinceStartup);
         }
 
         /// <summary>
@@ -123,6 +165,7 @@ namespace eu.foodmission.platform
         private void OnKeyboardShown(float height)
         {
             _isKeyboardVisible = true;
+            NotifyKeyboardTransition();
 
             if (height > 0 && _lastFocusedElement != null)
             {
@@ -133,6 +176,7 @@ namespace eu.foodmission.platform
         private void OnKeyboardHidden()
         {
             _isKeyboardVisible = false;
+            NotifyKeyboardTransition();
             _lastFocusedElement = null;
             RestorePanelPosition();
         }
@@ -269,6 +313,7 @@ namespace eu.foodmission.platform
             // Use style.translate instead of obsolete transform.position
             var newTranslate = new Translate(_originalTranslate.x, _originalTranslate.y + offset, _originalTranslate.z);
             _rootElement.style.translate = newTranslate;
+            NotifyKeyboardTransition();
         }
 
         private void RestorePanelPosition()
@@ -280,6 +325,7 @@ namespace eu.foodmission.platform
 
             // Restore original translate
             _rootElement.style.translate = new Translate(_originalTranslate.x, _originalTranslate.y, _originalTranslate.z);
+            NotifyKeyboardTransition();
         }
     }
 }
