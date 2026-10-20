@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -248,6 +249,65 @@ namespace eu.foodmission.platform.Tests
         {
             Assert.IsNotNull(UnitCatalog.Current);
             Assert.AreEqual("G", UnitCatalog.Current.ResolveCode("g"));
+        }
+
+        [TestCase(1.5f, "CUPS", "1.5 CUPS")]
+        [TestCase(200f, "g", "200 G")]
+        [TestCase(2f, "PIECES", "2 PIECES")]
+        [TestCase(0f, "KG", "KG")]
+        public async Task ToStoredMeasure_UsesUnitCodeAndInvariantNumber(float qty, string unit, string expected)
+        {
+            SetupUnits(SpanishUnits);
+            await _catalog.LoadAsync("es");
+
+            Assert.AreEqual(expected, _catalog.ToStoredMeasure(qty, unit));
+        }
+
+        [TestCase("1.5 CUPS", "1,5 Tazas")]
+        [TestCase("200 G", "200 Gramos")]
+        [TestCase("200g", "200 Gramos")]
+        [TestCase("1 1/2 cups", "1,5 Tazas")]
+        [TestCase("2 Tazas", "2 Tazas")]
+        [TestCase("KG", "Kilogramos")]
+        public async Task FormatMeasure_RecognisedUnit_ShowsLocalizedLabel(string measure, string expected)
+        {
+            SetupUnits(SpanishUnits);
+            await _catalog.LoadAsync("es");
+
+            Assert.AreEqual(expected, _catalog.FormatMeasure(measure, new CultureInfo("es-ES")));
+        }
+
+        [TestCase("2 tbs")]
+        [TestCase("to taste")]
+        [TestCase("1 clove")]
+        [TestCase("2")]
+        [TestCase("2 Tassen")]
+        public async Task FormatMeasure_UnrecognisedUnit_KeepsText(string measure)
+        {
+            SetupUnits(SpanishUnits);
+            await _catalog.LoadAsync("es");
+
+            Assert.AreEqual(measure, _catalog.FormatMeasure(measure, new CultureInfo("es-ES")));
+        }
+
+        [Test]
+        public void FormatMeasure_Empty_ReturnsEmpty()
+        {
+            Assert.AreEqual("", _catalog.FormatMeasure(null, CultureInfo.InvariantCulture));
+            Assert.AreEqual("", _catalog.FormatMeasure("  ", CultureInfo.InvariantCulture));
+        }
+
+        [Test]
+        public async Task StoredMeasure_RoundTripsAcrossLanguages()
+        {
+            SetupUnits(SpanishUnits);
+            await _catalog.LoadAsync("es");
+            string stored = _catalog.ToStoredMeasure(2f, "CUPS");
+
+            SetupUnits(new CatalogItem { code = "CUPS", label = "Tassen" });
+            await _catalog.LoadAsync("de");
+
+            Assert.AreEqual("2 Tassen", _catalog.FormatMeasure(stored, new CultureInfo("de-DE")));
         }
     }
 }

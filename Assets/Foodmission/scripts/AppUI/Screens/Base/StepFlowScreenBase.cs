@@ -105,6 +105,7 @@ namespace eu.foodmission.platform
             root.AddToClassList("fm-step-flow--closable");
             _btnClose = new IconButton { name = "btn-close", icon = "x", quiet = true, size = Size.L };
             _btnClose.AddToClassList("fm-step-flow__close");
+            _btnClose.AddToClassList("fm-icon-button--on-main-bg");
             _btnClose.clicked += OnCloseClicked;
             root.Add(_btnClose);
         }

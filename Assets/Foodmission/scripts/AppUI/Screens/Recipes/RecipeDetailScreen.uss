@@ -59,7 +59,7 @@
 }
 
 .fm-rd-source__text {
-    color: var(--appui-foregrounds-50);
+    color: var(--appui-primary-1000);
     white-space: nowrap;
 }
 
@@ -139,31 +139,31 @@
 .fm-r-badge--easy {
     background-color: rgba(16, 185, 129, 0.2);
     border-color: rgba(16, 185, 129, 0.45);
-    color: rgb(52, 211, 153);
+    color: rgb(255, 255, 255);
 }
 
 .fm-r-badge--medium {
     background-color: rgba(245, 158, 11, 0.2);
     border-color: rgba(245, 158, 11, 0.45);
-    color: rgb(251, 191, 36);
+    color: rgb(255, 255, 255);
 }
 
 .fm-r-badge--hard {
     background-color: rgba(239, 68, 68, 0.2);
     border-color: rgba(239, 68, 68, 0.45);
-    color: rgb(248, 113, 113);
+    color: rgb(255, 255, 255);
 }
 
 .fm-r-badge--dietary {
     background-color: rgba(20, 184, 166, 0.2);
     border-color: rgba(20, 184, 166, 0.45);
-    color: rgb(45, 212, 191);
+    color: rgb(255, 255, 255);
 }
 
 .fm-r-badge--allergen {
     background-color: rgba(244, 63, 94, 0.22);
     border-color: rgba(244, 63, 94, 0.5);
-    color: rgb(251, 113, 133);
+    color: rgb(255, 255, 255);
 }
 
 .fm-r-badge--tag {

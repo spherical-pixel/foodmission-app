@@ -78,6 +78,7 @@ namespace eu.foodmission.platform.Components
             _titleText.primary = true;
             _titleText.AddToClassList("fm-group-member-item-title");
             _titleText.style.width = StyleKeyword.Auto;
+            _titleText.style.flexGrow = 1; // pushes the badges to the right end of the row
             _titleText.style.flexShrink = 1;
             titleRow.Add(_titleText);
 

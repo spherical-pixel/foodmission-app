@@ -173,6 +173,10 @@
     /* Recipe rating stars (design: rating-star-on / rating-star-off) */
     --fm-star-filled: #024639;
     --fm-star-empty: #B5B5B5;
+    /* Recipe card pills (text over a 15% tint of the same hue, on a white card) */
+    --fm-pill-time: #1D4ED8;
+    --fm-pill-difficulty: #047857;
+    --fm-pill-category: #B45309;
     --fm-icon-tint: var(--appui-primary-100);
     --fm-icon-tint-selected: var(--appui-primary-15);
     --fm-bg-screen-trans: rgba(255, 255, 255, 0.45);
@@ -314,6 +318,9 @@
     /* Recipe rating stars (design: rating-star-on / rating-star-off) */
     --fm-star-filled: #A8E0D3;
     --fm-star-empty: rgba(255, 255, 255, 0.25);
+    --fm-pill-time: rgb(59, 130, 246);
+    --fm-pill-difficulty: rgb(16, 185, 129);
+    --fm-pill-category: rgb(245, 158, 11);
 
     --fm-icon-tint: var(--appui-primary-1200);
     --fm-icon-tint-selected: var(--appui-primary-900);

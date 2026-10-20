@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace eu.foodmission.platform
@@ -28,6 +29,18 @@ namespace eu.foodmission.platform
         /// is parsed, keeping the stored unit when the text's unit is not recognised.
         /// </summary>
         (float Quantity, string Unit) ResolveMeasure(string measure, float? storedQuantity, string storedUnit);
+
+        /// <summary>
+        /// Language-neutral measure text to store ("1.5 CUPS"): unit code and invariant number, so any language can
+        /// show it with its own label. Stand-in until the backend stores recipe quantity + unit code.
+        /// </summary>
+        string ToStoredMeasure(float quantity, string unit);
+
+        /// <summary>
+        /// Measure text for display: number in <paramref name="culture"/> + localized label when the unit is
+        /// recognised ("1.5 CUPS" → "1,5 Tazas"); the original text otherwise ("to taste", "2 tbs").
+        /// </summary>
+        string FormatMeasure(string measure, CultureInfo culture);
 
         /// <summary>Loads labels for a language. Idempotent per language; failures keep the current lists.</summary>
         Task LoadAsync(string lang);

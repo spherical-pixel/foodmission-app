@@ -10,6 +10,7 @@
 
 .fm-og-error {
     color: var(--fm-color-negative);
+    --fm-box-text: var(--fm-color-negative);
     align-self: center;
     margin: 8px 0;
     display: none;

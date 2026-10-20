@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.Accessibility;
@@ -21,6 +22,9 @@ namespace eu.foodmission.platform
         protected override bool IsFixedContent => true;
         protected override bool ApplySafeAreaBottom => false;
         protected override bool ApplySafeAreaTop => false;
+
+        private NavDestination _destination;
+        private NavDestination _openedFrom;
 
         private FMStepProgressBar _stepProgressBar;
         private VisualElement _step1Container;
@@ -112,6 +116,9 @@ namespace eu.foodmission.platform
         public override async void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
+            _destination = destination;
+            // Top of the back stack = the screen that opened the editor (RecipeBook to create, RecipeDetail to edit)
+            _openedFrom = controller?.currentBackStackEntry?.destination;
             if (_viewModel == null) return;
 
             string recipeId = ExtractArg(args, "recipeId");
@@ -126,6 +133,32 @@ namespace eu.foodmission.platform
                 _viewModel.Reset();
                 PopulateFieldsFromViewModel();
             }
+        }
+
+        /// <summary>
+        /// After saving, the detail replaces the editor (and, when editing, the stale detail it was opened from),
+        /// so Back from the saved recipe goes to the screen before them instead of the editor's last step.
+        /// </summary>
+        protected override void OnNavigationRequested(string navigationAction, Argument[] args)
+        {
+            if (navigationAction == Actions.recipes_to_detail && _navController != null && _destination != null)
+            {
+                NavDestination popUpTo = _openedFrom != null && _openedFrom.name == Destinations.recipedetail
+                    ? _openedFrom
+                    : _destination;
+                var options = new NavOptions
+                {
+                    popUpToStrategy = PopupToStrategy.SpecificRoute,
+                    popUpToRoute = popUpTo,
+                    popUpToInclusive = true
+                };
+                if (_navController.Navigate(Destinations.recipedetail, options, args ?? Array.Empty<Argument>()))
+                {
+                    return;
+                }
+            }
+
+            base.OnNavigationRequested(navigationAction, args);
         }
 
         protected override void OnViewModelBound()
@@ -624,10 +657,10 @@ namespace eu.foodmission.platform
                 }, ButtonVariant.Accent));
         }
 
+        /// <summary>Stored with the unit code ("1.5 CUPS"), not the label, so the recipe reads right in every language.</summary>
         private static string FormatMeasure(float qty, string unit)
         {
-            string unitDisplay = UnitCatalog.Current.GetLabel(unit);
-            return qty > 0 ? $"{qty} {unitDisplay}".Trim() : unitDisplay;
+            return UnitCatalog.Current.ToStoredMeasure(qty, unit);
         }
 
         private static (float qty, string unit) ParseMeasure(string measure, float? fallbackQty, string fallbackUnit)

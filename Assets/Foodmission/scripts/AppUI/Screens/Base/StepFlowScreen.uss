@@ -84,6 +84,7 @@
 
 .fm-step-flow__guide-card {
     background-color: var(--fm-surface-bg);
+    --fm-box-text: var(--appui-foregrounds-50);
     padding: 40px;
     margin-top: 12px;
     margin-bottom: 12px;

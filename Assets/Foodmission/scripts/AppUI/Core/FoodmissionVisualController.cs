@@ -942,6 +942,7 @@ namespace eu.foodmission.platform
                     icon = "gear-six",
                     quiet = true
                 };
+                appearanceButton.AddToClassList("fm-icon-button--on-main-bg");
                 appearanceButton.style.marginTop = 0;
                 appearanceButton.style.marginBottom = 0;
                 appearanceButton.style.alignSelf = Align.Center;

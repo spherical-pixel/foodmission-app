@@ -92,7 +92,7 @@
 }
 
 .fm-r-cat-chip:hover {
-    background-color: var(--appui-backgrounds-300);
+    background-color: var(--appui-backgrounds-50);
 }
 
 .fm-r-cat-chip:active {
@@ -100,7 +100,7 @@
 }
 
 .fm-r-cat-chip--active {
-    background-color: var(--appui-accent-100);
+    background-color: var(--appui-primary-300);
     color: white;
 }
 
@@ -115,7 +115,7 @@
 .fm-r-empty-pantry-card {
     flex-direction: row;
     align-items: center;
-    background-color: var(--appui-backgrounds-200);
+    background-color: var(--fm-surface-bg-transparent-50);
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 16px;
@@ -152,7 +152,7 @@
 
 .fm-r-empty-pantry-desc {
     font-size: var(--appui-font-sizes-body-sm);
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     margin-bottom: 12px;
     white-space: normal;
 }
@@ -257,7 +257,7 @@
 .fm-r-card {
     flex-direction: column;
     border-radius: 20px;
-    background-color: var(--appui-backgrounds-200);
+    background-color: var(--fm-surface-bg-transparent-80);
     padding: 20px;
     margin-bottom: 16px;
     position: relative;
@@ -278,7 +278,7 @@
 
 .fm-r-card-author {
     font-size: var(--appui-font-sizes-body-xs);
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     margin-top: 2px;
 }
 
@@ -326,25 +326,25 @@
     border-radius: 10px;
     margin-right: 6px;
     margin-bottom: 4px;
-    background-color: var(--appui-backgrounds-300);
-    color: var(--appui-foregrounds-100);
+    background-color: var(--appui-backgrounds-50);
+    color: var(--appui-foregrounds-50);
 }
 
 .fm-r-pill--time {
     background-color: rgba(59, 130, 246, 0.15);
-    color: rgb(59, 130, 246);
+    color: var(--fm-pill-time);
     white-space: nowrap;
 }
 
 .fm-r-pill--difficulty {
     background-color: rgba(16, 185, 129, 0.15);
-    color: rgb(16, 185, 129);
+    color: var(--fm-pill-difficulty);
     white-space: nowrap;
 }
 
 .fm-r-pill--category {
     background-color: rgba(245, 158, 11, 0.15);
-    color: rgb(245, 158, 11);
+    color: var(--fm-pill-category);
     white-space: nowrap;
 }
 
@@ -361,6 +361,6 @@
 
 .fm-r-card-rating {
     font-size: var(--appui-font-sizes-body-xs);
-    color: var(--appui-foregrounds-200);
+    color: var(--appui-foregrounds-50);
     margin-left: 4px;
 }

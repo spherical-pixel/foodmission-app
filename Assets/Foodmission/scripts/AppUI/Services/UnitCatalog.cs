@@ -120,6 +120,36 @@ namespace eu.foodmission.platform
             return (storedQuantity ?? 1f, fallbackUnit);
         }
 
+        public string ToStoredMeasure(float quantity, string unit)
+        {
+            string code = ResolveCode(unit) ?? unit ?? "";
+            if (quantity <= 0f)
+            {
+                return code;
+            }
+            return $"{quantity.ToString("0.##", CultureInfo.InvariantCulture)} {code}".Trim();
+        }
+
+        public string FormatMeasure(string measure, CultureInfo culture)
+        {
+            if (string.IsNullOrWhiteSpace(measure))
+            {
+                return "";
+            }
+
+            string text = measure.Trim();
+            culture ??= CultureInfo.InvariantCulture;
+
+            if (TryParseMeasureCore(text, out float quantity, out string code))
+            {
+                return code != null ? $"{quantity.ToString("0.##", culture)} {GetLabel(code)}" : text;
+            }
+
+            // Unit without a number ("KG")
+            string unitOnly = ResolveCode(text);
+            return unitOnly != null ? GetLabel(unitOnly) : text;
+        }
+
         /// <summary>Parses the leading number; <paramref name="unit"/> is null when the unit text is not recognised.</summary>
         private bool TryParseMeasureCore(string measure, out float quantity, out string unit)
         {

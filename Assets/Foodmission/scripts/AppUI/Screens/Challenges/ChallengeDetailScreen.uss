@@ -19,6 +19,7 @@
 
 .fm-challenge-card {
     background-color: var(--fm-surface-bg-transparent-80);
+    --fm-box-text: var(--appui-foregrounds-50);
     border-radius: 44px;
     padding: 35px;
     margin: 0 16px 16px 16px;
@@ -45,6 +46,7 @@
     padding: 12px 25px;
     background-color: var(--fm-surface-bg);
     color: var(--appui-primary-100);
+    --fm-box-text: var(--appui-primary-100);
     -unity-font-style: bold;
     margin-bottom: 20px;
     white-space: nowrap;
@@ -80,6 +82,7 @@
 
 .fm-challenge-why-title {
     color: var(--appui-primary-100);
+    --fm-box-text: var(--appui-primary-100);
     -unity-font-style: bold;
     margin-bottom: 8px;
     flex-shrink: 0;
@@ -123,6 +126,7 @@
     padding: 25px 35px;
     background-color: rgb(0, 139, 58);
     color: rgb(255, 255, 255);
+    --fm-box-text: rgb(255, 255, 255);
     -unity-font-style: bold;
     flex-shrink: 0;
     width: 100%;

@@ -183,6 +183,7 @@ namespace eu.foodmission.platform.Components
                 icon = "barcode",
                 quiet = true,
             };
+            scanButton.AddToClassList("fm-icon-button--on-main-bg");
             scanButton.style.width = 72;
             scanButton.style.height = 72;
             scanButton.style.minWidth = 36;
