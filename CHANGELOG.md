@@ -1,3 +1,15 @@
+v0.0.9 - Changelog
+🐛 Bug Fixes
+- Light mode: readable text and icons on every screen. Boxes with a light background keep their own text colors (`--fm-box-text`), icon-only buttons over the green background use `fm-icon-button--on-main-bg`, and texts follow one rule (dark on white cards, white on the green background, mint on translucent boxes). Covers food info, food waste overlay, group detail, recipes, meal log swaps, notifications, mission check-in and food comparison.
+- Navigation: Back returns to the previous screen after the auto-opened shopping list and after saving a recipe (single `Navigate` with `popUpTo` instead of `PopBackStack()` + `Navigate()`).
+- Recipes: ingredient units stored as catalog codes with an invariant number ("1.5 CUPS") and shown localized; unrecognized measures stay as written.
+- Onboarding survey questions requested with `?lang=` (the backend ignores `Accept-Language`).
+- AppBar titles localized, missing UI keys added, App UI 2.1 theme variables used instead of non-existent ones.
+- `AppState.Copy()` deep-copies every nested model.
+
+🛠️ Dev & Build
+- EditMode tests on GitHub Actions with GameCI (required check on `main`), plus static checks for UXML bindings, localization keys, navigation assets, theme variables, DI registrations and reducers.
+
 v0.0.8 - Changelog
 ✨ New Features & Modules
 - Quests: Quest catalog (`QuestsScreen`) and detail with an activity timeline (`QuestDetailScreen`), active quest from `GET current-quest` (`FMActiveQuestCard` on Home), sequential and level-based unlocking, confirmation when switching quests, onboarding survey required before starting, and celebrations when a quest or a whole dimension is completed.
