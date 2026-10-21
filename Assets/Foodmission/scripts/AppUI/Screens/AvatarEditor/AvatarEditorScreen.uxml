@@ -30,9 +30,17 @@
                     </ui:VisualElement>
                     <appui:Spacer/>
                     <ui:VisualElement name="Buttons" style="flex-grow: 1;">
-                        <fm:FMButton title="Save &amp; continue" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btSave" class="fm-button-align-left fm-button fm-button-shadow"/>
+                        <fm:FMButton title="Save &amp; continue" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btSave" class="fm-button-align-left fm-button fm-button-shadow">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(41000000000000020)"/>
+                            </Bindings>
+                        </fm:FMButton>
                         <appui:Spacer/>
-                        <fm:FMButton title="Exit without saving" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btExit" class="fm-button-align-left fm-button fm-button-shadow"/>
+                        <fm:FMButton title="Exit without saving" subtitle="" quiet="false" variant="Accent" trailing-icon="fm-arrow-right" name="btExit" class="fm-button-align-left fm-button fm-button-shadow">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(25353325686808576)"/>
+                            </Bindings>
+                        </fm:FMButton>
                         <appui:Spacer name="btExit"/>
                     </ui:VisualElement>
                 </ui:VisualElement>

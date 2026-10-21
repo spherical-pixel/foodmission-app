@@ -7,7 +7,7 @@
 }
 
 .fm-quick-meal-card {
-    background-color: var(--fm-bg-screen-trans);
+    background-color: var(--fm-surface-bg-transparent);
     border-radius: 24px;
     padding: 32px;
     display: flex;
