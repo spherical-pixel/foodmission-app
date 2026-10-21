@@ -15,6 +15,8 @@ namespace eu.foodmission.platform.Components
             IconButtonVisible = true;
             IconButtonIcon = "eye";
             IconButtonQuiet = true;
+            // Login/Register sit on the green background, where the default icon tint vanishes in light mode
+            _iconButton.AddToClassList("fm-icon-button--on-main-bg");
             _iconButton.clicked += IconButtonClicked;
         }
 
