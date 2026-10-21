@@ -812,5 +812,85 @@ namespace eu.foodmission.platform.Tests
             Assert.AreSame(error, _vm.ErrorDetail);
             _mockGamification.Verify(g => g.GetCurrentQuestAsync(), Times.Exactly(2));
         }
+
+        private void SetCurrentQuest(bool completed, float progress)
+        {
+            AppState state = _storeService.GetAppState();
+            state.userCurrentQuestId = "q-100";
+            _storeService.SetAppState(state);
+            _mockDimensionService.Setup(s => s.GetDimension("DIET_CHANGES")).Returns(_mockDimension);
+            _mockGamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync((new CurrentQuest
+            {
+                questId = "q-100", questCode = "QUEST.DIET.1", name = "Diet", dimensionCode = "DIET_CHANGES", level = "BEGINNER",
+                completed = completed, progress = progress,
+                items = new[]
+                {
+                    new CurrentQuestItem { contentType = QuestContentType.Quiz, contentCode = "Q1", title = "Quiz 1", status = CurrentQuestItemStatus.Completed, progress = 100f, sortOrder = 1 },
+                },
+            }, (ApiErrorResponse)null));
+        }
+
+        [Test]
+        public async Task LoadQuestAsync_CurrentQuestCompleted_GoesHomeForTheRewards()
+        {
+            SetCurrentQuest(completed: true, progress: 100f);
+            var routes = new List<string>();
+            _vm.NavigationRequested += (route, _) => routes.Add(route);
+
+            await _vm.LoadQuestAsync("q-100");
+
+            CollectionAssert.AreEqual(new[] { Actions.go_to_home }, routes);
+        }
+
+        [Test]
+        public async Task LoadQuestAsync_CurrentQuestInProgress_StaysOnTheDetail()
+        {
+            SetCurrentQuest(completed: false, progress: 50f);
+            var routes = new List<string>();
+            _vm.NavigationRequested += (route, _) => routes.Add(route);
+
+            await _vm.LoadQuestAsync("q-100");
+
+            CollectionAssert.IsEmpty(routes);
+        }
+
+        [Test]
+        public async Task LoadQuestAsync_OtherCompletedQuest_StaysOnTheDetail()
+        {
+            AppState state = _storeService.GetAppState();
+            state.userCurrentQuestId = "another-quest";
+            _storeService.SetAppState(state);
+            _mockQuestService.Setup(s => s.GetQuestAsync("QUEST.DIET.1", It.IsAny<string>()))
+                .ReturnsAsync((_mockQuest, null));
+            _mockQuestService.Setup(s => s.GetQuestProgressAsync("QUEST.DIET.1", It.IsAny<string>()))
+                .ReturnsAsync((new QuestProgress { questId = "q-100", completed = true, progress = 100f }, null));
+            var routes = new List<string>();
+            _vm.NavigationRequested += (route, _) => routes.Add(route);
+
+            await _vm.LoadQuestAsync("QUEST.DIET.1");
+
+            Assert.IsTrue(_vm.IsCompleted);
+            CollectionAssert.IsEmpty(routes);
+        }
+
+        [Test]
+        public async Task LoadQuestAsync_CurrentQuestCompletedWithoutCurrentQuestEndpoint_GoesHome()
+        {
+            // The server has no current quest any more, but the app still holds it: Home's safety net clears it
+            AppState state = _storeService.GetAppState();
+            state.userCurrentQuestId = "q-100";
+            _storeService.SetAppState(state);
+            _mockGamification.Setup(g => g.GetCurrentQuestAsync()).ReturnsAsync(((CurrentQuest)null, (ApiErrorResponse)null));
+            _mockQuestService.Setup(s => s.GetQuestAsync("q-100", It.IsAny<string>()))
+                .ReturnsAsync((_mockQuest, null));
+            _mockQuestService.Setup(s => s.GetQuestProgressAsync("q-100", It.IsAny<string>()))
+                .ReturnsAsync((new QuestProgress { questId = "q-100", completed = true, progress = 100f }, null));
+            var routes = new List<string>();
+            _vm.NavigationRequested += (route, _) => routes.Add(route);
+
+            await _vm.LoadQuestAsync("q-100");
+
+            CollectionAssert.AreEqual(new[] { Actions.go_to_home }, routes);
+        }
     }
 }
