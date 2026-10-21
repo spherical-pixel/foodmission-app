@@ -52,6 +52,7 @@ namespace eu.foodmission.platform
         private IMissionInputsService _inputsService;
         private FMButton _btnTellNutri;
         private FMButton _btnLater;
+        private FMButton _btnGoToQuest;
         private FMNutriView _nutriView;
         private INutriService _nutriService;
         private IVisualElementScheduledItem _cardSchedule;
@@ -101,6 +102,7 @@ namespace eu.foodmission.platform
             _startBox = contentContainer.Q<VisualElement>("mission-start-box");
             _btnStartMission = contentContainer.Q<FMButton>("btn-start-mission");
             _progressRow = contentContainer.Q<VisualElement>("mission-progress");
+            _btnGoToQuest = contentContainer.Q<FMButton>("btn-go-to-quest");
 
             if (_btnTellNutri != null)
             {
@@ -121,6 +123,10 @@ namespace eu.foodmission.platform
             if (_btnStartMission != null)
             {
                 _btnStartMission.clicked += OnStartMissionClicked;
+            }
+            if (_btnGoToQuest != null)
+            {
+                _btnGoToQuest.clicked += OnGoToQuestClicked;
             }
         }
 
@@ -312,15 +318,23 @@ namespace eu.foodmission.platform
             _progressLabel?.EnableInClassList("fm-mission-progress-label--failed", _viewModel.IsFailed);
             _actions?.EnableInClassList("hidden", !_viewModel.CanAct);
 
-            string statusKey = _viewModel.IsPendingRule ? "MISSION_NOT_AVAILABLE"
-                : _viewModel.ShowsNotCurrentQuest ? "MISSION_NOT_CURRENT_QUEST"
-                : _viewModel.IsFailed && !_viewModel.IsCurrentQuestMission ? "MISSION_NOT_CURRENT_QUEST"
-                : null;
+            string statusText = null;
+            if (_viewModel.IsPendingRule)
+            {
+                statusText = Localize("MISSION_NOT_AVAILABLE");
+            }
+            else if (_viewModel.ShowsNotCurrentQuest || (_viewModel.IsFailed && !_viewModel.IsCurrentQuestMission))
+            {
+                statusText = _viewModel.ContainingQuest != null
+                    ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_IN_QUEST", new object[] { _viewModel.ContainingQuest.GetDisplayName() })
+                    : Localize("MISSION_NOT_CURRENT_QUEST");
+            }
             if (_status != null)
             {
-                _status.text = statusKey != null ? Localize(statusKey) : string.Empty;
-                _status.EnableInClassList("hidden", statusKey == null);
+                _status.text = statusText ?? string.Empty;
+                _status.EnableInClassList("hidden", statusText == null);
             }
+            _btnGoToQuest?.EnableInClassList("hidden", !_viewModel.ShowsGoToQuest);
 
             _autoHint?.EnableInClassList("hidden", _viewModel.AutoModules.Count == 0);
             RebuildModuleButtons(_autoModules, _viewModel.ModuleButtons, ButtonVariant.Accent);
@@ -360,6 +374,12 @@ namespace eu.foodmission.platform
         {
             _audioService?.PlaySfx(SfxType.PositiveButton);
             _viewModel?.OpenCheckIn();
+        }
+
+        private void OnGoToQuestClicked()
+        {
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            _viewModel?.OpenContainingQuest();
         }
 
         private void OnLaterClicked()

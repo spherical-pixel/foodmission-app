@@ -4765,18 +4765,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "Estas son las misiones de tu quest actual. Cada misi\xF3n es un
-      peque\xF1o cambio de h\xE1bito durante unos d\xEDas. Toca una para empezarla
-      y ver qu\xE9 tienes que hacer. Avanzan solas con tus registros de comidas,
-      o puedes cont\xE1rmelo con \xABCont\xE1rselo a {global.PET_NAME}\xBB."
+    m_Localized: "Aqu\xED tienes todas las misiones, agrupadas por tema. Cada misi\xF3n
+      es un peque\xF1o cambio de h\xE1bito durante unos d\xEDas y forma parte de
+      una quest: para hacerla, empieza su quest y, desde ah\xED, empieza la misi\xF3n.
+      Avanzan solas con tus registros de comidas, o puedes cont\xE1rmelo con \xABCont\xE1rselo
+      a {global.PET_NAME}\xBB."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
   - m_Id: 56190243387203709
-    m_Localized: "Los retos son acciones peque\xF1as y r\xE1pidas de tus quests para
-      probar algo nuevo. Te explico cada uno y, cuando lo hayas hecho, tocas \xAB\xA1Ya
-      lo he hecho!\xBB para ganar tus puntos. Algunos te llevan a una herramienta
-      de la app que te ayuda a completarlos."
+    m_Localized: "Los retos son acciones peque\xF1as y r\xE1pidas para probar algo
+      nuevo. Cada uno forma parte de una quest y se hace desde esa quest. Te explico
+      cada uno y, cuando lo hayas hecho, tocas \xAB\xA1Ya lo he hecho!\xBB para ganar
+      tus puntos. Algunos te llevan a una herramienta de la app que te ayuda a completarlos."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4889,6 +4890,24 @@ MonoBehaviour:
   - m_Id: 56190243387203733
     m_Localized: "Podr\xE1s completar el resto m\xE1s adelante desde Inicio o tu
       perfil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: Ir a la quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "Esta misi\xF3n forma parte de la quest \xAB{0}\xBB. Se hace desde
+      esa quest."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "Este reto forma parte de la quest \xAB{0}\xBB. Se hace desde esa
+      quest."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: Empieza la quest de este reto para hacerlo.
     m_Metadata:
       m_Items: []
   references:

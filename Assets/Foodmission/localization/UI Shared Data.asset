@@ -4587,6 +4587,22 @@ MonoBehaviour:
     m_Key: ONBOARDING_CLOSE_PROGRESS_MESSAGE
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203734
+    m_Key: BTN_GO_TO_QUEST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Key: MISSION_IN_QUEST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Key: CHALLENGE_IN_QUEST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Key: CHALLENGE_NOT_CURRENT_QUEST
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -22,6 +22,7 @@
                 <appui:Text name="mission-why-it-matters" text="" size="M" class="fm-mission-why-text"/>
             </ui:VisualElement>
             <appui:Text name="mission-status" text="" size="M" class="fm-mission-status"/>
+            <fm:FMButton name="btn-go-to-quest" title="@UI:BTN_GO_TO_QUEST" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-mission-btn fm-button fm-button-align-left hidden"/>
             <ui:VisualElement name="mission-start-box" class="fm-mission-start hidden">
                 <appui:Text text="@UI:MISSION_NOT_STARTED_HINT" size="M" class="fm-mission-start-text"/>
                 <fm:FMButton name="btn-start-mission" title="@UI:MISSION_START" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-mission-btn fm-button fm-button-align-left"/>

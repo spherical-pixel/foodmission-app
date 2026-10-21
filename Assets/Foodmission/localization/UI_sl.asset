@@ -4762,18 +4762,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "To so misije tvoje trenutne naloge. Vsaka misija je majhna sprememba
-      navade za nekaj dni. Tapni eno, da jo za\u010Dne\u0161 in vidi\u0161, kaj mora\u0161
-      narediti. Napredujejo same z dnevnikom obrokov, lahko pa mi pove\u0161 z gumbom
-      \xBBPovej prijatelju {global.PET_NAME}\xAB."
+    m_Localized: "Tukaj vidi\u0161 vse misije, razvr\u0161\u010Dene po temah. Vsaka
+      misija je majhna sprememba navade za nekaj dni in spada v nalogo: da jo opravi\u0161,
+      za\u010Dni njeno nalogo in nato misijo za\u010Dni tam. Napredujejo same z dnevnikom
+      obrokov, lahko pa mi pove\u0161 z gumbom \xBBPovej prijatelju {global.PET_NAME}\xAB."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 56190243387203709
-    m_Localized: "Izzivi so majhna, hitra dejanja iz tvojih nalog, s katerimi poskusi\u0161
-      nekaj novega. Vsakega ti razlo\u017Eim, in ko ga opravi\u0161, tapni \xBBOpravljeno!\xAB,
-      da dobi\u0161 to\u010Dke. Nekateri te popeljejo do orodja v aplikaciji, ki
-      ti pomaga, da jih opravi\u0161."
+    m_Localized: "Izzivi so majhna, hitra dejanja, s katerimi poskusi\u0161 nekaj
+      novega. Vsak spada v nalogo in ga opravi\u0161 v tej nalogi. Vsakega ti razlo\u017Eim,
+      in ko ga opravi\u0161, tapni \xBBOpravljeno!\xAB, da dobi\u0161 to\u010Dke.
+      Nekateri te popeljejo do orodja v aplikaciji, ki ti pomaga, da jih opravi\u0161."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4887,6 +4887,22 @@ MonoBehaviour:
   - m_Id: 56190243387203733
     m_Localized: "Preostalo lahko dokon\u010Da\u0161 pozneje na za\u010Detnem zaslonu
       ali v svojem profilu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: Pojdi na nalogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "Ta misija spada v nalogo \xBB{0}\xAB. Opravi\u0161 jo v tej nalogi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "Ta izziv spada v nalogo \xBB{0}\xAB. Opravi\u0161 ga v tej nalogi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: "Za\u010Dni nalogo tega izziva, da ga opravi\u0161."
     m_Metadata:
       m_Items: []
   references:

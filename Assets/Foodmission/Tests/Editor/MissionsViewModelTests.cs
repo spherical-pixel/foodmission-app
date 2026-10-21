@@ -253,6 +253,20 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void OpenMission_NavigatesToItsDetail()
+        {
+            string requestedAction = null;
+            Unity.AppUI.Navigation.Argument[] requestedArgs = null;
+            _vm.NavigationRequested += (action, args) => { requestedAction = action; requestedArgs = args; };
+
+            var testMission = _mockMissions[0];
+            _vm.OpenMission(testMission);
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_mission, requestedAction);
+            Assert.AreEqual(testMission.code, requestedArgs.Single(a => a.name == "code").value);
+        }
+
+        [Test]
         public void RebuildDisplayGroups_WithNullTopicId_GroupsUnderDimensionDirectly()
         {
             var directMissions = new[]

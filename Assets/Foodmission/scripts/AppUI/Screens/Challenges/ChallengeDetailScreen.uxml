@@ -11,6 +11,8 @@
                 <appui:Text text="@UI:CHALLENGE_WHY_TITLE" size="M" class="fm-challenge-why-title"/>
                 <appui:Text name="challenge-why-it-matters" text="" size="M" class="fm-challenge-why-text"/>
             </ui:VisualElement>
+            <appui:Text name="challenge-status" text="" size="M" class="fm-challenge-status hidden"/>
+            <fm:FMButton name="btn-go-to-quest" title="@UI:BTN_GO_TO_QUEST" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-challenge-btn fm-button fm-button-align-left hidden"/>
             <ui:VisualElement name="challenge-actions" class="fm-challenge-actions">
                 <appui:Text name="challenge-auto-hint" text="@UI:CHALLENGE_HINT_AUTO" size="S" class="fm-challenge-hint"/>
                 <fm:FMButton name="btn-helper-module" title="" variant="Accent" size="L" trailing-icon="fm-arrow-right" class="fm-challenge-btn fm-button fm-button-align-left"/>

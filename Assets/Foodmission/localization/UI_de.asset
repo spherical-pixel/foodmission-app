@@ -4791,18 +4791,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "Das sind die Missionen deiner aktuellen Quest. Jede Mission ist
-      eine kleine Gewohnheits\xE4nderung \xFCber ein paar Tage. Tippe auf eine, um
-      sie zu starten und zu sehen, was zu tun ist. Sie kommen mit deinem Essensprotokoll
-      von selbst voran, oder du erz\xE4hlst es mir mit \u201E{global.PET_NAME} erz\xE4hlen\u201C."
+    m_Localized: "Hier siehst du alle Missionen, nach Thema geordnet. Jede Mission
+      ist eine kleine Gewohnheits\xE4nderung \xFCber ein paar Tage und geh\xF6rt
+      zu einer Quest: Um sie zu machen, starte ihre Quest und beginne die Mission
+      von dort aus. Sie kommen mit deinem Essensprotokoll von selbst voran, oder
+      du erz\xE4hlst es mir mit \u201E{global.PET_NAME} erz\xE4hlen\u201C."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690407
   - m_Id: 56190243387203709
-    m_Localized: "Herausforderungen sind kleine, schnelle Aktionen aus deinen Quests,
-      um etwas Neues auszuprobieren. Ich erkl\xE4re dir jede, und wenn du sie gemacht
-      hast, tippst du auf \u201EErledigt!\u201C, um deine Punkte zu bekommen. Manche
-      f\xFChren dich zu einem Werkzeug der App, das dir dabei hilft."
+    m_Localized: "Herausforderungen sind kleine, schnelle Aktionen, um etwas Neues
+      auszuprobieren. Jede geh\xF6rt zu einer Quest, und du machst sie von dieser
+      Quest aus. Ich erkl\xE4re dir jede, und wenn du sie gemacht hast, tippst du
+      auf \u201EErledigt!\u201C, um deine Punkte zu bekommen. Manche f\xFChren dich
+      zu einem Werkzeug der App, das dir dabei hilft."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4917,6 +4919,24 @@ MonoBehaviour:
   - m_Id: 56190243387203733
     m_Localized: "Den Rest kannst du sp\xE4ter \xFCber den Startbildschirm oder dein
       Profil erledigen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: Zur Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "Diese Mission geh\xF6rt zur Quest \u201E{0}\u201C. Du machst sie
+      von dieser Quest aus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "Diese Herausforderung geh\xF6rt zur Quest \u201E{0}\u201C. Du machst
+      sie von dieser Quest aus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: Starte die Quest dieser Herausforderung, um sie zu machen.
     m_Metadata:
       m_Items: []
   references:

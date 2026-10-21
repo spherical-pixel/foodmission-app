@@ -4764,18 +4764,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "Queste sono le missioni della tua missione principale attuale.
-      Ognuna \xE8 un piccolo cambiamento di abitudine per qualche giorno. Toccane
-      una per iniziarla e vedere cosa devi fare. Avanzano da sole con il registro
-      dei pasti, oppure puoi dirmelo con \xABRaccontalo a {global.PET_NAME}\xBB."
+    m_Localized: "Qui trovi tutte le missioni, divise per tema. Ognuna \xE8 un piccolo
+      cambiamento di abitudine per qualche giorno e fa parte di una missione principale:
+      per farla, inizia la sua missione principale e poi avvia la missione da l\xEC.
+      Avanzano da sole con il registro dei pasti, oppure puoi dirmelo con \xABRaccontalo
+      a {global.PET_NAME}\xBB."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 56190243387203709
-    m_Localized: "Le sfide sono piccole azioni rapide delle tue missioni per provare
-      qualcosa di nuovo. Te le spiego una per una e, quando l'hai fatto, tocca \xABL'ho
-      fatto!\xBB per guadagnare i tuoi punti. Alcune ti portano a uno strumento dell'app
-      che ti aiuta a completarle."
+    m_Localized: "Le sfide sono piccole azioni rapide per provare qualcosa di nuovo.
+      Ognuna fa parte di una missione principale e la fai da l\xEC. Te le spiego
+      una per una e, quando l'hai fatto, tocca \xABL'ho fatto!\xBB per guadagnare
+      i tuoi punti. Alcune ti portano a uno strumento dell'app che ti aiuta a completarle."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4888,6 +4889,24 @@ MonoBehaviour:
   - m_Id: 56190243387203733
     m_Localized: "Potrai completare il resto pi\xF9 tardi dalla schermata Home o
       dal tuo profilo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: Vai alla missione principale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "Questa missione fa parte della missione principale \xAB{0}\xBB.
+      La fai da l\xEC."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "Questa sfida fa parte della missione principale \xAB{0}\xBB. La
+      fai da l\xEC."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: Inizia la missione principale di questa sfida per farla.
     m_Metadata:
       m_Items: []
   references:
