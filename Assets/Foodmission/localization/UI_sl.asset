@@ -1885,11 +1885,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Razpon letnega dohodka
+    m_Localized: Osebni bruto letni dohodek
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Izberite razpon letnega dohodka
+    m_Localized: Izberite razpon bruto dohodka
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -4908,6 +4908,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203738
     m_Localized: "Ni\u010D od na\u0161tetega"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203739
+    m_Localized: "Ne \u017Eelim odgovoriti"
     m_Metadata:
       m_Items: []
   references:

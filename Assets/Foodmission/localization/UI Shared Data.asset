@@ -4607,6 +4607,10 @@ MonoBehaviour:
     m_Key: ONBOARDING_PROFILE.OPTION_DIET_NONE
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203739
+    m_Key: ONBOARDING_PROFILE.OPTION_INCOME_PREFER_NOT_TO_SAY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

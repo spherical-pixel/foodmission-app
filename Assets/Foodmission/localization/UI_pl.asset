@@ -1901,11 +1901,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: "Zakres rocznych dochod\xF3w"
+    m_Localized: "Indywidualny roczny doch\xF3d brutto"
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: "Wybierz przedzia\u0142 rocznego dochodu"
+    m_Localized: "Wybierz przedzia\u0142 dochodu brutto"
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -4987,6 +4987,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203738
     m_Localized: "\u017Badne z powy\u017Cszych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203739
+    m_Localized: "Wol\u0119 nie podawa\u0107"
     m_Metadata:
       m_Items: []
   references:

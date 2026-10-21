@@ -21,6 +21,18 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ToJson_ClearAnnualIncome_SendsExplicitNull()
+        {
+            var request = new ProfileUpdateRequest { gender = "MALE", clearAnnualIncome = true };
+
+            string json = request.ToJson();
+
+            StringAssert.Contains("\"annualIncome\":null", json);
+            StringAssert.Contains("\"gender\":\"MALE\"", json);
+            StringAssert.DoesNotContain("currentQuestId", json);
+        }
+
+        [Test]
         public void ToJson_IncludesSettingsWhenSet()
         {
             var request = new ProfileUpdateRequest

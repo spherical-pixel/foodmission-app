@@ -61,6 +61,10 @@ namespace eu.foodmission.platform
         [JsonIgnore]
         public bool clearCurrentQuest;
 
+        /// <summary>Sends <c>"annualIncome": null</c> to remove the stored income ("Prefer not to say").</summary>
+        [JsonIgnore]
+        public bool clearAnnualIncome;
+
         [JsonProperty("healthGoals", NullValueHandling = NullValueHandling.Ignore)]
         public object healthGoals;
 
@@ -91,13 +95,20 @@ namespace eu.foodmission.platform
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-            if (!clearCurrentQuest)
+            if (!clearCurrentQuest && !clearAnnualIncome)
             {
                 return json;
             }
 
             var obj = Newtonsoft.Json.Linq.JObject.Parse(json);
-            obj["currentQuestId"] = Newtonsoft.Json.Linq.JValue.CreateNull();
+            if (clearCurrentQuest)
+            {
+                obj["currentQuestId"] = Newtonsoft.Json.Linq.JValue.CreateNull();
+            }
+            if (clearAnnualIncome)
+            {
+                obj["annualIncome"] = Newtonsoft.Json.Linq.JValue.CreateNull();
+            }
             return obj.ToString(Formatting.None);
         }
     }

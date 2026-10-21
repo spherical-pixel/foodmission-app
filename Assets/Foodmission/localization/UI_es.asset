@@ -1889,11 +1889,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Rango de Ingresos Anuales
+    m_Localized: Ingresos brutos anuales individuales
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Selecciona rango de ingresos anual
+    m_Localized: Selecciona tu rango de ingresos brutos
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -4913,6 +4913,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203738
     m_Localized: Ninguna de las anteriores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203739
+    m_Localized: Prefiero no decirlo
     m_Metadata:
       m_Items: []
   references:

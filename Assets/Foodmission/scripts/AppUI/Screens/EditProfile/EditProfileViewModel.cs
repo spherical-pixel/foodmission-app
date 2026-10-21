@@ -352,19 +352,22 @@ namespace eu.foodmission.platform
                 var (incomes, _) = await _catalogService.GetAnnualIncomeLevelsAsync(lang, countryCode);
                 if (incomes != null && incomes.Length > 0)
                 {
-                    string prevIncomeCode = (_selectedAnnualIncomeIndex >= 0 && _catalogData?.annualIncomeLevels != null && _selectedAnnualIncomeIndex < _catalogData.annualIncomeLevels.Length)
-                        ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code
-                        : null;
+                    string prevIncomeCode = AnnualIncomeSelection.ToCode(_selectedAnnualIncomeIndex, _catalogData?.annualIncomeLevels);
+                    bool preferNotToSay = AnnualIncomeSelection.IsPreferNotToSay(_selectedAnnualIncomeIndex, _catalogData?.annualIncomeLevels);
 
                     if (_catalogData != null)
                     {
                         _catalogData.annualIncomeLevels = incomes;
                     }
-                    AnnualIncomeOptions = incomes.Select(i => i.label).ToList();
+                    AnnualIncomeOptions = AnnualIncomeSelection.BuildOptions(incomes, LocalizationSettings.StringDatabase.GetLocalizedString("UI", AnnualIncomeSelection.PreferNotToSayLabelKey));
 
                     if (!string.IsNullOrEmpty(prevIncomeCode))
                     {
                         SelectedAnnualIncomeIndex = FindCatalogIndex(incomes, prevIncomeCode);
+                    }
+                    else if (preferNotToSay)
+                    {
+                        SelectedAnnualIncomeIndex = AnnualIncomeSelection.PreferNotToSayIndex(incomes);
                     }
                 }
             }
@@ -424,7 +427,7 @@ namespace eu.foodmission.platform
                 GenderOptions = data.genders?.Select(g => g.label).ToList() ?? new List<string>();
                 ActivityLevelOptions = data.activityLevels?.Select(a => a.label).ToList() ?? new List<string>();
                 EducationLevelOptions = data.educationLevels?.Select(e => e.label).ToList() ?? new List<string>();
-                AnnualIncomeOptions = data.annualIncomeLevels?.Select(i => i.label).ToList() ?? new List<string>();
+                AnnualIncomeOptions = AnnualIncomeSelection.BuildOptions(data.annualIncomeLevels, LocalizationSettings.StringDatabase.GetLocalizedString("UI", AnnualIncomeSelection.PreferNotToSayLabelKey));
                 ShoppingResponsibilityOptions = data.shoppingResponsibilities?.Select(s => s.label).ToList() ?? new List<string>();
                 DietaryPreferenceOptions = DietaryPreferenceSelection.BuildOptions(data.dietaryPreferences, LocalizationSettings.StringDatabase.GetLocalizedString("UI", DietaryPreferenceSelection.NoneLabelKey));
 
@@ -568,7 +571,9 @@ namespace eu.foodmission.platform
                     gender = _selectedGenderIndex >= 0 && _catalogData?.genders != null ? _catalogData.genders[_selectedGenderIndex].code : null,
                     activityLevel = _selectedActivityLevelIndex >= 0 && _catalogData?.activityLevels != null ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 && _catalogData?.educationLevels != null ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
-                    annualIncome = _selectedAnnualIncomeIndex >= 0 && _catalogData?.annualIncomeLevels != null ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
+                    annualIncome = AnnualIncomeSelection.ToCode(_selectedAnnualIncomeIndex, _catalogData?.annualIncomeLevels),
+                    clearAnnualIncome = AnnualIncomeSelection.IsPreferNotToSay(_selectedAnnualIncomeIndex, _catalogData?.annualIncomeLevels)
+                        && !string.IsNullOrEmpty(state.userAnnualIncome),
                     yearOfBirth = SelectedYearOfBirthIndex >= 0 ? (int?)int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : null,
 
                     preferences = (hasShopping || hasDietary || hasSurvey || hasMotivation || hasDailyTime)
@@ -598,11 +603,6 @@ namespace eu.foodmission.platform
                 if (SelectedEducationLevelIndex >= 0 && _catalogData.educationLevels[SelectedEducationLevelIndex].code != state.userEducationLevel)
                 {
                     request.educationLevel = _catalogData.educationLevels[SelectedEducationLevelIndex].code;
-                }
-
-                if (SelectedAnnualIncomeIndex >= 0 && _catalogData.annualIncomeLevels[SelectedAnnualIncomeIndex].code != state.userAnnualIncome)
-                {
-                    request.annualIncome = _catalogData.annualIncomeLevels[SelectedAnnualIncomeIndex].code;
                 }
 
                 int currentYear = SelectedYearOfBirthIndex >= 0 ? int.Parse(YearOfBirthOptions[SelectedYearOfBirthIndex]) : 0;

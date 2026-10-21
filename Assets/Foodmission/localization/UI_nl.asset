@@ -1896,11 +1896,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Jaarinkomen (bereik)
+    m_Localized: Individueel bruto jaarinkomen
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Selecteer een inkomensklasse
+    m_Localized: Selecteer je bruto-inkomensklasse
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -4920,6 +4920,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203738
     m_Localized: Geen van bovenstaande
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203739
+    m_Localized: Zeg ik liever niet
     m_Metadata:
       m_Items: []
   references:

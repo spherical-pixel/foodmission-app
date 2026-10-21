@@ -241,7 +241,7 @@ namespace eu.foodmission.platform
                 GenderOptions = data.genders?.Select(g => g.label).ToList() ?? new List<string>();
                 ActivityLevelOptions = data.activityLevels?.Select(a => a.label).ToList() ?? new List<string>();
                 EducationLevelOptions = data.educationLevels?.Select(e => e.label).ToList() ?? new List<string>();
-                AnnualIncomeOptions = data.annualIncomeLevels?.Select(i => i.label).ToList() ?? new List<string>();
+                AnnualIncomeOptions = AnnualIncomeSelection.BuildOptions(data.annualIncomeLevels, GetLocalized(AnnualIncomeSelection.PreferNotToSayLabelKey));
                 ShoppingResponsibilityOptions = data.shoppingResponsibilities?.Select(s => s.label).ToList() ?? new List<string>();
                 DietaryPreferenceOptions = DietaryPreferenceSelection.BuildOptions(data.dietaryPreferences, GetLocalized(DietaryPreferenceSelection.NoneLabelKey));
 
@@ -405,7 +405,8 @@ namespace eu.foodmission.platform
                     gender = _selectedGenderIndex >= 0 && _catalogData?.genders != null ? _catalogData.genders[_selectedGenderIndex].code : null,
                     activityLevel = _selectedActivityLevelIndex >= 0 && _catalogData?.activityLevels != null ? _catalogData.activityLevels[_selectedActivityLevelIndex].code : null,
                     educationLevel = _selectedEducationLevelIndex >= 0 && _catalogData?.educationLevels != null ? _catalogData.educationLevels[_selectedEducationLevelIndex].code : null,
-                    annualIncome = _selectedAnnualIncomeIndex >= 0 && _catalogData?.annualIncomeLevels != null ? _catalogData.annualIncomeLevels[_selectedAnnualIncomeIndex].code : null,
+                    annualIncome = AnnualIncomeSelection.ToCode(_selectedAnnualIncomeIndex, _catalogData?.annualIncomeLevels),
+                    clearAnnualIncome = AnnualIncomeSelection.IsPreferNotToSay(_selectedAnnualIncomeIndex, _catalogData?.annualIncomeLevels),
 
                     preferences = new ProfileUpdatePreferences
                     {
