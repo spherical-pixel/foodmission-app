@@ -2140,32 +2140,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
-    m_Localized: Missioni
+    m_Localized: Percorsi
     m_Metadata:
       m_Items: []
   - m_Id: 44135210076332032
-    m_Localized: Non sono state trovate missioni corrispondenti ai filtri selezionati.
+    m_Localized: Non sono stati trovati percorsi corrispondenti ai filtri selezionati.
     m_Metadata:
       m_Items: []
   - m_Id: 44177849203023872
-    m_Localized: 'Missione attiva:'
+    m_Localized: 'Percorso attivo:'
     m_Metadata:
       m_Items: []
   - m_Id: 44181617910996992
-    m_Localized: Inizia la missione
+    m_Localized: Inizia il percorso
     m_Metadata:
       m_Items: []
   - m_Id: 44181804343615488
-    m_Localized: Quest Active
+    m_Localized: Percorso attivo
     m_Metadata:
       m_Items: []
   - m_Id: 44193049838870528
-    m_Localized: "Hai gi\xE0 una missione attiva in corso. Sei sicuro di voler apportare
+    m_Localized: "Hai gi\xE0 un percorso attivo in corso. Sei sicuro di voler apportare
       questa modifica?"
     m_Metadata:
       m_Items: []
   - m_Id: 44196897802412032
-    m_Localized: Modifica missione
+    m_Localized: Cambia percorso
     m_Metadata:
       m_Items: []
   - m_Id: 44197097057017856
@@ -3180,11 +3180,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44199025098874880
-    m_Localized: Scegli una missione per iniziare a imparare e a fare progressi.
+    m_Localized: Scegli un percorso per iniziare a imparare e a fare progressi.
     m_Metadata:
       m_Items: []
   - m_Id: 44199294499020800
-    m_Localized: Esplora le missioni
+    m_Localized: Esplora i percorsi
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232936
@@ -3299,7 +3299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347392
-    m_Localized: Quest bloccata
+    m_Localized: Percorso bloccato
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347393
@@ -3308,11 +3308,11 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 52041725676347394
-    m_Localized: Nuova quest sbloccata!
+    m_Localized: Nuovo percorso sbloccato!
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347395
-    m_Localized: la quest precedente
+    m_Localized: il percorso precedente
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397
@@ -3642,7 +3642,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347469
-    m_Localized: Inizia la quest di questa missione per registrare i tuoi progressi.
+    m_Localized: Inizia il percorso di questa missione per registrare i tuoi progressi.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347470
@@ -4125,11 +4125,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247376
-    m_Localized: Tutte le quest completate!
+    m_Localized: Tutti i percorsi completati!
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: Hai completato tutte le quest di {0}. Esplora altre aree per continuare
+    m_Localized: Hai completato tutti i percorsi di {0}. Esplora altre aree per continuare
       a progredire.
     m_Metadata:
       m_Items: []
@@ -4653,8 +4653,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203689
-    m_Localized: Al momento non hai nessuna missione in corso. Diamo un'occhiata
-      alle missioni e ne scegliamo una?
+    m_Localized: Al momento non hai nessun percorso in corso. Diamo un'occhiata ai
+      percorsi e ne scegliamo uno?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203690
@@ -4702,9 +4702,9 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 56190243387203700
-    m_Localized: 'Tutto ruota attorno alle missioni principali: ognuna contiene diverse
-      missioni con piccoli cambiamenti alle tue abitudini. Scegline una e completa
-      le sue missioni per salire di livello.'
+    m_Localized: 'Tutto ruota attorno ai percorsi: ognuno contiene diverse missioni
+      con piccoli cambiamenti alle tue abitudini. Scegline uno e completa le sue
+      missioni per salire di livello.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203701
@@ -4715,9 +4715,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203702
     m_Localized: "Per muoverti: in basso hai quello che usi ogni giorno \u2014 registro
-      dei pasti, ricerca rapida, lista della spesa e dispensa. Tocca \u2630 per missioni,
-      sfide, conoscenza, ricette e spreco alimentare. Se ti perdi, tocca il ? in
-      ogni sezione."
+      dei pasti, ricerca rapida, lista della spesa e dispensa. Tocca \u2630 per percorsi,
+      missioni, sfide, conoscenza, ricette e spreco alimentare. Se ti perdi, tocca
+      il ? in ogni sezione."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203703
@@ -4750,26 +4750,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203707
-    m_Localized: 'Le missioni principali sono i grandi obiettivi di FOODMISSION,
-      organizzati per tema e livello. Ognuna contiene diverse missioni. Scegline
-      una per iniziare: completandola si sblocca la successiva e, quando finisci
-      tutte quelle del tuo livello, sali di livello in quel tema.'
+    m_Localized: 'I percorsi sono i grandi obiettivi di FOODMISSION, organizzati
+      per tema e livello. Ognuno contiene diverse missioni. Scegline uno per iniziare:
+      completandolo si sblocca il successivo e, quando finisci tutti quelli del tuo
+      livello, sali di livello in quel tema.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
     m_Localized: "Qui trovi tutte le missioni, divise per tema. Ognuna \xE8 un piccolo
-      cambiamento di abitudine per qualche giorno e fa parte di una missione principale:
-      per farla, inizia la sua missione principale e poi avvia la missione da l\xEC.
-      Avanzano da sole con il registro dei pasti, oppure puoi dirmelo con \xABRaccontalo
-      a {global.PET_NAME}\xBB."
+      cambiamento di abitudine per qualche giorno e fa parte di un percorso: per
+      farla, inizia il suo percorso e poi avvia la missione da l\xEC. Avanzano da
+      sole con il registro dei pasti, oppure puoi dirmelo con \xABRaccontalo a {global.PET_NAME}\xBB."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690409
   - m_Id: 56190243387203709
     m_Localized: "Le sfide sono piccole azioni rapide per provare qualcosa di nuovo.
-      Ognuna fa parte di una missione principale e la fai da l\xEC. Te le spiego
-      una per una e, quando l'hai fatto, tocca \xABL'ho fatto!\xBB per guadagnare
-      i tuoi punti. Alcune ti portano a uno strumento dell'app che ti aiuta a completarle."
+      Ognuna fa parte di un percorso e la fai da l\xEC. Te le spiego una per una
+      e, quando l'hai fatto, tocca \xABL'ho fatto!\xBB per guadagnare i tuoi punti.
+      Alcune ti portano a uno strumento dell'app che ti aiuta a completarle."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4885,21 +4884,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203734
-    m_Localized: Vai alla missione principale
+    m_Localized: Vai al percorso
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203735
-    m_Localized: "Questa missione fa parte della missione principale \xAB{0}\xBB.
-      La fai da l\xEC."
+    m_Localized: "Questa missione fa parte del percorso \xAB{0}\xBB. La fai da l\xEC."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203736
-    m_Localized: "Questa sfida fa parte della missione principale \xAB{0}\xBB. La
-      fai da l\xEC."
+    m_Localized: "Questa sfida fa parte del percorso \xAB{0}\xBB. La fai da l\xEC."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203737
-    m_Localized: Inizia la missione principale di questa sfida per farla.
+    m_Localized: Inizia il percorso di questa sfida per farla.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203738

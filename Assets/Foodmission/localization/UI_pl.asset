@@ -2163,7 +2163,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44177849203023872
-    m_Localized: 'Aktywna misja:'
+    m_Localized: 'Aktywne zadanie:'
     m_Metadata:
       m_Items: []
   - m_Id: 44181617910996992
@@ -2171,7 +2171,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44181804343615488
-    m_Localized: Quest Active
+    m_Localized: Zadanie aktywne
     m_Metadata:
       m_Items: []
   - m_Id: 44193049838870528
@@ -3682,7 +3682,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347469
-    m_Localized: "Rozpocznij questa tej misji, aby zg\u0142asza\u0107 post\u0119py."
+    m_Localized: "Rozpocznij zadanie tej misji, aby zg\u0142asza\u0107 post\u0119py."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347470

@@ -717,7 +717,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000104
-    m_Localized: "Kunne ikke slette fullf\xF8rte oppgaver"
+    m_Localized: Kunne ikke fjerne avkryssede varer
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000105
@@ -1903,7 +1903,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34040348811452416
-    m_Localized: Ansvarlig shopping
+    m_Localized: "Ansvarlig for matinnkj\xF8p"
     m_Metadata:
       m_Items: []
   - m_Id: 34040572049088512
@@ -2117,7 +2117,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44130372064108544
-    m_Localized: MISSJON
+    m_Localized: OPPDRAG
     m_Metadata:
       m_Items: []
   - m_Id: 44130442662633472
@@ -2133,32 +2133,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
-    m_Localized: Oppdrag
+    m_Localized: Quester
     m_Metadata:
       m_Items: []
   - m_Id: 44135210076332032
-    m_Localized: Det ble ikke funnet noen oppdrag som samsvarer med de valgte filtrene.
+    m_Localized: Det ble ikke funnet noen quester som samsvarer med de valgte filtrene.
     m_Metadata:
       m_Items: []
   - m_Id: 44177849203023872
-    m_Localized: 'Aktiv oppgave:'
+    m_Localized: 'Aktiv quest:'
     m_Metadata:
       m_Items: []
   - m_Id: 44181617910996992
-    m_Localized: Start oppdrag
+    m_Localized: Start quest
     m_Metadata:
       m_Items: []
   - m_Id: 44181804343615488
-    m_Localized: Quest Active
+    m_Localized: Aktiv quest
     m_Metadata:
       m_Items: []
   - m_Id: 44193049838870528
-    m_Localized: "Du har allerede et aktivt oppdrag p\xE5 gang. Er du sikker p\xE5
-      at du vil foreta endringen?"
+    m_Localized: "Du har allerede en aktiv quest p\xE5 gang. Er du sikker p\xE5 at
+      du vil foreta endringen?"
     m_Metadata:
       m_Items: []
   - m_Id: 44196897802412032
-    m_Localized: Endre oppdrag
+    m_Localized: Bytt quest
     m_Metadata:
       m_Items: []
   - m_Id: 44197097057017856
@@ -2199,7 +2199,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 47094236238045184
-    m_Localized: "Oppdrag fullf\xF8rt!"
+    m_Localized: "Quest fullf\xF8rt!"
     m_Metadata:
       m_Items: []
   - m_Id: 47094236242239488
@@ -3173,11 +3173,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44199025098874880
-    m_Localized: "Velg et oppdrag for \xE5 begynne \xE5 l\xE6re og gj\xF8re fremskritt."
+    m_Localized: "Velg en quest for \xE5 begynne \xE5 l\xE6re og gj\xF8re fremskritt."
     m_Metadata:
       m_Items: []
   - m_Id: 44199294499020800
-    m_Localized: Utforsk oppdrag
+    m_Localized: Utforsk quester
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232936
@@ -3292,7 +3292,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347392
-    m_Localized: "L\xE5st oppdrag"
+    m_Localized: "L\xE5st quest"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347393
@@ -3301,11 +3301,11 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 52041725676347394
-    m_Localized: "Nytt oppdrag l\xE5st opp!"
+    m_Localized: "Ny quest l\xE5st opp!"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347395
-    m_Localized: det forrige oppdraget
+    m_Localized: den forrige questen
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397
@@ -4117,11 +4117,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247376
-    m_Localized: "Alle oppdrag fullf\xF8rt!"
+    m_Localized: "Alle quester fullf\xF8rt!"
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Du har fullf\xF8rt alle oppdragene i {0}. Utforsk andre omr\xE5der
+    m_Localized: "Du har fullf\xF8rt alle questene i {0}. Utforsk andre omr\xE5der
       for \xE5 komme videre."
     m_Metadata:
       m_Items: []
@@ -4647,8 +4647,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203689
-    m_Localized: "Du har ikke noe oppdrag i gang akkurat n\xE5. Skal vi se p\xE5
-      oppdragene og velge ett?"
+    m_Localized: "Du har ingen quest i gang akkurat n\xE5. Skal vi se p\xE5 questene
+      og velge \xE9n?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203690
@@ -4665,7 +4665,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203693
-    m_Localized: Oppdrag
+    m_Localized: Quest
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203694
@@ -4695,8 +4695,8 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 56190243387203700
-    m_Localized: "Alt dreier seg om oppdrag: hvert oppdrag har flere sm\xE5 utfordringer
-      som endrer vanene dine litt. Velg et oppdrag og fullf\xF8r det for \xE5 g\xE5
+    m_Localized: "Alt dreier seg om quester: hver quest har flere oppdrag med sm\xE5
+      endringer i vanene dine. Velg en quest og fullf\xF8r oppdragene for \xE5 g\xE5
       opp et niv\xE5."
     m_Metadata:
       m_Items: []
@@ -4709,8 +4709,8 @@ MonoBehaviour:
   - m_Id: 56190243387203702
     m_Localized: "Slik finner du frem: nederst har du det du bruker hver dag \u2014
       m\xE5ltidslogg, hurtigs\xF8k, handleliste og spiskammer. Trykk p\xE5 \u2630
-      for oppdrag, utfordringer, kunnskap, oppskrifter og matsvinn. Hvis du g\xE5r
-      deg vill, trykk p\xE5 ? i hver del."
+      for quester, oppdrag, utfordringer, kunnskap, oppskrifter og matsvinn. Hvis
+      du g\xE5r deg vill, trykk p\xE5 ? i hver del."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203703
@@ -4744,24 +4744,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203707
-    m_Localized: "Oppdragene er de store m\xE5lene i FOODMISSION, ordnet etter tema
-      og niv\xE5. Hvert oppdrag har flere deloppgaver. Velg ett for \xE5 starte:
-      n\xE5r du fullf\xF8rer det, l\xE5ses det neste opp, og n\xE5r du er ferdig
-      med alle p\xE5 ditt niv\xE5, g\xE5r du opp et niv\xE5 i det temaet."
+    m_Localized: "Questene er de store m\xE5lene i FOODMISSION, ordnet etter tema
+      og niv\xE5. Hver quest har flere oppdrag. Velg \xE9n for \xE5 starte: n\xE5r
+      du fullf\xF8rer den, l\xE5ses den neste opp, og n\xE5r du er ferdig med alle
+      p\xE5 ditt niv\xE5, g\xE5r du opp et niv\xE5 i det temaet."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "Her ser du alle deloppgavene, ordnet etter tema. Hver av dem er
-      en liten vaneendring over noen dager og h\xF8rer til et oppdrag: for \xE5 gj\xF8re
-      den, start oppdraget og start deretter deloppgaven derfra. De g\xE5r framover
-      av seg selv med m\xE5ltidsloggen din, eller du kan fortelle meg det med \xABFortell
+    m_Localized: "Her ser du alle oppdragene, ordnet etter tema. Hvert oppdrag er
+      en liten vaneendring over noen dager og h\xF8rer til en quest: for \xE5 gj\xF8re
+      det, start questen og start deretter oppdraget derfra. De g\xE5r framover av
+      seg selv med m\xE5ltidsloggen din, eller du kan fortelle meg det med \xABFortell
       det til {global.PET_NAME}\xBB."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 56190243387203709
     m_Localized: "Utfordringer er sm\xE5, raske handlinger for \xE5 pr\xF8ve noe
-      nytt. Hver av dem h\xF8rer til et oppdrag, og du gj\xF8r den fra det oppdraget.
+      nytt. Hver av dem h\xF8rer til en quest, og du gj\xF8r den fra den questen.
       Jeg forklarer hver av dem, og n\xE5r du har gjort det, trykker du p\xE5 \xABJeg
       har gjort det!\xBB for \xE5 f\xE5 poengene dine. Noen tar deg til et verkt\xF8y
       i appen som hjelper deg \xE5 fullf\xF8re dem."
@@ -4880,21 +4880,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203734
-    m_Localized: "G\xE5 til oppdraget"
+    m_Localized: "G\xE5 til questen"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203735
-    m_Localized: "Denne deloppgaven h\xF8rer til oppdraget \xAB{0}\xBB. Du gj\xF8r
-      den fra det oppdraget."
+    m_Localized: "Dette oppdraget h\xF8rer til questen \xAB{0}\xBB. Du gj\xF8r det
+      fra den questen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203736
-    m_Localized: "Denne utfordringen h\xF8rer til oppdraget \xAB{0}\xBB. Du gj\xF8r
-      den fra det oppdraget."
+    m_Localized: "Denne utfordringen h\xF8rer til questen \xAB{0}\xBB. Du gj\xF8r
+      den fra den questen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203737
-    m_Localized: "Start oppdraget til denne utfordringen for \xE5 gj\xF8re den."
+    m_Localized: "Start questen til denne utfordringen for \xE5 gj\xF8re den."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203738

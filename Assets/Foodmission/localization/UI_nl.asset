@@ -2161,24 +2161,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44177849203023872
-    m_Localized: 'Actieve zoektocht:'
+    m_Localized: 'Actieve opdracht:'
     m_Metadata:
       m_Items: []
   - m_Id: 44181617910996992
-    m_Localized: Begin de missie
+    m_Localized: Start de opdracht
     m_Metadata:
       m_Items: []
   - m_Id: 44181804343615488
-    m_Localized: Quest Active
+    m_Localized: Opdracht actief
     m_Metadata:
       m_Items: []
   - m_Id: 44193049838870528
-    m_Localized: Je hebt al een actieve missie lopen. Weet je zeker dat je deze wijziging
-      wilt doorvoeren?
+    m_Localized: Je hebt al een actieve opdracht lopen. Weet je zeker dat je deze
+      wijziging wilt doorvoeren?
     m_Metadata:
       m_Items: []
   - m_Id: 44196897802412032
-    m_Localized: Quest wijzigen
+    m_Localized: Opdracht wijzigen
     m_Metadata:
       m_Items: []
   - m_Id: 44197097057017856
@@ -3197,7 +3197,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44199294499020800
-    m_Localized: Ontdek missies
+    m_Localized: Ontdek opdrachten
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232936
@@ -3312,7 +3312,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347392
-    m_Localized: Vergrendelde quest
+    m_Localized: Vergrendelde opdracht
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347393
@@ -3321,11 +3321,11 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 52041725676347394
-    m_Localized: Nieuwe quest ontgrendeld!
+    m_Localized: Nieuwe opdracht ontgrendeld!
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347395
-    m_Localized: de vorige quest
+    m_Localized: de vorige opdracht
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397
@@ -3653,7 +3653,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347469
-    m_Localized: Start de quest van deze missie om je voortgang te melden.
+    m_Localized: Start de opdracht van deze missie om je voortgang te melden.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347470
@@ -4133,12 +4133,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247376
-    m_Localized: Alle quests voltooid!
+    m_Localized: Alle opdrachten voltooid!
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: Je hebt alle quests van {0} voltooid. Ontdek andere gebieden om
-      verder te gaan.
+    m_Localized: Je hebt alle opdrachten van {0} voltooid. Ontdek andere gebieden
+      om verder te gaan.
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247378

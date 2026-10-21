@@ -2119,7 +2119,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44130372064108544
-    m_Localized: POSLANSTVO
+    m_Localized: MISIJA
     m_Metadata:
       m_Items: []
   - m_Id: 44130442662633472
@@ -2151,7 +2151,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44181804343615488
-    m_Localized: Quest Active
+    m_Localized: Aktivna naloga
     m_Metadata:
       m_Items: []
   - m_Id: 44193049838870528
@@ -2160,7 +2160,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44196897802412032
-    m_Localized: "Naloga \xBBSprememba\xAB"
+    m_Localized: Zamenjaj nalogo
     m_Metadata:
       m_Items: []
   - m_Id: 44197097057017856
@@ -3640,7 +3640,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347469
-    m_Localized: "Za\u010Dni quest te misije, da bo\u0161 lahko bele\u017Eil napredek."
+    m_Localized: "Za\u010Dni nalogo te misije, da bo\u0161 lahko bele\u017Eil napredek."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347470
