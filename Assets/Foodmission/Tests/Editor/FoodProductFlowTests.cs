@@ -35,8 +35,8 @@ namespace eu.foodmission.platform.Tests
             var (result, error) = await FoodProductFlow.SearchProductsAsync(_mockFoodService.Object, _mockOffService.Object, "apple");
 
             Assert.IsNull(error);
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("Backend Product", result[0].name);
+            Assert.AreEqual(1, result.products.Length);
+            Assert.AreEqual("Backend Product", result.products[0].name);
 
             _mockFoodService.Verify(f => f.SearchOpenFoodFactsAsync("apple", 1, 20), Times.Once);
             _mockOffService.Verify(o => o.SearchAsync(It.IsAny<string>(), It.IsAny<int>()), Times.Never);
@@ -50,7 +50,7 @@ namespace eu.foodmission.platform.Tests
             var (result, error) = await FoodProductFlow.SearchProductsAsync(_mockFoodService.Object, _mockOffService.Object, "ap");
 
             Assert.IsNull(error);
-            Assert.AreEqual(0, result.Count);
+            Assert.AreEqual(0, result.products.Length);
 
             _mockFoodService.Verify(f => f.SearchOpenFoodFactsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
             _mockOffService.Verify(o => o.SearchAsync(It.IsAny<string>(), It.IsAny<int>()), Times.Never);
@@ -73,8 +73,8 @@ namespace eu.foodmission.platform.Tests
             var (result, error) = await FoodProductFlow.SearchProductsAsync(_mockFoodService.Object, _mockOffService.Object, "apple");
 
             Assert.IsNull(error);
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("OFF Direct Product", result[0].name);
+            Assert.AreEqual(1, result.products.Length);
+            Assert.AreEqual("OFF Direct Product", result.products[0].name);
 
             _mockFoodService.Verify(f => f.SearchOpenFoodFactsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
             _mockOffService.Verify(o => o.SearchAsync("apple", 1), Times.Once);

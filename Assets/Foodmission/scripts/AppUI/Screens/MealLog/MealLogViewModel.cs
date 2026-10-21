@@ -514,31 +514,20 @@ namespace eu.foodmission.platform
 
         // ========= FMSearchOrCategoryField delegates =========
 
-        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
+        public async Task<FoodSearchPage> SearchFoodsPageAsync(string query, int page, bool includeGeneric, bool includeProducts)
         {
-            var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
+            var (result, error) = await FoodSearchFlow.SearchAsync(_genericFoodService, _foodProductService, _openFoodFactsClientService,
+                query, page, includeGeneric, includeProducts);
             if (error != null)
             {
                 ErrorDetail = error;
-                return new List<OpenFoodFactsProduct>();
             }
-            return products ?? new List<OpenFoodFactsProduct>();
+            return result;
         }
 
         public async Task<List<GenericFood>> GetGenericFoodsAsync()
         {
             var (response, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
-            if (error != null)
-            {
-                ErrorDetail = error;
-                return new List<GenericFood>();
-            }
-            return response?.items != null ? new List<GenericFood>(response.items) : new List<GenericFood>();
-        }
-
-        public async Task<List<GenericFood>> SearchGenericFoodsAsync(string query)
-        {
-            var (response, error) = await _genericFoodService.SearchGenericFoodsAsync(query, pageSize: 20);
             if (error != null)
             {
                 ErrorDetail = error;

@@ -49,12 +49,12 @@ namespace eu.foodmission.platform.Components
         public bool AutoOpenCategories { get; set; }
 
         // ========= CALLBACKS (set by consuming screen) =========
-        public Func<string, Task<List<OpenFoodFactsProduct>>> SearchProductsAsync { get; set; }
+        // (query, page, includeGeneric, includeProducts) -> one page of results, see FoodSearchFlow
+        public Func<string, int, bool, bool, Task<FoodSearchPage>> SearchFoodsAsync { get; set; }
         public Func<Task<List<GenericFood>>> GetGenericFoodsAsync { get; set; }
         public Func<OpenFoodFactsProduct, float?, string, Task> OnProductConfirmed { get; set; }
         public Func<GenericFood, float?, string, Task> OnGenericFoodConfirmed { get; set; }
 
-        public Func<string, Task<List<GenericFood>>> SearchGenericFoodsAsync { get; set; }
         public Func<string, int, int, Task<PaginatedGenericFoodResponse>> SearchByFoodGroupAsync { get; set; }
         public Func<string, Task> OnCreateItemAsync { get; set; }
         public Action<string> OnTextChanged { get; set; }
@@ -210,10 +210,12 @@ namespace eu.foodmission.platform.Components
         private object _selectedItem;
         private bool _genericEnabled = true;
         private bool _productsEnabled;
-        private const int MaxSearchResults = 10;
         private const int PageSize = 10;
         private int _currentPage;
         private int _totalPages;
+        private string _searchQuery;
+        private int _searchPage;
+        private int _searchTotalPages;
         private string _currentFoodGroup;
         private string _currentFoodGroupSlug;
         private VisualElement _paginationContainer;
@@ -522,6 +524,7 @@ namespace eu.foodmission.platform.Components
                 _categoryContainer.style.display = DisplayStyle.None;
                 _confirmContainer.style.display = DisplayStyle.None;
                 _searchResultsContainer.style.display = DisplayStyle.Flex;
+                _paginationContainer.style.display = _searchTotalPages > 1 ? DisplayStyle.Flex : DisplayStyle.None;
                 _resultsContainer.style.display = DisplayStyle.Flex;
                 return;
             }
@@ -542,6 +545,7 @@ namespace eu.foodmission.platform.Components
 
             _searchResultsContainer.style.display = DisplayStyle.None;
             _confirmContainer.style.display = DisplayStyle.None;
+            _paginationContainer.style.display = DisplayStyle.None;
             _categoryContainer.style.display = DisplayStyle.Flex;
             _resultsContainer.style.display = DisplayStyle.Flex;
             _spinner.style.display = DisplayStyle.None;
@@ -727,7 +731,11 @@ namespace eu.foodmission.platform.Components
 
             if (_totalPages > 1)
             {
-                BuildPaginationBar();
+                BuildPaginationBar(_currentPage, _totalPages, page =>
+                {
+                    _currentPage = page;
+                    _ = LoadCategoryPageAsync();
+                });
             }
 
             _categoryContainer.style.display = DisplayStyle.Flex;
@@ -736,40 +744,37 @@ namespace eu.foodmission.platform.Components
             _resultsContainer.style.display = DisplayStyle.Flex;
         }
 
-        private void BuildPaginationBar()
+        private void BuildPaginationBar(int currentPage, int totalPages, Action<int> goToPage)
         {
             _paginationContainer.Clear();
 
             var prevBtn = new Unity.AppUI.UI.Button { title = "@UI:txtPrevious", quiet = true };
             prevBtn.leadingIcon = "fm-arrow-left";
-            prevBtn.SetEnabled(_currentPage > 1);
+            prevBtn.SetEnabled(currentPage > 1);
             prevBtn.RegisterCallback<ClickEvent>(evt =>
             {
                 evt.StopPropagation();
-                if (_currentPage > 1)
+                if (currentPage > 1)
                 {
-                    _currentPage--;
-                    _ = LoadCategoryPageAsync();
+                    goToPage(currentPage - 1);
                 }
             });
             _paginationContainer.Add(prevBtn);
 
-            //var pageLabel = new Text { text = $"Page {_currentPage} of {_totalPages}" };
-            var pageLabel = new Text { text = new LocalizedOption("UI", "txtPage_n_of_pages", _currentPage, _totalPages).GetText() };
+            var pageLabel = new Text { text = new LocalizedOption("UI", "txtPage_n_of_pages", currentPage, totalPages).GetText() };
             pageLabel.style.flexGrow = 1;
             pageLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
             _paginationContainer.Add(pageLabel);
 
             var nextBtn = new Unity.AppUI.UI.Button { title = "@UI:TXT_NEXT", quiet = true };
             nextBtn.trailingIcon = "fm-arrow-right";
-            nextBtn.SetEnabled(_currentPage < _totalPages);
+            nextBtn.SetEnabled(currentPage < totalPages);
             nextBtn.RegisterCallback<ClickEvent>(evt =>
             {
                 evt.StopPropagation();
-                if (_currentPage < _totalPages)
+                if (currentPage < totalPages)
                 {
-                    _currentPage++;
-                    _ = LoadCategoryPageAsync();
+                    goToPage(currentPage + 1);
                 }
             });
             _paginationContainer.Add(nextBtn);
@@ -802,6 +807,7 @@ namespace eu.foodmission.platform.Components
 
             _searchResultsContainer.style.display = DisplayStyle.None;
             _categoryContainer.style.display = DisplayStyle.None;
+            _paginationContainer.style.display = DisplayStyle.None;
 
             _selectedNameLabel.text = genericFood.foodName;
             _confirmContainer.style.display = DisplayStyle.Flex;
@@ -855,72 +861,50 @@ namespace eu.foodmission.platform.Components
 
             if (_currentMode != Mode.Categories && _currentMode != Mode.Searching) return;
 
+            _searchQuery = query;
+            _searchPage = 1;
+            await LoadSearchPageAsync(ct);
+        }
+
+        private void GoToSearchPage(int page)
+        {
+            _debounceCts?.Cancel();
+            _debounceCts?.Dispose();
+            _debounceCts = new CancellationTokenSource();
+
+            _searchPage = page;
+            _ = LoadSearchPageAsync(_debounceCts.Token);
+        }
+
+        private async Task LoadSearchPageAsync(CancellationToken ct)
+        {
             SetMode(Mode.Searching);
             _categoryContainer.style.display = DisplayStyle.None;
             _searchResultsContainer.Clear();
+            _paginationContainer.style.display = DisplayStyle.None;
             _spinner.style.display = DisplayStyle.Flex;
 
-            // Run only the enabled search sources
-            var tasks = new List<Task>();
-
-            Task<List<GenericFood>> genericTask = null;
-            Task<List<OpenFoodFactsProduct>> productTask = null;
-
-            if (_genericEnabled && SearchGenericFoodsAsync != null)
+            FoodSearchPage result = null;
+            if (SearchFoodsAsync != null && (_genericEnabled || _productsEnabled))
             {
-                genericTask = SearchGenericFoodsAsync(query);
-                tasks.Add(genericTask);
-            }
-
-            if (_productsEnabled && SearchProductsAsync != null)
-            {
-                productTask = SearchProductsAsync(query);
-                tasks.Add(productTask);
-            }
-
-            if (tasks.Count > 0)
-            {
-                await Task.WhenAll(tasks);
+                try
+                {
+                    result = await SearchFoodsAsync(_searchQuery, _searchPage, _genericEnabled, _productsEnabled);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{GetType().Name}] LoadSearchPageAsync failed: {ex.Message}");
+                }
             }
 
             if (ct.IsCancellationRequested) return;
 
             _spinner.style.display = DisplayStyle.None;
 
-            // Collect and score results
-            var scored = new List<(object item, int score, string name)>();
-
-            if (_genericEnabled && genericTask?.Result != null)
+            // Each source keeps the order the API returned (see FoodSearchFlow)
+            if (result?.Items != null && result.Items.Count > 0)
             {
-                foreach (var gf in genericTask.Result)
-                {
-                    int score = ScoreRelevance(query, gf.foodName);
-                    scored.Add((gf, score, gf.foodName));
-                }
-            }
-
-            if (_productsEnabled && productTask?.Result != null)
-            {
-                foreach (var prod in productTask.Result)
-                {
-                    int score = ScoreRelevance(query, prod.name);
-                    scored.Add((prod, score, prod.name));
-                }
-            }
-
-            // Sort: descending score, then ascending name
-            scored.Sort((a, b) =>
-            {
-                int cmp = b.score.CompareTo(a.score);
-                return cmp != 0 ? cmp : string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase);
-            });
-
-            // Take top N
-            var topResults = scored.Take(MaxSearchResults).ToList();
-
-            if (topResults.Count > 0)
-            {
-                foreach (var (item, _, _) in topResults)
+                foreach (object item in result.Items)
                 {
                     _searchResultsContainer.Add(MakeResultRow(item, OnResultClicked));
                 }
@@ -935,17 +919,15 @@ namespace eu.foodmission.platform.Components
                 _searchResultsContainer.Add(noResults);
             }
 
-            _lastResultsQuery = query;
+            _searchTotalPages = result?.TotalPages ?? 0;
+            if (_searchTotalPages > 1)
+            {
+                BuildPaginationBar(_searchPage, _searchTotalPages, GoToSearchPage);
+            }
+
+            _lastResultsQuery = _searchQuery;
             _resultsContainer.style.display = DisplayStyle.Flex;
             _searchResultsContainer.style.display = DisplayStyle.Flex;
-        }
-
-        private static int ScoreRelevance(string query, string name)
-        {
-            if (string.IsNullOrEmpty(name)) return 0;
-            if (name.StartsWith(query, StringComparison.OrdinalIgnoreCase)) return 200;
-            if (name.Contains(query, StringComparison.OrdinalIgnoreCase)) return 100;
-            return 0;
         }
 
         private void OnResultClicked(object item)
@@ -978,6 +960,7 @@ namespace eu.foodmission.platform.Components
             _resultsContainer.style.display = DisplayStyle.Flex;
             _searchResultsContainer.style.display = DisplayStyle.None;
             _categoryContainer.style.display = DisplayStyle.None;
+            _paginationContainer.style.display = DisplayStyle.None;
 
             string name;
             if (item is OpenFoodFactsProduct food)

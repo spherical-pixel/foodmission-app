@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eu.foodmission.platform
@@ -8,36 +7,25 @@ namespace eu.foodmission.platform
     {
         public static Func<bool> UseDirectClientOverride { get; set; } = () => ApiConfig.UseDirectOpenFoodFactsClient;
 
-        public static async Task<(List<OpenFoodFactsProduct> Result, ApiErrorResponse Error)> SearchProductsAsync(
+        // The direct client ignores pageSize: its page size comes from the environment config
+        public static async Task<(OpenFoodFactsSearchResponse Result, ApiErrorResponse Error)> SearchProductsAsync(
             IFoodProductService foodService,
             IOpenFoodFactsClientService offService,
-            string query)
+            string query,
+            int page = 1,
+            int pageSize = 20)
         {
             if (UseDirectClientOverride())
             {
                 if (string.IsNullOrWhiteSpace(query) || query.Trim().Length < 3)
                 {
-                    return (new List<OpenFoodFactsProduct>(), null);
+                    return (new OpenFoodFactsSearchResponse { products = Array.Empty<OpenFoodFactsProduct>() }, null);
                 }
 
-                var (response, error) = await offService.SearchAsync(query, 1);
-                if (error != null)
-                {
-                    return (null, error);
-                }
-
-                return (response?.products != null ? new List<OpenFoodFactsProduct>(response.products) : new List<OpenFoodFactsProduct>(), null);
+                return await offService.SearchAsync(query, page);
             }
-            else
-            {
-                var (response, error) = await foodService.SearchOpenFoodFactsAsync(query, 1, 20);
-                if (error != null)
-                {
-                    return (null, error);
-                }
 
-                return (response?.products != null ? new List<OpenFoodFactsProduct>(response.products) : new List<OpenFoodFactsProduct>(), null);
-            }
+            return await foodService.SearchOpenFoodFactsAsync(query, page, pageSize);
         }
 
         public static async Task<(FoodProduct Result, ApiErrorResponse Error)> ImportByBarcodeAsync(

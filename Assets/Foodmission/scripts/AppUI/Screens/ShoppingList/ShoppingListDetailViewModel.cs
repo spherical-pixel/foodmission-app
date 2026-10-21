@@ -25,8 +25,6 @@ namespace eu.foodmission.platform
         private readonly IPantryService _pantryService;
 
         private const string CacheKeyPrefix = "shoppinglist_items_";
-        private const string FoodSearchCachePrefix = "food_search_";
-        private static readonly TimeSpan CacheTtl = TimeSpan.FromHours(24);
 
         private string _currentListId;
         private List<ShoppingListItemView> _allItems = new();
@@ -36,16 +34,7 @@ namespace eu.foodmission.platform
         private List<ShoppingListItemView> _items = new();
 
         [ObservableProperty]
-        private List<OpenFoodFactsProduct> _searchResults = new();
-
-        [ObservableProperty]
-        private string _searchQuery = "";
-
-        [ObservableProperty]
         private bool _isLoadingItems;
-
-        [ObservableProperty]
-        private bool _isSearching;
 
         [ObservableProperty]
         private string _listName = "";
@@ -259,17 +248,6 @@ namespace eu.foodmission.platform
             return GenericFoods;
         }
 
-        public async Task<List<GenericFood>> SearchGenericFoodsAsync(string query)
-        {
-            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(query, pageSize: 100);
-            if (error != null)
-            {
-                ErrorDetail = error;
-                return new List<GenericFood>();
-            }
-            return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
-        }
-
         public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)
         {
             var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(foodGroup: foodGroup, page: page, pageSize: pageSize);
@@ -425,77 +403,15 @@ namespace eu.foodmission.platform
             };
         }
 
-        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
+        public async Task<FoodSearchPage> SearchFoodsPageAsync(string query, int page, bool includeGeneric, bool includeProducts)
         {
-            SearchQuery = query;
-            ErrorMessage = "";
-
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                SearchResults = new List<OpenFoodFactsProduct>();
-                return SearchResults;
-            }
-
-            string normalized = query.Trim().ToLowerInvariant();
-            string cacheKey = FoodSearchCachePrefix + normalized;
-
-            CachedFoodSearch cached = _localStorage.GetValue<CachedFoodSearch>(cacheKey);
-            if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
-            {
-                SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
-                return SearchResults;
-            }
-
-            IsSearching = true;
-            var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
-            IsSearching = false;
-
+            var (result, error) = await FoodSearchFlow.SearchAsync(_genericFoodService, _foodProductService, _openFoodFactsClientService,
+                query, page, includeGeneric, includeProducts);
             if (error != null)
             {
                 ErrorDetail = error;
-                ErrorMessage = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "COULD_NOT_SEARCH_PRODUCTS");
-                if (cached?.data?.products != null)
-                {
-                    SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
-                }
-                else
-                {
-                    SearchResults = new List<OpenFoodFactsProduct>();
-                }
             }
-            else
-            {
-                if (products != null && products.Count > 0)
-                {
-                    var response = new OpenFoodFactsSearchResponse
-                    {
-                        products = products.ToArray()
-                    };
-                    _localStorage.SetValue(cacheKey, new CachedFoodSearch
-                    {
-                        data = response,
-                        cachedAtTicks = DateTime.UtcNow.Ticks
-                    });
-                    SearchResults = products;
-                }
-                else if (cached?.data?.products != null)
-                {
-                    SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
-                }
-                else
-                {
-                    SearchResults = new List<OpenFoodFactsProduct>();
-                }
-            }
-
-            return SearchResults;
-        }
-
-        private static bool IsCacheFresh(long cachedAtTicks)
-        {
-            if (cachedAtTicks <= 0) return false;
-            DateTime cachedAt = new DateTime(cachedAtTicks, DateTimeKind.Utc);
-            return (DateTime.UtcNow - cachedAt) < CacheTtl;
+            return result;
         }
 
         public async Task<bool> ImportAndAddItemAsync(OpenFoodFactsProduct product, float? quantity = null, string unit = null)
@@ -544,8 +460,6 @@ namespace eu.foodmission.platform
             }
 
             ErrorDetail = null;
-            SearchResults = new List<OpenFoodFactsProduct>();
-            SearchQuery = "";
             if (added != null)
             {
                 var newItem = new ShoppingListItemView
@@ -611,8 +525,6 @@ namespace eu.foodmission.platform
             }
 
             ErrorDetail = null;
-            SearchResults = new List<OpenFoodFactsProduct>();
-            SearchQuery = "";
             if (added != null)
             {
                 var newItem = new ShoppingListItemView

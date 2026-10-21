@@ -370,40 +370,28 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SearchFoodsAsync_WithEmptyQuery_ReturnsEmpty()
+        public async Task SearchFoodsPageAsync_WithEmptyQuery_ReturnsEmpty()
         {
-            List<OpenFoodFactsProduct> result = await _vm.SearchFoodsAsync("");
+            FoodSearchPage result = await _vm.SearchFoodsPageAsync("", 1, true, true);
 
-            Assert.AreEqual(0, result.Count);
+            Assert.AreEqual(0, result.Items.Count);
             _mockFoodProductService.Verify(
                 x => x.SearchOpenFoodFactsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()),
                 Times.Never);
         }
 
         [Test]
-        public async Task SearchFoodsAsync_WithCachedResult_UsesCache()
+        public async Task SearchFoodsPageAsync_WithApiError_SetsErrorDetail()
         {
-            _mockLocalStorage
-                .Setup(x => x.GetValue<CachedFoodSearch>(It.IsAny<string>(), It.IsAny<CachedFoodSearch>()))
-                .Returns(new CachedFoodSearch
-                {
-                    data = new OpenFoodFactsSearchResponse
-                    {
-                        products = new OpenFoodFactsProduct[]
-                        {
-                            new OpenFoodFactsProduct { barcode = "123", name = "CachedProduct" }
-                        }
-                    },
-                    cachedAtTicks = DateTime.UtcNow.Ticks
-                });
+            _mockGenericFoodService
+                .Setup(x => x.SearchGenericFoodsAsync("test", null, 1, FoodSearchFlow.PageSize))
+                .ReturnsAsync(((PaginatedGenericFoodResponse)null, new ApiErrorResponse { statusCode = 500, message = "Search failed" }));
 
-            List<OpenFoodFactsProduct> result = await _vm.SearchFoodsAsync("test");
+            FoodSearchPage result = await _vm.SearchFoodsPageAsync("test", 1, true, false);
 
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("CachedProduct", result[0].name);
-            _mockFoodProductService.Verify(
-                x => x.SearchOpenFoodFactsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()),
-                Times.Never);
+            Assert.AreEqual(0, result.Items.Count);
+            Assert.IsNotNull(_vm.ErrorDetail);
+            Assert.AreEqual(500, _vm.ErrorDetail.statusCode);
         }
 
         [Test]

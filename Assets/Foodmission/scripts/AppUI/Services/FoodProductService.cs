@@ -121,8 +121,9 @@ namespace eu.foodmission.platform
         public async Task<(OpenFoodFactsSearchResponse Result, ApiErrorResponse Error)> SearchOpenFoodFactsAsync(string query, int page = 1, int pageSize = 20)
         {
             AppState state = _storeService.GetAppState();
+            // The backend reads pageSize before limit and defaults pageSize to 10, so limit alone is ignored
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-products/search/openfoodfacts" +
-                         $"?query={Uri.EscapeDataString(query ?? "")}&page={page}&limit={pageSize}&lang={Uri.EscapeDataString(Lang)}";
+                         $"?query={Uri.EscapeDataString(query ?? "")}&page={page}&pageSize={pageSize}&limit={pageSize}&lang={Uri.EscapeDataString(Lang)}";
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", $"{state.tokenType} {state.accessToken}");
