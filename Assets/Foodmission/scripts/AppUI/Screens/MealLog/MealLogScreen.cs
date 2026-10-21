@@ -378,13 +378,20 @@ namespace eu.foodmission.platform
 
             if (_btnLogSelected != null)
             {
+                // Editing saves right away; creating only moves on to the review step, where the meal is logged
                 if (isEditing)
                 {
                     _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SAVE_CHANGES");
+                    _btnLogSelected.trailingIcon = "check";
                 }
                 else
                 {
-                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "LOG_DISHES");
+                    _btnLogSelected.title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "TXT_CONTINUE");
+                    _btnLogSelected.trailingIcon = "fm-arrow-right";
+                }
+                if (_logButtonNode != null)
+                {
+                    _logButtonNode.label = _btnLogSelected.title;
                 }
             }
 
@@ -420,7 +427,8 @@ namespace eu.foodmission.platform
             base.SetupAccessibilityNodes();
             if (_accessibilityHierarchy == null) return;
 
-            _logButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnLogSelected, "Log selected dishes");
+            string logKey = _viewModel != null && _viewModel.IsEditing ? "SAVE_CHANGES" : "TXT_CONTINUE";
+            _logButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnLogSelected, LocalizationSettings.StringDatabase.GetLocalizedString("UI", logKey));
             _confirmButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnConfirmLog, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_REVIEW_CONFIRM"));
         }
 
