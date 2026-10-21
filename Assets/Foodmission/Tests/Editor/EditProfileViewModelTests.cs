@@ -118,7 +118,8 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("Male", _vm.GenderOptions[0]);
             Assert.AreEqual(1, _vm.ActivityLevelOptions.Count);
             Assert.AreEqual(1, _vm.EducationLevelOptions.Count);
-            Assert.AreEqual(1, _vm.AnnualIncomeOptions.Count);
+            // Catalog ranges + "Prefer not to say"
+            Assert.AreEqual(2, _vm.AnnualIncomeOptions.Count);
             Assert.AreEqual(1, _vm.ShoppingResponsibilityOptions.Count);
             Assert.AreEqual(1, _vm.DietaryPreferenceOptions.Count);
             Assert.AreEqual(1, _vm.MotivationOptions.Count);
@@ -322,6 +323,84 @@ namespace eu.foodmission.platform.Tests
         public void GetSelectedRegionIso_WithNoSelection_ReturnsNull()
         {
             Assert.IsNull(_vm.GetSelectedRegionIso());
+        }
+
+        [Test]
+        public async Task SubmitAsync_PreferNotToSay_WithStoredIncome_ClearsIncome()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" }, new CatalogItem { code = "50k_75k", label = "50k-75k" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+
+            await _vm.LoadCatalogDataAsync();
+            _vm.SelectedAnnualIncomeIndex = 2;
+
+            await _vm.SubmitAsync();
+
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req =>
+                req.annualIncome == null && req.clearAnnualIncome)), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitAsync_PreferNotToSay_WithoutStoredIncome_DoesNotSendIncome()
+        {
+            var state = _storeService.GetAppState().Copy();
+            state.userAnnualIncome = "";
+            _storeService.SetAppState(state);
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" }, new CatalogItem { code = "50k_75k", label = "50k-75k" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+
+            await _vm.LoadCatalogDataAsync();
+            _vm.SelectedAnnualIncomeIndex = 2;
+
+            await _vm.SubmitAsync();
+
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req =>
+                req.annualIncome == null && !req.clearAnnualIncome)), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitAsync_IncomeRange_SendsCode()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" }, new CatalogItem { code = "50k_75k", label = "50k-75k" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+
+            await _vm.LoadCatalogDataAsync();
+            _vm.SelectedAnnualIncomeIndex = 1;
+
+            await _vm.SubmitAsync();
+
+            _mockAuthService.Verify(x => x.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(req =>
+                req.annualIncome == "50k_75k" && !req.clearAnnualIncome)), Times.Once);
         }
 
         [Test]

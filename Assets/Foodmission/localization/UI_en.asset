@@ -1885,11 +1885,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Annual Income Range
+    m_Localized: Individual gross annual income
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Select annual income range
+    m_Localized: Select your gross income range
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -4881,6 +4881,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: Start this challenge's quest to do it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203739
+    m_Localized: Prefer not to say
     m_Metadata:
       m_Items: []
   references:

@@ -1889,11 +1889,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
-    m_Localized: Fascia di reddito annuo
+    m_Localized: Reddito annuo lordo individuale
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Seleziona la fascia di reddito annuo
+    m_Localized: Seleziona la tua fascia di reddito lordo
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -4907,6 +4907,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: Inizia la missione principale di questa sfida per farla.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203739
+    m_Localized: Preferisco non rispondere
     m_Metadata:
       m_Items: []
   references:
