@@ -31,12 +31,7 @@ namespace eu.foodmission.platform
         private readonly IOpenFoodFactsClientService _openFoodFactsClientService;
         private readonly ICatalogService _catalogService;
 
-        private const string FoodSearchCachePrefix = "food_search_cache_";
-        private static readonly TimeSpan CacheTtl = TimeSpan.FromMinutes(1440);
 
-        [ObservableProperty] private List<OpenFoodFactsProduct> _searchResults = new();
-        [ObservableProperty] private string _searchQuery = "";
-        [ObservableProperty] private bool _isSearching;
         [ObservableProperty] private string _errorMessage = "";
         [ObservableProperty] private string _statusMessage = "";
         [ObservableProperty] private ApiErrorResponse m_ErrorDetail;
@@ -83,71 +78,20 @@ namespace eu.foodmission.platform
             return Array.Empty<CatalogItem>();
         }
 
-        public async Task<List<OpenFoodFactsProduct>> SearchFoodsAsync(string query)
+        public async Task<FoodSearchPage> SearchFoodsPageAsync(string query, int page, bool includeGeneric, bool includeProducts)
         {
-            SearchQuery = query;
-            ErrorMessage = "";
-
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                SearchResults = new List<OpenFoodFactsProduct>();
-                return SearchResults;
-            }
-
-            string normalized = query.Trim().ToLowerInvariant();
-            string cacheKey = FoodSearchCachePrefix + normalized;
-
-            CachedFoodSearch cached = _localStorage.GetValue<CachedFoodSearch>(cacheKey);
-            if (cached?.data?.products != null && IsCacheFresh(cached.cachedAtTicks))
-            {
-                SearchResults = new List<OpenFoodFactsProduct>(cached.data.products);
-                return SearchResults;
-            }
-
-            IsSearching = true;
-            var (products, error) = await FoodProductFlow.SearchProductsAsync(_foodProductService, _openFoodFactsClientService, query);
-            IsSearching = false;
-
+            var (result, error) = await FoodSearchFlow.SearchAsync(_genericFoodService, _foodProductService, _openFoodFactsClientService,
+                query, page, includeGeneric, includeProducts);
             if (error != null)
             {
                 ErrorDetail = error;
-                SearchResults = cached?.data?.products != null ? new List<OpenFoodFactsProduct>(cached.data.products) : new List<OpenFoodFactsProduct>();
             }
-            else
-            {
-                if (products != null && products.Count > 0)
-                {
-                    var response = new OpenFoodFactsSearchResponse { products = products.ToArray() };
-                    _localStorage.SetValue(cacheKey, new CachedFoodSearch
-                    {
-                        data = response,
-                        cachedAtTicks = DateTime.UtcNow.Ticks
-                    });
-                    SearchResults = products;
-                }
-                else
-                {
-                    SearchResults = cached?.data?.products != null ? new List<OpenFoodFactsProduct>(cached.data.products) : new List<OpenFoodFactsProduct>();
-                }
-            }
-
-            return SearchResults;
+            return result;
         }
 
         public async Task<List<GenericFood>> GetGenericFoodsAsync()
         {
             var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(query: null, pageSize: 100);
-            if (error != null)
-            {
-                ErrorDetail = error;
-                return new List<GenericFood>();
-            }
-            return result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
-        }
-
-        public async Task<List<GenericFood>> SearchGenericFoodsAsync(string query)
-        {
-            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(query, pageSize: 100);
             if (error != null)
             {
                 ErrorDetail = error;
@@ -430,11 +374,5 @@ namespace eu.foodmission.platform
             return "Alimento";
         }
 
-        private static bool IsCacheFresh(long cachedAtTicks)
-        {
-            if (cachedAtTicks <= 0) return false;
-            DateTime cachedAt = new DateTime(cachedAtTicks, DateTimeKind.Utc);
-            return (DateTime.UtcNow - cachedAt) < CacheTtl;
-        }
     }
 }

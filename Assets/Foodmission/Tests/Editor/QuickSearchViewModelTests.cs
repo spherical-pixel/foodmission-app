@@ -55,13 +55,13 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task SearchFoodsAsync_EmptyQuery_ReturnsEmptyList()
+        public async Task SearchFoodsPageAsync_EmptyQuery_ReturnsEmptyPage()
         {
             var vm = CreateViewModel();
-            var results = await vm.SearchFoodsAsync("");
+            var results = await vm.SearchFoodsPageAsync("", 1, true, true);
 
             Assert.IsNotNull(results);
-            Assert.AreEqual(0, results.Count);
+            Assert.AreEqual(0, results.Items.Count);
         }
 
         [Test]

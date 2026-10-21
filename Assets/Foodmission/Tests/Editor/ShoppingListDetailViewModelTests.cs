@@ -54,11 +54,7 @@ namespace eu.foodmission.platform.Tests
         {
             Assert.IsNotNull(_vm.Items);
             Assert.AreEqual(0, _vm.Items.Count);
-            Assert.IsNotNull(_vm.SearchResults);
-            Assert.AreEqual(0, _vm.SearchResults.Count);
-            Assert.AreEqual("", _vm.SearchQuery);
             Assert.IsFalse(_vm.IsLoadingItems);
-            Assert.IsFalse(_vm.IsSearching);
             Assert.AreEqual("", _vm.ListName);
             Assert.AreEqual("", _vm.ErrorMessage);
             Assert.AreEqual("", _vm.FilterText);
