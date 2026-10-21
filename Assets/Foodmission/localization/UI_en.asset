@@ -1860,8 +1860,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: Do you follow any special dietary requirements? This will help us
-      to recommend suitable recipes and products.
+    m_Localized: Do you have any dietary restrictions or preferences? You can select
+      as many as apply. This helps us suggest recipes and foods that suit you.
     m_Metadata:
       m_Items: []
   - m_Id: 34037819398676480
@@ -1893,11 +1893,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: Food Preferences
+    m_Localized: Dietary restrictions & preferences
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: None selected
+    m_Localized: Select all that apply
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4881,6 +4881,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: Start this challenge's quest to do it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: None of the above
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203739

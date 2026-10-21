@@ -1861,8 +1861,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: "Befolgen Sie bestimmte Ern\xE4hrungsvorschriften? Das hilft uns
-      dabei, Ihnen passende Rezepte und Produkte zu empfehlen."
+    m_Localized: "Haben Sie Ern\xE4hrungseinschr\xE4nkungen oder -vorlieben? Sie
+      k\xF6nnen alle zutreffenden Optionen ausw\xE4hlen. So k\xF6nnen wir Ihnen passende
+      Rezepte und Lebensmittel vorschlagen."
     m_Metadata:
       m_Items: []
   - m_Id: 34027969428054016
@@ -1899,11 +1900,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: Essgewohnheiten
+    m_Localized: "Ern\xE4hrungseinschr\xE4nkungen & -vorlieben"
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Keine Auswahl
+    m_Localized: "Alle zutreffenden ausw\xE4hlen"
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4937,6 +4938,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: Starte die Quest dieser Herausforderung, um sie zu machen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: Nichts davon
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203739

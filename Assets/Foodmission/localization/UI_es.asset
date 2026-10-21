@@ -1863,8 +1863,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: "\xBFSigues alg\xFAn tipo de alimentaci\xF3n especial? Esto nos
-      ayudar\xE1 a recomendarte recetas y productos id\xF3neos."
+    m_Localized: "\xBFTienes alguna restricci\xF3n o preferencia alimentaria? Puedes
+      marcar todas las que quieras. As\xED podremos recomendarte recetas y alimentos
+      adecuados para ti."
     m_Metadata:
       m_Items: []
   - m_Id: 34037819398676480
@@ -1896,11 +1897,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: Preferencias Alimentarias
+    m_Localized: Restricciones y preferencias alimentarias
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: "No se ha seleccionado ninguna opci\xF3n"
+    m_Localized: Selecciona todas las que correspondan
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4908,6 +4909,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: Empieza la quest de este reto para hacerlo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: Ninguna de las anteriores
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203739

@@ -1865,8 +1865,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: Houdt u zich aan bepaalde dieetvoorschriften? Dit helpt ons om geschikte
-      recepten en producten aan te bevelen.
+    m_Localized: Heeft u dieetbeperkingen of voedselvoorkeuren? U kunt er zoveel
+      kiezen als van toepassing is. Zo kunnen we recepten en voedingsmiddelen voorstellen
+      die bij u passen.
     m_Metadata:
       m_Items: []
   - m_Id: 34027969428054016
@@ -1903,11 +1904,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: Voedselvoorkeuren
+    m_Localized: Dieetbeperkingen en -voorkeuren
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Niets geselecteerd
+    m_Localized: Selecteer alles wat van toepassing is
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4915,6 +4916,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: Start de opdracht van deze uitdaging om hem te doen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: Geen van bovenstaande
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203739

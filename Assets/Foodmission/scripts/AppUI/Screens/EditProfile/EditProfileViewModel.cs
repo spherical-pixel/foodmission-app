@@ -103,6 +103,18 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private int[] _selectedDietaryPreferenceIndices = new int[] { };
 
+        /// <summary>"None of the above" option, listed after the catalog options.</summary>
+        public int DietaryNoneIndex => DietaryPreferenceSelection.NoneIndex(_catalogData?.dietaryPreferences);
+
+        /// <summary>
+        /// Applies the "None of the above" rule and stores the result; returns it so the screen can sync the dropdown.
+        /// </summary>
+        public int[] UpdateDietarySelection(IEnumerable<int> previous, IEnumerable<int> next)
+        {
+            SelectedDietaryPreferenceIndices = DietaryPreferenceSelection.Normalize(previous, next, DietaryNoneIndex);
+            return SelectedDietaryPreferenceIndices;
+        }
+
         [ObservableProperty]
         private int _selectedEducationLevelIndex = -1;
 
@@ -417,7 +429,7 @@ namespace eu.foodmission.platform
                 EducationLevelOptions = data.educationLevels?.Select(e => e.label).ToList() ?? new List<string>();
                 AnnualIncomeOptions = AnnualIncomeSelection.BuildOptions(data.annualIncomeLevels, LocalizationSettings.StringDatabase.GetLocalizedString("UI", AnnualIncomeSelection.PreferNotToSayLabelKey));
                 ShoppingResponsibilityOptions = data.shoppingResponsibilities?.Select(s => s.label).ToList() ?? new List<string>();
-                DietaryPreferenceOptions = data.dietaryPreferences?.Select(d => d.label).ToList() ?? new List<string>();
+                DietaryPreferenceOptions = DietaryPreferenceSelection.BuildOptions(data.dietaryPreferences, LocalizationSettings.StringDatabase.GetLocalizedString("UI", DietaryPreferenceSelection.NoneLabelKey));
 
                 if (data.onboarding?.motivations != null && data.onboarding.motivations.Length > 0)
                 {
@@ -540,21 +552,10 @@ namespace eu.foodmission.platform
                 else if (_selectedDailyTimeCommitmentIndex == 2) dailyTimeMinutes = 15;
                 else if (_selectedDailyTimeCommitmentIndex == 3) dailyTimeMinutes = 20;
 
-                // Build array of all selected dietary preference codes
-                string[] dietaryCodes = null;
-                if (_selectedDietaryPreferenceIndices != null && _selectedDietaryPreferenceIndices.Length > 0
-                    && _catalogData?.dietaryPreferences != null)
-                {
-                    var codes = new List<string>();
-                    foreach (int idx in _selectedDietaryPreferenceIndices)
-                    {
-                        if (idx >= 0 && idx < _catalogData.dietaryPreferences.Length)
-                        {
-                            codes.Add(_catalogData.dietaryPreferences[idx].code);
-                        }
-                    }
-                    if (codes.Count > 0) dietaryCodes = codes.ToArray();
-                }
+                // null only without catalog (keeps the stored value); "None" or no selection sends [] to clear it.
+                string[] dietaryCodes = _catalogData?.dietaryPreferences != null
+                    ? DietaryPreferenceSelection.ToCodes(_selectedDietaryPreferenceIndices, _catalogData.dietaryPreferences)
+                    : null;
 
                 AppState state = _storeService.GetAppState();
 

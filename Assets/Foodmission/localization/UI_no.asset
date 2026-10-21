@@ -1852,8 +1852,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: "F\xF8lger du noen spesielle kostholdsregler? Dette vil hjelpe oss
-      med \xE5 anbefale passende oppskrifter og produkter."
+    m_Localized: "Har du kostholdsrestriksjoner eller matpreferanser? Du kan velge
+      s\xE5 mange som passer. Slik kan vi foresl\xE5 oppskrifter og matvarer som
+      passer for deg."
     m_Metadata:
       m_Items: []
   - m_Id: 34027969428054016
@@ -1890,11 +1891,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: Matpreferanser
+    m_Localized: Kostholdsrestriksjoner og -preferanser
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Ingen valgt
+    m_Localized: Velg alle som passer
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4902,6 +4903,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: "Start oppdraget til denne utfordringen for \xE5 gj\xF8re den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: Ingen av disse
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203739

@@ -146,7 +146,7 @@ namespace eu.foodmission.platform.Tests
             // Catalog ranges + "Prefer not to say"
             Assert.AreEqual(2, _vm.AnnualIncomeOptions.Count);
             Assert.AreEqual(1, _vm.ShoppingResponsibilityOptions.Count);
-            Assert.AreEqual(1, _vm.DietaryPreferenceOptions.Count);
+            Assert.AreEqual(2, _vm.DietaryPreferenceOptions.Count); // catalog + "None of the above"
             Assert.IsFalse(_vm.IsLoading);
         }
 
@@ -330,6 +330,36 @@ namespace eu.foodmission.platform.Tests
                 && req.settings != null
                 && req.settings.pushNotificationsEnabled == true
                 && req.settings.notificationPreferredTime == "10:00")), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitAsync_WithNoneOfTheAbove_SendsEmptyDietaryArray()
+        {
+            var catalogData = new CatalogData
+            {
+                dietaryPreferences = new[] { new CatalogItem { code = "VEGAN", label = "Vegan" } }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            _storeService.SetAppState(new AppState { userDietaryPreference = new[] { "VEGAN" } });
+
+            await _vm.LoadCatalogDataAsync();
+            _vm.UpdateDietarySelection(new[] { 0 }, new[] { 0, _vm.DietaryNoneIndex });
+
+            ProfileUpdateRequest capturedRequest = null;
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
+                .ReturnsAsync((true, null));
+
+            await _vm.SubmitAsync();
+
+            Assert.IsNotNull(capturedRequest?.preferences);
+            Assert.IsNotNull(capturedRequest.preferences.dietaryPreference);
+            Assert.IsEmpty(capturedRequest.preferences.dietaryPreference);
         }
 
         [Test]
