@@ -126,6 +126,70 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task Load_MissionOutsideCurrentQuest_OffersItsQuest()
+        {
+            _quests.Setup(q => q.GetQuestsAsync(null, null, null)).ReturnsAsync((new[]
+            {
+                new Quest { id = "q2", code = "Q2", available = false, items = new[] { new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B2.1" } } },
+                new Quest { id = "q3", code = "Q3", available = true, items = new[] { new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B2.1" } } }
+            }, (ApiErrorResponse)null));
+
+            await LoadAsync("M.B2.1");
+            _vm.OpenContainingQuest();
+
+            Assert.AreEqual("q3", _vm.ContainingQuest?.id, "available quests first");
+            Assert.IsTrue(_vm.ShowsGoToQuest);
+            Assert.AreEqual(Actions.open_quest, _navAction);
+            CollectionAssert.AreEquivalent(new[] { "code", "id" }, Array.ConvertAll(_navArgs, a => a.name));
+        }
+
+        [Test]
+        public async Task Load_MissionOutsideCurrentQuest_LoadsTheDetailOfQuestsOfItsDimensionAndLevel()
+        {
+            // GET /quests has no items: only same dimension + level quests are opened
+            _missions.Setup(m => m.GetMissionAsync("M.B2.1", null)).ReturnsAsync((new Mission { id = "id", code = "M.B2.1", title = "T", dimensionId = "d1", level = "BEGINNER" }, (ApiErrorResponse)null));
+            _missions.Setup(m => m.GetMissionProgressAsync("M.B2.1", null)).ReturnsAsync((new MissionProgress { missionCode = "M.B2.1" }, (ApiErrorResponse)null));
+            _quests.Setup(q => q.GetQuestsAsync(null, null, null)).ReturnsAsync((new[]
+            {
+                new Quest { id = "q1", code = "Q1", dimensionId = "d1", level = "BEGINNER", available = true },
+                new Quest { id = "q2", code = "Q2", dimensionId = "d2", level = "BEGINNER", available = true },
+                new Quest { id = "q3", code = "Q3", dimensionId = "d1", level = "ADVANCED", available = true },
+                new Quest { id = "q4", code = "Q4", dimensionId = "d1", level = "BEGINNER", available = true }
+            }, (ApiErrorResponse)null));
+            _quests.Setup(q => q.GetQuestAsync("Q4", null)).ReturnsAsync((new Quest
+            {
+                id = "q4", code = "Q4", items = new[] { new QuestItem { contentType = QuestContentType.Mission, contentCode = "M.B2.1" } }
+            }, (ApiErrorResponse)null));
+
+            await _vm.LoadMissionAsync("M.B2.1");
+
+            Assert.AreEqual("q4", _vm.ContainingQuest?.id);
+            Assert.IsTrue(_vm.ShowsGoToQuest);
+            _quests.Verify(q => q.GetQuestAsync("Q2", It.IsAny<string>()), Times.Never);
+            _quests.Verify(q => q.GetQuestAsync("Q3", It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task Load_MissionInNoQuest_DoesNotOfferAQuest()
+        {
+            await LoadAsync("M.B2.1");
+
+            Assert.IsTrue(_vm.ShowsNotCurrentQuest);
+            Assert.IsNull(_vm.ContainingQuest);
+            Assert.IsFalse(_vm.ShowsGoToQuest);
+        }
+
+        [Test]
+        public async Task Load_MissionInCurrentQuest_DoesNotOfferAQuest()
+        {
+            await LoadAsync("M.B1.4");
+
+            Assert.AreEqual("q1", _vm.ContainingQuest?.id);
+            Assert.IsFalse(_vm.ShowsGoToQuest);
+            _quests.Verify(q => q.GetQuestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
         public async Task Load_PendingRule_IsNotAvailable()
         {
             await LoadAsync("M.Z9.8");

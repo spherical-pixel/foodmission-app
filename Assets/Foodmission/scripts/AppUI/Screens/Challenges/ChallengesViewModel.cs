@@ -240,10 +240,12 @@ namespace eu.foodmission.platform
         {
             if (challenge == null) return;
             OnChallengeSelected?.Invoke(challenge);
-            Debug.Log($"[{GetType().Name}] OpenChallenge clicked: {challenge.code} - {challenge.title}");
 
-            // string codeOrId = !string.IsNullOrEmpty(challenge.code) ? challenge.code : challenge.id;
-            // RaiseNavigationRequested(Actions.open_challenge, new Argument("code", codeOrId));
+            string codeOrId = !string.IsNullOrEmpty(challenge.code) ? challenge.code : challenge.id;
+            if (!string.IsNullOrEmpty(codeOrId))
+            {
+                RaiseNavigationRequested(Actions.open_challenge, new Argument("code", codeOrId));
+            }
         }
 
         public void OpenDimensionLevels()

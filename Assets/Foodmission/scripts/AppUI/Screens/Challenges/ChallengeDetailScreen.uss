@@ -101,6 +101,12 @@
     height: auto;
 }
 
+.fm-challenge-status {
+    -unity-text-align: middle-center;
+    white-space: normal;
+    margin: 12px 0;
+}
+
 .fm-challenge-hint {
     color: var(--appui-foregrounds-200);
     -unity-text-align: middle-center;

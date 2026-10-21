@@ -4740,17 +4740,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "These are the missions of your current quest. Each mission is a
-      small change of habit over a few days. Tap one to start it and see what you
-      have to do. They progress on their own with your meal logs, or you can tell
-      me with \u201CTell {global.PET_NAME}\u201D."
+    m_Localized: "Here you have all the missions, grouped by topic. Each mission
+      is a small change of habit over a few days and is part of a quest: to do it,
+      start its quest and then start the mission from there. They progress on their
+      own with your meal logs, or you can tell me with \u201CTell {global.PET_NAME}\u201D."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690406
   - m_Id: 56190243387203709
-    m_Localized: "Challenges are small, quick actions from your quests to try something
-      new. I explain each one, and when you've done it, tap \u201CI've done it!\u201D
-      to earn your points. Some take you to an app tool that helps you complete them."
+    m_Localized: "Challenges are small, quick actions to try something new. Each
+      one is part of a quest, and you do it from that quest. I explain each one,
+      and when you've done it, tap \u201CI've done it!\u201D to earn your points.
+      Some take you to an app tool that helps you complete them."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4862,6 +4863,24 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203733
     m_Localized: You can finish the rest later from the home screen or your profile.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: Go to the quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "This mission is part of the quest \u201C{0}\u201D. You do it from
+      that quest."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "This challenge is part of the quest \u201C{0}\u201D. You do it
+      from that quest."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: Start this challenge's quest to do it.
     m_Metadata:
       m_Items: []
   references:

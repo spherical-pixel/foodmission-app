@@ -17,6 +17,7 @@ namespace eu.foodmission.platform
         private readonly IDimensionService _dimensionService;
         private readonly IChallengeCompletionService _completion;
         private readonly IChallengeSessionService _session;
+        private readonly IQuestService _questService;
 
         [ObservableProperty]
         private bool _isLoading;
@@ -52,21 +53,33 @@ namespace eu.foodmission.platform
             }
         }
 
+        private QuestMembership _membership = QuestMembership.Unknown;
+
+        /// <summary>Challenges are done inside their quest. Only true when it's known not to be in the current one (a failed check doesn't block).</summary>
+        public bool IsOutsideCurrentQuest => _membership.InCurrentQuest == false;
+
+        /// <summary>The quest that has this challenge (the current one first); null when none was found.</summary>
+        public Quest ContainingQuest => _membership.Quest;
+
+        public bool ShowsNotCurrentQuest => Challenge != null && !IsCompleted && IsOutsideCurrentQuest;
+
+        public bool ShowsGoToQuest => ShowsNotCurrentQuest && ContainingQuest != null;
+
         public bool IsCompleted =>
             ChallengeProgress?.completed == true ||
             (ChallengeProgress != null && ChallengeProgress.progress >= 100f) ||
             (Challenge != null && _completion != null && _completion.IsCompleted(Challenge.code));
 
         public bool HasHelperModule =>
-            !IsCompleted && Interaction != null && Interaction.Type != ChallengeInteractionType.Confirm &&
+            !IsCompleted && !IsOutsideCurrentQuest && Interaction != null && Interaction.Type != ChallengeInteractionType.Confirm &&
             !string.IsNullOrEmpty(Interaction.ModuleAction);
 
         public bool ShowsAutoCompleteHint => HasHelperModule && Interaction.AutoCompletes;
 
-        public bool ShowsDoneButton => Challenge != null && !IsCompleted;
+        public bool ShowsDoneButton => Challenge != null && !IsCompleted && !IsOutsideCurrentQuest;
 
         /// <summary>"Más tarde" stays visible when loading failed, so the user always has a way out.</summary>
-        public bool ShowsLaterButton => !IsCompleted && !IsLoading;
+        public bool ShowsLaterButton => !IsCompleted && !IsLoading && !IsOutsideCurrentQuest;
 
         /// <summary>All actions are disabled while the completion PATCH runs.</summary>
         public bool AreActionsEnabled => !IsCompleting;
@@ -79,8 +92,10 @@ namespace eu.foodmission.platform
             IChallengeService challengeService,
             IDimensionService dimensionService,
             IChallengeCompletionService completion,
-            IChallengeSessionService session) : base(storeService)
+            IChallengeSessionService session,
+            IQuestService questService) : base(storeService)
         {
+            _questService = questService;
             _challengeService = challengeService;
             _dimensionService = dimensionService;
             _completion = completion;
@@ -130,6 +145,7 @@ namespace eu.foodmission.platform
             NotifyStateChanged();
             ErrorDetail = null;
             EarnedReward = null;
+            _membership = QuestMembership.Unknown;
 
             try
             {
@@ -150,6 +166,10 @@ namespace eu.foodmission.platform
 
                 var (progress, _) = await _challengeService.GetChallengeProgressAsync(codeOrId);
                 ChallengeProgress = progress;
+
+                _membership = await QuestMembership.FindAsync(
+                    _questService, _storeService?.GetAppState()?.userCurrentQuestId, QuestContentType.Challenge, challenge?.code ?? codeOrId,
+                    challenge?.dimensionId, challenge?.level);
 
                 if (_dimensionService != null && !string.IsNullOrEmpty(challenge?.dimensionId))
                 {
@@ -192,6 +212,15 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Interaction.ModuleAction, args.ToArray());
         }
 
+        public void OpenContainingQuest()
+        {
+            if (!ShowsGoToQuest)
+            {
+                return;
+            }
+            RaiseNavigationRequested(Actions.open_quest, QuestMembership.OpenQuestArguments(ContainingQuest));
+        }
+
         /// <summary>"¡Ya lo he hecho!". Returns true when the challenge is (already) completed.</summary>
         public async Task<bool> MarkCompletedAsync()
         {
@@ -203,6 +232,11 @@ namespace eu.foodmission.platform
             if (IsCompleted)
             {
                 return true;
+            }
+
+            if (IsOutsideCurrentQuest)
+            {
+                return false;
             }
 
             if (IsCompleting || _completion == null)
@@ -253,6 +287,9 @@ namespace eu.foodmission.platform
             OnPropertyChanged(nameof(ShowsDoneButton));
             OnPropertyChanged(nameof(ShowsLaterButton));
             OnPropertyChanged(nameof(AreActionsEnabled));
+            OnPropertyChanged(nameof(IsOutsideCurrentQuest));
+            OnPropertyChanged(nameof(ShowsNotCurrentQuest));
+            OnPropertyChanged(nameof(ShowsGoToQuest));
         }
     }
 }

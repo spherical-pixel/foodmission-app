@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.AppUI.MVVM;
+using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using UnityEngine;
 
@@ -240,7 +241,12 @@ namespace eu.foodmission.platform
         {
             if (mission == null) return;
             OnMissionSelected?.Invoke(mission);
-            Debug.Log($"[{GetType().Name}] OpenMission clicked: {mission.code} - {mission.title}");
+
+            string codeOrId = !string.IsNullOrEmpty(mission.code) ? mission.code : mission.id;
+            if (!string.IsNullOrEmpty(codeOrId))
+            {
+                RaiseNavigationRequested(Actions.open_mission, new Argument("code", codeOrId));
+            }
         }
 
         public void OpenDimensionLevels()

@@ -27,7 +27,7 @@ namespace eu.foodmission.platform.Tests
             _challengeService = new Mock<IChallengeService>();
             _completion = new Mock<IChallengeCompletionService>();
             _session = new Mock<IChallengeSessionService>();
-            _vm = new ChallengeDetailViewModel(_store.Object, _challengeService.Object, null, _completion.Object, _session.Object);
+            _vm = new ChallengeDetailViewModel(_store.Object, _challengeService.Object, null, _completion.Object, _session.Object, null);
             _vm.NavigationRequested += (action, args) => { _navAction = action; _navArgs = args; };
         }
 
@@ -252,6 +252,85 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsFalse(_vm.IsCompleted);
             Assert.IsTrue(_vm.ShowsDoneButton);
+        }
+
+        private ChallengeDetailViewModel CreateWithQuests(string currentQuestId, Quest current, ApiErrorResponse currentError, params Quest[] all)
+        {
+            var store = new TestStoreService();
+            store.SetAppState(new AppState { userId = "u1", userCurrentQuestId = currentQuestId });
+            var quests = new Mock<IQuestService>();
+            quests.Setup(q => q.GetQuestAsync(currentQuestId, null)).ReturnsAsync((current, currentError));
+            quests.Setup(q => q.GetQuestsAsync(null, null, null)).ReturnsAsync((all, (ApiErrorResponse)null));
+            var vm = new ChallengeDetailViewModel(store, _challengeService.Object, null, _completion.Object, _session.Object, quests.Object);
+            vm.NavigationRequested += (action, args) => { _navAction = action; _navArgs = args; };
+            return vm;
+        }
+
+        private static Quest QuestWith(string id, string challengeCode) => new Quest
+        {
+            id = id,
+            code = id.ToUpperInvariant(),
+            available = true,
+            items = new[] { new QuestItem { contentType = QuestContentType.Challenge, contentCode = challengeCode } }
+        };
+
+        [Test]
+        public async Task Load_InCurrentQuest_CanBeDone()
+        {
+            SetupChallenge("CH.B2.2", completed: false);
+            using var vm = CreateWithQuests("q1", QuestWith("q1", "CH.B2.2"), null);
+
+            await vm.LoadChallengeAsync("CH.B2.2");
+
+            Assert.IsFalse(vm.IsOutsideCurrentQuest);
+            Assert.IsTrue(vm.ShowsDoneButton);
+            Assert.IsTrue(vm.HasHelperModule);
+            Assert.IsFalse(vm.ShowsGoToQuest);
+        }
+
+        [Test]
+        public async Task Load_OutsideCurrentQuest_HidesActionsAndOffersItsQuest()
+        {
+            SetupChallenge("CH.B2.2", completed: false);
+            using var vm = CreateWithQuests("q1", QuestWith("q1", "CH.OTHER"), null, QuestWith("q2", "CH.B2.2"));
+
+            await vm.LoadChallengeAsync("CH.B2.2");
+            bool done = await vm.MarkCompletedAsync();
+            vm.OpenContainingQuest();
+
+            Assert.IsTrue(vm.IsOutsideCurrentQuest);
+            Assert.IsFalse(vm.ShowsDoneButton);
+            Assert.IsFalse(vm.HasHelperModule);
+            Assert.IsFalse(vm.ShowsLaterButton);
+            Assert.IsTrue(vm.ShowsGoToQuest);
+            Assert.IsFalse(done);
+            _completion.Verify(c => c.CompleteAsync(It.IsAny<string>()), Times.Never);
+            Assert.AreEqual(Actions.open_quest, _navAction);
+            Assert.AreEqual("q2", _navArgs.Single(a => a.name == "id").value);
+        }
+
+        [Test]
+        public async Task Load_WithoutCurrentQuest_IsOutsideIt()
+        {
+            SetupChallenge("CH.B2.2", completed: false);
+            using var vm = CreateWithQuests(null, null, null, QuestWith("q2", "CH.B2.2"));
+
+            await vm.LoadChallengeAsync("CH.B2.2");
+
+            Assert.IsTrue(vm.IsOutsideCurrentQuest);
+            Assert.AreEqual("q2", vm.ContainingQuest?.id);
+        }
+
+        [Test]
+        public async Task Load_CurrentQuestFailsToLoad_DoesNotBlock()
+        {
+            SetupChallenge("CH.B2.2", completed: false);
+            using var vm = CreateWithQuests("q1", null, new ApiErrorResponse { message = "network" });
+
+            await vm.LoadChallengeAsync("CH.B2.2");
+
+            Assert.IsFalse(vm.IsOutsideCurrentQuest);
+            Assert.IsTrue(vm.ShowsDoneButton);
         }
 
         [Test]

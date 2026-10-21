@@ -4774,18 +4774,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "Dit zijn de missies van je huidige opdracht. Elke missie is een
-      kleine verandering in je gewoonten gedurende een paar dagen. Tik op een missie
-      om te beginnen en te zien wat je moet doen. Ze gaan vanzelf vooruit met je
-      eetdagboek, of je vertelt het me met \u201EVertel het {global.PET_NAME}\u201D."
+    m_Localized: "Hier zie je alle missies, per thema. Elke missie is een kleine
+      verandering in je gewoonten gedurende een paar dagen en hoort bij een opdracht:
+      om hem te doen, start je die opdracht en begin je de missie van daaruit. Ze
+      gaan vanzelf vooruit met je eetdagboek, of je vertelt het me met \u201EVertel
+      het {global.PET_NAME}\u201D."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690405
   - m_Id: 56190243387203709
-    m_Localized: "Uitdagingen zijn kleine, snelle acties uit je opdrachten om iets
-      nieuws te proberen. Ik leg ze allemaal uit, en als je het gedaan hebt, tik
-      je op \u201EIk heb het gedaan!\u201D om je punten te verdienen. Sommige brengen
-      je naar een hulpmiddel in de app dat je helpt ze te voltooien."
+    m_Localized: "Uitdagingen zijn kleine, snelle acties om iets nieuws te proberen.
+      Elke uitdaging hoort bij een opdracht en je doet hem vanuit die opdracht. Ik
+      leg ze allemaal uit, en als je het gedaan hebt, tik je op \u201EIk heb het
+      gedaan!\u201D om je punten te verdienen. Sommige brengen je naar een hulpmiddel
+      in de app dat je helpt ze te voltooien."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4895,6 +4897,24 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203733
     m_Localized: Je kunt de rest later afmaken via het startscherm of je profiel.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: Naar de opdracht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "Deze missie hoort bij de opdracht \u201E{0}\u201D. Je doet hem
+      vanuit die opdracht."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "Deze uitdaging hoort bij de opdracht \u201E{0}\u201D. Je doet hem
+      vanuit die opdracht."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: Start de opdracht van deze uitdaging om hem te doen.
     m_Metadata:
       m_Items: []
   references:

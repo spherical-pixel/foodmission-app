@@ -4758,18 +4758,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "Dette er utfordringene i det n\xE5v\xE6rende oppdraget ditt. Hver
-      av dem er en liten vaneendring over noen dager. Trykk p\xE5 en for \xE5 starte
-      og se hva du skal gj\xF8re. De g\xE5r framover av seg selv med m\xE5ltidsloggen
-      din, eller du kan fortelle meg det med \xABFortell det til {global.PET_NAME}\xBB."
+    m_Localized: "Her ser du alle deloppgavene, ordnet etter tema. Hver av dem er
+      en liten vaneendring over noen dager og h\xF8rer til et oppdrag: for \xE5 gj\xF8re
+      den, start oppdraget og start deretter deloppgaven derfra. De g\xE5r framover
+      av seg selv med m\xE5ltidsloggen din, eller du kan fortelle meg det med \xABFortell
+      det til {global.PET_NAME}\xBB."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690410
   - m_Id: 56190243387203709
-    m_Localized: "Utfordringer er sm\xE5, raske handlinger fra oppdragene dine for
-      \xE5 pr\xF8ve noe nytt. Jeg forklarer hver av dem, og n\xE5r du har gjort det,
-      trykker du p\xE5 \xABJeg har gjort det!\xBB for \xE5 f\xE5 poengene dine. Noen
-      tar deg til et verkt\xF8y i appen som hjelper deg \xE5 fullf\xF8re dem."
+    m_Localized: "Utfordringer er sm\xE5, raske handlinger for \xE5 pr\xF8ve noe
+      nytt. Hver av dem h\xF8rer til et oppdrag, og du gj\xF8r den fra det oppdraget.
+      Jeg forklarer hver av dem, og n\xE5r du har gjort det, trykker du p\xE5 \xABJeg
+      har gjort det!\xBB for \xE5 f\xE5 poengene dine. Noen tar deg til et verkt\xF8y
+      i appen som hjelper deg \xE5 fullf\xF8re dem."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4882,6 +4884,24 @@ MonoBehaviour:
   - m_Id: 56190243387203733
     m_Localized: "Du kan fullf\xF8re resten senere fra startskjermen eller profilen
       din."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: "G\xE5 til oppdraget"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "Denne deloppgaven h\xF8rer til oppdraget \xAB{0}\xBB. Du gj\xF8r
+      den fra det oppdraget."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "Denne utfordringen h\xF8rer til oppdraget \xAB{0}\xBB. Du gj\xF8r
+      den fra det oppdraget."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: "Start oppdraget til denne utfordringen for \xE5 gj\xF8re den."
     m_Metadata:
       m_Items: []
   references:

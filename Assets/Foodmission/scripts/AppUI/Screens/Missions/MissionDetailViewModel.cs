@@ -76,6 +76,20 @@ namespace eu.foodmission.platform
             }
         }
 
+        private Quest _containingQuest;
+        /// <summary>The quest to do this mission in: the current one when it belongs there, otherwise the first quest that has it.</summary>
+        public Quest ContainingQuest
+        {
+            get => _containingQuest;
+            private set
+            {
+                if (SetProperty(ref _containingQuest, value))
+                {
+                    NotifyStateChanged();
+                }
+            }
+        }
+
         public Func<DateTime> Clock { get; set; } = () => DateTime.Now;
 
         public DateTime? StartLocal => MissionProgress?.startedAt?.ToLocalTime();
@@ -98,6 +112,8 @@ namespace eu.foodmission.platform
         public bool IsStarting => _isStarting;
         public bool CanAct => Mission != null && IsStarted && !IsCompleted && !IsFailed && !IsPendingRule && IsCurrentQuestMission;
         public bool ShowsNotCurrentQuest => Mission != null && !IsCompleted && !IsFailed && !IsPendingRule && !IsCurrentQuestMission;
+        /// <summary>Missions are done inside their quest: outside the current one, offer to open the quest that has it.</summary>
+        public bool ShowsGoToQuest => Mission != null && !IsCompleted && !IsPendingRule && !IsCurrentQuestMission && ContainingQuest != null;
         /// <summary>Rules only run for the current quest, so a failed mission is restarted only from there.</summary>
         public bool CanRestartFailed => Mission != null && IsFailed && IsCurrentQuestMission;
         /// <summary>Only when the backend reports a status (pr-402+): older backends have no restart endpoint.</summary>
@@ -151,7 +167,11 @@ namespace eu.foodmission.platform
                 _progressUnknown = progressError != null;
                 MissionProgress = progress;
 
-                IsCurrentQuestMission = await IsInCurrentQuestAsync(mission?.code ?? codeOrId);
+                QuestMembership membership = await QuestMembership.FindAsync(
+                    _questService, _storeService?.GetAppState()?.userCurrentQuestId, QuestContentType.Mission, mission?.code ?? codeOrId,
+                    mission?.dimensionId, mission?.level);
+                IsCurrentQuestMission = membership.InCurrentQuest == true;
+                ContainingQuest = membership.Quest;
                 if (IsFailed)
                 {
                     // Seeing the failed card here is being told: Home won't announce it again
@@ -193,19 +213,13 @@ namespace eu.foodmission.platform
             RaiseNavigationRequested(Actions.open_mission_checkin, new Argument("code", Mission.code));
         }
 
-        private async Task<bool> IsInCurrentQuestAsync(string missionCode)
+        public void OpenContainingQuest()
         {
-            string questId = _storeService?.GetAppState()?.userCurrentQuestId;
-            if (string.IsNullOrEmpty(questId) || _questService == null || string.IsNullOrEmpty(missionCode))
+            if (!ShowsGoToQuest)
             {
-                return false;
+                return;
             }
-
-            var (quest, _) = await _questService.GetQuestAsync(questId);
-            return quest?.items?.Any(i =>
-                i != null &&
-                string.Equals(i.contentType, QuestContentType.Mission, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(i.contentCode, missionCode, StringComparison.OrdinalIgnoreCase)) == true;
+            RaiseNavigationRequested(Actions.open_quest, QuestMembership.OpenQuestArguments(ContainingQuest));
         }
 
         /// <summary>
@@ -317,6 +331,7 @@ namespace eu.foodmission.platform
             OnPropertyChanged(nameof(CanStart));
             OnPropertyChanged(nameof(CanAct));
             OnPropertyChanged(nameof(ShowsNotCurrentQuest));
+            OnPropertyChanged(nameof(ShowsGoToQuest));
             OnPropertyChanged(nameof(AutoModules));
             OnPropertyChanged(nameof(ModuleButtons));
             OnPropertyChanged(nameof(LevelKey));

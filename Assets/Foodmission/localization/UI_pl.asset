@@ -4835,20 +4835,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
-    m_Localized: "To s\u0105 misje twojego obecnego zadania. Ka\u017Cda misja to
-      ma\u0142a zmiana nawyku przez kilka dni. Dotknij jednej, aby j\u0105 rozpocz\u0105\u0107
-      i zobaczy\u0107, co masz zrobi\u0107. Post\u0119puj\u0105 same dzi\u0119ki
-      twojemu dziennikowi posi\u0142k\xF3w albo mo\u017Cesz mi o tym powiedzie\u0107
-      przyciskiem \u201EPowiedz {global.PET_NAME}\u201D."
+    m_Localized: "Tutaj widzisz wszystkie misje, pogrupowane wed\u0142ug tematu.
+      Ka\u017Cda misja to ma\u0142a zmiana nawyku przez kilka dni i nale\u017Cy do
+      jakiego\u015B zadania: aby j\u0105 wykona\u0107, rozpocznij jej zadanie, a
+      nast\u0119pnie rozpocznij misj\u0119 w tym zadaniu. Post\u0119puj\u0105 same
+      dzi\u0119ki twojemu dziennikowi posi\u0142k\xF3w albo mo\u017Cesz mi o tym
+      powiedzie\u0107 przyciskiem \u201EPowiedz {global.PET_NAME}\u201D."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
   - m_Id: 56190243387203709
-    m_Localized: "Wyzwania to ma\u0142e, szybkie dzia\u0142ania z twoich zada\u0144,
-      dzi\u0119ki kt\xF3rym spr\xF3bujesz czego\u015B nowego. Wyja\u015Bniam ka\u017Cde
-      z nich, a gdy je wykonasz, dotknij \u201EZrobione!\u201D, aby zdoby\u0107 punkty.
-      Niekt\xF3re prowadz\u0105 do narz\u0119dzia w aplikacji, kt\xF3re pomaga je
-      uko\u0144czy\u0107."
+    m_Localized: "Wyzwania to ma\u0142e, szybkie dzia\u0142ania, dzi\u0119ki kt\xF3rym
+      spr\xF3bujesz czego\u015B nowego. Ka\u017Cde nale\u017Cy do jakiego\u015B zadania
+      i wykonujesz je w ramach tego zadania. Wyja\u015Bniam ka\u017Cde z nich, a
+      gdy je wykonasz, dotknij \u201EZrobione!\u201D, aby zdoby\u0107 punkty. Niekt\xF3re
+      prowadz\u0105 do narz\u0119dzia w aplikacji, kt\xF3re pomaga je uko\u0144czy\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203710
@@ -4964,6 +4965,24 @@ MonoBehaviour:
   - m_Id: 56190243387203733
     m_Localized: "Reszt\u0119 mo\u017Cesz doko\u0144czy\u0107 p\xF3\u017Aniej na
       ekranie g\u0142\xF3wnym lub w swoim profilu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203734
+    m_Localized: "Przejd\u017A do zadania"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203735
+    m_Localized: "Ta misja nale\u017Cy do zadania \u201E{0}\u201D. Wykonujesz j\u0105
+      w ramach tego zadania."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203736
+    m_Localized: "To wyzwanie nale\u017Cy do zadania \u201E{0}\u201D. Wykonujesz
+      je w ramach tego zadania."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203737
+    m_Localized: "Rozpocznij zadanie tego wyzwania, aby je wykona\u0107."
     m_Metadata:
       m_Items: []
   references:

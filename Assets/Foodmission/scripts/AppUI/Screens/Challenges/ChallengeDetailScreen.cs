@@ -40,6 +40,8 @@ namespace eu.foodmission.platform
         private FMButton _btnHelper;
         private FMButton _btnDone;
         private FMButton _btnLater;
+        private Text _status;
+        private FMButton _btnGoToQuest;
 
         private readonly IAudioService _audioService;
         private bool _isLeaving;
@@ -71,6 +73,8 @@ namespace eu.foodmission.platform
             _btnHelper = contentContainer.Q<FMButton>("btn-helper-module");
             _btnDone = contentContainer.Q<FMButton>("btn-mark-done");
             _btnLater = contentContainer.Q<FMButton>("btn-later");
+            _status = contentContainer.Q<Text>("challenge-status");
+            _btnGoToQuest = contentContainer.Q<FMButton>("btn-go-to-quest");
 
             if (_btnHelper != null)
             {
@@ -83,6 +87,10 @@ namespace eu.foodmission.platform
             if (_btnLater != null)
             {
                 _btnLater.clicked += OnLaterClicked;
+            }
+            if (_btnGoToQuest != null)
+            {
+                _btnGoToQuest.clicked += OnGoToQuestClicked;
             }
         }
 
@@ -252,7 +260,18 @@ namespace eu.foodmission.platform
             }
 
             bool completed = _viewModel.IsCompleted;
-            _actions?.EnableInClassList("hidden", completed);
+            _actions?.EnableInClassList("hidden", completed || _viewModel.IsOutsideCurrentQuest);
+
+            if (_status != null)
+            {
+                bool showsStatus = _viewModel.ShowsNotCurrentQuest;
+                _status.text = !showsStatus ? string.Empty
+                    : _viewModel.ContainingQuest != null
+                        ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "CHALLENGE_IN_QUEST", new object[] { _viewModel.ContainingQuest.GetDisplayName() })
+                        : Localize("CHALLENGE_NOT_CURRENT_QUEST");
+                _status.EnableInClassList("hidden", !showsStatus);
+            }
+            _btnGoToQuest?.EnableInClassList("hidden", !_viewModel.ShowsGoToQuest);
             _completedBox?.EnableInClassList("hidden", !completed);
             _btnDone?.EnableInClassList("hidden", !_viewModel.ShowsDoneButton);
             _btnLater?.EnableInClassList("hidden", !_viewModel.ShowsLaterButton);
@@ -324,6 +343,12 @@ namespace eu.foodmission.platform
                 UnityEngine.Debug.LogError($"[ChallengeDetailScreen] Done failed: {ex.Message}");
                 _isLeaving = false;
             }
+        }
+
+        private void OnGoToQuestClicked()
+        {
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            _viewModel?.OpenContainingQuest();
         }
 
         private void OnLaterClicked()
