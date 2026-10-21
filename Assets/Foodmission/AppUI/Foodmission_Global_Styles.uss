@@ -883,6 +883,27 @@
     margin-top: 0;
 }
 
+/* FormFieldItemCheckbox: long texts wrap onto as many lines as they need */
+.fm-form-checkbox__row {
+    align-items: center;
+}
+
+.fm-form-checkbox__label {
+    flex-shrink: 1;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.fm-form-checkbox__label .appui-button__titlecontainer {
+    flex-shrink: 1;
+    align-items: flex-start;
+}
+
+.fm-form-checkbox__label .appui-button__title {
+    white-space: normal;
+    -unity-text-align: middle-left;
+}
+
 .centered-text {
     -unity-text-align: middle-center;
 }

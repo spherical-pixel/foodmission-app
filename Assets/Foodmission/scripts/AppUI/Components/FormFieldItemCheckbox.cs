@@ -58,6 +58,7 @@ namespace eu.foodmission.platform.Components
         {
             VisualElement ve = new VisualElement();
             ve.AddToClassList("item-field");
+            ve.AddToClassList("fm-form-checkbox__row");
             ve.style.flexDirection = FlexDirection.Row;
 
             _fieldContainer.Add(ve);
@@ -75,6 +76,7 @@ namespace eu.foodmission.platform.Components
             {
                 quiet = true
             };
+            _button.AddToClassList("fm-form-checkbox__label");
             _button.clicked += OnButtonClicked;
 
             _button.style.minHeight = new StyleLength(62);
