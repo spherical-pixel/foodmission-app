@@ -4,7 +4,7 @@
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/FoodFacts/FoodFactsScreen.uss?fileID=7433441132597879392&amp;guid=2b963874931364548a3daaf45c987eef&amp;type=3#FoodFactsScreen"/>
     <ui:VisualElement name="root" class="fm-root fm-foodfacts-root">
         <ui:VisualElement name="header-section" class="fm-foodfacts-header-section">
-            <eu:FMButton name="btn-random-fact" title="Read a random food fact" variant="Accent" size="M" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-foodfacts-random-btn"/>
+            <eu:FMButton name="btn-random-fact" title="Read a random food fact" variant="Accent" size="M" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-foodfacts-random-btn" style="display: none;"/>
             <ui:VisualElement name="filters-container" class="fm-foodfacts-filters-container">
                 <ui:VisualElement name="row-levels" style="flex-grow: 1; flex-direction: row;">
                     <appui:Text text="Nivel_" size="XXXL" style="margin-right: 20px;">

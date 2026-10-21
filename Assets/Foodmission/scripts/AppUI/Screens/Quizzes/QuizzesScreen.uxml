@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Quizzes/QuizzesScreen.uss?fileID=7433441132597879392&amp;guid=109516a41d4334001b40e7c8a262dbc4&amp;type=3#QuizzesScreen"/>
     <ui:VisualElement name="root" class="fm-root fm-quizzes-root">
         <ui:VisualElement name="header-section" class="fm-quizzes-header-section">
-            <eu:FMButton name="btn-random-quiz" title="Take a random quiz" variant="Accent" size="M" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-quizzes-random-btn"/>
+            <eu:FMButton name="btn-random-quiz" title="Take a random quiz" variant="Accent" size="M" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-quizzes-random-btn" style="display: none;"/>
             <ui:VisualElement name="filters-container" class="fm-quizzes-filters-container">
                 <ui:VisualElement name="row-levels" style="flex-grow: 1; flex-direction: row;">
                     <appui:Text text="Nivel_" size="XXXL" style="margin-right: 20px;">
