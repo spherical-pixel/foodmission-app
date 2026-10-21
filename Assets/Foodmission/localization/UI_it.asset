@@ -1859,8 +1859,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: "Segui qualche regime alimentare particolare? Questo ci aiuter\xE0
-      a consigliarti ricette e prodotti adatti alle tue esigenze."
+    m_Localized: "Hai restrizioni o preferenze alimentari? Puoi selezionare tutte
+      quelle che ti riguardano. Cos\xEC potremo suggerirti ricette e alimenti adatti
+      a te."
     m_Metadata:
       m_Items: []
   - m_Id: 34027969428054016
@@ -1897,11 +1898,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: Preferenze alimentari
+    m_Localized: Restrizioni e preferenze alimentari
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Nessuno selezionato
+    m_Localized: Seleziona tutte quelle pertinenti
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4907,6 +4908,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: Inizia la missione principale di questa sfida per farla.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: Nessuna delle precedenti
     m_Metadata:
       m_Items: []
   references:

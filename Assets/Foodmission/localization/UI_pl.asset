@@ -1870,9 +1870,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: "Czy przestrzegasz jakich\u015B szczeg\xF3lnych zalece\u0144 \u017Cywieniowych?
-      Dzi\u0119ki temu b\u0119dziemy mogli zaproponowa\u0107 Ci odpowiednie przepisy
-      i produkty."
+    m_Localized: "Czy masz jakie\u015B ograniczenia lub preferencje \u017Cywieniowe?
+      Mo\u017Cesz zaznaczy\u0107 wszystkie, kt\xF3re Ci\u0119 dotycz\u0105. Dzi\u0119ki
+      temu zaproponujemy Ci przepisy i \u017Cywno\u015B\u0107 dopasowane do Ciebie."
     m_Metadata:
       m_Items: []
   - m_Id: 34027969428054016
@@ -1909,11 +1909,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: "Preferencje \u017Cywieniowe"
+    m_Localized: "Ograniczenia i preferencje \u017Cywieniowe"
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: "Nie wybrano \u017Cadnej opcji"
+    m_Localized: "Zaznacz wszystkie pasuj\u0105ce"
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4983,6 +4983,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: "Rozpocznij zadanie tego wyzwania, aby je wykona\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: "\u017Badne z powy\u017Cszych"
     m_Metadata:
       m_Items: []
   references:

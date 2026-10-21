@@ -120,7 +120,7 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, _vm.EducationLevelOptions.Count);
             Assert.AreEqual(1, _vm.AnnualIncomeOptions.Count);
             Assert.AreEqual(1, _vm.ShoppingResponsibilityOptions.Count);
-            Assert.AreEqual(1, _vm.DietaryPreferenceOptions.Count);
+            Assert.AreEqual(2, _vm.DietaryPreferenceOptions.Count); // catalog + "None of the above"
             Assert.AreEqual(1, _vm.MotivationOptions.Count);
             Assert.AreEqual(4, _vm.DailyTimeCommitmentOptions.Count);
             Assert.IsFalse(_vm.IsLoading);
@@ -601,6 +601,79 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsNotNull(capturedRequest);
             Assert.IsNull(capturedRequest.preferences);
+        }
+
+        [Test]
+        public async Task SubmitAsync_WithNoneOfTheAbove_SendsEmptyDietaryArray()
+        {
+            await LoadDietaryCatalogWithStoredVeganAsync();
+
+            int[] selection = _vm.UpdateDietarySelection(new[] { 0 }, new[] { 0, _vm.DietaryNoneIndex });
+            CollectionAssert.AreEqual(new[] { _vm.DietaryNoneIndex }, selection);
+
+            ProfileUpdateRequest capturedRequest = await SubmitAndCaptureAsync();
+
+            Assert.IsNotNull(capturedRequest.preferences);
+            Assert.IsNotNull(capturedRequest.preferences.dietaryPreference);
+            Assert.IsEmpty(capturedRequest.preferences.dietaryPreference);
+        }
+
+        [Test]
+        public async Task SubmitAsync_AfterDeselectingAll_SendsEmptyDietaryArray()
+        {
+            await LoadDietaryCatalogWithStoredVeganAsync();
+
+            _vm.UpdateDietarySelection(new[] { 0 }, new int[0]);
+
+            ProfileUpdateRequest capturedRequest = await SubmitAndCaptureAsync();
+
+            Assert.IsNotNull(capturedRequest.preferences);
+            Assert.IsEmpty(capturedRequest.preferences.dietaryPreference);
+        }
+
+        [Test]
+        public async Task LoadCatalogDataAsync_AppendsNoneOptionAfterCatalog()
+        {
+            await LoadDietaryCatalogWithStoredVeganAsync();
+
+            Assert.AreEqual(3, _vm.DietaryPreferenceOptions.Count);
+            Assert.AreEqual(2, _vm.DietaryNoneIndex);
+        }
+
+        private async Task LoadDietaryCatalogWithStoredVeganAsync()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                dietaryPreferences = new[]
+                {
+                    new CatalogItem { code = "VEGAN", label = "Vegan" },
+                    new CatalogItem { code = "HALAL", label = "Halal" }
+                }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+
+            _storeService.SetAppState(new AppState { userDietaryPreference = new[] { "VEGAN" } });
+
+            await _vm.LoadCatalogDataAsync();
+            _vm.SelectedGenderIndex = 0;
+        }
+
+        private async Task<ProfileUpdateRequest> SubmitAndCaptureAsync()
+        {
+            ProfileUpdateRequest capturedRequest = null;
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .Callback<ProfileUpdateRequest>(r => capturedRequest = r)
+                .ReturnsAsync((true, null));
+
+            await _vm.SubmitAsync();
+
+            Assert.IsNotNull(capturedRequest);
+            return capturedRequest;
         }
 
         [Test]

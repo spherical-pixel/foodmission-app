@@ -399,7 +399,11 @@ namespace eu.foodmission.platform
 
             _dietaryPreferencesDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
             {
-                _viewModel.SelectedDietaryPreferenceIndices = evt.newValue?.ToArray() ?? new int[0];
+                int[] selection = _viewModel.UpdateDietarySelection(evt.previousValue, evt.newValue);
+                if (!selection.SequenceEqual(evt.newValue ?? new int[0]))
+                {
+                    _dietaryPreferencesDropdown.Dropdown.SetValueWithoutNotify(selection);
+                }
             });
 
             _activityLevelDropdown?.Dropdown.RegisterValueChangedCallback(evt =>
