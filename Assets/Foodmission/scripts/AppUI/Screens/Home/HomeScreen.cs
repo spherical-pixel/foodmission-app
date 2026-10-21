@@ -80,6 +80,7 @@ namespace eu.foodmission.platform
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
             base.OnEnter(controller, destination, args);
+            _viewModel?.EndOnboardingRun();
             _ = _viewModel?.LoadActiveQuestAsync();
             RefreshActiveQuestWidget();
             _nutriView?.RefreshView();

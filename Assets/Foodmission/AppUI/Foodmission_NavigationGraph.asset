@@ -390,6 +390,39 @@ MonoBehaviour:
     m_RestoreState: 0
     m_LaunchSingleTop: 0
   m_DefaultArguments: []
+--- !u!114 &-4550895027092396944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: OnboardingProgress
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 2200, y: 472}
+  m_Guid: 35b5a8720e9b4583974b47d788310806
+  m_Parent: {fileID: 4520152674340125327}
+  m_Actions: []
+  m_Label: OnboardingProgress
+  m_TemplateSettings:
+    rid: 2657033003049418982
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 2657033003049418982
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.OnboardingProgressScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 0
+        m_ShowBackButton: 0
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &-4347370231613209298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1383,6 +1416,8 @@ MonoBehaviour:
   - {fileID: -1741816292427579952}
   - {fileID: 1581165950026053526}
   - {fileID: 2688167473367792649}
+  - {fileID: -4550895027092396944}
+  - {fileID: 3721770249691427602}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1979,6 +2014,33 @@ MonoBehaviour:
     m_PopUpToStrategy: 0
     m_PopUpToRoute: {fileID: 0}
     m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
+--- !u!114 &3721770249691427602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: go_to_onboarding_progress
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 1900, y: 472}
+  m_Guid: f27a1346-c3db-49f8-b2ff-d479a2008418
+  m_Destination: {fileID: -4550895027092396944}
+  m_Options:
+    m_PopUpToStrategy: 2
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 1
     m_EnterAnim: 0
     m_ExitAnim: 0
     m_PopEnterAnim: 0
@@ -2986,6 +3048,7 @@ MonoBehaviour:
   - {fileID: 7429980358298452540}
   - {fileID: -1741816292427579952}
   - {fileID: 2688167473367792649}
+  - {fileID: 3721770249691427602}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
 --- !u!114 &6946922476416249955

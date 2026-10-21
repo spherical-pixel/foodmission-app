@@ -58,6 +58,7 @@ namespace eu.foodmission.platform
         private readonly INotificationService _notificationService;
         private readonly ILegalService _legalService;
         private readonly IPilotSurveyService _pilotSurveyService;
+        private readonly IOnboardingRun _onboardingRun;
         private readonly IMissionNudgeService _missionNudgeService;
         private readonly IMissionLastDayService _missionLastDayService;
         private readonly IMissionFailureService _missionFailureService;
@@ -104,8 +105,10 @@ namespace eu.foodmission.platform
             IDimensionService dimensionService = null,
             IMissionLastDayService missionLastDayService = null,
             IKnowledgeProgressService knowledgeProgressService = null,
-            IMissionInputsService missionInputsService = null) : base(storeService)
+            IMissionInputsService missionInputsService = null,
+            IOnboardingRun onboardingRun = null) : base(storeService)
         {
+            _onboardingRun = onboardingRun ?? App.current?.services?.GetService<IOnboardingRun>();
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
             _pilotSurveyService = pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
@@ -220,12 +223,12 @@ namespace eu.foodmission.platform
                 return PendingOnboardingType.Profile;
             }
 
-            // Same order as the onboarding flow: profile → goals → survey
-            bool goalsSet = state.userGoals != null && state.userGoals.Length > 0;
-            if (!goalsSet)
-            {
-                return PendingOnboardingType.Goals;
-            }
+            // Skipped goals are not reminded (issue #31): after the profile comes the survey
+            // bool goalsSet = state.userGoals != null && state.userGoals.Length > 0;
+            // if (!goalsSet)
+            // {
+            //     return PendingOnboardingType.Goals;
+            // }
 
             bool surveyAnswered = state.userOnboardingSurvey != null && state.userOnboardingSurvey.HasAnswers();
             if (!surveyAnswered)
@@ -236,9 +239,17 @@ namespace eu.foodmission.platform
             return PendingOnboardingType.None;
         }
 
+        /// <summary>Profile reminder: starts an onboarding run, so the progress screen shows what is left.</summary>
         public void NavigateToOnboardingProfile()
         {
-            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.register_to_onboarding);
+            _onboardingRun?.Start();
+            RaiseNavigationRequested(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_progress);
+        }
+
+        /// <summary>Reaching Home ends any onboarding run (finished, skipped or left with the ✕).</summary>
+        public void EndOnboardingRun()
+        {
+            _onboardingRun?.End();
         }
 
         public event System.Action ProgressWheelsChanged;

@@ -4112,9 +4112,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: "Nie wybra\u0142e\u015B jeszcze swoich cel\xF3w. Przypomn\u0119
-      Ci o tym p\xF3\u017Aniej na ekranie g\u0142\xF3wnym, aby\u015B m\xF3g\u0142
-      je ustawi\u0107."
+    m_Localized: "Nie wybra\u0142e\u015B jeszcze swoich cel\xF3w. Mo\u017Cesz je
+      ustawi\u0107 w dowolnej chwili w swoim profilu."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4892,6 +4891,81 @@ MonoBehaviour:
       z pomoc\u0105 techniczn\u0105."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: "Pomi\u0144"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: "Pomi\u0144 ten krok"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: "Tw\xF3j profil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: Moje cele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: "Ankieta i Tw\xF3j poziom"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: "Tw\xF3j awatar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (opcjonalnie)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} min
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
+  - m_Id: 56190243387203725
+    m_Localized: "Cze\u015B\u0107! Jestem {global.PET_NAME}. Kilka szybkich krok\xF3w
+      i dopasujemy aplikacj\u0119 do Ciebie. Zaczynamy od Twojego profilu."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690411
+  - m_Id: 56190243387203726
+    m_Localized: "Teraz powiedz mi, co chcesz poprawi\u0107, a lepiej dobior\u0119
+      Twoje misje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: "Kilka pyta\u0144 o Twoje nawyki, a zaproponuj\u0119 Tw\xF3j poziom
+      w ka\u017Cdym obszarze."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: "Chcesz spersonalizowa\u0107 sw\xF3j awatar? Mo\u017Cesz to zrobi\u0107
+      teraz lub p\xF3\u017Aniej w swoim profilu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: do zrobienia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: "bie\u017C\u0105cy krok"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: "uko\u0144czono"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: "pomini\u0119to"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: "Reszt\u0119 mo\u017Cesz doko\u0144czy\u0107 p\xF3\u017Aniej na
+      ekranie g\u0142\xF3wnym lub w swoim profilu."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4928,3 +5002,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

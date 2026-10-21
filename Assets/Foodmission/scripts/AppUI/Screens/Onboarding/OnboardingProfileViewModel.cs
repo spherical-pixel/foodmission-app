@@ -107,6 +107,7 @@ namespace eu.foodmission.platform
         private string _loadingText = "";
 
         private readonly INotificationService _notificationService;
+        private readonly IOnboardingRun _onboardingRun;
 
         /// <summary>
         /// Event to show an error toast.
@@ -117,12 +118,14 @@ namespace eu.foodmission.platform
             IStoreService storeService,
             ICatalogService catalogService,
             IAuthService authService,
-            INotificationService notificationService = null)
+            INotificationService notificationService = null,
+            IOnboardingRun onboardingRun = null)
             : base(storeService)
         {
             _catalogService = catalogService;
             _authService = authService;
             _notificationService = notificationService;
+            _onboardingRun = onboardingRun;
 
             PropertyChanged += (sender, args) =>
             {
@@ -321,9 +324,13 @@ namespace eu.foodmission.platform
             await SkipAsync();
         }
 
+        /// <summary>True inside the onboarding run: Skip is shown and the flow returns to the progress screen.</summary>
+        public bool IsInOnboardingRun => _onboardingRun != null && _onboardingRun.IsActive;
+
         public async Task SkipAsync()
         {
             await MarkProfileSkippedAsync();
+            _onboardingRun?.MarkSkipped(OnboardingStep.Profile);
             NavigateNextScreen();
         }
 
@@ -339,23 +346,10 @@ namespace eu.foodmission.platform
             IsSubmitting = true;
             try
             {
-                var request = new ProfileUpdateRequest
-                {
-                    preferences = new ProfileUpdatePreferences
-                    {
-                        onboardingProfileSkippedAt = DateTime.UtcNow.ToString("o")
-                    }
-                };
-
-                await _authService.UpdateProfileAsync(request);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"[OnboardingProfileViewModel] MarkProfileSkippedAsync profile update error: {ex.Message}");
+                await OnboardingProfileSkip.MarkAsync(_authService, _storeService);
             }
             finally
             {
-                _storeService.store.Dispatch(AppActions.setSkippedExtendedProfile.Invoke());
                 IsSubmitting = false;
             }
         }
@@ -453,6 +447,7 @@ namespace eu.foodmission.platform
                     }
 
                     ErrorDetail = null;
+                    _onboardingRun?.MarkDone(OnboardingStep.Profile);
                     NavigateNextScreen();
                 }
                 else
@@ -479,7 +474,7 @@ namespace eu.foodmission.platform
 
         private void NavigateNextScreen()
         {
-            RaiseNavigationRequested(Actions.onboardingprofile_to_onboarding_goals);
+            RaiseNavigationRequested(IsInOnboardingRun ? Actions.go_to_onboarding_progress : Actions.onboardingprofile_to_onboarding_goals);
         }
 
         private string GetLocalized(string key)

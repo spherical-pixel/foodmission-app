@@ -29,6 +29,7 @@ namespace eu.foodmission.platform
 
         private readonly IAuthService _authService;
         private readonly IDimensionService _dimensionService;
+        private readonly IOnboardingRun _onboardingRun;
         private readonly List<DimensionLevelRow> _rows = new List<DimensionLevelRow>();
 
         public DimensionLevelsMode Mode { get; set; } = DimensionLevelsMode.Edit;
@@ -43,10 +44,12 @@ namespace eu.foodmission.platform
         public DimensionLevelsViewModel(
             IStoreService storeService,
             IAuthService authService = null,
-            IDimensionService dimensionService = null) : base(storeService)
+            IDimensionService dimensionService = null,
+            IOnboardingRun onboardingRun = null) : base(storeService)
         {
             _authService = authService;
             _dimensionService = dimensionService;
+            _onboardingRun = onboardingRun;
         }
 
         public override void Initialize()
@@ -190,6 +193,10 @@ namespace eu.foodmission.platform
             else if (FromHome)
             {
                 RaiseNavigationRequested(Actions.go_to_home);
+            }
+            else if (_onboardingRun != null && _onboardingRun.IsActive)
+            {
+                RaiseNavigationRequested(Actions.go_to_onboarding_progress);
             }
             else
             {

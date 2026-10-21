@@ -334,5 +334,86 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(_vm.ErrorDetail);
             Assert.IsFalse(_vm.IsSubmitting);
         }
+
+        // ── Onboarding run (issue #31) ──
+
+        private OnboardingProfileViewModel CreateRunVm(OnboardingRun run)
+        {
+            var vm = new OnboardingProfileViewModel(_storeService, _mockCatalogService.Object, _mockAuthService.Object, null, run);
+            _mockAuthService
+                .Setup(x => x.UpdateProfileAsync(It.IsAny<ProfileUpdateRequest>()))
+                .ReturnsAsync((true, null));
+            return vm;
+        }
+
+        private async Task FillValidProfileAsync(OnboardingProfileViewModel vm)
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                activityLevels = new[] { new CatalogItem { code = "moderate", label = "Moderate" } },
+                educationLevels = new[] { new CatalogItem { code = "bachelor", label = "Bachelor" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" } },
+                shoppingResponsibilities = new[] { new CatalogItem { code = "primary", label = "Primary" } },
+                dietaryPreferences = new[] { new CatalogItem { code = "vegetarian", label = "Vegetarian" } }
+            };
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+            await vm.LoadCatalogDataAsync();
+            vm.SelectedGenderIndex = 0;
+            vm.SelectedActivityLevelIndex = 0;
+            vm.SelectedEducationLevelIndex = 0;
+            vm.SelectedAnnualIncomeIndex = 0;
+        }
+
+        [Test]
+        public async Task Skip_InRun_MarksSkipped_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = CreateRunVm(run);
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            Assert.IsTrue(vm.IsInOnboardingRun);
+            await vm.SkipAsync();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_progress, action);
+            Assert.AreEqual(OnboardingStepState.Skipped, run.GetStates(new AppState())[(int)OnboardingStep.Profile]);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Submit_InRun_MarksDone_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = CreateRunVm(run);
+            await FillValidProfileAsync(vm);
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            await vm.SubmitAsync();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_progress, action);
+            Assert.AreEqual(OnboardingStepState.Done, run.GetStates(new AppState())[(int)OnboardingStep.Profile]);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Submit_NoRun_GoesToGoals()
+        {
+            var vm = CreateRunVm(new OnboardingRun());
+            await FillValidProfileAsync(vm);
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            Assert.IsFalse(vm.IsInOnboardingRun);
+            await vm.SubmitAsync();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.onboardingprofile_to_onboarding_goals, action);
+            vm.Dispose();
+        }
     }
 }

@@ -4065,8 +4065,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: "A\xFAn no has elegido tus objetivos. Te lo recordar\xE9 m\xE1s
-      adelante en Inicio para que puedas establecerlos."
+    m_Localized: "A\xFAn no has elegido tus objetivos. Puedes establecerlos cuando
+      quieras desde tu perfil."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4816,6 +4816,81 @@ MonoBehaviour:
       cambiar los ajustes o escribir a soporte."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: Saltar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: Saltar este paso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: Tu perfil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: Mis objetivos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: Encuesta y tu nivel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: Tu avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (opcional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} min
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 56190243387203725
+    m_Localized: "\xA1Hola! Soy {global.PET_NAME}. Con unos pasos r\xE1pidos prepararemos
+      la app a tu medida. Empezamos por tu perfil."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690413
+  - m_Id: 56190243387203726
+    m_Localized: "Ahora cu\xE9ntame qu\xE9 te interesa mejorar, as\xED elegir\xE9
+      mejor tus misiones."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: "Unas preguntas sobre tus h\xE1bitos y te propondr\xE9 tu nivel
+      en cada \xE1rea."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: "\xBFQuieres personalizar tu avatar? Puedes hacerlo ahora o m\xE1s
+      adelante desde tu perfil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: pendiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: paso actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: completado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: saltado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: "Podr\xE1s completar el resto m\xE1s adelante desde Inicio o tu
+      perfil."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4852,3 +4927,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

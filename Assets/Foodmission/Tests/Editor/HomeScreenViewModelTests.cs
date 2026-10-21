@@ -577,19 +577,6 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void GetPendingOnboardingType_WhenGoalsAndSurveyPending_ReturnsGoalsFirst()
-        {
-            _storeService.SetAppState(new AppState
-            {
-                hasCompletedExtendedProfile = true,
-                userOnboardingSurvey = new OnboardingSurveyData(),
-                userGoals = new string[0]
-            });
-
-            Assert.AreEqual(PendingOnboardingType.Goals, _vm.GetPendingOnboardingType());
-        }
-
-        [Test]
         public void GetPendingOnboardingType_WhenBothCompleted_ReturnsNone()
         {
             _storeService.SetAppState(new AppState
@@ -621,7 +608,7 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void GetPendingOnboardingType_WhenProfileAndSurveyDoneButNoGoals_ReturnsGoals()
+        public void GetPendingOnboardingType_WhenProfileAndSurveyDoneButNoGoals_ReturnsNone()
         {
             _storeService.SetAppState(new AppState
             {
@@ -633,11 +620,11 @@ namespace eu.foodmission.platform.Tests
 
             var result = _vm.GetPendingOnboardingType();
 
-            Assert.AreEqual(PendingOnboardingType.Goals, result);
+            Assert.AreEqual(PendingOnboardingType.None, result, "skipped goals are not reminded (issue #31)");
         }
 
         [Test]
-        public void GetPendingOnboardingType_WhenProfileAndSurveyDoneAndGoalsEmpty_ReturnsGoals()
+        public void GetPendingOnboardingType_WhenProfileAndSurveyDoneAndGoalsEmpty_ReturnsNone()
         {
             _storeService.SetAppState(new AppState
             {
@@ -649,7 +636,7 @@ namespace eu.foodmission.platform.Tests
 
             var result = _vm.GetPendingOnboardingType();
 
-            Assert.AreEqual(PendingOnboardingType.Goals, result);
+            Assert.AreEqual(PendingOnboardingType.None, result, "skipped goals are not reminded (issue #31)");
         }
 
         [Test]
@@ -1787,6 +1774,49 @@ namespace eu.foodmission.platform.Tests
             }));
 
             Assert.AreEqual(35, _vm.KnowledgeBarPercent(KnowledgeKind.Health));
+        }
+
+        // ── Onboarding run (issue #31) ──
+
+        [Test]
+        public void GetPendingOnboardingType_GoalsMissing_SurveyMissing_ReturnsSurvey()
+        {
+            _storeService.SetAppState(new AppState
+            {
+                hasCompletedExtendedProfile = true,
+                userOnboardingSurvey = new OnboardingSurveyData(),
+                userGoals = new string[0]
+            });
+
+            Assert.AreEqual(PendingOnboardingType.Survey, _vm.GetPendingOnboardingType());
+        }
+
+        [Test]
+        public void NavigateToOnboardingProfile_StartsRun_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, onboardingRun: run);
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            vm.NavigateToOnboardingProfile();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_progress, action);
+            Assert.IsTrue(run.IsActive);
+            vm.Dispose();
+        }
+
+        [Test]
+        public void EndOnboardingRun_EndsRun()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, onboardingRun: run);
+
+            vm.EndOnboardingRun();
+
+            Assert.IsFalse(run.IsActive);
+            vm.Dispose();
         }
     }
 }

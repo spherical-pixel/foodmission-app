@@ -4079,8 +4079,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: "Du hast deine Ziele noch nicht ausgew\xE4hlt. Ich erinnere dich
-      sp\xE4ter auf dem Startbildschirm daran, damit du sie festlegen kannst."
+    m_Localized: "Du hast deine Ziele noch nicht ausgew\xE4hlt. Du kannst sie jederzeit
+      in deinem Profil festlegen."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4844,6 +4844,81 @@ MonoBehaviour:
       oder den Support kontaktieren."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: "\xDCberspringen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: "Diesen Schritt \xFCberspringen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: Dein Profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: Meine Ziele
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: Umfrage und dein Niveau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: Dein Avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} Min.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 56190243387203725
+    m_Localized: Hallo! Ich bin {global.PET_NAME}. Mit ein paar kurzen Schritten
+      passen wir die App an dich an. Wir beginnen mit deinem Profil.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690407
+  - m_Id: 56190243387203726
+    m_Localized: "Erz\xE4hl mir jetzt, was du verbessern m\xF6chtest, damit ich deine
+      Missionen besser ausw\xE4hlen kann."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: Ein paar Fragen zu deinen Gewohnheiten, und ich schlage dir dein
+      Niveau in jedem Bereich vor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: "M\xF6chtest du deinen Avatar gestalten? Das geht jetzt oder sp\xE4ter
+      \xFCber dein Profil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: ausstehend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: aktueller Schritt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: abgeschlossen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: "\xFCbersprungen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: "Den Rest kannst du sp\xE4ter \xFCber den Startbildschirm oder dein
+      Profil erledigen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4880,3 +4955,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

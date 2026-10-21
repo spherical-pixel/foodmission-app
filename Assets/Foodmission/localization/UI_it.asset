@@ -4067,8 +4067,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: "Non hai ancora scelto i tuoi obiettivi. Te lo ricorder\xF2 pi\xF9
-      avanti nella schermata Home cos\xEC potrai impostarli."
+    m_Localized: Non hai ancora scelto i tuoi obiettivi. Puoi impostarli quando vuoi
+      dal tuo profilo.
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4815,6 +4815,81 @@ MonoBehaviour:
       vedere i tuoi badge, cambiare le impostazioni o contattare l'assistenza."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: Salta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: Salta questo passaggio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: Il tuo profilo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: I miei obiettivi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: Questionario e il tuo livello
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: Il tuo avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (facoltativo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} min
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
+  - m_Id: 56190243387203725
+    m_Localized: Ciao! Sono {global.PET_NAME}. Con pochi passaggi veloci adatteremo
+      l'app a te. Iniziamo dal tuo profilo.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690409
+  - m_Id: 56190243387203726
+    m_Localized: "Ora dimmi cosa ti piacerebbe migliorare, cos\xEC sceglier\xF2 meglio
+      le tue missioni."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: "Qualche domanda sulle tue abitudini e ti proporr\xF2 il tuo livello
+      in ogni area."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: "Vuoi personalizzare il tuo avatar? Puoi farlo ora o pi\xF9 tardi
+      dal tuo profilo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: da fare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: passaggio attuale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: completato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: saltato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: "Potrai completare il resto pi\xF9 tardi dalla schermata Home o
+      dal tuo profilo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4851,3 +4926,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

@@ -20,6 +20,18 @@ namespace eu.foodmission.platform
         protected override string CompleteButtonLabel => "@UI:TXT_DONE";
         protected override bool ShowCloseButton => true;
 
+        protected override bool ShowSkipOnFirstStep => _viewModel != null && _viewModel.IsInOnboardingRun;
+
+        protected override void OnSkipRequested()
+        {
+            if (_viewModel == null || _viewModel.IsSubmitting)
+            {
+                return;
+            }
+            ResetNutriToIdle();
+            _viewModel.Skip();
+        }
+
         private ExVisualElement _messageCard;
         private Unity.AppUI.UI.Text _messageText;
         private FMNutriView _nutriView;
@@ -106,6 +118,8 @@ namespace eu.foodmission.platform
                     }
                 }
 
+                // The Skip button depends on the entry point read above
+                RefreshNavigationButtons();
                 _viewModel.LoadInitialGoals();
                 PopulateAllDimensionCheckboxes();
                 _ = _viewModel.EnsureDimensionsLoadedAsync();

@@ -303,5 +303,58 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.DoesNotContain(_storeService.DispatchedActionTypes, "app/setOnboardingSurvey");
             vm.Dispose();
         }
+
+        // ── Onboarding run (issue #31) ──
+
+        private OnboardingSurveyViewModel CreateRunVm(OnboardingRun run)
+        {
+            var vm = new OnboardingSurveyViewModel(_storeService, _gamification.Object, _auth.Object, run);
+            vm.Initialize();
+            return vm;
+        }
+
+        [Test]
+        public void Skip_InRun_MarksSkipped_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = CreateRunVm(run);
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            Assert.IsTrue(vm.IsInOnboardingRun);
+            vm.Skip();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_progress, action);
+            Assert.AreEqual(OnboardingStepState.Skipped, run.GetStates(new AppState())[(int)OnboardingStep.Survey]);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Submit_InRun_MarksSurveyDone()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = CreateRunVm(run);
+
+            await GoToEndAsync(vm);
+
+            Assert.AreEqual(OnboardingStepState.Done, run.GetStates(new AppState())[(int)OnboardingStep.Survey]);
+            vm.Dispose();
+        }
+
+        [Test]
+        public void EndOnboardingRun_ThenSurveyFromHome_NotInRun()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            run.End();
+            var vm = CreateRunVm(run);
+
+            vm.FromHome = true;
+
+            Assert.IsFalse(vm.IsInOnboardingRun);
+            vm.Dispose();
+        }
     }
 }

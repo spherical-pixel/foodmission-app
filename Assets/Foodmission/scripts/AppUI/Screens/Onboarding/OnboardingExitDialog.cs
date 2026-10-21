@@ -17,6 +17,7 @@ namespace eu.foodmission.platform
         public const string GoalsMessage = "ONBOARDING_CLOSE_GOALS_MESSAGE";
         public const string SurveyMessage = "ONBOARDING_CLOSE_SURVEY_MESSAGE";
         public const string LevelsMessage = "ONBOARDING_CLOSE_LEVELS_MESSAGE";
+        public const string ProgressMessage = OnboardingProgressTexts.CloseMessageKey;
 
         public static void Show(VisualElement anchor, string messageKey, Action onLeave)
         {

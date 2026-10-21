@@ -62,6 +62,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string go_to_badges = "go_to_badges";
         public const string go_to_onboarding_goals = "go_to_onboarding_goals";
         public const string go_to_dimension_levels = "go_to_dimension_levels";
+        public const string go_to_onboarding_progress = "go_to_onboarding_progress";
     }
     public static partial class Destinations
     {
@@ -91,6 +92,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string testsurvey = "TestSurvey";
         public const string onboardinggoals = "OnboardingGoals";
         public const string dimensionlevels = "DimensionLevels";
+        public const string onboardingprogress = "OnboardingProgress";
         public const string onboardingsurvey = "OnboardingSurvey";
         public const string quick_search = "QUICK_SEARCH";
         public const string recipebook = "RecipeBook";

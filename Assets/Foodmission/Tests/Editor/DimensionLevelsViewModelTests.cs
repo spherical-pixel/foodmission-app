@@ -212,5 +212,35 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("ADVANCED", row.Level, "Loading names must not reset the user's choice");
             Assert.AreEqual(1, changes);
         }
+
+        // ── Onboarding run (issue #31) ──
+
+        [Test]
+        public async Task ProposalSave_InRun_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = new DimensionLevelsViewModel(_store, _auth.Object, _dims.Object, run) { Mode = DimensionLevelsMode.Proposal };
+            vm.Initialize();
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            await vm.SaveAsync();
+
+            Assert.AreEqual(Actions.go_to_onboarding_progress, action);
+        }
+
+        [Test]
+        public async Task ProposalSave_NoRun_GoesToAvatar()
+        {
+            var vm = new DimensionLevelsViewModel(_store, _auth.Object, _dims.Object, new OnboardingRun()) { Mode = DimensionLevelsMode.Proposal };
+            vm.Initialize();
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            await vm.SaveAsync();
+
+            Assert.AreEqual(Actions.onboardingprofile_to_onboardingavatar, action);
+        }
     }
 }

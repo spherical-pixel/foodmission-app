@@ -4059,8 +4059,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: "Du har ikke valgt m\xE5lene dine enn\xE5. Jeg minner deg p\xE5
-      det senere p\xE5 startskjermen, s\xE5 du kan angi dem."
+    m_Localized: "Du har ikke valgt m\xE5lene dine enn\xE5. Du kan angi dem n\xE5r
+      som helst fra profilen din."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4809,6 +4809,81 @@ MonoBehaviour:
       dine, se merkene dine, endre innstillingene eller kontakte support."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: Hopp over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: Hopp over dette steget
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: Profilen din
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: "Mine m\xE5l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: "Sp\xF8rreskjema og niv\xE5et ditt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: Avataren din
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (valgfritt)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} min
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 56190243387203725
+    m_Localized: Hei! Jeg er {global.PET_NAME}. Med noen raske steg tilpasser vi
+      appen til deg. Vi begynner med profilen din.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690410
+  - m_Id: 56190243387203726
+    m_Localized: "Fortell meg n\xE5 hva du vil forbedre, s\xE5 kan jeg velge oppdragene
+      dine bedre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: "Noen sp\xF8rsm\xE5l om vanene dine, s\xE5 foresl\xE5r jeg niv\xE5et
+      ditt p\xE5 hvert omr\xE5de."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: "Vil du tilpasse avataren din? Du kan gj\xF8re det n\xE5 eller senere
+      fra profilen din."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: "gjenst\xE5r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: "n\xE5v\xE6rende steg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: "fullf\xF8rt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: hoppet over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: "Du kan fullf\xF8re resten senere fra startskjermen eller profilen
+      din."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4845,3 +4920,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

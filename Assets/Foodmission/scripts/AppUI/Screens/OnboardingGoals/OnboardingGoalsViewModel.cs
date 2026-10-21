@@ -13,6 +13,7 @@ namespace eu.foodmission.platform
     {
         private readonly IAuthService _authService;
         private readonly IDimensionService _dimensionService;
+        private readonly IOnboardingRun _onboardingRun;
 
         private bool m_IsSubmitting;
         public bool IsSubmitting
@@ -58,10 +59,12 @@ namespace eu.foodmission.platform
         public OnboardingGoalsViewModel(
             IStoreService storeService,
             IAuthService authService = null,
-            IDimensionService dimensionService = null) : base(storeService)
+            IDimensionService dimensionService = null,
+            IOnboardingRun onboardingRun = null) : base(storeService)
         {
             _authService = authService;
             _dimensionService = dimensionService;
+            _onboardingRun = onboardingRun;
         }
 
         public override void Initialize()
@@ -259,6 +262,11 @@ namespace eu.foodmission.platform
                 {
                     RaiseNavigationRequested(Actions.go_to_editprofile);
                 }
+                else if (IsInOnboardingRun)
+                {
+                    _onboardingRun.MarkDone(OnboardingStep.Goals);
+                    RaiseNavigationRequested(Actions.go_to_onboarding_progress);
+                }
                 else
                 {
                     RaiseNavigationRequested(Actions.onboardinggoals_to_onboardingsurvey);
@@ -268,6 +276,16 @@ namespace eu.foodmission.platform
             {
                 IsSubmitting = false;
             }
+        }
+
+        /// <summary>Inside the onboarding run (not from Home, Edit Profile or a content list): Skip is shown.</summary>
+        public bool IsInOnboardingRun => _onboardingRun != null && _onboardingRun.IsActive && IsOnboardingContext && !FromHome;
+
+        /// <summary>Skip (onboarding run only): goals stay empty and are not reminded; back to the progress screen.</summary>
+        public void Skip()
+        {
+            _onboardingRun?.MarkSkipped(OnboardingStep.Goals);
+            RaiseNavigationRequested(Actions.go_to_onboarding_progress);
         }
 
         /// <summary>Opened by the onboarding or Home's reminder (not Edit Profile or a content list): the ✕ asks before leaving.</summary>
