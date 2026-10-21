@@ -1147,6 +1147,29 @@
     align-items: center;
 }
 
+/* Long product names wrap and the row grows instead of running under the icons */
+.fm-shopping-list-detail-item {
+    height: auto;
+    min-height: 116px;
+}
+
+.fm-shopping-list-detail-item__text-container {
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    align-self: stretch;
+    justify-content: center;
+}
+
+.fm-shopping-list-detail-item__buttons {
+    flex-direction: row;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: -10px;
+}
+
 .fm-pantry-item {
     overflow: hidden;
     align-content: flex-start;
@@ -1184,6 +1207,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.fm-shopping-list-detail-item .appui-text {
+    height: auto;
+    padding-right: 12px;
+    white-space: normal;
+    flex-grow: 0;
 }
 
 .fm-pantry-item-text-container {

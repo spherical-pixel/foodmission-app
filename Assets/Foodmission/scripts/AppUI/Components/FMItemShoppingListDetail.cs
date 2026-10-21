@@ -57,25 +57,25 @@ namespace eu.foodmission.platform.Components
             _checkbox.style.marginLeft = 15;
             this.Add(_checkbox);
 
+            // The open button is a sibling of the text: a TextElement with children is not measured
+            // by its text, so it would not grow when a long name wraps
+            var textContainer = new VisualElement();
+            textContainer.AddToClassList("fm-shopping-list-detail-item__text-container");
+            this.Add(textContainer);
+
             _text = new Unity.AppUI.UI.Text();
             _text.primary = true;
-            this.Add(_text);
+            textContainer.Add(_text);
 
             _openButton = new Unity.AppUI.UI.Button();
             _openButton.AddToClassList("fm-full-button");
             _openButton.quiet = true;
 
-            _text.Add(_openButton);
+            textContainer.Add(_openButton);
 
+            // In the row flow (not absolute) so the text only gets the width left beside the icons
             _buttonsContainer = new VisualElement();
-            _buttonsContainer.style.position = Position.Absolute;
-            _buttonsContainer.style.right = 0;
-            _buttonsContainer.style.flexDirection = FlexDirection.Row;
-            _buttonsContainer.style.height = Length.Percent(100);
-            _buttonsContainer.style.paddingRight = 10;
-            _buttonsContainer.style.justifyContent = Justify.FlexEnd;
-            _buttonsContainer.style.alignContent = Align.Center;
-            _buttonsContainer.style.alignItems = Align.Center;
+            _buttonsContainer.AddToClassList("fm-shopping-list-detail-item__buttons");
             this.Add(_buttonsContainer);
 
             _editButton = new Unity.AppUI.UI.Button();
