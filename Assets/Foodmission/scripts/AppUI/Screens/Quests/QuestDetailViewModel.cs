@@ -496,8 +496,9 @@ namespace eu.foodmission.platform
                  (progress.reward.points.HasValue && progress.reward.points.Value > 0) ||
                  !string.IsNullOrEmpty(progress.reward.badgeId)))
             {
-                EarnedReward = progress.reward;
+                // Wallet first: setting EarnedReward opens the celebration, which reads the XP from the store
                 _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(progress.reward.xp ?? 0, progress.reward.points ?? 0)));
+                EarnedReward = progress.reward;
             }
             else
             {

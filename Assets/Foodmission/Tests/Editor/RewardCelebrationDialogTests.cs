@@ -307,6 +307,26 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void ResolveXpRange_UsesWalletXpAsEndAndSubtractsReward()
+        {
+            // Level 10 starts at 540 XP: a user there must not be shown level 1 or 2
+            var (start, end) = RewardCelebrationDialog.ResolveXpRange(560, 20);
+
+            Assert.AreEqual(540, start);
+            Assert.AreEqual(560, end);
+            Assert.AreEqual(10, eu.foodmission.platform.Utils.LevelFormula.GetLevel(start));
+        }
+
+        [Test]
+        public void ResolveXpRange_WhenWalletBelowReward_StartsAtZero()
+        {
+            var (start, end) = RewardCelebrationDialog.ResolveXpRange(0, 50);
+
+            Assert.AreEqual(0, start);
+            Assert.AreEqual(50, end);
+        }
+
+        [Test]
         public void AnimateXpProgression_WhenHostOrBarNull_InvokesOnCompleteImmediately()
         {
             bool completed = false;

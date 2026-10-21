@@ -505,16 +505,8 @@ namespace eu.foodmission.platform.Components
             var container = CreateContentContainer("fm-reward-content--xp");
             IStoreService storeService = App.current?.services?.GetService<IStoreService>();
 
-            int userXp = 0;
-
-            if (storeService != null)
-            {
-                //userXp = storeService.GetAppState().userXp;
-                // Let's fake for testing 
-                userXp = 10 + item.Value;
-            }
-
-            int prevXp = userXp - item.Value;
+            int rewardXp = item?.Value ?? 0;
+            var (prevXp, userXp) = ResolveXpRange(storeService?.GetAppState()?.userXp ?? 0, rewardXp);
             var startInfo = LevelFormula.GetProgressInfo(prevXp);
 
             var xpRow = new VisualElement();
@@ -571,6 +563,17 @@ namespace eu.foodmission.platform.Components
             }
 
             return container;
+        }
+
+        /// <summary>
+        /// XP range the bar animates through. The wallet already includes the reward when the dialog opens
+        /// (every caller adds it to the store first), so the animation runs from walletXp - rewardXp to walletXp.
+        /// </summary>
+        public static (int StartXp, int EndXp) ResolveXpRange(int walletXp, int rewardXp)
+        {
+            rewardXp = Mathf.Max(0, rewardXp);
+            int endXp = Mathf.Max(walletXp, rewardXp);
+            return (endXp - rewardXp, endXp);
         }
 
         /// <summary>

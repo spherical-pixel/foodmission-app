@@ -149,7 +149,7 @@ namespace eu.foodmission.platform
             // An injected IChallengeService (tests) gets its own completion service; otherwise share the app singleton
             _completion = completionService
                 ?? (challengeService == null ? App.current?.services?.GetService<IChallengeCompletionService>() : null)
-                ?? new ChallengeCompletionService(_challengeService, _authService);
+                ?? new ChallengeCompletionService(_challengeService, _authService, storeService);
         }
 
         public async Task LoadComparisonDataAsync(string challengeCode, string mode, string source)

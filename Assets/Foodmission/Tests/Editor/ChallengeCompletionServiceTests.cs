@@ -10,6 +10,7 @@ namespace eu.foodmission.platform.Tests
     {
         private Mock<IChallengeService> _challengeService;
         private Mock<IAuthService> _authService;
+        private TestStoreService _storeService;
         private ChallengeCompletionService _service;
 
         [SetUp]
@@ -17,7 +18,14 @@ namespace eu.foodmission.platform.Tests
         {
             _challengeService = new Mock<IChallengeService>();
             _authService = new Mock<IAuthService>();
-            _service = new ChallengeCompletionService(_challengeService.Object, _authService.Object);
+            _storeService = new TestStoreService();
+            _service = new ChallengeCompletionService(_challengeService.Object, _authService.Object, _storeService);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _storeService.Dispose();
         }
 
         private void SetupPatch(ChallengeProgress progress, ApiErrorResponse error)
@@ -43,6 +51,21 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("CH.B2.1", raisedCode);
             Assert.AreSame(reward, raisedReward);
             _authService.Verify(a => a.SyncGamificationAsync(), Times.Once);
+        }
+
+        [Test]
+        public async Task CompleteAsync_WithReward_AddsItToTheWalletBeforeRaisingEvent()
+        {
+            var state = new AppState { userXp = 500, userPoints = 40 };
+            _storeService.SetAppState(state);
+            SetupPatch(new ChallengeProgress { completed = true, progress = 100f, reward = new ContentReward { xp = 10, points = 5 } }, null);
+            int xpWhenRaised = -1;
+            _service.ChallengeCompleted += (_, _) => xpWhenRaised = _storeService.GetAppState().userXp;
+
+            await _service.CompleteAsync("CH.B2.1");
+
+            Assert.AreEqual(510, xpWhenRaised);
+            Assert.AreEqual(45, _storeService.GetAppState().userPoints);
         }
 
         [Test]
@@ -102,6 +125,7 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(result.Success);
             Assert.IsNull(result.Reward);
             _authService.Verify(a => a.SyncGamificationAsync(), Times.Never);
+            Assert.AreEqual(0, _storeService.GetAppState().userXp);
         }
 
         [Test]
