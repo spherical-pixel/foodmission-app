@@ -201,6 +201,7 @@ namespace eu.foodmission.platform
 
                 if (await TryLoadCurrentQuestAsync(codeOrId))
                 {
+                    GoHomeIfCurrentQuestCompleted();
                     return;
                 }
 
@@ -262,6 +263,7 @@ namespace eu.foodmission.platform
                         missionProgressResp.Result,
                         challengeProgressResp.Result,
                         foodFactProgressResp.Result));
+                GoHomeIfCurrentQuestCompleted();
             }
             catch (Exception ex)
             {
@@ -271,6 +273,20 @@ namespace eu.foodmission.platform
             finally
             {
                 IsLoading = false;
+            }
+        }
+
+        /// <summary>
+        /// The active quest is completed (e.g. back from its last mission, challenge, quiz or food fact): Home celebrates it,
+        /// clears it and offers the next quest. Uses the server's completion, the same check as Home's safety net, so the
+        /// user is never sent to a Home that has nothing to celebrate.
+        /// </summary>
+        private void GoHomeIfCurrentQuestCompleted()
+        {
+            bool serverCompleted = _questProgress != null && (_questProgress.completed || _questProgress.progress >= 100f);
+            if (IsCurrentQuest && serverCompleted)
+            {
+                RaiseNavigationRequested(Actions.go_to_home);
             }
         }
 
