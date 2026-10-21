@@ -10,6 +10,7 @@ namespace eu.foodmission.platform
     {
         private readonly IChallengeService _challengeService;
         private readonly IAuthService _authService;
+        private readonly IStoreService _storeService;
         private readonly Dictionary<string, Task<ChallengeCompletionResult>> _inFlight = new(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> _completed = new(StringComparer.OrdinalIgnoreCase);
         // Incremented on Reset so requests started by a previous user cannot write into the new session
@@ -17,10 +18,11 @@ namespace eu.foodmission.platform
 
         public event Action<string, ContentReward> ChallengeCompleted;
 
-        public ChallengeCompletionService(IChallengeService challengeService, IAuthService authService)
+        public ChallengeCompletionService(IChallengeService challengeService, IAuthService authService, IStoreService storeService)
         {
             _challengeService = challengeService;
             _authService = authService;
+            _storeService = storeService;
         }
 
         public bool IsCompleted(string challengeCode)
@@ -90,6 +92,8 @@ namespace eu.foodmission.platform
                 ContentReward reward = HasReward(progress?.reward) ? progress.reward : null;
                 if (reward != null)
                 {
+                    // Local wallet first so the celebration shows the right level; the sync then sets the server balance
+                    _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(reward.xp ?? 0, reward.points ?? 0)));
                     _ = _authService?.SyncGamificationAsync();
                 }
 
