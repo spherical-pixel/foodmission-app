@@ -4063,8 +4063,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: "Svojih ciljev \u0161e nisi izbral. Kasneje te bom opomnil na za\u010Detnem
-      zaslonu, da jih bo\u0161 lahko nastavil."
+    m_Localized: "Svojih ciljev \u0161e nisi izbral. Nastavi\u0161 jih lahko kadar
+      koli v svojem profilu."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4814,6 +4814,81 @@ MonoBehaviour:
       podpori."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: "Presko\u010Di"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: "Presko\u010Di ta korak"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: Tvoj profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: Moji cilji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: "Vpra\u0161alnik in tvoja raven"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: Tvoj avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (neobvezno)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} min
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 56190243387203725
+    m_Localized: "\u017Divjo! Sem {global.PET_NAME}. Z nekaj hitrimi koraki bomo
+      aplikacijo prilagodili tebi. Za\u010Dnimo s tvojim profilom."
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690412
+  - m_Id: 56190243387203726
+    m_Localized: "Zdaj mi povej, kaj \u017Eeli\u0161 izbolj\u0161ati, da bom bolje
+      izbral tvoje misije."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: "Nekaj vpra\u0161anj o tvojih navadah, nato ti predlagam raven na
+      vsakem podro\u010Dju."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: "\u017Deli\u0161 prilagoditi svoj avatar? To lahko naredi\u0161
+      zdaj ali pozneje v svojem profilu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: "na \u010Dakanju"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: trenutni korak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: "dokon\u010Dano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: "presko\u010Deno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: "Preostalo lahko dokon\u010Da\u0161 pozneje na za\u010Detnem zaslonu
+      ali v svojem profilu."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4850,3 +4925,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

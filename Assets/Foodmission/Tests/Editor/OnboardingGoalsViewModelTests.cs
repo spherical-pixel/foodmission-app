@@ -339,5 +339,60 @@ namespace eu.foodmission.platform.Tests
             Assert.IsFalse(wasLoading);
             _dimensionServiceMock.Verify(d => d.PreloadAsync(It.IsAny<string>(), It.IsAny<bool>()), Times.Never);
         }
+
+        // ── Onboarding run (issue #31) ──
+
+        private OnboardingGoalsViewModel CreateRunVm(OnboardingRun run)
+        {
+            var vm = new OnboardingGoalsViewModel(_storeService, _authServiceMock.Object, _dimensionServiceMock.Object, run);
+            vm.NavigationRequested += (action, args) => _lastNavigatedAction = action;
+            vm.Initialize();
+            return vm;
+        }
+
+        [Test]
+        public void Skip_InRun_MarksSkipped_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = CreateRunVm(run);
+
+            Assert.IsTrue(vm.IsInOnboardingRun);
+            vm.Skip();
+
+            Assert.AreEqual(Actions.go_to_onboarding_progress, _lastNavigatedAction);
+            Assert.AreEqual(OnboardingStepState.Skipped, run.GetStates(new AppState())[(int)OnboardingStep.Goals]);
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task Submit_InRun_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = CreateRunVm(run);
+
+            for (int i = 0; i < 7; i++)
+            {
+                await vm.GoNextAsync();
+            }
+
+            Assert.AreEqual(Actions.go_to_onboarding_progress, _lastNavigatedAction);
+            Assert.AreEqual(OnboardingStepState.Done, run.GetStates(new AppState())[(int)OnboardingStep.Goals]);
+            vm.Dispose();
+        }
+
+        [Test]
+        public void FromEditProfile_InRun_NotInOnboardingRun()
+        {
+            var run = new OnboardingRun();
+            run.Start();
+            var vm = CreateRunVm(run);
+
+            vm.FromEditProfile = true;
+
+            Assert.IsFalse(vm.IsInOnboardingRun);
+            vm.Dispose();
+        }
     }
 }

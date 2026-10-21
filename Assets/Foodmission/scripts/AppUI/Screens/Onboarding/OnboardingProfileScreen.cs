@@ -27,7 +27,6 @@ namespace eu.foodmission.platform
         private ExVisualElement _messageCard;
         private Unity.AppUI.UI.Text _messageText;
         private FMNutriView _nutriView;
-        //private FMButton _skipHeaderButton;
 
         // Form dropdowns per step
         private FormFieldItemDropDownField _motivationDropdown;
@@ -449,12 +448,16 @@ namespace eu.foodmission.platform
             });
         }
 
-        private void OnSkipClicked()
+        protected override bool ShowSkipOnFirstStep => _viewModel != null && _viewModel.IsInOnboardingRun;
+
+        protected override void OnSkipRequested()
         {
-            if (_viewModel != null)
+            if (_viewModel == null || _viewModel.IsSubmitting)
             {
-                _viewModel.Skip();
+                return;
             }
+            ResetNutriToIdle();
+            _viewModel.Skip();
         }
 
         protected override void OnViewModelBound()

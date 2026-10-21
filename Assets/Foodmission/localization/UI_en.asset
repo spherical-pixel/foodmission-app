@@ -4046,8 +4046,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: You haven't chosen your goals yet. I'll remind you later on the
-      home screen so you can set them.
+    m_Localized: You haven't chosen your goals yet. You can set them any time from
+      your profile.
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4790,6 +4790,80 @@ MonoBehaviour:
       settings or contact support.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: Skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: Skip this step
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: Your profile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: My goals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: Survey and your level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: Your avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (optional)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} min
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 56190243387203725
+    m_Localized: Hi! I'm {global.PET_NAME}. With a few quick steps we'll tailor the
+      app to you. Let's start with your profile.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690406
+  - m_Id: 56190243387203726
+    m_Localized: Now tell me what you'd like to improve, so I can pick your missions
+      better.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: A few questions about your habits, and I'll suggest your level in
+      each area.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: Would you like to personalize your avatar? You can do it now or
+      later from your profile.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: pending
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: current step
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: skipped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: You can finish the rest later from the home screen or your profile.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4826,3 +4900,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

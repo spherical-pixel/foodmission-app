@@ -4519,6 +4519,74 @@ MonoBehaviour:
     m_Key: TUTORIAL_HELP
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Key: ONBOARDING_SKIP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Key: ONBOARDING_PROGRESS_SKIP_STEP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Key: ONBOARDING_PROGRESS_STEP_PROFILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Key: ONBOARDING_PROGRESS_STEP_GOALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Key: ONBOARDING_PROGRESS_STEP_SURVEY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Key: ONBOARDING_PROGRESS_STEP_AVATAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Key: ONBOARDING_PROGRESS_OPTIONAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Key: ONBOARDING_PROGRESS_MINUTES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203725
+    m_Key: ONBOARDING_PROGRESS_NUTRI_PROFILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203726
+    m_Key: ONBOARDING_PROGRESS_NUTRI_GOALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Key: ONBOARDING_PROGRESS_NUTRI_SURVEY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Key: ONBOARDING_PROGRESS_NUTRI_AVATAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Key: ONBOARDING_PROGRESS_STATE_PENDING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Key: ONBOARDING_PROGRESS_STATE_CURRENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Key: ONBOARDING_PROGRESS_STATE_DONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Key: ONBOARDING_PROGRESS_STATE_SKIPPED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Key: ONBOARDING_CLOSE_PROGRESS_MESSAGE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

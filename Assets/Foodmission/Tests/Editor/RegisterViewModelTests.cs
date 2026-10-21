@@ -463,5 +463,39 @@ namespace eu.foodmission.platform.Tests
             mockLegalService.Verify(x => x.AcceptConsentAsync("PRIVACY_POLICY:1.0:es"), Times.Once);
             vm.Dispose();
         }
+
+        // ── Onboarding run (issue #31) ──
+
+        [Test]
+        public async Task Register_Success_StartsRun_GoesToProgress()
+        {
+            var run = new OnboardingRun();
+            var vm = new RegisterViewModel(_mockAuthService.Object, _mockCatalogService.Object, _storeService, null, null, run);
+            _mockAuthService
+                .Setup(x => x.RegisterAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((true, "user-1", null));
+            string action = null;
+            vm.NavigationRequested += (a, args) => action = a;
+
+            vm.Username = "testuser";
+            vm.Email = "test@example.com";
+            vm.Password = "password123";
+            vm.SelectedYearOfBirthIndex = vm.YearOfBirthOptions.IndexOf("2000");
+            vm.SelectedCountryIndex = 0;
+            vm.SelectedRegionIndex = 0;
+            vm.PostalCode = "12345";
+            vm.HasAcceptedTerms = CheckboxState.Checked;
+            vm.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+            vm.HasAcceptedPilotConsent = CheckboxState.Checked;
+
+            vm.Register();
+            await Task.Delay(200);
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_progress, action);
+            Assert.IsTrue(run.IsActive);
+            vm.Dispose();
+        }
     }
 }

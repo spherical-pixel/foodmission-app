@@ -15,6 +15,7 @@ namespace eu.foodmission.platform
     {
         private readonly IAuthService _authService;
         private readonly IGamificationService _gamificationService;
+        private readonly IOnboardingRun _onboardingRun;
         private readonly OnboardingSurveyData _answers = new OnboardingSurveyData();
         private OnboardingSurveyQuestion[] _questions = new OnboardingSurveyQuestion[0];
         private int _loadRequest;
@@ -33,10 +34,11 @@ namespace eu.foodmission.platform
         /// <summary>False until the questions load; the load error dialog then offers a retry.</summary>
         public bool HasQuestions => _questions.Length > 0;
 
-        public OnboardingSurveyViewModel(IStoreService storeService, IGamificationService gamificationService, IAuthService authService = null) : base(storeService)
+        public OnboardingSurveyViewModel(IStoreService storeService, IGamificationService gamificationService, IAuthService authService = null, IOnboardingRun onboardingRun = null) : base(storeService)
         {
             _gamificationService = gamificationService;
             _authService = authService;
+            _onboardingRun = onboardingRun;
 
             _storeSubscription = _store.Subscribe(
                 state => state.lang,
@@ -187,6 +189,10 @@ namespace eu.foodmission.platform
                 await DimensionLevels.RefreshAsync(_gamificationService, _storeService);
 
                 ErrorDetail = null;
+                if (IsInOnboardingRun)
+                {
+                    _onboardingRun.MarkDone(OnboardingStep.Survey);
+                }
 
                 // 5. Show the proposed per-dimension levels; that screen continues to Home or the avatar step
                 RaiseNavigationRequested(Actions.go_to_dimension_levels, DimensionLevelsNavigation.ProposalArguments(FromHome));
@@ -195,6 +201,16 @@ namespace eu.foodmission.platform
             {
                 IsSubmitting = false;
             }
+        }
+
+        /// <summary>Inside the onboarding run (not Home's reminder): Skip is shown.</summary>
+        public bool IsInOnboardingRun => _onboardingRun != null && _onboardingRun.IsActive && !FromHome;
+
+        /// <summary>Skip (onboarding run only): skips the survey and the level proposal; back to the progress screen.</summary>
+        public void Skip()
+        {
+            _onboardingRun?.MarkSkipped(OnboardingStep.Survey);
+            RaiseNavigationRequested(Actions.go_to_onboarding_progress);
         }
 
         /// <summary>✕: leaves for Home without saving; the survey stays pending (Home reminds it next session).</summary>

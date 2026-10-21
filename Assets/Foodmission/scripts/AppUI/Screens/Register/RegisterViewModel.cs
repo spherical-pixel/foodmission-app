@@ -157,18 +157,21 @@ namespace eu.foodmission.platform
 
         private bool _registrationCompleted = false;
         private readonly IPilotSurveyService _pilotSurveyService;
+        private readonly IOnboardingRun _onboardingRun;
 
         public RegisterViewModel(
             IAuthService authService,
             ICatalogService catalogService,
             IStoreService storeService,
             ILegalService legalService = null,
-            IPilotSurveyService pilotSurveyService = null) : base(storeService)
+            IPilotSurveyService pilotSurveyService = null,
+            IOnboardingRun onboardingRun = null) : base(storeService)
         {
             _authService = authService;
             _catalogService = catalogService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
             _pilotSurveyService = pilotSurveyService ?? App.current?.services?.GetService<IPilotSurveyService>();
+            _onboardingRun = onboardingRun ?? App.current?.services?.GetService<IOnboardingRun>();
 
             PropertyChanged += (sender, args) =>
             {
@@ -437,7 +440,8 @@ namespace eu.foodmission.platform
                         string lang = _storeService.GetAppState().lang ?? "en";
                         _ = UnitCatalog.Current.LoadAsync(lang);
 
-                        RaiseNavigationRequested(Actions.register_to_onboarding);
+                        _onboardingRun?.Start();
+                        RaiseNavigationRequested(Actions.go_to_onboarding_progress);
                     }
                     else
                     {

@@ -4075,8 +4075,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: Je hebt je doelen nog niet gekozen. Ik herinner je er later op het
-      startscherm aan, zodat je ze kunt instellen.
+    m_Localized: Je hebt je doelen nog niet gekozen. Je kunt ze altijd instellen
+      via je profiel.
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
@@ -4824,6 +4824,79 @@ MonoBehaviour:
       wijzigen of contact opnemen met support.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203717
+    m_Localized: Overslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203718
+    m_Localized: Deze stap overslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203719
+    m_Localized: Je profiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203720
+    m_Localized: Mijn doelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203721
+    m_Localized: Vragenlijst en je niveau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203722
+    m_Localized: Je avatar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203723
+    m_Localized: (optioneel)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203724
+    m_Localized: ~{0} min
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 56190243387203725
+    m_Localized: Hoi! Ik ben {global.PET_NAME}. Met een paar korte stappen stemmen
+      we de app op jou af. We beginnen met je profiel.
+    m_Metadata:
+      m_Items:
+      - rid: 4008881209995690405
+  - m_Id: 56190243387203726
+    m_Localized: Vertel me nu wat je wilt verbeteren, dan kan ik je missies beter
+      kiezen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203727
+    m_Localized: Een paar vragen over je gewoonten, en ik stel je niveau per onderdeel
+      voor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203728
+    m_Localized: Wil je je avatar personaliseren? Dat kan nu of later via je profiel.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203729
+    m_Localized: nog te doen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203730
+    m_Localized: huidige stap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203731
+    m_Localized: voltooid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203732
+    m_Localized: overgeslagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203733
+    m_Localized: Je kunt de rest later afmaken via het startscherm of je profiel.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -4860,3 +4933,5 @@ MonoBehaviour:
         - id: 25709632411394048
         - id: 56190243387203699
         - id: 56190243387203708
+        - id: 56190243387203724
+        - id: 56190243387203725

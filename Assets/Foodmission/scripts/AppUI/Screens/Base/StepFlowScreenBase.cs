@@ -7,6 +7,7 @@ using Unity.AppUI.MVVM;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
@@ -50,6 +51,10 @@ namespace eu.foodmission.platform
 
         private readonly Dictionary<int, VisualElement> _stepContents = new Dictionary<int, VisualElement>();
 
+        private AccessibilityNode _previousNode;
+        private AccessibilityNode _nextNode;
+        private AccessibilityNode _closeNode;
+
         // ── Abstract Methods ────────────────────────────────
         protected abstract int StepCount { get; }
         protected abstract VisualElement CreateStepContent(int stepIndex);
@@ -65,6 +70,17 @@ namespace eu.foodmission.platform
 
         /// <summary>Shows a ✕ (top right) that leaves the flow from any step. Off by default; each flow opts in.</summary>
         protected virtual bool ShowCloseButton => false;
+
+        /// <summary>
+        /// Shows a Skip button in place of the (hidden) Back button on the first step. Read every time the buttons
+        /// refresh, so it may depend on navigation arguments. Off by default.
+        /// </summary>
+        protected virtual bool ShowSkipOnFirstStep => false;
+
+        protected virtual string SkipButtonLabel => "@UI:ONBOARDING_SKIP";
+
+        /// <summary>Called by the first-step Skip button.</summary>
+        protected virtual void OnSkipRequested() { }
 
         /// <summary>Called by the ✕. Default: go back; override to confirm first.</summary>
         protected virtual void OnCloseRequested()
@@ -385,9 +401,18 @@ namespace eu.foodmission.platform
         {
             if (_btnPrevious != null)
             {
-                _btnPrevious.title = PreviousButtonLabel;
-                _btnPrevious.SetEnabled(_viewModel.CanGoPrevious);
-                _btnPrevious.style.visibility = _viewModel.IsFirstStep ? Visibility.Hidden : Visibility.Visible;
+                if (IsSkipShown())
+                {
+                    _btnPrevious.title = SkipButtonLabel;
+                    _btnPrevious.SetEnabled(true);
+                    _btnPrevious.style.visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _btnPrevious.title = PreviousButtonLabel;
+                    _btnPrevious.SetEnabled(_viewModel.CanGoPrevious);
+                    _btnPrevious.style.visibility = _viewModel.IsFirstStep ? Visibility.Hidden : Visibility.Visible;
+                }
             }
 
             if (_btnNext != null)
@@ -395,6 +420,8 @@ namespace eu.foodmission.platform
                 _btnNext.title = _viewModel.IsLastStep ? CompleteButtonLabel : NextButtonLabel;
                 _btnNext.SetEnabled(_viewModel.CanGoNext);
             }
+
+            RefreshButtonNodes();
 
             if (_progressBar != null)
             {
@@ -438,9 +465,121 @@ namespace eu.foodmission.platform
             }
         }
 
+        // ── Accessibility ──
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null)
+            {
+                return;
+            }
+
+            _previousNode = CreateButtonNode(_btnPrevious);
+            _nextNode = CreateButtonNode(_btnNext);
+            _closeNode = CreateButtonNode(_btnClose);
+            if (_closeNode != null)
+            {
+                _closeNode.label = LocalizedLabel("@UI:MISSION_CHECKIN_CLOSE");
+            }
+            RefreshButtonNodes();
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            if (_accessibilityHierarchy != null)
+            {
+                foreach (AccessibilityNode node in new[] { _previousNode, _nextNode, _closeNode })
+                {
+                    if (node != null)
+                    {
+                        _accessibilityHierarchy.RemoveNode(node);
+                    }
+                }
+            }
+            _previousNode = null;
+            _nextNode = null;
+            _closeNode = null;
+            base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(VisualElement button)
+        {
+            if (button == null)
+            {
+                return null;
+            }
+            AccessibilityNode node = _accessibilityHierarchy.AddNode(string.Empty);
+            node.role = AccessibilityRole.Button;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null || button.resolvedStyle.visibility == Visibility.Hidden)
+                {
+                    return Rect.zero;
+                }
+                Rect rect = button.worldBound;
+                float scale = button.panel.scaledPixelsPerPoint;
+                return new Rect(rect.position * scale, rect.size * scale);
+            };
+            node.invoked += () =>
+            {
+                if (!button.enabledInHierarchy || button.resolvedStyle.visibility == Visibility.Hidden)
+                {
+                    return false;
+                }
+                using (NavigationSubmitEvent evt = NavigationSubmitEvent.GetPooled())
+                {
+                    evt.target = button;
+                    button.SendEvent(evt);
+                }
+                return true;
+            };
+            return node;
+        }
+
+        /// <summary>Button labels and states follow the buttons (Back becomes Skip on the first step, Next becomes Done).</summary>
+        private void RefreshButtonNodes()
+        {
+            if (_previousNode != null && _btnPrevious != null)
+            {
+                _previousNode.label = LocalizedLabel(_btnPrevious.title);
+                _previousNode.state = _btnPrevious.enabledSelf ? AccessibilityState.None : AccessibilityState.Disabled;
+            }
+            if (_nextNode != null && _btnNext != null)
+            {
+                _nextNode.label = LocalizedLabel(_btnNext.title);
+                _nextNode.state = _btnNext.enabledSelf ? AccessibilityState.None : AccessibilityState.Disabled;
+            }
+        }
+
+        private static string LocalizedLabel(string title)
+        {
+            if (string.IsNullOrEmpty(title) || !title.StartsWith("@UI:"))
+            {
+                return title ?? string.Empty;
+            }
+            return LocalizationSettings.StringDatabase.GetLocalizedString("UI", title.Substring(4));
+        }
+
+        private bool IsSkipShown() => _viewModel != null && _viewModel.IsFirstStep && ShowSkipOnFirstStep;
+
+        /// <summary>Re-evaluates the first-step Skip (e.g. after reading navigation arguments).</summary>
+        protected void RefreshNavigationButtons()
+        {
+            if (_viewModel != null)
+            {
+                UpdateNavigationControls();
+            }
+        }
+
         private async void OnPreviousClicked()
         {
             ResetNutriToIdle();
+            if (IsSkipShown())
+            {
+                OnSkipRequested();
+                return;
+            }
             try
             {
                 await _viewModel.GoPreviousAsync();

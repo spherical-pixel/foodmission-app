@@ -54,6 +54,10 @@
     align-items: flex-start;
 }
 
+.appui-button__title {
+    width: 100%;
+}
+
 .fm-button-avatar-list {
     flex-direction: row;
     align-content: center;
@@ -2748,6 +2752,85 @@
     flex-shrink: 0;
     align-self: center;
     margin-top: 4px;
+}
+
+/* Onboarding progress (issue #31): one row per onboarding step */
+.fm-onboarding-progress {
+    width: 100%;
+    flex-shrink: 0;
+    padding: 16px;
+}
+
+.fm-onboarding-progress__step {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    flex-shrink: 0;
+    padding: 32px;
+    margin-bottom: 32px;
+    background-color: var(--appui-primary-200);
+}
+
+.fm-onboarding-progress__marker {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+    margin-right: 42px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+    border-width: 8px;
+    border-color: var(--appui-foregrounds-100);
+}
+
+.fm-onboarding-progress__number {
+    -unity-font-style: bold;
+}
+
+.fm-onboarding-progress__check.appui-icon {
+    --unity-image-tint-color: var(--appui-color-transparent-white-1000);
+}
+
+.fm-onboarding-progress__texts {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.fm-onboarding-progress__title {
+    white-space: normal;
+}
+
+.fm-onboarding-progress__detail {
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-sm);
+    margin-top: 0px;
+}
+
+.fm-onboarding-progress__step--current {
+    border-width: 8px;
+    border-color: var(--appui-accent-100);
+}
+
+.fm-onboarding-progress__step--current .fm-onboarding-progress__marker {
+    border-color: var(--appui-accent-100);
+}
+
+.fm-onboarding-progress__step--current .fm-onboarding-progress__title {
+    -unity-font-style: bold;
+}
+
+.fm-onboarding-progress__step--done .fm-onboarding-progress__marker {
+    background-color: var(--fm-color-positive);
+    border-color: var(--fm-color-positive);
+}
+
+.fm-onboarding-progress__step--skipped {
+    opacity: 0.55;
+}
+
+.fm-onboarding-progress__step--skipped .fm-onboarding-progress__marker {
+    border-color: var(--appui-foregrounds-25);
 }
 
 /* Content above the user's level (missions, challenges, quizzes, food facts) */
