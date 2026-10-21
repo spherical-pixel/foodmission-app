@@ -513,10 +513,6 @@ MonoBehaviour:
     m_Localized: "\xC9xito"
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000004
-    m_Localized: Registrar comida
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: Tipo de comida
     m_Metadata:
@@ -3318,10 +3314,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347397
     m_Localized: Detalles del producto
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347398
-    m_Localized: Registrar seleccionados
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399

@@ -509,10 +509,6 @@ MonoBehaviour:
     m_Localized: Uspeh
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000004
-    m_Localized: Zapis obroka
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: Vrsta obroka
     m_Metadata:
@@ -3319,10 +3315,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347397
     m_Localized: Podrobnosti izdelka
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347398
-    m_Localized: "Zabele\u017Ei izbrano"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399

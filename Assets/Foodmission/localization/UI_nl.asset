@@ -516,10 +516,6 @@ MonoBehaviour:
     m_Localized: Succes
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000004
-    m_Localized: Maaltijdregistratie
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: Soort maaltijd
     m_Metadata:
@@ -3334,10 +3330,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347397
     m_Localized: Productdetails
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347398
-    m_Localized: Geselecteerde registreren
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399

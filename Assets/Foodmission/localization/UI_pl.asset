@@ -513,10 +513,6 @@ MonoBehaviour:
     m_Localized: Sukces
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000004
-    m_Localized: "Dziennik posi\u0142k\xF3w"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: "Rodzaj posi\u0142ku"
     m_Metadata:
@@ -3351,10 +3347,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347397
     m_Localized: "Szczeg\xF3\u0142y produktu"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347398
-    m_Localized: Zapisz wybrane
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399

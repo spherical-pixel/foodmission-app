@@ -513,10 +513,6 @@ MonoBehaviour:
     m_Localized: Success
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000004
-    m_Localized: Log Meal
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: Type of meal
     m_Metadata:
@@ -3307,10 +3303,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347397
     m_Localized: Product details
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347398
-    m_Localized: Log selected
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399

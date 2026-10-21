@@ -511,10 +511,6 @@ MonoBehaviour:
     m_Localized: Suksess
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000004
-    m_Localized: "Logg m\xE5ltid"
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Localized: "M\xE5ltidstype"
     m_Metadata:
@@ -3314,10 +3310,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347397
     m_Localized: Produktdetaljer
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347398
-    m_Localized: Registrer valgte
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399

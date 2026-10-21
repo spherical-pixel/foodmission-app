@@ -755,10 +755,6 @@ MonoBehaviour:
     m_Key: ALERT_SUCCESS_TITLE
     m_Metadata:
       m_Items: []
-  - m_Id: 41000000000000004
-    m_Key: MEAL_LOG_ADD
-    m_Metadata:
-      m_Items: []
   - m_Id: 41000000000000008
     m_Key: TYPE_OF_MEAL
     m_Metadata:
@@ -3217,10 +3213,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347397
     m_Key: ITEM_DETAILS
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52041725676347398
-    m_Key: LOG_DISHES
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399
