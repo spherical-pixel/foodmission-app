@@ -4603,6 +4603,10 @@ MonoBehaviour:
     m_Key: CHALLENGE_NOT_CURRENT_QUEST
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203738
+    m_Key: ONBOARDING_PROFILE.OPTION_DIET_NONE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

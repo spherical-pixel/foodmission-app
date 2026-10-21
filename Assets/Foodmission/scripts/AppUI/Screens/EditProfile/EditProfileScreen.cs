@@ -383,8 +383,13 @@ namespace eu.foodmission.platform
         private void OnDietaryPreferencesChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             // Multi-select dropdown: always sync (including empty selection) so deselection clears the array.
+            // "None of the above" is exclusive, so the dropdown is corrected when the VM changes the selection.
             if (_viewModel == null) return;
-            _viewModel.SelectedDietaryPreferenceIndices = evt.newValue?.ToArray() ?? new int[0];
+            int[] selection = _viewModel.UpdateDietarySelection(evt.previousValue, evt.newValue);
+            if (!selection.SequenceEqual(evt.newValue ?? new int[0]))
+            {
+                _dietaryPreferencesDropdown.Dropdown.SetValueWithoutNotify(selection);
+            }
         }
 
         private void OnEducationLevelChanged(ChangeEvent<IEnumerable<int>> evt)

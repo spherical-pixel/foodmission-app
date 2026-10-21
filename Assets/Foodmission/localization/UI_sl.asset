@@ -1854,8 +1854,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: "Ali upo\u0161tevate kak\u0161ne posebne prehranske zahteve? To
-      nam bo pomagalo, da vam bomo lahko priporo\u010Dili ustrezne recepte in izdelke."
+    m_Localized: "Ali imate kak\u0161ne prehranske omejitve ali \u017Eelje? Izberete
+      lahko vse, ki veljajo za vas. Tako vam bomo lahko predlagali recepte in \u017Eivila,
+      ki vam ustrezajo."
     m_Metadata:
       m_Items: []
   - m_Id: 34027969428054016
@@ -1892,11 +1893,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
-    m_Localized: Prehranske navade
+    m_Localized: "Prehranske omejitve in \u017Eelje"
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Ni izbranih
+    m_Localized: Izberite vse, kar velja
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -4903,6 +4904,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203737
     m_Localized: "Za\u010Dni nalogo tega izziva, da ga opravi\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203738
+    m_Localized: "Ni\u010D od na\u0161tetega"
     m_Metadata:
       m_Items: []
   references:
