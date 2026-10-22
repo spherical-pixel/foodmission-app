@@ -16,7 +16,9 @@
     --appui-sizing-300: 48px;
     --appui-sizing-320: 51px;
     
-    --appui-checkbox__box-size-md: var(--appui-sizing-250);
+    --appui-checkbox__box-size-md: var(--appui-sizing-500);
+    /* Inner corner = radius - border width (8px), so it must be well above the border to read as rounded */
+    --appui-checkbox__box-border-radius-md: 36px;
     --appui-sizing-350: 54px;
     --appui-sizing-400: 57px;
     --appui-sizing-450: 61px;

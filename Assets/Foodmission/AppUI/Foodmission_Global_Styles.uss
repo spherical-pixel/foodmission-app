@@ -1236,6 +1236,12 @@
     border-color: var(--appui-foregrounds-50);
 }
 
+/* The padding is part of the checkbox, so it widens the touch target without moving the box much */
+.fm-shopping-list-detail-item__checkbox {
+    margin: 0;
+    padding: 10px 20px 10px 10px;
+}
+
 .fm-shopping-list-item-list .appui-text,
 .fm-shopping-list-detail-item .appui-text {
     height: 100%;
