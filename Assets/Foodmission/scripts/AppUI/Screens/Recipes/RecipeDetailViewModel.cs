@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Unity.AppUI.MVVM;
@@ -13,6 +14,7 @@ namespace eu.foodmission.platform
     {
         private readonly IRecipeService _recipeService;
         private readonly IShoppingListService _shoppingListService;
+        private readonly IPantryService _pantryService;
         private readonly ICatalogService _catalogService;
         private readonly IChallengeSessionService _challengeSession;
 
@@ -38,10 +40,12 @@ namespace eu.foodmission.platform
             IRecipeService recipeService,
             IShoppingListService shoppingListService,
             ICatalogService catalogService,
+            IPantryService pantryService,
             IChallengeSessionService challengeSession = null) : base(storeService)
         {
             _recipeService = recipeService;
             _shoppingListService = shoppingListService;
+            _pantryService = pantryService;
             _catalogService = catalogService;
             _challengeSession = challengeSession ?? App.current?.services?.GetService<IChallengeSessionService>();
         }
@@ -197,9 +201,121 @@ namespace eu.foodmission.platform
             if (success) RaiseNavigationRequested(Actions.go_to_recipes);
         }
 
-        public async Task<bool> AddIngredientsToShoppingListAsync(string listId = null)
+        /// <summary>
+        /// Recipe ingredients that can go to the shopping list (they have a food id), checked against the pantry:
+        /// pre-selected when missing, or when the pantry has less than the recipe needs (then only the difference is
+        /// offered). When the amounts can't be compared (free-text measure, pieces vs grams…) having it is enough.
+        /// If the pantry can't be loaded every ingredient counts as missing.
+        /// </summary>
+        public async Task<RecipeShoppingCandidate[]> GetShoppingListCandidatesAsync()
         {
-            if (Recipe?.ingredients == null || Recipe.ingredients.Length == 0) return false;
+            var ingredients = Recipe?.ingredients?
+                .Where(ing => !string.IsNullOrEmpty(ing.foodProductId) || !string.IsNullOrEmpty(ing.genericFoodId))
+                .ToArray();
+            if (ingredients == null || ingredients.Length == 0)
+            {
+                return Array.Empty<RecipeShoppingCandidate>();
+            }
+
+            PantryItem[] pantryItems = null;
+            if (_pantryService != null)
+            {
+                IsAddingToShoppingList = true;
+                try
+                {
+                    var (items, error) = await _pantryService.GetItemsAsync();
+                    if (error != null)
+                    {
+                        Debug.LogWarning($"[RecipeDetailViewModel] Pantry not available, offering every ingredient: {error.message}");
+                    }
+                    pantryItems = items;
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[RecipeDetailViewModel] GetShoppingListCandidatesAsync: {ex}");
+                }
+                finally { IsAddingToShoppingList = false; }
+            }
+
+            return ingredients.Select(ing => BuildCandidate(ing, pantryItems)).ToArray();
+        }
+
+        public static RecipeShoppingCandidate BuildCandidate(RecipeIngredient ingredient, IReadOnlyList<PantryItem> pantryItems)
+        {
+            var candidate = BuildCandidateCore(ingredient, pantryItems);
+            // Show in the dialog exactly what the shopping list will store
+            candidate.Quantity = UnitCodes.ToWholeQuantity(candidate.Quantity, candidate.Unit, out string wholeUnit);
+            candidate.Unit = wholeUnit;
+            return candidate;
+        }
+
+        private static RecipeShoppingCandidate BuildCandidateCore(RecipeIngredient ingredient, IReadOnlyList<PantryItem> pantryItems)
+        {
+            bool hasQty = UnitCatalog.Current.TryParseExactMeasure(ingredient.measure, out float recipeQty, out string recipeUnit) && recipeQty > 0f;
+            var candidate = new RecipeShoppingCandidate
+            {
+                Ingredient = ingredient,
+                HasRecipeQuantity = hasQty,
+                Quantity = hasQty ? recipeQty : 1f,
+                Unit = hasQty ? recipeUnit : UnitCodes.Default,
+                Selected = true
+            };
+
+            var matches = pantryItems?
+                .Where(p => p != null &&
+                    ((!string.IsNullOrEmpty(ingredient.foodProductId) && p.foodProductId == ingredient.foodProductId) ||
+                     (!string.IsNullOrEmpty(ingredient.genericFoodId) && p.genericFoodId == ingredient.genericFoodId)))
+                .ToList();
+            if (matches == null || matches.Count == 0)
+            {
+                return candidate;
+            }
+
+            candidate.InPantry = true;
+            candidate.PantryUnit = string.IsNullOrEmpty(matches[0].unit) ? UnitCodes.Default : matches[0].unit;
+            candidate.PantryQuantity = SumConvertible(matches, candidate.PantryUnit, out _);
+
+            bool comparable = false;
+            float available = hasQty ? SumConvertible(matches, recipeUnit, out comparable) : 0f;
+            if (!comparable)
+            {
+                candidate.Selected = false;
+                return candidate;
+            }
+
+            float missing = recipeQty - available;
+            if (missing > 0.0001f)
+            {
+                candidate.PantryShort = true;
+                candidate.Quantity = missing;
+            }
+            else
+            {
+                candidate.Selected = false;
+            }
+            return candidate;
+        }
+
+        /// <summary>Sum of the pantry items expressible in <paramref name="unit"/>; <paramref name="any"/> is false when none is.</summary>
+        private static float SumConvertible(IEnumerable<PantryItem> items, string unit, out bool any)
+        {
+            any = false;
+            float total = 0f;
+            foreach (var item in items)
+            {
+                if (UnitCodes.TryConvert(item.quantity, item.unit, unit, out float converted))
+                {
+                    total += converted;
+                    any = true;
+                }
+            }
+            return total;
+        }
+
+        public async Task<bool> AddIngredientsToShoppingListAsync(IReadOnlyList<RecipeShoppingCandidate> candidates, string listId = null)
+        {
+            var selected = candidates?.Where(c => c?.Ingredient != null && c.Selected).ToArray();
+            if (selected == null || selected.Length == 0) return false;
             IsAddingToShoppingList = true;
             ErrorDetail = null;
             try
@@ -211,13 +327,7 @@ namespace eu.foodmission.platform
                     return false;
                 }
 
-                var validIngredients = Recipe.ingredients
-                    .Where(ing => !string.IsNullOrEmpty(ing.foodProductId) || !string.IsNullOrEmpty(ing.genericFoodId))
-                    .ToArray();
-
-                if (validIngredients.Length == 0) return false;
-
-                var (success, error) = await TryAddIngredientsAsync(targetListId, validIngredients);
+                var (success, error) = await TryAddIngredientsAsync(targetListId, selected);
 
                 // If target list was deleted (404), clear stale state, create a new default list and retry once
                 if (!success && error != null && (error.statusCode == 404 || (error.message != null && error.message.ToLowerInvariant().Contains("not found"))))
@@ -236,7 +346,7 @@ namespace eu.foodmission.platform
                         return false;
                     }
 
-                    (success, error) = await TryAddIngredientsAsync(newList.id, validIngredients);
+                    (success, error) = await TryAddIngredientsAsync(newList.id, selected);
                 }
 
                 if (error != null)
@@ -304,15 +414,16 @@ namespace eu.foodmission.platform
             return (targetListId, null);
         }
 
-        private async Task<(bool Success, ApiErrorResponse Error)> TryAddIngredientsAsync(string targetListId, RecipeIngredient[] ingredients)
+        private async Task<(bool Success, ApiErrorResponse Error)> TryAddIngredientsAsync(string targetListId, RecipeShoppingCandidate[] candidates)
         {
             ApiErrorResponse firstError = null;
             var (existingItems, _) = await _shoppingListService.GetItemsAsync(targetListId);
             var itemsList = existingItems != null ? new System.Collections.Generic.List<ShoppingListItem>(existingItems) : new System.Collections.Generic.List<ShoppingListItem>();
 
-            for (int i = 0; i < ingredients.Length; i++)
+            for (int i = 0; i < candidates.Length; i++)
             {
-                var ing = ingredients[i];
+                var candidate = candidates[i];
+                var ing = candidate.Ingredient;
                 if (i > 0)
                 {
                     await Task.Delay(150);
@@ -324,15 +435,21 @@ namespace eu.foodmission.platform
 
                 ApiErrorResponse itemErr = null;
 
-                if (existingItem != null)
+                if (existingItem != null && !UnitCodes.TryConvert(candidate.Quantity, candidate.Unit, existingItem.unit, out _))
                 {
-                    float newQty = existingItem.quantity + 1f;
+                    // Already on the list in a unit that can't be added up (pieces vs grams…): leave it as it is
+                }
+                else if (existingItem != null)
+                {
+                    UnitCodes.TryConvert(candidate.Quantity, candidate.Unit, existingItem.unit, out float extra);
+                    int newQty = UnitCodes.ToWholeQuantity(existingItem.quantity + extra, existingItem.unit, out string newUnit);
                     var (updated, updateErr) = await _shoppingListService.UpdateItemAsync(
-                        targetListId, existingItem.id, newQty, existingItem.unit, existingItem.notes, existingItem.@checked);
+                        targetListId, existingItem.id, newQty, newUnit, existingItem.notes, existingItem.@checked);
 
                     if (updated != null)
                     {
                         existingItem.quantity = newQty;
+                        existingItem.unit = newUnit;
                     }
                     else if (updateErr != null && (updateErr.statusCode == 409 || (updateErr.error != null && updateErr.error.Equals("ConflictException", StringComparison.OrdinalIgnoreCase))))
                     {
@@ -345,12 +462,13 @@ namespace eu.foodmission.platform
                 }
                 else
                 {
+                    int addQty = UnitCodes.ToWholeQuantity(candidate.Quantity, candidate.Unit, out string addUnit);
                     var (added, addErr) = await _shoppingListService.AddItemAsync(
                         targetListId,
                         foodProductId: ing.foodProductId,
                         genericFoodId: ing.genericFoodId,
-                        quantity: 1f,
-                        unit: UnitCodes.Default);
+                        quantity: addQty,
+                        unit: addUnit);
 
                     if (addErr != null && (addErr.statusCode == 429 || (addErr.error != null && addErr.error.Equals("ThrottlerException", StringComparison.OrdinalIgnoreCase))))
                     {
@@ -359,8 +477,8 @@ namespace eu.foodmission.platform
                             targetListId,
                             foodProductId: ing.foodProductId,
                             genericFoodId: ing.genericFoodId,
-                            quantity: 1f,
-                            unit: UnitCodes.Default);
+                            quantity: addQty,
+                            unit: addUnit);
                     }
 
                     if (added != null)

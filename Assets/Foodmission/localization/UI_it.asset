@@ -4947,6 +4947,15 @@ MonoBehaviour:
       alla volta, apri il registro completo con il pulsante in alto."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: "Alcuni ingredienti sono gi\xE0 nella tua dispensa. Seleziona quelli
+      da aggiungere alla lista della spesa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: 'Nella tua dispensa: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

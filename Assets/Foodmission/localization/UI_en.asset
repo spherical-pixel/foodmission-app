@@ -4924,6 +4924,15 @@ MonoBehaviour:
       button at the top.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: Some ingredients are already in your pantry. Tick the ones you want
+      to add to your shopping list.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: 'In your pantry: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

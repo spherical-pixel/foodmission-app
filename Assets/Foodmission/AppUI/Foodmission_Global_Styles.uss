@@ -471,6 +471,44 @@
     margin-bottom: 8px;
 }
 
+/* Recipe detail → shopping list: pick ingredients, pantry amount under each one (issue #57) */
+.fm-recipe-shopping {
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: var(--appui-sizing-150);
+}
+
+.fm-recipe-shopping__intro {
+    white-space: normal;
+    margin-bottom: 16px;
+}
+
+.fm-recipe-shopping__list {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.fm-recipe-shopping__row {
+    margin-bottom: 12px;
+}
+
+.fm-recipe-shopping__checkbox {
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.fm-recipe-shopping__checkbox .appui-checkbox__label {
+    white-space: normal;
+    flex-shrink: 1;
+}
+
+.fm-recipe-shopping__pantry {
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+    font-size: var(--appui-font-sizes-body-sm);
+    margin-left: 28px;
+}
+
 .fm-notifications-empty {
     -unity-text-align: middle-center;
     color: var(--appui-foregrounds-50);

@@ -25,6 +25,12 @@ namespace eu.foodmission.platform
         bool TryParseMeasure(string measure, out float quantity, out string unit);
 
         /// <summary>
+        /// Like <see cref="TryParseMeasure"/> but only true when the amount is fully understood: a number with a
+        /// recognised unit, or a bare number (pieces). "2 tbs" or "to taste" are false.
+        /// </summary>
+        bool TryParseExactMeasure(string measure, out float quantity, out string unit);
+
+        /// <summary>
         /// Quantity and unit for a stored ingredient: stored values win when both exist; otherwise the measure text
         /// is parsed, keeping the stored unit when the text's unit is not recognised.
         /// </summary>

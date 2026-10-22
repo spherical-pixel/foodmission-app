@@ -4946,6 +4946,15 @@ MonoBehaviour:
       for matvare, \xE5pner du den fullstendige loggen med knappen \xF8verst."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: "Noen ingredienser har du allerede i spiskammeret. Huk av for det
+      du vil legge til p\xE5 handlelisten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: 'I spiskammeret ditt: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
