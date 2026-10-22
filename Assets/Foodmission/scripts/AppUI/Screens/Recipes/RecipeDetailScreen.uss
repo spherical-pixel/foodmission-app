@@ -254,6 +254,23 @@
     text-overflow: ellipsis;
 }
 
+/* Ingredient rows: the measure keeps its full width and the name wraps in the rest.
+   The measure's max-width (a share of the row) is set from code on GeometryChanged: px values depend on the
+   panel scale and a % max-width resolves wrong on wrapping text. No flex-basis: 0 on the name either
+   (the measure is then measured at min-content). */
+.fm-rd-detail-row--ingredient .fm-rd-detail-row__label {
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: normal;
+}
+
+.fm-rd-detail-row--ingredient .fm-rd-detail-row__value {
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: visible;
+    text-overflow: clip;
+}
+
 .fm-rd-meta-grid {
     flex-direction: row;
     flex-wrap: wrap;

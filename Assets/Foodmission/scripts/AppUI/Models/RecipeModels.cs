@@ -239,6 +239,13 @@ namespace eu.foodmission.platform
             new RecipeCatalogItem { Code = "Vietnamese", CountryCode = "VN", Emoji = "🇻🇳", LocalizationKey = "RECIPES_CUISINE_VIETNAMESE"}
         };
 
+        public static RecipeCatalogItem FindCategory(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code)) return null;
+            var trimmed = code.Trim();
+            return Categories.Find(c => c.Code.Equals(trimmed, System.StringComparison.OrdinalIgnoreCase));
+        }
+
         public static string GetCategoryEmoji(string category)
         {
             if (string.IsNullOrEmpty(category)) return "🍲";

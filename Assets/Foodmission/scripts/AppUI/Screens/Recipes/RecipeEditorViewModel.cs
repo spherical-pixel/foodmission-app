@@ -78,6 +78,30 @@ namespace eu.foodmission.platform
 
         public bool IsEditMode => !string.IsNullOrEmpty(EditingRecipeId);
 
+        /// <summary>Tags that are recipe category codes (the editor's tag picker), in catalog spelling.</summary>
+        public string[] SelectedTagCodes => (Tags ?? Array.Empty<string>())
+            .Select(RecipeCatalogs.FindCategory)
+            .Where(c => c != null)
+            .Select(c => c.Code)
+            .Distinct()
+            .ToArray();
+
+        /// <summary>
+        /// Replaces the category-code tags with <paramref name="codes"/>. Other tags (e.g. TheMealDB's free-form ones) are kept.
+        /// </summary>
+        public void SetSelectedTagCodes(IEnumerable<string> codes)
+        {
+            var selected = (codes ?? Enumerable.Empty<string>())
+                .Select(RecipeCatalogs.FindCategory)
+                .Where(c => c != null)
+                .Select(c => c.Code);
+            var others = (Tags ?? Array.Empty<string>())
+                .Where(t => !string.IsNullOrWhiteSpace(t) && RecipeCatalogs.FindCategory(t) == null);
+            Tags = others.Concat(selected)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+        }
+
         public bool TestValidateStep(int stepIndex, bool showError = true) => ValidateStep(stepIndex, showError);
 
         protected override int GetStepCount() => 3;

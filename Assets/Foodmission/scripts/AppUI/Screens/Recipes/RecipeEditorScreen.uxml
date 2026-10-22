@@ -46,6 +46,10 @@
                             <appui:Dropdown name="cuisine-dropdown" size="M" class="fm-re-dropdown"/>
                         </ui:VisualElement>
                     </ui:VisualElement>
+                    <ui:VisualElement class="fm-re-field-group">
+                        <appui:Text text="@UI:TAGS" class="fm-re-field-label"/>
+                        <appui:Dropdown name="tags-dropdown" size="M" selection-type="Multiple" close-on-selection="false" class="fm-re-dropdown"/>
+                    </ui:VisualElement>
                     <appui:Checkbox name="is-public-checkbox" label="@UI:RECIPES_FIELD_PUBLIC"/>
                 </ui:ScrollView>
             </ui:VisualElement>

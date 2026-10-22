@@ -18,6 +18,8 @@ namespace eu.foodmission.platform
     [Preserve]
     public class RecipeDetailScreen : NavigationScreenBase<RecipeDetailViewModel>
     {
+        private const float k_IngredientMeasureMaxWidthRatio = 0.6f;
+
         private Image _heroImage;
         private VisualElement _heroImageContainer;
         private Text _heroEmoji;
@@ -473,7 +475,8 @@ namespace eu.foodmission.platform
             foreach (var tag in r.tags)
             {
                 if (string.IsNullOrWhiteSpace(tag)) continue;
-                var tagText = tag.StartsWith("#") ? tag : $"#{tag}";
+                // Category-code tags (editor picker) show translated; free-form ones (TheMealDB) as they come
+                var tagText = $"#{RecipeCatalogs.GetLocalizedCategoryName(tag.TrimStart('#'))}";
                 AddBadgeToContainer(_tagsContainer, tagText, "fm-r-badge--tag");
             }
 
@@ -510,6 +513,7 @@ namespace eu.foodmission.platform
                 var ing = r.ingredients[i];
                 var row = new VisualElement();
                 row.AddToClassList("fm-rd-detail-row");
+                row.AddToClassList("fm-rd-detail-row--ingredient");
                 if (i % 2 != 0)
                 {
                     row.AddToClassList("fm-rd-detail-row--odd");
@@ -528,6 +532,27 @@ namespace eu.foodmission.platform
                     var measureEl = new Text { text = UnitCatalog.Current.FormatMeasure(ing.measure, culture) };
                     measureEl.AddToClassList("fm-rd-detail-row__value");
                     row.Add(measureEl);
+                    // Long free-text measures wrap within a share of the row instead of squeezing the name.
+                    // Ones that fit stay nowrap: laid out at exactly their preferred width, the text engine
+                    // still breaks the last word (rounding) while the row only reserved one line.
+                    row.RegisterCallback<GeometryChangedEvent>(_ =>
+                    {
+                        float maxWidth = row.contentRect.width * k_IngredientMeasureMaxWidthRatio;
+                        if (maxWidth <= 0f)
+                        {
+                            return;
+                        }
+                        if (!Mathf.Approximately(measureEl.resolvedStyle.maxWidth.value, maxWidth))
+                        {
+                            measureEl.style.maxWidth = maxWidth;
+                        }
+                        float preferredWidth = measureEl.MeasureTextSize(measureEl.text, 0f, VisualElement.MeasureMode.Undefined, 0f, VisualElement.MeasureMode.Undefined).x;
+                        var whiteSpace = preferredWidth <= maxWidth ? WhiteSpace.NoWrap : WhiteSpace.Normal;
+                        if (measureEl.resolvedStyle.whiteSpace != whiteSpace)
+                        {
+                            measureEl.style.whiteSpace = whiteSpace;
+                        }
+                    });
                 }
                 _ingredientsCard.Add(row);
             }
