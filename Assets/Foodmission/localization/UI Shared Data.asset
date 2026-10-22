@@ -4603,6 +4603,10 @@ MonoBehaviour:
     m_Key: ONBOARDING_PROFILE.OPTION_INCOME_PREFER_NOT_TO_SAY
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203740
+    m_Key: RECIPES_FIELD_TAGS_HINT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

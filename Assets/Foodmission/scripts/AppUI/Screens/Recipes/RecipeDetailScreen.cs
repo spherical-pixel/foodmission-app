@@ -473,7 +473,8 @@ namespace eu.foodmission.platform
             foreach (var tag in r.tags)
             {
                 if (string.IsNullOrWhiteSpace(tag)) continue;
-                var tagText = tag.StartsWith("#") ? tag : $"#{tag}";
+                // Category-code tags (editor picker) show translated; free-form ones (TheMealDB) as they come
+                var tagText = $"#{RecipeCatalogs.GetLocalizedCategoryName(tag.TrimStart('#'))}";
                 AddBadgeToContainer(_tagsContainer, tagText, "fm-r-badge--tag");
             }
 

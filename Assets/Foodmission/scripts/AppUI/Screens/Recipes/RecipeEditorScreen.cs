@@ -40,6 +40,7 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Dropdown _difficultyDropdown;
         private Unity.AppUI.UI.Dropdown _categoryDropdown;
         private Unity.AppUI.UI.Dropdown _cuisineDropdown;
+        private Unity.AppUI.UI.Dropdown _tagsDropdown;
         private Unity.AppUI.UI.Checkbox _isPublicCheckbox;
 
         private readonly List<string> _difficultyOptions = new();
@@ -48,6 +49,8 @@ namespace eu.foodmission.platform
         private readonly List<string> _categoryCodes = new();
         private readonly List<string> _cuisineOptions = new();
         private readonly List<string> _cuisineCodes = new();
+        private readonly List<string> _tagOptions = new();
+        private readonly List<string> _tagCodes = new();
 
         // Step 2: Ingredients
         private FMSearchOrCategoryField _searchIngredientsField;
@@ -91,6 +94,7 @@ namespace eu.foodmission.platform
             _difficultyDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("difficulty-dropdown");
             _categoryDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("category-dropdown");
             _cuisineDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("cuisine-dropdown");
+            _tagsDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("tags-dropdown");
             _isPublicCheckbox = contentContainer.Q<Unity.AppUI.UI.Checkbox>("is-public-checkbox");
 
             // Step 2
@@ -252,6 +256,7 @@ namespace eu.foodmission.platform
             _difficultyDropdown?.RegisterValueChangedCallback(OnDifficultyDropdownChanged);
             _categoryDropdown?.RegisterValueChangedCallback(OnCategoryDropdownChanged);
             _cuisineDropdown?.RegisterValueChangedCallback(OnCuisineDropdownChanged);
+            _tagsDropdown?.RegisterValueChangedCallback(OnTagsDropdownChanged);
             _isPublicCheckbox?.RegisterValueChangedCallback(evt => _viewModel.IsPublic = evt.newValue == CheckboxState.Checked);
 
             _instructionsField?.RegisterValueChangedCallback(evt => _viewModel.Instructions = evt.newValue);
@@ -281,6 +286,7 @@ namespace eu.foodmission.platform
             _difficultyDropdown?.UnregisterValueChangedCallback(OnDifficultyDropdownChanged);
             _categoryDropdown?.UnregisterValueChangedCallback(OnCategoryDropdownChanged);
             _cuisineDropdown?.UnregisterValueChangedCallback(OnCuisineDropdownChanged);
+            _tagsDropdown?.UnregisterValueChangedCallback(OnTagsDropdownChanged);
 
             HideLoadingOverlay();
             base.OnViewModelUnbinding();
@@ -320,6 +326,7 @@ namespace eu.foodmission.platform
                 case nameof(_viewModel.Difficulty):
                 case nameof(_viewModel.Category):
                 case nameof(_viewModel.CuisineType):
+                case nameof(_viewModel.Tags):
                     PopulateDropdownsFromViewModel();
                     break;
             }
@@ -349,6 +356,7 @@ namespace eu.foodmission.platform
             SetupDifficultyDropdown();
             SetupCategoryDropdown();
             SetupCuisineDropdown();
+            SetupTagsDropdown();
         }
 
         private void SetupDifficultyDropdown()
@@ -440,6 +448,41 @@ namespace eu.foodmission.platform
             };
         }
 
+        private void SetupTagsDropdown()
+        {
+            if (_tagsDropdown == null) return;
+            _tagOptions.Clear();
+            _tagCodes.Clear();
+
+            // Tags reuse the category codes so a tag means the same as the category filter and shows translated
+            foreach (var cat in RecipeCatalogs.Categories.OrderBy(c => c.GetLocalizedName()))
+            {
+                _tagOptions.Add($"{cat.Emoji} {cat.GetLocalizedName()}");
+                _tagCodes.Add(cat.Code);
+            }
+
+            _tagsDropdown.sourceItems = _tagOptions;
+            _tagsDropdown.bindItem = (item, index) =>
+            {
+                if (index >= 0 && index < _tagOptions.Count)
+                {
+                    item.label = _tagOptions[index];
+                    item.icon = null;
+                }
+            };
+            _tagsDropdown.bindTitle = (item, indices) =>
+            {
+                var labels = indices?
+                    .Where(i => i >= 0 && i < _tagOptions.Count)
+                    .Select(i => _tagOptions[i])
+                    .ToList();
+                item.icon = null;
+                item.label = labels != null && labels.Count > 0
+                    ? string.Join(", ", labels)
+                    : L("RECIPES_FIELD_TAGS_HINT");
+            };
+        }
+
         private void OnDifficultyDropdownChanged(ChangeEvent<IEnumerable<int>> evt)
         {
             var value = evt.newValue?.ToArray();
@@ -474,6 +517,15 @@ namespace eu.foodmission.platform
                 string code = _cuisineCodes[idx];
                 _viewModel.CuisineType = string.IsNullOrEmpty(code) ? null : code;
             }
+        }
+
+        private void OnTagsDropdownChanged(ChangeEvent<IEnumerable<int>> evt)
+        {
+            if (_viewModel == null) return;
+            var codes = (evt.newValue ?? Enumerable.Empty<int>())
+                .Where(i => i >= 0 && i < _tagCodes.Count)
+                .Select(i => _tagCodes[i]);
+            _viewModel.SetSelectedTagCodes(codes);
         }
 
         private void PopulateDropdownsFromViewModel()
@@ -511,6 +563,16 @@ namespace eu.foodmission.platform
                     if (found >= 0) cuiIdx = found;
                 }
                 _cuisineDropdown.SetValueWithoutNotify(new[] { cuiIdx });
+            }
+
+            if (_tagsDropdown != null && _tagCodes.Count > 0)
+            {
+                var tagIndices = _viewModel.SelectedTagCodes
+                    .Select(code => _tagCodes.IndexOf(code))
+                    .Where(i => i >= 0)
+                    .OrderBy(i => i)
+                    .ToArray();
+                _tagsDropdown.SetValueWithoutNotify(tagIndices);
             }
         }
 

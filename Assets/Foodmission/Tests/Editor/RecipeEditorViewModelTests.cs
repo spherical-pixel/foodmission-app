@@ -293,6 +293,85 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void SelectedTagCodes_ReturnsCatalogCodesOnly_CaseInsensitive()
+        {
+            _viewModel.Tags = new[] { "Soup", "vegan", "Pasta" };
+
+            CollectionAssert.AreEquivalent(new[] { "Vegan", "Pasta" }, _viewModel.SelectedTagCodes);
+        }
+
+        [Test]
+        public void SetSelectedTagCodes_ReplacesCatalogTags_KeepsOtherTags()
+        {
+            _viewModel.Tags = new[] { "Soup", "Vegan" };
+
+            _viewModel.SetSelectedTagCodes(new[] { "Pasta", "Vegetarian" });
+
+            CollectionAssert.AreEqual(new[] { "Soup", "Pasta", "Vegetarian" }, _viewModel.Tags);
+        }
+
+        [Test]
+        public void SetSelectedTagCodes_IgnoresUnknownCodesAndDuplicates()
+        {
+            _viewModel.SetSelectedTagCodes(new[] { "Pasta", "pasta", "NotACategory", "", null });
+
+            CollectionAssert.AreEqual(new[] { "Pasta" }, _viewModel.Tags);
+        }
+
+        [Test]
+        public void SetSelectedTagCodes_Empty_ClearsCatalogTags()
+        {
+            _viewModel.Tags = new[] { "Vegan", "Soup" };
+
+            _viewModel.SetSelectedTagCodes(Array.Empty<string>());
+
+            CollectionAssert.AreEqual(new[] { "Soup" }, _viewModel.Tags);
+        }
+
+        [Test]
+        public async Task SaveAsync_SendsCategoryAndSelectedTags()
+        {
+            CreateRecipeRequest sent = null;
+            _viewModel.Title = "Vegan pasta";
+            _viewModel.Category = "Pasta";
+            _viewModel.SetSelectedTagCodes(new[] { "Vegan", "Vegetarian" });
+            _mockRecipeService.Setup(s => s.CreateRecipeAsync(It.IsAny<CreateRecipeRequest>()))
+                .Callback<CreateRecipeRequest>(r => sent = r)
+                .ReturnsAsync((new Recipe { id = "new-1" }, null));
+
+            await _viewModel.SaveAsync();
+
+            Assert.AreEqual("Pasta", sent.category);
+            CollectionAssert.AreEqual(new[] { "Vegan", "Vegetarian" }, sent.tags);
+        }
+
+        [Test]
+        public async Task SaveAsync_WithoutTags_SendsNullTags()
+        {
+            CreateRecipeRequest sent = null;
+            _viewModel.Title = "Pasta";
+            _mockRecipeService.Setup(s => s.CreateRecipeAsync(It.IsAny<CreateRecipeRequest>()))
+                .Callback<CreateRecipeRequest>(r => sent = r)
+                .ReturnsAsync((new Recipe { id = "new-1" }, null));
+
+            await _viewModel.SaveAsync();
+
+            Assert.IsNull(sent.tags);
+        }
+
+        [Test]
+        public async Task LoadForEditAsync_LoadsTags()
+        {
+            _mockRecipeService.Setup(s => s.GetRecipeAsync("rec-1"))
+                .ReturnsAsync((new Recipe { id = "rec-1", title = "Vegan pasta", category = "Pasta", tags = new[] { "Vegan", "Soup" } }, null));
+
+            await _viewModel.LoadForEditAsync("rec-1");
+
+            CollectionAssert.AreEqual(new[] { "Vegan", "Soup" }, _viewModel.Tags);
+            CollectionAssert.AreEqual(new[] { "Vegan" }, _viewModel.SelectedTagCodes);
+        }
+
+        [Test]
         public async Task GoNextAsync_WithValidTitle_AdvancesToStep1()
         {
             _viewModel.Reset();
