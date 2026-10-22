@@ -4984,25 +4984,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203748
-    m_Localized: Produkt nicht gefunden
+    m_Localized: "Einige Zutaten hast du schon in deiner Vorratskammer. Hake an,
+      was du zur Einkaufsliste hinzuf\xFCgen m\xF6chtest."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203749
+    m_Localized: 'In deiner Vorratskammer: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: Produkt nicht gefunden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
     m_Localized: Wir haben kein Produkt mit dem Barcode {0} gefunden. Suche es stattdessen
       nach Namen.
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203750
+  - m_Id: 56190243387203752
     m_Localized: "F\xFCr das Produkt mit dem Barcode {0} gibt es in Open Food Facts
       noch keine Angaben, daher kann es nicht hinzugef\xFCgt werden. Suche es stattdessen
       nach Namen."
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203751
+  - m_Id: 56190243387203753
     m_Localized: "Dienst nicht verf\xFCgbar"
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203752
+  - m_Id: 56190243387203754
     m_Localized: Der Barcode {0} konnte gerade nicht abgefragt werden. Bitte versuche
       es gleich noch einmal.
     m_Metadata:

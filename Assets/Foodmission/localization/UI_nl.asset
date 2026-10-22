@@ -4960,24 +4960,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203748
-    m_Localized: Product niet gevonden
+    m_Localized: "Sommige ingredi\xEBnten heb je al in je voorraadkast. Vink aan
+      wat je aan je boodschappenlijstje wilt toevoegen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203749
+    m_Localized: 'In je voorraadkast: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: Product niet gevonden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
     m_Localized: We hebben geen product gevonden met streepjescode {0}. Probeer het
       op naam te zoeken.
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203750
+  - m_Id: 56190243387203752
     m_Localized: Het product met streepjescode {0} heeft nog geen gegevens in Open
       Food Facts en kan dus niet worden toegevoegd. Probeer het op naam te zoeken.
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203751
+  - m_Id: 56190243387203753
     m_Localized: Dienst niet beschikbaar
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203752
+  - m_Id: 56190243387203754
     m_Localized: We konden streepjescode {0} nu niet opzoeken. Probeer het zo meteen
       opnieuw.
     m_Metadata:

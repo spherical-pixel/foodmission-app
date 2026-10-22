@@ -14,6 +14,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IRecipeService> _mockRecipeService;
         private Mock<IShoppingListService> _mockShoppingListService;
         private Mock<ICatalogService> _mockCatalogService;
+        private Mock<IPantryService> _mockPantryService;
         private RecipeDetailViewModel _viewModel;
 
         [SetUp]
@@ -24,7 +25,10 @@ namespace eu.foodmission.platform.Tests
             _mockRecipeService = new Mock<IRecipeService>();
             _mockShoppingListService = new Mock<IShoppingListService>();
             _mockCatalogService = new Mock<ICatalogService>();
-            _viewModel = new RecipeDetailViewModel(_storeService, _mockRecipeService.Object, _mockShoppingListService.Object, _mockCatalogService.Object);
+            _mockPantryService = new Mock<IPantryService>();
+            _mockPantryService.Setup(s => s.GetItemsAsync())
+                .ReturnsAsync((Array.Empty<PantryItem>(), null));
+            _viewModel = new RecipeDetailViewModel(_storeService, _mockRecipeService.Object, _mockShoppingListService.Object, _mockCatalogService.Object, _mockPantryService.Object);
             FoodProductFlow.UseDirectClientOverride = () => false;
         }
 
@@ -116,7 +120,7 @@ namespace eu.foodmission.platform.Tests
                 It.IsAny<string>()))
                 .ReturnsAsync((new ShoppingListItem { id = "i1" }, null));
 
-            await _viewModel.AddIngredientsToShoppingListAsync("list-1");
+            await _viewModel.AddIngredientsToShoppingListAsync(await _viewModel.GetShoppingListCandidatesAsync(), "list-1");
 
             _mockShoppingListService.Verify(s => s.AddItemAsync(
                 "list-1", It.IsAny<string>(), It.IsAny<float>(),
@@ -145,7 +149,7 @@ namespace eu.foodmission.platform.Tests
                 It.IsAny<string>()))
                 .ReturnsAsync((new ShoppingListItem { id = "i1" }, null));
 
-            bool success = await _viewModel.AddIngredientsToShoppingListAsync();
+            bool success = await _viewModel.AddIngredientsToShoppingListAsync(await _viewModel.GetShoppingListCandidatesAsync());
 
             Assert.IsTrue(success);
             _mockShoppingListService.Verify(s => s.AddItemAsync(
@@ -180,7 +184,7 @@ namespace eu.foodmission.platform.Tests
             _mockShoppingListService.Setup(s => s.AddItemAsync("new-list-id", It.IsAny<string>(), It.IsAny<float>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>(), It.IsAny<string>()))
                 .ReturnsAsync((new ShoppingListItem { id = "i1" }, null));
 
-            bool success = await _viewModel.AddIngredientsToShoppingListAsync();
+            bool success = await _viewModel.AddIngredientsToShoppingListAsync(await _viewModel.GetShoppingListCandidatesAsync());
 
             Assert.IsTrue(success);
             _mockShoppingListService.Verify(s => s.CreateListAsync(It.IsAny<string>()), Times.Once);
@@ -208,17 +212,221 @@ namespace eu.foodmission.platform.Tests
             _mockShoppingListService.Setup(s => s.UpdateItemAsync("list-1", "item-1", 3f, "PIECES", null, false))
                 .ReturnsAsync((new ShoppingListItem { id = "item-1", quantity = 3f }, null));
 
-            bool success = await _viewModel.AddIngredientsToShoppingListAsync("list-1");
+            bool success = await _viewModel.AddIngredientsToShoppingListAsync(await _viewModel.GetShoppingListCandidatesAsync(), "list-1");
 
             Assert.IsTrue(success);
             _mockShoppingListService.Verify(s => s.UpdateItemAsync("list-1", "item-1", 3f, "PIECES", null, false), Times.Once);
+        }
+
+        // ── Pantry check before the shopping list (issue #57) ───────────────
+
+        [Test]
+        public async Task GetShoppingListCandidatesAsync_IngredientNotInPantry_IsSelectedWithRecipeAmount()
+        {
+            _viewModel.Recipe = new Recipe { id = "r1", ingredients = new[] { new RecipeIngredient { genericFoodId = "gf1", measure = "200 g" } } };
+
+            var candidates = await _viewModel.GetShoppingListCandidatesAsync();
+
+            Assert.AreEqual(1, candidates.Length);
+            Assert.IsTrue(candidates[0].Selected);
+            Assert.IsFalse(candidates[0].InPantry);
+            Assert.AreEqual(200f, candidates[0].Quantity);
+            Assert.AreEqual(UnitCodes.G, candidates[0].Unit);
+        }
+
+        [Test]
+        public async Task GetShoppingListCandidatesAsync_SkipsIngredientsWithoutFoodId()
+        {
+            _viewModel.Recipe = new Recipe { id = "r1", ingredients = new[] { new RecipeIngredient { name = "Salt" }, new RecipeIngredient { foodProductId = "fp1" } } };
+
+            var candidates = await _viewModel.GetShoppingListCandidatesAsync();
+
+            Assert.AreEqual(1, candidates.Length);
+            Assert.AreEqual("fp1", candidates[0].Ingredient.foodProductId);
+        }
+
+        [Test]
+        public async Task GetShoppingListCandidatesAsync_PantryFailure_OffersEverything()
+        {
+            _mockPantryService.Setup(s => s.GetItemsAsync())
+                .ReturnsAsync(((PantryItem[])null, new ApiErrorResponse { statusCode = 500, message = "boom" }));
+            _viewModel.Recipe = new Recipe { id = "r1", ingredients = new[] { new RecipeIngredient { genericFoodId = "gf1" } } };
+
+            var candidates = await _viewModel.GetShoppingListCandidatesAsync();
+
+            Assert.IsTrue(candidates[0].Selected);
+            Assert.IsFalse(candidates[0].InPantry);
+            Assert.IsNull(_viewModel.ErrorDetail);
+        }
+
+        [Test]
+        public void BuildCandidate_EnoughInPantry_IsNotSelected()
+        {
+            var pantry = new[] { new PantryItem { genericFoodId = "gf1", quantity = 0.5f, unit = UnitCodes.Kg } };
+
+            var c = RecipeDetailViewModel.BuildCandidate(new RecipeIngredient { genericFoodId = "gf1", measure = "200 g" }, pantry);
+
+            Assert.IsTrue(c.InPantry);
+            Assert.IsFalse(c.Selected);
+            Assert.IsFalse(c.PantryShort);
+            Assert.AreEqual(0.5f, c.PantryQuantity);
+            Assert.AreEqual(UnitCodes.Kg, c.PantryUnit);
+        }
+
+        [Test]
+        public void BuildCandidate_NotEnoughInPantry_SelectsTheDifference()
+        {
+            var pantry = new[]
+            {
+                new PantryItem { foodProductId = "fp1", quantity = 100f, unit = UnitCodes.G },
+                new PantryItem { foodProductId = "fp1", quantity = 0.05f, unit = UnitCodes.Kg }
+            };
+
+            var c = RecipeDetailViewModel.BuildCandidate(new RecipeIngredient { foodProductId = "fp1", measure = "400 g" }, pantry);
+
+            Assert.IsTrue(c.InPantry);
+            Assert.IsTrue(c.PantryShort);
+            Assert.IsTrue(c.Selected);
+            Assert.AreEqual(250f, c.Quantity, 0.01f);
+            Assert.AreEqual(UnitCodes.G, c.Unit);
+            Assert.AreEqual(150f, c.PantryQuantity, 0.01f);
+        }
+
+        [Test]
+        public void BuildCandidate_AmountsNotComparable_HavingItIsEnough()
+        {
+            var pantry = new[] { new PantryItem { genericFoodId = "gf1", quantity = 1f, unit = UnitCodes.Pieces } };
+
+            var freeText = RecipeDetailViewModel.BuildCandidate(new RecipeIngredient { genericFoodId = "gf1", measure = "2 tbs" }, pantry);
+            var otherUnit = RecipeDetailViewModel.BuildCandidate(new RecipeIngredient { genericFoodId = "gf1", measure = "300 g" }, pantry);
+
+            Assert.IsFalse(freeText.Selected);
+            Assert.IsFalse(freeText.HasRecipeQuantity);
+            Assert.AreEqual(1f, freeText.Quantity);
+            Assert.AreEqual(UnitCodes.Pieces, freeText.Unit);
+            Assert.IsFalse(otherUnit.Selected);
+            Assert.IsFalse(otherUnit.PantryShort);
+        }
+
+        [Test]
+        public void BuildCandidate_MatchesByGenericFoodWhenProductDiffers()
+        {
+            var pantry = new[] { new PantryItem { foodProductId = "other", genericFoodId = "gf1", quantity = 1f, unit = UnitCodes.L } };
+
+            var c = RecipeDetailViewModel.BuildCandidate(new RecipeIngredient { foodProductId = "fp1", genericFoodId = "gf1", measure = "500 ml" }, pantry);
+
+            Assert.IsTrue(c.InPantry);
+            Assert.IsFalse(c.Selected);
+        }
+
+        [Test]
+        public async Task AddIngredientsToShoppingListAsync_OnlyAddsSelected_WithTheirAmount()
+        {
+            _mockShoppingListService.Setup(s => s.GetListsAsync())
+                .ReturnsAsync((new[] { new ShoppingList { id = "list-1" } }, null));
+            _mockShoppingListService.Setup(s => s.AddItemAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>(),
+                It.IsAny<string>()))
+                .ReturnsAsync((new ShoppingListItem { id = "i1" }, null));
+            var candidates = new[]
+            {
+                new RecipeShoppingCandidate { Ingredient = new RecipeIngredient { genericFoodId = "gf1" }, Quantity = 250f, Unit = UnitCodes.G, Selected = true },
+                new RecipeShoppingCandidate { Ingredient = new RecipeIngredient { genericFoodId = "gf2" }, Quantity = 1f, Unit = UnitCodes.Pieces, Selected = false }
+            };
+
+            bool success = await _viewModel.AddIngredientsToShoppingListAsync(candidates, "list-1");
+
+            Assert.IsTrue(success);
+            _mockShoppingListService.Verify(s => s.AddItemAsync("list-1", null, 250f, UnitCodes.G, null, null, "gf1"), Times.Once);
+            _mockShoppingListService.Verify(s => s.AddItemAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>(),
+                "gf2"), Times.Never);
+        }
+
+        [Test]
+        public void BuildCandidate_FractionalAmount_IsMadeWholeForTheShoppingList()
+        {
+            var kg = RecipeDetailViewModel.BuildCandidate(new RecipeIngredient { genericFoodId = "gf1", measure = "1.5 kg" }, null);
+            var cups = RecipeDetailViewModel.BuildCandidate(new RecipeIngredient { genericFoodId = "gf1", measure = "1/2 cup" }, null);
+
+            Assert.AreEqual(1500f, kg.Quantity);
+            Assert.AreEqual(UnitCodes.G, kg.Unit);
+            Assert.AreEqual(1f, cups.Quantity);
+            Assert.AreEqual(UnitCodes.Cups, cups.Unit);
+        }
+
+        [Test]
+        public async Task AddIngredientsToShoppingListAsync_SendsWholeQuantities()
+        {
+            _mockShoppingListService.Setup(s => s.GetListsAsync())
+                .ReturnsAsync((new[] { new ShoppingList { id = "list-1" } }, null));
+            _mockShoppingListService.Setup(s => s.AddItemAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>(),
+                It.IsAny<string>()))
+                .ReturnsAsync((new ShoppingListItem { id = "i1" }, null));
+            var candidates = new[] { new RecipeShoppingCandidate { Ingredient = new RecipeIngredient { genericFoodId = "gf1" }, Quantity = 0.25f, Unit = UnitCodes.Cups, Selected = true } };
+
+            await _viewModel.AddIngredientsToShoppingListAsync(candidates, "list-1");
+
+            _mockShoppingListService.Verify(s => s.AddItemAsync("list-1", null, 1f, UnitCodes.Cups, null, null, "gf1"), Times.Once);
+        }
+
+        [Test]
+        public async Task AddIngredientsToShoppingListAsync_NothingSelected_DoesNothing()
+        {
+            var candidates = new[] { new RecipeShoppingCandidate { Ingredient = new RecipeIngredient { genericFoodId = "gf1" }, Selected = false } };
+
+            bool success = await _viewModel.AddIngredientsToShoppingListAsync(candidates);
+
+            Assert.IsFalse(success);
+            _mockShoppingListService.Verify(s => s.GetListsAsync(), Times.Never);
+        }
+
+        [Test]
+        public async Task AddIngredientsToShoppingListAsync_ItemOnListInConvertibleUnit_AddsUpConverted()
+        {
+            _mockShoppingListService.Setup(s => s.GetListsAsync())
+                .ReturnsAsync((new[] { new ShoppingList { id = "list-1" } }, null));
+            _mockShoppingListService.Setup(s => s.GetItemsAsync("list-1"))
+                .ReturnsAsync((new[] { new ShoppingListItem { id = "item-1", genericFoodId = "gf1", quantity = 1f, unit = UnitCodes.Kg } }, null));
+            _mockShoppingListService.Setup(s => s.UpdateItemAsync("list-1", "item-1", It.IsAny<float?>(), It.IsAny<string>(), null, false))
+                .ReturnsAsync((new ShoppingListItem { id = "item-1" }, null));
+            var candidates = new[] { new RecipeShoppingCandidate { Ingredient = new RecipeIngredient { genericFoodId = "gf1" }, Quantity = 500f, Unit = UnitCodes.G, Selected = true } };
+
+            await _viewModel.AddIngredientsToShoppingListAsync(candidates, "list-1");
+
+            // 1 kg + 500 g = 1.5 kg → sent as 1500 g (the backend only takes whole quantities)
+            _mockShoppingListService.Verify(s => s.UpdateItemAsync("list-1", "item-1", 1500f, UnitCodes.G, null, false), Times.Once);
+        }
+
+        [Test]
+        public async Task AddIngredientsToShoppingListAsync_ItemOnListInOtherKindOfUnit_LeavesIt()
+        {
+            _mockShoppingListService.Setup(s => s.GetListsAsync())
+                .ReturnsAsync((new[] { new ShoppingList { id = "list-1" } }, null));
+            _mockShoppingListService.Setup(s => s.GetItemsAsync("list-1"))
+                .ReturnsAsync((new[] { new ShoppingListItem { id = "item-1", genericFoodId = "gf1", quantity = 2f, unit = UnitCodes.Pieces } }, null));
+            var candidates = new[] { new RecipeShoppingCandidate { Ingredient = new RecipeIngredient { genericFoodId = "gf1" }, Quantity = 500f, Unit = UnitCodes.G, Selected = true } };
+
+            bool success = await _viewModel.AddIngredientsToShoppingListAsync(candidates, "list-1");
+
+            Assert.IsTrue(success);
+            _mockShoppingListService.Verify(s => s.UpdateItemAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>()), Times.Never);
+            _mockShoppingListService.Verify(s => s.AddItemAsync(
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool?>(),
+                It.IsAny<string>()), Times.Never);
         }
 
         [Test]
         public async Task LoadAsync_OnSuccess_ReportsRecipeViewed()
         {
             var session = new Mock<IChallengeSessionService>();
-            var vm = new RecipeDetailViewModel(_storeService, _mockRecipeService.Object, _mockShoppingListService.Object, _mockCatalogService.Object, session.Object);
+            var vm = new RecipeDetailViewModel(_storeService, _mockRecipeService.Object, _mockShoppingListService.Object, _mockCatalogService.Object, _mockPantryService.Object, session.Object);
             _mockRecipeService.Setup(s => s.GetRecipeAsync("r-1"))
                 .ReturnsAsync((new Recipe { id = "r-1", userId = "user-1", title = "Pasta" }, null));
 

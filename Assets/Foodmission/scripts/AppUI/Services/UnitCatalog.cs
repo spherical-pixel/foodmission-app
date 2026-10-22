@@ -105,6 +105,22 @@ namespace eu.foodmission.platform
             return parsed;
         }
 
+        public bool TryParseExactMeasure(string measure, out float quantity, out string unit)
+        {
+            unit = null;
+            if (!TryParseMeasureCore(measure, out quantity, out string resolved, out string unitText))
+            {
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(unitText))
+            {
+                unit = UnitCodes.Default;
+                return true;
+            }
+            unit = resolved;
+            return resolved != null;
+        }
+
         public (float Quantity, string Unit) ResolveMeasure(string measure, float? storedQuantity, string storedUnit)
         {
             if (storedQuantity.HasValue && !string.IsNullOrEmpty(storedUnit))
@@ -151,10 +167,15 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>Parses the leading number; <paramref name="unit"/> is null when the unit text is not recognised.</summary>
-        private bool TryParseMeasureCore(string measure, out float quantity, out string unit)
+        private bool TryParseMeasureCore(string measure, out float quantity, out string unit) =>
+            TryParseMeasureCore(measure, out quantity, out unit, out _);
+
+        /// <param name="unitText">Text after the number ("" for a bare number).</param>
+        private bool TryParseMeasureCore(string measure, out float quantity, out string unit, out string unitText)
         {
             quantity = 1f;
             unit = null;
+            unitText = null;
 
             if (string.IsNullOrWhiteSpace(measure))
             {
@@ -175,7 +196,8 @@ namespace eu.foodmission.platform
                 }
 
                 quantity = whole + numerator / denominator;
-                unit = ResolveCode(fraction.Groups[4].Value);
+                unitText = fraction.Groups[4].Value;
+                unit = ResolveCode(unitText);
                 return true;
             }
 
@@ -191,7 +213,8 @@ namespace eu.foodmission.platform
             }
 
             quantity = parsed;
-            unit = ResolveCode(match.Groups[2].Value);
+            unitText = match.Groups[2].Value;
+            unit = ResolveCode(unitText);
             return true;
         }
 

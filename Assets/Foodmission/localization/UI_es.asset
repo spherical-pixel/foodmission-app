@@ -4952,25 +4952,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203748
-    m_Localized: Producto no encontrado
+    m_Localized: "Algunos ingredientes ya est\xE1n en tu despensa. Marca los que
+      quieras a\xF1adir a la lista de la compra."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203749
+    m_Localized: 'En tu despensa: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: Producto no encontrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
     m_Localized: "No hemos encontrado ning\xFAn producto con el c\xF3digo de barras
       {0}. Prueba a buscarlo por su nombre."
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203750
+  - m_Id: 56190243387203752
     m_Localized: "El producto con el c\xF3digo de barras {0} todav\xEDa no tiene
       informaci\xF3n en Open Food Facts, as\xED que no se puede a\xF1adir. Prueba
       a buscarlo por su nombre."
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203751
+  - m_Id: 56190243387203753
     m_Localized: Servicio no disponible
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203752
+  - m_Id: 56190243387203754
     m_Localized: "Ahora mismo no hemos podido consultar el c\xF3digo de barras {0}.
       Int\xE9ntalo de nuevo en un momento."
     m_Metadata:

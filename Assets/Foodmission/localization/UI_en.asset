@@ -4925,24 +4925,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203748
-    m_Localized: Product not found
+    m_Localized: Some ingredients are already in your pantry. Tick the ones you want
+      to add to your shopping list.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203749
+    m_Localized: 'In your pantry: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: Product not found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
     m_Localized: We couldn't find any product with barcode {0}. Try searching for
       it by name.
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203750
+  - m_Id: 56190243387203752
     m_Localized: The product with barcode {0} has no details in Open Food Facts yet,
       so it can't be added. Try searching for it by name.
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203751
+  - m_Id: 56190243387203753
     m_Localized: Service not available
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203752
+  - m_Id: 56190243387203754
     m_Localized: We couldn't look up barcode {0} right now. Please try again in a
       moment.
     m_Metadata:
