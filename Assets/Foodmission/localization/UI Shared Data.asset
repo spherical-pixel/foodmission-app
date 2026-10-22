@@ -4635,6 +4635,26 @@ MonoBehaviour:
     m_Key: TUTORIAL_QUICK_MEAL_LOG
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Key: BARCODE_SCAN_NOT_FOUND_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Key: BARCODE_SCAN_NOT_FOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Key: BARCODE_SCAN_NO_INFO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
+    m_Key: BARCODE_SCAN_BUSY_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203752
+    m_Key: BARCODE_SCAN_BUSY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

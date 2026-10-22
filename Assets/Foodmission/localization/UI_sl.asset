@@ -4947,6 +4947,29 @@ MonoBehaviour:
       za \u017Eivilom, odpri poln dnevnik z gumbom na vrhu."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: "Izdelka ni mogo\u010De najti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: "Nismo na\u0161li nobenega izdelka s \u010Drtno kodo {0}. Poskusi
+      ga poiskati po imenu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: "Izdelek s \u010Drtno kodo {0} v Open Food Facts \u0161e nima podatkov,
+      zato ga ni mogo\u010De dodati. Poskusi ga poiskati po imenu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
+    m_Localized: Storitev ni na voljo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203752
+    m_Localized: "\u010Crtne kode {0} trenutno ni bilo mogo\u010De poiskati. Poskusi
+      znova \u010Dez trenutek."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4947,6 +4947,30 @@ MonoBehaviour:
       alla volta, apri il registro completo con il pulsante in alto."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: Prodotto non trovato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: Non abbiamo trovato nessun prodotto con il codice a barre {0}. Prova
+      a cercarlo per nome.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: "Il prodotto con il codice a barre {0} non ha ancora informazioni
+      su Open Food Facts, quindi non pu\xF2 essere aggiunto. Prova a cercarlo per
+      nome."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
+    m_Localized: Servizio non disponibile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203752
+    m_Localized: "Al momento non \xE8 stato possibile cercare il codice a barre {0}.
+      Riprova tra poco."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

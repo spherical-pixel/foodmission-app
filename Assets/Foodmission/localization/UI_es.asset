@@ -4951,6 +4951,30 @@ MonoBehaviour:
       abre el registro completo con el bot\xF3n de arriba."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: Producto no encontrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: "No hemos encontrado ning\xFAn producto con el c\xF3digo de barras
+      {0}. Prueba a buscarlo por su nombre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: "El producto con el c\xF3digo de barras {0} todav\xEDa no tiene
+      informaci\xF3n en Open Food Facts, as\xED que no se puede a\xF1adir. Prueba
+      a buscarlo por su nombre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
+    m_Localized: Servicio no disponible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203752
+    m_Localized: "Ahora mismo no hemos podido consultar el c\xF3digo de barras {0}.
+      Int\xE9ntalo de nuevo en un momento."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

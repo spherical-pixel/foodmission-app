@@ -5028,6 +5028,30 @@ MonoBehaviour:
       na g\xF3rze."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: Nie znaleziono produktu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: "Nie znale\u017Ali\u015Bmy produktu z kodem kreskowym {0}. Spr\xF3buj
+      wyszuka\u0107 go po nazwie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: "Produkt z kodem kreskowym {0} nie ma jeszcze danych w Open Food
+      Facts, wi\u0119c nie mo\u017Cna go doda\u0107. Spr\xF3buj wyszuka\u0107 go
+      po nazwie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
+    m_Localized: "Us\u0142uga niedost\u0119pna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203752
+    m_Localized: "Nie uda\u0142o si\u0119 teraz wyszuka\u0107 kodu kreskowego {0}.
+      Spr\xF3buj ponownie za chwil\u0119."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

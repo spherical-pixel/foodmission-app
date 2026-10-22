@@ -4924,6 +4924,29 @@ MonoBehaviour:
       button at the top.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: Product not found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: We couldn't find any product with barcode {0}. Try searching for
+      it by name.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: The product with barcode {0} has no details in Open Food Facts yet,
+      so it can't be added. Try searching for it by name.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
+    m_Localized: Service not available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203752
+    m_Localized: We couldn't look up barcode {0} right now. Please try again in a
+      moment.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

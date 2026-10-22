@@ -33,6 +33,8 @@ namespace eu.foodmission.platform
             IOpenFoodFactsClientService offService,
             string barcode)
         {
+            barcode = BarcodeScan.Normalize(barcode);
+
             if (UseDirectClientOverride())
             {
                 // 1. Check local database first by barcode
