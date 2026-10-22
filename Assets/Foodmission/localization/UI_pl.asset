@@ -4992,6 +4992,19 @@ MonoBehaviour:
     m_Localized: Dodaj tagi
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: "Na razie brak przepis\xF3w dla Ciebie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: "Nie znale\u017Ali\u015Bmy przepis\xF3w z produktami z Twojej spi\u017Carni.
+      Dodaj wi\u0119cej produkt\xF3w lub przegl\u0105daj ksi\u0105\u017Ck\u0119 przepis\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: "Przegl\u0105daj przepisy"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

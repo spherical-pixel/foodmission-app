@@ -4912,6 +4912,19 @@ MonoBehaviour:
     m_Localized: Dodajte oznake
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: "Zate \u0161e ni receptov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: "Nismo na\u0161li receptov z \u017Eivili iz tvoje shrambe. Dodaj
+      ve\u010D \u017Eivil ali razi\u0161\u010Di knjigo receptov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: "Razi\u0161\u010Di recepte"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4913,6 +4913,19 @@ MonoBehaviour:
     m_Localized: Aggiungi tag
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: Ancora nessuna ricetta per te
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: Non abbiamo trovato ricette con gli alimenti della tua dispensa.
+      Aggiungi altri alimenti o esplora il ricettario.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: Esplora le ricette
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

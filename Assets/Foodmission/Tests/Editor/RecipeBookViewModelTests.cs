@@ -59,6 +59,39 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task LoadAsync_ForYou_WhenPantryHasItemsButNoMatches_SetsIsPantryEmptyFalse()
+        {
+            _mockRecipeService.Setup(s => s.GetRecommendationsAsync(
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync((new MultipleRecommendationResponse
+                {
+                    data = new RecommendationResponse[0],
+                    totalPantryItems = 3,
+                    expiringItemsCount = 0
+                }, null));
+
+            await _viewModel.LoadAsync();
+
+            Assert.IsFalse(_viewModel.IsPantryEmpty);
+            Assert.AreEqual(0, _viewModel.Recommendations.Count);
+            Assert.AreEqual(3, _viewModel.TotalPantryItems);
+        }
+
+        [Test]
+        public async Task LoadAsync_ForYou_OnErrorWithoutCache_DoesNotReportEmptyPantry()
+        {
+            _mockRecipeService.Setup(s => s.GetRecommendationsAsync(
+                It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(((MultipleRecommendationResponse)null, new ApiErrorResponse { message = "boom" }));
+
+            await _viewModel.LoadAsync();
+
+            Assert.IsFalse(_viewModel.IsPantryEmpty);
+            Assert.AreEqual(0, _viewModel.Recommendations.Count);
+            Assert.IsNotNull(_viewModel.ErrorDetail);
+        }
+
+        [Test]
         public async Task LoadAsync_ForYou_WhenRecommendationsReturned_PopulatesRecommendations()
         {
             _mockRecipeService.Setup(s => s.GetRecommendationsAsync(

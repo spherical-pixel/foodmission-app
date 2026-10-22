@@ -4925,6 +4925,19 @@ MonoBehaviour:
     m_Localized: Tags toevoegen
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: Nog geen recepten voor jou
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: We hebben geen recepten gevonden met de producten in je voorraadkast.
+      Voeg meer producten toe of ontdek het receptenboek.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: Recepten ontdekken
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

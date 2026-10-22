@@ -4947,6 +4947,19 @@ MonoBehaviour:
     m_Localized: "Stichw\xF6rter hinzuf\xFCgen"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: "Noch keine Rezepte f\xFCr dich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: "Wir haben keine Rezepte mit den Lebensmitteln in deiner Speisekammer
+      gefunden. F\xFCge weitere Lebensmittel hinzu oder entdecke das Rezeptbuch."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: Rezepte entdecken
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
