@@ -355,11 +355,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897565464879104
-    m_Localized: Il
+    m_Localized: Attive
     m_Metadata:
       m_Items: []
   - m_Id: 39897588734877696
-    m_Localized: Spento
+    m_Localized: Disattivate
     m_Metadata:
       m_Items: []
   - m_Id: 39897610318766080
