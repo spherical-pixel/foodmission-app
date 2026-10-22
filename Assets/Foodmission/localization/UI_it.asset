@@ -4012,13 +4012,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: In base alle tue risposte, ti proponiamo questo livello per ogni
-      area. Puoi mantenerlo o sceglierne un altro.
+    m_Localized: "In base alle tue risposte, ti proponiamo un livello per ogni area.
+      Indica da dove parti: percorsi, missioni e altri contenuti di quel livello,
+      senza dover fare prima quelli pi\xF9 semplici. Se ti va bene, tocca Continua.
+      Altrimenti, tocca un'area per cambiarlo."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: Scegli il tuo livello in ogni area. I contenuti sopra il tuo livello
-      restano bloccati.
+    m_Localized: Scegli il tuo livello in ogni area. Partirai dai contenuti di quel
+      livello; quelli superiori restano bloccati.
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4026,7 +4028,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979203
-    m_Localized: Ripristina proposta
+    m_Localized: Torna ai livelli suggeriti
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204

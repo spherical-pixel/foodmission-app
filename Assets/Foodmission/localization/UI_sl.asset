@@ -4009,13 +4009,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: "Na podlagi tvojih odgovorov ti predlagamo to raven za vsako podro\u010Dje.
-      Lahko jo obdr\u017Ei\u0161 ali izbere\u0161 svojo."
+    m_Localized: "Na podlagi tvojih odgovorov ti za vsako podro\u010Dje predlagamo
+      raven. Ta dolo\u010Da, kje za\u010Dne\u0161: naloge, misije in druge vsebine
+      te ravni, brez predhodnega re\u0161evanja la\u017Ejih. \u010Ce se ti zdi prav,
+      tapni Nadaljuj. \u010Ce ne, tapni podro\u010Dje, da spremeni\u0161 raven."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: "Izberi svojo raven za vsako podro\u010Dje. Vsebina nad tvojo ravnjo
-      ostane zaklenjena."
+    m_Localized: "Izberi svojo raven za vsako podro\u010Dje. Za\u010Dne\u0161 z vsebino
+      te ravni; vse nad njo ostane zaklenjeno."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4023,7 +4025,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979203
-    m_Localized: Obnovi predlog
+    m_Localized: Nazaj na predlagane ravni
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204
