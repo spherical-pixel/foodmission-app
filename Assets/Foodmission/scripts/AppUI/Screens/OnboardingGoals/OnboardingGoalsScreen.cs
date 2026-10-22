@@ -269,7 +269,7 @@ namespace eu.foodmission.platform
             var title = new Unity.AppUI.UI.Heading { text = "@UI:GOALS_TITLE" };
             title.AddToClassList("centered-text");
             title.style.unityFontStyleAndWeight = FontStyle.Bold;
-            title.size = HeadingSize.XL;
+            title.size = HeadingSize.L;
             container.Add(title);
 
             _nutriView = new FMNutriView();

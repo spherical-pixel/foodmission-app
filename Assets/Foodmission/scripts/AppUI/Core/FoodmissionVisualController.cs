@@ -306,7 +306,7 @@ namespace eu.foodmission.platform
 
             var nameHeading = new Heading();
             nameHeading.AddToClassList("fm-profile-username");
-            nameHeading.size = HeadingSize.XL;
+            nameHeading.size = HeadingSize.M;
             nameHeading.style.marginBottom = 8;
             _userNameLabel = nameHeading;
 

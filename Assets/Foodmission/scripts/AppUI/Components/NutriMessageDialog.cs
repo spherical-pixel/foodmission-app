@@ -184,7 +184,7 @@ namespace eu.foodmission.platform.Components
                 var text = new Unity.AppUI.UI.Text(message)
                 {
                     primary = true,
-                    size = TextSize.XL
+                    size = TextSize.M
                 };
                 messageContainer.Add(text);
 

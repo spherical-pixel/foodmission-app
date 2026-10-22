@@ -5,7 +5,7 @@
     <Style src="project://database/Assets/Foodmission/scripts/AppUI/Screens/Quests/QuestDetailScreen.uss?fileID=7433441132597879392&amp;guid=5821b2fde381647d297af73b5ef1cbff&amp;type=3#QuestDetailScreen"/>
     <ui:VisualElement name="root" class="fm-root fm-quest-detail-root">
         <ui:VisualElement name="card" class="fm-quest-detail-card">
-            <appui:Text name="quest-title" text="" size="XXL" class="fm-quest-detail-title"/>
+            <appui:Heading name="quest-title" text="" size="M" class="fm-quest-detail-title"/>
             <ui:VisualElement name="banner-container" class="fm-quest-detail-banner-container">
                 <ui:Image name="image-dimension-banner" class="fm-quizzes-dim-icon fm-quest-detail-banner-image"/>
             </ui:VisualElement>

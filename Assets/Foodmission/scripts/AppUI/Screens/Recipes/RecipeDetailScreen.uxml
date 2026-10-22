@@ -6,11 +6,11 @@
     <ui:VisualElement name="root" class="fm-root">
         <ui:ScrollView name="scroll-view" mode="Vertical" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="fm-rd-scroll">
             <ui:VisualElement name="hero-section" class="fm-rd-hero">
-                <appui:Heading name="recipe-title" size="L"/>
+                <appui:Heading name="recipe-title" size="M"/>
                 <ui:VisualElement name="hero-image-container" class="fm-rd-hero-image">
                     <ui:Image name="hero-image" class="fm-rd-hero-img"/>
                     <appui:Text name="hero-emoji" text="📚" class="fm-rd-hero-emoji"/>
-                    <appui:Button name="btn-watch-video" label="Watch video guide" quiet="true" title="" leading-icon="play" class="fm-rd-video-button fm-rd-action--hidden" style="font-size: 64px;"/>
+                    <appui:Button name="btn-watch-video" label="Watch video guide" quiet="true" title="" leading-icon="play" class="fm-rd-video-button fm-rd-action--hidden"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="rating-summary" class="fm-rd-rating-row">
                     <eu.foodmission.platform.Components.FMStarRating name="rating-stars" class="fm-star-rating--small"/>

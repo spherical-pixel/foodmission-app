@@ -51,7 +51,7 @@
 }
 
 .fm-fi-emoji {
-    font-size: var(--appui-font-sizes-display-lg, 64px);
+    font-size: 64px;
     -unity-text-align: middle-center;
     align-self: center;
     margin-bottom: 8px;

@@ -8,7 +8,7 @@
             <appui:ExVisualElement name="fact-card" class="box-background fm-shadow-wrapper fm-foodfact-card">
                 <ui:Image name="image-topic" class="fm-quiz-topic-image"/>
                 <appui:Heading name="text-title" size="M" class="fm-learning-title fm-learning-title--hidden"/>
-                <appui:Text name="text-body" size="L" class="fm-foodfact-body"/>
+                <appui:Text name="text-body" size="M" class="fm-foodfact-body"/>
                 <fm:FMSourceItemView name="source-item-view"/>
                 <ui:VisualElement name="actions-row" class="fm-share-row">
                     <fm:FMButton name="bt-continue" title="Continuar_" trailing-icon="fm-arrow-right" variant="Accent" class="fm-button fm-button-align-left fm-share-row__continue">

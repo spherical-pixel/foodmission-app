@@ -120,7 +120,7 @@ namespace eu.foodmission.platform.Components
             _heading = new Unity.AppUI.UI.Heading();
             _heading.AddToClassList("heading-wrap");
             _heading.AddToClassList("stepper-heading");
-            _heading.size = HeadingSize.M;
+            _heading.size = HeadingSize.S;
             _heading.primary = true;
             _heading.style.flexShrink = 1;
             Add(_heading);

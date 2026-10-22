@@ -6,7 +6,7 @@
         <appui:ExVisualElement name="mission-card" class="box-background fm-shadow-wrapper fm-mission-card">
             <appui:Text name="mission-level-badge" text="" size="S" class="fm-mission-badge"/>
             <appui:Heading name="mission-title" text="" size="M" class="fm-mission-title"/>
-            <appui:Text name="mission-goal" text="" size="L" class="fm-mission-goal"/>
+            <appui:Text name="mission-goal" text="" size="M" class="fm-mission-goal"/>
             <ui:VisualElement name="mission-schedule" class="fm-mission-schedule">
                 <appui:Text name="mission-schedule-dates" text="" size="S" class="fm-mission-schedule-dates"/>
                 <appui:Text name="mission-schedule-day" text="" size="M" class="fm-mission-schedule-day"/>

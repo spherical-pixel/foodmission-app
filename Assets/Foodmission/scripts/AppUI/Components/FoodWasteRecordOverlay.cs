@@ -296,7 +296,7 @@ namespace eu.foodmission.platform
             var section = new VisualElement();
             section.AddToClassList("fm-food-waste-record-overlay__section");
 
-            var label = new Heading { text = labelText, size = HeadingSize.XXS };
+            var label = new Heading { text = labelText, size = HeadingSize.S };
             label.AddToClassList("fm-food-waste-record-overlay__label");
             section.Add(label);
 

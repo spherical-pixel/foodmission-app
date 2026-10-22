@@ -213,7 +213,7 @@
 
 
 .fm-button-drawer {
-    font-size: var(--appui-font-sizes-500);
+    font-size: var(--appui-font-sizes-body-lg);
 }
 
 .appui-button--accent.appui-button--quiet.fm-button-list {
@@ -618,7 +618,7 @@
     width: 45%;
     overflow: hidden;
     white-space: nowrap;
-    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-500);
+    -unity-text-auto-size: best-fit var(--appui-font-sizes-25) var(--appui-font-sizes-heading-sm);
 }
 
 .fm-arrow-stepper__row {
@@ -701,6 +701,11 @@
 
 .fm-status-row--clickable {
     cursor: link;
+}
+
+.fm-profile-menu-emoji {
+    margin-right: 12px;
+    font-size: var(--appui-font-sizes-body-md);
 }
 
 .fm-status-icon {
@@ -855,7 +860,6 @@
 
 .fm-profile-username {
     flex-grow: 1;
-    font-size: var(--appui-font-sizes-500);
     color: var(--appui-primary-100);
     padding-bottom: 8px;
     -unity-font-definition: var(--appui-font-weights-200);

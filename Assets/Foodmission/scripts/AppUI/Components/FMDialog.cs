@@ -429,7 +429,7 @@ namespace eu.foodmission.platform.Components
             var root = new VisualElement();
             root.AddToClassList("fm-info-dialog");
 
-            var heading = new Heading(title) { size = HeadingSize.XL };
+            var heading = new Heading(title) { size = HeadingSize.M };
             heading.AddToClassList("fm-info-dialog__heading");
             root.Add(heading);
 

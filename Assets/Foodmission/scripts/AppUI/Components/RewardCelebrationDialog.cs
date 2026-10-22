@@ -303,7 +303,7 @@ namespace eu.foodmission.platform.Components
             var headerContainer = new VisualElement();
             headerContainer.AddToClassList("fm-reward-header-container");
             var headerTitle = new Text();
-            headerTitle.size = TextSize.XXXL;
+            headerTitle.size = TextSize.XL;
             headerTitle.AddToClassList("fm-reward-celebration-title");
             headerTitle.text = !string.IsNullOrEmpty(contextTitle) ? contextTitle : "@UI:REWARD_CELEBRATION_TITLE";
             headerContainer.Add(headerTitle);
@@ -535,12 +535,12 @@ namespace eu.foodmission.platform.Components
             container.Add(xpRow);
 
             var title = new Text { text = item?.Title ?? "" };
-            title.size = TextSize.XXXL;
+            title.size = TextSize.L;
             title.AddToClassList("fm-reward-title");
             container.Add(title);
 
             var subtitle = new Text { text = item?.Subtitle ?? "" };
-            subtitle.size = TextSize.XXXL;
+            subtitle.size = TextSize.M;
             subtitle.AddToClassList("fm-reward-subtitle");
             container.Add(subtitle);
 

@@ -621,7 +621,7 @@ namespace eu.foodmission.platform.Components
             {
                 var recentHeading = new Unity.AppUI.UI.Heading { text = "@UI:txtRECENTLY_ADDED" };
                 recentHeading.AddToClassList("fm-scf-heading");
-                recentHeading.size = HeadingSize.M;
+                recentHeading.size = HeadingSize.S;
                 _categoryContainer.Add(recentHeading);
 
                 foreach (var prod in _recentProducts)
@@ -633,7 +633,7 @@ namespace eu.foodmission.platform.Components
 
             // Food groups heading
             var groupHeading = new Unity.AppUI.UI.Heading { text = "@UI:txtCATEGORIES" };
-            groupHeading.size = HeadingSize.M;
+            groupHeading.size = HeadingSize.S;
             groupHeading.AddToClassList("fm-scf-heading");
             _categoryContainer.Add(groupHeading);
 
@@ -696,7 +696,7 @@ namespace eu.foodmission.platform.Components
             string backEmoji = GetCategoryEmoji(_currentFoodGroupSlug ?? _currentFoodGroup);
             string backLocalized = _currentFoodGroup;
             var backLabel = new Unity.AppUI.UI.Heading { text = $"{backEmoji} {backLocalized}" };
-            backLabel.size = HeadingSize.M;
+            backLabel.size = HeadingSize.S;
             backLabel.style.flexGrow = 1;
 
             var icon = new Unity.AppUI.UI.Icon { iconName = "fm-arrow-left" };

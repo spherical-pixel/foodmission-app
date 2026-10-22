@@ -6,7 +6,7 @@
         <appui:ExVisualElement name="challenge-card" class="box-background fm-shadow-wrapper fm-challenge-card">
             <appui:Text name="challenge-level-badge" text="" size="S" class="fm-challenge-badge"/>
             <appui:Heading name="challenge-title" text="" size="M" class="fm-challenge-title"/>
-            <appui:Text name="challenge-task" text="" size="L" class="fm-challenge-task"/>
+            <appui:Text name="challenge-task" text="" size="M" class="fm-challenge-task"/>
             <ui:VisualElement class="fm-challenge-why-box">
                 <appui:Text text="@UI:CHALLENGE_WHY_TITLE" size="M" class="fm-challenge-why-title"/>
                 <appui:Text name="challenge-why-it-matters" text="" size="M" class="fm-challenge-why-text"/>

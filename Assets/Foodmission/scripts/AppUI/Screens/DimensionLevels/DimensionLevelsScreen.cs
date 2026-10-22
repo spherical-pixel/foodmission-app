@@ -201,7 +201,7 @@ namespace eu.foodmission.platform
             card.AddToClassList("fm-dimension-levels__card");
 
             // No AppBar on this destination: the card carries the screen title
-            var title = new Heading { text = "@UI:DIMENSION_LEVELS_TITLE", size = HeadingSize.M };
+            var title = new Heading { text = "@UI:DIMENSION_LEVELS_TITLE", size = HeadingSize.L };
             title.AddToClassList("fm-dimension-levels__title");
             card.Add(title);
 

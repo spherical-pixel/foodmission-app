@@ -24,7 +24,7 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaTop => false;
         protected override bool IsFixedContent => false;
 
-        private Unity.AppUI.UI.Text _questTitle;
+        private Unity.AppUI.UI.Heading _questTitle;
         private Image _imageDimensionBanner;
         private Unity.AppUI.UI.Text _questDescription;
         private VisualElement _activitiesContainer;
@@ -49,7 +49,7 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
-            _questTitle = contentContainer.Q<Unity.AppUI.UI.Text>("quest-title");
+            _questTitle = contentContainer.Q<Unity.AppUI.UI.Heading>("quest-title");
             _imageDimensionBanner = contentContainer.Q<Image>("image-dimension-banner");
             _questDescription = contentContainer.Q<Unity.AppUI.UI.Text>("quest-description");
             _activitiesContainer = contentContainer.Q<VisualElement>("activities-container");
