@@ -1385,8 +1385,10 @@
     align-items: center;
     color: var(--appui-foregrounds-50);
     --unity-image-tint-color: var(--appui-foregrounds-50);
-    height: var(--appui-sizing-700);
+    /* Grows with long names / large fonts (OpenDyslexic + large scale); 115px is only the minimum */
+    height: auto;
     min-height: var(--appui-sizing-700);
+    flex-shrink: 0;
     background-color: var(--fm-surface-bg);
     margin-bottom: 5px;
 }
@@ -1404,8 +1406,10 @@
     flex-direction: row;
     align-items: center;
     color: var(--appui-foregrounds-50);
-    height: var(--appui-sizing-700);
+    /* Grows with 3-line names / large fonts (OpenDyslexic + large scale); 115px is only the minimum */
+    height: auto;
     min-height: var(--appui-sizing-700);
+    flex-shrink: 0;
     background-color: var(--fm-surface-bg);
     padding: 16px 24px;
     border-radius: var(--appui-alias-control-border-radius);
