@@ -4917,6 +4917,19 @@ MonoBehaviour:
     m_Localized: "A\xF1adir etiquetas"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: "A\xFAn no hay recetas para ti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: "No hemos encontrado recetas con los alimentos de tu despensa. A\xF1ade
+      m\xE1s alimentos o explora el recetario."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: Explorar recetas
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

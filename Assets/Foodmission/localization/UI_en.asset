@@ -4890,6 +4890,19 @@ MonoBehaviour:
     m_Localized: Add tags
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: No recipes for you yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: We couldn't find recipes that use the foods in your pantry. Add
+      more foods or explore the recipe book.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: Explore recipes
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

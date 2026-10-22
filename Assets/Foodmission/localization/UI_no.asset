@@ -4911,6 +4911,19 @@ MonoBehaviour:
     m_Localized: Legg til tags
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: "Ingen oppskrifter til deg enn\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: Vi fant ingen oppskrifter med matvarene i spiskammeret ditt. Legg
+      til flere matvarer eller utforsk oppskriftsboken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: Utforsk oppskrifter
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
