@@ -4025,13 +4025,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: "Basierend auf deinen Antworten schlagen wir dir diese Stufe pro
-      Bereich vor. Du kannst sie behalten oder selbst w\xE4hlen."
+    m_Localized: "Basierend auf deinen Antworten schlagen wir dir f\xFCr jeden Bereich
+      eine Stufe vor. Sie legt fest, wo du startest: Quests, Missionen und weitere
+      Inhalte dieser Stufe, ohne vorher die einfacheren machen zu m\xFCssen. Passt
+      alles, tippe auf Weiter. Wenn nicht, tippe auf einen Bereich, um die Stufe
+      zu \xE4ndern."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: "W\xE4hle deine Stufe pro Bereich. Inhalte \xFCber deiner Stufe
-      bleiben gesperrt."
+    m_Localized: "W\xE4hle deine Stufe pro Bereich. Du startest mit Inhalten dieser
+      Stufe; alles dar\xFCber bleibt gesperrt."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4039,7 +4042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979203
-    m_Localized: Vorschlag wiederherstellen
+    m_Localized: "Zur\xFCck zu den vorgeschlagenen Stufen"
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204

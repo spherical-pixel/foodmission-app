@@ -2793,6 +2793,11 @@
     margin-bottom: 12px;
 }
 
+.fm-dimension-levels__title {
+    white-space: normal;
+    margin-top: 4px;
+}
+
 .fm-dimension-levels__dropdown {
     width: 100%;
     flex-shrink: 0;

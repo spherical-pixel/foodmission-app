@@ -4011,13 +4011,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: "Seg\xFAn tus respuestas, este es el nivel que te proponemos en
-      cada \xE1rea. Puedes mantenerlo o elegir el tuyo."
+    m_Localized: "Seg\xFAn tus respuestas, te proponemos un nivel para cada \xE1rea.
+      Marca por d\xF3nde empiezas: quests, misiones y otros contenidos de ese nivel,
+      sin tener que hacer antes los m\xE1s b\xE1sicos. Si te parece bien, pulsa Contin\xFAa.
+      Si no, toca un \xE1rea para cambiarlo."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: "Elige tu nivel en cada \xE1rea. El contenido por encima de tu nivel
-      quedar\xE1 bloqueado."
+    m_Localized: "Elige tu nivel en cada \xE1rea. Empezar\xE1s con el contenido de
+      ese nivel; lo que est\xE9 por encima quedar\xE1 bloqueado."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4025,7 +4027,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979203
-    m_Localized: Restablecer propuesta
+    m_Localized: Volver a los niveles propuestos
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204

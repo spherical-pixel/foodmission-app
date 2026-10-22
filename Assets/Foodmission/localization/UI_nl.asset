@@ -4022,12 +4022,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: Op basis van je antwoorden stellen we dit niveau per gebied voor.
-      Je kunt het houden of zelf kiezen.
+    m_Localized: 'Op basis van je antwoorden stellen we per gebied een niveau voor.
+      Dat bepaalt waar je begint: opdrachten, missies en andere inhoud op dat niveau,
+      zonder eerst de makkelijkere te doen. Klopt het? Tik dan op Doorgaan. Zo niet,
+      tik op een gebied om het te wijzigen.'
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: Kies je niveau per gebied. Inhoud boven je niveau blijft vergrendeld.
+    m_Localized: Kies je niveau per gebied. Je begint met inhoud op dat niveau; alles
+      daarboven blijft vergrendeld.
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4035,7 +4038,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979203
-    m_Localized: Voorstel herstellen
+    m_Localized: Terug naar voorgestelde niveaus
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204

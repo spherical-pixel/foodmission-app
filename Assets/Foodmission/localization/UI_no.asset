@@ -351,7 +351,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897565464879104
-    m_Localized: "P\u00E5"
+    m_Localized: "P\xE5"
     m_Metadata:
       m_Items: []
   - m_Id: 39897588734877696
@@ -4005,13 +4005,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: "Basert p\xE5 svarene dine foresl\xE5r vi dette niv\xE5et for hvert
-      omr\xE5de. Du kan beholde det eller velge selv."
+    m_Localized: "Basert p\xE5 svarene dine foresl\xE5r vi et niv\xE5 for hvert omr\xE5de.
+      Det avgj\xF8r hvor du starter: quester, oppdrag og annet innhold p\xE5 det
+      niv\xE5et, uten at du m\xE5 gj\xF8re de enklere f\xF8rst. Ser det riktig ut,
+      trykk p\xE5 Fortsett. Hvis ikke, trykk p\xE5 et omr\xE5de for \xE5 endre det."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: "Velg niv\xE5et ditt for hvert omr\xE5de. Innhold over niv\xE5et
-      ditt forblir l\xE5st."
+    m_Localized: "Velg niv\xE5et ditt for hvert omr\xE5de. Du starter med innhold
+      p\xE5 det niv\xE5et; alt over forblir l\xE5st."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4019,7 +4021,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979203
-    m_Localized: Gjenopprett forslag
+    m_Localized: "Tilbake til foresl\xE5tte niv\xE5er"
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204

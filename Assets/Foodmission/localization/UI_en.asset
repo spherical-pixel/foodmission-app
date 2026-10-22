@@ -3992,12 +3992,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: Based on your answers, this is the level we suggest for each area.
-      You can keep it or choose your own.
+    m_Localized: 'Based on your answers, we suggest a level for each area. It sets
+      where you start: quests, missions and other content at that level, without
+      doing the easier ones first. If it looks right, tap Continue. If not, tap an
+      area to change it.'
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: Choose your level in each area. Content above your level stays locked.
+    m_Localized: Choose your level in each area. You'll start with content at that
+      level; anything above it stays locked.
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4005,7 +4008,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979203
-    m_Localized: Restore suggestion
+    m_Localized: Back to suggested levels
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204

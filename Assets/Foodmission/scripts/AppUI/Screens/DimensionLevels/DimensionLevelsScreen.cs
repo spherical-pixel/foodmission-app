@@ -200,6 +200,11 @@ namespace eu.foodmission.platform
             card.AddToClassList("fm-shadow-wrapper");
             card.AddToClassList("fm-dimension-levels__card");
 
+            // No AppBar on this destination: the card carries the screen title
+            var title = new Heading { text = "@UI:DIMENSION_LEVELS_TITLE", size = HeadingSize.M };
+            title.AddToClassList("fm-dimension-levels__title");
+            card.Add(title);
+
             foreach (DimensionLevelRow row in _viewModel.Rows)
             {
                 var dropdown = new FormFieldItemDropDownField
@@ -226,12 +231,7 @@ namespace eu.foodmission.platform
                     }
                 });
 
-                if (proposal)
-                {
-                    // The field's own help-text slot (reserved space under the dropdown), so nothing overlaps
-                    dropdown.HelpTextText = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DIMENSION_LEVELS_PROPOSED")
-                        + ": " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SEGMENT_" + row.ProposedLevel);
-                }
+                UpdateProposedHint(dropdown, row, proposal);
                 card.Add(dropdown);
 
                 _dropdownsByDimension[dimensionCode] = dropdown;
@@ -248,16 +248,27 @@ namespace eu.foodmission.platform
                 return;
             }
 
+            bool proposal = _viewModel.Mode == DimensionLevelsMode.Proposal;
             foreach (DimensionLevelRow row in _viewModel.Rows)
             {
                 if (_dropdownsByDimension.TryGetValue(row.DimensionCode, out FormFieldItemDropDownField dropdown))
                 {
                     dropdown.Dropdown.SetValueWithoutNotify(new[] { Math.Max(0, ContentLevel.Rank(row.Level)) });
                     dropdown.HeadingText = row.DimensionName;
+                    UpdateProposedHint(dropdown, row, proposal);
                 }
             }
             UpdateResetButton();
             RefreshRowNodeValues();
+        }
+
+        /// <summary>"Suggested: X" only under the rows the user moved away from the proposal; the help-text slot keeps its space, so nothing jumps.</summary>
+        private static void UpdateProposedHint(FormFieldItemDropDownField dropdown, DimensionLevelRow row, bool proposal)
+        {
+            dropdown.HelpTextText = proposal && row.Level != row.ProposedLevel
+                ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", "DIMENSION_LEVELS_PROPOSED")
+                    + ": " + LevelLabel(row.ProposedLevel)
+                : string.Empty;
         }
 
         private void UpdateResetButton()
