@@ -87,10 +87,10 @@ namespace eu.foodmission.platform
                 string lang = _storeService.GetAppState().lang ?? "en";
                 await UnitCatalog.Current.LoadAsync(lang);
 
-                // Pre-warm generic foods & categories cache in background during splash load
+                // Pre-warm food groups cache in background during splash load
                 if (_genericFoodService != null)
                 {
-                    _ = _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+                    _ = _genericFoodService.GetFoodGroupsAsync();
                 }
 
                 // Preload dimensions and topics taxonomy

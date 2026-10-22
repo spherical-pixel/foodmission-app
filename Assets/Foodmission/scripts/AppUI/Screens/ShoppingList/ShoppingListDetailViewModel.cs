@@ -49,12 +49,6 @@ namespace eu.foodmission.platform
         private string _filterText = "";
 
         [ObservableProperty]
-        private List<GenericFood> _genericFoods = new();
-
-        [ObservableProperty]
-        private bool _isLoadingGenericFoods;
-
-        [ObservableProperty]
         private bool _autoAddToPantry;
 
         public ShoppingListDetailViewModel(
@@ -231,21 +225,15 @@ namespace eu.foodmission.platform
             SaveCache();
         }
 
-        public async Task<List<GenericFood>> GetGenericFoodsAsync()
+        public async Task<List<FoodGroupItem>> GetFoodGroupsAsync()
         {
-            IsLoadingGenericFoods = true;
-            var (result, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
-
+            var (result, error) = await _genericFoodService.GetFoodGroupsAsync();
             if (error != null)
             {
                 ErrorDetail = error;
-                IsLoadingGenericFoods = false;
-                return new List<GenericFood>();
+                return new List<FoodGroupItem>();
             }
-
-            GenericFoods = result?.items != null ? new List<GenericFood>(result.items) : new List<GenericFood>();
-            IsLoadingGenericFoods = false;
-            return GenericFoods;
+            return result != null ? new List<FoodGroupItem>(result) : new List<FoodGroupItem>();
         }
 
         public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)

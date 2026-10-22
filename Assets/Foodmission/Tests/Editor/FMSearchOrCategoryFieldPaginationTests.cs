@@ -72,6 +72,80 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(DisplayStyle.None, PaginationDisplay);
         }
 
+        private List<string> RenderedCategoryTitles()
+        {
+            var titles = new List<string>();
+            foreach (VisualElement child in GetField<VisualElement>("_categoryContainer").Children())
+            {
+                if (child is Unity.AppUI.UI.Button button)
+                {
+                    titles.Add(button.title);
+                }
+            }
+            return titles;
+        }
+
+        [Test]
+        public void OrderForDisplay_KeepsBackendOrderAndMovesAlcoholicBeveragesLast()
+        {
+            var groups = new List<FoodGroupItem>
+            {
+                new FoodGroupItem { slug = "vegetables", name = "Verduras" },
+                new FoodGroupItem { slug = "alcoholic-beverages", name = "Bebidas alcohólicas" },
+                new FoodGroupItem { slug = "bread", name = "Pan" },
+                new FoodGroupItem { slug = "non-alcoholic-beverages", name = "Bebidas sin alcohol" }
+            };
+
+            List<FoodGroupItem> ordered = FMSearchOrCategoryField.OrderForDisplay(groups);
+
+            CollectionAssert.AreEqual(
+                new[] { "vegetables", "bread", "non-alcoholic-beverages", "alcoholic-beverages" },
+                ordered.ConvertAll(g => g.slug));
+        }
+
+        [Test]
+        public void OrderForDisplay_WithoutAlcoholicBeverages_KeepsOrder()
+        {
+            var groups = new List<FoodGroupItem>
+            {
+                new FoodGroupItem { slug = "soups", name = "Soups" },
+                new FoodGroupItem { slug = "bread", name = "Bread" }
+            };
+
+            List<FoodGroupItem> ordered = FMSearchOrCategoryField.OrderForDisplay(groups);
+
+            CollectionAssert.AreEqual(new[] { "soups", "bread" }, ordered.ConvertAll(g => g.slug));
+        }
+
+        [Test]
+        public async Task ShowCategories_RendersBackendGroupsWithAlcoholicBeveragesLast()
+        {
+            _field.GetFoodGroupsAsync = () => Task.FromResult(new List<FoodGroupItem>
+            {
+                new FoodGroupItem { slug = "alcoholic-beverages", name = "Alcoholic beverages" },
+                new FoodGroupItem { slug = "soups", name = "Soups" },
+                new FoodGroupItem { slug = "bread", name = "Bread" }
+            });
+
+            await (Task)Invoke("ShowGenericFoodsAsync");
+
+            List<string> titles = RenderedCategoryTitles();
+            Assert.AreEqual(3, titles.Count);
+            StringAssert.EndsWith("Soups", titles[0]);
+            StringAssert.EndsWith("Bread", titles[1]);
+            StringAssert.EndsWith("Alcoholic beverages", titles[2]);
+        }
+
+        [Test]
+        public async Task ShowCategories_WithoutBackendGroups_ShowsDefaultsWithAlcoholicBeveragesLast()
+        {
+            await (Task)Invoke("ShowGenericFoodsAsync");
+
+            List<string> titles = RenderedCategoryTitles();
+            StringAssert.EndsWith("Bread", titles[0]);
+            StringAssert.EndsWith("Alcoholic beverages", titles[titles.Count - 1]);
+        }
+
         [Test]
         public async Task SearchWithSeveralPages_ShowsPaginationAndRequestsThePage()
         {

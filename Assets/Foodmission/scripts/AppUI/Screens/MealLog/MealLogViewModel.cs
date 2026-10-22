@@ -525,15 +525,15 @@ namespace eu.foodmission.platform
             return result;
         }
 
-        public async Task<List<GenericFood>> GetGenericFoodsAsync()
+        public async Task<List<FoodGroupItem>> GetFoodGroupsAsync()
         {
-            var (response, error) = await _genericFoodService.SearchGenericFoodsAsync(pageSize: 100);
+            var (result, error) = await _genericFoodService.GetFoodGroupsAsync();
             if (error != null)
             {
                 ErrorDetail = error;
-                return new List<GenericFood>();
+                return new List<FoodGroupItem>();
             }
-            return response?.items != null ? new List<GenericFood>(response.items) : new List<GenericFood>();
+            return result != null ? new List<FoodGroupItem>(result) : new List<FoodGroupItem>();
         }
 
         public async Task<PaginatedGenericFoodResponse> SearchByFoodGroupAsync(string foodGroup, int page, int pageSize)
