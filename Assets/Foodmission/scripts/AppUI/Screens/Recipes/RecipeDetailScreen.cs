@@ -1052,19 +1052,102 @@ namespace eu.foodmission.platform
         {
             try
             {
-                bool success = await _viewModel.AddIngredientsToShoppingListAsync();
-                if (success && _viewModel.ErrorDetail == null)
+                var candidates = await _viewModel.GetShoppingListCandidatesAsync();
+                if (candidates.Length == 0)
+                {
+                    return;
+                }
+                // Nothing in the pantry: no choice to make, add everything straight away
+                if (!candidates.Any(c => c.InPantry))
+                {
+                    await AddCandidatesToShoppingListAsync(candidates);
+                    return;
+                }
+                ShowShoppingListPantryDialog(candidates);
+            }
+            catch (Exception ex) { Debug.LogError($"[RecipeDetailScreen] SafeAddToShoppingListAsync: {ex}"); }
+        }
+
+        /// <summary>
+        /// Lets the user pick which ingredients go to the shopping list: the ones missing from the pantry come
+        /// ticked, the ones already there unticked with the pantry amount underneath (issue #57).
+        /// </summary>
+        private void ShowShoppingListPantryDialog(RecipeShoppingCandidate[] candidates)
+        {
+            CultureInfo culture = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentCulture;
+
+            var content = new VisualElement();
+            content.AddToClassList("fm-recipe-shopping");
+
+            var intro = new Text { text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_SHOPPING_PANTRY_INTRO") };
+            intro.AddToClassList("fm-recipe-shopping__intro");
+            content.Add(intro);
+
+            var scroll = new ScrollView();
+            scroll.AddToClassList("fm-recipe-shopping__list");
+            content.Add(scroll);
+
+            foreach (var candidate in candidates)
+            {
+                var captured = candidate;
+                var row = new VisualElement();
+                row.AddToClassList("fm-recipe-shopping__row");
+
+                string label = captured.Ingredient.name ?? "";
+                if (captured.HasRecipeQuantity)
+                {
+                    label += $" · {FormatAmount(captured.Quantity, captured.Unit, culture)}";
+                }
+                var checkbox = new Checkbox
+                {
+                    label = label,
+                    value = captured.Selected ? CheckboxState.Checked : CheckboxState.Unchecked
+                };
+                checkbox.AddToClassList("fm-recipe-shopping__checkbox");
+                checkbox.RegisterValueChangedCallback(evt => captured.Selected = evt.newValue == CheckboxState.Checked);
+                row.Add(checkbox);
+
+                if (captured.InPantry)
+                {
+                    var pantry = new Text
+                    {
+                        text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "RECIPE_SHOPPING_IN_PANTRY",
+                            new object[] { FormatAmount(captured.PantryQuantity, captured.PantryUnit, culture) })
+                    };
+                    pantry.AddToClassList("fm-recipe-shopping__pantry");
+                    row.Add(pantry);
+                }
+                scroll.Add(row);
+            }
+
+            FMDialog.ShowCustom(
+                this,
+                "@UI:ADD_TO_SHOPPING_LIST",
+                content,
+                new FMDialogAction("@UI:TXT_CANCEL", null, ButtonVariant.Default),
+                new FMDialogAction("@UI:ADD_TO_SHOPPING_LIST", () => _ = AddCandidatesToShoppingListAsync(candidates), ButtonVariant.Accent));
+        }
+
+        private static string FormatAmount(float quantity, string unit, CultureInfo culture) =>
+            $"{quantity.ToString("0.##", culture)} {UnitCatalog.Current.GetLabel(unit)}";
+
+        private async System.Threading.Tasks.Task AddCandidatesToShoppingListAsync(RecipeShoppingCandidate[] candidates)
+        {
+            try
+            {
+                if (_viewModel == null)
+                {
+                    return;
+                }
+                bool success = await _viewModel.AddIngredientsToShoppingListAsync(candidates);
+                if (success && _viewModel?.ErrorDetail == null)
                 {
                     string msg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ITEM_ADDED_TO_SHOPPING_LIST");
-                    if (string.IsNullOrEmpty(msg) || msg.StartsWith("No translation found"))
-                    {
-                        msg = "Ingredientes añadidos a la lista de la compra";
-                    }
                     Toast.Build(this, msg, Unity.AppUI.Core.NotificationDuration.Short)
                         .SetStyle(NotificationStyle.Positive).Show();
                 }
             }
-            catch (Exception ex) { Debug.LogError($"[RecipeDetailScreen] SafeAddToShoppingListAsync: {ex}"); }
+            catch (Exception ex) { Debug.LogError($"[RecipeDetailScreen] AddCandidatesToShoppingListAsync: {ex}"); }
         }
 
         private async System.Threading.Tasks.Task SafeDeleteAsync()

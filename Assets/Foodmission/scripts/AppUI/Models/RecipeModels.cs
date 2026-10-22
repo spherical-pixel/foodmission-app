@@ -167,6 +167,27 @@ namespace eu.foodmission.platform
         public string[] ExpiringIngredientNames;
     }
 
+    /// <summary>
+    /// UI-only: one recipe ingredient offered for the shopping list, after checking the pantry.
+    /// Quantity/Unit is what would be added (the missing part when the pantry amount could be compared).
+    /// </summary>
+    public class RecipeShoppingCandidate
+    {
+        public RecipeIngredient Ingredient;
+        public float Quantity;
+        public string Unit;
+        /// <summary>The recipe measure was understood (number + catalog unit).</summary>
+        public bool HasRecipeQuantity;
+        public bool InPantry;
+        /// <summary>Pantry total, in PantryUnit; only meaningful when InPantry.</summary>
+        public float PantryQuantity;
+        public string PantryUnit;
+        /// <summary>The pantry has some, but less than the recipe needs (amounts were comparable).</summary>
+        public bool PantryShort;
+        /// <summary>Pre-selected in the dialog: missing from the pantry or not enough of it.</summary>
+        public bool Selected;
+    }
+
     public class RecipeCatalogItem
     {
         public string Code { get; set; }

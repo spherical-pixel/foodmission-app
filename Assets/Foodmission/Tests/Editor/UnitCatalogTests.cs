@@ -174,6 +174,60 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(unit, u);
         }
 
+        [TestCase("200 g", 200f, "G")]
+        [TestCase("1 1/2 cups", 1.5f, "CUPS")]
+        [TestCase("2", 2f, "PIECES")]
+        [TestCase("½", 0.5f, "PIECES")]
+        public void TryParseExactMeasure_Understood(string measure, float qty, string unit)
+        {
+            Assert.IsTrue(_catalog.TryParseExactMeasure(measure, out float q, out string u));
+            Assert.AreEqual(qty, q, 0.0001f);
+            Assert.AreEqual(unit, u);
+        }
+
+        [TestCase("2 tbs")]
+        [TestCase("1/2 tsp")]
+        [TestCase("3 handfuls")]
+        [TestCase("to taste")]
+        [TestCase("")]
+        [TestCase(null)]
+        public void TryParseExactMeasure_NotUnderstood(string measure)
+        {
+            Assert.IsFalse(_catalog.TryParseExactMeasure(measure, out _, out string u));
+            Assert.IsNull(u);
+        }
+
+        [TestCase(500f, "G", "KG", 0.5f)]
+        [TestCase(1.5f, "L", "ML", 1500f)]
+        [TestCase(3f, "PIECES", "PIECES", 3f)]
+        [TestCase(2f, null, "PIECES", 2f)]
+        public void UnitCodes_TryConvert_SameKind(float qty, string from, string to, float expected)
+        {
+            Assert.IsTrue(UnitCodes.TryConvert(qty, from, to, out float result));
+            Assert.AreEqual(expected, result, 0.0001f);
+        }
+
+        [TestCase("G", "ML")]
+        [TestCase("PIECES", "G")]
+        [TestCase("CUPS", "ML")]
+        public void UnitCodes_TryConvert_DifferentKind_ReturnsFalse(string from, string to)
+        {
+            Assert.IsFalse(UnitCodes.TryConvert(1f, from, to, out _));
+        }
+
+        [TestCase(1.5f, "KG", 1500, "G")]
+        [TestCase(0.25f, "L", 250, "ML")]
+        [TestCase(2f, "KG", 2, "KG")]
+        [TestCase(0.5f, "CUPS", 1, "CUPS")]
+        [TestCase(2.3f, "PIECES", 3, "PIECES")]
+        [TestCase(250.00002f, "G", 250, "G")]
+        [TestCase(0f, null, 1, "PIECES")]
+        public void UnitCodes_ToWholeQuantity(float qty, string unit, int expected, string expectedUnit)
+        {
+            Assert.AreEqual(expected, UnitCodes.ToWholeQuantity(qty, unit, out string u));
+            Assert.AreEqual(expectedUnit, u);
+        }
+
         [Test]
         public void TryParseMeasure_ZeroDenominator_ReturnsFalse()
         {

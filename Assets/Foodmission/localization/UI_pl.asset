@@ -5028,6 +5028,15 @@ MonoBehaviour:
       na g\xF3rze."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: "Niekt\xF3re sk\u0142adniki masz ju\u017C w spi\u017Carni. Zaznacz
+      te, kt\xF3re chcesz doda\u0107 do listy zakup\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: "W twojej spi\u017Carni: {0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

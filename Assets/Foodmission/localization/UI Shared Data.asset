@@ -4635,6 +4635,14 @@ MonoBehaviour:
     m_Key: TUTORIAL_QUICK_MEAL_LOG
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Key: RECIPE_SHOPPING_PANTRY_INTRO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Key: RECIPE_SHOPPING_IN_PANTRY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

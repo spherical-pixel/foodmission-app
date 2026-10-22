@@ -4983,6 +4983,15 @@ MonoBehaviour:
       das vollst\xE4ndige Protokoll."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: "Einige Zutaten hast du schon in deiner Vorratskammer. Hake an,
+      was du zur Einkaufsliste hinzuf\xFCgen m\xF6chtest."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: 'In deiner Vorratskammer: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

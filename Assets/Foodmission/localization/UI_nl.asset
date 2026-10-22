@@ -4959,6 +4959,15 @@ MonoBehaviour:
       voedingsmiddel apart bij? Open dan het volledige logboek met de knop bovenaan.'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: "Sommige ingredi\xEBnten heb je al in je voorraadkast. Vink aan
+      wat je aan je boodschappenlijstje wilt toevoegen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: 'In je voorraadkast: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4951,6 +4951,15 @@ MonoBehaviour:
       abre el registro completo con el bot\xF3n de arriba."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203748
+    m_Localized: "Algunos ingredientes ya est\xE1n en tu despensa. Marca los que
+      quieras a\xF1adir a la lista de la compra."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203749
+    m_Localized: 'En tu despensa: {0}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
