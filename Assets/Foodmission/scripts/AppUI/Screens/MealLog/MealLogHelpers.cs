@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+
+using Unity.AppUI.Navigation;
+
 using UnityEngine.Localization.Settings;
 
 namespace eu.foodmission.platform
@@ -15,6 +18,19 @@ namespace eu.foodmission.platform
             { "DRINKS", "🥤" },
             { "OTHER", "🍽️" },
         };
+
+        /// <summary>
+        /// Switches between the full and the simplified log: goes back when the other one is the previous screen,
+        /// so alternating does not stack them; otherwise runs <paramref name="navigate"/>.
+        /// </summary>
+        public static void SwitchLogMode(NavController navController, string otherDestination, Action navigate)
+        {
+            if (navController?.currentBackStackEntry?.destination?.name == otherDestination && navController.PopBackStack())
+            {
+                return;
+            }
+            navigate?.Invoke();
+        }
 
         public static string GetEmojiForTypeOfMeal(string type)
         {

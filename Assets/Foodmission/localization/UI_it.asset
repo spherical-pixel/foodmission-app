@@ -4926,6 +4926,27 @@ MonoBehaviour:
     m_Localized: Esplora le ricette
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203744
+    m_Localized: "\U0001F4DD Apri il registro dei pasti completo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203745
+    m_Localized: Qui aggiungi uno alla volta gli alimenti che hai mangiato. Hai fretta?
+      Il registro semplificato richiede solo pochi tocchi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203746
+    m_Localized: "Scegli il tipo di pasto e segna cosa c'era nel tuo piatto, senza
+      aggiungere ogni alimento. Vuoi pi\xF9 dettagli? Usa il registro completo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203747
+    m_Localized: "Questo \xE8 il registro semplificato: scegli il tipo di pasto e
+      segna le caratteristiche principali del tuo piatto, senza aggiungere ogni alimento.
+      Le tue missioni avanzano con queste risposte. Se preferisci registrare un alimento
+      alla volta, apri il registro completo con il pulsante in alto."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

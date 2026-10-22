@@ -39,6 +39,87 @@ namespace eu.foodmission.platform
 
         private bool _challengeSessionSubscribed;
 
+        /// <summary>
+        /// App UI lays the compact title absolutely over the whole bar, so a long title runs under the side buttons
+        /// (? + ☰ on the right). Keep it between them (<see cref="AppBarTitleLayout"/>) and ellipsize the rest.
+        /// </summary>
+        private void FitAppBarTitle(AppBar appBar)
+        {
+            // The safe-area filler also has the bar class: take the title's parent
+            var title = appBar.Q(className: AppBar.compactTitleUssClassName);
+            var bar = title?.parent;
+            if (bar == null)
+            {
+                return;
+            }
+
+            title.style.overflow = Overflow.Hidden;
+            title.style.whiteSpace = WhiteSpace.NoWrap;
+            title.style.textOverflow = UnityEngine.UIElements.TextOverflow.Ellipsis;
+
+            // GeometryChangedEvent does not bubble: watch the bar and each side element (buttons show/hide per destination)
+            foreach (var element in bar.Children())
+            {
+                if (element != title && !(element is Spacer))
+                {
+                    element.RegisterCallback<GeometryChangedEvent>(OnAppBarSideGeometryChanged);
+                }
+            }
+            bar.RegisterCallback<GeometryChangedEvent>(OnAppBarSideGeometryChanged);
+            UpdateAppBarTitleInset(bar, title);
+            // The title text changes per destination without any geometry change: measure it again next frame
+            title.schedule.Execute(() => UpdateAppBarTitleInset(bar, title));
+        }
+
+        private void OnAppBarSideGeometryChanged(GeometryChangedEvent evt)
+        {
+            var element = evt.target as VisualElement;
+            var title = element?.Q(className: AppBar.compactTitleUssClassName) ?? element?.parent?.Q(className: AppBar.compactTitleUssClassName);
+            var bar = title?.parent;
+            if (bar != null)
+            {
+                UpdateAppBarTitleInset(bar, title);
+            }
+        }
+
+        private static void UpdateAppBarTitleInset(VisualElement bar, VisualElement title)
+        {
+            float width = bar.layout.width;
+            if (float.IsNaN(width) || width <= 0)
+            {
+                return;
+            }
+
+            float leading = 0f;
+            float trailing = 0f;
+            foreach (var element in bar.Children())
+            {
+                // The expanding spacer fills the middle: only buttons count
+                if (element == title || element is Spacer || element.resolvedStyle.display == DisplayStyle.None || element.layout.width <= 0)
+                {
+                    continue;
+                }
+                if (element.layout.center.x < width / 2f)
+                {
+                    leading = Mathf.Max(leading, element.layout.xMax);
+                }
+                else
+                {
+                    trailing = Mathf.Max(trailing, width - element.layout.xMin);
+                }
+            }
+
+            float textWidth = title is TextElement text
+                ? text.MeasureTextSize(text.text, 0, VisualElement.MeasureMode.Undefined, 0, VisualElement.MeasureMode.Undefined).x
+                : 0f;
+            (float left, float right) = AppBarTitleLayout.Insets(width, leading, trailing, textWidth);
+            if (!Mathf.Approximately(title.resolvedStyle.left, left) || !Mathf.Approximately(title.resolvedStyle.right, right))
+            {
+                title.style.left = left;
+                title.style.right = right;
+            }
+        }
+
         private void SubscribeChallengeSessionEvents()
         {
             if (_challengeSessionSubscribed)
@@ -1012,6 +1093,8 @@ namespace eu.foodmission.platform
                     }
                 }
             }
+
+            FitAppBarTitle(appBar);
 
             var screen = appBar.parent;
             if (screen != null)

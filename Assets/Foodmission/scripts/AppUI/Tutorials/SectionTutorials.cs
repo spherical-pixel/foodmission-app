@@ -12,6 +12,7 @@ namespace eu.foodmission.platform
     {
         public const string Home = "home";
         public const string MealLog = "meal_log";
+        public const string QuickMealLog = "quick_meal_log";
         public const string QuickSearch = "quick_search";
         public const string ShoppingList = "shopping_list";
         public const string Pantry = "pantry";
@@ -32,6 +33,7 @@ namespace eu.foodmission.platform
         {
             { Destinations.home, Home },
             { Destinations.meallog, MealLog },
+            { Destinations.quick_meallog, QuickMealLog },
             { Destinations.quick_search, QuickSearch },
             { Destinations.shoppinglist, ShoppingList },
             // The lists screen opens the last list at once, so users land on the detail: both share the tutorial
@@ -49,6 +51,7 @@ namespace eu.foodmission.platform
         {
             { Home, new[] { "TUTORIAL_HOME_1", "TUTORIAL_HOME_2", "TUTORIAL_HOME_3", "TUTORIAL_HOME_4", "TUTORIAL_HOME_5" } },
             { MealLog, new[] { "TUTORIAL_MEAL_LOG" } },
+            { QuickMealLog, new[] { "TUTORIAL_QUICK_MEAL_LOG" } },
             { QuickSearch, new[] { "TUTORIAL_QUICK_SEARCH" } },
             { ShoppingList, new[] { "TUTORIAL_SHOPPING_LIST" } },
             { Pantry, new[] { "TUTORIAL_PANTRY" } },

@@ -34,6 +34,8 @@ namespace eu.foodmission.platform
         private VisualElement _editModeBanner;
         private Unity.AppUI.UI.Text _feedbackLabel;
         private FMButton _btnSubmitQuickMeal;
+        private VisualElement _fullMealBanner;
+        private FMButton _btnGoFullMeal;
 
         private IAudioService _audioService;
         private IVisualElementScheduledItem _navigationScheduleItem;
@@ -90,6 +92,16 @@ namespace eu.foodmission.platform
             _editModeBanner = contentContainer.Q<VisualElement>("edit-mode-banner");
             _feedbackLabel = contentContainer.Q<Unity.AppUI.UI.Text>("feedback-label");
             _btnSubmitQuickMeal = contentContainer.Q<FMButton>("btn-submit-quick-meal");
+            _fullMealBanner = contentContainer.Q<VisualElement>("full-meal-banner");
+            _btnGoFullMeal = contentContainer.Q<FMButton>("btn-go-full-meal");
+
+            if (_btnGoFullMeal != null)
+            {
+                _btnGoFullMeal.clicked += () =>
+                {
+                    MealLogHelpers.SwitchLogMode(_navController, Destinations.meallog, () => _viewModel?.NavigateToFullMealLog());
+                };
+            }
 
             if (_inputMealName != null)
             {
@@ -334,6 +346,8 @@ namespace eu.foodmission.platform
             {
                 _editModeBanner.style.display = isEditing ? DisplayStyle.Flex : DisplayStyle.None;
             }
+            // A meal is edited in the log it was made with: no switching while editing
+            _fullMealBanner?.EnableInClassList("fm-meal-log-switch--hidden", isEditing);
             if (_btnSubmitQuickMeal != null)
             {
                 _btnSubmitQuickMeal.title = isEditing

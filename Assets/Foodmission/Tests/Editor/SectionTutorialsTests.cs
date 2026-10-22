@@ -13,11 +13,11 @@ namespace eu.foodmission.platform.Tests
     public class SectionTutorialsTests
     {
         [Test]
-        public void All_HasTheElevenIds()
+        public void All_HasTheTwelveIds()
         {
             CollectionAssert.AreEquivalent(new[]
             {
-                "home", "meal_log", "quick_search", "shopping_list", "pantry",
+                "home", "meal_log", "quick_meal_log", "quick_search", "shopping_list", "pantry",
                 "quests", "missions", "challenges", "knowledge", "recipes", "food_waste"
             }, SectionTutorials.All);
         }
@@ -27,6 +27,7 @@ namespace eu.foodmission.platform.Tests
         {
             Assert.AreEqual("home", SectionTutorials.IdForDestination(Destinations.home));
             Assert.AreEqual("meal_log", SectionTutorials.IdForDestination(Destinations.meallog));
+            Assert.AreEqual("quick_meal_log", SectionTutorials.IdForDestination(Destinations.quick_meallog));
             Assert.AreEqual("quick_search", SectionTutorials.IdForDestination("QUICK_SEARCH"));
             Assert.AreEqual("shopping_list", SectionTutorials.IdForDestination(Destinations.shoppinglist));
             // The lists screen opens the last list at once: users land on the detail, so both share the tutorial
@@ -44,7 +45,6 @@ namespace eu.foodmission.platform.Tests
         public void IdForDestination_Uncovered_ReturnsNull()
         {
             Assert.IsNull(SectionTutorials.IdForDestination(Destinations.badges));
-            Assert.IsNull(SectionTutorials.IdForDestination(Destinations.quick_meallog));
             Assert.IsNull(SectionTutorials.IdForDestination(null));
         }
 
@@ -63,6 +63,7 @@ namespace eu.foodmission.platform.Tests
                 CollectionAssert.IsNotEmpty(SectionTutorials.MessageKeys(id), id);
             }
             CollectionAssert.AreEqual(new[] { "TUTORIAL_MEAL_LOG" }, SectionTutorials.MessageKeys(SectionTutorials.MealLog));
+            CollectionAssert.AreEqual(new[] { "TUTORIAL_QUICK_MEAL_LOG" }, SectionTutorials.MessageKeys(SectionTutorials.QuickMealLog));
             CollectionAssert.IsEmpty(SectionTutorials.MessageKeys("unknown"));
         }
 

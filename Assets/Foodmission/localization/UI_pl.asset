@@ -5005,6 +5005,29 @@ MonoBehaviour:
     m_Localized: "Przegl\u0105daj przepisy"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203744
+    m_Localized: "\U0001F4DD Otw\xF3rz pe\u0142ny dziennik posi\u0142k\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203745
+    m_Localized: "Tutaj dodajesz po kolei ka\u017Cdy zjedzony produkt. Spieszysz
+      si\u0119? Uproszczony dziennik zajmie tylko kilka dotkni\u0119\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203746
+    m_Localized: "Wybierz rodzaj posi\u0142ku i zaznacz, co by\u0142o w Twoim daniu,
+      bez dodawania ka\u017Cdego produktu. Chcesz wi\u0119cej szczeg\xF3\u0142\xF3w?
+      U\u017Cyj pe\u0142nego dziennika."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203747
+    m_Localized: "To jest uproszczony dziennik: wybierz rodzaj posi\u0142ku i zaznacz
+      najwa\u017Cniejsze cechy swojego dania, bez dodawania ka\u017Cdego produktu.
+      Twoje misje post\u0119puj\u0105 na podstawie tych odpowiedzi. Je\u015Bli wolisz
+      zapisywa\u0107 produkt po produkcie, otw\xF3rz pe\u0142ny dziennik przyciskiem
+      na g\xF3rze."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

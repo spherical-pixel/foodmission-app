@@ -4924,6 +4924,28 @@ MonoBehaviour:
     m_Localized: Utforsk oppskrifter
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203744
+    m_Localized: "\U0001F4DD \xC5pne fullstendig m\xE5ltidslogg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203745
+    m_Localized: "Her legger du til hver matvare du har spist, \xE9n etter \xE9n.
+      Har du d\xE5rlig tid? Den forenklede loggen tar bare noen f\xE5 trykk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203746
+    m_Localized: "Velg m\xE5ltidstype og kryss av for hva retten din hadde, uten
+      \xE5 legge til hver matvare. Vil du ha flere detaljer? Bruk den fullstendige
+      loggen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203747
+    m_Localized: "Dette er den forenklede loggen: velg m\xE5ltidstype og kryss av
+      for de viktigste kjennetegnene ved retten din, uten \xE5 legge til hver matvare.
+      Oppdragene dine g\xE5r framover med disse svarene. Vil du heller logge matvare
+      for matvare, \xE5pner du den fullstendige loggen med knappen \xF8verst."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

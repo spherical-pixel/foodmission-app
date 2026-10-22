@@ -3129,3 +3129,28 @@
 .fm-quick-meal-only-missions--hidden {
     display: none;
 }
+
+/* Full / simplified meal log switch: help line + button at the top of both screens */
+.fm-meal-log-switch {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.fm-meal-log-switch--hidden {
+    display: none;
+}
+
+.fm-meal-log-switch-help {
+    color: var(--appui-foregrounds-100);
+    white-space: normal;
+    margin-bottom: 30px;
+}
+
+.fm-meal-log-switch-btn {
+    flex-shrink: 0;
+    width: 100%;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
