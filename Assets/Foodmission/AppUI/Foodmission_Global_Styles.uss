@@ -311,7 +311,7 @@
 .appui-bottom-navbar-item .appui-localized-text {
     -unity-text-align: upper-center;
     /* Same fixed size on every item (no autosize); long labels wrap to a second line, clipped by the item */
-    font-size: var(--appui-font-sizes-body-xs);
+    font-size: var(--appui-font-sizes-body-sm);
     text-overflow: ellipsis;
     width: 100%;
     max-width: 100%;
