@@ -180,5 +180,23 @@ namespace eu.foodmission.platform.Tests
 
             _mockFoodService.Verify(f => f.ImportFromBarcodeAsync("12345"), Times.Once);
         }
+
+        [Test]
+        public async Task ImportByBarcode_WithTwelveDigitUpcA_LooksUpThirteenDigitCode()
+        {
+            FoodProductFlow.UseDirectClientOverride = () => false;
+
+            var existingProduct = new FoodProduct { id = "550e8400-e29b-41d4-a716-446655440000", name = "Coca cola", barcode = "0049000006346" };
+
+            _mockFoodService
+                .Setup(f => f.SearchFoodsByBarcodeAsync("0049000006346"))
+                .ReturnsAsync((new PaginatedFoodProductResponse { data = new[] { existingProduct } }, null));
+
+            var (result, error) = await FoodProductFlow.ImportByBarcodeAsync(_mockFoodService.Object, _mockOffService.Object, "049000006346");
+
+            Assert.IsNull(error);
+            Assert.AreEqual(existingProduct, result);
+            _mockFoodService.Verify(f => f.SearchFoodsByBarcodeAsync("049000006346"), Times.Never);
+        }
     }
 }

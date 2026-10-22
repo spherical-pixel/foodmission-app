@@ -1051,47 +1051,75 @@ namespace eu.foodmission.platform.Components
             }
         }
 
-        private async void OnScanClicked()
+        private void OnScanClicked()
         {
             if (ImportFromBarcodeAsync != null)
             {
-                BarcodeScanOverlay.Show(this, async barcode =>
-                {
-                    try
-                    {
-                        var (foodItem, error) = await ImportFromBarcodeAsync(barcode);
-                        if (error != null)
-                        {
-                            FMDialog.ShowApiError(this,
-                                LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ALERT_ERROR_TITLE"),
-                                error);
-                            return;
-                        }
-                        if (foodItem != null)
-                        {
-                            OnResultClicked(new OpenFoodFactsProduct
-                            {
-                                id = foodItem.id,
-                                name = foodItem.name,
-                                barcode = foodItem.barcode,
-                                imageFrontUrl = foodItem.imageFrontUrl ?? foodItem.imageUrl,
-                                nutritionGrade = foodItem.nutriscoreGrade,
-                                ecoscoreGrade = foodItem.ecoscoreGrade,
-                                novaGroup = foodItem.novaGroup,
-                                brands = Array.Empty<string>(),
-                            });
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.LogError($"[FMSearchOrCategoryField] Barcode scan error: {ex.Message}");
-                        FMDialog.ShowAlert(this,
-                            LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ALERT_ERROR_TITLE"),
-                            ex.Message,
-                            AlertSemantic.Error);
-                    }
-                });
+                BarcodeScanOverlay.Show(this, ImportScannedBarcodeAsync);
             }
+        }
+
+        private async void ImportScannedBarcodeAsync(string barcode)
+        {
+            try
+            {
+                var (foodItem, error) = await ImportFromBarcodeAsync(barcode);
+                string shownBarcode = BarcodeScan.Normalize(barcode);
+                switch (BarcodeScan.Classify(foodItem, error))
+                {
+                    case BarcodeScanOutcome.Found:
+                        OnResultClicked(new OpenFoodFactsProduct
+                        {
+                            id = foodItem.id,
+                            name = foodItem.name,
+                            barcode = foodItem.barcode,
+                            imageFrontUrl = foodItem.imageFrontUrl ?? foodItem.imageUrl,
+                            nutritionGrade = foodItem.nutriscoreGrade,
+                            ecoscoreGrade = foodItem.ecoscoreGrade,
+                            novaGroup = foodItem.novaGroup,
+                            brands = Array.Empty<string>(),
+                        });
+                        break;
+                    case BarcodeScanOutcome.NotFound:
+                        ShowBarcodeAlert("BARCODE_SCAN_NOT_FOUND_TITLE", "BARCODE_SCAN_NOT_FOUND", shownBarcode);
+                        break;
+                    case BarcodeScanOutcome.NoProductInfo:
+                        // The backend keeps OFF entries without a name as "Unknown Product": don't offer them
+                        ShowBarcodeAlert("BARCODE_SCAN_NOT_FOUND_TITLE", "BARCODE_SCAN_NO_INFO", shownBarcode);
+                        break;
+                    case BarcodeScanOutcome.Busy:
+                        FMDialog.ShowAlert(this,
+                            LocalizationSettings.StringDatabase.GetLocalizedString("UI", "BARCODE_SCAN_BUSY_TITLE"),
+                            LocalizationSettings.StringDatabase.GetLocalizedString("UI", "BARCODE_SCAN_BUSY", new object[] { shownBarcode }),
+                            AlertSemantic.Warning,
+                            "@UI:TXT_RETRY",
+                            () => ImportScannedBarcodeAsync(barcode),
+                            "@UI:TXT_CANCEL",
+                            () => { });
+                        break;
+                    default:
+                        FMDialog.ShowApiError(this,
+                            LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ALERT_ERROR_TITLE"),
+                            error);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FMSearchOrCategoryField] Barcode scan error: {ex.Message}");
+                FMDialog.ShowAlert(this,
+                    LocalizationSettings.StringDatabase.GetLocalizedString("UI", "ALERT_ERROR_TITLE"),
+                    ex.Message,
+                    AlertSemantic.Error);
+            }
+        }
+
+        private void ShowBarcodeAlert(string titleKey, string messageKey, string barcode)
+        {
+            FMDialog.ShowAlert(this,
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", titleKey),
+                LocalizationSettings.StringDatabase.GetLocalizedString("UI", messageKey, new object[] { barcode }),
+                AlertSemantic.Warning);
         }
 
         private void SetMode(Mode mode)

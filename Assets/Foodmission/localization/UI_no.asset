@@ -4955,6 +4955,30 @@ MonoBehaviour:
     m_Localized: 'I spiskammeret ditt: {0}'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203750
+    m_Localized: Fant ikke produktet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203751
+    m_Localized: "Vi fant ikke noe produkt med strekkoden {0}. Pr\xF8v \xE5 s\xF8ke
+      etter det med navn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203752
+    m_Localized: "Produktet med strekkoden {0} har ingen opplysninger i Open Food
+      Facts enn\xE5, s\xE5 det kan ikke legges til. Pr\xF8v \xE5 s\xF8ke etter det
+      med navn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203753
+    m_Localized: Tjenesten er ikke tilgjengelig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203754
+    m_Localized: "Vi kunne ikke sl\xE5 opp strekkoden {0} akkurat n\xE5. Pr\xF8v
+      igjen om litt."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
