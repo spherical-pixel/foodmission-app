@@ -19,7 +19,7 @@ namespace eu.foodmission.platform
         private readonly ICatalogService _catalogService;
         private readonly ILegalService _legalService;
 
-        // Country/region data loaded from backend catalog (with JSON fallback)
+        // Country/region data loaded from backend catalog
         private List<CatalogItem> _countries = new();
         private List<CatalogItem> _regions = new();
 
@@ -208,7 +208,7 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
-        /// Loads country data from the backend catalog (with local JSON fallback).
+        /// Loads country data from the backend catalog.
         /// Call this from the Screen's OnEnter.
         /// </summary>
         public async Task LoadCountriesAsync()

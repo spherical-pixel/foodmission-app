@@ -293,10 +293,6 @@ namespace eu.foodmission.platform
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
-                    Debug.LogWarning($"[{GetType().Name}] GetCountriesAsync failed, falling back to local JSON: {request.error}");
-                    var fallback = LoadCountriesFromJson();
-                    if (fallback != null)
-                        return (fallback, null);
                     return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetCountries"));
                 }
 
@@ -305,10 +301,7 @@ namespace eu.foodmission.platform
 
                 if (response?.data == null || response.data.Length == 0)
                 {
-                    Debug.LogWarning($"[{GetType().Name}] GetCountriesAsync — empty response, falling back to local JSON");
-                    var fallback = LoadCountriesFromJson();
-                    if (fallback != null)
-                        return (fallback, null);
+                    Debug.LogError($"[{GetType().Name}] GetCountriesAsync — empty response");
                     return (null, null);
                 }
 
@@ -322,9 +315,6 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] GetCountriesAsync exception: {ex.Message}");
-                var fallback = LoadCountriesFromJson();
-                if (fallback != null)
-                    return (fallback, null);
                 return (null, null);
             }
         }
@@ -360,10 +350,6 @@ namespace eu.foodmission.platform
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
-                    Debug.LogWarning($"[{GetType().Name}] GetRegionsAsync({cc}) failed, falling back to local JSON: {request.error}");
-                    var fallback = LoadRegionsFromJson(cc);
-                    if (fallback != null)
-                        return (fallback, null);
                     return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetRegions({cc})"));
                 }
 
@@ -372,10 +358,7 @@ namespace eu.foodmission.platform
 
                 if (response?.data == null)
                 {
-                    Debug.LogWarning($"[{GetType().Name}] GetRegionsAsync({cc}) — null response, falling back to local JSON");
-                    var fallback = LoadRegionsFromJson(cc);
-                    if (fallback != null)
-                        return (fallback, null);
+                    Debug.LogError($"[{GetType().Name}] GetRegionsAsync({cc}) — null response");
                     return (new List<CatalogItem>(), null);
                 }
 
@@ -387,46 +370,8 @@ namespace eu.foodmission.platform
             catch (Exception ex)
             {
                 Debug.LogError($"[{GetType().Name}] GetRegionsAsync({cc}) exception: {ex.Message}");
-                var fallback = LoadRegionsFromJson(cc);
-                if (fallback != null)
-                    return (fallback, null);
                 return (null, null);
             }
-        }
-
-        // ── JSON fallback (offline resilience) ──────────────────────────────
-
-        private static List<CatalogItem> LoadCountriesFromJson()
-        {
-            var jsonAsset = Resources.Load<TextAsset>("ue_countries_regions");
-            if (jsonAsset == null)
-            {
-                Debug.LogError("[CatalogService] ue_countries_regions.json fallback could not be loaded");
-                return null;
-            }
-
-            var wrapper = JsonUtility.FromJson<CountriesList>("{\"countries\":" + jsonAsset.text + "}");
-            if (wrapper?.countries == null) return null;
-
-            return wrapper.countries
-                .Select(c => new CatalogItem { code = c.country_iso, label = c.country_name_local })
-                .ToList();
-        }
-
-        private static List<CatalogItem> LoadRegionsFromJson(string countryCode)
-        {
-            var jsonAsset = Resources.Load<TextAsset>("ue_countries_regions");
-            if (jsonAsset == null) return null;
-
-            var wrapper = JsonUtility.FromJson<CountriesList>("{\"countries\":" + jsonAsset.text + "}");
-            if (wrapper?.countries == null) return null;
-
-            var country = wrapper.countries.FirstOrDefault(c => c.country_iso == countryCode);
-            if (country?.regions == null) return new List<CatalogItem>();
-
-            return country.regions
-                .Select(r => new CatalogItem { code = r.region_iso, label = r.region_name_local })
-                .ToList();
         }
     }
 }
