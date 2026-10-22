@@ -87,6 +87,11 @@
     color: var(--appui-foregrounds-100);
 }
 
+/* Not-earned badges fade out so earned ones stand out (#38); text stays opaque for contrast. */
+.fm-badge-card--locked .fm-badge-card__image {
+    opacity: 0.5;
+}
+
 .hidden {
     display: none;
 }
