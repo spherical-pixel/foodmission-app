@@ -4913,21 +4913,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203741
-    m_Localized: "\U0001F4DD Odpri poln dnevnik obrokov"
+    m_Localized: "Zate \u0161e ni receptov"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203742
+    m_Localized: "Nismo na\u0161li receptov z \u017Eivili iz tvoje shrambe. Dodaj
+      ve\u010D \u017Eivil ali razi\u0161\u010Di knjigo receptov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: "Razi\u0161\u010Di recepte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203744
+    m_Localized: "\U0001F4DD Odpri poln dnevnik obrokov"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203745
     m_Localized: "Tukaj eno za drugim doda\u0161 vsako zau\u017Eito \u017Eivilo.
       Se ti mudi? Poenostavljen dnevnik vzame le nekaj dotikov."
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203743
+  - m_Id: 56190243387203746
     m_Localized: "Izberi vrsto obroka in ozna\u010Di, kaj je vsebovala tvoja jed,
       brez dodajanja vsakega \u017Eivila. \u017Deli\u0161 ve\u010D podrobnosti? Uporabi
       poln dnevnik."
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203744
+  - m_Id: 56190243387203747
     m_Localized: "To je poenostavljen dnevnik: izberi vrsto obroka in ozna\u010Di
       glavne zna\u010Dilnosti svoje jedi, brez dodajanja vsakega \u017Eivila. Tvoje
       misije napredujejo s temi odgovori. \u010Ce raje bele\u017Ei\u0161 \u017Eivilo

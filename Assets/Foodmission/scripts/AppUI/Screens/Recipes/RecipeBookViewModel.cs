@@ -181,12 +181,14 @@ namespace eu.foodmission.platform
                 ErrorDetail = err;
                 var cached = _localStorage.GetValue<List<RecipeView>>(CurrentCacheKey + "_rec");
                 Recommendations = cached ?? new();
-                IsPantryEmpty = Recommendations.Count == 0;
+                // Without a response we don't know the pantry is empty; the error dialog explains the failure
+                IsPantryEmpty = false;
                 return;
             }
 
             ExpiringItemsCount = recs?.expiringItemsCount ?? 0;
             TotalPantryItems = recs?.totalPantryItems ?? 0;
+            // An empty list with pantry items means no recipe matched them, not an empty pantry
             IsPantryEmpty = TotalPantryItems == 0 && (recs?.data == null || recs.data.Length == 0);
 
             var list = new List<RecipeView>();

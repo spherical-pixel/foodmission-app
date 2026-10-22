@@ -4926,20 +4926,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203741
-    m_Localized: "\U0001F4DD Open het volledige maaltijdlogboek"
+    m_Localized: Nog geen recepten voor jou
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203742
+    m_Localized: We hebben geen recepten gevonden met de producten in je voorraadkast.
+      Voeg meer producten toe of ontdek het receptenboek.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: Recepten ontdekken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203744
+    m_Localized: "\U0001F4DD Open het volledige maaltijdlogboek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203745
     m_Localized: "Hier voeg je elk voedingsmiddel dat je hebt gegeten \xE9\xE9n voor
       \xE9\xE9n toe. Weinig tijd? Het vereenvoudigde logboek kost maar een paar tikken."
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203743
+  - m_Id: 56190243387203746
     m_Localized: Kies het type maaltijd en vink aan wat er in je gerecht zat, zonder
       elk voedingsmiddel toe te voegen. Meer details? Gebruik het volledige logboek.
     m_Metadata:
       m_Items: []
-  - m_Id: 56190243387203744
+  - m_Id: 56190243387203747
     m_Localized: 'Dit is het vereenvoudigde logboek: kies het type maaltijd en vink
       de belangrijkste kenmerken van je gerecht aan, zonder elk voedingsmiddel toe
       te voegen. Je missies gaan vooruit met deze antwoorden. Houd je liever elk

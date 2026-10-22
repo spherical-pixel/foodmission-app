@@ -52,6 +52,8 @@ namespace eu.foodmission.platform
         private VisualElement _viewForYou;
         private VisualElement _foryouEmptyPantry;
         private FMButton _btnGoToPantry;
+        private VisualElement _foryouNoMatches;
+        private FMButton _btnExploreRecipes;
         private VisualElement _foryouContent;
         private VisualElement _recommendationsContainer;
 
@@ -111,6 +113,8 @@ namespace eu.foodmission.platform
             _viewForYou = contentContainer.Q<VisualElement>("view-for-you");
             _foryouEmptyPantry = contentContainer.Q<VisualElement>("foryou-empty-pantry");
             _btnGoToPantry = contentContainer.Q<FMButton>("btn-go-to-pantry");
+            _foryouNoMatches = contentContainer.Q<VisualElement>("foryou-no-matches");
+            _btnExploreRecipes = contentContainer.Q<FMButton>("btn-explore-recipes");
             _foryouContent = contentContainer.Q<VisualElement>("foryou-content");
             _recommendationsContainer = contentContainer.Q<VisualElement>("recommendations-container");
 
@@ -284,6 +288,8 @@ namespace eu.foodmission.platform
 
             if (_btnGoToPantry != null)
                 _btnGoToPantry.clicked += () => _viewModel?.GoToPantry();
+            if (_btnExploreRecipes != null)
+                _btnExploreRecipes.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.Explore);
 
             if (_btnTabForYou != null) _btnTabForYou.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.ForYou);
             if (_btnTabExplore != null) _btnTabExplore.clicked += () => _ = _viewModel?.SetTabAsync(RecipeBookTab.Explore);
@@ -434,13 +440,20 @@ namespace eu.foodmission.platform
         private void UpdatePantryEmptyState()
         {
             bool empty = _viewModel.IsPantryEmpty || (_viewModel.Recommendations == null || _viewModel.Recommendations.Count == 0);
+            // Pantry empty: ask to add foods. Pantry with foods but no recipe matched them: point to Explore
+            bool pantryEmpty = empty && _viewModel.IsPantryEmpty;
+            bool noMatches = empty && !_viewModel.IsPantryEmpty;
             if (_foryouEmptyPantry != null)
             {
-                _foryouEmptyPantry.style.display = empty ? DisplayStyle.Flex : DisplayStyle.None;
-                if (empty)
-                {
-                    App.current?.services?.GetService<INutriService>()?.SetAction(NutriAction.Talking);
-                }
+                _foryouEmptyPantry.style.display = pantryEmpty ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+            if (_foryouNoMatches != null)
+            {
+                _foryouNoMatches.style.display = noMatches ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+            if (empty)
+            {
+                App.current?.services?.GetService<INutriService>()?.SetAction(NutriAction.Talking);
             }
             if (_foryouContent != null)
             {
