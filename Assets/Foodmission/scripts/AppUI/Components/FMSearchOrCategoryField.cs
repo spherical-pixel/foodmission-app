@@ -51,7 +51,7 @@ namespace eu.foodmission.platform.Components
         // ========= CALLBACKS (set by consuming screen) =========
         // (query, page, includeGeneric, includeProducts) -> one page of results, see FoodSearchFlow
         public Func<string, int, bool, bool, Task<FoodSearchPage>> SearchFoodsAsync { get; set; }
-        public Func<Task<List<GenericFood>>> GetGenericFoodsAsync { get; set; }
+        public Func<Task<List<FoodGroupItem>>> GetFoodGroupsAsync { get; set; }
         public Func<OpenFoodFactsProduct, float?, string, Task> OnProductConfirmed { get; set; }
         public Func<GenericFood, float?, string, Task> OnGenericFoodConfirmed { get; set; }
 
@@ -165,6 +165,38 @@ namespace eu.foodmission.platform.Components
             new FoodGroupItem { slug = "vegetables", name = "Vegetables" },
         };
 
+        private const string AlcoholicBeveragesSlug = "alcoholic-beverages";
+
+        // Keeps the backend order and moves alcoholic beverages to the end of the list
+        public static List<FoodGroupItem> OrderForDisplay(IEnumerable<FoodGroupItem> groups)
+        {
+            var ordered = new List<FoodGroupItem>();
+            var alcoholic = new List<FoodGroupItem>();
+            if (groups == null)
+            {
+                return ordered;
+            }
+
+            foreach (FoodGroupItem group in groups)
+            {
+                if (group == null)
+                {
+                    continue;
+                }
+
+                if (group.slug == AlcoholicBeveragesSlug)
+                {
+                    alcoholic.Add(group);
+                }
+                else
+                {
+                    ordered.Add(group);
+                }
+            }
+            ordered.AddRange(alcoholic);
+            return ordered;
+        }
+
         public static string ToSlug(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return string.Empty;
@@ -199,13 +231,12 @@ namespace eu.foodmission.platform.Components
         private Mode _currentMode = Mode.Idle;
         private CancellationTokenSource _debounceCts;
         private string _lastResultsQuery;
-        private static List<GenericFood> s_SessionGenericFoodsCache;
+        private static List<FoodGroupItem> s_SessionFoodGroupsCache;
 
         public static void ClearSessionCache()
         {
-            s_SessionGenericFoodsCache = null;
+            s_SessionFoodGroupsCache = null;
         }
-        private List<GenericFood> _genericFoods = new();
         private List<object> _recentProducts = new();
         private object _selectedItem;
         private bool _genericEnabled = true;
@@ -534,7 +565,7 @@ namespace eu.foodmission.platform.Components
 
         private async Task ShowGenericFoodsAsync()
         {
-            if (GetGenericFoodsAsync == null && CategoryEmojis.Count == 0) return;
+            if (GetFoodGroupsAsync == null && CategoryEmojis.Count == 0) return;
 
             _categoryLoadCts?.Cancel();
             _categoryLoadCts?.Dispose();
@@ -551,36 +582,27 @@ namespace eu.foodmission.platform.Components
             _spinner.style.display = DisplayStyle.None;
 
             // 1. If session cache exists, use it immediately
-            if (s_SessionGenericFoodsCache != null && s_SessionGenericFoodsCache.Count > 0)
+            if (s_SessionFoodGroupsCache != null && s_SessionFoodGroupsCache.Count > 0)
             {
-                _genericFoods = s_SessionGenericFoodsCache;
-                var cachedGroups = ExtractGroups(_genericFoods);
-                RenderCategoryList(cachedGroups.Count > 0 ? cachedGroups : DefaultFoodGroupItems);
+                RenderCategoryList(s_SessionFoodGroupsCache);
                 return;
             }
-
-            _genericFoods.Clear();
 
             // 2. Pre-render instantly using default items (0ms latency visual feedback)
             RenderCategoryList(DefaultFoodGroupItems);
 
             // 3. Perform background fetch if callback is supplied and not yet cached
-            if (GetGenericFoodsAsync != null)
+            if (GetFoodGroupsAsync != null)
             {
                 try
                 {
-                    List<GenericFood> genericFoods = await GetGenericFoodsAsync();
+                    List<FoodGroupItem> groups = await GetFoodGroupsAsync();
                     if (ct.IsCancellationRequested) return;
 
-                    if (genericFoods != null && genericFoods.Count > 0)
+                    if (groups != null && groups.Count > 0)
                     {
-                        _genericFoods = genericFoods;
-                        s_SessionGenericFoodsCache = genericFoods;
-                        var groups = ExtractGroups(_genericFoods);
-                        if (groups.Count > 0)
-                        {
-                            RenderCategoryList(groups);
-                        }
+                        s_SessionFoodGroupsCache = groups;
+                        RenderCategoryList(groups);
                     }
                 }
                 catch (Exception ex)
@@ -588,23 +610,6 @@ namespace eu.foodmission.platform.Components
                     Debug.LogError($"[{GetType().Name}] Background category load failed: {ex.Message}");
                 }
             }
-        }
-
-        private List<FoodGroupItem> ExtractGroups(List<GenericFood> foods)
-        {
-            var groups = new List<FoodGroupItem>();
-            var seen = new HashSet<string>();
-            foreach (var gf in foods)
-            {
-                string name = string.IsNullOrEmpty(gf.foodGroup) ? "Other" : gf.foodGroup;
-                string slug = string.IsNullOrEmpty(gf.foodGroupSlug) ? ToSlug(name) : gf.foodGroupSlug;
-                string key = !string.IsNullOrEmpty(slug) ? slug : name;
-                if (seen.Add(key))
-                {
-                    groups.Add(new FoodGroupItem { slug = slug, name = name });
-                }
-            }
-            return groups;
         }
 
         private void RenderCategoryList(IEnumerable<FoodGroupItem> groups)
@@ -632,7 +637,7 @@ namespace eu.foodmission.platform.Components
             groupHeading.AddToClassList("fm-scf-heading");
             _categoryContainer.Add(groupHeading);
 
-            foreach (var group in groups)
+            foreach (var group in OrderForDisplay(groups))
             {
                 string emoji = GetCategoryEmoji(group.slug);
                 string localized = group.name;

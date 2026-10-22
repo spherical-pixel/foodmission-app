@@ -11,6 +11,8 @@ namespace eu.foodmission.platform
     {
         private readonly IStoreService _storeService;
         private string _pantryId;
+        // User the cached pantry belongs to: another login must not reuse it (403 "user does not own this pantry")
+        private string _pantryOwnerId;
 
         public PantryService(IStoreService storeService)
         {
@@ -28,9 +30,10 @@ namespace eu.foodmission.platform
 
         private async Task<(string PantryId, ApiErrorResponse Error)> EnsurePantryIdAsync()
         {
-            if (!string.IsNullOrEmpty(_pantryId))
+            string cachedId = CachedPantryIdForCurrentUser();
+            if (!string.IsNullOrEmpty(cachedId))
             {
-                return (_pantryId, null);
+                return (cachedId, null);
             }
 
             var (pantry, error) = await GetPantryAsync();
@@ -38,11 +41,22 @@ namespace eu.foodmission.platform
             return (pantry?.id, null);
         }
 
+        private string CachedPantryIdForCurrentUser()
+        {
+            if (_pantryOwnerId != _storeService.GetAppState().userId)
+            {
+                _pantryId = null;
+                _pantryOwnerId = null;
+            }
+            return _pantryId;
+        }
+
         // ── Pantry ─────────────────────────────────────────────────────────
 
         public async Task<(Pantry Result, ApiErrorResponse Error)> GetPantryAsync()
         {
             string url = $"{ApiConfig.BaseUrl}/api/v1/pantry";
+            string ownerId = _storeService.GetAppState().userId;
 
             using UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("Authorization", AuthHeader);
@@ -60,6 +74,7 @@ namespace eu.foodmission.platform
             if (pantry?.id != null)
             {
                 _pantryId = pantry.id;
+                _pantryOwnerId = ownerId;
             }
 
             return (pantry, null);

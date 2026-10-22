@@ -188,7 +188,7 @@ namespace eu.foodmission.platform
             {
                 _searchIngredientsField.SearchFoodsAsync = (query, page, includeGeneric, includeProducts) =>
                     _viewModel.SearchFoodsPageAsync(query, page, includeGeneric, includeProducts);
-                _searchIngredientsField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
+                _searchIngredientsField.GetFoodGroupsAsync = () => _viewModel.GetFoodGroupsAsync();
                 _searchIngredientsField.SearchByFoodGroupAsync = (foodGroup, page, pageSize) => _viewModel.SearchByFoodGroupAsync(foodGroup, page, pageSize);
                 _searchIngredientsField.ImportFromBarcodeAsync = barcode => _viewModel.ImportByBarcodeAsync(barcode);
                 _searchIngredientsField.OnProductConfirmed = (product, qty, unit) =>

@@ -125,7 +125,7 @@ namespace eu.foodmission.platform
                 _searchCategoryField.OpenFoodInfoOnSelect = true;
                 _searchCategoryField.SearchFoodsAsync = (query, page, includeGeneric, includeProducts) =>
                     _viewModel.SearchFoodsPageAsync(query, page, includeGeneric, includeProducts);
-                _searchCategoryField.GetGenericFoodsAsync = () => _viewModel.GetGenericFoodsAsync();
+                _searchCategoryField.GetFoodGroupsAsync = () => _viewModel.GetFoodGroupsAsync();
                 _searchCategoryField.SearchByFoodGroupAsync = (foodGroup, page, pageSize) => _viewModel.SearchByFoodGroupAsync(foodGroup, page, pageSize);
                 _searchCategoryField.OnProductConfirmed = async (product, qty, unit) =>
                 {

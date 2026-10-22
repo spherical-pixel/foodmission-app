@@ -395,32 +395,31 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public async Task GetGenericFoodsAsync_OnSuccess_ReturnsItems()
+        public async Task GetFoodGroupsAsync_OnSuccess_KeepsBackendOrder()
         {
             _mockGenericFoodService
-                .Setup(x => x.SearchGenericFoodsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(Task.FromResult<(PaginatedGenericFoodResponse Result, ApiErrorResponse Error)>((new PaginatedGenericFoodResponse
+                .Setup(x => x.GetFoodGroupsAsync())
+                .Returns(Task.FromResult<(FoodGroupItem[] Result, ApiErrorResponse Error)>((new FoodGroupItem[]
                 {
-                    items = new GenericFood[]
-                    {
-                        new GenericFood { id = "g1", foodName = "Rice", foodGroup = "Grains" }
-                    }
+                    new FoodGroupItem { slug = "vegetables", name = "Vegetables" },
+                    new FoodGroupItem { slug = "bread", name = "Bread" }
                 }, null)));
 
-            List<GenericFood> result = await _vm.GetGenericFoodsAsync();
+            List<FoodGroupItem> result = await _vm.GetFoodGroupsAsync();
 
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("Rice", result[0].foodName);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("vegetables", result[0].slug);
+            Assert.AreEqual("bread", result[1].slug);
         }
 
         [Test]
-        public async Task GetGenericFoodsAsync_WithApiError_ReturnsEmpty()
+        public async Task GetFoodGroupsAsync_WithApiError_ReturnsEmpty()
         {
             _mockGenericFoodService
-                .Setup(x => x.SearchGenericFoodsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(Task.FromResult<(PaginatedGenericFoodResponse Result, ApiErrorResponse Error)>(((PaginatedGenericFoodResponse)null, new ApiErrorResponse { statusCode = 500 })));
+                .Setup(x => x.GetFoodGroupsAsync())
+                .Returns(Task.FromResult<(FoodGroupItem[] Result, ApiErrorResponse Error)>(((FoodGroupItem[])null, new ApiErrorResponse { statusCode = 500 })));
 
-            List<GenericFood> result = await _vm.GetGenericFoodsAsync();
+            List<FoodGroupItem> result = await _vm.GetFoodGroupsAsync();
 
             Assert.AreEqual(0, result.Count);
             Assert.IsNotNull(_vm.ErrorDetail);
