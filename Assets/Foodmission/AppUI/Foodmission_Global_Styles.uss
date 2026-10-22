@@ -268,10 +268,14 @@
 
 .appui-bottom-navbar-item {
     align-items: center;
-    justify-content: center;
+    /* Icons stay aligned whether the label takes one line or two */
+    justify-content: flex-start;
     border-width: 0;
     width: var(--appui-sizing-850);
-    height: var(--appui-sizing-850);
+    /* Fits icon (86px) + two label lines at the large text scale (~76px) inside the 218px bar */
+    height: 196px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     flex-grow: 1;
     flex-shrink: 1;
     min-width: 0;
@@ -306,21 +310,18 @@
 .appui-bottom-navbar-item .appui-bottom-navbar-item__label.appui-localized-text,
 .appui-bottom-navbar-item .appui-localized-text {
     -unity-text-align: upper-center;
-    font-size: var(--appui-font-sizes-body-sm);
+    /* Same fixed size on every item (no autosize); long labels wrap to a second line, clipped by the item */
+    font-size: var(--appui-font-sizes-body-xs);
     text-overflow: ellipsis;
     width: 100%;
     max-width: 100%;
     min-width: 0;
     flex-shrink: 1;
     overflow: hidden;
-    -unity-text-auto-size: best-fit;
-    --unity-text-min-size: var(--appui-font-sizes-25);
-    --unity-text-max-size: var(--appui-font-sizes-body-sm);
     color: var(--fm-icon-tint);
     margin-top: 0;
     padding: 0;
-    flex-wrap: nowrap;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .appui-drawer__drawer-container {
