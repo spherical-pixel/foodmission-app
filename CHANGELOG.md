@@ -1,3 +1,25 @@
+v0.0.10 - Changelog
+✨ New Features & Modules
+- Section tutorials: Nutri explains each main section on the first visit (Home is a 5-step sequence ending on the profile drawer); a ? button in the AppBar replays it. Seen tutorials are synced in `settings.seenTutorials`. "Daily challenge" renamed to "Challenges".
+- Onboarding: progress screen between steps and a visible Skip; skipping defers the Home quest reminder for the session.
+- Quests: mission and challenge rows open their detail with a "Go to quest" link when outside the current quest; the quest detail redirects to Home when the active quest is completed on the server.
+- Profile: "None of the above" for dietary preferences (saves `[]`) and "Prefer not to say" for annual income (saves `null`), with clearer labels; long checkbox texts wrap.
+- Recipes: multiple tags per recipe in the editor; before adding ingredients to the shopping list the app checks the pantry (selection dialog with quantity difference); "For you" tells an empty pantry apart from no matching recipes.
+- Meal log: switch between full and simplified log, quick log tutorial, clearer Log/Continue buttons and wrapping item rows.
+
+🐛 Bug Fixes
+- Food search: shared paged search (`FoodSearchFlow`), API order kept, stale pagination hidden; typed text kept when tapping outside the field.
+- Barcode: clear scan errors, retry, and lookup of 12-digit codes.
+- iOS keyboard: ignore touches replayed on keyboard show/hide and keep focus when the replayed touch lands below the moved panel.
+- Rewards: the celebration shows the user's real XP and level.
+- Levels: explanation of the per-area level, suggestion only on changed rows, readable "show previous levels" row in light mode.
+- Badges: not-earned badges faded.
+- Food groups in backend order, alcoholic beverages last.
+- Pantry: cached pantry id dropped when the logged-in user changes.
+- Recipes: ingredient measures shown in full in the recipe detail.
+- Localization: distinct quest, mission and challenge terms in every language; On/Off in the notifications stepper; unused keys removed.
+- Auth: password eye icon visible in light mode.
+
 v0.0.9 - Changelog
 🐛 Bug Fixes
 - Light mode: readable text and icons on every screen. Boxes with a light background keep their own text colors (`--fm-box-text`), icon-only buttons over the green background use `fm-icon-button--on-main-bg`, and texts follow one rule (dark on white cards, white on the green background, mint on translucent boxes). Covers food info, food waste overlay, group detail, recipes, meal log swaps, notifications, mission check-in and food comparison.
