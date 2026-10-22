@@ -589,5 +589,10 @@ namespace eu.foodmission.platform
         {
             RaiseNavigationRequested(Actions.go_to_home);
         }
+
+        public void NavigateToFullMealLog()
+        {
+            RaiseNavigationRequested(Actions.go_to_meallog);
+        }
     }
 }

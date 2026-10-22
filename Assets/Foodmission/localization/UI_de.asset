@@ -4947,6 +4947,29 @@ MonoBehaviour:
     m_Localized: "Stichw\xF6rter hinzuf\xFCgen"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: "\U0001F4DD Vollst\xE4ndiges Ern\xE4hrungsprotokoll \xF6ffnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: "Hier f\xFCgst du jedes Lebensmittel, das du gegessen hast, einzeln
+      hinzu. Wenig Zeit? Das vereinfachte Protokoll braucht nur ein paar Tipps."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: "W\xE4hle die Art der Mahlzeit und hake an, was dein Gericht hatte,
+      ohne jedes Lebensmittel hinzuzuf\xFCgen. Mehr Details? Nutze das vollst\xE4ndige
+      Protokoll."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203744
+    m_Localized: "Das ist das vereinfachte Protokoll: W\xE4hle die Art der Mahlzeit
+      und hake die wichtigsten Merkmale deines Gerichts an, ohne jedes Lebensmittel
+      hinzuzuf\xFCgen. Mit diesen Antworten kommen deine Missionen voran. Wenn du
+      lieber jedes Lebensmittel einzeln eintr\xE4gst, \xF6ffne mit dem Button oben
+      das vollst\xE4ndige Protokoll."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

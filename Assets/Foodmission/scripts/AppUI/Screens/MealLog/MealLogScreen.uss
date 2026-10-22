@@ -161,23 +161,6 @@
     align-self: center;
 }
 
-.fm-quick-meal-banner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 16px;
-    padding: 16px;
-}
-
-.fm-quick-meal-banner-btn {
-    flex-shrink: 0;
-    width: 100%;
-    white-space: normal;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
 .fm-ml-review-hint {
     color: var(--appui-foregrounds-50);
     white-space: normal;

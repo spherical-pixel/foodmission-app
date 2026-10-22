@@ -685,6 +685,17 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void NavigateToFullMealLog_RaisesNavigationRequestedWithGoToMealLog()
+        {
+            string requestedAction = null;
+            _vm.NavigationRequested += (action, args) => requestedAction = action;
+
+            _vm.NavigateToFullMealLog();
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_meallog, requestedAction);
+        }
+
+        [Test]
         public async Task LoadForEditAsync_HydratesMealTypeFlagsAndSwaps()
         {
             var existingLog = new MealLog

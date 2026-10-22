@@ -19,6 +19,7 @@ using UnityEngine.UIElements;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using Unity.AppUI.Navigation;
+using Unity.AppUI.Navigation.Generated;
 
 namespace eu.foodmission.platform
 {
@@ -55,6 +56,7 @@ namespace eu.foodmission.platform
         private VisualElement _selectedChips;
         private FMButton _btnLogSelected;
         private FMButton _btnGoQuickMeal;
+        private VisualElement _quickMealBanner;
         private VisualElement _loggedMealsZone;
         private VisualElement _mealList;
         private FMArrowStepper _dayStepper;
@@ -103,6 +105,7 @@ namespace eu.foodmission.platform
             _selectedChips = contentContainer.Q<VisualElement>("selected-chips");
             _btnLogSelected = contentContainer.Q<FMButton>("btn-log-selected");
             _btnGoQuickMeal = contentContainer.Q<FMButton>("btn-go-quick-meal");
+            _quickMealBanner = contentContainer.Q<VisualElement>("quick-meal-banner");
             _loggedMealsZone = contentContainer.Q<VisualElement>("logged-meals-zone");
             _mealList = contentContainer.Q<VisualElement>("list-meals-today");
             _dayStepper = contentContainer.Q<FMArrowStepper>("day-stepper");
@@ -114,7 +117,7 @@ namespace eu.foodmission.platform
             {
                 _btnGoQuickMeal.clicked += () =>
                 {
-                    _viewModel?.NavigateToQuickMealLog();
+                    MealLogHelpers.SwitchLogMode(_navController, Destinations.quick_meallog, () => _viewModel?.NavigateToQuickMealLog());
                 };
             }
         }
@@ -362,6 +365,8 @@ namespace eu.foodmission.platform
             if (_viewModel == null) return;
             bool isEditing = _viewModel.IsEditing;
             _editModeBanner?.EnableInClassList("visible", isEditing);
+            // A meal is edited in the log it was made with: no switching while editing
+            _quickMealBanner?.EnableInClassList("fm-meal-log-switch--hidden", isEditing);
 
             if (isEditing && _editModeTitle != null)
             {

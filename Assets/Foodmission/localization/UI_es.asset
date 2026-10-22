@@ -4917,6 +4917,27 @@ MonoBehaviour:
     m_Localized: "A\xF1adir etiquetas"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203741
+    m_Localized: "\U0001F4DD Abrir el registro completo de comidas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203742
+    m_Localized: "Aqu\xED a\xF1ades uno a uno los alimentos que has comido. \xBFVas
+      con prisa? El registro simplificado solo lleva unos toques."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203743
+    m_Localized: "Elige el tipo de comida y marca lo que ten\xEDa tu plato, sin a\xF1adir
+      cada alimento. \xBFQuieres m\xE1s detalle? Usa el registro completo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203744
+    m_Localized: "Este es el registro simplificado: elige el tipo de comida y marca
+      lo m\xE1s importante de tu plato, sin a\xF1adir cada alimento. Tus misiones
+      avanzan con estas respuestas. Si prefieres registrar alimento por alimento,
+      abre el registro completo con el bot\xF3n de arriba."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
