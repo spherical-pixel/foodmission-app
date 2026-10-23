@@ -1,6 +1,6 @@
 {
   "ios": {
-    "latestVersion": "0.0.10",
+    "latestVersion": "0.0.11",
     "isForced": true,
     "storeUrl": "https://testflight.apple.com/join/eVPDEzhq"
   },
