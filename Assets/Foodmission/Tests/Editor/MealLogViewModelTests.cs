@@ -881,6 +881,73 @@ namespace eu.foodmission.platform.Tests
             _mockMealLogService.Verify(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Once);
         }
 
+        private void PrepareNewLunchMeal()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.SelectTypeOfMeal(0);
+            _vm.SetSource(fromPantry: false, eatenOut: false);
+            _vm.SelectedItems.Add(new MealLogItem { isProduct = true, foodProductId = "fp-1", quantity = 2f, unit = "PIECES" });
+            _mockMealService.Setup(x => x.CreateMealAsync(It.IsAny<CreateMealRequest>()))
+                .ReturnsAsync((new Meal { id = "meal-1" }, null));
+            _mockMealItemService.Setup(x => x.CreateAsync(It.IsAny<string>(), It.IsAny<CreateMealItemRequest>()))
+                .ReturnsAsync((new MealItem { id = "mi-1" }, null));
+        }
+
+        [Test]
+        public async Task SaveAsync_PastLogDay_StagesTheDraftAtTheTypicalTimeOfThatMeal()
+        {
+            DateTime day = DateTime.Today.AddDays(-3);
+            _vm.SetLogDay(day);
+            PrepareNewLunchMeal();
+
+            Assert.IsTrue(await _vm.SaveAsync());
+
+            string expected = MealLogDate.BuildTimestamp(day, "LUNCH", DateTime.Now);
+            _mockMealLogService.Verify(x => x.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.draft == true && r.typeOfMeal == "LUNCH" && r.timestamp == expected)), Times.Once);
+        }
+
+        [Test]
+        public async Task SaveAsync_Today_StagesTheDraftNow()
+        {
+            PrepareNewLunchMeal();
+            CreateMealLogRequest sent = null;
+            _mockMealLogService.Setup(x => x.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .Callback<CreateMealLogRequest>(r => sent = r)
+                .ReturnsAsync((new MealLog { id = "draft-1", status = MealLogStatus.Draft }, (ApiErrorResponse)null));
+            DateTime before = DateTime.UtcNow.AddSeconds(-1);
+
+            Assert.IsTrue(await _vm.SaveAsync());
+
+            DateTime sentUtc = DateTime.Parse(sent.timestamp, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal);
+            Assert.That(sentUtc, Is.InRange(before, DateTime.UtcNow.AddSeconds(1)));
+        }
+
+        [Test]
+        public async Task ConfirmLogAsync_PastLogDay_ShowsThatDayAndKeepsItForTheNextMeal()
+        {
+            DateTime day = DateTime.Today.AddDays(-1);
+            _vm.SetLogDay(day);
+            PrepareNewLunchMeal();
+
+            Assert.IsTrue(await _vm.SaveAsync());
+            Assert.IsTrue(await _vm.ConfirmLogAsync());
+
+            Assert.AreEqual(day, _vm.SelectedDate);
+            Assert.AreEqual(day, _vm.SelectedLogDay);
+        }
+
+        [Test]
+        public void SetLogDay_WhileEditing_IsIgnored()
+        {
+            _vm.TypeOfMealOptions = new[] { new CatalogItem { code = "LUNCH", label = "Lunch" } };
+            _vm.LoadForEdit(new MealLog { id = "ml-1", typeOfMeal = "LUNCH", timestamp = "2026-10-01T12:00:00Z" });
+
+            _vm.SetLogDay(DateTime.Today.AddDays(-2));
+
+            Assert.AreEqual(DateTime.Today, _vm.SelectedLogDay);
+        }
+
         [Test]
         public async Task ConfirmLogAsync_MealFromPantryFalse_DoesNotTouchPantry()
         {

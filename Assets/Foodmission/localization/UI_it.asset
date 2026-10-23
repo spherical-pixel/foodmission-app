@@ -4980,6 +4980,14 @@ MonoBehaviour:
       Riprova tra poco."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203755
+    m_Localized: Quando l'hai mangiato?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203756
+    m_Localized: Scegli il tipo di pasto prima di salvare.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

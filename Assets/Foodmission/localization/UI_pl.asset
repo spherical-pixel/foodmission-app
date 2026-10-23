@@ -5061,6 +5061,14 @@ MonoBehaviour:
       Spr\xF3buj ponownie za chwil\u0119."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203755
+    m_Localized: "Kiedy by\u0142 ten posi\u0142ek?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203756
+    m_Localized: "Przed zapisaniem wybierz rodzaj posi\u0142ku."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

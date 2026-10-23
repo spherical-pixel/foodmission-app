@@ -36,6 +36,7 @@ namespace eu.foodmission.platform
         private VisualElement _step2;
         private VisualElement _step3;
         private VisualElement _step1Buttons;
+        private FMMealDayPicker _logDayPicker;
         private VisualElement _step2Buttons;
         private VisualElement _btnBackStep2;
         private VisualElement _btnBackStep3;
@@ -63,6 +64,7 @@ namespace eu.foodmission.platform
         private readonly List<DateTime> _stepperDates = new();
         private AccessibilityNode _logButtonNode;
         private AccessibilityNode _confirmButtonNode;
+        private List<AccessibilityNode> _logDayNodes = new();
         private VisualElement _editModeBanner;
         private Unity.AppUI.UI.Text _editModeTitle;
         private FMButton _btnCancelEdit;
@@ -81,6 +83,8 @@ namespace eu.foodmission.platform
             _step2 = contentContainer.Q<VisualElement>("step-2");
             _step3 = contentContainer.Q<VisualElement>("step-3");
             _step1Buttons = contentContainer.Q<VisualElement>("step-1-buttons");
+            _logDayPicker = contentContainer.Q<FMMealDayPicker>("log-day-picker");
+            _logDayPicker?.Title.AddToClassList("fm-ml-day-picker-title");
             _step2Buttons = contentContainer.Q<VisualElement>("step-2-buttons");
             _btnBackStep2 = contentContainer.Q<VisualElement>("btn-back-step-2");
             _btnBackStep3 = contentContainer.Q<VisualElement>("btn-back-step-3");
@@ -124,7 +128,16 @@ namespace eu.foodmission.platform
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
+            // Rebuilt on every entry (the week ends today, labels follow the language), before base.OnEnter
+            // sets up the accessibility nodes of the chips
+            _logDayPicker?.Build(DateTime.Now);
+
             base.OnEnter(controller, destination, args);
+
+            if (_logDayPicker != null && _viewModel != null)
+            {
+                _logDayPicker.SelectedDay = _viewModel.SelectedLogDay;
+            }
 
             string recipeId = null;
             int mealTypeIndex = 0;
@@ -207,6 +220,10 @@ namespace eu.foodmission.platform
                 _btnConfirmLog.clicked += OnConfirmLogClicked;
             }
             _reviewOnlyMissions?.RegisterCallback<ChangeEvent<CheckboxState>>(OnReviewOnlyMissionsChanged);
+            if (_logDayPicker != null)
+            {
+                _logDayPicker.DaySelected += OnLogDaySelected;
+            }
             if (_factsPicker != null)
             {
                 _factsPicker.SectionToggled += OnFactSectionToggled;
@@ -315,6 +332,10 @@ namespace eu.foodmission.platform
                 _btnConfirmLog.clicked -= OnConfirmLogClicked;
             }
             _reviewOnlyMissions?.UnregisterCallback<ChangeEvent<CheckboxState>>(OnReviewOnlyMissionsChanged);
+            if (_logDayPicker != null)
+            {
+                _logDayPicker.DaySelected -= OnLogDaySelected;
+            }
             if (_factsPicker != null)
             {
                 _factsPicker.SectionToggled -= OnFactSectionToggled;
@@ -353,6 +374,11 @@ namespace eu.foodmission.platform
             _viewModel.SaveAsPreset = evt.newValue == CheckboxState.Checked;
         }
 
+        private void OnLogDaySelected(DateTime day)
+        {
+            _viewModel?.SetLogDay(day);
+        }
+
         private void OnCancelEditClicked()
         {
             _viewModel?.CancelEdit();
@@ -367,6 +393,8 @@ namespace eu.foodmission.platform
             _editModeBanner?.EnableInClassList("visible", isEditing);
             // A meal is edited in the log it was made with: no switching while editing
             _quickMealBanner?.EnableInClassList("fm-meal-log-switch--hidden", isEditing);
+            // An edited log keeps its original day
+            _logDayPicker?.EnableInClassList("fm-meal-day-picker--hidden", isEditing);
 
             if (isEditing && _editModeTitle != null)
             {
@@ -435,12 +463,14 @@ namespace eu.foodmission.platform
             string logKey = _viewModel != null && _viewModel.IsEditing ? "SAVE_CHANGES" : "TXT_CONTINUE";
             _logButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnLogSelected, LocalizationSettings.StringDatabase.GetLocalizedString("UI", logKey));
             _confirmButtonNode = CreateButtonNode(_accessibilityHierarchy, _btnConfirmLog, LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MEAL_LOG_REVIEW_CONFIRM"));
+            _logDayNodes = _logDayPicker?.AddAccessibilityNodes(_accessibilityHierarchy) ?? new List<AccessibilityNode>();
         }
 
         protected override void TeardownAccessibilityNodes()
         {
             _logButtonNode = null;
             _confirmButtonNode = null;
+            _logDayNodes.Clear();
             base.TeardownAccessibilityNodes();
         }
 
@@ -527,6 +557,12 @@ namespace eu.foodmission.platform
                         break;
                     case nameof(_viewModel.SelectedDate):
                         UpdateDayStepperSelection();
+                        break;
+                    case nameof(_viewModel.SelectedLogDay):
+                        if (_logDayPicker != null)
+                        {
+                            _logDayPicker.SelectedDay = _viewModel.SelectedLogDay;
+                        }
                         break;
                     case nameof(_viewModel.ErrorMessage):
                         if (!string.IsNullOrEmpty(_viewModel.ErrorMessage))

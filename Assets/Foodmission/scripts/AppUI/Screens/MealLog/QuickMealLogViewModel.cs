@@ -49,6 +49,13 @@ namespace eu.foodmission.platform
         [ObservableProperty]
         private string _selectedMealType = "LUNCH";
 
+        /// <summary>Local day the meal was eaten (issue #65); only today and the previous <see cref="MealLogDate.DaysBack"/> days.</summary>
+        [ObservableProperty]
+        private DateTime _selectedLogDay = DateTime.Today;
+
+        // True once the user picks a type: changing the day then keeps it instead of guessing from the hour
+        private bool _mealTypeChosen;
+
         [ObservableProperty]
         private CatalogItem[] _typeOfMealOptions = Array.Empty<CatalogItem>();
 
@@ -161,7 +168,7 @@ namespace eu.foodmission.platform
                     }
                     MealTypeLabels = dict;
 
-                    if (!types.Any(t => t != null && string.Equals(t.code, SelectedMealType, StringComparison.OrdinalIgnoreCase)))
+                    if (SelectedMealType != null && !types.Any(t => t != null && string.Equals(t.code, SelectedMealType, StringComparison.OrdinalIgnoreCase)))
                     {
                         SelectedMealType = types[0].code;
                     }
@@ -459,6 +466,8 @@ namespace eu.foodmission.platform
             EditingMealLogId = null;
             EditingMealLog = null;
             MealName = "";
+            SelectedLogDay = DateTime.Today;
+            _mealTypeChosen = false;
             InitializeDefaultMealType();
             SubmitSuccess = false;
             ErrorMessage = "";
@@ -467,12 +476,42 @@ namespace eu.foodmission.platform
 
         public void SetMealType(string mealType)
         {
+            _mealTypeChosen = true;
             SelectedMealType = mealType;
+        }
+
+        /// <summary>Past days get no type from the current hour: the user picks it before saving.</summary>
+        public void SetLogDay(DateTime day)
+        {
+            if (IsEditing)
+            {
+                return;
+            }
+
+            SelectedLogDay = day.Date;
+            if (_mealTypeChosen)
+            {
+                return;
+            }
+
+            if (MealLogDate.IsToday(SelectedLogDay, DateTime.Now))
+            {
+                InitializeDefaultMealType();
+            }
+            else
+            {
+                SelectedMealType = null;
+            }
         }
 
         public async Task<bool> SubmitQuickMealLogAsync()
         {
             if (_isSubmitting) return false;
+            if (string.IsNullOrEmpty(SelectedMealType))
+            {
+                ErrorMessage = "@UI:MEAL_LOG_DAY_PICK_TYPE";
+                return false;
+            }
             IsSubmitting = true;
             SubmitSuccess = false;
             ErrorMessage = "";
@@ -542,7 +581,7 @@ namespace eu.foodmission.platform
                         typeOfMeal = SelectedMealType,
                         flags = flags.Count > 0 ? flags.ToArray() : null,
                         swaps = swaps.Count > 0 ? swaps.ToArray() : null,
-                        timestamp = DateTime.UtcNow.ToString("o")
+                        timestamp = MealLogDate.BuildTimestamp(SelectedLogDay, SelectedMealType, DateTime.Now)
                     };
                     var (createdLog, logErr) = await _mealLogService.CreateAsync(logReq);
                     if (logErr != null)

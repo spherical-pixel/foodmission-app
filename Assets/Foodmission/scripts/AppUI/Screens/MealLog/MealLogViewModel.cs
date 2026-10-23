@@ -43,6 +43,9 @@ namespace eu.foodmission.platform
         [ObservableProperty] private List<MealLog> m_LastTenLogs = new();
         [ObservableProperty] private DateTime m_SelectedDate = DateTime.Today;
 
+        /// <summary>Local day the new meal is logged for (issue #65); <see cref="SelectedDate"/> only filters the list.</summary>
+        [ObservableProperty] private DateTime _selectedLogDay = DateTime.Today;
+
         private List<MealLog> _allLogs = new();
 
         private CancellationTokenSource _presetSearchCts;
@@ -687,7 +690,7 @@ namespace eu.foodmission.platform
 
             IsSaving = true;
             ErrorMessage = "";
-            string timestamp = DateTime.UtcNow.ToString("o");
+            string timestamp = MealLogDate.BuildTimestamp(SelectedLogDay, SelectedTypeOfMeal?.code, DateTime.Now);
 
             try
             {
@@ -1030,7 +1033,7 @@ namespace eu.foodmission.platform
 
             IsSaving = true;
             ErrorMessage = "";
-            string timestamp = DateTime.UtcNow.ToString("o");
+            string timestamp = MealLogDate.BuildTimestamp(SelectedLogDay, SelectedTypeOfMeal?.code, DateTime.Now);
 
             try
             {
@@ -1397,6 +1400,16 @@ namespace eu.foodmission.platform
             }
         }
 
+        /// <summary>Kept after a save so several meals of the same past day can be logged in a row; edits keep their day.</summary>
+        public void SetLogDay(DateTime day)
+        {
+            if (IsEditing)
+            {
+                return;
+            }
+            SelectedLogDay = day.Date;
+        }
+
         public void ResetToStep1()
         {
             _ = DiscardDraftAsync();
@@ -1627,6 +1640,7 @@ namespace eu.foodmission.platform
 
                 _draftLog = null;
                 _draftMealId = null;
+                DateTime loggedDay = SelectedLogDay;
                 await RefreshGamificationAsync();
 
                 if (MealFromPantry && SelectedItems != null && SelectedItems.Count > 0)
@@ -1640,6 +1654,11 @@ namespace eu.foodmission.platform
                 _originalItemsSnapshot = new List<MealLogItem>();
                 ResetToStep1();
                 await LoadTodayAsync();
+                // Show the list of the day the meal went to, so a past-day log is visible right away
+                if (!MealLogDate.IsToday(loggedDay, DateTime.Now))
+                {
+                    await SetSelectedDateAsync(loggedDay);
+                }
                 IsSaving = false;
                 return true;
             }
