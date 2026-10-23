@@ -4979,6 +4979,14 @@ MonoBehaviour:
       znova \u010Dez trenutek."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203755
+    m_Localized: Kdaj je bil ta obrok?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203756
+    m_Localized: Pred shranjevanjem izberi vrsto obroka.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

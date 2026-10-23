@@ -5016,6 +5016,14 @@ MonoBehaviour:
       es gleich noch einmal.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203755
+    m_Localized: Wann hast du es gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203756
+    m_Localized: "W\xE4hle vor dem Speichern die Art der Mahlzeit."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

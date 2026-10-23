@@ -3192,3 +3192,33 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+/* Day of the meal (FMMealDayPicker): last week as wrapping chips, shared by both meal logs */
+.fm-meal-day-picker {
+    display: flex;
+    flex-direction: column;
+}
+
+.fm-meal-day-picker--hidden {
+    display: none;
+}
+
+.fm-meal-day-picker-title {
+    white-space: normal;
+}
+
+.fm-meal-day-picker-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: -4px;
+}
+
+.fm-meal-day-picker-chip {
+    margin: 4px;
+    border-width: 3px;
+    border-color: rgba(128, 128, 128, 0.35);
+}
+
+.fm-meal-day-picker-chip--selected {
+    border-color: var(--appui-accent-100);
+}

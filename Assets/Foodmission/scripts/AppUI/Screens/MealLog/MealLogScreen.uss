@@ -42,6 +42,16 @@
     white-space: wrap;
 }
 
+.fm-ml-day-picker {
+    margin-bottom: 24px;
+}
+
+.fm-ml-day-picker-title {
+    color: var(--appui-foregrounds-100);
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+}
+
 .fm-ml-step-buttons {
     flex-direction: column;
 }

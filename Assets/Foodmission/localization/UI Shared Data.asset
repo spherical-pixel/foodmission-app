@@ -4663,6 +4663,14 @@ MonoBehaviour:
     m_Key: BARCODE_SCAN_BUSY
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203755
+    m_Key: MEAL_LOG_DAY_QUESTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203756
+    m_Key: MEAL_LOG_DAY_PICK_TYPE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

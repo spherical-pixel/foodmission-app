@@ -4984,6 +4984,14 @@ MonoBehaviour:
       Int\xE9ntalo de nuevo en un momento."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203755
+    m_Localized: "\xBFCu\xE1ndo lo comiste?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203756
+    m_Localized: Elige el tipo de comida antes de guardar.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

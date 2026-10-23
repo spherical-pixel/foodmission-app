@@ -9,6 +9,7 @@ using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
 using Unity.AppUI.UI;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
@@ -24,6 +25,8 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaTop => false;
         protected override bool IsFixedContent => false;
 
+        private FMMealDayPicker _dayPicker;
+        private List<AccessibilityNode> _dayNodes = new();
         private VisualElement _typesContainer;
         private readonly List<(string Code, FMButton Button)> _typeButtons = new();
 
@@ -79,6 +82,8 @@ namespace eu.foodmission.platform
 
         private void CacheUIElements()
         {
+            _dayPicker = contentContainer.Q<FMMealDayPicker>("day-picker");
+            _dayPicker?.Title.AddToClassList("fm-quick-meal-section-title");
             _typesContainer = contentContainer.Q<VisualElement>("types-row") ?? contentContainer.Q<VisualElement>(className: "fm-quick-meal-types-row");
 
             _questionsContainer = contentContainer.Q<VisualElement>("questions-container");
@@ -166,6 +171,10 @@ namespace eu.foodmission.platform
 
         public override void OnEnter(NavController controller, NavDestination destination, Argument[] args)
         {
+            // Rebuilt on every entry (the week ends today, labels follow the language), before base.OnEnter
+            // sets up the accessibility nodes of the chips
+            _dayPicker?.Build(DateTime.Now);
+
             base.OnEnter(controller, destination, args);
 
             string mealLogId = null;
@@ -200,6 +209,11 @@ namespace eu.foodmission.platform
                 _ = _viewModel?.LoadActiveQuestQuestionsAsync();
             }
 
+            if (_dayPicker != null && _viewModel != null)
+            {
+                _dayPicker.SelectedDay = _viewModel.SelectedLogDay;
+            }
+
             UpdateView();
         }
 
@@ -212,6 +226,10 @@ namespace eu.foodmission.platform
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;
             }
             _onlyMissionsToggle?.RegisterCallback<ChangeEvent<CheckboxState>>(OnOnlyMissionsChanged);
+            if (_dayPicker != null)
+            {
+                _dayPicker.DaySelected += OnDaySelected;
+            }
             if (_factsPicker != null)
             {
                 _factsPicker.SectionToggled += OnSectionToggled;
@@ -219,6 +237,12 @@ namespace eu.foodmission.platform
                 _factsPicker.SwapSelected += OnSwapSelected;
             }
             UpdateView();
+        }
+
+        private void OnDaySelected(DateTime day)
+        {
+            _audioService?.PlaySfx(SfxType.PositiveButton);
+            _viewModel?.SetLogDay(day);
         }
 
         private void OnSectionToggled(string id)
@@ -251,6 +275,10 @@ namespace eu.foodmission.platform
                 _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             }
             _onlyMissionsToggle?.UnregisterCallback<ChangeEvent<CheckboxState>>(OnOnlyMissionsChanged);
+            if (_dayPicker != null)
+            {
+                _dayPicker.DaySelected -= OnDaySelected;
+            }
             if (_factsPicker != null)
             {
                 _factsPicker.SectionToggled -= OnSectionToggled;
@@ -276,6 +304,13 @@ namespace eu.foodmission.platform
             else if (e.PropertyName == nameof(_viewModel.SelectedMealType))
             {
                 UpdateMealTypeSelection();
+            }
+            else if (e.PropertyName == nameof(_viewModel.SelectedLogDay))
+            {
+                if (_dayPicker != null)
+                {
+                    _dayPicker.SelectedDay = _viewModel.SelectedLogDay;
+                }
             }
             else if (e.PropertyName == nameof(_viewModel.SubmitSuccess) ||
                      e.PropertyName == nameof(_viewModel.SuccessMessage) ||
@@ -305,6 +340,19 @@ namespace eu.foodmission.platform
                     _viewModel.ErrorDetail = null;
                 }
             }
+        }
+
+        protected override void SetupAccessibilityNodes()
+        {
+            base.SetupAccessibilityNodes();
+            if (_accessibilityHierarchy == null) return;
+            _dayNodes = _dayPicker?.AddAccessibilityNodes(_accessibilityHierarchy) ?? new List<AccessibilityNode>();
+        }
+
+        protected override void TeardownAccessibilityNodes()
+        {
+            _dayNodes.Clear();
+            base.TeardownAccessibilityNodes();
         }
 
         private void ShowErrorToast(string message)
@@ -348,6 +396,8 @@ namespace eu.foodmission.platform
             }
             // A meal is edited in the log it was made with: no switching while editing
             _fullMealBanner?.EnableInClassList("fm-meal-log-switch--hidden", isEditing);
+            // An edited log keeps its original day
+            _dayPicker?.EnableInClassList("fm-meal-day-picker--hidden", isEditing);
             if (_btnSubmitQuickMeal != null)
             {
                 _btnSubmitQuickMeal.title = isEditing
@@ -432,7 +482,8 @@ namespace eu.foodmission.platform
         private void UpdateMealTypeSelection()
         {
             if (_viewModel == null) return;
-            string selected = _viewModel.SelectedMealType ?? "LUNCH";
+            // No selection on a past day until the user picks a type
+            string selected = _viewModel.SelectedMealType;
 
             foreach (var (code, btn) in _typeButtons)
             {

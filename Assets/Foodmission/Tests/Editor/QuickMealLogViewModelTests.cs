@@ -951,5 +951,122 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.Contains(events, ClientEventTypes.MealMeatConsumed);
             CollectionAssert.Contains(events, ClientEventTypes.MealMeatFree);
         }
+
+        private void CheckOneMealFlag()
+        {
+            _vm.Questions = new System.Collections.Generic.List<QuickMealCheckItem>
+            {
+                new QuickMealCheckItem { Id = "q-meat-free", EventType = ClientEventTypes.MealMeatFree, IsChecked = true }
+            };
+        }
+
+        [Test]
+        public void SetLogDay_PastDayWithoutChosenType_ClearsTheHourBasedType()
+        {
+            _vm.SetLogDay(DateTime.Today.AddDays(-1));
+
+            Assert.AreEqual(DateTime.Today.AddDays(-1), _vm.SelectedLogDay);
+            Assert.IsNull(_vm.SelectedMealType);
+        }
+
+        [Test]
+        public void SetLogDay_AfterTheUserPickedAType_KeepsIt()
+        {
+            _vm.SetMealType("DINNER");
+
+            _vm.SetLogDay(DateTime.Today.AddDays(-2));
+
+            Assert.AreEqual("DINNER", _vm.SelectedMealType);
+        }
+
+        [Test]
+        public void SetLogDay_BackToTodayWithoutChosenType_RestoresTheHourBasedType()
+        {
+            _vm.SetLogDay(DateTime.Today.AddDays(-1));
+
+            _vm.SetLogDay(DateTime.Today);
+
+            Assert.IsNotEmpty(_vm.SelectedMealType);
+        }
+
+        [Test]
+        public async Task SetLogDay_WhileEditing_IsIgnored()
+        {
+            await _vm.LoadForEditAsync(new MealLog { id = "ml-1", typeOfMeal = "LUNCH", timestamp = "2026-10-01T12:00:00Z" });
+
+            _vm.SetLogDay(DateTime.Today.AddDays(-3));
+
+            Assert.AreEqual(DateTime.Today, _vm.SelectedLogDay);
+            Assert.AreEqual("LUNCH", _vm.SelectedMealType);
+        }
+
+        [Test]
+        public async Task LoadCatalogDataAsync_DoesNotPickATypeForAPastDay()
+        {
+            _vm.SetLogDay(DateTime.Today.AddDays(-1));
+
+            await _vm.LoadCatalogDataAsync();
+
+            Assert.IsNull(_vm.SelectedMealType);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_WithoutMealType_DoesNotSendAndAsksForIt()
+        {
+            _vm.SetLogDay(DateTime.Today.AddDays(-1));
+            CheckOneMealFlag();
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsFalse(success);
+            Assert.AreEqual("@UI:MEAL_LOG_DAY_PICK_TYPE", _vm.ErrorMessage);
+            _mockMealLogService.Verify(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()), Times.Never);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_PastDay_SendsTheTypicalTimeOfThatMeal()
+        {
+            DateTime day = DateTime.Today.AddDays(-2);
+            _vm.SetLogDay(day);
+            _vm.SetMealType("DINNER");
+            CheckOneMealFlag();
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .ReturnsAsync((new MealLog { id = "ml-1" }, null));
+
+            bool success = await _vm.SubmitQuickMealLogAsync();
+
+            Assert.IsTrue(success);
+            string expected = MealLogDate.BuildTimestamp(day, "DINNER", DateTime.Now);
+            _mockMealLogService.Verify(s => s.CreateAsync(It.Is<CreateMealLogRequest>(r =>
+                r.typeOfMeal == "DINNER" && r.timestamp == expected)), Times.Once);
+        }
+
+        [Test]
+        public async Task SubmitQuickMealLogAsync_Today_SendsNow()
+        {
+            _vm.SetMealType("LUNCH");
+            CheckOneMealFlag();
+            CreateMealLogRequest sent = null;
+            _mockMealLogService.Setup(s => s.CreateAsync(It.IsAny<CreateMealLogRequest>()))
+                .Callback<CreateMealLogRequest>(r => sent = r)
+                .ReturnsAsync((new MealLog { id = "ml-1" }, null));
+            DateTime before = DateTime.UtcNow.AddSeconds(-1);
+
+            await _vm.SubmitQuickMealLogAsync();
+
+            DateTime sentUtc = DateTime.Parse(sent.timestamp, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal);
+            Assert.That(sentUtc, Is.InRange(before, DateTime.UtcNow.AddSeconds(1)));
+        }
+
+        [Test]
+        public void ResetEditState_GoesBackToToday()
+        {
+            _vm.SetLogDay(DateTime.Today.AddDays(-4));
+
+            _vm.ResetEditState();
+
+            Assert.AreEqual(DateTime.Today, _vm.SelectedLogDay);
+            Assert.IsNotEmpty(_vm.SelectedMealType);
+        }
     }
 }

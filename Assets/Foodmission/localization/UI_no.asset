@@ -4979,6 +4979,14 @@ MonoBehaviour:
       igjen om litt."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203755
+    m_Localized: "N\xE5r spiste du det?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203756
+    m_Localized: "Velg type m\xE5ltid f\xF8r du lagrer."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
