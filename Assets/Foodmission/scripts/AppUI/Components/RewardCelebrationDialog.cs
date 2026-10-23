@@ -63,6 +63,7 @@ namespace eu.foodmission.platform.Components
         {
             public List<RewardPresentationItem> Items;
             public string ContextTitle;
+            public string ContextSubtitle;
             public Action OnDismiss;
         }
         private static VisualTreeAsset s_CachedConfetiParticlesTemplate;
@@ -183,7 +184,8 @@ namespace eu.foodmission.platform.Components
         /// <summary>
         /// Displays the global reward celebration modal for a pre-built presentation queue.
         /// </summary>
-        public static void Show(List<RewardPresentationItem> queue, string contextTitle = null, Action onDismiss = null)
+        /// <param name="contextSubtitle">Shown under the title, e.g. the name of the completed quest; hidden when empty.</param>
+        public static void Show(List<RewardPresentationItem> queue, string contextTitle = null, Action onDismiss = null, string contextSubtitle = null)
         {
             if (queue == null || queue.Count == 0)
             {
@@ -198,7 +200,7 @@ namespace eu.foodmission.platform.Components
                 return;
             }
 
-            var celebration = new PendingCelebration { Items = queue, ContextTitle = contextTitle, OnDismiss = onDismiss };
+            var celebration = new PendingCelebration { Items = queue, ContextTitle = contextTitle, ContextSubtitle = contextSubtitle, OnDismiss = onDismiss };
             if (s_Celebrations.TryBegin(celebration))
             {
                 Present(celebration);
@@ -218,7 +220,7 @@ namespace eu.foodmission.platform.Components
 
             LoadParticlesTemplateAsync(() =>
             {
-                ShowModal(rootElement, celebration.Items, celebration.ContextTitle, celebration.OnDismiss);
+                ShowModal(rootElement, celebration.Items, celebration.ContextTitle, celebration.ContextSubtitle, celebration.OnDismiss);
             });
         }
 
@@ -233,7 +235,7 @@ namespace eu.foodmission.platform.Components
         /// <summary>
         /// Displays the global reward celebration modal for the earned rewards.
         /// </summary>
-        public static void Show(ContentReward reward, string contextTitle = null, Action onDismiss = null, RewardPresentationItem extraItem = null)
+        public static void Show(ContentReward reward, string contextTitle = null, Action onDismiss = null, RewardPresentationItem extraItem = null, string contextSubtitle = null)
         {
             if (reward == null && extraItem == null)
             {
@@ -242,7 +244,7 @@ namespace eu.foodmission.platform.Components
             }
 
             var queue = BuildPresentationQueue(reward, contextTitle, extraItem);
-            Show(queue, contextTitle, onDismiss);
+            Show(queue, contextTitle, onDismiss, contextSubtitle);
         }
 
 
@@ -250,6 +252,7 @@ namespace eu.foodmission.platform.Components
             VisualElement panelRoot,
             List<RewardPresentationItem> queue,
             string contextTitle,
+            string contextSubtitle,
             Action onDismiss)
         {
             s_IsAdvancing = false;
@@ -303,10 +306,18 @@ namespace eu.foodmission.platform.Components
             var headerContainer = new VisualElement();
             headerContainer.AddToClassList("fm-reward-header-container");
             var headerTitle = new Text();
-            headerTitle.size = TextSize.XL;
+            headerTitle.size = TextSize.XXXL;
             headerTitle.AddToClassList("fm-reward-celebration-title");
             headerTitle.text = !string.IsNullOrEmpty(contextTitle) ? contextTitle : "@UI:REWARD_CELEBRATION_TITLE";
             headerContainer.Add(headerTitle);
+            if (!string.IsNullOrEmpty(contextSubtitle))
+            {
+                var headerSubtitle = new Text();
+                headerSubtitle.size = TextSize.L;
+                headerSubtitle.AddToClassList("fm-reward-celebration-subtitle");
+                headerSubtitle.text = contextSubtitle;
+                headerContainer.Add(headerSubtitle);
+            }
             rootContainer.Add(headerContainer);
 
             // Center Reward Card Container

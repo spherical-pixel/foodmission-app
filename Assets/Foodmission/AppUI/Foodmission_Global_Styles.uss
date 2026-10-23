@@ -2451,13 +2451,20 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 200px;
     z-index: 10;
 }
 
 .fm-reward-celebration-title {
     width: 100%;
     -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.fm-reward-celebration-subtitle {
+    width: 100%;
+    margin-top: 8px;
     -unity-text-align: middle-center;
     white-space: normal;
 }
@@ -2527,17 +2534,26 @@
     
     text-align: center;
     -unity-text-align: middle-center;
-    margin-bottom: 25px;
-    margin-top: 25px;
-    width: 100%;
+    margin-bottom: 64px;
+    margin-top: 64px;
+    padding-left: 25px;
+    padding-right: 25px;
+    width: 60%;
 
     -unity-font-style: bold;
     -unity-text-outline-width: 2px;
     -unity-text-outline-color: var(--fm-color-positive);
     text-shadow: 2px 2px 4px var(--fm-color-positive);
     scale: 2;
-    
-    
+
+
+}
+
+/* Number inside the coin: spans the whole coin */
+.fm-reward-content--points .fm-reward-title {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .fm-reward-subtitle {
@@ -2546,6 +2562,8 @@
     -unity-text-align: middle-center;
     margin-bottom: 25px;
     margin-top: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
     width: 100%;
 }
 

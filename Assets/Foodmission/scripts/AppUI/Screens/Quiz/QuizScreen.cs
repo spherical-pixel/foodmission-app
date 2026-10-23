@@ -371,7 +371,8 @@ namespace eu.foodmission.platform
                 RewardCelebrationDialog.Show(
                     reward,
                     contextTitle: "@UI:QUIZ_REWARD_TITLE",
-                    onDismiss: NavigateOut);
+                    onDismiss: NavigateOut,
+                    contextSubtitle: _viewModel?.QuizData?.title);
             }
             else
             {

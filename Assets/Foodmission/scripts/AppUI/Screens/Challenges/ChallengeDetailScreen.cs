@@ -325,6 +325,7 @@ namespace eu.foodmission.platform
                 if (reward != null)
                 {
                     RewardCelebrationDialog.Show(reward, contextTitle: "@UI:CHALLENGE_REWARD_TITLE",
+                        contextSubtitle: viewModel.Challenge?.title,
                         onDismiss: () =>
                         {
                             if (stillOnScreen)

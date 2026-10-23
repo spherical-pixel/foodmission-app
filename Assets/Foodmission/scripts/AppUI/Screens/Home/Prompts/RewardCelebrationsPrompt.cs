@@ -73,7 +73,7 @@ namespace eu.foodmission.platform
                     AddIfAny(queue, LevelUpCard(item.LevelUp));
                     AddIfAny(queue, UnlockedQuestCard(item.UnlockedQuest));
                     AddIfAny(queue, DimensionCompletedCard(item.CompletedDimensionName));
-                    RewardCelebrationDialog.Show(queue, item.ContextTitle, () => closed.TrySetResult(true));
+                    RewardCelebrationDialog.Show(queue, item.ContextTitle, () => closed.TrySetResult(true), item.ContextSubtitle);
                     await _viewModel.MarkCelebrationShownAsync(item);
                     if (item.UnlockedQuest != null)
                     {

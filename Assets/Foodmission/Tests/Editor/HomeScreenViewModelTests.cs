@@ -339,6 +339,37 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task CheckPendingGamificationRewardsAsync_WhenMissionCompleted_SubtitleIsTheMissionTitle()
+        {
+            var mockGamification = new Mock<IGamificationService>();
+            var mockMissions = new Mock<IMissionService>();
+            mockMissions.Setup(m => m.GetMissionAsync("M.B1.1", null))
+                .ReturnsAsync((new Mission { code = "M.B1.1", title = "Eat more legumes" }, (ApiErrorResponse)null));
+            mockGamification.Setup(g => g.GetGamificationProfileAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IReadOnlyCollection<string>>()))
+                .ReturnsAsync((new GamificationProfileResponse
+                {
+                    userId = "test-user",
+                    recentEvents = new[]
+                    {
+                        new UserEvent
+                        {
+                            id = "ev-mission-1",
+                            eventType = "MISSION_COMPLETED",
+                            timestamp = "2026-09-23T10:05:00Z",
+                            metadata = JObject.FromObject(new { missionCode = "M.B1.1" })
+                        }
+                    }
+                }, (ApiErrorResponse)null));
+            _storeService.SetAppState(new AppState { userId = "test-user", accessToken = "token-123" });
+            PlayerPrefs.SetString("last_seen_gamif_ts_test-user", "2026-09-23T10:00:00Z");
+            var vm = new HomeScreenViewModel(_storeService, _mockAudioService.Object, missionService: mockMissions.Object, gamificationService: mockGamification.Object);
+
+            var result = await vm.CheckPendingGamificationRewardsAsync();
+
+            Assert.AreEqual("Eat more legumes", result?.Single().ContextSubtitle);
+        }
+
+        [Test]
         public async Task CheckPendingGamificationRewardsAsync_WhenQuizOrFoodFactEvent_IgnoresAndReturnsNull()
         {
             var mockGamification = new Mock<IGamificationService>();
@@ -750,6 +781,7 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(result[0].UnlockedQuest);
             Assert.AreEqual("QUEST.HEALTH.BEGINNER.2", result[0].UnlockedQuest.code);
             Assert.AreEqual("Health Quest 2", result[0].UnlockedQuest.title);
+            Assert.AreEqual("Health Quest 1", result[0].ContextSubtitle);
         }
 
         [Test]
@@ -938,6 +970,7 @@ namespace eu.foodmission.platform.Tests
             {
                 questId = "q1",
                 questCode = "QUEST.A.BEGINNER.1",
+                questTitle = "Quest A",
                 completed = true,
                 progress = 100,
                 reward = new ContentReward { xp = 30, points = 30 }
@@ -952,6 +985,7 @@ namespace eu.foodmission.platform.Tests
             Assert.IsNotNull(celebration);
             Assert.IsTrue(celebration.IsQuest);
             Assert.AreEqual(30, celebration.Reward.xp);
+            Assert.AreEqual("Quest A", celebration.ContextSubtitle, "questTitle when the listed quest has no name");
             Assert.AreEqual("q2", celebration.UnlockedQuest?.id);
             Assert.AreEqual("q1", _storeService.GetAppState().userCurrentQuestId, "cleared only when shown");
 
