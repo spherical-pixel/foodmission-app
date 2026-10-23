@@ -5,7 +5,7 @@
     "storeUrl": "https://testflight.apple.com/join/eVPDEzhq"
   },
   "android": {
-    "latestVersion": "0.0.10",
+    "latestVersion": "0.0.11",
     "isForced": true,
     "storeUrl": "https://play.google.com/apps/testing/eu.foodmission.platform"
   }
