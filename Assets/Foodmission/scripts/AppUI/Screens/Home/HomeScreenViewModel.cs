@@ -727,13 +727,19 @@ namespace eu.foodmission.platform
                         points = progress.reward?.points
                     },
                     ContextTitle = "@UI:QUEST_REWARD_TITLE",
+                    ContextSubtitle = progress.questTitle,
                     Code = code,
                     QuestId = questId,
                     IsQuest = true
                 };
+                var (allQuests, _) = await _questService.GetQuestsAsync();
+                Quest completedQuest = allQuests != null ? FindQuest(allQuests, questId) ?? FindQuest(allQuests, code) : null;
+                if (!string.IsNullOrEmpty(completedQuest?.name) || string.IsNullOrEmpty(celebration.ContextSubtitle))
+                {
+                    celebration.ContextSubtitle = completedQuest?.GetDisplayName();
+                }
                 if (_questProgressionService != null)
                 {
-                    var (allQuests, _) = await _questService.GetQuestsAsync();
                     await ResolveQuestFollowUpAsync(celebration, allQuests);
                 }
                 return celebration;
@@ -1291,15 +1297,28 @@ namespace eu.foodmission.platform
                         IsQuest = isQuest
                     };
 
-                    // The next quest unlocked in sequence, or the level up when it was the last one of the user's level
-                    if (isQuest && !string.IsNullOrEmpty(code) && _questService != null && _questProgressionService != null)
+                    if (isQuest && !string.IsNullOrEmpty(code) && _questService != null)
                     {
                         if (cachedQuests == null)
                         {
                             var (allQuests, _) = await _questService.GetQuestsAsync();
                             cachedQuests = allQuests;
                         }
-                        await ResolveQuestFollowUpAsync(celebration, cachedQuests);
+                        Quest completedQuest = cachedQuests != null
+                            ? FindQuest(cachedQuests, eventQuestId) ?? FindQuest(cachedQuests, code)
+                            : null;
+                        celebration.ContextSubtitle = completedQuest?.GetDisplayName();
+
+                        // The next quest unlocked in sequence, or the level up when it was the last one of the user's level
+                        if (_questProgressionService != null)
+                        {
+                            await ResolveQuestFollowUpAsync(celebration, cachedQuests);
+                        }
+                    }
+                    else if (isMission && !string.IsNullOrEmpty(code) && _missionService != null)
+                    {
+                        var (mission, _) = await _missionService.GetMissionAsync(code);
+                        celebration.ContextSubtitle = mission?.title;
                     }
 
                     results.Add(celebration);
@@ -1329,6 +1348,8 @@ namespace eu.foodmission.platform
     {
         public ContentReward Reward { get; set; }
         public string ContextTitle { get; set; }
+        /// <summary>Name of the completed quest or mission, shown under the title.</summary>
+        public string ContextSubtitle { get; set; }
         public string EventId { get; set; }
         public string QuestId { get; set; }
         public string Code { get; set; }

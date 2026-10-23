@@ -274,7 +274,8 @@ namespace eu.foodmission.platform
                 RewardCelebrationDialog.Show(
                     reward,
                     contextTitle: "@UI:FOOD_FACT_REWARD_TITLE",
-                    onDismiss: NavigateOut);
+                    onDismiss: NavigateOut,
+                    contextSubtitle: _viewModel?.FoodFactData?.title);
             }
             else
             {

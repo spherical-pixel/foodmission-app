@@ -162,7 +162,7 @@ namespace eu.foodmission.platform
             {
                 if (_viewModel.EarnedReward != null)
                 {
-                    RewardCelebrationDialog.Show(_viewModel.EarnedReward, "@UI:QUEST_REWARD_TITLE");
+                    RewardCelebrationDialog.Show(_viewModel.EarnedReward, "@UI:QUEST_REWARD_TITLE", contextSubtitle: _viewModel.QuestTitle);
                 }
             }
         }
