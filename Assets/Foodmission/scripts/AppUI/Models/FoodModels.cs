@@ -105,6 +105,9 @@ namespace eu.foodmission.platform
         public string page;     // API returns this as string, not int
         public int pageSize;
         public int totalPages;
+        // Backend OFF search no longer counts matches: while this is true, totalCount/totalPages are only a lower bound.
+        // Null on responses that report an exact count (direct OFF client, older backend).
+        public bool? hasMore;
     }
 
     [Serializable]

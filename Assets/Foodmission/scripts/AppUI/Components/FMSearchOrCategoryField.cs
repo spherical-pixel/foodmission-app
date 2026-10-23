@@ -246,7 +246,7 @@ namespace eu.foodmission.platform.Components
         private int _totalPages;
         private string _searchQuery;
         private int _searchPage;
-        private int _searchTotalPages;
+        private bool _searchHasPages;
         private string _currentFoodGroup;
         private string _currentFoodGroupSlug;
         private VisualElement _paginationContainer;
@@ -555,7 +555,7 @@ namespace eu.foodmission.platform.Components
                 _categoryContainer.style.display = DisplayStyle.None;
                 _confirmContainer.style.display = DisplayStyle.None;
                 _searchResultsContainer.style.display = DisplayStyle.Flex;
-                _paginationContainer.style.display = _searchTotalPages > 1 ? DisplayStyle.Flex : DisplayStyle.None;
+                _paginationContainer.style.display = _searchHasPages ? DisplayStyle.Flex : DisplayStyle.None;
                 _resultsContainer.style.display = DisplayStyle.Flex;
                 return;
             }
@@ -736,7 +736,7 @@ namespace eu.foodmission.platform.Components
 
             if (_totalPages > 1)
             {
-                BuildPaginationBar(_currentPage, _totalPages, page =>
+                BuildPaginationBar(_currentPage, _totalPages, _currentPage < _totalPages, page =>
                 {
                     _currentPage = page;
                     _ = LoadCategoryPageAsync();
@@ -749,7 +749,8 @@ namespace eu.foodmission.platform.Components
             _resultsContainer.style.display = DisplayStyle.Flex;
         }
 
-        private void BuildPaginationBar(int currentPage, int totalPages, Action<int> goToPage)
+        /// <param name="totalPages">0 when unknown: the label then shows only the current page.</param>
+        private void BuildPaginationBar(int currentPage, int totalPages, bool hasNextPage, Action<int> goToPage)
         {
             _paginationContainer.Clear();
 
@@ -766,18 +767,21 @@ namespace eu.foodmission.platform.Components
             });
             _paginationContainer.Add(prevBtn);
 
-            var pageLabel = new Text { text = new LocalizedOption("UI", "txtPage_n_of_pages", currentPage, totalPages).GetText() };
+            string pageText = totalPages > 0
+                ? new LocalizedOption("UI", "txtPage_n_of_pages", currentPage, totalPages).GetText()
+                : new LocalizedOption("UI", "txtPage_n", currentPage).GetText();
+            var pageLabel = new Text { text = pageText };
             pageLabel.style.flexGrow = 1;
             pageLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
             _paginationContainer.Add(pageLabel);
 
             var nextBtn = new Unity.AppUI.UI.Button { title = "@UI:TXT_NEXT", quiet = true };
             nextBtn.trailingIcon = "fm-arrow-right";
-            nextBtn.SetEnabled(currentPage < totalPages);
+            nextBtn.SetEnabled(hasNextPage);
             nextBtn.RegisterCallback<ClickEvent>(evt =>
             {
                 evt.StopPropagation();
-                if (currentPage < totalPages)
+                if (hasNextPage)
                 {
                     goToPage(currentPage + 1);
                 }
@@ -924,10 +928,11 @@ namespace eu.foodmission.platform.Components
                 _searchResultsContainer.Add(noResults);
             }
 
-            _searchTotalPages = result?.TotalPages ?? 0;
-            if (_searchTotalPages > 1)
+            // OFF search doesn't count its matches: TotalPages is 0 then, and only HasNextPage is known
+            _searchHasPages = result != null && (_searchPage > 1 || result.HasNextPage);
+            if (_searchHasPages)
             {
-                BuildPaginationBar(_searchPage, _searchTotalPages, GoToSearchPage);
+                BuildPaginationBar(_searchPage, result.TotalPages, result.HasNextPage, GoToSearchPage);
             }
 
             _lastResultsQuery = _searchQuery;

@@ -156,7 +156,8 @@ namespace eu.foodmission.platform.Tests
                 return Task.FromResult(new FoodSearchPage
                 {
                     Items = new List<object> { new GenericFood { id = "1", foodName = "Pan" } },
-                    TotalPages = 4
+                    TotalPages = 4,
+                    HasNextPage = true
                 });
             };
             SetField("_searchQuery", "pan");
@@ -166,7 +167,7 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(1, requested.Count);
             Assert.AreEqual(("pan", 2, true, false), requested[0]);
-            Assert.AreEqual(4, GetField<int>("_searchTotalPages"));
+            Assert.IsTrue(GetField<bool>("_searchHasPages"));
             Assert.AreEqual(DisplayStyle.Flex, PaginationDisplay);
             Assert.AreEqual(1, GetField<VisualElement>("_searchResultsContainer").childCount);
         }
@@ -183,6 +184,48 @@ namespace eu.foodmission.platform.Tests
             await Task.Yield();
 
             Assert.AreEqual(DisplayStyle.None, PaginationDisplay);
+        }
+
+        [Test]
+        public async Task SearchWithUnknownTotal_ShowsPaginationWithNextEnabled()
+        {
+            _field.SearchFoodsAsync = (query, page, generic, products) =>
+                Task.FromResult(new FoodSearchPage
+                {
+                    Items = new List<object> { new OpenFoodFactsProduct { id = "1", name = "Pan" } },
+                    TotalPages = 0,
+                    HasNextPage = true
+                });
+            SetField("_searchQuery", "pan");
+
+            Invoke("GoToSearchPage", 1);
+            await Task.Yield();
+
+            var pagination = GetField<VisualElement>("_paginationContainer");
+            Assert.AreEqual(DisplayStyle.Flex, PaginationDisplay);
+            Assert.IsFalse(pagination[0].enabledSelf, "Previous on page 1");
+            Assert.IsTrue(pagination[2].enabledSelf, "Next while more results exist");
+        }
+
+        [Test]
+        public async Task SearchLastPageWithUnknownTotal_DisablesNext()
+        {
+            _field.SearchFoodsAsync = (query, page, generic, products) =>
+                Task.FromResult(new FoodSearchPage
+                {
+                    Items = new List<object> { new OpenFoodFactsProduct { id = "1", name = "Pan" } },
+                    TotalPages = 0,
+                    HasNextPage = false
+                });
+            SetField("_searchQuery", "pan");
+
+            Invoke("GoToSearchPage", 3);
+            await Task.Yield();
+
+            var pagination = GetField<VisualElement>("_paginationContainer");
+            Assert.AreEqual(DisplayStyle.Flex, PaginationDisplay);
+            Assert.IsTrue(pagination[0].enabledSelf);
+            Assert.IsFalse(pagination[2].enabledSelf);
         }
     }
 }

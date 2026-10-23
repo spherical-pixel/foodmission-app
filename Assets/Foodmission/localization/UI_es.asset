@@ -4992,6 +4992,10 @@ MonoBehaviour:
     m_Localized: Elige el tipo de comida antes de guardar.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203757
+    m_Localized: "P\xE1gina {0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
