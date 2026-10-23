@@ -1,3 +1,18 @@
+v0.0.11 - Changelog
+✨ New Features & Modules
+- Meal log: day picker (today and the previous 6 days) in the full and the quick log; past days are stamped at a typical local time for the meal type (sent in UTC), edits keep their original timestamp (#65).
+- Rewards: the celebration shows the name of the completed quest, mission, challenge, quiz or food fact under the title; larger title and points that fit inside the coin (#66).
+
+🐛 Bug Fixes
+- Food search: adapted to the OFF `hasMore` pagination (no total count). With both sources on, results come in chunks of 5 and the other source fills the page when one runs out; "Page N" when the total is unknown; no error dialog when the other source has results. Result rows grow with long names and large fonts.
+- Text fields: the caret of an empty field is drawn where the text will appear (`EmptyFieldCaret`, works around a UI Toolkit bug in Unity 6.3–6.7) (#69).
+- Catalog: the bundled countries/regions JSON fallback is gone; lists come only from the catalog endpoints.
+
+🎨 UI / UX & Enhancements
+- Typography: monotonic font scale per text size (small/medium/large) and role-based text sizes; hardcoded px replaced with scale variables.
+- Bottom navigation: fixed label size (body-sm) that wraps to two lines instead of autosizing.
+- Shopping list: larger rounded checkboxes with a wider touch target.
+
 v0.0.10 - Changelog
 ✨ New Features & Modules
 - Section tutorials: Nutri explains each main section on the first visit (Home is a 5-step sequence ending on the profile drawer); a ? button in the AppBar replays it. Seen tutorials are synced in `settings.seenTutorials`. "Daily challenge" renamed to "Challenges".
