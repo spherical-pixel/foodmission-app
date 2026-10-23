@@ -3,7 +3,7 @@
     <Style src="OnboardingGroupsScreen.uss"/>
     <ui:VisualElement name="root" class="login-root" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0);">
         <ui:VisualElement name="form-container" class="box-background" style="flex-shrink: 0;">
-            <appui:Heading size="M" style="-unity-text-align: middle-center; -unity-font-style: bold;">
+            <appui:Heading size="L" style="-unity-text-align: middle-center; -unity-font-style: bold;">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(7590950986024)"/>
                 </Bindings>

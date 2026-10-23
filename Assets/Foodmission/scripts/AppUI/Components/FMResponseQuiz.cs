@@ -102,7 +102,7 @@ namespace eu.foodmission.platform.Components
 
             _responseText = new Unity.AppUI.UI.Text();
             _responseText.primary = true;
-            _responseText.size = TextSize.XL;
+            _responseText.size = TextSize.M;
 
             this.Add(_responseText);
 

@@ -9,7 +9,7 @@
                     <ui:Image name="food-image" class="fm-fi-image"/>
                 </ui:VisualElement>
                 <appui:Text name="food-emoji" size="L" class="fm-fi-emoji"/>
-                <appui:Heading name="food-name" size="L" class="fm-fi-food-name"/>
+                <appui:Heading name="food-name" size="M" class="fm-fi-food-name"/>
                 <appui:Text name="food-subtitle" size="M" class="fm-fi-food-subtitle"/>
             </ui:VisualElement>
         </ui:VisualElement>

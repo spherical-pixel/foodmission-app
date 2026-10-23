@@ -16,7 +16,9 @@
     --appui-sizing-300: 48px;
     --appui-sizing-320: 51px;
     
-    --appui-checkbox__box-size-md: var(--appui-sizing-250);
+    --appui-checkbox__box-size-md: var(--appui-sizing-500);
+    /* Inner corner = radius - border width (8px), so it must be well above the border to read as rounded */
+    --appui-checkbox__box-border-radius-md: 36px;
     --appui-sizing-350: 54px;
     --appui-sizing-400: 57px;
     --appui-sizing-450: 61px;
@@ -339,89 +341,144 @@
 
 /* ============================================
    Font sizes per scale level
-   Defined after .appui so scale classes win in cascade
+   Defined after .appui so scale classes win in cascade.
+   Every step is strictly larger than the previous one; small ~0.85x and
+   large ~1.2x of medium. Aliases are explicit px (not var() to the numeric
+   ramp) because App UI maps heading-xxs to font-sizes-50, below body text.
+   Roles: see AGENTS.md "Typography scale & roles".
    ============================================ */
 
 .appui--small {
-    --appui-font-sizes-body-sm: 24px;
-    --appui-font-sizes-body-md: 28px;
-    --appui-font-sizes-body-lg: 30px;
+    /* Body (Text size XXS..XXXL) */
+    --appui-font-sizes-body-xxs: 18px;
+    --appui-font-sizes-body-xs: 22px;
+    --appui-font-sizes-body-sm: 26px;
+    --appui-font-sizes-body-md: 30px;
+    --appui-font-sizes-body-lg: 36px;
+    --appui-font-sizes-body-xl: 40px;
+    --appui-font-sizes-body-xxl: 48px;
+    --appui-font-sizes-body-xxxl: 54px;
 
-    --appui-font-sizes-25: 8px;
-    --appui-font-sizes-50: 12px;
-    --appui-font-sizes-75: 16px;
-    --appui-font-sizes-100: 28px;
-    --appui-font-sizes-200: 28px;
-    --appui-font-sizes-300: 28px;
-    --appui-font-sizes-400: 32px;
-    --appui-font-sizes-500: 36px;
-    --appui-font-sizes-600: 42px;
-    --appui-font-sizes-700: 48px;
-    --appui-font-sizes-800: 56px;
-    --appui-font-sizes-900: 64px;
-    --appui-font-sizes-1000: 72px;
-    --appui-font-sizes-1100: 82px;
+    /* Headings (Heading size XXS..XXXL) */
+    --appui-font-sizes-heading-xxs: 28px;
+    --appui-font-sizes-heading-xs: 30px;
+    --appui-font-sizes-heading-sm: 34px;
+    --appui-font-sizes-heading-md: 40px;
+    --appui-font-sizes-heading-lg: 46px;
+    --appui-font-sizes-heading-xl: 54px;
+    --appui-font-sizes-heading-xxl: 68px;
+    --appui-font-sizes-heading-xxxl: 82px;
+
+    /* Numeric ramp (App UI components, autosize limits); 25..500 = body-xxs..body-xxxl */
+    --appui-font-sizes-25: 18px;
+    --appui-font-sizes-50: 22px;
+    --appui-font-sizes-75: 26px;
+    --appui-font-sizes-100: 30px;
+    --appui-font-sizes-200: 36px;
+    --appui-font-sizes-300: 40px;
+    --appui-font-sizes-400: 48px;
+    --appui-font-sizes-500: 54px;
+    --appui-font-sizes-600: 60px;
+    --appui-font-sizes-700: 64px;
+    --appui-font-sizes-800: 70px;
+    --appui-font-sizes-900: 74px;
+    --appui-font-sizes-1000: 80px;
+    --appui-font-sizes-1100: 84px;
     --appui-font-sizes-1200: 94px;
-    --appui-font-sizes-1300: 108px;
-    --appui-font-sizes-1400: 122px;
-    --appui-font-sizes-1500: 138px;
-    --appui-font-sizes-1600: 156px;
-    --appui-font-sizes-1700: 176px;
-    --appui-font-sizes-1800: 200px;
+    --appui-font-sizes-1300: 102px;
+    --appui-font-sizes-1400: 112px;
+    --appui-font-sizes-1500: 122px;
+    --appui-font-sizes-1600: 134px;
+    --appui-font-sizes-1700: 148px;
+    --appui-font-sizes-1800: 164px;
 }
 
 .appui--medium {
+    /* Body (Text size XXS..XXXL) */
+    --appui-font-sizes-body-xxs: 20px;
+    --appui-font-sizes-body-xs: 26px;
     --appui-font-sizes-body-sm: 32px;
     --appui-font-sizes-body-md: 36px;
     --appui-font-sizes-body-lg: 42px;
+    --appui-font-sizes-body-xl: 48px;
+    --appui-font-sizes-body-xxl: 56px;
+    --appui-font-sizes-body-xxxl: 64px;
 
-    --appui-font-sizes-25: 16px;
-    --appui-font-sizes-50: 20px;
-    --appui-font-sizes-75: 24px;
+    /* Headings (Heading size XXS..XXXL) */
+    --appui-font-sizes-heading-xxs: 32px;
+    --appui-font-sizes-heading-xs: 36px;
+    --appui-font-sizes-heading-sm: 40px;
+    --appui-font-sizes-heading-md: 46px;
+    --appui-font-sizes-heading-lg: 54px;
+    --appui-font-sizes-heading-xl: 64px;
+    --appui-font-sizes-heading-xxl: 80px;
+    --appui-font-sizes-heading-xxxl: 96px;
+
+    /* Numeric ramp (App UI components, autosize limits); 25..500 = body-xxs..body-xxxl */
+    --appui-font-sizes-25: 20px;
+    --appui-font-sizes-50: 26px;
+    --appui-font-sizes-75: 32px;
     --appui-font-sizes-100: 36px;
-    --appui-font-sizes-200: 36px;
-    --appui-font-sizes-300: 36px;
-    --appui-font-sizes-400: 40px;
-    --appui-font-sizes-500: 44px;
-    --appui-font-sizes-600: 50px;
-    --appui-font-sizes-700: 56px;
-    --appui-font-sizes-800: 64px;
-    --appui-font-sizes-900: 72px;
-    --appui-font-sizes-1000: 80px;
-    --appui-font-sizes-1100: 90px;
-    --appui-font-sizes-1200: 102px;
-    --appui-font-sizes-1300: 116px;
-    --appui-font-sizes-1400: 130px;
-    --appui-font-sizes-1500: 146px;
-    --appui-font-sizes-1600: 164px;
-    --appui-font-sizes-1700: 184px;
-    --appui-font-sizes-1800: 208px;
+    --appui-font-sizes-200: 42px;
+    --appui-font-sizes-300: 48px;
+    --appui-font-sizes-400: 56px;
+    --appui-font-sizes-500: 64px;
+    --appui-font-sizes-600: 70px;
+    --appui-font-sizes-700: 76px;
+    --appui-font-sizes-800: 82px;
+    --appui-font-sizes-900: 88px;
+    --appui-font-sizes-1000: 94px;
+    --appui-font-sizes-1100: 100px;
+    --appui-font-sizes-1200: 110px;
+    --appui-font-sizes-1300: 120px;
+    --appui-font-sizes-1400: 132px;
+    --appui-font-sizes-1500: 144px;
+    --appui-font-sizes-1600: 158px;
+    --appui-font-sizes-1700: 174px;
+    --appui-font-sizes-1800: 192px;
 }
 
 .appui--large {
-    --appui-font-sizes-body-sm: 32px;
-    --appui-font-sizes-body-md: 42px;
-    --appui-font-sizes-body-lg: 52px;
+    /* Body (Text size XXS..XXXL) */
+    --appui-font-sizes-body-xxs: 24px;
+    --appui-font-sizes-body-xs: 32px;
+    --appui-font-sizes-body-sm: 38px;
+    --appui-font-sizes-body-md: 44px;
+    --appui-font-sizes-body-lg: 50px;
+    --appui-font-sizes-body-xl: 58px;
+    --appui-font-sizes-body-xxl: 68px;
+    --appui-font-sizes-body-xxxl: 76px;
 
+    /* Headings (Heading size XXS..XXXL) */
+    --appui-font-sizes-heading-xxs: 38px;
+    --appui-font-sizes-heading-xs: 44px;
+    --appui-font-sizes-heading-sm: 48px;
+    --appui-font-sizes-heading-md: 56px;
+    --appui-font-sizes-heading-lg: 64px;
+    --appui-font-sizes-heading-xl: 76px;
+    --appui-font-sizes-heading-xxl: 96px;
+    --appui-font-sizes-heading-xxxl: 116px;
+
+    /* Numeric ramp (App UI components, autosize limits); 25..500 = body-xxs..body-xxxl */
     --appui-font-sizes-25: 24px;
-    --appui-font-sizes-50: 28px;
-    --appui-font-sizes-75: 32px;
+    --appui-font-sizes-50: 32px;
+    --appui-font-sizes-75: 38px;
     --appui-font-sizes-100: 44px;
-    --appui-font-sizes-200: 44px;
-    --appui-font-sizes-300: 44px;
-    --appui-font-sizes-400: 48px;
-    --appui-font-sizes-500: 52px;
-    --appui-font-sizes-600: 58px;
-    --appui-font-sizes-700: 64px;
-    --appui-font-sizes-800: 72px;
-    --appui-font-sizes-900: 80px;
-    --appui-font-sizes-1000: 90px;
-    --appui-font-sizes-1100: 102px;
-    --appui-font-sizes-1200: 116px;
-    --appui-font-sizes-1300: 130px;
-    --appui-font-sizes-1400: 138px;
-    --appui-font-sizes-1500: 154px;
-    --appui-font-sizes-1600: 172px;
-    --appui-font-sizes-1700: 192px;
-    --appui-font-sizes-1800: 216px;
+    --appui-font-sizes-200: 50px;
+    --appui-font-sizes-300: 58px;
+    --appui-font-sizes-400: 68px;
+    --appui-font-sizes-500: 76px;
+    --appui-font-sizes-600: 84px;
+    --appui-font-sizes-700: 92px;
+    --appui-font-sizes-800: 98px;
+    --appui-font-sizes-900: 106px;
+    --appui-font-sizes-1000: 112px;
+    --appui-font-sizes-1100: 120px;
+    --appui-font-sizes-1200: 132px;
+    --appui-font-sizes-1300: 144px;
+    --appui-font-sizes-1400: 158px;
+    --appui-font-sizes-1500: 172px;
+    --appui-font-sizes-1600: 190px;
+    --appui-font-sizes-1700: 208px;
+    --appui-font-sizes-1800: 230px;
 }

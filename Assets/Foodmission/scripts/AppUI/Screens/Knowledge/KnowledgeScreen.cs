@@ -110,7 +110,7 @@ namespace eu.foodmission.platform
                     }
                 }
                 title.text = localizedTitle ?? section.Title ?? section.Id;
-                title.size = TextSize.L;
+                title.size = TextSize.M;
                 footer.Add(title);
 
                 var arrow = new Icon();

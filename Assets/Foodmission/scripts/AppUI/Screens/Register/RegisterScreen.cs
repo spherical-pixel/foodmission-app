@@ -159,7 +159,7 @@ namespace eu.foodmission.platform
             _messageText = new Unity.AppUI.UI.Text { text = "" };
             _messageText.style.whiteSpace = WhiteSpace.Normal;
             _messageText.primary = false;
-            _messageText.size = TextSize.L;
+            _messageText.size = TextSize.M;
             _messageCard.Add(_messageText);
 
             _messageCard.style.display = DisplayStyle.None;
@@ -573,7 +573,7 @@ namespace eu.foodmission.platform
                 primary = false
             };
             welcomeBody.style.whiteSpace = WhiteSpace.Normal;
-            welcomeBody.size = TextSize.L;
+            welcomeBody.size = TextSize.M;
             // welcomeBody.AddToClassList("centered-text");
             root.Add(welcomeBody);
 

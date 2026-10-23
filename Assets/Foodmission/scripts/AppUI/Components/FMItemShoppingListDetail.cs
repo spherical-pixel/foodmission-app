@@ -53,8 +53,7 @@ namespace eu.foodmission.platform.Components
             this.AddToClassList("fm-shopping-list-detail-item");
 
             _checkbox = new Unity.AppUI.UI.Checkbox();
-            _checkbox.style.marginRight = 10;
-            _checkbox.style.marginLeft = 15;
+            _checkbox.AddToClassList("fm-shopping-list-detail-item__checkbox");
             this.Add(_checkbox);
 
             // The open button is a sibling of the text: a TextElement with children is not measured

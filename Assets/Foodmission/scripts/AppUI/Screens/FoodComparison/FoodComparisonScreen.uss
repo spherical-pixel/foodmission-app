@@ -159,7 +159,7 @@
 }
 
 .fm-fc-duel-badge-icon {
-    font-size: 44px;
+    font-size: var(--appui-font-sizes-heading-md);
     margin-right: 4px;
     flex-shrink: 0;
 }
@@ -407,7 +407,7 @@
 }
 
 .fm-fc-feedback-icon {
-    font-size: 44px;
+    font-size: var(--appui-font-sizes-heading-md);
     margin-right: 8px;
 }
 
@@ -541,7 +541,7 @@
 }
 
 .fm-fc-row-icon {
-    font-size: 44px;
+    font-size: var(--appui-font-sizes-heading-md);
     margin-right: 8px;
     flex-shrink: 0;
 }
@@ -649,7 +649,7 @@
 }
 
 .fm-fc-takeaway-icon {
-    font-size: 44px;
+    font-size: var(--appui-font-sizes-heading-md);
     margin-right: 8px;
     flex-shrink: 0;
 }
@@ -677,7 +677,7 @@
 }
 
 .fm-fc-citation-icon {
-    font-size: 44px;
+    font-size: var(--appui-font-sizes-heading-md);
     margin-right: 12px;
     flex-shrink: 0;
 }

@@ -100,10 +100,10 @@ namespace eu.foodmission.platform.Components
             var loadingLabel = new Text
             {
                 text = "...",
-                name = "camera-loading-label"
+                name = "camera-loading-label",
+                size = TextSize.S
             };
             loadingLabel.style.color = new Color(1f, 1f, 1f, 0.6f);
-            loadingLabel.style.fontSize = 14;
             loadingLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
             scanFrame.Add(loadingLabel);
 

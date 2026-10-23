@@ -137,7 +137,7 @@ namespace eu.foodmission.platform
             }
 
             var name = new Text { text = item.Name ?? item.Code };
-            name.size = TextSize.XXL;
+            name.size = TextSize.L;
             name.AddToClassList("fm-badge-card__name");
             card.Add(name);
 

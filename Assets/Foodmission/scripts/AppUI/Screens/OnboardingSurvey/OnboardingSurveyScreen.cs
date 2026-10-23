@@ -226,7 +226,7 @@ namespace eu.foodmission.platform
             var title = new Unity.AppUI.UI.Heading { text = "📋 Onboarding Survey" };
             title.AddToClassList("centered-text");
             title.style.unityFontStyleAndWeight = FontStyle.Bold;
-            title.size = HeadingSize.XL;
+            title.size = HeadingSize.L;
             container.Add(title);
 
             _nutriView = new FMNutriView();
