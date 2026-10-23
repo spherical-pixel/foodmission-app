@@ -3255,3 +3255,13 @@
 .fm-meal-day-picker-chip--selected {
     border-color: var(--appui-accent-100);
 }
+
+/* Empty focused text fields (EmptyFieldCaret): UI Toolkit misplaces the native caret, a bar replaces it */
+.unity-base-text-field.fm-empty-caret {
+    --unity-cursor-color: rgba(0, 0, 0, 0);
+}
+
+.fm-empty-caret__bar {
+    position: absolute;
+    background-color: var(--appui-foregrounds-200);
+}

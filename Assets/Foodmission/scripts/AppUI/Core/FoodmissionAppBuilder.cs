@@ -19,6 +19,8 @@ namespace eu.foodmission.platform
         public AudioMixer audioMixer;
         public AudioCatalogSO audioCatalog;
 
+        private readonly EmptyFieldCaret _emptyFieldCaret = new EmptyFieldCaret();
+
         protected override void OnConfiguringApp(AppBuilder builder)
         {
             base.OnConfiguringApp(builder);
@@ -277,6 +279,7 @@ namespace eu.foodmission.platform
                 }
                 panelAdjuster.Initialize(rootElement, keyboardService);
                 Debug.Log($"[{GetType().Name}] KeyboardPanelAdjuster initialized");
+                _emptyFieldCaret.Attach(rootElement);
             }
             else
             {
