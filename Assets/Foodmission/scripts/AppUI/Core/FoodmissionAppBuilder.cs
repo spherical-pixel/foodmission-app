@@ -142,6 +142,7 @@ namespace eu.foodmission.platform
             builder.services.AddTransient<FoodFactScreenViewModel>();
             builder.services.AddTransient<KnowledgeViewModel>();
             builder.services.AddTransient<KnowledgeBarDetailViewModel>();
+            builder.services.AddTransient<ProgressWheelInfoViewModel>();
             builder.services.AddTransient<ChallengesViewModel>();
             builder.services.AddTransient<MissionsViewModel>();
             builder.services.AddTransient<QuestsViewModel>();

@@ -42,6 +42,9 @@ namespace eu.foodmission.platform.Components
         public int EffectiveColumns => _effectiveColumns;
         public IReadOnlyList<FMProgressWheelCard> Cards => _cards;
 
+        /// <summary>Raised with the wheel kind when any card is tapped.</summary>
+        public event Action<string> WheelClicked;
+
         public FMProgressWheelGrid()
         {
             AddToClassList(UssClassName);
@@ -61,6 +64,7 @@ namespace eu.foodmission.platform.Components
             while (_cards.Count < count)
             {
                 var card = new FMProgressWheelCard();
+                card.clicked += kind => WheelClicked?.Invoke(kind);
                 _cards.Add(card);
                 Add(card);
             }

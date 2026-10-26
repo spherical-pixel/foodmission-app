@@ -77,6 +77,26 @@
     align-items: center;
 }
 
+.fm-wheel-card--clickable {
+    cursor: link;
+}
+
+/* (i) hint that the card opens its explanation */
+.fm-wheel-card__info {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+/* Icons are tinted, not coloured; without the explicit tint the light theme drew it almost white. */
+.fm-wheel-card .fm-wheel-card__info {
+    --unity-image-tint-color: var(--appui-foregrounds-50);
+}
+
+.fm-wheel-card__info--hidden {
+    display: none;
+}
+
 .fm-wheel-card__ring-wrapper {
     width: 220px;
     height: 220px;

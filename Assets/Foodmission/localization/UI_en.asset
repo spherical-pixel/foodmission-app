@@ -4968,6 +4968,252 @@ MonoBehaviour:
     m_Localized: Page {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: What does this wheel measure?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Scenario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: Amount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: Scientific Basis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: 'The calculation framework is based on:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: Show explanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: Your impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "CO\u2082 Reduction Wheel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg CO\u2082e avoided"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "CO\u2082 Reduction (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "The CO\u2082 Reduction Wheel shows how much climate impact you
+      have avoided through your food choices. Every time you eat less meat, choose
+      lower-impact proteins, prevent food waste, replace ultra-processed foods with
+      more sustainable alternatives, or use refill and reusable packaging systems,
+      you reduce greenhouse gas emissions."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "The wheel measures these savings in <b>kilograms of carbon dioxide
+      equivalent (kg CO\u2082e)</b>. Carbon dioxide equivalent is a standard way
+      of expressing the climate impact of different greenhouse gases in a single
+      measure."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Each action you complete adds CO\u2082 savings to your total. As
+      your savings accumulate, the wheel gradually fills until you reach your current
+      sustainability goal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: Energy Reduction Wheel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: kWh saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: Energy Reduction (kWh)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: The Energy Reduction Wheel tracks how much energy has been saved
+      through your food-related choices. Food production requires energy at every
+      step of the food system. Energy is used to produce fertilisers, irrigate crops,
+      operate farming machinery, process food, transport products, refrigerate food
+      and prepare meals. By choosing lower-impact foods and reducing waste, you help
+      reduce demand for these resources.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: The wheel measures savings in <b>kilowatt-hours (kWh)</b>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: Each action you complete adds <b>kWh</b> savings to your total.
+      As your savings accumulate, the wheel gradually fills until you reach your
+      current sustainability goal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: Water Savings Wheel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: L blue water saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: Water Saved (L)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: The Water Savings Wheel shows how much freshwater has been conserved
+      through your food choices. Agriculture accounts for the largest global use
+      of freshwater. Different foods have very different water footprints. Animal-based
+      foods generally require much more water than plant-based alternatives. Preventing
+      food waste also saves all the water that would otherwise have been used to
+      produce replacement food.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: The wheel measures savings in <b>litres (L)</b> of blue water. Each
+      action you complete adds L savings to your total. As your savings accumulate,
+      the wheel gradually fills until you reach your current sustainability goal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: Land Use Reduction Wheel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 land preserved"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Land Saved (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: The Land Use Reduction Wheel measures how much agricultural land
+      has been spared through your food choices. Producing food requires land. Animal
+      products generally use much more land than plant foods because land is needed
+      both to raise animals and to grow feed crops. Reducing food waste also reduces
+      the amount of land needed to produce food that is ultimately discarded.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "The wheel measures land savings in <b>square metres (m\xB2)</b>.
+      Each action you complete adds m\xB2 savings to your total. As your savings
+      accumulate, the wheel gradually fills until you reach your current sustainability
+      goal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: Vegan Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: Vegetarian Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: Vegan Serving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: Vegetarian Serving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Beef \u2192 Pork"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Beef \u2192 Chicken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Beef \u2192 Legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Pork \u2192 Chicken"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Pork \u2192 Legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "Chicken \u2192 Legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: Half Plate Saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: Full Plate Saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: Expired Product Consumed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Snack \u2192 Fruit or Nuts"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "Sugary Cereal \u2192 Oats/Fruit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "Sugary Drink \u2192 Water"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Ready Meal \u2192 Home-Cooked Meal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Processed Meat \u2192 Legumes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: Reusable Container
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: Refill Product
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: '{0:0.##} use'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: '{0:0.##} refill'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

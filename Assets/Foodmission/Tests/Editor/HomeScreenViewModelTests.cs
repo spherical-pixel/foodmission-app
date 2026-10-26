@@ -1796,6 +1796,20 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("kind", args[0].name);
             Assert.AreEqual(KnowledgeKind.FoodWaste, args[0].value);
         }
+
+        [Test]
+        public void OpenProgressWheelInfo_NavigatesWithKind()
+        {
+            string action = null;
+            Unity.AppUI.Navigation.Argument[] args = null;
+            _vm.NavigationRequested += (a, ar) => { action = a; args = ar; };
+
+            _vm.OpenProgressWheelInfo("WATER_SAVINGS");
+
+            Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.open_progress_wheel_info, action);
+            Assert.AreEqual("kind", args[0].name);
+            Assert.AreEqual("WATER_SAVINGS", args[0].value);
+        }
     
         [Test]
         public void KnowledgeBarPercent_FollowsTheStore()

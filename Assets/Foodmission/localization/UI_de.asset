@@ -5028,6 +5028,259 @@ MonoBehaviour:
     m_Localized: Seite {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: Was misst dieses Rad?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Szenario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: Menge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: Wissenschaftliche Grundlage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: 'Das Berechnungsmodell basiert auf:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: "Erkl\xE4rung anzeigen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: Deine Wirkung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "CO\u2082-Reduktionsrad"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg CO\u2082e vermieden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "CO\u2082-Reduktion (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "Das CO\u2082-Reduktionsrad zeigt, wie viel Klimawirkung du durch
+      deine Lebensmittelwahl vermieden hast. Jedes Mal, wenn du weniger Fleisch isst,
+      Proteine mit geringerer Umweltwirkung w\xE4hlst, Lebensmittelverschwendung
+      vermeidest, hochverarbeitete Lebensmittel durch nachhaltigere Alternativen
+      ersetzt oder Nachf\xFCll- und Mehrwegverpackungssysteme nutzt, verringerst
+      du Treibhausgasemissionen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "Das Rad misst diese Einsparungen in <b>Kilogramm CO\u2082-\xC4quivalent
+      (kg CO\u2082e)</b>. Das CO\u2082-\xC4quivalent ist eine Standardmethode, um
+      die Klimawirkung verschiedener Treibhausgase in einer einzigen Gr\xF6\xDFe
+      auszudr\xFCcken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme CO\u2082-Einsparungen
+      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
+      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: Energieeinsparungsrad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: kWh eingespart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: Energieeinsparung (kWh)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: "Das Energieeinsparungsrad erfasst, wie viel Energie durch deine
+      Entscheidungen rund ums Essen eingespart wurde. Die Lebensmittelproduktion
+      ben\xF6tigt in jedem Schritt des Ern\xE4hrungssystems Energie. Energie wird
+      verwendet, um D\xFCngemittel herzustellen, Felder zu bew\xE4ssern, landwirtschaftliche
+      Maschinen zu betreiben, Lebensmittel zu verarbeiten, Produkte zu transportieren,
+      Lebensmittel zu k\xFChlen und Mahlzeiten zuzubereiten. Wenn du Lebensmittel
+      mit geringerer Umweltwirkung w\xE4hlst und Verschwendung reduzierst, hilfst
+      du, den Bedarf an diesen Ressourcen zu senken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: Das Rad misst Einsparungen in <b>Kilowattstunden (kWh)</b>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: "Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme <b>kWh</b>-Einsparungen
+      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
+      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: Wassereinsparungsrad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: L blaues Wasser eingespart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: Eingespartes Wasser (L)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: "Das Wassereinsparungsrad zeigt, wie viel S\xFC\xDFwasser durch
+      deine Lebensmittelwahl eingespart wurde. Die Landwirtschaft ist weltweit der
+      gr\xF6\xDFte S\xFC\xDFwasserverbraucher. Verschiedene Lebensmittel haben sehr
+      unterschiedliche Wasserfu\xDFabdr\xFCcke. Tierische Lebensmittel ben\xF6tigen
+      in der Regel viel mehr Wasser als pflanzliche Alternativen. Wenn du Lebensmittelverschwendung
+      vermeidest, sparst du au\xDFerdem das gesamte Wasser, das sonst f\xFCr die
+      Herstellung von Ersatzlebensmitteln verbraucht worden w\xE4re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: "Das Rad misst Einsparungen in <b>Litern (L)</b> blauem Wasser.
+      Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme L-Einsparungen
+      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
+      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: "Rad f\xFCr weniger Fl\xE4chenverbrauch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 Fl\xE4che erhalten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Eingesparte Fl\xE4che (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: "Das Rad f\xFCr weniger Fl\xE4chenverbrauch misst, wie viel landwirtschaftliche
+      Fl\xE4che durch deine Lebensmittelwahl eingespart wurde. F\xFCr die Lebensmittelproduktion
+      wird Fl\xE4che ben\xF6tigt. Tierische Produkte ben\xF6tigen in der Regel viel
+      mehr Fl\xE4che als pflanzliche Lebensmittel, weil Fl\xE4che sowohl f\xFCr die
+      Tierhaltung als auch f\xFCr den Anbau von Futterpflanzen gebraucht wird. Weniger
+      Lebensmittelverschwendung verringert auch die Fl\xE4che, die f\xFCr die Produktion
+      von Lebensmitteln n\xF6tig ist, die letztlich weggeworfen werden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "Das Rad misst Fl\xE4cheneinsparungen in <b>Quadratmetern (m\xB2)</b>.
+      Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme m\xB2-Einsparungen
+      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
+      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: Veganer Tag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: Vegetarischer Tag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: Vegane Portion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: Vegetarische Portion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Rindfleisch \u2192 Schweinefleisch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Rindfleisch \u2192 H\xFChnchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Rindfleisch \u2192 H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Schweinefleisch \u2192 H\xFChnchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Schweinefleisch \u2192 H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "H\xFChnchen \u2192 H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: Halber Teller gerettet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: Voller Teller gerettet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: Abgelaufenes Produkt verzehrt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Snack \u2192 Obst oder N\xFCsse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "Ges\xFC\xDFte Zerealien \u2192 Hafer/Obst"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "Zuckerhaltiges Getr\xE4nk \u2192 Wasser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Fertiggericht \u2192 Selbstgekochte Mahlzeit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Verarbeitetes Fleisch \u2192 H\xFClsenfr\xFCchte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: "Mehrwegbeh\xE4lter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: "Nachf\xFCllprodukt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: '{0:0.##} Nutzung'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: "{0:0.##} Nachf\xFCllung"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

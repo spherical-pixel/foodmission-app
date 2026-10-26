@@ -44,6 +44,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string open_pilot_survey = "open_pilot_survey";
         public const string open_food_fact = "open_food_fact";
         public const string open_knowledge_bar = "open_knowledge_bar";
+        public const string open_progress_wheel_info = "open_progress_wheel_info";
         public const string go_to_food_facts = "go_to_food_facts";
         public const string go_to_knowledge = "go_to_knowledge";
         public const string go_to_challenges = "go_to_challenges";
@@ -104,6 +105,7 @@ namespace Unity.AppUI.Navigation.Generated
         public const string foodfacts = "FoodFacts";
         public const string foodfact = "FoodFact";
         public const string knowledgebardetail = "KnowledgeBarDetail";
+        public const string progresswheelinfo = "ProgressWheelInfo";
         public const string knowledge = "Knowledge";
         public const string challenges = "Challenges";
         public const string missions = "Missions";

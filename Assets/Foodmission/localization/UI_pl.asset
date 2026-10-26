@@ -5073,6 +5073,268 @@ MonoBehaviour:
     m_Localized: Strona {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: "Co mierzy to ko\u0142o?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Scenariusz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: "Ilo\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: Podstawy naukowe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: "Ramy oblicze\u0144 opieraj\u0105 si\u0119 na:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: "Poka\u017C wyja\u015Bnienie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: "Tw\xF3j wp\u0142yw"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "Ko\u0142o redukcji CO\u2082"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg CO\u2082e unikni\u0119te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "Redukcja CO\u2082 (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "Ko\u0142o redukcji CO\u2082 pokazuje, jakiego wp\u0142ywu na klimat
+      uda\u0142o ci si\u0119 unikn\u0105\u0107 dzi\u0119ki twoim wyborom \u017Cywieniowym.
+      Za ka\u017Cdym razem, gdy jesz mniej mi\u0119sa, wybierasz bia\u0142ko o mniejszym
+      wp\u0142ywie na \u015Brodowisko, zapobiegasz marnowaniu \u017Cywno\u015Bci,
+      zast\u0119pujesz \u017Cywno\u015B\u0107 wysoko przetworzon\u0105 bardziej zr\xF3wnowa\u017Conymi
+      alternatywami lub korzystasz z system\xF3w uzupe\u0142niania i opakowa\u0144
+      wielokrotnego u\u017Cytku, zmniejszasz emisj\u0119 gaz\xF3w cieplarnianych."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "Ko\u0142o mierzy te oszcz\u0119dno\u015Bci w <b>kilogramach ekwiwalentu
+      dwutlenku w\u0119gla (kg CO\u2082e)</b>. Ekwiwalent dwutlenku w\u0119gla to
+      standardowy spos\xF3b wyra\u017Cania wp\u0142ywu r\xF3\u017Cnych gaz\xF3w cieplarnianych
+      na klimat za pomoc\u0105 jednej miary."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci
+      CO\u2082 do twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105,
+      ko\u0142o stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j
+      obecny cel zr\xF3wnowa\u017Conego rozwoju."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: "Ko\u0142o redukcji energii"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: "kWh zaoszcz\u0119dzone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: Redukcja energii (kWh)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: "Ko\u0142o redukcji energii pokazuje, ile energii uda\u0142o si\u0119
+      zaoszcz\u0119dzi\u0107 dzi\u0119ki twoim wyborom zwi\u0105zanym z jedzeniem.
+      Produkcja \u017Cywno\u015Bci wymaga energii na ka\u017Cdym etapie systemu \u017Cywno\u015Bciowego.
+      Energia jest potrzebna do produkcji nawoz\xF3w, nawadniania upraw, obs\u0142ugi
+      maszyn rolniczych, przetwarzania \u017Cywno\u015Bci, transportu produkt\xF3w,
+      ch\u0142odzenia \u017Cywno\u015Bci i przygotowywania posi\u0142k\xF3w. Wybieraj\u0105c
+      \u017Cywno\u015B\u0107 o mniejszym wp\u0142ywie na \u015Brodowisko i ograniczaj\u0105c
+      marnowanie, pomagasz zmniejszy\u0107 zapotrzebowanie na te zasoby."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: "Ko\u0142o mierzy oszcz\u0119dno\u015Bci w <b>kilowatogodzinach
+      (kWh)</b>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: "Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci
+      <b>kWh</b> do twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105,
+      ko\u0142o stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j
+      obecny cel zr\xF3wnowa\u017Conego rozwoju."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: "Ko\u0142o oszcz\u0119dno\u015Bci wody"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: "L niebieskiej wody zaoszcz\u0119dzone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: "Zaoszcz\u0119dzona woda (L)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: "Ko\u0142o oszcz\u0119dno\u015Bci wody pokazuje, ile s\u0142odkiej
+      wody uda\u0142o si\u0119 zaoszcz\u0119dzi\u0107 dzi\u0119ki twoim wyborom \u017Cywieniowym.
+      Rolnictwo odpowiada za najwi\u0119ksze zu\u017Cycie s\u0142odkiej wody na \u015Bwiecie.
+      R\xF3\u017Cne produkty spo\u017Cywcze maj\u0105 bardzo r\xF3\u017Cny \u015Blad
+      wodny. \u017Bywno\u015B\u0107 pochodzenia zwierz\u0119cego wymaga na og\xF3\u0142
+      znacznie wi\u0119cej wody ni\u017C ro\u015Blinne alternatywy. Zapobieganie
+      marnowaniu \u017Cywno\u015Bci oszcz\u0119dza te\u017C ca\u0142\u0105 wod\u0119,
+      kt\xF3ra w przeciwnym razie zosta\u0142aby zu\u017Cyta do wyprodukowania \u017Cywno\u015Bci
+      zast\u0119pczej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: "Ko\u0142o mierzy oszcz\u0119dno\u015Bci w <b>litrach (L)</b> niebieskiej
+      wody. Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci L do
+      twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105, ko\u0142o
+      stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j obecny cel
+      zr\xF3wnowa\u017Conego rozwoju."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: "Ko\u0142o mniejszego zu\u017Cycia grunt\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 zachowanych grunt\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Zaoszcz\u0119dzone grunty (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: "Ko\u0142o mniejszego zu\u017Cycia grunt\xF3w mierzy, ile grunt\xF3w
+      rolnych uda\u0142o si\u0119 oszcz\u0119dzi\u0107 dzi\u0119ki twoim wyborom
+      \u017Cywieniowym. Produkcja \u017Cywno\u015Bci wymaga grunt\xF3w. Produkty
+      zwierz\u0119ce zajmuj\u0105 na og\xF3\u0142 znacznie wi\u0119cej ziemi ni\u017C
+      \u017Cywno\u015B\u0107 ro\u015Blinna, poniewa\u017C ziemia jest potrzebna zar\xF3wno
+      do hodowli zwierz\u0105t, jak i do uprawy ro\u015Blin paszowych. Ograniczenie
+      marnowania \u017Cywno\u015Bci zmniejsza te\u017C powierzchni\u0119 potrzebn\u0105
+      do produkcji \u017Cywno\u015Bci, kt\xF3ra ostatecznie zostaje wyrzucona."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "Ko\u0142o mierzy oszcz\u0119dno\u015Bci grunt\xF3w w <b>metrach
+      kwadratowych (m\xB2)</b>. Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci
+      m\xB2 do twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105, ko\u0142o
+      stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j obecny cel
+      zr\xF3wnowa\u017Conego rozwoju."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: "Dzie\u0144 wega\u0144ski"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: "Dzie\u0144 wegetaria\u0144ski"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: "Porcja wega\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: "Porcja wegetaria\u0144ska"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Wo\u0142owina \u2192 Wieprzowina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Wo\u0142owina \u2192 Kurczak"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Wo\u0142owina \u2192 Ro\u015Bliny str\u0105czkowe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Wieprzowina \u2192 Kurczak"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Wieprzowina \u2192 Ro\u015Bliny str\u0105czkowe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "Kurczak \u2192 Ro\u015Bliny str\u0105czkowe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: "Uratowane p\xF3\u0142 talerza"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: "Uratowany pe\u0142ny talerz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: "Spo\u017Cyty przeterminowany produkt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Przek\u0105ska \u2192 Owoce lub orzechy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "S\u0142odzone p\u0142atki \u2192 Owies/owoce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "S\u0142odki nap\xF3j \u2192 Woda"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Danie gotowe \u2192 Posi\u0142ek domowy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Przetworzone mi\u0119so \u2192 Ro\u015Bliny str\u0105czkowe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: "Pojemnik wielokrotnego u\u017Cytku"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: "Produkt do uzupe\u0142niania"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: "{0:0.##} u\u017Cycie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: "{0:0.##} uzupe\u0142nienie"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

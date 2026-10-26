@@ -1418,6 +1418,8 @@ MonoBehaviour:
   - {fileID: 2688167473367792649}
   - {fileID: -4550895027092396944}
   - {fileID: 3721770249691427602}
+  - {fileID: 6727395892852312623}
+  - {fileID: 4850539159198804759}
 --- !u!114 &107596328955053790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2732,6 +2734,33 @@ MonoBehaviour:
   - {fileID: -7176301613669967976}
   m_Label: 
   m_StartDestination: {fileID: -8582299972390442400}
+--- !u!114 &4850539159198804759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78073c03d6154685bf631e4ad244b9b8, type: 3}
+  m_Name: open_progress_wheel_info
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavAction
+  m_Position: {x: 550, y: 4070}
+  m_Guid: 37bdd261-4a8d-4c42-bd77-1cd2850b2bc3
+  m_Destination: {fileID: 6727395892852312623}
+  m_Options:
+    m_PopUpToStrategy: 0
+    m_PopUpToRoute: {fileID: 0}
+    m_PopUpToInclusive: 0
+    m_EnterAnim: 0
+    m_ExitAnim: 0
+    m_PopEnterAnim: 0
+    m_PopExitAnim: 0
+    m_PopUpToSaveState: 0
+    m_RestoreState: 0
+    m_LaunchSingleTop: 0
+  m_DefaultArguments: []
 --- !u!114 &4900769893359248207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3049,8 +3078,42 @@ MonoBehaviour:
   - {fileID: -1741816292427579952}
   - {fileID: 2688167473367792649}
   - {fileID: 3721770249691427602}
+  - {fileID: 4850539159198804759}
   m_Label: 
   m_StartDestination: {fileID: 2695106299898621552}
+--- !u!114 &6727395892852312623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819e9866b5cc41e7ac482ba5fe89e09b, type: 3}
+  m_Name: ProgressWheelInfo
+  m_EditorClassIdentifier: Unity.AppUI.Navigation::Unity.AppUI.Navigation.NavDestination
+  m_Position: {x: 550, y: 3950}
+  m_Guid: 0991c81902dc4442859a17c7641e2636
+  m_Parent: {fileID: 6576446744998733474}
+  m_Actions: []
+  m_Label: '@UI:WHEEL_INFO_APPBAR'
+  m_TemplateSettings:
+    rid: 685283817655151546
+  m_Arguments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 685283817655151546
+      type: {class: DefaultDestinationTemplate, ns: Unity.AppUI.Navigation, asm: Unity.AppUI.Navigation}
+      data:
+        m_ScreenType: eu.foodmission.platform.ProgressWheelInfoScreen, Foodmission,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_ShowBottomNavBar: 0
+        m_ShowAppBar: 1
+        m_ShowBackButton: 1
+        m_ShowDrawer: 0
+        m_ShowNavigationRail: 0
 --- !u!114 &6946922476416249955
 MonoBehaviour:
   m_ObjectHideFlags: 0

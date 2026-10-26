@@ -4675,6 +4675,222 @@ MonoBehaviour:
     m_Key: txtPage_n
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Key: WHEEL_INFO_MEASURE_HEADING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Key: WHEEL_INFO_COL_SCENARIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Key: WHEEL_INFO_COL_AMOUNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Key: WHEEL_INFO_VALUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Key: WHEEL_INFO_SOURCES_HEADING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Key: WHEEL_INFO_SOURCES_LEAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Key: WHEEL_INFO_A11Y_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Key: WHEEL_INFO_APPBAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Key: WHEEL_INFO_CO2_REDUCTION_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Key: WHEEL_INFO_CO2_REDUCTION_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Key: WHEEL_INFO_CO2_REDUCTION_VALUE_HEADER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Key: WHEEL_INFO_CO2_REDUCTION_P1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Key: WHEEL_INFO_CO2_REDUCTION_P2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Key: WHEEL_INFO_CO2_REDUCTION_P3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Key: WHEEL_INFO_ENERGY_REDUCTION_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Key: WHEEL_INFO_ENERGY_REDUCTION_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Key: WHEEL_INFO_ENERGY_REDUCTION_VALUE_HEADER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Key: WHEEL_INFO_ENERGY_REDUCTION_P1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Key: WHEEL_INFO_ENERGY_REDUCTION_P2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Key: WHEEL_INFO_ENERGY_REDUCTION_P3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Key: WHEEL_INFO_WATER_SAVINGS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Key: WHEEL_INFO_WATER_SAVINGS_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Key: WHEEL_INFO_WATER_SAVINGS_VALUE_HEADER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Key: WHEEL_INFO_WATER_SAVINGS_P1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Key: WHEEL_INFO_WATER_SAVINGS_P2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Key: WHEEL_INFO_LAND_USE_REDUCTION_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Key: WHEEL_INFO_LAND_USE_REDUCTION_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Key: WHEEL_INFO_LAND_USE_REDUCTION_VALUE_HEADER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Key: WHEEL_INFO_LAND_USE_REDUCTION_P1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Key: WHEEL_INFO_LAND_USE_REDUCTION_P2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Key: WHEEL_INFO_SCENARIO_VEGAN_DAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Key: WHEEL_INFO_SCENARIO_VEGETARIAN_DAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Key: WHEEL_INFO_SCENARIO_VEGAN_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Key: WHEEL_INFO_SCENARIO_VEGETARIAN_MEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Key: WHEEL_INFO_SCENARIO_BEEF_TO_PORK_100G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Key: WHEEL_INFO_SCENARIO_BEEF_TO_CHICKEN_100G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Key: WHEEL_INFO_SCENARIO_BEEF_TO_LEGUMES_100G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Key: WHEEL_INFO_SCENARIO_PORK_TO_CHICKEN_100G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Key: WHEEL_INFO_SCENARIO_PORK_TO_LEGUMES_100G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Key: WHEEL_INFO_SCENARIO_CHICKEN_TO_LEGUMES_100G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Key: WHEEL_INFO_SCENARIO_HALF_PLATE_SAVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Key: WHEEL_INFO_SCENARIO_FULL_PLATE_SAVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Key: WHEEL_INFO_SCENARIO_EXPIRED_PRODUCT_CONSUMED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Key: WHEEL_INFO_SCENARIO_SNACK_TO_FRUIT_OR_NUTS_30G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Key: WHEEL_INFO_SCENARIO_SUGARY_CEREAL_TO_OATS_FRUIT_30G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Key: WHEEL_INFO_SCENARIO_SUGARY_DRINK_TO_WATER_250ML
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Key: WHEEL_INFO_SCENARIO_READY_MEAL_TO_HOME_COOKED_400G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Key: WHEEL_INFO_SCENARIO_PROCESSED_MEAT_TO_LEGUMES_50G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Key: WHEEL_INFO_SCENARIO_REUSABLE_CONTAINER_USE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Key: WHEEL_INFO_SCENARIO_REFILL_PRODUCT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Key: WHEEL_INFO_AMOUNT_G
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Key: WHEEL_INFO_AMOUNT_ML
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Key: WHEEL_INFO_AMOUNT_USE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Key: WHEEL_INFO_AMOUNT_REFILL
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
