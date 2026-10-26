@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:appui="Unity.AppUI.UI" editor-extension-mode="False">
+    <Style src="project://database/Assets/Foodmission/AppUI/Foodmission_Global_Styles.uss?fileID=7433441132597879392&amp;guid=86346275682b4470483ba900372b6b10&amp;type=3#Foodmission_Global_Styles"/>
+    <Style src="project://database/Assets/Foodmission/AppUI/FMProgressWheel.uss?fileID=7433441132597879392&amp;guid=0cce8fad8612c407c8975a0413072653&amp;type=3#FMProgressWheel"/>
+    <Style src="ProgressWheelInfoScreen.uss"/>
+    <ui:VisualElement name="root" class="fm-root fm-wheel-info-root">
+        <ui:VisualElement name="wheel-header" class="fm-wheel-info-header">
+            <eu.foodmission.platform.Components.FMProgressWheelCard name="wheel-card" class="fm-wheel-info-card"/>
+            <appui:Heading name="wheel-title" text="" size="M" class="fm-wheel-info-title"/>
+            <appui:Text name="wheel-subtitle" text="" size="M" class="fm-wheel-info-subtitle"/>
+        </ui:VisualElement>
+        <appui:Heading name="measure-heading" text="" size="S" class="fm-wheel-info-section-heading"/>
+        <ui:VisualElement name="paragraphs" class="fm-wheel-info-paragraphs"/>
+        <ui:VisualElement name="scenario-table" class="fm-wheel-info-table">
+            <ui:VisualElement name="scenario-header" class="fm-wheel-info-row fm-wheel-info-row--header">
+                <appui:Text name="col-scenario" text="" size="S" class="fm-wheel-info-cell fm-wheel-info-cell--name"/>
+                <appui:Text name="col-amount" text="" size="S" class="fm-wheel-info-cell fm-wheel-info-cell--amount"/>
+                <appui:Text name="col-value" text="" size="S" class="fm-wheel-info-cell fm-wheel-info-cell--value"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="scenarios" class="fm-wheel-info-scenarios"/>
+        </ui:VisualElement>
+        <appui:Accordion name="sources" class="fm-wheel-info-sources">
+            <appui:AccordionItem name="sources-item" title="">
+                <appui:Text name="sources-lead" text="" size="S" class="fm-wheel-info-sources-lead"/>
+                <ui:VisualElement name="sources-list" class="fm-wheel-info-sources-list"/>
+            </appui:AccordionItem>
+        </appui:Accordion>
+        <ui:VisualElement class="fm-bottom-nav-padding"/>
+    </ui:VisualElement>
+</ui:UXML>

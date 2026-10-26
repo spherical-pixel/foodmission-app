@@ -5003,6 +5003,254 @@ MonoBehaviour:
     m_Localized: Pagina {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: Wat meet dit wiel?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Scenario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: Hoeveelheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: Wetenschappelijke basis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: 'Het rekenkader is gebaseerd op:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: Uitleg tonen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: Jouw impact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "CO\u2082-reductiewiel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg CO\u2082e vermeden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "CO\u2082-reductie (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "Het CO\u2082-reductiewiel laat zien hoeveel klimaatimpact je hebt
+      vermeden door je voedselkeuzes. Elke keer dat je minder vlees eet, eiwitten
+      met een lagere impact kiest, voedselverspilling voorkomt, ultrabewerkte producten
+      vervangt door duurzamere alternatieven of navul- en herbruikbare verpakkingssystemen
+      gebruikt, verminder je de uitstoot van broeikasgassen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "Het wiel meet deze besparingen in <b>kilogram CO\u2082-equivalent
+      (kg CO\u2082e)</b>. CO\u2082-equivalent is een standaardmanier om de klimaatimpact
+      van verschillende broeikasgassen in \xE9\xE9n maat uit te drukken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Elke actie die je voltooit, telt CO\u2082-besparingen op bij je
+      totaal. Naarmate je besparingen toenemen, vult het wiel zich geleidelijk tot
+      je je huidige duurzaamheidsdoel bereikt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: Energiebesparingswiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: kWh bespaard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: Energiebesparing (kWh)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: Het energiebesparingswiel houdt bij hoeveel energie er is bespaard
+      door je voedselgerelateerde keuzes. Voedselproductie vraagt energie in elke
+      stap van het voedselsysteem. Er wordt energie gebruikt om kunstmest te produceren,
+      gewassen te irrigeren, landbouwmachines te laten draaien, voedsel te verwerken,
+      producten te vervoeren, voedsel te koelen en maaltijden te bereiden. Door voedsel
+      met een lagere impact te kiezen en verspilling te verminderen, help je de vraag
+      naar deze hulpbronnen te verlagen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: Het wiel meet besparingen in <b>kilowattuur (kWh)</b>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: Elke actie die je voltooit, telt <b>kWh</b>-besparingen op bij je
+      totaal. Naarmate je besparingen toenemen, vult het wiel zich geleidelijk tot
+      je je huidige duurzaamheidsdoel bereikt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: Waterbesparingswiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: L blauw water bespaard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: Bespaard water (L)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: Het waterbesparingswiel laat zien hoeveel zoet water er is bespaard
+      door je voedselkeuzes. De landbouw is wereldwijd de grootste gebruiker van
+      zoet water. Verschillende voedingsmiddelen hebben een heel verschillende watervoetafdruk.
+      Dierlijke producten vragen over het algemeen veel meer water dan plantaardige
+      alternatieven. Door voedselverspilling te voorkomen, bespaar je ook al het
+      water dat anders nodig zou zijn geweest om vervangend voedsel te produceren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: Het wiel meet besparingen in <b>liters (L)</b> blauw water. Elke
+      actie die je voltooit, telt L-besparingen op bij je totaal. Naarmate je besparingen
+      toenemen, vult het wiel zich geleidelijk tot je je huidige duurzaamheidsdoel
+      bereikt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: Wiel voor minder landgebruik
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 land behouden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Bespaard land (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: "Het wiel voor minder landgebruik meet hoeveel landbouwgrond er
+      is gespaard door je voedselkeuzes. Voor het produceren van voedsel is land
+      nodig. Dierlijke producten gebruiken over het algemeen veel meer land dan plantaardig
+      voedsel, omdat er land nodig is om dieren te houden \xE9n om voedergewassen
+      te telen. Minder voedselverspilling verkleint ook de hoeveelheid land die nodig
+      is om voedsel te produceren dat uiteindelijk wordt weggegooid."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "Het wiel meet landbesparingen in <b>vierkante meters (m\xB2)</b>.
+      Elke actie die je voltooit, telt m\xB2-besparingen op bij je totaal. Naarmate
+      je besparingen toenemen, vult het wiel zich geleidelijk tot je je huidige duurzaamheidsdoel
+      bereikt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: Veganistische dag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: Vegetarische dag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: Veganistische portie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: Vegetarische portie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Rundvlees \u2192 Varkensvlees"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Rundvlees \u2192 Kip"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Rundvlees \u2192 Peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Varkensvlees \u2192 Kip"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Varkensvlees \u2192 Peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "Kip \u2192 Peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: Half bord gered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: Vol bord gered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: Verlopen product geconsumeerd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Snack \u2192 Fruit of noten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "Suikerrijke ontbijtgranen \u2192 Haver/fruit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "Suikerrijke drank \u2192 Water"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Kant-en-klaarmaaltijd \u2192 Zelfgekookte maaltijd"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Bewerkt vlees \u2192 Peulvruchten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: Herbruikbare verpakking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: Navulproduct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: '{0:0.##} gebruik'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: '{0:0.##} navulling'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

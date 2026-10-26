@@ -1,0 +1,113 @@
+.fm-wheel-info-header {
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.fm-wheel-info-card {
+    width: 100%;
+}
+
+.fm-wheel-info-card--hidden {
+    display: none;
+}
+
+.fm-wheel-info-title {
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.fm-wheel-info-subtitle {
+    -unity-text-align: middle-center;
+    white-space: normal;
+    color: var(--appui-foregrounds-50);
+    margin-top: 4px;
+}
+
+.fm-wheel-info-section-heading {
+    white-space: normal;
+    margin-bottom: 12px;
+}
+
+.fm-wheel-info-paragraphs {
+    margin-bottom: 24px;
+}
+
+.fm-wheel-info-paragraph {
+    white-space: normal;
+    margin-bottom: 16px;
+}
+
+/* Rounded container like the Food Info nutrition table; rows reach its edges and the radius clips them. */
+.fm-wheel-info-table {
+    border-radius: 14px;
+    overflow: hidden;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--fm-surface-bg-transparent);
+    margin-bottom: 24px;
+}
+
+/* Name on its own line, amount and value below it: long translations never share a line with a fixed column. */
+.fm-wheel-info-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 12px 16px;
+    background-color: var(--fm-surface-bg-transparent);
+}
+
+.fm-wheel-info-row--header {
+    border-bottom-width: 8px;
+    border-bottom-color: var(--appui-backgrounds-200);
+}
+
+.fm-wheel-info-row--header .fm-wheel-info-cell {
+    -unity-font-style: bold;
+}
+
+.fm-wheel-info-row--alt {
+    background-color: var(--fm-table-row-alt-bg);
+}
+
+.fm-wheel-info-cell {
+    white-space: normal;
+}
+
+.fm-wheel-info-cell--name {
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.fm-wheel-info-cell--amount {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    padding-right: 12px;
+}
+
+/* Takes the width it needs (never wraps "0,15 kWh"); the amount gives way instead. */
+.fm-wheel-info-cell--value {
+    flex-shrink: 0;
+    white-space: nowrap;
+    -unity-text-align: upper-right;
+    -unity-font-style: bold;
+}
+
+/*
+ * Column titles can be long ("Reducción de CO₂ (kg CO₂e)") and must wrap. Both titles get half of the
+ * line with a zero basis, so the text is measured at its real width and the row grows with it
+ * (a shrunk cell keeps the height of its unwrapped text and the second line is clipped).
+ */
+.fm-wheel-info-row--header .fm-wheel-info-cell--amount,
+.fm-wheel-info-row--header .fm-wheel-info-cell--value {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
+    white-space: normal;
+}
+
+.fm-wheel-info-sources-lead {
+    white-space: normal;
+    margin-bottom: 12px;
+}

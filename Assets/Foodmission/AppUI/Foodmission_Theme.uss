@@ -163,6 +163,7 @@
     --fm-surface-bg-transparent: rgba(255, 255, 255, 0.20);
     --fm-surface-bg-transparent-50: rgba(255, 255, 255, 0.50);
     --fm-surface-bg-transparent-80: rgba(255, 255, 255, 0.80);
+    --fm-table-row-alt-bg: rgba(255, 255, 255, 0.10);
     --fm-surface-bg-alt: #F5F5F5;
     --fm-card-bg: rgba(255, 255, 255, 0.90);
     /* Progress wheels (ring >= 3:1 vs --fm-card-bg, checked by ProgressWheelThemeContrastTests) */
@@ -308,6 +309,8 @@
     --fm-surface-bg-transparent: rgba(10, 20, 18, 0.65);
     --fm-surface-bg-transparent-50: rgba(10, 20, 18, 0.65);
     --fm-surface-bg-transparent-80: rgba(10, 20, 18, 0.80);
+    /* The dark surface tones are all the same green, so zebra rows lighten instead. */
+    --fm-table-row-alt-bg: rgba(255, 255, 255, 0.06);
     --fm-surface-bg-alt: #0f1f1c;
     --fm-card-bg: rgba(15, 30, 26, 0.95);
     /* Progress wheels (ring >= 3:1 vs --fm-card-bg, checked by ProgressWheelThemeContrastTests) */

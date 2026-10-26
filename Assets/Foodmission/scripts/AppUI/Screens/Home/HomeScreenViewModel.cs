@@ -305,6 +305,13 @@ namespace eu.foodmission.platform
                 new Unity.AppUI.Navigation.Argument("kind", kind));
         }
 
+        public void OpenProgressWheelInfo(string kind)
+        {
+            RaiseNavigationRequested(
+                Unity.AppUI.Navigation.Generated.Actions.open_progress_wheel_info,
+                new Unity.AppUI.Navigation.Argument("kind", kind));
+        }
+
         protected override void OnDispose()
         {
             _wheelsSubscription?.Dispose();

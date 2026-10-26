@@ -1,3 +1,5 @@
+using System;
+
 using Unity.AppUI.UI;
 
 using UnityEngine.UIElements;
@@ -11,6 +13,9 @@ namespace eu.foodmission.platform.Components
     {
         public const string UssClassName = "fm-wheel-card";
         public const string HorizontalUssClassName = "fm-wheel-card--horizontal";
+        public const string ClickableUssClassName = "fm-wheel-card--clickable";
+        public const string InfoIconUssClassName = "fm-wheel-card__info";
+        public const string InfoIconHiddenUssClassName = "fm-wheel-card__info--hidden";
 
         private readonly CircularProgress _ring;
         private readonly Text _percent;
@@ -19,10 +24,29 @@ namespace eu.foodmission.platform.Components
         private readonly Text _stageTitle;
         private readonly Text _value;
         private readonly Text _meta;
+        private readonly Icon _infoIcon;
         private string _colorClass;
+        private bool _interactive = true;
 
         public string Kind { get; private set; }
         public string AccessibilityLabel { get; private set; } = "";
+
+        /// <summary>Raised with the wheel kind when the card is tapped (Home opens its explanation).</summary>
+        public event Action<string> clicked;
+
+        /// <summary>Whether the host lets the card be tapped; false on the explanation screen itself.</summary>
+        public bool Interactive
+        {
+            get => _interactive;
+            set
+            {
+                _interactive = value;
+                RefreshInteractivity();
+            }
+        }
+
+        /// <summary>True when tapping opens an explanation: the host allows it and the app has a text for this wheel.</summary>
+        public bool CanOpen => _interactive && ProgressWheelInfoCatalog.ParagraphCount(Kind) > 0;
 
         public FMProgressWheelCard()
         {
@@ -51,6 +75,29 @@ namespace eu.foodmission.platform.Components
             _value = AddText(texts, "fm-wheel-card__value", TextSize.S);
             _meta = AddText(texts, "fm-wheel-card__meta", TextSize.S);
             Add(texts);
+
+            _infoIcon = new Icon { iconName = "info" };
+            _infoIcon.AddToClassList(InfoIconUssClassName);
+            Add(_infoIcon);
+
+            RefreshInteractivity();
+            this.AddManipulator(new UnityEngine.UIElements.Clickable(Activate));
+        }
+
+        /// <summary>Same as a tap: raises <see cref="clicked"/> when <see cref="CanOpen"/> (also used by the screen reader action).</summary>
+        public void Activate()
+        {
+            if (CanOpen)
+            {
+                clicked?.Invoke(Kind);
+            }
+        }
+
+        private void RefreshInteractivity()
+        {
+            bool canOpen = CanOpen;
+            EnableInClassList(ClickableUssClassName, canOpen);
+            _infoIcon.EnableInClassList(InfoIconHiddenUssClassName, !canOpen);
         }
 
         private static Text AddText(VisualElement parent, string ussClass, TextSize size)
@@ -64,6 +111,7 @@ namespace eu.foodmission.platform.Components
         public void Bind(ProgressWheel wheel)
         {
             Kind = wheel?.kind;
+            RefreshInteractivity();
 
             string colorClass = ProgressWheelText.ColorClass(Kind);
             if (_colorClass != colorClass)

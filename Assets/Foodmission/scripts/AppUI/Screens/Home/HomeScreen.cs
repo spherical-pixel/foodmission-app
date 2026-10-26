@@ -542,6 +542,10 @@ namespace eu.foodmission.platform
             {
                 _btnWheelsCustomize.clicked += OnWheelsCustomizeClicked;
             }
+            if (_wheelsGrid != null)
+            {
+                _wheelsGrid.WheelClicked += OnWheelClicked;
+            }
             if (_viewModel != null)
             {
                 _viewModel.ProgressWheelsChanged += RenderProgressWheels;
@@ -600,6 +604,7 @@ namespace eu.foodmission.platform
         private void OnHealthBarClicked() => _viewModel?.OpenKnowledgeBar(KnowledgeKind.Health);
         private void OnFoodChoicesBarClicked() => _viewModel?.OpenKnowledgeBar(KnowledgeKind.FoodChoices);
         private void OnFoodWasteBarClicked() => _viewModel?.OpenKnowledgeBar(KnowledgeKind.FoodWaste);
+        private void OnWheelClicked(string kind) => _viewModel?.OpenProgressWheelInfo(kind);
 
         private void UnregisterEvents()
         {
@@ -627,6 +632,10 @@ namespace eu.foodmission.platform
             if (_btnWheelsCustomize != null)
             {
                 _btnWheelsCustomize.clicked -= OnWheelsCustomizeClicked;
+            }
+            if (_wheelsGrid != null)
+            {
+                _wheelsGrid.WheelClicked -= OnWheelClicked;
             }
             if (_viewModel != null)
             {
@@ -989,10 +998,26 @@ namespace eu.foodmission.platform
                 for (int i = 0; i < _wheelsGrid.Cards.Count; i++)
                 {
                     FMProgressWheelCard card = _wheelsGrid.Cards[i];
-                    AccessibilityNode node = _accessibilityHierarchy.AddNode(labels[i]);
-                    node.role = AccessibilityRole.StaticText;
-                    node.frameGetter = MakeElementFrameGetter(card);
-                    _wheelNodes.Add(node);
+                    if (card.CanOpen)
+                    {
+                        AccessibilityNode node = _accessibilityHierarchy.AddNode(
+                            $"{labels[i]}, {ProgressWheelText.Localize(ProgressWheelInfoCatalog.A11yHintKey)}");
+                        node.role = AccessibilityRole.Button;
+                        node.frameGetter = MakeElementFrameGetter(card);
+                        node.invoked += () =>
+                        {
+                            card.Activate();
+                            return true;
+                        };
+                        _wheelNodes.Add(node);
+                    }
+                    else
+                    {
+                        AccessibilityNode node = _accessibilityHierarchy.AddNode(labels[i]);
+                        node.role = AccessibilityRole.StaticText;
+                        node.frameGetter = MakeElementFrameGetter(card);
+                        _wheelNodes.Add(node);
+                    }
                 }
             }
 

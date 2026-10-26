@@ -4996,6 +4996,257 @@ MonoBehaviour:
     m_Localized: "P\xE1gina {0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: "\xBFQu\xE9 mide esta rueda?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Escenario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: Cantidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: "Base cient\xEDfica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: "El marco de c\xE1lculo se basa en:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: "Mostrar explicaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: Tu impacto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "Rueda de reducci\xF3n de CO\u2082"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg de CO\u2082e evitados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "Reducci\xF3n de CO\u2082 (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "La rueda de reducci\xF3n de CO\u2082 muestra cu\xE1nto impacto
+      clim\xE1tico has evitado con tus elecciones alimentarias. Cada vez que comes
+      menos carne, eliges prote\xEDnas de menor impacto, evitas el desperdicio de
+      alimentos, sustituyes los ultraprocesados por alternativas m\xE1s sostenibles
+      o usas sistemas de recarga y envases reutilizables, reduces las emisiones de
+      gases de efecto invernadero."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "La rueda mide este ahorro en <b>kilogramos de di\xF3xido de carbono
+      equivalente (kg CO\u2082e)</b>. El di\xF3xido de carbono equivalente es una
+      forma est\xE1ndar de expresar el impacto clim\xE1tico de distintos gases de
+      efecto invernadero con una sola medida."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Cada acci\xF3n que completas suma ahorro de CO\u2082 a tu total.
+      A medida que se acumula, la rueda se va llenando hasta que alcanzas tu objetivo
+      de sostenibilidad actual."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: "Rueda de reducci\xF3n de energ\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: kWh ahorrados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: "Reducci\xF3n de energ\xEDa (kWh)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: "La rueda de reducci\xF3n de energ\xEDa registra cu\xE1nta energ\xEDa
+      se ha ahorrado gracias a tus decisiones relacionadas con la alimentaci\xF3n.
+      Producir alimentos requiere energ\xEDa en cada etapa del sistema alimentario.
+      Se usa energ\xEDa para fabricar fertilizantes, regar cultivos, hacer funcionar
+      la maquinaria agr\xEDcola, procesar alimentos, transportar productos, refrigerar
+      alimentos y preparar comidas. Al elegir alimentos de menor impacto y reducir
+      el desperdicio, ayudas a reducir la demanda de estos recursos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: La rueda mide el ahorro en <b>kilovatios hora (kWh)</b>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: "Cada acci\xF3n que completas suma ahorro de <b>kWh</b> a tu total.
+      A medida que se acumula, la rueda se va llenando hasta que alcanzas tu objetivo
+      de sostenibilidad actual."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: Rueda de ahorro de agua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: L de agua azul ahorrados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: Agua ahorrada (L)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: "La rueda de ahorro de agua muestra cu\xE1nta agua dulce se ha conservado
+      gracias a tus elecciones alimentarias. La agricultura es el mayor consumidor
+      de agua dulce del mundo. Los distintos alimentos tienen huellas h\xEDdricas
+      muy diferentes. Los alimentos de origen animal suelen necesitar mucha m\xE1s
+      agua que las alternativas vegetales. Evitar el desperdicio de alimentos tambi\xE9n
+      ahorra toda el agua que, de otro modo, se habr\xEDa usado para producir alimentos
+      de reposici\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: "La rueda mide el ahorro en <b>litros (L)</b> de agua azul. Cada
+      acci\xF3n que completas suma ahorro de L a tu total. A medida que se acumula,
+      la rueda se va llenando hasta que alcanzas tu objetivo de sostenibilidad actual."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: "Rueda de reducci\xF3n del uso del suelo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 de suelo preservados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Suelo ahorrado (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: "La rueda de reducci\xF3n del uso del suelo mide cu\xE1nta tierra
+      agr\xEDcola se ha ahorrado gracias a tus elecciones alimentarias. Producir
+      alimentos requiere tierra. Los productos de origen animal suelen usar mucha
+      m\xE1s tierra que los alimentos vegetales, porque se necesita tierra tanto
+      para criar a los animales como para cultivar su alimento. Reducir el desperdicio
+      de alimentos tambi\xE9n reduce la tierra necesaria para producir alimentos
+      que acaban en la basura."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "La rueda mide el ahorro de suelo en <b>metros cuadrados (m\xB2)</b>.
+      Cada acci\xF3n que completas suma ahorro de m\xB2 a tu total. A medida que
+      se acumula, la rueda se va llenando hasta que alcanzas tu objetivo de sostenibilidad
+      actual."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: "D\xEDa vegano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: "D\xEDa vegetariano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: "Raci\xF3n vegana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: "Raci\xF3n vegetariana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Ternera \u2192 Cerdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Ternera \u2192 Pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Ternera \u2192 Legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Cerdo \u2192 Pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Cerdo \u2192 Legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "Pollo \u2192 Legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: Medio plato aprovechado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: Plato entero aprovechado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: Producto caducado consumido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Snack \u2192 Fruta o frutos secos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "Cereales azucarados \u2192 Avena/fruta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "Bebida azucarada \u2192 Agua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Plato preparado \u2192 Comida casera"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Carne procesada \u2192 Legumbres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: Envase reutilizable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: Producto de recarga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: '{0:0.##} uso'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: '{0:0.##} recarga'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

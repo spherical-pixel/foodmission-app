@@ -4991,6 +4991,253 @@ MonoBehaviour:
     m_Localized: Side {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: "Hva m\xE5ler dette hjulet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Scenario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: Mengde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: Vitenskapelig grunnlag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: "Beregningsrammeverket er basert p\xE5:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: Vis forklaring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: Din innvirkning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "CO\u2082-reduksjonshjulet"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg CO\u2082e unng\xE5tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "CO\u2082-reduksjon (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "CO\u2082-reduksjonshjulet viser hvor mye klimap\xE5virkning du
+      har unng\xE5tt gjennom matvalgene dine. Hver gang du spiser mindre kj\xF8tt,
+      velger proteiner med lavere p\xE5virkning, forhindrer matsvinn, erstatter ultraprosessert
+      mat med mer b\xE6rekraftige alternativer eller bruker p\xE5fyllings- og gjenbruksemballasje,
+      reduserer du klimagassutslippene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "Hjulet m\xE5ler disse besparelsene i <b>kilogram karbondioksidekvivalenter
+      (kg CO\u2082e)</b>. Karbondioksidekvivalenter er en standard m\xE5te \xE5 uttrykke
+      klimap\xE5virkningen fra ulike klimagasser i ett enkelt m\xE5l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Hver handling du fullf\xF8rer, legger CO\u2082-besparelser til
+      totalen din. Etter hvert som besparelsene \xF8ker, fylles hjulet gradvis til
+      du n\xE5r ditt n\xE5v\xE6rende b\xE6rekraftsm\xE5l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: Energireduksjonshjulet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: kWh spart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: Energireduksjon (kWh)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: "Energireduksjonshjulet viser hvor mye energi som er spart gjennom
+      de matrelaterte valgene dine. Matproduksjon krever energi i hvert ledd av matsystemet.
+      Energi brukes til \xE5 produsere kunstgj\xF8dsel, vanne avlinger, drive landbruksmaskiner,
+      bearbeide mat, transportere produkter, kj\xF8le ned mat og lage m\xE5ltider.
+      Ved \xE5 velge mat med lavere p\xE5virkning og redusere svinn hjelper du til
+      med \xE5 redusere behovet for disse ressursene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: "Hjulet m\xE5ler besparelser i <b>kilowattimer (kWh)</b>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: "Hver handling du fullf\xF8rer, legger <b>kWh</b>-besparelser til
+      totalen din. Etter hvert som besparelsene \xF8ker, fylles hjulet gradvis til
+      du n\xE5r ditt n\xE5v\xE6rende b\xE6rekraftsm\xE5l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: Vannbesparelseshjulet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: "L bl\xE5tt vann spart"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: Spart vann (L)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: "Vannbesparelseshjulet viser hvor mye ferskvann som er spart gjennom
+      matvalgene dine. Landbruket st\xE5r for den st\xF8rste bruken av ferskvann
+      i verden. Ulike matvarer har sv\xE6rt ulike vannfotavtrykk. Animalske matvarer
+      krever generelt mye mer vann enn plantebaserte alternativer. N\xE5r du forhindrer
+      matsvinn, sparer du ogs\xE5 alt vannet som ellers ville blitt brukt til \xE5
+      produsere erstatningsmat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: "Hjulet m\xE5ler besparelser i <b>liter (L)</b> bl\xE5tt vann. Hver
+      handling du fullf\xF8rer, legger L-besparelser til totalen din. Etter hvert
+      som besparelsene \xF8ker, fylles hjulet gradvis til du n\xE5r ditt n\xE5v\xE6rende
+      b\xE6rekraftsm\xE5l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: Hjulet for redusert arealbruk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 areal bevart"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Spart areal (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: "Hjulet for redusert arealbruk m\xE5ler hvor mye jordbruksareal
+      som er spart gjennom matvalgene dine. Matproduksjon krever areal. Animalske
+      produkter bruker generelt mye mer areal enn plantebasert mat, fordi det trengs
+      areal b\xE5de til \xE5 holde dyrene og til \xE5 dyrke f\xF4rvekster. Mindre
+      matsvinn reduserer ogs\xE5 arealet som trengs for \xE5 produsere mat som til
+      slutt kastes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "Hjulet m\xE5ler arealbesparelser i <b>kvadratmeter (m\xB2)</b>.
+      Hver handling du fullf\xF8rer, legger m\xB2-besparelser til totalen din. Etter
+      hvert som besparelsene \xF8ker, fylles hjulet gradvis til du n\xE5r ditt n\xE5v\xE6rende
+      b\xE6rekraftsm\xE5l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: Vegansk dag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: Vegetarisk dag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: Vegansk porsjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: Vegetarisk porsjon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Storfekj\xF8tt \u2192 Svinekj\xF8tt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Storfekj\xF8tt \u2192 Kylling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Storfekj\xF8tt \u2192 Belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Svinekj\xF8tt \u2192 Kylling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Svinekj\xF8tt \u2192 Belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "Kylling \u2192 Belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: Halv tallerken reddet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: Full tallerken reddet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: "Utl\xF8pt produkt spist"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Snacks \u2192 Frukt eller n\xF8tter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "Sukkerholdige frokostblandinger \u2192 Havre/frukt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "Sukkerholdig drikke \u2192 Vann"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Ferdigrett \u2192 Hjemmelaget m\xE5ltid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Bearbeidet kj\xF8tt \u2192 Belgfrukter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: Gjenbruksbeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: "P\xE5fyllingsprodukt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: '{0:0.##} bruk'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: "{0:0.##} p\xE5fylling"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

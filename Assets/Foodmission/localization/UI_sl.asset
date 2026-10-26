@@ -4991,6 +4991,258 @@ MonoBehaviour:
     m_Localized: Stran {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: Kaj meri to kolo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Scenarij
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: "Koli\u010Dina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: Znanstvena podlaga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: "Okvir izra\u010Duna temelji na:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: "Prika\u017Ei razlago"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: Tvoj vpliv
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "Kolo zmanj\u0161anja CO\u2082"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg CO\u2082e prepre\u010Denih"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "Zmanj\u0161anje CO\u2082 (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "Kolo zmanj\u0161anja CO\u2082 prikazuje, koliko vpliva na podnebje
+      je bilo prepre\u010Denega s tvojimi prehranskimi izbirami. Vsaki\u010D, ko
+      poje\u0161 manj mesa, izbere\u0161 beljakovine z manj\u0161im vplivom, prepre\u010Di\u0161
+      zavr\u017Eek hrane, ultra predelano hrano nadomesti\u0161 s trajnostnej\u0161imi
+      mo\u017Enostmi ali uporabi\u0161 sisteme za ponovno polnjenje in embala\u017Eo
+      za ve\u010Dkratno uporabo, zmanj\u0161a\u0161 izpuste toplogrednih plinov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "Kolo meri te prihranke v <b>kilogramih ekvivalenta ogljikovega
+      dioksida (kg CO\u2082e)</b>. Ekvivalent ogljikovega dioksida je standardni
+      na\u010Din izra\u017Eanja vpliva razli\u010Dnih toplogrednih plinov na podnebje
+      z eno samo mero."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Vsako dejanje, ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku
+      doda prihranke CO\u2082. Ko se prihranki nabirajo, se kolo postopoma polni,
+      dokler ne dose\u017Ee\u0161 svojega trenutnega trajnostnega cilja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: "Kolo zmanj\u0161anja porabe energije"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: kWh prihranjenih
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: "Zmanj\u0161anje porabe energije (kWh)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: "Kolo zmanj\u0161anja porabe energije spremlja, koliko energije
+      je bilo prihranjene s tvojimi izbirami, povezanimi s hrano. Pridelava hrane
+      zahteva energijo na vsakem koraku prehranskega sistema. Energija se porablja
+      za proizvodnjo gnojil, namakanje pridelkov, delovanje kmetijskih strojev, predelavo
+      hrane, prevoz izdelkov, hlajenje hrane in pripravo obrokov. Z izbiro hrane
+      z manj\u0161im vplivom in zmanj\u0161evanjem zavr\u017Ekov pomaga\u0161 zmanj\u0161ati
+      povpra\u0161evanje po teh virih."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: Kolo meri prihranke v <b>kilovatnih urah (kWh)</b>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: "Vsako dejanje, ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku
+      doda prihranke <b>kWh</b>. Ko se prihranki nabirajo, se kolo postopoma polni,
+      dokler ne dose\u017Ee\u0161 svojega trenutnega trajnostnega cilja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: Kolo prihranka vode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: L prihranjene modre vode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: Prihranjena voda (L)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: "Kolo prihranka vode prikazuje, koliko sladke vode je bilo prihranjene
+      s tvojimi prehranskimi izbirami. Kmetijstvo je najve\u010Dji porabnik sladke
+      vode na svetu. Razli\u010Dna \u017Eivila imajo zelo razli\u010Dne vodne odtise.
+      \u017Divila \u017Eivalskega izvora na splo\u0161no zahtevajo veliko ve\u010D
+      vode kot rastlinske mo\u017Enosti. S prepre\u010Devanjem zavr\u017Ekov hrane
+      prihrani\u0161 tudi vso vodo, ki bi bila sicer porabljena za pridelavo nadomestne
+      hrane."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: "Kolo meri prihranke v <b>litrih (L)</b> modre vode. Vsako dejanje,
+      ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku doda prihranke L. Ko se
+      prihranki nabirajo, se kolo postopoma polni, dokler ne dose\u017Ee\u0161 svojega
+      trenutnega trajnostnega cilja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: "Kolo manj\u0161e rabe zemlji\u0161\u010D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 ohranjenih zemlji\u0161\u010D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Prihranjena zemlji\u0161\u010Da (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: "Kolo manj\u0161e rabe zemlji\u0161\u010D meri, koliko kmetijskih
+      zemlji\u0161\u010D je bilo prihranjenih s tvojimi prehranskimi izbirami. Za
+      pridelavo hrane so potrebna zemlji\u0161\u010Da. \u017Divalski izdelki na splo\u0161no
+      porabijo veliko ve\u010D zemlji\u0161\u010D kot rastlinska hrana, saj so zemlji\u0161\u010Da
+      potrebna tako za rejo \u017Eivali kot za pridelavo krme. Manj zavr\u017Eene
+      hrane zmanj\u0161a tudi povr\u0161ino zemlji\u0161\u010D, ki je potrebna za
+      pridelavo hrane, ki se na koncu zavr\u017Ee."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "Kolo meri prihranke zemlji\u0161\u010D v <b>kvadratnih metrih (m\xB2)</b>.
+      Vsako dejanje, ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku doda prihranke
+      m\xB2. Ko se prihranki nabirajo, se kolo postopoma polni, dokler ne dose\u017Ee\u0161
+      svojega trenutnega trajnostnega cilja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: Veganski dan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: Vegetarijanski dan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: Veganska porcija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: Vegetarijanska porcija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Govedina \u2192 Svinjina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Govedina \u2192 Pi\u0161\u010Danec"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Govedina \u2192 Stro\u010Dnice"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Svinjina \u2192 Pi\u0161\u010Danec"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Svinjina \u2192 Stro\u010Dnice"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "Pi\u0161\u010Danec \u2192 Stro\u010Dnice"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: "Re\u0161en pol kro\u017Enika"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: "Re\u0161en poln kro\u017Enik"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: "Zau\u017Eit prete\u010Den izdelek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Prigrizek \u2192 Sadje ali ore\u0161\u010Dki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "Sladkani kosmi\u010Di \u2192 Oves/sadje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "Sladka pija\u010Da \u2192 Voda"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Pripravljena jed \u2192 Doma skuhan obrok"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Predelano meso \u2192 Stro\u010Dnice"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: "Posoda za ve\u010Dkratno uporabo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: Izdelek za ponovno polnjenje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: '{0:0.##} uporaba'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: '{0:0.##} ponovno polnjenje'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

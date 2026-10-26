@@ -4992,6 +4992,258 @@ MonoBehaviour:
     m_Localized: Pagina {0}
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203758
+    m_Localized: Cosa misura questa ruota?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203759
+    m_Localized: Scenario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203760
+    m_Localized: "Quantit\xE0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203761
+    m_Localized: '{0:0.##} {1}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203762
+    m_Localized: Base scientifica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203763
+    m_Localized: 'Il quadro di calcolo si basa su:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203764
+    m_Localized: Mostra spiegazione
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203765
+    m_Localized: Il tuo impatto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203766
+    m_Localized: "Ruota della riduzione di CO\u2082"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203767
+    m_Localized: "kg di CO\u2082e evitati"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203768
+    m_Localized: "Riduzione di CO\u2082 (kg CO\u2082e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203769
+    m_Localized: "La ruota della riduzione di CO\u2082 mostra quanto impatto sul
+      clima hai evitato grazie alle tue scelte alimentari. Ogni volta che mangi meno
+      carne, scegli proteine a minore impatto, eviti lo spreco alimentare, sostituisci
+      gli alimenti ultra-processati con alternative pi\xF9 sostenibili o utilizzi
+      sistemi di ricarica e imballaggi riutilizzabili, riduci le emissioni di gas
+      serra."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203770
+    m_Localized: "La ruota misura questi risparmi in <b>chilogrammi di anidride carbonica
+      equivalente (kg CO\u2082e)</b>. L'anidride carbonica equivalente \xE8 un modo
+      standard per esprimere l'impatto climatico dei diversi gas serra con un'unica
+      misura."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203771
+    m_Localized: "Ogni azione che completi aggiunge risparmi di CO\u2082 al tuo totale.
+      Man mano che i risparmi si accumulano, la ruota si riempie gradualmente fino
+      a raggiungere il tuo attuale obiettivo di sostenibilit\xE0."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203772
+    m_Localized: Ruota della riduzione dell'energia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203773
+    m_Localized: kWh risparmiati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203774
+    m_Localized: Riduzione dell'energia (kWh)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203775
+    m_Localized: "La ruota della riduzione dell'energia tiene traccia di quanta energia
+      \xE8 stata risparmiata grazie alle tue scelte legate al cibo. La produzione
+      alimentare richiede energia in ogni fase del sistema alimentare. L'energia
+      serve per produrre fertilizzanti, irrigare le colture, far funzionare i macchinari
+      agricoli, trasformare gli alimenti, trasportare i prodotti, refrigerare il
+      cibo e preparare i pasti. Scegliendo alimenti a minore impatto e riducendo
+      gli sprechi, contribuisci a ridurre la domanda di queste risorse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203776
+    m_Localized: La ruota misura i risparmi in <b>chilowattora (kWh)</b>.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203777
+    m_Localized: "Ogni azione che completi aggiunge risparmi di <b>kWh</b> al tuo
+      totale. Man mano che i risparmi si accumulano, la ruota si riempie gradualmente
+      fino a raggiungere il tuo attuale obiettivo di sostenibilit\xE0."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203778
+    m_Localized: Ruota del risparmio idrico
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203779
+    m_Localized: L di acqua blu risparmiati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203780
+    m_Localized: Acqua risparmiata (L)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203781
+    m_Localized: "La ruota del risparmio idrico mostra quanta acqua dolce \xE8 stata
+      risparmiata grazie alle tue scelte alimentari. L'agricoltura \xE8 il principale
+      utilizzatore di acqua dolce a livello mondiale. Alimenti diversi hanno impronte
+      idriche molto diverse. Gli alimenti di origine animale richiedono in genere
+      molta pi\xF9 acqua rispetto alle alternative vegetali. Evitare lo spreco alimentare
+      fa risparmiare anche tutta l'acqua che altrimenti sarebbe servita per produrre
+      cibo sostitutivo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203782
+    m_Localized: "La ruota misura i risparmi in <b>litri (L)</b> di acqua blu. Ogni
+      azione che completi aggiunge risparmi di L al tuo totale. Man mano che i risparmi
+      si accumulano, la ruota si riempie gradualmente fino a raggiungere il tuo attuale
+      obiettivo di sostenibilit\xE0."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203783
+    m_Localized: Ruota della riduzione del consumo di suolo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203784
+    m_Localized: "m\xB2 di suolo preservati"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203785
+    m_Localized: "Suolo risparmiato (m\xB2)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203786
+    m_Localized: "La ruota della riduzione del consumo di suolo misura quanta terra
+      agricola \xE8 stata risparmiata grazie alle tue scelte alimentari. Produrre
+      cibo richiede terra. I prodotti di origine animale utilizzano in genere molta
+      pi\xF9 terra degli alimenti vegetali, perch\xE9 serve terra sia per allevare
+      gli animali sia per coltivare i mangimi. Ridurre lo spreco alimentare riduce
+      anche la quantit\xE0 di terra necessaria per produrre cibo che alla fine viene
+      buttato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203787
+    m_Localized: "La ruota misura il suolo risparmiato in <b>metri quadrati (m\xB2)</b>.
+      Ogni azione che completi aggiunge risparmi di m\xB2 al tuo totale. Man mano
+      che i risparmi si accumulano, la ruota si riempie gradualmente fino a raggiungere
+      il tuo attuale obiettivo di sostenibilit\xE0."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203788
+    m_Localized: Giornata vegana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203789
+    m_Localized: Giornata vegetariana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203790
+    m_Localized: Porzione vegana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203791
+    m_Localized: Porzione vegetariana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203792
+    m_Localized: "Manzo \u2192 Maiale"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203793
+    m_Localized: "Manzo \u2192 Pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203794
+    m_Localized: "Manzo \u2192 Legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203795
+    m_Localized: "Maiale \u2192 Pollo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203796
+    m_Localized: "Maiale \u2192 Legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203797
+    m_Localized: "Pollo \u2192 Legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203798
+    m_Localized: Mezzo piatto salvato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203799
+    m_Localized: Piatto intero salvato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203800
+    m_Localized: Prodotto scaduto consumato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203801
+    m_Localized: "Snack \u2192 Frutta o frutta secca"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203802
+    m_Localized: "Cereali zuccherati \u2192 Avena/frutta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203803
+    m_Localized: "Bevanda zuccherata \u2192 Acqua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203804
+    m_Localized: "Piatto pronto \u2192 Pasto cucinato in casa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203805
+    m_Localized: "Carne lavorata \u2192 Legumi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203806
+    m_Localized: Contenitore riutilizzabile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203807
+    m_Localized: Prodotto in ricarica
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203808
+    m_Localized: '{0:0.##} g'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203809
+    m_Localized: '{0:0.##} ml'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203810
+    m_Localized: '{0:0.##} utilizzo'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203811
+    m_Localized: '{0:0.##} ricarica'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
