@@ -15,10 +15,12 @@ namespace eu.foodmission.platform
         /// <summary>Device-wide read list from before: not per user, so it leaked reads between accounts. Removed on start.</summary>
         private const string LegacyReadFactsKey = "fm_read_food_facts";
         private const string ReadFactsKeyPrefix = "fm_read_food_facts_";
+        private const int ReadFactsPageSize = 500;
+        private const int MaxReadFactsPages = 10;
 
         /// <summary>
-        /// Facts the user read on this device. Stands in while the backend has no GET /food-facts/progress
-        /// (only POST :codeOrId/read). Per user: never shown to another account.
+        /// Facts the user read on this device. Stands in when GET /food-facts/me fails (offline, or a backend
+        /// without the route). Per user: never shown to another account.
         /// </summary>
         public static string ReadFactsKey(string userId) => ReadFactsKeyPrefix + userId;
 
@@ -243,34 +245,61 @@ namespace eu.foodmission.platform
                 return (null, new ApiErrorResponse { message = "Authentication required" });
             }
 
-            string url = $"{ApiConfig.BaseUrl}/api/v1/food-facts/progress";
-            using UnityWebRequest request = UnityWebRequest.Get(url);
-            request.SetRequestHeader("Authorization", auth);
-            request.SetRequestHeader("Accept", "application/json");
-
-            await request.SendAsync();
-
-            if (request.result == UnityWebRequest.Result.Success)
+            var reads = new List<FoodFactProgressResponse>();
+            for (int page = 1; page <= MaxReadFactsPages; page++)
             {
+                string url = $"{ApiConfig.BaseUrl}/api/v1/food-facts/me?completed=true&page={page}&limit={ReadFactsPageSize}";
+                using UnityWebRequest request = UnityWebRequest.Get(url);
+                request.SetRequestHeader("Authorization", auth);
+                request.SetRequestHeader("Accept", "application/json");
+
+                await request.SendAsync();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    // A backend without the route answers 404; fall back to this device's reads
+                    ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetUserProgressListAsync", false);
+                    return (LocalReadFactsAsProgress(), null);
+                }
+
+                PaginatedUserFoodFactResponse response;
                 try
                 {
-                    string raw = request.downloadHandler.text;
-                    var list = JsonConvert.DeserializeObject<FoodFactProgressResponse[]>(raw) ?? Array.Empty<FoodFactProgressResponse>();
-                    SaveLocalReadFacts(list.SelectMany(p => new[] { p.foodFactCode, p.foodFactId }));
-                    return (list, null);
+                    response = JsonConvert.DeserializeObject<PaginatedUserFoodFactResponse>(request.downloadHandler.text);
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogWarning($"[{GetType().Name}] Failed to parse FoodFactProgress list: {ex.Message}");
+                    Debug.LogWarning($"[{GetType().Name}] Failed to parse read food facts: {ex.Message}");
+                    return (LocalReadFactsAsProgress(), null);
+                }
+
+                reads.AddRange(ToReadProgress(response?.data));
+                if (response?.meta == null || !response.meta.hasNext)
+                {
+                    break;
                 }
             }
-            else
-            {
-                // Expected 404 until the backend adds the route; a warning, not an error
-                ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetUserProgressListAsync", false);
-            }
 
-            return (GetLocalReadFacts().Select(c => new FoodFactProgressResponse { foodFactCode = c, foodFactId = c }).ToArray(), null);
+            SaveLocalReadFacts(reads.SelectMany(p => new[] { p.foodFactCode, p.foodFactId }));
+            return (reads.ToArray(), null);
+        }
+
+        /// <summary>GET /food-facts/me items as read entries; unread items are skipped even if the filter let them through.</summary>
+        public static FoodFactProgressResponse[] ToReadProgress(UserFoodFact[] facts)
+        {
+            if (facts == null)
+            {
+                return Array.Empty<FoodFactProgressResponse>();
+            }
+            return facts
+                .Where(f => f != null && f.completed)
+                .Select(f => new FoodFactProgressResponse { foodFactId = f.id, foodFactCode = f.code, readAt = f.readAt })
+                .ToArray();
+        }
+
+        private FoodFactProgressResponse[] LocalReadFactsAsProgress()
+        {
+            return GetLocalReadFacts().Select(c => new FoodFactProgressResponse { foodFactCode = c, foodFactId = c }).ToArray();
         }
 
         private string CurrentUserId => _storeService?.GetAppState()?.userId;

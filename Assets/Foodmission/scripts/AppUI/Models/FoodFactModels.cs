@@ -35,6 +35,21 @@ namespace eu.foodmission.platform
         public PaginationMeta meta;
     }
 
+    /// <summary>GET /food-facts/me item: the catalog fact plus the signed-in user's read state.</summary>
+    [Serializable]
+    public class UserFoodFact : FoodFact
+    {
+        public bool completed;
+        public string readAt;
+    }
+
+    [Serializable]
+    public class PaginatedUserFoodFactResponse
+    {
+        public UserFoodFact[] data;
+        public PaginationMeta meta;
+    }
+
     public class FoodFactFilterParams
     {
         public string dimensionCode;

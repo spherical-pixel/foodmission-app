@@ -150,7 +150,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task GetUserProgressListAsync_WithoutServerList_UsesOnlyTheSignedInUsersReads()
         {
-            // The backend has no GET /food-facts/progress yet: reads recorded on this device stand in, per user
+            // GET /food-facts/me failed: reads recorded on this device stand in, per user
             _storeService.SetAppState(new AppState { accessToken = "test-jwt-token", tokenType = "Bearer", userId = "u2" });
             _localStorageService.SetValue(FoodFactService.ReadFactsKey("u1"), new System.Collections.Generic.List<string> { "FACT_OF_U1" });
             _localStorageService.SetValue(FoodFactService.ReadFactsKey("u2"), new System.Collections.Generic.List<string> { "FACT_OF_U2" });
@@ -159,6 +159,30 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsTrue(System.Array.Exists(result, p => p.foodFactCode == "FACT_OF_U2"));
             Assert.IsFalse(System.Array.Exists(result, p => p.foodFactCode == "FACT_OF_U1"));
+        }
+
+        [Test]
+        public void ToReadProgress_MapsReadFactsToProgressEntries()
+        {
+            var raw = @"{""data"":[
+                {""id"":""id-1"",""code"":""FF1.1.1"",""completed"":true,""readAt"":""2026-10-20T08:00:00.000Z""},
+                {""id"":""id-2"",""code"":""FF1.1.2"",""completed"":false,""readAt"":null}],
+                ""meta"":{""page"":1,""limit"":500,""total"":2,""totalPages"":1,""hasNext"":false}}";
+            var response = Newtonsoft.Json.JsonConvert.DeserializeObject<PaginatedUserFoodFactResponse>(raw);
+
+            FoodFactProgressResponse[] reads = FoodFactService.ToReadProgress(response.data);
+
+            Assert.AreEqual(1, reads.Length, "unread facts are not reads");
+            Assert.AreEqual("id-1", reads[0].foodFactId);
+            Assert.AreEqual("FF1.1.1", reads[0].foodFactCode);
+            Assert.AreEqual("2026-10-20T08:00:00.000Z", reads[0].readAt);
+        }
+
+        [Test]
+        public void ToReadProgress_OnNullData_ReturnsEmpty()
+        {
+            Assert.IsEmpty(FoodFactService.ToReadProgress(null));
+            Assert.IsEmpty(FoodFactService.ToReadProgress(new UserFoodFact[] { null }));
         }
     }
 }
