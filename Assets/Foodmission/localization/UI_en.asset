@@ -5214,6 +5214,25 @@ MonoBehaviour:
     m_Localized: '{0:0.##} refill'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "Use at least 3 characters: letters a\u2013z without accents, numbers
+      and . _ - @ (no spaces)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: This username is already taken. Please choose another one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: There is already an account with this email. Log in or reset your
+      password.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: This password doesn't meet the security requirements. Try a longer
+      one that mixes letters and numbers.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

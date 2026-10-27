@@ -15,7 +15,7 @@ namespace eu.foodmission.platform
         /// </summary>
         Task<string> EnsureFreshTokenAsync();
         Task<(bool success, string userId, string error)> LoginAsync(string username, string password);
-        Task<(bool success, string userId, string error)> RegisterAsync(
+        Task<(bool success, string userId, string error, RegisterErrorReason errorReason)> RegisterAsync(
             string username,
             string email,
             string password,

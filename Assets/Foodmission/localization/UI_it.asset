@@ -5244,6 +5244,25 @@ MonoBehaviour:
     m_Localized: '{0:0.##} ricarica'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "Usa almeno 3 caratteri: lettere a\u2013z senza accenti, numeri
+      e . _ - @ (senza spazi)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: "Questo nome utente \xE8 gi\xE0 in uso. Scegline un altro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: "Esiste gi\xE0 un account con questa e-mail. Accedi o reimposta
+      la password."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: "Questa password non soddisfa i requisiti di sicurezza. Provane
+      una pi\xF9 lunga con lettere e numeri."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

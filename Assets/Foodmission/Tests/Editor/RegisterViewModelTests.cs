@@ -55,6 +55,34 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(_vm.CanGoNext, "Step 0 (Welcome) should allow GoNext");
         }
 
+        [TestCase("ana lopez")]
+        [TestCase("ana!")]
+        [TestCase("josé")]
+        [TestCase("ab")]
+        public void ValidateUsername_WithCharactersKeycloakRejects_ReturnsFalse(string username)
+        {
+            _vm.Username = username;
+
+            bool result = _vm.ValidateUsername();
+
+            Assert.IsFalse(result);
+            Assert.AreEqual("@UI:ERROR_USERNAME_INVALID", _vm.UsernameHelpTextValue);
+            Assert.AreEqual(HelpTextVariant.Destructive, _vm.UsernameHelpTextVariant);
+        }
+
+        [TestCase("ana_lopez")]
+        [TestCase("Ana.Lopez-90")]
+        [TestCase("ana@example.com")]
+        public void ValidateUsername_WithAllowedCharacters_ReturnsTrue(string username)
+        {
+            _vm.Username = username;
+
+            bool result = _vm.ValidateUsername();
+
+            Assert.IsTrue(result);
+            Assert.AreEqual("", _vm.UsernameHelpTextValue);
+        }
+
         [Test]
         public void ValidateEmail_WithInvalidFormat_ReturnsFalse()
         {
@@ -337,7 +365,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.RegisterAsync(
                     "testuser", "test@example.com", "password123", 2000,
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync((false, null, "error"));
+                .ReturnsAsync((false, null, "error", RegisterErrorReason.None));
 
             _vm.Username = "testuser";
             _vm.Email = "test@example.com";
@@ -364,7 +392,7 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public async Task Register_WhileAwaitingAuthService_IsSubmitting()
         {
-            var pending = new TaskCompletionSource<(bool success, string userId, string error)>();
+            var pending = new TaskCompletionSource<(bool success, string userId, string error, RegisterErrorReason errorReason)>();
             _mockAuthService
                 .Setup(x => x.RegisterAsync(
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(),
@@ -387,7 +415,7 @@ namespace eu.foodmission.platform.Tests
             _vm.Register();
             Assert.IsTrue(_vm.IsSubmitting);
 
-            pending.SetResult((false, null, "error"));
+            pending.SetResult((false, null, "error", RegisterErrorReason.None));
             await Task.Delay(100);
             Assert.IsFalse(_vm.IsSubmitting);
         }
@@ -436,7 +464,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.RegisterAsync(
                     "newuser", "new@example.com", "password123", 1995,
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync((true, "user-123", null));
+                .ReturnsAsync((true, "user-123", null, RegisterErrorReason.None));
 
             var vm = new RegisterViewModel(_mockAuthService.Object, _mockCatalogService.Object, _storeService, mockLegalService.Object);
             vm.Initialize();
@@ -464,6 +492,81 @@ namespace eu.foodmission.platform.Tests
             vm.Dispose();
         }
 
+        [TestCase(RegisterErrorReason.UsernameTaken, 1)]
+        [TestCase(RegisterErrorReason.EmailTaken, 2)]
+        [TestCase(RegisterErrorReason.PasswordPolicy, 3)]
+        public async Task Register_WhenBackendRejectsField_GoesBackToItsStepWithHelpText(RegisterErrorReason reason, int expectedStep)
+        {
+            _mockAuthService
+                .Setup(x => x.RegisterAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((false, null, "error", reason));
+            string shownError = null;
+            _vm.ShowErrorRequest += message => shownError = message;
+
+            _vm.Username = "testuser";
+            _vm.Email = "test@example.com";
+            _vm.Password = "password123";
+            _vm.SelectedYearOfBirthIndex = _vm.YearOfBirthOptions.IndexOf("2000");
+            _vm.SelectedCountryIndex = 0;
+            _vm.SelectedRegionIndex = 0;
+            _vm.PostalCode = "12345";
+            _vm.HasAcceptedTerms = CheckboxState.Checked;
+            _vm.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+            _vm.HasAcceptedPilotConsent = CheckboxState.Checked;
+            for (int i = 0; i < _vm.StepCount - 1; i++)
+            {
+                await _vm.GoNextAsync();
+            }
+
+            _vm.Register();
+            await Task.Delay(200);
+
+            string expectedHelpText = "@UI:" + RegisterErrorMapper.GetLocalizationKey(reason);
+            string helpText = expectedStep switch
+            {
+                1 => _vm.UsernameHelpTextValue,
+                2 => _vm.EmailHelpTextValue,
+                _ => _vm.PasswordHelpTextValue
+            };
+            Assert.AreEqual(expectedStep, _vm.CurrentStepIndex);
+            Assert.AreEqual(expectedHelpText, helpText);
+            Assert.AreEqual("error", shownError);
+        }
+
+        [Test]
+        public async Task Register_WhenBackendErrorHasNoField_StaysOnCurrentStep()
+        {
+            _mockAuthService
+                .Setup(x => x.RegisterAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((false, null, "error", RegisterErrorReason.None));
+
+            _vm.Username = "testuser";
+            _vm.Email = "test@example.com";
+            _vm.Password = "password123";
+            _vm.SelectedYearOfBirthIndex = _vm.YearOfBirthOptions.IndexOf("2000");
+            _vm.SelectedCountryIndex = 0;
+            _vm.SelectedRegionIndex = 0;
+            _vm.PostalCode = "12345";
+            _vm.HasAcceptedTerms = CheckboxState.Checked;
+            _vm.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+            _vm.HasAcceptedPilotConsent = CheckboxState.Checked;
+            for (int i = 0; i < _vm.StepCount - 1; i++)
+            {
+                await _vm.GoNextAsync();
+            }
+            int lastStep = _vm.CurrentStepIndex;
+
+            _vm.Register();
+            await Task.Delay(200);
+
+            Assert.AreEqual(lastStep, _vm.CurrentStepIndex);
+            Assert.AreEqual("", _vm.UsernameHelpTextValue);
+        }
+
         // ── Onboarding run (issue #31) ──
 
         [Test]
@@ -475,7 +578,7 @@ namespace eu.foodmission.platform.Tests
                 .Setup(x => x.RegisterAsync(
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(),
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync((true, "user-1", null));
+                .ReturnsAsync((true, "user-1", null, RegisterErrorReason.None));
             string action = null;
             vm.NavigationRequested += (a, args) => action = a;
 
