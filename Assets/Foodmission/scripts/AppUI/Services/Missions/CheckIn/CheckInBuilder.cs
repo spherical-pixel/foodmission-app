@@ -53,18 +53,38 @@ namespace eu.foodmission.platform
                     }));
                 }
 
-                // Every day answer of the day in one OTHER meal log: no food, only flags, never claiming which meal it was
+                // Every day answer of the day in one OTHER meal log: no food, only flags and swaps, never claiming which meal it was
                 List<CheckInDayQuestion> answered = dayQuestions.Where(q => CheckInDayRules.EventOf(q, dayAnswer) != null).ToList();
-                if (answered.Count > 0)
+                List<(string Swap, int Units)> swapUnits = CheckInSwapRules.Visible(plan, answers, i)
+                    .Select(o => (o.Swap, Units: dayAnswer.Swaps.TryGetValue(o.Swap, out int units) ? Math.Min(units, o.Max) : 0))
+                    .Where(s => s.Units > 0)
+                    .ToList();
+                if (answered.Count > 0 || swapUnits.Count > 0)
                 {
-                    DateTime? latestStart = answered.Where(q => q.StartLocal.HasValue).Select(q => q.StartLocal).DefaultIfEmpty(null).Max();
-                    DateTime moment = MissionReportDays.EventTimestampFor(day.Day, latestStart, nowLocal);
+                    DateTime? latestStart = answered.Select(q => q.StartLocal)
+                        .Concat(swapUnits.Count > 0 ? day.SwapQuestion.Missions.Select(m => m.StartLocal) : Enumerable.Empty<DateTime?>())
+                        .Where(start => start.HasValue).DefaultIfEmpty(null).Max();
+                    string timestamp = MissionReportDays.EventTimestampFor(day.Day, latestStart, nowLocal).ToUniversalTime().ToString("o");
                     items.Add(new PendingReportItem(new CreateMealLogRequest
                     {
                         typeOfMeal = OtherMealType,
-                        flags = answered.Select(q => CheckInDayRules.EventOf(q, dayAnswer)).Distinct().ToArray(),
-                        timestamp = moment.ToUniversalTime().ToString("o")
+                        flags = answered.Count > 0 ? answered.Select(q => CheckInDayRules.EventOf(q, dayAnswer)).Distinct().ToArray() : null,
+                        swaps = swapUnits.Count > 0 ? swapUnits.Select(s => s.Swap).ToArray() : null,
+                        timestamp = timestamp
                     }));
+                    // A meal log carries a swap once (backend @ArrayUnique): each further unit is its own OTHER log
+                    foreach (var (swap, units) in swapUnits)
+                    {
+                        for (int extra = 1; extra < units; extra++)
+                        {
+                            items.Add(new PendingReportItem(new CreateMealLogRequest
+                            {
+                                typeOfMeal = OtherMealType,
+                                swaps = new[] { swap },
+                                timestamp = timestamp
+                            }));
+                        }
+                    }
                 }
             }
 

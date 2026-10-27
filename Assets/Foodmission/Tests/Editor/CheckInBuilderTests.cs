@@ -117,7 +117,8 @@ namespace eu.foodmission.platform.Tests
         [Test]
         public void Build_SwapOnlyMeal_IsSentWithSwapsOnly()
         {
-            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.B1.4", Now.Date)));
+            // Next to a per-meal mission (A1.3) the protein swaps stay per meal
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.A1.3", Now.Date), CheckInPlannerTests.M("M.B1.4", Now.Date)));
             var answers = CheckInAnswers.For(plan);
             answers.MealDays[0].Meals["LUNCH"] = new HashSet<string> { ClientEventTypes.SwapBeefToChicken };
 
@@ -295,6 +296,81 @@ namespace eu.foodmission.platform.Tests
             answers.MealDays[0].DayAnswers["M.Z9.9"] = 0;
 
             Assert.IsEmpty(CheckInBuilder.Build(plan, answers, "r1", Now));
+        }
+
+        // ── Day swaps (spec 2026-10-27 swaps §7) ──────────────
+
+        private static List<CreateMealLogRequest> OtherLogs(List<PendingReportItem> items) =>
+            items.Select(i => i.MealLog).Where(l => l != null && l.typeOfMeal == CheckInBuilder.OtherMealType).ToList();
+
+        [Test]
+        public void DaySwaps_GoInTheDayOtherLog()
+        {
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.MP("M.I1.1", 0f), CheckInPlannerTests.MP("M.B6.2", 0f)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].Swaps[ClientEventTypes.SwapBeefToLegumes] = 1;
+            answers.MealDays[0].DayAnswers["M.B6.2"] = 0;
+
+            CreateMealLogRequest log = OtherLogs(CheckInBuilder.Build(plan, answers, "r1", Now)).Single();
+
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.NutritionFruitVegServingAdded }, log.flags);
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.SwapBeefToLegumes }, log.swaps);
+        }
+
+        [Test]
+        public void DaySwaps_Only_SendFlagsNull()
+        {
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.MP("M.I1.1", 0f)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[1].Swaps[ClientEventTypes.SwapPorkToLegumes] = 1;
+
+            List<PendingReportItem> items = CheckInBuilder.Build(plan, answers, "r1", Now);
+
+            CreateMealLogRequest log = items.Single().MealLog;
+            Assert.AreEqual(CheckInBuilder.OtherMealType, log.typeOfMeal);
+            Assert.IsNull(log.flags);
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.SwapPorkToLegumes }, log.swaps);
+            Assert.AreEqual(MissionReportDays.EventTimestampFor(plan.MealDays[1].Day, plan.MealDays[1].SwapQuestion.Missions[0].StartLocal, Now)
+                .ToUniversalTime().ToString("o"), log.timestamp);
+        }
+
+        [Test]
+        public void Counter_ExtraUnits_AreExtraOtherLogs()
+        {
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.MP("M.B6.5", 0f)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].Swaps[ClientEventTypes.SwapSnackToFruitNuts] = 3;
+
+            List<CreateMealLogRequest> logs = OtherLogs(CheckInBuilder.Build(plan, answers, "r1", Now));
+
+            Assert.AreEqual(3, logs.Count);
+            Assert.IsTrue(logs.All(l => l.swaps.SequenceEqual(new[] { ClientEventTypes.SwapSnackToFruitNuts }) && l.flags == null));
+            Assert.AreEqual(1, logs.Select(l => l.timestamp).Distinct().Count());
+        }
+
+        [Test]
+        public void NoSwaps_SendsNothing()
+        {
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.MP("M.B6.5", 0f)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].NoSwaps = true;
+
+            Assert.IsEmpty(CheckInBuilder.Build(plan, answers, "r1", Now));
+        }
+
+        [Test]
+        public void HiddenSwapAnswers_AreNotSent()
+        {
+            // I3.3 needs 2: two waters on day 0 hide day 1's question
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.MP("M.I3.3", 0.5f)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].Swaps[ClientEventTypes.SwapSugaryDrinkToWater] = 2;
+            answers.MealDays[1].Swaps[ClientEventTypes.SwapSugaryCerealToOats] = 1;
+
+            List<CreateMealLogRequest> logs = OtherLogs(CheckInBuilder.Build(plan, answers, "r1", Now));
+
+            Assert.AreEqual(2, logs.Count, "day 0: the day log + one extra water");
+            Assert.IsFalse(logs.Any(l => l.swaps.Contains(ClientEventTypes.SwapSugaryCerealToOats)));
         }
     }
 }

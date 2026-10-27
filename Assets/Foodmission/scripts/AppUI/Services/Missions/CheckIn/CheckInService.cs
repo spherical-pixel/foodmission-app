@@ -48,7 +48,8 @@ namespace eu.foodmission.platform
         {
             try
             {
-                var (missions, _, missionsError) = await LoadActiveMissionsAsync(_storeService, _questService, _missionService, onlyMissionCode);
+                // Every active mission of the quest: the others still decide whether swaps go per meal
+                var (missions, _, missionsError) = await LoadActiveMissionsAsync(_storeService, _questService, _missionService);
                 if (missionsError != null)
                 {
                     return (null, missionsError);
@@ -56,7 +57,11 @@ namespace eu.foodmission.platform
 
                 DateTime now = Clock();
                 var inputs = new CheckInInputs { NowLocal = now };
-                inputs.Missions.AddRange(missions);
+                foreach (CheckInMission mission in missions)
+                {
+                    bool covered = onlyMissionCode == null || string.Equals(mission.Code, onlyMissionCode, StringComparison.OrdinalIgnoreCase);
+                    (covered ? inputs.Missions : inputs.QuestMissions).Add(mission);
+                }
                 // Only answers of each mission's current attempt
                 var attempts = new HashSet<string>(inputs.Missions.Select(m => Attempt(m.Code, m.StartLocal)), StringComparer.OrdinalIgnoreCase);
                 foreach (var (code, start, day) in ReadDecidedDays())
@@ -78,8 +83,9 @@ namespace eu.foodmission.platform
                     return (CheckInPlan.Empty, null);
                 }
 
-                // Day questions need the logged days too (a logged day is already decided)
-                if (inputs.Missions.Any(m => HasStep(m, MissionStepType.MealReport) || HasStep(m, MissionStepType.DayQuestion)))
+                // Day questions need the logged days too (a logged day is already decided); day swaps, the swaps already logged
+                if (inputs.Missions.Any(m => HasStep(m, MissionStepType.MealReport) || HasStep(m, MissionStepType.DayQuestion) ||
+                    HasStep(m, MissionStepType.DaySwaps)))
                 {
                     string from = now.Date.AddDays(-(MissionReportDays.WindowDays - 1)).ToUniversalTime().ToString("o");
                     string to = now.ToUniversalTime().ToString("o");
@@ -90,9 +96,17 @@ namespace eu.foodmission.platform
                     }
                     foreach (MealLog log in logs?.data ?? Array.Empty<MealLog>())
                     {
-                        if (log == null || string.IsNullOrEmpty(log.typeOfMeal) || !TryParseLocalDate(log.timestamp, out DateTime day))
+                        if (log == null || string.IsNullOrEmpty(log.typeOfMeal) || !TryParseLocal(log.timestamp, out DateTime atLocal))
                         {
                             continue;
+                        }
+                        DateTime day = atLocal.Date;
+                        foreach (string swap in log.swaps ?? Array.Empty<string>())
+                        {
+                            if (!string.IsNullOrEmpty(swap))
+                            {
+                                inputs.LoggedSwaps.Add((atLocal, swap));
+                            }
                         }
                         if (!inputs.LoggedMealTypes.TryGetValue(day, out HashSet<string> types))
                         {
@@ -393,15 +407,15 @@ namespace eu.foodmission.platform
         private static bool HasStep(CheckInMission mission, MissionStepType type) =>
             mission.Interaction.Steps.Any(s => s.Type == type);
 
-        private static bool TryParseLocalDate(string timestamp, out DateTime day)
+        private static bool TryParseLocal(string timestamp, out DateTime local)
         {
-            day = default;
+            local = default;
             if (string.IsNullOrEmpty(timestamp) ||
                 !DateTime.TryParse(timestamp, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out DateTime utc))
             {
                 return false;
             }
-            day = utc.ToLocalTime().Date;
+            local = utc.ToLocalTime();
             return true;
         }
     }

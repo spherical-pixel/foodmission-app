@@ -5321,6 +5321,34 @@ MonoBehaviour:
     m_Localized: "\xAB{0}\xBB er i boks: det fullf\xF8res {1}."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Localized: Gjorde du noen av disse matbyttene?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Localized: "{0}: fullf\xF8rt! \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Localized: '{0}: gikk ikke denne gangen.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Localized: '{0}: {1} av {2} bytter'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Localized: "{0}: {1} av {2} niv\xE5er"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Localized: '{0}: {1} av {2} dager'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Localized: '{0}: {1} %'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

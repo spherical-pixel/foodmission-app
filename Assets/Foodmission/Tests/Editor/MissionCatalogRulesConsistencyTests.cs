@@ -131,6 +131,13 @@ namespace eu.foodmission.platform.Tests
                             list.Add(MealSignature(flag, new[] { "OTHER" }));
                         }
                         break;
+                    case MissionStepType.DaySwaps:
+                        // Swaps of the day go in OTHER meal logs, like day questions
+                        foreach (MissionStepOption option in step.Options)
+                        {
+                            list.Add(MealSignature(option.EventType, new[] { "OTHER" }));
+                        }
+                        break;
                 }
             }
             return list;

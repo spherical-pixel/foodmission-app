@@ -5331,6 +5331,34 @@ MonoBehaviour:
     m_Localized: "\xAB{0}\xBB ya lo tienes: se completar\xE1 el {1}."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Localized: "\xBFHas hecho alguno de estos cambios de alimentos?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Localized: "{0}: \xA1completada! \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Localized: '{0}: esta vez no ha salido.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Localized: '{0}: {1} de {2} cambios'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Localized: '{0}: {1} de {2} niveles'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Localized: "{0}: {1} de {2} d\xEDas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Localized: '{0}: {1}%'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

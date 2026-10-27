@@ -5423,6 +5423,35 @@ MonoBehaviour:
       {1}."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Localized: "Czy uda\u0142o ci si\u0119 zrobi\u0107 kt\xF3r\u0105\u015B z tych
+      zamian?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Localized: "{0}: uko\u0144czona! \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Localized: "{0}: tym razem si\u0119 nie uda\u0142o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Localized: '{0}: {1} z {2} zamian'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Localized: "{0}: {1} z {2} poziom\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Localized: '{0}: {1} z {2} dni'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Localized: '{0}: {1}%'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

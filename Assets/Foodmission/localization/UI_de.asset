@@ -5365,6 +5365,34 @@ MonoBehaviour:
     m_Localized: "\u201E{0}\u201C hast du in der Tasche: Sie wird am {1} abgeschlossen."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Localized: Hast du einen dieser Lebensmitteltausche gemacht?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Localized: "{0}: abgeschlossen! \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Localized: '{0}: hat diesmal nicht geklappt.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Localized: '{0}: {1} von {2} Tauschen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Localized: '{0}: {1} von {2} Stufen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Localized: '{0}: {1} von {2} Tagen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Localized: '{0}: {1} %'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

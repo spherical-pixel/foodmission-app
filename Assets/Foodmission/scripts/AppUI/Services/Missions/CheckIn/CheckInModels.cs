@@ -32,6 +32,8 @@ namespace eu.foodmission.platform
     public sealed class CheckInInputs
     {
         public readonly List<CheckInMission> Missions = new List<CheckInMission>();
+        /// <summary>Other active missions of the quest when the check-in covers one mission: they decide whether swaps go per meal.</summary>
+        public readonly List<CheckInMission> QuestMissions = new List<CheckInMission>();
         /// <summary>Local date → typeOfMeal values already logged that day.</summary>
         public readonly Dictionary<DateTime, HashSet<string>> LoggedMealTypes = new Dictionary<DateTime, HashSet<string>>();
         /// <summary>Event type → days (dayBucket) already recorded, from recentEvents.</summary>
@@ -41,6 +43,8 @@ namespace eu.foodmission.platform
             new Dictionary<string, Dictionary<DateTime, HashSet<string>>>(StringComparer.Ordinal);
         /// <summary>Mission code → days whose day question was already answered on this device.</summary>
         public readonly Dictionary<string, HashSet<DateTime>> DecidedDays = new Dictionary<string, HashSet<DateTime>>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>Every swap of the loaded meal logs, with the log's local time (several per log, repeated per log).</summary>
+        public readonly List<(DateTime AtLocal, string Swap)> LoggedSwaps = new List<(DateTime AtLocal, string Swap)>();
         /// <summary>Events reported from the product detail (real food ids), for the "already counted" hint.</summary>
         public readonly List<CheckInProductReport> ProductReports = new List<CheckInProductReport>();
         public DateTime NowLocal;
@@ -111,6 +115,52 @@ namespace eu.foodmission.platform
         }
     }
 
+    /// <summary>A swap mission asked with the shared swap question of a day (spec 2026-10-27 swaps).</summary>
+    public sealed class CheckInSwapMission
+    {
+        public string Code { get; }
+        public string Title { get; }
+        public DateTime? StartLocal { get; }
+        public SwapQuestionSpec Spec { get; }
+        /// <summary>Swaps that count for the mission, in catalog order.</summary>
+        public IReadOnlyList<string> Swaps { get; }
+        /// <summary>Count missions: swaps still needed when the plan was made. Null for level missions.</summary>
+        public int? Remaining { get; }
+        /// <summary>Level missions: indexes of the levels with no swap yet. Empty for count missions.</summary>
+        public IReadOnlyList<int> MissingLevels { get; }
+
+        public CheckInSwapMission(string code, string title, DateTime? startLocal, SwapQuestionSpec spec, IReadOnlyList<string> swaps,
+            int? remaining, IReadOnlyList<int> missingLevels = null)
+        {
+            Code = code;
+            Title = title;
+            StartLocal = startLocal;
+            Spec = spec;
+            Swaps = swaps;
+            Remaining = remaining;
+            MissingLevels = missingLevels ?? Array.Empty<int>();
+        }
+    }
+
+    /// <summary>"Did you make any of these food swaps?" for one day, shared by every swap mission asked that day.</summary>
+    public sealed class CheckInSwapQuestion
+    {
+        public IReadOnlyList<CheckInSwapMission> Missions { get; }
+        /// <summary>Union of the missions' swaps, in catalog order.</summary>
+        public IReadOnlyList<string> Swaps { get; }
+        /// <summary>Swap → times already logged that day (shown checked and locked).</summary>
+        public IReadOnlyDictionary<string, int> Logged { get; }
+
+        public CheckInSwapQuestion(IReadOnlyList<CheckInSwapMission> missions, IReadOnlyList<string> swaps, IReadOnlyDictionary<string, int> logged = null)
+        {
+            Missions = missions;
+            Swaps = swaps;
+            Logged = logged ?? new Dictionary<string, int>();
+        }
+
+        public int LoggedCount(string swap) => swap != null && Logged.TryGetValue(swap, out int count) ? count : 0;
+    }
+
     public sealed class CheckInMissionRef
     {
         public string Code { get; }
@@ -155,10 +205,14 @@ namespace eu.foodmission.platform
         public IReadOnlyList<CheckInDayQuestion> DayQuestions { get; }
         /// <summary>Missions that ask something this day: day questions, and meal missions when the day has no log.</summary>
         public IReadOnlyList<CheckInMissionRef> Waiting { get; }
+        /// <summary>The day's swap question, null when no swap mission is asked per day that day.</summary>
+        public CheckInSwapQuestion SwapQuestion { get; }
 
         public CheckInMealDay(DateTime day, bool hasAnyLog, IReadOnlyList<string> openMealTypes, IReadOnlyList<CheckInMealQuestion> questions,
-            IReadOnlyList<string> hintKeys = null, IReadOnlyList<CheckInDayQuestion> dayQuestions = null, IReadOnlyList<CheckInMissionRef> waiting = null)
+            IReadOnlyList<string> hintKeys = null, IReadOnlyList<CheckInDayQuestion> dayQuestions = null, IReadOnlyList<CheckInMissionRef> waiting = null,
+            CheckInSwapQuestion swapQuestion = null)
         {
+            SwapQuestion = swapQuestion;
             Day = day;
             HasAnyLog = hasAnyLog;
             OpenMealTypes = openMealTypes;
@@ -229,6 +283,8 @@ namespace eu.foodmission.platform
 
         /// <summary>Missions with nothing left to ask that only wait for their window to end (told on an up-to-date check-in).</summary>
         public IReadOnlyList<CheckInMissionRef> Secured { get; }
+        /// <summary>Missions this check-in asks something for, in first-asked order (result lines after sending).</summary>
+        public IReadOnlyList<CheckInMissionRef> AskedMissions { get; }
 
         public List<CheckInMealDay> MealDays { get; }
         public List<CheckInDayEvent> DayEvents { get; }
@@ -238,9 +294,10 @@ namespace eu.foodmission.platform
         public bool IsEmpty => StepCount == 0;
 
         public CheckInPlan(List<CheckInMealDay> mealDays, List<CheckInDayEvent> dayEvents, List<CheckInMissionStep> missionSteps,
-            IReadOnlyList<CheckInMissionRef> secured = null)
+            IReadOnlyList<CheckInMissionRef> secured = null, IReadOnlyList<CheckInMissionRef> askedMissions = null)
         {
             Secured = secured ?? Array.Empty<CheckInMissionRef>();
+            AskedMissions = askedMissions ?? Array.Empty<CheckInMissionRef>();
             MealDays = mealDays;
             DayEvents = dayEvents;
             MissionSteps = missionSteps;
@@ -299,6 +356,10 @@ namespace eu.foodmission.platform
         public readonly Dictionary<string, HashSet<string>> Meals = new Dictionary<string, HashSet<string>>();
         /// <summary>Day questions: mission code → chosen option index.</summary>
         public readonly Dictionary<string, int> DayAnswers = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>Swap question: swap → new units told (chips 0/1, counters up to their max).</summary>
+        public readonly Dictionary<string, int> Swaps = new Dictionary<string, int>(StringComparer.Ordinal);
+        /// <summary>Swap question answered "No".</summary>
+        public bool NoSwaps;
     }
 
     public sealed class CheckInAnswers

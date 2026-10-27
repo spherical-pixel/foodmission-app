@@ -5327,6 +5327,34 @@ MonoBehaviour:
     m_Localized: "\xBB{0}\xAB je v \u017Eepu. Datum zaklju\u010Dka: {1}."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Localized: "Si naredil katero od teh zamenjav \u017Eivil?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Localized: "{0}: opravljena! \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Localized: '{0}: tokrat ni uspelo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Localized: '{0}: {1} od {2} zamenjav'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Localized: '{0}: {1} od {2} stopenj'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Localized: '{0}: {1} od {2} dni'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Localized: '{0}: {1} %'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

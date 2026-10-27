@@ -246,6 +246,78 @@ namespace eu.foodmission.platform
             Changed();
         }
 
+        /// <summary>Chip of the day swap question: checks or unchecks one unit (spec 2026-10-27 swaps §5.1).</summary>
+        public void ToggleDaySwap(int stepIndex, string swap)
+        {
+            CheckInSwapOption option = EditableSwapOption(stepIndex, swap);
+            if (option == null)
+            {
+                return;
+            }
+
+            CheckInMealDayAnswer answer = Answers.MealDays[stepIndex];
+            if (!answer.Swaps.Remove(swap))
+            {
+                answer.Swaps[swap] = 1;
+                answer.NoSwaps = false;
+            }
+            SwapsChanged();
+        }
+
+        /// <summary>Counter of the day swap question (water, snack): new units, clamped to the option's max.</summary>
+        public void SetDaySwapUnits(int stepIndex, string swap, int units)
+        {
+            CheckInSwapOption option = EditableSwapOption(stepIndex, swap);
+            if (option == null)
+            {
+                return;
+            }
+
+            CheckInMealDayAnswer answer = Answers.MealDays[stepIndex];
+            units = Math.Max(0, Math.Min(units, option.Max));
+            if (units == 0)
+            {
+                answer.Swaps.Remove(swap);
+            }
+            else
+            {
+                answer.Swaps[swap] = units;
+                answer.NoSwaps = false;
+            }
+            SwapsChanged();
+        }
+
+        /// <summary>"No" on the day swap question; again unsets it.</summary>
+        public void SetNoSwaps(int stepIndex)
+        {
+            if (!CanEdit(stepIndex, CheckInStepKind.MealDay) || VisibleSwapOptions(stepIndex).Count == 0)
+            {
+                return;
+            }
+
+            CheckInMealDayAnswer answer = Answers.MealDays[stepIndex];
+            answer.NoSwaps = !answer.NoSwaps;
+            if (answer.NoSwaps)
+            {
+                answer.Swaps.Clear();
+            }
+            SwapsChanged();
+        }
+
+        /// <summary>Chips and counters of the day swap question, given the answers of earlier days.</summary>
+        public IReadOnlyList<CheckInSwapOption> VisibleSwapOptions(int stepIndex) =>
+            KindOf(stepIndex) == CheckInStepKind.MealDay ? CheckInSwapRules.Visible(Plan, Answers, stepIndex) : Array.Empty<CheckInSwapOption>();
+
+        private CheckInSwapOption EditableSwapOption(int stepIndex, string swap) =>
+            CanEdit(stepIndex, CheckInStepKind.MealDay) ? VisibleSwapOptions(stepIndex).FirstOrDefault(o => o.Swap == swap && o.Max > 0) : null;
+
+        private void SwapsChanged()
+        {
+            // Answers on later days may no longer be needed
+            CheckInSwapRules.ClearHidden(Plan, Answers);
+            Changed();
+        }
+
         /// <summary>Day questions still needed on this day, given the answers of earlier days.</summary>
         public IReadOnlyList<CheckInDayQuestion> VisibleDayQuestions(int stepIndex) =>
             KindOf(stepIndex) == CheckInStepKind.MealDay ? CheckInDayRules.Visible(Plan, Answers, stepIndex) : Array.Empty<CheckInDayQuestion>();
@@ -431,6 +503,8 @@ namespace eu.foodmission.platform
             List<PendingReportItem> items = CurrentItems();
             if (items.Count == 0)
             {
+                // "No" answers send nothing but still decide their days
+                _checkInService.RememberDayAnswers(AnsweredDayQuestions());
                 CheckInDismissed?.Invoke();
                 return;
             }
@@ -448,7 +522,9 @@ namespace eu.foodmission.platform
                 }
 
                 _checkInService.RememberDayAnswers(AnsweredDayQuestions());
-                _outcome = new CheckInOutcome(_pendingItems.Count, await TryGetSingleMissionProgressAsync());
+                List<(MissionProgress Progress, CheckInResultLine Line)> results = await TryGetMissionResultsAsync();
+                MissionProgress single = string.IsNullOrEmpty(OnlyMissionCode) ? null : results.Select(r => r.Progress).FirstOrDefault();
+                _outcome = new CheckInOutcome(_pendingItems.Count, single, results);
                 CheckInCompleted?.Invoke(_outcome);
             }
             catch (Exception ex)
@@ -475,28 +551,50 @@ namespace eu.foodmission.platform
                 answered.AddRange(CheckInDayRules.Visible(Plan, Answers, i)
                     .Where(q => dayAnswers.ContainsKey(q.MissionCode))
                     .Select(q => (q.MissionCode, q.StartLocal, Plan.MealDays[i].Day)));
+                // The swap question answers for every mission behind it
+                CheckInSwapQuestion swapQuestion = Plan.MealDays[i].SwapQuestion;
+                if (swapQuestion != null && CheckInSwapRules.IsAnswered(Answers.MealDays[i]) && CheckInSwapRules.Visible(Plan, Answers, i).Count > 0)
+                {
+                    answered.AddRange(swapQuestion.Missions.Select(m => (m.Code, m.StartLocal, Plan.MealDays[i].Day)));
+                }
             }
             return answered;
         }
 
-        /// <summary>Progress shown after a successful send; failing to fetch it must not turn the send into an error.</summary>
-        private async Task<MissionProgress> TryGetSingleMissionProgressAsync()
+        /// <summary>
+        /// Refreshed progress of each mission asked about (or the only mission), with its result line. Failing to fetch one
+        /// leaves that mission out and never turns the send into an error.
+        /// </summary>
+        private async Task<List<(MissionProgress Progress, CheckInResultLine Line)>> TryGetMissionResultsAsync()
         {
-            if (string.IsNullOrEmpty(OnlyMissionCode) || _missionService == null)
+            var results = new List<(MissionProgress Progress, CheckInResultLine Line)>();
+            if (_missionService == null)
             {
-                return null;
+                return results;
             }
 
-            try
+            IEnumerable<CheckInMissionRef> missions = string.IsNullOrEmpty(OnlyMissionCode)
+                ? Plan.AskedMissions
+                : new[] { Plan.AskedMissions.FirstOrDefault(m => string.Equals(m.Code, OnlyMissionCode, StringComparison.OrdinalIgnoreCase))
+                          ?? new CheckInMissionRef(OnlyMissionCode, null, null) };
+            foreach (CheckInMissionRef mission in missions)
             {
-                var (progress, _) = await _missionService.GetMissionProgressAsync(OnlyMissionCode);
-                return progress;
+                try
+                {
+                    var (progress, _) = await _missionService.GetMissionProgressAsync(mission.Code);
+                    if (progress == null)
+                    {
+                        continue;
+                    }
+                    string title = !string.IsNullOrEmpty(progress.missionTitle) ? progress.missionTitle : mission.Title ?? mission.Code;
+                    results.Add((progress, CheckInResultLines.For(title, MissionInteractionCatalog.Get(mission.Code), progress)));
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"[MissionCheckInViewModel] Progress refresh after send failed for {mission.Code}: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"[MissionCheckInViewModel] Progress refresh after send failed: {ex.Message}");
-                return null;
-            }
+            return results;
         }
 
         private List<PendingReportItem> CurrentItems() =>
