@@ -452,7 +452,7 @@ namespace eu.foodmission.platform
             }
         }
 
-        public async Task<(bool success, string userId, string error)> RegisterAsync(
+        public async Task<(bool success, string userId, string error, RegisterErrorReason errorReason)> RegisterAsync(
             string username,
             string email,
             string password,
@@ -491,17 +491,25 @@ namespace eu.foodmission.platform
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
-                    string errorMessage = request.responseCode switch
-                    {
-                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_400"),
-                        409 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_409"),
-                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_500"),
-                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_CONNECTION", new object[] { request.error })
-                    };
+                    RegisterErrorReason errorReason = RegisterErrorMapper.Map(request.responseCode, request.downloadHandler?.text);
+                    string errorKey = RegisterErrorMapper.GetLocalizationKey(errorReason);
+                    string errorMessage = errorKey != null
+                        ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", errorKey)
+                        : request.responseCode switch
+                        {
+                            400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_400"),
+                            409 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_REGISTER_409"),
+                            500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_500"),
+                            _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_CONNECTION", new object[] { request.error })
+                        };
 
                     Debug.LogError($"[{GetType().Name}] Register failed: {errorMessage} (Code: {request.responseCode})");
+                    // Log the backend body (Keycloak / validation reason) and what was sent, without the password
+                    ApiErrorHelper.Parse(request, $"[{GetType().Name}] Register");
+                    Debug.LogError($"[{GetType().Name}] Register request: username='{username}' (len {username?.Length}), email='{email}', " +
+                                   $"passwordLength={password?.Length}, yearOfBirth={yearOfBirth}, country={country}, region={region}, zip={zip}");
                     _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMessage));
-                    return (false, null, errorMessage);
+                    return (false, null, errorMessage, errorReason);
                 }
 
                 string responseJson = request.downloadHandler.text;
@@ -513,7 +521,7 @@ namespace eu.foodmission.platform
                 {
                     string errorMsg = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_INVALID_RESPONSE");
                     _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMsg));
-                    return (false, null, errorMsg);
+                    return (false, null, errorMsg, RegisterErrorReason.None);
                 }
 
                 // Register successful - dispatch success
@@ -530,13 +538,13 @@ namespace eu.foodmission.platform
                     // A new account has no language/settings on the backend, so login kept the ones chosen
                     // before registering (AppearanceSettingsDialog); store them
                     _ = SyncSettingsAsync();
-                    return (true, loginResult.userId, null);
+                    return (true, loginResult.userId, null, RegisterErrorReason.None);
                 }
                 else
                 {
                     Debug.LogWarning($"[{GetType().Name}] Auto-login failed after registration: {loginResult.error}");
                     // Registration succeeded but auto-login failed - still return success
-                    return (true, response.createdUser.id, null);
+                    return (true, response.createdUser.id, null, RegisterErrorReason.None);
                 }
             }
             catch (Exception ex)
@@ -544,7 +552,7 @@ namespace eu.foodmission.platform
                 string error = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_UNEXPECTED", new object[] { ex.Message });
                 Debug.LogError($"[{GetType().Name}] Register exception: {ex}");
                 _storeService.store.Dispatch(AppActions.registerFailure.Invoke(error));
-                return (false, null, error);
+                return (false, null, error, RegisterErrorReason.None);
             }
         }
 

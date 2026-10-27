@@ -4891,6 +4891,22 @@ MonoBehaviour:
     m_Key: WHEEL_INFO_AMOUNT_REFILL
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Key: ERROR_USERNAME_INVALID
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Key: API_ERROR_REGISTER_USERNAME_TAKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Key: API_ERROR_REGISTER_EMAIL_TAKEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Key: API_ERROR_REGISTER_PASSWORD_POLICY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

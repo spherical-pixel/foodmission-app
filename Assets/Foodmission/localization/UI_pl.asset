@@ -5335,6 +5335,25 @@ MonoBehaviour:
     m_Localized: "{0:0.##} uzupe\u0142nienie"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "U\u017Cyj co najmniej 3 znak\xF3w: liter a\u2013z bez polskich
+      znak\xF3w, cyfr oraz . _ - @ (bez spacji)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: "Ta nazwa u\u017Cytkownika jest ju\u017C zaj\u0119ta. Wybierz inn\u0105."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: "Konto z tym adresem e-mail ju\u017C istnieje. Zaloguj si\u0119
+      lub zresetuj has\u0142o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: "To has\u0142o nie spe\u0142nia wymaga\u0144 bezpiecze\u0144stwa.
+      Spr\xF3buj d\u0142u\u017Cszego, z literami i cyframi."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

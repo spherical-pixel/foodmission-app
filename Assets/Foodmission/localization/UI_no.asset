@@ -5238,6 +5238,25 @@ MonoBehaviour:
     m_Localized: "{0:0.##} p\xE5fylling"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "Bruk minst 3 tegn: bokstavene a\u2013z uten aksenter, tall og .
+      _ - @ (ingen mellomrom)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: Dette brukernavnet er allerede i bruk. Velg et annet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: Det finnes allerede en konto med denne e-postadressen. Logg inn
+      eller tilbakestill passordet ditt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: "Dette passordet oppfyller ikke sikkerhetskravene. Pr\xF8v et lengre
+      passord med bokstaver og tall."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

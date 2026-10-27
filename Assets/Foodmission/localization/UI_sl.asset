@@ -5243,6 +5243,25 @@ MonoBehaviour:
     m_Localized: '{0:0.##} ponovno polnjenje'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "Uporabi vsaj 3 znake: \u010Drke a\u2013z brez stre\u0161ic, \u0161tevilke
+      ter . _ - @ (brez presledkov)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: "To uporabni\u0161ko ime je \u017Ee zasedeno. Izberi drugo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: "Ra\u010Dun s tem e-po\u0161tnim naslovom \u017Ee obstaja. Prijavi
+      se ali ponastavi geslo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: "To geslo ne izpolnjuje varnostnih zahtev. Poskusi z dalj\u0161im
+      geslom s \u010Drkami in \u0161tevilkami."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

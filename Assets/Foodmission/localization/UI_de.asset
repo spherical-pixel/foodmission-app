@@ -5281,6 +5281,26 @@ MonoBehaviour:
     m_Localized: "{0:0.##} Nachf\xFCllung"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "Verwende mindestens 3 Zeichen: Buchstaben a\u2013z ohne Akzente
+      oder Umlaute, Ziffern und . _ - @ (keine Leerzeichen)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: "Dieser Benutzername ist bereits vergeben. Bitte w\xE4hle einen
+      anderen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: "Mit dieser E-Mail-Adresse gibt es bereits ein Konto. Melde dich
+      an oder setze dein Passwort zur\xFCck."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: "Dieses Passwort erf\xFCllt die Sicherheitsanforderungen nicht.
+      Versuche ein l\xE4ngeres mit Buchstaben und Ziffern."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

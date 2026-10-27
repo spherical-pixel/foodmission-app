@@ -5251,6 +5251,25 @@ MonoBehaviour:
     m_Localized: '{0:0.##} navulling'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "Gebruik minstens 3 tekens: letters a\u2013z zonder accenten, cijfers
+      en . _ - @ (geen spaties)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: Deze gebruikersnaam is al in gebruik. Kies een andere.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: Er bestaat al een account met dit e-mailadres. Log in of stel je
+      wachtwoord opnieuw in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: Dit wachtwoord voldoet niet aan de beveiligingseisen. Probeer een
+      langer wachtwoord met letters en cijfers.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

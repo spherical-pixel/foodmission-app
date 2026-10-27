@@ -5247,6 +5247,25 @@ MonoBehaviour:
     m_Localized: '{0:0.##} recarga'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203812
+    m_Localized: "Usa al menos 3 caracteres: letras a\u2013z sin acentos ni \xF1,
+      n\xFAmeros y . _ - @ (sin espacios)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203813
+    m_Localized: "Este nombre de usuario ya est\xE1 en uso. Elige otro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203814
+    m_Localized: "Ya existe una cuenta con este email. Inicia sesi\xF3n o recupera
+      tu contrase\xF1a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203815
+    m_Localized: "Esta contrase\xF1a no cumple los requisitos de seguridad. Prueba
+      una m\xE1s larga que combine letras y n\xFAmeros."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

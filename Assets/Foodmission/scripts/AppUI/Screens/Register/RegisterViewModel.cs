@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
 using Unity.AppUI.MVVM;
@@ -154,6 +155,10 @@ namespace eu.foodmission.platform
         public List<string> RegionOptions { get; private set; } = new();
 
         public event System.Action<string> ShowErrorRequest;
+
+        // Keycloak rejects spaces and most symbols in usernames (error-username-invalid-character) and
+        // needs at least 3 characters; allow only what is safe so the error shows on the username step
+        private static readonly Regex UsernamePattern = new Regex(@"^[A-Za-z0-9._@-]{3,}$");
 
         private bool _registrationCompleted = false;
         private readonly IPilotSurveyService _pilotSurveyService;
@@ -445,6 +450,7 @@ namespace eu.foodmission.platform
                     }
                     else
                     {
+                        await ShowFieldErrorAsync(result.errorReason);
                         ShowErrorRequest?.Invoke(result.error);
                     }
                 }
@@ -476,9 +482,45 @@ namespace eu.foodmission.platform
                 return false;
             }
 
+            if (!UsernamePattern.IsMatch(Username))
+            {
+                UsernameHelpTextValue = "@UI:ERROR_USERNAME_INVALID";
+                UsernameHelpTextVariant = HelpTextVariant.Destructive;
+                return false;
+            }
+
             UsernameHelpTextValue = string.Empty;
             UsernameHelpTextVariant = HelpTextVariant.Default;
             return true;
+        }
+
+        /// <summary>
+        /// Takes the user back to the step of the field the backend rejected and shows the reason under it.
+        /// The help text is set after the step change, which re-validates the step and would clear it.
+        /// </summary>
+        private async Task ShowFieldErrorAsync(RegisterErrorReason reason)
+        {
+            string helpText = "@UI:" + RegisterErrorMapper.GetLocalizationKey(reason);
+            switch (reason)
+            {
+                case RegisterErrorReason.UsernameInvalid:
+                case RegisterErrorReason.UsernameTaken:
+                    await GoToStepAsync(1);
+                    UsernameHelpTextValue = helpText;
+                    UsernameHelpTextVariant = HelpTextVariant.Destructive;
+                    break;
+                case RegisterErrorReason.EmailInvalid:
+                case RegisterErrorReason.EmailTaken:
+                    await GoToStepAsync(2);
+                    EmailHelpTextValue = helpText;
+                    EmailHelpTextVariant = HelpTextVariant.Destructive;
+                    break;
+                case RegisterErrorReason.PasswordPolicy:
+                    await GoToStepAsync(3);
+                    PasswordHelpTextValue = helpText;
+                    PasswordHelpTextVariant = HelpTextVariant.Destructive;
+                    break;
+            }
         }
 
         public bool ValidateEmail(bool showError = true)
