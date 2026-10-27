@@ -5301,6 +5301,70 @@ MonoBehaviour:
       Versuche ein l\xE4ngeres mit Buchstaben und Ziffern."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: Hast du Fleisch gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: Hast du Lebensmittel vor dem Wegwerfen bewahrt?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "Enthielt mindestens eine Mahlzeit ein eiwei\xDFreiches Lebensmittel
+      (H\xFClsenfr\xFCchte, Eier, Fisch, Milchprodukte, Tofu, N\xFCsse\u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: "Hast du eine zus\xE4tzliche Portion Obst oder Gem\xFCse gegessen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: "Hast du Vollkornprodukte gew\xE4hlt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: "Hast du Lebensmittel und Getr\xE4nke vermieden, die zugesetzten
+      Zucker unter den ersten drei Zutaten haben?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: Hast du bei allen Mahlzeiten darauf verzichtet, am Tisch nachzusalzen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: Nein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: "{0}: Erz\xE4hl mir, wie es war."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: "Beantworte auch diese Frage, damit ich diesen Tag richtig z\xE4hle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "F\xFCr diesen Tag brauche ich nichts weiter. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "F\xFCr \u201E{0}\u201C fehlen mir noch diese Tage: {1}. Sollen
+      wir das jetzt nachholen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "F\xFCr \u201E{0}\u201C und weitere Missionen fehlen mir noch einige
+      Tage, zum Beispiel: {1}. Sollen wir das jetzt nachholen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "Geschafft! Mach weiter so: \u201E{0}\u201C wird am {1} abgeschlossen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "\u201E{0}\u201C hast du in der Tasche: Sie wird am {1} abgeschlossen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -5257,6 +5257,70 @@ MonoBehaviour:
       passord med bokstaver og tall."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: "Spiste du kj\xF8tt?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: "Reddet du mat fra \xE5 bli kastet?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "Inneholdt minst ett m\xE5ltid en proteinrik matvare (belgfrukter,
+      egg, fisk, meieriprodukter, tofu, n\xF8tter \u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: "La du til en ekstra porsjon frukt eller gr\xF8nnsaker?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: Valgte du fullkornsprodukter?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: "Unngikk du mat og drikke med tilsatt sukker blant de tre f\xF8rste
+      ingrediensene?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: "Unngikk du \xE5 salte maten ved bordet i alle m\xE5ltidene?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: Nei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: '{0}: fortell meg hvordan det gikk.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: "Svar p\xE5 denne ogs\xE5, s\xE5 jeg teller denne dagen riktig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "Jeg trenger ikke noe mer for denne dagen. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "For \xAB{0}\xBB mangler jeg fortsatt disse dagene: {1}. Skal vi
+      ta det igjen n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "For \xAB{0}\xBB og andre oppdrag mangler jeg fortsatt noen dager,
+      blant annet: {1}. Skal vi ta det igjen n\xE5?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "Du har klart det! Fortsett s\xE5nn: \xAB{0}\xBB fullf\xF8res {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "\xAB{0}\xBB er i boks: det fullf\xF8res {1}."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

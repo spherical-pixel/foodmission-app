@@ -5263,6 +5263,71 @@ MonoBehaviour:
       una pi\xF9 lunga con lettere e numeri."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: Hai mangiato carne?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: Hai evitato di sprecare del cibo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "Almeno un pasto conteneva un alimento ricco di proteine (legumi,
+      uova, pesce, latticini, tofu, frutta secca\u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: "Hai aggiunto una porzione in pi\xF9 di frutta o verdura?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: Hai scelto cibi integrali?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: Hai evitato cibi e bevande con zuccheri aggiunti tra i primi tre
+      ingredienti?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: Hai evitato di aggiungere sale a tavola in tutti i pasti?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: "{0}: raccontami com'\xE8 andata."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: "Rispondi anche a questa, cos\xEC conto bene questa giornata."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "Per questo giorno non mi serve altro. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "Per \u201C{0}\u201D mi mancano ancora questi giorni: {1}. Ci aggiorniamo
+      adesso?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "Per \u201C{0}\u201D e altre missioni mi mancano ancora alcuni giorni,
+      per esempio: {1}. Ci aggiorniamo adesso?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "Ce l'hai fatta! Continua cos\xEC: \u201C{0}\u201D sar\xE0 completata
+      {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "\u201C{0}\u201D \xE8 fatta: sar\xE0 completata {1}."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

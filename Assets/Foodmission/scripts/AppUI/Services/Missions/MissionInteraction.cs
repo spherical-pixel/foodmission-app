@@ -23,7 +23,39 @@ namespace eu.foodmission.platform
         DayPicker,
         YesNo,
         ProductChecklist,
-        DayChecklist
+        DayChecklist,
+        DayQuestion
+    }
+
+    /// <summary>When a day is decided for a <see cref="MissionStepType.DayQuestion"/>.</summary>
+    public enum DayCoverage
+    {
+        /// <summary>The day counts once one of the counting flags is recorded that day (dayBucket).</summary>
+        FlagDay,
+        /// <summary>The day is decided once it has any meal log (meat-free days, all-meals ratios).</summary>
+        LoggedDay
+    }
+
+    /// <summary>
+    /// One question per day for rules that count days (spec 2026-10-27): the answers of a day go in one OTHER meal log.
+    /// </summary>
+    public sealed class DayQuestionSpec
+    {
+        public DayCoverage Coverage { get; }
+        /// <summary>Any later answer can change the outcome (limits, all-meals ratios): never pruned.</summary>
+        public bool HasLimit { get; }
+        /// <summary>The flag goes on every meal log of that day; the answer is required when the day sends anything.</summary>
+        public bool AllMeals { get; }
+        /// <summary>Option indexes that make the day count for the mission.</summary>
+        public IReadOnlyList<int> CountingOptions { get; }
+
+        public DayQuestionSpec(DayCoverage coverage, bool hasLimit, bool allMeals, IReadOnlyList<int> countingOptions)
+        {
+            Coverage = coverage;
+            HasLimit = hasLimit;
+            AllMeals = allMeals;
+            CountingOptions = countingOptions ?? Array.Empty<int>();
+        }
     }
 
     /// <summary>Navigation action (Actions.*) plus the UI.csv key of its button.</summary>
@@ -117,6 +149,8 @@ namespace eu.foodmission.platform
         public IReadOnlyList<string> MealTypes { get; }
         /// <summary>ProductChecklist / DayChecklist: the chips and what makes an item count. Null for other types.</summary>
         public ChecklistSpec Checklist { get; }
+        /// <summary>DayQuestion: how its days are decided. Null for other types.</summary>
+        public DayQuestionSpec DayQuestion { get; }
 
         /// <summary>
         /// Each report sends new synthetic ids (or plain occasions), so telling the same thing in two check-ins counts it twice:
@@ -137,7 +171,8 @@ namespace eu.foodmission.platform
             int maxCount,
             bool onePerDay,
             IReadOnlyList<string> mealTypes,
-            ChecklistSpec checklist = null)
+            ChecklistSpec checklist = null,
+            DayQuestionSpec dayQuestion = null)
         {
             Type = type;
             PromptKey = promptKey;
@@ -149,6 +184,7 @@ namespace eu.foodmission.platform
             OnePerDay = onePerDay;
             MealTypes = mealTypes ?? Array.Empty<string>();
             Checklist = checklist;
+            DayQuestion = dayQuestion;
         }
     }
 

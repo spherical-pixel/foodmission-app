@@ -77,12 +77,27 @@ namespace eu.foodmission.platform
             if (viewModel.IsUpToDate)
             {
                 NavController navController = _navController;
-                NutriMessageDialog.Show(L("MISSION_CHECKIN_UP_TO_DATE"),
+                NutriMessageDialog.Show(UpToDateMessage(viewModel.Plan),
                     new FMDialogAction("@UI:MISSION_REPORT_CLOSE", () => navController?.PopBackStack(), ButtonVariant.Accent));
                 return;
             }
             OnStepChanged(_viewModel.CurrentStepIndex);
         }
+
+        /// <summary>Up to date; secured missions say when they will be completed.</summary>
+        private static string UpToDateMessage(CheckInPlan plan)
+        {
+            string message = L("MISSION_CHECKIN_UP_TO_DATE");
+            foreach (CheckInMissionRef mission in plan.Secured.Where(m => m.StartLocal.HasValue))
+            {
+                message += "\n\n" + LF("MISSION_SECURED_CHECKIN", mission.Title, CompletionDay(mission.StartLocal.Value));
+            }
+            return message;
+        }
+
+        /// <summary>Day the backend resolves a mission started at <paramref name="startLocal"/> (its window end).</summary>
+        public static string CompletionDay(DateTime startLocal) =>
+            MissionDeadlines.DeadlineLocal(startLocal).ToString("dddd d", Formatter);
 
         protected override void OnCloseRequested()
         {
@@ -220,7 +235,8 @@ namespace eu.foodmission.platform
                 }
             });
             // Only meals can also be logged elsewhere in the app (quick meal log); every other answer goes through Nutri
-            if (stepIndex == 0 && _viewModel != null && _viewModel.KindOf(stepIndex) == CheckInStepKind.MealDay)
+            if (stepIndex == 0 && _viewModel != null && _viewModel.KindOf(stepIndex) == CheckInStepKind.MealDay &&
+                _viewModel.Plan.MealDays[0].OpenMealTypes.Count > 0)
             {
                 var hint = new Text { text = L("MISSION_REPORT_INTRO") };
                 hint.AddToClassList("fm-mission-report-hint");
@@ -279,8 +295,72 @@ namespace eu.foodmission.platform
             }
         }
 
+        /// <summary>Re-renders every day card on the next frame: an answer can hide a question on later days.</summary>
+        private void RenderDayCardsLater()
+        {
+            schedule.Execute(() =>
+            {
+                for (int step = 0; _viewModel != null && step < _viewModel.Plan.MealDays.Count; step++)
+                {
+                    RenderStep(step);
+                }
+            });
+        }
+
         private void RenderMealDay(int stepIndex, CheckInMealDay day, CheckInMealDayAnswer answer, VisualElement body)
         {
+            IReadOnlyList<CheckInDayQuestion> dayQuestions = _viewModel.VisibleDayQuestions(stepIndex);
+            IReadOnlyList<CheckInDayQuestion> missing = _viewModel.MissingRequired(stepIndex);
+            foreach (CheckInDayQuestion question in dayQuestions)
+            {
+                var missionTitle = new Text { text = question.MissionTitle };
+                missionTitle.AddToClassList("fm-mission-report-meal-hint");
+                var prompt = new Text { text = L(question.Step.PromptKey) };
+                prompt.AddToClassList("fm-mission-report-day-question");
+                body.Add(prompt);
+                body.Add(missionTitle);
+
+                var row = new VisualElement();
+                row.AddToClassList("fm-mission-report-row");
+                bool answered = answer.DayAnswers.TryGetValue(question.MissionCode, out int chosen);
+                for (int option = 0; option < question.Step.Options.Count; option++)
+                {
+                    int captured = option;
+                    string codeCaptured = question.MissionCode;
+                    row.Add(Chip(L(question.Step.Options[option].LabelKey), answered && chosen == option, () =>
+                    {
+                        _viewModel.SetDayAnswer(stepIndex, codeCaptured, captured);
+                        RenderDayCardsLater();
+                    }));
+                }
+                body.Add(row);
+
+                if (missing.Contains(question))
+                {
+                    var requiredHint = new Text { text = L("MISSION_CHECKIN_DAY_REQUIRED_HINT") };
+                    requiredHint.AddToClassList("fm-mission-report-meal-hint");
+                    body.Add(requiredHint);
+                }
+            }
+
+            if (day.OpenMealTypes.Count == 0)
+            {
+                // Earlier answers covered what this day was asked for
+                if (dayQuestions.Count == 0)
+                {
+                    var nothingLeft = new Text { text = L("MISSION_CHECKIN_DAY_NOTHING_LEFT") };
+                    nothingLeft.AddToClassList("fm-mission-report-meal-hint");
+                    body.Add(nothingLeft);
+                }
+                return;
+            }
+            if (dayQuestions.Count > 0)
+            {
+                var separator = new VisualElement();
+                separator.AddToClassList("fm-mission-report-day-separator");
+                body.Add(separator);
+            }
+
             var mealRow = new VisualElement();
             mealRow.AddToClassList("fm-mission-report-row");
             foreach (string mealType in day.OpenMealTypes)

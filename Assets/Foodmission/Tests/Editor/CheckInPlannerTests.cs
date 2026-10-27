@@ -369,5 +369,212 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(1, step.FromProducts);
         }
+
+        // ── Day questions (spec 2026-10-27) ───────────────────
+
+        private static readonly DateTime DayStart = Now.Date.AddDays(-3).AddHours(9);
+
+        internal static CheckInMission MP(string code, float progress, DateTime? start = null) =>
+            new CheckInMission(code, "T " + code, MissionInteractionCatalog.Get(code), start ?? DayStart, progress);
+
+        private static IEnumerable<DateTime> DaysAsking(CheckInPlan plan, string code) =>
+            plan.MealDays.Where(d => d.DayQuestions.Any(q => q.MissionCode == code)).Select(d => d.Day);
+
+        [Test]
+        public void Plan_FlagDayQuestion_OnDaysWithoutTheFlag()
+        {
+            var inputs = Inputs(MP("M.B6.2", 0f));
+            inputs.CoveredEventDays[ClientEventTypes.NutritionFruitVegServingAdded] = new HashSet<DateTime> { Now.Date.AddDays(-2) };
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-3), Now.Date.AddDays(-1), Now.Date }, DaysAsking(plan, "M.B6.2").ToArray());
+        }
+
+        [Test]
+        public void Plan_LoggedDayQuestion_SkipsDaysWithAnyLog()
+        {
+            var inputs = Inputs(MP("M.I1.3", 0f));
+            inputs.LoggedMealTypes[Now.Date.AddDays(-2)] = new HashSet<string> { "LUNCH" };
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            CollectionAssert.DoesNotContain(DaysAsking(plan, "M.I1.3").ToArray(), Now.Date.AddDays(-2));
+            CollectionAssert.Contains(DaysAsking(plan, "M.I1.3").ToArray(), Now.Date.AddDays(-1));
+        }
+
+        [Test]
+        public void Plan_MeatDayQuestion_DerivedWhenMealBlockAsksMeat()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.I1.3", 0f), MP("M.B1.3", 0f)));
+
+            var meatQuestions = plan.MealDays.SelectMany(d => d.DayQuestions).Where(q => q.MissionCode == "M.I1.3").ToList();
+            Assert.IsNotEmpty(meatQuestions);
+            Assert.IsTrue(meatQuestions.All(q => q.DerivedFromMeals));
+            Assert.IsTrue(plan.MealDays.All(d => d.Questions.Any(q => q.EventType == ClientEventTypes.MealMeatConsumed)));
+        }
+
+        [Test]
+        public void Plan_SecuredMission_IsListedWithItsStart()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.I1.3", 1f), MP("M.A6.3", 1f)));
+
+            var secured = plan.Secured.Single();
+            Assert.AreEqual("M.I1.3", secured.Code);
+            Assert.AreEqual(DayStart, secured.StartLocal);
+        }
+
+        [Test]
+        public void Plan_FlagDayQuestion_JoinsTheMealBlockWhenItsFlagsAreAskedPerMeal()
+        {
+            // B5.1 / B5.2 ask the plate flags per meal: B5.5 is answered there, with its missing flag added to the meals
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.B5.5", 0f), MP("M.B5.1", 0f), MP("M.B5.2", 0f)));
+
+            Assert.IsEmpty(DaysAsking(plan, "M.B5.5"));
+            var day = plan.MealDays.First();
+            CollectionAssert.IsSupersetOf(day.Questions.Select(q => q.EventType).ToArray(), new[]
+            {
+                ClientEventTypes.FoodWasteHalfPlateSaved, ClientEventTypes.FoodWasteFullPlateSaved, ClientEventTypes.FoodWasteExpiredConsumed
+            });
+            Assert.AreEqual(1, day.Questions.Count(q => q.EventType == ClientEventTypes.FoodWasteHalfPlateSaved), "no duplicate chips");
+        }
+
+        [Test]
+        public void Plan_FlagDayQuestion_StaysOnADayWithoutMealBlock()
+        {
+            var inputs = Inputs(MP("M.B5.5", 0f), MP("M.B5.1", 0f));
+            inputs.LoggedMealTypes[Now.Date.AddDays(-2)] = new HashSet<string> { "BREAKFAST", "LUNCH", "DINNER" };
+
+            CollectionAssert.Contains(DaysAsking(CheckInPlanner.Plan(inputs), "M.B5.5").ToArray(), Now.Date.AddDays(-2));
+        }
+
+        [Test]
+        public void Plan_DecidedDay_NotAskedAgain()
+        {
+            var inputs = Inputs(MP("M.B6.2", 0f));
+            inputs.DecidedDays["M.B6.2"] = new HashSet<DateTime> { Now.Date.AddDays(-2) };
+
+            CollectionAssert.DoesNotContain(DaysAsking(CheckInPlanner.Plan(inputs), "M.B6.2").ToArray(), Now.Date.AddDays(-2));
+        }
+
+        [Test]
+        public void Plan_MissionWithEnoughProgress_AsksNothing()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.I1.3", 1f)));
+
+            Assert.IsTrue(plan.IsEmpty);
+        }
+
+        [Test]
+        public void Plan_Remaining_FromProgress()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.B5.5", 0.5f)));
+
+            Assert.IsTrue(plan.MealDays.SelectMany(d => d.DayQuestions).All(q => q.Remaining == 2));
+        }
+
+        [Test]
+        public void Plan_LimitMission_NeverPruned()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.A6.3", 1f)));
+
+            Assert.AreEqual(4, DaysAsking(plan, "M.A6.3").Count());
+            Assert.IsTrue(plan.MealDays.SelectMany(d => d.DayQuestions).All(q => q.Remaining == null));
+        }
+
+        [Test]
+        public void Plan_AllMealsQuestion_OnLoggedDayWithOpenMeals()
+        {
+            var inputs = Inputs(MP("M.A6.3", 0f), MP("M.A1.3", 0f));
+            inputs.LoggedMealTypes[Now.Date.AddDays(-2)] = new HashSet<string> { "BREAKFAST" };
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            CollectionAssert.Contains(DaysAsking(plan, "M.A6.3").ToArray(), Now.Date.AddDays(-2));
+        }
+
+        [Test]
+        public void Plan_AllMealsQuestion_NotOnLoggedDayWithoutMealBlock()
+        {
+            var inputs = Inputs(MP("M.A6.3", 0f));
+            inputs.LoggedMealTypes[Now.Date.AddDays(-2)] = new HashSet<string> { "BREAKFAST" };
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            CollectionAssert.DoesNotContain(DaysAsking(plan, "M.A6.3").ToArray(), Now.Date.AddDays(-2));
+        }
+
+        [Test]
+        public void Plan_TodayDayQuestion_OfferedAllDay()
+        {
+            var inputs = Inputs(MP("M.B6.2", 0f));
+            inputs.NowLocal = Now.Date.AddHours(8);
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            CollectionAssert.Contains(DaysAsking(plan, "M.B6.2").ToArray(), Now.Date);
+        }
+
+        [Test]
+        public void Plan_DayWithOnlyDayQuestions_IsEmitted()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.B6.2", 0f)));
+
+            Assert.AreEqual(4, plan.MealDays.Count);
+            Assert.IsTrue(plan.MealDays.All(d => d.OpenMealTypes.Count == 0 && d.Questions.Count == 0));
+            Assert.AreEqual("T M.B6.2", plan.MealDays[0].DayQuestions.Single().MissionTitle);
+        }
+
+        [Test]
+        public void Plan_FullyLoggedDay_KeepsItsDayQuestions()
+        {
+            var inputs = Inputs(MP("M.B6.2", 0f), MP("M.A1.3", 0f));
+            inputs.LoggedMealTypes[Now.Date.AddDays(-2)] = new HashSet<string> { "BREAKFAST", "LUNCH", "DINNER" };
+
+            var day = CheckInPlanner.Plan(inputs).MealDays.Single(d => d.Day == Now.Date.AddDays(-2));
+
+            Assert.IsEmpty(day.OpenMealTypes);
+            Assert.AreEqual("M.B6.2", day.DayQuestions.Single().MissionCode);
+        }
+
+        [Test]
+        public void PendingPastDays_DayQuestionsCountOnlyOnDaysWithoutLogs()
+        {
+            // A day with a meal log was told about, even if a day question is still open on it
+            var inputs = Inputs(MP("M.B6.2", 0f));
+            inputs.LoggedMealTypes[Now.Date.AddDays(-2)] = new HashSet<string> { "LUNCH" };
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            Assert.AreEqual(2, plan.PendingPastDays(Now));
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-3), Now.Date.AddDays(-1) }, plan.WaitingMissions(Now).Single().Days.ToArray());
+        }
+
+        [Test]
+        public void WaitingMissions_GroupsPastDaysPerMission()
+        {
+            var inputs = Inputs(MP("M.B6.2", 0f), MP("M.A5.4", 0f, Now.Date.AddDays(-1).AddHours(9)));
+            inputs.CoveredEventDays[ClientEventTypes.NutritionFruitVegServingAdded] = new HashSet<DateTime> { Now.Date.AddDays(-3) };
+
+            var waiting = CheckInPlanner.Plan(inputs).WaitingMissions(Now);
+
+            var fruit = waiting.Single(w => w.Code == "M.B6.2");
+            Assert.AreEqual("T M.B6.2", fruit.Title);
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-2), Now.Date.AddDays(-1) }, fruit.Days.ToArray());
+            var fifo = waiting.Single(w => w.Code == "M.A5.4");
+            Assert.AreEqual("T M.A5.4", fifo.Title);
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-1) }, fifo.Days.ToArray());
+        }
+
+        [Test]
+        public void WaitingMissions_MealMissionsOnlyOnDaysWithoutLogs()
+        {
+            var inputs = Inputs(MP("M.A1.3", 0f));
+            inputs.LoggedMealTypes[Now.Date.AddDays(-2)] = new HashSet<string> { "LUNCH" };
+
+            var waiting = CheckInPlanner.Plan(inputs).WaitingMissions(Now).Single();
+
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-3), Now.Date.AddDays(-1) }, waiting.Days.ToArray());
+        }
     }
 }

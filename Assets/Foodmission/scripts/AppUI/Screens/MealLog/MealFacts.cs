@@ -225,13 +225,15 @@ namespace eu.foodmission.platform
             var events = new HashSet<string>(StringComparer.Ordinal);
             foreach (string code in missionCodes)
             {
-                foreach (MissionReportStep step in MissionInteractionCatalog.Get(code).Steps.Where(s => s.Type == MissionStepType.MealReport))
+                // Day questions are sent as meal-log flags too, so a logged meal can answer them
+                foreach (MissionReportStep step in MissionInteractionCatalog.Get(code).Steps
+                    .Where(s => s.Type == MissionStepType.MealReport || s.Type == MissionStepType.DayQuestion))
                 {
                     if (step.EventType != null)
                     {
                         events.Add(step.EventType);
                     }
-                    events.UnionWith(step.Options.Select(o => o.EventType));
+                    events.UnionWith(step.Options.Select(o => o.EventType).Where(e => e != null));
                 }
             }
             // Meat-reduction missions count meat portions, but a meat-free meal is the answer that helps them
@@ -329,9 +331,24 @@ namespace eu.foodmission.platform
             {
                 foreach (QuickMealCheckItem item in allItems)
                 {
-                    if (IsMeatConsumedItem(item))
+                    if (IsMeatConsumedItem(item) || IsSwapEndingInMeat(item))
+                    {
+                        Uncheck(item);
+                    }
+                }
+            }
+            else if (IsSwapEndingInMeat(target))
+            {
+                // Beef → chicken is still meat: the meal had meat
+                foreach (QuickMealCheckItem item in allItems)
+                {
+                    if (IsMeatFreeItem(item))
                     {
                         item.IsChecked = false;
+                    }
+                    else if (IsMeatConsumedItem(item))
+                    {
+                        item.IsChecked = true;
                     }
                 }
             }
@@ -360,6 +377,19 @@ namespace eu.foodmission.platform
                    item.Id == "q_vegan";
         }
 
+        private static bool IsSwapEndingInMeat(QuickMealCheckItem item) =>
+            item != null && item.IsChecked && MeatSwaps.EndsInMeat(!string.IsNullOrEmpty(item.SelectedSwapOption) ? item.SelectedSwapOption : item.EventType);
+
+        private static void Uncheck(QuickMealCheckItem item)
+        {
+            item.IsChecked = false;
+            if (item.QuestionType == DirectQuestionType.SwapSelector)
+            {
+                item.SelectedSwapOption = null;
+                item.EventType = null;
+            }
+        }
+
         private static bool IsMeatConsumedItem(QuickMealCheckItem item)
         {
             if (item == null)
@@ -370,7 +400,7 @@ namespace eu.foodmission.platform
                    item.Id == "q_meat_consumed";
         }
 
-        public static void SelectSwap(QuickMealCheckItem target, string swapOption)
+        public static void SelectSwap(QuickMealCheckItem target, string swapOption, IReadOnlyCollection<QuickMealCheckItem> allItems = null)
         {
             if (target == null || string.IsNullOrEmpty(swapOption))
             {
@@ -388,6 +418,10 @@ namespace eu.foodmission.platform
                 target.SelectedSwapOption = swapOption;
                 target.EventType = swapOption;
                 target.IsChecked = true;
+                if (allItems != null)
+                {
+                    ApplyMeatExclusion(target, allItems);
+                }
             }
         }
 

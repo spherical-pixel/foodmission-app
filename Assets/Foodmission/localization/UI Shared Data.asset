@@ -4907,6 +4907,66 @@ MonoBehaviour:
     m_Key: API_ERROR_REGISTER_PASSWORD_POLICY
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Key: MISSION_QDAY_MEAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Key: MISSION_QDAY_FOOD_SAVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Key: MISSION_QDAY_PROTEIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Key: MISSION_QDAY_FRUIT_VEG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Key: MISSION_QDAY_WHOLEGRAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Key: MISSION_QDAY_NO_ADDED_SUGAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Key: MISSION_QDAY_NO_SALT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Key: MISSION_QDAY_NONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Key: MISSION_CHECKIN_Q_DAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Key: MISSION_CHECKIN_DAY_REQUIRED_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Key: MISSION_CHECKIN_DAY_NOTHING_LEFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Key: MISSION_NUDGE_MISSING_DAYS_FOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Key: MISSION_NUDGE_MISSING_DAYS_FOR_MANY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Key: MISSION_SECURED_MESSAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Key: MISSION_SECURED_CHECKIN
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

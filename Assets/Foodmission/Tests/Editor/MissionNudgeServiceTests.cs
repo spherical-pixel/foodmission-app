@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Moq;
@@ -104,6 +105,18 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(MissionNudgeKind.MissingDays, nudge.Kind);
             Assert.AreEqual(3, nudge.MissingDays);
+        }
+
+        [Test]
+        public async Task GetNudge_SecuredMission_IsNeverStalled()
+        {
+            _pendingDays = 0;
+            SetQuest("M.I1.3");
+            SetProgress(new MissionProgress { missionCode = "M.I1.3", missionTitle = "T M.I1.3", progress = 100, status = ProgressStatus.InProgress, startedAt = _now.AddDays(-5) });
+            await SeeQuestDaysAgo(5);
+            _now = _now.AddDays(3);
+
+            Assert.IsNull(await _service.GetNudgeAsync());
         }
 
         [Test]
@@ -313,6 +326,60 @@ namespace eu.foodmission.platform.Tests
             await SeeQuestDaysAgo(5);
 
             Assert.IsNull(await _service.GetNudgeAsync());
+        }
+
+        // ── Missing-days nudge names the mission (spec 2026-10-27 §7) ──
+
+        private CheckInDayEvent TitledDayEvent(string code, string title, DateTime startLocal, params int[] daysAgo) =>
+            new CheckInDayEvent(code, MissionInteractionCatalog.Get("M.A5.4").Steps[0],
+                daysAgo.Select(d => _now.ToLocalTime().Date.AddDays(-d)).ToList(), startLocal, title);
+
+        private void PlanWith(params CheckInDayEvent[] dayEvents)
+        {
+            var plan = new CheckInPlan(new List<CheckInMealDay>(), dayEvents.ToList(), new List<CheckInMissionStep>());
+            _checkIn.Setup(c => c.LoadPlanAsync(null)).ReturnsAsync((plan, (ApiErrorResponse)null));
+        }
+
+        [Test]
+        public async Task MissingDaysNudge_NamesSoonestDeadlineMission()
+        {
+            await SeeQuestDaysAgo(6);
+            DateTime today = _now.ToLocalTime().Date;
+            PlanWith(
+                TitledDayEvent("M.X1", "Later", today.AddDays(-2), 1, 2),
+                TitledDayEvent("M.X2", "Sooner", today.AddDays(-5), 3, 1, 2));
+
+            var nudge = await _service.GetNudgeAsync();
+
+            Assert.AreEqual(MissionNudgeKind.MissingDays, nudge.Kind);
+            Assert.AreEqual("Sooner", nudge.MissionTitle);
+            CollectionAssert.AreEqual(new[] { today.AddDays(-3), today.AddDays(-2), today.AddDays(-1) }, nudge.MissionDays.ToArray());
+            Assert.IsTrue(nudge.OthersWaiting);
+        }
+
+        [Test]
+        public async Task MissingDaysNudge_SingleMission_NoOthersWaiting()
+        {
+            await SeeQuestDaysAgo(6);
+            PlanWith(TitledDayEvent("M.X1", "Only", _now.ToLocalTime().Date.AddDays(-5), 1, 2));
+
+            var nudge = await _service.GetNudgeAsync();
+
+            Assert.AreEqual("Only", nudge.MissionTitle);
+            Assert.IsFalse(nudge.OthersWaiting);
+        }
+
+        [Test]
+        public async Task MissingDaysNudge_NoTitle_FallsBackToCount()
+        {
+            _pendingDays = 3;
+            await SeeQuestDaysAgo(5);
+
+            var nudge = await _service.GetNudgeAsync();
+
+            Assert.AreEqual(MissionNudgeKind.MissingDays, nudge.Kind);
+            Assert.IsNull(nudge.MissionTitle);
+            Assert.IsEmpty(nudge.MissionDays);
         }
     }
 }

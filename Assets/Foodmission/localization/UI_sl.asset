@@ -5262,6 +5262,71 @@ MonoBehaviour:
       geslom s \u010Drkami in \u0161tevilkami."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: Si jedel meso?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: "Si re\u0161il kaj hrane pred zavr\u017Eenjem?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "Je vsaj en obrok vseboval \u017Eivilo, bogato z beljakovinami (stro\u010Dnice,
+      jajca, ribe, mle\u010Dni izdelki, tofu, ore\u0161\u010Dki \u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: Si dodal dodatno porcijo sadja ali zelenjave?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: "Si izbral polnozrnata \u017Eivila?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: "Si se izogibal \u017Eivilom in pija\u010Dam z dodanim sladkorjem
+      med prvimi tremi sestavinami?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: Si se pri vseh obrokih izognil dosoljevanju pri mizi?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: Ne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: '{0}: povej mi, kako je bilo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: "Odgovori tudi na to, da bom ta dan pravilno \u0161tel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "Za ta dan ne potrebujem ni\u010Desar ve\u010D. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "Pri \xBB{0}\xAB mi \u0161e manjkajo ti dnevi: {1}. Bova to nadoknadila
+      zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "Pri \xBB{0}\xAB in drugih misijah mi \u0161e manjka nekaj dni,
+      na primer: {1}. Bova to nadoknadila zdaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "Uspelo ti je! Kar tako naprej. Datum zaklju\u010Dka misije \xBB{0}\xAB:
+      {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "\xBB{0}\xAB je v \u017Eepu. Datum zaklju\u010Dka: {1}."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

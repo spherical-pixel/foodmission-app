@@ -46,6 +46,10 @@ namespace eu.foodmission.platform
 
         public static string ScheduledIdsKey(string userId) => "mission_last_day_ids_" + userId;
         private static string ShownKey(string userId) => "mission_last_day_shown_" + userId;
+        private static string SecuredKey(string userId) => "mission_secured_shown_" + userId;
+
+        private static string AttemptOf(MissionDeadlines.ActiveMission mission) =>
+            mission.Code + "|" + (mission.StartLocal?.ToUniversalTime().ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture) ?? "-");
 
         private string UserId => _storeService?.GetAppState()?.userId;
 
@@ -76,7 +80,7 @@ namespace eu.foodmission.platform
                 {
                     return null;
                 }
-                List<MissionDeadlines.ActiveMission> missions = await LoadActiveMissionsAsync();
+                var (missions, _) = await LoadActiveMissionsAsync();
                 return MissionDeadlines.Today(missions, PreferredTime(), Clock());
             }
             catch (Exception ex)
@@ -97,7 +101,7 @@ namespace eu.foodmission.platform
             try
             {
                 DateTime now = Clock();
-                List<MissionDeadlines.ActiveMission> missions = await LoadActiveMissionsAsync();
+                var (missions, _) = await LoadActiveMissionsAsync();
                 var scheduled = new List<string>();
                 foreach (MissionDeadlines.LastDay day in MissionDeadlines.LastDays(missions, PreferredTime()).Where(d => d.ReminderLocal > now))
                 {
@@ -124,6 +128,45 @@ namespace eu.foodmission.platform
             }
         }
 
+        public async Task<MissionDeadlines.ActiveMission> GetSecuredToAnnounceAsync()
+        {
+            string userId = UserId;
+            if (string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
+
+            try
+            {
+                var (_, secured) = await LoadActiveMissionsAsync();
+                List<string> announced = _localStorage?.GetValue<List<string>>(SecuredKey(userId)) ?? new List<string>();
+                return secured
+                    .Where(m => !announced.Contains(AttemptOf(m)))
+                    .OrderBy(m => m.StartLocal ?? DateTime.MaxValue)
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[MissionLastDayService] GetSecuredToAnnounceAsync failed: {ex.Message}");
+                return null;
+            }
+        }
+
+        public void MarkSecuredAnnounced(MissionDeadlines.ActiveMission mission)
+        {
+            string userId = UserId;
+            if (mission == null || string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
+            List<string> announced = _localStorage?.GetValue<List<string>>(SecuredKey(userId)) ?? new List<string>();
+            if (!announced.Contains(AttemptOf(mission)))
+            {
+                announced.Add(AttemptOf(mission));
+                _localStorage?.SetValue(SecuredKey(userId), announced);
+            }
+        }
+
         private TimeSpan PreferredTime()
         {
             string value = _storeService?.GetAppState()?.notificationPreferredTime;
@@ -132,25 +175,29 @@ namespace eu.foodmission.platform
                 : TimeSpan.FromHours(10);
         }
 
-        /// <summary>Open missions of the current quest that have a rule (so a deadline) and a start time.</summary>
-        private async Task<List<MissionDeadlines.ActiveMission>> LoadActiveMissionsAsync()
+        /// <summary>
+        /// Open missions of the current quest that have a rule (so a deadline) and a start time. Secured ones (nothing
+        /// left to report, they only wait for their end) come apart: no last-day reminder for them.
+        /// </summary>
+        private async Task<(List<MissionDeadlines.ActiveMission> Active, List<MissionDeadlines.ActiveMission> Secured)> LoadActiveMissionsAsync()
         {
             var result = new List<MissionDeadlines.ActiveMission>();
+            var secured = new List<MissionDeadlines.ActiveMission>();
             string questId = _storeService?.GetAppState()?.userCurrentQuestId;
             if (string.IsNullOrEmpty(questId) || _questService == null || _missionService == null)
             {
-                return result;
+                return (result, secured);
             }
 
             var (quest, questError) = await _questService.GetQuestAsync(questId);
             if (questError != null || quest?.items == null)
             {
-                return result;
+                return (result, secured);
             }
             var (progressList, progressError) = await _missionService.GetUserProgressListAsync();
             if (progressError != null)
             {
-                return result;
+                return (result, secured);
             }
 
             IEnumerable<string> codes = quest.items
@@ -159,7 +206,8 @@ namespace eu.foodmission.platform
                 .Distinct(StringComparer.OrdinalIgnoreCase);
             foreach (string code in codes)
             {
-                if (MissionInteractionCatalog.Get(code).Status != MissionInteractionStatus.Available)
+                MissionInteraction interaction = MissionInteractionCatalog.Get(code);
+                if (interaction.Status != MissionInteractionStatus.Available)
                 {
                     continue;
                 }
@@ -169,9 +217,10 @@ namespace eu.foodmission.platform
                     continue;
                 }
                 string title = !string.IsNullOrEmpty(progress.missionTitle) ? progress.missionTitle : code;
-                result.Add(new MissionDeadlines.ActiveMission(code, title, progress.startedAt.Value.ToLocalTime()));
+                var mission = new MissionDeadlines.ActiveMission(code, title, progress.startedAt.Value.ToLocalTime());
+                (MissionProgressState.IsSecured(progress, interaction) ? secured : result).Add(mission);
             }
-            return result;
+            return (result, secured);
         }
     }
 }

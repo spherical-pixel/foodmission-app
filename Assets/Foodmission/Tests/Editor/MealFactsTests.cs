@@ -52,6 +52,49 @@ namespace eu.foodmission.platform.Tests
             Assert.IsTrue(Item("q_meat_consumed").IsChecked);
         }
 
+        private QuickMealCheckItem Swap(string swap) => Item($"q_{swap.ToLowerInvariant()}");
+
+        [Test]
+        public void Toggle_MeatFree_UnchecksSwapsThatEndInMeat()
+        {
+            MealFacts.Toggle(Swap(ClientEventTypes.SwapBeefToChicken), _all);
+            MealFacts.Toggle(Swap(ClientEventTypes.SwapBeefToLegumes), _all);
+
+            MealFacts.Toggle(Item("q_meat_free"), _all);
+
+            Assert.IsFalse(Swap(ClientEventTypes.SwapBeefToChicken).IsChecked);
+            Assert.IsTrue(Swap(ClientEventTypes.SwapBeefToLegumes).IsChecked, "a swap to legumes can be meat-free");
+        }
+
+        [Test]
+        public void Toggle_SwapThatEndsInMeat_UnchecksMeatFree_AndChecksMeatConsumed()
+        {
+            MealFacts.Toggle(Item("q_meat_free"), _all);
+
+            MealFacts.Toggle(Swap(ClientEventTypes.SwapPorkToChicken), _all);
+
+            Assert.IsFalse(Item("q_meat_free").IsChecked);
+            Assert.IsTrue(Item("q_meat_consumed").IsChecked);
+        }
+
+        [Test]
+        public void SelectSwap_ThatEndsInMeat_AppliesTheSameExclusion()
+        {
+            var selector = new QuickMealCheckItem
+            {
+                Id = "sel",
+                QuestionType = DirectQuestionType.SwapSelector,
+                SwapOptions = new[] { ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes }
+            };
+            var items = new List<QuickMealCheckItem>(_all) { selector };
+            MealFacts.Toggle(Item("q_meat_free"), items);
+
+            MealFacts.SelectSwap(selector, ClientEventTypes.SwapBeefToChicken, items);
+
+            Assert.IsFalse(Item("q_meat_free").IsChecked);
+            Assert.IsTrue(Item("q_meat_consumed").IsChecked);
+        }
+
         [Test]
         public void Toggle_SyncsOtherItemsWithTheSameEventType()
         {
@@ -131,6 +174,17 @@ namespace eu.foodmission.platform.Tests
                 filtered.SelectMany(s => s.Items).Select(i => i.EventType).ToArray());
             Assert.AreSame(Item("q_legumes"), filtered.SelectMany(s => s.Items).First(i => i.Id == "q_legumes"));
             Assert.IsTrue(filtered.All(s => s.IsExpanded));
+        }
+
+        [Test]
+        public void MissionMealEvents_IncludesDayQuestionFlags()
+        {
+            var events = MealFacts.MissionMealEvents(new[] { "M.B6.2", "M.I1.3" });
+
+            CollectionAssert.IsSupersetOf(events, new[]
+            {
+                ClientEventTypes.NutritionFruitVegServingAdded, ClientEventTypes.MealMeatConsumed, ClientEventTypes.MealMeatFree
+            });
         }
 
         [Test]

@@ -16,13 +16,16 @@ namespace eu.foodmission.platform
         public string Title { get; }
         public MissionInteraction Interaction { get; }
         public DateTime? StartLocal { get; }
+        /// <summary>Backend progress 0..1: day questions stop once a mission has enough.</summary>
+        public float Progress { get; }
 
-        public CheckInMission(string code, string title, MissionInteraction interaction, DateTime? startLocal)
+        public CheckInMission(string code, string title, MissionInteraction interaction, DateTime? startLocal, float progress = 0f)
         {
             Code = code;
             Title = title;
             Interaction = interaction ?? MissionInteraction.Unknown;
             StartLocal = startLocal;
+            Progress = progress;
         }
     }
 
@@ -36,6 +39,8 @@ namespace eu.foodmission.platform
         /// <summary>Event type → local day → upper-cased array values already recorded that day (DayChecklist steps).</summary>
         public readonly Dictionary<string, Dictionary<DateTime, HashSet<string>>> RecordedValues =
             new Dictionary<string, Dictionary<DateTime, HashSet<string>>>(StringComparer.Ordinal);
+        /// <summary>Mission code → days whose day question was already answered on this device.</summary>
+        public readonly Dictionary<string, HashSet<DateTime>> DecidedDays = new Dictionary<string, HashSet<DateTime>>(StringComparer.OrdinalIgnoreCase);
         /// <summary>Events reported from the product detail (real food ids), for the "already counted" hint.</summary>
         public readonly List<CheckInProductReport> ProductReports = new List<CheckInProductReport>();
         public DateTime NowLocal;
@@ -82,6 +87,62 @@ namespace eu.foodmission.platform
         public bool AppliesTo(string mealType) => MealTypes.Contains(mealType);
     }
 
+    /// <summary>One mission's question about one day (sent in that day's OTHER meal log).</summary>
+    public sealed class CheckInDayQuestion
+    {
+        public string MissionCode { get; }
+        public string MissionTitle { get; }
+        public MissionReportStep Step { get; }
+        public DateTime? StartLocal { get; }
+        /// <summary>Days still needed when the plan was made; null = mission with a limit (never pruned).</summary>
+        public int? Remaining { get; }
+        /// <summary>"Had meat?" is also asked per meal that day: shown only while no such meal is chosen.</summary>
+        public bool DerivedFromMeals { get; }
+
+        public CheckInDayQuestion(string missionCode, string missionTitle, MissionReportStep step, DateTime? startLocal, int? remaining,
+            bool derivedFromMeals = false)
+        {
+            DerivedFromMeals = derivedFromMeals;
+            MissionCode = missionCode;
+            MissionTitle = missionTitle;
+            Step = step;
+            StartLocal = startLocal;
+            Remaining = remaining;
+        }
+    }
+
+    public sealed class CheckInMissionRef
+    {
+        public string Code { get; }
+        public string Title { get; }
+        public DateTime? StartLocal { get; }
+
+        public CheckInMissionRef(string code, string title, DateTime? startLocal)
+        {
+            Code = code;
+            Title = title;
+            StartLocal = startLocal;
+        }
+    }
+
+    /// <summary>A mission still waiting for past days (Home missing-days nudge).</summary>
+    public sealed class CheckInWaitingMission
+    {
+        public string Code { get; }
+        public string Title { get; }
+        public DateTime? StartLocal { get; }
+        /// <summary>Oldest first.</summary>
+        public IReadOnlyList<DateTime> Days { get; }
+
+        public CheckInWaitingMission(string code, string title, DateTime? startLocal, IReadOnlyList<DateTime> days)
+        {
+            Code = code;
+            Title = title;
+            StartLocal = startLocal;
+            Days = days;
+        }
+    }
+
     public sealed class CheckInMealDay
     {
         public DateTime Day { get; }
@@ -90,15 +151,21 @@ namespace eu.foodmission.platform
         public IReadOnlyList<CheckInMealQuestion> Questions { get; }
         /// <summary>UI.csv keys of what the missions asked that day want (see <see cref="MealStepHints"/>).</summary>
         public IReadOnlyList<string> HintKeys { get; }
+        /// <summary>Day-level questions, shown above the meals.</summary>
+        public IReadOnlyList<CheckInDayQuestion> DayQuestions { get; }
+        /// <summary>Missions that ask something this day: day questions, and meal missions when the day has no log.</summary>
+        public IReadOnlyList<CheckInMissionRef> Waiting { get; }
 
         public CheckInMealDay(DateTime day, bool hasAnyLog, IReadOnlyList<string> openMealTypes, IReadOnlyList<CheckInMealQuestion> questions,
-            IReadOnlyList<string> hintKeys = null)
+            IReadOnlyList<string> hintKeys = null, IReadOnlyList<CheckInDayQuestion> dayQuestions = null, IReadOnlyList<CheckInMissionRef> waiting = null)
         {
             Day = day;
             HasAnyLog = hasAnyLog;
             OpenMealTypes = openMealTypes;
             Questions = questions;
             HintKeys = hintKeys ?? Array.Empty<string>();
+            DayQuestions = dayQuestions ?? Array.Empty<CheckInDayQuestion>();
+            Waiting = waiting ?? Array.Empty<CheckInMissionRef>();
         }
 
         public IReadOnlyList<CheckInMealQuestion> QuestionsFor(string mealType) => Questions.Where(q => q.AppliesTo(mealType)).ToList();
@@ -107,14 +174,17 @@ namespace eu.foodmission.platform
     public sealed class CheckInDayEvent
     {
         public string MissionCode { get; }
+        public string MissionTitle { get; }
         public MissionReportStep Step { get; }
         public IReadOnlyList<DateTime> OpenDays { get; }
         /// <summary>Mission start: events dated before it don't count.</summary>
         public DateTime? StartLocal { get; }
 
-        public CheckInDayEvent(string missionCode, MissionReportStep step, IReadOnlyList<DateTime> openDays, DateTime? startLocal = null)
+        public CheckInDayEvent(string missionCode, MissionReportStep step, IReadOnlyList<DateTime> openDays, DateTime? startLocal = null,
+            string missionTitle = null)
         {
             MissionCode = missionCode;
+            MissionTitle = missionTitle;
             Step = step;
             OpenDays = openDays;
             StartLocal = startLocal;
@@ -157,6 +227,9 @@ namespace eu.foodmission.platform
     {
         public static readonly CheckInPlan Empty = new CheckInPlan(new List<CheckInMealDay>(), new List<CheckInDayEvent>(), new List<CheckInMissionStep>());
 
+        /// <summary>Missions with nothing left to ask that only wait for their window to end (told on an up-to-date check-in).</summary>
+        public IReadOnlyList<CheckInMissionRef> Secured { get; }
+
         public List<CheckInMealDay> MealDays { get; }
         public List<CheckInDayEvent> DayEvents { get; }
         public List<CheckInMissionStep> MissionSteps { get; }
@@ -164,8 +237,10 @@ namespace eu.foodmission.platform
         public int StepCount => MealDays.Count + DayEvents.Count + MissionSteps.Count;
         public bool IsEmpty => StepCount == 0;
 
-        public CheckInPlan(List<CheckInMealDay> mealDays, List<CheckInDayEvent> dayEvents, List<CheckInMissionStep> missionSteps)
+        public CheckInPlan(List<CheckInMealDay> mealDays, List<CheckInDayEvent> dayEvents, List<CheckInMissionStep> missionSteps,
+            IReadOnlyList<CheckInMissionRef> secured = null)
         {
+            Secured = secured ?? Array.Empty<CheckInMissionRef>();
             MealDays = mealDays;
             DayEvents = dayEvents;
             MissionSteps = missionSteps;
@@ -179,7 +254,7 @@ namespace eu.foodmission.platform
         {
             DateTime today = nowLocal.Date;
             DateTime first = notBeforeLocal?.Date ?? DateTime.MinValue;
-            return MealDays.Where(d => !d.HasAnyLog && d.Questions.Count > 0).Select(d => d.Day)
+            return MealDays.Where(d => !d.HasAnyLog && (d.Questions.Count > 0 || d.DayQuestions.Count > 0)).Select(d => d.Day)
                 .Concat(DayEvents.SelectMany(e => e.OpenDays))
                 .Concat(MissionSteps.Where(s => s.Step.Type == MissionStepType.DayChecklist)
                     .SelectMany(s => s.OpenDays.Where(d => s.RecordedValuesFor(d).Count == 0)))
@@ -187,12 +262,43 @@ namespace eu.foodmission.platform
                 .Distinct()
                 .Count();
         }
+
+        /// <summary>The pending past days of <see cref="PendingPastDays"/>, per mission waiting for them.</summary>
+        public IReadOnlyList<CheckInWaitingMission> WaitingMissions(DateTime nowLocal, DateTime? notBeforeLocal = null)
+        {
+            DateTime today = nowLocal.Date;
+            DateTime first = notBeforeLocal?.Date ?? DateTime.MinValue;
+            var pending = new List<(CheckInMissionRef Mission, DateTime Day)>();
+            foreach (CheckInMealDay day in MealDays)
+            {
+                pending.AddRange(day.Waiting.Select(m => (m, day.Day)));
+            }
+            foreach (CheckInDayEvent dayEvent in DayEvents)
+            {
+                var mission = new CheckInMissionRef(dayEvent.MissionCode, dayEvent.MissionTitle, dayEvent.StartLocal);
+                pending.AddRange(dayEvent.OpenDays.Select(d => (mission, d)));
+            }
+            foreach (CheckInMissionStep step in MissionSteps.Where(s => s.Step.Type == MissionStepType.DayChecklist))
+            {
+                var mission = new CheckInMissionRef(step.MissionCode, step.MissionTitle, step.StartLocal);
+                pending.AddRange(step.OpenDays.Where(d => step.RecordedValuesFor(d).Count == 0).Select(d => (mission, d)));
+            }
+
+            return pending
+                .Where(p => p.Day < today && p.Day >= first)
+                .GroupBy(p => p.Mission.Code, StringComparer.OrdinalIgnoreCase)
+                .Select(g => new CheckInWaitingMission(g.Key, g.First().Mission.Title, g.First().Mission.StartLocal,
+                    g.Select(p => p.Day.Date).Distinct().OrderBy(d => d).ToList()))
+                .ToList();
+        }
     }
 
     public sealed class CheckInMealDayAnswer
     {
         /// <summary>Meal type → checked event types. A key present means the meal was chosen.</summary>
         public readonly Dictionary<string, HashSet<string>> Meals = new Dictionary<string, HashSet<string>>();
+        /// <summary>Day questions: mission code → chosen option index.</summary>
+        public readonly Dictionary<string, int> DayAnswers = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
     }
 
     public sealed class CheckInAnswers

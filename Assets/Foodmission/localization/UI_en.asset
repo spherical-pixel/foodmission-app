@@ -5233,6 +5233,71 @@ MonoBehaviour:
       one that mixes letters and numbers.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: Did you eat any meat?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: Did you save any food from going to waste?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "Did at least one meal include a protein-rich food (legumes, eggs,
+      fish, dairy, tofu, nuts\u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: Did you add an extra serving of fruit or vegetables?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: Did you choose wholegrain foods?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: Did you avoid foods and drinks that have added sugar among their
+      first three ingredients?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: Did you avoid adding salt at the table in all your meals?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: '{0}: tell me how it went.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: Answer this one too, so I count this day correctly.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "Nothing else needed for this day. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "For \u201C{0}\u201D I'm still missing these days: {1}. Shall we
+      catch up now?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "For \u201C{0}\u201D and other missions I'm still missing some days,
+      starting with: {1}. Shall we catch up now?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "You've got it! Keep it up: \u201C{0}\u201D will be completed on
+      {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "\u201C{0}\u201D is in the bag: it will be completed on {1}."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

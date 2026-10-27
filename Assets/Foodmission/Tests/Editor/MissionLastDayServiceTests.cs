@@ -61,6 +61,56 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.AreEqual(new[] { "M.A1.1", "M.B1.3" }, today.Missions.Select(m => m.Code).ToArray());
         }
 
+        private void WithSecuredMission(DateTime start)
+        {
+            var items = new[] { "M.A1.1", "M.I1.3" }.Select(c => new QuestItem { contentType = QuestContentType.Mission, contentCode = c }).ToArray();
+            _quests.Setup(q => q.GetQuestAsync("q1", null)).ReturnsAsync((new Quest { id = "q1", items = items }, (ApiErrorResponse)null));
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.A1.1", missionTitle = "Green zone", startedAt = Start.ToUniversalTime() },
+                new MissionProgress { missionCode = "M.I1.3", missionTitle = "Two meat-free days", progress = 100, status = ProgressStatus.InProgress, startedAt = start.ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+        }
+
+        [Test]
+        public async Task GetTodayAsync_SkipsSecuredMissions()
+        {
+            WithSecuredMission(Start);
+
+            MissionDeadlines.LastDay today = await _service.GetTodayAsync();
+
+            CollectionAssert.AreEqual(new[] { "M.A1.1" }, today.Missions.Select(m => m.Code).ToArray());
+        }
+
+        [Test]
+        public async Task SyncRemindersAsync_NoReminderForASecuredMission()
+        {
+            WithSecuredMission(Start.AddDays(1));
+            _now = Start.AddHours(1);
+
+            await _service.SyncRemindersAsync();
+
+            _notifications.Verify(n => n.ScheduleLocalNotification(It.IsAny<string>(), It.IsAny<string>(),
+                It.Is<string>(b => b.Contains("Two meat-free days")), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        }
+
+        [Test]
+        public async Task GetSecuredToAnnounce_OncePerAttempt()
+        {
+            WithSecuredMission(Start);
+
+            MissionDeadlines.ActiveMission secured = await _service.GetSecuredToAnnounceAsync();
+            Assert.AreEqual("M.I1.3", secured.Code);
+            Assert.AreEqual(Start, secured.StartLocal);
+
+            _service.MarkSecuredAnnounced(secured);
+            Assert.IsNull(await _service.GetSecuredToAnnounceAsync());
+
+            // Restarted and secured again: a new attempt is announced again
+            WithSecuredMission(Start.AddDays(2));
+            Assert.AreEqual("M.I1.3", (await _service.GetSecuredToAnnounceAsync()).Code);
+        }
+
         [Test]
         public async Task GetTodayAsync_OncePerDay()
         {

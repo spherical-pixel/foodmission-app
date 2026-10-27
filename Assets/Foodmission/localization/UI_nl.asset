@@ -5270,6 +5270,70 @@ MonoBehaviour:
       langer wachtwoord met letters en cijfers.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: Heb je vlees gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: Heb je voedsel gered van de afvalbak?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "Zat er in minstens \xE9\xE9n maaltijd een eiwitrijk product (peulvruchten,
+      eieren, vis, zuivel, tofu, noten\u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: Heb je een extra portie fruit of groente gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: Heb je voor volkorenproducten gekozen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: "Heb je voedingsmiddelen en dranken vermeden met toegevoegde suiker
+      bij de eerste drie ingredi\xEBnten?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: Heb je bij al je maaltijden geen zout aan tafel toegevoegd?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: Nee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: '{0}: vertel me hoe het ging.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: Beantwoord deze ook, zodat ik deze dag goed tel.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "Voor deze dag heb ik verder niets nodig. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "Voor \u201C{0}\u201D mis ik nog deze dagen: {1}. Zullen we het
+      nu bijwerken?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "Voor \u201C{0}\u201D en andere missies mis ik nog enkele dagen,
+      te beginnen met: {1}. Zullen we het nu bijwerken?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "Je hebt het! Ga zo door: \u201C{0}\u201D wordt voltooid op {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "\u201C{0}\u201D heb je binnen: hij wordt voltooid op {1}."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

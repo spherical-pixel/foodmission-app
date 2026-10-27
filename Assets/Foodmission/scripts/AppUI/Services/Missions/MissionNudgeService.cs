@@ -144,13 +144,22 @@ namespace eu.foodmission.platform
                 return null;
             }
 
-            int days = plan.PendingPastDays(NowLocal(), questState.FirstSeenAtUtc.ToLocalTime());
+            DateTime firstSeenLocal = questState.FirstSeenAtUtc.ToLocalTime();
+            int days = plan.PendingPastDays(NowLocal(), firstSeenLocal);
             if (days < MissingDaysThreshold)
             {
                 return null;
             }
 
-            return MissionNudge.ForMissingDays(days);
+            // Name the mission whose window ends first, and the days it is waiting for
+            IReadOnlyList<CheckInWaitingMission> waiting = plan.WaitingMissions(NowLocal(), firstSeenLocal);
+            CheckInWaitingMission first = waiting
+                .Where(w => !string.IsNullOrEmpty(w.Title))
+                .OrderBy(w => w.StartLocal.HasValue ? MissionDeadlines.DeadlineLocal(w.StartLocal.Value) : DateTime.MaxValue)
+                .FirstOrDefault();
+            return first == null
+                ? MissionNudge.ForMissingDays(days)
+                : MissionNudge.ForMissingDays(days, first.Title, first.Days, waiting.Count > 1);
         }
 
         private async Task<MissionNudge> GetStalledMissionNudgeAsync(string questId, Dictionary<string, MissionNudgeState> states, DateTime now)
@@ -186,14 +195,17 @@ namespace eu.foodmission.platform
             TimeSpan bestStall = TimeSpan.Zero;
             foreach (string code in codes)
             {
-                if (!MissionInteractionCatalog.Get(code).CanReport)
+                MissionInteraction interaction = MissionInteractionCatalog.Get(code);
+                if (!interaction.CanReport)
                 {
                     continue;
                 }
 
                 byCode.TryGetValue(code, out MissionProgress progress);
                 float value = progress?.progress ?? 0f;
-                if (!MissionProgressState.IsStarted(progress) || MissionProgressState.IsResolved(progress))
+                // A secured mission doesn't move until its window ends: it isn't stalled
+                if (!MissionProgressState.IsStarted(progress) || MissionProgressState.IsResolved(progress) ||
+                    MissionProgressState.IsSecured(progress, interaction))
                 {
                     continue;
                 }

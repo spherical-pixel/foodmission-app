@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eu.foodmission.platform
@@ -18,18 +20,26 @@ namespace eu.foodmission.platform
         public string MissionTitle { get; }
         /// <summary>StalledMission: first automatic module of the mission, null when it has none.</summary>
         public MissionModuleLink AutoModule { get; }
+        /// <summary>MissingDays: past days the named mission is waiting for, oldest first (empty when no mission is named).</summary>
+        public IReadOnlyList<DateTime> MissionDays { get; }
+        /// <summary>MissingDays: other missions are waiting for past days too.</summary>
+        public bool OthersWaiting { get; }
 
-        private MissionNudge(MissionNudgeKind kind, int missingDays, string missionCode, string missionTitle, MissionModuleLink autoModule)
+        private MissionNudge(MissionNudgeKind kind, int missingDays, string missionCode, string missionTitle, MissionModuleLink autoModule,
+            IReadOnlyList<DateTime> missionDays = null, bool othersWaiting = false)
         {
             Kind = kind;
             MissingDays = missingDays;
             MissionCode = missionCode;
             MissionTitle = missionTitle;
             AutoModule = autoModule;
+            MissionDays = missionDays ?? Array.Empty<DateTime>();
+            OthersWaiting = othersWaiting;
         }
 
-        public static MissionNudge ForMissingDays(int days) =>
-            new MissionNudge(MissionNudgeKind.MissingDays, days, null, null, null);
+        /// <param name="missionTitle">Mission named in the message (soonest deadline); null = only the day count.</param>
+        public static MissionNudge ForMissingDays(int days, string missionTitle = null, IReadOnlyList<DateTime> missionDays = null, bool othersWaiting = false) =>
+            new MissionNudge(MissionNudgeKind.MissingDays, days, null, missionTitle, null, missionTitle != null ? missionDays : null, othersWaiting);
 
         public static MissionNudge ForStalledMission(string missionCode, string missionTitle, MissionModuleLink autoModule) =>
             new MissionNudge(MissionNudgeKind.StalledMission, 0, missionCode, missionTitle, autoModule);
