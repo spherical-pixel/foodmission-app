@@ -14,6 +14,7 @@ namespace eu.foodmission.platform
     public partial class MissionCheckInViewModel : StepFlowViewModelBase
     {
         private const string MealDayPromptKey = "MISSION_CHECKIN_Q_MEALS";
+        private const string DayPromptKey = "MISSION_CHECKIN_Q_DAY";
         private const string SummaryPromptKey = "MISSION_REPORT_SUMMARY_TITLE";
         private const string EmptySummaryPromptKey = "MISSION_CHECKIN_SUMMARY_EMPTY";
 
@@ -193,17 +194,65 @@ namespace eu.foodmission.platform
             if (!checkedEvents.Remove(eventType))
             {
                 checkedEvents.Add(eventType);
-                if (eventType == ClientEventTypes.MealMeatFree)
+                if (eventType == ClientEventTypes.MealMeatFree || eventType == ClientEventTypes.MealVegan)
                 {
                     checkedEvents.Remove(ClientEventTypes.MealMeatConsumed);
+                    checkedEvents.RemoveWhere(MeatSwaps.EndsInMeat);
                 }
                 else if (eventType == ClientEventTypes.MealMeatConsumed)
                 {
                     checkedEvents.Remove(ClientEventTypes.MealMeatFree);
                 }
+                else if (MeatSwaps.EndsInMeat(eventType))
+                {
+                    // Beef → chicken is still meat: the meal had meat
+                    checkedEvents.Remove(ClientEventTypes.MealMeatFree);
+                    checkedEvents.Remove(ClientEventTypes.MealVegan);
+                    if (Plan.MealDays[stepIndex].QuestionsFor(mealType).Any(q => q.EventType == ClientEventTypes.MealMeatConsumed))
+                    {
+                        checkedEvents.Add(ClientEventTypes.MealMeatConsumed);
+                    }
+                }
             }
             Changed();
         }
+
+        /// <summary>Chooses an option of a day question; the same option again unsets it.</summary>
+        public void SetDayAnswer(int stepIndex, string missionCode, int optionIndex)
+        {
+            if (!CanEdit(stepIndex, CheckInStepKind.MealDay))
+            {
+                return;
+            }
+
+            CheckInDayQuestion question = VisibleDayQuestions(stepIndex)
+                .FirstOrDefault(q => string.Equals(q.MissionCode, missionCode, StringComparison.OrdinalIgnoreCase));
+            if (question == null || optionIndex < 0 || optionIndex >= question.Step.Options.Count)
+            {
+                return;
+            }
+
+            Dictionary<string, int> dayAnswers = Answers.MealDays[stepIndex].DayAnswers;
+            if (dayAnswers.TryGetValue(question.MissionCode, out int current) && current == optionIndex)
+            {
+                dayAnswers.Remove(question.MissionCode);
+            }
+            else
+            {
+                dayAnswers[question.MissionCode] = optionIndex;
+            }
+            // Answers on later days may no longer be needed
+            CheckInDayRules.ClearHidden(Plan, Answers);
+            Changed();
+        }
+
+        /// <summary>Day questions still needed on this day, given the answers of earlier days.</summary>
+        public IReadOnlyList<CheckInDayQuestion> VisibleDayQuestions(int stepIndex) =>
+            KindOf(stepIndex) == CheckInStepKind.MealDay ? CheckInDayRules.Visible(Plan, Answers, stepIndex) : Array.Empty<CheckInDayQuestion>();
+
+        /// <summary>All-meals questions that must be answered before leaving this day.</summary>
+        public IReadOnlyList<CheckInDayQuestion> MissingRequired(int stepIndex) =>
+            KindOf(stepIndex) == CheckInStepKind.MealDay ? CheckInDayRules.MissingRequired(Plan, Answers, stepIndex) : Array.Empty<CheckInDayQuestion>();
 
         public void ToggleEventDay(int stepIndex, DateTime day)
         {
@@ -353,7 +402,7 @@ namespace eu.foodmission.platform
                 // An empty summary stays valid so the user can always leave
                 return !IsSubmitting;
             }
-            return stepIndex >= 0 && stepIndex < Plan.StepCount;
+            return stepIndex >= 0 && stepIndex < Plan.StepCount && MissingRequired(stepIndex).Count == 0;
         }
 
         protected override string GetStepTitle(int stepIndex) => string.Empty;
@@ -398,6 +447,7 @@ namespace eu.foodmission.platform
                     return;
                 }
 
+                _checkInService.RememberDayAnswers(AnsweredDayQuestions());
                 _outcome = new CheckInOutcome(_pendingItems.Count, await TryGetSingleMissionProgressAsync());
                 CheckInCompleted?.Invoke(_outcome);
             }
@@ -414,6 +464,20 @@ namespace eu.foodmission.platform
         }
 
         // ── Helpers ───────────────────────────────────────────
+
+        /// <summary>Day questions answered in this check-in (also "No", which sends nothing).</summary>
+        private List<(string MissionCode, DateTime? StartLocal, DateTime Day)> AnsweredDayQuestions()
+        {
+            var answered = new List<(string, DateTime?, DateTime)>();
+            for (int i = 0; i < Plan.MealDays.Count && i < Answers.MealDays.Count; i++)
+            {
+                Dictionary<string, int> dayAnswers = Answers.MealDays[i].DayAnswers;
+                answered.AddRange(CheckInDayRules.Visible(Plan, Answers, i)
+                    .Where(q => dayAnswers.ContainsKey(q.MissionCode))
+                    .Select(q => (q.MissionCode, q.StartLocal, Plan.MealDays[i].Day)));
+            }
+            return answered;
+        }
 
         /// <summary>Progress shown after a successful send; failing to fetch it must not turn the send into an error.</summary>
         private async Task<MissionProgress> TryGetSingleMissionProgressAsync()
@@ -479,7 +543,7 @@ namespace eu.foodmission.platform
 
         private string PromptKeyFor(int stepIndex) => KindOf(stepIndex) switch
         {
-            CheckInStepKind.MealDay => MealDayPromptKey,
+            CheckInStepKind.MealDay => Plan.MealDays[ItemIndexOf(stepIndex)].OpenMealTypes.Count > 0 ? MealDayPromptKey : DayPromptKey,
             CheckInStepKind.DayEvent => Plan.DayEvents[ItemIndexOf(stepIndex)].Step.PromptKey,
             CheckInStepKind.MissionStep => Plan.MissionSteps[ItemIndexOf(stepIndex)].Step.PromptKey,
             _ => IsSummaryEmpty ? EmptySummaryPromptKey : SummaryPromptKey

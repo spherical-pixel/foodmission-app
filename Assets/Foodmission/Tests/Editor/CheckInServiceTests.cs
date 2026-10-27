@@ -20,6 +20,7 @@ namespace eu.foodmission.platform.Tests
         private Mock<IMealLogService> _mealLogs;
         private Mock<IGamificationService> _gamification;
         private CheckInService _service;
+        private TestLocalStorageService _storage;
         private string _dateFrom;
         private string _dateTo;
         private string[] _requestedTypes;
@@ -57,7 +58,8 @@ namespace eu.foodmission.platform.Tests
                 .Callback<IReadOnlyCollection<string>, int>((types, _) => _requestedTypes = types.ToArray())
                 .ReturnsAsync(() => (_recentEvents, (ApiErrorResponse)null));
 
-            _service = new CheckInService(_store, _quests.Object, _missions.Object, _mealLogs.Object, _gamification.Object) { Clock = () => Now };
+            _storage = new TestLocalStorageService();
+            _service = new CheckInService(_store, _quests.Object, _missions.Object, _mealLogs.Object, _gamification.Object, _storage) { Clock = () => Now };
         }
 
         private void StartMissionToo(string code, DateTime startedLocal)
@@ -306,6 +308,95 @@ namespace eu.foodmission.platform.Tests
             await _service.LoadPlanAsync();
 
             Assert.IsTrue(calls.Any(c => c.SequenceEqual(new[] { ClientEventTypes.FoodWasteFifoOrganized })), "day types alone, as before");
+        }
+
+        // ── Day questions (spec 2026-10-27) ───────────────────
+
+        private static readonly DateTime DayMissionStart = Now.Date.AddDays(-3);
+
+        private void OnlyDayMission(string code, float progressPercent, DateTime? startLocal = null)
+        {
+            SetQuest(code);
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = code, missionTitle = code, progress = progressPercent, status = ProgressStatus.InProgress, startedAt = (startLocal ?? DayMissionStart).ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+        }
+
+        [Test]
+        public async Task RememberDayAnswers_ForgottenWhenTheMissionRestarts()
+        {
+            OnlyDayMission("M.B6.2", 0f);
+            _service.RememberDayAnswers(new[] { ("M.B6.2", (DateTime?)DayMissionStart, Now.Date.AddDays(-1)) });
+
+            // Restarted: a new attempt with its own start asks every day of its window again
+            OnlyDayMission("M.B6.2", 0f, Now.Date.AddDays(-2).AddHours(10));
+            var (plan, _) = await _service.LoadPlanAsync();
+
+            CollectionAssert.Contains(plan.MealDays.Where(d => d.DayQuestions.Count > 0).Select(d => d.Day).ToArray(), Now.Date.AddDays(-1));
+        }
+
+        [Test]
+        public async Task LoadPlan_DayQuestionMission_LoadsMealLogsAndFlagEvents()
+        {
+            OnlyDayMission("M.B6.2", 0f);
+            _recentEvents = new[]
+            {
+                new UserEvent { eventType = ClientEventTypes.NutritionFruitVegServingAdded, metadata = JObject.Parse("{\"dayBucket\":\"" + Now.Date.AddDays(-2).ToString("yyyy-MM-dd") + "\"}") }
+            };
+
+            var (plan, error) = await _service.LoadPlanAsync();
+
+            Assert.IsNull(error);
+            CollectionAssert.Contains(_requestedTypes, ClientEventTypes.NutritionFruitVegServingAdded);
+            _mealLogs.Verify(m => m.GetLogsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            CollectionAssert.DoesNotContain(plan.MealDays.Where(d => d.DayQuestions.Count > 0).Select(d => d.Day).ToArray(), Now.Date.AddDays(-2));
+        }
+
+        [Test]
+        public async Task RememberDayAnswers_SkipsThoseDaysNextTime_PerUser()
+        {
+            OnlyDayMission("M.B6.2", 0f);
+            _service.RememberDayAnswers(new[] { ("M.B6.2", (DateTime?)DayMissionStart, Now.Date.AddDays(-2)) });
+
+            var (plan, _) = await _service.LoadPlanAsync();
+            CollectionAssert.DoesNotContain(plan.MealDays.Where(d => d.DayQuestions.Count > 0).Select(d => d.Day).ToArray(), Now.Date.AddDays(-2));
+
+            _store.SetAppState(new AppState { userId = "u2", userCurrentQuestId = "q1" });
+            var (other, _) = await _service.LoadPlanAsync();
+            CollectionAssert.Contains(other.MealDays.Where(d => d.DayQuestions.Count > 0).Select(d => d.Day).ToArray(), Now.Date.AddDays(-2));
+        }
+
+        [Test]
+        public async Task LoadPlan_PassesProgressToPlanner()
+        {
+            OnlyDayMission("M.B5.5", 50f);
+
+            var (plan, _) = await _service.LoadPlanAsync();
+
+            Assert.IsTrue(plan.MealDays.SelectMany(d => d.DayQuestions).Any());
+            Assert.IsTrue(plan.MealDays.SelectMany(d => d.DayQuestions).All(q => q.Remaining == 2));
+        }
+
+        [Test]
+        public async Task LoadPlan_DayQuestionEvents_UseFallbackOn400()
+        {
+            OnlyDayMission("M.B6.2", 0f);
+            _gamification.Setup(g => g.GetRecentEventsAsync(It.IsAny<IReadOnlyCollection<string>>(), CheckInService.EventsLimit))
+                .ReturnsAsync(((UserEvent[])null, new ApiErrorResponse { statusCode = 400, message = "property eventTypes should not exist" }));
+            _gamification.Setup(g => g.GetGamificationProfileAsync(CheckInService.EventsLimit, 1)).ReturnsAsync((new GamificationProfileResponse
+            {
+                recentEvents = new[]
+                {
+                    new UserEvent { eventType = ClientEventTypes.NutritionFruitVegServingAdded, metadata = JObject.Parse("{\"dayBucket\":\"" + Now.Date.AddDays(-1).ToString("yyyy-MM-dd") + "\"}") }
+                }
+            }, (ApiErrorResponse)null));
+
+            var (plan, error) = await _service.LoadPlanAsync();
+
+            Assert.IsNull(error);
+            CollectionAssert.DoesNotContain(plan.MealDays.Where(d => d.DayQuestions.Count > 0).Select(d => d.Day).ToArray(), Now.Date.AddDays(-1));
+            Assert.AreEqual(3, plan.MealDays.Count(d => d.DayQuestions.Count > 0));
         }
     }
 }

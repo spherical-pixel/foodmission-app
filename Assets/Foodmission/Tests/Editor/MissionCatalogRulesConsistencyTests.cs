@@ -122,6 +122,15 @@ namespace eu.foodmission.platform.Tests
                     case MissionStepType.DayChecklist:
                         list.AddRange(ChecklistSignatures(step));
                         break;
+                    case MissionStepType.DayQuestion:
+                        // One OTHER meal log per day: rules restricted to main meals must not count it
+                        var dayFlags = step.Options.Where(o => o.EventType != null).Select(o => o.EventType).ToList();
+                        dayFlags.Add(ClientEventTypes.MealLogged);
+                        foreach (string flag in dayFlags)
+                        {
+                            list.Add(MealSignature(flag, new[] { "OTHER" }));
+                        }
+                        break;
                 }
             }
             return list;

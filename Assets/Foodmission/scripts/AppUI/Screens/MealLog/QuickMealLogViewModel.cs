@@ -383,7 +383,7 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            MealFacts.SelectSwap(target, swapOption);
+            MealFacts.SelectSwap(target, swapOption, GetAllItems().ToList());
             NotifySectionsChanged();
         }
 

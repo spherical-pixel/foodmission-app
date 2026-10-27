@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Unity.AppUI.UI;
@@ -50,7 +53,7 @@ namespace eu.foodmission.platform
                 string message;
                 if (_nudge.Kind == MissionNudgeKind.MissingDays)
                 {
-                    message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MISSING_DAYS", new object[] { _nudge.MissingDays });
+                    message = MissingDaysMessage(_nudge);
                     choices.Add(new PromptChoice("@UI:MISSION_BTN_TELL_NUTRI", ButtonVariant.Accent));
                     actions.Add(() => _viewModel.OpenCheckIn());
                 }
@@ -75,6 +78,26 @@ namespace eu.foodmission.platform
                 }
                 return HomePromptResult.Dismissed;
             }
+
+            /// <summary>Names the mission and up to <see cref="MaxNamedDays"/> weekdays it is waiting for; only the count without a mission.</summary>
+            private static string MissingDaysMessage(MissionNudge nudge)
+            {
+                if (string.IsNullOrEmpty(nudge.MissionTitle) || nudge.MissionDays.Count == 0)
+                {
+                    return LocalizationSettings.StringDatabase.GetLocalizedString("UI", "MISSION_NUDGE_MISSING_DAYS", new object[] { nudge.MissingDays });
+                }
+
+                IFormatProvider formatter = LocalizationSettings.SelectedLocale?.Formatter ?? CultureInfo.CurrentCulture;
+                string days = string.Join(", ", nudge.MissionDays.Take(MaxNamedDays).Select(d => d.ToString("dddd", formatter)));
+                if (nudge.MissionDays.Count > MaxNamedDays)
+                {
+                    days += "…";
+                }
+                string key = nudge.OthersWaiting ? "MISSION_NUDGE_MISSING_DAYS_FOR_MANY" : "MISSION_NUDGE_MISSING_DAYS_FOR";
+                return LocalizationSettings.StringDatabase.GetLocalizedString("UI", key, new object[] { nudge.MissionTitle, days });
+            }
         }
+
+        private const int MaxNamedDays = 3;
     }
 }

@@ -2656,6 +2656,20 @@
     margin: 0 4px 8px 4px;
 }
 
+/* Check-in day card: day questions above the meals */
+.fm-mission-report-day-question {
+    -unity-font-style: bold;
+    white-space: normal;
+    margin: 8px 0 4px 0;
+    color: var(--appui-foregrounds-100);
+}
+
+.fm-mission-report-day-separator {
+    border-top-width: 1px;
+    border-top-color: var(--appui-foregrounds-25);
+    margin: 4px 0 8px 0;
+}
+
 .fm-mission-report-chip {
     margin: 4px;
     border-width: 3px;

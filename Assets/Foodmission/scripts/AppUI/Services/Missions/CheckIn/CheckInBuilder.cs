@@ -7,6 +7,9 @@ namespace eu.foodmission.platform
     /// <summary>Check-in answers → grouped quick meal logs + events (spec §3.9). Pure.</summary>
     public static class CheckInBuilder
     {
+        /// <summary>Meal type of the day log (spec 2026-10-27): outside the main-meal rules.</summary>
+        public const string OtherMealType = "OTHER";
+
         public static List<PendingReportItem> Build(CheckInPlan plan, CheckInAnswers answers, string reportId, DateTime nowLocal)
         {
             var items = new List<PendingReportItem>();
@@ -18,14 +21,24 @@ namespace eu.foodmission.platform
             for (int i = 0; i < plan.MealDays.Count && i < answers.MealDays.Count; i++)
             {
                 CheckInMealDay day = plan.MealDays[i];
+                CheckInMealDayAnswer dayAnswer = answers.MealDays[i];
+                IReadOnlyList<CheckInDayQuestion> dayQuestions = CheckInDayRules.Visible(plan, answers, i);
+                // "Yes" to an all-meals question is true of every meal of that day
+                List<string> allMealsFlags = dayQuestions
+                    .Where(q => q.Step.DayQuestion.AllMeals)
+                    .Select(q => CheckInDayRules.EventOf(q, dayAnswer))
+                    .Where(e => e != null)
+                    .ToList();
                 foreach (string mealType in CheckInMealTypes.All)
                 {
-                    if (!day.OpenMealTypes.Contains(mealType) || !answers.MealDays[i].Meals.TryGetValue(mealType, out HashSet<string> checkedEvents))
+                    if (!day.OpenMealTypes.Contains(mealType) || !dayAnswer.Meals.TryGetValue(mealType, out HashSet<string> checkedEvents))
                     {
                         continue;
                     }
 
-                    if (!TryBuildMeal(day, mealType, checkedEvents, out List<string> flags, out List<string> swaps))
+                    TryBuildMeal(day, mealType, checkedEvents, out List<string> flags, out List<string> swaps);
+                    flags.AddRange(allMealsFlags.Where(f => !flags.Contains(f)));
+                    if (flags.Count == 0 && swaps.Count == 0)
                     {
                         continue;
                     }
@@ -36,6 +49,20 @@ namespace eu.foodmission.platform
                         typeOfMeal = mealType,
                         flags = flags.Count > 0 ? flags.ToArray() : null,
                         swaps = swaps.Count > 0 ? swaps.ToArray() : null,
+                        timestamp = moment.ToUniversalTime().ToString("o")
+                    }));
+                }
+
+                // Every day answer of the day in one OTHER meal log: no food, only flags, never claiming which meal it was
+                List<CheckInDayQuestion> answered = dayQuestions.Where(q => CheckInDayRules.EventOf(q, dayAnswer) != null).ToList();
+                if (answered.Count > 0)
+                {
+                    DateTime? latestStart = answered.Where(q => q.StartLocal.HasValue).Select(q => q.StartLocal).DefaultIfEmpty(null).Max();
+                    DateTime moment = MissionReportDays.EventTimestampFor(day.Day, latestStart, nowLocal);
+                    items.Add(new PendingReportItem(new CreateMealLogRequest
+                    {
+                        typeOfMeal = OtherMealType,
+                        flags = answered.Select(q => CheckInDayRules.EventOf(q, dayAnswer)).Distinct().ToArray(),
                         timestamp = moment.ToUniversalTime().ToString("o")
                     }));
                 }
@@ -69,6 +96,16 @@ namespace eu.foodmission.platform
             flags = applicable.Where(q => !q.IsSwap).Select(q => q.EventType).ToList();
             swaps = applicable.Where(q => q.IsSwap).Select(q => q.EventType).ToList();
 
+            // A swap that ends in meat (beef → chicken) means the meal had meat, whatever else was checked
+            if (swaps.Any(MeatSwaps.EndsInMeat))
+            {
+                flags.Remove(ClientEventTypes.MealMeatFree);
+                flags.Remove(ClientEventTypes.MealVegan);
+                if (!flags.Contains(ClientEventTypes.MealMeatConsumed) && questions.Any(q => q.EventType == ClientEventTypes.MealMeatConsumed))
+                {
+                    flags.Add(ClientEventTypes.MealMeatConsumed);
+                }
+            }
             if (flags.Contains(ClientEventTypes.MealMeatFree) || flags.Contains(ClientEventTypes.MealVegan))
             {
                 flags.Remove(ClientEventTypes.MealMeatConsumed);

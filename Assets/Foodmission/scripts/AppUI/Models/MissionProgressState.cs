@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace eu.foodmission.platform
 {
@@ -38,6 +39,18 @@ namespace eu.foodmission.platform
         /// even at 0. Older backends: restarts were NOT_STARTED with a startedAt, and rows without a status (before
         /// pr-402) started with the quest.
         /// </summary>
+        /// <summary>
+        /// Started, not resolved, at full progress and nothing left to report: it only waits for its window to end
+        /// (rules resolved at window end). Missions with a limit are never secured: a later answer can still change them.
+        /// </summary>
+        public static bool IsSecured(MissionProgress progress, MissionInteraction interaction) =>
+            IsStarted(progress) && !IsResolved(progress) && IsSecured(interaction, progress.progress);
+
+        /// <param name="progressPercent">Backend progress, 0..100.</param>
+        public static bool IsSecured(MissionInteraction interaction, float progressPercent) =>
+            progressPercent >= 100f && interaction != null && interaction.Steps.Count > 0 &&
+            interaction.Steps.All(s => s.Type == MissionStepType.DayQuestion && s.DayQuestion != null && !s.DayQuestion.HasLimit);
+
         public static bool IsStarted(MissionProgress progress)
         {
             if (progress == null)

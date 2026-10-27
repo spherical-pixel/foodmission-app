@@ -45,7 +45,7 @@ namespace eu.foodmission.platform.Tests
                 typeof(LegalConsentPrompt), typeof(PilotConsentPrompt), typeof(HomeTutorialPrompt),
                 typeof(RewardCelebrationsPrompt), typeof(FailedMissionsPrompt), typeof(WhatsNewPrompt),
                 typeof(UnlockedQuestPrompt), typeof(OnboardingReminderPrompt), typeof(NotificationsPrompt),
-                typeof(PilotSurveyPrompt), typeof(MissionLastDayPrompt), typeof(MissionNudgePrompt), typeof(QuestStartReminderPrompt), typeof(DailyFoodFactPrompt)
+                typeof(PilotSurveyPrompt), typeof(MissionSecuredPrompt), typeof(MissionLastDayPrompt), typeof(MissionNudgePrompt), typeof(QuestStartReminderPrompt), typeof(DailyFoodFactPrompt)
             }, types);
             vm.Dispose();
         }
@@ -63,6 +63,21 @@ namespace eu.foodmission.platform.Tests
 
             lastDay.Setup(s => s.GetTodayAsync()).ReturnsAsync((MissionDeadlines.LastDay)null);
             Assert.IsNull(await new MissionLastDayPrompt(vm).CheckAsync());
+            vm.Dispose();
+        }
+
+        [Test]
+        public async Task MissionSecuredPrompt_ShowsWhenAMissionOnlyWaitsForItsEnd()
+        {
+            var lastDay = new Mock<IMissionLastDayService>();
+            lastDay.Setup(s => s.GetSecuredToAnnounceAsync())
+                .ReturnsAsync(new MissionDeadlines.ActiveMission("M.I1.3", "Two meat-free days", System.DateTime.Now.AddDays(-3)));
+            var vm = new HomeScreenViewModel(_store, _audio.Object, missionLastDayService: lastDay.Object);
+
+            Assert.IsNotNull(await new MissionSecuredPrompt(vm).CheckAsync());
+
+            lastDay.Setup(s => s.GetSecuredToAnnounceAsync()).ReturnsAsync((MissionDeadlines.ActiveMission)null);
+            Assert.IsNull(await new MissionSecuredPrompt(vm).CheckAsync());
             vm.Dispose();
         }
 

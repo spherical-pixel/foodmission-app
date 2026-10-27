@@ -5354,6 +5354,75 @@ MonoBehaviour:
       Spr\xF3buj d\u0142u\u017Cszego, z literami i cyframi."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: "Czy jad\u0142e\u015B mi\u0119so?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: "Czy uratowa\u0142e\u015B jedzenie przed zmarnowaniem?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "Czy co najmniej jeden posi\u0142ek zawiera\u0142 produkt bogaty
+      w bia\u0142ko (str\u0105czki, jajka, ryby, nabia\u0142, tofu, orzechy\u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: "Czy doda\u0142e\u015B dodatkow\u0105 porcj\u0119 owoc\xF3w lub
+      warzyw?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: "Czy wybra\u0142e\u015B produkty pe\u0142noziarniste?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: "Czy unika\u0142e\u015B produkt\xF3w i napoj\xF3w z dodanym cukrem
+      w\u015Br\xF3d pierwszych trzech sk\u0142adnik\xF3w?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: "Czy we wszystkich posi\u0142kach unika\u0142e\u015B dosalania przy
+      stole?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: Nie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: "{0}: opowiedz mi, jak min\u0105\u0142."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: "Odpowiedz te\u017C na to pytanie, \u017Cebym dobrze policzy\u0142
+      ten dzie\u0144."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "Na ten dzie\u0144 niczego wi\u0119cej nie potrzebuj\u0119. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "W misji \u201E{0}\u201D brakuje mi jeszcze tych dni: {1}. Nadrobimy
+      to teraz?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "W misji \u201E{0}\u201D i innych misjach brakuje mi jeszcze kilku
+      dni, na przyk\u0142ad: {1}. Nadrobimy to teraz?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "Masz to! Tak trzymaj. Data uko\u0144czenia misji \u201E{0}\u201D:
+      {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "Misja \u201E{0}\u201D jest ju\u017C Twoja. Data uko\u0144czenia:
+      {1}."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

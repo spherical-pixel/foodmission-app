@@ -15,12 +15,16 @@ namespace eu.foodmission.platform
     {
         public const int EventsLimit = 100;
         public const int MealLogsLimit = 100;
+        private const string DecidedDaysKeyPrefix = "checkin_day_answers_";
+        /// <summary>Older answers can't be in any 7-day window any more.</summary>
+        private const int DecidedDaysKept = 14;
 
         private readonly IStoreService _storeService;
         private readonly IQuestService _questService;
         private readonly IMissionService _missionService;
         private readonly IMealLogService _mealLogService;
         private readonly IGamificationService _gamificationService;
+        private readonly ILocalStorageService _storage;
 
         public Func<DateTime> Clock { get; set; } = () => DateTime.Now;
 
@@ -29,8 +33,10 @@ namespace eu.foodmission.platform
             IQuestService questService,
             IMissionService missionService,
             IMealLogService mealLogService,
-            IGamificationService gamificationService)
+            IGamificationService gamificationService,
+            ILocalStorageService storage)
         {
+            _storage = storage;
             _storeService = storeService;
             _questService = questService;
             _missionService = missionService;
@@ -51,13 +57,29 @@ namespace eu.foodmission.platform
                 DateTime now = Clock();
                 var inputs = new CheckInInputs { NowLocal = now };
                 inputs.Missions.AddRange(missions);
+                // Only answers of each mission's current attempt
+                var attempts = new HashSet<string>(inputs.Missions.Select(m => Attempt(m.Code, m.StartLocal)), StringComparer.OrdinalIgnoreCase);
+                foreach (var (code, start, day) in ReadDecidedDays())
+                {
+                    if (!attempts.Contains(Attempt(code, start)))
+                    {
+                        continue;
+                    }
+                    if (!inputs.DecidedDays.TryGetValue(code, out HashSet<DateTime> days))
+                    {
+                        days = new HashSet<DateTime>();
+                        inputs.DecidedDays[code] = days;
+                    }
+                    days.Add(day);
+                }
 
                 if (inputs.Missions.Count == 0)
                 {
                     return (CheckInPlan.Empty, null);
                 }
 
-                if (inputs.Missions.Any(m => HasStep(m, MissionStepType.MealReport)))
+                // Day questions need the logged days too (a logged day is already decided)
+                if (inputs.Missions.Any(m => HasStep(m, MissionStepType.MealReport) || HasStep(m, MissionStepType.DayQuestion)))
                 {
                     string from = now.Date.AddDays(-(MissionReportDays.WindowDays - 1)).ToUniversalTime().ToString("o");
                     string to = now.ToUniversalTime().ToString("o");
@@ -85,6 +107,13 @@ namespace eu.foodmission.platform
                     .SelectMany(m => m.Interaction.Steps)
                     .Where(s => (s.Type == MissionStepType.DayPicker || s.Type == MissionStepType.DayChecklist) && !string.IsNullOrEmpty(s.EventType))
                     .ToList();
+                // Day questions decided by a flag: the days that flag was already recorded
+                string[] dayQuestionTypes = inputs.Missions
+                    .SelectMany(m => m.Interaction.Steps)
+                    .Where(s => s.Type == MissionStepType.DayQuestion && s.DayQuestion?.Coverage == DayCoverage.FlagDay)
+                    .SelectMany(s => s.DayQuestion.CountingOptions.Select(i => s.Options[i].EventType))
+                    .Where(e => !string.IsNullOrEmpty(e))
+                    .ToArray();
                 // Product steps: foods already reported from the product detail (real ids) are counted in the check-in
                 string[] productTypes = inputs.Missions
                     .SelectMany(m => m.Interaction.Steps)
@@ -104,9 +133,9 @@ namespace eu.foodmission.platform
                         RecordProductReports(inputs, productEvents, productTypes);
                     }
                 }
-                if (daySteps.Count > 0)
+                if (daySteps.Count > 0 || dayQuestionTypes.Length > 0)
                 {
-                    string[] eventTypes = daySteps.Select(s => s.EventType).Distinct(StringComparer.Ordinal).ToArray();
+                    string[] eventTypes = daySteps.Select(s => s.EventType).Concat(dayQuestionTypes).Distinct(StringComparer.Ordinal).ToArray();
                     var (events, eventsError) = await LoadRecentEventsAsync(_gamificationService, eventTypes, EventsLimit);
                     if (eventsError != null)
                     {
@@ -153,6 +182,67 @@ namespace eu.foodmission.platform
                 Debug.LogError($"[CheckInService] LoadPlanAsync failed: {ex.Message}");
                 return (null, new ApiErrorResponse { message = ex.Message });
             }
+        }
+
+        public void RememberDayAnswers(IEnumerable<(string MissionCode, DateTime? StartLocal, DateTime Day)> answered)
+        {
+            string key = DecidedDaysKey();
+            if (_storage == null || key == null || answered == null)
+            {
+                return;
+            }
+
+            try
+            {
+                DateTime oldest = Clock().Date.AddDays(-DecidedDaysKept);
+                var entries = new HashSet<string>(ReadDecidedDays().Where(d => d.Day >= oldest).Select(d => Entry(d.MissionCode, d.Start, d.Day)), StringComparer.OrdinalIgnoreCase);
+                entries.UnionWith(answered.Where(a => !string.IsNullOrEmpty(a.MissionCode)).Select(a => Entry(a.MissionCode, a.StartLocal, a.Day)));
+                _storage.SetValue(key, string.Join(";", entries));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[CheckInService] RememberDayAnswers failed: {ex.Message}");
+            }
+        }
+
+        // Per user: several accounts can share a device
+        private string DecidedDaysKey()
+        {
+            string userId = _storeService?.GetAppState()?.userId;
+            return string.IsNullOrEmpty(userId) ? null : DecidedDaysKeyPrefix + userId;
+        }
+
+        // Entry: CODE|attempt start (UTC, "-" when unknown)|day
+        private static string StartKey(DateTime? startLocal) =>
+            startLocal.HasValue ? startLocal.Value.ToUniversalTime().ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture) : "-";
+
+        private static string Attempt(string missionCode, DateTime? startLocal) => missionCode + "|" + StartKey(startLocal);
+
+        private static string Attempt(string missionCode, string startKey) => missionCode + "|" + startKey;
+
+        private static string Entry(string missionCode, string startKey, DateTime day) =>
+            Attempt(missionCode, startKey) + "|" + day.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+        private static string Entry(string missionCode, DateTime? startLocal, DateTime day) => Entry(missionCode, StartKey(startLocal), day);
+
+        private List<(string MissionCode, string Start, DateTime Day)> ReadDecidedDays()
+        {
+            var result = new List<(string, string, DateTime)>();
+            string key = DecidedDaysKey();
+            string stored = key == null ? null : _storage?.GetValue<string>(key, null);
+            if (string.IsNullOrEmpty(stored))
+            {
+                return result;
+            }
+            foreach (string entry in stored.Split(';'))
+            {
+                string[] parts = entry.Split('|');
+                if (parts.Length == 3 && DateTime.TryParseExact(parts[2], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime day))
+                {
+                    result.Add((parts[0], parts[1], day));
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -203,7 +293,8 @@ namespace eu.foodmission.platform
                     continue;
                 }
                 string title = !string.IsNullOrEmpty(progress?.missionTitle) ? progress.missionTitle : code;
-                active.Add(new CheckInMission(code, title, interaction, progress?.startedAt?.ToLocalTime()));
+                // Backend progress is a percentage
+                active.Add(new CheckInMission(code, title, interaction, progress?.startedAt?.ToLocalTime(), (progress?.progress ?? 0f) / 100f));
                 if (progress != null)
                 {
                     progressByCode[code] = progress;

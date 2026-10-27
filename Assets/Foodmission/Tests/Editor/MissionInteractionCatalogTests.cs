@@ -124,6 +124,14 @@ namespace eu.foodmission.platform.Tests
                             }
                             Assert.IsTrue(step.Type == MissionStepType.ProductChecklist || spec.IsArray, $"{code} day checklists send arrays");
                             break;
+                        case MissionStepType.DayQuestion:
+                            Assert.IsNotNull(step.DayQuestion, code);
+                            Assert.GreaterOrEqual(step.Options.Count, 2, code);
+                            Assert.IsNotEmpty(step.DayQuestion.CountingOptions, code);
+                            Assert.IsTrue(step.DayQuestion.CountingOptions.All(i => i >= 0 && i < step.Options.Count && step.Options[i].EventType != null),
+                                $"{code} counting options need an event");
+                            Assert.IsTrue(step.Options.All(o => !o.IsSwap), $"{code} day questions send flags");
+                            break;
                         default:
                             Assert.IsFalse(string.IsNullOrEmpty(step.EventType), code);
                             break;
@@ -197,6 +205,56 @@ namespace eu.foodmission.platform.Tests
             CollectionAssert.AreEqual(new[] { "BREAKFAST" }, step.MealTypes.ToArray());
             Assert.AreEqual(ClientEventTypes.NutritionHighFibreMeal, step.EventType);
             Assert.AreEqual("MISSION_QD_NUTRITION_HIGH_FIBRE_MEAL", step.PromptKey);
+        }
+
+        [TestCase("M.I1.3", "MISSION_QDAY_MEAT", 2, DayCoverage.LoggedDay, false, false)]
+        [TestCase("M.B5.5", "MISSION_QDAY_FOOD_SAVED", 4, DayCoverage.FlagDay, false, false)]
+        [TestCase("M.B6.1", "MISSION_QDAY_PROTEIN", 7, DayCoverage.FlagDay, false, false)]
+        [TestCase("M.B6.2", "MISSION_QDAY_FRUIT_VEG", 7, DayCoverage.FlagDay, false, false)]
+        [TestCase("M.B6.4", "MISSION_QDAY_WHOLEGRAIN", 7, DayCoverage.FlagDay, false, false)]
+        [TestCase("M.A6.3", "MISSION_QDAY_NO_ADDED_SUGAR", 7, DayCoverage.LoggedDay, true, true)]
+        [TestCase("M.I6.3", "MISSION_QDAY_NO_SALT", 7, DayCoverage.LoggedDay, true, true)]
+        public void DayBasedMissions_AreDayQuestions(string code, string promptKey, int targetDays, DayCoverage coverage, bool hasLimit, bool allMeals)
+        {
+            var step = MissionInteractionCatalog.Get(code).Steps.Single();
+
+            Assert.AreEqual(MissionStepType.DayQuestion, step.Type);
+            Assert.AreEqual(promptKey, step.PromptKey);
+            Assert.AreEqual(targetDays, step.MaxCount);
+            Assert.AreEqual(coverage, step.DayQuestion.Coverage);
+            Assert.AreEqual(hasLimit, step.DayQuestion.HasLimit);
+            Assert.AreEqual(allMeals, step.DayQuestion.AllMeals);
+        }
+
+        [Test]
+        public void MeatFreeDays_CountOnlyTheMeatFreeAnswer()
+        {
+            var step = MissionInteractionCatalog.Get("M.I1.3").Steps.Single();
+
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.MealMeatConsumed, ClientEventTypes.MealMeatFree }, step.Options.Select(o => o.EventType).ToArray());
+            CollectionAssert.AreEqual(new[] { 1 }, step.DayQuestion.CountingOptions.ToArray());
+        }
+
+        [Test]
+        public void FoodSavingDays_OfferEachSavingFlagAndNone()
+        {
+            var step = MissionInteractionCatalog.Get("M.B5.5").Steps.Single();
+
+            CollectionAssert.AreEqual(new[]
+            {
+                ClientEventTypes.FoodWasteHalfPlateSaved, ClientEventTypes.FoodWasteFullPlateSaved, ClientEventTypes.FoodWasteExpiredConsumed, null
+            }, step.Options.Select(o => o.EventType).ToArray());
+            CollectionAssert.AreEqual(new[] { 0, 1, 2 }, step.DayQuestion.CountingOptions.ToArray());
+            Assert.AreEqual("MISSION_QDAY_NONE", step.Options[3].LabelKey);
+        }
+
+        [TestCase("M.B1.1")]
+        [TestCase("M.B1.2")]
+        [TestCase("M.B1.3")]
+        [TestCase("M.A1.1")]
+        public void MealCountingMissions_StayMealReports(string code)
+        {
+            Assert.AreEqual(MissionStepType.MealReport, MissionInteractionCatalog.Get(code).Steps.Single().Type);
         }
 
         [Test]

@@ -15,5 +15,11 @@ namespace eu.foodmission.platform
 
         /// <summary>Schedules one local notification per upcoming last day and cancels the ones that no longer apply. Never throws.</summary>
         Task SyncRemindersAsync();
+
+        /// <summary>A secured mission (only waits for its end) not yet announced in this attempt, soonest end first; null if none. Never throws.</summary>
+        Task<MissionDeadlines.ActiveMission> GetSecuredToAnnounceAsync();
+
+        /// <summary>Nutri told the user this attempt is secured: not again until a restart.</summary>
+        void MarkSecuredAnnounced(MissionDeadlines.ActiveMission mission);
     }
 }

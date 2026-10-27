@@ -104,7 +104,7 @@ namespace eu.foodmission.platform
             { "M.A6.1", Manual(DayValues("MISSION_QD_RAINBOW_COLOURS", ClientEventTypes.NutritionRainbowColoursLogged, "colours",
                 "MISSION_OPT_COLOUR_", 5, RainbowColours)) },
             { "M.A6.2", Auto(DailyMeals(ClientEventTypes.NutritionHighFibreMeal, "BREAKFAST")) },
-            { "M.A6.3", Auto(DailyMeals(ClientEventTypes.NutritionAddedSugarAvoided)) },
+            { "M.A6.3", Auto(AllMealsDays("MISSION_QDAY_NO_ADDED_SUGAR", ClientEventTypes.NutritionAddedSugarAvoided)) },
             { "M.A6.4", Auto(MainMealChoice("MISSION_Q_NUTRIENT_DENSE_MEALS", 21,
                 ClientEventTypes.NutritionProteinIncluded, ClientEventTypes.NutritionHighFibreMeal,
                 ClientEventTypes.NutritionFruitVegServingAdded, ClientEventTypes.NutritionHealthyFatChosen)) },
@@ -139,19 +139,19 @@ namespace eu.foodmission.platform
             { "M.B5.2", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 3)) },
             { "M.B5.3", Auto(Meals(ClientEventTypes.FoodWasteExpiredConsumed, 1)) },
             { "M.B5.4", Manual(Products(ClientEventTypes.FoodWasteStorageInstructionsRead, 5)) },
-            { "M.B5.5", Auto(MealChoice("MISSION_Q_FOOD_SAVING", 4, true,
+            { "M.B5.5", Auto(FlagDays("MISSION_QDAY_FOOD_SAVED", 4,
                 ClientEventTypes.FoodWasteHalfPlateSaved, ClientEventTypes.FoodWasteFullPlateSaved, ClientEventTypes.FoodWasteExpiredConsumed)) },
             // B6 — Nutrition (beginner)
-            { "M.B6.1", Auto(DailyMeals(ClientEventTypes.NutritionProteinIncluded)) },
-            { "M.B6.2", Auto(DailyMeals(ClientEventTypes.NutritionFruitVegServingAdded)) },
+            { "M.B6.1", Auto(YesDays("MISSION_QDAY_PROTEIN", ClientEventTypes.NutritionProteinIncluded)) },
+            { "M.B6.2", Auto(YesDays("MISSION_QDAY_FRUIT_VEG", ClientEventTypes.NutritionFruitVegServingAdded)) },
             { "M.B6.3", Auto(Meals(ClientEventTypes.SwapSugaryDrinkToWater, 3)) },
-            { "M.B6.4", Auto(DailyMeals(ClientEventTypes.NutritionWholegrainChosen)) },
+            { "M.B6.4", Auto(YesDays("MISSION_QDAY_WHOLEGRAIN", ClientEventTypes.NutritionWholegrainChosen)) },
             { "M.B6.5", Auto(Meals(ClientEventTypes.SwapSnackToFruitNuts, 5)) },
             // I1 — Diet (intermediate)
             { "M.I1.1", Auto(SwapMeals(4, ProteinSwaps)) },
             { "M.I1.2", Auto(SwapMeals(6, ClientEventTypes.SwapBeefToPork, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes,
                 ClientEventTypes.SwapPorkToLegumes, ClientEventTypes.SwapChickenToLegumes)) },
-            { "M.I1.3", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 14, false, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
+            { "M.I1.3", Auto(MeatFreeDays(2)) },
             { "M.I1.4", Auto(Meals(ClientEventTypes.MealLegumeConsumed, 4)) },
             { "M.I1.5", Manual(ProteinSourceChoice()) },
             // I2 — Product choices (intermediate)
@@ -188,7 +188,7 @@ namespace eu.foodmission.platform
             // I6 — Nutrition (intermediate)
             { "M.I6.1", Auto(Meals(ClientEventTypes.SwapProcessedMeatToLegumes, 2)) },
             { "M.I6.2", Auto(Meals(ClientEventTypes.NutritionHighFibreMeal, 21, CheckInMealTypes.Main)) },
-            { "M.I6.3", Auto(DailyMeals(ClientEventTypes.NutritionSaltFreeTable)) },
+            { "M.I6.3", Auto(AllMealsDays("MISSION_QDAY_NO_SALT", ClientEventTypes.NutritionSaltFreeTable)) },
             { "M.I6.4", Auto(Meals(ClientEventTypes.NutritionHealthyFatChosen, 5)) },
             { "M.I6.5", Manual(ProteinSourceChoice()) },
         };
@@ -262,6 +262,34 @@ namespace eu.foodmission.platform
         /// <summary>Quick meal logs whose swap is chosen per meal (a meal log may carry only swaps).</summary>
         private static MissionReportStep SwapMeals(int maxMeals, params string[] swaps) =>
             MealChoice("MISSION_Q_SWAPS", maxMeals, false, swaps);
+
+        // ── Day questions (one OTHER meal log per day) ────────
+
+        private static MissionStepOption Yes(string flag) => new MissionStepOption("MISSION_REPORT_YES", flag, NoMetadata);
+
+        private static MissionStepOption No(string flag = null) => new MissionStepOption("MISSION_REPORT_NO", flag, NoMetadata);
+
+        private static MissionReportStep DayQuestion(string promptKey, int targetDays, DayQuestionSpec spec, params MissionStepOption[] options) =>
+            new MissionReportStep(MissionStepType.DayQuestion, promptKey, null, null, NoMetadata, options, targetDays, true, null, null, spec);
+
+        /// <summary>Yes = the flag that day; the day counts once the flag is recorded.</summary>
+        private static MissionReportStep YesDays(string promptKey, string flag) =>
+            DayQuestion(promptKey, MissionReportDays.WindowDays, new DayQuestionSpec(DayCoverage.FlagDay, false, false, new[] { 0 }), Yes(flag), No());
+
+        /// <summary>One of several flags that day, or none.</summary>
+        private static MissionReportStep FlagDays(string promptKey, int targetDays, params string[] flags) =>
+            DayQuestion(promptKey, targetDays, new DayQuestionSpec(DayCoverage.FlagDay, false, false, Enumerable.Range(0, flags.Length).ToArray()),
+                flags.Select(f => new MissionStepOption(MealFlagLabels.KeyFor(f), f, NoMetadata))
+                    .Append(new MissionStepOption("MISSION_QDAY_NONE", null, NoMetadata)).ToArray());
+
+        /// <summary>"Did you eat meat?": a logged day without meat counts, so only No counts.</summary>
+        private static MissionReportStep MeatFreeDays(int targetDays) =>
+            DayQuestion("MISSION_QDAY_MEAT", targetDays, new DayQuestionSpec(DayCoverage.LoggedDay, false, false, new[] { 1 }),
+                Yes(ClientEventTypes.MealMeatConsumed), No(ClientEventTypes.MealMeatFree));
+
+        /// <summary>Every meal must carry the flag: Yes flags every meal log of that day, and the mission is never pruned.</summary>
+        private static MissionReportStep AllMealsDays(string promptKey, string flag) =>
+            DayQuestion(promptKey, MissionReportDays.WindowDays, new DayQuestionSpec(DayCoverage.LoggedDay, true, true, new[] { 0 }), Yes(flag), No());
 
         private static MissionReportStep ProductChoice(string promptKey, int maxPerOption, params string[] eventTypes) =>
             new MissionReportStep(MissionStepType.OptionPicker, promptKey, null, ProductId, NoMetadata, eventTypes.Select(Option).ToArray(), maxPerOption, false, null);

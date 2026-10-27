@@ -9,6 +9,8 @@ namespace eu.foodmission.platform
     {
         private sealed class MealContribution
         {
+            public string Code;
+            public string Title;
             public string EventType;
             public IReadOnlyList<string> MealTypes;
             public int Order;
@@ -19,8 +21,10 @@ namespace eu.foodmission.platform
         public static CheckInPlan Plan(CheckInInputs inputs)
         {
             var mealByDay = new SortedDictionary<DateTime, List<MealContribution>>();
-            var dayEvents = new List<(string Code, MissionReportStep Step, SortedSet<DateTime> Days, DateTime? Start)>();
+            var dayEvents = new List<(string Code, string Title, MissionReportStep Step, SortedSet<DateTime> Days, DateTime? Start)>();
+            var dayQuestions = new List<(CheckInMission Mission, MissionReportStep Step, IReadOnlyList<DateTime> Window, int? Remaining)>();
             var missionSteps = new List<CheckInMissionStep>();
+            var secured = new List<CheckInMissionRef>();
             int order = 0;
 
             foreach (CheckInMission mission in inputs.Missions)
@@ -32,6 +36,12 @@ namespace eu.foodmission.platform
                 // Past its deadline nothing counts any more (the backend fails it within the hour)
                 if (mission.StartLocal.HasValue && inputs.NowLocal >= MissionDeadlines.DeadlineLocal(mission.StartLocal.Value))
                 {
+                    continue;
+                }
+
+                if (MissionProgressState.IsSecured(mission.Interaction, mission.Progress * 100f))
+                {
+                    secured.Add(new CheckInMissionRef(mission.Code, mission.Title, mission.StartLocal));
                     continue;
                 }
 
@@ -56,7 +66,7 @@ namespace eu.foodmission.platform
                                     }
                                     list.Add(new MealContribution
                                     {
-                                        EventType = eventType, MealTypes = step.MealTypes, Order = eventOrder, Start = mission.StartLocal,
+                                        Code = mission.Code, Title = mission.Title, EventType = eventType, MealTypes = step.MealTypes, Order = eventOrder, Start = mission.StartLocal,
                                         HintKey = MealStepHints.KeyFor(step)
                                     });
                                 }
@@ -72,13 +82,32 @@ namespace eu.foodmission.platform
                                 DateTime? start = dayEvents[existing].Start;
                                 if (mission.StartLocal.HasValue && (!start.HasValue || mission.StartLocal.Value > start.Value))
                                 {
-                                    dayEvents[existing] = (dayEvents[existing].Code, step, dayEvents[existing].Days, mission.StartLocal);
+                                    dayEvents[existing] = (dayEvents[existing].Code, dayEvents[existing].Title, step, dayEvents[existing].Days, mission.StartLocal);
                                 }
                             }
                             else
                             {
-                                dayEvents.Add((mission.Code, step, new SortedSet<DateTime>(window), mission.StartLocal));
+                                dayEvents.Add((mission.Code, mission.Title, step, new SortedSet<DateTime>(window), mission.StartLocal));
                             }
+                            break;
+
+                        case MissionStepType.DayQuestion:
+                            DayQuestionSpec spec = step.DayQuestion;
+                            if (spec == null)
+                            {
+                                break;
+                            }
+                            int? remaining = null;
+                            if (!spec.HasLimit)
+                            {
+                                // Missions that resolve at window end reach progress 1 before they complete
+                                remaining = Math.Max(0, step.MaxCount - (int)Math.Floor(mission.Progress * step.MaxCount + 0.0001f));
+                                if (remaining == 0)
+                                {
+                                    break;
+                                }
+                            }
+                            dayQuestions.Add((mission, step, window, remaining));
                             break;
 
                         case MissionStepType.DayChecklist:
@@ -108,15 +137,17 @@ namespace eu.foodmission.platform
                 }
             }
 
+            var allDays = new SortedSet<DateTime>(mealByDay.Keys);
+            allDays.UnionWith(dayQuestions.SelectMany(q => q.Window));
             var mealDays = new List<CheckInMealDay>();
-            foreach (KeyValuePair<DateTime, List<MealContribution>> entry in mealByDay)
+            foreach (DateTime dayKey in allDays)
             {
+                var entry = new KeyValuePair<DateTime, List<MealContribution>>(dayKey,
+                    mealByDay.TryGetValue(dayKey, out List<MealContribution> contributions) ? contributions : new List<MealContribution>());
                 inputs.LoggedMealTypes.TryGetValue(entry.Key, out HashSet<string> logged);
                 logged ??= new HashSet<string>();
-                if (CheckInMealTypes.Main.All(logged.Contains))
-                {
-                    continue;
-                }
+                // A fully logged day keeps only its day questions
+                bool mealsClosed = CheckInMealTypes.Main.All(logged.Contains);
 
                 List<CheckInMealQuestion> questions = entry.Value
                     .GroupBy(c => c.EventType)
@@ -135,12 +166,19 @@ namespace eu.foodmission.platform
                     .ToList();
 
                 bool isToday = entry.Key == inputs.NowLocal.Date;
-                string[] open = CheckInMealTypes.All
-                    .Where(t => !logged.Contains(t) && (!isToday || MissionReportDays.IsOfferedToday(t, inputs.NowLocal)) && questions.Any(q => q.AppliesTo(t)))
-                    .ToArray();
-                if (open.Length == 0)
+                string[] open = mealsClosed
+                    ? Array.Empty<string>()
+                    : CheckInMealTypes.All
+                        .Where(t => !logged.Contains(t) && (!isToday || MissionReportDays.IsOfferedToday(t, inputs.NowLocal)) && questions.Any(q => q.AppliesTo(t)))
+                        .ToArray();
+                List<CheckInDayQuestion> dayAsked = DayQuestionsFor(dayQuestions, entry.Key, inputs, logged, open, questions);
+                if (open.Length == 0 && dayAsked.Count == 0)
                 {
                     continue;
+                }
+                if (open.Length == 0)
+                {
+                    questions = new List<CheckInMealQuestion>();
                 }
                 // Only missions still asked on one of the open meals that day
                 string[] hints = entry.Value
@@ -149,21 +187,99 @@ namespace eu.foodmission.platform
                     .Select(c => c.HintKey)
                     .Distinct()
                     .ToArray();
-                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions, hints));
+                // A day with a meal log was told about (Home nudge): only empty days are waiting
+                var waiting = new List<CheckInMissionRef>();
+                if (logged.Count == 0)
+                {
+                    waiting.AddRange(dayAsked.Select(q => new CheckInMissionRef(q.MissionCode, q.MissionTitle, q.StartLocal)));
+                    waiting.AddRange(entry.Value
+                        .Where(c => open.Any(t => Counts(c, entry.Key, t, inputs.NowLocal)))
+                        .OrderBy(c => c.Order)
+                        .Select(c => new CheckInMissionRef(c.Code, c.Title, c.Start)));
+                }
+                waiting = waiting.GroupBy(m => m.Code, StringComparer.OrdinalIgnoreCase).Select(g => g.First()).ToList();
+                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions, hints, dayAsked, waiting));
             }
 
             var openDayEvents = new List<CheckInDayEvent>();
-            foreach (var (code, step, days, start) in dayEvents)
+            foreach (var (code, title, step, days, start) in dayEvents)
             {
                 inputs.CoveredEventDays.TryGetValue(step.EventType, out HashSet<DateTime> covered);
                 List<DateTime> open = days.Where(d => covered == null || !covered.Contains(d)).ToList();
                 if (open.Count > 0)
                 {
-                    openDayEvents.Add(new CheckInDayEvent(code, step, open, start));
+                    openDayEvents.Add(new CheckInDayEvent(code, step, open, start, title));
                 }
             }
 
-            return new CheckInPlan(mealDays, openDayEvents, missionSteps);
+            return new CheckInPlan(mealDays, openDayEvents, missionSteps, secured);
+        }
+
+        /// <summary>Day questions still open on this day (spec 2026-10-27 §6), in mission order.</summary>
+        private static List<CheckInDayQuestion> DayQuestionsFor(
+            List<(CheckInMission Mission, MissionReportStep Step, IReadOnlyList<DateTime> Window, int? Remaining)> dayQuestions,
+            DateTime day, CheckInInputs inputs, HashSet<string> logged, string[] openMeals, List<CheckInMealQuestion> mealQuestions)
+        {
+            var asked = new List<CheckInDayQuestion>();
+            foreach (var (mission, step, window, remaining) in dayQuestions)
+            {
+                if (!window.Contains(day) ||
+                    (inputs.DecidedDays.TryGetValue(mission.Code, out HashSet<DateTime> decided) && decided.Contains(day)))
+                {
+                    continue;
+                }
+
+                DayQuestionSpec spec = step.DayQuestion;
+                if (JoinsMealBlock(step, openMeals, mealQuestions))
+                {
+                    continue;
+                }
+                bool open;
+                if (spec.Coverage == DayCoverage.FlagDay)
+                {
+                    open = !spec.CountingOptions
+                        .Select(i => step.Options[i].EventType)
+                        .Any(e => inputs.CoveredEventDays.TryGetValue(e, out HashSet<DateTime> covered) && covered.Contains(day));
+                }
+                else
+                {
+                    // A logged day already counts (or can't any more); all-meals answers are still needed for new meals
+                    open = logged.Count == 0 || (spec.AllMeals && openMeals.Length > 0);
+                }
+                // "Had meat?" asked per meal answers the day question too
+                bool derivedFromMeals = !spec.HasLimit && openMeals.Length > 0 &&
+                    step.Options.Any(o => o.EventType == ClientEventTypes.MealMeatConsumed) &&
+                    mealQuestions.Any(q => q.EventType == ClientEventTypes.MealMeatConsumed);
+                if (open)
+                {
+                    asked.Add(new CheckInDayQuestion(mission.Code, mission.Title, step, mission.StartLocal, remaining, derivedFromMeals));
+                }
+            }
+            return asked;
+        }
+
+        /// <summary>
+        /// A day question whose flags are already asked per meal that day would ask the same thing twice: it is answered
+        /// on the meals instead, with its missing flags added to them (e.g. M.B5.5 next to the plate missions B5.1 / B5.2).
+        /// </summary>
+        private static bool JoinsMealBlock(MissionReportStep step, string[] openMeals, List<CheckInMealQuestion> mealQuestions)
+        {
+            DayQuestionSpec spec = step.DayQuestion;
+            if (spec.Coverage != DayCoverage.FlagDay || spec.HasLimit || openMeals.Length == 0)
+            {
+                return false;
+            }
+            List<string> flags = spec.CountingOptions.Select(i => step.Options[i].EventType).ToList();
+            CheckInMealQuestion shared = mealQuestions.FirstOrDefault(q => flags.Contains(q.EventType));
+            if (shared == null)
+            {
+                return false;
+            }
+            foreach (string flag in flags.Where(f => mealQuestions.All(q => q.EventType != f)))
+            {
+                mealQuestions.Add(new CheckInMealQuestion(flag, shared.OnlyMealType, shared.MealTypes));
+            }
+            return true;
         }
 
         /// <summary>

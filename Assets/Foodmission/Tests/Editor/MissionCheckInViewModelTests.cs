@@ -442,5 +442,143 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(1, _vm.Answers.MissionSteps[0].Products.Count);
             CollectionAssert.AreEquivalent(new[] { 0, 1 }, _vm.Answers.MissionSteps[0].Products[0].ToArray());
         }
+
+        // ── Swaps that end in meat ────────────────────────────
+
+        [Test]
+        public async Task ToggleMealEvent_MeatFree_UnchecksSwapsThatEndInMeat()
+        {
+            await LoadAsync(null, CheckInPlannerTests.M("M.B1.3", Now.Date), CheckInPlannerTests.M("M.B1.5", Now.Date));
+            _vm.ToggleMeal(0, "LUNCH");
+            _vm.ToggleMealEvent(0, "LUNCH", ClientEventTypes.SwapBeefToChicken);
+            _vm.ToggleMealEvent(0, "LUNCH", ClientEventTypes.SwapBeefToLegumes);
+
+            _vm.ToggleMealEvent(0, "LUNCH", ClientEventTypes.MealMeatFree);
+
+            var meal = _vm.Answers.MealDays[0].Meals["LUNCH"];
+            CollectionAssert.DoesNotContain(meal, ClientEventTypes.SwapBeefToChicken);
+            CollectionAssert.Contains(meal, ClientEventTypes.SwapBeefToLegumes);
+        }
+
+        [Test]
+        public async Task ToggleMealEvent_SwapThatEndsInMeat_UnchecksMeatFree_AndChecksMeat()
+        {
+            await LoadAsync(null, CheckInPlannerTests.M("M.B1.3", Now.Date), CheckInPlannerTests.M("M.B1.5", Now.Date));
+            _vm.ToggleMeal(0, "LUNCH");
+            _vm.ToggleMealEvent(0, "LUNCH", ClientEventTypes.MealMeatFree);
+
+            _vm.ToggleMealEvent(0, "LUNCH", ClientEventTypes.SwapBeefToChicken);
+
+            var meal = _vm.Answers.MealDays[0].Meals["LUNCH"];
+            CollectionAssert.DoesNotContain(meal, ClientEventTypes.MealMeatFree);
+            CollectionAssert.Contains(meal, ClientEventTypes.MealMeatConsumed);
+        }
+
+        // ── Day questions (spec 2026-10-27) ───────────────────
+
+        [Test]
+        public async Task SetDayAnswer_StoresAndToggles()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.2", 0f));
+
+            _vm.SetDayAnswer(0, "M.B6.2", 0);
+            Assert.AreEqual(0, _vm.Answers.MealDays[0].DayAnswers["M.B6.2"]);
+
+            _vm.SetDayAnswer(0, "M.B6.2", 1);
+            Assert.AreEqual(1, _vm.Answers.MealDays[0].DayAnswers["M.B6.2"]);
+
+            _vm.SetDayAnswer(0, "M.B6.2", 1);
+            Assert.IsFalse(_vm.Answers.MealDays[0].DayAnswers.ContainsKey("M.B6.2"), "same option again unsets it");
+        }
+
+        [Test]
+        public async Task SetDayAnswer_IgnoresQuestionsNotOnThatDay()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.2", 0f));
+
+            _vm.SetDayAnswer(0, "M.I1.3", 0);
+            _vm.SetDayAnswer(0, "M.B6.2", 7);
+
+            Assert.IsEmpty(_vm.Answers.MealDays[0].DayAnswers);
+        }
+
+        [Test]
+        public async Task SetDayAnswer_ClearsAnswersThatBecameHidden()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.I1.3", 0f));
+            _vm.SetDayAnswer(2, "M.I1.3", 1);
+
+            _vm.SetDayAnswer(0, "M.I1.3", 1);
+            _vm.SetDayAnswer(1, "M.I1.3", 1);
+
+            Assert.IsFalse(_vm.Answers.MealDays[2].DayAnswers.ContainsKey("M.I1.3"));
+            Assert.IsEmpty(_vm.VisibleDayQuestions(2));
+        }
+
+        [Test]
+        public async Task ValidateStep_MissingAllMealsAnswer_IsInvalid()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.A6.3", 0f), CheckInPlannerTests.MP("M.B6.2", 0f));
+            Assert.IsTrue(_vm.IsStepValid(0));
+
+            _vm.SetDayAnswer(0, "M.B6.2", 0);
+            Assert.IsFalse(_vm.IsStepValid(0));
+            Assert.AreEqual("M.A6.3", _vm.MissingRequired(0).Single().MissionCode);
+
+            _vm.SetDayAnswer(0, "M.A6.3", 1);
+            Assert.IsTrue(_vm.IsStepValid(0));
+        }
+
+        [Test]
+        public async Task Summary_CountsOtherLogForDayAnswers()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.2", 0f));
+            _vm.SetDayAnswer(1, "M.B6.2", 0);
+
+            var line = _vm.BuildSummary().Single();
+
+            Assert.AreEqual(CheckInStepKind.MealDay, line.Kind);
+            Assert.AreEqual(1, line.Count);
+        }
+
+        [Test]
+        public async Task DayWithoutMeals_UsesDayPrompt()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.2", 0f));
+
+            Assert.AreEqual("MISSION_CHECKIN_Q_DAY", _vm.NutriPromptKey);
+        }
+
+        [Test]
+        public async Task Complete_RemembersAnsweredDayQuestions()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.2", 0f));
+            _vm.SetDayAnswer(0, "M.B6.2", 1);
+            _vm.SetDayAnswer(1, "M.B6.2", 0);
+            List<(string, DateTime?, DateTime)> remembered = null;
+            _checkIn.Setup(c => c.RememberDayAnswers(It.IsAny<IEnumerable<(string, DateTime?, DateTime)>>()))
+                .Callback<IEnumerable<(string, DateTime?, DateTime)>>(a => remembered = a.ToList());
+
+            await CompleteAsync();
+
+            DateTime? start = _vm.Plan.MealDays[0].DayQuestions[0].StartLocal;
+            CollectionAssert.AreEquivalent(new[] { ("M.B6.2", start, _vm.Plan.MealDays[0].Day), ("M.B6.2", start, _vm.Plan.MealDays[1].Day) }, remembered);
+        }
+
+        [Test]
+        public async Task SetDayAnswer_AfterPartialSend_IsIgnored()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.2", 0f));
+            _vm.SetDayAnswer(0, "M.B6.2", 0);
+            _vm.SetDayAnswer(1, "M.B6.2", 0);
+            _emitter.Setup(e => e.SendAsync(It.IsAny<IReadOnlyList<PendingReportItem>>()))
+                .Callback<IReadOnlyList<PendingReportItem>>(items => items[0].Sent = true)
+                .ReturnsAsync(MissionReportSendResult.Fail(new ApiErrorResponse { message = "x" }));
+            await CompleteAsync();
+
+            _vm.SetDayAnswer(2, "M.B6.2", 0);
+
+            Assert.IsFalse(_vm.Answers.MealDays[2].DayAnswers.ContainsKey("M.B6.2"));
+        }
     }
 }

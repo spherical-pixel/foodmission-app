@@ -5266,6 +5266,71 @@ MonoBehaviour:
       una m\xE1s larga que combine letras y n\xFAmeros."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203900
+    m_Localized: "\xBFComiste carne?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203901
+    m_Localized: "\xBFEvitaste que se desperdiciara comida?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203902
+    m_Localized: "\xBFAl menos una comida llev\xF3 un alimento rico en prote\xEDna
+      (legumbres, huevos, pescado, l\xE1cteos, tofu, frutos secos\u2026)?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203903
+    m_Localized: "\xBFA\xF1adiste una raci\xF3n extra de fruta o verdura?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203904
+    m_Localized: "\xBFElegiste alimentos integrales?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203905
+    m_Localized: "\xBFEvitaste alimentos y bebidas con az\xFAcar a\xF1adido entre
+      sus tres primeros ingredientes?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203906
+    m_Localized: "\xBFEvitaste a\xF1adir sal en la mesa en todas tus comidas?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203907
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203908
+    m_Localized: "{0}: cu\xE9ntame qu\xE9 tal fue."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203909
+    m_Localized: "Responde tambi\xE9n a esta, para que cuente bien este d\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203910
+    m_Localized: "No necesito nada m\xE1s de este d\xEDa. \U0001F642"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203911
+    m_Localized: "Para \xAB{0}\xBB a\xFAn me faltan estos d\xEDas: {1}. \xBFNos ponemos
+      al d\xEDa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203912
+    m_Localized: "Para \xAB{0}\xBB y otras misiones a\xFAn me faltan algunos d\xEDas,
+      por ejemplo: {1}. \xBFNos ponemos al d\xEDa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203913
+    m_Localized: "\xA1Ya lo tienes! Sigue as\xED: \xAB{0}\xBB se completar\xE1 el
+      {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203914
+    m_Localized: "\xAB{0}\xBB ya lo tienes: se completar\xE1 el {1}."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

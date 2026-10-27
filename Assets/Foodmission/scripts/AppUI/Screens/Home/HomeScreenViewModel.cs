@@ -379,6 +379,18 @@ namespace eu.foodmission.platform
                 : System.Threading.Tasks.Task.FromResult<MissionDeadlines.LastDay>(null);
         }
 
+        public System.Threading.Tasks.Task<MissionDeadlines.ActiveMission> CheckMissionSecuredAsync()
+        {
+            return _missionLastDayService != null
+                ? _missionLastDayService.GetSecuredToAnnounceAsync()
+                : System.Threading.Tasks.Task.FromResult<MissionDeadlines.ActiveMission>(null);
+        }
+
+        public void MarkMissionSecuredAnnounced(MissionDeadlines.ActiveMission mission)
+        {
+            _missionLastDayService?.MarkSecuredAnnounced(mission);
+        }
+
         public void MarkMissionLastDayShown()
         {
             _missionLastDayService?.MarkShown();

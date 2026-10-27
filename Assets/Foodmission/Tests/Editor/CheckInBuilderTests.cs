@@ -182,5 +182,119 @@ namespace eu.foodmission.platform.Tests
 
             Assert.AreEqual(start.ToUniversalTime().ToString("o"), items.Single().Event.createdAt);
         }
+
+        [Test]
+        public void Build_SwapThatEndsInMeat_NeverInfersMeatFree()
+        {
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(CheckInPlannerTests.M("M.B1.3", Now.Date), CheckInPlannerTests.M("M.B1.5", Now.Date)));
+            var answers = CheckInAnswers.For(plan);
+            answers.MealDays[0].Meals["LUNCH"] = new HashSet<string> { ClientEventTypes.SwapBeefToChicken, ClientEventTypes.MealMeatFree };
+
+            var log = CheckInBuilder.Build(plan, answers, "r1", Now).Single().MealLog;
+
+            CollectionAssert.DoesNotContain(log.flags, ClientEventTypes.MealMeatFree);
+            CollectionAssert.Contains(log.flags, ClientEventTypes.MealMeatConsumed);
+        }
+
+        // ── Day questions (spec 2026-10-27) ───────────────────
+
+        private static (CheckInPlan Plan, CheckInAnswers Answers) DayPlan(params CheckInMission[] missions)
+        {
+            var plan = CheckInPlanner.Plan(CheckInPlannerTests.Inputs(missions));
+            return (plan, CheckInAnswers.For(plan));
+        }
+
+        [Test]
+        public void Build_DayAnswers_OneOtherLogPerDay()
+        {
+            var (plan, answers) = DayPlan(CheckInPlannerTests.MP("M.B6.2", 0f), CheckInPlannerTests.MP("M.B5.5", 0f));
+            int day = plan.MealDays.FindIndex(d => d.Day == Now.Date.AddDays(-2));
+            answers.MealDays[day].DayAnswers["M.B6.2"] = 0;
+            answers.MealDays[day].DayAnswers["M.B5.5"] = 0;
+
+            var log = CheckInBuilder.Build(plan, answers, "r1", Now).Single().MealLog;
+
+            Assert.AreEqual("OTHER", log.typeOfMeal);
+            CollectionAssert.AreEquivalent(new[] { ClientEventTypes.NutritionFruitVegServingAdded, ClientEventTypes.FoodWasteHalfPlateSaved }, log.flags);
+            Assert.IsNull(log.swaps);
+            Assert.AreEqual(Now.Date.AddDays(-2).AddHours(12).ToUniversalTime().ToString("o"), log.timestamp);
+        }
+
+        [Test]
+        public void Build_DayAnswersAllNo_NoLog()
+        {
+            var (plan, answers) = DayPlan(CheckInPlannerTests.MP("M.B6.2", 0f));
+            answers.MealDays[0].DayAnswers["M.B6.2"] = 1;
+
+            Assert.IsEmpty(CheckInBuilder.Build(plan, answers, "r1", Now));
+        }
+
+        [Test]
+        public void Build_MeatFreeDay_SendsMealMeatFree()
+        {
+            var (plan, answers) = DayPlan(CheckInPlannerTests.MP("M.I1.3", 0f));
+            answers.MealDays[0].DayAnswers["M.I1.3"] = 1;
+
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.MealMeatFree }, CheckInBuilder.Build(plan, answers, "r1", Now).Single().MealLog.flags);
+        }
+
+        [Test]
+        public void Build_DayLogOnStartDay_NotBeforeStart()
+        {
+            DateTime start = Now.Date.AddDays(-3).AddHours(15);
+            var (plan, answers) = DayPlan(CheckInPlannerTests.MP("M.B6.2", 0f, start));
+            answers.MealDays[0].DayAnswers["M.B6.2"] = 0;
+
+            Assert.AreEqual(start.ToUniversalTime().ToString("o"), CheckInBuilder.Build(plan, answers, "r1", Now).Single().MealLog.timestamp);
+        }
+
+        [Test]
+        public void Build_TodayMorning_DatedNow()
+        {
+            DateTime morning = Now.Date.AddHours(9.5);
+            var inputs = CheckInPlannerTests.Inputs(CheckInPlannerTests.MP("M.B6.2", 0f));
+            inputs.NowLocal = morning;
+            var plan = CheckInPlanner.Plan(inputs);
+            var answers = CheckInAnswers.For(plan);
+            int today = plan.MealDays.FindIndex(d => d.Day == Now.Date);
+            answers.MealDays[today].DayAnswers["M.B6.2"] = 0;
+
+            Assert.AreEqual(morning.ToUniversalTime().ToString("o"), CheckInBuilder.Build(plan, answers, "r1", morning).Single().MealLog.timestamp);
+        }
+
+        [Test]
+        public void Build_AllMealsYes_FlagsEveryMealOfThatDay()
+        {
+            var (plan, answers) = DayPlan(CheckInPlannerTests.MP("M.A6.3", 0f), CheckInPlannerTests.MP("M.A1.3", 0f));
+            int day = plan.MealDays.FindIndex(d => d.Day == Now.Date.AddDays(-1));
+            answers.MealDays[day].DayAnswers["M.A6.3"] = 0;
+            answers.MealDays[day].Meals["LUNCH"] = new HashSet<string> { ClientEventTypes.MealLegumeConsumed };
+
+            var logs = CheckInBuilder.Build(plan, answers, "r1", Now).Select(i => i.MealLog).ToList();
+
+            CollectionAssert.AreEqual(new[] { "LUNCH", "OTHER" }, logs.Select(l => l.typeOfMeal).ToArray());
+            Assert.IsTrue(logs.All(l => l.flags.Contains(ClientEventTypes.NutritionAddedSugarAvoided)));
+            CollectionAssert.Contains(logs[0].flags, ClientEventTypes.MealLegumeConsumed);
+        }
+
+        [Test]
+        public void Build_MealLevelQuestionsNeverUseOther()
+        {
+            var (plan, answers) = DayPlan(CheckInPlannerTests.MP("M.B1.3", 0f));
+            answers.MealDays[0].Meals["LUNCH"] = new HashSet<string> { ClientEventTypes.MealMeatConsumed };
+
+            var items = CheckInBuilder.Build(plan, answers, "r1", Now);
+
+            Assert.IsTrue(items.All(i => i.MealLog.typeOfMeal != "OTHER"));
+        }
+
+        [Test]
+        public void Build_AnswerOfQuestionNotAskedThatDay_IsIgnored()
+        {
+            var (plan, answers) = DayPlan(CheckInPlannerTests.MP("M.B6.2", 0f));
+            answers.MealDays[0].DayAnswers["M.Z9.9"] = 0;
+
+            Assert.IsEmpty(CheckInBuilder.Build(plan, answers, "r1", Now));
+        }
     }
 }

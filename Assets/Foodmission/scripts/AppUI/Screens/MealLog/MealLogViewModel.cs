@@ -1790,7 +1790,7 @@ namespace eu.foodmission.platform
             {
                 return;
             }
-            MealFacts.SelectSwap(target, swapOption);
+            MealFacts.SelectSwap(target, swapOption, MealFacts.AllItems(_allFactSections).ToList());
             FactSections = new List<QuickMealSection>(FactSections);
         }
 
