@@ -337,6 +337,56 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task RequestsMealLogs_ForDaySwapMissions()
+        {
+            OnlyDayMission("M.B6.5", 0f);
+
+            var (_, error) = await _service.LoadPlanAsync();
+
+            Assert.IsNull(error);
+            _mealLogs.Verify(m => m.GetLogsAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public async Task LoadAsync_LoggedSwapsLockChipsOnThatDay()
+        {
+            OnlyDayMission("M.B6.5", 0f);
+            DateTime yesterday = Now.Date.AddDays(-1);
+            _mealLogs.Setup(m => m.GetLogsAsync(1, CheckInService.MealLogsLimit, null, It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((new PaginatedMealLogResponse { data = new[]
+                {
+                    new MealLog { typeOfMeal = "SNACK", swaps = new[] { ClientEventTypes.SwapSnackToFruitNuts }, timestamp = yesterday.AddHours(11).ToUniversalTime().ToString("o") },
+                    new MealLog { typeOfMeal = "OTHER", swaps = new[] { ClientEventTypes.SwapSnackToFruitNuts, ClientEventTypes.SwapSugaryDrinkToWater },
+                        timestamp = yesterday.AddHours(12).ToUniversalTime().ToString("o") }
+                } }, (ApiErrorResponse)null));
+
+            var (plan, _) = await _service.LoadPlanAsync();
+
+            CheckInSwapQuestion question = plan.MealDays.Single(d => d.Day == yesterday).SwapQuestion;
+            Assert.AreEqual(2, question.LoggedCount(ClientEventTypes.SwapSnackToFruitNuts));
+        }
+
+        [Test]
+        public async Task SingleMission_SwapsStayPerMeal_WhenTheQuestAsksPerMeal()
+        {
+            // Opened from M.B1.5's detail in DIET_CHANGES.BEGINNER.2: B1.3 still asks meat per meal
+            SetQuest("M.B1.3", "M.B1.5");
+            _missions.Setup(m => m.GetUserProgressListAsync(null)).ReturnsAsync((new[]
+            {
+                new MissionProgress { missionCode = "M.B1.3", missionTitle = "Less meat", progress = 0, status = ProgressStatus.InProgress, startedAt = Now.Date.ToUniversalTime() },
+                new MissionProgress { missionCode = "M.B1.5", missionTitle = "Beef swaps", progress = 0, status = ProgressStatus.InProgress, startedAt = Now.Date.ToUniversalTime() }
+            }, (ApiErrorResponse)null));
+
+            var (plan, error) = await _service.LoadPlanAsync("M.B1.5");
+
+            Assert.IsNull(error);
+            Assert.IsTrue(plan.MealDays.All(d => d.SwapQuestion == null));
+            CollectionAssert.Contains(plan.MealDays.Single().Questions.Select(q => q.EventType).ToArray(), ClientEventTypes.SwapBeefToChicken);
+            CollectionAssert.DoesNotContain(plan.MealDays.Single().Questions.Select(q => q.EventType).ToArray(), ClientEventTypes.MealMeatConsumed,
+                "only the opened mission is asked");
+        }
+
+        [Test]
         public async Task LoadPlan_DayQuestionMission_LoadsMealLogsAndFlagEvents()
         {
             OnlyDayMission("M.B6.2", 0f);

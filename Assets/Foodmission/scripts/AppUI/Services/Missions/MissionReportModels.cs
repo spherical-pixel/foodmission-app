@@ -94,10 +94,15 @@ namespace eu.foodmission.platform
         /// <summary>Single-mission mode: the mission's refreshed progress; null in all-missions mode.</summary>
         public MissionProgress SingleMissionProgress { get; }
 
-        public CheckInOutcome(int itemsSent, MissionProgress singleMissionProgress)
+        /// <summary>Refreshed progress and its result line for each mission the check-in asked about (fetch failures left out).</summary>
+        public IReadOnlyList<(MissionProgress Progress, CheckInResultLine Line)> Missions { get; }
+
+        public CheckInOutcome(int itemsSent, MissionProgress singleMissionProgress,
+            IReadOnlyList<(MissionProgress Progress, CheckInResultLine Line)> missions = null)
         {
             ItemsSent = itemsSent;
             SingleMissionProgress = singleMissionProgress;
+            Missions = missions ?? Array.Empty<(MissionProgress, CheckInResultLine)>();
         }
     }
 }

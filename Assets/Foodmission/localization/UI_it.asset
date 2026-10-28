@@ -5328,6 +5328,34 @@ MonoBehaviour:
     m_Localized: "\u201C{0}\u201D \xE8 fatta: sar\xE0 completata {1}."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Localized: Hai fatto qualcuno di questi scambi alimentari?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Localized: "{0}: completata! \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Localized: "{0}: questa volta non \xE8 andata."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Localized: '{0}: {1} su {2} scambi'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Localized: '{0}: {1} su {2} livelli'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Localized: '{0}: {1} su {2} giorni'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Localized: '{0}: {1}%'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

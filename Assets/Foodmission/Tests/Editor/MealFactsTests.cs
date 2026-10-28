@@ -188,6 +188,12 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public void MissionMealEvents_IncludesDaySwaps()
+        {
+            CollectionAssert.Contains(MealFacts.MissionMealEvents(new[] { "M.B6.5" }), ClientEventTypes.SwapSnackToFruitNuts);
+        }
+
+        [Test]
         public void FilterByMissionEvents_NoEvents_ReturnsAllSections()
         {
             Assert.AreSame(_sections, MealFacts.FilterByMissionEvents(_sections, new HashSet<string>()));

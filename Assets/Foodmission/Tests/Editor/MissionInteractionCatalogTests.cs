@@ -132,6 +132,13 @@ namespace eu.foodmission.platform.Tests
                                 $"{code} counting options need an event");
                             Assert.IsTrue(step.Options.All(o => !o.IsSwap), $"{code} day questions send flags");
                             break;
+                        case MissionStepType.DaySwaps:
+                            Assert.IsNotNull(step.DaySwaps, code);
+                            Assert.Greater(step.Options.Count, 0, code);
+                            Assert.IsTrue(step.Options.All(o => o.IsSwap), $"{code} day swaps send swaps");
+                            Assert.IsTrue(!step.DaySwaps.IsLevels || step.DaySwaps.Levels.SelectMany(l => l).SequenceEqual(step.Options.Select(o => o.EventType)),
+                                $"{code} level swaps are the options");
+                            break;
                         default:
                             Assert.IsFalse(string.IsNullOrEmpty(step.EventType), code);
                             break;
@@ -141,18 +148,84 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void ProteinSwapMission_IsSwapMealReportWithQuickMealLog()
+        public void ProteinSwapMission_IsDaySwapsWithQuickMealLog()
         {
             var interaction = MissionInteractionCatalog.Get("M.B1.4");
 
             Assert.AreSame(MissionInteractionCatalog.QuickMealLog, interaction.AutoModules.Single());
             Assert.AreEqual(Actions.open_quick_meal_log, interaction.AutoModules[0].Action);
             var step = interaction.Steps.Single();
-            Assert.AreEqual(MissionStepType.MealReport, step.Type);
+            Assert.AreEqual(MissionStepType.DaySwaps, step.Type);
             Assert.AreEqual(2, step.MaxCount);
             Assert.AreEqual(6, step.Options.Count);
             Assert.IsTrue(step.Options.All(o => o.IsSwap));
             Assert.AreEqual("SWAP_BEEF_TO_LEGUMES", step.Options.Single(o => o.EventType == ClientEventTypes.SwapBeefToLegumes).LabelKey);
+        }
+
+        [TestCase("M.B3.5", 2)]
+        [TestCase("M.I3.3", 4)]
+        [TestCase("M.B1.4", 2)]
+        [TestCase("M.B1.5", 2)]
+        [TestCase("M.I1.1", 4)]
+        [TestCase("M.B6.3", 3)]
+        [TestCase("M.B6.5", 5)]
+        [TestCase("M.I6.1", 2)]
+        public void SwapMissions_AreDaySwapsWithTheRuleTarget(string code, int target)
+        {
+            MissionReportStep step = MissionInteractionCatalog.Get(code).Steps.Single();
+
+            Assert.AreEqual(MissionStepType.DaySwaps, step.Type, code);
+            Assert.AreEqual(target, step.DaySwaps.Target, code);
+            Assert.AreEqual(target, step.MaxCount, code);
+            Assert.IsFalse(step.DaySwaps.IsLevels, code);
+            Assert.AreEqual("MISSION_QDAY_SWAPS", step.PromptKey, code);
+        }
+
+        [Test]
+        public void MI12_HasThreeLevels_WithoutPorkToChicken()
+        {
+            MissionReportStep step = MissionInteractionCatalog.Get("M.I1.2").Steps.Single();
+            SwapQuestionSpec spec = step.DaySwaps;
+
+            Assert.AreEqual(MissionStepType.DaySwaps, step.Type);
+            Assert.IsTrue(spec.IsLevels);
+            Assert.AreEqual(3, step.MaxCount);
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.SwapBeefToPork, ClientEventTypes.SwapBeefToChicken }, spec.Levels[0]);
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.SwapBeefToLegumes }, spec.Levels[1]);
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.SwapPorkToLegumes, ClientEventTypes.SwapChickenToLegumes }, spec.Levels[2]);
+            CollectionAssert.DoesNotContain(step.Options.Select(o => o.EventType).ToList(), ClientEventTypes.SwapPorkToChicken);
+        }
+
+        [Test]
+        public void MissionSwaps_OnlyWaterAndSnackAreRepeatable()
+        {
+            string[] all =
+            {
+                ClientEventTypes.SwapBeefToPork, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes,
+                ClientEventTypes.SwapPorkToChicken, ClientEventTypes.SwapPorkToLegumes, ClientEventTypes.SwapChickenToLegumes,
+                ClientEventTypes.SwapSugaryDrinkToWater, ClientEventTypes.SwapSnackToFruitNuts, ClientEventTypes.SwapSugaryCerealToOats,
+                ClientEventTypes.SwapReadyMealToHomecooked, ClientEventTypes.SwapProcessedMeatToLegumes
+            };
+
+            CollectionAssert.AreEquivalent(new[] { ClientEventTypes.SwapSugaryDrinkToWater, ClientEventTypes.SwapSnackToFruitNuts },
+                all.Where(MissionSwaps.IsRepeatable).ToArray());
+            Assert.AreEqual(5, MissionSwaps.MaxPerDay);
+        }
+
+        [Test]
+        public void MissionSwaps_AsMealReport_KeepsOptionsAndTarget()
+        {
+            MissionReportStep daySwaps = MissionInteractionCatalog.Get("M.B1.5").Steps.Single();
+
+            MissionReportStep meal = MissionSwaps.AsMealReport(daySwaps);
+
+            Assert.AreEqual(MissionStepType.MealReport, meal.Type);
+            Assert.AreEqual("MISSION_Q_SWAPS", meal.PromptKey);
+            Assert.IsNull(meal.EventType);
+            Assert.AreEqual(2, meal.MaxCount);
+            Assert.IsFalse(meal.OnePerDay);
+            Assert.AreEqual(0, meal.MealTypes.Count);
+            CollectionAssert.AreEqual(daySwaps.Options.Select(o => o.EventType).ToArray(), meal.Options.Select(o => o.EventType).ToArray());
         }
 
         [Test]

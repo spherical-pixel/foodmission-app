@@ -580,5 +580,128 @@ namespace eu.foodmission.platform.Tests
 
             Assert.IsFalse(_vm.Answers.MealDays[2].DayAnswers.ContainsKey("M.B6.2"));
         }
+
+        // ── Day swaps (spec 2026-10-27 swaps) ─────────────────
+
+        [Test]
+        public async Task ToggleDaySwap_ChecksAndUnchecks_AndClearsNone()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.I1.1", 0f));
+            _vm.SetNoSwaps(0);
+
+            _vm.ToggleDaySwap(0, ClientEventTypes.SwapBeefToLegumes);
+
+            Assert.AreEqual(1, _vm.Answers.MealDays[0].Swaps[ClientEventTypes.SwapBeefToLegumes]);
+            Assert.IsFalse(_vm.Answers.MealDays[0].NoSwaps);
+            _vm.ToggleDaySwap(0, ClientEventTypes.SwapBeefToLegumes);
+            Assert.IsFalse(_vm.Answers.MealDays[0].Swaps.ContainsKey(ClientEventTypes.SwapBeefToLegumes));
+        }
+
+        [Test]
+        public async Task SetDaySwapUnits_ClampsToMax()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.5", 0.6f));
+
+            _vm.SetDaySwapUnits(0, ClientEventTypes.SwapSnackToFruitNuts, 4);
+
+            Assert.AreEqual(2, _vm.Answers.MealDays[0].Swaps[ClientEventTypes.SwapSnackToFruitNuts]);
+            Assert.AreEqual(2, _vm.VisibleSwapOptions(0).Single().Max);
+            Assert.IsEmpty(_vm.VisibleSwapOptions(1), "the 2 still needed are told on day 0");
+        }
+
+        [Test]
+        public async Task SetNoSwaps_ClearsSwaps()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.5", 0f));
+            _vm.SetDaySwapUnits(0, ClientEventTypes.SwapSnackToFruitNuts, 2);
+
+            _vm.SetNoSwaps(0);
+
+            Assert.IsTrue(_vm.Answers.MealDays[0].NoSwaps);
+            Assert.IsEmpty(_vm.Answers.MealDays[0].Swaps);
+        }
+
+        [Test]
+        public async Task SwapQuestion_IsOptional()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.5", 0f));
+
+            Assert.IsTrue(_vm.IsStepValid(0));
+        }
+
+        [Test]
+        public async Task Send_RemembersSwapDays_ForEveryMissionOfTheQuestion()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.I1.1", 0f), CheckInPlannerTests.MP("M.I1.2", 0f));
+            _vm.ToggleDaySwap(0, ClientEventTypes.SwapBeefToLegumes);
+            _vm.SetNoSwaps(1);
+            List<(string, DateTime?, DateTime)> remembered = null;
+            _checkIn.Setup(c => c.RememberDayAnswers(It.IsAny<IEnumerable<(string, DateTime?, DateTime)>>()))
+                .Callback<IEnumerable<(string, DateTime?, DateTime)>>(a => remembered = a.ToList());
+
+            await CompleteAsync();
+
+            DateTime? start = _vm.Plan.MealDays[0].SwapQuestion.Missions[0].StartLocal;
+            DateTime day0 = _vm.Plan.MealDays[0].Day;
+            DateTime day1 = _vm.Plan.MealDays[1].Day;
+            CollectionAssert.AreEquivalent(new[]
+            {
+                ("M.I1.1", start, day0), ("M.I1.2", start, day0), ("M.I1.1", start, day1), ("M.I1.2", start, day1)
+            }, remembered);
+        }
+
+        [Test]
+        public async Task Send_DoesNotRememberUnansweredSwapDays()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.5", 0f));
+            _vm.SetDaySwapUnits(0, ClientEventTypes.SwapSnackToFruitNuts, 1);
+            List<(string, DateTime?, DateTime)> remembered = null;
+            _checkIn.Setup(c => c.RememberDayAnswers(It.IsAny<IEnumerable<(string, DateTime?, DateTime)>>()))
+                .Callback<IEnumerable<(string, DateTime?, DateTime)>>(a => remembered = a.ToList());
+
+            await CompleteAsync();
+
+            CollectionAssert.AreEqual(new[] { _vm.Plan.MealDays[0].Day }, remembered.Select(r => r.Item3).ToArray());
+        }
+
+        [Test]
+        public async Task Send_FetchesProgressPerAskedMission_AndSkipsFailures()
+        {
+            _missions.Setup(m => m.GetMissionProgressAsync("M.B6.5", null))
+                .ReturnsAsync((new MissionProgress { missionCode = "M.B6.5", missionTitle = "Snacks", progress = 40, status = ProgressStatus.InProgress }, (ApiErrorResponse)null));
+            _missions.Setup(m => m.GetMissionProgressAsync("M.B6.2", null))
+                .ReturnsAsync(((MissionProgress)null, new ApiErrorResponse { message = "x" }));
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.5", 0f), CheckInPlannerTests.MP("M.B6.2", 0f));
+            _vm.SetDaySwapUnits(0, ClientEventTypes.SwapSnackToFruitNuts, 2);
+            CheckInOutcome outcome = null;
+            _vm.CheckInCompleted += o => outcome = o;
+
+            await CompleteAsync();
+
+            CollectionAssert.AreEquivalent(new[] { "M.B6.5", "M.B6.2" }, _vm.Plan.AskedMissions.Select(m => m.Code).ToArray());
+            var (progress, line) = outcome.Missions.Single();
+            Assert.AreEqual("M.B6.5", progress.missionCode);
+            Assert.AreEqual("MISSION_CHECKIN_LINE_SWAPS", line.Key);
+            CollectionAssert.AreEqual(new object[] { "Snacks", 2, 5 }, line.Args);
+        }
+
+        [Test]
+        public async Task Complete_OnlyNoAnswers_StillRemembersTheDays()
+        {
+            await LoadAsync(null, CheckInPlannerTests.MP("M.B6.5", 0f));
+            _vm.SetNoSwaps(0);
+            _vm.SetNoSwaps(1);
+            List<(string, DateTime?, DateTime)> remembered = null;
+            _checkIn.Setup(c => c.RememberDayAnswers(It.IsAny<IEnumerable<(string, DateTime?, DateTime)>>()))
+                .Callback<IEnumerable<(string, DateTime?, DateTime)>>(a => remembered = a.ToList());
+            bool dismissed = false;
+            _vm.CheckInDismissed += () => dismissed = true;
+
+            await CompleteAsync();
+
+            Assert.IsTrue(dismissed, "nothing to send");
+            Assert.IsEmpty(_sent);
+            CollectionAssert.AreEquivalent(new[] { _vm.Plan.MealDays[0].Day, _vm.Plan.MealDays[1].Day }, remembered.Select(r => r.Item3).ToArray());
+        }
     }
 }

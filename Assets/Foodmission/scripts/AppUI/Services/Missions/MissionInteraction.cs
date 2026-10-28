@@ -24,7 +24,8 @@ namespace eu.foodmission.platform
         YesNo,
         ProductChecklist,
         DayChecklist,
-        DayQuestion
+        DayQuestion,
+        DaySwaps
     }
 
     /// <summary>When a day is decided for a <see cref="MissionStepType.DayQuestion"/>.</summary>
@@ -55,6 +56,24 @@ namespace eu.foodmission.platform
             HasLimit = hasLimit;
             AllMeals = allMeals;
             CountingOptions = countingOptions ?? Array.Empty<int>();
+        }
+    }
+
+    /// <summary>
+    /// Swaps asked once per day (spec 2026-10-27 swaps): the rule counts every swap event, up to <see cref="Target"/>,
+    /// or one swap of each level (M.I1.2).
+    /// </summary>
+    public sealed class SwapQuestionSpec
+    {
+        public int Target { get; }
+        /// <summary>Swaps of each level, in order; empty for missions that count swaps.</summary>
+        public IReadOnlyList<IReadOnlyList<string>> Levels { get; }
+        public bool IsLevels => Levels.Count > 0;
+
+        public SwapQuestionSpec(int target, IReadOnlyList<IReadOnlyList<string>> levels = null)
+        {
+            Target = target;
+            Levels = levels ?? Array.Empty<IReadOnlyList<string>>();
         }
     }
 
@@ -151,6 +170,8 @@ namespace eu.foodmission.platform
         public ChecklistSpec Checklist { get; }
         /// <summary>DayQuestion: how its days are decided. Null for other types.</summary>
         public DayQuestionSpec DayQuestion { get; }
+        /// <summary>DaySwaps: target or levels. Null for other types.</summary>
+        public SwapQuestionSpec DaySwaps { get; }
 
         /// <summary>
         /// Each report sends new synthetic ids (or plain occasions), so telling the same thing in two check-ins counts it twice:
@@ -172,7 +193,8 @@ namespace eu.foodmission.platform
             bool onePerDay,
             IReadOnlyList<string> mealTypes,
             ChecklistSpec checklist = null,
-            DayQuestionSpec dayQuestion = null)
+            DayQuestionSpec dayQuestion = null,
+            SwapQuestionSpec daySwaps = null)
         {
             Type = type;
             PromptKey = promptKey;
@@ -185,6 +207,7 @@ namespace eu.foodmission.platform
             MealTypes = mealTypes ?? Array.Empty<string>();
             Checklist = checklist;
             DayQuestion = dayQuestion;
+            DaySwaps = daySwaps;
         }
     }
 

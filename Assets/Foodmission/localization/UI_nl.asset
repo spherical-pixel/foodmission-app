@@ -5334,6 +5334,34 @@ MonoBehaviour:
     m_Localized: "\u201C{0}\u201D heb je binnen: hij wordt voltooid op {1}."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Localized: Heb je een van deze voedselwissels gemaakt?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Localized: "{0}: voltooid! \U0001F389"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Localized: '{0}: is deze keer niet gelukt.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Localized: '{0}: {1} van {2} wissels'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Localized: '{0}: {1} van {2} niveaus'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Localized: '{0}: {1} van {2} dagen'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Localized: '{0}: {1}%'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

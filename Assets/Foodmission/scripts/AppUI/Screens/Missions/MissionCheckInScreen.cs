@@ -343,10 +343,16 @@ namespace eu.foodmission.platform
                 }
             }
 
+            IReadOnlyList<CheckInSwapOption> swapOptions = _viewModel.VisibleSwapOptions(stepIndex);
+            if (swapOptions.Count > 0)
+            {
+                RenderSwapQuestion(stepIndex, day.SwapQuestion, answer, swapOptions, body);
+            }
+
             if (day.OpenMealTypes.Count == 0)
             {
                 // Earlier answers covered what this day was asked for
-                if (dayQuestions.Count == 0)
+                if (dayQuestions.Count == 0 && swapOptions.Count == 0)
                 {
                     var nothingLeft = new Text { text = L("MISSION_CHECKIN_DAY_NOTHING_LEFT") };
                     nothingLeft.AddToClassList("fm-mission-report-meal-hint");
@@ -354,7 +360,7 @@ namespace eu.foodmission.platform
                 }
                 return;
             }
-            if (dayQuestions.Count > 0)
+            if (dayQuestions.Count > 0 || swapOptions.Count > 0)
             {
                 var separator = new VisualElement();
                 separator.AddToClassList("fm-mission-report-day-separator");
@@ -414,6 +420,63 @@ namespace eu.foodmission.platform
                     body.Add(emptyHint);
                 }
             }
+        }
+
+        /// <summary>"Did you make any of these food swaps?": counters for repeatable swaps, chips for the rest, plus "No".</summary>
+        private void RenderSwapQuestion(int stepIndex, CheckInSwapQuestion question, CheckInMealDayAnswer answer,
+            IReadOnlyList<CheckInSwapOption> options, VisualElement body)
+        {
+            var prompt = new Text { text = L(MissionSwaps.PromptKey) };
+            prompt.AddToClassList("fm-mission-report-day-question");
+            body.Add(prompt);
+            var missionTitles = new Text { text = string.Join(", ", question.Missions.Select(m => m.Title)) };
+            missionTitles.AddToClassList("fm-mission-report-meal-hint");
+            body.Add(missionTitles);
+
+            foreach (CheckInSwapOption option in options.Where(o => o.IsCounter))
+            {
+                string swap = option.Swap;
+                int logged = option.Logged;
+                var counterRow = new VisualElement();
+                counterRow.AddToClassList("fm-mission-report-row");
+                var label = new Text { text = L(MealFlagLabels.KeyFor(swap)) };
+                label.AddToClassList("fm-mission-report-label");
+                counterRow.Add(label);
+                answer.Swaps.TryGetValue(swap, out int units);
+                // Already logged that day is the minimum: only the increase is sent
+                FMArrowStepper stepper = Stepper(logged + units, logged + option.Max, v =>
+                {
+                    _viewModel.SetDaySwapUnits(stepIndex, swap, v - logged);
+                    RenderDayCardsLater();
+                }, logged);
+                stepper.SetEnabled(option.Max > 0);
+                counterRow.Add(stepper);
+                body.Add(counterRow);
+            }
+
+            var row = new VisualElement();
+            row.AddToClassList("fm-mission-report-row");
+            foreach (CheckInSwapOption option in options.Where(o => !o.IsCounter))
+            {
+                string swap = option.Swap;
+                FMButton chip = Chip(L(MealFlagLabels.KeyFor(swap)), option.Logged > 0 || answer.Swaps.ContainsKey(swap), () =>
+                {
+                    _viewModel.ToggleDaySwap(stepIndex, swap);
+                    RenderDayCardsLater();
+                });
+                if (option.Max == 0)
+                {
+                    chip.SetEnabled(false);
+                    chip.AddToClassList("fm-mission-report-chip--locked");
+                }
+                row.Add(chip);
+            }
+            row.Add(Chip(L("MISSION_QDAY_NONE"), answer.NoSwaps, () =>
+            {
+                _viewModel.SetNoSwaps(stepIndex);
+                RenderDayCardsLater();
+            }));
+            body.Add(row);
         }
 
         private void RenderDayEvent(int stepIndex, CheckInDayEvent dayEvent, HashSet<DateTime> selected, VisualElement body)
@@ -669,11 +732,11 @@ namespace eu.foodmission.platform
 
         private static FMButton Chip(string title, bool selected, Action onClick) => MissionChips.Chip(title, selected, onClick);
 
-        private static FMArrowStepper Stepper(int value, int max, Action<int> onChanged)
+        private static FMArrowStepper Stepper(int value, int max, Action<int> onChanged, int min = 0)
         {
-            var stepper = new FMArrowStepper { Choices = Enumerable.Range(0, max + 1).Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray() };
-            stepper.SelectedIndex = Math.Clamp(value, 0, max);
-            stepper.valueChanged += (_, e) => onChanged(e.newValue);
+            var stepper = new FMArrowStepper { Choices = Enumerable.Range(min, max - min + 1).Select(i => i.ToString(CultureInfo.InvariantCulture)).ToArray() };
+            stepper.SelectedIndex = Math.Clamp(value, min, max) - min;
+            stepper.valueChanged += (_, e) => onChanged(min + e.newValue);
             return stepper;
         }
 
@@ -699,7 +762,14 @@ namespace eu.foodmission.platform
             string message;
             if (progress == null)
             {
-                message = L("MISSION_CHECKIN_RESULT");
+                // Concrete progress per mission ("3 of 4 swaps") under the thanks (spec 2026-10-27 swaps §8)
+                message = string.Join("\n", new[] { L("MISSION_CHECKIN_RESULT") }.Concat(outcome.Missions
+                    .Where(m => m.Line != null)
+                    .Select(m => LF(m.Line.Key, m.Line.Args))));
+                foreach (MissionProgress failed in outcome.Missions.Select(m => m.Progress).Where(MissionProgressState.IsFailed))
+                {
+                    App.current?.services?.GetService<IMissionFailureService>()?.Acknowledge(failed);
+                }
             }
             else if (MissionProgressState.IsFailed(progress))
             {
@@ -713,7 +783,10 @@ namespace eu.foodmission.platform
             }
             else
             {
-                message = LF("MISSION_REPORT_RESULT_PROGRESS", Mathf.RoundToInt(progress.progress));
+                CheckInResultLine line = outcome.Missions.Select(m => m.Line).FirstOrDefault();
+                message = line != null && line.Key != CheckInResultLines.PercentKey
+                    ? L("MISSION_CHECKIN_RESULT") + "\n" + LF(line.Key, line.Args)
+                    : LF("MISSION_REPORT_RESULT_PROGRESS", Mathf.RoundToInt(progress.progress));
             }
 
             NutriMessageDialog.Show(message,

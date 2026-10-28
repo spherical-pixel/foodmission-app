@@ -225,9 +225,9 @@ namespace eu.foodmission.platform
             var events = new HashSet<string>(StringComparer.Ordinal);
             foreach (string code in missionCodes)
             {
-                // Day questions are sent as meal-log flags too, so a logged meal can answer them
+                // Day questions and day swaps are sent as meal-log flags/swaps too, so a logged meal can answer them
                 foreach (MissionReportStep step in MissionInteractionCatalog.Get(code).Steps
-                    .Where(s => s.Type == MissionStepType.MealReport || s.Type == MissionStepType.DayQuestion))
+                    .Where(s => s.Type == MissionStepType.MealReport || s.Type == MissionStepType.DayQuestion || s.Type == MissionStepType.DaySwaps))
                 {
                     if (step.EventType != null)
                     {

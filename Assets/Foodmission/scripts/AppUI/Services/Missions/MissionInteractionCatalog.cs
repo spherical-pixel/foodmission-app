@@ -113,8 +113,8 @@ namespace eu.foodmission.platform
             { "M.B1.1", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, true, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
             { "M.B1.2", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, true, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
             { "M.B1.3", Auto(MealChoice("MISSION_Q_MEAL_MEAT", 7, false, ClientEventTypes.MealMeatFree, ClientEventTypes.MealMeatConsumed)) },
-            { "M.B1.4", Auto(SwapMeals(2, ProteinSwaps)) },
-            { "M.B1.5", Auto(SwapMeals(2, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes)) },
+            { "M.B1.4", Auto(DaySwaps(2, ProteinSwaps)) },
+            { "M.B1.5", Auto(DaySwaps(2, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes)) },
             // B2 — Product choices (beginner)
             { "M.B2.1", Manual(Products(ClientEventTypes.ShoppingOriginChecked, 5)) },
             { "M.B2.2", Auto(Meals(ClientEventTypes.MealSeasonalProduce, 5)) },
@@ -126,7 +126,7 @@ namespace eu.foodmission.platform
             { "M.B3.2", Manual(Products(ClientEventTypes.ProcessingNovaChecked, 3)) },
             { "M.B3.3", Manual(Products(ClientEventTypes.ProcessingIngredientsReviewed, 5)) },
             { "M.B3.4", Manual(Products(ClientEventTypes.ProcessingGreenscoreChecked, 5)) },
-            { "M.B3.5", Auto(SwapMeals(2, ProcessingSwaps)) },
+            { "M.B3.5", Auto(DaySwaps(2, ProcessingSwaps)) },
             // B4 — Packaging (beginner)
             { "M.B4.1", Manual(Products(ClientEventTypes.PackagingMaterialObserved, 5)) },
             { "M.B4.2", Manual(Products(ClientEventTypes.PackagingRecyclingLabelRead, 10)) },
@@ -144,13 +144,15 @@ namespace eu.foodmission.platform
             // B6 — Nutrition (beginner)
             { "M.B6.1", Auto(YesDays("MISSION_QDAY_PROTEIN", ClientEventTypes.NutritionProteinIncluded)) },
             { "M.B6.2", Auto(YesDays("MISSION_QDAY_FRUIT_VEG", ClientEventTypes.NutritionFruitVegServingAdded)) },
-            { "M.B6.3", Auto(Meals(ClientEventTypes.SwapSugaryDrinkToWater, 3)) },
+            { "M.B6.3", Auto(DaySwaps(3, ClientEventTypes.SwapSugaryDrinkToWater)) },
             { "M.B6.4", Auto(YesDays("MISSION_QDAY_WHOLEGRAIN", ClientEventTypes.NutritionWholegrainChosen)) },
-            { "M.B6.5", Auto(Meals(ClientEventTypes.SwapSnackToFruitNuts, 5)) },
+            { "M.B6.5", Auto(DaySwaps(5, ClientEventTypes.SwapSnackToFruitNuts)) },
             // I1 — Diet (intermediate)
-            { "M.I1.1", Auto(SwapMeals(4, ProteinSwaps)) },
-            { "M.I1.2", Auto(SwapMeals(6, ClientEventTypes.SwapBeefToPork, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes,
-                ClientEventTypes.SwapPorkToLegumes, ClientEventTypes.SwapChickenToLegumes)) },
+            { "M.I1.1", Auto(DaySwaps(4, ProteinSwaps)) },
+            { "M.I1.2", Auto(LevelSwaps(
+                new[] { ClientEventTypes.SwapBeefToPork, ClientEventTypes.SwapBeefToChicken },
+                new[] { ClientEventTypes.SwapBeefToLegumes },
+                new[] { ClientEventTypes.SwapPorkToLegumes, ClientEventTypes.SwapChickenToLegumes })) },
             { "M.I1.3", Auto(MeatFreeDays(2)) },
             { "M.I1.4", Auto(Meals(ClientEventTypes.MealLegumeConsumed, 4)) },
             { "M.I1.5", Manual(ProteinSourceChoice()) },
@@ -166,7 +168,7 @@ namespace eu.foodmission.platform
             { "M.I3.1", Manual(ProductChoice("MISSION_Q_M_I3_1_PRODUCTION_CHECKS", 5,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked, ClientEventTypes.ProcessingIngredientsReviewed)) },
             { "M.I3.2", Manual(Confirm(ClientEventTypes.ProcessingNovaCategoryCompared)) },
-            { "M.I3.3", Auto(SwapMeals(4, ProcessingSwaps)) },
+            { "M.I3.3", Auto(DaySwaps(4, ProcessingSwaps)) },
             { "M.I3.4", Manual(Products(ClientEventTypes.ProcessingNovaScoreCompared, 4)) },
             { "M.I3.5", Manual(ProductChoice("MISSION_Q_M_I3_5_PRODUCTION_CHECKS", 6,
                 ClientEventTypes.ProcessingNovaChecked, ClientEventTypes.ProcessingGreenscoreChecked, ClientEventTypes.ProcessingProductionMethodChecked)) },
@@ -186,7 +188,7 @@ namespace eu.foodmission.platform
             { "M.I5.4", Auto(Meals(ClientEventTypes.FoodWasteHalfPlateSaved, 3)) },
             { "M.I5.5", Auto(Meals(ClientEventTypes.FoodWasteFullPlateSaved, 3)) },
             // I6 — Nutrition (intermediate)
-            { "M.I6.1", Auto(Meals(ClientEventTypes.SwapProcessedMeatToLegumes, 2)) },
+            { "M.I6.1", Auto(DaySwaps(2, ClientEventTypes.SwapProcessedMeatToLegumes)) },
             { "M.I6.2", Auto(Meals(ClientEventTypes.NutritionHighFibreMeal, 21, CheckInMealTypes.Main)) },
             { "M.I6.3", Auto(AllMealsDays("MISSION_QDAY_NO_SALT", ClientEventTypes.NutritionSaltFreeTable)) },
             { "M.I6.4", Auto(Meals(ClientEventTypes.NutritionHealthyFatChosen, 5)) },
@@ -259,9 +261,17 @@ namespace eu.foodmission.platform
         private static MissionReportStep MainMealChoice(string promptKey, int max, params string[] flags) =>
             new MissionReportStep(MissionStepType.MealReport, promptKey, null, null, NoMetadata, flags.Select(Option).ToArray(), max, false, CheckInMealTypes.Main);
 
-        /// <summary>Quick meal logs whose swap is chosen per meal (a meal log may carry only swaps).</summary>
-        private static MissionReportStep SwapMeals(int maxMeals, params string[] swaps) =>
-            MealChoice("MISSION_Q_SWAPS", maxMeals, false, swaps);
+        // ── Swaps asked per day (OTHER meal logs; per meal next to meal missions, see MissionSwaps) ──
+
+        /// <summary>The rule counts every swap event up to <paramref name="target"/>.</summary>
+        private static MissionReportStep DaySwaps(int target, params string[] swaps) =>
+            new MissionReportStep(MissionStepType.DaySwaps, MissionSwaps.PromptKey, null, null, NoMetadata, swaps.Select(Option).ToArray(), target, false, null,
+                daySwaps: new SwapQuestionSpec(target));
+
+        /// <summary>The rule wants one swap of each level (M.I1.2).</summary>
+        private static MissionReportStep LevelSwaps(params string[][] levels) =>
+            new MissionReportStep(MissionStepType.DaySwaps, MissionSwaps.PromptKey, null, null, NoMetadata, levels.SelectMany(l => l).Select(Option).ToArray(),
+                levels.Length, false, null, daySwaps: new SwapQuestionSpec(levels.Length, levels));
 
         // ── Day questions (one OTHER meal log per day) ────────
 

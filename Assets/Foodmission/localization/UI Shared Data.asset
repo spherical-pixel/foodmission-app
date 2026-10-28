@@ -4967,6 +4967,34 @@ MonoBehaviour:
     m_Key: MISSION_SECURED_CHECKIN
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203915
+    m_Key: MISSION_QDAY_SWAPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203916
+    m_Key: MISSION_CHECKIN_LINE_DONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203917
+    m_Key: MISSION_CHECKIN_LINE_FAILED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203918
+    m_Key: MISSION_CHECKIN_LINE_SWAPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203919
+    m_Key: MISSION_CHECKIN_LINE_LEVELS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203920
+    m_Key: MISSION_CHECKIN_LINE_DAYS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203921
+    m_Key: MISSION_CHECKIN_LINE_PERCENT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

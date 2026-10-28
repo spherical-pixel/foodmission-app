@@ -576,5 +576,145 @@ namespace eu.foodmission.platform.Tests
 
             CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-3), Now.Date.AddDays(-1) }, waiting.Days.ToArray());
         }
+
+        // ── Day swaps (spec 2026-10-27 swaps) ─────────────────
+
+        private static CheckInSwapQuestion SwapsOn(CheckInPlan plan, DateTime day) =>
+            plan.MealDays.FirstOrDefault(d => d.Day == day)?.SwapQuestion;
+
+        [Test]
+        public void SwapMission_Alone_GetsOneSwapQuestionPerOpenDay()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.B6.5", 0f, Now.Date.AddDays(-2).AddHours(9))));
+
+            CollectionAssert.AreEqual(new[] { Now.Date.AddDays(-2), Now.Date.AddDays(-1), Now.Date },
+                plan.MealDays.Where(d => d.SwapQuestion != null).Select(d => d.Day).ToArray());
+            CheckInSwapQuestion question = SwapsOn(plan, Now.Date);
+            CollectionAssert.AreEqual(new[] { ClientEventTypes.SwapSnackToFruitNuts }, question.Swaps);
+            Assert.AreEqual(5, question.Missions.Single().Remaining);
+            Assert.IsTrue(plan.MealDays.All(d => d.Questions.Count == 0), "never per meal on its own");
+        }
+
+        [Test]
+        public void SwapMissions_ShareOneQuestion_UnionInCatalogOrder()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.I1.1", 0f), MP("M.I1.2", 0f)));
+
+            CheckInSwapQuestion question = SwapsOn(plan, Now.Date);
+            CollectionAssert.AreEqual(new[] { "M.I1.1", "M.I1.2" }, question.Missions.Select(m => m.Code).ToArray());
+            CollectionAssert.AreEqual(new[]
+            {
+                ClientEventTypes.SwapBeefToPork, ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes,
+                ClientEventTypes.SwapPorkToChicken, ClientEventTypes.SwapPorkToLegumes, ClientEventTypes.SwapChickenToLegumes
+            }, question.Swaps);
+        }
+
+        [Test]
+        public void SwapMission_WithPerMealMission_StaysInMealBlock()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(M("M.B1.3", Now.Date), M("M.B1.5", Now.Date)));
+
+            Assert.IsTrue(plan.MealDays.All(d => d.SwapQuestion == null));
+            CollectionAssert.IsSupersetOf(plan.MealDays.Single().Questions.Select(q => q.EventType).ToArray(),
+                new[] { ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes });
+        }
+
+        [Test]
+        public void SwapMission_WithResolvedPerMealMissions_IsAskedPerDay()
+        {
+            // B1.3 started 8 days ago: past its deadline, so nothing is asked per meal any more
+            var plan = CheckInPlanner.Plan(Inputs(M("M.B1.3", Now.Date.AddDays(-8)), M("M.B1.5", Now.Date)));
+
+            Assert.IsNotNull(SwapsOn(plan, Now.Date));
+            Assert.IsTrue(plan.MealDays.All(d => d.Questions.Count == 0));
+        }
+
+        [Test]
+        public void SwapMission_WithPerMealMissionOutsideTheCheckIn_StaysInMealBlock()
+        {
+            var inputs = Inputs(M("M.B1.5", Now.Date));
+            inputs.QuestMissions.Add(M("M.B1.3", Now.Date));
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            Assert.IsTrue(plan.MealDays.All(d => d.SwapQuestion == null));
+            CollectionAssert.AreEquivalent(new[] { ClientEventTypes.SwapBeefToChicken, ClientEventTypes.SwapBeefToLegumes },
+                plan.MealDays.Single().Questions.Select(q => q.EventType).ToArray());
+        }
+
+        [Test]
+        public void CountMission_AtTarget_IsNotAsked()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.B6.3", 1f)));
+
+            Assert.IsTrue(plan.MealDays.All(d => d.SwapQuestion == null));
+        }
+
+        [Test]
+        public void CountMission_Remaining_FromProgress()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.I3.3", 0.5f)));
+
+            Assert.AreEqual(2, SwapsOn(plan, Now.Date).Missions.Single().Remaining);
+        }
+
+        [Test]
+        public void LevelMission_MissingLevels_FromLoggedSwaps()
+        {
+            var inputs = Inputs(MP("M.I1.2", 0.34f));
+            inputs.LoggedSwaps.Add((DayStart.AddDays(1).AddHours(4), ClientEventTypes.SwapBeefToLegumes));
+
+            CheckInSwapMission mission = SwapsOn(CheckInPlanner.Plan(inputs), Now.Date).Missions.Single();
+
+            Assert.IsNull(mission.Remaining);
+            CollectionAssert.AreEqual(new[] { 0, 2 }, mission.MissingLevels);
+        }
+
+        [Test]
+        public void LevelMission_IgnoresSwapsBeforeStart()
+        {
+            var inputs = Inputs(MP("M.I1.2", 0f));
+            inputs.LoggedSwaps.Add((DayStart.AddHours(-1), ClientEventTypes.SwapBeefToLegumes));
+
+            CheckInSwapQuestion question = SwapsOn(CheckInPlanner.Plan(inputs), DayStart.Date);
+
+            CollectionAssert.AreEqual(new[] { 0, 1, 2 }, question.Missions.Single().MissingLevels);
+            Assert.AreEqual(1, question.LoggedCount(ClientEventTypes.SwapBeefToLegumes), "still locked on that day");
+        }
+
+        [Test]
+        public void LoggedSwaps_AreCountedPerDay()
+        {
+            var inputs = Inputs(MP("M.B6.5", 0f));
+            inputs.LoggedSwaps.Add((Now.Date.AddDays(-1).AddHours(11), ClientEventTypes.SwapSnackToFruitNuts));
+            inputs.LoggedSwaps.Add((Now.Date.AddDays(-1).AddHours(17), ClientEventTypes.SwapSnackToFruitNuts));
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            Assert.AreEqual(2, SwapsOn(plan, Now.Date.AddDays(-1)).LoggedCount(ClientEventTypes.SwapSnackToFruitNuts));
+            Assert.AreEqual(0, SwapsOn(plan, Now.Date).LoggedCount(ClientEventTypes.SwapSnackToFruitNuts));
+        }
+
+        [Test]
+        public void DecidedDay_IsNotAskedForThatMission()
+        {
+            var inputs = Inputs(MP("M.B6.5", 0f));
+            inputs.DecidedDays["M.B6.5"] = new HashSet<DateTime> { Now.Date.AddDays(-1) };
+
+            var plan = CheckInPlanner.Plan(inputs);
+
+            Assert.IsNull(SwapsOn(plan, Now.Date.AddDays(-1)));
+            Assert.IsNotNull(SwapsOn(plan, Now.Date));
+        }
+
+        [Test]
+        public void SwapOnlyDay_IsNotPendingNorWaiting()
+        {
+            var plan = CheckInPlanner.Plan(Inputs(MP("M.B6.5", 0f)));
+
+            Assert.IsNotNull(SwapsOn(plan, Now.Date.AddDays(-2)));
+            Assert.AreEqual(0, plan.PendingPastDays(Now));
+            Assert.IsEmpty(plan.WaitingMissions(Now));
+        }
     }
 }

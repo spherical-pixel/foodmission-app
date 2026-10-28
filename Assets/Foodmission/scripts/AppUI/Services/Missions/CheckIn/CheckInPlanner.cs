@@ -24,17 +24,15 @@ namespace eu.foodmission.platform
             var dayEvents = new List<(string Code, string Title, MissionReportStep Step, SortedSet<DateTime> Days, DateTime? Start)>();
             var dayQuestions = new List<(CheckInMission Mission, MissionReportStep Step, IReadOnlyList<DateTime> Window, int? Remaining)>();
             var missionSteps = new List<CheckInMissionStep>();
+            var swapMissions = new List<(CheckInSwapMission Mission, IReadOnlyList<DateTime> Window)>();
+            var asked = new List<CheckInMissionRef>();
             var secured = new List<CheckInMissionRef>();
             int order = 0;
 
+            var askable = new List<CheckInMission>();
             foreach (CheckInMission mission in inputs.Missions)
             {
-                if (mission == null || !mission.Interaction.CanReport)
-                {
-                    continue;
-                }
-                // Past its deadline nothing counts any more (the backend fails it within the hour)
-                if (mission.StartLocal.HasValue && inputs.NowLocal >= MissionDeadlines.DeadlineLocal(mission.StartLocal.Value))
+                if (!IsAskable(mission, inputs.NowLocal))
                 {
                     continue;
                 }
@@ -44,10 +42,20 @@ namespace eu.foodmission.platform
                     secured.Add(new CheckInMissionRef(mission.Code, mission.Title, mission.StartLocal));
                     continue;
                 }
+                askable.Add(mission);
+            }
+            // Swaps join the meal block when another mission of the quest asks per meal anyway, even one this check-in
+            // doesn't cover (spec 2026-10-27 swaps §4)
+            bool mealsAsked = askable
+                .Concat(inputs.QuestMissions.Where(m => IsAskable(m, inputs.NowLocal) && !MissionProgressState.IsSecured(m.Interaction, m.Progress * 100f)))
+                .Any(m => m.Interaction.Steps.Any(s => s.Type == MissionStepType.MealReport));
 
+            foreach (CheckInMission mission in askable)
+            {
                 IReadOnlyList<DateTime> window = MissionReportDays.Allowed(mission.StartLocal, inputs.NowLocal);
-                foreach (MissionReportStep step in mission.Interaction.Steps)
+                foreach (MissionReportStep catalogStep in mission.Interaction.Steps)
                 {
+                    MissionReportStep step = catalogStep.Type == MissionStepType.DaySwaps && mealsAsked ? MissionSwaps.AsMealReport(catalogStep) : catalogStep;
                     switch (step.Type)
                     {
                         case MissionStepType.MealReport:
@@ -110,6 +118,14 @@ namespace eu.foodmission.platform
                             dayQuestions.Add((mission, step, window, remaining));
                             break;
 
+                        case MissionStepType.DaySwaps:
+                            CheckInSwapMission swapMission = SwapMissionFor(mission, step, inputs);
+                            if (swapMission != null)
+                            {
+                                swapMissions.Add((swapMission, window));
+                            }
+                            break;
+
                         case MissionStepType.DayChecklist:
                             inputs.RecordedValues.TryGetValue(step.EventType, out Dictionary<DateTime, HashSet<string>> recordedByDay);
                             var recorded = new Dictionary<DateTime, HashSet<string>>();
@@ -139,6 +155,7 @@ namespace eu.foodmission.platform
 
             var allDays = new SortedSet<DateTime>(mealByDay.Keys);
             allDays.UnionWith(dayQuestions.SelectMany(q => q.Window));
+            allDays.UnionWith(swapMissions.SelectMany(m => m.Window));
             var mealDays = new List<CheckInMealDay>();
             foreach (DateTime dayKey in allDays)
             {
@@ -172,7 +189,8 @@ namespace eu.foodmission.platform
                         .Where(t => !logged.Contains(t) && (!isToday || MissionReportDays.IsOfferedToday(t, inputs.NowLocal)) && questions.Any(q => q.AppliesTo(t)))
                         .ToArray();
                 List<CheckInDayQuestion> dayAsked = DayQuestionsFor(dayQuestions, entry.Key, inputs, logged, open, questions);
-                if (open.Length == 0 && dayAsked.Count == 0)
+                CheckInSwapQuestion swapQuestion = SwapQuestionFor(swapMissions, entry.Key, inputs);
+                if (open.Length == 0 && dayAsked.Count == 0 && swapQuestion == null)
                 {
                     continue;
                 }
@@ -198,7 +216,12 @@ namespace eu.foodmission.platform
                         .Select(c => new CheckInMissionRef(c.Code, c.Title, c.Start)));
                 }
                 waiting = waiting.GroupBy(m => m.Code, StringComparer.OrdinalIgnoreCase).Select(g => g.First()).ToList();
-                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions, hints, dayAsked, waiting));
+                AddAsked(asked, entry.Value.Where(c => open.Any(t => Counts(c, entry.Key, t, inputs.NowLocal))).OrderBy(c => c.Order)
+                    .Select(c => new CheckInMissionRef(c.Code, c.Title, c.Start)));
+                AddAsked(asked, dayAsked.Select(q => new CheckInMissionRef(q.MissionCode, q.MissionTitle, q.StartLocal)));
+                AddAsked(asked, swapQuestion?.Missions.Select(m => new CheckInMissionRef(m.Code, m.Title, m.StartLocal)));
+                // Swaps are optional: a day with only the swap question is neither pending nor waiting
+                mealDays.Add(new CheckInMealDay(entry.Key, logged.Count > 0, open, questions, hints, dayAsked, waiting, swapQuestion));
             }
 
             var openDayEvents = new List<CheckInDayEvent>();
@@ -212,7 +235,25 @@ namespace eu.foodmission.platform
                 }
             }
 
-            return new CheckInPlan(mealDays, openDayEvents, missionSteps, secured);
+            AddAsked(asked, openDayEvents.Select(e => new CheckInMissionRef(e.MissionCode, e.MissionTitle, e.StartLocal)));
+            AddAsked(asked, missionSteps.Select(m => new CheckInMissionRef(m.MissionCode, m.MissionTitle, m.StartLocal)));
+            return new CheckInPlan(mealDays, openDayEvents, missionSteps, secured, asked);
+        }
+
+        /// <summary>Reportable and before its deadline (past it nothing counts any more; the backend fails it within the hour).</summary>
+        private static bool IsAskable(CheckInMission mission, DateTime nowLocal) =>
+            mission != null && mission.Interaction.CanReport &&
+            !(mission.StartLocal.HasValue && nowLocal >= MissionDeadlines.DeadlineLocal(mission.StartLocal.Value));
+
+        private static void AddAsked(List<CheckInMissionRef> asked, IEnumerable<CheckInMissionRef> missions)
+        {
+            foreach (CheckInMissionRef mission in missions ?? Enumerable.Empty<CheckInMissionRef>())
+            {
+                if (!asked.Any(m => string.Equals(m.Code, mission.Code, StringComparison.OrdinalIgnoreCase)))
+                {
+                    asked.Add(mission);
+                }
+            }
         }
 
         /// <summary>Day questions still open on this day (spec 2026-10-27 §6), in mission order.</summary>
@@ -256,6 +297,55 @@ namespace eu.foodmission.platform
                 }
             }
             return asked;
+        }
+
+        /// <summary>What a swap mission still needs (spec 2026-10-27 swaps §6); null when nothing.</summary>
+        private static CheckInSwapMission SwapMissionFor(CheckInMission mission, MissionReportStep step, CheckInInputs inputs)
+        {
+            SwapQuestionSpec spec = step.DaySwaps;
+            if (spec == null)
+            {
+                return null;
+            }
+            List<string> swaps = step.Options.Select(o => o.EventType).Where(e => e != null).ToList();
+            if (spec.IsLevels)
+            {
+                // Progress only says how many levels are done: the swaps logged since the start say which
+                var counted = new HashSet<string>(inputs.LoggedSwaps
+                    .Where(l => !mission.StartLocal.HasValue || l.AtLocal >= mission.StartLocal.Value)
+                    .Select(l => l.Swap), StringComparer.Ordinal);
+                List<int> missing = Enumerable.Range(0, spec.Levels.Count).Where(i => !spec.Levels[i].Any(counted.Contains)).ToList();
+                return missing.Count == 0 ? null : new CheckInSwapMission(mission.Code, mission.Title, mission.StartLocal, spec, swaps, null, missing);
+            }
+
+            int remaining = Math.Max(0, spec.Target - (int)Math.Floor(mission.Progress * spec.Target + 0.0001f));
+            return remaining == 0 ? null : new CheckInSwapMission(mission.Code, mission.Title, mission.StartLocal, spec, swaps, remaining);
+        }
+
+        /// <summary>The swap question of a day, shared by the swap missions still asked that day; null when none.</summary>
+        private static CheckInSwapQuestion SwapQuestionFor(List<(CheckInSwapMission Mission, IReadOnlyList<DateTime> Window)> swapMissions,
+            DateTime day, CheckInInputs inputs)
+        {
+            List<CheckInSwapMission> missions = swapMissions
+                .Where(m => m.Window.Contains(day) &&
+                            !(inputs.DecidedDays.TryGetValue(m.Mission.Code, out HashSet<DateTime> decided) && decided.Contains(day)))
+                .Select(m => m.Mission)
+                .ToList();
+            if (missions.Count == 0)
+            {
+                return null;
+            }
+
+            List<string> swaps = missions.SelectMany(m => m.Swaps).Distinct().OrderBy(MissionSwaps.OrderOf).ToList();
+            var logged = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var (atLocal, swap) in inputs.LoggedSwaps)
+            {
+                if (atLocal.Date == day && swaps.Contains(swap))
+                {
+                    logged[swap] = logged.TryGetValue(swap, out int count) ? count + 1 : 1;
+                }
+            }
+            return new CheckInSwapQuestion(missions, swaps, logged);
         }
 
         /// <summary>
