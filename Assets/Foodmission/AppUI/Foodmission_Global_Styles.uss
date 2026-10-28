@@ -2167,6 +2167,21 @@
     transition-timing-function: ease-in-cubic;
 }
 
+/* The visible quiz card is laid out in flow so the scroll view gets its height */
+.fm-quiz-card--in-flow {
+    position: relative;
+}
+
+/* Quiz and food fact content scrolls when the text does not fit (small screens, large text) */
+.fm-learning-scroll {
+    flex-grow: 1;
+}
+
+.fm-learning-scroll--centered > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container {
+    min-height: 100%;
+    justify-content: center;
+}
+
 /* Continue + share row on the food fact and quiz explanation cards */
 .fm-share-row {
     flex-direction: row;
