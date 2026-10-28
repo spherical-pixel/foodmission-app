@@ -9,7 +9,7 @@
             <ui:Image source="project://database/Assets/Foodmission/art/ui_sprites/icons-quiz/quiz_win.png?fileID=21300000&amp;guid=6fa957a6c34dda646b9cf5bec9a3c408&amp;type=3#quiz_win" name="icn-ok" picking-mode="Ignore" class="fm-quiz-feedback-icon fm-quiz-feedback-icon--hidden"/>
             <ui:Image source="project://database/Assets/Foodmission/art/ui_sprites/icons-quiz/quiz_lose.png?fileID=21300000&amp;guid=9ef570a545059af4b9a7b257d78839d7&amp;type=3#quiz_lose" name="icn-ko" picking-mode="Ignore" class="fm-quiz-feedback-icon fm-quiz-feedback-icon--hidden"/>
         </ui:VisualElement>
-        <ui:VisualElement name="back" style="flex-grow: 1;">
+        <ui:ScrollView name="back" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="fm-learning-scroll">
             <appui:ExVisualElement name="main-question-card" class="box-background fm-shadow-wrapper fm-quiz-main-card">
                 <ui:VisualElement name="NutriViewContainer" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0;">
                     <fm:FMNutriView style="top: 0; left: 0; right: 0; scale: 0.5 0.5 0.5; margin-top: -570px; height: 900px;"/>
@@ -37,6 +37,6 @@
                     <appui:IconButton name="bt-share" icon="share-network" size="L" class="fm-share-button"/>
                 </ui:VisualElement>
             </appui:ExVisualElement>
-        </ui:VisualElement>
+        </ui:ScrollView>
     </ui:VisualElement>
 </ui:UXML>

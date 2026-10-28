@@ -45,6 +45,7 @@ namespace eu.foodmission.platform
         private Text _questionText;
         private VisualElement _mainQuestionCard;
         private VisualElement _explanationCard;
+        private ScrollView _scrollView;
         private Text _explanationText;
         private FMSourceItemView _sourceItemView;
         private Image _imageTopic;
@@ -199,6 +200,7 @@ namespace eu.foodmission.platform
         {
             _mainQuestionCard.schedule.Execute(() =>
             {
+                BringCardIntoFlow(_mainQuestionCard);
                 _mainQuestionCard.RemoveFromClassList("fm-quiz-main-card--hidden");
             }).StartingIn(delay);
 
@@ -212,16 +214,19 @@ namespace eu.foodmission.platform
         {
             _mainQuestionCard.AddToClassList("fm-quiz-main-card--hidden");
 
-            if (onComplete != null)
+            // Leaves the layout only once it has slid out, so the scroll offset does not jump mid-animation
+            _mainQuestionCard.schedule.Execute(() =>
             {
-                _mainQuestionCard.schedule.Execute(onComplete).StartingIn(400);
-            }
+                _mainQuestionCard.RemoveFromClassList("fm-quiz-card--in-flow");
+                onComplete?.Invoke();
+            }).StartingIn(400);
         }
 
         private void ShowExplanationCard(long delay, Action onComplete = null)
         {
             _explanationCard.schedule.Execute(() =>
             {
+                BringCardIntoFlow(_explanationCard);
                 _explanationCard.RemoveFromClassList("fm-quiz-explanation-card--hidden");
                 AddExplanationNodes();
             }).StartingIn(delay);
@@ -237,9 +242,21 @@ namespace eu.foodmission.platform
             _explanationCard.AddToClassList("fm-quiz-explanation-card--hidden");
             RemoveExplanationNodes();
 
-            if (onComplete != null)
+            _explanationCard.schedule.Execute(() =>
             {
-                _explanationCard.schedule.Execute(onComplete).StartingIn(400);
+                _explanationCard.RemoveFromClassList("fm-quiz-card--in-flow");
+                onComplete?.Invoke();
+            }).StartingIn(400);
+        }
+
+        // Both cards are stacked absolutely; only the visible one takes part in layout,
+        // so the scroll view can reach the end of a long question or explanation.
+        private void BringCardIntoFlow(VisualElement card)
+        {
+            card.AddToClassList("fm-quiz-card--in-flow");
+            if (_scrollView != null)
+            {
+                _scrollView.scrollOffset = Vector2.zero;
             }
         }
 
@@ -265,6 +282,8 @@ namespace eu.foodmission.platform
             _questionText = contentContainer.Q<Text>("text-question");
             _mainQuestionCard = contentContainer.Q<VisualElement>("main-question-card");
             _mainQuestionCard.AddToClassList("fm-quiz-main-card--hidden");
+
+            _scrollView = contentContainer.Q<ScrollView>("back");
 
             _explanationCard = contentContainer.Q<VisualElement>("explanation-card");
             _explanationCard.AddToClassList("fm-quiz-explanation-card--hidden");
