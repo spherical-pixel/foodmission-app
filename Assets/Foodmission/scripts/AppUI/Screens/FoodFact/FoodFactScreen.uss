@@ -17,3 +17,10 @@
     color: var(--appui-foregrounds-50);
     white-space: normal;
 }
+
+.fm-foodfact-intro {
+    color: var(--appui-foregrounds-50);
+    -unity-font-style: bold;
+    white-space: normal;
+    margin-bottom: 8px;
+}
