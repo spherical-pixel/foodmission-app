@@ -5393,6 +5393,32 @@ MonoBehaviour:
     m_Localized: '{0}: {1} %'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Localized: Laufende Herausforderung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Localized: "Du arbeitest an dieser Herausforderung. Passt dieses Produkt? Dann
+      z\xE4hl es mit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Localized: "Dieses Produkt z\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Localized: Dieses Produkt zeigt diese Angaben nicht. Probier ein gescanntes
+      Markenprodukt oder schau auf die Verpackung.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Localized: Nicht jetzt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Localized: Mission deiner Quest
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

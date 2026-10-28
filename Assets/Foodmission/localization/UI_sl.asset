@@ -5355,6 +5355,32 @@ MonoBehaviour:
     m_Localized: '{0}: {1} %'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Localized: Izziv v teku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Localized: "Izvaja\u0161 ta izziv. Ali ti ta izdelek pomaga? \u010Ce ja, ga
+      \u0161tej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Localized: "\u0160tej ta izdelek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Localized: "Ta izdelek ne prikazuje teh podatkov. Poskusi s skeniranim ali
+      blagovnim izdelkom ali poglej embala\u017Eo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Localized: Ne zdaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Localized: Misija tvoje naloge
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

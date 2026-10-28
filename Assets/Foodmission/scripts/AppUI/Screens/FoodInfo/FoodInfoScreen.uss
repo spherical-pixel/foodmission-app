@@ -493,6 +493,15 @@
     display: none;
 }
 
+/* Says what the card belongs to: it can appear far from where the challenge started */
+.fm-fi-challenge-card__kind {
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: bold;
+    color: var(--appui-accent-100);
+    white-space: normal;
+    margin-bottom: 4px;
+}
+
 .fm-fi-challenge-card__header {
     flex-direction: row;
     justify-content: space-between;
@@ -524,9 +533,19 @@
     margin-bottom: 8px;
 }
 
+.fm-fi-challenge-card__intro {
+    white-space: normal;
+    margin-bottom: 8px;
+}
+
 .fm-fi-challenge-card__button {
     width: 100%;
     margin-top: 4px;
+}
+
+.fm-fi-challenge-card__dismiss {
+    width: 100%;
+    margin-top: 8px;
 }
 
 /* What the running product challenge asks the user to look at */

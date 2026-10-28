@@ -134,7 +134,14 @@ namespace eu.foodmission.platform
             }
 
             session.AutoCompleted += OnChallengeAutoCompleted;
+            NavController.destinationChanged -= OnNavDestinationChanged;
+            NavController.destinationChanged += OnNavDestinationChanged;
             _challengeSessionSubscribed = true;
+        }
+
+        private static void OnNavDestinationChanged(NavController navController, NavDestination destination)
+        {
+            App.current?.services?.GetService<IChallengeSessionService>()?.OnDestinationChanged(destination ? destination.name : null);
         }
 
         // Challenges auto-completed from a helper module: the reward is shown wherever the user is

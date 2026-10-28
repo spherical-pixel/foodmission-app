@@ -5359,6 +5359,32 @@ MonoBehaviour:
     m_Localized: '{0}: {1}%'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Localized: Reto en curso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Localized: "Est\xE1s haciendo este reto. \xBFTe sirve este producto? Si es
+      as\xED, cu\xE9ntalo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Localized: Contar este producto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Localized: "Este producto no muestra esa informaci\xF3n. Prueba con un producto
+      escaneado o de marca, o m\xEDralo en el envase."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Localized: Ahora no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Localized: "Misi\xF3n de tu quest"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

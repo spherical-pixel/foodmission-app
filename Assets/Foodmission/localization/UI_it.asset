@@ -5356,6 +5356,32 @@ MonoBehaviour:
     m_Localized: '{0}: {1}%'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Localized: Sfida in corso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Localized: "Stai facendo questa sfida. Questo prodotto ti aiuta? Se s\xEC,
+      contalo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Localized: Conta questo prodotto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Localized: Questo prodotto non mostra queste informazioni. Prova un prodotto
+      scansionato o di marca, oppure guarda la confezione.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Localized: Non ora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Localized: Missione del tuo percorso
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

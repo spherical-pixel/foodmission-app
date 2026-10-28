@@ -78,6 +78,7 @@ namespace eu.foodmission.platform
         private static Text _challengeTask;
         private static Text _challengeNote;
         private static FMButton _challengeButton;
+        private static FMButton _challengeDismiss;
 
         private static string _overlayFoodId;
         private static string _overlayFoodData;
@@ -277,12 +278,17 @@ namespace eu.foodmission.platform
             {
                 _challengeButton.clicked -= OnChallengeReportClicked;
             }
+            if (_challengeDismiss != null)
+            {
+                _challengeDismiss.clicked -= OnChallengeDismissClicked;
+            }
             _challengeCard = null;
             _challengeTitle = null;
             _challengeProgress = null;
             _challengeTask = null;
             _challengeNote = null;
             _challengeButton = null;
+            _challengeDismiss = null;
             _reportItemKey = null;
             _isReporting = false;
             _productMissions = null;
@@ -779,6 +785,10 @@ namespace eu.foodmission.platform
             _challengeCard = new VisualElement();
             _challengeCard.AddToClassList("fm-fi-challenge-card");
 
+            var kind = new Text { text = L("CHALLENGE_PRODUCT_KIND") };
+            kind.AddToClassList("fm-fi-challenge-card__kind");
+            _challengeCard.Add(kind);
+
             var header = new VisualElement();
             header.AddToClassList("fm-fi-challenge-card__header");
             _challengeTitle = new Text();
@@ -793,7 +803,11 @@ namespace eu.foodmission.platform
             _challengeTask.AddToClassList("fm-fi-challenge-card__task");
             _challengeCard.Add(_challengeTask);
 
-            _challengeNote = new Text { text = L("CHALLENGE_PRODUCT_NOT_HERE") };
+            var intro = new Text { text = L("CHALLENGE_PRODUCT_INTRO") };
+            intro.AddToClassList("fm-fi-challenge-card__intro");
+            _challengeCard.Add(intro);
+
+            _challengeNote = new Text { text = L("CHALLENGE_PRODUCT_NOT_HERE_HINT") };
             _challengeNote.AddToClassList("fm-fi-challenge-card__note");
             _challengeCard.Add(_challengeNote);
 
@@ -802,6 +816,12 @@ namespace eu.foodmission.platform
             _challengeButton.AddToClassList("fm-fi-challenge-card__button");
             _challengeButton.clicked += OnChallengeReportClicked;
             _challengeCard.Add(_challengeButton);
+
+            _challengeDismiss = new FMButton { variant = ButtonVariant.Default, quiet = true, title = L("CHALLENGE_PRODUCT_NOT_NOW") };
+            _challengeDismiss.AddToClassList("fm-button");
+            _challengeDismiss.AddToClassList("fm-fi-challenge-card__dismiss");
+            _challengeDismiss.clicked += OnChallengeDismissClicked;
+            _challengeCard.Add(_challengeDismiss);
 
             VisualElement parent = _actionContainer.parent;
             parent.Insert(parent.IndexOf(_actionContainer), _challengeCard);
@@ -835,7 +855,7 @@ namespace eu.foodmission.platform
 
             // Pending (sending or failed): the product stays reportable so the completion can be retried, even after reopening
             bool counted = _challengeSession.HasReported(_reportItemKey) && !_challengeSession.IsCompletionPending;
-            _challengeButton.title = L(counted ? "CHALLENGE_PRODUCT_COUNTED" : "CHALLENGE_PRODUCT_DONE");
+            _challengeButton.title = L(counted ? "CHALLENGE_PRODUCT_COUNTED" : "CHALLENGE_PRODUCT_COUNT");
             _challengeButton.leadingIcon = counted ? "check" : string.Empty;
             _challengeButton.SetEnabled(loaded && !counted && !_isReporting);
         }
@@ -869,6 +889,16 @@ namespace eu.foodmission.platform
                 FMDialog.ShowApiError(_overlay, L("ERROR_TITLE"), session.LastError);
             }
             UpdateChallengeCard();
+        }
+
+        // The user isn't working on the challenge: end the session so its card stops showing up
+        private static void OnChallengeDismissClicked()
+        {
+            if (_isReporting)
+            {
+                return;
+            }
+            _challengeSession?.Cancel();
         }
 
         private static void OnChallengeSessionChanged()
@@ -968,6 +998,10 @@ namespace eu.foodmission.platform
             root.AddToClassList("fm-fi-challenge-card");
             root.AddToClassList("fm-fi-mission-card");
 
+            var kind = new Text { text = L("MISSION_PRODUCT_KIND") };
+            kind.AddToClassList("fm-fi-challenge-card__kind");
+            root.Add(kind);
+
             var header = new VisualElement();
             header.AddToClassList("fm-fi-challenge-card__header");
             var title = new Text { text = card.MissionTitle };
@@ -988,7 +1022,7 @@ namespace eu.foodmission.platform
                 var button = new FMButton
                 {
                     variant = ButtonVariant.Accent,
-                    title = L(card.AllSent ? "CHALLENGE_PRODUCT_COUNTED" : "CHALLENGE_PRODUCT_DONE"),
+                    title = L(card.AllSent ? "CHALLENGE_PRODUCT_COUNTED" : "CHALLENGE_PRODUCT_COUNT"),
                     leadingIcon = card.AllSent ? "check" : string.Empty
                 };
                 button.AddToClassList("fm-button");

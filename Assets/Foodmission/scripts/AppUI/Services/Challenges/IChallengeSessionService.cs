@@ -42,6 +42,9 @@ namespace eu.foodmission.platform
 
         void Cancel();
 
+        /// <summary>Ends the session when the user navigates outside the helper module flow.</summary>
+        void OnDestinationChanged(string destinationName);
+
         /// <summary>Called by modules. itemKey identifies the product/fact/waste/recipe so repeats count once.</summary>
         Task<ChallengeReportResult> ReportAsync(ChallengeCompletionTrigger trigger, string itemKey);
     }

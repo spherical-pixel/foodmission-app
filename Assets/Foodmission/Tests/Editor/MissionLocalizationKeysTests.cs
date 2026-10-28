@@ -92,7 +92,8 @@ namespace eu.foodmission.platform.Tests
         public void ChallengeProductReportKeys_ExistInUiCsv()
         {
             HashSet<string> keys = UiKeys();
-            foreach (string key in new[] { "CHALLENGE_PRODUCT_DONE", "CHALLENGE_PRODUCT_COUNTED", "CHALLENGE_PRODUCT_PROGRESS", "CHALLENGE_PRODUCT_NOT_HERE" })
+            foreach (string key in new[] { "CHALLENGE_PRODUCT_COUNT", "CHALLENGE_PRODUCT_COUNTED", "CHALLENGE_PRODUCT_PROGRESS", "CHALLENGE_PRODUCT_NOT_HERE_HINT",
+                "CHALLENGE_PRODUCT_KIND", "CHALLENGE_PRODUCT_INTRO", "CHALLENGE_PRODUCT_NOT_NOW" })
             {
                 Assert.IsTrue(keys.Contains(key), $"Missing UI.csv key {key}");
             }
@@ -102,7 +103,7 @@ namespace eu.foodmission.platform.Tests
         public void MissionProductReportKeys_ExistInUiCsv()
         {
             HashSet<string> keys = UiKeys();
-            foreach (string key in new[] { "MISSION_PRODUCT_PROGRESS", "MISSION_PRODUCT_SEND", "MISSION_PRODUCT_SUGGESTED", "MISSION_CHECKIN_FROM_PRODUCTS", "MISSION_BTN_FIND_PRODUCT" })
+            foreach (string key in new[] { "MISSION_PRODUCT_KIND", "MISSION_PRODUCT_PROGRESS", "MISSION_PRODUCT_SEND", "MISSION_PRODUCT_SUGGESTED", "MISSION_CHECKIN_FROM_PRODUCTS", "MISSION_BTN_FIND_PRODUCT" })
             {
                 Assert.IsTrue(keys.Contains(key), $"Missing UI.csv key {key}");
             }
