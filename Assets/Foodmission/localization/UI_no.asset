@@ -5349,6 +5349,32 @@ MonoBehaviour:
     m_Localized: '{0}: {1} %'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Localized: "Utfordring p\xE5g\xE5r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Localized: "Du holder p\xE5 med denne utfordringen. Passer dette produktet?
+      Tell det med i s\xE5 fall."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Localized: Tell dette produktet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Localized: "Dette produktet viser ikke den informasjonen. Pr\xF8v et skannet
+      produkt eller et merkevareprodukt, eller sjekk emballasjen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Localized: "Ikke n\xE5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Localized: Oppdrag i questen din
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

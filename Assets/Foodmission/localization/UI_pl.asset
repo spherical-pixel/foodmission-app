@@ -5452,6 +5452,32 @@ MonoBehaviour:
     m_Localized: '{0}: {1}%'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Localized: Wyzwanie w toku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Localized: "Realizujesz to wyzwanie. Czy ten produkt pasuje? Je\u015Bli tak,
+      policz go."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Localized: Policz ten produkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Localized: "Ten produkt nie pokazuje tych informacji. Spr\xF3buj produktu zeskanowanego
+      lub markowego albo sprawd\u017A opakowanie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Localized: Nie teraz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Localized: Misja twojego zadania
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

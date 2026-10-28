@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Unity.AppUI.Navigation.Generated;
+
 using UnityEngine;
 
 namespace eu.foodmission.platform
@@ -27,6 +29,36 @@ namespace eu.foodmission.platform
         public ChallengeSessionService(IChallengeCompletionService completion)
         {
             _completion = completion;
+        }
+
+        /// <summary>
+        /// Screens of the helper module flow. Anywhere else the user is no longer working on the challenge,
+        /// so the session ends (otherwise its card shows up when opening a product from the pantry days later).
+        /// </summary>
+        public static bool IsFlowDestination(ChallengeCompletionTrigger trigger, string destinationName)
+        {
+            switch (trigger)
+            {
+                case ChallengeCompletionTrigger.ProductViewed:
+                    return destinationName == Destinations.quick_search;
+                case ChallengeCompletionTrigger.FoodFactRead:
+                    return destinationName == Destinations.foodfact;
+                case ChallengeCompletionTrigger.RecipeViewed:
+                    return destinationName == Destinations.recipebook || destinationName == Destinations.recipedetail;
+                case ChallengeCompletionTrigger.FoodWasteLogged:
+                    return destinationName == Destinations.foodwaste || destinationName == Destinations.pantry ||
+                           destinationName == Destinations.pantryitemdetail;
+                default:
+                    return false;
+            }
+        }
+
+        public void OnDestinationChanged(string destinationName)
+        {
+            if (_interaction != null && !IsFlowDestination(_interaction.Trigger, destinationName))
+            {
+                Cancel();
+            }
         }
 
         public bool HasReported(string itemKey) =>

@@ -5362,6 +5362,31 @@ MonoBehaviour:
     m_Localized: '{0}: {1}%'
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Localized: Uitdaging bezig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Localized: Je werkt aan deze uitdaging. Helpt dit product? Tel het dan mee.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Localized: Dit product meetellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Localized: Dit product toont die informatie niet. Probeer een gescand of merkproduct,
+      of kijk op de verpakking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Localized: Niet nu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Localized: Missie van je opdracht
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

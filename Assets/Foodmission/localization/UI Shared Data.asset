@@ -4995,6 +4995,30 @@ MonoBehaviour:
     m_Key: MISSION_CHECKIN_LINE_PERCENT
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203922
+    m_Key: CHALLENGE_PRODUCT_KIND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203923
+    m_Key: CHALLENGE_PRODUCT_INTRO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203924
+    m_Key: CHALLENGE_PRODUCT_COUNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203925
+    m_Key: CHALLENGE_PRODUCT_NOT_HERE_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203926
+    m_Key: CHALLENGE_PRODUCT_NOT_NOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203927
+    m_Key: MISSION_PRODUCT_KIND
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

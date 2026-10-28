@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 
+using Unity.AppUI.Navigation.Generated;
+
 namespace eu.foodmission.platform.Tests
 {
     [TestFixture]
@@ -213,6 +215,67 @@ namespace eu.foodmission.platform.Tests
 
             _session.Cancel();
             Assert.AreEqual(2, changes);
+        }
+
+        [Test]
+        public void OnDestinationChanged_OutsideTheModuleFlow_EndsTheSession()
+        {
+            // Issue #84: a product challenge card showed up when opening a product from the pantry later on
+            _session.Begin("CH.I3.1", ChallengeInteractionCatalog.Get("CH.I3.1"));
+
+            _session.OnDestinationChanged(Destinations.quick_search);
+            Assert.AreEqual("CH.I3.1", _session.ActiveChallengeCode, "the search is the challenge's own flow");
+
+            _session.OnDestinationChanged(Destinations.pantry);
+            Assert.IsNull(_session.ActiveChallengeCode);
+            Assert.IsNull(_session.ActiveInteraction);
+        }
+
+        [Test]
+        public void OnDestinationChanged_BackToTheChallengeDetail_EndsTheSession()
+        {
+            _session.Begin("CH.I3.1", ChallengeInteractionCatalog.Get("CH.I3.1"));
+
+            _session.OnDestinationChanged(Destinations.challenge_detail);
+
+            Assert.IsNull(_session.ActiveChallengeCode);
+        }
+
+        [Test]
+        public void OnDestinationChanged_WasteCanBeLoggedFromThePantry()
+        {
+            _session.Begin("CH.B5.3", ChallengeInteractionCatalog.Get("CH.B5.3")); // FoodWasteLogged x3
+
+            _session.OnDestinationChanged(Destinations.foodwaste);
+            _session.OnDestinationChanged(Destinations.pantry);
+            _session.OnDestinationChanged(Destinations.pantryitemdetail);
+            Assert.AreEqual("CH.B5.3", _session.ActiveChallengeCode);
+
+            _session.OnDestinationChanged(Destinations.home);
+            Assert.IsNull(_session.ActiveChallengeCode);
+        }
+
+        [Test]
+        public void OnDestinationChanged_RecipeFlowKeepsTheSession()
+        {
+            _session.Begin("CH.I1.5", ChallengeInteractionCatalog.Get("CH.I1.5")); // RecipeViewed
+
+            _session.OnDestinationChanged(Destinations.recipebook);
+            _session.OnDestinationChanged(Destinations.recipedetail);
+
+            Assert.AreEqual("CH.I1.5", _session.ActiveChallengeCode);
+        }
+
+        [Test]
+        public void OnDestinationChanged_WithoutSession_RaisesNothing()
+        {
+            int changes = 0;
+            _session.SessionChanged += () => changes++;
+
+            _session.OnDestinationChanged(Destinations.pantry);
+            _session.OnDestinationChanged(null);
+
+            Assert.AreEqual(0, changes);
         }
     }
 }
