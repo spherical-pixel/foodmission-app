@@ -2875,6 +2875,21 @@
     margin-bottom: 25px;
 }
 
+/* My Goals steps (OnboardingGoalsScreen): why each dimension matters + a help line per topic */
+.fm-goals-dimension__why {
+    white-space: normal;
+    color: var(--appui-foregrounds-100);
+    margin-bottom: 70px;
+    flex-shrink: 0;
+}
+
+.fm-goals-topic__help {
+    white-space: normal;
+    color: var(--appui-foregrounds-100);
+    margin: -35px 0 35px 120px;
+    flex-shrink: 0;
+}
+
 /* Per-dimension levels screen (DimensionLevelsScreen) */
 /* The StepFlow body (step-body-scroll) scrolls; children must keep their height instead of shrinking */
 .fm-dimension-levels {

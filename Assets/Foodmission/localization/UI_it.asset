@@ -2828,10 +2828,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "Ciao! Per personalizzare la tua esperienza, vorremmo conoscere
-      i tuoi interessi e obiettivi di sostenibilit\xE0 e nutrizione. Nei passaggi
-      successivi puoi scegliere quali argomenti ti interessano di pi\xF9. Puoi modificarli
-      in qualsiasi momento!"
+    m_Localized: "Ciao! Vorremmo sapere quali temi di sostenibilit\xE0 e nutrizione
+      ti interessano di pi\xF9. Nei prossimi passaggi seleziona quelli che ti stanno
+      a cuore: ogni area e ogni tema hanno una breve spiegazione. Le tue risposte
+      aiutano la ricerca del progetto e continuerai a vedere tutti i contenuti dell'app.
+      Puoi modificarle in qualsiasi momento!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5380,6 +5381,160 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203927
     m_Localized: Missione del tuo percorso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203928
+    m_Localized: "Perch\xE9 \xE8 importante: produrre carne richiede molta pi\xF9
+      terra, acqua ed energia rispetto agli alimenti vegetali. Sostituire parte della
+      carne con legumi, frutta secca o altre proteine, e provare alimenti di base
+      diversi, \xE8 uno dei cambiamenti pi\xF9 grandi che puoi fare per il pianeta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203929
+    m_Localized: "Perch\xE9 \xE8 importante: ogni alimento ha un costo nascosto per
+      l'ambiente, dalla terra e dall'acqua usate per coltivarlo all'energia e al
+      trasporto necessari per portarlo fino a te. Conoscere questi costi ti aiuta
+      a confrontare i prodotti e a scegliere l'opzione pi\xF9 leggera."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203930
+    m_Localized: "Perch\xE9 \xE8 importante: il modo in cui un alimento viene coltivato,
+      allevato, trasformato e commerciato influisce sull'ambiente, sugli animali
+      e sulle persone che lo producono. L'etichetta spesso ti dice pi\xF9 di quanto
+      pensi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203931
+    m_Localized: "Perch\xE9 \xE8 importante: gli imballaggi proteggono il cibo, ma
+      gran parte di essi diventa rifiuto. Alcuni materiali sono pi\xF9 facili da
+      riciclare o riutilizzare di altri."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203932
+    m_Localized: "Perch\xE9 \xE8 importante: una grande parte del cibo che produciamo
+      viene buttata, e con essa la terra, l'acqua e l'energia usate per produrlo.
+      Pianificare, conservare bene il cibo e usare gli avanzi fa risparmiare cibo
+      e denaro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203933
+    m_Localized: "Perch\xE9 \xE8 importante: i nutrienti del tuo cibo influiscono
+      sulla tua salute. Sapere quante proteine, grassi, zuccheri, sale, fibre e vitamine
+      assumi ti aiuta a fare scelte pi\xF9 sane."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203934
+    m_Localized: "Mangiare carne meno spesso o in porzioni pi\xF9 piccole."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203935
+    m_Localized: Prendere le proteine da legumi, frutta secca, uova, latticini o
+      prodotti vegetali.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203936
+    m_Localized: Provare altri alimenti di base, come cereali, legumi o tuberi diversi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203937
+    m_Localized: Quanta terra serve per coltivare o allevare un alimento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203938
+    m_Localized: Quanta acqua serve per produrre un alimento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203939
+    m_Localized: Quanta energia serve per produrre, conservare e cucinare un alimento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203940
+    m_Localized: I gas serra emessi per produrre un alimento, che riscaldano il pianeta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203941
+    m_Localized: Quanta strada fa un alimento da dove viene prodotto fino al tuo
+      piatto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203942
+    m_Localized: "Quanto un alimento \xE8 stato modificato rispetto al suo stato
+      naturale, ad es. fresco, trasformato o ultra-trasformato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203943
+    m_Localized: "Dove \xE8 stato coltivato o prodotto un alimento, e se \xE8 locale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203944
+    m_Localized: Come vengono coltivate le piante, ad es. agricoltura biologica o
+      convenzionale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203945
+    m_Localized: Come vengono allevati e accuditi gli animali, ad es. all'aperto,
+      biologico o al chiuso.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203946
+    m_Localized: Se le persone che producono il tuo cibo ricevono una paga e condizioni
+      di lavoro eque.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203947
+    m_Localized: "Se l'imballaggio \xE8 fatto di materiali riciclabili, compostabili
+      o a minore impatto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203948
+    m_Localized: "Se l'imballaggio pu\xF2 essere ricaricato o riutilizzato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203949
+    m_Localized: Cibo servito nel piatto che non viene mangiato.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203950
+    m_Localized: Cibo cucinato che viene buttato invece di essere mangiato in seguito.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203951
+    m_Localized: Cibo che va a male o scade prima che tu lo usi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203952
+    m_Localized: "Comprare o mangiare pi\xF9 cibo di quanto ti serve."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203953
+    m_Localized: Costruisce e ripara il corpo. Si trova in legumi, carne, pesce,
+      uova e latticini.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203954
+    m_Localized: "Una fonte di energia; alcuni grassi sono pi\xF9 sani di altri."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203955
+    m_Localized: "Soprattutto lo zucchero aggiunto, che \xE8 meglio limitare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203956
+    m_Localized: "Troppo sale pu\xF2 aumentare la pressione sanguigna."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203957
+    m_Localized: Aiutano la digestione. Si trovano in cereali integrali, frutta,
+      verdura e legumi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203958
+    m_Localized: Piccoli nutrienti di cui il corpo ha bisogno per funzionare bene,
+      soprattutto da frutta e verdura.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203959
+    m_Localized: "Quanta energia ti d\xE0 un alimento, misurata in calorie."
     m_Metadata:
       m_Items: []
   references:

@@ -117,7 +117,9 @@ namespace eu.foodmission.platform
             AppState state = _storeService?.GetAppState();
             SelectedTopicCodes.Clear();
 
-            if (state?.userGoals != null && state.userGoals.Length > 0)
+            // Fresh onboarding starts with nothing selected: the goals are research data (issue #86),
+            // so an untouched "all selected" would record interests the user never chose.
+            if (state?.userGoals != null)
             {
                 foreach (var g in state.userGoals)
                 {
@@ -125,14 +127,6 @@ namespace eu.foodmission.platform
                     {
                         SelectedTopicCodes.Add(g);
                     }
-                }
-            }
-            else
-            {
-                // Default: All 26 topics selected on fresh onboarding
-                foreach (var code in DimensionGoalsCatalog.AllTopicCodes)
-                {
-                    SelectedTopicCodes.Add(code);
                 }
             }
 
