@@ -40,6 +40,15 @@
     transition-duration: 0s;
 }
 
+.fm-mission-kind {
+    color: var(--appui-foregrounds-50);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    white-space: normal;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
 .fm-mission-badge {
     align-self: center;
     border-radius: 32px;

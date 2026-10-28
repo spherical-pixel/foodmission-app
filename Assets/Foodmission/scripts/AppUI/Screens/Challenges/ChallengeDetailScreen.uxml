@@ -4,6 +4,7 @@
     <ui:VisualElement name="root" class="fm-root fm-challenge-root">
         <fm:FMNutriView name="nutri-view" class="fm-home-nutri-image fm-challenge-nutri"/>
         <appui:ExVisualElement name="challenge-card" class="box-background fm-shadow-wrapper fm-challenge-card">
+            <appui:Heading name="challenge-kind" text="@UI:ACTIVITY_CHALLENGE" size="L" class="fm-challenge-kind"/>
             <appui:Text name="challenge-level-badge" text="" size="S" class="fm-challenge-badge"/>
             <appui:Heading name="challenge-title" text="" size="M" class="fm-challenge-title"/>
             <appui:Text name="challenge-task" text="" size="M" class="fm-challenge-task"/>

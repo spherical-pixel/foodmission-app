@@ -4,6 +4,7 @@
     <ui:VisualElement name="root" class="fm-root fm-mission-root">
         <fm:FMNutriView name="nutri-view" class="fm-home-nutri-image fm-mission-nutri"/>
         <appui:ExVisualElement name="mission-card" class="box-background fm-shadow-wrapper fm-mission-card">
+            <appui:Heading name="mission-kind" text="@UI:ACTIVITY_MISSION" size="L" class="fm-mission-kind"/>
             <appui:Text name="mission-level-badge" text="" size="S" class="fm-mission-badge"/>
             <appui:Heading name="mission-title" text="" size="M" class="fm-mission-title"/>
             <appui:Text name="mission-goal" text="" size="M" class="fm-mission-goal"/>
