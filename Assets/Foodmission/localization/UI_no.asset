@@ -1867,7 +1867,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038583797997568
-    m_Localized: Velg sjanger
+    m_Localized: "Velg kj\xF8nn"
     m_Metadata:
       m_Items: []
   - m_Id: 34038675313516544
@@ -2826,8 +2826,7 @@ MonoBehaviour:
     m_Localized: "Hei! Vi vil gjerne vite hvilke temaer innen b\xE6rekraft og ern\xE6ring
       som interesserer deg mest. Kryss av for det som er viktig for deg i de neste
       trinnene: hvert omr\xE5de og tema har en kort forklaring. Svarene dine hjelper
-      forskningen i prosjektet, og du ser fortsatt alt innholdet i appen. Du kan
-      endre dem n\xE5r som helst!"
+      forskningen i prosjektet. Du kan endre dem n\xE5r som helst!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5051,9 +5050,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
-    m_Localized: "Hver handling du fullf\xF8rer, legger CO\u2082-besparelser til
-      totalen din. Etter hvert som besparelsene \xF8ker, fylles hjulet gradvis til
-      du n\xE5r ditt n\xE5v\xE6rende b\xE6rekraftsm\xE5l."
+    m_Localized: "Hver handling du fullf\xF8rer, bidrar til den samlede besparelsen
+      i CO\u2082-ekvivalenter (CO\u2082e). Etter hvert som besparelsen \xF8ker, fylles
+      hjulet gradvis til du n\xE5r ditt n\xE5v\xE6rende b\xE6rekraftsm\xE5l."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
@@ -5082,9 +5081,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
-    m_Localized: "Hver handling du fullf\xF8rer, legger <b>kWh</b>-besparelser til
-      totalen din. Etter hvert som besparelsene \xF8ker, fylles hjulet gradvis til
-      du n\xE5r ditt n\xE5v\xE6rende b\xE6rekraftsm\xE5l."
+    m_Localized: "Hver handling du fullf\xF8rer, bidrar til den samlede energibesparelsen,
+      m\xE5lt i <b>kWh</b>. Etter hvert som besparelsen \xF8ker, fylles hjulet gradvis
+      til du n\xE5r ditt n\xE5v\xE6rende b\xE6rekraftsm\xE5l."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
@@ -5092,7 +5091,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: "L bl\xE5tt vann spart"
+    m_Localized: "Liter bl\xE5tt vann spart"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5109,10 +5108,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203782
-    m_Localized: "Hjulet m\xE5ler besparelser i <b>liter (L)</b> bl\xE5tt vann. Hver
-      handling du fullf\xF8rer, legger L-besparelser til totalen din. Etter hvert
-      som besparelsene \xF8ker, fylles hjulet gradvis til du n\xE5r ditt n\xE5v\xE6rende
-      b\xE6rekraftsm\xE5l."
+    m_Localized: "Hjulet m\xE5ler besparelsen i <b>liter (L)</b> bl\xE5tt vann. Hver
+      handling du fullf\xF8rer, legges til den totale vannbesparelsen din. Etter
+      hvert som besparelsen \xF8ker, fylles hjulet gradvis til du n\xE5r det gjeldende
+      b\xE6rekraftsm\xE5let ditt."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203783
@@ -5120,7 +5119,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
-    m_Localized: "m\xB2 areal bevart"
+    m_Localized: "m\xB2 spart landareal"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203785
@@ -5137,10 +5136,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203787
-    m_Localized: "Hjulet m\xE5ler arealbesparelser i <b>kvadratmeter (m\xB2)</b>.
-      Hver handling du fullf\xF8rer, legger m\xB2-besparelser til totalen din. Etter
-      hvert som besparelsene \xF8ker, fylles hjulet gradvis til du n\xE5r ditt n\xE5v\xE6rende
-      b\xE6rekraftsm\xE5l."
+    m_Localized: "Hjulet m\xE5ler spart areal i <b>kvadratmeter (m\xB2)</b>. Hver
+      handling du fullf\xF8rer, legges til det totale arealet som spares. Etter hvert
+      som besparelsen \xF8ker, fylles hjulet gradvis til du n\xE5r det gjeldende
+      b\xE6rekraftsm\xE5let ditt."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203788
@@ -5152,11 +5151,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203790
-    m_Localized: Vegansk porsjon
+    m_Localized: "Vegansk m\xE5ltid"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203791
-    m_Localized: Vegetarisk porsjon
+    m_Localized: "Vegetarisk m\xE5ltid"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203792
@@ -5184,15 +5183,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: Halv tallerken reddet
+    m_Localized: En halv tallerken med mat reddet
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: Full tallerken reddet
+    m_Localized: En full tallerken med mat reddet
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: "Utl\xF8pt produkt spist"
+    m_Localized: "Mat brukt etter best f\xF8r-datoen"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5200,7 +5199,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203802
-    m_Localized: "Sukkerholdige frokostblandinger \u2192 Havre/frukt"
+    m_Localized: "Sukkerholdige frokostblandinger \u2192 Havregryn eller frukt"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203803
@@ -5285,7 +5284,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: "Unngikk du \xE5 salte maten ved bordet i alle m\xE5ltidene?"
+    m_Localized: "Unngikk du \xE5 tilsette salt ved bordet til hvert m\xE5ltid?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5306,12 +5305,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203911
     m_Localized: "For \xAB{0}\xBB mangler jeg fortsatt disse dagene: {1}. Skal vi
-      ta det igjen n\xE5?"
+      fylle dem ut n\xE5?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203912
     m_Localized: "For \xAB{0}\xBB og andre oppdrag mangler jeg fortsatt noen dager,
-      blant annet: {1}. Skal vi ta det igjen n\xE5?"
+      f\xF8rst: {1}. Skal vi fylle dem ut n\xE5?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203913
@@ -5355,8 +5354,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203923
-    m_Localized: "Du holder p\xE5 med denne utfordringen. Passer dette produktet?
-      Tell det med i s\xE5 fall."
+    m_Localized: "Du holder p\xE5 med denne utfordringen. Teller dette produktet
+      med? I s\xE5 fall tar du det med."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203924
@@ -5364,8 +5363,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203925
-    m_Localized: "Dette produktet viser ikke den informasjonen. Pr\xF8v et skannet
-      produkt eller et merkevareprodukt, eller sjekk emballasjen."
+    m_Localized: "Informasjonen er ikke tilgjengelig for dette produktet. Pr\xF8v
+      \xE5 skanne strekkoden p\xE5 et merkevareprodukt, eller sjekk emballasjen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203926
@@ -5379,15 +5378,15 @@ MonoBehaviour:
   - m_Id: 56190243387203928
     m_Localized: "Hvorfor det er viktig: \xE5 produsere kj\xF8tt krever mye mer land,
       vann og energi enn plantemat. \xC5 bytte ut noe av kj\xF8ttet med belgfrukter,
-      n\xF8tter eller andre proteiner, og pr\xF8ve andre basismatvarer, er en av
-      de st\xF8rste endringene du kan gj\xF8re for planeten."
+      n\xF8tter eller andre proteinkilder, og pr\xF8ve andre basismatvarer, er en
+      av de st\xF8rste endringene du kan gj\xF8re for planeten."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
-    m_Localized: "Hvorfor det er viktig: all mat har en skjult kostnad for milj\xF8et,
-      fra landet og vannet som brukes til \xE5 dyrke den til energien og transporten
-      som trengs for \xE5 f\xE5 den til deg. N\xE5r du kjenner disse kostnadene,
-      kan du sammenligne produkter og velge det sk\xE5nsomme alternativet."
+    m_Localized: "Hvorfor det er viktig: all mat har en skjult milj\xF8kostnad, fra
+      arealet og vannet som brukes til \xE5 dyrke den, til energien og transporten
+      som trengs for \xE5 f\xE5 den fram til deg. N\xE5r du kjenner disse kostnadene,
+      kan du sammenligne produkter og velge alternativet med lavere milj\xF8p\xE5virkning."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
@@ -5403,9 +5402,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203932
-    m_Localized: "Hvorfor det er viktig: en stor del av maten vi produserer blir
-      kastet, og det samme gj\xF8r landet, vannet og energien som ble brukt til \xE5
-      lage den. Planlegging, god oppbevaring og bruk av rester sparer mat og penger."
+    m_Localized: "Hvorfor det er viktig: En stor del av maten vi produserer, blir
+      kastet, sammen med arealet, vannet og energien som ble brukt til \xE5 produsere
+      den. Ved \xE5 planlegge m\xE5ltider, oppbevare mat riktig og bruke rester kan
+      du redusere matsvinn og spare penger."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5424,12 +5424,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203936
-    m_Localized: "Pr\xF8ve andre basismatvarer, som andre kornslag, belgfrukter eller
-      rotgr\xF8nnsaker."
+    m_Localized: "Pr\xF8ve andre basisvarer, som ulike kornslag, belgfrukter eller
+      knoller."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203937
-    m_Localized: "Hvor mye land som trengs for \xE5 dyrke eller produsere en matvare."
+    m_Localized: "Hvor mye land som trengs for \xE5 dyrke avlinger eller holde dyr
+      for \xE5 produsere en matvare."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203938
@@ -5451,7 +5452,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: Hvor mye en matvare er endret fra sin naturlige form, f.eks. fersk,
+    m_Localized: Hvor mye en matvare er bearbeidet, for eksempel minimalt bearbeidet,
       bearbeidet eller ultrabearbeidet.
     m_Metadata:
       m_Items: []
@@ -5465,18 +5466,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
-    m_Localized: "Hvordan husdyr holdes og stelles, f.eks. frittg\xE5ende, \xF8kologisk
-      eller innend\xF8rs."
+    m_Localized: "Hvordan husdyr holdes og stelles, for eksempel med utegang, \xF8kologisk
+      drift eller innend\xF8rs hold."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203946
-    m_Localized: "Om de som produserer maten din f\xE5r rettferdig l\xF8nn og gode
-      arbeidsforhold."
+    m_Localized: "Om menneskene som produserer maten din, f\xE5r rettferdig l\xF8nn
+      og har anstendige arbeidsforhold."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203947
     m_Localized: "Om emballasjen er laget av materialer som kan resirkuleres eller
-      komposteres, eller som belaster milj\xF8et mindre."
+      komposteres, eller som har mindre milj\xF8p\xE5virkning."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203948
@@ -5523,8 +5524,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203958
-    m_Localized: "Sm\xE5 n\xE6ringsstoffer kroppen trenger for \xE5 fungere godt,
-      mest fra frukt og gr\xF8nnsaker."
+    m_Localized: "Mikron\xE6ringsstoffer kroppen trenger for \xE5 fungere godt, og
+      som finnes i mange matvarer, blant annet frukt og gr\xF8nnsaker."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203959

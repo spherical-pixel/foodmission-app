@@ -1869,7 +1869,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038583797997568
-    m_Localized: "Izberite \u017Eanr"
+    m_Localized: Izberi spol
     m_Metadata:
       m_Items: []
   - m_Id: 34038675313516544
@@ -2826,11 +2826,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "Pozdravljeni! Radi bi izvedeli, katere teme o trajnosti in prehrani
-      vas najbolj zanimajo. V naslednjih korakih ozna\u010Dite tiste, ki so vam pomembne:
-      vsako podro\u010Dje in tema ima kratko razlago. Va\u0161i odgovori pomagajo
-      raziskavi projekta, v aplikaciji pa boste \u0161e vedno videli vso vsebino.
-      Kadar koli jih lahko spremenite!"
+    m_Localized: "\u017Divjo! Radi bi izvedeli, katere teme o trajnosti in prehrani
+      te najbolj zanimajo. V naslednjih korakih ozna\u010Di tiste, ki so ti pomembne:
+      vsako podro\u010Dje in tema ima kratko razlago. Tvoji odgovori pomagajo raziskavi
+      projekta. Kadar koli jih lahko spremeni\u0161!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5053,9 +5052,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
-    m_Localized: "Vsako dejanje, ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku
-      doda prihranke CO\u2082. Ko se prihranki nabirajo, se kolo postopoma polni,
-      dokler ne dose\u017Ee\u0161 svojega trenutnega trajnostnega cilja."
+    m_Localized: "Vsako opravljeno dejanje prispeva k skupnemu prihranku, izra\u017Eenemu
+      v ekvivalentu CO\u2082 (CO\u2082e). Ko se prihranek pove\u010Duje, se kolo
+      postopoma polni, dokler ne dose\u017Ee\u0161 trenutnega trajnostnega cilja."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
@@ -5085,9 +5084,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
-    m_Localized: "Vsako dejanje, ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku
-      doda prihranke <b>kWh</b>. Ko se prihranki nabirajo, se kolo postopoma polni,
-      dokler ne dose\u017Ee\u0161 svojega trenutnega trajnostnega cilja."
+    m_Localized: "Vsako opravljeno dejanje prispeva k skupnemu prihranku energije,
+      merjenemu v <b>kWh</b>. Ko se prihranek pove\u010Duje, se kolo postopoma polni,
+      dokler ne dose\u017Ee\u0161 trenutnega trajnostnega cilja."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
@@ -5095,7 +5094,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: L prihranjene modre vode
+    m_Localized: Prihranjeni litri modre vode
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5113,10 +5112,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203782
-    m_Localized: "Kolo meri prihranke v <b>litrih (L)</b> modre vode. Vsako dejanje,
-      ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku doda prihranke L. Ko se
-      prihranki nabirajo, se kolo postopoma polni, dokler ne dose\u017Ee\u0161 svojega
-      trenutnega trajnostnega cilja."
+    m_Localized: "Kolo meri prihranek v <b>litrih (L)</b> modre vode. Vsako opravljeno
+      dejanje prispeva k skupnemu prihranku vode. Ko se prihranek pove\u010Duje,
+      se kolo postopoma polni, dokler ne dose\u017Ee\u0161 trenutnega cilja trajnosti."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203783
@@ -5124,7 +5122,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
-    m_Localized: "m\xB2 ohranjenih zemlji\u0161\u010D"
+    m_Localized: "m\xB2 prihranjenega zemlji\u0161\u010Da"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203785
@@ -5142,10 +5140,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203787
-    m_Localized: "Kolo meri prihranke zemlji\u0161\u010D v <b>kvadratnih metrih (m\xB2)</b>.
-      Vsako dejanje, ki ga opravi\u0161, tvojemu skupnemu se\u0161tevku doda prihranke
-      m\xB2. Ko se prihranki nabirajo, se kolo postopoma polni, dokler ne dose\u017Ee\u0161
-      svojega trenutnega trajnostnega cilja."
+    m_Localized: "Kolo meri prihranek zemlji\u0161\u010Da v <b>kvadratnih metrih
+      (m\xB2)</b>. Vsako opravljeno dejanje prispeva k skupni prihranjeni povr\u0161ini.
+      Ko se prihranek pove\u010Duje, se kolo postopoma polni, dokler ne dose\u017Ee\u0161
+      trenutnega cilja trajnosti."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203788
@@ -5157,11 +5155,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203790
-    m_Localized: Veganska porcija
+    m_Localized: Veganski obrok
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203791
-    m_Localized: Vegetarijanska porcija
+    m_Localized: Vegetarijanski obrok
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203792
@@ -5189,15 +5187,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: "Re\u0161en pol kro\u017Enika"
+    m_Localized: "Pol kro\u017Enika hrane, ki je ni bilo treba zavre\u010Di"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: "Re\u0161en poln kro\u017Enik"
+    m_Localized: "Poln kro\u017Enik hrane, ki je ni bilo treba zavre\u010Di"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: "Zau\u017Eit prete\u010Den izdelek"
+    m_Localized: "\u017Divilo, uporabljeno po datumu minimalne trajnosti"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5205,7 +5203,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203802
-    m_Localized: "Sladkani kosmi\u010Di \u2192 Oves/sadje"
+    m_Localized: "Sladkani kosmi\u010Di \u2192 Ovseni kosmi\u010Di ali sadje"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203803
@@ -5290,7 +5288,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: Si se pri vseh obrokih izognil dosoljevanju pri mizi?
+    m_Localized: Ali si se pri vsakem obroku izognil dodajanju soli za mizo?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5302,7 +5300,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203909
-    m_Localized: "Odgovori tudi na to, da bom ta dan pravilno \u0161tel."
+    m_Localized: "Odgovori tudi na to, da ta dan pravilno \u0161tejem."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203910
@@ -5310,13 +5308,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203911
-    m_Localized: "Pri \xBB{0}\xAB mi \u0161e manjkajo ti dnevi: {1}. Bova to nadoknadila
-      zdaj?"
+    m_Localized: "Pri \xBB{0}\xAB ti dnevi \u0161e manjkajo: {1}. Ali jih zdaj dopolniva?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203912
-    m_Localized: "Pri \xBB{0}\xAB in drugih misijah mi \u0161e manjka nekaj dni,
-      na primer: {1}. Bova to nadoknadila zdaj?"
+    m_Localized: "Pri \xBB{0}\xAB in drugih misijah manjka \u0161e nekaj dni, najprej:
+      {1}. Ali jih zdaj dopolniva?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203913
@@ -5361,8 +5358,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203923
-    m_Localized: "Izvaja\u0161 ta izziv. Ali ti ta izdelek pomaga? \u010Ce ja, ga
-      \u0161tej."
+    m_Localized: "Izvaja\u0161 ta izziv. Ali ta izdelek \u0161teje? \u010Ce da, ga
+      upo\u0161tevaj."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203924
@@ -5370,8 +5367,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203925
-    m_Localized: "Ta izdelek ne prikazuje teh podatkov. Poskusi s skeniranim ali
-      blagovnim izdelkom ali poglej embala\u017Eo."
+    m_Localized: "Ti podatki za ta izdelek niso na voljo. Poskusi skenirati \u010Drtno
+      kodo izdelka znane blagovne znamke ali preveri embala\u017Eo."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203926
@@ -5385,16 +5382,16 @@ MonoBehaviour:
   - m_Id: 56190243387203928
     m_Localized: "Zakaj je pomembno: za meso je potrebno veliko ve\u010D zemlje,
       vode in energije kot za rastlinsko hrano. Zamenjava dela mesa s stro\u010Dnicami,
-      ore\u0161\u010Dki ali drugimi beljakovinami in preizku\u0161anje druga\u010Dnih
+      ore\u0161\u010Dki ali drugimi viri beljakovin in preizku\u0161anje druga\u010Dnih
       osnovnih \u017Eivil je ena najve\u010Djih sprememb, ki jih lahko naredi\u0161
       za planet."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
-    m_Localized: "Zakaj je pomembno: vsako \u017Eivilo ima skrite stro\u0161ke za
-      okolje, od zemlje in vode za pridelavo do energije in prevoza, da pride do
-      tebe. \u010Ce pozna\u0161 te stro\u0161ke, la\u017Eje primerja\u0161 izdelke
-      in izbere\u0161 manj obremenjujo\u010Do mo\u017Enost."
+    m_Localized: "Zakaj je pomembno: vsako \u017Eivilo ima skrite okoljske stro\u0161ke,
+      od zemlje in vode za pridelavo do energije in prevoza, potrebnih, da pride
+      do tebe. \u010Ce pozna\u0161 te stro\u0161ke, lahko primerja\u0161 izdelke
+      in izbere\u0161 mo\u017Enost z manj\u0161im vplivom na okolje."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
@@ -5410,9 +5407,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203932
-    m_Localized: "Zakaj je pomembno: velik del hrane, ki jo pridelamo, zavr\u017Eemo,
-      z njo pa tudi zemljo, vodo in energijo, porabljene za njeno pridelavo. Na\u010Drtovanje,
-      pravilno shranjevanje in uporaba ostankov prihranijo hrano in denar."
+    m_Localized: "Zakaj je pomembno: velik del pridelane hrane zavr\u017Eemo, z njo
+      pa tudi zemljo, vodo in energijo, porabljene za njeno proizvodnjo. Z na\u010Drtovanjem
+      obrokov, pravilnim shranjevanjem hrane in uporabo ostankov lahko zmanj\u0161a\u0161
+      koli\u010Dino zavr\u017Eene hrane in prihrani\u0161 denar."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5436,7 +5434,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203937
-    m_Localized: "Koliko zemlje je potrebno za pridelavo ali vzrejo \u017Eivila."
+    m_Localized: "Koliko zemlje je potrebno za gojenje polj\u0161\u010Din ali rejo
+      \u017Eivali za pridelavo \u017Eivila."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203938
@@ -5459,8 +5458,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: "Koliko je \u017Eivilo spremenjeno glede na naravno stanje, npr.
-      sve\u017Ee, predelano ali ultra predelano."
+    m_Localized: "Koliko je \u017Eivilo predelano, na primer minimalno predelano,
+      predelano ali ultra predelano."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203943
@@ -5473,18 +5472,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
-    m_Localized: "Kako se rejne \u017Eivali vzrejajo in oskrbujejo, npr. prosta reja,
-      ekolo\u0161ka reja ali reja v hlevu."
+    m_Localized: "Kako se rejne \u017Eivali redijo in v kak\u0161nih pogojih so nastanjene,
+      na primer v prosti reji, ekolo\u0161ki reji ali v hlevih."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203946
-    m_Localized: "Ali ljudje, ki pridelujejo tvojo hrano, dobijo po\u0161teno pla\u010Dilo
-      in delovne pogoje."
+    m_Localized: "Ali so ljudje, ki pridelujejo tvojo hrano, po\u0161teno pla\u010Dani
+      in imajo dostojne delovne pogoje."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203947
-    m_Localized: "Ali je embala\u017Ea iz materialov, ki jih je mogo\u010De reciklirati
-      ali kompostirati ali manj obremenjujejo okolje."
+    m_Localized: "Ali je embala\u017Ea izdelana iz materialov, ki jih je mogo\u010De
+      reciklirati ali kompostirati oziroma manj obremenjujejo okolje."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203948
@@ -5508,8 +5507,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203953
-    m_Localized: "Gradi in obnavlja telo. Najde\u0161 jih v stro\u010Dnicah, mesu,
-      ribah, jajcih in mle\u010Dnih izdelkih."
+    m_Localized: "Gradijo in obnavljajo telo. Najde\u0161 jih v stro\u010Dnicah,
+      mesu, ribah, jajcih in mle\u010Dnih izdelkih."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203954
@@ -5530,8 +5529,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203958
-    m_Localized: Majhna hranila, ki jih telo potrebuje za dobro delovanje, predvsem
-      iz sadja in zelenjave.
+    m_Localized: "Mikrohranila, ki jih telo potrebuje za pravilno delovanje in jih
+      najdemo v razli\u010Dnih \u017Eivilih, tudi v sadju in zelenjavi."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203959

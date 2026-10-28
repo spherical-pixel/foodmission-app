@@ -2820,8 +2820,7 @@ MonoBehaviour:
     m_Localized: 'Hello! We would like to know which sustainability and nutrition
       topics interest you most. In the next steps, tick the ones you care about:
       each area and topic comes with a short explanation. Your answers help the project''s
-      research, and you will still see all the content in the app. You can change
-      them at any time!'
+      research. You can change them at any time!'
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5026,13 +5025,13 @@ MonoBehaviour:
     m_Localized: "The wheel measures these savings in <b>kilograms of carbon dioxide
       equivalent (kg CO\u2082e)</b>. Carbon dioxide equivalent is a standard way
       of expressing the climate impact of different greenhouse gases in a single
-      measure."
+      unit."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
-    m_Localized: "Each action you complete adds CO\u2082 savings to your total. As
-      your savings accumulate, the wheel gradually fills until you reach your current
-      sustainability goal."
+    m_Localized: "Each action you complete adds to your total savings in CO\u2082
+      equivalent (CO\u2082e). As your savings accumulate, the wheel gradually fills
+      until you reach your current sustainability goal."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
@@ -5061,9 +5060,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
-    m_Localized: Each action you complete adds <b>kWh</b> savings to your total.
-      As your savings accumulate, the wheel gradually fills until you reach your
-      current sustainability goal.
+    m_Localized: Each action you complete adds to your total energy savings, measured
+      in <b>kWh</b>. As your savings accumulate, the wheel gradually fills until
+      you reach your current sustainability goal.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
@@ -5071,7 +5070,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: L blue water saved
+    m_Localized: Litres of blue water saved
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5089,7 +5088,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203782
     m_Localized: The wheel measures savings in <b>litres (L)</b> of blue water. Each
-      action you complete adds L savings to your total. As your savings accumulate,
+      action you complete adds to your total water savings. As your savings accumulate,
       the wheel gradually fills until you reach your current sustainability goal.
     m_Metadata:
       m_Items: []
@@ -5098,7 +5097,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
-    m_Localized: "m\xB2 land preserved"
+    m_Localized: "m\xB2 of land saved"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203785
@@ -5115,9 +5114,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203787
     m_Localized: "The wheel measures land savings in <b>square metres (m\xB2)</b>.
-      Each action you complete adds m\xB2 savings to your total. As your savings
-      accumulate, the wheel gradually fills until you reach your current sustainability
-      goal."
+      Each action you complete adds to the total land saved. As your savings accumulate,
+      the wheel gradually fills until you reach your current sustainability goal."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203788
@@ -5129,11 +5127,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203790
-    m_Localized: Vegan Serving
+    m_Localized: Vegan Meal
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203791
-    m_Localized: Vegetarian Serving
+    m_Localized: Vegetarian Meal
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203792
@@ -5161,15 +5159,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: Half Plate Saved
+    m_Localized: Half a Plate of Food Saved
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: Full Plate Saved
+    m_Localized: A Full Plate of Food Saved
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: Expired Product Consumed
+    m_Localized: Food Used Past Its Best-Before Date
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5177,7 +5175,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203802
-    m_Localized: "Sugary Cereal \u2192 Oats/Fruit"
+    m_Localized: "Sugary Cereal \u2192 Oats or Fruit"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203803
@@ -5197,7 +5195,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203807
-    m_Localized: Refill Product
+    m_Localized: Refillable Product
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203808
@@ -5257,12 +5255,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203905
-    m_Localized: Did you avoid foods and drinks that have added sugar among their
-      first three ingredients?
+    m_Localized: Did you avoid foods and drinks where added sugar is listed among
+      the first three ingredients?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: Did you avoid adding salt at the table in all your meals?
+    m_Localized: Did you avoid adding salt at the table at every meal?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5282,13 +5280,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203911
-    m_Localized: "For \u201C{0}\u201D I'm still missing these days: {1}. Shall we
-      catch up now?"
+    m_Localized: "For \u201C{0}\u201D, I\u2019m still missing these days: {1}. Shall
+      we fill them in now?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203912
-    m_Localized: "For \u201C{0}\u201D and other missions I'm still missing some days,
-      starting with: {1}. Shall we catch up now?"
+    m_Localized: "For \u201C{0}\u201D and other missions, I\u2019m still missing
+      some days, starting with: {1}. Shall we fill them in now?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203913
@@ -5333,8 +5331,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203923
-    m_Localized: You're working on this challenge. Does this product help? Count
-      it if it does.
+    m_Localized: You're working on this challenge. Does this product count towards
+      it? If so, count it.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203924
@@ -5342,8 +5340,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203925
-    m_Localized: This product doesn't show that information. Try a scanned or branded
-      product, or check the packaging.
+    m_Localized: "That information isn\u2019t available for this product. Try scanning
+      the barcode of a branded product, or check its packaging."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203926
@@ -5351,21 +5349,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203927
-    m_Localized: Mission of your quest
+    m_Localized: Mission in your quest
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203928
     m_Localized: 'Why it matters: producing meat uses much more land, water and energy
       than producing plant foods. Replacing some meat with pulses, nuts or other
-      proteins, and trying different staple foods, is one of the biggest changes
-      you can make for the planet.'
+      sources of protein, and trying different staple foods, is one of the biggest
+      changes you can make for the planet.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
-    m_Localized: 'Why it matters: every food has a hidden cost for the environment,
-      from the land and water used to grow it to the energy and transport needed
-      to bring it to you. Knowing these costs helps you compare products and choose
-      the lighter option.'
+    m_Localized: 'Why it matters: every food has a hidden environmental cost, from
+      the land and water used to grow it to the energy and transport needed to bring
+      it to you. Knowing these costs helps you compare products and choose the option
+      with a lower environmental impact.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
@@ -5381,8 +5379,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203932
     m_Localized: 'Why it matters: a large share of the food we produce is thrown
-      away, and so are the land, water and energy used to make it. Planning, storing
-      food well and using leftovers saves food and money.'
+      away, along with the land, water and energy used to make it. Planning meals,
+      storing food properly and using leftovers can help reduce food waste and save
+      money.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5404,7 +5403,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203937
-    m_Localized: How much land is needed to grow or raise a food.
+    m_Localized: How much land is needed to grow crops or raise animals to produce
+      a food.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203938
@@ -5416,8 +5416,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203940
-    m_Localized: The greenhouse gases released to produce a food, which warm the
-      planet.
+    m_Localized: The greenhouse gases emitted during food production that contribute
+      to global warming.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203941
@@ -5425,12 +5425,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: How much a food has been changed from its natural state, e.g. fresh,
-      processed or ultra-processed.
+    m_Localized: How extensively a food has been processed, for example minimally
+      processed, processed or ultra-processed.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203943
-    m_Localized: Where a food was grown or made, and whether it is local.
+    m_Localized: Where a food was grown or produced, and whether it is local.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203944
@@ -5438,18 +5438,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
-    m_Localized: How farm animals are raised and cared for, e.g. free-range, organic
-      or indoor farming.
+    m_Localized: How farm animals are raised and housed, for example in free-range,
+      organic or indoor systems.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203946
-    m_Localized: Whether the people who produce your food get fair pay and working
-      conditions.
+    m_Localized: Whether the people who produce your food are paid fairly and have
+      decent working conditions.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203947
-    m_Localized: Whether the packaging is made of materials that can be recycled
-      or composted, or that have less impact.
+    m_Localized: Whether packaging is made from materials that can be recycled or
+      composted, or that have a lower environmental impact.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203948
@@ -5494,8 +5494,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203958
-    m_Localized: Small nutrients your body needs to work well, mostly from fruit
-      and vegetables.
+    m_Localized: Micronutrients your body needs to function properly, found in a
+      variety of foods, including fruit and vegetables.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203959

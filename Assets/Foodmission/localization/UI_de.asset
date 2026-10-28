@@ -1876,7 +1876,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038583797997568
-    m_Localized: "W\xE4hlen Sie Ihr Genre aus"
+    m_Localized: "W\xE4hle dein Geschlecht aus"
     m_Metadata:
       m_Items: []
   - m_Id: 34038675313516544
@@ -2839,8 +2839,8 @@ MonoBehaviour:
     m_Localized: "Hallo! Wir m\xF6chten gern wissen, welche Themen rund um Nachhaltigkeit
       und Ern\xE4hrung dich am meisten interessieren. Kreuze in den n\xE4chsten Schritten
       an, was dir wichtig ist: Zu jedem Bereich und Thema gibt es eine kurze Erkl\xE4rung.
-      Deine Antworten helfen der Forschung des Projekts, und du siehst trotzdem alle
-      Inhalte der App. Du kannst sie jederzeit \xE4ndern!"
+      Deine Antworten helfen der Forschung des Projekts. Du kannst sie jederzeit
+      \xE4ndern!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5090,9 +5090,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
-    m_Localized: "Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme CO\u2082-Einsparungen
-      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
-      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Localized: "Jede abgeschlossene Aktion tr\xE4gt zu deinen gesamten Einsparungen
+      an CO\u2082-\xC4quivalenten (CO\u2082e) bei. Je mehr du einsparst, desto weiter
+      f\xFCllt sich das Rad, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
@@ -5123,9 +5123,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
-    m_Localized: "Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme <b>kWh</b>-Einsparungen
-      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
-      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Localized: "Jede abgeschlossene Aktion tr\xE4gt zu deiner gesamten Energieeinsparung
+      bei, gemessen in <b>kWh</b>. Je mehr du einsparst, desto weiter f\xFCllt sich
+      das Rad, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
@@ -5133,7 +5133,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: L blaues Wasser eingespart
+    m_Localized: Liter eingespartes blaues Wasser
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5151,10 +5151,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203782
-    m_Localized: "Das Rad misst Einsparungen in <b>Litern (L)</b> blauem Wasser.
-      Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme L-Einsparungen
-      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
-      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Localized: "Das Rad misst die Einsparungen in <b>Litern (L)</b> blauen Wassers.
+      Jede abgeschlossene Aktion erh\xF6ht deine gesamte Wassereinsparung. Mit zunehmender
+      Einsparung f\xFCllt sich das Rad nach und nach, bis du dein aktuelles Nachhaltigkeitsziel
+      erreichst."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203783
@@ -5162,7 +5162,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
-    m_Localized: "m\xB2 Fl\xE4che erhalten"
+    m_Localized: "m\xB2 eingesparte Landfl\xE4che"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203785
@@ -5180,10 +5180,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203787
-    m_Localized: "Das Rad misst Fl\xE4cheneinsparungen in <b>Quadratmetern (m\xB2)</b>.
-      Jede Aktion, die du abschlie\xDFt, f\xFCgt deiner Gesamtsumme m\xB2-Einsparungen
-      hinzu. W\xE4hrend sich deine Einsparungen summieren, f\xFCllt sich das Rad
-      nach und nach, bis du dein aktuelles Nachhaltigkeitsziel erreichst."
+    m_Localized: "Das Rad misst die eingesparte Fl\xE4che in <b>Quadratmetern (m\xB2)</b>.
+      Jede abgeschlossene Aktion erh\xF6ht die insgesamt eingesparte Fl\xE4che. Mit
+      zunehmender Einsparung f\xFCllt sich das Rad nach und nach, bis du dein aktuelles
+      Nachhaltigkeitsziel erreichst."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203788
@@ -5195,11 +5195,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203790
-    m_Localized: Vegane Portion
+    m_Localized: Vegane Mahlzeit
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203791
-    m_Localized: Vegetarische Portion
+    m_Localized: Vegetarische Mahlzeit
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203792
@@ -5227,15 +5227,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: Halber Teller gerettet
+    m_Localized: Ein halber Teller Essen gerettet
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: Voller Teller gerettet
+    m_Localized: Ein voller Teller Essen gerettet
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: Abgelaufenes Produkt verzehrt
+    m_Localized: Lebensmittel nach dem Mindesthaltbarkeitsdatum verwendet
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5243,7 +5243,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203802
-    m_Localized: "Ges\xFC\xDFte Zerealien \u2192 Hafer/Obst"
+    m_Localized: "Gezuckerte Fr\xFChst\xFCcksflocken \u2192 Haferflocken oder Obst"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203803
@@ -5329,7 +5329,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: Hast du bei allen Mahlzeiten darauf verzichtet, am Tisch nachzusalzen?
+    m_Localized: "Hast du bei jeder Mahlzeit darauf verzichtet, am Tisch Salz hinzuzuf\xFCgen?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5349,13 +5349,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203911
-    m_Localized: "F\xFCr \u201E{0}\u201C fehlen mir noch diese Tage: {1}. Sollen
-      wir das jetzt nachholen?"
+    m_Localized: "F\xFCr \u201E{0}\u201C fehlen mir noch diese Tage: {1}. Wollen
+      wir sie jetzt nachtragen?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203912
     m_Localized: "F\xFCr \u201E{0}\u201C und weitere Missionen fehlen mir noch einige
-      Tage, zum Beispiel: {1}. Sollen wir das jetzt nachholen?"
+      Tage, zun\xE4chst: {1}. Wollen wir sie jetzt nachtragen?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203913
@@ -5367,7 +5367,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203915
-    m_Localized: Hast du einen dieser Lebensmitteltausche gemacht?
+    m_Localized: Hast du eines dieser Lebensmittel durch eine Alternative ersetzt?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203916
@@ -5379,7 +5379,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203918
-    m_Localized: '{0}: {1} von {2} Tauschen'
+    m_Localized: '{0}: {1} von {2} Ersetzungen'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203919
@@ -5399,8 +5399,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203923
-    m_Localized: "Du arbeitest an dieser Herausforderung. Passt dieses Produkt? Dann
-      z\xE4hl es mit."
+    m_Localized: "Du arbeitest an dieser Herausforderung. Z\xE4hlt dieses Produkt
+      daf\xFCr? Wenn ja, z\xE4hle es mit."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203924
@@ -5408,8 +5408,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203925
-    m_Localized: Dieses Produkt zeigt diese Angaben nicht. Probier ein gescanntes
-      Markenprodukt oder schau auf die Verpackung.
+    m_Localized: "Diese Information ist f\xFCr dieses Produkt nicht verf\xFCgbar.
+      Scanne den Barcode eines Markenprodukts oder schau auf der Verpackung nach."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203926
@@ -5417,22 +5417,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203927
-    m_Localized: Mission deiner Quest
+    m_Localized: Mission in deiner Quest
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203928
     m_Localized: "Warum es wichtig ist: F\xFCr Fleisch braucht man viel mehr Land,
       Wasser und Energie als f\xFCr pflanzliche Lebensmittel. Einen Teil des Fleisches
-      durch H\xFClsenfr\xFCchte, N\xFCsse oder andere Proteine zu ersetzen und andere
-      Grundnahrungsmittel auszuprobieren, ist eine der gr\xF6\xDFten Ver\xE4nderungen,
+      durch H\xFClsenfr\xFCchte, N\xFCsse oder andere Proteinquellen zu ersetzen
+      und andere Grundnahrungsmittel auszuprobieren, ist eine der gr\xF6\xDFten Ver\xE4nderungen,
       die du f\xFCr den Planeten machen kannst."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
-    m_Localized: "Warum es wichtig ist: Jedes Lebensmittel hat versteckte Kosten
-      f\xFCr die Umwelt \u2013 vom Land und Wasser f\xFCr den Anbau bis zur Energie
-      und zum Transport, bis es bei dir ankommt. Wenn du diese Kosten kennst, kannst
-      du Produkte vergleichen und die umweltschonendere Wahl treffen."
+    m_Localized: "Warum es wichtig ist: Jedes Lebensmittel verursacht versteckte
+      Umweltkosten \u2013 vom Land und Wasser f\xFCr den Anbau bis zur Energie und
+      zum Transport, bis es bei dir ankommt. Wenn du diese Kosten kennst, kannst
+      du Produkte vergleichen und die umweltschonendere Option w\xE4hlen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
@@ -5450,8 +5450,9 @@ MonoBehaviour:
   - m_Id: 56190243387203932
     m_Localized: "Warum es wichtig ist: Ein gro\xDFer Teil der produzierten Lebensmittel
       wird weggeworfen \u2013 und damit auch das Land, das Wasser und die Energie,
-      die daf\xFCr n\xF6tig waren. Planen, Lebensmittel richtig lagern und Reste
-      verwerten spart Essen und Geld."
+      die f\xFCr ihre Herstellung n\xF6tig waren. Wenn du Mahlzeiten planst, Lebensmittel
+      richtig lagerst und Reste verwertest, kannst du Lebensmittelverschwendung reduzieren
+      und Geld sparen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5501,8 +5502,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: "Wie stark ein Lebensmittel gegen\xFCber seinem nat\xFCrlichen Zustand
-      ver\xE4ndert wurde, z. B. frisch, verarbeitet oder hochverarbeitet."
+    m_Localized: Wie stark ein Lebensmittel verarbeitet wurde, zum Beispiel minimal
+      verarbeitet, verarbeitet oder hochverarbeitet.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203943
@@ -5515,18 +5516,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
-    m_Localized: Wie Nutztiere gehalten und versorgt werden, z. B. Freiland-, Bio-
-      oder Stallhaltung.
+    m_Localized: Wie Nutztiere gehalten werden und unter welchen Bedingungen, z.
+      B. in Freiland-, Bio- oder Stallhaltung.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203946
-    m_Localized: Ob die Menschen, die dein Essen herstellen, fair bezahlt werden
-      und gute Arbeitsbedingungen haben.
+    m_Localized: Ob die Menschen, die deine Lebensmittel produzieren, fair bezahlt
+      werden und angemessene Arbeitsbedingungen haben.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203947
-    m_Localized: Ob die Verpackung aus Materialien besteht, die sich recyceln oder
-      kompostieren lassen oder weniger belasten.
+    m_Localized: "Ob die Verpackung aus Materialien besteht, die recycelt oder kompostiert
+      werden k\xF6nnen oder eine geringere Umweltbelastung verursachen."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203948
@@ -5572,8 +5573,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203958
-    m_Localized: "Kleine N\xE4hrstoffe, die dein K\xF6rper braucht, um gut zu funktionieren,
-      vor allem aus Obst und Gem\xFCse."
+    m_Localized: "Mikron\xE4hrstoffe, die dein K\xF6rper braucht, um richtig zu funktionieren
+      und die in verschiedenen Lebensmitteln vorkommen, darunter Obst und Gem\xFCse."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203959

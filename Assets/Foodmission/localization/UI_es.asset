@@ -2826,8 +2826,7 @@ MonoBehaviour:
     m_Localized: "\xA1Hola! Queremos saber qu\xE9 temas de sostenibilidad y nutrici\xF3n
       te interesan m\xE1s. En los siguientes pasos, marca los que te importan: cada
       \xE1rea y cada tema llevan una breve explicaci\xF3n. Tus respuestas ayudan
-      a la investigaci\xF3n del proyecto y seguir\xE1s viendo todo el contenido de
-      la app. \xA1Podr\xE1s cambiarlas cuando quieras!"
+      a la investigaci\xF3n del proyecto. \xA1Podr\xE1s cambiarlas cuando quieras!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5058,9 +5057,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
-    m_Localized: "Cada acci\xF3n que completas suma ahorro de CO\u2082 a tu total.
-      A medida que se acumula, la rueda se va llenando hasta que alcanzas tu objetivo
-      de sostenibilidad actual."
+    m_Localized: "Cada acci\xF3n que completas contribuye al ahorro total expresado
+      en CO\u2082 equivalente (CO\u2082e). A medida que aumenta el ahorro, la rueda
+      se va llenando hasta que alcanzas tu objetivo de sostenibilidad actual."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
@@ -5090,9 +5089,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
-    m_Localized: "Cada acci\xF3n que completas suma ahorro de <b>kWh</b> a tu total.
-      A medida que se acumula, la rueda se va llenando hasta que alcanzas tu objetivo
-      de sostenibilidad actual."
+    m_Localized: "Cada acci\xF3n que completas contribuye al ahorro total de energ\xEDa,
+      medido en <b>kWh</b>. A medida que aumenta el ahorro, la rueda se va llenando
+      hasta que alcanzas tu objetivo de sostenibilidad actual."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
@@ -5100,7 +5099,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: L de agua azul ahorrados
+    m_Localized: Litros de agua azul ahorrados
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5119,8 +5118,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203782
     m_Localized: "La rueda mide el ahorro en <b>litros (L)</b> de agua azul. Cada
-      acci\xF3n que completas suma ahorro de L a tu total. A medida que se acumula,
-      la rueda se va llenando hasta que alcanzas tu objetivo de sostenibilidad actual."
+      acci\xF3n que completas se suma al ahorro total de agua. A medida que acumulas
+      ahorro, la rueda se va llenando hasta que alcanzas tu objetivo actual de sostenibilidad."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203783
@@ -5128,16 +5127,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
-    m_Localized: "m\xB2 de suelo preservados"
+    m_Localized: "m\xB2 de suelo preservado"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203785
-    m_Localized: "Suelo ahorrado (m\xB2)"
+    m_Localized: "Suelo preservado (m\xB2)"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203786
-    m_Localized: "La rueda de reducci\xF3n del uso del suelo mide cu\xE1nta tierra
-      agr\xEDcola se ha ahorrado gracias a tus elecciones alimentarias. Producir
+    m_Localized: "La rueda de reducci\xF3n del uso del suelo mide cu\xE1nta superficie
+      agr\xEDcola has evitado ocupar gracias a tus elecciones alimentarias. Producir
       alimentos requiere tierra. Los productos de origen animal suelen usar mucha
       m\xE1s tierra que los alimentos vegetales, porque se necesita tierra tanto
       para criar a los animales como para cultivar su alimento. Reducir el desperdicio
@@ -5146,10 +5145,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203787
-    m_Localized: "La rueda mide el ahorro de suelo en <b>metros cuadrados (m\xB2)</b>.
-      Cada acci\xF3n que completas suma ahorro de m\xB2 a tu total. A medida que
-      se acumula, la rueda se va llenando hasta que alcanzas tu objetivo de sostenibilidad
-      actual."
+    m_Localized: "La rueda mide el suelo preservado en <b>metros cuadrados (m\xB2)</b>.
+      Cada acci\xF3n que completas se suma a la superficie total preservada. A medida
+      que se acumula, la rueda se va llenando hasta que alcanzas tu objetivo actual
+      de sostenibilidad."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203788
@@ -5161,11 +5160,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203790
-    m_Localized: "Raci\xF3n vegana"
+    m_Localized: Comida vegana
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203791
-    m_Localized: "Raci\xF3n vegetariana"
+    m_Localized: Comida vegetariana
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203792
@@ -5193,15 +5192,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: Medio plato aprovechado
+    m_Localized: Medio plato de comida salvado
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: Plato entero aprovechado
+    m_Localized: Un plato lleno de comida salvado
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: Producto caducado consumido
+    m_Localized: Alimento aprovechado con la fecha de consumo preferente pasada
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5209,7 +5208,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203802
-    m_Localized: "Cereales azucarados \u2192 Avena/fruta"
+    m_Localized: "Cereales azucarados \u2192 Avena o fruta"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203803
@@ -5229,7 +5228,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203807
-    m_Localized: Producto de recarga
+    m_Localized: Producto recargable
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203808
@@ -5276,8 +5275,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203902
-    m_Localized: "\xBFAl menos una comida llev\xF3 un alimento rico en prote\xEDna
-      (legumbres, huevos, pescado, l\xE1cteos, tofu, frutos secos\u2026)?"
+    m_Localized: "\xBFIncluiste alg\xFAn alimento rico en prote\xEDnas en al menos
+      una comida (legumbres, huevos, pescado, l\xE1cteos, tofu, frutos secos\u2026)?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203903
@@ -5294,7 +5293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: "\xBFEvitaste a\xF1adir sal en la mesa en todas tus comidas?"
+    m_Localized: "\xBFEvitaste a\xF1adir sal en la mesa en cada comida?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5314,26 +5313,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203911
-    m_Localized: "Para \xAB{0}\xBB a\xFAn me faltan estos d\xEDas: {1}. \xBFNos ponemos
-      al d\xEDa?"
+    m_Localized: "Para \xAB{0}\xBB a\xFAn faltan estos d\xEDas: {1}. \xBFLos completamos
+      ahora?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203912
-    m_Localized: "Para \xAB{0}\xBB y otras misiones a\xFAn me faltan algunos d\xEDas,
-      por ejemplo: {1}. \xBFNos ponemos al d\xEDa?"
+    m_Localized: "Para \xAB{0}\xBB y otras misiones a\xFAn faltan algunos d\xEDas,
+      empezando por: {1}. \xBFLos completamos ahora?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203913
-    m_Localized: "\xA1Ya lo tienes! Sigue as\xED: \xAB{0}\xBB se completar\xE1 el
+    m_Localized: "\xA1Ya la tienes! Sigue as\xED: \xAB{0}\xBB se completar\xE1 el
       {1}."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203914
-    m_Localized: "\xAB{0}\xBB ya lo tienes: se completar\xE1 el {1}."
+    m_Localized: "La misi\xF3n \xAB{0}\xBB ya est\xE1 asegurada: se completar\xE1
+      el {1}."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203915
-    m_Localized: "\xBFHas hecho alguno de estos cambios de alimentos?"
+    m_Localized: "\xBFSustituiste alg\xFAn alimento por alguna de estas alternativas?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203916
@@ -5365,8 +5365,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203923
-    m_Localized: "Est\xE1s haciendo este reto. \xBFTe sirve este producto? Si es
-      as\xED, cu\xE9ntalo."
+    m_Localized: "Est\xE1s haciendo este reto. \xBFCuenta este producto? Si es as\xED,
+      contabil\xEDzalo."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203924
@@ -5374,8 +5374,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203925
-    m_Localized: "Este producto no muestra esa informaci\xF3n. Prueba con un producto
-      escaneado o de marca, o m\xEDralo en el envase."
+    m_Localized: "Esa informaci\xF3n no est\xE1 disponible para este producto. Prueba
+      a escanear el c\xF3digo de barras de un producto de marca o consulta el envase."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203926
@@ -5389,15 +5389,15 @@ MonoBehaviour:
   - m_Id: 56190243387203928
     m_Localized: "Por qu\xE9 importa: producir carne requiere mucha m\xE1s tierra,
       agua y energ\xEDa que los alimentos vegetales. Cambiar parte de la carne por
-      legumbres, frutos secos u otras prote\xEDnas, y probar otros alimentos b\xE1sicos,
-      es uno de los mayores cambios que puedes hacer por el planeta."
+      legumbres, frutos secos u otras fuentes de prote\xEDna, y probar otros alimentos
+      b\xE1sicos, es uno de los mayores cambios que puedes hacer por el planeta."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
-    m_Localized: "Por qu\xE9 importa: cada alimento tiene un coste oculto para el
-      medio ambiente, desde la tierra y el agua para cultivarlo hasta la energ\xEDa
-      y el transporte para que llegue a ti. Conocer esos costes te ayuda a comparar
-      productos y elegir la opci\xF3n m\xE1s ligera."
+    m_Localized: "Por qu\xE9 importa: cada alimento tiene un coste ambiental oculto,
+      desde la tierra y el agua necesarias para producirlo hasta la energ\xEDa y
+      el transporte para que llegue a ti. Conocer esos costes te ayuda a comparar
+      productos y elegir la opci\xF3n con menor impacto ambiental."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
@@ -5413,10 +5413,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203932
-    m_Localized: "Por qu\xE9 importa: una gran parte de los alimentos que producimos
-      se tira, y con ellos la tierra, el agua y la energ\xEDa usadas para producirlos.
-      Planificar, guardar bien la comida y aprovechar las sobras ahorra comida y
-      dinero."
+    m_Localized: "Por qu\xE9 importa: gran parte de los alimentos que producimos
+      acaba desechada, junto con la tierra, el agua y la energ\xEDa utilizadas para
+      producirlos. Planificar las comidas, conservar bien los alimentos y aprovechar
+      las sobras ayuda a reducir el desperdicio alimentario y a ahorrar dinero."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5440,7 +5440,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203937
-    m_Localized: "Cu\xE1nta tierra hace falta para cultivar o criar un alimento."
+    m_Localized: "Cu\xE1nta tierra hace falta para cultivar plantas o criar animales
+      para producir un alimento."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203938
@@ -5458,12 +5459,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203941
-    m_Localized: "Cu\xE1nto viaja un alimento desde donde se produce hasta tu plato."
+    m_Localized: La distancia que recorre un alimento desde el lugar donde se produce
+      hasta tu plato.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: "Cu\xE1nto ha cambiado un alimento respecto a su estado natural,
-      por ejemplo fresco, procesado o ultraprocesado."
+    m_Localized: "En qu\xE9 medida se ha procesado un alimento, por ejemplo, m\xEDnimamente
+      procesado, procesado o ultraprocesado."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203943
@@ -5476,18 +5478,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
-    m_Localized: "C\xF3mo se cr\xEDan y cuidan los animales de granja, por ejemplo
-      en libertad, en ecol\xF3gico o en interior."
+    m_Localized: "C\xF3mo se cr\xEDan y alojan los animales de granja, por ejemplo,
+      al aire libre, con m\xE9todos ecol\xF3gicos o en espacios cerrados."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203946
-    m_Localized: Si las personas que producen tu comida reciben un pago y unas condiciones
-      de trabajo justas.
+    m_Localized: "Si las personas que producen tus alimentos reciben una remuneraci\xF3n
+      justa y tienen condiciones de trabajo dignas."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203947
-    m_Localized: "Si el envase est\xE1 hecho de materiales que se pueden reciclar
-      o compostar, o que tienen menos impacto."
+    m_Localized: "Si el envase est\xE1 hecho de materiales reciclables o compostables,
+      o de materiales con un menor impacto ambiental."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203948
@@ -5534,8 +5536,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203958
-    m_Localized: "Peque\xF1os nutrientes que tu cuerpo necesita para funcionar bien,
-      sobre todo de fruta y verdura."
+    m_Localized: Micronutrientes que tu cuerpo necesita para funcionar bien y que
+      se encuentran en distintos alimentos, incluidas las frutas y verduras.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203959

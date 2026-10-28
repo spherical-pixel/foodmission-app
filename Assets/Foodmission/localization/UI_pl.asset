@@ -1885,7 +1885,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038583797997568
-    m_Localized: Wybierz gatunek
+    m_Localized: "Wybierz p\u0142e\u0107"
     m_Metadata:
       m_Items: []
   - m_Id: 34038675313516544
@@ -2853,8 +2853,8 @@ MonoBehaviour:
       ze zr\xF3wnowa\u017Conym rozwojem i od\u017Cywianiem interesuj\u0105 Ci\u0119
       najbardziej. W kolejnych krokach zaznacz to, co jest dla Ciebie wa\u017Cne:
       ka\u017Cdy obszar i temat ma kr\xF3tkie wyja\u015Bnienie. Twoje odpowiedzi
-      pomagaj\u0105 w badaniach projektu, a w aplikacji nadal zobaczysz wszystkie
-      tre\u015Bci. Mo\u017Cesz je zmieni\u0107 w ka\u017Cdej chwili!"
+      pomagaj\u0105 w badaniach projektu. Mo\u017Cesz je zmieni\u0107 w ka\u017Cdej
+      chwili!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5120,7 +5120,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203769
     m_Localized: "Ko\u0142o redukcji CO\u2082 pokazuje, jakiego wp\u0142ywu na klimat
-      uda\u0142o ci si\u0119 unikn\u0105\u0107 dzi\u0119ki twoim wyborom \u017Cywieniowym.
+      uda\u0142o Ci si\u0119 unikn\u0105\u0107 dzi\u0119ki Twoim wyborom \u017Cywieniowym.
       Za ka\u017Cdym razem, gdy jesz mniej mi\u0119sa, wybierasz bia\u0142ko o mniejszym
       wp\u0142ywie na \u015Brodowisko, zapobiegasz marnowaniu \u017Cywno\u015Bci,
       zast\u0119pujesz \u017Cywno\u015B\u0107 wysoko przetworzon\u0105 bardziej zr\xF3wnowa\u017Conymi
@@ -5136,10 +5136,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
-    m_Localized: "Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci
-      CO\u2082 do twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105,
-      ko\u0142o stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j
-      obecny cel zr\xF3wnowa\u017Conego rozwoju."
+    m_Localized: "Ka\u017Cde wykonane dzia\u0142anie zwi\u0119ksza \u0142\u0105czn\u0105
+      oszcz\u0119dno\u015B\u0107 wyra\u017Con\u0105 w ekwiwalencie CO\u2082 (CO\u2082e).
+      W miar\u0119 wzrostu oszcz\u0119dno\u015Bci ko\u0142o stopniowo si\u0119 zape\u0142nia,
+      a\u017C osi\u0105gniesz sw\xF3j obecny cel zr\xF3wnowa\u017Conego rozwoju."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
@@ -5171,10 +5171,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
-    m_Localized: "Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci
-      <b>kWh</b> do twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105,
-      ko\u0142o stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j
-      obecny cel zr\xF3wnowa\u017Conego rozwoju."
+    m_Localized: "Ka\u017Cde wykonane dzia\u0142anie zwi\u0119ksza \u0142\u0105czn\u0105
+      oszcz\u0119dno\u015B\u0107 energii, mierzon\u0105 w <b>kWh</b>. W miar\u0119
+      wzrostu oszcz\u0119dno\u015Bci ko\u0142o stopniowo si\u0119 zape\u0142nia,
+      a\u017C osi\u0105gniesz sw\xF3j obecny cel zr\xF3wnowa\u017Conego rozwoju."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
@@ -5182,7 +5182,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: "L niebieskiej wody zaoszcz\u0119dzone"
+    m_Localized: "Litry zaoszcz\u0119dzonej wody b\u0142\u0119kitnej"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5191,7 +5191,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203781
     m_Localized: "Ko\u0142o oszcz\u0119dno\u015Bci wody pokazuje, ile s\u0142odkiej
-      wody uda\u0142o si\u0119 zaoszcz\u0119dzi\u0107 dzi\u0119ki twoim wyborom \u017Cywieniowym.
+      wody uda\u0142o si\u0119 zaoszcz\u0119dzi\u0107 dzi\u0119ki Twoim wyborom \u017Cywieniowym.
       Rolnictwo odpowiada za najwi\u0119ksze zu\u017Cycie s\u0142odkiej wody na \u015Bwiecie.
       R\xF3\u017Cne produkty spo\u017Cywcze maj\u0105 bardzo r\xF3\u017Cny \u015Blad
       wodny. \u017Bywno\u015B\u0107 pochodzenia zwierz\u0119cego wymaga na og\xF3\u0142
@@ -5202,11 +5202,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203782
-    m_Localized: "Ko\u0142o mierzy oszcz\u0119dno\u015Bci w <b>litrach (L)</b> niebieskiej
-      wody. Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci L do
-      twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105, ko\u0142o
-      stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j obecny cel
-      zr\xF3wnowa\u017Conego rozwoju."
+    m_Localized: "Ko\u0142o mierzy oszcz\u0119dno\u015B\u0107 w <b>litrach (L)</b>
+      wody b\u0142\u0119kitnej. Ka\u017Cde wykonane dzia\u0142anie zwi\u0119ksza
+      \u0142\u0105czn\u0105 ilo\u015B\u0107 zaoszcz\u0119dzonej wody. W miar\u0119
+      wzrostu oszcz\u0119dno\u015Bci ko\u0142o stopniowo si\u0119 zape\u0142nia,
+      a\u017C osi\u0105gniesz obecny cel zr\xF3wnowa\u017Conego rozwoju."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203783
@@ -5214,7 +5214,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
-    m_Localized: "m\xB2 zachowanych grunt\xF3w"
+    m_Localized: "m\xB2 zaoszcz\u0119dzonej powierzchni gruntu"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203785
@@ -5233,11 +5233,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203787
-    m_Localized: "Ko\u0142o mierzy oszcz\u0119dno\u015Bci grunt\xF3w w <b>metrach
-      kwadratowych (m\xB2)</b>. Ka\u017Cde wykonane dzia\u0142anie dodaje oszcz\u0119dno\u015Bci
-      m\xB2 do twojej sumy. W miar\u0119 jak oszcz\u0119dno\u015Bci rosn\u0105, ko\u0142o
-      stopniowo si\u0119 zape\u0142nia, a\u017C osi\u0105gniesz sw\xF3j obecny cel
-      zr\xF3wnowa\u017Conego rozwoju."
+    m_Localized: "Ko\u0142o mierzy oszcz\u0119dno\u015B\u0107 powierzchni w <b>metrach
+      kwadratowych (m\xB2)</b>. Ka\u017Cde wykonane dzia\u0142anie zwi\u0119ksza
+      \u0142\u0105czn\u0105 zaoszcz\u0119dzon\u0105 powierzchni\u0119. W miar\u0119
+      wzrostu oszcz\u0119dno\u015Bci ko\u0142o stopniowo si\u0119 zape\u0142nia,
+      a\u017C osi\u0105gniesz obecny cel zr\xF3wnowa\u017Conego rozwoju."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203788
@@ -5249,11 +5249,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203790
-    m_Localized: "Porcja wega\u0144ska"
+    m_Localized: "Posi\u0142ek wega\u0144ski"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203791
-    m_Localized: "Porcja wegetaria\u0144ska"
+    m_Localized: "Posi\u0142ek wegetaria\u0144ski"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203792
@@ -5281,15 +5281,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: "Uratowane p\xF3\u0142 talerza"
+    m_Localized: "Uratowana po\u0142owa talerza jedzenia"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: "Uratowany pe\u0142ny talerz"
+    m_Localized: "Uratowany pe\u0142ny talerz jedzenia"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: "Spo\u017Cyty przeterminowany produkt"
+    m_Localized: "\u017Bywno\u015B\u0107 wykorzystana po dacie minimalnej trwa\u0142o\u015Bci"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5297,7 +5297,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203802
-    m_Localized: "S\u0142odzone p\u0142atki \u2192 Owies/owoce"
+    m_Localized: "S\u0142odzone p\u0142atki \u015Bniadaniowe \u2192 P\u0142atki owsiane
+      lub owoce"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203803
@@ -5317,7 +5318,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203807
-    m_Localized: "Produkt do uzupe\u0142niania"
+    m_Localized: "Produkt do ponownego nape\u0142nienia"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203808
@@ -5356,11 +5357,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203900
-    m_Localized: "Czy jad\u0142e\u015B mi\u0119so?"
+    m_Localized: "Czy w Twoich posi\u0142kach by\u0142o mi\u0119so?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203901
-    m_Localized: "Czy uratowa\u0142e\u015B jedzenie przed zmarnowaniem?"
+    m_Localized: "Czy uda\u0142o Ci si\u0119 uratowa\u0107 jedzenie przed zmarnowaniem?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203902
@@ -5369,22 +5370,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203903
-    m_Localized: "Czy doda\u0142e\u015B dodatkow\u0105 porcj\u0119 owoc\xF3w lub
-      warzyw?"
+    m_Localized: "Czy uda\u0142o Ci si\u0119 doda\u0107 dodatkow\u0105 porcj\u0119
+      owoc\xF3w lub warzyw?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203904
-    m_Localized: "Czy wybra\u0142e\u015B produkty pe\u0142noziarniste?"
+    m_Localized: "Czy uda\u0142o Ci si\u0119 wybra\u0107 produkty pe\u0142noziarniste?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203905
-    m_Localized: "Czy unika\u0142e\u015B produkt\xF3w i napoj\xF3w z dodanym cukrem
-      w\u015Br\xF3d pierwszych trzech sk\u0142adnik\xF3w?"
+    m_Localized: "Czy uda\u0142o Ci si\u0119 unika\u0107 produkt\xF3w i napoj\xF3w
+      z dodanym cukrem w\u015Br\xF3d pierwszych trzech sk\u0142adnik\xF3w?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: "Czy we wszystkich posi\u0142kach unika\u0142e\u015B dosalania przy
-      stole?"
+    m_Localized: "Czy przy ka\u017Cdym posi\u0142ku uda\u0142o Ci si\u0119 nie dodawa\u0107
+      soli przy stole?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5392,12 +5393,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203908
-    m_Localized: "{0}: opowiedz mi, jak min\u0105\u0142."
+    m_Localized: "{0}: opowiedz, jak min\u0105\u0142 Ci dzie\u0144."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203909
-    m_Localized: "Odpowiedz te\u017C na to pytanie, \u017Cebym dobrze policzy\u0142
-      ten dzie\u0144."
+    m_Localized: "Odpowiedz te\u017C na to pytanie, aby ten dzie\u0144 zosta\u0142
+      dobrze policzony."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203910
@@ -5405,13 +5406,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203911
-    m_Localized: "W misji \u201E{0}\u201D brakuje mi jeszcze tych dni: {1}. Nadrobimy
-      to teraz?"
+    m_Localized: "W misji \u201E{0}\u201D brakuje jeszcze tych dni: {1}. Uzupe\u0142nimy
+      je teraz?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203912
-    m_Localized: "W misji \u201E{0}\u201D i innych misjach brakuje mi jeszcze kilku
-      dni, na przyk\u0142ad: {1}. Nadrobimy to teraz?"
+    m_Localized: "W misji \u201E{0}\u201D i innych misjach brakuje jeszcze kilku
+      dni, zaczynaj\u0105c od: {1}. Uzupe\u0142nimy je teraz?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203913
@@ -5425,7 +5426,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203915
-    m_Localized: "Czy uda\u0142o ci si\u0119 zrobi\u0107 kt\xF3r\u0105\u015B z tych
+    m_Localized: "Czy uda\u0142o Ci si\u0119 zrobi\u0107 kt\xF3r\u0105\u015B z tych
       zamian?"
     m_Metadata:
       m_Items: []
@@ -5458,8 +5459,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203923
-    m_Localized: "Realizujesz to wyzwanie. Czy ten produkt pasuje? Je\u015Bli tak,
-      policz go."
+    m_Localized: "Realizujesz to wyzwanie. Czy ten produkt si\u0119 kwalifikuje?
+      Je\u015Bli tak, uwzgl\u0119dnij go."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203924
@@ -5467,8 +5468,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203925
-    m_Localized: "Ten produkt nie pokazuje tych informacji. Spr\xF3buj produktu zeskanowanego
-      lub markowego albo sprawd\u017A opakowanie."
+    m_Localized: "Te informacje nie s\u0105 dost\u0119pne dla tego produktu. Zeskanuj
+      kod kreskowy produktu markowego albo sprawd\u017A opakowanie."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203926
@@ -5489,11 +5490,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
-    m_Localized: "Dlaczego to wa\u017Cne: ka\u017Cda \u017Cywno\u015B\u0107 ma ukryty
-      koszt dla \u015Brodowiska \u2013 od ziemi i wody potrzebnych do jej uprawy
-      po energi\u0119 i transport, dzi\u0119ki kt\xF3rym trafia do Ciebie. Znaj\u0105c
-      te koszty, mo\u017Cesz por\xF3wnywa\u0107 produkty i wybiera\u0107 l\u017Cejsz\u0105
-      opcj\u0119."
+    m_Localized: "Dlaczego to wa\u017Cne: ka\u017Cda \u017Cywno\u015B\u0107 wi\u0105\u017Ce
+      si\u0119 z ukrytym kosztem dla \u015Brodowiska \u2013 od ziemi i wody potrzebnych
+      do jej uprawy po energi\u0119 i transport, dzi\u0119ki kt\xF3rym trafia do
+      Ciebie. Znaj\u0105c te koszty, mo\u017Cesz por\xF3wnywa\u0107 produkty i wybiera\u0107
+      opcj\u0119 o mniejszym wp\u0142ywie na \u015Brodowisko."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
@@ -5511,9 +5512,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203932
     m_Localized: "Dlaczego to wa\u017Cne: du\u017Ca cz\u0119\u015B\u0107 produkowanej
-      \u017Cywno\u015Bci trafia do kosza, a razem z ni\u0105 ziemia, woda i energia
-      zu\u017Cyte do jej wytworzenia. Planowanie, dobre przechowywanie i wykorzystywanie
-      resztek oszcz\u0119dza jedzenie i pieni\u0105dze."
+      \u017Cywno\u015Bci trafia do kosza, a wraz z ni\u0105 ziemia, woda i energia
+      zu\u017Cyte do jej wytworzenia. Planowanie posi\u0142k\xF3w, w\u0142a\u015Bciwe
+      przechowywanie \u017Cywno\u015Bci i wykorzystywanie resztek pomagaj\u0105 ograniczy\u0107
+      marnowanie jedzenia i oszcz\u0119dza\u0107 pieni\u0105dze."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5538,8 +5540,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203937
-    m_Localized: "Ile ziemi potrzeba, aby wyhodowa\u0107 lub wyprodukowa\u0107 dan\u0105
-      \u017Cywno\u015B\u0107."
+    m_Localized: "Ile ziemi potrzeba do uprawy ro\u015Blin lub hodowli zwierz\u0105t,
+      aby wyprodukowa\u0107 dan\u0105 \u017Cywno\u015B\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203938
@@ -5557,14 +5559,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203941
-    m_Localized: "Jak daleko \u017Cywno\u015B\u0107 podr\xF3\u017Cuje z miejsca produkcji
-      na Tw\xF3j talerz."
+    m_Localized: "Odleg\u0142o\u015B\u0107, jak\u0105 \u017Cywno\u015B\u0107 pokonuje
+      od miejsca produkcji do Twojego talerza."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: "Jak bardzo \u017Cywno\u015B\u0107 zosta\u0142a zmieniona w por\xF3wnaniu
-      z jej naturaln\u0105 postaci\u0105, np. \u015Bwie\u017Ca, przetworzona lub
-      wysoko przetworzona."
+    m_Localized: "W jakim stopniu \u017Cywno\u015B\u0107 zosta\u0142a przetworzona,
+      np. minimalnie przetworzona, przetworzona lub wysoko przetworzona."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203943
@@ -5578,19 +5579,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
-    m_Localized: "Jak hoduje si\u0119 zwierz\u0119ta i jak si\u0119 o nie dba, np.
-      ch\xF3w wolnowybiegowy, ekologiczny lub zamkni\u0119ty."
+    m_Localized: "Jak zwierz\u0119ta gospodarskie s\u0105 utrzymywane i traktowane,
+      np. w chowie wolnowybiegowym, ekologicznym lub w pomieszczeniach."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203946
     m_Localized: "Czy osoby produkuj\u0105ce Twoj\u0105 \u017Cywno\u015B\u0107 otrzymuj\u0105
-      uczciw\u0105 zap\u0142at\u0119 i maj\u0105 dobre warunki pracy."
+      uczciwe wynagrodzenie i maj\u0105 godne warunki pracy."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203947
-    m_Localized: "Czy opakowanie jest z materia\u0142\xF3w, kt\xF3re mo\u017Cna podda\u0107
-      recyklingowi lub kompostowaniu albo kt\xF3re mniej obci\u0105\u017Caj\u0105
-      \u015Brodowisko."
+    m_Localized: "Czy opakowanie wykonano z materia\u0142\xF3w nadaj\u0105cych si\u0119
+      do recyklingu lub kompostowania albo maj\u0105cych mniejszy wp\u0142yw na \u015Brodowisko."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203948
@@ -5639,8 +5639,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203958
-    m_Localized: "Drobne sk\u0142adniki od\u017Cywcze potrzebne do prawid\u0142owej
-      pracy organizmu, g\u0142\xF3wnie z owoc\xF3w i warzyw."
+    m_Localized: "Mikrosk\u0142adniki od\u017Cywcze potrzebne organizmowi do prawid\u0142owego
+      funkcjonowania, obecne w r\xF3\u017Cnych produktach, w tym w owocach i warzywach."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203959

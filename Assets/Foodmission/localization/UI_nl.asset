@@ -1880,7 +1880,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038583797997568
-    m_Localized: Kies je genre
+    m_Localized: Kies je geslacht
     m_Metadata:
       m_Items: []
   - m_Id: 34038675313516544
@@ -2844,8 +2844,7 @@ MonoBehaviour:
     m_Localized: 'Hallo! We willen graag weten welke onderwerpen over duurzaamheid
       en voeding je het meest interesseren. Vink in de volgende stappen aan wat je
       belangrijk vindt: bij elk gebied en onderwerp staat een korte uitleg. Je antwoorden
-      helpen het onderzoek van het project, en je ziet nog steeds alle inhoud van
-      de app. Je kunt ze op elk moment wijzigen!'
+      helpen het onderzoek van het project. Je kunt ze op elk moment wijzigen!'
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5063,9 +5062,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
-    m_Localized: "Elke actie die je voltooit, telt CO\u2082-besparingen op bij je
-      totaal. Naarmate je besparingen toenemen, vult het wiel zich geleidelijk tot
-      je je huidige duurzaamheidsdoel bereikt."
+    m_Localized: "Elke voltooide actie draagt bij aan je totale besparing in CO\u2082-equivalenten
+      (CO\u2082e). Naarmate deze besparing oploopt, vult het wiel zich geleidelijk
+      totdat je je huidige duurzaamheidsdoel bereikt."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
@@ -5095,9 +5094,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
-    m_Localized: Elke actie die je voltooit, telt <b>kWh</b>-besparingen op bij je
-      totaal. Naarmate je besparingen toenemen, vult het wiel zich geleidelijk tot
-      je je huidige duurzaamheidsdoel bereikt.
+    m_Localized: Elke actie die je voltooit, draagt bij aan je totale energiebesparing,
+      uitgedrukt in <b>kWh</b>. Naarmate je besparing toeneemt, vult het wiel zich
+      geleidelijk totdat je je huidige duurzaamheidsdoel bereikt.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
@@ -5105,7 +5104,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: L blauw water bespaard
+    m_Localized: Liter blauw water bespaard
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5122,9 +5121,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203782
-    m_Localized: Het wiel meet besparingen in <b>liters (L)</b> blauw water. Elke
-      actie die je voltooit, telt L-besparingen op bij je totaal. Naarmate je besparingen
-      toenemen, vult het wiel zich geleidelijk tot je je huidige duurzaamheidsdoel
+    m_Localized: Het wiel meet de besparing in <b>liter (L)</b> blauw water. Elke
+      actie die je voltooit, telt mee voor je totale waterbesparing. Naarmate je
+      besparing oploopt, vult het wiel zich geleidelijk totdat je je huidige duurzaamheidsdoel
       bereikt.
     m_Metadata:
       m_Items: []
@@ -5133,7 +5132,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
-    m_Localized: "m\xB2 land behouden"
+    m_Localized: "m\xB2 land bespaard"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203785
@@ -5150,10 +5149,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203787
-    m_Localized: "Het wiel meet landbesparingen in <b>vierkante meters (m\xB2)</b>.
-      Elke actie die je voltooit, telt m\xB2-besparingen op bij je totaal. Naarmate
-      je besparingen toenemen, vult het wiel zich geleidelijk tot je je huidige duurzaamheidsdoel
-      bereikt."
+    m_Localized: "Het wiel meet de bespaarde oppervlakte in <b>vierkante meter (m\xB2)</b>.
+      Elke actie die je voltooit, telt mee voor de totale bespaarde oppervlakte.
+      Naarmate deze besparing oploopt, vult het wiel zich geleidelijk totdat je je
+      huidige duurzaamheidsdoel bereikt."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203788
@@ -5165,11 +5164,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203790
-    m_Localized: Veganistische portie
+    m_Localized: Veganistische maaltijd
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203791
-    m_Localized: Vegetarische portie
+    m_Localized: Vegetarische maaltijd
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203792
@@ -5197,15 +5196,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: Half bord gered
+    m_Localized: Een half bord eten gered
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: Vol bord gered
+    m_Localized: Een vol bord eten gered
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: Verlopen product geconsumeerd
+    m_Localized: Eten gebruikt na de houdbaarheidsdatum
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5213,7 +5212,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203802
-    m_Localized: "Suikerrijke ontbijtgranen \u2192 Haver/fruit"
+    m_Localized: "Suikerrijke ontbijtgranen \u2192 Havermout of fruit"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203803
@@ -5298,7 +5297,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: Heb je bij al je maaltijden geen zout aan tafel toegevoegd?
+    m_Localized: Heb je bij elke maaltijd vermeden om aan tafel zout toe te voegen?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5318,13 +5317,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203911
-    m_Localized: "Voor \u201C{0}\u201D mis ik nog deze dagen: {1}. Zullen we het
-      nu bijwerken?"
+    m_Localized: "Voor \u201C{0}\u201D ontbreken nog deze dagen: {1}. Zullen we ze
+      nu invullen?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203912
-    m_Localized: "Voor \u201C{0}\u201D en andere missies mis ik nog enkele dagen,
-      te beginnen met: {1}. Zullen we het nu bijwerken?"
+    m_Localized: "Voor \u201C{0}\u201D en andere missies ontbreken nog enkele dagen,
+      te beginnen met: {1}. Zullen we ze nu invullen?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203913
@@ -5332,7 +5331,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203914
-    m_Localized: "\u201C{0}\u201D heb je binnen: hij wordt voltooid op {1}."
+    m_Localized: "\u201C{0}\u201D is binnen: deze wordt afgerond op {1}."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203915
@@ -5364,11 +5363,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203922
-    m_Localized: Uitdaging bezig
+    m_Localized: Lopende uitdaging
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203923
-    m_Localized: Je werkt aan deze uitdaging. Helpt dit product? Tel het dan mee.
+    m_Localized: Je werkt aan deze uitdaging. Telt dit product mee? Zo ja, tel het
+      dan mee.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203924
@@ -5376,8 +5376,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203925
-    m_Localized: Dit product toont die informatie niet. Probeer een gescand of merkproduct,
-      of kijk op de verpakking.
+    m_Localized: Die informatie is niet beschikbaar voor dit product. Scan de barcode
+      van een merkproduct of controleer de verpakking.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203926
@@ -5391,16 +5391,16 @@ MonoBehaviour:
   - m_Id: 56190243387203928
     m_Localized: 'Waarom het belangrijk is: vlees produceren kost veel meer land,
       water en energie dan plantaardig voedsel. Een deel van het vlees vervangen
-      door peulvruchten, noten of andere eiwitten, en andere basisvoedingsmiddelen
+      door peulvruchten, noten of andere eiwitbronnen, en andere basisvoedingsmiddelen
       proberen, is een van de grootste veranderingen die je voor de planeet kunt
       maken.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
-    m_Localized: 'Waarom het belangrijk is: elk voedingsmiddel heeft verborgen kosten
-      voor het milieu, van het land en water om het te telen tot de energie en het
-      transport om het bij jou te krijgen. Als je die kosten kent, kun je producten
-      vergelijken en de lichtere keuze maken.'
+    m_Localized: 'Waarom het belangrijk is: elk voedingsmiddel heeft verborgen milieukosten,
+      van de grond en het water die nodig zijn om het te telen tot de energie en
+      het transport om het bij jou te krijgen. Als je die kosten kent, kun je producten
+      vergelijken en de optie met de kleinste milieu-impact kiezen.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
@@ -5417,9 +5417,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203932
     m_Localized: 'Waarom het belangrijk is: een groot deel van het voedsel dat we
-      produceren wordt weggegooid, en daarmee ook het land, water en de energie die
-      ervoor nodig waren. Plannen, voedsel goed bewaren en restjes gebruiken bespaart
-      voedsel en geld.'
+      produceren wordt weggegooid, samen met het land, water en de energie die ervoor
+      nodig waren. Maaltijden plannen, voedsel goed bewaren en restjes gebruiken
+      helpt voedselverspilling te verminderen en geld te besparen.'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5465,8 +5465,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: Hoeveel voedsel is veranderd ten opzichte van de natuurlijke vorm,
-      bijv. vers, bewerkt of ultrabewerkt.
+    m_Localized: In welke mate een voedingsmiddel is bewerkt, bijvoorbeeld minimaal
+      bewerkt, bewerkt of ultrabewerkt.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203943
@@ -5478,18 +5478,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
-    m_Localized: Hoe landbouwdieren worden gehouden en verzorgd, bijv. vrije uitloop,
-      biologisch of binnen.
+    m_Localized: Hoe boerderijdieren worden gehouden en verzorgd, bijvoorbeeld met
+      vrije uitloop, volgens biologische normen of in stallen.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203946
-    m_Localized: Of de mensen die je voedsel maken een eerlijk loon en goede arbeidsomstandigheden
-      krijgen.
+    m_Localized: Of de mensen die je voedsel produceren eerlijk worden betaald en
+      goede arbeidsomstandigheden hebben.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203947
-    m_Localized: Of de verpakking is gemaakt van materialen die gerecycled of gecomposteerd
-      kunnen worden, of die minder impact hebben.
+    m_Localized: Of de verpakking is gemaakt van materialen die kunnen worden gerecycled
+      of gecomposteerd, of die minder belastend zijn voor het milieu.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203948
@@ -5535,8 +5535,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203958
-    m_Localized: Kleine voedingsstoffen die je lichaam nodig heeft om goed te werken,
-      vooral uit fruit en groenten.
+    m_Localized: "Micronutri\xEBnten die je lichaam nodig heeft om goed te functioneren
+      en die in allerlei voedingsmiddelen zitten, waaronder fruit en groenten."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203959
