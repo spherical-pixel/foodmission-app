@@ -2823,10 +2823,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "Hei! For \xE5 tilpasse opplevelsen din vil vi gjerne vite dine
-      interesser og m\xE5l for b\xE6rekraft og ern\xE6ring. I de neste trinnene kan
-      du velge hvilke emner som interesserer deg mest. Du kan endre dem n\xE5r som
-      helst!"
+    m_Localized: "Hei! Vi vil gjerne vite hvilke temaer innen b\xE6rekraft og ern\xE6ring
+      som interesserer deg mest. Kryss av for det som er viktig for deg i de neste
+      trinnene: hvert omr\xE5de og tema har en kort forklaring. Svarene dine hjelper
+      forskningen i prosjektet, og du ser fortsatt alt innholdet i appen. Du kan
+      endre dem n\xE5r som helst!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5373,6 +5374,161 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203927
     m_Localized: Oppdrag i questen din
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203928
+    m_Localized: "Hvorfor det er viktig: \xE5 produsere kj\xF8tt krever mye mer land,
+      vann og energi enn plantemat. \xC5 bytte ut noe av kj\xF8ttet med belgfrukter,
+      n\xF8tter eller andre proteiner, og pr\xF8ve andre basismatvarer, er en av
+      de st\xF8rste endringene du kan gj\xF8re for planeten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203929
+    m_Localized: "Hvorfor det er viktig: all mat har en skjult kostnad for milj\xF8et,
+      fra landet og vannet som brukes til \xE5 dyrke den til energien og transporten
+      som trengs for \xE5 f\xE5 den til deg. N\xE5r du kjenner disse kostnadene,
+      kan du sammenligne produkter og velge det sk\xE5nsomme alternativet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203930
+    m_Localized: "Hvorfor det er viktig: hvordan maten dyrkes, oppdrettes, bearbeides
+      og omsettes p\xE5virker milj\xF8et, dyrene og menneskene som lager den. Etiketten
+      forteller deg ofte mer enn du tror."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203931
+    m_Localized: "Hvorfor det er viktig: emballasje beskytter maten, men mye av den
+      ender som avfall. Noen materialer er lettere \xE5 resirkulere eller gjenbruke
+      enn andre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203932
+    m_Localized: "Hvorfor det er viktig: en stor del av maten vi produserer blir
+      kastet, og det samme gj\xF8r landet, vannet og energien som ble brukt til \xE5
+      lage den. Planlegging, god oppbevaring og bruk av rester sparer mat og penger."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203933
+    m_Localized: "Hvorfor det er viktig: n\xE6ringsstoffene i maten p\xE5virker helsen
+      din. N\xE5r du vet hvor mye protein, fett, sukker, salt, fiber og vitaminer
+      du f\xE5r i deg, blir det lettere \xE5 ta sunnere valg."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203934
+    m_Localized: "Spise kj\xF8tt sjeldnere eller i mindre porsjoner."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203935
+    m_Localized: "F\xE5 protein fra belgfrukter, n\xF8tter, egg, meieriprodukter
+      eller plantebaserte produkter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203936
+    m_Localized: "Pr\xF8ve andre basismatvarer, som andre kornslag, belgfrukter eller
+      rotgr\xF8nnsaker."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203937
+    m_Localized: "Hvor mye land som trengs for \xE5 dyrke eller produsere en matvare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203938
+    m_Localized: "Hvor mye vann som trengs for \xE5 produsere en matvare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203939
+    m_Localized: "Hvor mye energi som brukes til \xE5 produsere, oppbevare og lage
+      en matvare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203940
+    m_Localized: "Klimagassene som slippes ut n\xE5r maten produseres, og som varmer
+      opp planeten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203941
+    m_Localized: Hvor langt maten reiser fra der den produseres til tallerkenen din.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203942
+    m_Localized: Hvor mye en matvare er endret fra sin naturlige form, f.eks. fersk,
+      bearbeidet eller ultrabearbeidet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203943
+    m_Localized: Hvor maten er dyrket eller laget, og om den er lokal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203944
+    m_Localized: "Hvordan avlinger dyrkes, f.eks. \xF8kologisk eller konvensjonelt
+      landbruk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203945
+    m_Localized: "Hvordan husdyr holdes og stelles, f.eks. frittg\xE5ende, \xF8kologisk
+      eller innend\xF8rs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203946
+    m_Localized: "Om de som produserer maten din f\xE5r rettferdig l\xF8nn og gode
+      arbeidsforhold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203947
+    m_Localized: "Om emballasjen er laget av materialer som kan resirkuleres eller
+      komposteres, eller som belaster milj\xF8et mindre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203948
+    m_Localized: "Om emballasjen kan fylles p\xE5 igjen eller brukes p\xE5 nytt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203949
+    m_Localized: "Mat som legges p\xE5 tallerkenen, men ikke blir spist."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203950
+    m_Localized: "Laget mat som kastes i stedet for \xE5 spises senere."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203951
+    m_Localized: "Mat som blir d\xE5rlig eller g\xE5r ut p\xE5 dato f\xF8r du bruker
+      den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203952
+    m_Localized: "Kj\xF8pe eller spise mer mat enn du trenger."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203953
+    m_Localized: "Bygger opp og reparerer kroppen. Finnes i belgfrukter, kj\xF8tt,
+      fisk, egg og meieriprodukter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203954
+    m_Localized: En energikilde; noen typer fett er sunnere enn andre.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203955
+    m_Localized: "S\xE6rlig tilsatt sukker, som det er best \xE5 begrense."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203956
+    m_Localized: "For mye salt kan \xF8ke blodtrykket."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203957
+    m_Localized: "Hjelper ford\xF8yelsen. Finnes i fullkorn, frukt, gr\xF8nnsaker
+      og belgfrukter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203958
+    m_Localized: "Sm\xE5 n\xE6ringsstoffer kroppen trenger for \xE5 fungere godt,
+      mest fra frukt og gr\xF8nnsaker."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203959
+    m_Localized: "Hvor mye energi en matvare gir deg, m\xE5lt i kalorier."
     m_Metadata:
       m_Items: []
   references:

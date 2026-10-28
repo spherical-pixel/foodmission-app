@@ -2836,10 +2836,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "Hallo! Um deine Erfahrung zu personalisieren, m\xF6chten wir deine
-      Interessen und Ziele in Bezug auf Nachhaltigkeit und Ern\xE4hrung erfahren.
-      In den n\xE4chsten Schritten kannst du ausw\xE4hlen, welche Themen dich am
-      meisten interessieren. Du kannst sie jederzeit \xE4ndern!"
+    m_Localized: "Hallo! Wir m\xF6chten gern wissen, welche Themen rund um Nachhaltigkeit
+      und Ern\xE4hrung dich am meisten interessieren. Kreuze in den n\xE4chsten Schritten
+      an, was dir wichtig ist: Zu jedem Bereich und Thema gibt es eine kurze Erkl\xE4rung.
+      Deine Antworten helfen der Forschung des Projekts, und du siehst trotzdem alle
+      Inhalte der App. Du kannst sie jederzeit \xE4ndern!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5417,6 +5418,166 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203927
     m_Localized: Mission deiner Quest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203928
+    m_Localized: "Warum es wichtig ist: F\xFCr Fleisch braucht man viel mehr Land,
+      Wasser und Energie als f\xFCr pflanzliche Lebensmittel. Einen Teil des Fleisches
+      durch H\xFClsenfr\xFCchte, N\xFCsse oder andere Proteine zu ersetzen und andere
+      Grundnahrungsmittel auszuprobieren, ist eine der gr\xF6\xDFten Ver\xE4nderungen,
+      die du f\xFCr den Planeten machen kannst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203929
+    m_Localized: "Warum es wichtig ist: Jedes Lebensmittel hat versteckte Kosten
+      f\xFCr die Umwelt \u2013 vom Land und Wasser f\xFCr den Anbau bis zur Energie
+      und zum Transport, bis es bei dir ankommt. Wenn du diese Kosten kennst, kannst
+      du Produkte vergleichen und die umweltschonendere Wahl treffen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203930
+    m_Localized: "Warum es wichtig ist: Wie ein Lebensmittel angebaut, gez\xFCchtet,
+      verarbeitet und gehandelt wird, wirkt sich auf die Umwelt, die Tiere und die
+      Menschen aus, die es herstellen. Das Etikett verr\xE4t oft mehr, als du denkst."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203931
+    m_Localized: "Warum es wichtig ist: Verpackungen sch\xFCtzen Lebensmittel, aber
+      vieles davon landet im M\xFCll. Manche Materialien lassen sich leichter recyceln
+      oder wiederverwenden als andere."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203932
+    m_Localized: "Warum es wichtig ist: Ein gro\xDFer Teil der produzierten Lebensmittel
+      wird weggeworfen \u2013 und damit auch das Land, das Wasser und die Energie,
+      die daf\xFCr n\xF6tig waren. Planen, Lebensmittel richtig lagern und Reste
+      verwerten spart Essen und Geld."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203933
+    m_Localized: "Warum es wichtig ist: Die N\xE4hrstoffe in deinem Essen wirken
+      sich auf deine Gesundheit aus. Wenn du wei\xDFt, wie viel Protein, Fett, Zucker,
+      Salz, Ballaststoffe und Vitamine du isst, kannst du ges\xFCndere Entscheidungen
+      treffen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203934
+    m_Localized: Seltener oder kleinere Portionen Fleisch essen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203935
+    m_Localized: "Protein aus H\xFClsenfr\xFCchten, N\xFCssen, Eiern, Milchprodukten
+      oder pflanzlichen Produkten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203936
+    m_Localized: "Andere Grundnahrungsmittel ausprobieren, etwa andere Getreide,
+      H\xFClsenfr\xFCchte oder Knollen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203937
+    m_Localized: "Wie viel Land n\xF6tig ist, um ein Lebensmittel anzubauen oder
+      Tiere daf\xFCr zu halten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203938
+    m_Localized: "Wie viel Wasser f\xFCr die Herstellung eines Lebensmittels n\xF6tig
+      ist."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203939
+    m_Localized: "Wie viel Energie f\xFCr Herstellung, Lagerung und Zubereitung eines
+      Lebensmittels verbraucht wird."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203940
+    m_Localized: "Die Treibhausgase, die bei der Herstellung eines Lebensmittels
+      entstehen und den Planeten erw\xE4rmen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203941
+    m_Localized: Wie weit ein Lebensmittel vom Erzeugungsort bis auf deinen Teller
+      reist.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203942
+    m_Localized: "Wie stark ein Lebensmittel gegen\xFCber seinem nat\xFCrlichen Zustand
+      ver\xE4ndert wurde, z. B. frisch, verarbeitet oder hochverarbeitet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203943
+    m_Localized: Wo ein Lebensmittel angebaut oder hergestellt wurde und ob es regional
+      ist.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203944
+    m_Localized: Wie Pflanzen angebaut werden, z. B. biologisch oder konventionell.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203945
+    m_Localized: Wie Nutztiere gehalten und versorgt werden, z. B. Freiland-, Bio-
+      oder Stallhaltung.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203946
+    m_Localized: Ob die Menschen, die dein Essen herstellen, fair bezahlt werden
+      und gute Arbeitsbedingungen haben.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203947
+    m_Localized: Ob die Verpackung aus Materialien besteht, die sich recyceln oder
+      kompostieren lassen oder weniger belasten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203948
+    m_Localized: "Ob die Verpackung nachgef\xFCllt oder wiederverwendet werden kann."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203949
+    m_Localized: Essen, das auf den Teller kommt, aber nicht gegessen wird.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203950
+    m_Localized: "Gekochtes Essen, das weggeworfen statt sp\xE4ter gegessen wird."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203951
+    m_Localized: Lebensmittel, die verderben oder ablaufen, bevor du sie verwendest.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203952
+    m_Localized: Mehr Lebensmittel kaufen oder essen, als du brauchst.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203953
+    m_Localized: "Baut deinen K\xF6rper auf und repariert ihn. Steckt in H\xFClsenfr\xFCchten,
+      Fleisch, Fisch, Eiern und Milchprodukten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203954
+    m_Localized: "Eine Energiequelle; manche Fette sind ges\xFCnder als andere."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203955
+    m_Localized: "Vor allem zugesetzter Zucker, den man besser gering h\xE4lt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203956
+    m_Localized: "Zu viel Salz kann den Blutdruck erh\xF6hen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203957
+    m_Localized: "Unterst\xFCtzt die Verdauung. Steckt in Vollkorn, Obst, Gem\xFCse
+      und H\xFClsenfr\xFCchten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203958
+    m_Localized: "Kleine N\xE4hrstoffe, die dein K\xF6rper braucht, um gut zu funktionieren,
+      vor allem aus Obst und Gem\xFCse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203959
+    m_Localized: Wie viel Energie ein Lebensmittel liefert, gemessen in Kalorien.
     m_Metadata:
       m_Items: []
   references:

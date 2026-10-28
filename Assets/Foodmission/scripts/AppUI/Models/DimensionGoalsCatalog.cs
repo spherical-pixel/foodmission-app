@@ -8,6 +8,9 @@ namespace eu.foodmission.platform
     {
         public string Code { get; }
 
+        /// <summary>One-line explanation shown under the topic checkbox.</summary>
+        public string HelpKey => "GOALS_TOPIC_HELP_" + Code;
+
         public GoalTopicDefinition(string code)
         {
             Code = code;
@@ -18,12 +21,16 @@ namespace eu.foodmission.platform
     {
         public string DimensionCode { get; }
         public string QuestionKey { get; }
+
+        /// <summary>Why the dimension matters, shown above its topics.</summary>
+        public string WhyKey { get; }
         public GoalTopicDefinition[] Topics { get; }
 
-        public GoalDimensionDefinition(string dimensionCode, string questionKey, GoalTopicDefinition[] topics)
+        public GoalDimensionDefinition(string dimensionCode, string questionKey, string whyKey, GoalTopicDefinition[] topics)
         {
             DimensionCode = dimensionCode;
             QuestionKey = questionKey;
+            WhyKey = whyKey;
             Topics = topics ?? Array.Empty<GoalTopicDefinition>();
         }
     }
@@ -37,6 +44,7 @@ namespace eu.foodmission.platform
             new GoalDimensionDefinition(
                 DimensionCode.DietChanges,
                 "GOALS_Q_DIM_1",
+                "GOALS_WHY_DIM_1",
                 new[]
                 {
                     new GoalTopicDefinition(TopicCode.ReducingMeatConsumption),
@@ -47,6 +55,7 @@ namespace eu.foodmission.platform
             new GoalDimensionDefinition(
                 DimensionCode.ProductChoices,
                 "GOALS_Q_DIM_2",
+                "GOALS_WHY_DIM_2",
                 new[]
                 {
                     new GoalTopicDefinition(TopicCode.LandUse),
@@ -59,6 +68,7 @@ namespace eu.foodmission.platform
             new GoalDimensionDefinition(
                 DimensionCode.ProductionMethods,
                 "GOALS_Q_DIM_3",
+                "GOALS_WHY_DIM_3",
                 new[]
                 {
                     new GoalTopicDefinition(TopicCode.LevelOfProcessing),
@@ -71,6 +81,7 @@ namespace eu.foodmission.platform
             new GoalDimensionDefinition(
                 DimensionCode.Packaging,
                 "GOALS_Q_DIM_4",
+                "GOALS_WHY_DIM_4",
                 new[]
                 {
                     new GoalTopicDefinition(TopicCode.SustainabilityOfPackagingMaterials),
@@ -80,6 +91,7 @@ namespace eu.foodmission.platform
             new GoalDimensionDefinition(
                 DimensionCode.FoodWaste,
                 "GOALS_Q_DIM_5",
+                "GOALS_WHY_DIM_5",
                 new[]
                 {
                     new GoalTopicDefinition(TopicCode.PlateWaste),
@@ -91,6 +103,7 @@ namespace eu.foodmission.platform
             new GoalDimensionDefinition(
                 DimensionCode.NutritionValues,
                 "GOALS_Q_DIM_6",
+                "GOALS_WHY_DIM_6",
                 new[]
                 {
                     new GoalTopicDefinition(TopicCode.Protein),

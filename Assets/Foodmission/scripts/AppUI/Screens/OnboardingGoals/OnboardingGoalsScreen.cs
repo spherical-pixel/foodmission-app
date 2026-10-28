@@ -20,6 +20,9 @@ namespace eu.foodmission.platform
         protected override string CompleteButtonLabel => "@UI:TXT_DONE";
         protected override bool ShowCloseButton => true;
 
+        // Topics with help lines can be taller than the body (nutrition step): grow and scroll, or the rows collapse
+        protected override bool GrowWithStepContent => true;
+
         protected override bool ShowSkipOnFirstStep => _viewModel != null && _viewModel.IsInOnboardingRun;
 
         protected override void OnSkipRequested()
@@ -152,6 +155,7 @@ namespace eu.foodmission.platform
             container.style.paddingBottom = 16;
             container.style.paddingLeft = 16;
             container.style.paddingRight = 16;
+            container.style.flexShrink = 0;
             return container;
         }
 
@@ -163,6 +167,7 @@ namespace eu.foodmission.platform
             root.style.paddingLeft = 16;
             root.style.paddingRight = 16;
             root.style.width = new StyleLength(Length.Percent(100));
+            root.style.flexShrink = 0;
 
             if (element != null)
             {
@@ -195,6 +200,10 @@ namespace eu.foodmission.platform
 
                 container.Clear();
 
+                var why = new Unity.AppUI.UI.Text { text = "@UI:" + dimDef.WhyKey, size = TextSize.S };
+                why.AddToClassList("fm-goals-dimension__why");
+                container.Add(why);
+
                 foreach (var topic in dimDef.Topics)
                 {
                     string topicCode = topic.Code;
@@ -216,7 +225,12 @@ namespace eu.foodmission.platform
                     }
 
                     _checkboxItems.Add(checkboxItem);
+                    checkboxItem.style.flexShrink = 0;
                     container.Add(checkboxItem);
+
+                    var help = new Unity.AppUI.UI.Text { text = "@UI:" + topic.HelpKey, size = TextSize.S };
+                    help.AddToClassList("fm-goals-topic__help");
+                    container.Add(help);
                 }
             }
         }

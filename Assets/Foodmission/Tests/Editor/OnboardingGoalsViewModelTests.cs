@@ -59,14 +59,14 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
-        public void Initialize_WithNoPriorGoals_SelectsAll26TopicsByDefault()
+        public void Initialize_WithNoPriorGoals_StartsWithNothingSelected()
         {
             _vm.Initialize();
 
-            Assert.AreEqual(26, _vm.SelectedTopicCodes.Count);
+            Assert.AreEqual(0, _vm.SelectedTopicCodes.Count);
             foreach (var code in DimensionGoalsCatalog.AllTopicCodes)
             {
-                Assert.IsTrue(_vm.IsTopicSelected(code));
+                Assert.IsFalse(_vm.IsTopicSelected(code));
             }
         }
 
@@ -90,6 +90,9 @@ namespace eu.foodmission.platform.Tests
         public void SetTopicSelected_AndToggleTopic_ModifySelection()
         {
             _vm.Initialize();
+            Assert.IsFalse(_vm.IsTopicSelected(TopicCode.ReducingMeatConsumption));
+
+            _vm.SetTopicSelected(TopicCode.ReducingMeatConsumption, true);
             Assert.IsTrue(_vm.IsTopicSelected(TopicCode.ReducingMeatConsumption));
 
             _vm.SetTopicSelected(TopicCode.ReducingMeatConsumption, false);
@@ -103,11 +106,6 @@ namespace eu.foodmission.platform.Tests
         public async Task StepProgression_Steps0to5_CanAdvanceEvenWithZeroSelections()
         {
             _vm.Initialize();
-            // Deselect all
-            foreach (var code in DimensionGoalsCatalog.AllTopicCodes)
-            {
-                _vm.SetTopicSelected(code, false);
-            }
             Assert.AreEqual(0, _vm.SelectedTopicCodes.Count);
 
             // Step 0 can advance
@@ -136,6 +134,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CompleteFlow_OnboardingMode_DispatchesReduxUpdatesProfileAndNavigatesToSurvey()
         {
             _vm.Initialize();
+            _vm.SetTopicSelected(TopicCode.Protein, true);
             _vm.FromEditProfile = false;
 
             // Advance through all steps to step 6
@@ -153,11 +152,11 @@ namespace eu.foodmission.platform.Tests
             // Verify Redux action dispatched
             Assert.IsTrue(_dispatchedActions.Contains(AppActions.setUserGoals.type));
             var state = _storeService.GetAppState();
-            Assert.AreEqual(26, state.userGoals.Length);
+            CollectionAssert.AreEqual(new[] { TopicCode.Protein }, state.userGoals);
 
             // Verify API called
             _authServiceMock.Verify(a => a.UpdateProfileAsync(It.Is<ProfileUpdateRequest>(
-                req => req.preferences != null && req.preferences.goals.Length == 26
+                req => req.preferences != null && req.preferences.goals.Length == 1
             )), Times.Once);
 
             // Verify navigation to survey
@@ -168,6 +167,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CompleteFlow_FromEditProfile_NavigatesToEditProfile()
         {
             _vm.Initialize();
+            _vm.SetTopicSelected(TopicCode.Protein, true);
             _vm.FromEditProfile = true;
 
             for (int i = 0; i < 6; i++)
@@ -184,6 +184,7 @@ namespace eu.foodmission.platform.Tests
         public async Task CompleteFlow_WhenFromHome_NavigatesToGoToHome()
         {
             _vm.Initialize();
+            _vm.SetTopicSelected(TopicCode.Protein, true);
             _vm.FromHome = true;
 
             for (int i = 0; i < 6; i++)
@@ -207,6 +208,7 @@ namespace eu.foodmission.platform.Tests
             Unity.AppUI.Navigation.Argument[] navArgs = null;
             _vm.NavigationRequested += (action, args) => navArgs = args;
             _vm.Initialize();
+            _vm.SetTopicSelected(TopicCode.Protein, true);
             _vm.FromHome = true;
 
             for (int i = 0; i < 7; i++)
@@ -253,6 +255,7 @@ namespace eu.foodmission.platform.Tests
                 .ReturnsAsync((false, new ApiErrorResponse { statusCode = 500, message = "Server error" }));
 
             _vm.Initialize();
+            _vm.SetTopicSelected(TopicCode.Protein, true);
             for (int i = 0; i < 6; i++)
             {
                 await _vm.GoNextAsync();
@@ -371,6 +374,7 @@ namespace eu.foodmission.platform.Tests
             var run = new OnboardingRun();
             run.Start();
             var vm = CreateRunVm(run);
+            vm.SetTopicSelected(TopicCode.Protein, true);
 
             for (int i = 0; i < 7; i++)
             {

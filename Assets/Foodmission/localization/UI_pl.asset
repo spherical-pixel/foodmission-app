@@ -2849,11 +2849,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "Cze\u015B\u0107! Aby spersonalizowa\u0107 Twoje do\u015Bwiadczenie,
-      chcemy pozna\u0107 Twoje zainteresowania i cele w zakresie zr\xF3wnowa\u017Conego
-      rozwoju i od\u017Cywiania. W kolejnych krokach mo\u017Cesz wybra\u0107 tematy,
-      kt\xF3re najbardziej Ci\u0119 interesuj\u0105. Mo\u017Cesz je zmieni\u0107
-      w ka\u017Cdej chwili!"
+    m_Localized: "Cze\u015B\u0107! Chcemy wiedzie\u0107, kt\xF3re tematy zwi\u0105zane
+      ze zr\xF3wnowa\u017Conym rozwojem i od\u017Cywianiem interesuj\u0105 Ci\u0119
+      najbardziej. W kolejnych krokach zaznacz to, co jest dla Ciebie wa\u017Cne:
+      ka\u017Cdy obszar i temat ma kr\xF3tkie wyja\u015Bnienie. Twoje odpowiedzi
+      pomagaj\u0105 w badaniach projektu, a w aplikacji nadal zobaczysz wszystkie
+      tre\u015Bci. Mo\u017Cesz je zmieni\u0107 w ka\u017Cdej chwili!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5476,6 +5477,174 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203927
     m_Localized: Misja twojego zadania
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203928
+    m_Localized: "Dlaczego to wa\u017Cne: produkcja mi\u0119sa zu\u017Cywa znacznie
+      wi\u0119cej ziemi, wody i energii ni\u017C produkcja \u017Cywno\u015Bci ro\u015Blinnej.
+      Zast\u0105pienie cz\u0119\u015Bci mi\u0119sa ro\u015Blinami str\u0105czkowymi,
+      orzechami lub innymi \u017Ar\xF3d\u0142ami bia\u0142ka oraz pr\xF3bowanie innych
+      podstawowych produkt\xF3w to jedna z najwi\u0119kszych zmian, jakie mo\u017Cesz
+      zrobi\u0107 dla planety."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203929
+    m_Localized: "Dlaczego to wa\u017Cne: ka\u017Cda \u017Cywno\u015B\u0107 ma ukryty
+      koszt dla \u015Brodowiska \u2013 od ziemi i wody potrzebnych do jej uprawy
+      po energi\u0119 i transport, dzi\u0119ki kt\xF3rym trafia do Ciebie. Znaj\u0105c
+      te koszty, mo\u017Cesz por\xF3wnywa\u0107 produkty i wybiera\u0107 l\u017Cejsz\u0105
+      opcj\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203930
+    m_Localized: "Dlaczego to wa\u017Cne: spos\xF3b uprawy, hodowli, przetwarzania
+      i handlu \u017Cywno\u015Bci\u0105 wp\u0142ywa na \u015Brodowisko, zwierz\u0119ta
+      i ludzi, kt\xF3rzy j\u0105 wytwarzaj\u0105. Etykieta cz\u0119sto m\xF3wi wi\u0119cej,
+      ni\u017C my\u015Blisz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203931
+    m_Localized: "Dlaczego to wa\u017Cne: opakowania chroni\u0105 \u017Cywno\u015B\u0107,
+      ale wiele z nich staje si\u0119 odpadami. Niekt\xF3re materia\u0142y \u0142atwiej
+      podda\u0107 recyklingowi lub ponownie wykorzysta\u0107 ni\u017C inne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203932
+    m_Localized: "Dlaczego to wa\u017Cne: du\u017Ca cz\u0119\u015B\u0107 produkowanej
+      \u017Cywno\u015Bci trafia do kosza, a razem z ni\u0105 ziemia, woda i energia
+      zu\u017Cyte do jej wytworzenia. Planowanie, dobre przechowywanie i wykorzystywanie
+      resztek oszcz\u0119dza jedzenie i pieni\u0105dze."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203933
+    m_Localized: "Dlaczego to wa\u017Cne: sk\u0142adniki od\u017Cywcze w jedzeniu
+      wp\u0142ywaj\u0105 na Twoje zdrowie. Wiedza o tym, ile bia\u0142ka, t\u0142uszczu,
+      cukru, soli, b\u0142onnika i witamin spo\u017Cywasz, pomaga dokonywa\u0107
+      zdrowszych wybor\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203934
+    m_Localized: "Jedzenie mi\u0119sa rzadziej lub w mniejszych porcjach."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203935
+    m_Localized: "Bia\u0142ko z ro\u015Blin str\u0105czkowych, orzech\xF3w, jajek,
+      nabia\u0142u lub produkt\xF3w ro\u015Blinnych."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203936
+    m_Localized: "Pr\xF3bowanie innych podstawowych produkt\xF3w, np. innych zb\xF3\u017C,
+      ro\u015Blin str\u0105czkowych lub bulw."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203937
+    m_Localized: "Ile ziemi potrzeba, aby wyhodowa\u0107 lub wyprodukowa\u0107 dan\u0105
+      \u017Cywno\u015B\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203938
+    m_Localized: "Ile wody potrzeba do wyprodukowania danej \u017Cywno\u015Bci."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203939
+    m_Localized: "Ile energii zu\u017Cywa si\u0119 do wyprodukowania, przechowywania
+      i przygotowania \u017Cywno\u015Bci."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203940
+    m_Localized: "Gazy cieplarniane uwalniane przy produkcji \u017Cywno\u015Bci,
+      kt\xF3re ogrzewaj\u0105 planet\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203941
+    m_Localized: "Jak daleko \u017Cywno\u015B\u0107 podr\xF3\u017Cuje z miejsca produkcji
+      na Tw\xF3j talerz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203942
+    m_Localized: "Jak bardzo \u017Cywno\u015B\u0107 zosta\u0142a zmieniona w por\xF3wnaniu
+      z jej naturaln\u0105 postaci\u0105, np. \u015Bwie\u017Ca, przetworzona lub
+      wysoko przetworzona."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203943
+    m_Localized: "Gdzie \u017Cywno\u015B\u0107 zosta\u0142a wyhodowana lub wyprodukowana
+      i czy jest lokalna."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203944
+    m_Localized: "Jak uprawia si\u0119 ro\u015Bliny, np. rolnictwo ekologiczne lub
+      konwencjonalne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203945
+    m_Localized: "Jak hoduje si\u0119 zwierz\u0119ta i jak si\u0119 o nie dba, np.
+      ch\xF3w wolnowybiegowy, ekologiczny lub zamkni\u0119ty."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203946
+    m_Localized: "Czy osoby produkuj\u0105ce Twoj\u0105 \u017Cywno\u015B\u0107 otrzymuj\u0105
+      uczciw\u0105 zap\u0142at\u0119 i maj\u0105 dobre warunki pracy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203947
+    m_Localized: "Czy opakowanie jest z materia\u0142\xF3w, kt\xF3re mo\u017Cna podda\u0107
+      recyklingowi lub kompostowaniu albo kt\xF3re mniej obci\u0105\u017Caj\u0105
+      \u015Brodowisko."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203948
+    m_Localized: "Czy opakowanie mo\u017Cna ponownie nape\u0142ni\u0107 lub wykorzysta\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203949
+    m_Localized: "Jedzenie na\u0142o\u017Cone na talerz, kt\xF3re nie zostaje zjedzone."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203950
+    m_Localized: "Ugotowane jedzenie, kt\xF3re zostaje wyrzucone zamiast zjedzone
+      p\xF3\u017Aniej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203951
+    m_Localized: "\u017Bywno\u015B\u0107, kt\xF3ra psuje si\u0119 lub traci wa\u017Cno\u015B\u0107,
+      zanim j\u0105 wykorzystasz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203952
+    m_Localized: "Kupowanie lub jedzenie wi\u0119cej, ni\u017C potrzebujesz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203953
+    m_Localized: "Buduje i odbudowuje organizm. Wyst\u0119puje w ro\u015Blinach str\u0105czkowych,
+      mi\u0119sie, rybach, jajkach i nabiale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203954
+    m_Localized: "\u0179r\xF3d\u0142o energii; niekt\xF3re t\u0142uszcze s\u0105
+      zdrowsze od innych."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203955
+    m_Localized: "Zw\u0142aszcza cukier dodany, kt\xF3ry najlepiej ogranicza\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203956
+    m_Localized: "Zbyt du\u017Co soli mo\u017Ce podnosi\u0107 ci\u015Bnienie krwi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203957
+    m_Localized: "Wspomaga trawienie. Wyst\u0119puje w produktach pe\u0142noziarnistych,
+      owocach, warzywach i ro\u015Blinach str\u0105czkowych."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203958
+    m_Localized: "Drobne sk\u0142adniki od\u017Cywcze potrzebne do prawid\u0142owej
+      pracy organizmu, g\u0142\xF3wnie z owoc\xF3w i warzyw."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203959
+    m_Localized: "Ile energii dostarcza \u017Cywno\u015B\u0107, mierzonej w kaloriach."
     m_Metadata:
       m_Items: []
   references:

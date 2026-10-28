@@ -2823,10 +2823,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "\xA1Hola! Para personalizar tu experiencia, queremos conocer tus
-      intereses y metas de sostenibilidad y nutrici\xF3n. En los siguientes pasos
-      podr\xE1s elegir qu\xE9 temas te interesan m\xE1s. \xA1Podr\xE1s cambiarlos
-      cuando quieras!"
+    m_Localized: "\xA1Hola! Queremos saber qu\xE9 temas de sostenibilidad y nutrici\xF3n
+      te interesan m\xE1s. En los siguientes pasos, marca los que te importan: cada
+      \xE1rea y cada tema llevan una breve explicaci\xF3n. Tus respuestas ayudan
+      a la investigaci\xF3n del proyecto y seguir\xE1s viendo todo el contenido de
+      la app. \xA1Podr\xE1s cambiarlas cuando quieras!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5383,6 +5384,162 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203927
     m_Localized: "Misi\xF3n de tu quest"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203928
+    m_Localized: "Por qu\xE9 importa: producir carne requiere mucha m\xE1s tierra,
+      agua y energ\xEDa que los alimentos vegetales. Cambiar parte de la carne por
+      legumbres, frutos secos u otras prote\xEDnas, y probar otros alimentos b\xE1sicos,
+      es uno de los mayores cambios que puedes hacer por el planeta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203929
+    m_Localized: "Por qu\xE9 importa: cada alimento tiene un coste oculto para el
+      medio ambiente, desde la tierra y el agua para cultivarlo hasta la energ\xEDa
+      y el transporte para que llegue a ti. Conocer esos costes te ayuda a comparar
+      productos y elegir la opci\xF3n m\xE1s ligera."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203930
+    m_Localized: "Por qu\xE9 importa: c\xF3mo se cultiva, se cr\xEDa, se procesa
+      y se comercia un alimento afecta al medio ambiente, a los animales y a las
+      personas que lo producen. La etiqueta suele decirte m\xE1s de lo que crees."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203931
+    m_Localized: "Por qu\xE9 importa: los envases protegen los alimentos, pero muchos
+      acaban en la basura. Algunos materiales son m\xE1s f\xE1ciles de reciclar o
+      reutilizar que otros."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203932
+    m_Localized: "Por qu\xE9 importa: una gran parte de los alimentos que producimos
+      se tira, y con ellos la tierra, el agua y la energ\xEDa usadas para producirlos.
+      Planificar, guardar bien la comida y aprovechar las sobras ahorra comida y
+      dinero."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203933
+    m_Localized: "Por qu\xE9 importa: los nutrientes de lo que comes afectan a tu
+      salud. Saber cu\xE1nta prote\xEDna, grasa, az\xFAcar, sal, fibra y vitaminas
+      tomas te ayuda a elegir de forma m\xE1s saludable."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203934
+    m_Localized: "Comer carne con menos frecuencia o en raciones m\xE1s peque\xF1as."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203935
+    m_Localized: "Obtener prote\xEDna de legumbres, frutos secos, huevos, l\xE1cteos
+      o productos vegetales."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203936
+    m_Localized: "Probar otros alimentos b\xE1sicos, como otros cereales, legumbres
+      o tub\xE9rculos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203937
+    m_Localized: "Cu\xE1nta tierra hace falta para cultivar o criar un alimento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203938
+    m_Localized: "Cu\xE1nta agua hace falta para producir un alimento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203939
+    m_Localized: "Cu\xE1nta energ\xEDa se usa para producir, conservar y cocinar
+      un alimento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203940
+    m_Localized: Los gases de efecto invernadero que se emiten al producir un alimento
+      y que calientan el planeta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203941
+    m_Localized: "Cu\xE1nto viaja un alimento desde donde se produce hasta tu plato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203942
+    m_Localized: "Cu\xE1nto ha cambiado un alimento respecto a su estado natural,
+      por ejemplo fresco, procesado o ultraprocesado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203943
+    m_Localized: "D\xF3nde se cultiv\xF3 o elabor\xF3 un alimento y si es local."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203944
+    m_Localized: "C\xF3mo se cultivan los alimentos, por ejemplo agricultura ecol\xF3gica
+      o convencional."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203945
+    m_Localized: "C\xF3mo se cr\xEDan y cuidan los animales de granja, por ejemplo
+      en libertad, en ecol\xF3gico o en interior."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203946
+    m_Localized: Si las personas que producen tu comida reciben un pago y unas condiciones
+      de trabajo justas.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203947
+    m_Localized: "Si el envase est\xE1 hecho de materiales que se pueden reciclar
+      o compostar, o que tienen menos impacto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203948
+    m_Localized: Si el envase se puede rellenar o volver a usar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203949
+    m_Localized: Comida servida en el plato que no se come.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203950
+    m_Localized: "Comida cocinada que se tira en vez de comerla m\xE1s tarde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203951
+    m_Localized: Alimentos que se estropean o caducan antes de que los uses.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203952
+    m_Localized: "Comprar o comer m\xE1s comida de la que necesitas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203953
+    m_Localized: "Construye y repara tu cuerpo. Est\xE1 en legumbres, carne, pescado,
+      huevos y l\xE1cteos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203954
+    m_Localized: "Una fuente de energ\xEDa; algunas grasas son m\xE1s saludables
+      que otras."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203955
+    m_Localized: "Sobre todo el az\xFAcar a\xF1adido, que conviene limitar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203956
+    m_Localized: "Demasiada sal puede subir la tensi\xF3n arterial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203957
+    m_Localized: "Ayuda a la digesti\xF3n. Est\xE1 en cereales integrales, fruta,
+      verdura y legumbres."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203958
+    m_Localized: "Peque\xF1os nutrientes que tu cuerpo necesita para funcionar bien,
+      sobre todo de fruta y verdura."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203959
+    m_Localized: "Cu\xE1nta energ\xEDa te aporta un alimento, medida en calor\xEDas."
     m_Metadata:
       m_Items: []
   references:

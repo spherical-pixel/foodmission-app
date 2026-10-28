@@ -8,6 +8,31 @@ namespace eu.foodmission.platform.Tests
         private static readonly Dimension Diet = new Dimension { id = "dim-1", code = DimensionCode.DietChanges };
         private static readonly Dimension Waste = new Dimension { id = "dim-5", code = DimensionCode.FoodWaste };
 
+        // The filter is switched off in the app (issue #86); these tests cover it switched on
+        [SetUp]
+        public void SetUp()
+        {
+            GoalContentFilter.Enabled = true;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            GoalContentFilter.Enabled = false;
+        }
+
+        [Test]
+        public void FromGoals_WhenDisabled_ShowsEverything()
+        {
+            GoalContentFilter.Enabled = false;
+
+            var filter = GoalContentFilter.FromGoals(new[] { TopicCode.PlateWaste });
+
+            Assert.IsTrue(filter.ShowsAll);
+            Assert.IsTrue(filter.ShouldShow(Diet, false));
+            Assert.IsFalse(filter.HasHiddenContent);
+        }
+
         [Test]
         public void FromGoals_NoGoals_ShowsEverything()
         {

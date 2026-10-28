@@ -2841,10 +2841,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: Hallo! Om je ervaring te personaliseren, willen we graag je interesses
-      en doelen op het gebied van duurzaamheid en voeding weten. In de volgende stappen
-      kun je kiezen welke onderwerpen je het meest interesseren. Je kunt ze op elk
-      moment wijzigen!
+    m_Localized: 'Hallo! We willen graag weten welke onderwerpen over duurzaamheid
+      en voeding je het meest interesseren. Vink in de volgende stappen aan wat je
+      belangrijk vindt: bij elk gebied en onderwerp staat een korte uitleg. Je antwoorden
+      helpen het onderzoek van het project, en je ziet nog steeds alle inhoud van
+      de app. Je kunt ze op elk moment wijzigen!'
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5385,6 +5386,161 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203927
     m_Localized: Missie van je opdracht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203928
+    m_Localized: 'Waarom het belangrijk is: vlees produceren kost veel meer land,
+      water en energie dan plantaardig voedsel. Een deel van het vlees vervangen
+      door peulvruchten, noten of andere eiwitten, en andere basisvoedingsmiddelen
+      proberen, is een van de grootste veranderingen die je voor de planeet kunt
+      maken.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203929
+    m_Localized: 'Waarom het belangrijk is: elk voedingsmiddel heeft verborgen kosten
+      voor het milieu, van het land en water om het te telen tot de energie en het
+      transport om het bij jou te krijgen. Als je die kosten kent, kun je producten
+      vergelijken en de lichtere keuze maken.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203930
+    m_Localized: 'Waarom het belangrijk is: hoe voedsel wordt geteeld, gefokt, bewerkt
+      en verhandeld, heeft invloed op het milieu, de dieren en de mensen die het
+      maken. Het etiket vertelt je vaak meer dan je denkt.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203931
+    m_Localized: 'Waarom het belangrijk is: verpakkingen beschermen voedsel, maar
+      veel ervan wordt afval. Sommige materialen zijn makkelijker te recyclen of
+      te hergebruiken dan andere.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203932
+    m_Localized: 'Waarom het belangrijk is: een groot deel van het voedsel dat we
+      produceren wordt weggegooid, en daarmee ook het land, water en de energie die
+      ervoor nodig waren. Plannen, voedsel goed bewaren en restjes gebruiken bespaart
+      voedsel en geld.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203933
+    m_Localized: "Waarom het belangrijk is: de voedingsstoffen in je eten be\xEFnvloeden
+      je gezondheid. Weten hoeveel eiwit, vet, suiker, zout, vezels en vitamines
+      je binnenkrijgt, helpt je gezondere keuzes te maken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203934
+    m_Localized: Minder vaak vlees eten of in kleinere porties.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203935
+    m_Localized: Eiwitten halen uit peulvruchten, noten, eieren, zuivel of plantaardige
+      producten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203936
+    m_Localized: Andere basisvoedingsmiddelen proberen, zoals andere granen, peulvruchten
+      of knollen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203937
+    m_Localized: Hoeveel land nodig is om voedsel te telen of dieren te houden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203938
+    m_Localized: Hoeveel water nodig is om voedsel te produceren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203939
+    m_Localized: Hoeveel energie nodig is om voedsel te produceren, te bewaren en
+      te bereiden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203940
+    m_Localized: De broeikasgassen die vrijkomen bij het produceren van voedsel en
+      die de aarde opwarmen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203941
+    m_Localized: Hoe ver voedsel reist van waar het wordt gemaakt tot op je bord.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203942
+    m_Localized: Hoeveel voedsel is veranderd ten opzichte van de natuurlijke vorm,
+      bijv. vers, bewerkt of ultrabewerkt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203943
+    m_Localized: Waar voedsel is geteeld of gemaakt, en of het lokaal is.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203944
+    m_Localized: Hoe gewassen worden geteeld, bijv. biologisch of gangbaar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203945
+    m_Localized: Hoe landbouwdieren worden gehouden en verzorgd, bijv. vrije uitloop,
+      biologisch of binnen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203946
+    m_Localized: Of de mensen die je voedsel maken een eerlijk loon en goede arbeidsomstandigheden
+      krijgen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203947
+    m_Localized: Of de verpakking is gemaakt van materialen die gerecycled of gecomposteerd
+      kunnen worden, of die minder impact hebben.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203948
+    m_Localized: Of de verpakking opnieuw gevuld of hergebruikt kan worden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203949
+    m_Localized: Eten dat op het bord wordt opgeschept maar niet wordt opgegeten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203950
+    m_Localized: Gekookt eten dat wordt weggegooid in plaats van later opgegeten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203951
+    m_Localized: Voedsel dat bederft of over de datum gaat voordat je het gebruikt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203952
+    m_Localized: Meer voedsel kopen of eten dan je nodig hebt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203953
+    m_Localized: Bouwt en herstelt je lichaam. Zit in peulvruchten, vlees, vis, eieren
+      en zuivel.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203954
+    m_Localized: Een bron van energie; sommige vetten zijn gezonder dan andere.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203955
+    m_Localized: Vooral toegevoegde suiker, die je beter beperkt houdt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203956
+    m_Localized: Te veel zout kan de bloeddruk verhogen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203957
+    m_Localized: Helpt bij de spijsvertering. Zit in volkorenproducten, fruit, groenten
+      en peulvruchten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203958
+    m_Localized: Kleine voedingsstoffen die je lichaam nodig heeft om goed te werken,
+      vooral uit fruit en groenten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203959
+    m_Localized: "Hoeveel energie voedsel je geeft, gemeten in calorie\xEBn."
     m_Metadata:
       m_Items: []
   references:

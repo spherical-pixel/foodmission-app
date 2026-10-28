@@ -2826,10 +2826,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "Pozdravljeni! Da bi prilagodili va\u0161o izku\u0161njo, bi radi
-      spoznali va\u0161e interese in cilje glede trajnosti in prehrane. V naslednjih
-      korakih lahko izberete teme, ki vas najbolj zanimajo. Kadar koli jih lahko
-      spremenite!"
+    m_Localized: "Pozdravljeni! Radi bi izvedeli, katere teme o trajnosti in prehrani
+      vas najbolj zanimajo. V naslednjih korakih ozna\u010Dite tiste, ki so vam pomembne:
+      vsako podro\u010Dje in tema ima kratko razlago. Va\u0161i odgovori pomagajo
+      raziskavi projekta, v aplikaciji pa boste \u0161e vedno videli vso vsebino.
+      Kadar koli jih lahko spremenite!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -5379,6 +5380,162 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203927
     m_Localized: Misija tvoje naloge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203928
+    m_Localized: "Zakaj je pomembno: za meso je potrebno veliko ve\u010D zemlje,
+      vode in energije kot za rastlinsko hrano. Zamenjava dela mesa s stro\u010Dnicami,
+      ore\u0161\u010Dki ali drugimi beljakovinami in preizku\u0161anje druga\u010Dnih
+      osnovnih \u017Eivil je ena najve\u010Djih sprememb, ki jih lahko naredi\u0161
+      za planet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203929
+    m_Localized: "Zakaj je pomembno: vsako \u017Eivilo ima skrite stro\u0161ke za
+      okolje, od zemlje in vode za pridelavo do energije in prevoza, da pride do
+      tebe. \u010Ce pozna\u0161 te stro\u0161ke, la\u017Eje primerja\u0161 izdelke
+      in izbere\u0161 manj obremenjujo\u010Do mo\u017Enost."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203930
+    m_Localized: "Zakaj je pomembno: kako se \u017Eivilo prideluje, vzreja, predeluje
+      in prodaja, vpliva na okolje, \u017Eivali in ljudi, ki ga pridelajo. Etiketa
+      ti pogosto pove ve\u010D, kot misli\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203931
+    m_Localized: "Zakaj je pomembno: embala\u017Ea \u0161\u010Diti hrano, a velik
+      del kon\u010Da med odpadki. Nekatere materiale je la\u017Eje reciklirati ali
+      ponovno uporabiti kot druge."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203932
+    m_Localized: "Zakaj je pomembno: velik del hrane, ki jo pridelamo, zavr\u017Eemo,
+      z njo pa tudi zemljo, vodo in energijo, porabljene za njeno pridelavo. Na\u010Drtovanje,
+      pravilno shranjevanje in uporaba ostankov prihranijo hrano in denar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203933
+    m_Localized: "Zakaj je pomembno: hranila v hrani vplivajo na tvoje zdravje. \u010Ce
+      ve\u0161, koliko beljakovin, ma\u0161\u010Dob, sladkorja, soli, vlaknin in
+      vitaminov poje\u0161, la\u017Eje izbira\u0161 bolj zdravo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203934
+    m_Localized: "U\u017Eivanje mesa manj pogosto ali v manj\u0161ih porcijah."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203935
+    m_Localized: "Beljakovine iz stro\u010Dnic, ore\u0161\u010Dkov, jajc, mle\u010Dnih
+      izdelkov ali rastlinskih izdelkov."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203936
+    m_Localized: "Preizku\u0161anje drugih osnovnih \u017Eivil, na primer druga\u010Dnih
+      \u017Eit, stro\u010Dnic ali gomoljev."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203937
+    m_Localized: "Koliko zemlje je potrebno za pridelavo ali vzrejo \u017Eivila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203938
+    m_Localized: "Koliko vode je potrebno za pridelavo \u017Eivila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203939
+    m_Localized: "Koliko energije se porabi za pridelavo, shranjevanje in pripravo
+      \u017Eivila."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203940
+    m_Localized: "Toplogredni plini, ki se sprostijo pri pridelavi \u017Eivila in
+      segrevajo planet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203941
+    m_Localized: "Kako dale\u010D potuje \u017Eivilo od kraja pridelave do tvojega
+      kro\u017Enika."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203942
+    m_Localized: "Koliko je \u017Eivilo spremenjeno glede na naravno stanje, npr.
+      sve\u017Ee, predelano ali ultra predelano."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203943
+    m_Localized: "Kje je bilo \u017Eivilo pridelano ali izdelano in ali je lokalno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203944
+    m_Localized: "Kako se gojijo rastline, npr. ekolo\u0161ko ali konvencionalno
+      kmetovanje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203945
+    m_Localized: "Kako se rejne \u017Eivali vzrejajo in oskrbujejo, npr. prosta reja,
+      ekolo\u0161ka reja ali reja v hlevu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203946
+    m_Localized: "Ali ljudje, ki pridelujejo tvojo hrano, dobijo po\u0161teno pla\u010Dilo
+      in delovne pogoje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203947
+    m_Localized: "Ali je embala\u017Ea iz materialov, ki jih je mogo\u010De reciklirati
+      ali kompostirati ali manj obremenjujejo okolje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203948
+    m_Localized: "Ali je embala\u017Eo mogo\u010De ponovno napolniti ali uporabiti."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203949
+    m_Localized: "Hrana, postre\u017Eena na kro\u017Eniku, ki ostane nepojedena."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203950
+    m_Localized: "Kuhana hrana, ki jo zavr\u017Eemo, namesto da bi jo pojedli pozneje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203951
+    m_Localized: "Hrana, ki se pokvari ali ji pote\u010De rok, preden jo porabi\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203952
+    m_Localized: "Kupovanje ali u\u017Eivanje ve\u010D hrane, kot jo potrebuje\u0161."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203953
+    m_Localized: "Gradi in obnavlja telo. Najde\u0161 jih v stro\u010Dnicah, mesu,
+      ribah, jajcih in mle\u010Dnih izdelkih."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203954
+    m_Localized: "Vir energije; nekatere ma\u0161\u010Dobe so bolj zdrave od drugih."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203955
+    m_Localized: Predvsem dodani sladkor, ki ga je bolje omejiti.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203956
+    m_Localized: "Preve\u010D soli lahko zvi\u0161a krvni tlak."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203957
+    m_Localized: "Pomagajo pri prebavi. Najde\u0161 jih v polnozrnatih \u017Eivilih,
+      sadju, zelenjavi in stro\u010Dnicah."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203958
+    m_Localized: Majhna hranila, ki jih telo potrebuje za dobro delovanje, predvsem
+      iz sadja in zelenjave.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203959
+    m_Localized: "Koliko energije ti da \u017Eivilo, merjeno v kalorijah."
     m_Metadata:
       m_Items: []
   references:

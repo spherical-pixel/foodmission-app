@@ -10,9 +10,16 @@ namespace eu.foodmission.platform
     /// pick in their goals. A dimension is wanted when at least one of its topics is in <c>userGoals</c>.
     /// Content the user already started or completed is always shown, and so is content whose dimension is unknown.
     /// No goals stored (legacy users) means no filtering. Create one per list rebuild: it counts what it hid.
+    /// Switched off by <see cref="Enabled"/> since issue #86; the code stays in case it is turned back on.
     /// </summary>
     public sealed class GoalContentFilter
     {
+        /// <summary>
+        /// Off: <see cref="FromGoals"/> shows everything, so no list hides content or shows the goals hint.
+        /// Issue #86: the goals are kept for research, not to personalize content. Tests switch it on.
+        /// </summary>
+        public static bool Enabled = false;
+
         private readonly HashSet<string> _wantedDimensionCodes;
         private readonly HashSet<string> _hiddenDimensionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
@@ -23,7 +30,7 @@ namespace eu.foodmission.platform
 
         public static GoalContentFilter FromGoals(string[] userGoals)
         {
-            if (userGoals == null || userGoals.Length == 0)
+            if (!Enabled || userGoals == null || userGoals.Length == 0)
             {
                 return new GoalContentFilter(null);
             }
