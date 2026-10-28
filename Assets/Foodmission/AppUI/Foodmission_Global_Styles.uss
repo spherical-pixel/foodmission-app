@@ -2670,10 +2670,27 @@
     margin: 4px 0 8px 0;
 }
 
+/* Long answers ("Fleischlose / vegetarische Gerichte") wrap inside the chip instead of widening it past the card */
 .fm-mission-report-chip {
     margin: 4px;
     border-width: 3px;
     border-color: rgba(128, 128, 128, 0.35);
+    flex-shrink: 1;
+}
+
+.fm-mission-report-chip .appui-button__titlecontainer {
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.fm-mission-report-chip .appui-button__title {
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+/* SwipeView items don't clip: content wider than a step showed up on the neighbouring step */
+.fm-step-flow .appui-swipeview-item {
+    overflow: hidden;
 }
 
 .fm-mission-report-chip--selected {
