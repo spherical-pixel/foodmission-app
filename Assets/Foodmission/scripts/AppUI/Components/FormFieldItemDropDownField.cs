@@ -63,9 +63,18 @@ namespace eu.foodmission.platform.Components
             set
             {
                 _searchable = value;
-                if (_dropdown != null)
+                if (_dropdown == null)
                 {
-                    _dropdown.clickable = value ? new Pressable(OpenSearchablePicker) : _defaultClickable;
+                    return;
+                }
+
+                if (value)
+                {
+                    _dropdown.MakeSearchable(() => HeadingText);
+                }
+                else
+                {
+                    _dropdown.clickable = _defaultClickable;
                 }
             }
         }
@@ -92,29 +101,6 @@ namespace eu.foodmission.platform.Components
             _fieldContainer.Add(_dropdown);
             _dropdown.RegisterValueChangedCallback(OnDropdownValueChanged);
             _defaultClickable = _dropdown.clickable;
-        }
-
-        private void OpenSearchablePicker()
-        {
-            var items = _dropdown?.sourceItems;
-            if (items == null || items.Count == 0)
-            {
-                return;
-            }
-
-            var labels = new System.Collections.Generic.List<string>(items.Count);
-            foreach (var item in items)
-            {
-                labels.Add(item?.ToString() ?? "");
-            }
-
-            var current = _dropdown.value?.ToList();
-            var selected = current is { Count: > 0 } ? current[0] : -1;
-
-            FMSearchablePicker.Show(this, HeadingText, labels, selected, index =>
-            {
-                _dropdown.value = new[] { index };
-            });
         }
 
         public override AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)

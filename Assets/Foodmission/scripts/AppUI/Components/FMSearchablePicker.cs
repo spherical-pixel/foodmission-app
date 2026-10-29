@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 using Unity.AppUI.Core;
@@ -18,6 +19,41 @@ namespace eu.foodmission.platform.Components
     /// </summary>
     public static class FMSearchablePicker
     {
+        /// <summary>
+        /// Tapping <paramref name="dropdown"/> opens the picker instead of the App UI menu.
+        /// Labels are the <c>ToString()</c> of each source item; picking sets <c>dropdown.value</c>,
+        /// so the dropdown's ChangeEvent handlers run as usual.
+        /// </summary>
+        public static void MakeSearchable(this Dropdown dropdown, Func<string> getTitle)
+        {
+            if (dropdown == null)
+            {
+                return;
+            }
+
+            dropdown.clickable = new Pressable(() => ShowFor(dropdown, getTitle?.Invoke() ?? ""));
+        }
+
+        private static void ShowFor(Dropdown dropdown, string title)
+        {
+            var items = dropdown.sourceItems;
+            if (items == null || items.Count == 0)
+            {
+                return;
+            }
+
+            var labels = new List<string>(items.Count);
+            foreach (var item in items)
+            {
+                labels.Add(item?.ToString() ?? "");
+            }
+
+            var current = dropdown.value?.ToList();
+            var selected = current is { Count: > 0 } ? current[0] : -1;
+
+            Show(dropdown, title, labels, selected, index => dropdown.value = new[] { index });
+        }
+
         public static void Show(
             VisualElement anchor,
             string title,

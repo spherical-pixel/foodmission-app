@@ -93,7 +93,9 @@ namespace eu.foodmission.platform
             _servingsField = contentContainer.Q<Unity.AppUI.UI.TextField>("servings-field");
             _difficultyDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("difficulty-dropdown");
             _categoryDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("category-dropdown");
+            _categoryDropdown?.MakeSearchable(() => "@UI:RECIPES_FIELD_CATEGORY");
             _cuisineDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("cuisine-dropdown");
+            _cuisineDropdown?.MakeSearchable(() => "@UI:RECIPES_FIELD_CUISINE");
             _tagsDropdown = contentContainer.Q<Unity.AppUI.UI.Dropdown>("tags-dropdown");
             _isPublicCheckbox = contentContainer.Q<Unity.AppUI.UI.Checkbox>("is-public-checkbox");
 

@@ -97,6 +97,7 @@ namespace eu.foodmission.platform
             _filterSection = contentContainer.Q<VisualElement>("filter-section");
             _searchBar = contentContainer.Q<SearchBar>("search-bar");
             _cuisineDropdown = contentContainer.Q<Dropdown>("cuisine-dropdown");
+            _cuisineDropdown?.MakeSearchable(() => "@UI:RECIPES_FIELD_CUISINE");
             _groupDifficultyFilters = contentContainer.Q<ActionGroup>("group-difficulty-filters");
             _groupOriginFilters = contentContainer.Q<ActionGroup>("group-origin-filters");
             _btnOriginAll = contentContainer.Q<ActionButton>("btn-origin-all");

@@ -82,7 +82,8 @@ namespace eu.foodmission.platform
             {
                 name = "yearofbirth-dropdown",
                 HeadingText = "@UI:MEMBER_YEAR_OF_BIRTH",
-                DropdownDefaultMessage = "@UI:MEMBER_YEAR_OF_BIRTH_PLACEHOLDER"
+                DropdownDefaultMessage = "@UI:MEMBER_YEAR_OF_BIRTH_PLACEHOLDER",
+                Searchable = true
             };
 
             _countryDropdown = new FormFieldItemDropDownField
