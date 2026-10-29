@@ -926,6 +926,15 @@
     margin-top: 0;
 }
 
+/* FormFieldItem* question heading: App UI Heading defaults to nowrap + flex-shrink 0 + ellipsis,
+   so long questions were cut in the row container; let it shrink and wrap instead */
+.appui-heading.heading_field {
+    white-space: normal;
+    text-overflow: clip;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
 /* FormFieldItemCheckbox: long texts wrap onto as many lines as they need */
 .fm-form-checkbox__row {
     align-items: center;
