@@ -15,9 +15,10 @@ Foodmission is a Unity application designed to help users develop healthier and 
 
 ### ✨ Key Features
 
-- 🤖 **Nutri** — Mascot that guides the user, with a unified daily check-in
+- 🤖 **Nutri** — Mascot that guides the user, with a unified daily check-in and first-visit section tutorials
 - 👤 **User Profiles** — Onboarding survey, goals, dietary preferences and avatar personalization
-- 🏆 **Quests & Missions** — Long-term quests and daily missions, with per-dimension levels and badges
+- 🏆 **Quests & Missions** — Long-term quests, missions and challenges, with per-dimension levels and badges
+- 📊 **Progress Wheels** — Health and sustainability impact wheels, each with an explanation screen
 - 🍽️ **Meal Logging** — Quick and detailed food diary with barcode scanning (Open Food Facts) and a review step
 - 🛒 **Shopping & Pantry** — Shopping lists and pantry inventory with expiry tracking
 - 🗑️ **Food Waste Tracking** — Log and reduce food waste
@@ -33,6 +34,16 @@ Foodmission is a Unity application designed to help users develop healthier and 
 - 🎮 **Games** — Educational mini-games linked to challenges
 - 🌐 **Global Community** — Compare progress with community filters
 - 📍 **Sustainable Business Map** — Find eco-friendly food businesses nearby
+
+---
+
+## 📲 Try the App
+
+| Platform | Link |
+|----------|------|
+| **iOS** | [TestFlight](https://testflight.apple.com/join/eVPDEzhq) |
+| **Android** | [Google Play open testing](https://play.google.com/apps/testing/eu.foodmission.platform) |
+| **Releases** | [GitHub Releases](https://github.com/spherical-pixel/foodmission-app/releases) (changelog per version) |
 
 ---
 
@@ -93,13 +104,14 @@ NavHost with Navigation Graph + DI container
 
 ### API Environment
 
-The backend URLs live in `Assets/Foodmission/Resources/ApiEnvironmentConfig.asset`, which defines three environments:
+The backend URLs live in `Assets/Foodmission/Resources/ApiEnvironmentConfig.asset`, which defines four environments:
 
-| Environment | API |
-|-------------|-----|
-| Staging | `https://staging.api.foodmission.eu` |
-| Test | `https://test.api.foodmission.eu` |
-| Local | `http://localhost:3000` |
+| Environment | API | Auth (Keycloak) |
+|-------------|-----|-----------------|
+| Production | `https://api.foodmission.eu` | `https://auth.foodmission.eu` |
+| Staging | `https://staging.api.foodmission.eu` | `https://staging.auth.foodmission.eu` |
+| Test | `https://test.api.foodmission.eu` | `https://test.auth.foodmission.eu` |
+| Local | `http://localhost:3000` | `http://localhost:8080` |
 
 Select the active one in that asset. Code must always read the URL from `ApiConfig.BaseUrl`, never hardcode it.
 
@@ -116,6 +128,7 @@ Assets/Foodmission/
 │   ├── Services/       # Interfaces and implementations
 │   ├── Screens/        # Screens, ViewModels, UXML and USS (per-screen folders)
 │   ├── Store/          # Redux actions and reducers
+│   ├── Tutorials/      # Nutri section tutorials
 │   └── Navigation/     # Generated navigation graph
 ├── AppUI/              # Shared UXML templates, theme and USS styles
 ├── Resources/          # ApiEnvironmentConfig, fonts
