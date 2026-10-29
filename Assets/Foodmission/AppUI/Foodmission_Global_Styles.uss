@@ -563,6 +563,11 @@
     width: 900px;
 }
 
+.fm-info-dialog__safe-area {
+    width: 100%;
+    height: 100%;
+}
+
 .fm-info-dialog {
     padding: var(--appui-spacing-200);
     flex-direction: column;
