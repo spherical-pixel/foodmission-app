@@ -223,6 +223,46 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task UpdateRegionsForSelectedCountry_AfterPrePopulate_KeepsSavedRegion()
+        {
+            var catalogData = new CatalogData
+            {
+                genders = new[] { new CatalogItem { code = "male", label = "Male" } },
+                activityLevels = new[] { new CatalogItem { code = "moderate", label = "Moderate" } },
+                educationLevels = new[] { new CatalogItem { code = "bachelor", label = "Bachelor" } },
+                annualIncomeLevels = new[] { new CatalogItem { code = "30k_50k", label = "30k-50k" } }
+            };
+            var countries = new List<CatalogItem> { new CatalogItem { code = "ES", label = "Spain" } };
+            var regions = new List<CatalogItem>
+            {
+                new CatalogItem { code = "AN", label = "Andalucía" },
+                new CatalogItem { code = "CT", label = "Cataluña" }
+            };
+
+            _mockCatalogService
+                .Setup(x => x.LoadStartupAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<(CatalogData Result, ApiErrorResponse Error)>((catalogData, null)));
+            _mockCatalogService
+                .Setup(x => x.GetCountriesAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((countries, null)));
+            _mockCatalogService
+                .Setup(x => x.GetRegionsAsync("ES", It.IsAny<string>()))
+                .Returns(Task.FromResult<(List<CatalogItem> Result, ApiErrorResponse Error)>((regions, null)));
+
+            await _vm.LoadCatalogDataAsync();
+            await _vm.LoadCountriesAsync();
+            await _vm.PrePopulateFromState();
+
+            Assert.AreEqual(1, _vm.SelectedRegionIndex);
+
+            // The screen reloads the regions when the pre-populated country fires its change event
+            await _vm.UpdateRegionsForSelectedCountryAsync();
+
+            Assert.AreEqual(1, _vm.SelectedRegionIndex);
+            Assert.AreEqual("CT", _vm.GetSelectedRegionIso());
+        }
+
+        [Test]
         public async Task PrePopulateFromState_PopulatesIndicesFromState()
         {
             var catalogData = new CatalogData
