@@ -52,6 +52,24 @@ namespace eu.foodmission.platform.Components
             }
         }
 
+        /// <summary>
+        /// Opens <see cref="FMSearchablePicker"/> instead of the App UI menu, so the user can type
+        /// to filter long lists. Labels are the <c>ToString()</c> of each source item.
+        /// </summary>
+        [UxmlAttribute("dropdown-searchable")] [CreateProperty]
+        public bool Searchable
+        {
+            get => _searchable;
+            set
+            {
+                _searchable = value;
+                if (_dropdown != null)
+                {
+                    _dropdown.clickable = value ? new Pressable(OpenSearchablePicker) : _defaultClickable;
+                }
+            }
+        }
+
         public Dropdown Dropdown
         {
             get => _dropdown;
@@ -63,7 +81,9 @@ namespace eu.foodmission.platform.Components
 
         /* ========= INTERNAL ELEMENTS ========= */
         protected Unity.AppUI.UI.Dropdown _dropdown;
-        
+        private readonly Pressable _defaultClickable;
+        private bool _searchable;
+
 
         public FormFieldItemDropDownField()
         {
@@ -71,6 +91,30 @@ namespace eu.foodmission.platform.Components
             _dropdown.AddToClassList("item-field");
             _fieldContainer.Add(_dropdown);
             _dropdown.RegisterValueChangedCallback(OnDropdownValueChanged);
+            _defaultClickable = _dropdown.clickable;
+        }
+
+        private void OpenSearchablePicker()
+        {
+            var items = _dropdown?.sourceItems;
+            if (items == null || items.Count == 0)
+            {
+                return;
+            }
+
+            var labels = new System.Collections.Generic.List<string>(items.Count);
+            foreach (var item in items)
+            {
+                labels.Add(item?.ToString() ?? "");
+            }
+
+            var current = _dropdown.value?.ToList();
+            var selected = current is { Count: > 0 } ? current[0] : -1;
+
+            FMSearchablePicker.Show(this, HeadingText, labels, selected, index =>
+            {
+                _dropdown.value = new[] { index };
+            });
         }
 
         public override AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)

@@ -41,7 +41,7 @@
                     <ui:DataBinding property="HelpTextVariant" data-source-path="YearOfBirthHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemDropDownField>
-            <eu.foodmission.platform.Components.FormFieldItemDropDownField name="country">
+            <eu.foodmission.platform.Components.FormFieldItemDropDownField name="country" dropdown-searchable="true">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22819860558897152)"/>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22819676332482560)"/>
@@ -49,7 +49,7 @@
                     <ui:DataBinding property="HelpTextVariant" data-source-path="CountryHelpTextVariant" binding-mode="TwoWay"/>
                 </Bindings>
             </eu.foodmission.platform.Components.FormFieldItemDropDownField>
-            <eu.foodmission.platform.Components.FormFieldItemDropDownField name="region">
+            <eu.foodmission.platform.Components.FormFieldItemDropDownField name="region" dropdown-searchable="true">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="DropdownDefaultMessage" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22820425670057984)"/>
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(22820314747494400)"/>

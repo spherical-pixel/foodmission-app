@@ -89,14 +89,16 @@ namespace eu.foodmission.platform
             {
                 name = "country",
                 HeadingText = "@UI:COUNTRY",
-                DropdownDefaultMessage = "@UI:COUNTRY_PLACEHOLDER"
+                DropdownDefaultMessage = "@UI:COUNTRY_PLACEHOLDER",
+                Searchable = true
             };
 
             _regionDropdown = new FormFieldItemDropDownField
             {
                 name = "region",
                 HeadingText = "@UI:REGION",
-                DropdownDefaultMessage = "@UI:REGION_PLACEHOLDER"
+                DropdownDefaultMessage = "@UI:REGION_PLACEHOLDER",
+                Searchable = true
             };
 
             _postalCodeField = new FormFieldItemTextField
