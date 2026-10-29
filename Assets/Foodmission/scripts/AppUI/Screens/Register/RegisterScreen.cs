@@ -82,21 +82,24 @@ namespace eu.foodmission.platform
             {
                 name = "yearofbirth-dropdown",
                 HeadingText = "@UI:MEMBER_YEAR_OF_BIRTH",
-                DropdownDefaultMessage = "@UI:MEMBER_YEAR_OF_BIRTH_PLACEHOLDER"
+                DropdownDefaultMessage = "@UI:MEMBER_YEAR_OF_BIRTH_PLACEHOLDER",
+                Searchable = true
             };
 
             _countryDropdown = new FormFieldItemDropDownField
             {
                 name = "country",
                 HeadingText = "@UI:COUNTRY",
-                DropdownDefaultMessage = "@UI:COUNTRY_PLACEHOLDER"
+                DropdownDefaultMessage = "@UI:COUNTRY_PLACEHOLDER",
+                Searchable = true
             };
 
             _regionDropdown = new FormFieldItemDropDownField
             {
                 name = "region",
                 HeadingText = "@UI:REGION",
-                DropdownDefaultMessage = "@UI:REGION_PLACEHOLDER"
+                DropdownDefaultMessage = "@UI:REGION_PLACEHOLDER",
+                Searchable = true
             };
 
             _postalCodeField = new FormFieldItemTextField

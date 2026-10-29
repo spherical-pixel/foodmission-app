@@ -589,6 +589,46 @@
     flex-direction: column;
 }
 
+.fm-searchable-picker__safe-area {
+    width: 100%;
+    height: 100%;
+}
+
+.fm-searchable-picker__search {
+    margin-bottom: var(--appui-spacing-100);
+}
+
+.fm-searchable-picker__list {
+    flex-grow: 1;
+    margin-bottom: var(--appui-spacing-100);
+}
+
+.fm-searchable-picker__item {
+    min-height: var(--appui-sizing-850);
+    padding: var(--appui-spacing-50) var(--appui-spacing-100);
+    font-size: var(--appui-font-sizes-body-lg);
+    white-space: normal;
+    -unity-text-align: middle-left;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--appui-foregrounds-25);
+}
+
+.fm-searchable-picker__item--selected {
+    -unity-font-style: bold;
+    background-color: var(--appui-accent-100);
+    color: var(--appui-alias-actions-accent-foreground-color-default);
+    border-radius: 16px;
+}
+
+.fm-searchable-picker__empty {
+    padding: var(--appui-spacing-100);
+    white-space: normal;
+}
+
+.fm-searchable-picker__empty--hidden {
+    display: none;
+}
+
 .fm-nutri-dialog {
     opacity: 0;
     scale: 0.95;

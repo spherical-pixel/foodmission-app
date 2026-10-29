@@ -52,6 +52,33 @@ namespace eu.foodmission.platform.Components
             }
         }
 
+        /// <summary>
+        /// Opens <see cref="FMSearchablePicker"/> instead of the App UI menu, so the user can type
+        /// to filter long lists. Labels are the <c>ToString()</c> of each source item.
+        /// </summary>
+        [UxmlAttribute("dropdown-searchable")] [CreateProperty]
+        public bool Searchable
+        {
+            get => _searchable;
+            set
+            {
+                _searchable = value;
+                if (_dropdown == null)
+                {
+                    return;
+                }
+
+                if (value)
+                {
+                    _dropdown.MakeSearchable(() => HeadingText);
+                }
+                else
+                {
+                    _dropdown.clickable = _defaultClickable;
+                }
+            }
+        }
+
         public Dropdown Dropdown
         {
             get => _dropdown;
@@ -63,7 +90,9 @@ namespace eu.foodmission.platform.Components
 
         /* ========= INTERNAL ELEMENTS ========= */
         protected Unity.AppUI.UI.Dropdown _dropdown;
-        
+        private readonly Pressable _defaultClickable;
+        private bool _searchable;
+
 
         public FormFieldItemDropDownField()
         {
@@ -71,6 +100,7 @@ namespace eu.foodmission.platform.Components
             _dropdown.AddToClassList("item-field");
             _fieldContainer.Add(_dropdown);
             _dropdown.RegisterValueChangedCallback(OnDropdownValueChanged);
+            _defaultClickable = _dropdown.clickable;
         }
 
         public override AccessibilityNode CreateAccessibilityNode(AccessibilityHierarchy hierarchy, string label)
