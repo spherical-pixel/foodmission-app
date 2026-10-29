@@ -158,8 +158,6 @@ namespace eu.foodmission.platform.Components
             this.Add(_headingContainer);
 
             _heading = new Unity.AppUI.UI.Heading();
-            //_heading.AddToClassList("heading-wrap");
-            _heading.style.whiteSpace = WhiteSpace.Normal;
             _heading.AddToClassList("heading_field");
             _heading.size = HeadingSize.S;
             _heading.primary = true;
