@@ -39,7 +39,7 @@ namespace eu.foodmission.platform
         protected override bool ApplySafeAreaLeft => false;
         protected override bool ApplySafeAreaRight => false;
         protected override bool ApplySafeAreaTop => false;
-        protected override bool IsFixedContent => true;
+        protected override bool IsFixedContent => false;
 
         public LoginScreen()
         {
