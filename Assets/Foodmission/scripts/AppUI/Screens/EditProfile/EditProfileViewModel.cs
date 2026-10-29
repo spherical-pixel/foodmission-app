@@ -341,11 +341,15 @@ namespace eu.foodmission.platform
 
             string countryCode = _countries[SelectedCountryIndex].code;
             string lang = _storeService.GetAppState().lang ?? "en";
+            string prevRegionCode = GetSelectedRegionIso();
             var (regions, _) = await _catalogService.GetRegionsAsync(countryCode, lang);
 
             _regions = regions ?? new List<CatalogItem>();
             RegionOptions = _regions.Select(r => r.label).ToList();
-            SelectedRegionIndex = RegionOptions.Count > 0 ? 0 : -1;
+
+            // Reloading the same country (the screen does it when the pre-populated country fires its change event) must keep the chosen region
+            int prevRegionIndex = string.IsNullOrEmpty(prevRegionCode) ? -1 : _regions.FindIndex(r => r.code == prevRegionCode);
+            SelectedRegionIndex = prevRegionIndex >= 0 ? prevRegionIndex : (RegionOptions.Count > 0 ? 0 : -1);
 
             try
             {
