@@ -1,3 +1,23 @@
+v0.0.12 - Changelog
+✨ New Features & Modules
+- Progress wheels: tapping a wheel card on Home opens an explanation screen with the partner text, the 20 scenarios with this wheel's values (local copy of the backend impact coefficients) and the scientific sources; 9 languages.
+- Check-in: day-based missions (M.I1.3, M.B5.5, M.B6.1/2/4, M.A6.3, M.I6.3) and swap missions (M.B1.4, M.B1.5, M.B3.5, M.B6.3, M.B6.5, M.I1.1, M.I1.2, M.I3.3, M.I6.1) are asked once per day on the day card and sent as OTHER meal logs; water/snack swaps are counters; answered days are remembered per user and mission attempt; after sending, Nutri lists each mission's progress. Missions at 100% waiting for their window end get no stalled/last-day nudge.
+- Food facts: the read list comes from `GET /food-facts/me` (local list kept as fallback).
+
+🐛 Bug Fixes
+- Register: username validated locally; Keycloak/validation errors (invalid or duplicate username, duplicate email, password policy, invalid email) mapped to localized messages on their step.
+- Challenges: the product challenge session ends when leaving the helper module flow; the card explains it belongs to a challenge in progress, counts with "Count this product" and can be dismissed with "Not now" (#84).
+- Step flow: steps clip their content and check-in chips wrap long answers.
+- Learning: quiz and food fact cards scroll when the text does not fit.
+- Swaps ending in meat uncheck meat-free/vegan, and such a meal is never sent as MEAL_MEAT_FREE.
+- Onboarding: "gender" instead of "genre" in the gender placeholder (en).
+
+🎨 UI / UX & Enhancements
+- Typography: default text size one step larger (old medium → small, old large → medium, new large = old large ×1.15); stored scale values unchanged (#82).
+- Food facts: "Did you know...?" heading and "Got it!" button; mission and challenge detail cards start with a MISSION / CHALLENGE heading (#79).
+- My Goals: explanation for each dimension and topic, starts unselected; the content filter is switched off (`GoalContentFilter.Enabled`) (#86).
+- Localization: updated translations from the linguists' review.
+
 v0.0.11 - Changelog
 ✨ New Features & Modules
 - Meal log: day picker (today and the previous 6 days) in the full and the quick log; past days are stamped at a typical local time for the meal type (sent in UTC), edits keep their original timestamp (#65).
