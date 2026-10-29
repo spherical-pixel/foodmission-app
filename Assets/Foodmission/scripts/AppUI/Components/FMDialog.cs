@@ -477,7 +477,13 @@ namespace eu.foodmission.platform.Components
 
             root.Add(actionsRow);
 
-            modal = Modal.Build(anchor, root);
+            // Full-screen takeover: keep the content out of the notch and the home indicator
+            var safeArea = new VisualElement();
+            safeArea.AddToClassList("fm-info-dialog__safe-area");
+            App.current?.services?.GetService<IThemeService>()?.ApplySafeAreaPadding(safeArea, true, true, true, true);
+            safeArea.Add(root);
+
+            modal = Modal.Build(anchor, safeArea);
             modal.SetFullScreenMode(ModalFullScreenMode.FullScreenTakeOver);
             if (onDismissed != null)
             {
