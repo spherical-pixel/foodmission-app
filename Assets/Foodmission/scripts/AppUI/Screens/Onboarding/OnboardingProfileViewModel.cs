@@ -425,7 +425,9 @@ namespace eu.foodmission.platform
                     }
                 };
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[OnboardingProfileViewModel] Submitting profile update: {request.ToJson()}");
+#endif
 
                 var (success, error) = await _authService.UpdateProfileAsync(request);
 

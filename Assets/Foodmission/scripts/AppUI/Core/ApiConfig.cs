@@ -145,7 +145,7 @@ namespace eu.foodmission.platform
             {
                 EnsureLoaded();
                 var env = GetActiveEnvironment();
-                if (env == null) return "https://staging.api.foodmission.eu";
+                if (env == null) return "https://api.foodmission.eu";
                 if (env.Name == "Local" && !string.IsNullOrEmpty(s_localUrlOverride))
                     return s_localUrlOverride;
                 return env.ApiBaseUrl;
@@ -158,7 +158,7 @@ namespace eu.foodmission.platform
             {
                 EnsureLoaded();
                 var env = GetActiveEnvironment();
-                if (env == null) return "https://staging.auth.foodmission.eu";
+                if (env == null) return "https://auth.foodmission.eu";
                 return env.AuthBaseUrl;
             }
         }

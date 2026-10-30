@@ -292,7 +292,9 @@ namespace eu.foodmission.platform
             }
             else if (!string.IsNullOrEmpty(authState.userId) && !_registrationCompleted)
             {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] - OnAuthStateChanged -> userId = {authState.userId}, registration completed -> " + JsonUtility.ToJson(authState));
+#endif
                 _registrationCompleted = true;
                 // NutriMessageDialog.Show(
                 //     message: "@UI:COMPLETE_WELCOME_MESSAGE",
@@ -398,7 +400,9 @@ namespace eu.foodmission.platform
                     if (result.success)
                     {
                         // Registration and auto-login successful - navigation handled by auth state change
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                         Debug.Log($"[RegisterViewModel] Registration completed successfully for user: {result.userId}");
+#endif
 
                         // Record acceptance of required legal documents on the backend
                         if (_legalService != null)

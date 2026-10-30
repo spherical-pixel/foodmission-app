@@ -79,7 +79,9 @@ namespace eu.foodmission.platform
                 }
 
                 string responseJson = request.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] Catalog response: {responseJson}");
+#endif
 
                 StartupResponse response = JsonUtility.FromJson<StartupResponse>(responseJson);
 

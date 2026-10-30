@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using eu.foodmission.platform.Components;
@@ -403,7 +402,9 @@ namespace eu.foodmission.platform
         {
             DisableQuizButtons();
             _currentResponse = response;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log("OnOptionSelected -> " + _currentResponse.QuizOption.label);
+#endif
 
             _audioService.PlaySfx(SfxType.PositiveButton);
             _currentResponse.SetState(QuizResponseState.Selected);

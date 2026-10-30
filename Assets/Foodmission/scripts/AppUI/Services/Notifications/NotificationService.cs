@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.AppUI.MVVM;
 using UnityEngine.Localization.Settings;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 
@@ -719,7 +718,9 @@ namespace eu.foodmission.platform
         {
             if (string.IsNullOrEmpty(e?.Token)) return;
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[NotificationService] Received FCM Registration Token: {e.Token}");
+#endif
             UpdatePushRegistrationToken(e.Token);
         }
 
